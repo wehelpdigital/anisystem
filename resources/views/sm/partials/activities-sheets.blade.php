@@ -1,0 +1,459 @@
+{{--
+    All bottom-sheets for the Activities module.
+    Expects: $schedule (lots, workers, materials, services, versions,
+    defaultGroupings loaded), $activityTypes, $activeVersion.
+--}}
+
+{{-- ============================ ADD / EDIT ACTIVITY ============================ --}}
+<div class="sheet hidden" id="activitySheet" style="--sheet-width:44rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="activitySheetTitle">Add Activity</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <input type="hidden" id="activityId">
+        <div class="space-y-4">
+            <div>
+                <label class="form-label" for="activityTitle">Title <span class="text-red-500">*</span></label>
+                <input type="text" id="activityTitle" class="form-input" maxlength="255" placeholder="e.g. Basal Fertilizer Application">
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="form-label" for="activityTargetDate">Start date <span class="text-red-500">*</span></label>
+                    <input type="date" id="activityTargetDate" class="form-input">
+                </div>
+                <div>
+                    <label class="form-label" for="activityTargetEndDate">End date <span class="text-gray-400 font-normal">(optional)</span></label>
+                    <div class="relative">
+                        <input type="date" id="activityTargetEndDate" class="form-input pr-10">
+                        <button type="button" id="activityTargetEndDateClear" class="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600" title="Clear end date (single-day activity)">✕</button>
+                    </div>
+                </div>
+            </div>
+
+            {{-- DAS day-number lens over the date inputs (shown only when an anchored lot is selected) --}}
+            <div id="activityDasRow" class="das-panel hidden">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div>
+                        <label class="form-label text-blue-900!" for="activityDasRefLot">Reference lot</label>
+                        <select id="activityDasRefLot" class="form-select"></select>
+                    </div>
+                    <div>
+                        <label class="form-label text-blue-900!" for="activityStartDas">Start <span class="day-type-label">{{ $schedule->dayType }}</span></label>
+                        <input type="number" id="activityStartDas" class="form-input" step="1" placeholder="e.g. 21">
+                    </div>
+                    <div>
+                        <label class="form-label text-blue-900!" for="activityEndDas">End <span class="day-type-label">{{ $schedule->dayType }}</span></label>
+                        <input type="number" id="activityEndDas" class="form-input" step="1" placeholder="optional">
+                    </div>
+                </div>
+                <p class="text-xs text-blue-800 mt-2" id="activityDasAnchorNote"></p>
+            </div>
+
+            <div>
+                <span class="form-label">Lots</span>
+                @if ($schedule->lots->count())
+                    <div id="activityLotsContainer" class="flex flex-wrap gap-2">
+                        <button type="button" class="chip chip-dashed lot-chip lot-chip-na" data-lot-na="1" aria-pressed="false"
+                            title="Applies generally — not tied to any specific lot">N/A — Not lot-specific</button>
+                        @foreach ($schedule->lots as $lot)
+                            <button type="button" class="chip lot-chip" data-lot-id="{{ $lot->id }}" aria-pressed="false">
+                                {{ $lot->lotName }}@if(!empty($lot->variety)) · {{ $lot->variety }}@endif
+                            </button>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-sm px-4 py-3">
+                        No lots defined yet — the activity will be saved as general (N/A).
+                        <a href="{{ route('sm.lots', ['id' => $schedule->id]) }}" class="font-semibold underline">Add lots</a>
+                    </div>
+                    <div id="activityLotsContainer" class="hidden"></div>
+                @endif
+            </div>
+
+            <div>
+                <label class="form-label" for="activityType">Activity type</label>
+                <select id="activityType" class="form-select">
+                    <option value="">— select a type —</option>
+                    @foreach ($activityTypes as $slug => $label)
+                        <option value="{{ $slug }}">{{ $label }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="form-label" for="activityPriority">Priority</label>
+                    <select id="activityPriority" class="form-select">
+                        <option value="critical">Critical</option>
+                        <option value="high">High</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label" for="activityTimeRequired">Time required</label>
+                    <select id="activityTimeRequired" class="form-select">
+                        <option value="half" selected>Half Day</option>
+                        <option value="whole">Whole Day</option>
+                        <option value="n/a">N/A</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="day-zero-panel" id="activityDayZeroPanel">
+                <label class="flex items-start gap-3 cursor-pointer select-none">
+                    <input type="checkbox" id="activityIsDayZero" class="mt-1 w-5 h-5 rounded border-amber-400 text-amber-600 focus:ring-amber-300">
+                    <span class="text-sm text-amber-900">
+                        <strong>Mark this activity as <span class="day-type-label">{{ $schedule->dayType }}</span> 0</strong><br>
+                        <span class="text-amber-800/80">Its start date becomes Day 0 for every lot it covers. When several anchors conflict, the earliest date wins.</span>
+                    </span>
+                </label>
+            </div>
+
+            <div>
+                <span class="form-label">Workers <span class="text-gray-400 font-normal">(optional)</span></span>
+                <div id="activityWorkersContainer" class="flex flex-wrap gap-2">
+                    @foreach ($schedule->workers as $w)
+                        <button type="button" class="chip worker-chip" data-worker-id="{{ $w->id }}" aria-pressed="false">
+                            {{ $w->workerName }} <span class="opacity-70">#{{ $w->priority }}</span>
+                        </button>
+                    @endforeach
+                    @if ($schedule->workers->isEmpty())
+                        <p class="text-xs text-gray-400">No workers defined yet.</p>
+                    @endif
+                </div>
+            </div>
+
+            <div>
+                <div class="flex items-center justify-between mb-1.5">
+                    <label class="form-label mb-0!" for="activityDescription">Description</label>
+                    <button type="button" id="toggleDescriptionMode" class="text-xs font-semibold text-brand-700">
+                        <span id="toggleDescriptionModeLabel">Edit HTML source</span>
+                    </button>
+                </div>
+                <div class="sm-quill-wrap" id="activityDescriptionWrap">
+                    <div class="quill-host-wrap"><div id="activityDescription"></div></div>
+                    <textarea id="activityDescriptionSource" class="form-textarea quill-source font-mono text-xs" rows="8" placeholder="Raw HTML…"></textarea>
+                </div>
+            </div>
+
+            <div>
+                <span class="form-label">Reference image <span class="text-gray-400 font-normal">(optional, max 8 MB)</span></span>
+                <input type="hidden" id="activityImagePath">
+                <input type="file" id="activityImageFileInput" accept="image/jpeg,image/png,image/webp,image/gif" class="hidden">
+                <div id="activityImageEmpty">
+                    <button type="button" id="activityImageUploadBtn" class="btn btn-white w-full">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        Upload Image
+                    </button>
+                </div>
+                <div id="activityImageWrap" class="hidden">
+                    <img id="activityImagePreview" src="" alt="Activity image preview" class="w-full max-h-64 object-contain rounded-xl border border-gray-200 bg-gray-50">
+                    <div class="flex gap-2 mt-2">
+                        <button type="button" id="activityImageReplaceBtn" class="btn btn-white btn-sm grow">Replace</button>
+                        <button type="button" id="activityImageRemoveBtn" class="btn btn-danger-outline btn-sm grow">Remove</button>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <span class="form-label">Materials &amp; Services <span class="text-gray-400 font-normal">(optional)</span></span>
+                <div class="rounded-xl border border-gray-200 p-3 space-y-2">
+                    <div class="grid grid-cols-2 gap-2">
+                        <select id="itemPickerType" class="form-select">
+                            <option value="material">Material</option>
+                            <option value="service">Service</option>
+                        </select>
+                        <select id="itemPickerId" class="form-select"></select>
+                    </div>
+                    <div class="grid grid-cols-[1fr_1fr_auto] gap-2">
+                        <input type="number" id="itemPickerQty" class="form-input" value="1" min="0" step="any" placeholder="Qty">
+                        <select id="itemPickerUnit" class="form-select">
+                            <option value="">— unit —</option>
+                            @foreach (['kg','g','ml','l','bottle','sachet','piece','pack'] as $u)
+                                <option value="{{ $u }}">{{ $u }}</option>
+                            @endforeach
+                        </select>
+                        <button type="button" id="addItemBtn" class="btn btn-outline btn-sm">Add</button>
+                    </div>
+                    <div id="itemsContainer" class="flex flex-wrap gap-1.5"></div>
+                    <p id="itemsContainerEmpty" class="text-xs text-gray-400">No materials or services added. That's fine — you can attach them later.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" id="saveActivityBtn" class="btn btn-primary">Save Activity</button>
+    </div>
+</div>
+
+{{-- ============================ MOBILE CARD ACTION MENU ============================ --}}
+<div class="sheet hidden" id="cardMenuSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title truncate" id="cardMenuTitle">Activity</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="grid gap-1">
+            <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="edit">Edit</button>
+            <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="move">Move to date…</button>
+            <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="duplicate">Duplicate</button>
+            <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="hide"><span id="cardMenuHideLabel">Hide from presentations</span></button>
+            <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="draft">Move to drafts</button>
+            <button type="button" class="btn btn-ghost justify-start! text-red-600!" data-card-menu-action="delete">Delete</button>
+        </div>
+    </div>
+</div>
+
+{{-- ============================ MOVE SINGLE CARD TO DATE ============================ --}}
+<div class="sheet hidden" id="moveDateSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Move activity</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-3">
+        <p class="text-sm text-gray-600">Move <strong id="moveDateName" class="text-gray-900"></strong> to a new date.</p>
+        <div>
+            <label class="form-label" for="moveDateInput">New date</label>
+            <input type="date" id="moveDateInput" class="form-input">
+        </div>
+        <p class="form-hint">Multi-day activities keep their duration — the end date shifts by the same number of days.</p>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" id="confirmMoveDateBtn" class="btn btn-primary">Move</button>
+    </div>
+</div>
+
+{{-- ============================ CHANGE GROUP DATE ============================ --}}
+<div class="sheet hidden" id="changeGroupDateSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Change group date</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-3">
+        <input type="hidden" id="changeGroupDateOld">
+        <p class="text-sm text-gray-600">
+            Move all <strong id="changeGroupDateCount" class="text-gray-900">0</strong> activities on
+            <strong id="changeGroupDateCurrent" class="text-gray-900"></strong> to:
+        </p>
+        <input type="date" id="changeGroupDateNew" class="form-input">
+        <p class="form-hint">Multi-day activities keep their duration — end dates shift by the same number of days.</p>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" id="confirmChangeGroupDateBtn" class="btn btn-primary">Move Activities</button>
+    </div>
+</div>
+
+{{-- ============================ DATE NOTE ============================ --}}
+<div class="sheet hidden" id="dateNoteSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="dateNoteSheetTitle">Note for this date</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-3">
+        <input type="hidden" id="dateNoteDate">
+        <p class="text-sm font-semibold text-gray-700" id="dateNoteSheetDate"></p>
+        <textarea id="dateNoteContent" class="form-textarea" rows="5" maxlength="20000" placeholder="What happens on this day? Notes render on printed documents too."></textarea>
+        <p class="form-hint">Notes are scoped to the current version — forks carry their own copies.</p>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" id="dateNoteClearBtn" class="btn btn-danger-outline mr-auto hidden">Clear Note</button>
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" id="dateNoteSaveBtn" class="btn btn-primary">Save Note</button>
+    </div>
+</div>
+
+{{-- ============================ PROGRESS MARKER ============================ --}}
+<div class="sheet hidden" id="markerSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="markerSheetTitle">Resume-here marker</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-3">
+        <input type="hidden" id="progressMarkerDate">
+        <input type="hidden" id="progressMarkerId">
+        <p class="text-sm text-gray-600">A dashed amber "Resume here" line will render after <strong id="markerSheetDate" class="text-gray-900"></strong>.</p>
+        <textarea id="progressMarkerNote" class="form-textarea" rows="4" maxlength="5000" placeholder="Optional note — where you left off, what's next…"></textarea>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" id="progressMarkerClearBtn" class="btn btn-danger-outline mr-auto hidden">Remove Marker</button>
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" id="progressMarkerSaveBtn" class="btn btn-primary">Save Marker</button>
+    </div>
+</div>
+
+{{-- ============================ DRAFTS ============================ --}}
+<div class="sheet hidden" id="draftsSheet" style="--sheet-width:36rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Drafts</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div id="draftsListContainer" class="space-y-2"></div>
+        <div id="draftsEmpty" class="text-center text-gray-500 py-8 hidden">
+            <p class="font-bold text-gray-800 mb-1">No drafts.</p>
+            <p class="text-sm">Use the archive button on an activity card to park it here without deleting.</p>
+        </div>
+    </div>
+</div>
+
+{{-- ============================ LABOR SUMMARY ============================ --}}
+<div class="sheet hidden" id="laborSheet" style="--sheet-width:56rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Labor Expenses</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="rounded-xl bg-gray-100 text-gray-600 text-xs px-4 py-2.5 mb-3">
+            <strong class="text-gray-800">cost = Σ(worker half-day rates) × units/day × days</strong>
+            &nbsp;·&nbsp; whole = 2 units, half = 1, N/A = 0 &nbsp;·&nbsp; drafts excluded
+        </div>
+
+        <div class="card p-3 mb-3 space-y-3">
+            @if ($schedule->defaultGroupings->count())
+                <div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-gray-500 uppercase">Groups</span>
+                        <span>
+                            <button type="button" id="laborSelectAllGroups" class="text-xs font-semibold text-brand-700">All</button>
+                            <span class="text-gray-300">·</span>
+                            <button type="button" id="laborClearGroups" class="text-xs font-semibold text-brand-700">None</button>
+                        </span>
+                    </div>
+                    <div class="scroll-chips mt-1" id="laborGroupsContainer" data-chip-group>
+                        @foreach ($schedule->defaultGroupings as $g)
+                            <button type="button" class="chip shrink-0 min-h-9! py-1! text-xs" data-value="{{ $g->id }}"
+                                data-lot-ids="{{ $g->lots->pluck('id')->implode(',') }}">{{ $g->groupName }}</button>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+            @if ($schedule->workers->count())
+                <div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-gray-500 uppercase">Workers</span>
+                        <span>
+                            <button type="button" id="laborSelectAllWorkers" class="text-xs font-semibold text-brand-700">All</button>
+                            <span class="text-gray-300">·</span>
+                            <button type="button" id="laborClearWorkers" class="text-xs font-semibold text-brand-700">None</button>
+                        </span>
+                    </div>
+                    <div class="scroll-chips mt-1" id="laborWorkersContainer" data-chip-group>
+                        @foreach ($schedule->workers as $w)
+                            <button type="button" class="chip shrink-0 min-h-9! py-1! text-xs" data-value="{{ $w->id }}">{{ $w->workerName }} <span class="opacity-70">#{{ $w->priority }}</span></button>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <div>
+                    <label class="form-label text-xs!" for="laborDasMin"><span class="day-type-label">{{ $schedule->dayType }}</span> min</label>
+                    <input type="number" id="laborDasMin" class="form-input" step="1" placeholder="−∞">
+                </div>
+                <div>
+                    <label class="form-label text-xs!" for="laborDasMax"><span class="day-type-label">{{ $schedule->dayType }}</span> max</label>
+                    <input type="number" id="laborDasMax" class="form-input" step="1" placeholder="+∞">
+                </div>
+                <div>
+                    <label class="form-label text-xs!" for="laborStartDate">From date</label>
+                    <input type="date" id="laborStartDate" class="form-input">
+                </div>
+                <div>
+                    <label class="form-label text-xs!" for="laborEndDate">To date</label>
+                    <input type="date" id="laborEndDate" class="form-input">
+                </div>
+            </div>
+            <div class="flex items-center gap-2 flex-wrap">
+                <button type="button" id="laborApplyFiltersBtn" class="btn btn-primary btn-sm">Apply Filters</button>
+                <button type="button" id="laborResetFiltersBtn" class="btn btn-white btn-sm">Reset</button>
+                <span id="laborFilterHint" class="text-xs text-gray-500"></span>
+            </div>
+        </div>
+
+        <div id="laborSummaryBody"></div>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" id="laborCopyBtn" class="btn btn-white mr-auto">Copy as Text</button>
+        <button type="button" id="laborPrintBtn" class="btn btn-white">Print</button>
+        <button type="button" class="btn btn-ghost" data-sheet-close>Close</button>
+    </div>
+</div>
+
+{{-- ============================ NEW VERSION ============================ --}}
+<div class="sheet hidden" id="versionSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">New Version</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-4">
+        <div>
+            <label class="form-label" for="newVersionName">Version name <span class="text-red-500">*</span></label>
+            <input type="text" id="newVersionName" class="form-input" maxlength="120" placeholder='e.g. "Budget Cut V1"'>
+        </div>
+        <div>
+            <label class="form-label" for="newVersionDescription">Notes <span class="text-gray-400 font-normal">(optional)</span></label>
+            <textarea id="newVersionDescription" class="form-textarea" rows="3" maxlength="5000" placeholder="Why this branch exists"></textarea>
+        </div>
+        <div>
+            <label class="form-label" for="newVersionSource">Fork from</label>
+            <select id="newVersionSource" class="form-select">
+                @foreach ($schedule->versions as $v)
+                    <option value="{{ $v->id }}" @if($v->isActive) selected @endif>{{ $v->versionName }}@if($v->isOriginal) (Original)@endif</option>
+                @endforeach
+                <option value="">Blank — start with no activities</option>
+            </select>
+            <p class="form-hint">Forking deep-clones every activity (items, lots, workers) plus the date notes of the source version.</p>
+        </div>
+        <label class="flex items-center gap-3 cursor-pointer select-none">
+            <input type="checkbox" id="newVersionSetActive" class="w-5 h-5 rounded border-gray-300 text-brand-600 focus:ring-brand-300" checked>
+            <span class="text-sm text-gray-700">Switch to this version after creating</span>
+        </label>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" id="saveNewVersionBtn" class="btn btn-primary">Create Version</button>
+    </div>
+</div>
+
+{{-- ============================ MANAGE (RENAME / DELETE) CURRENT VERSION ============================ --}}
+<div class="sheet hidden" id="manageVersionSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Manage Version</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-4">
+        <input type="hidden" id="renameVersionId">
+        <div>
+            <label class="form-label" for="renameVersionName">Version name <span class="text-red-500">*</span></label>
+            <input type="text" id="renameVersionName" class="form-input" maxlength="120">
+        </div>
+        <div>
+            <label class="form-label" for="renameVersionDescription">Notes</label>
+            <textarea id="renameVersionDescription" class="form-textarea" rows="3" maxlength="5000"></textarea>
+        </div>
+        <div id="deleteVersionZone" class="rounded-xl border border-red-200 bg-red-50 p-3 hidden">
+            <p class="text-sm text-red-800 mb-2">Deleting this version soft-deletes every activity inside it. The Original version becomes active again.</p>
+            <button type="button" id="deleteVersionBtn" class="btn btn-danger-outline btn-sm">Delete This Version</button>
+        </div>
+        <p id="originalVersionHint" class="form-hint hidden">The Original version is the baseline and cannot be deleted.</p>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" id="saveRenameVersionBtn" class="btn btn-primary">Save Changes</button>
+    </div>
+</div>

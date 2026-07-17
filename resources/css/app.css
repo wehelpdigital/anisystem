@@ -1,0 +1,184 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    /* AniSenso brand palette */
+    --color-brand-50: #f3f8ec;
+    --color-brand-100: #e4efd4;
+    --color-brand-200: #c9e0ad;
+    --color-brand-300: #a8cc7e;
+    --color-brand-400: #86b556;
+    --color-brand-500: #6b9f3d; /* brand-green-light */
+    --color-brand-600: #4a7c2a; /* brand-green (primary) */
+    --color-brand-700: #3d6823; /* brand-green-hover */
+    --color-brand-800: #2d5016; /* brand-green-dark */
+    --color-brand-900: #24400f;
+
+    --color-accent-300: #fadd6d;
+    --color-accent-400: #f7d13e;
+    --color-accent-500: #f5c518; /* brand-yellow */
+    --color-accent-600: #e6b800; /* brand-yellow-hover */
+    --color-accent-700: #c79e00;
+
+    --color-ink: #1a1a1a; /* brand-dark */
+
+    --font-heading: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-sans: 'Nunito Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --shadow-card: 0 1px 3px 0 rgb(26 26 26 / 0.06), 0 4px 14px -4px rgb(26 26 26 / 0.08);
+    --shadow-card-lg: 0 4px 6px -2px rgb(26 26 26 / 0.05), 0 12px 32px -8px rgb(26 26 26 / 0.14);
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+
+body {
+    @apply font-sans text-gray-800 antialiased bg-gray-50;
+}
+
+[x-cloak] { display: none !important; }
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+}
+
+/* ------------------------------------------------------------------ */
+/* Shared components (used across public site + client app)            */
+/* ------------------------------------------------------------------ */
+
+/* Buttons: big, thumb-friendly */
+.btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition
+        focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-500
+        disabled:opacity-50 disabled:pointer-events-none select-none cursor-pointer;
+    min-height: 2.75rem;
+    padding: 0.625rem 1.25rem;
+}
+.btn-sm { min-height: 2.25rem; padding: 0.375rem 0.875rem; @apply text-sm rounded-lg; }
+.btn-lg { min-height: 3.25rem; padding: 0.875rem 1.75rem; @apply text-lg rounded-2xl; }
+
+.btn-primary { @apply bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800; }
+.btn-accent { @apply bg-accent-500 text-ink hover:bg-accent-600; }
+.btn-outline { @apply border-2 border-brand-600 text-brand-700 bg-white hover:bg-brand-50; }
+.btn-ghost { @apply text-gray-600 bg-transparent hover:bg-gray-100; }
+.btn-danger { @apply bg-red-600 text-white hover:bg-red-700; }
+.btn-danger-outline { @apply border-2 border-red-500 text-red-600 bg-white hover:bg-red-50; }
+.btn-white { @apply bg-white text-gray-800 border border-gray-200 hover:bg-gray-50 shadow-sm; }
+
+/* Cards */
+.card {
+    @apply bg-white rounded-2xl border border-gray-100;
+    box-shadow: var(--shadow-card);
+}
+.card-hover { @apply transition hover:-translate-y-0.5; }
+.card-hover:hover { box-shadow: var(--shadow-card-lg); }
+.card-body { @apply p-4 sm:p-6; }
+
+/* Form controls */
+.form-label { @apply block text-sm font-semibold text-gray-700 mb-1.5; }
+.form-input, .form-select, .form-textarea {
+    @apply w-full rounded-xl border border-gray-300 bg-white px-4 text-gray-900
+        placeholder-gray-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 focus:outline-none transition;
+    min-height: 2.75rem;
+}
+.form-textarea { @apply py-3; min-height: auto; }
+.form-hint { @apply text-xs text-gray-500 mt-1; }
+.form-error { @apply text-xs font-medium text-red-600 mt-1; }
+
+/* Badges / chips */
+.badge { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold; }
+.badge-green { @apply bg-brand-100 text-brand-800; }
+.badge-yellow { @apply bg-accent-500/20 text-accent-700; }
+.badge-gray { @apply bg-gray-100 text-gray-600; }
+.badge-red { @apply bg-red-100 text-red-700; }
+.badge-blue { @apply bg-blue-100 text-blue-700; }
+.badge-orange { @apply bg-orange-100 text-orange-700; }
+
+/* Selectable chip (lots / workers / skills pickers) */
+.chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border-2 border-gray-200 bg-white px-3.5 py-1.5
+        text-sm font-medium text-gray-700 cursor-pointer transition select-none;
+    min-height: 2.5rem;
+}
+.chip:hover { @apply border-brand-300 bg-brand-50; }
+.chip.is-selected { @apply border-brand-600 bg-brand-600 text-white; }
+.chip.chip-dashed { @apply border-dashed; }
+
+/* Priority pills (schedule manager) */
+.pill { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide; }
+.pill-critical { background: #9c1c1c; color: #fff; }
+.pill-high { background: #f46a6a; color: #fff; }
+.pill-medium { background: #f1b44c; color: #3b2f10; }
+.pill-low { background: #74788d; color: #fff; }
+
+/* Bottom-sheet modal on mobile, centered dialog on >=sm */
+.sheet-backdrop {
+    @apply fixed inset-0 z-40 bg-ink/50 opacity-0 transition-opacity duration-200;
+}
+.sheet-backdrop.is-open { @apply opacity-100; }
+.sheet {
+    @apply fixed z-50 inset-x-0 bottom-0 bg-white rounded-t-3xl shadow-2xl flex flex-col
+        translate-y-full transition-transform duration-300 ease-out;
+    max-height: 92dvh;
+}
+.sheet.is-open { transform: translateY(0); }
+@media (min-width: 640px) {
+    .sheet {
+        @apply inset-auto rounded-2xl;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -46%) scale(0.97);
+        opacity: 0;
+        width: min(94vw, var(--sheet-width, 40rem));
+        max-height: 88vh;
+        transition: opacity 0.18s ease-out, transform 0.18s ease-out;
+    }
+    .sheet.is-open { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+.sheet-handle { @apply mx-auto mt-3 mb-1 h-1.5 w-12 rounded-full bg-gray-300 sm:hidden; }
+.sheet-header { @apply flex items-center justify-between gap-3 px-5 pt-3 pb-3 border-b border-gray-100 shrink-0; }
+.sheet-title { @apply text-lg font-bold text-gray-900; font-family: var(--font-heading); }
+.sheet-body { @apply px-5 py-4 overflow-y-auto grow; -webkit-overflow-scrolling: touch; }
+.sheet-footer { @apply flex items-center justify-end gap-3 px-5 py-4 border-t border-gray-100 shrink-0 bg-gray-50/60 rounded-b-2xl; }
+
+/* Toasts */
+#toast-stack { @apply fixed z-[70] top-4 right-4 left-4 sm:left-auto sm:w-96 flex flex-col gap-2 pointer-events-none; }
+.toast {
+    @apply pointer-events-auto rounded-xl px-4 py-3 text-sm font-medium text-white shadow-lg flex items-start gap-2
+        translate-y-[-8px] opacity-0 transition-all duration-200;
+}
+.toast.is-shown { @apply translate-y-0 opacity-100; }
+.toast-success { @apply bg-brand-700; }
+.toast-error { @apply bg-red-600; }
+.toast-info { @apply bg-gray-800; }
+
+/* Mobile bottom tab bar */
+.tabbar {
+    @apply fixed bottom-0 inset-x-0 z-30 bg-white border-t border-gray-200 flex md:hidden;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.tabbar-item {
+    @apply flex-1 flex flex-col items-center justify-center gap-0.5 py-2 text-[11px] font-semibold text-gray-500;
+    min-height: 3.5rem;
+}
+.tabbar-item.is-active { @apply text-brand-700; }
+.tabbar-item svg { @apply w-6 h-6; }
+
+/* Content spacing helper so pages clear the tab bar on mobile */
+.page-safe-bottom { padding-bottom: 5.5rem; }
+@media (min-width: 768px) { .page-safe-bottom { padding-bottom: 2rem; } }
+
+/* Simple utility for horizontal scrolling chip rows on mobile */
+.scroll-chips {
+    @apply flex gap-2 overflow-x-auto pb-1 -mx-1 px-1;
+    scrollbar-width: none;
+}
+.scroll-chips::-webkit-scrollbar { display: none; }
+
+/* Skeleton pulse */
+.skeleton { @apply animate-pulse bg-gray-200 rounded-lg; }
