@@ -14,7 +14,7 @@
         <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-900/60 via-brand-900/20 to-transparent"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-24 lg:py-28">
-            <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+            <div class="grid lg:grid-cols-[1fr_1.35fr] gap-10 lg:gap-14 items-center">
 
                 {{-- Left column: message --}}
                 <div class="animate-fade-up">
