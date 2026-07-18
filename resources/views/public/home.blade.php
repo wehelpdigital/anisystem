@@ -13,57 +13,95 @@
         <div class="absolute inset-0 -z-10 bg-gradient-to-t from-black/85 via-black/60 to-black/35"></div>
         <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-900/60 via-brand-900/20 to-transparent"></div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-24 sm:py-32 lg:py-40">
-            <div class="max-w-2xl animate-fade-up">
-                <span class="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur px-4 py-1.5 text-xs sm:text-sm font-semibold text-accent-400 ring-1 ring-white/20">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2a1 1 0 011 1v1.07A6 6 0 0116 10c0 4-3 6-6 8-3-2-6-4-6-8a6 6 0 015-5.93V3a1 1 0 011-1z"/></svg>
-                    From the makers of AniSenso — for Palay, Mais, and more
-                </span>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-24 lg:py-28">
+            <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
 
-                <h1 class="mt-6 font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.08] text-balance">
-                    Plan Every Cropping Season
-                    <span class="bg-gradient-to-r from-accent-300 to-accent-500 bg-clip-text text-transparent">Like a Pro</span>
-                </h1>
+                {{-- Left column: message --}}
+                <div class="animate-fade-up">
+                    <span class="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur px-4 py-1.5 text-xs sm:text-sm font-semibold text-accent-400 ring-1 ring-white/20">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2a1 1 0 011 1v1.07A6 6 0 0116 10c0 4-3 6-6 8-3-2-6-4-6-8a6 6 0 015-5.93V3a1 1 0 011-1z"/></svg>
+                        From the makers of AniSenso — for Palay, Mais, and more
+                    </span>
 
-                <p class="mt-5 text-base sm:text-lg text-gray-200 leading-relaxed max-w-xl">
-                    AniSystem is the AniSenso cropping schedule manager, now in your hands. Map your lots,
-                    schedule every activity from land prep to harvest, and track workers, materials and irrigation —
-                    all from your phone, wherever your farm is.
-                </p>
+                    <h1 class="mt-6 font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.08] text-balance">
+                        Plan Every Cropping Season
+                        <span class="bg-gradient-to-r from-accent-300 to-accent-500 bg-clip-text text-transparent">Like a Pro</span>
+                    </h1>
 
-                <div class="mt-8 flex flex-col sm:flex-row gap-3">
-                    <a href="{{ route('signup') }}" class="btn btn-accent btn-lg shadow-lg shadow-accent-500/20">
-                        Get Started
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
-                    </a>
-                    <a href="{{ route('tutorial') }}" class="btn btn-lg border-2 border-white/70 text-white bg-white/5 backdrop-blur hover:bg-white/15">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
-                        Watch How It Works
-                    </a>
+                    <p class="mt-5 text-base sm:text-lg text-gray-200 leading-relaxed max-w-xl">
+                        AniSystem is the AniSenso cropping schedule manager, now in your hands. Map your lots,
+                        schedule every activity from land prep to harvest, and track workers, materials and irrigation —
+                        all from your phone, wherever your farm is.
+                    </p>
+
+                    <div class="mt-8">
+                        <a href="{{ route('signup') }}" class="btn btn-accent btn-lg shadow-lg shadow-accent-500/20">
+                            Get Started
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
+                        </a>
+                    </div>
+
+                    {{-- Capability strip — generic capability statements, not fabricated metrics --}}
+                    <dl class="mt-10 grid grid-cols-2 gap-3 max-w-md">
+                        @php
+                            $trust = [
+                                ['t' => 'Mobile-first', 's' => 'Runs on any phone'],
+                                ['t' => 'Day-0 / DAS', 's' => 'Accurate timing'],
+                                ['t' => '₱ Costing', 's' => 'Built right in'],
+                                ['t' => 'AniSenso', 's' => 'Technician protocol'],
+                            ];
+                        @endphp
+                        @foreach ($trust as $item)
+                            <div class="rounded-2xl bg-white/10 backdrop-blur px-3.5 py-3 ring-1 ring-white/15">
+                                <dt class="font-heading text-sm sm:text-base font-bold text-white">{{ $item['t'] }}</dt>
+                                <dd class="text-[11px] sm:text-xs text-gray-300 mt-0.5">{{ $item['s'] }}</dd>
+                            </div>
+                        @endforeach
+                    </dl>
+
+                    <p class="mt-6 text-sm text-gray-300 max-w-xl">
+                        <span class="font-semibold text-white">Ani</span> (Yield) + <span class="font-semibold text-white">Senso</span>
+                        (Sensei means Teacher, Asenso means Success) — science-backed farm planning for Filipino farmers.
+                    </p>
                 </div>
 
-                {{-- Capability strip — generic capability statements, not fabricated metrics --}}
-                <dl class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl">
-                    @php
-                        $trust = [
-                            ['t' => 'Mobile-first', 's' => 'Runs on any phone'],
-                            ['t' => 'Day-0 / DAS', 's' => 'Accurate timing'],
-                            ['t' => '₱ Costing', 's' => 'Built right in'],
-                            ['t' => 'AniSenso', 's' => 'Technician protocol'],
-                        ];
-                    @endphp
-                    @foreach ($trust as $item)
-                        <div class="rounded-2xl bg-white/10 backdrop-blur px-3.5 py-3 ring-1 ring-white/15">
-                            <dt class="font-heading text-sm sm:text-base font-bold text-white">{{ $item['t'] }}</dt>
-                            <dd class="text-[11px] sm:text-xs text-gray-300 mt-0.5">{{ $item['s'] }}</dd>
-                        </div>
-                    @endforeach
-                </dl>
+                {{-- Right column: "how it works" video --}}
+                <div class="animate-fade-up" style="animation-delay: 0.12s" x-data="{ playing: false }">
+                    <div class="relative">
+                        <div class="absolute -inset-4 rounded-[2rem] bg-brand-500/25 blur-2xl -z-10" aria-hidden="true"></div>
+                        <div class="relative rounded-2xl overflow-hidden ring-1 ring-white/20 shadow-2xl bg-black aspect-video">
+                            <video x-ref="heroVideo"
+                                   class="h-full w-full object-cover"
+                                   poster="{{ asset('images/top-yield.webp') }}"
+                                   controls preload="none" playsinline
+                                   @play="playing = true" @pause="playing = false" @ended="playing = false">
+                                <source src="{{ asset('videos/how-it-works.mp4') }}" type="video/mp4">
+                                Sorry, your browser does not support embedded videos.
+                            </video>
 
-                <p class="mt-6 text-sm text-gray-300 max-w-xl">
-                    <span class="font-semibold text-white">Ani</span> (Yield) + <span class="font-semibold text-white">Senso</span>
-                    (Sensei means Teacher, Asenso means Success) — science-backed farm planning for Filipino farmers.
-                </p>
+                            {{-- Custom play overlay; hidden once the video is playing --}}
+                            <button type="button"
+                                    x-show="!playing"
+                                    @click="$refs.heroVideo.play()"
+                                    class="group absolute inset-0 flex items-center justify-center bg-black/35 hover:bg-black/25 transition"
+                                    aria-label="Play the how-it-works video">
+                                <span class="flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-accent-500 text-ink shadow-xl ring-4 ring-white/20 group-hover:scale-105 transition">
+                                    <svg class="w-7 h-7 sm:w-9 sm:h-9 ml-1" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
+                                </span>
+                            </button>
+
+                            {{-- Corner label --}}
+                            <span x-show="!playing" class="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black/45 backdrop-blur px-3 py-1 text-xs font-semibold text-white ring-1 ring-white/20">
+                                <svg class="w-3.5 h-3.5 text-accent-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2a1 1 0 011 1v1.07A6 6 0 0116 10c0 4-3 6-6 8-3-2-6-4-6-8a6 6 0 015-5.93V3a1 1 0 011-1z"/></svg>
+                                How it works
+                            </span>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-center text-sm text-gray-300">
+                        Watch how AniSystem works — from sign-up to your first full season plan.
+                    </p>
+                </div>
+
             </div>
         </div>
     </section>
