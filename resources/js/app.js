@@ -5,6 +5,46 @@ window.Alpine = Alpine;
 Alpine.start();
 
 /* ------------------------------------------------------------------ */
+/* Reveal-on-scroll (public marketing site)                             */
+/* Elements tagged .reveal fade/rise in as they enter the viewport.     */
+/* The hidden start-state is gated on <html class="js"> (set pre-paint  */
+/* by an inline head script), so content is never stuck invisible if    */
+/* JS fails, and reduced-motion users get everything shown at once.     */
+/* ------------------------------------------------------------------ */
+(function revealOnScroll() {
+    const start = () => {
+        window.__revealBooted = true; // tells the layout failsafe the observer is live
+        const els = document.querySelectorAll('.reveal');
+        if (!els.length) return;
+
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduced || !('IntersectionObserver' in window)) {
+            els.forEach((el) => el.classList.add('is-visible'));
+            return;
+        }
+
+        const io = new IntersectionObserver(
+            (entries, obs) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            },
+            { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+        );
+        els.forEach((el) => io.observe(el));
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+    } else {
+        start();
+    }
+})();
+
+/* ------------------------------------------------------------------ */
 /* CSRF + API helper                                                    */
 /* All schedule-manager endpoints reply {success, message, data}.       */
 /* ------------------------------------------------------------------ */

@@ -6,13 +6,16 @@
 @section('content')
 
     {{-- ================= HERO BAND ================= --}}
-    <section class="relative isolate overflow-hidden bg-brand-800">
+    <section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900">
         <img src="{{ asset('images/grains-min.webp') }}" alt="" aria-hidden="true"
-             class="absolute inset-0 -z-10 h-full w-full object-cover opacity-20" loading="eager">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28 text-center">
-            <p class="text-sm font-bold uppercase tracking-wider text-accent-400">About AniSystem</p>
-            <h1 class="mt-3 font-heading text-3xl sm:text-5xl font-bold text-white max-w-3xl mx-auto leading-tight">
-                Helping Filipino Farmers Reach <span class="text-accent-500">Maximum Yield</span> and Income
+             class="absolute inset-0 -z-20 h-full w-full object-cover opacity-20" loading="eager">
+        <div class="absolute inset-0 -z-10 bg-dot-grid opacity-40" aria-hidden="true"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28 text-center animate-fade-up">
+            <span class="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur px-4 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-accent-400 ring-1 ring-white/20">
+                About AniSystem
+            </span>
+            <h1 class="mt-5 font-heading text-3xl sm:text-5xl font-bold text-white max-w-3xl mx-auto leading-tight text-balance">
+                Helping Filipino Farmers Reach <span class="bg-gradient-to-r from-accent-300 to-accent-500 bg-clip-text text-transparent">Maximum Yield</span> and Income
             </h1>
             <p class="mt-5 max-w-2xl mx-auto text-brand-100 text-base sm:text-lg">
                 AniSystem is the cropping schedule manager by AniSenso — the same planning system our
@@ -22,18 +25,18 @@
     </section>
 
     {{-- ================= STORY / BRAND ================= --}}
-    <section class="py-16 sm:py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 grid gap-10 lg:grid-cols-2 items-center">
-            <div>
+    <section class="py-16 sm:py-24 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 grid gap-10 lg:gap-14 lg:grid-cols-2 items-center">
+            <div class="reveal">
                 <div class="relative">
-                    <div class="absolute -inset-3 rounded-3xl bg-accent-500/20 rotate-1"></div>
+                    <div class="absolute -inset-3 rounded-[1.75rem] bg-gradient-to-br from-accent-500/25 to-brand-100 rotate-1"></div>
                     <img src="{{ asset('images/palay-08.jpg') }}" alt="Palay field ready for harvest"
-                         class="relative rounded-2xl shadow-lg w-full object-cover" loading="lazy">
+                         class="relative rounded-2xl shadow-card-lg w-full object-cover ring-1 ring-black/5" loading="lazy">
                 </div>
             </div>
-            <div>
+            <div class="reveal">
                 <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Our story</p>
-                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink">What Does "AniSenso" Mean?</h2>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">What Does "AniSenso" Mean?</h2>
                 <p class="mt-4 text-gray-600 leading-relaxed">
                     <span class="font-semibold text-ink">Ani</span> means <em>Yield</em>.
                     <span class="font-semibold text-ink">Senso</span> carries two meanings:
@@ -56,11 +59,11 @@
     </section>
 
     {{-- ================= WHAT ANISYSTEM DOES ================= --}}
-    <section class="py-16 sm:py-24 bg-brand-50/60">
+    <section class="py-16 sm:py-24 bg-brand-mesh">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="max-w-2xl mx-auto text-center">
+            <div class="max-w-2xl mx-auto text-center reveal">
                 <p class="text-sm font-bold uppercase tracking-wider text-brand-600">The app</p>
-                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink">What AniSystem Does for You</h2>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">What AniSystem Does for You</h2>
             </div>
             <div class="mt-12 grid gap-6 md:grid-cols-3">
                 @php
@@ -82,10 +85,10 @@
                         ],
                     ];
                 @endphp
-                @foreach ($does as $d)
-                    <div class="card card-hover text-center">
+                @foreach ($does as $i => $d)
+                    <div class="card card-hover text-center reveal" style="--reveal-delay: {{ $i * 0.08 }}s">
                         <div class="card-body">
-                            <div class="mx-auto w-16 h-16 rounded-2xl bg-white shadow-sm border border-gray-100 flex items-center justify-center p-3">
+                            <div class="mx-auto w-16 h-16 rounded-2xl bg-white shadow-sm ring-1 ring-brand-100 flex items-center justify-center p-3">
                                 <img src="{{ asset($d['img']) }}" alt="" class="max-h-full max-w-full object-contain" loading="lazy">
                             </div>
                             <h3 class="mt-4 font-heading text-lg font-bold text-ink">{{ $d['title'] }}</h3>
@@ -100,11 +103,11 @@
     {{-- ================= VALUES ================= --}}
     <section class="py-16 sm:py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="max-w-2xl mx-auto text-center">
+            <div class="max-w-2xl mx-auto text-center reveal">
                 <p class="text-sm font-bold uppercase tracking-wider text-brand-600">What we stand for</p>
-                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink">Our Values</h2>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">Our Values</h2>
             </div>
-            <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="mt-12 grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 @php
                     $values = [
                         [
@@ -129,11 +132,11 @@
                         ],
                     ];
                 @endphp
-                @foreach ($values as $v)
-                    <div class="card card-hover">
+                @foreach ($values as $i => $v)
+                    <div class="group card card-hover reveal" style="--reveal-delay: {{ $i * 0.06 }}s">
                         <div class="card-body">
-                            <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">{!! $v['icon'] !!}</svg>
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-50 to-brand-100 text-brand-600 ring-1 ring-brand-100 flex items-center justify-center transition group-hover:scale-105">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">{!! $v['icon'] !!}</svg>
                             </div>
                             <h3 class="mt-4 font-heading text-lg font-bold text-ink">{{ $v['title'] }}</h3>
                             <p class="mt-2 text-sm text-gray-600 leading-relaxed">{{ $v['text'] }}</p>
@@ -145,9 +148,10 @@
     </section>
 
     {{-- ================= CTA ================= --}}
-    <section class="bg-brand-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center">
-            <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white">
+    <section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900">
+        <div class="absolute inset-0 bg-dot-grid opacity-50" aria-hidden="true"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center reveal">
+            <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white text-balance">
                 Reach Your Crop's Maximum Potential This Season
             </h2>
             <p class="mt-4 max-w-xl mx-auto text-brand-100">
@@ -155,7 +159,7 @@
             </p>
             <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
                 <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Get Started</a>
-                <a href="{{ route('tutorial') }}" class="btn btn-lg border-2 border-white/70 text-white bg-transparent hover:bg-white/10">See How It Works</a>
+                <a href="{{ route('tutorial') }}" class="btn btn-lg border-2 border-white/70 text-white bg-white/5 hover:bg-white/15">See How It Works</a>
             </div>
         </div>
     </section>

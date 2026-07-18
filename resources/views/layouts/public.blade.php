@@ -4,6 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- Enables the scroll-reveal hidden state only when JS is present, with a
+         failsafe that shows everything if the JS bundle never boots — so
+         content is never stuck invisible. --}}
+    <script>
+        document.documentElement.classList.add('js');
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                if (!window.__revealBooted) {
+                    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
+                }
+            }, 600);
+        });
+    </script>
     <title>@yield('title', 'AniSystem') — AniSystem by AniSenso</title>
     <meta name="description" content="@yield('meta_description', 'AniSystem — the cropping schedule manager for Filipino farmers by AniSenso. Plan lots, workers, materials, activities and irrigation in one mobile-friendly web app.')">
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">

@@ -182,3 +182,47 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Skeleton pulse */
 .skeleton { @apply animate-pulse bg-gray-200 rounded-lg; }
+
+/* ------------------------------------------------------------------ */
+/* Public marketing site — motion + decorative helpers                 */
+/* ------------------------------------------------------------------ */
+
+/* Reveal-on-scroll. Default (no-JS) state is fully visible; the hidden
+   start state only applies once app.js flags <html class="js">, so the
+   content is never trapped invisible without JavaScript. IntersectionObserver
+   toggles .is-visible. Motion is disabled for reduced-motion users. */
+.reveal { opacity: 1; }
+html.js .reveal {
+    opacity: 0;
+    transform: translateY(1.25rem);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0s);
+    will-change: opacity, transform;
+}
+html.js .reveal.is-visible { opacity: 1; transform: none; }
+
+/* One-shot entrance for above-the-fold content (pure CSS, runs on load). */
+@keyframes fade-up {
+    from { opacity: 0; transform: translateY(1rem); }
+    to   { opacity: 1; transform: none; }
+}
+.animate-fade-up { animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+    html.js .reveal { opacity: 1; transform: none; transition: none; }
+    .animate-fade-up { animation: none; }
+}
+
+/* Soft brand mesh gradient for section backgrounds */
+.bg-brand-mesh {
+    background-color: #f3f8ec; /* brand-50 */
+    background-image:
+        radial-gradient(42rem 42rem at 12% -10%, rgb(107 159 61 / 0.14), transparent 60%),
+        radial-gradient(38rem 38rem at 100% 0%, rgb(245 197 24 / 0.12), transparent 55%);
+}
+
+/* Faint dotted texture for dark brand panels */
+.bg-dot-grid {
+    background-image: radial-gradient(rgb(255 255 255 / 0.10) 1px, transparent 1px);
+    background-size: 18px 18px;
+}

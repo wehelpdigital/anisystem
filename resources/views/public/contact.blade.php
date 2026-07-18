@@ -6,10 +6,13 @@
 @section('content')
 
     {{-- ================= HERO BAND ================= --}}
-    <section class="bg-brand-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center">
-            <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Contact Us</p>
-            <h1 class="mt-3 font-heading text-3xl sm:text-5xl font-bold text-white">We're Here to Help</h1>
+    <section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900">
+        <div class="absolute inset-0 bg-dot-grid opacity-40" aria-hidden="true"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center animate-fade-up">
+            <span class="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur px-4 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-accent-400 ring-1 ring-white/20">
+                Contact Us
+            </span>
+            <h1 class="mt-5 font-heading text-3xl sm:text-5xl font-bold text-white text-balance">We're Here to Help</h1>
             <p class="mt-4 max-w-xl mx-auto text-brand-100">
                 Questions about plans, payments, or planning your season? Send us a message and we'll get back to you.
             </p>
@@ -20,7 +23,7 @@
         <div class="max-w-5xl mx-auto px-4 sm:px-6 grid gap-8 lg:grid-cols-3 items-start">
 
             {{-- ================= FORM ================= --}}
-            <div class="card lg:col-span-2">
+            <div class="card lg:col-span-2 reveal">
                 <div class="card-body">
                     <h2 class="font-heading text-xl sm:text-2xl font-bold text-ink">Send Us a Message</h2>
                     <p class="mt-1 text-sm text-gray-500">We usually reply within one business day.</p>
@@ -67,7 +70,7 @@
 
                         <div class="pt-1">
                             <button type="submit" class="btn btn-primary btn-lg w-full sm:w-auto">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                                 Send Message
                             </button>
                         </div>
@@ -76,14 +79,14 @@
             </div>
 
             {{-- ================= CONTACT INFO ================= --}}
-            <div class="space-y-6">
+            <div class="space-y-6 reveal" style="--reveal-delay: 0.08s">
                 <div class="card">
                     <div class="card-body">
                         <h3 class="font-heading text-lg font-bold text-ink">Contact Information</h3>
                         <ul class="mt-4 space-y-4 text-sm">
                             <li class="flex items-start gap-3">
-                                <span class="w-10 h-10 shrink-0 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.9 5.3a2 2 0 002.2 0L21 8M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"/></svg>
+                                <span class="w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br from-brand-50 to-brand-100 text-brand-600 ring-1 ring-brand-100 flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.9 5.3a2 2 0 002.2 0L21 8M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"/></svg>
                                 </span>
                                 <span>
                                     <span class="block font-semibold text-gray-900">Email</span>
@@ -91,8 +94,8 @@
                                 </span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <span class="w-10 h-10 shrink-0 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                <span class="w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br from-brand-50 to-brand-100 text-brand-600 ring-1 ring-brand-100 flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                                 </span>
                                 <span>
                                     <span class="block font-semibold text-gray-900">Location</span>
@@ -103,8 +106,9 @@
                     </div>
                 </div>
 
-                <div class="card bg-brand-800 border-brand-800">
-                    <div class="card-body">
+                <div class="relative overflow-hidden card border-transparent bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900">
+                    <div class="absolute inset-0 bg-dot-grid opacity-40" aria-hidden="true"></div>
+                    <div class="card-body relative">
                         <h3 class="font-heading text-lg font-bold text-white">New to AniSystem?</h3>
                         <p class="mt-2 text-sm text-brand-100 leading-relaxed">
                             The tutorial answers most questions about payments, plans and getting your first

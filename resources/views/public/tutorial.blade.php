@@ -6,13 +6,16 @@
 @section('content')
 
     {{-- ================= HERO BAND ================= --}}
-    <section class="relative isolate overflow-hidden bg-brand-800">
+    <section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900">
         <img src="{{ asset('images/top-yield.webp') }}" alt="" aria-hidden="true"
-             class="absolute inset-0 -z-10 h-full w-full object-cover opacity-20" loading="eager">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28 text-center">
-            <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Tutorial</p>
-            <h1 class="mt-3 font-heading text-3xl sm:text-5xl font-bold text-white leading-tight">
-                From Sign-Up to Harvest, <span class="text-accent-500">Step by Step</span>
+             class="absolute inset-0 -z-20 h-full w-full object-cover opacity-20" loading="eager">
+        <div class="absolute inset-0 -z-10 bg-dot-grid opacity-40" aria-hidden="true"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28 text-center animate-fade-up">
+            <span class="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur px-4 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-accent-400 ring-1 ring-white/20">
+                Tutorial
+            </span>
+            <h1 class="mt-5 font-heading text-3xl sm:text-5xl font-bold text-white leading-tight text-balance">
+                From Sign-Up to Harvest, <span class="bg-gradient-to-r from-accent-300 to-accent-500 bg-clip-text text-transparent">Step by Step</span>
             </h1>
             <p class="mt-5 max-w-2xl mx-auto text-brand-100 text-base sm:text-lg">
                 Everything you need to plan your first cropping season with AniSystem — in ten short steps.
@@ -78,18 +81,18 @@
                 ];
             @endphp
 
-            <ol class="space-y-6">
+            {{-- Connected vertical timeline --}}
+            <ol class="relative space-y-5 sm:space-y-6 before:absolute before:top-2 before:bottom-2 before:left-6 before:w-0.5 before:bg-gradient-to-b before:from-brand-200 before:via-brand-300 before:to-brand-100 before:content-[''] sm:before:left-7">
                 @foreach ($steps as $i => $step)
-                    <li class="card card-hover">
-                        <div class="card-body flex gap-4 sm:gap-6">
-                            <div class="shrink-0 flex flex-col items-center">
-                                <div class="w-12 h-12 rounded-full bg-brand-600 text-white font-heading text-xl font-bold flex items-center justify-center">
-                                    {{ $i + 1 }}
-                                </div>
-                            </div>
-                            <div class="min-w-0">
+                    <li class="relative pl-16 sm:pl-20 reveal" style="--reveal-delay: {{ min($i, 6) * 0.05 }}s">
+                        {{-- Number node sits on the line --}}
+                        <div class="absolute left-0 top-1 z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-brand-600 text-white font-heading text-lg sm:text-xl font-bold flex items-center justify-center shadow-md ring-4 ring-white">
+                            {{ $i + 1 }}
+                        </div>
+                        <div class="card card-hover">
+                            <div class="card-body">
                                 <div class="flex items-center gap-2.5">
-                                    <svg class="w-6 h-6 text-brand-600 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">{!! $step['icon'] !!}</svg>
+                                    <svg class="w-6 h-6 text-brand-600 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">{!! $step['icon'] !!}</svg>
                                     <h3 class="font-heading text-lg sm:text-xl font-bold text-ink">{{ $step['title'] }}</h3>
                                 </div>
                                 <p class="mt-2 text-sm sm:text-base text-gray-600 leading-relaxed">{{ $step['text'] }}</p>
@@ -99,18 +102,18 @@
                 @endforeach
             </ol>
 
-            <div class="mt-10 text-center">
+            <div class="mt-12 text-center reveal">
                 <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Start Step 1 — Create Your Account</a>
             </div>
         </div>
     </section>
 
     {{-- ================= FAQ ================= --}}
-    <section class="py-16 sm:py-24 bg-brand-50/60">
+    <section class="py-16 sm:py-24 bg-brand-mesh">
         <div class="max-w-3xl mx-auto px-4 sm:px-6">
-            <div class="text-center">
+            <div class="text-center reveal">
                 <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Common questions</p>
-                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink">Frequently Asked Questions</h2>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">Frequently Asked Questions</h2>
             </div>
 
             @php
@@ -152,15 +155,15 @@
 
             <div class="mt-10 space-y-3" x-data="{ openFaq: null }">
                 @foreach ($faqs as $i => $faq)
-                    <div class="card overflow-hidden">
+                    <div class="card overflow-hidden reveal" style="--reveal-delay: {{ min($i, 6) * 0.04 }}s">
                         <button type="button"
-                                class="w-full flex items-center justify-between gap-4 text-left px-5 py-4 sm:px-6 cursor-pointer"
+                                class="w-full flex items-center justify-between gap-4 text-left px-5 py-4 sm:px-6 cursor-pointer hover:bg-brand-50/40 transition"
                                 @click="openFaq = openFaq === {{ $i }} ? null : {{ $i }}"
                                 :aria-expanded="openFaq === {{ $i }} ? 'true' : 'false'">
                             <span class="font-heading font-bold text-ink">{{ $faq['q'] }}</span>
                             <svg class="w-5 h-5 shrink-0 text-brand-600 transition-transform duration-200"
                                  :class="openFaq === {{ $i }} ? 'rotate-180' : ''"
-                                 fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                 fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
                             </svg>
                         </button>
@@ -175,15 +178,16 @@
     </section>
 
     {{-- ================= CTA ================= --}}
-    <section class="bg-brand-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center">
-            <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white">Still Have Questions?</h2>
+    <section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900">
+        <div class="absolute inset-0 bg-dot-grid opacity-50" aria-hidden="true"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center reveal">
+            <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white text-balance">Still Have Questions?</h2>
             <p class="mt-4 max-w-xl mx-auto text-brand-100">
                 Our team is happy to help you get started — send us a message anytime.
             </p>
             <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
                 <a href="{{ route('contact') }}" class="btn btn-accent btn-lg">Contact Us</a>
-                <a href="{{ route('signup') }}" class="btn btn-lg border-2 border-white/70 text-white bg-transparent hover:bg-white/10">Get Started</a>
+                <a href="{{ route('signup') }}" class="btn btn-lg border-2 border-white/70 text-white bg-white/5 hover:bg-white/15">Get Started</a>
             </div>
         </div>
     </section>
