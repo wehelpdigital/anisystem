@@ -218,13 +218,11 @@
                                 </div>
                                 <div class="space-y-2.5">
                                     <input type="text" x-model="w.workerName" maxlength="255" class="form-input" placeholder="Worker name">
-                                    <div class="grid grid-cols-2 gap-2.5">
-                                        <div class="relative">
-                                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">₱</span>
-                                            <input type="number" step="0.01" min="0" x-model="w.costPerHalfDay" class="form-input pl-7" placeholder="Cost / half-day">
-                                        </div>
-                                        <input type="number" min="1" x-model="w.priority" class="form-input" placeholder="Priority (1 = first)">
+                                    <div class="relative">
+                                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">₱</span>
+                                        <input type="number" step="0.01" min="0" x-model="w.costPerHalfDay" class="form-input pl-7" placeholder="Cost per half-day work">
                                     </div>
+                                    <input type="number" min="1" x-model="w.priority" class="form-input" placeholder="Priority (1 = first pick)">
                                     <div>
                                         <span class="text-xs text-gray-500">Skills</span>
                                         <div class="flex flex-wrap gap-1.5 mt-1">
