@@ -48,7 +48,9 @@ class CroppingScheduleController extends Controller
 
     public function create()
     {
-        return view('sm.create');
+        return view('sm.create', [
+            'cropTypes' => AsCroppingSchedule::CROP_TYPES,
+        ]);
     }
 
     public function store(Request $request)
@@ -56,11 +58,18 @@ class CroppingScheduleController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:5000',
+            'cropType' => 'nullable|string|max:100',
+            'cropVariety' => 'nullable|string|max:150',
+            'dayType' => 'nullable|in:DAP,DAS,DAT',
         ], [
             'title.required' => 'Cropping schedule title is required.',
         ]);
 
         if ($validator->fails()) {
+            if ($request->expectsJson()) {
+                return response()->json(['success' => false, 'message' => 'Validation failed.', 'errors' => $validator->errors()], 422);
+            }
+
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -70,6 +79,9 @@ class CroppingScheduleController extends Controller
                 'usersId' => (int) config('anisystem.order_users_id', 1),
                 'title' => $request->title,
                 'description' => $request->description,
+                'cropType' => $request->filled('cropType') ? $request->cropType : null,
+                'cropVariety' => $request->filled('cropVariety') ? $request->cropVariety : null,
+                'dayType' => $request->filled('dayType') ? $request->dayType : null,
                 'status' => 'setup',
                 'isActive' => 1,
                 'deleteStatus' => 1,
@@ -87,11 +99,30 @@ class CroppingScheduleController extends Controller
                 'deleteStatus' => 1,
             ]);
 
+            // The setup wizard drives creation via AJAX so it can then add
+            // lots/workers/etc. inline before sending the client to the hub.
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Cropping schedule created.',
+                    'data' => [
+                        'id' => $schedule->id,
+                        'title' => $schedule->title,
+                        'hubUrl' => route('sm.hub', ['id' => $schedule->id]),
+                    ],
+                ]);
+            }
+
             return redirect()
                 ->route('sm.hub', ['id' => $schedule->id])
                 ->with('success', 'Cropping schedule created. Now set up its modules.');
         } catch (\Throwable $e) {
             Log::error('CroppingSchedule store failed: ' . $e->getMessage());
+
+            if ($request->expectsJson()) {
+                return response()->json(['success' => false, 'message' => 'Failed to create cropping schedule.'], 500);
+            }
+
             return redirect()->back()->withInput()->with('error', 'Failed to create cropping schedule.');
         }
     }
@@ -133,7 +164,10 @@ class CroppingScheduleController extends Controller
         $schedule = $this->findOwnedOrFail($request->query('id'));
         $schedule->load(['lots', 'defaultGroupings.lots']);
 
-        return view('sm.settings', compact('schedule'));
+        return view('sm.settings', [
+            'schedule' => $schedule,
+            'cropTypes' => AsCroppingSchedule::CROP_TYPES,
+        ]);
     }
 
     public function update(Request $request)
@@ -143,6 +177,8 @@ class CroppingScheduleController extends Controller
         $validator = Validator::make($request->all(), [
             'title'              => 'required|string|max:255',
             'description'        => 'nullable|string|max:5000',
+            'cropType'           => 'nullable|string|max:100',
+            'cropVariety'        => 'nullable|string|max:150',
             'dayType'            => 'nullable|in:DAP,DAS,DAT',
             'defaultStaggerDays' => 'nullable|integer|min:0',
         ]);
@@ -154,6 +190,8 @@ class CroppingScheduleController extends Controller
         $payload = [
             'title'       => $request->title,
             'description' => $request->description,
+            'cropType'    => $request->filled('cropType') ? $request->cropType : null,
+            'cropVariety' => $request->filled('cropVariety') ? $request->cropVariety : null,
         ];
         if ($request->filled('dayType')) {
             $payload['dayType'] = $request->dayType;

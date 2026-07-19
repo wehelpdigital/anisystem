@@ -14,11 +14,24 @@ class AsCroppingSchedule extends BaseModel
 {
     protected $table = 'as_cropping_schedules';
 
+    /** Common crop types (label => label) for the crop select. */
+    public const CROP_TYPES = [
+        'Rice (Palay)',
+        'Corn (Mais)',
+        'Vegetables (Gulay)',
+        'Fruits',
+        'Root Crops',
+        'Sugarcane',
+        'Other',
+    ];
+
     protected $fillable = [
         'usersId',
         'anisystemUserId',
         'title',
         'description',
+        'cropType',
+        'cropVariety',
         'dayType',
         'defaultStaggerDays',
         'status',

@@ -41,6 +41,12 @@
             <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0">
                     <h2 class="text-xl font-bold text-gray-900 leading-snug">{{ $schedule->title }}</h2>
+                    @if ($schedule->cropType || $schedule->cropVariety)
+                        <p class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 mt-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3s6 4 6 10a6 6 0 11-12 0c0-6 6-10 6-10z"/></svg>
+                            {{ collect([$schedule->cropType, $schedule->cropVariety])->filter()->implode(' · ') }}
+                        </p>
+                    @endif
                     @if ($schedule->description)
                         <p class="text-sm text-gray-500 mt-1">{{ $schedule->description }}</p>
                     @endif
