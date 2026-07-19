@@ -174,9 +174,10 @@
                                             <template x-for="u in lotUnits" :key="u"><option :value="u" x-text="u"></option></template>
                                         </select>
                                     </div>
-                                    <div class="grid grid-cols-2 gap-2.5">
-                                        <input type="text" x-model="lot.variety" maxlength="255" class="form-input" placeholder="Variety (optional)">
-                                        <input type="date" x-model="lot.dayZeroDate" class="form-input" title="Day-0 / sowing date (optional)">
+                                    <input type="text" x-model="lot.notes" maxlength="2000" class="form-input" placeholder="Description (optional)">
+                                    <div>
+                                        <span class="text-xs text-gray-500">Day-0 / sowing date <span class="text-gray-400">(optional)</span></span>
+                                        <input type="date" x-model="lot.dayZeroDate" class="form-input mt-1">
                                     </div>
                                 </div>
                             </div>
@@ -488,7 +489,7 @@
                 else worker.skills.push(key);
             },
             addLot() {
-                this.lots.push({ _id: uid(), lotName: '', lotSize: '', lotSizeUnit: 'hectare', variety: '', dayZeroDate: '' });
+                this.lots.push({ _id: uid(), lotName: '', lotSize: '', lotSizeUnit: 'hectare', notes: '', dayZeroDate: '' });
             },
             addWorker() {
                 this.workers.push({ _id: uid(), workerName: '', costPerHalfDay: '', priority: this.workers.length + 1, skills: [] });
