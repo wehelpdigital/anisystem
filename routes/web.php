@@ -75,6 +75,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'index'])->name('sm.index');
     Route::get('/app/sm-create', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'create'])->name('sm.create');
     Route::post('/app/sm-store', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'store'])->name('sm.store');
+    Route::post('/app/sm-store-wizard', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'storeWizard'])->name('sm.store.wizard');
     Route::get('/app/sm-hub', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'hub'])->name('sm.hub');
     Route::put('/app/sm-update', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'update'])->name('sm.update');
     Route::delete('/app/sm-delete', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'destroy'])->name('sm.destroy');

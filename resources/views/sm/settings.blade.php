@@ -23,22 +23,6 @@
                     <input type="text" id="settingsTitle" maxlength="255" class="form-input" value="{{ $schedule->title }}">
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label for="settingsCropType" class="form-label">Type of Crop</label>
-                        <select id="settingsCropType" class="form-select">
-                            <option value="">Select crop type…</option>
-                            @foreach ($cropTypes as $ct)
-                                <option value="{{ $ct }}" @selected($schedule->cropType === $ct)>{{ $ct }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label for="settingsCropVariety" class="form-label">Variety</label>
-                        <input type="text" id="settingsCropVariety" maxlength="150" class="form-input" value="{{ $schedule->cropVariety }}" placeholder="e.g. IR64, NSIC Rc222…">
-                    </div>
-                </div>
-
                 <div>
                     <label for="settingsDescription" class="form-label">Description</label>
                     <textarea id="settingsDescription" rows="3" maxlength="5000" class="form-textarea">{{ $schedule->description }}</textarea>
@@ -127,8 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: {
                     title: document.getElementById('settingsTitle').value.trim(),
                     description: document.getElementById('settingsDescription').value,
-                    cropType: document.getElementById('settingsCropType').value,
-                    cropVariety: document.getElementById('settingsCropVariety').value,
                     dayType: document.getElementById('settingsDayType').value,
                     defaultStaggerDays: document.getElementById('settingsDefaultStaggerDays').value || 0,
                 },

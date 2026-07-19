@@ -4,8 +4,14 @@ namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 use App\Models\AsCroppingSchedule;
+use App\Models\AsScheduleActivityVersion;
+use App\Models\AsScheduleLot;
+use App\Models\AsScheduleMaterial;
+use App\Models\AsScheduleService;
+use App\Models\AsScheduleWorker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
@@ -48,9 +54,7 @@ class CroppingScheduleController extends Controller
 
     public function create()
     {
-        return view('sm.create', [
-            'cropTypes' => AsCroppingSchedule::CROP_TYPES,
-        ]);
+        return view('sm.create');
     }
 
     public function store(Request $request)
@@ -58,18 +62,11 @@ class CroppingScheduleController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:5000',
-            'cropType' => 'nullable|string|max:100',
-            'cropVariety' => 'nullable|string|max:150',
-            'dayType' => 'nullable|in:DAP,DAS,DAT',
         ], [
             'title.required' => 'Cropping schedule title is required.',
         ]);
 
         if ($validator->fails()) {
-            if ($request->expectsJson()) {
-                return response()->json(['success' => false, 'message' => 'Validation failed.', 'errors' => $validator->errors()], 422);
-            }
-
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -79,9 +76,6 @@ class CroppingScheduleController extends Controller
                 'usersId' => (int) config('anisystem.order_users_id', 1),
                 'title' => $request->title,
                 'description' => $request->description,
-                'cropType' => $request->filled('cropType') ? $request->cropType : null,
-                'cropVariety' => $request->filled('cropVariety') ? $request->cropVariety : null,
-                'dayType' => $request->filled('dayType') ? $request->dayType : null,
                 'status' => 'setup',
                 'isActive' => 1,
                 'deleteStatus' => 1,
@@ -99,31 +93,184 @@ class CroppingScheduleController extends Controller
                 'deleteStatus' => 1,
             ]);
 
-            // The setup wizard drives creation via AJAX so it can then add
-            // lots/workers/etc. inline before sending the client to the hub.
-            if ($request->expectsJson()) {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Cropping schedule created.',
-                    'data' => [
-                        'id' => $schedule->id,
-                        'title' => $schedule->title,
-                        'hubUrl' => route('sm.hub', ['id' => $schedule->id]),
-                    ],
-                ]);
-            }
-
             return redirect()
                 ->route('sm.hub', ['id' => $schedule->id])
                 ->with('success', 'Cropping schedule created. Now set up its modules.');
         } catch (\Throwable $e) {
             Log::error('CroppingSchedule store failed: ' . $e->getMessage());
-
-            if ($request->expectsJson()) {
-                return response()->json(['success' => false, 'message' => 'Failed to create cropping schedule.'], 500);
-            }
-
             return redirect()->back()->withInput()->with('error', 'Failed to create cropping schedule.');
+        }
+    }
+
+    /**
+     * Create a schedule from the step-by-step wizard, optionally seeding crop
+     * info, lots, workers, materials and services in one transaction. Every
+     * sub-step is optional (skippable); child rows are best-effort sanitized so
+     * a smooth wizard never hard-fails on an incomplete row.
+     *
+     * Responds JSON {success, message, data:{scheduleId, redirect}}.
+     */
+    public function storeWizard(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:5000',
+            'cropType' => 'nullable|string|max:100',
+            'cropVariety' => 'nullable|string|max:255',
+            'dayType' => 'nullable|in:DAP,DAS,DAT',
+            'lots' => 'nullable|array',
+            'workers' => 'nullable|array',
+            'materials' => 'nullable|array',
+            'services' => 'nullable|array',
+        ], [
+            'title.required' => 'Give your cropping schedule a title to continue.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => $validator->errors()->first(),
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $lotUnits = ['hectare', 'sqm', 'acre'];
+        $skillKeys = array_keys(AsScheduleWorker::SKILLS);
+        $materialTypes = ['granular', 'foliar', 'pesticide', 'herbicide', 'molluscicide', 'fungicide', 'fertilizer', 'seed', 'other'];
+        $materialUnits = ['kg', 'g', 'ml', 'l', 'bottle', 'sachet', 'piece', 'pack'];
+
+        try {
+            $schedule = DB::transaction(function () use ($request, $lotUnits, $skillKeys, $materialTypes, $materialUnits) {
+                $schedule = AsCroppingSchedule::create([
+                    'anisystemUserId' => Auth::id(),
+                    'usersId' => (int) config('anisystem.order_users_id', 1),
+                    'title' => $request->input('title'),
+                    'description' => $request->input('description'),
+                    'cropType' => $request->filled('cropType') ? trim($request->input('cropType')) : null,
+                    'cropVariety' => $request->filled('cropVariety') ? trim($request->input('cropVariety')) : null,
+                    'dayType' => $request->input('dayType') ?: 'DAS',
+                    'status' => 'setup',
+                    'isActive' => 1,
+                    'deleteStatus' => 1,
+                ]);
+
+                AsScheduleActivityVersion::create([
+                    'croppingScheduleId' => $schedule->id,
+                    'versionName' => 'Original',
+                    'isOriginal' => 1,
+                    'isActive' => 1,
+                    'versionOrder' => 0,
+                    'deleteStatus' => 1,
+                ]);
+
+                // --- Lots ---
+                foreach ((array) $request->input('lots', []) as $row) {
+                    $name = trim((string) ($row['lotName'] ?? ''));
+                    if ($name === '') {
+                        continue;
+                    }
+                    $unit = strtolower((string) ($row['lotSizeUnit'] ?? 'hectare'));
+                    AsScheduleLot::create([
+                        'croppingScheduleId' => $schedule->id,
+                        'lotName' => mb_substr($name, 0, 255),
+                        'lotSize' => is_numeric($row['lotSize'] ?? null) ? max(0, (float) $row['lotSize']) : 0,
+                        'lotSizeUnit' => in_array($unit, $lotUnits, true) ? $unit : 'hectare',
+                        'variety' => ! empty($row['variety']) ? mb_substr(trim($row['variety']), 0, 255) : null,
+                        'dayZeroDate' => $this->sanitizeDate($row['dayZeroDate'] ?? null),
+                        'notes' => ! empty($row['notes']) ? mb_substr(trim($row['notes']), 0, 2000) : null,
+                        'deleteStatus' => 1,
+                    ]);
+                }
+
+                // --- Workers ---
+                $priorityFallback = 1;
+                foreach ((array) $request->input('workers', []) as $row) {
+                    $name = trim((string) ($row['workerName'] ?? ''));
+                    if ($name === '') {
+                        continue;
+                    }
+                    $skills = array_values(array_intersect($skillKeys, (array) ($row['skills'] ?? [])));
+                    AsScheduleWorker::create([
+                        'croppingScheduleId' => $schedule->id,
+                        'workerName' => mb_substr($name, 0, 255),
+                        'costPerHalfDay' => is_numeric($row['costPerHalfDay'] ?? null) ? max(0, (float) $row['costPerHalfDay']) : 0,
+                        'priority' => isset($row['priority']) && (int) $row['priority'] >= 1 ? (int) $row['priority'] : $priorityFallback,
+                        'skills' => $skills ?: null,
+                        'notes' => ! empty($row['notes']) ? mb_substr(trim($row['notes']), 0, 2000) : null,
+                        'deleteStatus' => 1,
+                    ]);
+                    $priorityFallback++;
+                }
+
+                // --- Materials ---
+                foreach ((array) $request->input('materials', []) as $row) {
+                    $name = trim((string) ($row['materialName'] ?? ''));
+                    if ($name === '') {
+                        continue;
+                    }
+                    $type = strtolower((string) ($row['materialType'] ?? 'other'));
+                    $unit = strtolower((string) ($row['unitOfMeasure'] ?? 'kg'));
+                    $qty = is_numeric($row['priceQuantity'] ?? null) ? (float) $row['priceQuantity'] : 1;
+                    AsScheduleMaterial::create([
+                        'croppingScheduleId' => $schedule->id,
+                        'materialName' => mb_substr($name, 0, 255),
+                        'description' => ! empty($row['description']) ? mb_substr(trim($row['description']), 0, 2000) : null,
+                        'materialType' => in_array($type, $materialTypes, true) ? $type : 'other',
+                        'unitOfMeasure' => in_array($unit, $materialUnits, true) ? $unit : 'kg',
+                        'priceAmount' => is_numeric($row['priceAmount'] ?? null) ? max(0, (float) $row['priceAmount']) : 0,
+                        'priceQuantity' => $qty > 0 ? $qty : 1,
+                        'deleteStatus' => 1,
+                    ]);
+                }
+
+                // --- Services ---
+                foreach ((array) $request->input('services', []) as $row) {
+                    $name = trim((string) ($row['serviceName'] ?? ''));
+                    if ($name === '') {
+                        continue;
+                    }
+                    AsScheduleService::create([
+                        'croppingScheduleId' => $schedule->id,
+                        'serviceName' => mb_substr($name, 0, 255),
+                        'description' => ! empty($row['description']) ? mb_substr(trim($row['description']), 0, 2000) : null,
+                        'serviceCost' => is_numeric($row['serviceCost'] ?? null) ? max(0, (float) $row['serviceCost']) : 0,
+                        'deleteStatus' => 1,
+                    ]);
+                }
+
+                return $schedule;
+            });
+        } catch (\Throwable $e) {
+            Log::error('CroppingSchedule wizard store failed: '.$e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'We could not create your schedule. Please try again.',
+            ], 500);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Cropping schedule created.',
+            'data' => [
+                'scheduleId' => $schedule->id,
+                'redirect' => route('sm.hub', ['id' => $schedule->id]),
+            ],
+        ]);
+    }
+
+    /**
+     * Accepts Y-m-d (or anything Carbon can parse) and returns Y-m-d, else null.
+     */
+    private function sanitizeDate($value): ?string
+    {
+        if (empty($value)) {
+            return null;
+        }
+        try {
+            return \Carbon\Carbon::parse($value)->format('Y-m-d');
+        } catch (\Throwable $e) {
+            return null;
         }
     }
 
@@ -164,10 +311,7 @@ class CroppingScheduleController extends Controller
         $schedule = $this->findOwnedOrFail($request->query('id'));
         $schedule->load(['lots', 'defaultGroupings.lots']);
 
-        return view('sm.settings', [
-            'schedule' => $schedule,
-            'cropTypes' => AsCroppingSchedule::CROP_TYPES,
-        ]);
+        return view('sm.settings', compact('schedule'));
     }
 
     public function update(Request $request)
@@ -177,8 +321,6 @@ class CroppingScheduleController extends Controller
         $validator = Validator::make($request->all(), [
             'title'              => 'required|string|max:255',
             'description'        => 'nullable|string|max:5000',
-            'cropType'           => 'nullable|string|max:100',
-            'cropVariety'        => 'nullable|string|max:150',
             'dayType'            => 'nullable|in:DAP,DAS,DAT',
             'defaultStaggerDays' => 'nullable|integer|min:0',
         ]);
@@ -190,8 +332,6 @@ class CroppingScheduleController extends Controller
         $payload = [
             'title'       => $request->title,
             'description' => $request->description,
-            'cropType'    => $request->filled('cropType') ? $request->cropType : null,
-            'cropVariety' => $request->filled('cropVariety') ? $request->cropVariety : null,
         ];
         if ($request->filled('dayType')) {
             $payload['dayType'] = $request->dayType;

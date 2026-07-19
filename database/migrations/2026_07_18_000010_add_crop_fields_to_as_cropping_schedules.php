@@ -13,7 +13,7 @@ return new class extends Migration
                 $table->string('cropType', 100)->nullable()->after('description');
             }
             if (! Schema::hasColumn('as_cropping_schedules', 'cropVariety')) {
-                $table->string('cropVariety', 150)->nullable()->after('cropType');
+                $table->string('cropVariety', 255)->nullable()->after('cropType');
             }
         });
     }
@@ -21,11 +21,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('as_cropping_schedules', function (Blueprint $table) {
-            foreach (['cropType', 'cropVariety'] as $col) {
-                if (Schema::hasColumn('as_cropping_schedules', $col)) {
-                    $table->dropColumn($col);
-                }
-            }
+            $table->dropColumn(['cropType', 'cropVariety']);
         });
     }
 };
