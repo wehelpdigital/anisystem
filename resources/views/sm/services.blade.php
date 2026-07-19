@@ -15,7 +15,7 @@
 </button>
 
 {{-- Card list --}}
-<div class="space-y-3" id="servicesList">
+<div class="space-y-3" id="servicesList" data-animate-list>
     @foreach ($schedule->services as $s)
         <div class="card p-4 service-card" data-id="{{ $s->id }}">
             <div class="flex items-start justify-between gap-3">

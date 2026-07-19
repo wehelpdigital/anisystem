@@ -45,6 +45,71 @@ Alpine.start();
 })();
 
 /* ------------------------------------------------------------------ */
+/* Client-app motion helpers                                            */
+/* - Auto-animate items inserted into [data-animate-list] containers    */
+/*   (new lot/worker/material/activity, duplicate, etc.).               */
+/* - window.animateIn(el) / window.animateOut(el, done) for manual use. */
+/* Respects prefers-reduced-motion.                                     */
+/* ------------------------------------------------------------------ */
+(function appMotion() {
+    const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Animate a single element in (used for AJAX-added cards/rows).
+    window.animateIn = function animateIn(el) {
+        if (!el || reduced()) return;
+        el.classList.add('list-item-enter');
+        el.addEventListener('animationend', () => el.classList.remove('list-item-enter'), { once: true });
+    };
+
+    // Animate an element out, then run done() (typically el.remove()).
+    window.animateOut = function animateOut(el, done) {
+        if (!el) return;
+        if (reduced()) { done && done(); return; }
+        el.classList.add('list-item-leave');
+        let finished = false;
+        const finish = () => {
+            if (finished) return;
+            finished = true;
+            done && done();
+        };
+        el.addEventListener('animationend', finish, { once: true });
+        setTimeout(finish, 400); // failsafe if animationend doesn't fire
+    };
+
+    const start = () => {
+        if (reduced()) return;
+        const lists = document.querySelectorAll('[data-animate-list]');
+        if (!lists.length) return;
+
+        const observer = new MutationObserver((mutations) => {
+            for (const m of mutations) {
+                m.addedNodes.forEach((node) => {
+                    // Only animate genuinely NEW elements. Nodes that were merely
+                    // moved (drag/arrow reorder) already carry data-animated, so
+                    // they are skipped — no flicker during reordering.
+                    if (node.nodeType === 1 && !node.dataset.animated) {
+                        node.dataset.animated = '1';
+                        window.animateIn(node);
+                    }
+                });
+            }
+        });
+
+        lists.forEach((list) => {
+            // Mark items already present at load so they aren't re-animated when moved.
+            [...list.children].forEach((child) => { if (child.nodeType === 1) child.dataset.animated = '1'; });
+            observer.observe(list, { childList: true });
+        });
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+    } else {
+        start();
+    }
+})();
+
+/* ------------------------------------------------------------------ */
 /* CSRF + API helper                                                    */
 /* All schedule-manager endpoints reply {success, message, data}.       */
 /* ------------------------------------------------------------------ */

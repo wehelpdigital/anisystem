@@ -73,7 +73,7 @@
     </a>
 
     {{-- Module grid --}}
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 stagger-children">
         @foreach ($moduleCards as [$label, $url, $count, $iconPath])
             <a href="{{ $url }}" class="card card-hover block">
                 <div class="p-4 flex flex-col gap-3">

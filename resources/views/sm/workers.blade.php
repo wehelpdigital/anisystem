@@ -16,7 +16,7 @@
             </button>
         </div>
 
-        <div id="workersList" class="space-y-3"></div>
+        <div id="workersList" class="space-y-3" data-animate-list>
 
         <div id="workersEmpty" class="card hidden">
             <div class="card-body text-center py-12">

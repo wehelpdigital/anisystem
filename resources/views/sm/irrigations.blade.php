@@ -42,7 +42,7 @@
         </button>
     </div>
 
-    <div id="irrigationsList"></div>
+    <div id="irrigationsList" data-animate-list></div>
 
     <div id="irrEmpty" class="card p-8 text-center hidden">
         <p class="text-3xl mb-2">💧</p>

@@ -16,7 +16,7 @@
             </button>
         </div>
 
-        <div id="lotsList" class="space-y-3"></div>
+        <div id="lotsList" class="space-y-3" data-animate-list>
 
         <div id="lotsEmpty" class="card hidden">
             <div class="card-body text-center py-12">

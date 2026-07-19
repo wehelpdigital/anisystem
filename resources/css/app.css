@@ -52,13 +52,18 @@ h1, h2, h3, h4, h5, h6 {
 /* Shared components (used across public site + client app)            */
 /* ------------------------------------------------------------------ */
 
-/* Buttons: big, thumb-friendly */
+/* Buttons: big, thumb-friendly, with a subtle press for tactile mobile feel */
 .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition
+    @apply inline-flex items-center justify-center gap-2 rounded-xl font-semibold
+        transition duration-150 active:scale-[0.97]
         focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-500
         disabled:opacity-50 disabled:pointer-events-none select-none cursor-pointer;
     min-height: 2.75rem;
     padding: 0.625rem 1.25rem;
+    touch-action: manipulation;
+}
+@media (prefers-reduced-motion: reduce) {
+    .btn { @apply active:scale-100; }
 }
 .btn-sm { min-height: 2.25rem; padding: 0.375rem 0.875rem; @apply text-sm rounded-lg; }
 .btn-lg { min-height: 3.25rem; padding: 0.875rem 1.75rem; @apply text-lg rounded-2xl; }
@@ -225,4 +230,94 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
 .bg-dot-grid {
     background-image: radial-gradient(rgb(255 255 255 / 0.10) 1px, transparent 1px);
     background-size: 18px 18px;
+}
+
+/* ================================================================== */
+/* Client app (backend) motion system                                  */
+/* Smooth, mobile-friendly entrances for pages, cards, lists & forms.  */
+/* Everything below collapses to no-motion for reduced-motion users.   */
+/* ================================================================== */
+
+@keyframes app-fade-up {
+    from { opacity: 0; transform: translateY(0.75rem); }
+    to   { opacity: 1; transform: none; }
+}
+@keyframes app-scale-in {
+    from { opacity: 0; transform: scale(0.96); }
+    to   { opacity: 1; transform: none; }
+}
+@keyframes app-slide-in {
+    from { opacity: 0; transform: translateX(-0.75rem); }
+    to   { opacity: 1; transform: none; }
+}
+@keyframes app-pop-in {
+    0%   { opacity: 0; transform: translateY(0.5rem) scale(0.97); }
+    60%  { opacity: 1; }
+    100% { opacity: 1; transform: none; }
+}
+
+.anim-fade-up { animation: app-fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-scale-in { animation: app-scale-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-slide-in { animation: app-slide-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Page content entrance — applied to the app layout <main>. */
+.app-enter { animation: app-fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Staggered entrance for direct children of a list/grid container.
+   Add class `stagger-children` to the container; children ride a fade-up
+   with an increasing delay. Covers server-rendered cards on page load. */
+.stagger-children > * {
+    animation: app-fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.stagger-children > *:nth-child(1)  { animation-delay: 0.02s; }
+.stagger-children > *:nth-child(2)  { animation-delay: 0.06s; }
+.stagger-children > *:nth-child(3)  { animation-delay: 0.10s; }
+.stagger-children > *:nth-child(4)  { animation-delay: 0.14s; }
+.stagger-children > *:nth-child(5)  { animation-delay: 0.18s; }
+.stagger-children > *:nth-child(6)  { animation-delay: 0.22s; }
+.stagger-children > *:nth-child(7)  { animation-delay: 0.26s; }
+.stagger-children > *:nth-child(8)  { animation-delay: 0.30s; }
+.stagger-children > *:nth-child(9)  { animation-delay: 0.34s; }
+.stagger-children > *:nth-child(10) { animation-delay: 0.38s; }
+.stagger-children > *:nth-child(n+11) { animation-delay: 0.4s; }
+
+/* Entrance for a single item inserted at runtime (AJAX add / duplicate).
+   app.js adds this class to newly-inserted children of [data-animate-list]. */
+.list-item-enter { animation: app-pop-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Exit for an item being removed (delete). app.js toggles it, then removes
+   the node when the animation ends. */
+@keyframes app-collapse-out {
+    from { opacity: 1; transform: none; max-height: 40rem; }
+    to   { opacity: 0; transform: translateX(1.5rem); max-height: 0; }
+}
+.list-item-leave {
+    animation: app-collapse-out 0.3s ease forwards;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* Sheet form fields ease in when a sheet opens (staggered). */
+.sheet.is-open .sheet-body > * {
+    animation: app-fade-up 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.sheet.is-open .sheet-body > *:nth-child(1) { animation-delay: 0.04s; }
+.sheet.is-open .sheet-body > *:nth-child(2) { animation-delay: 0.08s; }
+.sheet.is-open .sheet-body > *:nth-child(3) { animation-delay: 0.12s; }
+.sheet.is-open .sheet-body > *:nth-child(4) { animation-delay: 0.16s; }
+.sheet.is-open .sheet-body > *:nth-child(5) { animation-delay: 0.20s; }
+.sheet.is-open .sheet-body > *:nth-child(n+6) { animation-delay: 0.22s; }
+
+/* Backdrop gets a soft blur as it fades in. */
+.sheet-backdrop { backdrop-filter: blur(0); transition: opacity 0.2s ease, backdrop-filter 0.2s ease; }
+.sheet-backdrop.is-open { backdrop-filter: blur(2px); }
+
+@media (prefers-reduced-motion: reduce) {
+    .anim-fade-up, .anim-scale-in, .anim-slide-in, .app-enter,
+    .stagger-children > *, .list-item-enter,
+    .sheet.is-open .sheet-body > * {
+        animation: none !important;
+    }
+    .list-item-leave { animation: none !important; }
+    .sheet-backdrop, .sheet-backdrop.is-open { backdrop-filter: none; }
 }

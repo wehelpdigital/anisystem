@@ -110,7 +110,7 @@
             Upload Attachment
         </button>
 
-        <div id="attachmentsGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(160px, 1fr)); gap:0.75rem;">
+        <div id="attachmentsGrid" data-animate-list style="display:grid; grid-template-columns:repeat(auto-fill, minmax(160px, 1fr)); gap:0.75rem;">
             @foreach ($schedule->attachments as $a)
                 @php $ext = strtoupper(pathinfo($a->filename, PATHINFO_EXTENSION) ?: 'FILE'); @endphp
                 <div class="card overflow-hidden attachment-card" data-id="{{ $a->id }}">
@@ -160,7 +160,7 @@
             Add Critical Rule
         </button>
 
-        <div id="rulesList" class="space-y-2">
+        <div id="rulesList" class="space-y-2" data-animate-list>
             @foreach ($schedule->criticalRules as $rule)
                 <div class="rule-row border-l-4 border-red-400 bg-red-50 rounded-xl p-3 flex items-start gap-2" draggable="true" data-id="{{ $rule->id }}">
                     <div class="rule-handle hidden md:flex items-center text-red-300 cursor-grab pt-1 shrink-0" title="Drag to reorder">

@@ -63,7 +63,7 @@
             </div>
         </div>
     @else
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="schedulesGrid">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-children" id="schedulesGrid">
             @foreach ($schedules as $s)
                 <div class="card card-hover flex flex-col" data-schedule-card="{{ $s->id }}">
                     <div class="card-body flex flex-col grow">

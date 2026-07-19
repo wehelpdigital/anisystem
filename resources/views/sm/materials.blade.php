@@ -27,7 +27,7 @@
 </div>
 
 {{-- Card list --}}
-<div class="space-y-3" id="materialsList">
+<div class="space-y-3" id="materialsList" data-animate-list>
     @foreach ($schedule->materials as $m)
         <div class="card p-4 material-card" data-id="{{ $m->id }}"
             data-search="{{ strtolower($m->materialName . ' ' . $m->materialType . ' ' . $m->unitOfMeasure . ' ' . ($m->description ?? '')) }}">

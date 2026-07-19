@@ -70,7 +70,7 @@
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-4 md:py-8 page-safe-bottom">
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-4 md:py-8 page-safe-bottom app-enter">
         @yield('content')
     </main>
 
