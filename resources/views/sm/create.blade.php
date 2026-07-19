@@ -219,8 +219,7 @@
                                 <div class="space-y-2.5">
                                     <input type="text" x-model="w.workerName" maxlength="255" class="form-input" placeholder="Worker name">
                                     <div class="relative">
-                                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">₱</span>
-                                        <input type="number" step="0.01" min="0" x-model="w.costPerHalfDay" class="form-input pl-7" placeholder="Cost per half-day work">
+                                        <input type="number" step="0.01" min="0" x-model="w.costPerHalfDay" class="form-input" placeholder="Cost per half-day work">
                                     </div>
                                     <input type="number" min="1" x-model="w.priority" class="form-input" placeholder="Priority (1 = first pick)">
                                     <div>
@@ -283,8 +282,7 @@
                                     </div>
                                     <div class="grid grid-cols-2 gap-2.5 items-center">
                                         <div class="relative">
-                                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">₱</span>
-                                            <input type="number" step="0.01" min="0" x-model="m.priceAmount" class="form-input pl-7" placeholder="Price">
+                                                <input type="number" step="0.01" min="0" x-model="m.priceAmount" class="form-input" placeholder="Price">
                                         </div>
                                         <div class="flex items-center gap-1.5 text-sm text-gray-500">
                                             <span>per</span>
@@ -322,8 +320,7 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                                     <input type="text" x-model="sv.serviceName" maxlength="255" class="form-input" placeholder="Service (e.g. Tractor rental)">
                                     <div class="relative">
-                                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">₱</span>
-                                        <input type="number" step="0.01" min="0" x-model="sv.serviceCost" class="form-input pl-7" placeholder="Cost">
+                                        <input type="number" step="0.01" min="0" x-model="sv.serviceCost" class="form-input" placeholder="Cost">
                                     </div>
                                 </div>
                             </div>
