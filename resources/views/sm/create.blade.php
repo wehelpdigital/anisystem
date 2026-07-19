@@ -31,7 +31,7 @@
 @endphp
 
 @section('content')
-    <div class="max-w-2xl mx-auto" x-data="scheduleWizard(@json($wizardConfig))">
+    <div class="max-w-2xl mx-auto" x-data="scheduleWizard({{ \Illuminate\Support\Js::from($wizardConfig) }})">
 
         {{-- ===== Dotted stepper ===== --}}
         <div class="mb-6">
