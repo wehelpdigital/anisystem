@@ -175,10 +175,6 @@
                                         </select>
                                     </div>
                                     <input type="text" x-model="lot.notes" maxlength="2000" class="form-input" placeholder="Description (optional)">
-                                    <div>
-                                        <span class="text-xs text-gray-500">Day-0 / sowing date <span class="text-gray-400">(optional)</span></span>
-                                        <input type="date" x-model="lot.dayZeroDate" class="form-input mt-1">
-                                    </div>
                                 </div>
                             </div>
                         </template>
@@ -484,7 +480,7 @@
                 else worker.skills.push(key);
             },
             addLot() {
-                this.lots.push({ _id: uid(), lotName: '', lotSize: '', lotSizeUnit: 'hectare', notes: '', dayZeroDate: '' });
+                this.lots.push({ _id: uid(), lotName: '', lotSize: '', lotSizeUnit: 'hectare', notes: '' });
             },
             addWorker() {
                 this.workers.push({ _id: uid(), workerName: '', costPerHalfDay: '', priority: this.workers.length + 1, skills: [] });
