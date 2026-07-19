@@ -46,6 +46,36 @@
             No account yet?
             <a href="{{ route('signup') }}" class="font-bold text-brand-700 hover:underline">Create one for free</a>
         </p>
+
+        @if (app()->environment('local'))
+            {{-- Demo credentials — only rendered in the local environment. --}}
+            <div class="mt-6 rounded-2xl border border-dashed border-brand-300 bg-brand-50/70 p-4"
+                 x-data="{ email: 'demo@anisystem.test', password: 'demo1234' }">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="badge badge-yellow">Test account</span>
+                    <span class="text-xs text-gray-500">Local preview only</span>
+                </div>
+                <dl class="text-sm text-gray-700 space-y-1">
+                    <div class="flex items-center justify-between gap-3">
+                        <dt class="text-gray-500">Email</dt>
+                        <dd class="font-semibold" x-text="email">demo@anisystem.test</dd>
+                    </div>
+                    <div class="flex items-center justify-between gap-3">
+                        <dt class="text-gray-500">Password</dt>
+                        <dd class="font-semibold" x-text="password">demo1234</dd>
+                    </div>
+                </dl>
+                <button type="button"
+                        @click="
+                            document.getElementById('email').value = email;
+                            document.getElementById('password').value = password;
+                            document.getElementById('password').focus();
+                        "
+                        class="btn btn-outline btn-sm w-full mt-3">
+                    Fill in test login
+                </button>
+            </div>
+        @endif
     </div>
 </div>
 @endsection
