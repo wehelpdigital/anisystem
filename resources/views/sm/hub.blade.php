@@ -104,28 +104,6 @@
         @endforeach
     </div>
 
-    {{-- Documents --}}
-    <div class="card mb-6">
-        <div class="card-body">
-            <h3 class="font-bold text-gray-900 mb-1">Documents</h3>
-            <p class="text-sm text-gray-500 mb-4">Printable views of this schedule — each opens in a new tab.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                <a href="{{ route('sm.activities.export', ['scheduleId' => $schedule->id]) }}" target="_blank" rel="noopener" class="btn btn-outline">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-                    Export Schedule
-                </a>
-                <a href="{{ route('sm.card-viewer', ['scheduleId' => $schedule->id]) }}" target="_blank" rel="noopener" class="btn btn-outline">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2zm2 5h6m-6 4h4"/></svg>
-                    Card Viewer
-                </a>
-                <a href="{{ route('sm.worker-presentation', ['scheduleId' => $schedule->id]) }}" target="_blank" rel="noopener" class="btn btn-outline">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                    Worker Presentation
-                </a>
-            </div>
-        </div>
-    </div>
-
     {{-- Danger zone --}}
     <div class="card border-red-100">
         <div class="card-body">
