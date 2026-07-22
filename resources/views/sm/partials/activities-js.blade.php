@@ -334,35 +334,28 @@ document.addEventListener('DOMContentLoaded', () => {
             : '';
         const hiddenTag = `<span class="badge badge-gray hide-activity-tag"${isHiddenFlag ? '' : ' style="display:none;"'}>Hidden</span>`;
 
-        // Workers block
-        let workersBlock = '';
-        if (workerIds.length) {
-            const tags = workerIds.map((id) => `<span class="item-tag worker-tag">${esc(WORKER_NAMES[id] || ('Worker #' + id))}</span>`).join('');
-            workersBlock = `<div class="activity-card-workers flex items-center gap-1 flex-wrap mt-2"><span class="text-xs text-gray-500">Workers:</span>${tags}</div>`;
-        }
+        // Meta strip: workers then materials/services (time chip is added inline below).
+        const workerTags = workerIds
+            .map((id) => `<span class="item-tag worker-tag">${esc(WORKER_NAMES[id] || ('Worker #' + id))}</span>`)
+            .join('');
 
-        // Items block
-        let itemsInner = '';
-        if ((a.items || []).length) {
-            (a.items || []).forEach((it) => {
-                if (it.itemType === 'material') {
-                    const name = it.material?.materialName || ('Material #' + (it.materialId ?? ''));
-                    const unit = it.unitOfMeasure || it.material?.unitOfMeasure || '';
-                    itemsInner += `<span class="item-tag material-tag">${esc(name)} &times;${esc(trimQty(it.quantity))} ${esc(unit)}</span>`;
-                } else {
-                    const name = it.service?.serviceName || ('Service #' + (it.serviceId ?? ''));
-                    itemsInner += `<span class="item-tag service-tag">${esc(name)}</span>`;
-                }
-            });
-        } else {
-            itemsInner = '<span class="text-xs text-gray-400">No materials or services</span>';
-        }
+        let itemTags = '';
+        (a.items || []).forEach((it) => {
+            if (it.itemType === 'material') {
+                const name = it.material?.materialName || ('Material #' + (it.materialId ?? ''));
+                const unit = it.unitOfMeasure || it.material?.unitOfMeasure || '';
+                itemTags += `<span class="item-tag material-tag">${esc(name)} &times;${esc(trimQty(it.quantity))} ${esc(unit)}</span>`;
+            } else {
+                const name = it.service?.serviceName || ('Service #' + (it.serviceId ?? ''));
+                itemTags += `<span class="item-tag service-tag">${esc(name)}</span>`;
+            }
+        });
 
         const descHtml = a.description || '';
         const imageUrl = a.imageUrl || (a.imagePath ? STORAGE_BASE + '/' + String(a.imagePath).replace(/^\/+/, '') : '');
         const nameAttr = esc(a.activityTitle || '');
 
-        return `<div class="activity-card${isHiddenFlag ? ' is-hidden' : ''}" draggable="true"
+        return `<div class="activity-card prio-${esc(priority)}${isHiddenFlag ? ' is-hidden' : ''}" draggable="true"
      data-id="${a.id}"
      data-target-date="${esc(targetDateStr)}"
      data-target-end-date="${esc(targetEndDateStr)}"
@@ -374,17 +367,17 @@ document.addEventListener('DOMContentLoaded', () => {
      data-search="${esc(searchText)}">
     <div class="flex items-start justify-between gap-2">
         <div class="min-w-0 grow">
-            <div class="flex items-center gap-1.5 flex-wrap">
-                <h3 class="font-bold text-gray-900 text-sm leading-snug">${esc(a.activityTitle || '')}</h3>
+            <h3 class="activity-card-title">${esc(a.activityTitle || '')}</h3>
+            <div class="activity-card-badges">
+                <span class="pill pill-${esc(priority)}">${esc(priorityCap)}</span>
                 ${typeBadge}
                 ${dayZeroBadge}
                 ${rangeBadge}
                 ${hiddenTag}
             </div>
-            <div class="activity-card-lots flex items-center gap-1 flex-wrap mt-1.5">${lotsRow}</div>
+            <div class="activity-card-lots">${lotsRow}</div>
         </div>
-        <div class="flex items-center gap-1.5 shrink-0">
-            <span class="pill pill-${esc(priority)}">${esc(priorityCap)}</span>
+        <div class="flex items-center shrink-0">
             <div class="hidden md:flex items-center gap-0.5">
                 <button type="button" class="icon-btn hide-activity-toggle" data-id="${a.id}" title="Toggle visibility in presentations and exports" aria-pressed="${isHiddenFlag ? 'true' : 'false'}">${SVG.eye}</button>
                 <button type="button" class="icon-btn edit-activity-btn" data-id="${a.id}" title="Edit">${SVG.edit}</button>
@@ -397,9 +390,11 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     ${descHtml ? `<div class="activity-description-content text-sm text-gray-700 mt-2">${descHtml}</div>` : ''}
     ${imageUrl ? `<div class="activity-card-image mt-2"><img src="${esc(imageUrl)}" alt="Reference image" loading="lazy"></div>` : ''}
-    <div class="time-required-line flex items-center gap-1 mt-2 text-xs text-gray-500">${SVG.clock} ${esc(timeRequiredLabel(a.timeRequired))}</div>
-    ${workersBlock}
-    <div class="activity-card-items flex items-center gap-1 flex-wrap mt-2">${itemsInner}</div>
+    <div class="activity-meta">
+        <span class="meta-time">${SVG.clock} ${esc(timeRequiredLabel(a.timeRequired))}</span>
+        ${workerTags}
+        ${itemTags}
+    </div>
 </div>`;
     }
 
@@ -463,10 +458,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const hasNote = !isNoDate && (noteContent || '') !== '';
         const buttons = isNoDate ? '' : `
             <button type="button" class="date-header-btn group-add-activity-btn" data-date="${esc(dateKey)}" title="Add a new activity to this date">${SVG.plus}</button>
-            <button type="button" class="date-header-btn date-note-btn${hasNote ? ' has-note' : ''}" data-date="${esc(dateKey)}" title="${hasNote ? 'Edit the note for this date' : 'Add a note for this date'}">${SVG.note}</button>
-            <button type="button" class="date-header-btn date-marker-btn${hasMarker ? ' has-marker' : ''}" data-date="${esc(dateKey)}" title="${hasMarker ? 'Edit the resume-here marker' : 'Drop a resume-here marker after this date'}">${SVG.bookmark}</button>
-            <button type="button" class="date-header-btn change-group-date-btn" data-date="${esc(dateKey)}" title="Change date for all activities in this group">${SVG.calendarEdit}</button>
-            <button type="button" class="date-header-btn date-header-delete-btn delete-group-date-btn" data-date="${esc(dateKey)}" title="Delete every activity in this group">${SVG.trash}</button>`;
+            <span class="hidden md:flex items-center gap-0.5">
+                <button type="button" class="date-header-btn date-note-btn${hasNote ? ' has-note' : ''}" data-date="${esc(dateKey)}" title="${hasNote ? 'Edit the note for this date' : 'Add a note for this date'}">${SVG.note}</button>
+                <button type="button" class="date-header-btn date-marker-btn${hasMarker ? ' has-marker' : ''}" data-date="${esc(dateKey)}" title="${hasMarker ? 'Edit the resume-here marker' : 'Drop a resume-here marker after this date'}">${SVG.bookmark}</button>
+                <button type="button" class="date-header-btn change-group-date-btn" data-date="${esc(dateKey)}" title="Change date for all activities in this group">${SVG.calendarEdit}</button>
+                <button type="button" class="date-header-btn date-header-delete-btn delete-group-date-btn" data-date="${esc(dateKey)}" title="Delete every activity in this group">${SVG.trash}</button>
+            </span>
+            <button type="button" class="date-header-btn day-menu-btn md:hidden" data-date="${esc(dateKey)}" title="More actions for this day">${SVG.kebab}</button>`;
 
         const noteBlock = isNoDate ? ''
             : `<div class="date-note-block" data-date="${esc(dateKey)}"${hasNote ? '' : ' style="display:none;"'}>${esc(noteContent || '')}</div>`;
@@ -1478,6 +1476,38 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch((err) => toast(err.message, 'error'));
     }
+
+    // Day overflow menu (phones). Rows forward to the real date-header buttons,
+    // which stay in the DOM (desktop-only visually), so no handler is duplicated.
+    let dayMenuDate = null;
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.day-menu-btn');
+        if (!btn) return;
+        dayMenuDate = btn.getAttribute('data-date') || '';
+        const label = $id('dayMenuTitle');
+        if (label) label.textContent = dayMenuDate ? prettyDateFull(dayMenuDate) : 'This day';
+        openSheet('dayMenuSheet');
+    });
+
+    document.addEventListener('click', (e) => {
+        const row = e.target.closest('.day-menu-action');
+        if (!row || !dayMenuDate) return;
+        const cls = row.getAttribute('data-action');
+        closeSheet('dayMenuSheet');
+        const target = $qs(`#activitiesList .date-group[data-date="${dayMenuDate}"] .${cls}`);
+        // Defer so the sheet is closed before the next one opens.
+        setTimeout(() => target?.click(), 260);
+    });
+
+    // Tapping the card body opens the editor — the primary action on a phone,
+    // where aiming for a small pencil icon is awkward. Interactive bits and the
+    // lot chips (used by the lot filter) keep their own behaviour.
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('button, a, input, textarea, select, label, .item-tag')) return;
+        const card = e.target.closest('#activitiesList .activity-card[data-id]');
+        if (!card) return;
+        openEditActivitySheet(card.getAttribute('data-id'));
+    });
 
     // Card + timeline click delegation.
     document.addEventListener('click', (e) => {

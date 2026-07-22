@@ -24,7 +24,7 @@
     }
     $searchText = trim(implode(' ', array_filter($searchBits)));
 @endphp
-<div class="activity-card{{ $a->isHidden ? ' is-hidden' : '' }}" draggable="true"
+<div class="activity-card prio-{{ $a->priority }}{{ $a->isHidden ? ' is-hidden' : '' }}" draggable="true"
      data-id="{{ $a->id }}"
      data-target-date="{{ $startC ? $startC->format('Y-m-d') : '' }}"
      data-target-end-date="{{ $endC ? $endC->format('Y-m-d') : '' }}"
@@ -36,8 +36,9 @@
      data-search="{{ $searchText }}">
     <div class="flex items-start justify-between gap-2">
         <div class="min-w-0 grow">
-            <div class="flex items-center gap-1.5 flex-wrap">
-                <h3 class="font-bold text-gray-900 text-sm leading-snug">{{ $a->activityTitle }}</h3>
+            <h3 class="activity-card-title">{{ $a->activityTitle }}</h3>
+            <div class="activity-card-badges">
+                <span class="pill pill-{{ $a->priority }}">{{ ucfirst($a->priority) }}</span>
                 @if($typeLabel)
                     <span class="badge badge-green activity-type-badge">{{ $typeLabel }}</span>
                 @endif
@@ -52,7 +53,7 @@
                 @endif
                 <span class="badge badge-gray hide-activity-tag" @if(!$a->isHidden) style="display:none;" @endif>Hidden</span>
             </div>
-            <div class="activity-card-lots flex items-center gap-1 flex-wrap mt-1.5">
+            <div class="activity-card-lots">
                 @if($cardLots->count())
                     @foreach($cardLots as $lot)
                         @php
@@ -73,8 +74,7 @@
                 @endif
             </div>
         </div>
-        <div class="flex items-center gap-1.5 shrink-0">
-            <span class="pill pill-{{ $a->priority }}">{{ ucfirst($a->priority) }}</span>
+        <div class="flex items-center shrink-0">
             <div class="hidden md:flex items-center gap-0.5">
                 <button type="button" class="icon-btn hide-activity-toggle" data-id="{{ $a->id }}" title="Toggle visibility in presentations and exports" aria-pressed="{{ $a->isHidden ? 'true' : 'false' }}">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
@@ -103,29 +103,20 @@
     @if($a->imageUrl())
         <div class="activity-card-image mt-2"><img src="{{ $a->imageUrl() }}" alt="Reference image" loading="lazy"></div>
     @endif
-    <div class="time-required-line flex items-center gap-1 mt-2 text-xs text-gray-500">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        {{ $timeLabel }}
-    </div>
-    @if($a->workers->count())
-        <div class="activity-card-workers flex items-center gap-1 flex-wrap mt-2">
-            <span class="text-xs text-gray-500">Workers:</span>
-            @foreach($a->workers as $w)
-                <span class="item-tag worker-tag">{{ $w->workerName }}</span>
-            @endforeach
-        </div>
-    @endif
-    <div class="activity-card-items flex items-center gap-1 flex-wrap mt-2">
-        @if($a->items->count())
-            @foreach($a->items as $it)
-                @if($it->itemType === 'material')
-                    <span class="item-tag material-tag">{{ $it->material->materialName ?? 'Material #'.$it->materialId }} &times;{{ rtrim(rtrim(number_format((float) $it->quantity, 4, '.', ''), '0'), '.') }} {{ $it->unitOfMeasure ?: ($it->material->unitOfMeasure ?? '') }}</span>
-                @else
-                    <span class="item-tag service-tag">{{ $it->service->serviceName ?? 'Service #'.$it->serviceId }}</span>
-                @endif
-            @endforeach
-        @else
-            <span class="text-xs text-gray-400">No materials or services</span>
-        @endif
+    <div class="activity-meta">
+        <span class="meta-time">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            {{ $timeLabel }}
+        </span>
+        @foreach($a->workers as $w)
+            <span class="item-tag worker-tag">{{ $w->workerName }}</span>
+        @endforeach
+        @foreach($a->items as $it)
+            @if($it->itemType === 'material')
+                <span class="item-tag material-tag">{{ $it->material->materialName ?? 'Material #'.$it->materialId }} &times;{{ rtrim(rtrim(number_format((float) $it->quantity, 4, '.', ''), '0'), '.') }} {{ $it->unitOfMeasure ?: ($it->material->unitOfMeasure ?? '') }}</span>
+            @else
+                <span class="item-tag service-tag">{{ $it->service->serviceName ?? 'Service #'.$it->serviceId }}</span>
+            @endif
+        @endforeach
     </div>
 </div>

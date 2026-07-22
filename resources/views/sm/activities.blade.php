@@ -27,13 +27,16 @@
             padding: .55rem .8rem; border-radius: calc(1rem - 2px) calc(1rem - 2px) 0 0;
             background: color-mix(in srgb, var(--date-color, #4A90E2) 13%, #fff);
         }
-        .date-header-day { font-weight: 800; font-size: .78rem; color: var(--date-color); text-transform: uppercase; }
-        .date-header-date { font-weight: 700; font-size: .92rem; color: #111827; }
+        .date-header-day { font-weight: 800; font-size: .8rem; color: var(--date-color); text-transform: uppercase; }
+        .date-header-date { font-weight: 800; font-size: 1rem; color: #111827; }
         .date-header-range { display: inline-flex; align-items: center; gap: .2rem; font-size: 11px; font-weight: 600; color: #374151; background: rgba(255,255,255,.75); border-radius: 999px; padding: .1rem .5rem; }
-        .date-header-count { font-size: 11px; font-weight: 700; color: var(--date-color); background: rgba(255,255,255,.8); border-radius: 999px; padding: .1rem .55rem; margin-left: auto; }
+        .date-header-count { font-size: 11px; font-weight: 700; color: var(--date-color); background: rgba(255,255,255,.8); border-radius: 999px; padding: .12rem .55rem; margin-left: auto; }
         .date-header-btn {
             display: inline-flex; align-items: center; justify-content: center;
-            width: 2.15rem; height: 2.15rem; border-radius: .55rem; color: #4b5563; flex-shrink: 0;
+            width: 2.6rem; height: 2.6rem; border-radius: .6rem; color: #4b5563; flex-shrink: 0;
+        }
+        @media (min-width: 768px) {
+            .date-header-btn { width: 2.25rem; height: 2.25rem; }
         }
         .date-header-btn:hover { background: rgba(255,255,255,.75); color: #111827; }
         .date-note-btn.has-note, .date-marker-btn.has-marker { color: #b45309; }
@@ -47,12 +50,35 @@
             padding: .5rem .7rem; font-size: .8rem; color: #78350f; white-space: pre-wrap;
         }
 
-        .activity-card { border: 1px solid #eef0f3; border-radius: .85rem; background: #fff; padding: .7rem .85rem; }
+        /* ---- Activity card ----------------------------------------------
+           Left rail carries the priority colour so the top-right stays free
+           for actions. Tapping the card body opens the editor. */
+        .activity-card {
+            border: 1px solid #eef0f3; border-left: 3px solid var(--prio-color, #d1d5db);
+            border-radius: .85rem; background: #fff; padding: .75rem .85rem;
+            user-select: none; -webkit-user-select: none;
+            transition: box-shadow .15s ease, border-color .15s ease;
+        }
+        .activity-card:hover { box-shadow: var(--shadow-card); }
+        .activity-card.prio-critical { --prio-color: #9c1c1c; }
+        .activity-card.prio-high     { --prio-color: #f46a6a; }
+        .activity-card.prio-medium   { --prio-color: #f1b44c; }
+        .activity-card.prio-low      { --prio-color: #cbd5e1; }
         .activity-card[draggable="true"] { cursor: grab; }
-        /* Let the drag start from anywhere on the card (title, body, chips).
-           Without this the browser starts a text selection instead. */
-        .activity-card { user-select: none; -webkit-user-select: none; }
         .activity-card img { -webkit-user-drag: none; }
+
+        .activity-card-title {
+            font-weight: 700; font-size: .95rem; line-height: 1.35; color: #111827;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .activity-card-badges { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .3rem; }
+        .activity-card-lots { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .45rem; }
+        /* Meta strip: time + workers + materials/services on one wrapped row. */
+        .activity-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .55rem; }
+        .meta-time {
+            display: inline-flex; align-items: center; gap: .25rem; background: #f3f4f6; color: #4b5563;
+            border-radius: .5rem; padding: .2rem .45rem; font-size: 11.5px; font-weight: 600;
+        }
         /* The date header drags the whole day's activities to another date. */
         .date-header[draggable="true"] { cursor: grab; }
         .date-header.dragging { opacity: .55; }
@@ -61,6 +87,10 @@
         body.hide-empty-dates .rest-day-marker { display: none; }
         .activity-card.dragging { opacity: .45; }
         .activity-card-image img { max-width: 100%; max-height: 260px; border-radius: .6rem; border: 1px solid #eef0f3; }
+        /* Keep list rows scannable — the full text is in the editor. */
+        .activity-description-content {
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        }
         .activity-description-content p { margin: .25rem 0; }
         .activity-description-content ul { list-style: disc; padding-left: 1.25rem; }
         .activity-description-content ol { list-style: decimal; padding-left: 1.25rem; }
@@ -75,12 +105,21 @@
         .activity-na-tag { background: #f3f4f6; color: #6b7280; border: 1px dashed #d1d5db; }
         .day-zero-badge { background: #ff9800; color: #fff; }
 
+        /* Touch targets: 44px on phones, tighter once there's a mouse. */
         .icon-btn {
             display: inline-flex; align-items: center; justify-content: center;
-            width: 2.25rem; height: 2.25rem; border-radius: .6rem; color: #6b7280; flex-shrink: 0; cursor: pointer;
+            width: 2.75rem; height: 2.75rem; border-radius: .65rem; color: #6b7280; flex-shrink: 0; cursor: pointer;
+            transition: background .15s ease, color .15s ease;
         }
+        .icon-btn:active { background: #e5e7eb; }
         .icon-btn:hover { background: #f3f4f6; color: #374151; }
         .icon-btn-danger:hover { background: #fef2f2; color: #dc2626; }
+        @media (min-width: 768px) {
+            .icon-btn { width: 2.375rem; height: 2.375rem; }
+            /* These component classes set `display`, which beats Tailwind's
+               md:hidden — hide the phone overflow buttons explicitly. */
+            .card-menu-btn, .day-menu-btn { display: none; }
+        }
 
         .rest-day-marker {
             display: flex; align-items: center; gap: .6rem; padding: .55rem .8rem;
@@ -436,17 +475,23 @@
                             <button type="button" class="date-header-btn group-add-activity-btn" data-date="{{ $dateKey }}" title="Add a new activity to this date">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
                             </button>
-                            <button type="button" class="date-header-btn date-note-btn {{ $noteRow ? 'has-note' : '' }}" data-date="{{ $dateKey }}" title="{{ $noteRow ? 'Edit the note for this date' : 'Add a note for this date' }}">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                            </button>
-                            <button type="button" class="date-header-btn date-marker-btn {{ $existingMarker ? 'has-marker' : '' }}" data-date="{{ $dateKey }}" title="{{ $existingMarker ? 'Edit the resume-here marker' : 'Drop a resume-here marker after this date' }}">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-                            </button>
-                            <button type="button" class="date-header-btn change-group-date-btn" data-date="{{ $dateKey }}" title="Change date for all activities in this group">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                            </button>
-                            <button type="button" class="date-header-btn date-header-delete-btn delete-group-date-btn" data-date="{{ $dateKey }}" title="Delete every activity in this group">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            {{-- Secondary day actions: inline on desktop, overflow sheet on phones. --}}
+                            <span class="hidden md:flex items-center gap-0.5">
+                                <button type="button" class="date-header-btn date-note-btn {{ $noteRow ? 'has-note' : '' }}" data-date="{{ $dateKey }}" title="{{ $noteRow ? 'Edit the note for this date' : 'Add a note for this date' }}">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                </button>
+                                <button type="button" class="date-header-btn date-marker-btn {{ $existingMarker ? 'has-marker' : '' }}" data-date="{{ $dateKey }}" title="{{ $existingMarker ? 'Edit the resume-here marker' : 'Drop a resume-here marker after this date' }}">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                                </button>
+                                <button type="button" class="date-header-btn change-group-date-btn" data-date="{{ $dateKey }}" title="Change date for all activities in this group">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                </button>
+                                <button type="button" class="date-header-btn date-header-delete-btn delete-group-date-btn" data-date="{{ $dateKey }}" title="Delete every activity in this group">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                </button>
+                            </span>
+                            <button type="button" class="date-header-btn day-menu-btn md:hidden" data-date="{{ $dateKey }}" title="More actions for this day">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
                             </button>
                         @endif
                     </div>
