@@ -256,6 +256,11 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             Labor
         </button>
+        <button type="button" data-sheet-open="filtersSheet" class="btn btn-white btn-sm relative">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4h18M6 10h12M10 16h4"/></svg>
+            Filters
+            <span id="activeFilterCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-brand-600 text-white text-[10px] font-bold items-center justify-center">0</span>
+        </button>
         <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm ml-auto hidden md:inline-flex">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
             Add Activity
@@ -263,39 +268,68 @@
     </div>
 </div>
 
-{{-- ============================ FILTERS ============================ --}}
-<div class="mb-4 space-y-2">
-    <div class="relative">
-        <input type="search" id="activitySearchInput" class="form-input pr-24" placeholder="Search activities, lots, workers, items…">
-        <span id="activitySearchCount" class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400"></span>
-    </div>
-    <div class="scroll-chips" id="typeFilterChips" data-chip-group>
-        @foreach ($activityTypes as $slug => $label)
-            <button type="button" class="chip shrink-0 min-h-9! py-1! text-xs" data-value="{{ $slug }}">{{ $label }}</button>
-        @endforeach
-    </div>
-    @if ($schedule->lots->count())
-        <div class="flex items-center gap-2">
-            <span class="text-xs font-semibold text-gray-500 shrink-0">Hide lots:</span>
-            <div class="scroll-chips grow" id="lotFilterChips" data-chip-group>
-                @foreach ($schedule->lots as $lot)
-                    <button type="button" class="chip shrink-0 min-h-9! py-1! text-xs" data-value="{{ $lot->id }}"
-                        title="Hide {{ $lot->lotName }} — cards covering another visible lot stay put">
-                        {{ $lot->lotName }}@if(!empty($lot->variety)) · {{ $lot->variety }}@endif
-                    </button>
-                @endforeach
-                <button type="button" class="chip chip-dashed shrink-0 min-h-9! py-1! text-xs" data-value="__na__"
-                    title="Hide activities not tied to any specific lot">N/A</button>
-            </div>
-            <button type="button" id="lotFilterAllBtn" class="text-xs font-semibold text-brand-700 shrink-0">Hide all</button>
-            <button type="button" id="lotFilterClearBtn" class="text-xs font-semibold text-brand-700 shrink-0 hidden">Show all</button>
-        </div>
-    @endif
-    <div>
-        <button type="button" id="toggleHiddenBtn" class="btn btn-white btn-sm {{ $hiddenCount ? '' : 'hidden' }}">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
-            <span id="toggleHiddenLabel">Show Hidden ({{ $hiddenCount }})</span>
+{{-- ============================ FILTERS (bottom sheet) ============================ --}}
+<div class="sheet hidden" id="filtersSheet" style="--sheet-width: 30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Filter activities</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full -mr-1" aria-label="Close">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
+    </div>
+    <div class="sheet-body space-y-5">
+        <div>
+            <label class="text-xs font-semibold text-gray-500">Search</label>
+            <div class="relative mt-1.5">
+                <input type="search" id="activitySearchInput" class="form-input pr-16" placeholder="Title, lots, workers, items…">
+                <span id="activitySearchCount" class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400"></span>
+            </div>
+        </div>
+
+        <div>
+            <label class="text-xs font-semibold text-gray-500">Activity type</label>
+            <div class="flex flex-wrap gap-1.5 mt-1.5" id="typeFilterChips" data-chip-group>
+                @foreach ($activityTypes as $slug => $label)
+                    <button type="button" class="chip min-h-9! py-1! text-xs" data-value="{{ $slug }}">{{ $label }}</button>
+                @endforeach
+            </div>
+        </div>
+
+        @if ($schedule->lots->count())
+            <div>
+                <div class="flex items-center justify-between">
+                    <label class="text-xs font-semibold text-gray-500">Hide lots</label>
+                    <div class="flex items-center gap-3">
+                        <button type="button" id="lotFilterAllBtn" class="text-xs font-semibold text-brand-700">Hide all</button>
+                        <button type="button" id="lotFilterClearBtn" class="text-xs font-semibold text-brand-700 hidden">Show all</button>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-1.5 mt-1.5" id="lotFilterChips" data-chip-group>
+                    @foreach ($schedule->lots as $lot)
+                        <button type="button" class="chip min-h-9! py-1! text-xs" data-value="{{ $lot->id }}"
+                            title="Hide {{ $lot->lotName }} — cards covering another visible lot stay put">
+                            {{ $lot->lotName }}@if(!empty($lot->variety)) · {{ $lot->variety }}@endif
+                        </button>
+                    @endforeach
+                    <button type="button" class="chip chip-dashed min-h-9! py-1! text-xs" data-value="__na__"
+                        title="Hide activities not tied to any specific lot">N/A</button>
+                </div>
+            </div>
+        @endif
+
+        <div>
+            <label class="text-xs font-semibold text-gray-500">Display</label>
+            <div class="mt-1.5">
+                <button type="button" id="toggleHiddenBtn" class="btn btn-white btn-sm {{ $hiddenCount ? '' : 'hidden' }}">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
+                    <span id="toggleHiddenLabel">Show Hidden ({{ $hiddenCount }})</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" id="clearFiltersBtn" class="btn btn-ghost">Clear filters</button>
+        <button type="button" data-sheet-close class="btn btn-primary">Done</button>
     </div>
 </div>
 
@@ -439,4 +473,54 @@
     'activeVersion' => $activeVersion,
     'draftsCount' => $draftsCount,
 ])
+<script>
+    // Filter-sheet extras: active-filter count badge on the toolbar button, and
+    // a "Clear filters" action. Reuses the events the activities filter logic
+    // already listens to (input + chips:change), so no duplication of logic.
+    (function activityFilterSheet() {
+        const byId = (id) => document.getElementById(id);
+
+        function countActive() {
+            let n = (byId('activitySearchInput')?.value || '').trim() ? 1 : 0;
+            n += document.querySelectorAll('#typeFilterChips .chip.is-selected').length;
+            n += document.querySelectorAll('#lotFilterChips .chip.is-selected').length;
+            return n;
+        }
+        function refreshBadge() {
+            const badge = byId('activeFilterCount');
+            if (!badge) return;
+            const n = countActive();
+            badge.textContent = n;
+            badge.classList.toggle('hidden', n === 0);
+            badge.classList.toggle('inline-flex', n > 0);
+        }
+
+        byId('activitySearchInput')?.addEventListener('input', refreshBadge);
+        document.addEventListener('chips:change', (e) => {
+            const id = e.target?.id;
+            if (id === 'typeFilterChips' || id === 'lotFilterChips') refreshBadge();
+        });
+
+        byId('clearFiltersBtn')?.addEventListener('click', () => {
+            const search = byId('activitySearchInput');
+            if (search && search.value) {
+                search.value = '';
+                search.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+            ['typeFilterChips', 'lotFilterChips'].forEach((gid) => {
+                const group = byId(gid);
+                if (!group) return;
+                let changed = false;
+                group.querySelectorAll('.chip.is-selected').forEach((c) => {
+                    c.classList.remove('is-selected');
+                    changed = true;
+                });
+                if (changed) group.dispatchEvent(new CustomEvent('chips:change', { bubbles: true }));
+            });
+            refreshBadge();
+        });
+
+        refreshBadge();
+    })();
+</script>
 @endpush
