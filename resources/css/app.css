@@ -125,18 +125,32 @@ h1, h2, h3, h4, h5, h6 {
 /* Bottom-sheet modal on mobile, centered dialog on >=sm */
 .sheet-backdrop {
     @apply fixed inset-0 z-40 bg-ink/50 opacity-0 transition-opacity duration-200;
+    pointer-events: none; /* never swallow clicks while closed */
 }
-.sheet-backdrop.is-open { @apply opacity-100; }
+.sheet-backdrop.is-open { @apply opacity-100; pointer-events: auto; }
 .sheet {
-    @apply fixed z-50 inset-x-0 bottom-0 bg-white rounded-t-3xl shadow-2xl flex flex-col overflow-hidden
-        transition-transform duration-300 ease-out;
+    @apply fixed z-50 inset-x-0 bottom-0 bg-white rounded-t-3xl shadow-2xl flex flex-col overflow-hidden;
     max-height: 92dvh;
     /* Explicit transform (not Tailwind's translate-y-full, which sets the CSS
        `translate` property and would stack on top of the desktop centering
        transform below — pushing the dialog too far down). */
     transform: translateY(100%);
+    /* A closed sheet must never intercept clicks. The `hidden` utility can't be
+       relied on here: this component sets display:flex, which wins over
+       .hidden's display:none by source order — leaving an invisible full-size
+       overlay swallowing every click. visibility + pointer-events are scoped to
+       this class, so they always win. Visibility flips only after the close
+       animation finishes. */
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.3s ease-out, visibility 0s linear 0.3s;
 }
-.sheet.is-open { transform: translateY(0); }
+.sheet.is-open {
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+    transition: transform 0.3s ease-out, visibility 0s;
+}
 @media (min-width: 640px) {
     .sheet {
         @apply inset-auto rounded-2xl;
@@ -145,9 +159,13 @@ h1, h2, h3, h4, h5, h6 {
         opacity: 0;
         width: min(94vw, var(--sheet-width, 40rem));
         max-height: min(85vh, 48rem);
-        transition: opacity 0.18s ease-out, transform 0.18s ease-out;
+        transition: opacity 0.18s ease-out, transform 0.18s ease-out, visibility 0s linear 0.18s;
     }
-    .sheet.is-open { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    .sheet.is-open {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        transition: opacity 0.18s ease-out, transform 0.18s ease-out, visibility 0s;
+    }
 }
 .sheet-handle { @apply mx-auto mt-3 mb-1 h-1.5 w-12 rounded-full bg-gray-300 sm:hidden; }
 .sheet-header { @apply flex items-center justify-between gap-3 px-5 pt-3 pb-3 border-b border-gray-100 shrink-0; }
