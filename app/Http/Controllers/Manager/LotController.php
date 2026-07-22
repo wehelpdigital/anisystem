@@ -18,7 +18,7 @@ class LotController extends BaseScheduleController
     public function page(Request $request)
     {
         $schedule = $this->schedule($request->query('id'));
-        $schedule->load('lots');
+        $schedule->load(['lots', 'defaultGroupings.lots']);
 
         return view('sm.lots', compact('schedule'));
     }
