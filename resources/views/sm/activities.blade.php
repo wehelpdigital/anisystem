@@ -49,6 +49,16 @@
 
         .activity-card { border: 1px solid #eef0f3; border-radius: .85rem; background: #fff; padding: .7rem .85rem; }
         .activity-card[draggable="true"] { cursor: grab; }
+        /* Let the drag start from anywhere on the card (title, body, chips).
+           Without this the browser starts a text selection instead. */
+        .activity-card { user-select: none; -webkit-user-select: none; }
+        .activity-card img { -webkit-user-drag: none; }
+        /* The date header drags the whole day's activities to another date. */
+        .date-header[draggable="true"] { cursor: grab; }
+        .date-header.dragging { opacity: .55; }
+        .date-group.drag-over-group { outline: 2px dashed var(--date-color, #4A90E2); outline-offset: 2px; }
+        /* "Hide empty dates" filter */
+        body.hide-empty-dates .rest-day-marker { display: none; }
         .activity-card.dragging { opacity: .45; }
         .activity-card-image img { max-width: 100%; max-height: 260px; border-radius: .6rem; border: 1px solid #eef0f3; }
         .activity-description-content p { margin: .25rem 0; }
@@ -319,12 +329,17 @@
 
         <div>
             <label class="text-xs font-semibold text-gray-500">Display</label>
-            <div class="mt-1.5">
+            <div class="mt-1.5 flex flex-wrap gap-2">
+                <button type="button" id="toggleEmptyDatesBtn" class="btn btn-white btn-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v3m8-3v3M4 9h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>
+                    <span id="toggleEmptyDatesLabel">Hide empty dates</span>
+                </button>
                 <button type="button" id="toggleHiddenBtn" class="btn btn-white btn-sm {{ $hiddenCount ? '' : 'hidden' }}">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
                     <span id="toggleHiddenLabel">Show Hidden ({{ $hiddenCount }})</span>
                 </button>
             </div>
+            <p class="form-hint">Empty dates are the "no activities scheduled" rows between your working days.</p>
         </div>
     </div>
     <div class="sheet-footer">
@@ -404,7 +419,7 @@
                     </div>
                 @endif
                 <div class="date-group date-color-{{ $item['color'] }} {{ $allHidden ? 'all-hidden' : '' }}" data-date="{{ $dateKey }}">
-                    <div class="date-header">
+                    <div class="date-header"@if ($dateCarbon) draggable="true" title="Drag this header to move the whole day to another date"@endif>
                         @if ($dateCarbon)
                             <span class="date-header-day">{{ $dateCarbon->format('D') }}</span>
                             <span class="date-header-date">{{ $dateCarbon->format('M j, Y') }}</span>
@@ -494,6 +509,20 @@
             badge.classList.toggle('hidden', n === 0);
             badge.classList.toggle('inline-flex', n > 0);
         }
+
+        // "Hide empty dates" — collapses the rest-day rows. Persisted per schedule.
+        const HIDE_EMPTY_KEY = 'hideEmptyDates:' + @json($schedule->id);
+        function applyHideEmpty(on) {
+            document.body.classList.toggle('hide-empty-dates', on);
+            const label = byId('toggleEmptyDatesLabel');
+            if (label) label.textContent = on ? 'Show empty dates' : 'Hide empty dates';
+            byId('toggleEmptyDatesBtn')?.classList.toggle('btn-primary', on);
+            try { localStorage.setItem(HIDE_EMPTY_KEY, on ? '1' : '0'); } catch (_) { /* noop */ }
+        }
+        byId('toggleEmptyDatesBtn')?.addEventListener('click', () => {
+            applyHideEmpty(!document.body.classList.contains('hide-empty-dates'));
+        });
+        try { applyHideEmpty(localStorage.getItem(HIDE_EMPTY_KEY) === '1'); } catch (_) { /* noop */ }
 
         byId('activitySearchInput')?.addEventListener('input', refreshBadge);
         document.addEventListener('chips:change', (e) => {

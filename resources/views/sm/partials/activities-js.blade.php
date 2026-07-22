@@ -473,7 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const wrap = document.createElement('div');
         wrap.innerHTML = `<div class="date-group date-color-${colorIdx}${allHidden ? ' all-hidden' : ''}" data-date="${esc(dateKey)}">
-            <div class="date-header">
+            <div class="date-header"${dateObj ? ' draggable="true" title="Drag this header to move the whole day to another date"' : ''}>
                 ${headerDate}
                 <span class="date-header-count">${count} ${count === 1 ? 'activity' : 'activities'}</span>
                 ${buttons}
@@ -1579,24 +1579,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    $id('confirmChangeGroupDateBtn')?.addEventListener('click', async (e) => {
-        const btn = e.currentTarget;
-        const oldDate = ($id('changeGroupDateOld').value || '').trim();
-        const newDate = ($id('changeGroupDateNew').value || '').trim();
-        if (!oldDate) return;
-        if (!newDate) {
-            toast('Pick a new date.', 'error');
-            return;
-        }
+    /**
+     * Move every activity of one date group to another date, preserving each
+     * card's duration and order. Shared by the "change group date" sheet and by
+     * dragging a date header onto another day.
+     */
+    async function moveGroupToDate(oldDate, newDate) {
+        if (!oldDate || !newDate) return false;
         if (newDate === oldDate) {
             toast('That is already the current date.', 'info');
-            return;
+            return false;
         }
         const cards = $qsa(`#activitiesList .date-group[data-date="${oldDate}"] .activity-card[data-id]`);
         if (cards.length === 0) {
             toast('No activities to move.', 'error');
-            closeSheet('changeGroupDateSheet');
-            return;
+            return false;
         }
 
         const delta = isoDaysBetween(oldDate, newDate);
@@ -1611,7 +1608,6 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         });
 
-        btn.disabled = true;
         try {
             await api(U.reorder(), { method: 'POST', body: { items } });
             items.forEach((it) => {
@@ -1622,11 +1618,30 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             reorderAndRenumberActivities();
             recomputeLotDayZero();
-            closeSheet('changeGroupDateSheet');
             toast(`Moved ${items.length} ${items.length === 1 ? 'activity' : 'activities'} to ${newDate}`);
             pushUndo(`Move group from ${oldDate} to ${newDate}`, () => restoreBoardSnapshot(snapshot));
+            return true;
         } catch (err) {
             toast(err.message, 'error');
+            return false;
+        }
+    }
+
+    $id('confirmChangeGroupDateBtn')?.addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+        const oldDate = ($id('changeGroupDateOld').value || '').trim();
+        const newDate = ($id('changeGroupDateNew').value || '').trim();
+        if (!oldDate) return;
+        if (!newDate) {
+            toast('Pick a new date.', 'error');
+            return;
+        }
+
+        btn.disabled = true;
+        try {
+            if (await moveGroupToDate(oldDate, newDate)) {
+                closeSheet('changeGroupDateSheet');
+            }
         } finally {
             btn.disabled = false;
         }
@@ -1888,8 +1903,23 @@ document.addEventListener('DOMContentLoaded', () => {
     let dragSourceCard = null;
     let dragOrigin = null;
     let dragBoardSnapshot = null;
+    let dragGroupDate = null; // set while dragging a date header (whole-day move)
 
     document.addEventListener('dragstart', (e) => {
+        // Dragging a date header moves that whole day's activities.
+        const header = e.target.closest && e.target.closest('.date-header[draggable="true"]');
+        if (header) {
+            const groupDate = (header.closest('.date-group')?.getAttribute('data-date') || '').trim();
+            if (!groupDate || groupDate === '__no-date__') return;
+            dragGroupDate = groupDate;
+            header.classList.add('dragging');
+            if (e.dataTransfer) {
+                e.dataTransfer.effectAllowed = 'move';
+                try { e.dataTransfer.setData('text/plain', 'group:' + groupDate); } catch (_) { /* noop */ }
+            }
+            return;
+        }
+
         const card = e.target.closest && e.target.closest('.activity-card[data-id]');
         if (!card) return;
         dragSourceCard = card;
@@ -1910,9 +1940,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('dragend', (e) => {
         const card = e.target.closest && e.target.closest('.activity-card');
         card?.classList.remove('dragging');
-        $qsa('.date-activities.drag-over, .rest-day-marker.drag-over').forEach((el) => el.classList.remove('drag-over'));
+        $qsa('.date-header.dragging').forEach((el) => el.classList.remove('dragging'));
+        $qsa('.date-activities.drag-over, .rest-day-marker.drag-over, .date-group.drag-over-group')
+            .forEach((el) => el.classList.remove('drag-over', 'drag-over-group'));
         dragSourceCard = null;
         dragOrigin = null;
+        dragGroupDate = null;
     });
 
     function dragoverPosition(container, cursorY) {
@@ -1925,6 +1958,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener('dragover', (e) => {
+        // Whole-day move: highlight the day (or empty day) being hovered.
+        if (dragGroupDate) {
+            const targetGroup = e.target.closest && e.target.closest('.date-group');
+            const targetRest = e.target.closest && e.target.closest('.rest-day-marker');
+            const targetDate = (targetGroup?.getAttribute('data-date') || targetRest?.getAttribute('data-date') || '').trim();
+            if (!targetDate || targetDate === '__no-date__' || targetDate === dragGroupDate) return;
+            e.preventDefault();
+            if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+            $qsa('.date-group.drag-over-group, .rest-day-marker.drag-over')
+                .forEach((el) => el.classList.remove('drag-over-group', 'drag-over'));
+            if (targetRest) targetRest.classList.add('drag-over');
+            else targetGroup.classList.add('drag-over-group');
+            return;
+        }
+
         if (!dragSourceCard) return;
         const container = e.target.closest && e.target.closest('.date-activities');
         if (container) {
@@ -1955,6 +2003,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.addEventListener('drop', (e) => {
+        // Whole-day move via the date header.
+        if (dragGroupDate) {
+            const targetGroup = e.target.closest && e.target.closest('.date-group');
+            const targetRest = e.target.closest && e.target.closest('.rest-day-marker');
+            const targetDate = (targetGroup?.getAttribute('data-date') || targetRest?.getAttribute('data-date') || '').trim();
+            const sourceDate = dragGroupDate;
+            $qsa('.date-group.drag-over-group, .rest-day-marker.drag-over')
+                .forEach((el) => el.classList.remove('drag-over-group', 'drag-over'));
+            dragGroupDate = null;
+            if (!targetDate || targetDate === '__no-date__' || targetDate === sourceDate) return;
+            e.preventDefault();
+            moveGroupToDate(sourceDate, targetDate);
+            return;
+        }
+
         if (!dragSourceCard) return;
         const container = e.target.closest && e.target.closest('.date-activities');
         if (container) {
