@@ -20,7 +20,9 @@ Route::post('/contact', [App\Http\Controllers\PublicController::class, 'submitCo
 |--------------------------------------------------------------------------
 */
 
-Route::middleware('guest')->group(function () {
+// `no-cache` keeps the browser/bfcache from re-serving these forms with a
+// stale CSRF token, which is what produces intermittent 419s on login.
+Route::middleware(['guest', 'no-cache'])->group(function () {
     Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'show'])->name('login');
     Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login.attempt');
 
