@@ -306,8 +306,8 @@
             Labor
         </button>
         <button type="button" data-sheet-open="filtersSheet" class="btn btn-white btn-sm relative">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4h18M6 10h12M10 16h4"/></svg>
-            Filters
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
+            Search
             <span id="activeFilterCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-brand-600 text-white text-[10px] font-bold items-center justify-center">0</span>
         </button>
         <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm ml-auto hidden md:inline-flex">
@@ -321,7 +321,7 @@
 <div class="sheet hidden" id="filtersSheet" style="--sheet-width: 30rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Filter activities</h3>
+        <h3 class="sheet-title">Search &amp; filter</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full -mr-1" aria-label="Close">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
         </button>

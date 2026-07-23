@@ -624,9 +624,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function _removeCardById(id) {
-        $qs(`#activitiesList .activity-card[data-id="${id}"]`)?.remove();
-        reorderAndRenumberActivities();
-        recomputeLotDayZero();
+        const el = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
+        const finish = () => {
+            el?.remove();
+            reorderAndRenumberActivities();
+            recomputeLotDayZero();
+        };
+        // Animate the card out so the change is visible rather than instant.
+        if (el && window.animateOut) window.animateOut(el, finish);
+        else finish();
     }
 
     function captureBoardSnapshot() {
