@@ -26,12 +26,18 @@ class AsCroppingSchedule extends BaseModel
         'status',
         'isActive',
         'deleteStatus',
+        'isPublic',
+        'publishedAt',
+        'publicSummary',
+        'publicRegion',
     ];
 
     protected $casts = [
         'defaultStaggerDays' => 'integer',
         'isActive' => 'boolean',
         'deleteStatus' => 'integer',
+        'isPublic' => 'boolean',
+        'publishedAt' => 'datetime',
     ];
 
     /**
@@ -48,6 +54,12 @@ class AsCroppingSchedule extends BaseModel
     public function scopeForClient($q, $userId)
     {
         return $q->where('anisystemUserId', $userId);
+    }
+
+    /** The AniSystem client who owns this schedule. */
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'anisystemUserId');
     }
 
     public function lots()

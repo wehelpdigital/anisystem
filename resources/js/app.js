@@ -165,6 +165,9 @@ window.api = async function api(url, { method = 'GET', body = null, headers = {}
         const err = new Error(msg);
         err.status = res.status;
         err.errors = json?.errors || null;
+        // Some endpoints explain a rejection in `data` (e.g. why a plan is not
+        // ready to publish), so callers can render something better than `msg`.
+        err.data = json?.data || null;
         throw err;
     }
 

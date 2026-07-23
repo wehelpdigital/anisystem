@@ -149,6 +149,14 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-activities-drafts', [App\Http\Controllers\Manager\ActivityController::class, 'listDrafts'])->name('sm.activities.drafts');
     Route::get('/app/sm-activities-readiness', [App\Http\Controllers\Manager\ActivityController::class, 'readiness'])->name('sm.activities.readiness');
 
+    // --- Community: browse, question and rate published plans ---
+    Route::get('/app/community', [App\Http\Controllers\CommunityController::class, 'index'])->name('community.index');
+    Route::get('/app/community-plan', [App\Http\Controllers\CommunityController::class, 'show'])->name('community.show');
+    Route::post('/app/community-publish', [App\Http\Controllers\CommunityController::class, 'togglePublish'])->name('community.publish');
+    Route::post('/app/community-comment', [App\Http\Controllers\CommunityController::class, 'comment'])->name('community.comment');
+    Route::delete('/app/community-comment-delete', [App\Http\Controllers\CommunityController::class, 'deleteComment'])->name('community.comment.delete');
+    Route::post('/app/community-rate', [App\Http\Controllers\CommunityController::class, 'rate'])->name('community.rate');
+
     // Post-harvest observations
     Route::get('/app/sm-post-harvest', [App\Http\Controllers\Manager\PostHarvestController::class, 'page'])->name('sm.post-harvest');
     Route::post('/app/sm-post-harvest-store', [App\Http\Controllers\Manager\PostHarvestController::class, 'store'])->name('sm.post-harvest.store');
