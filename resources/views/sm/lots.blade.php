@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
-@section('title', 'Lots — ' . $schedule->title)
+@section('title', 'Lots â€” ' . $schedule->title)
 @section('page-title', 'Lots')
 @section('page-subtitle', $schedule->title)
 @section('back', route('sm.hub', ['id' => $schedule->id]))
@@ -40,7 +40,7 @@
                 </div>
 
                 <div id="groupsNoLots" class="rounded-xl bg-blue-50 border border-blue-100 text-blue-800 text-sm px-4 py-3 {{ $schedule->lots->isEmpty() ? '' : 'hidden' }}">
-                    Add at least one lot first — groupings are collections of lots.
+                    Add at least one lot first â€” groupings are collections of lots.
                 </div>
 
                 <div id="groupsList" class="space-y-3"></div>
@@ -70,14 +70,14 @@
     <div class="sheet-handle"></div>
     <div class="sheet-header">
         <h3 class="sheet-title" id="lotSheetTitle">Add Lot</h3>
-        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">âœ•</button>
     </div>
     <div class="sheet-body space-y-4">
         <input type="hidden" id="lotId" value="">
 
         <div>
             <label for="lotName" class="form-label">Lot Name <span class="text-red-500">*</span></label>
-            <input type="text" id="lotName" maxlength="255" class="form-input" placeholder="e.g. Lot A — riverside">
+            <input type="text" id="lotName" maxlength="255" class="form-input" placeholder="e.g. Lot A â€” riverside">
         </div>
 
         <div class="grid grid-cols-2 gap-3">
@@ -106,12 +106,12 @@
                 <input type="date" id="lotDayZeroDate" class="form-input">
                 <button type="button" id="lotDayZeroDateClear" class="btn btn-ghost shrink-0" title="Clear date">Clear</button>
             </div>
-            <p class="form-hint">Anchor for {{ $schedule->dayType }} labels — day numbers count from this date.</p>
+            <p class="form-hint">Anchor for {{ $schedule->dayType }} labels â€” day numbers count from this date.</p>
         </div>
 
         <div>
             <label for="lotNotes" class="form-label">Notes</label>
-            <textarea id="lotNotes" rows="3" maxlength="2000" class="form-textarea" placeholder="Anything worth remembering about this lot…"></textarea>
+            <textarea id="lotNotes" rows="3" maxlength="2000" class="form-textarea" placeholder="Anything worth remembering about this lotâ€¦"></textarea>
         </div>
     </div>
     <div class="sheet-footer">
@@ -139,7 +139,8 @@
     ])->values();
 @endphp
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+(() => {
+const __init = () => {
     const SCHEDULE_ID = {{ $schedule->id }};
     const DAY_TYPE = @json($schedule->dayType);
     let LOTS = @json($jsLots);
@@ -348,7 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div>
                 <label class="form-label">Start date</label>
                 <input type="date" class="form-input group-start-date" value="${escapeHtml(g.startDate || '')}">
-                <p class="form-hint">Day 0 for this group — irrigation day ranges count from here.</p>
+                <p class="form-hint">Day 0 for this group â€” irrigation day ranges count from here.</p>
             </div>
             <div>
                 <span class="form-label">Lots in this group</span>
@@ -419,6 +420,11 @@ document.addEventListener('DOMContentLoaded', () => {
     refreshGroupsEmptyHint();
 
     renderList();
-});
+};
+    // First load: wait for app.js (deferred) to define the globals.
+    // SPA injection: document is already complete, so run now.
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', __init, { once: true });
+    else __init();
+})();
 </script>
 @endpush

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
 @section('title', 'Irrigation')
 @section('page-title', 'Irrigation')
@@ -26,11 +26,11 @@
 
     {{-- How the priority bands work --}}
     <div class="card p-4 mb-4 bg-brand-50/60 border-brand-100 flex items-start gap-3">
-        <span class="text-xl leading-none shrink-0 mt-0.5">💧</span>
+        <span class="text-xl leading-none shrink-0 mt-0.5">ðŸ’§</span>
         <p class="text-sm text-gray-700">
-            Irrigation entries paint water-management <strong>bands</strong> on the calendar — anchored to each
+            Irrigation entries paint water-management <strong>bands</strong> on the calendar â€” anchored to each
             lot group's start date (DAS mode) or to fixed dates. When bands overlap on a day, the
-            <strong>lower priority number wins</strong> — a P1 Drain splits a P5 Irrigate band.
+            <strong>lower priority number wins</strong> â€” a P1 Drain splits a P5 Irrigate band.
         </p>
     </div>
 
@@ -45,9 +45,9 @@
     <div id="irrigationsList" data-animate-list></div>
 
     <div id="irrEmpty" class="card p-8 text-center hidden">
-        <p class="text-3xl mb-2">💧</p>
+        <p class="text-3xl mb-2">ðŸ’§</p>
         <p class="font-bold text-gray-900 mb-1">No irrigation entries yet</p>
-        <p class="text-sm text-gray-500">Add your first water-management window — irrigate, maintain, drain and more.</p>
+        <p class="text-sm text-gray-500">Add your first water-management window â€” irrigate, maintain, drain and more.</p>
     </div>
 
     {{-- Mobile floating action button --}}
@@ -62,13 +62,13 @@
         <div class="sheet-handle"></div>
         <div class="sheet-header">
             <h3 class="sheet-title" id="irrSheetTitle">Add Irrigation Entry</h3>
-            <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+            <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">âœ•</button>
         </div>
         <div class="sheet-body">
             <div class="space-y-4">
                 <div>
                     <label class="form-label" for="irrTitle">Title <span class="text-red-500">*</span></label>
-                    <input type="text" id="irrTitle" class="form-input" maxlength="255" placeholder="e.g. Establish 3–5 cm water level">
+                    <input type="text" id="irrTitle" class="form-input" maxlength="255" placeholder="e.g. Establish 3â€“5 cm water level">
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -83,13 +83,13 @@
                     <div>
                         <label class="form-label" for="irrPriority">Priority</label>
                         <select id="irrPriority" class="form-select">
-                            <option value="1">P1 — Highest</option>
+                            <option value="1">P1 â€” Highest</option>
                             <option value="2">P2</option>
                             <option value="3">P3</option>
                             <option value="4">P4</option>
-                            <option value="5" selected>P5 — Lowest (default)</option>
+                            <option value="5" selected>P5 â€” Lowest (default)</option>
                         </select>
-                        <p class="form-hint">Lower number wins on overlapping days — a P1 Drain splits a P5 Irrigate band.</p>
+                        <p class="form-hint">Lower number wins on overlapping days â€” a P1 Drain splits a P5 Irrigate band.</p>
                     </div>
                 </div>
 
@@ -154,7 +154,7 @@
                             @endforeach
                         </div>
                     @endif
-                    <p class="form-hint">Optional — assign one or more workers to this window.</p>
+                    <p class="form-hint">Optional â€” assign one or more workers to this window.</p>
                 </div>
             </div>
         </div>
@@ -168,6 +168,7 @@
 @push('scripts')
 <script>
 (function () {
+const __init = () => {
     const SCHEDULE_ID = @json($schedule->id);
     const TASK_TYPES  = @json(\App\Models\AsScheduleIrrigation::TASK_TYPES);
     const TASK_COLORS = @json(\App\Models\AsScheduleIrrigation::TASK_TYPE_COLORS);
@@ -187,7 +188,7 @@
     const LOT_NAMES    = Object.fromEntries(LOTS.map((l) => [l.id, l.lotName]));
     const WORKER_NAMES = Object.fromEntries(WORKERS.map((w) => [w.id, w.workerName]));
 
-    // Mother palette: P1 darkest red → P5 light gray.
+    // Mother palette: P1 darkest red â†’ P5 light gray.
     const PRIO_STYLES = {
         1: ['#9c1c1c', '#ffffff'],
         2: ['#c0392b', '#ffffff'],
@@ -234,7 +235,7 @@
         if (!start) return '';
         if (!end || end === start) return fmtDatePart(start, true);
         const sameYear = start.slice(0, 4) === end.slice(0, 4);
-        return `${fmtDatePart(start, !sameYear)} — ${fmtDatePart(end, true)}`;
+        return `${fmtDatePart(start, !sameYear)} â€” ${fmtDatePart(end, true)}`;
     }
 
     function taskMeta(slug) {
@@ -249,7 +250,7 @@
 
         const rangeBadge = irr.dayMode === 'date'
             ? `<span class="badge badge-gray">${escapeHtml(fmtDateRange(irr.startDate, irr.endDate))}</span>`
-            : `<span class="badge badge-blue">DAS ${irr.startDay} — ${irr.endDay}</span>`;
+            : `<span class="badge badge-blue">DAS ${irr.startDay} â€” ${irr.endDay}</span>`;
 
         const lotChips = irr.lotIds.length
             ? irr.lotIds.map((id) => `<span class="irr-chip-lot">${escapeHtml(LOT_NAMES[id] || 'Lot #' + id)}</span>`).join(' ')
@@ -386,7 +387,7 @@
             endDate: endDate,
             taskType: document.getElementById('irrTaskType').value,
             priority: parseInt(document.getElementById('irrPriority').value, 10) || 5,
-            assignedWorkerId: null, // legacy single-worker column — back-filled server-side from workerIds
+            assignedWorkerId: null, // legacy single-worker column â€” back-filled server-side from workerIds
             workerIds: workersGroup ? chipValues(workersGroup).map(Number) : [],
             lotIds: lotsGroup ? chipValues(lotsGroup).map(Number) : [],
         };
@@ -484,7 +485,7 @@
     }
 
     /* Desktop drag-drop: cards are draggable, but only when the drag starts
-       on the handle — otherwise text selection inside the card would fight
+       on the handle â€” otherwise text selection inside the card would fight
        the drag gesture. */
     let dragCard = null;
 
@@ -528,6 +529,10 @@
     });
 
     renderList();
+};
+    // Wait for app.js globals on first load; run at once when SPA-injected.
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', __init, { once: true });
+    else __init();
 })();
 </script>
 @endpush

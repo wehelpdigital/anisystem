@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
-@section('title', 'Workers — ' . $schedule->title)
+@section('title', 'Workers â€” ' . $schedule->title)
 @section('page-title', 'Workers')
 @section('page-subtitle', $schedule->title)
 @section('back', route('sm.hub', ['id' => $schedule->id]))
@@ -24,7 +24,7 @@
                     <svg class="w-7 h-7 text-brand-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
                 </div>
                 <h2 class="font-bold text-gray-900 mb-1">No workers yet</h2>
-                <p class="text-sm text-gray-500 mb-4">Add the people who will work this schedule — their cost, skills and off days feed labor costs and assignments.</p>
+                <p class="text-sm text-gray-500 mb-4">Add the people who will work this schedule â€” their cost, skills and off days feed labor costs and assignments.</p>
                 <button type="button" class="btn btn-primary" data-add-worker>Add your first worker</button>
             </div>
         </div>
@@ -44,7 +44,7 @@
     <div class="sheet-handle"></div>
     <div class="sheet-header">
         <h3 class="sheet-title" id="workerSheetTitle">Add Worker</h3>
-        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">âœ•</button>
     </div>
     <div class="sheet-body space-y-4">
         <input type="hidden" id="workerId" value="">
@@ -58,7 +58,7 @@
             <div>
                 <label for="workerCost" class="form-label">Cost / Half Day</label>
                 <div class="relative">
-                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-semibold pointer-events-none">₱</span>
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-semibold pointer-events-none">â‚±</span>
                     <input type="number" id="workerCost" min="0" step="0.01" class="form-input pl-9!" placeholder="0.00">
                 </div>
             </div>
@@ -80,7 +80,7 @@
 
         <div>
             <label for="workerNotes" class="form-label">Notes</label>
-            <textarea id="workerNotes" rows="3" maxlength="2000" class="form-textarea" placeholder="Anything worth remembering about this worker…"></textarea>
+            <textarea id="workerNotes" rows="3" maxlength="2000" class="form-textarea" placeholder="Anything worth remembering about this workerâ€¦"></textarea>
         </div>
     </div>
     <div class="sheet-footer">
@@ -94,7 +94,7 @@
     <div class="sheet-handle"></div>
     <div class="sheet-header">
         <h3 class="sheet-title" id="rulesSheetTitle">Availability Rules</h3>
-        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">âœ•</button>
     </div>
     <div class="sheet-body space-y-5">
         <input type="hidden" id="rulesWorkerId" value="">
@@ -140,7 +140,8 @@
     ])->values();
 @endphp
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+(() => {
+const __init = () => {
     const SCHEDULE_ID = {{ $schedule->id }};
     const SKILLS = @json(\App\Models\AsScheduleWorker::SKILLS);
     const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -160,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if ((w.offDates || []).length) {
             parts.push(`${w.offDates.length} off ${w.offDates.length === 1 ? 'date' : 'dates'}`);
         }
-        return parts.length ? parts.join(' · ') : 'No off rules';
+        return parts.length ? parts.join(' Â· ') : 'No off rules';
     }
 
     function workerCardHtml(w) {
@@ -173,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="flex items-start justify-between gap-3">
                     <div class="min-w-0">
                         <div class="flex items-center gap-2 flex-wrap mb-1">
-                            <span class="badge bg-brand-600 text-white" title="Priority — 1 is first pick">#${Number(w.priority) || 1}</span>
+                            <span class="badge bg-brand-600 text-white" title="Priority â€” 1 is first pick">#${Number(w.priority) || 1}</span>
                             <h3 class="font-bold text-gray-900">${escapeHtml(w.workerName)}</h3>
                         </div>
                         <p class="text-sm text-gray-600 mb-1.5">${fmtPeso(w.costPerHalfDay)} <span class="text-gray-400">/ half day</span></p>
@@ -281,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .map((d) => `
                 <span class="badge badge-orange py-1.5! px-3! text-sm!">
                     ${escapeHtml(fmtDate(d))}
-                    <button type="button" class="ml-1 font-bold" data-remove-off-date="${escapeHtml(d)}" aria-label="Remove ${escapeHtml(d)}">✕</button>
+                    <button type="button" class="ml-1 font-bold" data-remove-off-date="${escapeHtml(d)}" aria-label="Remove ${escapeHtml(d)}">âœ•</button>
                 </span>`)
             .join('');
         document.getElementById('offDatesEmpty').classList.toggle('hidden', offDatesState.length > 0);
@@ -289,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function openRulesSheet(worker) {
         document.getElementById('rulesWorkerId').value = worker.id;
-        document.getElementById('rulesSheetTitle').textContent = `Rules — ${worker.workerName}`;
+        document.getElementById('rulesSheetTitle').textContent = `Rules â€” ${worker.workerName}`;
         document.getElementById('rulesDateInput').value = '';
 
         // Prefill from local state, then refresh from the server.
@@ -409,6 +410,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     renderList();
-});
+};
+    // First load: wait for app.js (deferred) to define the globals.
+    // SPA injection: document is already complete, so run now.
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', __init, { once: true });
+    else __init();
+})();
 </script>
 @endpush

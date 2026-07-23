@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
-@section('title', 'Services — ' . $schedule->title)
+@section('title', 'Services â€” ' . $schedule->title)
 @section('page-title', 'Services')
 @section('page-subtitle', $schedule->title)
 @section('back', route('sm.hub', ['id' => $schedule->id]))
@@ -21,7 +21,7 @@
             <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0 grow">
                     <h3 class="font-bold text-gray-900 leading-snug js-name">{{ $s->serviceName }}</h3>
-                    <p class="text-sm font-semibold text-brand-700 mt-1 js-cost">₱ {{ number_format((float) $s->serviceCost, 2) }}</p>
+                    <p class="text-sm font-semibold text-brand-700 mt-1 js-cost">â‚± {{ number_format((float) $s->serviceCost, 2) }}</p>
                     @if (filled($s->description))
                         <p class="text-sm text-gray-500 mt-1 js-desc">{{ $s->description }}</p>
                     @else
@@ -45,7 +45,7 @@
 <div class="card p-8 text-center {{ $schedule->services->isEmpty() ? '' : 'hidden' }}" id="servicesEmpty">
     <svg class="w-12 h-12 mx-auto text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085"/></svg>
     <p class="font-semibold text-gray-700 mt-3">No services yet</p>
-    <p class="text-sm text-gray-500 mt-1">Add outside services — tractor rental, drone spray, hauling — so you can attach them to activities.</p>
+    <p class="text-sm text-gray-500 mt-1">Add outside services â€” tractor rental, drone spray, hauling â€” so you can attach them to activities.</p>
     <button type="button" class="btn btn-primary mt-4" data-service-add>Add Service</button>
 </div>
 
@@ -61,7 +61,7 @@
     <div class="sheet-handle"></div>
     <div class="sheet-header">
         <h3 class="sheet-title" id="serviceSheetTitle">Add Service</h3>
-        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">âœ•</button>
     </div>
     <div class="sheet-body">
         <input type="hidden" id="serviceId" value="">
@@ -71,12 +71,12 @@
         </div>
         <div class="mb-4">
             <label class="form-label" for="serviceDescription">Description</label>
-            <textarea id="serviceDescription" class="form-textarea" rows="2" maxlength="2000" placeholder="Optional notes about this service…"></textarea>
+            <textarea id="serviceDescription" class="form-textarea" rows="2" maxlength="2000" placeholder="Optional notes about this serviceâ€¦"></textarea>
         </div>
         <div class="mb-2">
             <label class="form-label" for="serviceCost">Cost <span class="text-red-500">*</span></label>
             <div class="flex items-center gap-2">
-                <span class="text-gray-600 font-semibold">₱</span>
+                <span class="text-gray-600 font-semibold">â‚±</span>
                 <input type="number" id="serviceCost" class="form-input" step="0.01" min="0" value="0" inputmode="decimal">
             </div>
         </div>
