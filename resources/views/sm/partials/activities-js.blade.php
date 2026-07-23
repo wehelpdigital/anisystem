@@ -1511,8 +1511,8 @@ document.addEventListener('DOMContentLoaded', () => {
         reorderAndRenumberActivities();   // recompute all-hidden groups + substitutes
 
         try {
-            const res = await api(U.toggleHidden(id), { method: 'POST' });
-            toast(res.message);
+            await api(U.toggleHidden(id), { method: 'POST' });
+            toast(wantHide ? 'Activity hidden' : 'Activity shown');
         } catch (err) {
             toast(err.message, 'error');
             const cardNow = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
@@ -2900,13 +2900,19 @@ document.addEventListener('DOMContentLoaded', () => {
         return hero + workerTable + activitySection;
     }
 
-    $id('openLaborBtn')?.addEventListener('click', () => {
+    // The Report button opens a picker first; for now the only report is the
+    // labor costing, but the picker is where future reports slot in.
+    $id('openReportBtn')?.addEventListener('click', () => openSheet('reportPickerSheet'));
+
+    function openLaborReport() {
+        closeSheet('reportPickerSheet');
         // Reset filters every open so the unfiltered grand total shows first.
         $qsa('#laborGroupsContainer .chip, #laborWorkersContainer .chip').forEach((c) => c.classList.remove('is-selected'));
         ['laborDasMin', 'laborDasMax', 'laborStartDate', 'laborEndDate'].forEach((i) => { if ($id(i)) $id(i).value = ''; });
         openSheet('laborSheet');
         reloadLaborSummary();
-    });
+    }
+    $id('reportLaborBtn')?.addEventListener('click', openLaborReport);
 
     $id('laborApplyFiltersBtn')?.addEventListener('click', reloadLaborSummary);
     $id('laborResetFiltersBtn')?.addEventListener('click', () => {
@@ -3200,8 +3206,23 @@ document.addEventListener('DOMContentLoaded', () => {
         return $qs('#versionStrip .version-chip[data-is-active="1"]');
     }
 
+    // A schedule may hold at most 4 versions (Original + 3). Hide the add
+    // button once the limit is reached; the server enforces it regardless.
+    const MAX_VERSIONS = 4;
+    function enforceVersionLimit() {
+        const addBtn = $id('addVersionBtn');
+        if (!addBtn) return;
+        const atLimit = $qsa('#versionStrip .version-chip').length >= MAX_VERSIONS;
+        addBtn.classList.toggle('hidden', atLimit);
+    }
+    enforceVersionLimit();
+
     $id('versionStrip')?.addEventListener('click', async (e) => {
         if (e.target.closest('#addVersionBtn')) {
+            if ($qsa('#versionStrip .version-chip').length >= MAX_VERSIONS) {
+                toast(`You can have at most ${MAX_VERSIONS} versions. Delete one to make room.`, 'error');
+                return;
+            }
             $id('newVersionName').value = '';
             $id('newVersionDescription').value = '';
             const active = activeVersionChip();

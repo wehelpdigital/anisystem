@@ -455,6 +455,29 @@
     </div>
 </div>
 
+{{-- ============================ REPORT PICKER ============================ --}}
+<div class="sheet hidden" id="reportPickerSheet" style="--sheet-width:28rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Generate a report</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-2">
+        <p class="text-sm text-gray-500 mb-1">Which report do you want to generate?</p>
+        <button type="button" id="reportLaborBtn"
+            class="w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50 border border-gray-200">
+            <span class="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </span>
+            <span class="grow">
+                <span class="block">Labor Costings</span>
+                <span class="block text-xs font-normal text-gray-400">Cost of workers across the plan</span>
+            </span>
+            <svg class="w-4 h-4 text-gray-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+    </div>
+</div>
+
 {{-- ============================ LABOR SUMMARY ============================ --}}
 <div class="sheet hidden" id="laborSheet" style="--sheet-width:56rem">
     <div class="sheet-handle"></div>

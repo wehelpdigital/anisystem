@@ -43,9 +43,19 @@ class ActivityVersionController extends BaseScheduleController
      *
      * If sourceVersionId is omitted, the new version starts empty.
      */
+    /** A schedule may hold at most this many versions (including Original). */
+    private const MAX_VERSIONS = 4;
+
     public function store(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request);
+
+        // Cap the number of versions — the client hides the add button at the
+        // limit, but a request can still arrive, so this is the authority.
+        $versionCount = AsScheduleActivityVersion::active()->forSchedule($schedule->id)->count();
+        if ($versionCount >= self::MAX_VERSIONS) {
+            return $this->jsonFail('You can have at most ' . self::MAX_VERSIONS . ' versions. Delete one to make room.', 422);
+        }
 
         $validator = Validator::make($request->all(), [
             'versionName'     => 'required|string|max:120',
