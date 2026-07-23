@@ -335,6 +335,85 @@
             #readinessBtn.has-alerts .readiness-ripple::before { opacity: .5; }
         }
 
+        /* ---- Calendar view -------------------------------------------------
+           A month grid sized so a whole month fits on a phone without
+           scrolling sideways; each day is still a 44px-ish tap target. */
+        .cal-head { display: flex; align-items: center; gap: .4rem; margin-bottom: .6rem; }
+        .cal-grid-head {
+            display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px;
+            margin-bottom: 2px;
+        }
+        .cal-grid-head span {
+            text-align: center; font-size: 10.5px; font-weight: 800; letter-spacing: .04em;
+            text-transform: uppercase; color: var(--tl-text-faint); padding: .3rem 0;
+        }
+        .cal-grid {
+            display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px;
+            background: var(--tl-border); border: 1px solid var(--tl-border);
+            border-radius: .9rem; overflow: hidden;
+        }
+        .cal-day {
+            background: var(--tl-surface); min-height: 4.6rem; padding: .25rem .3rem;
+            display: flex; flex-direction: column; gap: .15rem;
+            text-align: left; cursor: pointer; position: relative;
+            transition: background .12s ease;
+        }
+        .cal-day:hover { background: var(--tl-surface-2); }
+        .cal-day.is-outside { background: var(--tl-rest-bg); }
+        .cal-day.is-outside .cal-daynum { opacity: .35; }
+        .cal-daynum {
+            font-size: 11.5px; font-weight: 700; color: var(--tl-text-muted);
+            line-height: 1.5rem; min-width: 1.5rem; text-align: center; border-radius: 999px;
+        }
+        .cal-day.is-today .cal-daynum { background: var(--color-brand-600); color: #fff; }
+        .cal-day.is-dayzero .cal-daynum { box-shadow: inset 0 0 0 2px #ff9800; }
+        html.dark .cal-day.is-dayzero .cal-daynum { box-shadow: inset 0 0 0 2px #d98b1f; }
+
+        .cal-chip {
+            display: block; width: 100%; font-size: 10.5px; font-weight: 700; line-height: 1.25;
+            border-radius: .3rem; padding: .1rem .25rem;
+            border-left: 3px solid var(--prio-color, #d1d5db);
+            background: var(--tl-surface-2); color: var(--tl-text);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left;
+        }
+        .cal-chip.prio-critical { --prio-color: #9c1c1c; }
+        .cal-chip.prio-high     { --prio-color: #f46a6a; }
+        .cal-chip.prio-medium   { --prio-color: #f1b44c; }
+        .cal-chip.prio-low      { --prio-color: #cbd5e1; }
+        .cal-chip.is-continuation { opacity: .55; font-style: italic; }
+        .cal-more { font-size: 10px; font-weight: 700; color: var(--tl-text-faint); padding-left: .2rem; }
+
+        /* Rows in the day sheet — full-width, unlike the chips in the grid. */
+        .cal-day-row {
+            display: flex; align-items: flex-start; gap: .6rem; width: 100%; text-align: left;
+            border: 1px solid var(--tl-border-soft); border-radius: .75rem;
+            background: var(--tl-surface); padding: .7rem .8rem;
+            transition: background .12s ease;
+        }
+        .cal-day-row:hover { background: var(--tl-surface-2); }
+        .cal-day-rail {
+            width: .25rem; border-radius: 999px; align-self: stretch; flex-shrink: 0;
+            background: var(--prio-color, #d1d5db);
+        }
+        .cal-day-row.prio-critical { --prio-color: #9c1c1c; }
+        .cal-day-row.prio-high     { --prio-color: #f46a6a; }
+        .cal-day-row.prio-medium   { --prio-color: #f1b44c; }
+        .cal-day-row.prio-low      { --prio-color: #cbd5e1; }
+
+        /* Dropping a card onto a day moves it there, same as the list. */
+        .cal-day.drag-over { background: color-mix(in srgb, #86b556 16%, var(--tl-surface)); }
+
+        /* Phones: chips become dots so a month still fits. */
+        @media (max-width: 640px) {
+            .cal-day { min-height: 3.4rem; padding: .2rem .15rem; align-items: center; }
+            .cal-chip {
+                width: .4rem; height: .4rem; padding: 0; border-radius: 999px; border-left: 0;
+                background: var(--prio-color, #9ca3af); text-indent: -999em; overflow: hidden;
+            }
+            .cal-dots { display: flex; flex-wrap: wrap; gap: 2px; justify-content: center; }
+            .cal-more { font-size: 9px; }
+        }
+
         .readiness-row { display: flex; gap: .75rem; padding: .7rem .25rem; border-bottom: 1px solid var(--tl-border); }
         .readiness-row:last-child { border-bottom: 0; }
         .readiness-dot {
@@ -475,6 +554,12 @@
             Search
             <span id="activeFilterCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-brand-600 text-white text-[10px] font-bold items-center justify-center">0</span>
         </button>
+        <button type="button" id="viewToggleBtn" class="btn btn-white btn-sm" data-activities-only
+                title="Switch to calendar view" aria-pressed="false">
+            <svg id="viewIconCalendar" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <svg id="viewIconList" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <span id="viewToggleLabel">Calendar</span>
+        </button>
         <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm ml-auto hidden md:inline-flex" data-activities-only>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
             Add Activity
@@ -594,6 +679,38 @@
     <div class="sheet-footer">
         <button type="button" id="clearFiltersBtn" class="btn btn-ghost">Clear filters</button>
         <button type="button" data-sheet-close class="btn btn-primary">Done</button>
+    </div>
+</div>
+
+{{-- ============================ CALENDAR ============================
+     A month view of exactly what the list is showing. Built from the list's
+     own cards, so filters, edits, drags and version switches carry over
+     without a second copy of the data. --}}
+<div id="calendarRoot" class="hidden">
+    <div class="cal-head">
+        <button type="button" class="icon-btn" id="calPrev" aria-label="Previous month">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <div class="grow text-center min-w-0">
+            <p class="font-bold text-gray-900 leading-tight" id="calMonthLabel"></p>
+            <p class="text-xs text-gray-500" id="calMonthMeta"></p>
+        </div>
+        <button type="button" class="icon-btn" id="calNext" aria-label="Next month">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <button type="button" class="btn btn-white btn-sm shrink-0" id="calToday">Today</button>
+    </div>
+
+    <div class="cal-grid-head">
+        @foreach (['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as $d)
+            <span>{{ $d }}</span>
+        @endforeach
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+
+    <div class="card p-8 text-center hidden" id="calEmpty">
+        <p class="font-semibold text-gray-700">Nothing scheduled here</p>
+        <p class="text-sm text-gray-500 mt-1" id="calEmptyHint">Use the arrows to find the months with work in them.</p>
     </div>
 </div>
 
@@ -945,6 +1062,7 @@
     'activeVersion' => $activeVersion,
     'draftsCount' => $draftsCount,
 ])
+@include('sm.partials.activities-calendar-js', ['schedule' => $schedule])
 <script>
     // Filter-sheet extras: active-filter count badge on the toolbar button, and
     // a "Clear filters" action. Reuses the events the activities filter logic

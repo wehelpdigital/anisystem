@@ -330,6 +330,23 @@
     </div>
 </div>
 
+{{-- ==================== CALENDAR: ONE DAY ==================== --}}
+<div class="sheet hidden" id="calDaySheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <div class="min-w-0">
+            <h3 class="sheet-title" id="calDayTitle"></h3>
+            <p class="text-xs text-gray-500" id="calDayMeta"></p>
+        </div>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-2" id="calDayList"></div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost" data-sheet-close>Close</button>
+        <button type="button" class="btn btn-primary" id="calDayAddBtn">Add activity here</button>
+    </div>
+</div>
+
 {{-- ======================== SETUP / READINESS ======================== --}}
 <div class="sheet hidden" id="readinessSheet" style="--sheet-width:30rem">
     <div class="sheet-handle"></div>

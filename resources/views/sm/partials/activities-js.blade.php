@@ -645,6 +645,7 @@ document.addEventListener('DOMContentLoaded', () => {
         reorderAndRenumberActivitiesCore();
         refreshHiddenActivityCount();
         if (hasActiveFilters()) applyActivityFilter();
+        else announceBoardChange();
     }
 
     function _renderCardOrReplace(activityData) {
@@ -733,6 +734,7 @@ document.addEventListener('DOMContentLoaded', () => {
             $qsa('.rest-day-marker', list).forEach((r) => r.classList.remove('filters-active'));
             const count = $id('activitySearchCount');
             if (count) count.textContent = '';
+            announceBoardChange();   // clearing filters is a change too
             return;
         }
 
@@ -756,6 +758,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const count = $id('activitySearchCount');
         if (count) count.textContent = `${visible} shown`;
+        announceBoardChange();
+    }
+
+    /**
+     * The calendar view mirrors whatever the list is currently showing, so it
+     * redraws whenever the board is rebuilt or refiltered. Coalesced to one
+     * notification per frame — a drag can trigger several in a row.
+     */
+    let boardChangeQueued = false;
+    function announceBoardChange() {
+        if (boardChangeQueued) return;
+        boardChangeQueued = true;
+        requestAnimationFrame(() => {
+            boardChangeQueued = false;
+            document.dispatchEvent(new CustomEvent('activities:rendered'));
+        });
     }
 
     let searchTimer = null;
@@ -3313,5 +3331,10 @@ document.addEventListener('DOMContentLoaded', () => {
     rebuildItemPickerOptions();
     refreshHistoryBtns();
     refreshItemsEmptyState();
+
+    // The calendar view lives in its own script and drives these.
+    window.smOpenActivity = openEditActivitySheet;
+    window.smAddActivityOn = openAddActivitySheet;
+    window.smMoveActivityToDate = moveSingleActivity;
 });
 </script>
