@@ -9,6 +9,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    {{-- Applied before first paint so night mode never flashes white. --}}
+    <script>
+        (() => {
+            const saved = localStorage.getItem('anisystem-theme');
+            const dark = saved ? saved === 'dark'
+                : window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.classList.toggle('dark', dark);
+        })();
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
 </head>
@@ -59,6 +68,16 @@
                             </div>
                             <a href="{{ route('account.index') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">My Account</a>
                             <a href="{{ route('account.subscription') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">My Subscription</a>
+                            <button type="button" id="themeToggle"
+                                class="w-full flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                                role="switch" aria-checked="false">
+                                <span class="flex items-center gap-2">
+                                    <svg id="themeIconMoon" class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                                    <svg id="themeIconSun" class="w-4 h-4 text-accent-500 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 14v2m9-9h-2M5 12H3m14.66-6.66l-1.42 1.42M7.76 16.24l-1.42 1.42m12.32 0l-1.42-1.42M7.76 7.76L6.34 6.34M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                                    <span id="themeToggleLabel">Night mode</span>
+                                </span>
+                                <span class="theme-switch" aria-hidden="true"><span class="theme-switch-knob"></span></span>
+                            </button>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit" class="w-full text-left rounded-lg px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50">Log Out</button>
@@ -95,6 +114,41 @@
     <script>
         @if (session('success')) toast(@json(session('success')), 'success'); @endif
         @if (session('error')) toast(@json(session('error')), 'error'); @endif
+
+        // Night mode. The class is already on <html> from the head script; this
+        // only keeps the switch in sync and handles flipping it.
+        (() => {
+            const root = document.documentElement;
+            const btn = document.getElementById('themeToggle');
+
+            const paint = () => {
+                const dark = root.classList.contains('dark');
+                document.getElementById('themeIconMoon')?.classList.toggle('hidden', dark);
+                document.getElementById('themeIconSun')?.classList.toggle('hidden', !dark);
+                const label = document.getElementById('themeToggleLabel');
+                if (label) label.textContent = dark ? 'Day mode' : 'Night mode';
+                btn?.setAttribute('aria-checked', dark ? 'true' : 'false');
+                btn?.classList.toggle('is-on', dark);
+            };
+
+            btn?.addEventListener('click', () => {
+                const dark = !root.classList.contains('dark');
+                root.classList.add('theme-animating');
+                root.classList.toggle('dark', dark);
+                localStorage.setItem('anisystem-theme', dark ? 'dark' : 'light');
+                paint();
+                setTimeout(() => root.classList.remove('theme-animating'), 300);
+            });
+
+            // Follow the OS only while the user has not made an explicit choice.
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (localStorage.getItem('anisystem-theme')) return;
+                root.classList.toggle('dark', e.matches);
+                paint();
+            });
+
+            paint();
+        })();
     </script>
 </body>
 </html>

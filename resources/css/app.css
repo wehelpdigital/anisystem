@@ -349,3 +349,142 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
     .list-item-leave { animation: none !important; }
     .sheet-backdrop, .sheet-backdrop.is-open { backdrop-filter: none; }
 }
+
+/* ------------------------------------------------------------------ */
+/* Night mode                                                          */
+/*                                                                     */
+/* Tailwind v4 resolves every colour utility through a CSS variable    */
+/* (.bg-white -> var(--color-white)), so re-pointing the palette on    */
+/* the root flips the entire app without touching a single template.   */
+/* The gray ramp is inverted: text-gray-900 becomes near-white,        */
+/* bg-gray-50 becomes the darkest surface.                             */
+/* ------------------------------------------------------------------ */
+
+html.dark {
+    color-scheme: dark;
+
+    /* Surfaces (light ends of the ramp become the dark ends) */
+    --color-white: #191d23;
+    --color-gray-50: #14171c;
+    --color-gray-100: #21262e;
+    --color-gray-200: #2c323b;
+    --color-gray-300: #3a414c;
+
+    /* Text (dark ends become the light ends) */
+    --color-gray-400: #7d8794;
+    --color-gray-500: #98a2ae;
+    --color-gray-600: #b4bdc8;
+    --color-gray-700: #ccd4dd;
+    --color-gray-800: #e3e8ee;
+    --color-gray-900: #f2f5f8;
+    --color-ink: #f2f5f8;
+
+    /* Brand: the pale tint steps become dark washes that still carry the hue;
+       600/700 stay deep enough to keep white button text legible, while
+       300-500 brighten so green text and icons read on a dark surface. */
+    --color-brand-50: #1b2b16;
+    --color-brand-100: #22381b;
+    --color-brand-200: #2f4d24;
+    --color-brand-300: #a5d382;
+    --color-brand-400: #8fc267;
+    --color-brand-500: #7cb84f;
+    /* 600 stays at the light-mode green: white button text needs 4.5:1 and
+       anything brighter drops below it. */
+    --color-brand-600: #4a7c2a;
+    /* 700/800 are read as text (active nav, green badges) far more often than
+       as a surface, so they lean bright; the one place 700 paints a background
+       gets its own darker value below. */
+    --color-brand-700: #5c9a3e;
+    --color-brand-800: #74b352;
+    --color-brand-900: #a5d382;
+
+    /* Status tints follow the same pattern: dark wash + bright foreground. */
+    --color-red-50: #2e1618;
+    --color-red-100: #3d1c1f;
+    --color-red-500: #f26a6a;
+    --color-red-600: #f47c7c;
+    --color-red-700: #f79494;
+    --color-red-800: #f9adad;
+
+    --color-orange-50: #2d1e12;
+    --color-orange-100: #3b2716;
+    --color-orange-500: #f0913c;
+    --color-orange-600: #f3a257;
+    --color-orange-700: #f5b273;
+    --color-orange-800: #f7c290;
+
+    --color-amber-50: #2c2410;
+    --color-amber-100: #3a2f14;
+    --color-amber-500: #e7b53a;
+    --color-amber-600: #eec155;
+    --color-amber-700: #f2cd76;
+    --color-amber-800: #f5d896;
+
+    --color-blue-50: #151f30;
+    --color-blue-100: #1b283e;
+    --color-blue-500: #5c9ceb;
+    --color-blue-600: #74abef;
+    --color-blue-700: #8dbaf2;
+    --color-blue-800: #a6c9f5;
+
+    --color-indigo-50: #1a1a2e;
+    --color-indigo-100: #22223c;
+
+    --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 4px 14px -4px rgb(0 0 0 / 0.5);
+    --shadow-card-lg: 0 4px 6px -2px rgb(0 0 0 / 0.4), 0 12px 32px -8px rgb(0 0 0 / 0.6);
+}
+
+/* `--color-white` now names the darkest surface, which is right for bg-white
+   but wrong for text-white — that one still means "legible on a colour". */
+html.dark .text-white,
+html.dark .btn-primary,
+html.dark .btn-danger,
+html.dark .chip.is-selected,
+html.dark .toast { color: #fff; }
+/* A saturated panel stays saturated in night mode, so everything painted on
+   top of it keeps its light-mode meaning: white is white, the pale brand tints
+   stay pale. Re-pointing the variables inside the subtree does that in one go. */
+html.dark .bg-brand-600, html.dark .bg-brand-700, html.dark .bg-brand-800,
+html.dark .bg-gradient-to-r, html.dark .bg-gradient-to-br, html.dark .bg-gradient-to-b {
+    --color-white: #fff;
+    --color-brand-50: #f3f8ec;
+    --color-brand-100: #e4efd4;
+    --color-brand-200: #c9e0ad;
+}
+/* Yellow keeps dark ink on top of it. */
+html.dark .bg-accent-400, html.dark .bg-accent-500, html.dark .bg-accent-600 { --color-ink: #1a1a1a; }
+/* Primary-button hover/active go darker rather than brighter, so the white
+   label keeps its contrast (brand-700 is tuned for text, not for a surface). */
+html.dark .btn-primary:hover { background-color: #3f6b24; }
+html.dark .btn-primary:active { background-color: #35591e; }
+
+/* A few places paint with literal colours rather than palette utilities. */
+html.dark body { background-color: var(--color-gray-50); }
+html.dark img[src$=".png"], html.dark img[src$=".svg"] { filter: none; }
+html.dark .sheet-backdrop { background-color: rgb(0 0 0 / 0.6); }
+html.dark ::placeholder { color: var(--color-gray-400); }
+html.dark input[type="date"], html.dark input[type="time"], html.dark input[type="number"] {
+    color-scheme: dark;
+}
+
+/* Theme swap is instant on first paint but eased when the user toggles. */
+html.theme-animating,
+html.theme-animating * {
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease !important;
+}
+
+/* Night-mode switch in the account menu */
+.theme-switch {
+    @apply relative inline-block shrink-0 rounded-full bg-gray-200 transition-colors;
+    width: 2.25rem;
+    height: 1.25rem;
+}
+.theme-switch-knob {
+    @apply absolute rounded-full bg-white shadow-sm transition-transform;
+    width: 0.875rem;
+    height: 0.875rem;
+    top: 0.1875rem;
+    left: 0.1875rem;
+}
+#themeToggle.is-on .theme-switch { @apply bg-brand-600; }
+#themeToggle.is-on .theme-switch-knob { transform: translateX(1rem); }

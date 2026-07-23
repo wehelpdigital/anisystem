@@ -155,6 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
         kebab: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>',
         star: '<svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>',
         clock: '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+        dayNumber: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
     };
 
     /* ================================================================
@@ -498,6 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button type="button" class="date-header-btn date-note-btn${hasNote ? ' has-note' : ''}" data-date="${esc(dateKey)}" title="${hasNote ? 'Edit the note for this date' : 'Add a note for this date'}">${SVG.note}</button>
                 <button type="button" class="date-header-btn date-marker-btn${hasMarker ? ' has-marker' : ''}" data-date="${esc(dateKey)}" title="${hasMarker ? 'Edit the resume-here marker' : 'Drop a resume-here marker after this date'}">${SVG.bookmark}</button>
                 <button type="button" class="date-header-btn change-group-date-btn" data-date="${esc(dateKey)}" title="Change date for all activities in this group">${SVG.calendarEdit}</button>
+                <button type="button" class="date-header-btn move-group-das-btn" data-date="${esc(dateKey)}" title="Move this whole day to a ${esc(dayType())} number">${SVG.dayNumber}</button>
                 <button type="button" class="date-header-btn date-header-delete-btn delete-group-date-btn" data-date="${esc(dateKey)}" title="Delete every activity in this group">${SVG.trash}</button>
             </span>
             <button type="button" class="date-header-btn day-menu-btn md:hidden" data-date="${esc(dateKey)}" title="More actions for this day">${SVG.kebab}</button>`;
@@ -1665,11 +1667,106 @@ document.addEventListener('DOMContentLoaded', () => {
             openSheet('changeGroupDateSheet');
             return;
         }
+        const dasBtn = e.target.closest('.move-group-das-btn');
+        if (dasBtn) {
+            e.preventDefault();
+            openMoveGroupDasSheet((dasBtn.getAttribute('data-date') || '').trim());
+            return;
+        }
         const delGroupBtn = e.target.closest('.delete-group-date-btn');
         if (delGroupBtn) {
             e.preventDefault();
             deleteDateGroup((delGroupBtn.getAttribute('data-date') || '').trim());
             return;
+        }
+    });
+
+    /* ---- Move a whole day to a DAS/DAT number ----
+     * Same move as "change group date", but the target is expressed as "day N
+     * after this lot's day 0" instead of a calendar date, which is how the
+     * agronomy is actually written down. */
+
+    let MOVE_DAS_DATE = '';
+
+    function moveGroupDasAnchor() {
+        const lotId = parseInt($id('moveGroupDasRefLot')?.value, 10);
+        return lotId ? (LOT_DAY_ZERO_DATES[lotId] || null) : null;
+    }
+
+    function refreshMoveGroupDasPreview() {
+        const hint = $id('moveGroupDasPreview');
+        const anchor = moveGroupDasAnchor();
+        const n = parseInt($id('moveGroupDasValue').value, 10);
+        if (!hint) return;
+        if (!anchor) { hint.textContent = ''; return; }
+        const dt = dayType();
+        if (isNaN(n)) {
+            hint.innerHTML = `<strong>${esc(dt)} 0</strong> = ${esc(prettyDate(anchor))}.`;
+            return;
+        }
+        const target = _dasToDateStr(n, anchor);
+        const same = target === MOVE_DAS_DATE;
+        hint.innerHTML = `<strong>${esc(dt)} ${n}</strong> = <strong>${esc(prettyDate(target))}</strong>`
+            + (same ? ' — that is where this day already sits.' : '');
+    }
+
+    function openMoveGroupDasSheet(dateKey) {
+        if (!dateKey || dateKey === '__no-date__') return;
+        const sel = $id('moveGroupDasRefLot');
+        if (!sel) return;
+
+        // Only lots with a day 0 can anchor a day number.
+        const lotIds = Object.keys(LOT_DAY_ZERO_DATES).filter((id) => LOT_DAY_ZERO_DATES[id]);
+        if (lotIds.length === 0) {
+            toast(`No lot has a ${dayType()} 0 yet. Mark an activity as day zero, or set a lot's day-0 date, first.`, 'error');
+            return;
+        }
+
+        MOVE_DAS_DATE = dateKey;
+        sel.innerHTML = '';
+        lotIds.forEach((lotId) => {
+            const opt = document.createElement('option');
+            opt.value = lotId;
+            opt.textContent = (LOT_NAMES[lotId] || ('Lot #' + lotId))
+                + ' · day 0 = ' + prettyDate(LOT_DAY_ZERO_DATES[lotId]);
+            sel.appendChild(opt);
+        });
+
+        const cards = $qsa(`#activitiesList .date-group[data-date="${dateKey}"] .activity-card[data-id]`);
+        $id('moveGroupDasCount').textContent = cards.length;
+        $id('moveGroupDasCurrent').textContent = prettyDateFull(dateKey);
+        $id('moveGroupDasOld').value = dateKey;
+        // Start from where the day already sits, so the field reads as an edit.
+        $id('moveGroupDasValue').value = _dateStrToDas(dateKey, LOT_DAY_ZERO_DATES[lotIds[0]]);
+        refreshMoveGroupDasPreview();
+        openSheet('moveGroupDasSheet');
+    }
+
+    $id('moveGroupDasRefLot')?.addEventListener('change', () => {
+        // Keep the same calendar day when the reference lot changes.
+        const anchor = moveGroupDasAnchor();
+        if (anchor && MOVE_DAS_DATE) $id('moveGroupDasValue').value = _dateStrToDas(MOVE_DAS_DATE, anchor);
+        refreshMoveGroupDasPreview();
+    });
+    $id('moveGroupDasValue')?.addEventListener('input', refreshMoveGroupDasPreview);
+
+    $id('confirmMoveGroupDasBtn')?.addEventListener('click', async (e) => {
+        const btn = e.currentTarget;   // null once the await resumes — capture it now
+        const oldDate = ($id('moveGroupDasOld').value || '').trim();
+        const anchor = moveGroupDasAnchor();
+        const n = parseInt($id('moveGroupDasValue').value, 10);
+        if (!oldDate || !anchor) return;
+        if (isNaN(n)) { toast(`Enter a ${dayType()} number.`, 'error'); return; }
+
+        const newDate = _dasToDateStr(n, anchor);
+        if (!newDate) { toast('That day number is out of range.', 'error'); return; }
+        if (newDate === oldDate) { toast('That is already the current date.', 'info'); return; }
+
+        btn.disabled = true;
+        try {
+            if (await moveGroupToDate(oldDate, newDate)) closeSheet('moveGroupDasSheet');
+        } finally {
+            btn.disabled = false;
         }
     });
 

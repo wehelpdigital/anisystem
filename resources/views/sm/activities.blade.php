@@ -8,6 +8,46 @@
 @push('head')
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
     <style>
+        /* ---- Timeline surfaces ----------------------------------------------
+           The timeline paints with literal colours rather than Tailwind
+           utilities, so night mode needs its own set of tokens here. */
+        :root {
+            --tl-surface: #fff;
+            --tl-surface-2: #f3f4f6;
+            --tl-border: #f3f4f6;
+            --tl-border-soft: #eef0f3;
+            --tl-text: #111827;
+            --tl-text-soft: #374151;
+            --tl-text-muted: #4b5563;
+            --tl-text-faint: #6b7280;
+            --tl-header-tint: 13%;
+            --tl-pill: rgba(255, 255, 255, .8);
+            --tl-hover: rgba(255, 255, 255, .75);
+            --tl-note-bg: #fffbeb;
+            --tl-note-border: #fde68a;
+            --tl-note-text: #78350f;
+            --tl-rest-bg: #fafafa;
+            --tl-rest-border: #f3f4f6;
+        }
+        html.dark {
+            --tl-surface: #191d23;
+            --tl-surface-2: #262c34;
+            --tl-border: #2c323b;
+            --tl-border-soft: #2c323b;
+            --tl-text: #f2f5f8;
+            --tl-text-soft: #ccd4dd;
+            --tl-text-muted: #b4bdc8;
+            --tl-text-faint: #98a2ae;
+            --tl-header-tint: 18%;
+            --tl-pill: rgba(0, 0, 0, .3);
+            --tl-hover: rgba(255, 255, 255, .1);
+            --tl-note-bg: #2c2410;
+            --tl-note-border: #4a3d16;
+            --tl-note-text: #f2cd76;
+            --tl-rest-bg: #14171c;
+            --tl-rest-border: #23282f;
+        }
+
         /* ---- Timeline date-group color cycle (8 flat colors, mother parity) ---- */
         .date-color-0 { --date-color: #4A90E2; }
         .date-color-1 { --date-color: #50C878; }
@@ -17,45 +57,57 @@
         .date-color-5 { --date-color: #E74C3C; }
         .date-color-6 { --date-color: #5C6BC0; }
         .date-color-7 { --date-color: #16A085; }
+        /* Night mode needs lighter cycle colours: these are used as *text* on a
+           dark tinted header, where the saturated indigo/purple go unreadable. */
+        html.dark .date-color-0 { --date-color: #7FB3EF; }
+        html.dark .date-color-1 { --date-color: #6ED694; }
+        html.dark .date-color-2 { --date-color: #F5B450; }
+        html.dark .date-color-3 { --date-color: #C48AD8; }
+        html.dark .date-color-4 { --date-color: #4FD6BC; }
+        html.dark .date-color-5 { --date-color: #F5837A; }
+        html.dark .date-color-6 { --date-color: #8E9AE8; }
+        html.dark .date-color-7 { --date-color: #4FD0B4; }
 
         .date-group {
-            background: #fff; border: 1px solid #f3f4f6; border-left: 4px solid var(--date-color, #4A90E2);
+            background: var(--tl-surface); border: 1px solid var(--tl-border); border-left: 4px solid var(--date-color, #4A90E2);
             border-radius: 1rem; box-shadow: var(--shadow-card); margin-bottom: .9rem;
         }
         .date-header {
             display: flex; align-items: center; gap: .4rem; flex-wrap: wrap;
             padding: .55rem .8rem; border-radius: calc(1rem - 2px) calc(1rem - 2px) 0 0;
-            background: color-mix(in srgb, var(--date-color, #4A90E2) 13%, #fff);
+            background: color-mix(in srgb, var(--date-color, #4A90E2) var(--tl-header-tint), var(--tl-surface));
         }
         .date-header-day { font-weight: 800; font-size: .8rem; color: var(--date-color); text-transform: uppercase; }
-        .date-header-date { font-weight: 800; font-size: 1rem; color: #111827; }
-        .date-header-range { display: inline-flex; align-items: center; gap: .2rem; font-size: 11px; font-weight: 600; color: #374151; background: rgba(255,255,255,.75); border-radius: 999px; padding: .1rem .5rem; }
-        .date-header-count { font-size: 11px; font-weight: 700; color: var(--date-color); background: rgba(255,255,255,.8); border-radius: 999px; padding: .12rem .55rem; margin-left: auto; }
+        .date-header-date { font-weight: 800; font-size: 1rem; color: var(--tl-text); }
+        .date-header-range { display: inline-flex; align-items: center; gap: .2rem; font-size: 11px; font-weight: 600; color: var(--tl-text-soft); background: var(--tl-hover); border-radius: 999px; padding: .1rem .5rem; }
+        .date-header-count { font-size: 11px; font-weight: 700; color: var(--date-color); background: var(--tl-pill); border-radius: 999px; padding: .12rem .55rem; margin-left: auto; }
         .date-header-btn {
             display: inline-flex; align-items: center; justify-content: center;
-            width: 2.6rem; height: 2.6rem; border-radius: .6rem; color: #4b5563; flex-shrink: 0;
+            width: 2.6rem; height: 2.6rem; border-radius: .6rem; color: var(--tl-text-muted); flex-shrink: 0;
         }
         @media (min-width: 768px) {
             .date-header-btn { width: 2.25rem; height: 2.25rem; }
         }
-        .date-header-btn:hover { background: rgba(255,255,255,.75); color: #111827; }
+        .date-header-btn:hover { background: var(--tl-hover); color: var(--tl-text); }
         .date-note-btn.has-note, .date-marker-btn.has-marker { color: #b45309; }
-        .date-header-delete-btn:hover { color: #dc2626; background: rgba(255,255,255,.75); }
+        html.dark .date-note-btn.has-note, html.dark .date-marker-btn.has-marker { color: #eec155; }
+        .date-header-delete-btn:hover { color: #dc2626; background: var(--tl-hover); }
+        html.dark .date-header-delete-btn:hover { color: #f47c7c; }
 
         .date-activities { display: flex; flex-direction: column; gap: .55rem; padding: .7rem; }
-        .date-activities.drag-over { outline: 2px dashed #86b556; outline-offset: -4px; border-radius: .8rem; background: #f7fbf1; }
+        .date-activities.drag-over { outline: 2px dashed #86b556; outline-offset: -4px; border-radius: .8rem; background: color-mix(in srgb, #86b556 12%, var(--tl-surface)); }
 
         .date-note-block {
-            margin: .55rem .7rem 0; background: #fffbeb; border: 1px solid #fde68a; border-radius: .6rem;
-            padding: .5rem .7rem; font-size: .8rem; color: #78350f; white-space: pre-wrap;
+            margin: .55rem .7rem 0; background: var(--tl-note-bg); border: 1px solid var(--tl-note-border); border-radius: .6rem;
+            padding: .5rem .7rem; font-size: .8rem; color: var(--tl-note-text); white-space: pre-wrap;
         }
 
         /* ---- Activity card ----------------------------------------------
            Left rail carries the priority colour so the top-right stays free
            for actions. Tapping the card body opens the editor. */
         .activity-card {
-            border: 1px solid #eef0f3; border-left: 3px solid var(--prio-color, #d1d5db);
-            border-radius: .85rem; background: #fff; padding: .75rem .85rem;
+            border: 1px solid var(--tl-border-soft); border-left: 3px solid var(--prio-color, #d1d5db);
+            border-radius: .85rem; background: var(--tl-surface); padding: .75rem .85rem;
             user-select: none; -webkit-user-select: none;
             transition: box-shadow .15s ease, border-color .15s ease;
         }
@@ -68,7 +120,7 @@
         .activity-card img { -webkit-user-drag: none; }
 
         .activity-card-title {
-            font-weight: 700; font-size: .95rem; line-height: 1.35; color: #111827;
+            font-weight: 700; font-size: .95rem; line-height: 1.35; color: var(--tl-text);
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
         }
         .activity-card-badges { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .3rem; }
@@ -76,7 +128,7 @@
         /* Meta strip: time + workers + materials/services on one wrapped row. */
         .activity-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .55rem; }
         .meta-time {
-            display: inline-flex; align-items: center; gap: .25rem; background: #f3f4f6; color: #4b5563;
+            display: inline-flex; align-items: center; gap: .25rem; background: var(--tl-surface-2); color: var(--tl-text-muted);
             border-radius: .5rem; padding: .2rem .45rem; font-size: 11.5px; font-weight: 600;
         }
         /* The date header drags the whole day's activities to another date. */
@@ -199,6 +251,50 @@
         .labor-table th { text-align: left; font-weight: 700; color: #6b7280; padding: .4rem .5rem; background: #f9fafb; white-space: nowrap; }
         .labor-table td { padding: .45rem .5rem; border-top: 1px solid #f3f4f6; vertical-align: top; }
         .labor-table .num { text-align: right; white-space: nowrap; }
+
+        /* ---- Night mode for the timeline -------------------------------
+           Everything above that paints a pale tint needs a dark counterpart:
+           same hue, dark wash, bright foreground. */
+        html.dark .activity-card-image img { border-color: var(--tl-border-soft); }
+        html.dark .activity-description-content a { color: #9ccd74; }
+
+        html.dark .item-tag { background: #232847; color: #a9b3f0; }
+        html.dark .worker-tag { background: #33240f; color: #e9b563; }
+        html.dark .service-tag { background: #0e2b23; color: #63c8a5; }
+        html.dark .activity-na-tag { background: var(--tl-surface-2); color: var(--tl-text-faint); border-color: var(--tl-border); }
+        html.dark .day-zero-badge { background: #b56b00; color: #fff; }
+
+        html.dark .icon-btn { color: var(--tl-text-faint); }
+        html.dark .icon-btn:active { background: #333a44; }
+        html.dark .icon-btn:hover { background: var(--tl-surface-2); color: var(--tl-text); }
+        html.dark .icon-btn-danger:hover { background: #3d1c1f; color: #f47c7c; }
+
+        html.dark .rest-day-marker {
+            border-color: var(--tl-rest-border); color: var(--tl-text-faint); background: var(--tl-rest-bg);
+        }
+        html.dark .rest-day-marker.drag-over { border-color: #7cb84f; background: #1e2a17; }
+        html.dark .rest-day-date { color: var(--tl-text-muted); }
+        html.dark .rest-day-tag { color: var(--tl-text-faint); }
+
+        html.dark .progress-marker-bookmark { background: var(--tl-note-bg); border-color: var(--tl-note-border); color: var(--tl-note-text); }
+        html.dark .progress-marker-note { background: var(--tl-note-bg); border-color: var(--tl-note-border); color: var(--tl-note-text); }
+
+        html.dark .das-panel { background: #151f30; border-color: #24354f; }
+        html.dark .day-zero-panel { background: var(--tl-note-bg); border-color: var(--tl-note-border); }
+
+        html.dark .sm-quill-wrap .ql-toolbar,
+        html.dark .sm-quill-wrap .ql-container { border-color: var(--tl-border); background: var(--tl-surface); }
+        html.dark .sm-quill-wrap .ql-editor { color: var(--tl-text); }
+        html.dark .sm-quill-wrap .ql-editor.ql-blank::before { color: var(--tl-text-faint); }
+        html.dark .sm-quill-wrap .ql-stroke { stroke: var(--tl-text-muted); }
+        html.dark .sm-quill-wrap .ql-fill { fill: var(--tl-text-muted); }
+        html.dark .sm-quill-wrap .ql-picker-label { color: var(--tl-text-muted); }
+
+        html.dark .labor-table th { color: var(--tl-text-faint); background: var(--tl-surface-2); }
+        html.dark .labor-table td { border-color: var(--tl-border); }
+
+        html.dark .drag-ghost { box-shadow: 0 18px 40px rgba(0, 0, 0, .6); }
+        html.dark .activity-card.dragging { outline-color: #4a5563; }
     </style>
 @endpush
 
@@ -543,6 +639,9 @@
                                 </button>
                                 <button type="button" class="date-header-btn change-group-date-btn" data-date="{{ $dateKey }}" title="Change date for all activities in this group">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                </button>
+                                <button type="button" class="date-header-btn move-group-das-btn" data-date="{{ $dateKey }}" title="Move this whole day to a {{ $schedule->dayType }} number">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 </button>
                                 <button type="button" class="date-header-btn date-header-delete-btn delete-group-date-btn" data-date="{{ $dateKey }}" title="Delete every activity in this group">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
