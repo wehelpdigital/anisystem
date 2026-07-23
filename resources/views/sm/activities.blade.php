@@ -560,6 +560,10 @@
             <svg id="viewIconList" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             <span id="viewToggleLabel">Calendar</span>
         </button>
+        <button type="button" id="toggleHiddenBtn" class="btn btn-white btn-sm {{ $hiddenCount ? '' : 'hidden' }}" data-activities-only>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
+            <span id="toggleHiddenLabel">Show Hidden ({{ $hiddenCount }})</span>
+        </button>
     </div>
 </div>
 
@@ -667,10 +671,6 @@
                 <button type="button" id="toggleEmptyDatesBtn" class="btn btn-white btn-sm">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v3m8-3v3M4 9h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>
                     <span id="toggleEmptyDatesLabel">Hide empty dates</span>
-                </button>
-                <button type="button" id="toggleHiddenBtn" class="btn btn-white btn-sm {{ $hiddenCount ? '' : 'hidden' }}">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
-                    <span id="toggleHiddenLabel">Show Hidden ({{ $hiddenCount }})</span>
                 </button>
             </div>
             <p class="form-hint">Empty dates are the "no activities scheduled" rows between your working days.</p>
