@@ -1,6 +1,6 @@
 @extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
-@section('title', 'Settings Ã¢â‚¬â€ ' . $schedule->title)
+@section('title', 'Settings — ' . $schedule->title)
 @section('page-title', 'Settings')
 @section('page-subtitle', $schedule->title)
 @section('back', route('sm.hub', ['id' => $schedule->id]))
@@ -32,9 +32,9 @@
                     <div>
                         <label for="settingsDayType" class="form-label">Day Type</label>
                         <select id="settingsDayType" class="form-select">
-                            <option value="DAP" @selected($schedule->dayType === 'DAP')>DAP Ã¢â‚¬â€ Days After Planting</option>
-                            <option value="DAS" @selected($schedule->dayType === 'DAS')>DAS Ã¢â‚¬â€ Days After Seeding</option>
-                            <option value="DAT" @selected($schedule->dayType === 'DAT')>DAT Ã¢â‚¬â€ Days After Transplanting</option>
+                            <option value="DAP" @selected($schedule->dayType === 'DAP')>DAP — Days After Planting</option>
+                            <option value="DAS" @selected($schedule->dayType === 'DAS')>DAS — Days After Seeding</option>
+                            <option value="DAT" @selected($schedule->dayType === 'DAT')>DAT — Days After Transplanting</option>
                         </select>
                         <p class="form-hint">Label used for day numbers across the schedule.</p>
                     </div>
@@ -85,7 +85,7 @@ const __init = () => {
                 // Live-update the app-bar subtitle (schedule title) + tab title.
                 const sub = document.querySelector('header .min-w-0 p.text-xs');
                 if (sub) sub.textContent = t;
-                document.title = `Settings Ã¢â‚¬â€ ${t} | AniSystem`;
+                document.title = `Settings — ${t} | AniSystem`;
             }
         } catch (err) {
             toast(err.message, 'error');

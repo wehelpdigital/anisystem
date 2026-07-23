@@ -1,6 +1,6 @@
 @extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
-@section('title', 'Documentation â€” ' . $schedule->title)
+@section('title', 'Documentation — ' . $schedule->title)
 @section('page-title', 'Documentation')
 @section('page-subtitle', $schedule->title)
 @section('back', route('sm.hub', ['id' => $schedule->id]))
@@ -42,7 +42,7 @@
 
             <div class="mb-4">
                 <label class="form-label" for="protocolContent">Protocol Text</label>
-                <textarea id="protocolContent" class="form-textarea" rows="10" placeholder="Write or paste the protocol hereâ€¦">{{ $protocol->protocolContent ?? '' }}</textarea>
+                <textarea id="protocolContent" class="form-textarea" rows="10" placeholder="Write or paste the protocol here…">{{ $protocol->protocolContent ?? '' }}</textarea>
             </div>
 
             <div class="mb-4">
@@ -56,7 +56,7 @@
                 </div>
                 <input type="file" id="protocolFile" accept=".pdf,.doc,.docx,.txt"
                     class="block w-full text-sm text-gray-600 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:text-brand-700 file:font-semibold file:px-4 file:py-2.5 file:cursor-pointer cursor-pointer">
-                <p class="form-hint">PDF, DOC, DOCX or TXT â€” max 10 MB. Uploading a new file replaces the current one.</p>
+                <p class="form-hint">PDF, DOC, DOCX or TXT — max 10 MB. Uploading a new file replaces the current one.</p>
             </div>
 
             <button type="button" class="btn btn-primary w-full sm:w-auto" id="protocolSaveBtn">Save Protocol</button>
@@ -98,7 +98,7 @@
                     </div>
                 </div>
             @else
-                <p class="text-sm text-gray-500">No activity version exists for this schedule yet â€” the Introduction becomes available once the schedule has its first version (created automatically with your first activity).</p>
+                <p class="text-sm text-gray-500">No activity version exists for this schedule yet — the Introduction becomes available once the schedule has its first version (created automatically with your first activity).</p>
             @endif
         </div>
     </div>
@@ -148,7 +148,7 @@
         <div class="card p-8 text-center {{ $schedule->attachments->isEmpty() ? '' : 'hidden' }} mt-3" id="attachmentsEmpty">
             <svg class="w-12 h-12 mx-auto text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A1.5 1.5 0 0021.75 19.5V4.5A1.5 1.5 0 0020.25 3H3.75A1.5 1.5 0 002.25 4.5v15A1.5 1.5 0 003.75 21zM8.25 8.25h.008v.008H8.25V8.25z"/></svg>
             <p class="font-semibold text-gray-700 mt-3">No attachments yet</p>
-            <p class="text-sm text-gray-500 mt-1">Upload reference photos or PDFs â€” mixing charts, labels, field maps.</p>
+            <p class="text-sm text-gray-500 mt-1">Upload reference photos or PDFs — mixing charts, labels, field maps.</p>
             <button type="button" class="btn btn-primary mt-4" data-attachment-upload>Upload Attachment</button>
         </div>
     </div>
@@ -213,24 +213,24 @@
     <div class="sheet-handle"></div>
     <div class="sheet-header">
         <h3 class="sheet-title">Upload Attachment</h3>
-        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">âœ•</button>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
         <div class="mb-4">
             <label class="form-label" for="attachmentFile">File <span class="text-red-500">*</span></label>
             <input type="file" id="attachmentFile" accept="image/jpeg,image/png,image/gif,image/webp,application/pdf"
                 class="block w-full text-sm text-gray-600 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:text-brand-700 file:font-semibold file:px-4 file:py-2.5 file:cursor-pointer cursor-pointer">
-            <p class="form-hint">JPG, PNG, GIF, WebP or PDF â€” max 10 MB.</p>
+            <p class="form-hint">JPG, PNG, GIF, WebP or PDF — max 10 MB.</p>
         </div>
         <div class="mb-2">
             <label class="form-label" for="attachmentDescription">Description</label>
-            <textarea id="attachmentDescription" class="form-textarea" rows="3" maxlength="5000" placeholder="What is this? e.g. Foliar mixing chart for DAS 20â€“35â€¦"></textarea>
+            <textarea id="attachmentDescription" class="form-textarea" rows="3" maxlength="5000" placeholder="What is this? e.g. Foliar mixing chart for DAS 20–35…"></textarea>
         </div>
         <div class="hidden mt-3" id="attachmentProgressWrap">
             <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
                 <div id="attachmentProgressBar" class="h-full bg-brand-600 rounded-full transition-all duration-150" style="width:0%"></div>
             </div>
-            <p class="text-xs text-gray-500 mt-1" id="attachmentProgressLabel">Uploadingâ€¦ 0%</p>
+            <p class="text-xs text-gray-500 mt-1" id="attachmentProgressLabel">Uploading… 0%</p>
         </div>
     </div>
     <div class="sheet-footer">
@@ -244,13 +244,13 @@
     <div class="sheet-handle"></div>
     <div class="sheet-header">
         <h3 class="sheet-title">Edit Description</h3>
-        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">âœ•</button>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
         <input type="hidden" id="attachmentEditId" value="">
         <p class="text-sm font-semibold text-gray-700 truncate mb-2" id="attachmentEditFilename"></p>
-        <textarea id="attachmentEditDescription" class="form-textarea" rows="4" maxlength="5000" placeholder="Describe this attachmentâ€¦"></textarea>
-        <p class="form-hint">The file itself can't be changed â€” delete and re-upload to replace it.</p>
+        <textarea id="attachmentEditDescription" class="form-textarea" rows="4" maxlength="5000" placeholder="Describe this attachment…"></textarea>
+        <p class="form-hint">The file itself can't be changed — delete and re-upload to replace it.</p>
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
@@ -263,7 +263,7 @@
     <div class="sheet-handle"></div>
     <div class="sheet-header">
         <h3 class="sheet-title" id="ruleSheetTitle">Add Critical Rule</h3>
-        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">âœ•</button>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
         <input type="hidden" id="ruleEditId" value="">
@@ -306,7 +306,7 @@
         fd.append('protocolContent', document.getElementById('protocolContent').value);
         if (fileInput.files.length) {
             const f = fileInput.files[0];
-            if (f.size > 10 * 1024 * 1024) { toast('Protocol file is too large â€” max 10 MB.', 'error'); return; }
+            if (f.size > 10 * 1024 * 1024) { toast('Protocol file is too large — max 10 MB.', 'error'); return; }
             fd.append('protocolFile', f);
         }
         btn.disabled = true;
@@ -383,7 +383,7 @@
                 if (!quill) {
                     quill = new Quill('#introEditor', {
                         theme: 'snow',
-                        placeholder: 'Write the introductionâ€¦',
+                        placeholder: 'Write the introduction…',
                         modules: {
                             toolbar: [
                                 [{ header: [1, 2, 3, false] }],
@@ -521,7 +521,7 @@
         const fileInput = document.getElementById('attachmentFile');
         if (!fileInput.files.length) { toast('Pick an image (or PDF) to upload.', 'error'); return; }
         const file = fileInput.files[0];
-        if (file.size > 10 * 1024 * 1024) { toast('File is too large â€” max 10 MB.', 'error'); return; }
+        if (file.size > 10 * 1024 * 1024) { toast('File is too large — max 10 MB.', 'error'); return; }
 
         const fd = new FormData();
         fd.append('file', file);
@@ -532,7 +532,7 @@
         btn.disabled = true;
         progressWrap.classList.remove('hidden');
         progressBar.style.width = '0%';
-        progressLabel.textContent = 'Uploadingâ€¦ 0%';
+        progressLabel.textContent = 'Uploading… 0%';
 
         const xhr = new XMLHttpRequest();
         xhr.open('POST', URLS.attachmentStore);
@@ -544,7 +544,7 @@
             if (!e.lengthComputable) return;
             const pct = Math.round((e.loaded / e.total) * 100);
             progressBar.style.width = pct + '%';
-            progressLabel.textContent = pct >= 100 ? 'Processingâ€¦' : 'Uploadingâ€¦ ' + pct + '%';
+            progressLabel.textContent = pct >= 100 ? 'Processing…' : 'Uploading… ' + pct + '%';
         };
 
         const fail = (msg) => {
@@ -572,7 +572,7 @@
                 fail(msg);
             }
         };
-        xhr.onerror = () => fail('Upload failed â€” network error.');
+        xhr.onerror = () => fail('Upload failed — network error.');
         xhr.send(fd);
     });
 

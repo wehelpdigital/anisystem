@@ -1,6 +1,6 @@
 @extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
-@section('title', 'Materials â€” ' . $schedule->title)
+@section('title', 'Materials — ' . $schedule->title)
 @section('page-title', 'Materials')
 @section('page-subtitle', $schedule->title)
 @section('back', route('sm.hub', ['id' => $schedule->id]))
@@ -18,7 +18,7 @@
 <div class="mb-4">
     <div class="relative">
         <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
-        <input type="text" id="materialsSearch" class="form-input pl-11 pr-10" placeholder="Search name, type, unit, descriptionâ€¦" autocomplete="off">
+        <input type="text" id="materialsSearch" class="form-input pl-11 pr-10" placeholder="Search name, type, unit, description…" autocomplete="off">
         <button type="button" id="materialsSearchClear" class="hidden absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-gray-400 hover:bg-gray-100" aria-label="Clear search">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
@@ -38,7 +38,7 @@
                         <span class="badge badge-blue capitalize js-type">{{ $m->materialType }}</span>
                     </div>
                     <p class="text-sm font-semibold text-brand-700 mt-1 js-price">
-                        â‚± {{ number_format((float) $m->priceAmount, 2) }} per {{ rtrim(rtrim(number_format((float) $m->priceQuantity, 4, '.', ','), '0'), '.') }} {{ $m->unitOfMeasure }}
+                        ₱ {{ number_format((float) $m->priceAmount, 2) }} per {{ rtrim(rtrim(number_format((float) $m->priceQuantity, 4, '.', ','), '0'), '.') }} {{ $m->unitOfMeasure }}
                     </p>
                     @if (filled($m->description))
                         <p class="text-sm text-gray-500 mt-1 js-desc">{{ $m->description }}</p>
@@ -84,7 +84,7 @@
     <div class="sheet-handle"></div>
     <div class="sheet-header">
         <h3 class="sheet-title" id="materialSheetTitle">Add Material</h3>
-        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">âœ•</button>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
         <input type="hidden" id="materialId" value="">
@@ -94,7 +94,7 @@
         </div>
         <div class="mb-4">
             <label class="form-label" for="materialDescription">Description</label>
-            <textarea id="materialDescription" class="form-textarea" rows="2" maxlength="2000" placeholder="Optional notes about this materialâ€¦"></textarea>
+            <textarea id="materialDescription" class="form-textarea" rows="2" maxlength="2000" placeholder="Optional notes about this material…"></textarea>
         </div>
         <div class="grid grid-cols-2 gap-3 mb-4">
             <div>
@@ -117,13 +117,13 @@
         <div class="mb-2">
             <label class="form-label">Price <span class="text-red-500">*</span></label>
             <div class="flex items-center gap-2 flex-wrap">
-                <span class="text-gray-600 font-semibold">â‚±</span>
+                <span class="text-gray-600 font-semibold">₱</span>
                 <input type="number" id="materialAmount" class="form-input flex-1 min-w-[7rem]" step="0.01" min="0" value="0" inputmode="decimal">
                 <span class="text-gray-500 text-sm shrink-0">per</span>
                 <input type="number" id="materialQuantity" class="form-input w-24" step="0.0001" min="0.0001" value="1" inputmode="decimal">
                 <span class="text-sm font-semibold text-gray-700 shrink-0" id="materialUnitMirror">kg</span>
             </div>
-            <p class="form-hint">e.g. â‚± 3,000.00 per 50 kg â€” the price of one purchase pack.</p>
+            <p class="form-hint">e.g. ₱ 3,000.00 per 50 kg — the price of one purchase pack.</p>
         </div>
     </div>
     <div class="sheet-footer">

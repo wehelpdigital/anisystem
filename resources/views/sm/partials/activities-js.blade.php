@@ -216,63 +216,99 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ================================================================
-     * 3. UNDO STACK — 10-step LIFO + Ctrl+Z
+     * 3. UNDO / REDO STACKS — 10-step LIFO each, Ctrl+Z / Ctrl+Shift+Z
      * ================================================================ */
 
     const UNDO_STACK = [];
+    const REDO_STACK = [];
     const UNDO_MAX = 10;
 
-    function pushUndo(label, undoFn) {
-        UNDO_STACK.push({ label, undoFn });
-        if (UNDO_STACK.length > UNDO_MAX) UNDO_STACK.shift();
-        refreshUndoBtn();
-    }
-
-    function refreshUndoBtn() {
-        const n = UNDO_STACK.length;
-        const btn = $id('activityUndoBtn');
-        const count = $id('activityUndoCount');
-        if (!btn) return;
-        if (n === 0) {
-            btn.disabled = true;
-            btn.title = 'Nothing to undo';
-            count.classList.add('hidden');
-            count.classList.remove('inline-flex');
-        } else {
-            btn.disabled = false;
-            btn.title = 'Undo: ' + UNDO_STACK[n - 1].label + ' (' + n + ' available, Ctrl+Z)';
-            count.textContent = n;
-            count.classList.remove('hidden');
-            count.classList.add('inline-flex');
+    /**
+     * @param {string}    label
+     * @param {Function}  undoFn  reverts the action
+     * @param {Function} [redoFn] re-applies it. Omit for actions that only move
+     *                            cards around: the board state as it stands right
+     *                            now (i.e. after the action) is captured and
+     *                            replayed instead. Actions that create or destroy
+     *                            activities must pass their own — a board replay
+     *                            cannot resurrect a row that no longer exists.
+     */
+    function pushUndo(label, undoFn, redoFn) {
+        if (!redoFn) {
+            const after = captureBoardSnapshot();
+            redoFn = () => restoreBoardSnapshot(after);
         }
+        UNDO_STACK.push({ label, undoFn, redoFn });
+        if (UNDO_STACK.length > UNDO_MAX) UNDO_STACK.shift();
+        REDO_STACK.length = 0;   // a fresh action abandons the redo branch
+        refreshHistoryBtns();
     }
 
-    async function performUndo() {
-        const action = UNDO_STACK.pop();
-        refreshUndoBtn();
+    function refreshHistoryBtns() {
+        [['activityUndoBtn', 'activityUndoCount', UNDO_STACK, 'undo', 'Ctrl+Z'],
+         ['activityRedoBtn', 'activityRedoCount', REDO_STACK, 'redo', 'Ctrl+Shift+Z']]
+        .forEach(([btnId, countId, stack, verb, keys]) => {
+            const btn = $id(btnId);
+            const count = $id(countId);
+            if (!btn || !count) return;
+            const n = stack.length;
+            btn.disabled = n === 0;
+            if (n === 0) {
+                btn.title = 'Nothing to ' + verb;
+                count.classList.add('hidden');
+                count.classList.remove('inline-flex');
+            } else {
+                btn.title = verb[0].toUpperCase() + verb.slice(1) + ': ' + stack[n - 1].label
+                    + ' (' + n + ' available, ' + keys + ')';
+                count.textContent = n;
+                count.classList.remove('hidden');
+                count.classList.add('inline-flex');
+            }
+        });
+    }
+
+    /** Shared body for undo and redo — they differ only in direction. */
+    async function travelHistory(from, to, key, verb, doneWord) {
+        const action = from.pop();
+        refreshHistoryBtns();
         if (!action) {
-            toast('Nothing to undo', 'info');
+            toast('Nothing to ' + verb, 'info');
             return;
         }
         try {
-            await action.undoFn();
-            toast('Undone: ' + action.label);
+            await action[key]();
+            to.push(action);
+            if (to.length > UNDO_MAX) to.shift();
+            toast(doneWord + ': ' + action.label);
         } catch (err) {
-            toast('Undo failed: ' + (err && err.message ? err.message : 'unknown error'), 'error');
+            // Put it back so the user can retry rather than silently losing a step.
+            from.push(action);
+            toast(verb[0].toUpperCase() + verb.slice(1) + ' failed: '
+                + (err && err.message ? err.message : 'unknown error'), 'error');
         }
+        refreshHistoryBtns();
     }
+
+    const performUndo = () => travelHistory(UNDO_STACK, REDO_STACK, 'undoFn', 'undo', 'Undone');
+    const performRedo = () => travelHistory(REDO_STACK, UNDO_STACK, 'redoFn', 'redo', 'Redone');
 
     $id('activityUndoBtn')?.addEventListener('click', () => {
         if (!$id('activityUndoBtn').disabled) performUndo();
     });
+    $id('activityRedoBtn')?.addEventListener('click', () => {
+        if (!$id('activityRedoBtn').disabled) performRedo();
+    });
 
     document.addEventListener('keydown', (e) => {
-        if (!(e.ctrlKey || e.metaKey) || e.shiftKey) return;
-        if (e.key !== 'z' && e.key !== 'Z') return;
+        if (!(e.ctrlKey || e.metaKey)) return;
+        const k = (e.key || '').toLowerCase();
+        const isUndo = k === 'z' && !e.shiftKey;
+        const isRedo = (k === 'z' && e.shiftKey) || k === 'y';
+        if (!isUndo && !isRedo) return;
         const tag = (e.target.tagName || '').toLowerCase();
         if (tag === 'input' || tag === 'textarea' || tag === 'select' || e.target.isContentEditable) return;
         e.preventDefault();
-        performUndo();
+        (isUndo ? performUndo : performRedo)();
     });
 
     /* ================================================================
@@ -1326,10 +1362,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const existing = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
                 if (existing) existing.outerHTML = html;
                 const before = BEFORE_SNAPSHOT;
+                const after = res.data;
                 if (before) {
                     pushUndo(`Edit '${savedTitle}'`, async () => {
                         const r = await api(U.update(before.id), { method: 'PUT', body: activityToPayload(before) });
                         if (!r || !r.success) throw new Error((r && r.message) || 'restore failed');
+                        _renderCardOrReplace(r.data);
+                    }, async () => {
+                        const r = await api(U.update(after.id), { method: 'PUT', body: activityToPayload(after) });
+                        if (!r || !r.success) throw new Error((r && r.message) || 'reapply failed');
                         _renderCardOrReplace(r.data);
                     });
                 }
@@ -1341,6 +1382,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     const r = await api(U.destroy(newId), { method: 'DELETE' });
                     if (!r || !r.success) throw new Error((r && r.message) || 'delete failed');
                     _removeCardById(newId);
+                }, async () => {
+                    const r = await api(U.restore(newId), { method: 'POST' });
+                    if (!r || !r.success) throw new Error((r && r.message) || 'restore failed');
+                    _renderCardOrReplace(r.data);
                 });
             }
             reorderAndRenumberActivities();
@@ -1369,6 +1414,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const r = await api(U.destroy(copyId), { method: 'DELETE' });
                 if (!r || !r.success) throw new Error((r && r.message) || 'delete failed');
                 _removeCardById(copyId);
+            }, async () => {
+                const r = await api(U.restore(copyId), { method: 'POST' });
+                if (!r || !r.success) throw new Error((r && r.message) || 'restore failed');
+                _renderCardOrReplace(r.data);
             });
             openEditActivitySheet(copyId);   // open the copy for editing right away
         } catch (err) {
@@ -1392,6 +1441,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const r = await api(U.restore(id), { method: 'POST' });
                 if (!r || !r.success) throw new Error((r && r.message) || 'restore failed');
                 _renderCardOrReplace(r.data);
+            }, async () => {
+                const r = await api(U.destroy(id), { method: 'DELETE' });
+                if (!r || !r.success) throw new Error((r && r.message) || 'delete failed');
+                _removeCardById(id);
             });
         } catch (err) {
             toast(err.message, 'error');
@@ -1409,6 +1462,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!r || !r.success) throw new Error((r && r.message) || 'restore failed');
                 _renderCardOrReplace(r.data);
                 bumpDraftsBadge(-1);
+            }, async () => {
+                const r = await api(U.toDraft(id), { method: 'POST' });
+                if (!r || !r.success) throw new Error((r && r.message) || 'move failed');
+                _removeCardById(id);
+                bumpDraftsBadge(1);
             });
         } catch (err) {
             toast(err.message, 'error');
@@ -1729,6 +1787,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 ))).filter(Boolean);
                 if (restored.length === 0) throw new Error('no activities could be restored');
                 restored.forEach((d) => _renderCardOrReplace(d));
+            }, async () => {
+                const gone = (await Promise.all(ids.map((id) =>
+                    api(U.destroy(id), { method: 'DELETE' }).then(() => id).catch(() => null)
+                ))).filter(Boolean);
+                if (gone.length === 0) throw new Error('no activities could be deleted');
+                gone.forEach((id) => _removeCardById(id));
             });
         }
     }
@@ -1966,11 +2030,21 @@ document.addEventListener('DOMContentLoaded', () => {
             nextSibling: card.nextElementSibling,
         };
         dragBoardSnapshot = captureBoardSnapshot();
-        card.classList.add('dragging');
         if (e.dataTransfer) {
             e.dataTransfer.effectAllowed = 'move';
             try { e.dataTransfer.setData('text/plain', card.getAttribute('data-id')); } catch (_) { /* noop */ }
+            // Carry a faded copy of the card under the cursor. The browser's own
+            // snapshot would pick up the .dragging fade below and end up almost
+            // invisible, so hand it an explicit ghost instead.
+            const ghost = buildDragGhost(card);
+            ghost.style.transform = 'translate(-10000px, 0)';   // park it off-screen to be photographed
+            try {
+                e.dataTransfer.setDragImage(ghost, e.clientX - card.getBoundingClientRect().left, 24);
+            } catch (_) { /* noop */ }
+            setTimeout(() => ghost.remove(), 0);
         }
+        // Fade the original only after the drag image has been captured.
+        setTimeout(() => card.classList.add('dragging'), 0);
     });
 
     document.addEventListener('dragend', (e) => {
@@ -2180,6 +2254,205 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ================================================================
+     * 11b. TOUCH DRAG — HTML5 drag events never fire on phones, so a
+     * long-press starts an equivalent gesture: a faded copy of the card
+     * (or date header) follows the finger while the real one stays put,
+     * greyed, as the live insertion slot. Dropping hands off to the same
+     * handlers the desktop path uses, so ordering, dates, the reorder
+     * POST and undo all behave identically.
+     * ================================================================ */
+
+    const LONG_PRESS_MS = 320;
+    const TOUCH_SLOP = 10;          // px of finger travel that cancels the press
+    const EDGE_SCROLL_ZONE = 90;    // px from a viewport edge that auto-scrolls
+    const EDGE_SCROLL_SPEED = 12;
+
+    let touchDrag = null;
+
+    /** Translucent clone of `el`, sized to match and parked on <body>. */
+    function buildDragGhost(el) {
+        const rect = el.getBoundingClientRect();
+        const ghost = el.cloneNode(true);
+        ghost.classList.add('drag-ghost');
+        ghost.classList.remove('dragging');
+        ghost.removeAttribute('id');
+        ghost.removeAttribute('draggable');
+        ghost.style.width = rect.width + 'px';
+        $qsa('[id]', ghost).forEach((n) => n.removeAttribute('id'));
+        document.body.appendChild(ghost);
+        return ghost;
+    }
+
+    function positionGhost(x, y) {
+        if (!touchDrag) return;
+        touchDrag.ghost.style.transform =
+            `translate(${x - touchDrag.offsetX}px, ${y - touchDrag.offsetY}px) scale(1.03)`;
+    }
+
+    /** Keeps the page moving while a finger is parked near the top/bottom edge. */
+    function edgeScrollTick() {
+        if (!touchDrag) return;
+        const y = touchDrag.lastY;
+        if (y < EDGE_SCROLL_ZONE) window.scrollBy(0, -EDGE_SCROLL_SPEED);
+        else if (y > window.innerHeight - EDGE_SCROLL_ZONE - 60) window.scrollBy(0, EDGE_SCROLL_SPEED);
+        touchDrag.raf = requestAnimationFrame(edgeScrollTick);
+    }
+
+    function clearDropHighlights() {
+        $qsa('.date-activities.drag-over, .rest-day-marker.drag-over, .date-group.drag-over-group')
+            .forEach((el) => el.classList.remove('drag-over', 'drag-over-group'));
+    }
+
+    // Lifting a finger after a drag also fires a click; that must not be read
+    // as "tap the card to edit it".
+    let swallowNextClick = false;
+    document.addEventListener('click', (e) => {
+        if (!swallowNextClick) return;
+        swallowNextClick = false;
+        e.stopPropagation();
+        e.preventDefault();
+    }, true);
+
+    function endTouchDrag(commit) {
+        if (!touchDrag) return;
+        const td = touchDrag;
+        touchDrag = null;
+        if (td.active) swallowNextClick = true;
+        clearTimeout(td.timer);
+        if (td.raf) cancelAnimationFrame(td.raf);
+        td.ghost?.remove();
+        document.body.classList.remove('is-touch-dragging');
+
+        if (td.active) {
+            const target = document.elementFromPoint(td.lastX, td.lastY);
+            const rest = target?.closest?.('.rest-day-marker');
+            if (td.header) {
+                const group = target?.closest?.('.date-group');
+                const to = (group?.getAttribute('data-date') || rest?.getAttribute('data-date') || '').trim();
+                td.header.classList.remove('dragging');
+                clearDropHighlights();
+                dragGroupDate = null;
+                if (commit && to && to !== '__no-date__' && to !== td.groupDate) moveGroupToDate(td.groupDate, to);
+            } else {
+                const container = target?.closest?.('.date-activities');
+                td.card.classList.remove('dragging');
+                clearDropHighlights();
+                if (commit && container) handleDropIntoContainer(container);
+                else if (commit && rest) handleDropOntoRestDay(rest);
+                else if (dragOrigin?.parent) {
+                    // Cancelled: put the card back exactly where it started.
+                    if (dragOrigin.nextSibling) dragOrigin.parent.insertBefore(td.card, dragOrigin.nextSibling);
+                    else dragOrigin.parent.appendChild(td.card);
+                    reorderAndRenumberActivities();
+                }
+                dragSourceCard = null;
+                dragOrigin = null;
+                dragBoardSnapshot = null;
+            }
+        }
+    }
+
+    function beginTouchDrag(td) {
+        td.active = true;
+        document.body.classList.add('is-touch-dragging');
+        navigator.vibrate?.(15);
+
+        const el = td.header || td.card;
+        td.ghost = buildDragGhost(el);
+        const rect = el.getBoundingClientRect();
+        td.offsetX = td.lastX - rect.left;
+        td.offsetY = td.lastY - rect.top;
+        positionGhost(td.lastX, td.lastY);
+
+        if (td.header) {
+            td.header.classList.add('dragging');
+            dragGroupDate = td.groupDate;
+        } else {
+            td.card.classList.add('dragging');
+            dragSourceCard = td.card;
+            dragOrigin = {
+                date: (td.card.getAttribute('data-target-date') || '').trim(),
+                endDate: (td.card.getAttribute('data-target-end-date') || '').trim(),
+                parent: td.card.parentNode,
+                nextSibling: td.card.nextElementSibling,
+            };
+            dragBoardSnapshot = captureBoardSnapshot();
+        }
+        td.raf = requestAnimationFrame(edgeScrollTick);
+    }
+
+    document.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1 || touchDrag) return;
+        const t = e.touches[0];
+        // Taps on controls stay taps.
+        if (t.target.closest?.('button, a, input, select, textarea, [contenteditable], .sheet')) return;
+
+        const header = t.target.closest?.('.date-header[draggable="true"]');
+        const card = header ? null : t.target.closest?.('.activity-card[data-id]');
+        if (!header && !card) return;
+
+        const groupDate = header ? (header.closest('.date-group')?.getAttribute('data-date') || '').trim() : '';
+        if (header && (!groupDate || groupDate === '__no-date__')) return;
+
+        touchDrag = {
+            card, header, groupDate, active: false, raf: null,
+            startX: t.clientX, startY: t.clientY, lastX: t.clientX, lastY: t.clientY,
+            offsetX: 0, offsetY: 0, ghost: null,
+        };
+        touchDrag.timer = setTimeout(() => { if (touchDrag) beginTouchDrag(touchDrag); }, LONG_PRESS_MS);
+    }, { passive: true });
+
+    document.addEventListener('touchmove', (e) => {
+        if (!touchDrag || e.touches.length !== 1) return;
+        const t = e.touches[0];
+        touchDrag.lastX = t.clientX;
+        touchDrag.lastY = t.clientY;
+
+        if (!touchDrag.active) {
+            // Still waiting on the long press — any real movement means "scroll".
+            const moved = Math.hypot(t.clientX - touchDrag.startX, t.clientY - touchDrag.startY);
+            if (moved > TOUCH_SLOP) { clearTimeout(touchDrag.timer); touchDrag = null; }
+            return;
+        }
+
+        e.preventDefault();   // the page must not scroll under the finger
+        positionGhost(t.clientX, t.clientY);
+
+        const target = document.elementFromPoint(t.clientX, t.clientY);
+        const rest = target?.closest?.('.rest-day-marker');
+        clearDropHighlights();
+
+        if (touchDrag.header) {
+            const group = target?.closest?.('.date-group');
+            const to = (group?.getAttribute('data-date') || rest?.getAttribute('data-date') || '').trim();
+            if (!to || to === '__no-date__' || to === touchDrag.groupDate) return;
+            if (rest) rest.classList.add('drag-over');
+            else group.classList.add('drag-over-group');
+            return;
+        }
+
+        const container = target?.closest?.('.date-activities');
+        if (container) {
+            container.classList.add('drag-over');
+            const before = dragoverPosition(container, t.clientY);
+            if (before) {
+                if (before.previousElementSibling !== touchDrag.card) before.parentNode.insertBefore(touchDrag.card, before);
+            } else if (container.lastElementChild !== touchDrag.card) {
+                container.appendChild(touchDrag.card);
+            }
+        } else if (rest) {
+            rest.classList.add('drag-over');
+        }
+    }, { passive: false });
+
+    document.addEventListener('touchend', () => endTouchDrag(true), { passive: true });
+    document.addEventListener('touchcancel', () => endTouchDrag(false), { passive: true });
+    // A native scroll means the press was never a drag.
+    window.addEventListener('scroll', () => {
+        if (touchDrag && !touchDrag.active) { clearTimeout(touchDrag.timer); touchDrag = null; }
+    }, { passive: true });
+
+    /* ================================================================
      * 12. DRAFTS
      * ================================================================ */
 
@@ -2260,6 +2533,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!r || !r.success) throw new Error((r && r.message) || 'undo failed');
                     _removeCardById(id);
                     bumpDraftsBadge(1);
+                }, async () => {
+                    const r = await api(U.fromDraft(id), { method: 'POST' });
+                    if (!r || !r.success) throw new Error((r && r.message) || 'restore failed');
+                    _renderCardOrReplace(r.data);
+                    bumpDraftsBadge(-1);
+                    $qs(`#draftsListContainer .draft-row[data-id="${id}"]`)?.remove();
                 });
             } catch (err) {
                 toast(err.message, 'error');
@@ -2303,6 +2582,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             updatedAt: r.data.updated_at || null,
                         }));
                     }
+                }, async () => {
+                    const r = await api(U.destroy(id), { method: 'DELETE' });
+                    if (!r || !r.success) throw new Error((r && r.message) || 'delete failed');
+                    bumpDraftsBadge(-1);
+                    $qs(`#draftsListContainer .draft-row[data-id="${id}"]`)?.remove();
+                    if ($qsa('#draftsListContainer .draft-row').length === 0) renderDraftsList([]);
                 });
             } catch (err) {
                 toast(err.message, 'error');
@@ -2929,7 +3214,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     recomputeLotDayZero();
     rebuildItemPickerOptions();
-    refreshUndoBtn();
+    refreshHistoryBtns();
     refreshItemsEmptyState();
 });
 </script>

@@ -29,7 +29,7 @@
                         </a>
                     @endif
                     <div class="min-w-0">
-                        <h1 class="text-base md:text-lg font-bold text-gray-900 truncate leading-tight">@yield('page-title', 'AniSystem')</h1>
+                        <h1 id="appPageTitle" class="text-base md:text-lg font-bold text-gray-900 truncate leading-tight">@yield('page-title', 'AniSystem')</h1>
                         @hasSection('page-subtitle')
                             <p class="text-xs text-gray-500 truncate">@yield('page-subtitle')</p>
                         @endif

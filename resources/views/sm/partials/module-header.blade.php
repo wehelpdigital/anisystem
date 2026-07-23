@@ -15,7 +15,7 @@
     ];
 @endphp
 
-<div class="mb-4 md:mb-6">
+<div class="mb-4 md:mb-6 module-chip-nav">
     <div class="scroll-chips">
         <a href="{{ route('sm.hub', ['id' => $schedule->id]) }}"
             class="chip chip-dashed shrink-0" data-chip-manual>

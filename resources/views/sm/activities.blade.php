@@ -85,7 +85,36 @@
         .date-group.drag-over-group { outline: 2px dashed var(--date-color, #4A90E2); outline-offset: 2px; }
         /* "Hide empty dates" filter */
         body.hide-empty-dates .rest-day-marker { display: none; }
-        .activity-card.dragging { opacity: .45; }
+
+        /* ---- SPA shell ---------------------------------------------------
+           `module-hidden` beats component classes that set their own display
+           (the reason a plain `hidden` utility can lose here). */
+        .module-hidden { display: none !important; }
+        /* Injected modules keep their own chip nav in the markup — the toolbar
+           hamburger replaces it, so hide it inside the shell. */
+        #moduleHost .module-chip-nav { display: none; }
+        #moduleHost > div { animation: app-fade-up .3s cubic-bezier(.22,1,.36,1) both; }
+        /* The item being dragged stays in place as the live insertion slot,
+           dimmed and outlined; a faded copy travels with the pointer/finger. */
+        .activity-card.dragging {
+            opacity: .3;
+            outline: 2px dashed #b9c6a8;
+            outline-offset: -2px;
+            filter: grayscale(.5);
+        }
+        .drag-ghost {
+            position: fixed; top: 0; left: 0; z-index: 90;
+            margin: 0; pointer-events: none;
+            opacity: .72;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, .3);
+            transform-origin: top left; will-change: transform;
+        }
+        /* No text selection or long-press callout while a touch drag is live. */
+        body.is-touch-dragging {
+            user-select: none; -webkit-user-select: none;
+            -webkit-touch-callout: none; overscroll-behavior: contain;
+        }
+        .activity-card, .date-header[draggable="true"] { -webkit-touch-callout: none; }
         .activity-card-image img { max-width: 100%; max-height: 260px; border-radius: .6rem; border: 1px solid #eef0f3; }
         /* Keep list rows scannable — the full text is in the editor. */
         .activity-description-content {
@@ -261,8 +290,64 @@
     $hiddenCount = $sortedActivities->where('isHidden', true)->count();
 @endphp
 
-@include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'activities'])
+{{-- ===================== TOOLBAR (sticky, persistent) =====================
+     The modules hamburger lives here, inline with the activity actions. When
+     another module is showing, the activities-only buttons hide. --}}
+<div class="sticky top-14 md:top-16 z-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 py-2 mb-3 border-b border-gray-100">
+    <div class="flex items-center gap-2 flex-wrap">
+        <button type="button" id="modulesBtn" class="btn btn-white btn-sm" title="Switch module">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <span id="currentModuleLabel">Activities</span>
+        </button>
 
+        <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative" data-activities-only disabled title="Nothing to undo">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
+            Undo
+            <span id="activityUndoCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-accent-500 text-ink text-[10px] font-bold items-center justify-center">0</span>
+        </button>
+        <button type="button" id="activityRedoBtn" class="btn btn-white btn-sm relative" data-activities-only disabled title="Nothing to redo">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg>
+            Redo
+            <span id="activityRedoCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-accent-500 text-ink text-[10px] font-bold items-center justify-center">0</span>
+        </button>
+        <button type="button" id="openDraftsBtn" class="btn btn-white btn-sm" data-activities-only>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+            Drafts <span id="draftsBadge" class="badge badge-gray">{{ $draftsCount }}</span>
+        </button>
+        <button type="button" id="openLaborBtn" class="btn btn-white btn-sm" data-activities-only>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Labor
+        </button>
+        <button type="button" data-sheet-open="filtersSheet" class="btn btn-white btn-sm relative" data-activities-only>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
+            Search
+            <span id="activeFilterCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-brand-600 text-white text-[10px] font-bold items-center justify-center">0</span>
+        </button>
+        <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm ml-auto hidden md:inline-flex" data-activities-only>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+            Add Activity
+        </button>
+    </div>
+</div>
+
+{{-- Module host: other modules are fetched as partials and injected here.
+     Activities stays in the DOM (hidden) so its listeners survive. --}}
+<div id="moduleHost" class="hidden"></div>
+
+{{-- Full-surface loader while a module is being fetched --}}
+<div id="moduleLoader" class="hidden">
+    <div class="card">
+        <div class="card-body flex items-center justify-center gap-3 py-16 text-gray-500">
+            <svg class="w-6 h-6 animate-spin text-brand-600" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/>
+            </svg>
+            <span class="font-semibold" id="moduleLoaderLabel">Loading…</span>
+        </div>
+    </div>
+</div>
+
+<div id="activitiesRoot">
 {{-- ============================ VERSIONS STRIP ============================ --}}
 <div class="flex items-center gap-1 mb-3">
     <div class="scroll-chips grow" id="versionStrip">
@@ -289,33 +374,6 @@
     </button>
 </div>
 
-{{-- ============================ TOOLBAR (sticky) ============================ --}}
-<div class="sticky top-14 md:top-16 z-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 py-2 mb-3 border-b border-gray-100">
-    <div class="flex items-center gap-2 flex-wrap">
-        <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative" disabled title="Nothing to undo">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
-            Undo
-            <span id="activityUndoCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-accent-500 text-ink text-[10px] font-bold items-center justify-center">0</span>
-        </button>
-        <button type="button" id="openDraftsBtn" class="btn btn-white btn-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
-            Drafts <span id="draftsBadge" class="badge badge-gray">{{ $draftsCount }}</span>
-        </button>
-        <button type="button" id="openLaborBtn" class="btn btn-white btn-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            Labor
-        </button>
-        <button type="button" data-sheet-open="filtersSheet" class="btn btn-white btn-sm relative">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
-            Search
-            <span id="activeFilterCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-brand-600 text-white text-[10px] font-bold items-center justify-center">0</span>
-        </button>
-        <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm ml-auto hidden md:inline-flex">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-            Add Activity
-        </button>
-    </div>
-</div>
 
 {{-- ============================ FILTERS (bottom sheet) ============================ --}}
 <div class="sheet hidden" id="filtersSheet" style="--sheet-width: 30rem">
@@ -510,11 +568,12 @@
 </div>
 
 {{-- Mobile floating action button --}}
-<button type="button" id="fabAddActivity"
+<button type="button" id="fabAddActivity" data-activities-only
     class="fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full btn-primary shadow-lg md:hidden flex items-center justify-center"
     aria-label="Add activity">
     <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
 </button>
+</div>{{-- /#activitiesRoot --}}
 @endsection
 
 @push('sheets')
@@ -526,6 +585,124 @@
 @endpush
 
 @push('scripts')
+<script>
+/* ======================================================================
+ * Schedule shell — swaps modules in place instead of loading a new page.
+ * Each module is fetched once as a partial, injected, and then cached in
+ * the DOM (hidden) so returning to it is instant and its event listeners
+ * are never bound twice.
+ * ==================================================================== */
+(() => {
+    const SCHEDULE_ID = {{ $schedule->id }};
+    const MODULES = {
+        activities:    { label: 'Activities',    url: @json(route('sm.activities',    ['id' => $schedule->id])) },
+        settings:      { label: 'Settings',      url: @json(route('sm.settings',      ['id' => $schedule->id])) },
+        lots:          { label: 'Lots',          url: @json(route('sm.lots',          ['id' => $schedule->id])) },
+        workers:       { label: 'Workers',       url: @json(route('sm.workers',       ['id' => $schedule->id])) },
+        materials:     { label: 'Materials',     url: @json(route('sm.materials',     ['id' => $schedule->id])) },
+        services:      { label: 'Services',      url: @json(route('sm.services',      ['id' => $schedule->id])) },
+        documentation: { label: 'Documentation', url: @json(route('sm.documentation', ['id' => $schedule->id])) },
+        irrigations:   { label: 'Irrigation',    url: @json(route('sm.irrigations',   ['id' => $schedule->id])) },
+    };
+
+    const host = document.getElementById('moduleHost');
+    const activitiesRoot = document.getElementById('activitiesRoot');
+    const loader = document.getElementById('moduleLoader');
+    const loaderLabel = document.getElementById('moduleLoaderLabel');
+    const label = document.getElementById('currentModuleLabel');
+    const loaded = new Map();           // key -> injected wrapper element
+    let current = 'activities';
+    let busy = false;
+
+    const setActivitiesChrome = (on) => {
+        document.querySelectorAll('[data-activities-only]').forEach((el) => {
+            el.classList.toggle('module-hidden', !on);
+        });
+    };
+
+    /** innerHTML never executes <script>; re-create them so module JS runs. */
+    const runScripts = (root) => {
+        root.querySelectorAll('script').forEach((old) => {
+            const s = document.createElement('script');
+            [...old.attributes].forEach((a) => s.setAttribute(a.name, a.value));
+            s.textContent = old.textContent;
+            old.replaceWith(s);
+        });
+    };
+
+    async function showModule(key, push = true) {
+        if (busy || !MODULES[key] || key === current) { closeSheet('modulesSheet'); return; }
+        busy = true;
+        closeSheet('modulesSheet');
+
+        // Hide whatever is showing.
+        activitiesRoot.classList.add('module-hidden');
+        loaded.forEach((el) => el.classList.add('module-hidden'));
+
+        if (key === 'activities') {
+            activitiesRoot.classList.remove('module-hidden');
+            host.classList.add('hidden');
+        } else if (loaded.has(key)) {
+            host.classList.remove('hidden');
+            loaded.get(key).classList.remove('module-hidden');
+        } else {
+            loaderLabel.textContent = 'Loading ' + MODULES[key].label + '…';
+            loader.classList.remove('hidden');
+            host.classList.add('hidden');
+            try {
+                const sep = MODULES[key].url.includes('?') ? '&' : '?';
+                const res = await fetch(MODULES[key].url + sep + 'partial=1', {
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }, credentials: 'same-origin',
+                });
+                if (!res.ok) throw new Error('Could not load ' + MODULES[key].label);
+                const wrap = document.createElement('div');
+                wrap.dataset.module = key;
+                wrap.innerHTML = await res.text();
+                host.appendChild(wrap);
+                loaded.set(key, wrap);
+                runScripts(wrap);
+                host.classList.remove('hidden');
+            } catch (err) {
+                toast(err.message || 'Could not load that module.', 'error');
+                activitiesRoot.classList.remove('module-hidden');
+                key = 'activities';
+            } finally {
+                loader.classList.add('hidden');
+            }
+        }
+
+        current = key;
+        label.textContent = MODULES[key].label;
+        // Keep the app header + browser tab in step with the swapped module.
+        const pageTitle = document.getElementById('appPageTitle');
+        if (pageTitle) pageTitle.textContent = MODULES[key].label;
+        document.title = MODULES[key].label + ' — ' + @json($schedule->title);
+        setActivitiesChrome(key === 'activities');
+        document.querySelectorAll('#modulesSheet .module-nav-row').forEach((row) => {
+            row.querySelector('.module-nav-check')?.classList.toggle('hidden', row.dataset.module !== key);
+        });
+        if (push) history.pushState({ module: key }, '', MODULES[key].url);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        busy = false;
+    }
+
+    document.getElementById('modulesBtn')?.addEventListener('click', () => openSheet('modulesSheet'));
+    document.addEventListener('click', (e) => {
+        const row = e.target.closest('#modulesSheet .module-nav-row');
+        if (row) { showModule(row.dataset.module); return; }
+        // Module chip-nav links inside an injected partial stay in the shell.
+        const link = e.target.closest('#moduleHost a[href]');
+        if (link) {
+            const hit = Object.keys(MODULES).find((k) => link.href.split('?')[0] === MODULES[k].url.split('?')[0]);
+            if (hit) { e.preventDefault(); showModule(hit); }
+        }
+    });
+
+    window.addEventListener('popstate', (e) => showModule((e.state && e.state.module) || 'activities', false));
+    history.replaceState({ module: 'activities' }, '', MODULES.activities.url);
+    window.smShowModule = showModule;
+})();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.min.js"></script>
 @include('sm.partials.activities-js', [
     'schedule' => $schedule,
