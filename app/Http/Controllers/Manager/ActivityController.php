@@ -11,6 +11,7 @@ use App\Models\AsScheduleLot;
 use App\Models\AsScheduleMaterial;
 use App\Models\AsScheduleService;
 use App\Models\AsScheduleWorker;
+use App\Services\ScheduleReadinessService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -70,6 +71,23 @@ class ActivityController extends BaseScheduleController
             'markersByDate'   => $markersByDate,
             'activeVersion'   => $activeVersion,
             'activityTypes'   => AsScheduleActivity::ACTIVITY_TYPES,
+            'readiness'       => (new ScheduleReadinessService())->check($schedule),
+        ]);
+    }
+
+    /**
+     * What is still missing from this schedule. Polled by the readiness bell
+     * so the badge stays honest after an edit without a page reload.
+     */
+    public function readiness(Request $request)
+    {
+        $schedule = $this->schedule($request->query('id'));
+        $schedule->load(['lots', 'workers', 'materials', 'services', 'activities.lots']);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Readiness loaded.',
+            'data'    => (new ScheduleReadinessService())->check($schedule),
         ]);
     }
 

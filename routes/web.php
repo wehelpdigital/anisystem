@@ -147,6 +147,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-activities-to-draft', [App\Http\Controllers\Manager\ActivityController::class, 'toDraft'])->name('sm.activities.to-draft');
     Route::post('/app/sm-activities-from-draft', [App\Http\Controllers\Manager\ActivityController::class, 'fromDraft'])->name('sm.activities.from-draft');
     Route::get('/app/sm-activities-drafts', [App\Http\Controllers\Manager\ActivityController::class, 'listDrafts'])->name('sm.activities.drafts');
+    Route::get('/app/sm-activities-readiness', [App\Http\Controllers\Manager\ActivityController::class, 'readiness'])->name('sm.activities.readiness');
     Route::get('/app/sm-activities-labor', [App\Http\Controllers\Manager\ActivityController::class, 'laborSummary'])->name('sm.activities.labor');
     Route::post('/app/sm-activities-date-note-save', [App\Http\Controllers\Manager\ActivityController::class, 'saveDateNote'])->name('sm.activities.date-note.save');
     Route::delete('/app/sm-activities-date-note-delete', [App\Http\Controllers\Manager\ActivityController::class, 'deleteDateNote'])->name('sm.activities.date-note.delete');

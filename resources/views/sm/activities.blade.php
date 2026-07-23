@@ -295,6 +295,53 @@
 
         html.dark .drag-ghost { box-shadow: 0 18px 40px rgba(0, 0, 0, .6); }
         html.dark .activity-card.dragging { outline-color: #4a5563; }
+
+        /* ---- Readiness bell ----------------------------------------------
+           A water-ripple pulses out of the button while something still needs
+           setting up, and the bell itself gives an occasional nudge. Both stop
+           the moment the list is clear. */
+        #readinessBtn { overflow: visible; }
+        .readiness-ripple {
+            position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+            opacity: 0;
+        }
+        #readinessBtn.has-alerts .readiness-ripple::before,
+        #readinessBtn.has-alerts .readiness-ripple::after {
+            content: ''; position: absolute; inset: 0; border-radius: inherit;
+            border: 2px solid var(--ripple-color, #f5c518);
+            animation: readiness-ripple 2.4s cubic-bezier(.22, 1, .36, 1) infinite;
+        }
+        #readinessBtn.has-alerts .readiness-ripple::after { animation-delay: 1.2s; }
+        #readinessBtn.has-alerts .readiness-ripple { opacity: 1; }
+        #readinessBtn.has-blocking { --ripple-color: #ef4444; }
+        #readinessBtn.has-alerts svg { animation: readiness-nudge 2.4s ease-in-out infinite; transform-origin: 50% 15%; }
+
+        @keyframes readiness-ripple {
+            0%   { transform: scale(1);    opacity: .75; }
+            70%  { transform: scale(1.55); opacity: 0; }
+            100% { transform: scale(1.55); opacity: 0; }
+        }
+        @keyframes readiness-nudge {
+            0%, 62%, 100% { transform: rotate(0); }
+            68% { transform: rotate(-12deg); }
+            74% { transform: rotate(10deg); }
+            80% { transform: rotate(-6deg); }
+            86% { transform: rotate(4deg); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            #readinessBtn.has-alerts .readiness-ripple::before,
+            #readinessBtn.has-alerts .readiness-ripple::after,
+            #readinessBtn.has-alerts svg { animation: none; }
+            #readinessBtn.has-alerts .readiness-ripple::before { opacity: .5; }
+        }
+
+        .readiness-row { display: flex; gap: .75rem; padding: .7rem .25rem; border-bottom: 1px solid var(--tl-border); }
+        .readiness-row:last-child { border-bottom: 0; }
+        .readiness-dot {
+            width: .55rem; height: .55rem; border-radius: 999px; margin-top: .42rem; flex-shrink: 0;
+            background: #f5c518;
+        }
+        .readiness-row.is-blocking .readiness-dot { background: #ef4444; }
     </style>
 @endpush
 
@@ -394,6 +441,15 @@
         <button type="button" id="modulesBtn" class="btn btn-white btn-sm" title="Switch module">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             <span id="currentModuleLabel">Activities</span>
+        </button>
+
+        <button type="button" id="readinessBtn" class="btn btn-white btn-sm relative {{ $readiness['count'] > 0 ? 'has-alerts' : '' }}"
+                title="{{ $readiness['count'] > 0 ? $readiness['count'] . ($readiness['count'] === 1 ? ' thing still needs' : ' things still need') . ' setting up' : 'Everything is set up' }}">
+            <span class="readiness-ripple" aria-hidden="true"></span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0a3 3 0 11-6 0m6 0H9"/></svg>
+            <span class="hidden sm:inline">Setup</span>
+            <span id="readinessCount"
+                  class="absolute -top-1.5 -right-1.5 {{ $readiness['count'] > 0 ? 'inline-flex' : 'hidden' }} min-w-5 h-5 px-1 rounded-full {{ $readiness['blocking'] > 0 ? 'bg-red-500 text-white' : 'bg-accent-500 text-ink' }} text-[10px] font-bold items-center justify-center">{{ $readiness['count'] }}</span>
         </button>
 
         <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative" data-activities-only disabled title="Nothing to undo">
@@ -783,6 +839,8 @@
         if (push) history.pushState({ module: key }, '', MODULES[key].url);
         window.scrollTo({ top: 0, behavior: 'smooth' });
         busy = false;
+        // Leaving a module usually means something was just added or removed.
+        window.smRefreshReadiness?.();
     }
 
     document.getElementById('modulesBtn')?.addEventListener('click', () => openSheet('modulesSheet'));
@@ -800,6 +858,83 @@
     window.addEventListener('popstate', (e) => showModule((e.state && e.state.module) || 'activities', false));
     history.replaceState({ module: 'activities' }, '', MODULES.activities.url);
     window.smShowModule = showModule;
+
+    /* ---- Readiness bell -------------------------------------------------
+     * Flags what the plan is still missing (no day 0, no lots, activities
+     * with no date...). Rippling while anything is outstanding; each row
+     * jumps straight to the module that fixes it. */
+
+    const readinessBtn = document.getElementById('readinessBtn');
+    const readinessCount = document.getElementById('readinessCount');
+    let READINESS = @json($readiness);
+
+    const esc = (s) => String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+    function paintReadiness() {
+        if (!readinessBtn) return;
+        const n = READINESS.count || 0;
+        const blocking = READINESS.blocking || 0;
+        readinessBtn.classList.toggle('has-alerts', n > 0);
+        readinessBtn.classList.toggle('has-blocking', blocking > 0);
+        readinessBtn.title = n > 0
+            ? n + (n === 1 ? ' thing still needs' : ' things still need') + ' setting up'
+            : 'Everything is set up';
+        readinessCount.textContent = n;
+        readinessCount.classList.toggle('hidden', n === 0);
+        readinessCount.classList.toggle('inline-flex', n > 0);
+        readinessCount.className = readinessCount.className
+            .replace(/bg-(red-500|accent-500)|text-(white|ink)/g, '').trim()
+            + (blocking > 0 ? ' bg-red-500 text-white' : ' bg-accent-500 text-ink');
+
+        const list = document.getElementById('readinessList');
+        const clear = document.getElementById('readinessAllClear');
+        const intro = document.getElementById('readinessIntro');
+        if (!list) return;
+
+        list.classList.toggle('hidden', n === 0);
+        clear.classList.toggle('hidden', n > 0);
+        intro.classList.toggle('hidden', n === 0);
+        intro.textContent = blocking > 0
+            ? 'The first few stop the plan from working properly — the rest are worth doing when you get a chance.'
+            : 'None of these stop the plan from working, but they will make it more useful.';
+
+        list.innerHTML = (READINESS.items || []).map((it) => `
+            <button type="button" class="readiness-row w-full text-left hover:bg-gray-50 rounded-lg ${it.severity === 'blocking' ? 'is-blocking' : ''}"
+                    data-readiness-module="${esc(it.module)}">
+                <span class="readiness-dot"></span>
+                <span class="min-w-0 flex-1">
+                    <span class="block font-bold text-gray-900 text-sm">${esc(it.label)}</span>
+                    <span class="block text-xs text-gray-500 mt-0.5">${esc(it.detail)}</span>
+                </span>
+                <svg class="w-4 h-4 text-gray-300 shrink-0 mt-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </button>`).join('');
+    }
+
+    async function refreshReadiness() {
+        try {
+            const res = await fetch(@json(route('sm.activities.readiness', ['id' => $schedule->id])), {
+                headers: { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+                credentials: 'same-origin',
+            });
+            const json = await res.json();
+            if (json && json.success) { READINESS = json.data; paintReadiness(); }
+        } catch (_) { /* a stale badge is better than an error toast */ }
+    }
+
+    readinessBtn?.addEventListener('click', () => { openSheet('readinessSheet'); refreshReadiness(); });
+    document.addEventListener('click', (e) => {
+        const row = e.target.closest('[data-readiness-module]');
+        if (!row) return;
+        closeSheet('readinessSheet');
+        setTimeout(() => showModule(row.dataset.readinessModule), 240);
+    });
+
+    // Anything that changes the plan can move the needle, so re-check after
+    // module edits and when the user comes back to the tab.
+    window.smRefreshReadiness = refreshReadiness;
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshReadiness(); });
+    paintReadiness();
 })();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.min.js"></script>

@@ -329,6 +329,26 @@
     </div>
 </div>
 
+{{-- ======================== SETUP / READINESS ======================== --}}
+<div class="sheet hidden" id="readinessSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Finish setting up</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <p class="text-sm text-gray-600 mb-2" id="readinessIntro"></p>
+        <div id="readinessList"></div>
+        <div id="readinessAllClear" class="hidden text-center py-8">
+            <div class="w-14 h-14 mx-auto rounded-full bg-brand-50 text-brand-600 flex items-center justify-center mb-3">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <p class="font-bold text-gray-900">Nothing left to set up</p>
+            <p class="text-sm text-gray-500 mt-1">This cropping plan has everything it needs.</p>
+        </div>
+    </div>
+</div>
+
 {{-- ==================== MOVE DAY TO DAS/DAT ==================== --}}
 <div class="sheet hidden" id="moveGroupDasSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
