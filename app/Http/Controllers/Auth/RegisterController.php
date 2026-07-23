@@ -62,6 +62,18 @@ class RegisterController extends Controller
             'deleteStatus' => 1,
         ]);
 
+        // Free allowance so a new member can try the AI Technician before
+        // deciding whether to buy credits.
+        try {
+            $freeCredits = (int) \App\Models\AiSetting::current()->freeCreditsOnSignup;
+            if ($freeCredits > 0) {
+                app(\App\Services\AiCreditService::class)
+                    ->grant($user->id, $freeCredits, 'Welcome credits', 'signup');
+            }
+        } catch (\Throwable $e) {
+            Log::warning('Welcome AI credits failed for user '.$user->id.': '.$e->getMessage());
+        }
+
         try {
             $this->mail->sendTemplateToUser('registration_welcome', $user);
         } catch (\Throwable $e) {

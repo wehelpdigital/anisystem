@@ -28,6 +28,13 @@ return [
     // Mail settings / email templates group key inside as_mail_smtp_settings / as_email_templates
     'mail_group' => 'AniSystem',
 
+    /*
+    | Shared secret for the AI provider key. btc-check writes the key encrypted
+    | with this secret and AniSystem reads it back, so it must be the identical
+    | string in both apps' .env files. Without it the AI Technician stays off.
+    */
+    'ai_key_secret' => env('ANISYSTEM_AI_KEY_SECRET'),
+
     // Days before expiry to send the "expiring soon" email
     'expiry_notice_days' => 7,
 

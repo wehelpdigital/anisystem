@@ -189,6 +189,136 @@ class CheckoutService
     }
 
     /**
+     * Same ecom order contract as a plan purchase, for an AI Credit pack. The
+     * admin verifies it in the same ecom-orders queue; approving it grants the
+     * credits (see AiCreditPurchase → active).
+     *
+     * @return \App\Models\AiCreditPurchase the pending purchase linked to the order
+     */
+    public function purchaseCredits(
+        User $user,
+        \App\Models\AiCreditPack $pack,
+        string $payerName,
+        float $amountSent,
+        ?string $referenceNumber,
+        ?string $gcashPhone,
+        ?UploadedFile $screenshot,
+        ?string $notes = null,
+    ): \App\Models\AiCreditPurchase {
+        $now = Carbon::now('Asia/Manila');
+        $clientId = $this->ensureCrmClient($user, $now);
+        $orderNumber = $this->uniqueOrderNumber($now);
+
+        $screenshotPath = null;
+        if ($screenshot) {
+            $ext = \App\Support\UploadHelper::safeExtension($screenshot, ['jpg', 'jpeg', 'png', 'webp']);
+            $screenshotPath = 'images/payment-screenshots/payment_'.$orderNumber.'_'.$now->timestamp.'.'.$ext;
+        }
+
+        $purchase = DB::transaction(function () use ($user, $pack, $payerName, $amountSent, $referenceNumber, $gcashPhone, $screenshotPath, $notes, $now, $clientId, $orderNumber) {
+            $orderId = DB::table('ecom_orders')->insertGetId([
+                'usersId' => config('anisystem.order_users_id', 1),
+                'orderNumber' => $orderNumber,
+                'orderStatus' => 'pending',
+                'shippingStatus' => 'not_applicable',
+                'clientId' => $clientId,
+                'clientFirstName' => $user->firstName,
+                'clientMiddleName' => '',
+                'clientLastName' => $user->lastName,
+                'clientPhone' => $user->phone,
+                'clientEmail' => $user->email,
+                'subtotal' => $pack->price,
+                'shippingTotal' => 0,
+                'discountTotal' => 0,
+                'grandTotal' => $pack->price,
+                'affiliateCommissionTotal' => 0,
+                'netRevenue' => $pack->price,
+                'orderNotes' => 'AniSystem AI Credits. Pack: '.$pack->packName
+                    .' ('.$pack->credits.' credits). AniSystem user #'.$user->id.'.',
+                'isPackage' => 0,
+                'recoveryToken' => Str::random(48),
+                'recoveryTokenExpiresAt' => $now->copy()->addDays(7),
+                'deleteStatus' => 1,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+
+            DB::table('ecom_order_items')->insert([
+                'orderId' => $orderId,
+                'productId' => $pack->ecomProductId,
+                'productName' => 'AniSystem AI Credits',
+                'productStore' => config('anisystem.store_name', 'AniSystem'),
+                'productType' => 'access',
+                'variantId' => $pack->ecomVariantId,
+                'variantName' => $pack->packName.' ('.$pack->credits.' credits)',
+                'unitPrice' => $pack->price,
+                'quantity' => 1,
+                'subtotal' => $pack->price,
+                'shippingCost' => 0,
+                'accessClientName' => $user->full_name,
+                'accessClientPhone' => $user->phone,
+                'accessClientEmail' => $user->email,
+                'deleteStatus' => 1,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+
+            DB::table('ecom_orders')->where('id', $orderId)->update([
+                'paymentMethod' => 'manual_gcash',
+                'paymentVerificationStatus' => 'pending',
+                'paymentPayerName' => $payerName,
+                'paymentAmountSent' => $amountSent,
+                'paymentReferenceNumber' => $referenceNumber,
+                'paymentPhoneNumber' => $gcashPhone,
+                'paymentScreenshot' => $screenshotPath,
+                'paymentNotes' => $notes,
+                'updated_at' => $now,
+            ]);
+
+            DB::table('ecom_order_audit_logs')->insert([
+                'orderId' => $orderId,
+                'orderNumber' => $orderNumber,
+                'userId' => null,
+                'userName' => $user->full_name.' (Customer)',
+                'actionType' => 'payment_details_submitted',
+                'fieldChanged' => 'paymentMethod',
+                'previousValue' => null,
+                'newValue' => 'manual_gcash',
+                'description' => 'Customer submitted payment details via GCash from AniSystem (AI Credits). Amount: ₱'
+                    .number_format($amountSent, 2)
+                    .($referenceNumber ? '. Ref: '.$referenceNumber : ''),
+                'ipAddress' => request()->ip(),
+                'userAgent' => request()->userAgent(),
+                'deleteStatus' => 1,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+
+            return \App\Models\AiCreditPurchase::create([
+                'userId' => $user->id,
+                'packId' => $pack->id,
+                'packName' => $pack->packName,
+                'credits' => $pack->credits,
+                'price' => $pack->price,
+                'ecomOrderId' => $orderId,
+                'orderNumber' => $orderNumber,
+                'status' => \App\Models\AiCreditPurchase::STATUS_PENDING,
+                'deleteStatus' => 1,
+            ]);
+        });
+
+        if ($screenshot && $screenshotPath) {
+            try {
+                $this->moveScreenshot($screenshot, $screenshotPath);
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
+
+        return $purchase;
+    }
+
+    /**
      * Ensure a clients_all_database CRM row exists for this user (mother system
      * convention). Legacy table: all text columns NOT NULL, explicit datetimes.
      */

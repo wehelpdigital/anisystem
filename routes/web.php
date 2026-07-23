@@ -149,6 +149,16 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-activities-drafts', [App\Http\Controllers\Manager\ActivityController::class, 'listDrafts'])->name('sm.activities.drafts');
     Route::get('/app/sm-activities-readiness', [App\Http\Controllers\Manager\ActivityController::class, 'readiness'])->name('sm.activities.readiness');
 
+    // --- Agricultural AI Technician + AI Credits ---
+    Route::get('/app/ai', [App\Http\Controllers\AiController::class, 'index'])->name('ai.index');
+    Route::post('/app/ai-ask', [App\Http\Controllers\AiController::class, 'ask'])->name('ai.ask');
+    Route::post('/app/ai-photo', [App\Http\Controllers\AiController::class, 'uploadImage'])->name('ai.photo');
+    Route::post('/app/ai-conversation-new', [App\Http\Controllers\AiController::class, 'newConversation'])->name('ai.conversation.new');
+    Route::delete('/app/ai-conversation-delete', [App\Http\Controllers\AiController::class, 'deleteConversation'])->name('ai.conversation.delete');
+    Route::get('/app/ai-credits', [App\Http\Controllers\AiCreditController::class, 'index'])->name('ai.credits');
+    Route::get('/app/ai-credits/{packKey}', [App\Http\Controllers\AiCreditController::class, 'payment'])->name('ai.credits.payment');
+    Route::post('/app/ai-credits/{packKey}', [App\Http\Controllers\AiCreditController::class, 'submit'])->name('ai.credits.submit');
+
     // --- Community: browse, question and rate published plans ---
     Route::get('/app/community', [App\Http\Controllers\CommunityController::class, 'index'])->name('community.index');
     Route::get('/app/community-plan', [App\Http\Controllers\CommunityController::class, 'show'])->name('community.show');
