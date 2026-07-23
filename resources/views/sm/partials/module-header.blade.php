@@ -12,6 +12,7 @@
         'documentation' => ['label' => 'Documentation', 'route' => 'sm.documentation'],
         'activities' => ['label' => 'Activities', 'route' => 'sm.activities'],
         'irrigations' => ['label' => 'Irrigation', 'route' => 'sm.irrigations'],
+        'post-harvest' => ['label' => 'Post-harvest', 'route' => 'sm.post-harvest'],
     ];
 @endphp
 

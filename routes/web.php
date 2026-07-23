@@ -148,6 +148,14 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-activities-from-draft', [App\Http\Controllers\Manager\ActivityController::class, 'fromDraft'])->name('sm.activities.from-draft');
     Route::get('/app/sm-activities-drafts', [App\Http\Controllers\Manager\ActivityController::class, 'listDrafts'])->name('sm.activities.drafts');
     Route::get('/app/sm-activities-readiness', [App\Http\Controllers\Manager\ActivityController::class, 'readiness'])->name('sm.activities.readiness');
+
+    // Post-harvest observations
+    Route::get('/app/sm-post-harvest', [App\Http\Controllers\Manager\PostHarvestController::class, 'page'])->name('sm.post-harvest');
+    Route::post('/app/sm-post-harvest-store', [App\Http\Controllers\Manager\PostHarvestController::class, 'store'])->name('sm.post-harvest.store');
+    Route::put('/app/sm-post-harvest-update', [App\Http\Controllers\Manager\PostHarvestController::class, 'update'])->name('sm.post-harvest.update');
+    Route::delete('/app/sm-post-harvest-delete', [App\Http\Controllers\Manager\PostHarvestController::class, 'destroy'])->name('sm.post-harvest.destroy');
+    Route::post('/app/sm-post-harvest-restore', [App\Http\Controllers\Manager\PostHarvestController::class, 'restore'])->name('sm.post-harvest.restore');
+    Route::post('/app/sm-post-harvest-image-upload', [App\Http\Controllers\Manager\PostHarvestController::class, 'uploadImage'])->name('sm.post-harvest.image-upload');
     Route::get('/app/sm-activities-labor', [App\Http\Controllers\Manager\ActivityController::class, 'laborSummary'])->name('sm.activities.labor');
     Route::post('/app/sm-activities-date-note-save', [App\Http\Controllers\Manager\ActivityController::class, 'saveDateNote'])->name('sm.activities.date-note.save');
     Route::delete('/app/sm-activities-date-note-delete', [App\Http\Controllers\Manager\ActivityController::class, 'deleteDateNote'])->name('sm.activities.date-note.delete');

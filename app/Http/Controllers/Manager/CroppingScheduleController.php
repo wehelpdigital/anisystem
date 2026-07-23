@@ -300,7 +300,11 @@ class CroppingScheduleController extends Controller
             + (int) $schedule->critical_rules_count
             + ($hasProtocol ? 1 : 0);
 
-        return view('sm.hub', compact('schedule', 'documentationCount'));
+        $postHarvestCount = \App\Models\AsSchedulePostHarvest::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->count();
+
+        return view('sm.hub', compact('schedule', 'documentationCount', 'postHarvestCount'));
     }
 
     /**

@@ -758,6 +758,7 @@
         services:      { label: 'Services',      url: @json(route('sm.services',      ['id' => $schedule->id])) },
         documentation: { label: 'Documentation', url: @json(route('sm.documentation', ['id' => $schedule->id])) },
         irrigations:   { label: 'Irrigation',    url: @json(route('sm.irrigations',   ['id' => $schedule->id])) },
+        'post-harvest': { label: 'Post-harvest', url: @json(route('sm.post-harvest',  ['id' => $schedule->id])) },
     };
 
     const host = document.getElementById('moduleHost');
