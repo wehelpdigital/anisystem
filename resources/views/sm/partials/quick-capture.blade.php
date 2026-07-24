@@ -11,28 +11,28 @@
        so the `hidden` utility actually hides the modal. */
     .qc-overlay.hidden { display: none !important; }
     @media (min-width: 640px) { .qc-overlay { align-items: center; padding: 1rem; } }
-    .qc-modal { background: var(--color-white, #fff); width: 100%; max-width: 34rem; max-height: 92vh; display: flex; flex-direction: column;
+    /* Use the palette variables (they flip under html.dark) instead of fixed
+       hex, so the modal reads correctly in both light and dark. */
+    .qc-modal { background: var(--color-white); color: var(--color-gray-900); width: 100%; max-width: 34rem; max-height: 92vh; display: flex; flex-direction: column;
         border-radius: 1rem 1rem 0 0; overflow: hidden; animation: qc-rise .22s ease; }
     @media (min-width: 640px) { .qc-modal { border-radius: 1rem; } }
     @keyframes qc-rise { from { transform: translateY(24px); opacity: .6; } to { transform: none; opacity: 1; } }
-    .qc-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: 1rem 1.25rem; border-bottom: 1px solid #eef0f3; }
+    .qc-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: 1rem 1.25rem; border-bottom: 1px solid var(--color-gray-200); }
     .qc-body { padding: 1.25rem; overflow-y: auto; }
-    .qc-foot { display: flex; gap: .5rem; padding: 1rem 1.25rem; border-top: 1px solid #eef0f3; }
+    .qc-foot { display: flex; gap: .5rem; padding: 1rem 1.25rem; border-top: 1px solid var(--color-gray-200); }
     .qc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
-    .qc-thumb { position: relative; aspect-ratio: 1; border-radius: .6rem; overflow: hidden; background: #f3f4f6; }
+    .qc-thumb { position: relative; aspect-ratio: 1; border-radius: .6rem; overflow: hidden; background: var(--color-gray-100); }
     .qc-thumb img { width: 100%; height: 100%; object-fit: cover; }
     .qc-thumb button { position: absolute; top: .25rem; right: .25rem; width: 1.5rem; height: 1.5rem; border-radius: 999px;
         background: rgba(17,24,39,.7); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 1; }
     .qc-add { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .35rem; aspect-ratio: 1;
-        border: 1.5px dashed #cbd5e1; border-radius: .6rem; color: #64748b; font-size: 12px; font-weight: 600; cursor: pointer; background: #fafafa; }
-    .qc-add:hover { border-color: #94a3b8; color: #475569; }
-    .qc-target { display: flex; align-items: flex-start; gap: .6rem; padding: .75rem; border: 1.5px solid #e5e7eb; border-radius: .7rem; cursor: pointer; }
-    .qc-target.is-on { border-color: #4a7c2a; background: #f3f8ec; }
+        border: 1.5px dashed var(--color-gray-300); border-radius: .6rem; color: var(--color-gray-500); font-size: 12px; font-weight: 600; cursor: pointer; background: var(--color-gray-50); }
+    .qc-add:hover { border-color: var(--color-gray-400); color: var(--color-gray-600); }
+    .qc-target { display: flex; align-items: flex-start; gap: .6rem; padding: .75rem; border: 1.5px solid var(--color-gray-200); border-radius: .7rem; cursor: pointer; }
+    .qc-target.is-on { border-color: var(--color-brand-600, #4a7c2a); background: rgba(74,124,42,.12); }
     .qc-target input { margin-top: .2rem; }
     .qc-editor-wrap .ql-container { min-height: 6rem; border-bottom-left-radius: .6rem; border-bottom-right-radius: .6rem; }
     .qc-editor-wrap .ql-toolbar { border-top-left-radius: .6rem; border-top-right-radius: .6rem; }
-    html.dark .qc-modal { background: var(--color-gray-800, #1f2430); color: var(--color-gray-100); }
-    html.dark .qc-head, html.dark .qc-foot { border-color: rgba(255,255,255,.08); }
 </style>
 @endpush
 
@@ -160,11 +160,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function open() {
+    // Camera-app style: tapping Quick Capture opens the camera straight away.
+    // The modal only appears once a photo has actually been taken; if the user
+    // backs out of the camera without a shot, nothing pops up.
+    function startCapture() {
         files = [];
         renderPreviews();
         if (quill) quill.setText('');
         showStep('capture');
+        $('qcFile').click();
+    }
+    function openModal() {
+        if (!modal.classList.contains('hidden')) return;
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
     }
@@ -192,8 +199,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ---- entry points ---- */
-    $('quickCaptureBtn')?.addEventListener('click', open);
-    $('quickCaptureFab')?.addEventListener('click', open);
+    $('quickCaptureBtn')?.addEventListener('click', startCapture);
+    $('quickCaptureFab')?.addEventListener('click', startCapture);
     $('qcClose').addEventListener('click', close);
     modal.querySelectorAll('[data-qc-cancel]').forEach((b) => b.addEventListener('click', close));
     modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
@@ -202,7 +209,11 @@ document.addEventListener('DOMContentLoaded', () => {
     $('qcAddPhoto').addEventListener('click', () => $('qcFile').click());
     $('qcFile').addEventListener('change', (e) => {
         const f = e.target.files && e.target.files[0];
-        if (f) { files.push(f); renderPreviews(); }
+        if (f) {
+            files.push(f);
+            renderPreviews();
+            openModal();       // first shot brings up the review sheet
+        }
         e.target.value = '';   // let the same shot be re-taken
     });
     $('qcContinue').addEventListener('click', async () => {
