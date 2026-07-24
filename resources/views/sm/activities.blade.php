@@ -142,6 +142,21 @@
            `module-hidden` beats component classes that set their own display
            (the reason a plain `hidden` utility can lose here). */
         .module-hidden { display: none !important; }
+        /* On phones the activity tools collapse into #activityActionsBtn; these
+           individual buttons show only from md up. The rule wins over the
+           buttons' own display/`hidden` toggling on small screens.
+           These carry !important because `.btn` is unlayered CSS and would
+           otherwise beat Tailwind's layered `hidden` / `md:hidden` utilities. */
+        @media (max-width: 767px) {
+            .toolbar-desktop-action { display: none !important; }
+        }
+        @media (min-width: 768px) {
+            #activityActionsBtn { display: none !important; }
+        }
+        #toggleHiddenBtn.hidden { display: none !important; }
+        /* !important so the disabled dimming survives the sheet's fade-in
+           animation (which otherwise forces opacity back to 1). */
+        .activity-action-row:disabled { opacity: .4 !important; pointer-events: none; }
         /* Injected modules keep their own chip nav in the markup — the toolbar
            hamburger replaces it, so hide it inside the shell. */
         #moduleHost .module-chip-nav { display: none; }
@@ -522,6 +537,14 @@
             <span id="currentModuleLabel">Modules - Activities</span>
         </button>
 
+        {{-- Phones: one menu holding the activity tools; the individual buttons
+             below are desktop-only. --}}
+        <button type="button" id="activityActionsBtn" class="btn btn-white btn-sm relative md:hidden" data-activities-only title="Activity tools" aria-label="Activity tools">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            <span id="activityActionsDot" class="absolute -top-1 -right-1 hidden w-2.5 h-2.5 rounded-full bg-brand-600"></span>
+        </button>
+
         <button type="button" id="readinessBtn" class="btn btn-white btn-sm relative {{ $readiness['count'] > 0 ? 'has-alerts' : '' }}"
                 title="{{ $readiness['count'] > 0 ? $readiness['count'] . ($readiness['count'] === 1 ? ' thing still needs' : ' things still need') . ' setting up' : 'Everything is set up' }}">
             <span class="readiness-ripple" aria-hidden="true"></span>
@@ -531,38 +554,34 @@
                   class="absolute -top-1.5 -right-1.5 {{ $readiness['count'] > 0 ? 'inline-flex' : 'hidden' }} min-w-5 h-5 px-1 rounded-full {{ $readiness['blocking'] > 0 ? 'bg-red-500 text-white' : 'bg-accent-500 text-ink' }} text-[10px] font-bold items-center justify-center">{{ $readiness['count'] }}</span>
         </button>
 
-        <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative" data-activities-only disabled title="Nothing to undo">
+        <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative toolbar-desktop-action" data-activities-only disabled title="Nothing to undo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
             Undo
             <span id="activityUndoCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-accent-500 text-ink text-[10px] font-bold items-center justify-center">0</span>
         </button>
-        <button type="button" id="activityRedoBtn" class="btn btn-white btn-sm relative" data-activities-only disabled title="Nothing to redo">
+        <button type="button" id="activityRedoBtn" class="btn btn-white btn-sm relative toolbar-desktop-action" data-activities-only disabled title="Nothing to redo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg>
             Redo
             <span id="activityRedoCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-accent-500 text-ink text-[10px] font-bold items-center justify-center">0</span>
         </button>
-        <button type="button" id="openDraftsBtn" class="btn btn-white btn-sm" data-activities-only>
+        <button type="button" id="openDraftsBtn" class="btn btn-white btn-sm toolbar-desktop-action" data-activities-only>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
             Drafts <span id="draftsBadge" class="badge badge-gray">{{ $draftsCount }}</span>
         </button>
-        <button type="button" id="openReportBtn" class="btn btn-white btn-sm" data-activities-only>
+        <button type="button" id="openReportBtn" class="btn btn-white btn-sm toolbar-desktop-action" data-activities-only>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             Report
         </button>
-        <button type="button" data-sheet-open="filtersSheet" class="btn btn-white btn-sm relative" data-activities-only>
+        <button type="button" id="openSearchBtn" data-sheet-open="filtersSheet" class="btn btn-white btn-sm relative toolbar-desktop-action" data-activities-only>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
             Search
             <span id="activeFilterCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-brand-600 text-white text-[10px] font-bold items-center justify-center">0</span>
         </button>
-        <button type="button" id="viewToggleBtn" class="btn btn-white btn-sm" data-activities-only
+        <button type="button" id="viewToggleBtn" class="btn btn-white btn-sm toolbar-desktop-action" data-activities-only
                 title="Switch to calendar view" aria-pressed="false">
             <svg id="viewIconCalendar" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
             <svg id="viewIconList" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             <span id="viewToggleLabel">Calendar</span>
-        </button>
-        <button type="button" id="toggleHiddenBtn" class="btn btn-white btn-sm {{ $hiddenCount ? '' : 'hidden' }}" data-activities-only>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
-            <span id="toggleHiddenLabel">Show Hidden ({{ $hiddenCount }})</span>
         </button>
     </div>
 </div>
@@ -608,6 +627,10 @@
     </div>
     <button type="button" id="manageVersionBtn" class="icon-btn shrink-0" title="Rename or delete the current version">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
+    </button>
+    <button type="button" id="toggleHiddenBtn" class="btn btn-white btn-sm shrink-0 toolbar-desktop-action {{ $hiddenCount ? '' : 'hidden' }}">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
+        <span id="toggleHiddenLabel">Show Hidden ({{ $hiddenCount }})</span>
     </button>
     <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm shrink-0" data-activities-only>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
@@ -976,6 +999,79 @@
     window.addEventListener('popstate', (e) => showModule((e.state && e.state.module) || 'activities', false));
     history.replaceState({ module: 'activities' }, '', MODULES.activities.url);
     window.smShowModule = showModule;
+
+    /* ---- Phone activity-tools menu -------------------------------------
+     * One hamburger collapses the toolbar actions. Each row forwards to the
+     * real (desktop-only) button, so there is a single set of handlers. The
+     * rows mirror the real buttons' badges, labels and disabled/visible state
+     * every time the sheet opens. */
+    (() => {
+        const actionsBtn = document.getElementById('activityActionsBtn');
+        if (!actionsBtn) return;
+
+        // real button id -> sheet badge/label to mirror
+        const mirrorBadge = (btnId, countEl, srcId) => {
+            const badge = document.getElementById(countEl);
+            const src = document.getElementById(srcId);
+            if (!badge || !src) return;
+            const n = (src.textContent || '').trim();
+            const show = n && n !== '0' && !src.classList.contains('hidden');
+            badge.textContent = n || '0';
+            // Inline style: `.badge` is unlayered CSS and beats a `.hidden` class.
+            badge.style.display = show ? '' : 'none';
+        };
+
+        function syncActionsSheet() {
+            // Drafts / Search filter counts.
+            mirrorBadge('openDraftsBtn', 'actDraftsBadge', 'draftsBadge');
+            mirrorBadge('openSearchBtn', 'actFilterBadge', 'activeFilterCount');
+
+            // Undo / Redo: disabled + count.
+            [['activityUndoBtn', 'actUndoBadge', 'activityUndoCount'],
+             ['activityRedoBtn', 'actRedoBadge', 'activityRedoCount']].forEach(([btnId, badgeId, countId]) => {
+                const btn = document.getElementById(btnId);
+                const row = document.querySelector(`.activity-action-row[data-forward="${btnId}"]`);
+                if (row && btn) row.disabled = btn.disabled;
+                mirrorBadge(btnId, badgeId, countId);
+            });
+
+            // Calendar / List label mirrors the real toggle.
+            const viewLabel = document.getElementById('actViewLabel');
+            const realView = document.getElementById('viewToggleLabel');
+            if (viewLabel && realView) viewLabel.textContent = realView.textContent;
+
+            // Show/Hide Hidden: mirror label, hide the row when nothing is hidden.
+            const hiddenRow = document.querySelector('.activity-action-row[data-forward="toggleHiddenBtn"]');
+            const hiddenBtn = document.getElementById('toggleHiddenBtn');
+            const hiddenLabel = document.getElementById('actHiddenLabel');
+            if (hiddenRow && hiddenBtn) hiddenRow.classList.toggle('hidden', hiddenBtn.classList.contains('hidden'));
+            if (hiddenLabel) hiddenLabel.textContent = (document.getElementById('toggleHiddenLabel')?.textContent || 'Show Hidden').replace(/\s*\(\d+\)\s*$/, '');
+
+            // A dot on the hamburger when there is drafts/filter activity worth noticing.
+            const dot = document.getElementById('activityActionsDot');
+            if (dot) {
+                const draftsN = parseInt(document.getElementById('draftsBadge')?.textContent || '0', 10) || 0;
+                const filterN = parseInt(document.getElementById('activeFilterCount')?.textContent || '0', 10) || 0;
+                const filtering = !document.getElementById('activeFilterCount')?.classList.contains('hidden') && filterN > 0;
+                dot.classList.toggle('hidden', !(draftsN > 0 || filtering));
+            }
+        }
+
+        actionsBtn.addEventListener('click', () => { syncActionsSheet(); openSheet('activityActionsSheet'); });
+        // Keep the hamburger dot honest as things change underneath.
+        document.addEventListener('activities:rendered', syncActionsSheet);
+        syncActionsSheet();
+
+        document.addEventListener('click', (e) => {
+            const row = e.target.closest('.activity-action-row');
+            if (!row || row.disabled) return;
+            const target = document.getElementById(row.dataset.forward);
+            if (!target) return;
+            closeSheet('activityActionsSheet');
+            // Let the sheet finish closing before the next action fires.
+            setTimeout(() => target.click(), 240);
+        });
+    })();
 
     /* ---- Readiness bell -------------------------------------------------
      * Flags what the plan is still missing (no day 0, no lots, activities
