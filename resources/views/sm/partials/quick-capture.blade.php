@@ -7,6 +7,9 @@
 @push('head')
 <style>
     .qc-overlay { position: fixed; inset: 0; z-index: 60; background: rgba(17,24,39,.55); display: flex; align-items: flex-end; justify-content: center; padding: 0; }
+    /* Two-class selector beats the unlayered `.qc-overlay { display:flex }`,
+       so the `hidden` utility actually hides the modal. */
+    .qc-overlay.hidden { display: none !important; }
     @media (min-width: 640px) { .qc-overlay { align-items: center; padding: 1rem; } }
     .qc-modal { background: var(--color-white, #fff); width: 100%; max-width: 34rem; max-height: 92vh; display: flex; flex-direction: column;
         border-radius: 1rem 1rem 0 0; overflow: hidden; animation: qc-rise .22s ease; }
