@@ -1,3 +1,17 @@
+@push('head')
+<style>
+    /* Subtle motion for view swaps and month navigation. */
+    @keyframes smViewIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    @keyframes smSlideNext { from { opacity: .35; transform: translateX(16px); } to { opacity: 1; transform: none; } }
+    @keyframes smSlidePrev { from { opacity: .35; transform: translateX(-16px); } to { opacity: 1; transform: none; } }
+    .sm-view-in { animation: smViewIn .22s ease; }
+    .sm-slide-next { animation: smSlideNext .22s ease; }
+    .sm-slide-prev { animation: smSlidePrev .22s ease; }
+    @media (prefers-reduced-motion: reduce) {
+        .sm-view-in, .sm-slide-next, .sm-slide-prev { animation: none; }
+    }
+</style>
+@endpush
 <script>
 /**
  * Calendar view for the activities board.
@@ -38,6 +52,16 @@ const __init = () => {
 
     let cursor = null;          // first of the month being shown
     let mode = 'list';
+    let slideDir = 0;           // -1/+1 while stepping months, for the slide anim
+
+    // Replay a CSS animation class once, cleaning itself up afterwards.
+    const animateOnce = (el, cls) => {
+        if (!el) return;
+        el.classList.remove(cls);
+        void el.offsetWidth;    // force reflow so re-adding restarts the animation
+        el.classList.add(cls);
+        el.addEventListener('animationend', () => el.classList.remove(cls), { once: true });
+    };
 
     /* ---------------------------------------------------------------- *
      * Reading the board                                                 *
@@ -143,6 +167,11 @@ const __init = () => {
 
         grid.innerHTML = html;
 
+        if (slideDir !== 0) {
+            animateOnce(grid, slideDir > 0 ? 'sm-slide-next' : 'sm-slide-prev');
+            slideDir = 0;
+        }
+
         const total = [...byDate.values()].flat().filter((it) => !it.isContinuation).length;
         byId('calMonthMeta').textContent = monthCount === 0
             ? (total === 0 ? 'Nothing scheduled' : 'Nothing this month')
@@ -175,6 +204,7 @@ const __init = () => {
 
         if (remember) {
             try { localStorage.setItem(STORE_KEY, mode); } catch (_) { /* private mode */ }
+            animateOnce(isCal ? root : list, 'sm-view-in');
         }
         if (isCal) render();
     }
@@ -185,6 +215,7 @@ const __init = () => {
     const stepMonth = (delta) => {
         const from = cursor || new Date();
         cursor = new Date(from.getFullYear(), from.getMonth() + delta, 1, 12);
+        slideDir = delta;
         render();
     };
     byId('calPrev').addEventListener('click', () => stepMonth(-1));

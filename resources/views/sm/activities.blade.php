@@ -1000,6 +1000,14 @@
         }
 
         current = key;
+        // Gentle fade-in on the module that just became visible.
+        const shownEl = key === 'activities' ? activitiesRoot : (loaded.get(key) || host);
+        if (shownEl) {
+            shownEl.classList.remove('sm-view-in');
+            void shownEl.offsetWidth;
+            shownEl.classList.add('sm-view-in');
+            shownEl.addEventListener('animationend', () => shownEl.classList.remove('sm-view-in'), { once: true });
+        }
         label.textContent = 'Modules - ' + MODULES[key].label;
         // Keep the app header + browser tab in step with the swapped module.
         const pageTitle = document.getElementById('appPageTitle');
