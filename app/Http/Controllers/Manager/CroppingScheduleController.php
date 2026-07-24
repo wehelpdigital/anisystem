@@ -43,10 +43,6 @@ class CroppingScheduleController extends Controller
             });
         }
 
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-
         $schedules = $query->orderBy('created_at', 'desc')->paginate(12)->withQueryString();
 
         return view('sm.index', compact('schedules'));

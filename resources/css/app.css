@@ -288,8 +288,16 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
 .anim-scale-in { animation: app-scale-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .anim-slide-in { animation: app-slide-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
-/* Page content entrance — applied to the app layout <main>. */
-.app-enter { animation: app-fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+/* Page content entrance — applied to the app layout <main>.
+   Opacity only, on purpose: a transform here (even the identity matrix left
+   behind by `animation-fill-mode: both`) would make <main> the containing
+   block for every `position: fixed` child, so page FABs would pin to <main>
+   instead of the viewport. */
+@keyframes app-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+.app-enter { animation: app-fade-in 0.4s ease both; }
 
 /* Staggered entrance for direct children of a list/grid container.
    Add class `stagger-children` to the container; children ride a fade-up

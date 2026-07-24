@@ -16,29 +16,29 @@
 
 @section('content')
 
-    {{-- Top bar: search / filter + desktop CTA --}}
+    {{-- Top bar: search + desktop CTA --}}
     <div class="flex flex-col md:flex-row md:items-center gap-3 mb-4 md:mb-6">
-        <form method="GET" action="{{ route('sm.index') }}" id="filterForm" class="flex flex-1 gap-2">
+        <form method="GET" action="{{ route('sm.index') }}" role="search" class="flex flex-1 gap-2">
             <div class="relative flex-1">
                 <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-                <input type="search" name="search" value="{{ request('search') }}" class="form-input pl-10"
-                    placeholder="Search schedules…" aria-label="Search schedules">
+                <input type="search" name="search" value="{{ request('search') }}" class="form-input pl-10 w-full"
+                    placeholder="Search schedules…" aria-label="Search schedules" autocomplete="off" enterkeyhint="search">
             </div>
-            <select name="status" id="statusFilter" class="form-select w-36 sm:w-44" aria-label="Filter by status">
-                <option value="">All statuses</option>
-                @foreach (['draft', 'setup', 'generated', 'completed', 'archived'] as $st)
-                    <option value="{{ $st }}" @selected(request('status') === $st)>{{ ucfirst($st) }}</option>
-                @endforeach
-            </select>
-            @if (request()->filled('search') || request()->filled('status'))
-                <a href="{{ route('sm.index') }}" class="btn btn-ghost shrink-0" title="Clear filters">Clear</a>
+            <button type="submit" class="btn btn-white shrink-0">Search</button>
+            @if (request()->filled('search'))
+                <a href="{{ route('sm.index') }}" class="btn btn-ghost shrink-0" title="Clear search">Clear</a>
             @endif
         </form>
 
-        <a href="{{ route('sm.create') }}" class="btn btn-primary hidden md:inline-flex shrink-0">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
-            New Cropping Schedule
-        </a>
+        {{-- Desktop CTA. Wrapped so `hidden` reliably hides it on phones (a
+             bare `.btn` is unlayered CSS and would otherwise beat `hidden`);
+             the floating + button is the phone equivalent. --}}
+        <div class="hidden md:flex shrink-0">
+            <a href="{{ route('sm.create') }}" class="btn btn-primary">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
+                New Cropping Schedule
+            </a>
+        </div>
     </div>
 
     @if ($schedules->isEmpty())
@@ -48,10 +48,10 @@
                 <div class="mx-auto w-16 h-16 rounded-2xl bg-brand-50 flex items-center justify-center mb-4">
                     <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v3m8-3v3M4 8h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1zm4 8h6"/></svg>
                 </div>
-                @if (request()->filled('search') || request()->filled('status'))
-                    <h2 class="text-lg font-bold text-gray-900 mb-1">No schedules match your filters</h2>
-                    <p class="text-sm text-gray-500 mb-5">Try a different search or clear the filters.</p>
-                    <a href="{{ route('sm.index') }}" class="btn btn-outline">Clear filters</a>
+                @if (request()->filled('search'))
+                    <h2 class="text-lg font-bold text-gray-900 mb-1">No schedules match your search</h2>
+                    <p class="text-sm text-gray-500 mb-5">Try a different search, or clear it to see all your schedules.</p>
+                    <a href="{{ route('sm.index') }}" class="btn btn-outline">Clear search</a>
                 @else
                     <h2 class="text-lg font-bold text-gray-900 mb-1">No cropping schedules yet</h2>
                     <p class="text-sm text-gray-500 mb-5">Create your first schedule to start planning lots, workers and day-by-day activities.</p>
@@ -123,11 +123,6 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // Auto-submit the filter form when the status select changes.
-    document.getElementById('statusFilter')?.addEventListener('change', (e) => {
-        e.target.form.submit();
-    });
-
     // Delete schedule (soft delete) -> remove card.
     document.addEventListener('click', async (e) => {
         const btn = e.target.closest('[data-delete-schedule]');
