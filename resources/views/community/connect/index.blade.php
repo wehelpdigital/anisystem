@@ -1,0 +1,58 @@
+@extends('layouts.app')
+
+@section('title', 'Members — Community')
+@section('page-title', 'Co-farmers')
+@section('page-subtitle', 'Find and connect with other members')
+@section('back', route('community.index'))
+
+@section('content')
+<div class="flex items-center justify-between gap-3 mb-4">
+    <form method="GET" action="{{ route('community.connect.members') }}" class="grow" role="search">
+        <div class="relative">
+            <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+            <input type="search" name="q" value="{{ $q }}" class="form-input pl-11! w-full" placeholder="Search by name or place…" autocomplete="off">
+        </div>
+    </form>
+    <a href="{{ route('community.connect.requests') }}" class="btn btn-white btn-sm shrink-0 relative">
+        Requests
+        @if ($pendingCount > 0)
+            <span class="absolute -top-1.5 -right-1.5 min-w-5 h-5 px-1 rounded-full bg-red-500 text-white text-[10px] font-bold inline-flex items-center justify-center">{{ $pendingCount }}</span>
+        @endif
+    </a>
+</div>
+
+@if ($members->isEmpty())
+    <div class="card p-8 text-center text-sm text-gray-500">
+        {{ $q ? 'No members match that search.' : 'No other members yet.' }}
+    </div>
+@else
+    <div class="grid gap-2 sm:grid-cols-2" id="membersGrid">
+        @include('community.connect.partials.members', ['members' => $members])
+    </div>
+    @if ($hasMore)
+        <div class="text-center mt-3">
+            <button type="button" id="loadMoreMembers" class="btn btn-white" data-next="2" data-q="{{ $q }}">Load more</button>
+        </div>
+    @endif
+@endif
+@endsection
+
+@include('community.connect.partials.connect-js')
+
+@push('scripts')
+<script>
+document.getElementById('loadMoreMembers')?.addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    const page = btn.getAttribute('data-next');
+    const q = btn.getAttribute('data-q') || '';
+    btn.disabled = true; btn.textContent = 'Loading…';
+    try {
+        const res = await fetch(`{{ route('community.connect.members') }}?page=${page}&q=${encodeURIComponent(q)}`, { headers: { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' } });
+        const data = await res.json();
+        document.getElementById('membersGrid').insertAdjacentHTML('beforeend', data.data.html);
+        if (data.data.hasMore) { btn.setAttribute('data-next', data.data.nextPage); btn.disabled = false; btn.textContent = 'Load more'; }
+        else btn.remove();
+    } catch (_) { btn.disabled = false; btn.textContent = 'Load more'; toast('Could not load more.', 'error'); }
+});
+</script>
+@endpush

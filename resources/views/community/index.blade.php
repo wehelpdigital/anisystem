@@ -20,6 +20,8 @@
 <div class="scroll-chips mb-4">
     <span class="chip is-selected shrink-0">Shared Plans</span>
     <a href="{{ route('community.groups.index') }}" class="chip shrink-0">Groups</a>
+    <a href="{{ route('community.connect.members') }}" class="chip shrink-0">Members</a>
+    <a href="{{ route('community.connect.profile', ['userId' => auth()->id()]) }}" class="chip shrink-0">My Wall</a>
 </div>
 
 {{-- Your own shared plans, so the owner can find their inbox --}}

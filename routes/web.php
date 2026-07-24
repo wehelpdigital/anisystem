@@ -202,6 +202,21 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/community/posts/{postId}/reply', [App\Http\Controllers\CommunityGroupController::class, 'storeReply'])->whereNumber('postId')->name('community.groups.reply');
     Route::delete('/app/community/posts/{postId}', [App\Http\Controllers\CommunityGroupController::class, 'deletePost'])->whereNumber('postId')->name('community.groups.post.delete');
 
+    // --- Community: co-farmer connections (friend requests) ---
+    Route::get('/app/community/members', [App\Http\Controllers\CommunityConnectController::class, 'members'])->name('community.connect.members');
+    Route::get('/app/community/requests', [App\Http\Controllers\CommunityConnectController::class, 'requests'])->name('community.connect.requests');
+    Route::get('/app/community/members/{userId}', [App\Http\Controllers\CommunityConnectController::class, 'profile'])->whereNumber('userId')->name('community.connect.profile');
+    Route::post('/app/community/members/{userId}/connect', [App\Http\Controllers\CommunityConnectController::class, 'connect'])->whereNumber('userId')->name('community.connect.request');
+    Route::post('/app/community/members/{userId}/accept', [App\Http\Controllers\CommunityConnectController::class, 'accept'])->whereNumber('userId')->name('community.connect.accept');
+    Route::post('/app/community/members/{userId}/decline', [App\Http\Controllers\CommunityConnectController::class, 'decline'])->whereNumber('userId')->name('community.connect.decline');
+    Route::delete('/app/community/members/{userId}/connection', [App\Http\Controllers\CommunityConnectController::class, 'disconnect'])->whereNumber('userId')->name('community.connect.disconnect');
+
+    // --- Community: account walls ---
+    Route::get('/app/community/members/{userId}/wall', [App\Http\Controllers\CommunityWallController::class, 'posts'])->whereNumber('userId')->name('community.wall.posts');
+    Route::post('/app/community/members/{userId}/wall', [App\Http\Controllers\CommunityWallController::class, 'storePost'])->whereNumber('userId')->name('community.wall.post');
+    Route::post('/app/community/wall/{postId}/comment', [App\Http\Controllers\CommunityWallController::class, 'storeComment'])->whereNumber('postId')->name('community.wall.comment');
+    Route::delete('/app/community/wall/{postId}', [App\Http\Controllers\CommunityWallController::class, 'deletePost'])->whereNumber('postId')->name('community.wall.post.delete');
+
     // Post-harvest observations
     Route::get('/app/sm-post-harvest', [App\Http\Controllers\Manager\PostHarvestController::class, 'page'])->name('sm.post-harvest');
     Route::post('/app/sm-post-harvest-store', [App\Http\Controllers\Manager\PostHarvestController::class, 'store'])->name('sm.post-harvest.store');
