@@ -611,7 +611,7 @@
             <input type="text" id="newVersionName" class="form-input" maxlength="120" placeholder='e.g. "Budget Cut V1"'>
         </div>
         <div>
-            <label class="form-label" for="newVersionDescription">Notes <span class="text-gray-400 font-normal">(optional)</span></label>
+            <label class="form-label" for="newVersionDescription">Description <span class="text-gray-400 font-normal">(optional)</span></label>
             <textarea id="newVersionDescription" class="form-textarea" rows="3" maxlength="5000" placeholder="Why this branch exists"></textarea>
         </div>
         <div>
@@ -649,7 +649,7 @@
             <input type="text" id="renameVersionName" class="form-input" maxlength="120">
         </div>
         <div>
-            <label class="form-label" for="renameVersionDescription">Notes</label>
+            <label class="form-label" for="renameVersionDescription">Description</label>
             <textarea id="renameVersionDescription" class="form-textarea" rows="3" maxlength="5000"></textarea>
         </div>
         <div id="deleteVersionZone" class="rounded-xl border border-red-200 bg-red-50 p-3 hidden">

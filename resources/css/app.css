@@ -496,3 +496,22 @@ html.theme-animating * {
 }
 #themeToggle.is-on .theme-switch { @apply bg-brand-600; }
 #themeToggle.is-on .theme-switch-knob { transform: translateX(1rem); }
+
+/* ------------------------------------------------------------------ */
+/* Quill (WYSIWYG) — night mode                                        */
+/* The Quill snow theme hardcodes near-black text and a rgba(0,0,0,.6) */
+/* placeholder, invisible on a dark surface. `html.dark` gives these  */
+/* the extra specificity to win over the CDN stylesheet.              */
+/* ------------------------------------------------------------------ */
+html.dark .ql-toolbar.ql-snow,
+html.dark .ql-container.ql-snow { border-color: var(--color-gray-300); }
+html.dark .ql-container { background: var(--color-white); }
+html.dark .ql-editor { color: var(--color-gray-800); }
+html.dark .ql-editor.ql-blank::before { color: var(--color-gray-400); }
+html.dark .ql-snow .ql-stroke { stroke: var(--color-gray-500); }
+html.dark .ql-snow .ql-fill,
+html.dark .ql-snow .ql-stroke.ql-fill { fill: var(--color-gray-500); }
+html.dark .ql-snow .ql-picker { color: var(--color-gray-600); }
+html.dark .ql-snow .ql-picker-options { background: var(--color-white); border-color: var(--color-gray-300); }
+html.dark .ql-snow.ql-toolbar button:hover .ql-stroke,
+html.dark .ql-snow .ql-toolbar button:hover .ql-stroke { stroke: var(--color-brand-600); }
