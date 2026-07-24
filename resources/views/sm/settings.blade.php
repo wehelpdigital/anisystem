@@ -46,16 +46,6 @@
             </div>
         </div>
 
-        {{-- Default groupings now live on the Lots page, next to the lots they group. --}}
-        <div class="card">
-            <div class="card-body flex items-center justify-between gap-3">
-                <div>
-                    <h2 class="font-bold text-gray-900">Default Groupings</h2>
-                    <p class="text-sm text-gray-500">Grouping lots by start date has moved to the Lots page.</p>
-                </div>
-                <a href="{{ route('sm.lots', ['id' => $schedule->id]) }}" class="btn btn-white shrink-0">Go to Lots</a>
-            </div>
-        </div>
     </div>
 @endsection
 
