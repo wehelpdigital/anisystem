@@ -35,7 +35,13 @@
         {{-- Desktop CTA. Wrapped so `hidden` reliably hides it on phones (a
              bare `.btn` is unlayered CSS and would otherwise beat `hidden`);
              the floating + button is the phone equivalent. --}}
-        <div class="hidden md:flex shrink-0">
+        <div class="hidden md:flex shrink-0 gap-2">
+            @if ($allSchedules->isNotEmpty())
+                <button type="button" id="quickCaptureBtn" class="btn btn-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    Quick Capture
+                </button>
+            @endif
             <a href="{{ route('sm.create') }}" class="btn btn-primary">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
                 New Cropping Schedule
@@ -117,12 +123,21 @@
     @endif
     </div>{{-- /#scheduleResults --}}
 
-    {{-- Mobile floating action button --}}
+    {{-- Mobile floating action buttons --}}
+    @if ($allSchedules->isNotEmpty())
+        <button type="button" id="quickCaptureFab"
+            class="md:hidden fixed bottom-40 right-4 z-30 w-14 h-14 rounded-full bg-white text-brand-600 border border-gray-200 shadow-lg flex items-center justify-center"
+            aria-label="Quick capture photo">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </button>
+    @endif
     <a href="{{ route('sm.create') }}"
         class="md:hidden fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full btn-primary shadow-lg flex items-center justify-center"
         aria-label="New cropping schedule">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
     </a>
+
+    @include('sm.partials.quick-capture', ['allSchedules' => $allSchedules])
 @endsection
 
 @push('scripts')

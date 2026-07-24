@@ -45,7 +45,13 @@ class CroppingScheduleController extends Controller
 
         $schedules = $query->orderBy('created_at', 'desc')->paginate(12)->withQueryString();
 
-        return view('sm.index', compact('schedules'));
+        // Full list (not just this page) for the Quick Capture schedule picker.
+        $allSchedules = AsCroppingSchedule::active()
+            ->forClient(Auth::id())
+            ->orderBy('title')
+            ->get(['id', 'title']);
+
+        return view('sm.index', compact('schedules', 'allSchedules'));
     }
 
     public function create()

@@ -107,6 +107,9 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // Quick Share — email today's / tomorrow's plan to workers with an email.
     Route::post('/app/sm-quick-share-email', [App\Http\Controllers\Manager\ScheduleShareController::class, 'emailWorkers'])->name('sm.quick-share.email');
 
+    // Quick Capture — save a captured photo group as notes on a schedule.
+    Route::post('/app/quick-capture-notes', [App\Http\Controllers\Manager\QuickCaptureController::class, 'storeNotes'])->name('quick-capture.notes');
+
     // --- Default groupings ---
     Route::post('/app/sm-default-groupings-save', [App\Http\Controllers\Manager\DefaultGroupingController::class, 'save'])->name('sm.default-groupings.save');
 
