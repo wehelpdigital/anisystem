@@ -21,7 +21,7 @@
         <form method="GET" action="{{ route('sm.index') }}" role="search" class="flex flex-1 gap-2">
             <div class="relative flex-1">
                 <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-                <input type="search" name="search" value="{{ request('search') }}" class="form-input pl-10 w-full"
+                <input type="search" name="search" value="{{ request('search') }}" class="form-input pl-11! w-full"
                     placeholder="Search schedules…" aria-label="Search schedules" autocomplete="off" enterkeyhint="search">
             </div>
             <button type="submit" class="btn btn-white shrink-0">Search</button>

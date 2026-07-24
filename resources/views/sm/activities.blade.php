@@ -652,7 +652,7 @@
         <div>
             <label class="text-xs font-semibold text-gray-500">Search</label>
             <div class="relative mt-1.5">
-                <input type="search" id="activitySearchInput" class="form-input pr-16" placeholder="Title, lots, workers, items…">
+                <input type="search" id="activitySearchInput" class="form-input pr-16!" placeholder="Title, lots, workers, items…">
                 <span id="activitySearchCount" class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400"></span>
             </div>
         </div>

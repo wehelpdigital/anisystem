@@ -18,7 +18,7 @@
 <div class="mb-4">
     <div class="relative">
         <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
-        <input type="text" id="materialsSearch" class="form-input pl-11 pr-10" placeholder="Search name, type, unit, description…" autocomplete="off">
+        <input type="text" id="materialsSearch" class="form-input pl-11! pr-10!" placeholder="Search name, type, unit, description…" autocomplete="off">
         <button type="button" id="materialsSearchClear" class="hidden absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-gray-400 hover:bg-gray-100" aria-label="Clear search">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
