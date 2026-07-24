@@ -419,6 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button type="button" class="icon-btn hide-activity-toggle" data-id="${a.id}" title="Toggle visibility in presentations and exports" aria-pressed="${isHiddenFlag ? 'true' : 'false'}">${SVG.eye}</button>
                 <button type="button" class="icon-btn edit-activity-btn" data-id="${a.id}" title="Edit">${SVG.edit}</button>
                 <button type="button" class="icon-btn duplicate-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Duplicate">${SVG.duplicate}</button>
+                <button type="button" class="icon-btn share-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Share a public link"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z"/></svg></button>
                 <button type="button" class="icon-btn to-draft-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Move to drafts (hide without deleting)">${SVG.archive}</button>
                 <button type="button" class="icon-btn icon-btn-danger delete-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Delete">${SVG.trash}</button>
             </div>
@@ -1622,6 +1623,11 @@ document.addEventListener('DOMContentLoaded', () => {
             duplicateActivity(dupBtn.getAttribute('data-id'), dupBtn.getAttribute('data-name') || 'activity');
             return;
         }
+        const shareBtn = e.target.closest('.share-activity-btn');
+        if (shareBtn) {
+            openActivityShareSheet(shareBtn.getAttribute('data-id'), shareBtn.getAttribute('data-name') || 'activity');
+            return;
+        }
         const draftBtn = e.target.closest('.to-draft-activity-btn');
         if (draftBtn) {
             moveActivityToDrafts(draftBtn.getAttribute('data-id'), draftBtn.getAttribute('data-name') || 'activity');
@@ -1654,6 +1660,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const { id, name } = CARD_MENU;
             closeSheet('cardMenuSheet');
             if (action === 'edit') openEditActivitySheet(id);
+            else if (action === 'share') openActivityShareSheet(id, name);
             else if (action === 'duplicate') duplicateActivity(id, name);
             else if (action === 'draft') moveActivityToDrafts(id, name);
             else if (action === 'delete') deleteActivity(id, name);
@@ -1676,6 +1683,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         closeSheet('moveDateSheet');
         moveSingleActivity(CARD_MENU.id, newDate);
+    });
+
+    /* ================================================================
+     * SHARE ACTIVITY — public, link-based (no login for the viewer).
+     * The unguessable schedule token + activity id form the URL.
+     * ================================================================ */
+    function openActivityShareSheet(id, name) {
+        const S = window.SM_SHARE || {};
+        if (!S.scheduleUrl) { toast('Share link unavailable.', 'error'); return; }
+        const url = S.scheduleUrl + '/a/' + id;
+        $id('activityShareTitle').textContent = 'Share: ' + (name || 'activity');
+        $id('activityShareLink').value = url;
+        const enc = encodeURIComponent(url);
+        const text = encodeURIComponent((name || 'Activity') + ' — ' + (S.title || 'cropping plan'));
+        $id('activityShareFb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + enc;
+        $id('activityShareWa').href = 'https://wa.me/?text=' + text + '%20' + enc;
+        $id('activityShareEmail').href = 'mailto:?subject=' + text + '&body=' + enc;
+        const nativeBtn = $id('activityShareNative');
+        if (navigator.share) {
+            nativeBtn.style.display = '';
+            nativeBtn.onclick = () => navigator.share({ title: name || 'Activity', url }).catch(() => {});
+        } else {
+            nativeBtn.style.display = 'none';
+        }
+        openSheet('activityShareSheet');
+    }
+
+    $id('activityShareCopy')?.addEventListener('click', async () => {
+        const input = $id('activityShareLink');
+        try {
+            await navigator.clipboard.writeText(input.value);
+        } catch (_) {
+            input.select();
+            document.execCommand('copy');
+        }
+        toast('Link copied');
     });
 
     /* ================================================================
