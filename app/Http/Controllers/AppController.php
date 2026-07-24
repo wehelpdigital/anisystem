@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 
 class AppController extends Controller
 {
-    public function dashboard(Request $request)
+    public function dashboard(Request $request, NotificationService $notifications)
     {
         $user = $request->user();
+
+        // Keep the expiry reminder current whenever the client lands here.
+        $notifications->syncExpiryReminder($user);
 
         $subscription = $user->currentSubscription();
 

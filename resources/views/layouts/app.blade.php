@@ -54,6 +54,50 @@
                         <a href="{{ route('account.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('account.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Account</a>
                     </nav>
 
+                    {{-- Notification bell --}}
+                    <div class="relative" x-data="notificationBell()" x-init="init()" @click.outside="open = false">
+                        <button type="button" @click="toggle()"
+                            class="relative flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full text-gray-500 hover:bg-gray-100 transition"
+                            aria-label="Notifications">
+                            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0a3 3 0 11-6 0m6 0H9"/></svg>
+                            <span x-show="unread > 0" x-cloak
+                                class="absolute -top-0.5 -right-0.5 min-w-[1.15rem] h-[1.15rem] px-1 rounded-full bg-red-500 text-white text-[10px] font-bold inline-flex items-center justify-center"
+                                x-text="unread > 99 ? '99+' : unread"></span>
+                        </button>
+                        <div x-show="open" x-cloak x-transition
+                            class="absolute right-0 mt-2 w-80 max-w-[calc(100vw-2rem)] card p-0 z-50 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+                                <p class="font-bold text-gray-900 text-sm">Notifications</p>
+                                <button type="button" @click="markAll()" x-show="unread > 0"
+                                    class="text-xs font-semibold text-brand-600 hover:text-brand-700">Mark all read</button>
+                            </div>
+                            <div class="max-h-96 overflow-y-auto">
+                                <template x-if="loading">
+                                    <div class="px-4 py-8 text-center text-sm text-gray-400">Loading…</div>
+                                </template>
+                                <template x-if="!loading && items.length === 0">
+                                    <div class="px-4 py-10 text-center">
+                                        <p class="text-sm text-gray-500">You're all caught up.</p>
+                                    </div>
+                                </template>
+                                <template x-for="n in items" :key="n.id">
+                                    <a :href="n.url || '#'" @click="open = false; if (!n.isRead) read(n)"
+                                        class="block px-4 py-3 border-b border-gray-50 hover:bg-gray-50 transition"
+                                        :class="!n.isRead && 'bg-brand-50/40'">
+                                        <div class="flex items-start gap-2.5">
+                                            <span class="mt-1 w-2 h-2 rounded-full shrink-0" :class="n.isRead ? 'bg-transparent' : 'bg-brand-500'"></span>
+                                            <div class="min-w-0">
+                                                <p class="text-sm font-semibold text-gray-900 leading-snug" x-text="n.title"></p>
+                                                <p x-show="n.body" class="text-xs text-gray-500 mt-0.5 leading-snug" x-text="n.body"></p>
+                                                <p class="text-[11px] text-gray-400 mt-1" x-text="n.ago"></p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
                     {{-- Account dropdown --}}
                     <div class="relative" x-data="{ open: false }" @click.outside="open = false">
                         <button type="button" @click="open = !open"
@@ -89,6 +133,60 @@
             </div>
         </div>
     </header>
+
+    <script>
+        // Top-bar notification bell (Alpine component). Defined before Alpine
+        // inits so x-data="notificationBell()" resolves.
+        window.notificationBell = function () {
+            const csrf = () => document.querySelector('meta[name=csrf-token]')?.content || '';
+            const urls = {
+                index: @json(route('notifications.index')),
+                count: @json(route('notifications.count')),
+                read: @json(route('notifications.read')),
+                readAll: @json(route('notifications.read-all')),
+            };
+            return {
+                open: false, loading: false, items: [], unread: 0,
+                init() {
+                    this.refreshCount();
+                    setInterval(() => { if (!this.open) this.refreshCount(); }, 60000);
+                },
+                async toggle() {
+                    this.open = !this.open;
+                    if (this.open) await this.load();
+                },
+                async load() {
+                    this.loading = true;
+                    try {
+                        const r = await fetch(urls.index, { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
+                        const d = await r.json();
+                        this.items = d.data.items; this.unread = d.data.unread;
+                    } catch (_) { /* keep prior state */ } finally { this.loading = false; }
+                },
+                async refreshCount() {
+                    try {
+                        const r = await fetch(urls.count, { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
+                        const d = await r.json(); this.unread = d.data.unread;
+                    } catch (_) {}
+                },
+                async read(n) {
+                    n.isRead = true; this.unread = Math.max(0, this.unread - 1);
+                    try {
+                        await fetch(urls.read, { method: 'POST', keepalive: true,
+                            headers: { 'X-CSRF-TOKEN': csrf(), 'Content-Type': 'application/json', Accept: 'application/json' },
+                            body: JSON.stringify({ id: n.id }) });
+                    } catch (_) {}
+                },
+                async markAll() {
+                    this.items.forEach((n) => n.isRead = true); this.unread = 0;
+                    try {
+                        await fetch(urls.readAll, { method: 'POST',
+                            headers: { 'X-CSRF-TOKEN': csrf(), Accept: 'application/json' } });
+                    } catch (_) {}
+                },
+            };
+        };
+    </script>
 
     <main class="max-w-6xl mx-auto px-4 sm:px-6 py-4 md:py-8 page-safe-bottom app-enter">
         @yield('content')

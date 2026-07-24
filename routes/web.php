@@ -63,6 +63,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/account/password', [App\Http\Controllers\AccountController::class, 'updatePassword'])->name('account.password.update');
     Route::get('/account/subscription', [App\Http\Controllers\AccountController::class, 'subscription'])->name('account.subscription');
     Route::post('/account/subscription/refresh', [App\Http\Controllers\AccountController::class, 'refreshSubscription'])->name('account.subscription.refresh');
+
+    // Top-bar notification bell.
+    Route::get('/notifications', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('/notifications/count', [App\Http\Controllers\NotificationController::class, 'count'])->name('notifications.count');
+    Route::post('/notifications/read', [App\Http\Controllers\NotificationController::class, 'markRead'])->name('notifications.read');
+    Route::post('/notifications/read-all', [App\Http\Controllers\NotificationController::class, 'markAllRead'])->name('notifications.read-all');
 });
 
 /*
