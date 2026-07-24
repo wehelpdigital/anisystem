@@ -701,11 +701,27 @@ document.addEventListener('DOMContentLoaded', () => {
      * 5. FILTERS — search, type chips, hide-lots chips, show-hidden
      * ================================================================ */
 
+    // "Quick today & tomorrow" narrows the board to the next two days.
+    let ttActive = false;
+    function _ttDates() {
+        const d = new Date();
+        const iso = (x) => x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0');
+        const tom = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
+        return { today: iso(d), tomorrow: iso(tom) };
+    }
+    function _cardInTodayTomorrow(card) {
+        const start = (card.getAttribute('data-target-date') || '').trim();
+        if (!start) return false;
+        const end = (card.getAttribute('data-target-end-date') || '').trim() || start;
+        const { today, tomorrow } = _ttDates();
+        return start <= tomorrow && end >= today;   // overlaps [today, tomorrow]
+    }
+
     function hasActiveFilters() {
         const q = ($id('activitySearchInput')?.value || '').trim();
         const types = $id('typeFilterChips') ? chipValues($id('typeFilterChips')) : [];
         const lots = $id('lotFilterChips') ? chipValues($id('lotFilterChips')) : [];
-        return q !== '' || types.length > 0 || lots.length > 0;
+        return q !== '' || types.length > 0 || lots.length > 0 || ttActive;
     }
 
     function _cardAllLotsHidden(card, hiddenLotIds) {
@@ -728,7 +744,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         $id('lotFilterClearBtn')?.classList.toggle('hidden', !hasLots);
 
-        if (!needle && !hasType && !hasLots) {
+        if (!needle && !hasType && !hasLots && !ttActive) {
             cards.forEach((c) => c.classList.remove('filter-hidden'));
             $qsa('.date-group', list).forEach((g) => g.classList.remove('group-collapsed'));
             $qsa('.rest-day-marker', list).forEach((r) => r.classList.remove('filters-active'));
@@ -744,6 +760,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const cardType = String(card.getAttribute('data-activity-type') || '');
             const matches = (!needle || text.includes(needle))
                 && (!hasType || activeTypes.includes(cardType))
+                && (!ttActive || _cardInTodayTomorrow(card))
                 && (!hasLots || !_cardAllLotsHidden(card, hiddenLotIds));
             card.classList.toggle('filter-hidden', !matches);
             if (matches) visible++;
@@ -3357,5 +3374,25 @@ document.addEventListener('DOMContentLoaded', () => {
     window.smOpenActivity = openEditActivitySheet;
     window.smAddActivityOn = openAddActivitySheet;
     window.smMoveActivityToDate = moveSingleActivity;
+
+    // Quick "today & tomorrow" toggle (the toolbar button in activities.blade).
+    const ttBtn = $id('todayTomorrowBtn');
+    function applyTtButtonState() {
+        if (!ttBtn) return;
+        ttBtn.classList.toggle('btn-primary', ttActive);
+        ttBtn.classList.toggle('btn-white', !ttActive);
+        ttBtn.setAttribute('aria-pressed', ttActive ? 'true' : 'false');
+    }
+    ttBtn?.addEventListener('click', () => {
+        ttActive = !ttActive;
+        applyTtButtonState();
+        applyActivityFilter();
+        if (ttActive) {
+            const { today } = _ttDates();
+            $qs(`#activitiesList .date-group[data-date="${today}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            toast('Showing today & tomorrow');
+        }
+    });
+    window.smTodayTomorrowActive = () => ttActive;
 });
 </script>
