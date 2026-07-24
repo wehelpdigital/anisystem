@@ -6,10 +6,12 @@ use App\Models\AsCroppingSchedule;
 use App\Models\CommunityComment;
 use App\Models\CommunityRating;
 use App\Services\CommunityService;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 /**
  * Community: browse, question and rate cropping plans other members have
@@ -17,8 +19,10 @@ use Illuminate\Support\Facades\Validator;
  */
 class CommunityController extends Controller
 {
-    public function __construct(private readonly CommunityService $community)
-    {
+    public function __construct(
+        private readonly CommunityService $community,
+        private readonly NotificationService $notifications,
+    ) {
     }
 
     public function index(Request $request)
@@ -69,11 +73,13 @@ class CommunityController extends Controller
             return redirect()->route('community.index');
         }
 
-        $plan->load(['lots', 'owner', 'activities.lots']);
+        $plan->load(['lots', 'owner', 'workers', 'activities.lots']);
 
         return view('community.show', [
             'plan' => $plan,
             'isOwner' => $isOwner,
+            'dayZero' => $this->community->lotDayZero($plan),
+            'dayType' => $plan->dayType ?: 'DAS',
             'thread' => $this->community->thread($plan->id),
             'ratings' => $this->community->ratingSummary($plan->id),
             'myRating' => CommunityRating::active()
@@ -162,6 +168,8 @@ class CommunityController extends Controller
             'isQuestion' => $request->boolean('isQuestion') ? 1 : 0,
             'deleteStatus' => 1,
         ]);
+
+        $this->notifyOnComment($plan, $comment, $parentId ? ($parent ?? null) : null);
 
         return $this->json(true, $parentId ? 'Reply posted.' : 'Posted.', [
             'comment' => $this->presentComment($comment->fresh('author')),
@@ -262,6 +270,44 @@ class CommunityController extends Controller
         }
 
         return $schedule;
+    }
+
+    /**
+     * Tell the plan owner someone engaged, and (for a reply) tell the person
+     * being replied to. Self-actions are skipped by NotificationService.
+     */
+    private function notifyOnComment(AsCroppingSchedule $plan, CommunityComment $comment, ?CommunityComment $parent): void
+    {
+        $actorId = (int) $comment->anisystemUserId;
+        $actor = Auth::user();
+        $actorName = $actor ? ($actor->full_name ?: 'A member') : 'A member';
+        $url = route('community.show', ['id' => $plan->id]);
+        $snippet = Str::limit(trim(strip_tags($comment->body)), 90);
+        $verb = $comment->isQuestion ? 'asked about' : 'commented on';
+
+        // Plan owner.
+        $this->notifications->notify(
+            userId: (int) $plan->anisystemUserId,
+            type: 'comment',
+            title: $actorName . ' ' . $verb . ' your plan',
+            body: $snippet,
+            url: $url,
+            actorUserId: $actorId,
+            croppingScheduleId: $plan->id,
+        );
+
+        // Person being replied to (if different from the plan owner).
+        if ($parent && (int) $parent->anisystemUserId !== (int) $plan->anisystemUserId) {
+            $this->notifications->notify(
+                userId: (int) $parent->anisystemUserId,
+                type: 'reply',
+                title: $actorName . ' replied to you',
+                body: $snippet,
+                url: $url,
+                actorUserId: $actorId,
+                croppingScheduleId: $plan->id,
+            );
+        }
     }
 
     private function presentComment(CommunityComment $c): array

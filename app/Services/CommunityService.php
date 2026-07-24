@@ -170,4 +170,60 @@ class CommunityService
             'histogram' => $histogram,
         ];
     }
+
+    /**
+     * Effective day-0 date per lot: the lot's manual date, else the earliest
+     * day-zero activity that covers it. Powers the DAS/DAT labels on the plan.
+     * (The plan's `lots` and `activities.lots` must already be loaded.)
+     *
+     * @return array<int,\Illuminate\Support\Carbon>
+     */
+    public function lotDayZero(AsCroppingSchedule $plan): array
+    {
+        $map = [];
+        foreach ($plan->lots as $lot) {
+            if ($lot->dayZeroDate) {
+                $map[$lot->id] = \Illuminate\Support\Carbon::parse($lot->dayZeroDate);
+            }
+        }
+        foreach ($plan->activities as $a) {
+            if (! $a->isDayZero || ! $a->targetDate) {
+                continue;
+            }
+            $d = \Illuminate\Support\Carbon::parse($a->targetDate);
+            foreach ($a->lots as $lot) {
+                if (! isset($map[$lot->id]) || $d->lt($map[$lot->id])) {
+                    $map[$lot->id] = $d;
+                }
+            }
+        }
+
+        return $map;
+    }
+
+    /**
+     * "Lot A · DAS 21" labels for one activity's lots.
+     *
+     * @param  array<int,\Illuminate\Support\Carbon>  $dayZero
+     * @return array<int,string>
+     */
+    public function dasLabels($activity, array $dayZero, string $dayType): array
+    {
+        if (! $activity->targetDate) {
+            return [];
+        }
+        $target = \Illuminate\Support\Carbon::parse($activity->targetDate)->startOfDay();
+        $labels = [];
+        foreach ($activity->lots as $lot) {
+            $anchor = $dayZero[$lot->id] ?? null;
+            if ($anchor) {
+                $das = (int) $anchor->copy()->startOfDay()->diffInDays($target, false);
+                $labels[] = $lot->lotName . ' · ' . $dayType . ' ' . $das;
+            } else {
+                $labels[] = $lot->lotName;
+            }
+        }
+
+        return $labels;
+    }
 }

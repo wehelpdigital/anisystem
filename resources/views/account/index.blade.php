@@ -52,6 +52,29 @@
                     <p class="form-hint">Your email cannot be changed. Contact support if you need to update it.</p>
                 </div>
 
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="city" class="form-label">Town / City <span class="text-gray-400 font-normal">(optional)</span></label>
+                        <input id="city" name="city" type="text" maxlength="100"
+                            value="{{ old('city', $user->city) }}" class="form-input" placeholder="e.g. Nueva Ecija">
+                        @error('city') <p class="form-error">{{ $message }}</p> @enderror
+                    </div>
+                    <div>
+                        <label for="province" class="form-label">Province <span class="text-gray-400 font-normal">(optional)</span></label>
+                        <input id="province" name="province" type="text" maxlength="100"
+                            value="{{ old('province', $user->province) }}" class="form-input" placeholder="e.g. Central Luzon">
+                        @error('province') <p class="form-error">{{ $message }}</p> @enderror
+                    </div>
+                </div>
+
+                <div>
+                    <label for="bio" class="form-label">About you <span class="text-gray-400 font-normal">(optional)</span></label>
+                    <textarea id="bio" name="bio" rows="3" maxlength="500" class="form-textarea"
+                        placeholder="What do you grow? How long have you been farming?">{{ old('bio', $user->bio) }}</textarea>
+                    <p class="form-hint">Shown on your community profile and wall.</p>
+                    @error('bio') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
                 <div class="pt-1">
                     <button type="submit" class="btn btn-primary w-full sm:w-auto">Save Changes</button>
                 </div>

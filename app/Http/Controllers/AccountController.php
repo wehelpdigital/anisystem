@@ -29,6 +29,9 @@ class AccountController extends Controller
             'firstName' => ['required', 'string', 'max:100'],
             'lastName' => ['required', 'string', 'max:100'],
             'phone' => ['required', 'regex:/^09\d{9}$/'],
+            'city' => ['nullable', 'string', 'max:100'],
+            'province' => ['nullable', 'string', 'max:100'],
+            'bio' => ['nullable', 'string', 'max:500'],
         ], [
             'phone.regex' => 'Enter a valid PH mobile number in the format 09XXXXXXXXX (11 digits).',
         ]);

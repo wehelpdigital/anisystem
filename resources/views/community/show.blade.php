@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@inject('community', 'App\Services\CommunityService')
+
 @section('title', $plan->title . ' — Community')
 @section('page-title', $isOwner ? 'Your shared plan' : 'Shared plan')
 @section('page-subtitle', $plan->title)
@@ -78,8 +80,10 @@
 
     <p class="text-xs text-gray-500 mt-3">
         Shared by {{ $isOwner ? 'you' : (optional($plan->owner)->full_name ?: 'a member') }}
+        @if (! $isOwner && filled(optional($plan->owner)->location)) · {{ $plan->owner->location }} @endif
         @if ($plan->publishedAt) · {{ $plan->publishedAt->diffForHumans() }} @endif
         · {{ $plan->lots->count() }} {{ \Illuminate\Support\Str::plural('lot', $plan->lots->count()) }}
+        · {{ $plan->workers->count() }} {{ \Illuminate\Support\Str::plural('worker', $plan->workers->count()) }}
     </p>
 
     @if ($isOwner)
@@ -135,9 +139,40 @@
     </div>
 @endif
 
+{{-- Lots & workers at a glance --}}
+@if ($plan->lots->isNotEmpty() || $plan->workers->isNotEmpty())
+    <div class="grid gap-4 sm:grid-cols-2 mb-4">
+        @if ($plan->lots->isNotEmpty())
+            <div class="card p-4">
+                <h3 class="font-bold text-gray-900 mb-2">Lots <span class="text-gray-400 font-semibold">· {{ $plan->lots->count() }}</span></h3>
+                <div class="space-y-1.5">
+                    @foreach ($plan->lots as $lot)
+                        <div class="flex items-center justify-between gap-2 text-sm">
+                            <span class="font-medium text-gray-800 truncate">{{ $lot->lotName }}@if($lot->variety)<span class="text-gray-400 font-normal"> · {{ $lot->variety }}</span>@endif</span>
+                            @if ($lot->lotSize)
+                                <span class="text-xs text-gray-500 shrink-0">{{ rtrim(rtrim(number_format((float) $lot->lotSize, 4, '.', ''), '0'), '.') }} {{ $lot->lotSizeUnit }}</span>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+        @if ($plan->workers->isNotEmpty())
+            <div class="card p-4">
+                <h3 class="font-bold text-gray-900 mb-2">Workers <span class="text-gray-400 font-semibold">· {{ $plan->workers->count() }}</span></h3>
+                <div class="flex flex-wrap gap-1.5">
+                    @foreach ($plan->workers as $worker)
+                        <span class="badge badge-gray">{{ $worker->workerName }}</span>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+    </div>
+@endif
+
 {{-- The plan itself, read-only --}}
 <div class="card p-4 mb-4">
-    <h3 class="font-bold text-gray-900 mb-3">The season, step by step</h3>
+    <h3 class="font-bold text-gray-900 mb-3">The season, step by step <span class="text-gray-400 font-semibold text-sm">· counted in {{ $dayType }}</span></h3>
     @php
         $byDate = $plan->activities->sortBy('targetDate')->groupBy(fn ($a) => optional($a->targetDate)->format('Y-m-d') ?: 'no-date');
         $step = 0;
@@ -158,8 +193,13 @@
                         <span class="cp-step mt-0.5">{{ ++$step }}</span>
                         <div class="min-w-0">
                             <p class="font-semibold text-gray-900 text-sm leading-snug">{{ $a->activityTitle }}</p>
-                            @if ($a->lots->isNotEmpty())
-                                <p class="text-xs text-gray-500 mt-0.5">{{ $a->lots->pluck('lotName')->implode(', ') }}</p>
+                            @php $dasLabels = $community->dasLabels($a, $dayZero, $dayType); @endphp
+                            @if (! empty($dasLabels))
+                                <div class="flex flex-wrap gap-1 mt-1">
+                                    @foreach ($dasLabels as $lbl)
+                                        <span class="text-[11px] font-medium text-brand-700 bg-brand-50 rounded px-1.5 py-0.5">{{ $lbl }}</span>
+                                    @endforeach
+                                </div>
                             @endif
                             @if (filled($a->description))
                                 <div class="text-sm text-gray-600 mt-1">{!! $a->description !!}</div>

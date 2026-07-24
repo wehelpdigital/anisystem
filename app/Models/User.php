@@ -20,6 +20,10 @@ class User extends Authenticatable
         'password',
         'clientId',
         'status',
+        'city',
+        'province',
+        'bio',
+        'avatarPath',
         'deleteStatus',
     ];
 
@@ -61,6 +65,14 @@ class User extends Authenticatable
     public function getInitialsAttribute(): string
     {
         return strtoupper(mb_substr((string) $this->firstName, 0, 1).mb_substr((string) $this->lastName, 0, 1));
+    }
+
+    /** "Town, Province" — or whichever half is filled. Empty string if neither. */
+    public function getLocationAttribute(): string
+    {
+        return collect([$this->city, $this->province])
+            ->filter(fn ($p) => filled($p))
+            ->implode(', ');
     }
 
     public function subscriptions()
