@@ -33,6 +33,12 @@
     .qc-target input { margin-top: .2rem; }
     .qc-editor-wrap .ql-container { min-height: 6rem; border-bottom-left-radius: .6rem; border-bottom-right-radius: .6rem; }
     .qc-editor-wrap .ql-toolbar { border-top-left-radius: .6rem; border-top-right-radius: .6rem; }
+    /* Live camera */
+    .qc-camera-wrap { background: #000; aspect-ratio: 3 / 4; max-height: 70vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .qc-camera-wrap video { width: 100%; height: 100%; object-fit: cover; }
+    .qc-shutter { width: 3.5rem; height: 3.5rem; border-radius: 999px; border: 3px solid var(--color-gray-300); background: transparent; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+    .qc-shutter span { width: 2.6rem; height: 2.6rem; border-radius: 999px; background: var(--color-brand-600, #4a7c2a); transition: transform .1s ease; }
+    .qc-shutter:active span { transform: scale(.88); }
 </style>
 @endpush
 
@@ -43,6 +49,18 @@
             <button type="button" id="qcClose" class="btn-ghost p-2 rounded-full" aria-label="Close">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
             </button>
+        </div>
+
+        {{-- STEP 0 — live camera (getUserMedia; secure origins only) --}}
+        <div data-qc-step="camera" class="hidden">
+            <div class="qc-camera-wrap">
+                <video id="qcVideo" autoplay playsinline muted></video>
+            </div>
+            <div class="qc-foot">
+                <button type="button" class="btn btn-ghost" data-qc-cancel>Cancel</button>
+                <button type="button" id="qcShutter" class="qc-shutter mx-auto" aria-label="Take photo"><span></span></button>
+                <button type="button" id="qcUseFile" class="btn btn-ghost ml-auto" title="Choose a file instead">Upload</button>
+            </div>
         </div>
 
         {{-- STEP 1 — capture --}}
@@ -130,6 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let files = [];          // captured File objects, in order
     let quill = null;
+    let stream = null;       // live camera MediaStream, when open
 
     /* ---- Quill, lazy-loaded from CDN (open-source, no paid tier) ---- */
     function loadQuill() {
@@ -160,22 +179,62 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Camera-app style: tapping Quick Capture opens the camera straight away.
-    // The modal only appears once a photo has actually been taken; if the user
-    // backs out of the camera without a shot, nothing pops up.
-    function startCapture() {
+    // Camera-app style: tapping Quick Capture opens the live camera straight
+    // away. On desktop that needs a secure origin (HTTPS or localhost); when
+    // getUserMedia isn't available we fall back to the file picker (which on
+    // phones still opens the camera via the `capture` attribute).
+    async function startCapture() {
         files = [];
         renderPreviews();
         if (quill) quill.setText('');
         showStep('capture');
-        $('qcFile').click();
+        const camOk = await openCamera();
+        if (!camOk) $('qcFile').click();
     }
+
+    async function openCamera() {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return false;
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false });
+            $('qcVideo').srcObject = stream;
+            showStep('camera');
+            openModal();
+            return true;
+        } catch (_) {
+            stream = null;
+            return false;   // denied / no camera / insecure origin
+        }
+    }
+
+    function stopCamera() {
+        if (stream) { stream.getTracks().forEach((t) => t.stop()); stream = null; }
+        const v = $('qcVideo');
+        if (v) v.srcObject = null;
+    }
+
+    function snapPhoto() {
+        const v = $('qcVideo');
+        if (!v || !v.videoWidth) return;
+        const canvas = document.createElement('canvas');
+        canvas.width = v.videoWidth;
+        canvas.height = v.videoHeight;
+        canvas.getContext('2d').drawImage(v, 0, 0);
+        canvas.toBlob((blob) => {
+            if (!blob) return;
+            files.push(new File([blob], 'capture-' + files.length + '.jpg', { type: 'image/jpeg' }));
+            stopCamera();
+            renderPreviews();
+            showStep('capture');
+        }, 'image/jpeg', 0.9);
+    }
+
     function openModal() {
         if (!modal.classList.contains('hidden')) return;
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
     }
     function close() {
+        stopCamera();
         modal.classList.add('hidden');
         document.body.style.overflow = '';
     }
@@ -205,14 +264,22 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.querySelectorAll('[data-qc-cancel]').forEach((b) => b.addEventListener('click', close));
     modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
 
+    /* ---- camera step ---- */
+    $('qcShutter')?.addEventListener('click', snapPhoto);
+    $('qcUseFile')?.addEventListener('click', () => { stopCamera(); $('qcFile').click(); });
+
     /* ---- capture step ---- */
-    $('qcAddPhoto').addEventListener('click', () => $('qcFile').click());
+    $('qcAddPhoto').addEventListener('click', async () => {
+        const camOk = await openCamera();   // prefer the live camera again
+        if (!camOk) $('qcFile').click();     // otherwise the file picker
+    });
     $('qcFile').addEventListener('change', (e) => {
         const f = e.target.files && e.target.files[0];
         if (f) {
             files.push(f);
             renderPreviews();
-            openModal();       // first shot brings up the review sheet
+            showStep('capture');   // land on the review sheet
+            openModal();           // first shot brings up the modal
         }
         e.target.value = '';   // let the same shot be re-taken
     });
