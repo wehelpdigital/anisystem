@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
+// Public, link-based shares (no auth) — the unguessable token is the key.
+Route::get('/s/{token}', [App\Http\Controllers\ShareController::class, 'schedule'])->name('share.schedule');
+Route::get('/s/{token}/a/{activity}', [App\Http\Controllers\ShareController::class, 'activity'])->name('share.activity');
+
 Route::get('/', [App\Http\Controllers\PublicController::class, 'home'])->name('home');
 Route::get('/about', [App\Http\Controllers\PublicController::class, 'about'])->name('about');
 Route::get('/tutorial', [App\Http\Controllers\PublicController::class, 'tutorial'])->name('tutorial');

@@ -23,6 +23,7 @@ class AsScheduleWorker extends BaseModel
     protected $fillable = [
         'croppingScheduleId',
         'workerName',
+        'email',
         'costPerHalfDay',
         'priority',
         'skills',

@@ -515,3 +515,23 @@ html.dark .ql-snow .ql-picker { color: var(--color-gray-600); }
 html.dark .ql-snow .ql-picker-options { background: var(--color-white); border-color: var(--color-gray-300); }
 html.dark .ql-snow.ql-toolbar button:hover .ql-stroke,
 html.dark .ql-snow .ql-toolbar button:hover .ql-stroke { stroke: var(--color-brand-600); }
+
+/* ------------------------------------------------------------------ */
+/* Public share pages (layouts.share)                                 */
+/* Self-contained — these pages load only app.css, not the SPA's      */
+/* per-page <style> blocks, so re-declare the few atoms they use.     */
+/* ------------------------------------------------------------------ */
+.item-tag {
+    display: inline-flex; align-items: center; gap: .25rem; background: #eef0fb; color: #3a4699;
+    border-radius: .5rem; padding: .18rem .5rem; font-size: 11.5px; font-weight: 600;
+}
+.worker-tag { background: #fef3e8; color: #a66200; }
+.lot-tag { background: #eef7e8; color: #3d6a1c; }
+
+.share-activity { border-left: 3px solid #e5e7eb; }
+.share-activity.prio-critical { border-left-color: #9c1c1c; }
+.share-activity.prio-high { border-left-color: #f46a6a; }
+.share-activity.prio-medium { border-left-color: #f1b44c; }
+.share-activity.prio-low { border-left-color: #74788d; }
+
+.share-day-today > div:first-child h3 { color: var(--color-brand-700); }

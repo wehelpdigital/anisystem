@@ -894,6 +894,12 @@
  * ==================================================================== */
 (() => {
     const SCHEDULE_ID = {{ $schedule->id }};
+    // Public share links (unguessable token) — read by the activity share sheet.
+    window.SM_SHARE = {
+        token: @json($schedule->shareToken),
+        scheduleUrl: @json(route('share.schedule', $schedule->shareToken)),
+        title: @json($schedule->title),
+    };
     const MODULES = {
         activities:    { label: 'Activities',    url: @json(route('sm.activities',    ['id' => $schedule->id])) },
         settings:      { label: 'Settings',      url: @json(route('sm.settings',      ['id' => $schedule->id])) },
