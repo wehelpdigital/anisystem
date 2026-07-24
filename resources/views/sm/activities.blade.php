@@ -901,6 +901,15 @@
         'post-harvest': { label: 'Post-harvest', url: @json(route('sm.post-harvest',  ['id' => $schedule->id])) },
     };
 
+    // The address bar always stays on the Activities shell (…/sm-activities?id=X
+    // with ?module=key for non-Activities modules) so a refresh reloads the
+    // single-page shell, never the standalone module page. The partial fetch
+    // still uses each module's own URL (see showModule).
+    const ACTIVITIES_URL = MODULES.activities.url;
+    const shellUrl = (key) => key === 'activities'
+        ? ACTIVITIES_URL
+        : ACTIVITIES_URL + (ACTIVITIES_URL.includes('?') ? '&' : '?') + 'module=' + key;
+
     const host = document.getElementById('moduleHost');
     const activitiesRoot = document.getElementById('activitiesRoot');
     const loader = document.getElementById('moduleLoader');
@@ -977,7 +986,7 @@
         document.querySelectorAll('#modulesSheet .module-nav-row').forEach((row) => {
             row.querySelector('.module-nav-check')?.classList.toggle('hidden', row.dataset.module !== key);
         });
-        if (push) history.pushState({ module: key }, '', MODULES[key].url);
+        if (push) history.pushState({ module: key }, '', shellUrl(key));
         window.scrollTo({ top: 0, behavior: 'smooth' });
         busy = false;
         // Leaving a module usually means something was just added or removed.
@@ -997,8 +1006,29 @@
     });
 
     window.addEventListener('popstate', (e) => showModule((e.state && e.state.module) || 'activities', false));
-    history.replaceState({ module: 'activities' }, '', MODULES.activities.url);
     window.smShowModule = showModule;
+
+    // Deep link: the hub tiles open this shell with ?module=<key>, so the module
+    // loads here (with the hamburger) instead of as its own cut-off page. The
+    // URL stays on the shell, so Back returns to the hub and a refresh reloads
+    // the shell rather than the standalone page.
+    // Deferred to DOMContentLoaded: showModule uses helpers (closeSheet, toast)
+    // that the deferred app.js defines, which has not run during this inline
+    // script but has by DOMContentLoaded.
+    const applyDeepLink = () => {
+        const wanted = new URLSearchParams(location.search).get('module');
+        if (wanted && MODULES[wanted] && wanted !== 'activities') {
+            history.replaceState({ module: wanted }, '', shellUrl(wanted));
+            showModule(wanted, false);
+        } else {
+            history.replaceState({ module: 'activities' }, '', shellUrl('activities'));
+        }
+    };
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', applyDeepLink, { once: true });
+    } else {
+        applyDeepLink();
+    }
 
     /* ---- Phone activity-tools menu -------------------------------------
      * One hamburger collapses the toolbar actions. Each row forwards to the
