@@ -18,16 +18,18 @@
 
     {{-- Top bar: search + desktop CTA --}}
     <div class="flex flex-col md:flex-row md:items-center gap-3 mb-4 md:mb-6">
-        <form method="GET" action="{{ route('sm.index') }}" role="search" class="flex flex-1 gap-2">
-            <div class="relative flex-1">
+        {{-- Search runs as you type (see the script below); the button-less form
+             still submits on Enter as a no-JS fallback. --}}
+        <form method="GET" action="{{ route('sm.index') }}" role="search" id="scheduleSearchForm" class="flex-1">
+            <div class="relative">
                 <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-                <input type="search" name="search" value="{{ request('search') }}" class="form-input pl-11! w-full"
+                <input type="text" name="search" id="scheduleSearch" value="{{ request('search') }}" class="form-input pl-11! pr-16! w-full"
                     placeholder="Search schedules…" aria-label="Search schedules" autocomplete="off" enterkeyhint="search">
+                <svg id="scheduleSearchSpin" class="hidden absolute right-9 top-1/2 -translate-y-1/2 w-4 h-4 animate-spin text-brand-600" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
+                <button type="button" id="scheduleSearchClear" class="{{ request('search') ? '' : 'hidden' }} absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-gray-400 hover:bg-gray-100" aria-label="Clear search">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
             </div>
-            <button type="submit" class="btn btn-white shrink-0">Search</button>
-            @if (request()->filled('search'))
-                <a href="{{ route('sm.index') }}" class="btn btn-ghost shrink-0" title="Clear search">Clear</a>
-            @endif
         </form>
 
         {{-- Desktop CTA. Wrapped so `hidden` reliably hides it on phones (a
@@ -41,6 +43,8 @@
         </div>
     </div>
 
+    {{-- Live-search swaps this block's contents (see script). --}}
+    <div id="scheduleResults">
     @if ($schedules->isEmpty())
         {{-- Friendly empty state --}}
         <div class="card">
@@ -111,6 +115,7 @@
             {{ $schedules->links() }}
         </div>
     @endif
+    </div>{{-- /#scheduleResults --}}
 
     {{-- Mobile floating action button --}}
     <a href="{{ route('sm.create') }}"
@@ -123,6 +128,48 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    // ---- Live search: fetch as you type and swap the results in place.
+    (() => {
+        const form = document.getElementById('scheduleSearchForm');
+        const input = document.getElementById('scheduleSearch');
+        const clearBtn = document.getElementById('scheduleSearchClear');
+        const spin = document.getElementById('scheduleSearchSpin');
+        const results = document.getElementById('scheduleResults');
+        if (!form || !input || !results) return;
+
+        const BASE = @json(route('sm.index'));
+        let token = 0;
+        let debounce = null;
+
+        async function runSearch(push = true) {
+            const q = input.value.trim();
+            clearBtn.classList.toggle('hidden', q === '');
+            const url = BASE + (q ? ('?search=' + encodeURIComponent(q)) : '');
+            const mine = ++token;
+            spin.classList.remove('hidden');
+            try {
+                const res = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' }, credentials: 'same-origin' });
+                const html = await res.text();
+                if (mine !== token) return;                 // a newer keystroke won
+                const fresh = new DOMParser().parseFromString(html, 'text/html').getElementById('scheduleResults');
+                if (fresh) results.innerHTML = fresh.innerHTML;
+                if (push) history.replaceState(null, '', url);
+            } catch (_) {
+                /* keep the current results on a transient failure */
+            } finally {
+                if (mine === token) spin.classList.add('hidden');
+            }
+        }
+
+        input.addEventListener('input', () => {
+            clearTimeout(debounce);
+            debounce = setTimeout(runSearch, 250);
+        });
+        // Enter shouldn't full-reload; run the search immediately instead.
+        form.addEventListener('submit', (e) => { e.preventDefault(); clearTimeout(debounce); runSearch(); });
+        clearBtn.addEventListener('click', () => { input.value = ''; input.focus(); clearTimeout(debounce); runSearch(); });
+    })();
+
     // Delete schedule (soft delete) -> remove card.
     document.addEventListener('click', async (e) => {
         const btn = e.target.closest('[data-delete-schedule]');
