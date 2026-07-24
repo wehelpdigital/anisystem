@@ -637,6 +637,11 @@
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
         <span id="toggleHiddenLabel">Show Hidden ({{ $hiddenCount }})</span>
     </button>
+    <button type="button" id="quickShareBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
+            title="Share this whole plan or email workers">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z"/></svg>
+        <span class="hidden sm:inline">Quick Share</span>
+    </button>
     <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm shrink-0" data-activities-only>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
         <span class="hidden sm:inline">Add Activity</span>
@@ -899,6 +904,8 @@
         token: @json($schedule->shareToken),
         scheduleUrl: @json(route('share.schedule', $schedule->shareToken)),
         title: @json($schedule->title),
+        scheduleId: {{ $schedule->id }},
+        emailUrl: @json(route('sm.quick-share.email')),
     };
     const MODULES = {
         activities:    { label: 'Activities',    url: @json(route('sm.activities',    ['id' => $schedule->id])) },

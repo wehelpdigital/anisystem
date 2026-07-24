@@ -361,6 +361,56 @@
     </div>
 </div>
 
+{{-- ============================ QUICK SHARE (whole plan / email workers) ============================ --}}
+<div class="sheet hidden" id="quickShareSheet" style="--sheet-width:27rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Quick Share</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-5">
+        <div>
+            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Share the whole plan</p>
+            <p class="text-sm text-gray-600 mb-2">A public page anyone can open — no login needed. Great for Facebook or Messenger.</p>
+            <div class="flex gap-2">
+                <input type="text" id="quickShareLink" class="form-input grow" readonly onclick="this.select()">
+                <button type="button" id="quickShareCopy" class="btn btn-secondary shrink-0">Copy</button>
+            </div>
+            <div class="grid grid-cols-3 gap-2 mt-2">
+                <a id="quickShareFb" href="#" target="_blank" rel="noopener" class="btn btn-ghost">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0022 12z"/></svg>
+                    Facebook
+                </a>
+                <a id="quickShareWa" href="#" target="_blank" rel="noopener" class="btn btn-ghost">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.5l-.57-.01c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.75-.72 2-1.4.25-.7.25-1.28.17-1.4-.07-.13-.27-.2-.57-.35zM12 2a10 10 0 00-8.5 15.3L2 22l4.8-1.5A10 10 0 1012 2z"/></svg>
+                    WhatsApp
+                </a>
+                <a id="quickShareEmail" href="#" class="btn btn-ghost">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    Email
+                </a>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-200"></div>
+
+        <div>
+            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Email the plan to workers</p>
+            <p class="text-sm text-gray-600 mb-2">Sends the day's activities to workers who have a registered email (add emails in the Workers module).</p>
+            <div class="grid gap-2">
+                <button type="button" class="btn btn-white justify-start! quick-email-btn" data-scope="today">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    Email <strong class="mx-1">today's</strong> plan
+                </button>
+                <button type="button" class="btn btn-white justify-start! quick-email-btn" data-scope="tomorrow">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    Email <strong class="mx-1">tomorrow's</strong> plan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {{-- ============================ MOVE SINGLE CARD TO DATE ============================ --}}
 <div class="sheet hidden" id="moveDateSheet" style="--sheet-width:24rem">
     <div class="sheet-handle"></div>

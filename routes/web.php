@@ -104,6 +104,9 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-notes-delete', [App\Http\Controllers\Manager\NoteController::class, 'destroy'])->name('sm.notes.destroy');
     Route::post('/app/sm-notes-image-upload', [App\Http\Controllers\Manager\NoteController::class, 'uploadImage'])->name('sm.notes.image-upload');
 
+    // Quick Share — email today's / tomorrow's plan to workers with an email.
+    Route::post('/app/sm-quick-share-email', [App\Http\Controllers\Manager\ScheduleShareController::class, 'emailWorkers'])->name('sm.quick-share.email');
+
     // --- Default groupings ---
     Route::post('/app/sm-default-groupings-save', [App\Http\Controllers\Manager\DefaultGroupingController::class, 'save'])->name('sm.default-groupings.save');
 

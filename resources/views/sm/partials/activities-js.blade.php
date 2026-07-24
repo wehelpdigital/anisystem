@@ -1722,6 +1722,62 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ================================================================
+     * QUICK SHARE — share the whole plan (public page) or email the
+     * day's activities to workers who have a registered email.
+     * ================================================================ */
+    $id('quickShareBtn')?.addEventListener('click', () => {
+        const S = window.SM_SHARE || {};
+        if (!S.scheduleUrl) { toast('Share link unavailable.', 'error'); return; }
+        const enc = encodeURIComponent(S.scheduleUrl);
+        const text = encodeURIComponent(S.title || 'My cropping plan');
+        $id('quickShareLink').value = S.scheduleUrl;
+        $id('quickShareFb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + enc;
+        $id('quickShareWa').href = 'https://wa.me/?text=' + text + '%20' + enc;
+        $id('quickShareEmail').href = 'mailto:?subject=' + text + '&body=' + enc;
+        openSheet('quickShareSheet');
+    });
+
+    $id('quickShareCopy')?.addEventListener('click', async () => {
+        const input = $id('quickShareLink');
+        try {
+            await navigator.clipboard.writeText(input.value);
+        } catch (_) {
+            input.select();
+            document.execCommand('copy');
+        }
+        toast('Link copied');
+    });
+
+    $qsa('.quick-email-btn').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+            const S = window.SM_SHARE || {};
+            const scope = btn.getAttribute('data-scope');
+            const orig = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = 'Sending…';
+            try {
+                const res = await fetch(S.emailUrl, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                    },
+                    body: JSON.stringify({ scheduleId: S.scheduleId, scope }),
+                });
+                const data = await res.json().catch(() => ({}));
+                toast(data.message || (data.success ? 'Emailed.' : 'Could not send.'), data.success ? 'success' : 'error');
+                if (data.success) closeSheet('quickShareSheet');
+            } catch (_) {
+                toast('Network error — try again.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = orig;
+            }
+        });
+    });
+
+    /* ================================================================
      * 8. DATE-GROUP ACTIONS
      * ================================================================ */
 
