@@ -70,6 +70,13 @@
                 </div>
                 <span class="badge shrink-0 capitalize {{ $statusBadges[$schedule->status] ?? 'bg-gray-100 text-gray-600' }}">{{ $schedule->status }}</span>
             </div>
+
+            <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-3">
+                @include('sm.partials.community-switch', ['schedule' => $schedule])
+                @if ($schedule->isPublic)
+                    <a href="{{ route('community.show', ['id' => $schedule->id]) }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 shrink-0">View in Community →</a>
+                @endif
+            </div>
         </div>
     </div>
 
