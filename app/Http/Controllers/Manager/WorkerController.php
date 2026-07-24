@@ -34,6 +34,7 @@ class WorkerController extends BaseScheduleController
         $allowedSkillKeys = array_keys(AsScheduleWorker::SKILLS);
         $validator = Validator::make($request->all(), [
             'workerName' => 'required|string|max:255',
+            'email' => 'nullable|email|max:255',
             'costPerHalfDay' => 'nullable|numeric|min:0',
             'priority' => 'required|integer|min:1',
             'skills' => 'nullable|array',
@@ -48,6 +49,7 @@ class WorkerController extends BaseScheduleController
         $worker = AsScheduleWorker::create([
             'croppingScheduleId' => $schedule->id,
             'workerName' => $request->workerName,
+            'email' => $request->filled('email') ? $request->email : null,
             'costPerHalfDay' => is_numeric($request->costPerHalfDay) ? $request->costPerHalfDay : 0,
             'priority' => $request->priority,
             'skills' => $this->normalizeSkills($request->input('skills', []), $allowedSkillKeys),
@@ -68,6 +70,7 @@ class WorkerController extends BaseScheduleController
         $allowedSkillKeys = array_keys(AsScheduleWorker::SKILLS);
         $validator = Validator::make($request->all(), [
             'workerName' => 'required|string|max:255',
+            'email' => 'nullable|email|max:255',
             'costPerHalfDay' => 'nullable|numeric|min:0',
             'priority' => 'required|integer|min:1',
             'skills' => 'nullable|array',
@@ -81,6 +84,7 @@ class WorkerController extends BaseScheduleController
 
         $worker->update([
             'workerName' => $request->workerName,
+            'email' => $request->filled('email') ? $request->email : null,
             'costPerHalfDay' => is_numeric($request->costPerHalfDay) ? $request->costPerHalfDay : 0,
             'priority' => $request->priority,
             'skills' => $this->normalizeSkills($request->input('skills', []), $allowedSkillKeys),

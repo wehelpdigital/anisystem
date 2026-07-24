@@ -54,6 +54,12 @@
             <input type="text" id="workerName" maxlength="255" class="form-input" placeholder="e.g. Juan Dela Cruz">
         </div>
 
+        <div>
+            <label for="workerEmail" class="form-label">Email <span class="text-gray-400 font-normal">(optional)</span></label>
+            <input type="email" id="workerEmail" maxlength="255" class="form-input" placeholder="e.g. juan@email.com">
+            <p class="form-hint">Used to email this worker today's or tomorrow's plan from Quick Share.</p>
+        </div>
+
         <div class="grid grid-cols-2 gap-3">
             <div>
                 <label for="workerCost" class="form-label">Cost / Half Day</label>
@@ -131,6 +137,7 @@
     $jsWorkers = $schedule->workers->map(fn ($w) => [
         'id' => $w->id,
         'workerName' => $w->workerName,
+        'email' => $w->email,
         'costPerHalfDay' => $w->costPerHalfDay,
         'priority' => (int) $w->priority,
         'skills' => $w->skills ?? [],
@@ -178,6 +185,7 @@ const __init = () => {
                             <h3 class="font-bold text-gray-900">${escapeHtml(w.workerName)}</h3>
                         </div>
                         <p class="text-sm text-gray-600 mb-1.5">${fmtPeso(w.costPerHalfDay)} <span class="text-gray-400">/ half day</span></p>
+                        ${w.email ? `<p class="text-xs text-gray-500 mb-1.5 flex items-center gap-1 truncate"><svg class="w-3.5 h-3.5 shrink-0 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>${escapeHtml(w.email)}</p>` : ''}
                         ${skills ? `<div class="flex flex-wrap gap-1.5 mb-1.5">${skills}</div>` : ''}
                         <p class="text-xs ${offRulesSummary(w) === 'No off rules' ? 'text-gray-400' : 'text-orange-700 font-medium'} off-rules-line">${escapeHtml(offRulesSummary(w))}</p>
                         ${w.notes ? `<p class="text-xs text-gray-500 mt-1.5">${escapeHtml(w.notes)}</p>` : ''}
@@ -212,6 +220,7 @@ const __init = () => {
         document.getElementById('workerSheetTitle').textContent = w ? 'Edit Worker' : 'Add Worker';
         document.getElementById('workerId').value = w ? w.id : '';
         document.getElementById('workerName').value = w ? (w.workerName || '') : '';
+        document.getElementById('workerEmail').value = w ? (w.email || '') : '';
         document.getElementById('workerCost').value = w ? (parseFloat(w.costPerHalfDay) || 0) : '';
         document.getElementById('workerPriority').value = w ? (w.priority || 1) : 1;
         document.getElementById('workerNotes').value = w ? (w.notes || '') : '';
@@ -227,6 +236,7 @@ const __init = () => {
         const id = document.getElementById('workerId').value;
         const body = {
             workerName: document.getElementById('workerName').value.trim(),
+            email: document.getElementById('workerEmail').value.trim() || null,
             costPerHalfDay: document.getElementById('workerCost').value || 0,
             priority: Number(document.getElementById('workerPriority').value) || 1,
             skills: chipValues(document.getElementById('workerSkills')),
@@ -251,6 +261,7 @@ const __init = () => {
             const saved = {
                 id: res.data.id,
                 workerName: res.data.workerName,
+                email: res.data.email,
                 costPerHalfDay: res.data.costPerHalfDay,
                 priority: Number(res.data.priority) || 1,
                 skills: res.data.skills || [],

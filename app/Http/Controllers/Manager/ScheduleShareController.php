@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Manager;
 
 use App\Mail\ScheduleDayDigest;
 use App\Models\AsCroppingSchedule;
+use App\Services\AniSystemMailer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 
 /**
  * "Quick Share" server actions for the activities toolbar — email today's or
@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Mail;
 class ScheduleShareController extends BaseScheduleController
 {
     /** Email the workers with the given day's activities. */
-    public function emailWorkers(Request $request)
+    public function emailWorkers(Request $request, AniSystemMailer $mailer)
     {
         $data = $request->validate([
             'scheduleId' => 'required|integer',
@@ -51,7 +51,7 @@ class ScheduleShareController extends BaseScheduleController
         $sent = 0;
         try {
             foreach ($recipients as $worker) {
-                Mail::to($worker->email)->send(new ScheduleDayDigest(
+                $mailer->send($worker->email, $worker->workerName, new ScheduleDayDigest(
                     scheduleTitle: $schedule->title,
                     dateLabel: $dateLabel,
                     workerName: $worker->workerName,
