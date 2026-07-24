@@ -191,6 +191,17 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/community-comment-delete', [App\Http\Controllers\CommunityController::class, 'deleteComment'])->name('community.comment.delete');
     Route::post('/app/community-rate', [App\Http\Controllers\CommunityController::class, 'rate'])->name('community.rate');
 
+    // --- Community: groups (topics + replies) ---
+    Route::get('/app/community/groups', [App\Http\Controllers\CommunityGroupController::class, 'index'])->name('community.groups.index');
+    Route::post('/app/community/groups', [App\Http\Controllers\CommunityGroupController::class, 'store'])->name('community.groups.store');
+    Route::get('/app/community/groups/{id}', [App\Http\Controllers\CommunityGroupController::class, 'show'])->whereNumber('id')->name('community.groups.show');
+    Route::get('/app/community/groups/{id}/posts', [App\Http\Controllers\CommunityGroupController::class, 'posts'])->whereNumber('id')->name('community.groups.posts');
+    Route::post('/app/community/groups/{id}/join', [App\Http\Controllers\CommunityGroupController::class, 'join'])->whereNumber('id')->name('community.groups.join');
+    Route::post('/app/community/groups/{id}/leave', [App\Http\Controllers\CommunityGroupController::class, 'leave'])->whereNumber('id')->name('community.groups.leave');
+    Route::post('/app/community/groups/{id}/post', [App\Http\Controllers\CommunityGroupController::class, 'storePost'])->whereNumber('id')->name('community.groups.post');
+    Route::post('/app/community/posts/{postId}/reply', [App\Http\Controllers\CommunityGroupController::class, 'storeReply'])->whereNumber('postId')->name('community.groups.reply');
+    Route::delete('/app/community/posts/{postId}', [App\Http\Controllers\CommunityGroupController::class, 'deletePost'])->whereNumber('postId')->name('community.groups.post.delete');
+
     // Post-harvest observations
     Route::get('/app/sm-post-harvest', [App\Http\Controllers\Manager\PostHarvestController::class, 'page'])->name('sm.post-harvest');
     Route::post('/app/sm-post-harvest-store', [App\Http\Controllers\Manager\PostHarvestController::class, 'store'])->name('sm.post-harvest.store');

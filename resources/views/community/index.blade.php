@@ -16,6 +16,12 @@
 
 @section('content')
 
+{{-- Community sections --}}
+<div class="scroll-chips mb-4">
+    <span class="chip is-selected shrink-0">Shared Plans</span>
+    <a href="{{ route('community.groups.index') }}" class="chip shrink-0">Groups</a>
+</div>
+
 {{-- Your own shared plans, so the owner can find their inbox --}}
 @if ($myPlans->isNotEmpty())
     <div class="card p-4 mb-4">
