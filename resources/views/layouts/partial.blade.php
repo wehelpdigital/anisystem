@@ -4,6 +4,9 @@
     injected into #moduleHost by the schedule shell (sm/activities.blade.php).
 --}}
 <div data-module-content>
+    {{-- Module <style> blocks (pushed to 'head') ride along here so SPA-injected
+         modules keep their styling; <style> in the body applies fine. --}}
+    @stack('head')
     @yield('content')
 </div>
 @stack('sheets')

@@ -91,6 +91,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-documentation', [App\Http\Controllers\Manager\DocumentationController::class, 'page'])->name('sm.documentation');
     Route::get('/app/sm-activities', [App\Http\Controllers\Manager\ActivityController::class, 'page'])->name('sm.activities');
     Route::get('/app/sm-irrigations', [App\Http\Controllers\Manager\IrrigationController::class, 'page'])->name('sm.irrigations');
+    Route::get('/app/sm-ai', [App\Http\Controllers\AiController::class, 'schedulePage'])->name('sm.ai');
 
     // --- Default groupings ---
     Route::post('/app/sm-default-groupings-save', [App\Http\Controllers\Manager\DefaultGroupingController::class, 'save'])->name('sm.default-groupings.save');

@@ -224,16 +224,22 @@ class AiController extends Controller
 
     private function resolveConversation(Request $request, int $userId, bool $createIfMissing = false): ?AiConversation
     {
+        // The AI now lives inside a schedule, so conversations are scoped to it —
+        // one schedule's chat history never bleeds into another's.
+        $scheduleId = $request->input('scheduleId') ?? $request->query('scheduleId');
         $id = $request->input('conversationId') ?? $request->query('c');
 
+        $base = fn () => AiConversation::active()->where('userId', $userId)
+            ->when($scheduleId, fn ($q) => $q->where('croppingScheduleId', $scheduleId));
+
         if ($id) {
-            $found = AiConversation::active()->where('userId', $userId)->where('id', $id)->first();
+            $found = $base()->where('id', $id)->first();
             if ($found) {
                 return $found;
             }
         }
 
-        $latest = AiConversation::active()->where('userId', $userId)->orderByDesc('updated_at')->first();
+        $latest = $base()->orderByDesc('updated_at')->first();
         if ($latest) {
             return $latest;
         }
@@ -241,11 +247,45 @@ class AiController extends Controller
         return $createIfMissing
             ? AiConversation::create([
                 'userId' => $userId,
-                'croppingScheduleId' => $request->input('scheduleId') ?: null,
+                'croppingScheduleId' => $scheduleId ?: null,
                 'title' => 'New question',
                 'deleteStatus' => 1,
             ])
             : null;
+    }
+
+    /**
+     * The AI Technician scoped to one cropping schedule (an in-shell module).
+     * Same chat + endpoints as the standalone page, but history is this
+     * schedule's only, and the plan context is always attached.
+     */
+    public function schedulePage(Request $request)
+    {
+        $userId = Auth::id();
+        $schedule = AsCroppingSchedule::active()->forClient($userId)->where('id', $request->query('id'))->first();
+        if (! $schedule) {
+            abort(404);
+        }
+
+        $settings = AiSetting::current();
+        $conversation = $this->resolveConversation(
+            $request->merge(['scheduleId' => $schedule->id]),
+            $userId
+        );
+
+        return view('sm.ai', [
+            'schedule' => $schedule,
+            'settings' => $settings,
+            'balance' => $this->credits->balance($userId),
+            'conversation' => $conversation,
+            'messages' => $conversation ? $conversation->messages : collect(),
+            'conversations' => AiConversation::active()
+                ->where('userId', $userId)
+                ->where('croppingScheduleId', $schedule->id)
+                ->orderByDesc('updated_at')
+                ->limit(30)
+                ->get(),
+        ]);
     }
 
     /** A short factual preamble about the plan the question is about. */
