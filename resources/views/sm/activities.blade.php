@@ -899,6 +899,7 @@
         documentation: { label: 'Documentation', url: @json(route('sm.documentation', ['id' => $schedule->id])) },
         irrigations:   { label: 'Irrigation',    url: @json(route('sm.irrigations',   ['id' => $schedule->id])) },
         'post-harvest': { label: 'Post-harvest', url: @json(route('sm.post-harvest',  ['id' => $schedule->id])) },
+        notes:         { label: 'Notes',         url: @json(route('sm.notes',        ['id' => $schedule->id])) },
         ai:            { label: 'AI Technician', url: @json(route('sm.ai',           ['id' => $schedule->id])) },
     };
 

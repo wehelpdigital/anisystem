@@ -300,7 +300,11 @@ class CroppingScheduleController extends Controller
             ->where('croppingScheduleId', $schedule->id)
             ->count();
 
-        return view('sm.hub', compact('schedule', 'documentationCount', 'postHarvestCount'));
+        $notesCount = \App\Models\AsScheduleNote::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->count();
+
+        return view('sm.hub', compact('schedule', 'documentationCount', 'postHarvestCount', 'notesCount'));
     }
 
     /**

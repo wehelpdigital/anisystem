@@ -13,6 +13,7 @@
         'activities' => ['label' => 'Activities', 'route' => 'sm.activities'],
         'irrigations' => ['label' => 'Irrigation', 'route' => 'sm.irrigations'],
         'post-harvest' => ['label' => 'Post-harvest', 'route' => 'sm.post-harvest'],
+        'notes' => ['label' => 'Notes', 'route' => 'sm.notes'],
         'ai' => ['label' => 'AI Technician', 'route' => 'sm.ai'],
     ];
 @endphp

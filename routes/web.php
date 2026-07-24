@@ -93,6 +93,13 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-irrigations', [App\Http\Controllers\Manager\IrrigationController::class, 'page'])->name('sm.irrigations');
     Route::get('/app/sm-ai', [App\Http\Controllers\AiController::class, 'schedulePage'])->name('sm.ai');
 
+    // Schedule notebook
+    Route::get('/app/sm-notes', [App\Http\Controllers\Manager\NoteController::class, 'page'])->name('sm.notes');
+    Route::post('/app/sm-notes-store', [App\Http\Controllers\Manager\NoteController::class, 'store'])->name('sm.notes.store');
+    Route::put('/app/sm-notes-update', [App\Http\Controllers\Manager\NoteController::class, 'update'])->name('sm.notes.update');
+    Route::delete('/app/sm-notes-delete', [App\Http\Controllers\Manager\NoteController::class, 'destroy'])->name('sm.notes.destroy');
+    Route::post('/app/sm-notes-image-upload', [App\Http\Controllers\Manager\NoteController::class, 'uploadImage'])->name('sm.notes.image-upload');
+
     // --- Default groupings ---
     Route::post('/app/sm-default-groupings-save', [App\Http\Controllers\Manager\DefaultGroupingController::class, 'save'])->name('sm.default-groupings.save');
 
