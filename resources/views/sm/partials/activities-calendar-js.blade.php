@@ -10,6 +10,10 @@
     @media (prefers-reduced-motion: reduce) {
         .sm-view-in, .sm-slide-next, .sm-slide-prev { animation: none; }
     }
+    /* Brief highlight when "Today & Tomorrow" jumps to a day. */
+    @keyframes ttPulse { 0%, 100% { background: transparent; } 25% { background: rgba(74,124,42,.14); } }
+    .date-group.tt-highlight { animation: ttPulse 2.2s ease; border-radius: .75rem; }
+    @media (prefers-reduced-motion: reduce) { .date-group.tt-highlight { animation: none; } }
 </style>
 @endpush
 <script>

@@ -156,6 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
         star: '<svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>',
         clock: '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
         dayNumber: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+        share: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z"/></svg>',
     };
 
     /* ================================================================
@@ -419,7 +420,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button type="button" class="icon-btn hide-activity-toggle" data-id="${a.id}" title="Toggle visibility in presentations and exports" aria-pressed="${isHiddenFlag ? 'true' : 'false'}">${SVG.eye}</button>
                 <button type="button" class="icon-btn edit-activity-btn" data-id="${a.id}" title="Edit">${SVG.edit}</button>
                 <button type="button" class="icon-btn duplicate-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Duplicate">${SVG.duplicate}</button>
-                <button type="button" class="icon-btn share-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Share a public link"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z"/></svg></button>
                 <button type="button" class="icon-btn to-draft-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Move to drafts (hide without deleting)">${SVG.archive}</button>
                 <button type="button" class="icon-btn icon-btn-danger delete-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Delete">${SVG.trash}</button>
             </div>
@@ -499,6 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="hidden md:flex items-center gap-0.5">
                 <button type="button" class="date-header-btn date-note-btn${hasNote ? ' has-note' : ''}" data-date="${esc(dateKey)}" title="${hasNote ? 'Edit the note for this date' : 'Add a note for this date'}">${SVG.note}</button>
                 <button type="button" class="date-header-btn date-marker-btn${hasMarker ? ' has-marker' : ''}" data-date="${esc(dateKey)}" title="${hasMarker ? 'Edit the resume-here marker' : 'Drop a resume-here marker after this date'}">${SVG.bookmark}</button>
+                ${dateObj ? `<button type="button" class="date-header-btn share-day-btn" data-date="${esc(dateKey)}" title="Share this day's schedule (public link)">${SVG.share}</button>` : ''}
                 <button type="button" class="date-header-btn change-group-date-btn" data-date="${esc(dateKey)}" title="Change date for all activities in this group">${SVG.calendarEdit}</button>
                 <button type="button" class="date-header-btn move-group-das-btn" data-date="${esc(dateKey)}" title="Move this whole day to a ${esc(dayType())} number">${SVG.dayNumber}</button>
                 <button type="button" class="date-header-btn date-header-delete-btn delete-group-date-btn" data-date="${esc(dateKey)}" title="Delete every activity in this group">${SVG.trash}</button>
@@ -1623,11 +1624,6 @@ document.addEventListener('DOMContentLoaded', () => {
             duplicateActivity(dupBtn.getAttribute('data-id'), dupBtn.getAttribute('data-name') || 'activity');
             return;
         }
-        const shareBtn = e.target.closest('.share-activity-btn');
-        if (shareBtn) {
-            openActivityShareSheet(shareBtn.getAttribute('data-id'), shareBtn.getAttribute('data-name') || 'activity');
-            return;
-        }
         const draftBtn = e.target.closest('.to-draft-activity-btn');
         if (draftBtn) {
             moveActivityToDrafts(draftBtn.getAttribute('data-id'), draftBtn.getAttribute('data-name') || 'activity');
@@ -1660,7 +1656,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const { id, name } = CARD_MENU;
             closeSheet('cardMenuSheet');
             if (action === 'edit') openEditActivitySheet(id);
-            else if (action === 'share') openActivityShareSheet(id, name);
             else if (action === 'duplicate') duplicateActivity(id, name);
             else if (action === 'draft') moveActivityToDrafts(id, name);
             else if (action === 'delete') deleteActivity(id, name);
@@ -1686,32 +1681,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ================================================================
-     * SHARE ACTIVITY — public, link-based (no login for the viewer).
-     * The unguessable schedule token + activity id form the URL.
+     * SHARE A DAY — public, link-based (no login for the viewer). The
+     * unguessable schedule token + the ISO date form the URL.
      * ================================================================ */
-    function openActivityShareSheet(id, name) {
+    function openDayShareSheet(dateKey) {
         const S = window.SM_SHARE || {};
         if (!S.scheduleUrl) { toast('Share link unavailable.', 'error'); return; }
-        const url = S.scheduleUrl + '/a/' + id;
-        $id('activityShareTitle').textContent = 'Share: ' + (name || 'activity');
-        $id('activityShareLink').value = url;
+        if (!dateKey || dateKey === '__no-date__') { toast('This day has no date to share.', 'error'); return; }
+        const url = S.scheduleUrl + '/d/' + dateKey;
+        const pretty = prettyDateFull ? prettyDateFull(dateKey) : dateKey;
+        $id('dayShareTitle').textContent = 'Share ' + pretty;
+        $id('dayShareLink').value = url;
         const enc = encodeURIComponent(url);
-        const text = encodeURIComponent((name || 'Activity') + ' — ' + (S.title || 'cropping plan'));
-        $id('activityShareFb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + enc;
-        $id('activityShareWa').href = 'https://wa.me/?text=' + text + '%20' + enc;
-        $id('activityShareEmail').href = 'mailto:?subject=' + text + '&body=' + enc;
-        const nativeBtn = $id('activityShareNative');
+        const text = encodeURIComponent((S.title || 'Cropping plan') + ' — ' + pretty);
+        $id('dayShareFb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + enc;
+        $id('dayShareWa').href = 'https://wa.me/?text=' + text + '%20' + enc;
+        $id('dayShareEmail').href = 'mailto:?subject=' + text + '&body=' + enc;
+        const nativeBtn = $id('dayShareNative');
         if (navigator.share) {
             nativeBtn.style.display = '';
-            nativeBtn.onclick = () => navigator.share({ title: name || 'Activity', url }).catch(() => {});
+            nativeBtn.onclick = () => navigator.share({ title: S.title || 'Cropping plan', url }).catch(() => {});
         } else {
             nativeBtn.style.display = 'none';
         }
-        openSheet('activityShareSheet');
+        openSheet('dayShareSheet');
     }
 
-    $id('activityShareCopy')?.addEventListener('click', async () => {
-        const input = $id('activityShareLink');
+    $id('dayShareCopy')?.addEventListener('click', async () => {
+        const input = $id('dayShareLink');
         try {
             await navigator.clipboard.writeText(input.value);
         } catch (_) {
@@ -1805,6 +1802,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dasBtn) {
             e.preventDefault();
             openMoveGroupDasSheet((dasBtn.getAttribute('data-date') || '').trim());
+            return;
+        }
+        const shareDayBtn = e.target.closest('.share-day-btn');
+        if (shareDayBtn) {
+            e.preventDefault();
+            openDayShareSheet((shareDayBtn.getAttribute('data-date') || '').trim());
             return;
         }
         const delGroupBtn = e.target.closest('.delete-group-date-btn');
@@ -3474,24 +3477,39 @@ document.addEventListener('DOMContentLoaded', () => {
     window.smAddActivityOn = openAddActivitySheet;
     window.smMoveActivityToDate = moveSingleActivity;
 
-    // Quick "today & tomorrow" toggle (the toolbar button in activities.blade).
+    // Quick "today & tomorrow" — jump straight to those days for fast access.
+    // It scrolls rather than filters, so the rest of the plan stays visible.
     const ttBtn = $id('todayTomorrowBtn');
-    function applyTtButtonState() {
-        if (!ttBtn) return;
-        ttBtn.classList.toggle('btn-primary', ttActive);
-        ttBtn.classList.toggle('btn-white', !ttActive);
-        ttBtn.setAttribute('aria-pressed', ttActive ? 'true' : 'false');
+    function _findGroup(dateIso) {
+        return $qs(`#activitiesList .date-group[data-date="${dateIso}"]`);
+    }
+    function _nearestUpcomingGroup(todayIso) {
+        let best = null;
+        $qsa('#activitiesList .date-group[data-date]').forEach((g) => {
+            const d = g.getAttribute('data-date');
+            if (!d || d === '__no-date__' || d < todayIso) return;
+            if (!best || d < best.getAttribute('data-date')) best = g;
+        });
+        return best;
     }
     ttBtn?.addEventListener('click', () => {
-        ttActive = !ttActive;
-        applyTtButtonState();
-        applyActivityFilter();
-        if (ttActive) {
-            const { today } = _ttDates();
-            $qs(`#activitiesList .date-group[data-date="${today}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            toast('Showing today & tomorrow');
-        }
+        // Scrolling needs the list; hop out of calendar view first.
+        if (window.smSetActivitiesView) window.smSetActivitiesView('list');
+        const { today, tomorrow } = _ttDates();
+        const todayGroup = _findGroup(today);
+        const tomorrowGroup = _findGroup(tomorrow);
+        const target = todayGroup || tomorrowGroup || _nearestUpcomingGroup(today);
+        if (!target) { toast('No upcoming activities to jump to.', 'error'); return; }
+        // Defer so a just-triggered view switch has rendered the list.
+        setTimeout(() => {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            [todayGroup, tomorrowGroup].filter(Boolean).forEach((g) => {
+                g.classList.add('tt-highlight');
+                setTimeout(() => g.classList.remove('tt-highlight'), 2200);
+            });
+        }, 60);
+        toast(todayGroup || tomorrowGroup ? 'Jumped to today & tomorrow' : 'Jumped to the next scheduled day');
     });
-    window.smTodayTomorrowActive = () => ttActive;
+    window.smTodayTomorrowActive = () => false;
 });
 </script>

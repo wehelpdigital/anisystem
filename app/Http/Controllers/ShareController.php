@@ -57,7 +57,60 @@ class ShareController extends Controller
         ]);
     }
 
+    /** One calendar day from a shared plan — every activity on that date. */
+    public function day(string $token, string $date)
+    {
+        $schedule = $this->resolve($token);
+
+        try {
+            $carbon = Carbon::parse($date)->startOfDay();
+        } catch (\Throwable $e) {
+            abort(404);
+        }
+        $target = $carbon->format('Y-m-d');
+
+        $schedule->load(['lots', 'activities.lots', 'activities.workers']);
+        $lotDayZero = $this->lotDayZero($schedule);
+        $dayType = $schedule->dayType ?: 'DAS';
+
+        $rows = [];
+        foreach ($schedule->activities as $a) {
+            if ($a->isHidden || ! $a->targetDate) {
+                continue;
+            }
+            $start = Carbon::parse($a->targetDate)->format('Y-m-d');
+            $end = $a->targetEndDate ? Carbon::parse($a->targetEndDate)->format('Y-m-d') : $start;
+            if ($target < $start || $target > $end) {
+                continue;
+            }
+            $rows[] = [
+                'activity' => $a,
+                'das' => $this->activityDasLabels($a, $lotDayZero, $dayType),
+                'isStart' => $target === $start,
+            ];
+        }
+
+        usort($rows, fn ($x, $y) => (int) $x['activity']->sequenceOrder <=> (int) $y['activity']->sequenceOrder);
+
+        return view('share.day', [
+            'schedule' => $schedule,
+            'date' => $carbon,
+            'rows' => $rows,
+            'ogDescription' => $this->daySummary($schedule, $carbon, count($rows)),
+        ]);
+    }
+
     // ------------------------------------------------------------------
+
+    private function daySummary(AsCroppingSchedule $schedule, Carbon $date, int $count): string
+    {
+        $bits = array_filter([
+            $schedule->cropType,
+            $count . ' ' . Str::plural('activity', $count) . ' on ' . $date->format('M j, Y'),
+        ]);
+
+        return trim($schedule->title . ' — ' . implode(' · ', $bits)) . '.';
+    }
 
     private function resolve(string $token): AsCroppingSchedule
     {
