@@ -1279,11 +1279,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let BEFORE_SNAPSHOT = null;   // pre-edit payload for the edit-undo path
 
-    function openAddActivitySheet(prefillDate) {
-        $id('activitySheetTitle').textContent = 'Add Activity';
+    // Keep the Drafts counters (toolbar + mobile menu mirror) in step when a
+    // draft is added/removed without reopening the drafts list.
+    function bumpDraftsBadge(delta) {
+        ['draftsBadge', 'actDraftsBadge'].forEach((idv) => {
+            const el = $id(idv);
+            if (!el) return;
+            const n = Math.max(0, (parseInt(el.textContent, 10) || 0) + delta);
+            el.textContent = n;
+            if (idv === 'actDraftsBadge') el.style.display = n > 0 ? '' : 'none';
+        });
+    }
+
+    let ADD_AS_DRAFT = false;   // set by the "Add to drafts" menu option
+    function openAddActivitySheet(prefillDate, asDraft) {
+        ADD_AS_DRAFT = !!asDraft;
+        $id('activitySheetTitle').textContent = ADD_AS_DRAFT ? 'Add to Drafts' : 'Add Activity';
         resetActivitySheet();
         BEFORE_SNAPSHOT = null;
         if (prefillDate) $id('activityTargetDate').value = prefillDate;
+        const hint = $id('activityDraftHint');
+        if (hint) hint.classList.toggle('hidden', !ADD_AS_DRAFT);
         refreshActivityModalLotState();
         openSheet('activitySheet');
     }
@@ -1292,6 +1308,8 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const res = await api(U.show(id));
             const a = res.data;
+            ADD_AS_DRAFT = false;
+            $id('activityDraftHint')?.classList.add('hidden');
             $id('activitySheetTitle').textContent = 'Edit Activity';
             resetActivitySheet();
             BEFORE_SNAPSHOT = JSON.parse(JSON.stringify(a));
@@ -1321,7 +1339,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    $id('addActivityBtn')?.addEventListener('click', () => openAddActivitySheet());
+    // Add Activity is a 2-option menu: a normal activity, or straight to drafts.
+    function toggleAddActivityMenu(show) {
+        const menu = $id('addActivityMenu');
+        const btn = $id('addActivityBtn');
+        if (!menu) return;
+        const open = show === undefined ? menu.classList.contains('hidden') : show;
+        menu.classList.toggle('hidden', !open);
+        btn?.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    $id('addActivityBtn')?.addEventListener('click', (e) => { e.stopPropagation(); toggleAddActivityMenu(); });
+    $qsa('#addActivityMenu [data-add-mode]').forEach((item) => {
+        item.addEventListener('click', () => {
+            toggleAddActivityMenu(false);
+            openAddActivitySheet(null, item.getAttribute('data-add-mode') === 'draft');
+        });
+    });
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('#addActivityWrap')) toggleAddActivityMenu(false);
+    });
+    // The FAB (phones) always adds a normal activity.
     $id('fabAddActivity')?.addEventListener('click', () => openAddActivitySheet());
 
     // Convert an Activity model JSON back into an /update payload — edit-undo path.
@@ -1376,6 +1413,7 @@ document.addEventListener('DOMContentLoaded', () => {
             imagePath: ($id('activityImagePath').value || '').trim(),
             timeRequired: $id('activityTimeRequired').value,
             isDayZero: $id('activityIsDayZero').checked ? 1 : 0,
+            isDraft: (!id && ADD_AS_DRAFT) ? 1 : 0,
             lotIds: getActivityLotIds(),   // empty = N/A (not lot-specific)
             workerIds: getActivityWorkerIds(),
             items,
@@ -1413,6 +1451,21 @@ document.addEventListener('DOMContentLoaded', () => {
                         _renderCardOrReplace(r.data);
                     });
                 }
+            } else if (boolFlag(res.data.isDraft)) {
+                // Created straight into the Drafts bin — it stays off the board
+                // (it keeps its target date; the Drafts list shows that day).
+                const newId = res.data.id;
+                bumpDraftsBadge(1);
+                toast('Saved to drafts');
+                pushUndo(`Draft '${savedTitle}'`, async () => {
+                    const r = await api(U.destroy(newId), { method: 'DELETE' });
+                    if (!r || !r.success) throw new Error((r && r.message) || 'delete failed');
+                    bumpDraftsBadge(-1);
+                }, async () => {
+                    const r = await api(U.restore(newId), { method: 'POST' });
+                    if (!r || !r.success) throw new Error((r && r.message) || 'restore failed');
+                    bumpDraftsBadge(1);
+                });
             } else {
                 $id('activitiesEmpty')?.remove();
                 $id('activitiesList').insertAdjacentHTML('beforeend', html);

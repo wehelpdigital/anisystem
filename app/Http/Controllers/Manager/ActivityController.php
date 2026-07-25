@@ -725,6 +725,7 @@ class ActivityController extends BaseScheduleController
             'priority'        => 'required|in:critical,high,medium,low',
             'activityType'    => ['nullable', 'string', Rule::in(array_keys(AsScheduleActivity::ACTIVITY_TYPES))],
             'isDayZero'       => 'nullable|boolean',
+            'isDraft'         => 'nullable|boolean',
             'description'     => 'nullable|string|max:20000',
             // imagePath is a relative path under the `public` disk, set by
             // a prior image-upload call. Empty string / null = no image.
@@ -817,12 +818,15 @@ class ActivityController extends BaseScheduleController
         ];
 
         // New activities always land in the schedule's active version; edits
-        // never move versions.
+        // never move versions. A new activity may be created straight into the
+        // Drafts bin (isDraft = 1) — it keeps its target date so the drafts
+        // list can show the day it was planned for.
         if ($id === null) {
             $activeVersionId = $this->activeVersionIdFor($schedule->id);
             if ($activeVersionId) {
                 $payload['versionId'] = $activeVersionId;
             }
+            $payload['isDraft'] = $request->boolean('isDraft') ? 1 : 0;
         }
 
         try {
