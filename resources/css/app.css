@@ -94,6 +94,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 .form-textarea { @apply py-3; min-height: auto; }
 .form-hint { @apply text-xs text-gray-500 mt-1; }
+
+/* File inputs: the native "Choose File" button + filename otherwise sit at
+   the top of the padded box. Center them vertically. Scoped to .form-input
+   so it never out-specifies `.hidden` on the camera/photo inputs. */
+input[type="file"].form-input {
+    display: flex;
+    align-items: center;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+input[type="file"].form-input::-webkit-file-upload-button { margin-right: .75rem; }
 .form-error { @apply text-xs font-medium text-red-600 mt-1; }
 
 /* Badges / chips */

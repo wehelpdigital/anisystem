@@ -55,7 +55,7 @@
                     </a>
                 </div>
                 <input type="file" id="protocolFile" accept=".pdf,.doc,.docx,.txt"
-                    class="block w-full text-sm text-gray-600 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:text-brand-700 file:font-semibold file:px-4 file:py-2.5 file:cursor-pointer cursor-pointer">
+                    class="flex items-center w-full text-sm text-gray-600 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:text-brand-700 file:font-semibold file:px-4 file:py-2.5 file:cursor-pointer cursor-pointer">
                 <p class="form-hint">PDF, DOC, DOCX or TXT — max 10 MB. Uploading a new file replaces the current one.</p>
             </div>
 
@@ -219,7 +219,7 @@
         <div class="mb-4">
             <label class="form-label" for="attachmentFile">File <span class="text-red-500">*</span></label>
             <input type="file" id="attachmentFile" accept="image/jpeg,image/png,image/gif,image/webp,application/pdf"
-                class="block w-full text-sm text-gray-600 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:text-brand-700 file:font-semibold file:px-4 file:py-2.5 file:cursor-pointer cursor-pointer">
+                class="flex items-center w-full text-sm text-gray-600 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:text-brand-700 file:font-semibold file:px-4 file:py-2.5 file:cursor-pointer cursor-pointer">
             <p class="form-hint">JPG, PNG, GIF, WebP or PDF — max 10 MB.</p>
         </div>
         <div class="mb-2">
