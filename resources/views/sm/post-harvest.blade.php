@@ -39,6 +39,9 @@
         .ph-notes ul { list-style: disc; padding-left: 1.25rem; }
         .ph-notes ol { list-style: decimal; padding-left: 1.25rem; }
         .ph-photo { max-height: 220px; border-radius: .6rem; }
+        .ph-quill .ql-container { min-height: 8rem; border-bottom-left-radius: .75rem; border-bottom-right-radius: .75rem; }
+        .ph-quill .ql-toolbar { border-top-left-radius: .75rem; border-top-right-radius: .75rem; }
+        .ph-video { width: 100%; max-height: 60vh; border-radius: .6rem; background: #000; object-fit: cover; }
     </style>
 @endpush
 
@@ -185,7 +188,7 @@
             </select>
         </div>
         <div class="mb-4">
-            <label class="form-label" for="phDate">Date</label>
+            <label class="form-label" for="phDate">Date <span class="text-gray-400 font-normal">(optional)</span></label>
             <input type="date" id="phDate" class="form-input">
         </div>
         <div class="mb-4">
@@ -228,15 +231,31 @@
         </div>
 
         <div class="mb-4">
-            <label class="form-label" for="phNotes">Notes</label>
-            <textarea id="phNotes" class="form-textarea" rows="4" maxlength="20000"
-                placeholder="What happened, what you would do differently…"></textarea>
+            <label class="form-label">Notes</label>
+            <div class="ph-quill"><div id="phNotesEditor"></div></div>
         </div>
 
         <div class="mb-2">
-            <label class="form-label" for="phPhoto">Photo</label>
-            <input type="file" id="phPhoto" class="form-input" accept="image/*" capture="environment">
+            <label class="form-label">Photo</label>
+            <div class="flex gap-2 flex-wrap">
+                <label class="btn btn-white btn-sm cursor-pointer mb-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0-12l-4 4m4-4l4 4"/></svg>
+                    Upload
+                    <input type="file" id="phPhoto" accept="image/*" capture="environment" class="hidden">
+                </label>
+                <button type="button" class="btn btn-white btn-sm" id="phCameraBtn">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    Take photo
+                </button>
+            </div>
             <p class="form-hint">Snap the harvest, the sacks, or a problem worth remembering.</p>
+            <div id="phCameraWrap" class="hidden mt-2">
+                <video id="phVideo" autoplay playsinline muted class="ph-video"></video>
+                <div class="flex gap-2 mt-1">
+                    <button type="button" class="btn btn-primary btn-sm" id="phShutter">Capture</button>
+                    <button type="button" class="btn btn-ghost btn-sm" id="phCameraCancel">Cancel</button>
+                </div>
+            </div>
             <div id="phPhotoPreview" class="mt-2 hidden">
                 <img src="" alt="" class="ph-photo">
                 <button type="button" class="btn btn-sm btn-ghost text-red-600 mt-1" id="phPhotoRemove">Remove photo</button>
@@ -390,7 +409,81 @@ const __init = () => {
         wrap.querySelector('img').src = url || '';
     }
 
-    function openPhSheet(o = null) {
+    /* ---- Quill (WYSIWYG) for the observation notes, lazy-loaded from CDN ---- */
+    let quill = null;
+    function loadQuill() {
+        if (window.Quill) return Promise.resolve();
+        return new Promise((resolve, reject) => {
+            const css = document.createElement('link');
+            css.rel = 'stylesheet'; css.href = 'https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css';
+            document.head.appendChild(css);
+            const s = document.createElement('script');
+            s.src = 'https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.min.js';
+            s.onload = resolve; s.onerror = reject; document.head.appendChild(s);
+        });
+    }
+    async function ensureQuill() {
+        await loadQuill();
+        if (!quill) {
+            quill = new Quill('#phNotesEditor', {
+                theme: 'snow', placeholder: 'What happened, what you would do differently…',
+                modules: { toolbar: [['bold', 'italic', 'underline'], [{ list: 'ordered' }, { list: 'bullet' }], ['link', 'clean']] },
+            });
+        }
+        return quill;
+    }
+    function notesHtml() {
+        if (!quill) return null;
+        return quill.getText().trim() ? quill.root.innerHTML : null;
+    }
+
+    /* ---- Photo upload + live-camera capture (getUserMedia on secure origins) ---- */
+    let phStream = null;
+    async function uploadImageFile(file) {
+        const form = new FormData();
+        form.append('image', file);
+        const res = await fetch(URLS.upload, {
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, Accept: 'application/json' },
+            body: form, credentials: 'same-origin',
+        });
+        const json = await res.json();
+        if (!json.success) throw new Error(json.message || 'Upload failed.');
+        setPhoto(json.data.path, json.data.url);
+        toast(json.message);
+    }
+    function stopCamera() {
+        if (phStream) { phStream.getTracks().forEach((t) => t.stop()); phStream = null; }
+        const v = document.getElementById('phVideo'); if (v) v.srcObject = null;
+        document.getElementById('phCameraWrap').classList.add('hidden');
+    }
+    document.getElementById('phCameraBtn').addEventListener('click', async () => {
+        // Live camera needs a secure origin (HTTPS or localhost). Otherwise fall
+        // back to the file input, which still opens the camera on phones.
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { fld('phPhoto').click(); return; }
+        try {
+            phStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false });
+            document.getElementById('phVideo').srcObject = phStream;
+            document.getElementById('phCameraWrap').classList.remove('hidden');
+        } catch (_) { fld('phPhoto').click(); }
+    });
+    document.getElementById('phCameraCancel').addEventListener('click', stopCamera);
+    document.getElementById('phShutter').addEventListener('click', () => {
+        const v = document.getElementById('phVideo');
+        if (!v || !v.videoWidth) return;
+        const canvas = document.createElement('canvas');
+        canvas.width = v.videoWidth; canvas.height = v.videoHeight;
+        canvas.getContext('2d').drawImage(v, 0, 0);
+        canvas.toBlob(async (blob) => {
+            if (!blob) return;
+            stopCamera();
+            try { await uploadImageFile(new File([blob], 'observation-' + Date.now() + '.jpg', { type: 'image/jpeg' })); }
+            catch (err) { toast(err.message, 'error'); }
+        }, 'image/jpeg', 0.9);
+    });
+    document.querySelectorAll('#phSheet [data-sheet-close]').forEach((b) => b.addEventListener('click', stopCamera));
+
+    async function openPhSheet(o = null) {
         fld('phId').value = o ? o.id : '';
         fld('phSheetTitle').textContent = o ? 'Edit observation' : 'Record an observation';
         fld('phTitle').value = o ? o.title : '';
@@ -402,12 +495,13 @@ const __init = () => {
         fld('phMoisture').value = o && o.moisturePercent !== null ? o.moisturePercent : '';
         fld('phPrice').value = o && o.pricePerUnit !== null ? o.pricePerUnit : '';
         fld('phBuyer').value = o ? (o.buyer || '') : '';
-        // Notes round-trip as sanitised HTML; the textarea edits the source.
-        fld('phNotes').value = o ? (o.notes || '').replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '').trim() : '';
         fld('phPhoto').value = '';
+        stopCamera();
         setPhoto(o ? o.imagePath : '', o ? o.imageUrl : '');
         refreshValueHint();
         openSheet('phSheet');
+        // Notes round-trip as sanitised rich HTML through the WYSIWYG editor.
+        try { const q = await ensureQuill(); q.root.innerHTML = o ? (o.notes || '') : ''; } catch (_) { /* editor optional */ }
     }
 
     document.querySelectorAll('[data-ph-add]').forEach((btn) => btn.addEventListener('click', () => openPhSheet(null)));
@@ -418,23 +512,8 @@ const __init = () => {
     fld('phPhoto').addEventListener('change', async (e) => {
         const file = e.target.files && e.target.files[0];
         if (!file) return;
-        const form = new FormData();
-        form.append('image', file);
-        try {
-            const res = await fetch(URLS.upload, {
-                method: 'POST',
-                headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, Accept: 'application/json' },
-                body: form,
-                credentials: 'same-origin',
-            });
-            const json = await res.json();
-            if (!json.success) throw new Error(json.message || 'Upload failed.');
-            setPhoto(json.data.path, json.data.url);
-            toast(json.message);
-        } catch (err) {
-            toast(err.message, 'error');
-            e.target.value = '';
-        }
+        try { await uploadImageFile(file); }
+        catch (err) { toast(err.message, 'error'); e.target.value = ''; }
     });
 
     document.getElementById('phSaveBtn').addEventListener('click', async () => {
@@ -442,8 +521,6 @@ const __init = () => {
         const title = fld('phTitle').value.trim();
         if (!title) { toast('Give this observation a title.', 'error'); return; }
 
-        // Line breaks survive the sanitiser as <br>; everything else is escaped.
-        const rawNotes = fld('phNotes').value.trim();
         const payload = {
             title,
             category: fld('phCategory').value,
@@ -454,9 +531,8 @@ const __init = () => {
             moisturePercent: num(fld('phMoisture').value),
             pricePerUnit: num(fld('phPrice').value),
             buyer: fld('phBuyer').value.trim() || null,
-            notes: rawNotes
-                ? escapeHtml(rawNotes).replace(/\r?\n/g, '<br>')
-                : null,
+            // Rich HTML from the WYSIWYG; the server sanitises it (HtmlSanitizer::rich).
+            notes: notesHtml(),
             imagePath: fld('phImagePath').value || null,
         };
 
