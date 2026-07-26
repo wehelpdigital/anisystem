@@ -1,9 +1,16 @@
 {{--
     Quick Capture — snap one or more photos, add an optional rich-text note,
     pick a schedule, then either save them to that schedule's notebook or hand
-    the first photo to the AI Technician. Included on the schedules dashboard.
-    Expects: $allSchedules (id, title).
+    the first photo to the AI Technician.
+    Params:
+      $allSchedules (id, title) — for the schedule picker (dashboard use).
+      $fixedScheduleId (optional) — when included inside a schedule, the target
+      is known so the picker is replaced by a hidden field.
 --}}
+@php
+    $fixedScheduleId = $fixedScheduleId ?? null;
+    $allSchedules = $allSchedules ?? collect();
+@endphp
 @push('head')
 <style>
     .qc-overlay { position: fixed; inset: 0; z-index: 60; background: rgba(17,24,39,.55); display: flex; align-items: flex-end; justify-content: center; padding: 0; }
@@ -88,14 +95,19 @@
                     <label class="form-label">Add a note <span class="text-gray-400 font-normal">(optional)</span></label>
                     <div class="qc-editor-wrap"><div id="qcEditor"></div></div>
                 </div>
-                <div>
-                    <label class="form-label" for="qcSchedule">Connect to schedule</label>
-                    <select id="qcSchedule" class="form-input">
-                        @foreach ($allSchedules as $s)
-                            <option value="{{ $s->id }}">{{ $s->title }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                @if (!empty($fixedScheduleId))
+                    {{-- Inside a schedule: the target is known, no picker needed. --}}
+                    <input type="hidden" id="qcSchedule" value="{{ $fixedScheduleId }}">
+                @else
+                    <div>
+                        <label class="form-label" for="qcSchedule">Connect to schedule</label>
+                        <select id="qcSchedule" class="form-input">
+                            @foreach ($allSchedules as $s)
+                                <option value="{{ $s->id }}">{{ $s->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
                 <div>
                     <span class="form-label">What should we do with it?</span>
                     <div class="grid gap-2 mt-1.5">

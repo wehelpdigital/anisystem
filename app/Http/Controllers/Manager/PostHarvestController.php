@@ -166,6 +166,8 @@ class PostHarvestController extends BaseScheduleController
             'buyer' => 'nullable|string|max:191',
             'notes' => 'nullable|string|max:20000',
             'imagePath' => 'nullable|string|max:500',
+            'imagePaths' => 'nullable|array|max:20',
+            'imagePaths.*' => 'string|max:500',
         ], [
             'lotId.in' => 'That lot does not belong to this schedule.',
         ]);
@@ -180,17 +182,33 @@ class PostHarvestController extends BaseScheduleController
         $data['notes'] = filled($data['notes'] ?? null) ? HtmlSanitizer::rich($data['notes']) : null;
         $data['lotId'] = $data['lotId'] ?? null;
 
+        // Normalise the photo list: accept an array of paths, keep the legacy
+        // single `imagePath` in sync with the first one for backward compat.
+        $paths = collect($data['imagePaths'] ?? [])
+            ->filter(fn ($p) => filled($p))
+            ->values()->all();
+        $data['imagePaths'] = $paths ?: null;
+        $data['imagePath'] = $paths[0] ?? ($data['imagePath'] ?? null);
+
         return $data;
     }
 
     /** Shape a row for the JS renderer (lot name resolved, value precomputed). */
     private function present(AsSchedulePostHarvest $o): array
     {
+        // Prefer the multi-image list; fall back to the legacy single path.
+        $paths = ! empty($o->imagePaths) ? $o->imagePaths : array_filter([$o->imagePath]);
+        $images = array_values(array_map(fn ($p) => [
+            'path' => $p,
+            'url' => Storage::disk('public')->url($p),
+        ], $paths));
+
         return array_merge($o->toArray(), [
             'lotName' => $o->lotId ? optional($o->lot)->lotName : null,
             'grossValue' => $o->gross_value,
             'categoryLabel' => AsSchedulePostHarvest::CATEGORIES[$o->category] ?? $o->category,
-            'imageUrl' => $o->imagePath ? Storage::disk('public')->url($o->imagePath) : null,
+            'images' => $images,
+            'imageUrl' => $images[0]['url'] ?? null,
         ]);
     }
 

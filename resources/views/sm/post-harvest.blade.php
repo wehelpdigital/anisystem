@@ -42,6 +42,10 @@
         .ph-quill .ql-container { min-height: 8rem; border-bottom-left-radius: .75rem; border-bottom-right-radius: .75rem; }
         .ph-quill .ql-toolbar { border-top-left-radius: .75rem; border-top-right-radius: .75rem; }
         .ph-video { width: 100%; max-height: 60vh; border-radius: .6rem; background: #000; object-fit: cover; }
+        .ph-thumb { position: relative; aspect-ratio: 1; border-radius: .5rem; overflow: hidden; background: #f3f4f6; }
+        .ph-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .ph-thumb button { position: absolute; top: .2rem; right: .2rem; width: 1.4rem; height: 1.4rem; border-radius: 999px; background: rgba(17,24,39,.7); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; line-height: 1; }
+        .ph-gallery-thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem; }
     </style>
 @endpush
 
@@ -173,7 +177,6 @@
     </div>
     <div class="sheet-body">
         <input type="hidden" id="phId" value="">
-        <input type="hidden" id="phImagePath" value="">
 
         <div class="mb-4">
             <label class="form-label" for="phTitle">What are you recording? <span class="text-red-500">*</span></label>
@@ -236,12 +239,12 @@
         </div>
 
         <div class="mb-2">
-            <label class="form-label">Photo</label>
+            <label class="form-label">Photos <span class="text-gray-400 font-normal">(add as many as you like)</span></label>
             <div class="flex gap-2 flex-wrap">
                 <label class="btn btn-white btn-sm cursor-pointer mb-0">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0-12l-4 4m4-4l4 4"/></svg>
                     Upload
-                    <input type="file" id="phPhoto" accept="image/*" capture="environment" class="hidden">
+                    <input type="file" id="phPhoto" accept="image/*" capture="environment" class="hidden" multiple>
                 </label>
                 <button type="button" class="btn btn-white btn-sm" id="phCameraBtn">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -253,13 +256,11 @@
                 <video id="phVideo" autoplay playsinline muted class="ph-video"></video>
                 <div class="flex gap-2 mt-1">
                     <button type="button" class="btn btn-primary btn-sm" id="phShutter">Capture</button>
-                    <button type="button" class="btn btn-ghost btn-sm" id="phCameraCancel">Cancel</button>
+                    <button type="button" class="btn btn-ghost btn-sm" id="phCameraCancel">Done</button>
                 </div>
+                <p class="form-hint">Capture as many as you need, then tap Done.</p>
             </div>
-            <div id="phPhotoPreview" class="mt-2 hidden">
-                <img src="" alt="" class="ph-photo">
-                <button type="button" class="btn btn-sm btn-ghost text-red-600 mt-1" id="phPhotoRemove">Remove photo</button>
-            </div>
+            <div id="phGallery" class="mt-2 grid grid-cols-3 gap-2"></div>
         </div>
     </div>
     <div class="sheet-footer">
@@ -296,8 +297,12 @@ const __init = () => {
             'pricePerUnit' => $o->pricePerUnit === null ? null : (float) $o->pricePerUnit,
             'buyer' => $o->buyer,
             'notes' => $o->notes,
-            'imagePath' => $o->imagePath,
-            'imageUrl' => $o->imagePath ? \Illuminate\Support\Facades\Storage::disk('public')->url($o->imagePath) : null,
+            'images' => collect(! empty($o->imagePaths) ? $o->imagePaths : array_filter([$o->imagePath]))
+                ->map(fn ($p) => ['path' => $p, 'url' => \Illuminate\Support\Facades\Storage::disk('public')->url($p)])
+                ->values(),
+            'imageUrl' => ! empty($o->imagePaths)
+                ? \Illuminate\Support\Facades\Storage::disk('public')->url($o->imagePaths[0])
+                : ($o->imagePath ? \Illuminate\Support\Facades\Storage::disk('public')->url($o->imagePath) : null),
         ]]);
     @endphp
     const OBS = @json($seed->isEmpty() ? new stdClass() : $seed);
@@ -355,7 +360,9 @@ const __init = () => {
                 `<div class="ph-figure"><dt class="text-gray-400">${escapeHtml(l)}</dt><dd class="${tone}">${escapeHtml(v)}</dd></div>`).join('')}</dl>` : ''}
             ${o.buyer ? `<p class="text-sm text-gray-500 mt-2">Sold to <span class="font-semibold text-gray-700">${escapeHtml(o.buyer)}</span></p>` : ''}
             ${o.notes ? `<div class="ph-notes text-gray-600 mt-2">${o.notes}</div>` : ''}
-            ${o.imageUrl ? `<img src="${escapeHtml(o.imageUrl)}" alt="" class="ph-photo mt-3" loading="lazy">` : ''}`;
+            ${(o.images && o.images.length)
+                ? `<div class="ph-gallery-thumbs mt-3">${o.images.map((im) => `<img src="${escapeHtml(im.url)}" alt="" class="rounded-lg" style="aspect-ratio:1;object-fit:cover;width:100%" loading="lazy">`).join('')}</div>`
+                : (o.imageUrl ? `<img src="${escapeHtml(o.imageUrl)}" alt="" class="ph-photo mt-3" loading="lazy">` : '')}`;
         return el;
     }
 
@@ -402,12 +409,23 @@ const __init = () => {
             : '';
     }
 
-    function setPhoto(path, url) {
-        fld('phImagePath').value = path || '';
-        const wrap = document.getElementById('phPhotoPreview');
-        wrap.classList.toggle('hidden', !path);
-        wrap.querySelector('img').src = url || '';
+    // Multiple photos per observation, held as {path, url} while the sheet is open.
+    let phImages = [];
+    function renderGallery() {
+        const g = document.getElementById('phGallery');
+        g.innerHTML = phImages.map((im, i) =>
+            `<div class="ph-thumb"><img src="${escapeHtml(im.url)}" alt="Photo ${i + 1}">` +
+            `<button type="button" data-rm="${i}" aria-label="Remove photo">&times;</button></div>`).join('');
+        g.querySelectorAll('[data-rm]').forEach((b) => b.addEventListener('click', () => {
+            phImages.splice(parseInt(b.getAttribute('data-rm'), 10), 1);
+            renderGallery();
+        }));
     }
+    function setImages(list) {
+        phImages = (list || []).filter((im) => im && im.path).map((im) => ({ path: im.path, url: im.url }));
+        renderGallery();
+    }
+    function addImage(im) { phImages.push({ path: im.path, url: im.url }); renderGallery(); }
 
     /* ---- Quill (WYSIWYG) for the observation notes, lazy-loaded from CDN ---- */
     let quill = null;
@@ -449,8 +467,7 @@ const __init = () => {
         });
         const json = await res.json();
         if (!json.success) throw new Error(json.message || 'Upload failed.');
-        setPhoto(json.data.path, json.data.url);
-        toast(json.message);
+        addImage({ path: json.data.path, url: json.data.url });
     }
     function stopCamera() {
         if (phStream) { phStream.getTracks().forEach((t) => t.stop()); phStream = null; }
@@ -476,8 +493,8 @@ const __init = () => {
         canvas.getContext('2d').drawImage(v, 0, 0);
         canvas.toBlob(async (blob) => {
             if (!blob) return;
-            stopCamera();
-            try { await uploadImageFile(new File([blob], 'observation-' + Date.now() + '.jpg', { type: 'image/jpeg' })); }
+            // Keep the camera running so several shots can be taken in a row.
+            try { await uploadImageFile(new File([blob], 'observation-' + Date.now() + '.jpg', { type: 'image/jpeg' })); toast('Photo added'); }
             catch (err) { toast(err.message, 'error'); }
         }, 'image/jpeg', 0.9);
     });
@@ -497,7 +514,7 @@ const __init = () => {
         fld('phBuyer').value = o ? (o.buyer || '') : '';
         fld('phPhoto').value = '';
         stopCamera();
-        setPhoto(o ? o.imagePath : '', o ? o.imageUrl : '');
+        setImages(o ? (o.images || []) : []);
         refreshValueHint();
         openSheet('phSheet');
         // Notes round-trip as sanitised rich HTML through the WYSIWYG editor.
@@ -507,13 +524,13 @@ const __init = () => {
     document.querySelectorAll('[data-ph-add]').forEach((btn) => btn.addEventListener('click', () => openPhSheet(null)));
     fld('phYieldAmount').addEventListener('input', refreshValueHint);
     fld('phPrice').addEventListener('input', refreshValueHint);
-    document.getElementById('phPhotoRemove').addEventListener('click', () => setPhoto('', ''));
-
     fld('phPhoto').addEventListener('change', async (e) => {
-        const file = e.target.files && e.target.files[0];
-        if (!file) return;
-        try { await uploadImageFile(file); }
-        catch (err) { toast(err.message, 'error'); e.target.value = ''; }
+        const files = [...(e.target.files || [])];
+        for (const file of files) {
+            try { await uploadImageFile(file); }
+            catch (err) { toast(err.message, 'error'); }
+        }
+        e.target.value = '';   // allow re-selecting the same files
     });
 
     document.getElementById('phSaveBtn').addEventListener('click', async () => {
@@ -533,7 +550,7 @@ const __init = () => {
             buyer: fld('phBuyer').value.trim() || null,
             // Rich HTML from the WYSIWYG; the server sanitises it (HtmlSanitizer::rich).
             notes: notesHtml(),
-            imagePath: fld('phImagePath').value || null,
+            imagePaths: phImages.map((im) => im.path),
         };
 
         const btn = document.getElementById('phSaveBtn');
@@ -552,7 +569,7 @@ const __init = () => {
                 pricePerUnit: num(res.data.pricePerUnit),
                 buyer: res.data.buyer,
                 notes: res.data.notes,
-                imagePath: res.data.imagePath,
+                images: res.data.images || [],
                 imageUrl: res.data.imageUrl,
             };
             OBS[o.id] = o;
