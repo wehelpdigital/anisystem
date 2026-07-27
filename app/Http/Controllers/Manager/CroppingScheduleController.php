@@ -289,7 +289,6 @@ class CroppingScheduleController extends Controller
             'materials',
             'services',
             'activities',    // relation is already active-version + non-draft scoped
-            'irrigations',
             'attachments',
             'criticalRules',
         ]);

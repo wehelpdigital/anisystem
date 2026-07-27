@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ACTIVITY_TYPE_LABELS = @json($activityTypes);
     const WATER_TASK_LABELS = @json(\App\Models\AsScheduleActivity::WATER_TASKS);
     const WATER_TASK_COLORS = @json(\App\Models\AsScheduleActivity::WATER_TASK_COLORS);
+    let activityMode = 'task';   // 'task' | 'irrigation' — the add-activity sheet mode
     const LOT_NAMES = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->lotName]));
     const LOT_VARIETIES = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->variety]));
     const WORKER_NAMES = @json($schedule->workers->mapWithKeys(fn ($w) => [$w->id => $w->workerName]));
@@ -953,6 +954,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function refreshDayZeroToggleVisibility() {
         const panel = $id('activityDayZeroPanel');
         if (!panel) return;
+        // Day 0 doesn't apply to irrigation entries.
+        if (activityMode === 'irrigation') {
+            $id('activityIsDayZero').checked = false;
+            panel.classList.add('hidden');
+            return;
+        }
         if (shouldShowDayZeroToggle()) {
             panel.classList.remove('hidden');
         } else {
@@ -1068,7 +1075,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ---- Task / Irrigation mode tabs ----
-    let activityMode = 'task';   // 'task' | 'irrigation'
+    // Irrigation activities hide the Day-0 marker, services (materials only),
+    // and reference images — none of those apply to a watering entry.
     function setActivityMode(mode) {
         activityMode = mode === 'irrigation' ? 'irrigation' : 'task';
         $qsa('#activityModeTabs .activity-mode-tab').forEach((tab) => {
@@ -1079,6 +1087,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const irr = activityMode === 'irrigation';
         $id('activityTypeWrap')?.classList.toggle('hidden', irr);
         $id('activityWaterTaskWrap')?.classList.toggle('hidden', !irr);
+        $id('activityImagesSection')?.classList.toggle('hidden', irr);
+        $id('itemPickerKindWrap')?.classList.toggle('hidden', irr);
+        const secLabel = $id('itemsSectionLabel');
+        if (secLabel) secLabel.textContent = irr ? 'Materials' : 'Materials & Services';
+        const titleEl = $id('activityTitle');
+        if (titleEl) titleEl.setAttribute('placeholder', irr ? 'e.g. Irrigate Lot A — Day 20–35' : 'e.g. Basal Fertilizer Application');
+        if (irr) {
+            // Materials only — force the picker to materials and drop services.
+            if ($id('itemPickerType')) { $id('itemPickerType').value = 'material'; rebuildItemPickerOptions(); }
+            $qsa('#itemsContainer > span[data-type="service"]').forEach((t) => t.remove());
+            refreshItemsEmptyState();
+            setActivityImages([]);   // no reference images for irrigation
+        }
+        refreshDayZeroToggleVisibility();
     }
     $qsa('#activityModeTabs .activity-mode-tab').forEach((tab) => {
         tab.addEventListener('click', () => setActivityMode(tab.getAttribute('data-mode')));

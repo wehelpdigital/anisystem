@@ -164,9 +164,9 @@
             </div>
 
             <div>
-                <span class="form-label">Materials &amp; Services <span class="text-gray-400 font-normal">(optional)</span></span>
+                <span class="form-label"><span id="itemsSectionLabel">Materials &amp; Services</span> <span class="text-gray-400 font-normal">(optional)</span></span>
                 <div class="rounded-xl border border-gray-200 p-3 space-y-2.5">
-                    <div>
+                    <div id="itemPickerKindWrap">
                         <label class="form-label text-xs! mb-1!" for="itemPickerType">Kind</label>
                         <select id="itemPickerType" class="form-select">
                             <option value="material">Material</option>
@@ -203,7 +203,7 @@
             </div>
 
             {{-- Reference images — at the bottom, multiple allowed. --}}
-            <div>
+            <div id="activityImagesSection">
                 <span class="form-label">Reference images <span class="text-gray-400 font-normal">(optional, max 8 MB each)</span></span>
                 <input type="file" id="activityImageFileInput" accept="image/jpeg,image/png,image/webp,image/gif" class="hidden" multiple>
                 <div id="activityImagesGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-2"></div>
@@ -241,7 +241,6 @@
                 ['materials', 'Materials', 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4'],
                 ['services', 'Services', 'M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437'],
                 ['documentation', 'Documentation', 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
-                ['irrigations', 'Irrigation', 'M12 3s6 6.686 6 11a6 6 0 11-12 0c0-4.314 6-11 6-11z'],
                 ['post-harvest', 'Post-harvest', 'M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z'],
                 ['notes', 'Notes', 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
                 ['ai', 'AI Technician', 'M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5'],
