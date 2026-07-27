@@ -619,11 +619,19 @@ html.dark .doc-badge-miscellaneous { background: #3a2f1f; color: #e6c197; }
 }
 .doc-file-new { border-style: dashed; }
 .doc-file-x {
-    margin-left: .1rem; width: 1.15rem; height: 1.15rem; flex-shrink: 0;
-    border-radius: 9999px; color: var(--color-gray-400);
-    font-size: .7rem; line-height: 1; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-left: .15rem; width: 2rem; height: 2rem; flex-shrink: 0;
+    border-radius: 9999px; color: var(--color-gray-500);
+    background: var(--color-gray-100);
+    font-size: 1.05rem; line-height: 1; cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
-.doc-file-x:hover { color: #dc2626; background: #fdeaea; }
+.doc-file-x:hover, .doc-file-x:active { color: #dc2626; background: #fdeaea; }
+html.dark .doc-file-x { background: var(--color-gray-200); color: var(--color-gray-600); }
+/* Bigger, easier tap target on phones. */
+@media (max-width: 640px) {
+    .doc-file-x { width: 2.5rem; height: 2.5rem; font-size: 1.3rem; }
+}
 
 /* ------------------------------------------------------------------ */
 /* Public share pages (layouts.share)                                 */
