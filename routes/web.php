@@ -101,7 +101,6 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-services', [App\Http\Controllers\Manager\ServiceController::class, 'page'])->name('sm.services');
     Route::get('/app/sm-documentation', [App\Http\Controllers\Manager\DocumentationController::class, 'page'])->name('sm.documentation');
     Route::get('/app/sm-activities', [App\Http\Controllers\Manager\ActivityController::class, 'page'])->name('sm.activities');
-    Route::get('/app/sm-irrigations', [App\Http\Controllers\Manager\IrrigationController::class, 'page'])->name('sm.irrigations');
     Route::get('/app/sm-ai', [App\Http\Controllers\AiController::class, 'schedulePage'])->name('sm.ai');
 
     // Schedule notebook
@@ -246,13 +245,6 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-activity-versions-delete', [App\Http\Controllers\Manager\ActivityVersionController::class, 'destroy'])->name('sm.activity-versions.destroy');
     Route::post('/app/sm-activity-versions-set-active', [App\Http\Controllers\Manager\ActivityVersionController::class, 'setActive'])->name('sm.activity-versions.set-active');
     Route::post('/app/sm-activity-versions-global-note', [App\Http\Controllers\Manager\ActivityVersionController::class, 'setGlobalNote'])->name('sm.activity-versions.global-note');
-
-    // --- Irrigations ---
-    Route::post('/app/sm-irrigations-store', [App\Http\Controllers\Manager\IrrigationController::class, 'store'])->name('sm.irrigations.store');
-    Route::put('/app/sm-irrigations-update', [App\Http\Controllers\Manager\IrrigationController::class, 'update'])->name('sm.irrigations.update');
-    Route::delete('/app/sm-irrigations-delete', [App\Http\Controllers\Manager\IrrigationController::class, 'destroy'])->name('sm.irrigations.destroy');
-    Route::post('/app/sm-irrigations-duplicate', [App\Http\Controllers\Manager\IrrigationController::class, 'duplicate'])->name('sm.irrigations.duplicate');
-    Route::post('/app/sm-irrigations-reorder', [App\Http\Controllers\Manager\IrrigationController::class, 'reorder'])->name('sm.irrigations.reorder');
 
     // --- Printable / standalone documents ---
     Route::get('/app/sm-worker-presentation', [App\Http\Controllers\Manager\DocumentController::class, 'workerPresentation'])->name('sm.worker-presentation');
