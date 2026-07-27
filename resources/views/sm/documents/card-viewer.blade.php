@@ -1089,7 +1089,7 @@
                 @if($note)
                     <blockquote class="cv-day-note">
                         <span class="cv-day-note-label">Note &mdash;</span>
-                        {!! nl2br(e($note->noteContent)) !!}
+                        <span class="rich-inline">{!! $note->noteContent !!}</span>
                     </blockquote>
                 @endif
 

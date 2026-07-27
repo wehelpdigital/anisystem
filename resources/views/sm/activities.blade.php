@@ -676,6 +676,11 @@
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z"/></svg>
         <span class="hidden sm:inline">Quick Share</span>
     </button>
+    <button type="button" id="addDateNoteBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
+            title="Add a note for a date">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+        <span class="hidden sm:inline">Add Note</span>
+    </button>
     <div class="shrink-0" id="addActivityWrap" data-activities-only>
         <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
@@ -898,7 +903,7 @@
                         @endif
                     </div>
                     @if ($dateKey !== '__no-date__')
-                        <div class="date-note-block" data-date="{{ $dateKey }}" @if(!$noteRow) style="display:none;" @endif>{{ $noteRow?->noteContent }}</div>
+                        <div class="date-note-block rich-text" data-date="{{ $dateKey }}" @if(!$noteRow) style="display:none;" @endif>{!! $noteRow?->noteContent !!}</div>
                     @endif
                     <div class="date-activities" data-date="{{ $dateKey }}">
                         @foreach ($activitiesForDate as $a)

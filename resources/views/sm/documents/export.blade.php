@@ -619,7 +619,7 @@
                 </div>
                 @if($exportNote)
                     <div class="date-note">
-                        <strong>Note:</strong> {!! nl2br(e($exportNote->noteContent)) !!}
+                        <strong>Note:</strong> <span class="rich-inline">{!! $exportNote->noteContent !!}</span>
                     </div>
                 @endif
 

@@ -579,9 +579,17 @@
     </div>
     <div class="sheet-body space-y-3">
         <input type="hidden" id="dateNoteDate">
-        <p class="text-sm font-semibold text-gray-700" id="dateNoteSheetDate"></p>
-        <textarea id="dateNoteContent" class="form-textarea" rows="5" maxlength="20000" placeholder="What happens on this day? Notes render on printed documents too."></textarea>
-        <p class="form-hint">Notes are scoped to the current version — forks carry their own copies.</p>
+        <div>
+            <label class="form-label" for="dateNoteDatePicker">Date</label>
+            <input type="date" id="dateNoteDatePicker" class="form-input cal-only" inputmode="none">
+        </div>
+        <div>
+            <label class="form-label">Note</label>
+            <div class="rich-editor">
+                <div id="dateNoteEditor" style="min-height: 8rem;"></div>
+            </div>
+        </div>
+        <p class="form-hint">Notes are scoped to the current version — forks carry their own copies. They render on printed documents too.</p>
     </div>
     <div class="sheet-footer">
         <button type="button" id="dateNoteClearBtn" class="btn btn-danger-outline mr-auto hidden">Clear Note</button>

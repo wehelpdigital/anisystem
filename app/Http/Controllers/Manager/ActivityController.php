@@ -994,7 +994,12 @@ class ActivityController extends BaseScheduleController
         }
 
         $noteDate = $request->input('noteDate');
-        $content  = trim((string) $request->input('noteContent', ''));
+        // Notes are rich text from the WYSIWYG editor — sanitize like activity
+        // descriptions. Markup with no visible text counts as empty (clears it).
+        $content  = \App\Support\HtmlSanitizer::rich($request->input('noteContent'));
+        if (! filled(trim(strip_tags($content)))) {
+            $content = '';
+        }
 
         $existing = AsScheduleDateNote::active()
             ->forSchedule($schedule->id)

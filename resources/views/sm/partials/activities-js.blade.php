@@ -522,7 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <button type="button" class="date-header-btn day-menu-btn md:hidden" data-date="${esc(dateKey)}" title="More actions for this day">${SVG.kebab}</button>`;
 
         const noteBlock = isNoDate ? ''
-            : `<div class="date-note-block" data-date="${esc(dateKey)}"${hasNote ? '' : ' style="display:none;"'}>${esc(noteContent || '')}</div>`;
+            : `<div class="date-note-block rich-text" data-date="${esc(dateKey)}"${hasNote ? '' : ' style="display:none;"'}>${noteContent || ''}</div>`;
 
         const wrap = document.createElement('div');
         wrap.innerHTML = `<div class="date-group date-color-${colorIdx}${allHidden ? ' all-hidden' : ''}" data-date="${esc(dateKey)}">
@@ -609,7 +609,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const notesByDate = {};
         $qsa('.date-note-block[data-date]', list).forEach((el) => {
             const key = (el.getAttribute('data-date') || '').trim();
-            const content = (el.textContent || '').trim();
+            const content = (el.innerHTML || '').trim();
             if (key && el.style.display !== 'none' && content !== '') notesByDate[key] = content;
         });
         const markersByDate = snapshotMarkers(list);
@@ -2215,7 +2215,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function _dateNoteContentFor(dateKey) {
         const block = $qs(`#activitiesList .date-note-block[data-date="${dateKey}"]`);
         if (!block || block.style.display === 'none') return '';
-        return (block.textContent || '').trim();
+        return (block.innerHTML || '').trim();
     }
 
     function _refreshDateNoteUI(dateKey, content) {
@@ -2227,38 +2227,76 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.title = safe !== '' ? 'Edit the note for this date' : 'Add a note for this date';
         }
         if (block) {
-            block.textContent = safe;
+            block.innerHTML = safe;
             block.style.display = safe !== '' ? '' : 'none';
         }
+    }
+
+    // ---- Date-note WYSIWYG (Quill, reused toolbar) ----
+    let dateNoteQuill = null;
+    function ensureDateNoteEditor() {
+        if (typeof Quill === 'undefined' || dateNoteQuill) return;
+        dateNoteQuill = new Quill('#dateNoteEditor', {
+            theme: 'snow',
+            placeholder: 'What happens on this day?',
+            modules: { toolbar: SM_QUILL_TOOLBAR },
+        });
+    }
+    function setDateNoteContent(html) {
+        ensureDateNoteEditor();
+        if (!dateNoteQuill) return;
+        dateNoteQuill.setContents([]);
+        if (html && html.trim() !== '') dateNoteQuill.clipboard.dangerouslyPasteHTML(html);
+    }
+    function getDateNoteContent() {
+        if (!dateNoteQuill) return '';
+        const html = dateNoteQuill.root.innerHTML;
+        return html === '<p><br></p>' ? '' : html;
+    }
+
+    function openDateNoteSheet(dateKey) {
+        dateKey = (dateKey || '').trim();
+        if (!dateKey || dateKey === '__no-date__') dateKey = isoFromDate(new Date());
+        const existing = _dateNoteContentFor(dateKey);
+        $id('dateNoteDate').value = dateKey;
+        if ($id('dateNoteDatePicker')) $id('dateNoteDatePicker').value = dateKey;
+        $id('dateNoteSheetTitle').textContent = existing ? 'Edit note' : 'Add note';
+        $id('dateNoteClearBtn').classList.toggle('hidden', !existing);
+        openSheet('dateNoteSheet');
+        setDateNoteContent(existing);
+        setTimeout(() => dateNoteQuill && dateNoteQuill.focus(), 250);
     }
 
     document.addEventListener('click', (e) => {
         const btn = e.target.closest('.date-note-btn');
         if (!btn) return;
         e.preventDefault();
-        const dateKey = (btn.getAttribute('data-date') || '').trim();
-        if (!dateKey || dateKey === '__no-date__') return;
-        const existing = _dateNoteContentFor(dateKey);
-        $id('dateNoteDate').value = dateKey;
-        $id('dateNoteSheetDate').textContent = prettyDateFull(dateKey);
-        $id('dateNoteContent').value = existing;
-        $id('dateNoteSheetTitle').textContent = existing ? 'Edit note for this date' : 'Add note for this date';
+        openDateNoteSheet(btn.getAttribute('data-date') || '');
+    });
+    // Toolbar quick "Add Note" — defaults to today, date is changeable.
+    $id('addDateNoteBtn')?.addEventListener('click', () => openDateNoteSheet(''));
+    // Picking a different date loads that date's existing note.
+    $id('dateNoteDatePicker')?.addEventListener('change', () => {
+        const dk = ($id('dateNoteDatePicker').value || '').trim();
+        if (!dk) return;
+        $id('dateNoteDate').value = dk;
+        const existing = _dateNoteContentFor(dk);
+        setDateNoteContent(existing);
+        $id('dateNoteSheetTitle').textContent = existing ? 'Edit note' : 'Add note';
         $id('dateNoteClearBtn').classList.toggle('hidden', !existing);
-        openSheet('dateNoteSheet');
-        setTimeout(() => $id('dateNoteContent').focus(), 250);
     });
 
     $id('dateNoteSaveBtn')?.addEventListener('click', async (e) => {
         const btn = e.currentTarget;
         const dateKey = $id('dateNoteDate').value;
-        const content = $id('dateNoteContent').value;
+        const content = getDateNoteContent();
         if (!dateKey) return;
         btn.disabled = true;
         try {
-            await api(U.dateNoteSave(), { method: 'POST', body: { noteDate: dateKey, noteContent: content } });
-            const saved = (content || '').trim();
+            const res = await api(U.dateNoteSave(), { method: 'POST', body: { noteDate: dateKey, noteContent: content } });
+            const saved = (res && res.data && res.data.noteContent != null) ? res.data.noteContent : content;
             _refreshDateNoteUI(dateKey, saved);
-            toast(saved === '' ? 'Note cleared.' : 'Note saved.');
+            toast((saved || '').trim() === '' ? 'Note cleared.' : 'Note saved.');
             closeSheet('dateNoteSheet');
         } catch (err) {
             toast(err.message, 'error');

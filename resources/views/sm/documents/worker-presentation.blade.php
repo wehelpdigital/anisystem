@@ -1520,7 +1520,7 @@
                 <div class="date-activities-wrap">
                 @if($presentationNote)
                     <div class="date-note">
-                        <strong>Note:</strong> {!! nl2br(e($presentationNote->noteContent)) !!}
+                        <strong>Note:</strong> <span class="rich-inline">{!! $presentationNote->noteContent !!}</span>
                     </div>
                 @endif
                 {{-- Per-day irrigation summary — pulls from the priority-resolved
