@@ -9,7 +9,7 @@
 @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'materials'])
 
 {{-- Desktop add button --}}
-<button type="button" class="btn btn-primary w-full mb-4 hidden md:inline-flex" data-material-add id="materialAddBtnDesktop">
+<button type="button" class="btn btn-primary w-full mb-4 inline-flex" data-material-add id="materialAddBtnDesktop">
     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
     Add Material
 </button>
@@ -72,11 +72,6 @@
     <p class="text-sm text-gray-500">No materials match your search.</p>
 </div>
 
-{{-- Mobile FAB --}}
-<button type="button" data-material-add aria-label="Add material"
-    class="fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full btn-primary shadow-lg md:hidden flex items-center justify-center bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800">
-    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-</button>
 @endsection
 
 @push('sheets')

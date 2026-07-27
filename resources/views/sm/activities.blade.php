@@ -888,12 +888,6 @@
     @endif
 </div>
 
-{{-- Mobile floating action button --}}
-<button type="button" id="fabAddActivity" data-activities-only
-    class="fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full btn-primary shadow-lg md:hidden flex items-center justify-center"
-    aria-label="Add activity">
-    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-</button>
 </div>{{-- /#activitiesRoot --}}
 @endsection
 

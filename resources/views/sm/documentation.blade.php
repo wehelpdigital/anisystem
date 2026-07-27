@@ -9,7 +9,7 @@
 @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'documentation'])
 
 <div>
-    <button type="button" class="btn btn-primary w-full mb-4 hidden md:inline-flex" data-doc-add>
+    <button type="button" class="btn btn-primary w-full mb-4 inline-flex" data-doc-add>
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
         Add Document
         <span class="badge badge-gray ml-1" id="docCount">{{ $schedule->docEntries->count() }}</span>
@@ -23,12 +23,6 @@
         <p class="text-sm text-gray-500 mt-1">Add a protocol, introduction, critical rule, miscellaneous note, or any tagged reference — each with rich text and files.</p>
         <button type="button" class="btn btn-primary mt-4" data-doc-add>Add Document</button>
     </div>
-
-    {{-- Mobile FAB --}}
-    <button type="button" data-doc-add aria-label="Add document"
-        class="fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full btn-primary shadow-lg md:hidden flex items-center justify-center bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-    </button>
 </div>
 @endsection
 

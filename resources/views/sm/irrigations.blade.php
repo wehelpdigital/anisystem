@@ -34,8 +34,8 @@
         </p>
     </div>
 
-    {{-- Desktop add button --}}
-    <div class="hidden md:block mb-4">
+    {{-- Add button --}}
+    <div class="block mb-4">
         <button type="button" class="btn btn-primary w-full" data-irr-add>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
             Add Irrigation Entry
@@ -50,11 +50,6 @@
         <p class="text-sm text-gray-500">Add your first water-management window — irrigate, maintain, drain and more.</p>
     </div>
 
-    {{-- Mobile floating action button --}}
-    <button type="button" data-irr-add aria-label="Add irrigation entry"
-        class="md:hidden fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full bg-brand-600 text-white shadow-lg flex items-center justify-center active:bg-brand-800 transition">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-    </button>
 @endsection
 
 @push('sheets')

@@ -20,7 +20,7 @@
 @section('content')
 @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'notes'])
 
-<button type="button" class="btn btn-primary w-full mb-4 hidden md:inline-flex" data-note-add>
+<button type="button" class="btn btn-primary w-full mb-4 inline-flex" data-note-add>
     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
     New note
 </button>
@@ -58,11 +58,6 @@
     <p class="text-sm text-gray-500 mt-1">Jot down observations, reminders or anything worth remembering — attach a photo too.</p>
     <button type="button" class="btn btn-primary mt-4" data-note-add>New note</button>
 </div>
-
-<button type="button" data-note-add aria-label="New note"
-    class="fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full shadow-lg md:hidden flex items-center justify-center bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800">
-    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-</button>
 @endsection
 
 @push('sheets')

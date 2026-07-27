@@ -82,7 +82,7 @@
 </div>
 
 {{-- Desktop add button --}}
-<button type="button" class="btn btn-primary w-full mb-4 hidden md:inline-flex" data-ph-add>
+<button type="button" class="btn btn-primary w-full mb-4 inline-flex" data-ph-add>
     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
     Record an observation
 </button>
@@ -161,11 +161,6 @@
     <button type="button" class="btn btn-primary mt-4" data-ph-add>Record an observation</button>
 </div>
 
-{{-- Mobile FAB --}}
-<button type="button" data-ph-add aria-label="Record an observation"
-    class="fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full shadow-lg md:hidden flex items-center justify-center bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800">
-    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-</button>
 @endsection
 
 @push('sheets')

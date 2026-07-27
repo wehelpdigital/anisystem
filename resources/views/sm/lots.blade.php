@@ -9,8 +9,8 @@
     @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'lots'])
 
     <div class="max-w-3xl">
-        <div class="hidden md:flex justify-end mb-4">
-            <button type="button" class="btn btn-primary" data-add-lot>
+        <div class="flex justify-end mb-4">
+            <button type="button" class="btn btn-primary w-full md:w-auto" data-add-lot>
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
                 Add Lot
             </button>
@@ -33,12 +33,6 @@
 
     </div>
 
-    {{-- Mobile floating action button --}}
-    <button type="button" data-add-lot
-        class="md:hidden fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full btn-primary shadow-lg flex items-center justify-center"
-        aria-label="Add lot">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
-    </button>
 @endsection
 
 @push('sheets')
