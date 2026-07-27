@@ -39,7 +39,13 @@
             <h3 class="activity-card-title">{{ $a->activityTitle }}</h3>
             <div class="activity-card-badges">
                 <span class="pill pill-{{ $a->priority }}">{{ ucfirst($a->priority) }}</span>
-                @if($typeLabel)
+                @if($a->activityType === 'irrigation')
+                    @php $wtm = $a->waterTaskMeta(); @endphp
+                    <span class="badge water-task-badge" style="--wt:{{ $wtm['color'] }}">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3s6 6.686 6 11a6 6 0 11-12 0c0-4.314 6-11 6-11z"/></svg>
+                        {{ $wtm['label'] }}
+                    </span>
+                @elseif($typeLabel)
                     <span class="badge badge-green activity-type-badge">{{ $typeLabel }}</span>
                 @endif
                 @if($a->isDayZero)
@@ -100,8 +106,13 @@
     @if($a->description)
         <div class="activity-description-content text-sm text-gray-700 mt-2">{!! $a->description !!}</div>
     @endif
-    @if($a->imageUrl())
-        <div class="activity-card-image mt-2"><img src="{{ $a->imageUrl() }}" alt="Reference image" loading="lazy"></div>
+    @php $cardImages = $a->imageList(); @endphp
+    @if(count($cardImages))
+        <div class="activity-card-images mt-2">
+            @foreach($cardImages as $img)
+                <img src="{{ $img['url'] }}" alt="Reference image" loading="lazy">
+            @endforeach
+        </div>
     @endif
     <div class="activity-meta">
         <span class="meta-time">

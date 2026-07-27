@@ -26,6 +26,30 @@ class AsScheduleActivity extends BaseModel
         'other'          => 'Other',
     ];
 
+    /**
+     * Water-task catalog for irrigation-type activities (activityType =
+     * 'irrigation'). slug => label, plus a color for the card badge.
+     */
+    public const WATER_TASKS = [
+        'irrigate'      => 'Irrigate',
+        'maintain'      => 'Maintain water',
+        'overflow'      => 'Overflow',
+        'drain'         => 'Drain',
+        'drain_water'   => 'Drain water',
+        'no_irrigation' => 'No irrigation',
+        'let_subside'   => 'Let subside',
+    ];
+
+    public const WATER_TASK_COLORS = [
+        'irrigate'      => '#2f8fd8',
+        'maintain'      => '#1aa3a3',
+        'overflow'      => '#7c6bd6',
+        'drain'         => '#c1873b',
+        'drain_water'   => '#c1873b',
+        'no_irrigation' => '#8a95a8',
+        'let_subside'   => '#5a8f4c',
+    ];
+
     protected $fillable = [
         'croppingScheduleId',
         'versionId',
@@ -35,11 +59,13 @@ class AsScheduleActivity extends BaseModel
         'targetEndDate',
         'priority',
         'activityType',
+        'waterTask',
         'isDayZero',
         'isDraft',
         'isHidden',
         'description',
         'imagePath',
+        'imagePaths',
         'timeRequired',
         'sequenceOrder',
         'deleteStatus',
@@ -48,6 +74,7 @@ class AsScheduleActivity extends BaseModel
     protected $casts = [
         'targetDate' => 'date:Y-m-d',
         'targetEndDate' => 'date:Y-m-d',
+        'imagePaths' => 'array',
         'isDayZero' => 'boolean',
         'isDraft' => 'boolean',
         'isHidden' => 'boolean',
@@ -121,5 +148,44 @@ class AsScheduleActivity extends BaseModel
         if (empty($this->imagePath)) return null;
         $full = storage_path('app/public/' . ltrim($this->imagePath, '/'));
         return file_exists($full) ? $full : null;
+    }
+
+    /**
+     * All reference-image paths — the JSON list if present, else the single
+     * legacy imagePath. Always an array (possibly empty).
+     *
+     * @return array<int, string>
+     */
+    public function imagePathList(): array
+    {
+        if (! empty($this->imagePaths) && is_array($this->imagePaths)) {
+            return array_values(array_filter($this->imagePaths));
+        }
+        return array_values(array_filter([$this->imagePath]));
+    }
+
+    /**
+     * Reference images as [{path, url}] for the front-end.
+     *
+     * @return array<int, array{path:string, url:string}>
+     */
+    public function imageList(): array
+    {
+        return array_map(fn ($p) => [
+            'path' => $p,
+            'url' => asset('storage/' . ltrim($p, '/')),
+        ], $this->imagePathList());
+    }
+
+    /** Label + color for an irrigation activity's water task (or null). */
+    public function waterTaskMeta(): ?array
+    {
+        if ($this->activityType !== 'irrigation') return null;
+        $slug = $this->waterTask && isset(self::WATER_TASKS[$this->waterTask]) ? $this->waterTask : 'irrigate';
+        return [
+            'slug' => $slug,
+            'label' => self::WATER_TASKS[$slug],
+            'color' => self::WATER_TASK_COLORS[$slug] ?? '#2f8fd8',
+        ];
     }
 }

@@ -71,6 +71,7 @@ class ActivityController extends BaseScheduleController
             'markersByDate'   => $markersByDate,
             'activeVersion'   => $activeVersion,
             'activityTypes'   => AsScheduleActivity::ACTIVITY_TYPES,
+            'waterTasks'      => AsScheduleActivity::WATER_TASKS,
             'readiness'       => (new ScheduleReadinessService())->check($schedule),
         ]);
     }
@@ -118,6 +119,7 @@ class ActivityController extends BaseScheduleController
         // Resolved public URL alongside the stored path so the sheet can
         // render the existing image immediately without re-deriving.
         $payload['imageUrl'] = $activity->imageUrl();
+        $payload['images'] = $activity->imageList();
 
         return $this->jsonOk('Activity loaded.', ['data' => $payload]);
     }
@@ -724,12 +726,15 @@ class ActivityController extends BaseScheduleController
             'targetEndDate'   => 'nullable|date|after_or_equal:targetDate',
             'priority'        => 'required|in:critical,high,medium,low',
             'activityType'    => ['nullable', 'string', Rule::in(array_keys(AsScheduleActivity::ACTIVITY_TYPES))],
+            'waterTask'       => ['nullable', 'string', Rule::in(array_keys(AsScheduleActivity::WATER_TASKS))],
             'isDayZero'       => 'nullable|boolean',
             'isDraft'         => 'nullable|boolean',
             'description'     => 'nullable|string|max:20000',
-            // imagePath is a relative path under the `public` disk, set by
-            // a prior image-upload call. Empty string / null = no image.
+            // imagePath(s) are relative paths under the `public` disk, set by
+            // prior image-upload calls. Empty = no image.
             'imagePath'       => 'nullable|string|max:500',
+            'imagePaths'      => 'nullable|array|max:12',
+            'imagePaths.*'    => 'string|max:500',
             'timeRequired'    => 'required|in:half,whole,n/a',
             // Empty lotIds = "N/A — not lot-specific".
             'lotIds'          => 'nullable|array',
@@ -794,13 +799,25 @@ class ActivityController extends BaseScheduleController
             }
         }
 
-        // Normalize incoming imagePath + path-traversal guard.
-        $rawImage = trim((string) $request->input('imagePath', ''));
-        $rawImage = ltrim($rawImage, '/\\');
-        if ($rawImage !== '' && (str_contains($rawImage, '..') || !str_starts_with($rawImage, 'schedule-activities/'))) {
-            return $this->jsonFail('Invalid image path.', 422);
+        // Normalize incoming reference image path(s) + path-traversal guard.
+        // Accept the multi-image `imagePaths` list, falling back to the legacy
+        // single `imagePath`. Every path must live under schedule-activities/.
+        $rawPaths = $request->filled('imagePaths')
+            ? (array) $request->input('imagePaths', [])
+            : [(string) $request->input('imagePath', '')];
+        $submittedImagePaths = [];
+        foreach ($rawPaths as $p) {
+            $p = ltrim(trim((string) $p), '/\\');
+            if ($p === '') continue;
+            if (str_contains($p, '..') || ! str_starts_with($p, 'schedule-activities/')) {
+                return $this->jsonFail('Invalid image path.', 422);
+            }
+            $submittedImagePaths[] = $p;
         }
-        $submittedImagePath = $rawImage !== '' ? $rawImage : null;
+        $submittedImagePaths = array_values(array_unique($submittedImagePaths));
+        $submittedImagePath = $submittedImagePaths[0] ?? null;
+
+        $activityType = $request->filled('activityType') ? $request->activityType : null;
 
         $payload = [
             'croppingScheduleId' => $schedule->id,
@@ -808,11 +825,16 @@ class ActivityController extends BaseScheduleController
             'targetDate'         => $request->targetDate,
             'targetEndDate'      => $request->filled('targetEndDate') ? $request->targetEndDate : null,
             'priority'           => $request->priority,
-            'activityType'       => $request->filled('activityType') ? $request->activityType : null,
+            'activityType'       => $activityType,
+            // Water task only applies to irrigation activities.
+            'waterTask'          => $activityType === 'irrigation'
+                ? ($request->filled('waterTask') ? $request->waterTask : 'irrigate')
+                : null,
             'isDayZero'          => $request->boolean('isDayZero'),
             // Sanitize client rich text — it is rendered raw and shared with the admin app.
             'description'        => \App\Support\HtmlSanitizer::rich($request->description),
             'imagePath'          => $submittedImagePath,
+            'imagePaths'         => $submittedImagePaths ?: null,
             'timeRequired'       => $request->timeRequired,
             'deleteStatus'       => 1,
         ];
@@ -830,17 +852,17 @@ class ActivityController extends BaseScheduleController
         }
 
         try {
-            $activity = DB::transaction(function () use ($id, $schedule, $payload, $request, $submittedLotIds, $submittedWorkerIds, $submittedImagePath) {
+            $activity = DB::transaction(function () use ($id, $schedule, $payload, $request, $submittedLotIds, $submittedWorkerIds, $submittedImagePaths) {
                 if ($id) {
                     $activity = AsScheduleActivity::active()->where('croppingScheduleId', $schedule->id)->where('id', $id)->first();
                     if (!$activity) {
                         abort(404, 'Activity not found.');
                     }
-                    // Clean up the prior image file when the path changes.
-                    $previousImagePath = $activity->imagePath;
-                    if ($previousImagePath && $previousImagePath !== $submittedImagePath) {
+                    // Clean up any prior image files that are no longer referenced.
+                    $removed = array_diff($activity->imagePathList(), $submittedImagePaths);
+                    foreach ($removed as $gone) {
                         try {
-                            Storage::disk('public')->delete($previousImagePath);
+                            Storage::disk('public')->delete($gone);
                         } catch (\Throwable $e) {
                             // Non-fatal — orphan files can be janitor-cleaned.
                         }
@@ -882,6 +904,7 @@ class ActivityController extends BaseScheduleController
         $data['lotIds'] = $fresh->lots->pluck('id');
         $data['workerIds'] = $fresh->workers->pluck('id');
         $data['imageUrl'] = $fresh->imageUrl();
+        $data['images'] = $fresh->imageList();
 
         return $this->jsonOk($id ? 'Activity updated.' : 'Activity added.', [
             'data' => $data,

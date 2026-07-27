@@ -14,6 +14,19 @@
     <div class="sheet-body">
         <input type="hidden" id="activityId">
         <div class="space-y-4">
+            {{-- Task vs Irrigation mode — an irrigation is saved as an activity
+                 of type "irrigation" and shows on the timeline like any other. --}}
+            <div class="activity-mode-tabs" id="activityModeTabs" role="tablist">
+                <button type="button" class="activity-mode-tab is-active" data-mode="task" aria-selected="true">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                    Task
+                </button>
+                <button type="button" class="activity-mode-tab" data-mode="irrigation" aria-selected="false">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3s6 6.686 6 11a6 6 0 11-12 0c0-4.314 6-11 6-11z"/></svg>
+                    Irrigation
+                </button>
+            </div>
+
             <div id="activityDraftHint" class="hidden rounded-lg bg-blue-50 border border-blue-200 text-blue-800 text-xs px-3 py-2">
                 Saved to <strong>Drafts</strong> for the date you pick below — kept off the timeline until you restore it. The Drafts list shows this date.
             </div>
@@ -25,14 +38,11 @@
             <div class="grid grid-cols-2 gap-3">
                 <div>
                     <label class="form-label" for="activityTargetDate">Start date <span class="text-red-500">*</span></label>
-                    <input type="date" id="activityTargetDate" class="form-input">
+                    <input type="date" id="activityTargetDate" class="form-input cal-only" inputmode="none">
                 </div>
                 <div>
                     <label class="form-label" for="activityTargetEndDate">End date <span class="text-gray-400 font-normal">(optional)</span></label>
-                    <div class="relative">
-                        <input type="date" id="activityTargetEndDate" class="form-input pr-10">
-                        <button type="button" id="activityTargetEndDateClear" class="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600" title="Clear end date (single-day activity)">✕</button>
-                    </div>
+                    <input type="date" id="activityTargetEndDate" class="form-input cal-only" inputmode="none">
                 </div>
             </div>
 
@@ -76,11 +86,21 @@
                 @endif
             </div>
 
-            <div>
+            <div id="activityTypeWrap">
                 <label class="form-label" for="activityType">Activity type</label>
                 <select id="activityType" class="form-select">
                     <option value="">— select a type —</option>
                     @foreach ($activityTypes as $slug => $label)
+                        @if ($slug !== 'irrigation')
+                            <option value="{{ $slug }}">{{ $label }}</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+            <div id="activityWaterTaskWrap" class="hidden">
+                <label class="form-label" for="activityWaterTask">Water task</label>
+                <select id="activityWaterTask" class="form-select">
+                    @foreach ($waterTasks as $slug => $label)
                         <option value="{{ $slug }}">{{ $label }}</option>
                     @endforeach
                 </select>
@@ -144,47 +164,53 @@
             </div>
 
             <div>
-                <span class="form-label">Reference image <span class="text-gray-400 font-normal">(optional, max 8 MB)</span></span>
-                <input type="hidden" id="activityImagePath">
-                <input type="file" id="activityImageFileInput" accept="image/jpeg,image/png,image/webp,image/gif" class="hidden">
-                <div id="activityImageEmpty">
-                    <button type="button" id="activityImageUploadBtn" class="btn btn-white w-full">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                        Upload Image
-                    </button>
-                </div>
-                <div id="activityImageWrap" class="hidden">
-                    <img id="activityImagePreview" src="" alt="Activity image preview" class="w-full max-h-64 object-contain rounded-xl border border-gray-200 bg-gray-50">
-                    <div class="flex gap-2 mt-2">
-                        <button type="button" id="activityImageReplaceBtn" class="btn btn-white btn-sm grow">Replace</button>
-                        <button type="button" id="activityImageRemoveBtn" class="btn btn-danger-outline btn-sm grow">Remove</button>
-                    </div>
-                </div>
-            </div>
-
-            <div>
                 <span class="form-label">Materials &amp; Services <span class="text-gray-400 font-normal">(optional)</span></span>
-                <div class="rounded-xl border border-gray-200 p-3 space-y-2">
-                    <div class="grid grid-cols-2 gap-2">
+                <div class="rounded-xl border border-gray-200 p-3 space-y-2.5">
+                    <div>
+                        <label class="form-label text-xs! mb-1!" for="itemPickerType">Kind</label>
                         <select id="itemPickerType" class="form-select">
                             <option value="material">Material</option>
                             <option value="service">Service</option>
                         </select>
+                    </div>
+                    <div>
+                        <label class="form-label text-xs! mb-1!" for="itemPickerId"><span id="itemPickerIdLabel">Material</span></label>
                         <select id="itemPickerId" class="form-select"></select>
                     </div>
-                    <div class="grid grid-cols-[1fr_1fr_auto] gap-2">
-                        <input type="number" id="itemPickerQty" class="form-input" value="1" min="0" step="any" placeholder="Qty">
-                        <select id="itemPickerUnit" class="form-select">
-                            <option value="">— unit —</option>
-                            @foreach (['kg','g','ml','l','bottle','sachet','piece','pack'] as $u)
-                                <option value="{{ $u }}">{{ $u }}</option>
-                            @endforeach
-                        </select>
-                        <button type="button" id="addItemBtn" class="btn btn-outline btn-sm">Add</button>
+                    {{-- Quantity + unit only apply to materials; services are added as-is. --}}
+                    <div class="grid grid-cols-2 gap-2" id="itemPickerQtyRow">
+                        <div>
+                            <label class="form-label text-xs! mb-1!" for="itemPickerQty">Quantity</label>
+                            <input type="number" id="itemPickerQty" class="form-input" value="1" min="0" step="any" placeholder="Qty">
+                        </div>
+                        <div>
+                            <label class="form-label text-xs! mb-1!" for="itemPickerUnit">Unit</label>
+                            <select id="itemPickerUnit" class="form-select">
+                                <option value="">— unit —</option>
+                                @foreach (['kg','g','ml','l','bottle','sachet','piece','pack'] as $u)
+                                    <option value="{{ $u }}">{{ $u }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
+                    <button type="button" id="addItemBtn" class="btn btn-outline w-full">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                        Add
+                    </button>
                     <div id="itemsContainer" class="flex flex-wrap gap-1.5"></div>
                     <p id="itemsContainerEmpty" class="text-xs text-gray-400">No materials or services added. That's fine — you can attach them later.</p>
                 </div>
+            </div>
+
+            {{-- Reference images — at the bottom, multiple allowed. --}}
+            <div>
+                <span class="form-label">Reference images <span class="text-gray-400 font-normal">(optional, max 8 MB each)</span></span>
+                <input type="file" id="activityImageFileInput" accept="image/jpeg,image/png,image/webp,image/gif" class="hidden" multiple>
+                <div id="activityImagesGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-2"></div>
+                <button type="button" id="activityImageUploadBtn" class="btn btn-white w-full">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <span id="activityImageUploadLabel">Add images</span>
+                </button>
             </div>
         </div>
     </div>

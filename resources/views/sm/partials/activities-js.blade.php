@@ -32,6 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const STORAGE_BASE = @json(asset('storage'));
 
     const ACTIVITY_TYPE_LABELS = @json($activityTypes);
+    const WATER_TASK_LABELS = @json(\App\Models\AsScheduleActivity::WATER_TASKS);
+    const WATER_TASK_COLORS = @json(\App\Models\AsScheduleActivity::WATER_TASK_COLORS);
     const LOT_NAMES = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->lotName]));
     const LOT_VARIETIES = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->variety]));
     const WORKER_NAMES = @json($schedule->workers->mapWithKeys(fn ($w) => [$w->id => $w->workerName]));
@@ -155,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         kebab: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>',
         star: '<svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>',
         clock: '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+        water: '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3s6 6.686 6 11a6 6 0 11-12 0c0-4.314 6-11 6-11z"/></svg>',
         dayNumber: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
         share: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z"/></svg>',
     };
@@ -362,8 +365,16 @@ document.addEventListener('DOMContentLoaded', () => {
             lotsRow = '<span class="item-tag activity-na-tag" title="Applies generally — not tied to any specific lot">N/A — Not lot-specific</span>';
         }
 
-        // Badges
-        const typeBadge = typeLabel ? `<span class="badge badge-green activity-type-badge">${esc(typeLabel)}</span>` : '';
+        // Badges — irrigation activities show a water-task badge instead of
+        // the generic type badge.
+        let typeBadge;
+        if (a.activityType === 'irrigation') {
+            const wt = (a.waterTask && WATER_TASK_LABELS[a.waterTask]) ? a.waterTask : 'irrigate';
+            const color = WATER_TASK_COLORS[wt] || '#2f8fd8';
+            typeBadge = `<span class="badge water-task-badge" style="--wt:${color}">${SVG.water || '💧'} ${esc(WATER_TASK_LABELS[wt])}</span>`;
+        } else {
+            typeBadge = typeLabel ? `<span class="badge badge-green activity-type-badge">${esc(typeLabel)}</span>` : '';
+        }
         const dayZeroBadge = isDayZeroFlag
             ? `<span class="badge day-zero-badge" title="This activity's start date becomes ${esc(dt)} 0 for every lot it covers">${SVG.star} ${esc(dt)} 0</span>`
             : '';
@@ -391,6 +402,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const descHtml = a.description || '';
         const imageUrl = a.imageUrl || (a.imagePath ? STORAGE_BASE + '/' + String(a.imagePath).replace(/^\/+/, '') : '');
+        const cardImages = (a.images && a.images.length) ? a.images : (imageUrl ? [{ url: imageUrl }] : []);
+        const imagesHtml = cardImages.length
+            ? `<div class="activity-card-images mt-2">${cardImages.map((im) => `<img src="${esc(im.url)}" alt="Reference image" loading="lazy">`).join('')}</div>`
+            : '';
         const nameAttr = esc(a.activityTitle || '');
 
         return `<div class="activity-card prio-${esc(priority)}${isHiddenFlag ? ' is-hidden' : ''}" draggable="true"
@@ -427,7 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     </div>
     ${descHtml ? `<div class="activity-description-content text-sm text-gray-700 mt-2">${descHtml}</div>` : ''}
-    ${imageUrl ? `<div class="activity-card-image mt-2"><img src="${esc(imageUrl)}" alt="Reference image" loading="lazy"></div>` : ''}
+    ${imagesHtml}
     <div class="activity-meta">
         <span class="meta-time">${SVG.clock} ${esc(timeRequiredLabel(a.timeRequired))}</span>
         ${workerTags}
@@ -1037,9 +1052,36 @@ document.addEventListener('DOMContentLoaded', () => {
     $id('activityTargetEndDate')?.addEventListener('change', syncActivityDasFromDates);
     $id('activityDasRefLot')?.addEventListener('change', syncActivityDasFromDates);
     $id('activityIsDayZero')?.addEventListener('change', refreshActivityDasRow);
-    $id('activityTargetEndDateClear')?.addEventListener('click', () => {
-        $id('activityTargetEndDate').value = '';
-        syncActivityDasFromDates();
+
+    // ---- Calendar-only date fields (.cal-only): open the native picker on
+    // click, block manual typing. Bound once at the document level. ----
+    if (!window.__calOnlyBound) {
+        window.__calOnlyBound = true;
+        document.addEventListener('click', (ev) => {
+            const inp = ev.target.closest && ev.target.closest('input.cal-only[type="date"]');
+            if (inp && typeof inp.showPicker === 'function') { try { inp.showPicker(); } catch (_) {} }
+        });
+        document.addEventListener('keydown', (ev) => {
+            const inp = ev.target.closest && ev.target.closest('input.cal-only[type="date"]');
+            if (inp && !['Tab', 'Escape', 'Enter'].includes(ev.key)) ev.preventDefault();
+        });
+    }
+
+    // ---- Task / Irrigation mode tabs ----
+    let activityMode = 'task';   // 'task' | 'irrigation'
+    function setActivityMode(mode) {
+        activityMode = mode === 'irrigation' ? 'irrigation' : 'task';
+        $qsa('#activityModeTabs .activity-mode-tab').forEach((tab) => {
+            const on = tab.getAttribute('data-mode') === activityMode;
+            tab.classList.toggle('is-active', on);
+            tab.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        const irr = activityMode === 'irrigation';
+        $id('activityTypeWrap')?.classList.toggle('hidden', irr);
+        $id('activityWaterTaskWrap')?.classList.toggle('hidden', !irr);
+    }
+    $qsa('#activityModeTabs .activity-mode-tab').forEach((tab) => {
+        tab.addEventListener('click', () => setActivityMode(tab.getAttribute('data-mode')));
     });
 
     // ---- Quill description editor (+ HTML source mode) ----
@@ -1136,53 +1178,64 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('toggleDescriptionModeLabel').textContent = 'Edit HTML source';
     });
 
-    // ---- Image upload (two-phase: upload immediately, persist on save) ----
-    function setActivityImage(path, url) {
-        $id('activityImagePath').value = path || '';
-        if (path && url) {
-            $id('activityImagePreview').src = url;
-            $id('activityImageWrap').classList.remove('hidden');
-            $id('activityImageEmpty').classList.add('hidden');
-        } else {
-            $id('activityImagePreview').src = '';
-            $id('activityImageWrap').classList.add('hidden');
-            $id('activityImageEmpty').classList.remove('hidden');
-        }
+    // ---- Reference images (multiple; upload immediately, persist on save) ----
+    let ACTIVITY_IMAGES = [];   // [{ path, url }]
+    function renderActivityImages() {
+        const grid = $id('activityImagesGrid');
+        if (!grid) return;
+        grid.innerHTML = ACTIVITY_IMAGES.map((img, i) => `
+            <div class="activity-image-thumb">
+                <img src="${esc(img.url)}" alt="Reference image" loading="lazy">
+                <button type="button" class="activity-image-x" data-remove-image="${i}" aria-label="Remove image">✕</button>
+            </div>`).join('');
+        grid.classList.toggle('hidden', ACTIVITY_IMAGES.length === 0);
+    }
+    function setActivityImages(list) {
+        ACTIVITY_IMAGES = (list || []).filter((x) => x && x.path).map((x) => ({ path: x.path, url: x.url }));
+        renderActivityImages();
     }
 
+    $id('activityImagesGrid')?.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-remove-image]');
+        if (!btn) return;
+        ACTIVITY_IMAGES.splice(Number(btn.dataset.removeImage), 1);
+        renderActivityImages();
+    });
+
     document.addEventListener('click', (e) => {
-        if (e.target.closest('#activityImageUploadBtn') || e.target.closest('#activityImageReplaceBtn')) {
+        if (e.target.closest('#activityImageUploadBtn')) {
             const fi = $id('activityImageFileInput');
             fi.value = '';
             fi.click();
         }
-        if (e.target.closest('#activityImageRemoveBtn')) {
-            setActivityImage('', '');
-        }
     });
 
     $id('activityImageFileInput')?.addEventListener('change', async (e) => {
-        const file = e.target.files && e.target.files[0];
-        if (!file) return;
-        if (!/^image\//.test(file.type)) {
-            toast('Pick an image file (JPG, PNG, WebP, GIF).', 'error');
-            return;
-        }
-        const fd = new FormData();
-        fd.append('image', file);
+        const files = Array.from(e.target.files || []);
+        if (!files.length) return;
         const uploadBtn = $id('activityImageUploadBtn');
-        const prevLabel = uploadBtn.innerHTML;
+        const label = $id('activityImageUploadLabel');
+        const prev = label ? label.textContent : '';
         uploadBtn.disabled = true;
-        uploadBtn.textContent = 'Uploading…';
+        if (label) label.textContent = 'Uploading…';
         try {
-            const res = await api(U.imageUpload(), { method: 'POST', body: fd });
-            setActivityImage(res.data.imagePath, res.data.imageUrl);
-            toast(res.message || 'Image uploaded.');
+            for (const file of files) {
+                if (!/^image\//.test(file.type)) {
+                    toast(`"${file.name}" is not an image — skipped.`, 'error');
+                    continue;
+                }
+                const fd = new FormData();
+                fd.append('image', file);
+                const res = await api(U.imageUpload(), { method: 'POST', body: fd });
+                ACTIVITY_IMAGES.push({ path: res.data.imagePath, url: res.data.imageUrl });
+                renderActivityImages();
+            }
+            toast('Image(s) uploaded.');
         } catch (err) {
             toast(err.message, 'error');
         } finally {
             uploadBtn.disabled = false;
-            uploadBtn.innerHTML = prevLabel;
+            if (label) label.textContent = prev || 'Add images';
         }
     });
 
@@ -1194,20 +1247,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function rebuildItemPickerOptions() {
         const type = $id('itemPickerType').value;
+        const isMaterial = type === 'material';
+        // Services carry no quantity/unit — hide that row for them.
+        $id('itemPickerQtyRow')?.classList.toggle('hidden', !isMaterial);
+        const lbl = $id('itemPickerIdLabel');
+        if (lbl) lbl.textContent = isMaterial ? 'Material' : 'Service';
         const sel = $id('itemPickerId');
         sel.innerHTML = '';
-        const rows = type === 'material' ? MATERIALS : SERVICES;
+        const rows = isMaterial ? MATERIALS : SERVICES;
         rows.forEach((row) => {
             const opt = document.createElement('option');
             opt.value = type + '::' + row.id;
-            opt.textContent = type === 'material' ? `${row.name} (${row.unit})` : row.name;
+            opt.textContent = isMaterial ? `${row.name} (${row.unit})` : row.name;
             if (row.unit) opt.setAttribute('data-unit', row.unit);
             sel.appendChild(opt);
         });
         if (rows.length === 0) {
             const opt = document.createElement('option');
             opt.value = '';
-            opt.textContent = type === 'material' ? 'No materials defined' : 'No services defined';
+            opt.textContent = isMaterial ? 'No materials defined' : 'No services defined';
             sel.appendChild(opt);
         }
         syncItemPickerUnit();
@@ -1223,11 +1281,14 @@ document.addEventListener('DOMContentLoaded', () => {
     $id('itemPickerId')?.addEventListener('change', syncItemPickerUnit);
 
     function appendItemTag(type, itemId, label, qty, unit) {
+        const isService = type === 'service';
         const unitSafe = unit || '';
-        const html = `<span class="item-tag ${type === 'service' ? 'service-tag' : 'material-tag'}"
+        // Services show just the name; materials show ×qty unit.
+        const qtyText = isService ? '' : `&nbsp;×${esc(trimQty(qty))}${unitSafe ? ' ' + esc(unitSafe) : ''}`;
+        const html = `<span class="item-tag ${isService ? 'service-tag' : 'material-tag'}"
             data-type="${esc(type)}" data-id="${esc(String(itemId))}" data-qty="${esc(trimQty(qty))}" data-unit="${esc(unitSafe)}">
-            <strong>${esc(label)}</strong>&nbsp;×${esc(trimQty(qty))}${unitSafe ? ' ' + esc(unitSafe) : ''}
-            <button type="button" class="remove-item-tag ml-1 font-bold" aria-label="Remove">✕</button>
+            <strong>${esc(label)}</strong>${qtyText}
+            <button type="button" class="remove-item-tag" aria-label="Remove">✕</button>
         </span>`;
         $id('itemsContainer').insertAdjacentHTML('beforeend', html);
         refreshItemsEmptyState();
@@ -1247,12 +1308,13 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         const [type, itemId] = v.split('::');
+        const isService = type === 'service';
         const sel = $id('itemPickerId');
         const baseLabel = (sel.options[sel.selectedIndex]?.textContent || '').replace(/\s*\([^)]*\)\s*$/, '').trim();
-        const qty = parseFloat($id('itemPickerQty').value) || 1;
-        const unit = ($id('itemPickerUnit').value || '').trim();
+        const qty = isService ? 1 : (parseFloat($id('itemPickerQty').value) || 1);
+        const unit = isService ? '' : ($id('itemPickerUnit').value || '').trim();
         if ($qs(`#itemsContainer span[data-type="${type}"][data-id="${itemId}"]`)) {
-            toast('Already added — remove and re-add to update quantity/unit.', 'info');
+            toast(isService ? 'Already added.' : 'Already added — remove and re-add to update quantity/unit.', 'info');
             return;
         }
         appendItemTag(type, itemId, baseLabel, qty, unit);
@@ -1266,13 +1328,17 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('activityTargetEndDate').value = '';
         $id('activityPriority').value = 'medium';
         $id('activityType').value = '';
+        if ($id('activityWaterTask')) $id('activityWaterTask').value = 'irrigate';
+        setActivityMode('task');
         $id('activityTimeRequired').value = 'half';
         $id('activityIsDayZero').checked = false;
         setDescriptionContent('');
         pendingDescription = '';
         setActivityLots([]);
         setActivityWorkers([]);
-        setActivityImage('', '');
+        setActivityImages([]);
+        $id('itemPickerType').value = 'material';
+        rebuildItemPickerOptions();
         $id('itemsContainer').innerHTML = '';
         refreshItemsEmptyState();
     }
@@ -1318,13 +1384,19 @@ document.addEventListener('DOMContentLoaded', () => {
             $id('activityTargetDate').value = (a.targetDate || '').slice(0, 10);
             $id('activityTargetEndDate').value = (a.targetEndDate || '').slice(0, 10);
             $id('activityPriority').value = a.priority || 'medium';
-            $id('activityType').value = a.activityType || '';
+            if (a.activityType === 'irrigation') {
+                setActivityMode('irrigation');
+                if ($id('activityWaterTask')) $id('activityWaterTask').value = a.waterTask || 'irrigate';
+            } else {
+                setActivityMode('task');
+                $id('activityType').value = a.activityType || '';
+            }
             $id('activityTimeRequired').value = a.timeRequired || 'half';
             $id('activityIsDayZero').checked = !!boolFlag(a.isDayZero);
             setActivityLots(a.lotIds || (a.lots || []).map((l) => l.id));
             setActivityWorkers(a.workerIds || (a.workers || []).map((w) => w.id));
             setDescriptionContent(a.description || '');
-            setActivityImage(a.imagePath || '', a.imageUrl || '');
+            setActivityImages(a.images || (a.imagePath ? [{ path: a.imagePath, url: a.imageUrl }] : []));
             (a.items || []).forEach((it) => {
                 if (it.itemType === 'material' && it.material) {
                     appendItemTag('material', it.materialId, it.material.materialName, it.quantity, it.unitOfMeasure || it.material.unitOfMeasure || '');
@@ -1378,8 +1450,9 @@ document.addEventListener('DOMContentLoaded', () => {
             targetEndDate: a.targetEndDate ? a.targetEndDate.slice(0, 10) : null,
             priority: a.priority,
             activityType: a.activityType || '',
+            waterTask: a.waterTask || '',
             description: a.description || '',
-            imagePath: a.imagePath || '',
+            imagePaths: (a.images && a.images.length ? a.images.map((img) => img.path) : (a.imagePaths || (a.imagePath ? [a.imagePath] : []))).filter(Boolean),
             timeRequired: a.timeRequired,
             isDayZero: boolFlag(a.isDayZero),
             lotIds,
@@ -1403,14 +1476,16 @@ document.addEventListener('DOMContentLoaded', () => {
             quantity: tag.getAttribute('data-qty'),
             unitOfMeasure: tag.getAttribute('data-unit') || '',
         }));
+        const isIrrigation = activityMode === 'irrigation';
         const payload = {
             activityTitle: $id('activityTitle').value,
             targetDate: startDateVal,
             targetEndDate: endDateVal || null,
             priority: $id('activityPriority').value,
-            activityType: $id('activityType').value || '',
+            activityType: isIrrigation ? 'irrigation' : ($id('activityType').value || ''),
+            waterTask: isIrrigation ? ($id('activityWaterTask').value || 'irrigate') : '',
             description: getDescriptionContent(),
-            imagePath: ($id('activityImagePath').value || '').trim(),
+            imagePaths: ACTIVITY_IMAGES.map((img) => img.path),
             timeRequired: $id('activityTimeRequired').value,
             isDayZero: $id('activityIsDayZero').checked ? 1 : 0,
             isDraft: (!id && ADD_AS_DRAFT) ? 1 : 0,

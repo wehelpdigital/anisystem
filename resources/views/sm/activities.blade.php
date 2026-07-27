@@ -183,6 +183,32 @@
         }
         .activity-card, .date-header[draggable="true"] { -webkit-touch-callout: none; }
         .activity-card-image img { max-width: 100%; max-height: 260px; border-radius: .6rem; border: 1px solid #eef0f3; }
+
+        /* Task / Irrigation mode tabs (add-activity sheet) */
+        .activity-mode-tabs { display: inline-flex; gap: .25rem; padding: .25rem; background: #f1f3f7; border-radius: .75rem; width: 100%; }
+        .activity-mode-tab { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: .4rem; padding: .6rem .75rem; border: none; background: transparent; border-radius: .55rem; font-size: .9rem; font-weight: 600; color: #5b6472; cursor: pointer; }
+        .activity-mode-tab.is-active { background: #fff; color: #1f2937; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+        html.dark .activity-mode-tabs { background: #1c2136; }
+        html.dark .activity-mode-tab.is-active { background: #2a3050; color: #e5e9f5; }
+
+        /* Water-task badge on irrigation activity cards — tint from --wt */
+        .water-task-badge { background: color-mix(in srgb, var(--wt) 14%, transparent); color: var(--wt); border: 1px solid color-mix(in srgb, var(--wt) 42%, transparent); }
+
+        /* Reference-image thumbnails on cards (multiple) */
+        .activity-card-images { display: flex; flex-wrap: wrap; gap: .4rem; }
+        .activity-card-images img { width: 84px; height: 84px; object-fit: cover; border-radius: .6rem; border: 1px solid #eef0f3; }
+        html.dark .activity-card-images img { border-color: var(--tl-border-soft); }
+
+        /* Reference-image gallery in the sheet (thumb + remove) */
+        .activity-image-thumb { position: relative; aspect-ratio: 1; border-radius: .6rem; overflow: hidden; border: 1px solid #e5e7eb; }
+        .activity-image-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .activity-image-x { position: absolute; top: .25rem; right: .25rem; width: 1.9rem; height: 1.9rem; display: inline-flex; align-items: center; justify-content: center; border-radius: 9999px; background: rgba(17,24,39,.72); color: #fff; font-size: .9rem; line-height: 1; cursor: pointer; }
+        @media (max-width: 640px) { .activity-image-x { width: 2.4rem; height: 2.4rem; font-size: 1.1rem; } }
+
+        /* Bigger remove-X on material/service tags for easier mobile taps */
+        .remove-item-tag { display: inline-flex; align-items: center; justify-content: center; width: 1.5rem; height: 1.5rem; border-radius: 9999px; color: inherit; opacity: .7; font-weight: 700; cursor: pointer; }
+        .remove-item-tag:hover, .remove-item-tag:active { opacity: 1; background: rgba(0,0,0,.1); }
+        @media (max-width: 640px) { .remove-item-tag { width: 2.1rem; height: 2.1rem; font-size: 1rem; } }
         /* Keep list rows scannable — the full text is in the editor. */
         .activity-description-content {
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
