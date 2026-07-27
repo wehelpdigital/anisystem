@@ -224,6 +224,7 @@
         }
         .worker-tag { background: #fef3e8; color: #a66200; }
         .service-tag { background: #e6f7f1; color: #0f6f4d; }
+        .item-tag-price { font-weight: 700; opacity: .85; }
         .activity-na-tag { background: #f3f4f6; color: #6b7280; border: 1px dashed #d1d5db; }
         .day-zero-badge { background: #ff9800; color: #fff; }
 
@@ -948,8 +949,6 @@
         settings:      { label: 'Settings',      url: @json(route('sm.settings',      ['id' => $schedule->id])) },
         lots:          { label: 'Lots',          url: @json(route('sm.lots',          ['id' => $schedule->id])) },
         workers:       { label: 'Workers',       url: @json(route('sm.workers',       ['id' => $schedule->id])) },
-        materials:     { label: 'Materials',     url: @json(route('sm.materials',     ['id' => $schedule->id])) },
-        services:      { label: 'Services',      url: @json(route('sm.services',      ['id' => $schedule->id])) },
         documentation: { label: 'Documentation', url: @json(route('sm.documentation', ['id' => $schedule->id])) },
         'post-harvest': { label: 'Post-harvest', url: @json(route('sm.post-harvest',  ['id' => $schedule->id])) },
         notes:         { label: 'Notes',         url: @json(route('sm.notes',        ['id' => $schedule->id])) },

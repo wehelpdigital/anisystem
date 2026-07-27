@@ -39,8 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const LOT_VARIETIES = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->variety]));
     const WORKER_NAMES = @json($schedule->workers->mapWithKeys(fn ($w) => [$w->id => $w->workerName]));
     const LOT_MANUAL_DAY_ZERO = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->dayZeroDate ? $l->dayZeroDate->format('Y-m-d') : null]));
-    const MATERIALS = @json($schedule->materials->map(fn ($m) => ['id' => $m->id, 'name' => $m->materialName, 'unit' => $m->unitOfMeasure])->values());
-    const SERVICES = @json($schedule->services->map(fn ($s) => ['id' => $s->id, 'name' => $s->serviceName])->values());
 
     const U = {
         store:            ()  => `{{ route('sm.activities.store') }}?scheduleId=${SCHEDULE_ID}`,
@@ -349,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lotIds.forEach((id) => searchBits.push(((LOT_NAMES[id] || '') + ' ' + (LOT_VARIETIES[id] || '')).toLowerCase()));
         workerIds.forEach((id) => searchBits.push((WORKER_NAMES[id] || '').toLowerCase()));
         (a.items || []).forEach((it) => {
-            searchBits.push(String(it.itemType === 'material' ? (it.material?.materialName || '') : (it.service?.serviceName || '')).toLowerCase());
+            searchBits.push(String(it.itemName || it.material?.materialName || it.service?.serviceName || '').toLowerCase());
         });
         const searchText = searchBits.filter(Boolean).join(' ').trim();
 
@@ -391,14 +389,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let itemTags = '';
         (a.items || []).forEach((it) => {
-            if (it.itemType === 'material') {
-                const name = it.material?.materialName || ('Material #' + (it.materialId ?? ''));
-                const unit = it.unitOfMeasure || it.material?.unitOfMeasure || '';
-                itemTags += `<span class="item-tag material-tag">${esc(name)} &times;${esc(trimQty(it.quantity))} ${esc(unit)}</span>`;
-            } else {
-                const name = it.service?.serviceName || ('Service #' + (it.serviceId ?? ''));
-                itemTags += `<span class="item-tag service-tag">${esc(name)}</span>`;
-            }
+            const name = it.itemName || it.material?.materialName || it.service?.serviceName || 'Item';
+            const unit = it.unitOfMeasure || it.material?.unitOfMeasure || '';
+            const qty = (it.quantity != null && it.quantity !== '') ? ' &times;' + esc(trimQty(it.quantity)) + (unit ? ' ' + esc(unit) : '') : '';
+            const price = (it.unitPrice != null && it.unitPrice !== '') ? ` <span class="item-tag-price">@ ₱${esc(fmtMoney(it.unitPrice))}</span>` : '';
+            itemTags += `<span class="item-tag material-tag">${esc(name)}${qty}${price}</span>`;
         });
 
         const descHtml = a.description || '';
@@ -1088,16 +1083,11 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('activityTypeWrap')?.classList.toggle('hidden', irr);
         $id('activityWaterTaskWrap')?.classList.toggle('hidden', !irr);
         $id('activityImagesSection')?.classList.toggle('hidden', irr);
-        $id('itemPickerKindWrap')?.classList.toggle('hidden', irr);
         const secLabel = $id('itemsSectionLabel');
-        if (secLabel) secLabel.textContent = irr ? 'Materials' : 'Materials & Services';
+        if (secLabel) secLabel.textContent = irr ? 'Materials' : 'Materials & Items';
         const titleEl = $id('activityTitle');
         if (titleEl) titleEl.setAttribute('placeholder', irr ? 'e.g. Irrigate Lot A — Day 20–35' : 'e.g. Basal Fertilizer Application');
         if (irr) {
-            // Materials only — force the picker to materials and drop services.
-            if ($id('itemPickerType')) { $id('itemPickerType').value = 'material'; rebuildItemPickerOptions(); }
-            $qsa('#itemsContainer > span[data-type="service"]').forEach((t) => t.remove());
-            refreshItemsEmptyState();
             setActivityImages([]);   // no reference images for irrigation
         }
         refreshDayZeroToggleVisibility();
@@ -1267,53 +1257,60 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('itemsContainerEmpty').classList.toggle('hidden', hasItems);
     }
 
-    function rebuildItemPickerOptions() {
-        const type = $id('itemPickerType').value;
-        const isMaterial = type === 'material';
-        // Services carry no quantity/unit — hide that row for them.
-        $id('itemPickerQtyRow')?.classList.toggle('hidden', !isMaterial);
-        const lbl = $id('itemPickerIdLabel');
-        if (lbl) lbl.textContent = isMaterial ? 'Material' : 'Service';
-        const sel = $id('itemPickerId');
-        sel.innerHTML = '';
-        const rows = isMaterial ? MATERIALS : SERVICES;
-        rows.forEach((row) => {
-            const opt = document.createElement('option');
-            opt.value = type + '::' + row.id;
-            opt.textContent = isMaterial ? `${row.name} (${row.unit})` : row.name;
-            if (row.unit) opt.setAttribute('data-unit', row.unit);
-            sel.appendChild(opt);
-        });
-        if (rows.length === 0) {
-            const opt = document.createElement('option');
-            opt.value = '';
-            opt.textContent = isMaterial ? 'No materials defined' : 'No services defined';
-            sel.appendChild(opt);
+    // Reusable per-schedule item catalog: names, prices seen per name, unit.
+    const ITEM_CATALOG = Object.assign({ names: [], prices: {}, units: {} }, @json($itemCatalog ?? ['names'=>[], 'prices'=>[], 'units'=>[]]));
+    if (Array.isArray(ITEM_CATALOG.prices)) ITEM_CATALOG.prices = {};
+    if (Array.isArray(ITEM_CATALOG.units)) ITEM_CATALOG.units = {};
+
+    function rememberItem(name, price, unit) {
+        name = (name || '').trim();
+        if (!name) return;
+        if (!ITEM_CATALOG.names.some((n) => n.toLowerCase() === name.toLowerCase())) ITEM_CATALOG.names.push(name);
+        if (price !== '' && price != null) {
+            const p = String(trimQty(price));
+            (ITEM_CATALOG.prices[name] = ITEM_CATALOG.prices[name] || []);
+            if (!ITEM_CATALOG.prices[name].includes(p)) ITEM_CATALOG.prices[name].push(p);
         }
-        syncItemPickerUnit();
+        if (unit) ITEM_CATALOG.units[name] = unit;
     }
 
-    function syncItemPickerUnit() {
-        const sel = $id('itemPickerId');
-        const unit = sel.options[sel.selectedIndex]?.getAttribute('data-unit') || '';
-        $id('itemPickerUnit').value = unit;
+    function refreshNameDatalist() {
+        const dl = $id('itemNameList');
+        if (!dl) return;
+        dl.innerHTML = ITEM_CATALOG.names.slice().sort((a, b) => a.localeCompare(b))
+            .map((n) => `<option value="${esc(n)}"></option>`).join('');
     }
 
-    $id('itemPickerType')?.addEventListener('change', rebuildItemPickerOptions);
-    $id('itemPickerId')?.addEventListener('change', syncItemPickerUnit);
+    // When a known item name is picked, offer its past prices + suggest a unit.
+    function refreshPriceDatalistFor(name) {
+        const dl = $id('itemPriceList');
+        if (!dl) return;
+        const key = Object.keys(ITEM_CATALOG.prices).find((k) => k.toLowerCase() === (name || '').toLowerCase());
+        const prices = (key ? ITEM_CATALOG.prices[key] : []) || [];
+        dl.innerHTML = prices.map((p) => `<option value="${esc(p)}"></option>`).join('');
+        const ukey = Object.keys(ITEM_CATALOG.units).find((k) => k.toLowerCase() === (name || '').toLowerCase());
+        const unitEl = $id('itemUnitInput');
+        if (ukey && unitEl && !unitEl.value) unitEl.value = ITEM_CATALOG.units[ukey];
+    }
 
-    function appendItemTag(type, itemId, label, qty, unit) {
-        const isService = type === 'service';
+    $id('itemNameInput')?.addEventListener('input', (e) => refreshPriceDatalistFor(e.target.value));
+
+    function appendItemTag(name, price, qty, unit) {
         const unitSafe = unit || '';
-        // Services show just the name; materials show ×qty unit.
-        const qtyText = isService ? '' : `&nbsp;×${esc(trimQty(qty))}${unitSafe ? ' ' + esc(unitSafe) : ''}`;
-        const html = `<span class="item-tag ${isService ? 'service-tag' : 'material-tag'}"
-            data-type="${esc(type)}" data-id="${esc(String(itemId))}" data-qty="${esc(trimQty(qty))}" data-unit="${esc(unitSafe)}">
-            <strong>${esc(label)}</strong>${qtyText}
+        const priceNum = (price !== '' && price != null && !isNaN(parseFloat(price))) ? parseFloat(price) : null;
+        const qtyText = `&nbsp;×${esc(trimQty(qty || 1))}${unitSafe ? ' ' + esc(unitSafe) : ''}`;
+        const priceText = priceNum != null ? ` <span class="item-tag-price">@ ₱${esc(fmtMoney(priceNum))}</span>` : '';
+        const html = `<span class="item-tag material-tag"
+            data-name="${esc(name)}" data-price="${priceNum != null ? esc(String(priceNum)) : ''}" data-qty="${esc(trimQty(qty || 1))}" data-unit="${esc(unitSafe)}">
+            <strong>${esc(name)}</strong>${qtyText}${priceText}
             <button type="button" class="remove-item-tag" aria-label="Remove">✕</button>
         </span>`;
         $id('itemsContainer').insertAdjacentHTML('beforeend', html);
         refreshItemsEmptyState();
+    }
+
+    function fmtMoney(n) {
+        return Number(n || 0).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     $id('itemsContainer')?.addEventListener('click', (e) => {
@@ -1323,24 +1320,38 @@ document.addEventListener('DOMContentLoaded', () => {
         refreshItemsEmptyState();
     });
 
-    $id('addItemBtn')?.addEventListener('click', () => {
-        const v = $id('itemPickerId').value;
-        if (!v) {
-            toast('Pick a material or service', 'error');
-            return;
-        }
-        const [type, itemId] = v.split('::');
-        const isService = type === 'service';
-        const sel = $id('itemPickerId');
-        const baseLabel = (sel.options[sel.selectedIndex]?.textContent || '').replace(/\s*\([^)]*\)\s*$/, '').trim();
-        const qty = isService ? 1 : (parseFloat($id('itemPickerQty').value) || 1);
-        const unit = isService ? '' : ($id('itemPickerUnit').value || '').trim();
-        if ($qs(`#itemsContainer span[data-type="${type}"][data-id="${itemId}"]`)) {
-            toast(isService ? 'Already added.' : 'Already added — remove and re-add to update quantity/unit.', 'info');
-            return;
-        }
-        appendItemTag(type, itemId, baseLabel, qty, unit);
+    // Expand / collapse the add-item panel.
+    $id('itemsToggleBtn')?.addEventListener('click', () => {
+        const panel = $id('itemPickerPanel');
+        const open = panel.classList.toggle('hidden');
+        $id('itemsToggleBtn').setAttribute('aria-expanded', open ? 'false' : 'true');
+        $id('itemsToggleLabel').textContent = open ? 'Add an item' : 'Close';
+        if (!open) { refreshNameDatalist(); setTimeout(() => $id('itemNameInput')?.focus(), 50); }
     });
+
+    $id('addItemBtn')?.addEventListener('click', () => {
+        const name = ($id('itemNameInput').value || '').trim();
+        if (!name) { toast('Enter an item name', 'error'); $id('itemNameInput').focus(); return; }
+        const price = ($id('itemPriceInput').value || '').trim();
+        const qty = parseFloat($id('itemQtyInput').value) || 1;
+        const unit = ($id('itemUnitInput').value || '').trim();
+        if ($qs(`#itemsContainer span[data-name="${cssEsc(name)}"]`)) {
+            toast('That item is already added — remove it first to change it.', 'info');
+            return;
+        }
+        appendItemTag(name, price, qty, unit);
+        rememberItem(name, price, unit);
+        refreshNameDatalist();
+        // Clear the fields for the next item, keep the panel open.
+        $id('itemNameInput').value = '';
+        $id('itemPriceInput').value = '';
+        $id('itemQtyInput').value = '1';
+        $id('itemUnitInput').value = '';
+        $id('itemNameInput').focus();
+    });
+
+    // Escape a value for use inside an attribute selector.
+    function cssEsc(v) { return String(v).replace(/["\\\]]/g, '\\$&'); }
 
     // ---- Sheet open/reset/fill ----
     function resetActivitySheet() {
@@ -1359,9 +1370,13 @@ document.addEventListener('DOMContentLoaded', () => {
         setActivityLots([]);
         setActivityWorkers([]);
         setActivityImages([]);
-        $id('itemPickerType').value = 'material';
-        rebuildItemPickerOptions();
         $id('itemsContainer').innerHTML = '';
+        // Collapse + clear the add-item panel.
+        $id('itemPickerPanel')?.classList.add('hidden');
+        $id('itemsToggleBtn')?.setAttribute('aria-expanded', 'false');
+        if ($id('itemsToggleLabel')) $id('itemsToggleLabel').textContent = 'Add an item';
+        ['itemNameInput', 'itemPriceInput', 'itemUnitInput'].forEach((idv) => { if ($id(idv)) $id(idv).value = ''; });
+        if ($id('itemQtyInput')) $id('itemQtyInput').value = '1';
         refreshItemsEmptyState();
     }
 
@@ -1420,10 +1435,10 @@ document.addEventListener('DOMContentLoaded', () => {
             setDescriptionContent(a.description || '');
             setActivityImages(a.images || (a.imagePath ? [{ path: a.imagePath, url: a.imageUrl }] : []));
             (a.items || []).forEach((it) => {
-                if (it.itemType === 'material' && it.material) {
-                    appendItemTag('material', it.materialId, it.material.materialName, it.quantity, it.unitOfMeasure || it.material.unitOfMeasure || '');
-                } else if (it.itemType === 'service' && it.service) {
-                    appendItemTag('service', it.serviceId, it.service.serviceName, it.quantity, it.unitOfMeasure || '');
+                const name = it.itemName || it.material?.materialName || it.service?.serviceName;
+                if (name) {
+                    appendItemTag(name, it.unitPrice != null ? it.unitPrice : '', it.quantity, it.unitOfMeasure || '');
+                    rememberItem(name, it.unitPrice != null ? it.unitPrice : '', it.unitOfMeasure || '');
                 }
             });
             refreshActivityModalLotState();
@@ -1460,12 +1475,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const lotIds = a.lotIds || (a.lots || []).map((l) => l.id);
         const workerIds = a.workerIds || (a.workers || []).map((w) => w.id);
         const items = (a.items || []).map((it) => ({
-            itemType: it.itemType,
-            itemId: it.itemType === 'material' ? it.materialId : it.serviceId,
+            itemName: it.itemName || it.material?.materialName || it.service?.serviceName || '',
+            unitPrice: it.unitPrice != null ? it.unitPrice : '',
             quantity: it.quantity,
             unitOfMeasure: it.unitOfMeasure || '',
             notes: it.notes || '',
-        }));
+        })).filter((it) => it.itemName);
         return {
             activityTitle: a.activityTitle,
             targetDate: (a.targetDate || '').slice(0, 10),
@@ -1493,11 +1508,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         const items = $qsa('#itemsContainer > span').map((tag) => ({
-            itemType: tag.getAttribute('data-type'),
-            itemId: parseInt(tag.getAttribute('data-id'), 10),
+            itemName: tag.getAttribute('data-name') || '',
+            unitPrice: tag.getAttribute('data-price') || '',
             quantity: tag.getAttribute('data-qty'),
             unitOfMeasure: tag.getAttribute('data-unit') || '',
-        }));
+        })).filter((it) => it.itemName);
         const isIrrigation = activityMode === 'irrigation';
         const payload = {
             activityTitle: $id('activityTitle').value,
@@ -3651,7 +3666,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * ================================================================ */
 
     recomputeLotDayZero();
-    rebuildItemPickerOptions();
+    refreshNameDatalist();
     refreshHistoryBtns();
     refreshItemsEmptyState();
 

@@ -133,8 +133,6 @@ class ScheduleReadinessService
         // ---- Resources -------------------------------------------------
         foreach ([
             ['workers', 'No workers added', 'Labour cost and the workload summary stay empty until workers exist.', 'workers'],
-            ['materials', 'No materials added', 'Seed, fertiliser and chemicals cannot be attached to activities yet.', 'materials'],
-            ['services', 'No services added', 'Hired work such as land prep or threshing cannot be attached to activities yet.', 'services'],
         ] as [$relation, $label, $detail, $module]) {
             if ($schedule->{$relation}->isEmpty()) {
                 $items[] = [

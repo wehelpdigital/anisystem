@@ -72,6 +72,7 @@ class ActivityController extends BaseScheduleController
             'activeVersion'   => $activeVersion,
             'activityTypes'   => AsScheduleActivity::ACTIVITY_TYPES,
             'waterTasks'      => AsScheduleActivity::WATER_TASKS,
+            'itemCatalog'     => $this->itemCatalog($schedule),
             'readiness'       => (new ScheduleReadinessService())->check($schedule),
         ]);
     }
@@ -120,6 +121,7 @@ class ActivityController extends BaseScheduleController
         // render the existing image immediately without re-deriving.
         $payload['imageUrl'] = $activity->imageUrl();
         $payload['images'] = $activity->imageList();
+        $payload['items'] = $this->serializeItems($activity);
 
         return $this->jsonOk('Activity loaded.', ['data' => $payload]);
     }
@@ -716,6 +718,73 @@ class ActivityController extends BaseScheduleController
         return $this->jsonOk('Activity duplicated.', ['data' => $data]);
     }
 
+    /**
+     * Uniform item shape for the front-end (legacy material/service rows
+     * resolve their name/unit via the model helpers).
+     *
+     * @return \Illuminate\Support\Collection<int, array<string, mixed>>
+     */
+    private function serializeItems(AsScheduleActivity $activity)
+    {
+        return $activity->items->map(fn ($it) => [
+            'id' => $it->id,
+            'itemName' => $it->displayName(),
+            'unitPrice' => $it->unitPrice !== null ? (float) $it->unitPrice : null,
+            'quantity' => $it->quantity !== null ? (float) $it->quantity : null,
+            'unitOfMeasure' => $it->displayUnit(),
+        ])->values();
+    }
+
+    /**
+     * Reusable item catalog for a schedule: every item name that's been used,
+     * the distinct prices seen for each, and a suggested unit. Seeded from the
+     * legacy materials/services catalogs plus all name-based activity items, so
+     * users can re-select names/prices instead of retyping.
+     *
+     * @return array{names: array<int, string>, prices: array<string, array<int, string>>, units: array<string, string>}
+     */
+    private function itemCatalog(\App\Models\AsCroppingSchedule $schedule): array
+    {
+        $names = [];   // name => true
+        $prices = [];  // name => [price => true]
+        $units = [];   // name => unit
+
+        $add = function ($name, $price, $unit) use (&$names, &$prices, &$units) {
+            $name = trim((string) $name);
+            if ($name === '') return;
+            $names[$name] = true;
+            if ($price !== null && $price !== '' && is_numeric($price)) {
+                $prices[$name][number_format((float) $price, 2, '.', '')] = true;
+            }
+            if (filled($unit) && empty($units[$name])) {
+                $units[$name] = $unit;
+            }
+        };
+
+        foreach ($schedule->materials as $m) {
+            $add($m->materialName, $m->priceAmount, $m->unitOfMeasure);
+        }
+        foreach ($schedule->services as $s) {
+            $add($s->serviceName, $s->serviceCost, null);
+        }
+        AsScheduleActivityItem::query()
+            ->join('as_schedule_activities', 'as_schedule_activities.id', '=', 'as_schedule_activity_items.activityId')
+            ->where('as_schedule_activities.croppingScheduleId', $schedule->id)
+            ->where('as_schedule_activities.deleteStatus', 1)
+            ->where('as_schedule_activity_items.deleteStatus', 1)
+            ->whereNotNull('as_schedule_activity_items.itemName')
+            ->get(['as_schedule_activity_items.itemName', 'as_schedule_activity_items.unitPrice', 'as_schedule_activity_items.unitOfMeasure'])
+            ->each(fn ($r) => $add($r->itemName, $r->unitPrice, $r->unitOfMeasure));
+
+        ksort($names, SORT_NATURAL | SORT_FLAG_CASE);
+
+        return [
+            'names' => array_keys($names),
+            'prices' => array_map(fn ($m) => array_keys($m), $prices),
+            'units' => $units,
+        ];
+    }
+
     private function saveActivity(Request $request, $id = null)
     {
         $schedule = $this->scheduleFromRequest($request);
@@ -742,8 +811,8 @@ class ActivityController extends BaseScheduleController
             'workerIds'       => 'nullable|array',
             'workerIds.*'     => 'integer',
             'items'                 => 'nullable|array',
-            'items.*.itemType'      => 'required_with:items|in:material,service',
-            'items.*.itemId'        => 'required_with:items|integer',
+            'items.*.itemName'      => 'required_with:items|string|max:255',
+            'items.*.unitPrice'     => 'nullable|numeric|min:0|max:99999999',
             'items.*.quantity'      => 'nullable|numeric|min:0',
             'items.*.unitOfMeasure' => 'nullable|string|max:30',
             'items.*.notes'         => 'nullable|string|max:500',
@@ -780,24 +849,8 @@ class ActivityController extends BaseScheduleController
             ->filter(fn ($v) => in_array($v, $validWorkerIds, true))
             ->unique()->values()->all();
 
-        // Material/service item ids must belong to this schedule too — otherwise
-        // a client could reference another tenant's catalog id and read its
-        // name/price back via show()/exports (the catalogs share one table).
-        $validMaterialIds = AsScheduleMaterial::active()
-            ->where('croppingScheduleId', $schedule->id)
-            ->pluck('id')->all();
-        $validServiceIds = AsScheduleService::active()
-            ->where('croppingScheduleId', $schedule->id)
-            ->pluck('id')->all();
-        foreach ((array) $request->input('items', []) as $item) {
-            $itemId = (int) ($item['itemId'] ?? 0);
-            $type = $item['itemType'] ?? '';
-            $valid = ($type === 'material' && in_array($itemId, $validMaterialIds, true))
-                || ($type === 'service' && in_array($itemId, $validServiceIds, true));
-            if (! $valid) {
-                return $this->jsonFail('One or more selected materials/services do not belong to this schedule.', 422);
-            }
-        }
+        // Items are free-form now (name + price + qty + unit), so there's no
+        // catalog id to cross-check — just the field validation above.
 
         // Normalize incoming reference image path(s) + path-traversal guard.
         // Accept the multi-image `imagePaths` list, falling back to the legacy
@@ -877,12 +930,14 @@ class ActivityController extends BaseScheduleController
                 AsScheduleActivityItem::where('activityId', $activity->id)->update(['deleteStatus' => 0]);
 
                 foreach ((array) $request->input('items', []) as $item) {
+                    $name = trim((string) ($item['itemName'] ?? ''));
+                    if ($name === '') continue;
                     AsScheduleActivityItem::create([
                         'activityId'    => $activity->id,
-                        'itemType'      => $item['itemType'],
-                        'materialId'    => $item['itemType'] === 'material' ? $item['itemId'] : null,
-                        'serviceId'     => $item['itemType'] === 'service'  ? $item['itemId'] : null,
-                        'quantity'      => $item['quantity'] ?? 1,
+                        'itemType'      => 'custom',
+                        'itemName'      => $name,
+                        'unitPrice'     => isset($item['unitPrice']) && $item['unitPrice'] !== '' ? $item['unitPrice'] : null,
+                        'quantity'      => isset($item['quantity']) && $item['quantity'] !== '' ? $item['quantity'] : null,
                         'unitOfMeasure' => isset($item['unitOfMeasure']) && $item['unitOfMeasure'] !== '' ? $item['unitOfMeasure'] : null,
                         'notes'         => $item['notes'] ?? null,
                         'deleteStatus'  => 1,
@@ -905,6 +960,7 @@ class ActivityController extends BaseScheduleController
         $data['workerIds'] = $fresh->workers->pluck('id');
         $data['imageUrl'] = $fresh->imageUrl();
         $data['images'] = $fresh->imageList();
+        $data['items'] = $this->serializeItems($fresh);
 
         return $this->jsonOk($id ? 'Activity updated.' : 'Activity added.', [
             'data' => $data,

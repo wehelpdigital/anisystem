@@ -7,8 +7,6 @@
         'settings' => ['label' => 'Settings', 'route' => 'sm.settings'],
         'lots' => ['label' => 'Lots', 'route' => 'sm.lots'],
         'workers' => ['label' => 'Workers', 'route' => 'sm.workers'],
-        'materials' => ['label' => 'Materials', 'route' => 'sm.materials'],
-        'services' => ['label' => 'Services', 'route' => 'sm.services'],
         'documentation' => ['label' => 'Documentation', 'route' => 'sm.documentation'],
         'activities' => ['label' => 'Activities', 'route' => 'sm.activities'],
         'post-harvest' => ['label' => 'Post-harvest', 'route' => 'sm.post-harvest'],

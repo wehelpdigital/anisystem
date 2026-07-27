@@ -1240,31 +1240,19 @@
                                         @if($a->items->count() > 0)
                                             @php
                                                 $materialBits = [];
-                                                $serviceBits  = [];
                                                 foreach ($a->items as $it) {
-                                                    $qtyTrim = rtrim(rtrim((string) $it->quantity, '0'), '.');
-                                                    $unit = $it->unitOfMeasure ?: ($it->material->unitOfMeasure ?? '');
-                                                    if ($it->itemType === 'material' && $it->material) {
-                                                        $materialBits[] = $it->material->materialName . ' ×' . $qtyTrim . ($unit ? ' ' . $unit : '');
-                                                    } elseif ($it->itemType === 'service' && $it->service) {
-                                                        $svc = $it->service->serviceName;
-                                                        if ($qtyTrim !== '1' || $unit) {
-                                                            $svc .= ' ×' . $qtyTrim . ($unit ? ' ' . $unit : '');
-                                                        }
-                                                        $serviceBits[] = $svc;
-                                                    }
+                                                    $qtyTrim = $it->quantity !== null ? rtrim(rtrim(number_format((float) $it->quantity, 4, '.', ''), '0'), '.') : null;
+                                                    $unit = $it->displayUnit();
+                                                    $bit = $it->displayName();
+                                                    if ($qtyTrim !== null) $bit .= ' ×' . $qtyTrim . ($unit ? ' ' . $unit : '');
+                                                    if ($it->unitPrice !== null) $bit .= ' @ ₱' . number_format((float) $it->unitPrice, 2);
+                                                    $materialBits[] = $bit;
                                                 }
                                             @endphp
                                             @if(!empty($materialBits))
                                                 <div class="cv-doc-meta-row">
-                                                    <span class="cv-doc-meta-label">Materials</span>
+                                                    <span class="cv-doc-meta-label">Items</span>
                                                     <span class="cv-doc-meta-value">{{ implode(', ', $materialBits) }}</span>
-                                                </div>
-                                            @endif
-                                            @if(!empty($serviceBits))
-                                                <div class="cv-doc-meta-row">
-                                                    <span class="cv-doc-meta-label">Services</span>
-                                                    <span class="cv-doc-meta-value">{{ implode(', ', $serviceBits) }}</span>
                                                 </div>
                                             @endif
                                         @endif

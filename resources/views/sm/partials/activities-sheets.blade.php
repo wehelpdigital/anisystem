@@ -164,42 +164,47 @@
             </div>
 
             <div>
-                <span class="form-label"><span id="itemsSectionLabel">Materials &amp; Services</span> <span class="text-gray-400 font-normal">(optional)</span></span>
-                <div class="rounded-xl border border-gray-200 p-3 space-y-2.5">
-                    <div id="itemPickerKindWrap">
-                        <label class="form-label text-xs! mb-1!" for="itemPickerType">Kind</label>
-                        <select id="itemPickerType" class="form-select">
-                            <option value="material">Material</option>
-                            <option value="service">Service</option>
-                        </select>
+                <div class="flex items-center justify-between">
+                    <span class="form-label mb-0!"><span id="itemsSectionLabel">Materials &amp; Items</span> <span class="text-gray-400 font-normal">(optional)</span></span>
+                    <button type="button" id="itemsToggleBtn" class="text-xs font-semibold text-brand-700" aria-expanded="false">
+                        <span id="itemsToggleLabel">Add an item</span>
+                    </button>
+                </div>
+                {{-- Free-form items: name + price + quantity + unit. Names and the
+                     prices used for them are remembered per schedule (datalists). --}}
+                <div id="itemPickerPanel" class="rounded-xl border border-gray-200 p-3 space-y-2.5 mt-2 hidden">
+                    <div>
+                        <label class="form-label text-xs! mb-1!" for="itemNameInput">Item name</label>
+                        <input type="text" id="itemNameInput" class="form-input" list="itemNameList" maxlength="255" placeholder="e.g. Urea 46-0-0" autocomplete="off">
+                        <datalist id="itemNameList"></datalist>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="form-label text-xs! mb-1!" for="itemPriceInput">Price (₱)</label>
+                            <input type="number" id="itemPriceInput" class="form-input" list="itemPriceList" min="0" step="any" placeholder="0.00" inputmode="decimal">
+                            <datalist id="itemPriceList"></datalist>
+                        </div>
+                        <div>
+                            <label class="form-label text-xs! mb-1!" for="itemQtyInput">Quantity</label>
+                            <input type="number" id="itemQtyInput" class="form-input" value="1" min="0" step="any" placeholder="1" inputmode="decimal">
+                        </div>
                     </div>
                     <div>
-                        <label class="form-label text-xs! mb-1!" for="itemPickerId"><span id="itemPickerIdLabel">Material</span></label>
-                        <select id="itemPickerId" class="form-select"></select>
-                    </div>
-                    {{-- Quantity + unit only apply to materials; services are added as-is. --}}
-                    <div class="grid grid-cols-2 gap-2" id="itemPickerQtyRow">
-                        <div>
-                            <label class="form-label text-xs! mb-1!" for="itemPickerQty">Quantity</label>
-                            <input type="number" id="itemPickerQty" class="form-input" value="1" min="0" step="any" placeholder="Qty">
-                        </div>
-                        <div>
-                            <label class="form-label text-xs! mb-1!" for="itemPickerUnit">Unit</label>
-                            <select id="itemPickerUnit" class="form-select">
-                                <option value="">— unit —</option>
-                                @foreach (['kg','g','ml','l','bottle','sachet','piece','pack'] as $u)
-                                    <option value="{{ $u }}">{{ $u }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <label class="form-label text-xs! mb-1!" for="itemUnitInput">Unit</label>
+                        <input type="text" id="itemUnitInput" class="form-input" list="itemUnitList" maxlength="30" placeholder="e.g. kg, bottle, pack" autocomplete="off">
+                        <datalist id="itemUnitList">
+                            @foreach (['kg','g','ml','l','bottle','sachet','piece','pack','bag','sack'] as $u)
+                                <option value="{{ $u }}"></option>
+                            @endforeach
+                        </datalist>
                     </div>
                     <button type="button" id="addItemBtn" class="btn btn-outline w-full">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-                        Add
+                        Add item
                     </button>
-                    <div id="itemsContainer" class="flex flex-wrap gap-1.5"></div>
-                    <p id="itemsContainerEmpty" class="text-xs text-gray-400">No materials or services added. That's fine — you can attach them later.</p>
                 </div>
+                <div id="itemsContainer" class="flex flex-wrap gap-1.5 mt-2"></div>
+                <p id="itemsContainerEmpty" class="text-xs text-gray-400 mt-2">No items added. That's fine — you can attach them later.</p>
             </div>
 
             {{-- Reference images — at the bottom, multiple allowed. --}}
@@ -238,8 +243,6 @@
                 ['settings', 'Settings', 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z'],
                 ['lots', 'Lots', 'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2'],
                 ['workers', 'Workers', 'M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4z'],
-                ['materials', 'Materials', 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4'],
-                ['services', 'Services', 'M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437'],
                 ['documentation', 'Documentation', 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
                 ['post-harvest', 'Post-harvest', 'M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z'],
                 ['notes', 'Notes', 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],

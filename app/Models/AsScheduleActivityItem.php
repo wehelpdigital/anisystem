@@ -11,6 +11,8 @@ class AsScheduleActivityItem extends BaseModel
         'itemType',
         'materialId',
         'serviceId',
+        'itemName',
+        'unitPrice',
         'quantity',
         'unitOfMeasure',
         'notes',
@@ -19,6 +21,7 @@ class AsScheduleActivityItem extends BaseModel
 
     protected $casts = [
         'quantity' => 'decimal:4',
+        'unitPrice' => 'decimal:2',
         'deleteStatus' => 'integer',
     ];
 
@@ -35,5 +38,26 @@ class AsScheduleActivityItem extends BaseModel
     public function service()
     {
         return $this->belongsTo(AsScheduleService::class, 'serviceId');
+    }
+
+    /** Display name — the typed itemName, or the legacy material/service name. */
+    public function displayName(): string
+    {
+        if (filled($this->itemName)) {
+            return $this->itemName;
+        }
+        if ($this->itemType === 'material') {
+            return optional($this->material)->materialName ?: 'Item';
+        }
+        if ($this->itemType === 'service') {
+            return optional($this->service)->serviceName ?: 'Item';
+        }
+        return 'Item';
+    }
+
+    /** Display unit — the item's unit, or a legacy material's unit. */
+    public function displayUnit(): ?string
+    {
+        return $this->unitOfMeasure ?: optional($this->material)->unitOfMeasure;
     }
 }

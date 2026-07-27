@@ -286,8 +286,6 @@ class CroppingScheduleController extends Controller
         $schedule->loadCount([
             'lots',
             'workers',
-            'materials',
-            'services',
             'activities',    // relation is already active-version + non-draft scoped
             'attachments',
             'criticalRules',

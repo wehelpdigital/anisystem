@@ -97,8 +97,6 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-settings', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'settingsPage'])->name('sm.settings');
     Route::get('/app/sm-lots', [App\Http\Controllers\Manager\LotController::class, 'page'])->name('sm.lots');
     Route::get('/app/sm-workers', [App\Http\Controllers\Manager\WorkerController::class, 'page'])->name('sm.workers');
-    Route::get('/app/sm-materials', [App\Http\Controllers\Manager\MaterialController::class, 'page'])->name('sm.materials');
-    Route::get('/app/sm-services', [App\Http\Controllers\Manager\ServiceController::class, 'page'])->name('sm.services');
     Route::get('/app/sm-documentation', [App\Http\Controllers\Manager\DocumentationController::class, 'page'])->name('sm.documentation');
     Route::get('/app/sm-activities', [App\Http\Controllers\Manager\ActivityController::class, 'page'])->name('sm.activities');
     Route::get('/app/sm-ai', [App\Http\Controllers\AiController::class, 'schedulePage'])->name('sm.ai');
@@ -135,15 +133,6 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-protocol-save', [App\Http\Controllers\Manager\ProtocolController::class, 'save'])->name('sm.protocol.save');
     Route::get('/app/sm-protocol-download', [App\Http\Controllers\Manager\ProtocolController::class, 'download'])->name('sm.protocol.download');
 
-    // --- Materials ---
-    Route::post('/app/sm-materials-store', [App\Http\Controllers\Manager\MaterialController::class, 'store'])->name('sm.materials.store');
-    Route::put('/app/sm-materials-update', [App\Http\Controllers\Manager\MaterialController::class, 'update'])->name('sm.materials.update');
-    Route::delete('/app/sm-materials-delete', [App\Http\Controllers\Manager\MaterialController::class, 'destroy'])->name('sm.materials.destroy');
-
-    // --- Services ---
-    Route::post('/app/sm-services-store', [App\Http\Controllers\Manager\ServiceController::class, 'store'])->name('sm.services.store');
-    Route::put('/app/sm-services-update', [App\Http\Controllers\Manager\ServiceController::class, 'update'])->name('sm.services.update');
-    Route::delete('/app/sm-services-delete', [App\Http\Controllers\Manager\ServiceController::class, 'destroy'])->name('sm.services.destroy');
 
     // --- Attachments ---
     Route::post('/app/sm-attachments-store', [App\Http\Controllers\Manager\AttachmentController::class, 'store'])->name('sm.attachments.store');

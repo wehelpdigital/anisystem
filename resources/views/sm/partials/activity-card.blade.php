@@ -123,11 +123,13 @@
             <span class="item-tag worker-tag">{{ $w->workerName }}</span>
         @endforeach
         @foreach($a->items as $it)
-            @if($it->itemType === 'material')
-                <span class="item-tag material-tag">{{ $it->material->materialName ?? 'Material #'.$it->materialId }} &times;{{ rtrim(rtrim(number_format((float) $it->quantity, 4, '.', ''), '0'), '.') }} {{ $it->unitOfMeasure ?: ($it->material->unitOfMeasure ?? '') }}</span>
-            @else
-                <span class="item-tag service-tag">{{ $it->service->serviceName ?? 'Service #'.$it->serviceId }}</span>
-            @endif
+            @php
+                $itUnit = $it->displayUnit();
+                $itQty = $it->quantity !== null ? rtrim(rtrim(number_format((float) $it->quantity, 4, '.', ''), '0'), '.') : null;
+                $itQtyText = $itQty !== null ? ' ×' . $itQty . ($itUnit ? ' ' . $itUnit : '') : '';
+                $itPriceText = $it->unitPrice !== null ? '@ ₱' . number_format((float) $it->unitPrice, 2) : '';
+            @endphp
+            <span class="item-tag material-tag">{{ $it->displayName() }}{{ $itQtyText }} <span class="item-tag-price">{{ $itPriceText }}</span></span>
         @endforeach
     </div>
 </div>

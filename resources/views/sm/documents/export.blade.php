@@ -673,17 +673,16 @@
                         @endif
                         @if($a->items->count())
                             <div class="activity-line">
-                                <span class="label">Materials &amp; Services:</span>
+                                <span class="label">Materials &amp; Items:</span>
                                 @foreach($a->items as $it)
                                     @php
-                                        $qtyTrim = rtrim(rtrim((string) $it->quantity, '0'), '.');
-                                        $unit = $it->unitOfMeasure ?: ($it->material->unitOfMeasure ?? '');
+                                        $qtyTrim = $it->quantity !== null ? rtrim(rtrim(number_format((float) $it->quantity, 4, '.', ''), '0'), '.') : null;
+                                        $unit = $it->displayUnit();
+                                        $chip = $it->displayName();
+                                        if ($qtyTrim !== null) $chip .= ' ×' . $qtyTrim . ($unit ? ' ' . $unit : '');
+                                        if ($it->unitPrice !== null) $chip .= ' @ ₱' . number_format((float) $it->unitPrice, 2);
                                     @endphp
-                                    @if($it->itemType === 'material' && $it->material)
-                                        <span class="chip chip-material">{{ $it->material->materialName }} ×{{ $qtyTrim }}@if($unit) {{ $unit }}@endif</span>
-                                    @elseif($it->itemType === 'service' && $it->service)
-                                        <span class="chip chip-service">{{ $it->service->serviceName }}@if($qtyTrim !== '1' || $unit) ×{{ $qtyTrim }}@if($unit) {{ $unit }}@endif @endif</span>
-                                    @endif
+                                    <span class="chip chip-material">{{ $chip }}</span>
                                 @endforeach
                             </div>
                         @endif
