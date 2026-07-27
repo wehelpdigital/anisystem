@@ -103,7 +103,7 @@
         <div>
             <label for="lotDayZeroDate" class="form-label">Day 0 Date <span class="text-gray-400 font-normal">(optional)</span></label>
             <div class="flex gap-2">
-                <input type="date" id="lotDayZeroDate" class="form-input">
+                <input type="date" id="lotDayZeroDate" class="form-input cal-only" inputmode="none">
                 <button type="button" id="lotDayZeroDateClear" class="btn btn-ghost shrink-0" title="Clear date">Clear</button>
             </div>
             <p class="form-hint">Anchor for {{ $schedule->dayType }} labels — day numbers count from this date.</p>
@@ -144,6 +144,21 @@ const __init = () => {
     const SCHEDULE_ID = {{ $schedule->id }};
     const DAY_TYPE = @json($schedule->dayType);
     let LOTS = @json($jsLots);
+
+    // Date fields (.cal-only): open the native calendar on click and block
+    // manual typing, so the date always comes from the picker. Bound once at
+    // the document level so it also covers dynamically-added group inputs.
+    if (!window.__calOnlyBound) {
+        window.__calOnlyBound = true;
+        document.addEventListener('click', (e) => {
+            const inp = e.target.closest && e.target.closest('input.cal-only[type="date"]');
+            if (inp && typeof inp.showPicker === 'function') { try { inp.showPicker(); } catch (_) {} }
+        });
+        document.addEventListener('keydown', (e) => {
+            const inp = e.target.closest && e.target.closest('input.cal-only[type="date"]');
+            if (inp && !['Tab', 'Escape', 'Enter'].includes(e.key)) e.preventDefault();
+        });
+    }
     let GROUPS = @json($jsGroups);
 
     const list = document.getElementById('lotsList');
@@ -348,7 +363,7 @@ const __init = () => {
             </div>
             <div>
                 <label class="form-label">Start date</label>
-                <input type="date" class="form-input group-start-date" value="${escapeHtml(g.startDate || '')}">
+                <input type="date" class="form-input group-start-date cal-only" inputmode="none" value="${escapeHtml(g.startDate || '')}">
                 <p class="form-hint">Day 0 for this group — irrigation day ranges count from here.</p>
             </div>
             <div>
