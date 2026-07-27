@@ -1325,7 +1325,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const panel = $id('itemPickerPanel');
         const open = panel.classList.toggle('hidden');
         $id('itemsToggleBtn').setAttribute('aria-expanded', open ? 'false' : 'true');
-        $id('itemsToggleLabel').textContent = open ? 'Add item' : 'Done';
+        $id('itemsToggleLabel').textContent = open ? 'Add item' : 'Cancel';
         if (!open) { refreshNameDatalist(); setTimeout(() => $id('itemNameInput')?.focus(), 50); }
     });
 
