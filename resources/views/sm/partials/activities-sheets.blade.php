@@ -163,48 +163,52 @@
                 </div>
             </div>
 
-            <div>
-                <div class="flex items-center justify-between">
+            {{-- Materials & Items — a self-contained box so it reads as its own
+                 section. Items are free-form: name + price + quantity + unit,
+                 with names/prices remembered per schedule (datalists). --}}
+            <div class="rounded-xl border border-gray-200 bg-gray-50/60 p-3">
+                <div class="flex items-center justify-between gap-2">
                     <span class="form-label mb-0!"><span id="itemsSectionLabel">Materials &amp; Items</span> <span class="text-gray-400 font-normal">(optional)</span></span>
-                    <button type="button" id="itemsToggleBtn" class="text-xs font-semibold text-brand-700" aria-expanded="false">
-                        <span id="itemsToggleLabel">Add an item</span>
+                    <button type="button" id="itemsToggleBtn" class="btn btn-white btn-sm shrink-0" aria-expanded="false">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                        <span id="itemsToggleLabel">Add item</span>
                     </button>
                 </div>
-                {{-- Free-form items: name + price + quantity + unit. Names and the
-                     prices used for them are remembered per schedule (datalists). --}}
-                <div id="itemPickerPanel" class="rounded-xl border border-gray-200 p-3 space-y-2.5 mt-2 hidden">
+
+                <div id="itemsContainer" class="flex flex-wrap gap-1.5 mt-3"></div>
+                <p id="itemsContainerEmpty" class="text-xs text-gray-400 mt-3">No items added yet.</p>
+
+                <div id="itemPickerPanel" class="hidden mt-3 pt-3 border-t border-gray-200 space-y-2.5">
                     <div>
                         <label class="form-label text-xs! mb-1!" for="itemNameInput">Item name</label>
-                        <input type="text" id="itemNameInput" class="form-input" list="itemNameList" maxlength="255" placeholder="e.g. Urea 46-0-0" autocomplete="off">
+                        <input type="text" id="itemNameInput" class="form-input bg-white!" list="itemNameList" maxlength="255" placeholder="e.g. Urea 46-0-0" autocomplete="off">
                         <datalist id="itemNameList"></datalist>
                     </div>
                     <div class="grid grid-cols-2 gap-2">
                         <div>
                             <label class="form-label text-xs! mb-1!" for="itemPriceInput">Price (₱)</label>
-                            <input type="number" id="itemPriceInput" class="form-input" list="itemPriceList" min="0" step="any" placeholder="0.00" inputmode="decimal">
+                            <input type="number" id="itemPriceInput" class="form-input bg-white!" list="itemPriceList" min="0" step="any" placeholder="0.00" inputmode="decimal">
                             <datalist id="itemPriceList"></datalist>
                         </div>
                         <div>
                             <label class="form-label text-xs! mb-1!" for="itemQtyInput">Quantity</label>
-                            <input type="number" id="itemQtyInput" class="form-input" value="1" min="0" step="any" placeholder="1" inputmode="decimal">
+                            <input type="number" id="itemQtyInput" class="form-input bg-white!" value="1" min="0" step="any" placeholder="1" inputmode="decimal">
                         </div>
                     </div>
                     <div>
                         <label class="form-label text-xs! mb-1!" for="itemUnitInput">Unit</label>
-                        <input type="text" id="itemUnitInput" class="form-input" list="itemUnitList" maxlength="30" placeholder="e.g. kg, bottle, pack" autocomplete="off">
+                        <input type="text" id="itemUnitInput" class="form-input bg-white!" list="itemUnitList" maxlength="30" placeholder="e.g. kg, bottle, pack" autocomplete="off">
                         <datalist id="itemUnitList">
                             @foreach (['kg','g','ml','l','bottle','sachet','piece','pack','bag','sack'] as $u)
                                 <option value="{{ $u }}"></option>
                             @endforeach
                         </datalist>
                     </div>
-                    <button type="button" id="addItemBtn" class="btn btn-outline w-full">
+                    <button type="button" id="addItemBtn" class="btn btn-primary btn-sm w-full">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-                        Add item
+                        Add to list
                     </button>
                 </div>
-                <div id="itemsContainer" class="flex flex-wrap gap-1.5 mt-2"></div>
-                <p id="itemsContainerEmpty" class="text-xs text-gray-400 mt-2">No items added. That's fine — you can attach them later.</p>
             </div>
 
             {{-- Reference images — at the bottom, multiple allowed. --}}

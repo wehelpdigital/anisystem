@@ -1325,7 +1325,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const panel = $id('itemPickerPanel');
         const open = panel.classList.toggle('hidden');
         $id('itemsToggleBtn').setAttribute('aria-expanded', open ? 'false' : 'true');
-        $id('itemsToggleLabel').textContent = open ? 'Add an item' : 'Close';
+        $id('itemsToggleLabel').textContent = open ? 'Add item' : 'Done';
         if (!open) { refreshNameDatalist(); setTimeout(() => $id('itemNameInput')?.focus(), 50); }
     });
 
@@ -1374,7 +1374,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Collapse + clear the add-item panel.
         $id('itemPickerPanel')?.classList.add('hidden');
         $id('itemsToggleBtn')?.setAttribute('aria-expanded', 'false');
-        if ($id('itemsToggleLabel')) $id('itemsToggleLabel').textContent = 'Add an item';
+        if ($id('itemsToggleLabel')) $id('itemsToggleLabel').textContent = 'Add item';
         ['itemNameInput', 'itemPriceInput', 'itemUnitInput'].forEach((idv) => { if ($id(idv)) $id(idv).value = ''; });
         if ($id('itemQtyInput')) $id('itemQtyInput').value = '1';
         refreshItemsEmptyState();
@@ -1448,25 +1448,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Add Activity is a 2-option menu: a normal activity, or straight to drafts.
-    function toggleAddActivityMenu(show) {
-        const menu = $id('addActivityMenu');
-        const btn = $id('addActivityBtn');
-        if (!menu) return;
-        const open = show === undefined ? menu.classList.contains('hidden') : show;
-        menu.classList.toggle('hidden', !open);
-        btn?.setAttribute('aria-expanded', open ? 'true' : 'false');
-    }
-    $id('addActivityBtn')?.addEventListener('click', (e) => { e.stopPropagation(); toggleAddActivityMenu(); });
-    $qsa('#addActivityMenu [data-add-mode]').forEach((item) => {
-        item.addEventListener('click', () => {
-            toggleAddActivityMenu(false);
-            openAddActivitySheet(null, item.getAttribute('data-add-mode') === 'draft');
-        });
-    });
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('#addActivityWrap')) toggleAddActivityMenu(false);
-    });
+    // Add Activity opens the sheet directly (a fresh, non-draft activity).
+    $id('addActivityBtn')?.addEventListener('click', () => openAddActivitySheet());
     // The FAB (phones) always adds a normal activity.
     $id('fabAddActivity')?.addEventListener('click', () => openAddActivitySheet());
 
