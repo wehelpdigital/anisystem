@@ -17,7 +17,7 @@
         </div>
 
         {{-- JS fills this; it must be closed here or renderList() would wipe
-             whatever follows it (empty state, groupings). --}}
+             whatever follows it (the empty state). --}}
         <div id="lotsList" class="space-y-3" data-animate-list></div>
 
         <div id="lotsEmpty" class="card hidden">
@@ -26,35 +26,11 @@
                     <svg class="w-7 h-7 text-brand-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
                 </div>
                 <h2 class="font-bold text-gray-900 mb-1">No lots yet</h2>
-                <p class="text-sm text-gray-500 mb-4">Lots are the field areas this schedule covers. Activities and groupings attach to them.</p>
+                <p class="text-sm text-gray-500 mb-4">Lots are the field areas this schedule covers. Activities attach to them.</p>
                 <button type="button" class="btn btn-primary" data-add-lot>Add your first lot</button>
             </div>
         </div>
 
-        {{-- Default Groupings --}}
-        <div class="card mt-6">
-            <div class="card-body space-y-4">
-                <div>
-                    <h2 class="font-bold text-gray-900">Default Groupings</h2>
-                    <p class="text-sm text-gray-500">Group lots that start together and give the group its start date. Irrigation day ranges are counted from these dates.</p>
-                </div>
-
-                <div id="groupsNoLots" class="rounded-xl bg-blue-50 border border-blue-100 text-blue-800 text-sm px-4 py-3 {{ $schedule->lots->isEmpty() ? '' : 'hidden' }}">
-                    Add at least one lot first — groupings are collections of lots.
-                </div>
-
-                <div id="groupsList" class="space-y-3"></div>
-                <p id="groupsEmpty" class="text-sm text-gray-400 hidden">No default groupings yet. Add your first group below.</p>
-
-                <div class="flex flex-col sm:flex-row sm:justify-between gap-2">
-                    <button type="button" id="addGroupBtn" class="btn btn-white">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
-                        Add Group
-                    </button>
-                    <button type="button" id="saveGroupingsBtn" class="btn btn-primary">Save Groupings</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     {{-- Mobile floating action button --}}
@@ -132,11 +108,6 @@
         'dayZeroDate' => $l->dayZeroDate ? $l->dayZeroDate->format('Y-m-d') : null,
         'notes' => $l->notes,
     ])->values();
-    $jsGroups = $schedule->defaultGroupings->map(fn ($g) => [
-        'name' => $g->groupName,
-        'startDate' => $g->startDate ? $g->startDate->format('Y-m-d') : null,
-        'lotIds' => $g->lots->pluck('id'),
-    ])->values();
 @endphp
 <script>
 (() => {
@@ -146,8 +117,7 @@ const __init = () => {
     let LOTS = @json($jsLots);
 
     // Date fields (.cal-only): open the native calendar on click and block
-    // manual typing, so the date always comes from the picker. Bound once at
-    // the document level so it also covers dynamically-added group inputs.
+    // manual typing, so the date always comes from the picker.
     if (!window.__calOnlyBound) {
         window.__calOnlyBound = true;
         document.addEventListener('click', (e) => {
@@ -159,7 +129,6 @@ const __init = () => {
             if (inp && !['Tab', 'Escape', 'Enter'].includes(e.key)) e.preventDefault();
         });
     }
-    let GROUPS = @json($jsGroups);
 
     const list = document.getElementById('lotsList');
     const empty = document.getElementById('lotsEmpty');
@@ -221,9 +190,6 @@ const __init = () => {
             list.appendChild(card);
         });
         empty.classList.toggle('hidden', LOTS.length > 0);
-        // Keep the grouping lot-chips in step with the current lots.
-        refreshGroupChips();
-        document.getElementById('groupsNoLots')?.classList.toggle('hidden', LOTS.length > 0);
     }
 
     /* ---------------- Sheet open / fill ---------------- */
@@ -326,113 +292,6 @@ const __init = () => {
             btn.disabled = false;
         }
     });
-
-    /* ---------------- Default Groupings ---------------- */
-
-    const groupsList = document.getElementById('groupsList');
-    const groupsEmptyHint = document.getElementById('groupsEmpty');
-
-    function lotChipsHtml(selectedIds) {
-        const sel = (selectedIds || []).map(Number);
-        if (!LOTS.length) return '<span class="text-sm text-gray-400">No lots available.</span>';
-        return LOTS.map((l) => `
-            <button type="button" class="chip ${sel.includes(Number(l.id)) ? 'is-selected' : ''}"
-                data-value="${l.id}">${escapeHtml(l.lotName)}</button>`).join('');
-    }
-
-    /** Re-render each group's lot chips from the live LOTS list, keeping picks. */
-    function refreshGroupChips() {
-        if (!groupsList) return;
-        groupsList.querySelectorAll('.group-card').forEach((card) => {
-            const wrap = card.querySelector('.group-lots');
-            const selected = chipValues(wrap).map(Number);
-            wrap.innerHTML = lotChipsHtml(selected.filter((id) => LOTS.some((l) => Number(l.id) === id)));
-        });
-    }
-
-    function renderGroupCard(g) {
-        const card = document.createElement('div');
-        card.className = 'group-card border border-gray-200 rounded-xl p-4 space-y-3';
-        card.innerHTML = `
-            <div class="flex items-center gap-2">
-                <input type="text" maxlength="255" class="form-input group-name" placeholder="Group name (e.g. Group A)"
-                    value="${escapeHtml(g.name || '')}">
-                <button type="button" class="btn btn-ghost px-3! text-red-500 hover:bg-red-50! group-remove shrink-0" aria-label="Remove group">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16m-10 4v6m4-6v6"/></svg>
-                </button>
-            </div>
-            <div>
-                <label class="form-label">Start date</label>
-                <input type="date" class="form-input group-start-date cal-only" inputmode="none" value="${escapeHtml(g.startDate || '')}">
-                <p class="form-hint">Day 0 for this group — irrigation day ranges count from here.</p>
-            </div>
-            <div>
-                <span class="form-label">Lots in this group</span>
-                <div data-chip-group class="group-lots flex flex-wrap gap-2">${lotChipsHtml(g.lotIds)}</div>
-            </div>`;
-
-        card.querySelector('.group-remove').addEventListener('click', () => {
-            card.remove();
-            refreshGroupsEmptyHint();
-        });
-
-        groupsList.appendChild(card);
-        refreshGroupsEmptyHint();
-    }
-
-    function refreshGroupsEmptyHint() {
-        groupsEmptyHint.classList.toggle('hidden', groupsList.children.length > 0);
-    }
-
-    document.getElementById('addGroupBtn')?.addEventListener('click', () => {
-        if (!LOTS.length) {
-            toast('Add at least one lot first.', 'error');
-            return;
-        }
-        renderGroupCard({ name: '', startDate: null, lotIds: [] });
-        groupsList.lastElementChild?.querySelector('.group-name')?.focus();
-    });
-
-    document.getElementById('saveGroupingsBtn')?.addEventListener('click', async (e) => {
-        const btn = e.currentTarget;
-        const groupings = [];
-        for (const card of groupsList.querySelectorAll('.group-card')) {
-            const name = card.querySelector('.group-name').value.trim();
-            if (!name) {
-                toast('Every group needs a name.', 'error');
-                card.querySelector('.group-name').focus();
-                return;
-            }
-            groupings.push({
-                name,
-                staggerDays: 0,
-                startDate: card.querySelector('.group-start-date').value || null,
-                lotIds: chipValues(card.querySelector('.group-lots')).map(Number),
-            });
-        }
-
-        btn.disabled = true;
-        try {
-            const res = await api(`{{ route('sm.default-groupings.save') }}?scheduleId=${SCHEDULE_ID}`, {
-                method: 'POST',
-                body: { groupings },
-            });
-            toast(res.message);
-            GROUPS = (res.data || []).map((g) => ({
-                name: g.groupName, startDate: g.startDate, lotIds: g.lotIds,
-            }));
-            groupsList.innerHTML = '';
-            GROUPS.forEach(renderGroupCard);
-            refreshGroupsEmptyHint();
-        } catch (err) {
-            toast(err.message, 'error');
-        } finally {
-            btn.disabled = false;
-        }
-    });
-
-    GROUPS.forEach(renderGroupCard);
-    refreshGroupsEmptyHint();
 
     renderList();
 };
