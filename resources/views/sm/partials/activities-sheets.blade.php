@@ -771,6 +771,13 @@
             <label class="form-label" for="renameVersionDescription">Description</label>
             <textarea id="renameVersionDescription" class="form-textarea" rows="3" maxlength="5000"></textarea>
         </div>
+        <div class="rounded-xl border border-gray-200 bg-gray-50 p-3" id="duplicateVersionZone">
+            <p class="text-sm text-gray-600 mb-2">Make a full copy of this version — every activity (items, lots, workers) and its date notes.</p>
+            <button type="button" id="duplicateVersionBtn" class="btn btn-white btn-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                Duplicate This Version
+            </button>
+        </div>
         <div id="deleteVersionZone" class="rounded-xl border border-red-200 bg-red-50 p-3 hidden">
             <p class="text-sm text-red-800 mb-2">Deleting this version soft-deletes every activity inside it. The Original version becomes active again.</p>
             <button type="button" id="deleteVersionBtn" class="btn btn-danger-outline btn-sm">Delete This Version</button>

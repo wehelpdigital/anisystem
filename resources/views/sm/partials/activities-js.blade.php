@@ -3539,7 +3539,40 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('renameVersionDescription').value = active.getAttribute('data-version-description') || '';
         $id('deleteVersionZone').classList.toggle('hidden', isOriginal);
         $id('originalVersionHint').classList.toggle('hidden', !isOriginal);
+        // Duplicate is only offered while there's room for another version.
+        $id('duplicateVersionZone')?.classList.toggle('hidden', $qsa('#versionStrip .version-chip').length >= MAX_VERSIONS);
         openSheet('manageVersionSheet');
+    });
+
+    // Duplicate the version currently open in the manage sheet — a full fork
+    // (activities + items + lots/workers + date notes), left inactive.
+    $id('duplicateVersionBtn')?.addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+        const id = $id('renameVersionId').value;
+        const name = ($id('renameVersionName').value || 'Version').trim();
+        if (!id) return;
+        if ($qsa('#versionStrip .version-chip').length >= MAX_VERSIONS) {
+            toast(`You can have at most ${MAX_VERSIONS} versions. Delete one to make room.`, 'error');
+            return;
+        }
+        btn.disabled = true;
+        try {
+            await api(U.versionStore(), {
+                method: 'POST',
+                body: {
+                    versionName: `Copy of ${name}`.slice(0, 120),
+                    description: $id('renameVersionDescription').value || '',
+                    setActive: 0,
+                    sourceVersionId: parseInt(id, 10),
+                },
+            });
+            toast('Version duplicated. Reloading…');
+            closeSheet('manageVersionSheet');
+            setTimeout(() => location.reload(), 400);
+        } catch (err) {
+            toast(err.message, 'error');
+            btn.disabled = false;
+        }
     });
 
     $id('saveRenameVersionBtn')?.addEventListener('click', async (e) => {
