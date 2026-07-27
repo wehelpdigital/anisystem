@@ -976,24 +976,53 @@
                     @endif
                 </div>
 
-                @if($criticalRules->count() > 0)
+                @php
+                    $cvIntroEntries = $schedule->docEntries->where('type', 'introduction')->values();
+                    $cvRuleEntries = $schedule->docEntries->where('type', 'critical_rule')->values();
+                    $cvCustomEntries = $schedule->docEntries->where('type', 'custom')->values();
+                    $cvHasIntro = ($activeVersion && !empty($activeVersion->globalActivityNote)) || $cvIntroEntries->count() > 0;
+                    $cvHasRules = $criticalRules->count() > 0 || $cvRuleEntries->count() > 0;
+                @endphp
+
+                @if($cvHasRules)
                     <div class="cv-cover-rules">
                         <h2>Critical Rules &mdash; Read Every Time</h2>
                         <ol>
                             @foreach($criticalRules as $rule)
                                 <li class="rich-inline">{!! $rule->ruleText !!}</li>
                             @endforeach
+                            @foreach($cvRuleEntries as $entry)
+                                <li class="rich-inline">@if($entry->title)<strong>{{ $entry->title }} &mdash; </strong>@endif{!! $entry->content !!}</li>
+                            @endforeach
                         </ol>
                     </div>
                 @endif
 
-                @if($activeVersion && !empty($activeVersion->globalActivityNote))
+                @if($cvHasIntro)
                     <div class="cv-cover-intro">
-                        {!! $activeVersion->globalActivityNote !!}
+                        @if($activeVersion && !empty($activeVersion->globalActivityNote)){!! $activeVersion->globalActivityNote !!}@endif
+                        @foreach($cvIntroEntries as $entry)
+                            <div class="rich-inline">@if($entry->title)<strong>{{ $entry->title }}</strong> @endif{!! $entry->content !!}</div>
+                        @endforeach
                     </div>
                 @endif
 
-                @if($criticalRules->count() === 0 && (!$activeVersion || empty($activeVersion->globalActivityNote)))
+                @if($cvCustomEntries->count() > 0)
+                    <div class="cv-cover-intro">
+                        @foreach($cvCustomEntries as $entry)
+                            <div style="margin-bottom:8px;">
+                                <strong>{{ $entry->type_label }}@if($entry->title): {{ $entry->title }}@endif</strong>
+                                @if($entry->content)<div class="rich-inline">{!! $entry->content !!}</div>@endif
+                                @foreach(collect($entry->files ?? []) as $f)
+                                    @php $url = isset($f['path']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($f['path']) : null; @endphp
+                                    @if($url)<a href="{{ $url }}" style="color:#2c3e8c; text-decoration:underline; margin-right:8px;">{{ $f['name'] ?? 'file' }}</a>@endif
+                                @endforeach
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+
+                @if(!$cvHasRules && !$cvHasIntro && $cvCustomEntries->count() === 0)
                     <p class="cv-cover-empty">
                         No protocol introduction or critical rules defined yet.
                         Use the <strong>Documentation</strong> page of this schedule to add them.
@@ -1047,11 +1076,12 @@
             </div>
 
             <div class="cv-slide-body">
-                @if($criticalRules->count() > 0)
+                @php $cvRuleTotal = $criticalRules->count() + (isset($cvRuleEntries) ? $cvRuleEntries->count() : 0); @endphp
+                @if($cvRuleTotal > 0)
                     <p class="cv-rules-banner">
                         <span class="cv-rules-banner-mark">&#9888;</span>
-                        <span class="cv-rules-banner-count">{{ $criticalRules->count() }}</span>
-                        critical {{ \Illuminate\Support\Str::plural('rule', $criticalRules->count()) }}
+                        <span class="cv-rules-banner-count">{{ $cvRuleTotal }}</span>
+                        critical {{ \Illuminate\Support\Str::plural('rule', $cvRuleTotal) }}
                         apply every day &mdash; see cover page.
                     </p>
                 @endif
@@ -1300,13 +1330,16 @@
 </div>
 
 {{-- Critical rules quick-view modal (opened by clicking the day-slide banner) --}}
-@if($criticalRules->count() > 0)
+@if(!empty($cvHasRules))
     <div class="cv-modal-backdrop" id="cvRulesModal">
         <div class="cv-modal">
             <h2><i class="bx bx-flag"></i> Critical Rules</h2>
             <ol>
                 @foreach($criticalRules as $rule)
                     <li class="rich-inline">{!! $rule->ruleText !!}</li>
+                @endforeach
+                @foreach($cvRuleEntries as $entry)
+                    <li class="rich-inline">@if($entry->title)<strong>{{ $entry->title }} &mdash; </strong>@endif{!! $entry->content !!}</li>
                 @endforeach
             </ol>
             <button class="cv-modal-close" type="button">Close</button>

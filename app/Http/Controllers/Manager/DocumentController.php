@@ -54,6 +54,7 @@ class DocumentController extends BaseScheduleController
             'defaultGroupings.lots',
             'attachments',
             'criticalRules',
+            'docEntries.tag',
         ]);
 
         // ---- Export view options (all optional query params) ----
@@ -245,6 +246,7 @@ class DocumentController extends BaseScheduleController
             'versions',
             'attachments',
             'criticalRules',
+            'docEntries.tag',
         ]);
 
         // ---- Effective Day 0 anchor per lot (manual + activity flags) ----
@@ -796,6 +798,7 @@ class DocumentController extends BaseScheduleController
             'versions',
             'dateNotes',
             'criticalRules',
+            'docEntries.tag',
         ]);
 
         $activeVersion = $schedule->versions->firstWhere('isActive', true)

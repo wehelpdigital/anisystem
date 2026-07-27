@@ -1015,11 +1015,24 @@
                 ?? $schedule->versions->firstWhere('isOriginal', true)
                 ?? $schedule->versions->first();
             $hasProtocolIntro = $wpProtocolVersion && !empty($wpProtocolVersion->globalActivityNote);
+
+            // Unified documentation entries, grouped by their placement.
+            $wpIntroEntries = $schedule->docEntries->where('type', 'introduction')->values();
+            $wpRuleEntries = $schedule->docEntries->where('type', 'critical_rule')->values();
+            $wpCustomEntries = $schedule->docEntries->where('type', 'custom')->values();
+            $docFileView = function ($files) {
+                return collect($files ?? [])->map(fn ($f) => [
+                    'name' => $f['name'] ?? 'file',
+                    'url' => isset($f['path']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($f['path']) : null,
+                    'isImage' => isset($f['mime']) && str_starts_with((string) $f['mime'], 'image/'),
+                    'ext' => strtoupper(pathinfo($f['name'] ?? '', PATHINFO_EXTENSION) ?: 'FILE'),
+                ]);
+            };
         @endphp
 
         {{-- ---- Critical Rules (most prominent — at the top so workers
              read them every time they pick up the document) ---- --}}
-        @if($schedule->criticalRules->count() > 0)
+        @if($schedule->criticalRules->count() > 0 || $wpRuleEntries->count() > 0)
             <div class="critical-rules-callout">
                 <div class="critical-rules-heading">
                     ⚑ Critical Rules — Read Every Time
@@ -1028,16 +1041,37 @@
                     @foreach($schedule->criticalRules as $cRule)
                         <li class="rich-inline">{!! $cRule->ruleText !!}</li>
                     @endforeach
+                    @foreach($wpRuleEntries as $entry)
+                        <li class="rich-inline">
+                            @if($entry->title)<strong>{{ $entry->title }} — </strong>@endif{!! $entry->content !!}
+                        </li>
+                    @endforeach
                 </ol>
             </div>
         @endif
 
-        {{-- ---- Protocol Introduction (rich text) ---- --}}
-        @if($hasProtocolIntro)
-            <h2 style="margin-top: 16px;">Protocol Introduction</h2>
-            <div class="protocol-intro-print">
-                {!! $wpProtocolVersion->globalActivityNote !!}
-            </div>
+        {{-- ---- Protocol / Introduction (rich text) ---- --}}
+        @if($hasProtocolIntro || $wpIntroEntries->count() > 0)
+            <h2 style="margin-top: 16px;">Introduction</h2>
+            @if($hasProtocolIntro)
+                <div class="protocol-intro-print">
+                    {!! $wpProtocolVersion->globalActivityNote !!}
+                </div>
+            @endif
+            @foreach($wpIntroEntries as $entry)
+                <div class="protocol-intro-print">
+                    @if($entry->title)<strong>{{ $entry->title }}</strong>@endif
+                    <div class="rich-inline">{!! $entry->content !!}</div>
+                    @php $ef = $docFileView($entry->files); @endphp
+                    @if($ef->count() > 0)
+                        <div style="margin-top:6px;">
+                            @foreach($ef as $f)
+                                @if($f['url'])<a href="{{ $f['url'] }}" style="color:#2c3e8c; text-decoration:underline; margin-right:10px;">{{ $f['name'] }}</a>@endif
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            @endforeach
         @endif
 
         {{-- ---- Attachments (reference images / PDFs) ---- --}}
@@ -1065,6 +1099,35 @@
                     </div>
                 @endforeach
             </div>
+        @endif
+
+        {{-- ---- Reference Documents (custom-tagged unified entries) ---- --}}
+        @if($wpCustomEntries->count() > 0)
+            <h2 style="margin-top: 16px;">Reference Documents</h2>
+            @foreach($wpCustomEntries as $entry)
+                @php $ef = $docFileView($entry->files); @endphp
+                <div class="protocol-intro-print" style="page-break-inside: avoid;">
+                    <div style="font-size:9pt; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#2c3e8c;">{{ $entry->type_label }}</div>
+                    @if($entry->title)<div style="font-weight:700; font-size:11pt; margin-top:2px;">{{ $entry->title }}</div>@endif
+                    @if($entry->content)<div class="rich-inline" style="margin-top:4px;">{!! $entry->content !!}</div>@endif
+                    @if($ef->count() > 0)
+                        <div class="attachments-print-grid" style="margin-top:8px;">
+                            @foreach($ef as $f)
+                                <div class="attachment-print-card">
+                                    @if($f['isImage'] && $f['url'])
+                                        <img class="attachment-print-img" src="{{ $f['url'] }}" alt="{{ $f['name'] }}">
+                                    @else
+                                        <div class="attachment-print-noimg"><strong>{{ $f['ext'] }}</strong><span class="muted">file attached</span></div>
+                                    @endif
+                                    <div class="attachment-print-meta">
+                                        @if($f['url'])<a href="{{ $f['url'] }}" style="color:#2c3e8c; text-decoration:underline;">{{ $f['name'] }}</a>@else<strong>{{ $f['name'] }}</strong>@endif
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            @endforeach
         @endif
 
         <p style="margin-top: 14px;">

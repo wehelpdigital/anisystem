@@ -393,11 +393,23 @@
             ?? $schedule->versions->firstWhere('isOriginal', true)
             ?? $schedule->versions->first();
         $exportHasProtocolIntro = $exportProtocolVersion && !empty($exportProtocolVersion->globalActivityNote);
+
+        $exIntroEntries = $schedule->docEntries->where('type', 'introduction')->values();
+        $exRuleEntries = $schedule->docEntries->where('type', 'critical_rule')->values();
+        $exCustomEntries = $schedule->docEntries->where('type', 'custom')->values();
+        $exDocFileView = function ($files) {
+            return collect($files ?? [])->map(fn ($f) => [
+                'name' => $f['name'] ?? 'file',
+                'url' => isset($f['path']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($f['path']) : null,
+                'isImage' => isset($f['mime']) && str_starts_with((string) $f['mime'], 'image/'),
+                'ext' => strtoupper(pathinfo($f['name'] ?? '', PATHINFO_EXTENSION) ?: 'FILE'),
+            ]);
+        };
     @endphp
 
     {{-- Critical Rules — most prominent — render at the very top so the
          reader hits them first. Suppressed in activities-only mode. --}}
-    @if(!$exportActivitiesOnly && $schedule->criticalRules->count() > 0)
+    @if(!$exportActivitiesOnly && ($schedule->criticalRules->count() > 0 || $exRuleEntries->count() > 0))
         <section class="section">
             <div class="critical-rules-callout">
                 <div class="critical-rules-heading">
@@ -407,18 +419,33 @@
                     @foreach($schedule->criticalRules as $cRule)
                         <li class="rich-inline">{!! $cRule->ruleText !!}</li>
                     @endforeach
+                    @foreach($exRuleEntries as $entry)
+                        <li class="rich-inline">@if($entry->title)<strong>{{ $entry->title }} — </strong>@endif{!! $entry->content !!}</li>
+                    @endforeach
                 </ol>
             </div>
         </section>
     @endif
 
-    {{-- Protocol Introduction (rich text from the active version) --}}
-    @if(!$exportActivitiesOnly && $exportHasProtocolIntro)
+    {{-- Introduction (active version note + unified introduction entries) --}}
+    @if(!$exportActivitiesOnly && ($exportHasProtocolIntro || $exIntroEntries->count() > 0))
         <section class="section">
-            <h2>Protocol Introduction</h2>
-            <div class="protocol-intro-print">
-                {!! $exportProtocolVersion->globalActivityNote !!}
-            </div>
+            <h2>Introduction</h2>
+            @if($exportHasProtocolIntro)
+                <div class="protocol-intro-print">
+                    {!! $exportProtocolVersion->globalActivityNote !!}
+                </div>
+            @endif
+            @foreach($exIntroEntries as $entry)
+                <div class="protocol-intro-print">
+                    @if($entry->title)<strong>{{ $entry->title }}</strong>@endif
+                    <div class="rich-inline">{!! $entry->content !!}</div>
+                    @php $ef = $exDocFileView($entry->files); @endphp
+                    @foreach($ef as $f)
+                        @if($f['url'])<a href="{{ $f['url'] }}" style="color:#2c3e8c; text-decoration:underline; margin-right:10px;">{{ $f['name'] }}</a>@endif
+                    @endforeach
+                </div>
+            @endforeach
         </section>
     @endif
 
@@ -447,6 +474,37 @@
                     </div>
                 @endforeach
             </div>
+        </section>
+    @endif
+
+    {{-- Reference Documents (custom-tagged unified entries) --}}
+    @if(!$exportActivitiesOnly && $exCustomEntries->count() > 0)
+        <section class="section">
+            <h2>Reference Documents</h2>
+            @foreach($exCustomEntries as $entry)
+                @php $ef = $exDocFileView($entry->files); @endphp
+                <div class="protocol-intro-print" style="page-break-inside: avoid; margin-bottom:10px;">
+                    <div style="font-size:9pt; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#2c3e8c;">{{ $entry->type_label }}</div>
+                    @if($entry->title)<div style="font-weight:700; font-size:11pt; margin-top:2px;">{{ $entry->title }}</div>@endif
+                    @if($entry->content)<div class="rich-inline" style="margin-top:4px;">{!! $entry->content !!}</div>@endif
+                    @if($ef->count() > 0)
+                        <div class="attachments-print-grid" style="margin-top:8px;">
+                            @foreach($ef as $f)
+                                <div class="attachment-print-card">
+                                    @if($f['isImage'] && $f['url'])
+                                        <img class="attachment-print-img" src="{{ $f['url'] }}" alt="{{ $f['name'] }}">
+                                    @else
+                                        <div class="attachment-print-noimg"><strong>{{ $f['ext'] }}</strong><span class="muted">file attached</span></div>
+                                    @endif
+                                    <div class="attachment-print-meta">
+                                        @if($f['url'])<a href="{{ $f['url'] }}" style="color:#2c3e8c; text-decoration:underline;">{{ $f['name'] }}</a>@else<strong>{{ $f['name'] }}</strong>@endif
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            @endforeach
         </section>
     @endif
 
