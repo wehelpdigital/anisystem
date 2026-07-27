@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Models\AsScheduleCriticalRule;
+use App\Support\HtmlSanitizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -19,13 +20,18 @@ class CriticalRuleController extends BaseScheduleController
         $schedule = $this->scheduleFromRequest($request);
 
         $validator = Validator::make($request->all(), [
-            'ruleText' => 'required|string|max:2000',
+            'ruleText' => 'required|string|max:20000',
         ], [
             'ruleText.required' => 'Enter the rule text.',
-            'ruleText.max'      => 'Rule text is too long (max 2000 chars).',
+            'ruleText.max'      => 'Rule text is too long.',
         ]);
         if ($validator->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
+
+        $ruleText = HtmlSanitizer::rich($request->input('ruleText'));
+        if (! filled(trim(strip_tags($ruleText)))) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => ['ruleText' => ['Enter the rule text.']]]);
         }
 
         $maxOrder = (int) AsScheduleCriticalRule::active()
@@ -34,7 +40,7 @@ class CriticalRuleController extends BaseScheduleController
 
         $row = AsScheduleCriticalRule::create([
             'croppingScheduleId' => $schedule->id,
-            'ruleText'           => trim($request->input('ruleText')),
+            'ruleText'           => $ruleText,
             'sortOrder'          => $maxOrder + 1,
             'deleteStatus'       => 1,
         ]);
@@ -48,7 +54,7 @@ class CriticalRuleController extends BaseScheduleController
         $id = $this->queryId($request);
 
         $validator = Validator::make($request->all(), [
-            'ruleText' => 'required|string|max:2000',
+            'ruleText' => 'required|string|max:20000',
         ]);
         if ($validator->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
@@ -60,7 +66,12 @@ class CriticalRuleController extends BaseScheduleController
             ->first();
         if (!$row) return $this->jsonFail('Rule not found.', 404);
 
-        $row->update(['ruleText' => trim($request->input('ruleText'))]);
+        $ruleText = HtmlSanitizer::rich($request->input('ruleText'));
+        if (! filled(trim(strip_tags($ruleText)))) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => ['ruleText' => ['Enter the rule text.']]]);
+        }
+
+        $row->update(['ruleText' => $ruleText]);
         return $this->jsonOk('Rule updated.', ['data' => $row->fresh()]);
     }
 

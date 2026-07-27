@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Models\AsScheduleProtocol;
+use App\Support\HtmlSanitizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -36,7 +37,9 @@ class ProtocolController extends BaseScheduleController
             ]);
         }
 
-        $protocol->protocolContent = $request->input('protocolContent');
+        $content = HtmlSanitizer::rich($request->input('protocolContent'));
+        // Treat markup with no visible text as empty so protocolType is correct.
+        $protocol->protocolContent = filled(trim(strip_tags($content))) ? $content : null;
 
         if ($request->hasFile('protocolFile')) {
             if ($protocol->protocolFile && Storage::disk('public')->exists($protocol->protocolFile)) {

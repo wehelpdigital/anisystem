@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Models\AsScheduleAttachment;
+use App\Support\HtmlSanitizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -25,7 +26,7 @@ class AttachmentController extends BaseScheduleController
 
         $validator = Validator::make($request->all(), [
             'file'        => 'required|file|max:10240|mimes:jpg,jpeg,png,gif,webp,pdf',
-            'description' => 'nullable|string|max:5000',
+            'description' => 'nullable|string|max:20000',
         ], [
             'file.required' => 'Pick an image (or PDF) to upload.',
             'file.max'      => 'File is too large — max 10 MB.',
@@ -61,7 +62,7 @@ class AttachmentController extends BaseScheduleController
             'storagePath'        => $relativePath,
             'mimeType'           => $file->getMimeType(),
             'fileSize'           => $file->getSize(),
-            'description'        => $request->input('description'),
+            'description'        => $this->cleanDescription($request->input('description')),
             'sortOrder'          => $maxOrder + 1,
             'deleteStatus'       => 1,
         ]);
@@ -81,7 +82,7 @@ class AttachmentController extends BaseScheduleController
         $id = $this->queryId($request);
 
         $validator = Validator::make($request->all(), [
-            'description' => 'nullable|string|max:5000',
+            'description' => 'nullable|string|max:20000',
         ]);
         if ($validator->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
@@ -93,7 +94,7 @@ class AttachmentController extends BaseScheduleController
             ->first();
         if (!$row) return $this->jsonFail('Attachment not found.', 404);
 
-        $row->update(['description' => $request->input('description')]);
+        $row->update(['description' => $this->cleanDescription($request->input('description'))]);
 
         return $this->jsonOk('Description updated.', ['data' => $this->serialize($row->fresh())]);
     }
@@ -135,5 +136,17 @@ class AttachmentController extends BaseScheduleController
             'url'         => $row->getPublicUrl(),
             'isImage'     => $row->isImage(),
         ];
+    }
+
+    /**
+     * Descriptions are rich text from the WYSIWYG editor; run them through
+     * the same allow-list the activity notes use, and null out markup that
+     * carries no visible text.
+     */
+    private function cleanDescription(?string $html): ?string
+    {
+        $clean = HtmlSanitizer::rich($html);
+
+        return filled(trim(strip_tags($clean))) ? $clean : null;
     }
 }

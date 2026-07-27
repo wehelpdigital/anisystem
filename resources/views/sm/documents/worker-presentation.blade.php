@@ -475,6 +475,13 @@
             font-size: 10.5pt;
             line-height: 1.5;
         }
+        /* Rich-text (WYSIWYG) content rendered inline — neutralise the
+           editor's paragraph wrapping so it sits flush in cells / list items. */
+        .rich-inline > :first-child { margin-top: 0; }
+        .rich-inline > :last-child { margin-bottom: 0; }
+        .rich-inline p { margin: 0 0 4px; }
+        .rich-inline ul, .rich-inline ol { margin: 2px 0; padding-left: 18px; }
+        .rich-inline a { color: #2c3e8c; text-decoration: underline; }
 
         /* ---- Protocol introduction (printed) ---- */
         .protocol-intro-print {
@@ -1019,7 +1026,7 @@
                 </div>
                 <ol class="critical-rules-print-list">
                     @foreach($schedule->criticalRules as $cRule)
-                        <li>{{ $cRule->ruleText }}</li>
+                        <li class="rich-inline">{!! $cRule->ruleText !!}</li>
                     @endforeach
                 </ol>
             </div>
@@ -1052,7 +1059,7 @@
                         <div class="attachment-print-meta">
                             <strong>{{ $att['filename'] }}</strong>
                             @if($att['description'])
-                                <div class="attachment-print-desc">{{ $att['description'] }}</div>
+                                <div class="attachment-print-desc rich-inline">{!! $att['description'] !!}</div>
                             @endif
                         </div>
                     </div>

@@ -37,15 +37,25 @@
     {{-- ============================== 1) PROTOCOL ============================== --}}
     <div x-show="tab === 'protocol'">
         <div class="card p-4 sm:p-6">
-            <h2 class="font-bold text-gray-900 text-lg">Protocol Document</h2>
-            <p class="text-sm text-gray-500 mt-1 mb-4">Write the season protocol as text, attach a document, or both. It prints on the worker presentation and export.</p>
-
-            <div class="mb-4">
-                <label class="form-label" for="protocolContent">Protocol Text</label>
-                <textarea id="protocolContent" class="form-textarea" rows="10" placeholder="Write or paste the protocol here…">{{ $protocol->protocolContent ?? '' }}</textarea>
+            <div class="flex items-start gap-3 mb-4">
+                <span class="doc-section-icon bg-brand-50 text-brand-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                </span>
+                <div class="min-w-0">
+                    <h2 class="font-bold text-gray-900 text-lg leading-tight">Protocol Document</h2>
+                    <p class="text-sm text-gray-500 mt-0.5">Write the season protocol as rich text, attach a document, or both.</p>
+                </div>
             </div>
 
-            <div class="mb-4">
+            <div class="mb-5">
+                <label class="form-label">Protocol Text</label>
+                <div class="rich-editor">
+                    <div id="protocolEditor"></div>
+                </div>
+                <p class="form-hint">Use headings, bold and lists to structure the protocol — it prints on the worker documents.</p>
+            </div>
+
+            <div class="border-t border-gray-100 pt-4 mb-5">
                 <label class="form-label" for="protocolFile">Protocol File</label>
                 <div id="protocolCurrentFile" class="{{ $hasProtocolFile ? '' : 'hidden' }} mb-2">
                     <a href="{{ route('sm.protocol.download', ['scheduleId' => $schedule->id]) }}"
@@ -128,7 +138,7 @@
                         <p class="text-sm font-semibold text-gray-900 truncate js-filename" title="{{ $a->filename }}">{{ $a->filename }}</p>
                         <p class="text-xs text-gray-400 mt-0.5">{{ number_format($a->fileSize / 1024, 1) }} KB</p>
                         @if (filled($a->description))
-                            <p class="text-xs text-gray-500 mt-1 line-clamp-3 js-desc">{{ $a->description }}</p>
+                            <div class="rich-mini text-xs text-gray-500 mt-1 line-clamp-3 js-desc">{!! $a->description !!}</div>
                         @else
                             <p class="text-xs text-gray-400 italic mt-1 js-desc">No description.</p>
                         @endif
@@ -174,7 +184,7 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                         </button>
                     </div>
-                    <p class="grow min-w-0 text-sm text-gray-800 whitespace-pre-wrap pt-1 js-text">{{ $rule->ruleText }}</p>
+                    <div class="grow min-w-0 text-sm text-gray-800 pt-1 rich-text js-text">{!! $rule->ruleText !!}</div>
                     <div class="flex gap-1 shrink-0">
                         <button type="button" class="btn btn-sm btn-ghost js-edit" aria-label="Edit rule">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
@@ -223,8 +233,10 @@
             <p class="form-hint">JPG, PNG, GIF, WebP or PDF — max 10 MB.</p>
         </div>
         <div class="mb-2">
-            <label class="form-label" for="attachmentDescription">Description</label>
-            <textarea id="attachmentDescription" class="form-textarea" rows="3" maxlength="5000" placeholder="What is this? e.g. Foliar mixing chart for DAS 20–35…"></textarea>
+            <label class="form-label">Description</label>
+            <div class="rich-editor">
+                <div id="attachmentDescriptionEditor"></div>
+            </div>
         </div>
         <div class="hidden mt-3" id="attachmentProgressWrap">
             <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
@@ -249,7 +261,9 @@
     <div class="sheet-body">
         <input type="hidden" id="attachmentEditId" value="">
         <p class="text-sm font-semibold text-gray-700 truncate mb-2" id="attachmentEditFilename"></p>
-        <textarea id="attachmentEditDescription" class="form-textarea" rows="4" maxlength="5000" placeholder="Describe this attachment…"></textarea>
+        <div class="rich-editor">
+            <div id="attachmentEditDescriptionEditor"></div>
+        </div>
         <p class="form-hint">The file itself can't be changed — delete and re-upload to replace it.</p>
     </div>
     <div class="sheet-footer">
@@ -267,9 +281,11 @@
     </div>
     <div class="sheet-body">
         <input type="hidden" id="ruleEditId" value="">
-        <label class="form-label" for="ruleText">Rule <span class="text-red-500">*</span></label>
-        <textarea id="ruleText" class="form-textarea" rows="4" maxlength="2000" placeholder="e.g. NEVER spray when winds exceed 15 km/h."></textarea>
-        <p class="form-hint">Max 2000 characters. Printed prominently on every worker document.</p>
+        <label class="form-label">Rule <span class="text-red-500">*</span></label>
+        <div class="rich-editor">
+            <div id="ruleTextEditor"></div>
+        </div>
+        <p class="form-hint">Printed prominently on every worker document.</p>
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
@@ -297,13 +313,69 @@
     };
 
     /* ================================================================= */
+    /* Shared rich-text editor (Quill 2, lazy-loaded from CDN)           */
+    /* ================================================================= */
+    let quillLoading = null;
+    function ensureQuill() {
+        if (window.Quill) return Promise.resolve();
+        if (quillLoading) return quillLoading;
+        quillLoading = new Promise((resolve, reject) => {
+            const css = document.createElement('link');
+            css.rel = 'stylesheet';
+            css.href = 'https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css';
+            document.head.appendChild(css);
+            const s = document.createElement('script');
+            s.src = 'https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.min.js';
+            s.onload = () => resolve();
+            s.onerror = () => { quillLoading = null; reject(new Error('Could not load the editor. Check your connection and try again.')); };
+            document.head.appendChild(s);
+        });
+        return quillLoading;
+    }
+    const RICH_TOOLBAR = [
+        [{ header: [2, 3, false] }],
+        ['bold', 'italic', 'underline'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['link'],
+        ['clean'],
+    ];
+    const _editors = {};
+    /** Lazily create (once) a Quill editor on the given element id. */
+    async function mountEditor(elId, placeholder = '') {
+        await ensureQuill();
+        if (!_editors[elId]) {
+            _editors[elId] = new Quill('#' + elId, {
+                theme: 'snow',
+                placeholder,
+                modules: { toolbar: RICH_TOOLBAR },
+            });
+        }
+        return _editors[elId];
+    }
+    function setEditorHtml(q, html) {
+        q.setContents([]);
+        if (html && html.trim() !== '') q.clipboard.dangerouslyPasteHTML(html);
+    }
+    /** Editor HTML, or '' when the editor holds no visible text. */
+    function editorHtml(q) {
+        return q && q.getText().trim() !== '' ? q.root.innerHTML : '';
+    }
+
+    /* ================================================================= */
     /* 1) Protocol                                                       */
     /* ================================================================= */
+    let PROTOCOL_HTML = @json($protocol->protocolContent ?? '');
+    let protocolEditor = null;
+    // The Protocol tab is the default view, so mount its editor on load.
+    mountEditor('protocolEditor', 'Write or paste the protocol here…')
+        .then((q) => { protocolEditor = q; setEditorHtml(q, PROTOCOL_HTML); })
+        .catch(() => {});
+
     document.getElementById('protocolSaveBtn').addEventListener('click', async () => {
         const btn = document.getElementById('protocolSaveBtn');
         const fileInput = document.getElementById('protocolFile');
         const fd = new FormData();
-        fd.append('protocolContent', document.getElementById('protocolContent').value);
+        fd.append('protocolContent', editorHtml(protocolEditor));
         if (fileInput.files.length) {
             const f = fileInput.files[0];
             if (f.size > 10 * 1024 * 1024) { toast('Protocol file is too large — max 10 MB.', 'error'); return; }
@@ -329,28 +401,10 @@
     /* 2) Introduction (Quill 2, lazy-loaded from CDN)                   */
     /* ================================================================= */
     let quill = null;
-    let quillLoading = null;
     let INTRO_HTML = @json($activeVersion?->globalActivityNote ?? '');
 
-    function loadQuillAssets() {
-        if (window.Quill) return Promise.resolve();
-        if (quillLoading) return quillLoading;
-        quillLoading = new Promise((resolve, reject) => {
-            const css = document.createElement('link');
-            css.rel = 'stylesheet';
-            css.href = 'https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css';
-            document.head.appendChild(css);
-            const s = document.createElement('script');
-            s.src = 'https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.min.js';
-            s.onload = () => resolve();
-            s.onerror = () => { quillLoading = null; reject(new Error('Could not load the editor. Check your connection and try again.')); };
-            document.head.appendChild(s);
-        });
-        return quillLoading;
-    }
-
     /* Preload assets the first time the Introduction tab is shown. */
-    document.addEventListener('doc-intro-shown', () => { loadQuillAssets().catch(() => {}); }, { once: true });
+    document.addEventListener('doc-intro-shown', () => { ensureQuill().catch(() => {}); }, { once: true });
 
     const introIdle = document.getElementById('introIdle');
     const introEditWrap = document.getElementById('introEditWrap');
@@ -379,7 +433,7 @@
             const btn = document.getElementById('introEditBtn');
             btn.disabled = true;
             try {
-                await loadQuillAssets();
+                await ensureQuill();
                 if (!quill) {
                     quill = new Quill('#introEditor', {
                         theme: 'snow',
@@ -480,7 +534,7 @@
                     <span class="badge badge-gray uppercase">${escapeHtml(ext)}</span>
                </div>`;
         const desc = a.description
-            ? `<p class="text-xs text-gray-500 mt-1 line-clamp-3 js-desc">${escapeHtml(a.description)}</p>`
+            ? `<div class="rich-mini text-xs text-gray-500 mt-1 line-clamp-3 js-desc">${a.description}</div>`
             : `<p class="text-xs text-gray-400 italic mt-1 js-desc">No description.</p>`;
         el.innerHTML = `
             <div class="h-[130px] bg-gray-100 flex items-center justify-center overflow-hidden">${thumb}</div>
@@ -506,13 +560,16 @@
     const progressLabel = document.getElementById('attachmentProgressLabel');
     let uploading = false;
 
+    let attachmentUploadEditor = null;
     document.querySelectorAll('[data-attachment-upload]').forEach((btn) => {
         btn.addEventListener('click', () => {
             document.getElementById('attachmentFile').value = '';
-            document.getElementById('attachmentDescription').value = '';
             progressWrap.classList.add('hidden');
             progressBar.style.width = '0%';
             openSheet('attachmentUploadSheet');
+            mountEditor('attachmentDescriptionEditor', 'What is this? e.g. Foliar mixing chart for DAS 20–35…')
+                .then((q) => { attachmentUploadEditor = q; setEditorHtml(q, ''); })
+                .catch((e) => toast(e.message, 'error'));
         });
     });
 
@@ -525,7 +582,7 @@
 
         const fd = new FormData();
         fd.append('file', file);
-        fd.append('description', document.getElementById('attachmentDescription').value);
+        fd.append('description', editorHtml(attachmentUploadEditor));
 
         const btn = document.getElementById('attachmentUploadBtn');
         uploading = true;
@@ -586,8 +643,10 @@
         if (e.target.closest('.js-edit')) {
             document.getElementById('attachmentEditId').value = id;
             document.getElementById('attachmentEditFilename').textContent = a ? a.filename : '';
-            document.getElementById('attachmentEditDescription').value = a ? (a.description || '') : '';
             openSheet('attachmentEditSheet');
+            mountEditor('attachmentEditDescriptionEditor', 'Describe this attachment…')
+                .then((q) => { attachmentEditEditor = q; setEditorHtml(q, a ? (a.description || '') : ''); })
+                .catch((err) => toast(err.message, 'error'));
             return;
         }
         if (e.target.closest('.js-delete')) {
@@ -610,6 +669,7 @@
         }
     });
 
+    let attachmentEditEditor = null;
     document.getElementById('attachmentEditSaveBtn').addEventListener('click', async () => {
         const id = document.getElementById('attachmentEditId').value;
         if (!id) return;
@@ -618,7 +678,7 @@
         try {
             const res = await api(URLS.attachmentUpdate(id), {
                 method: 'PUT',
-                body: { description: document.getElementById('attachmentEditDescription').value.trim() || null },
+                body: { description: editorHtml(attachmentEditEditor) || null },
             });
             ATTACHMENTS[id] = res.data;
             const card = grid.querySelector('.attachment-card[data-id="' + id + '"]');
@@ -662,7 +722,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </button>
             </div>
-            <p class="grow min-w-0 text-sm text-gray-800 whitespace-pre-wrap pt-1 js-text">${escapeHtml(rule.ruleText)}</p>
+            <div class="grow min-w-0 text-sm text-gray-800 pt-1 rich-text js-text">${rule.ruleText}</div>
             <div class="flex gap-1 shrink-0">
                 <button type="button" class="btn btn-sm btn-ghost js-edit" aria-label="Edit rule">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
@@ -720,11 +780,14 @@
     });
 
     /* --- sheet open helpers --- */
-    function openRuleSheet(id = null, text = '') {
+    let ruleEditor = null;
+    function openRuleSheet(id = null, html = '') {
         document.getElementById('ruleEditId').value = id || '';
         document.getElementById('ruleSheetTitle').textContent = id ? 'Edit Critical Rule' : 'Add Critical Rule';
-        document.getElementById('ruleText').value = text;
         openSheet('ruleSheet');
+        mountEditor('ruleTextEditor', 'e.g. NEVER spray when winds exceed 15 km/h.')
+            .then((q) => { ruleEditor = q; setEditorHtml(q, html); })
+            .catch((e) => toast(e.message, 'error'));
     }
     document.querySelectorAll('[data-rule-add]').forEach((btn) => {
         btn.addEventListener('click', () => openRuleSheet(null));
@@ -733,19 +796,19 @@
     /* --- save (store / update) --- */
     document.getElementById('ruleSaveBtn').addEventListener('click', async () => {
         const id = document.getElementById('ruleEditId').value;
-        const text = document.getElementById('ruleText').value.trim();
-        if (!text) { toast('Enter the rule text.', 'error'); return; }
+        const html = editorHtml(ruleEditor);
+        if (!html) { toast('Enter the rule text.', 'error'); return; }
 
         const btn = document.getElementById('ruleSaveBtn');
         btn.disabled = true;
         try {
             const res = await api(id ? URLS.ruleUpdate(id) : URLS.ruleStore, {
                 method: id ? 'PUT' : 'POST',
-                body: { ruleText: text },
+                body: { ruleText: html },
             });
             if (id) {
                 const row = rulesList.querySelector('.rule-row[data-id="' + id + '"]');
-                if (row) row.querySelector('.js-text').textContent = res.data.ruleText;
+                if (row) row.querySelector('.js-text').innerHTML = res.data.ruleText;
             } else {
                 rulesList.appendChild(renderRuleRow(res.data));
             }
@@ -776,7 +839,7 @@
             return;
         }
         if (e.target.closest('.js-edit')) {
-            openRuleSheet(id, row.querySelector('.js-text').textContent);
+            openRuleSheet(id, row.querySelector('.js-text').innerHTML);
             return;
         }
         if (e.target.closest('.js-delete')) {

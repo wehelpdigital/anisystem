@@ -888,6 +888,13 @@
             padding: 7px 16px; border-radius: 5px;
             font-weight: 600;
         }
+        /* Rich-text (WYSIWYG) content rendered inline — neutralise the
+           editor's paragraph wrapping so it sits flush in list items / cells. */
+        .rich-inline > :first-child { margin-top: 0; }
+        .rich-inline > :last-child { margin-bottom: 0; }
+        .rich-inline p { margin: 0 0 4px; }
+        .rich-inline ul, .rich-inline ol { margin: 2px 0; padding-left: 18px; }
+        .rich-inline a { color: #2c3e8c; text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -974,7 +981,7 @@
                         <h2>Critical Rules &mdash; Read Every Time</h2>
                         <ol>
                             @foreach($criticalRules as $rule)
-                                <li>{{ $rule->ruleText }}</li>
+                                <li class="rich-inline">{!! $rule->ruleText !!}</li>
                             @endforeach
                         </ol>
                     </div>
@@ -1299,7 +1306,7 @@
             <h2><i class="bx bx-flag"></i> Critical Rules</h2>
             <ol>
                 @foreach($criticalRules as $rule)
-                    <li>{{ $rule->ruleText }}</li>
+                    <li class="rich-inline">{!! $rule->ruleText !!}</li>
                 @endforeach
             </ol>
             <button class="cv-modal-close" type="button">Close</button>
