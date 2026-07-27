@@ -116,11 +116,11 @@
         </div>
         <div class="mb-2">
             <label class="form-label">Price <span class="text-red-500">*</span></label>
-            <div class="flex items-center gap-2 flex-wrap">
-                <span class="text-gray-600 font-semibold">₱</span>
-                <input type="number" id="materialAmount" class="form-input flex-1 min-w-[7rem]" step="0.01" min="0" value="0" inputmode="decimal">
+            <div class="flex items-center gap-2">
+                <span class="text-gray-600 font-semibold shrink-0">₱</span>
+                <input type="number" id="materialAmount" class="form-input flex-1 min-w-0!" step="0.01" min="0" value="0" inputmode="decimal">
                 <span class="text-gray-500 text-sm shrink-0">per</span>
-                <input type="number" id="materialQuantity" class="form-input w-24" step="0.0001" min="0.0001" value="1" inputmode="decimal">
+                <input type="number" id="materialQuantity" class="form-input w-20! shrink-0" step="0.0001" min="0.0001" value="1" inputmode="decimal">
                 <span class="text-sm font-semibold text-gray-700 shrink-0" id="materialUnitMirror">kg</span>
             </div>
             <p class="form-hint">e.g. ₱ 3,000.00 per 50 kg — the price of one purchase pack.</p>
