@@ -588,6 +588,39 @@ html.dark .rich-editor .ql-toolbar.ql-snow { background: var(--color-gray-100); 
     width: 2.5rem; height: 2.5rem; border-radius: .75rem; flex-shrink: 0;
 }
 
+/* Unified documentation entries — type badges + file chips.          */
+.doc-badge {
+    display: inline-flex; align-items: center; gap: .25rem;
+    padding: .1rem .5rem; border-radius: .5rem;
+    font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .02em;
+}
+.doc-badge-introduction { background: #e8effb; color: #2c3e8c; }
+.doc-badge-critical_rule { background: #fdeaea; color: #9c1c1c; }
+.doc-badge-custom { background: var(--color-gray-100); color: var(--color-gray-600); }
+html.dark .doc-badge-introduction { background: #26324d; color: #aec4ef; }
+html.dark .doc-badge-critical_rule { background: #3a2323; color: #f0a6a6; }
+
+.doc-file-chip {
+    display: inline-flex; align-items: center; gap: .5rem;
+    max-width: 15rem; padding: .35rem .55rem;
+    border: 1px solid var(--color-gray-200); border-radius: .6rem;
+    background: var(--color-white); text-decoration: none;
+}
+.doc-file-chip:hover { border-color: var(--color-brand-300); background: var(--color-brand-50); }
+.doc-file-ext {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.75rem; height: 1.75rem; border-radius: .4rem; flex-shrink: 0;
+    background: var(--color-brand-50); color: var(--color-brand-700);
+    font-size: .55rem; font-weight: 800;
+}
+.doc-file-new { border-style: dashed; }
+.doc-file-x {
+    margin-left: .1rem; width: 1.15rem; height: 1.15rem; flex-shrink: 0;
+    border-radius: 9999px; color: var(--color-gray-400);
+    font-size: .7rem; line-height: 1; cursor: pointer;
+}
+.doc-file-x:hover { color: #dc2626; background: #fdeaea; }
+
 /* ------------------------------------------------------------------ */
 /* Public share pages (layouts.share)                                 */
 /* Self-contained — these pages load only app.css, not the SPA's      */

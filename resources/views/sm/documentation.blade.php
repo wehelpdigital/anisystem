@@ -13,29 +13,38 @@
 @section('content')
 @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'documentation'])
 
-<div x-data="{ tab: 'protocol' }">
+<div x-data="{ tab: 'documents' }">
 
-    {{-- Sub-tab pills (horizontal scroll on mobile) --}}
+    {{-- Sub-tab pills --}}
     <div class="scroll-chips mb-4">
+        <button type="button" class="chip shrink-0" :class="tab === 'documents' && 'is-selected'" @click="tab = 'documents'">
+            Documents
+            <span class="badge badge-gray" id="docCount">{{ $schedule->docEntries->count() }}</span>
+        </button>
         <button type="button" class="chip shrink-0" :class="tab === 'protocol' && 'is-selected'" @click="tab = 'protocol'">
             Protocol
         </button>
-        <button type="button" class="chip shrink-0" :class="tab === 'intro' && 'is-selected'"
-            @click="tab = 'intro'; document.dispatchEvent(new CustomEvent('doc-intro-shown'))">
-            Introduction
-        </button>
-        <button type="button" class="chip shrink-0" :class="tab === 'attachments' && 'is-selected'" @click="tab = 'attachments'">
-            Attachments
-            <span class="badge badge-gray" id="docAttachmentsCount">{{ $schedule->attachments->count() }}</span>
-        </button>
-        <button type="button" class="chip shrink-0" :class="tab === 'rules' && 'is-selected'" @click="tab = 'rules'">
-            Critical Rules
-            <span class="badge badge-gray" id="docRulesCount">{{ $schedule->criticalRules->count() }}</span>
-        </button>
     </div>
 
-    {{-- ============================== 1) PROTOCOL ============================== --}}
-    <div x-show="tab === 'protocol'">
+    {{-- ============================== DOCUMENTS ============================== --}}
+    <div x-show="tab === 'documents'">
+        <button type="button" class="btn btn-primary w-full mb-4 hidden md:inline-flex" data-doc-add>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+            Add Document
+        </button>
+
+        <div id="docList" class="space-y-3" data-animate-list></div>
+
+        <div class="card p-8 text-center hidden mt-3" id="docEmpty">
+            <svg class="w-12 h-12 mx-auto text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            <p class="font-semibold text-gray-700 mt-3">No documents yet</p>
+            <p class="text-sm text-gray-500 mt-1">Add an introduction, a critical rule, or any tagged reference — each with rich text and files.</p>
+            <button type="button" class="btn btn-primary mt-4" data-doc-add>Add Document</button>
+        </div>
+    </div>
+
+    {{-- ============================== PROTOCOL ============================== --}}
+    <div x-show="tab === 'protocol'" x-cloak>
         <div class="card p-4 sm:p-6">
             <div class="flex items-start gap-3 mb-4">
                 <span class="doc-section-icon bg-brand-50 text-brand-600">
@@ -73,144 +82,8 @@
         </div>
     </div>
 
-    {{-- ============================ 2) INTRODUCTION ============================ --}}
-    <div x-show="tab === 'intro'" x-cloak>
-        <div class="card p-4 sm:p-6">
-            <h2 class="font-bold text-gray-900 text-lg">Introduction</h2>
-            <p class="text-sm text-gray-500 mt-1 mb-4">
-                Rich-text introduction shown to workers above the activity timeline.
-                @if ($activeVersion)
-                    Stored on the active version <span class="badge badge-green">{{ $activeVersion->versionName }}</span>
-                @endif
-            </p>
-
-            @if ($activeVersion)
-                <div id="introIdle">
-                    <div id="introPreview" class="rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm text-gray-800 overflow-x-auto">
-                        @if (filled($activeVersion->globalActivityNote))
-                            {!! $activeVersion->globalActivityNote !!}
-                        @else
-                            <p class="text-gray-400 italic">No introduction yet.</p>
-                        @endif
-                    </div>
-                    <div class="flex flex-wrap gap-2 mt-3">
-                        <button type="button" class="btn btn-primary" id="introEditBtn">Edit Introduction</button>
-                        <button type="button" class="btn btn-danger-outline {{ filled($activeVersion->globalActivityNote) ? '' : 'hidden' }}" id="introClearBtn">Clear</button>
-                    </div>
-                </div>
-                <div id="introEditWrap" class="hidden">
-                    <div class="rounded-xl border border-gray-200 overflow-hidden bg-white">
-                        <div id="introEditor" style="min-height: 14rem;"></div>
-                    </div>
-                    <div class="flex flex-wrap gap-2 mt-3 justify-end">
-                        <button type="button" class="btn btn-ghost" id="introCancelBtn">Cancel</button>
-                        <button type="button" class="btn btn-primary" id="introSaveBtn">Save Introduction</button>
-                    </div>
-                </div>
-            @else
-                <p class="text-sm text-gray-500">No activity version exists for this schedule yet — the Introduction becomes available once the schedule has its first version (created automatically with your first activity).</p>
-            @endif
-        </div>
-    </div>
-
-    {{-- ============================ 3) ATTACHMENTS ============================ --}}
-    <div x-show="tab === 'attachments'" x-cloak>
-        <button type="button" class="btn btn-primary w-full mb-4 hidden md:inline-flex" data-attachment-upload>
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 16V4m0 0L8 8m4-4l4 4"/></svg>
-            Upload Attachment
-        </button>
-
-        <div id="attachmentsGrid" data-animate-list style="display:grid; grid-template-columns:repeat(auto-fill, minmax(160px, 1fr)); gap:0.75rem;">
-            @foreach ($schedule->attachments as $a)
-                @php $ext = strtoupper(pathinfo($a->filename, PATHINFO_EXTENSION) ?: 'FILE'); @endphp
-                <div class="card overflow-hidden attachment-card" data-id="{{ $a->id }}">
-                    <div class="h-[130px] bg-gray-100 flex items-center justify-center overflow-hidden">
-                        @if ($a->isImage() && $a->getPublicUrl())
-                            <img src="{{ $a->getPublicUrl() }}" alt="{{ $a->filename }}" class="w-full h-full object-cover" loading="lazy">
-                        @else
-                            <div class="flex flex-col items-center gap-1.5 text-gray-400">
-                                <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                <span class="badge badge-gray uppercase">{{ $ext }}</span>
-                            </div>
-                        @endif
-                    </div>
-                    <div class="p-3">
-                        <p class="text-sm font-semibold text-gray-900 truncate js-filename" title="{{ $a->filename }}">{{ $a->filename }}</p>
-                        <p class="text-xs text-gray-400 mt-0.5">{{ number_format($a->fileSize / 1024, 1) }} KB</p>
-                        @if (filled($a->description))
-                            <div class="rich-mini text-xs text-gray-500 mt-1 line-clamp-3 js-desc">{!! $a->description !!}</div>
-                        @else
-                            <p class="text-xs text-gray-400 italic mt-1 js-desc">No description.</p>
-                        @endif
-                        <div class="flex gap-1 mt-2">
-                            <button type="button" class="btn btn-sm btn-ghost js-edit" aria-label="Edit description">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                            </button>
-                            <button type="button" class="btn btn-sm btn-ghost text-red-600 js-delete" aria-label="Delete attachment">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-
-        <div class="card p-8 text-center {{ $schedule->attachments->isEmpty() ? '' : 'hidden' }} mt-3" id="attachmentsEmpty">
-            <svg class="w-12 h-12 mx-auto text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A1.5 1.5 0 0021.75 19.5V4.5A1.5 1.5 0 0020.25 3H3.75A1.5 1.5 0 002.25 4.5v15A1.5 1.5 0 003.75 21zM8.25 8.25h.008v.008H8.25V8.25z"/></svg>
-            <p class="font-semibold text-gray-700 mt-3">No attachments yet</p>
-            <p class="text-sm text-gray-500 mt-1">Upload reference photos or PDFs — mixing charts, labels, field maps.</p>
-            <button type="button" class="btn btn-primary mt-4" data-attachment-upload>Upload Attachment</button>
-        </div>
-    </div>
-
-    {{-- =========================== 4) CRITICAL RULES =========================== --}}
-    <div x-show="tab === 'rules'" x-cloak>
-        <button type="button" class="btn btn-primary w-full mb-4 hidden md:inline-flex" data-rule-add>
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-            Add Critical Rule
-        </button>
-
-        <div id="rulesList" class="space-y-2" data-animate-list>
-            @foreach ($schedule->criticalRules as $rule)
-                <div class="rule-row border-l-4 border-red-400 bg-red-50 rounded-xl p-3 flex items-start gap-2" draggable="true" data-id="{{ $rule->id }}">
-                    <div class="rule-handle hidden md:flex items-center text-red-300 cursor-grab pt-1 shrink-0" title="Drag to reorder">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg>
-                    </div>
-                    <div class="flex flex-col gap-1 md:hidden shrink-0">
-                        <button type="button" class="p-1.5 rounded-lg bg-white/80 border border-red-100 text-gray-500 js-up" aria-label="Move up">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
-                        </button>
-                        <button type="button" class="p-1.5 rounded-lg bg-white/80 border border-red-100 text-gray-500 js-down" aria-label="Move down">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                        </button>
-                    </div>
-                    <div class="grow min-w-0 text-sm text-gray-800 pt-1 rich-text js-text">{!! $rule->ruleText !!}</div>
-                    <div class="flex gap-1 shrink-0">
-                        <button type="button" class="btn btn-sm btn-ghost js-edit" aria-label="Edit rule">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                        </button>
-                        <button type="button" class="btn btn-sm btn-ghost text-red-600 js-delete" aria-label="Delete rule">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                        </button>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-
-        <div class="card p-8 text-center {{ $schedule->criticalRules->isEmpty() ? '' : 'hidden' }} mt-3" id="rulesEmpty">
-            <svg class="w-12 h-12 mx-auto text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
-            <p class="font-semibold text-gray-700 mt-3">No critical rules yet</p>
-            <p class="text-sm text-gray-500 mt-1">Season-long reminders that print at the top of every worker document.</p>
-            <button type="button" class="btn btn-primary mt-4" data-rule-add>Add Critical Rule</button>
-        </div>
-    </div>
-
-    {{-- Context-aware mobile FABs --}}
-    <button type="button" x-show="tab === 'attachments'" x-cloak data-attachment-upload aria-label="Upload attachment"
-        class="fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full btn-primary shadow-lg md:hidden flex items-center justify-center bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 16V4m0 0L8 8m4-4l4 4"/></svg>
-    </button>
-    <button type="button" x-show="tab === 'rules'" x-cloak data-rule-add aria-label="Add critical rule"
+    {{-- Mobile FAB (documents) --}}
+    <button type="button" x-show="tab === 'documents'" data-doc-add aria-label="Add document"
         class="fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full btn-primary shadow-lg md:hidden flex items-center justify-center bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
     </button>
@@ -218,98 +91,88 @@
 @endsection
 
 @push('sheets')
-{{-- Upload attachment --}}
-<div class="sheet hidden" id="attachmentUploadSheet" style="--sheet-width:32rem">
+{{-- Add / edit document --}}
+<div class="sheet hidden" id="docSheet" style="--sheet-width:36rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Upload Attachment</h3>
+        <h3 class="sheet-title" id="docSheetTitle">Add Document</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
+        <input type="hidden" id="docId" value="">
+
         <div class="mb-4">
-            <label class="form-label" for="attachmentFile">File <span class="text-red-500">*</span></label>
-            <input type="file" id="attachmentFile" accept="image/jpeg,image/png,image/gif,image/webp,application/pdf"
-                class="flex items-center w-full text-sm text-gray-600 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:text-brand-700 file:font-semibold file:px-4 file:py-2.5 file:cursor-pointer cursor-pointer">
-            <p class="form-hint">JPG, PNG, GIF, WebP or PDF — max 10 MB.</p>
+            <label class="form-label" for="docType">Type <span class="text-red-500">*</span></label>
+            <select id="docType" class="form-select"></select>
         </div>
-        <div class="mb-2">
-            <label class="form-label">Description</label>
+
+        {{-- New-tag inline creator (shown when "+ Add new tag" is picked) --}}
+        <div class="mb-4 hidden" id="docNewTagWrap">
+            <label class="form-label" for="docNewTag">New tag name</label>
+            <div class="flex items-center gap-2">
+                <input type="text" id="docNewTag" class="form-input flex-1 min-w-0!" maxlength="100" placeholder="e.g. Mixing Chart">
+                <button type="button" class="btn btn-white shrink-0" id="docNewTagAdd">Add</button>
+            </div>
+            <p class="form-hint">Saved to this schedule so you can pick it again later.</p>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label" for="docTitle">Title <span class="text-gray-400 font-normal">(optional)</span></label>
+            <input type="text" id="docTitle" class="form-input" maxlength="255" placeholder="e.g. Foliar mixing chart">
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Content</label>
             <div class="rich-editor">
-                <div id="attachmentDescriptionEditor"></div>
+                <div id="docContentEditor"></div>
             </div>
         </div>
-        <div class="hidden mt-3" id="attachmentProgressWrap">
-            <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div id="attachmentProgressBar" class="h-full bg-brand-600 rounded-full transition-all duration-150" style="width:0%"></div>
-            </div>
-            <p class="text-xs text-gray-500 mt-1" id="attachmentProgressLabel">Uploading… 0%</p>
-        </div>
-    </div>
-    <div class="sheet-footer">
-        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
-        <button type="button" class="btn btn-primary" id="attachmentUploadBtn">Upload</button>
-    </div>
-</div>
 
-{{-- Edit attachment description --}}
-<div class="sheet hidden" id="attachmentEditSheet" style="--sheet-width:28rem">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header">
-        <h3 class="sheet-title">Edit Description</h3>
-        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
-    </div>
-    <div class="sheet-body">
-        <input type="hidden" id="attachmentEditId" value="">
-        <p class="text-sm font-semibold text-gray-700 truncate mb-2" id="attachmentEditFilename"></p>
-        <div class="rich-editor">
-            <div id="attachmentEditDescriptionEditor"></div>
+        <div class="mb-2">
+            <label class="form-label">Files <span class="text-gray-400 font-normal">(optional)</span></label>
+            <input type="file" id="docFiles" multiple accept="image/*,.pdf,.doc,.docx,.txt,.xls,.xlsx"
+                class="flex items-center w-full text-sm text-gray-600 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:text-brand-700 file:font-semibold file:px-4 file:py-2.5 file:cursor-pointer cursor-pointer">
+            <p class="form-hint">Add any number of files — images, PDF, Word, Excel or TXT. Max 10 MB each.</p>
+            <div id="docFileList" class="flex flex-wrap gap-2 mt-3"></div>
         </div>
-        <p class="form-hint">The file itself can't be changed — delete and re-upload to replace it.</p>
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
-        <button type="button" class="btn btn-primary" id="attachmentEditSaveBtn">Save</button>
-    </div>
-</div>
-
-{{-- Add / edit critical rule --}}
-<div class="sheet hidden" id="ruleSheet" style="--sheet-width:32rem">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header">
-        <h3 class="sheet-title" id="ruleSheetTitle">Add Critical Rule</h3>
-        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
-    </div>
-    <div class="sheet-body">
-        <input type="hidden" id="ruleEditId" value="">
-        <label class="form-label">Rule <span class="text-red-500">*</span></label>
-        <div class="rich-editor">
-            <div id="ruleTextEditor"></div>
-        </div>
-        <p class="form-hint">Printed prominently on every worker document.</p>
-    </div>
-    <div class="sheet-footer">
-        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
-        <button type="button" class="btn btn-primary" id="ruleSaveBtn">Save Rule</button>
+        <button type="button" class="btn btn-primary" id="docSaveBtn">Save Document</button>
     </div>
 </div>
 @endpush
 
 @push('scripts')
+@php
+    // Shape each entry for the front-end: resolve the label + public file URLs.
+    $docEntriesSeed = $schedule->docEntries->mapWithKeys(fn ($e) => [$e->id => [
+        'id' => $e->id,
+        'type' => $e->type,
+        'tagId' => $e->tagId,
+        'typeLabel' => $e->type_label,
+        'title' => $e->title,
+        'content' => $e->content,
+        'files' => collect($e->files ?? [])->map(fn ($f) => [
+            'path' => $f['path'] ?? null,
+            'name' => $f['name'] ?? 'file',
+            'size' => (int) ($f['size'] ?? 0),
+            'mime' => $f['mime'] ?? null,
+            'url' => isset($f['path']) ? Storage::disk('public')->url($f['path']) : null,
+            'isImage' => isset($f['mime']) && str_starts_with((string) $f['mime'], 'image/'),
+        ])->values(),
+    ]]);
+    $docTagsSeed = $schedule->docTags->map(fn ($t) => ['id' => $t->id, 'name' => $t->name])->values();
+@endphp
 <script>
 (function () {
     const SCHEDULE_ID = @json($schedule->id);
-    const CSRF = document.querySelector('meta[name="csrf-token"]')?.content || '';
-    const ACTIVE_VERSION_ID = @json($activeVersion?->id);
     const URLS = {
         protocolSave: @json(route('sm.protocol.save')) + '?scheduleId=' + SCHEDULE_ID,
-        globalNote: @json(route('sm.activity-versions.global-note')) + '?scheduleId=' + SCHEDULE_ID + '&id=' + ACTIVE_VERSION_ID,
-        attachmentStore: @json(route('sm.attachments.store')) + '?scheduleId=' + SCHEDULE_ID,
-        attachmentUpdate: (id) => @json(route('sm.attachments.update')) + '?scheduleId=' + SCHEDULE_ID + '&id=' + id,
-        attachmentDestroy: (id) => @json(route('sm.attachments.destroy')) + '?scheduleId=' + SCHEDULE_ID + '&id=' + id,
-        ruleStore: @json(route('sm.critical-rules.store')) + '?scheduleId=' + SCHEDULE_ID,
-        ruleUpdate: (id) => @json(route('sm.critical-rules.update')) + '?scheduleId=' + SCHEDULE_ID + '&id=' + id,
-        ruleDestroy: (id) => @json(route('sm.critical-rules.destroy')) + '?scheduleId=' + SCHEDULE_ID + '&id=' + id,
-        ruleReorder: @json(route('sm.critical-rules.reorder')) + '?scheduleId=' + SCHEDULE_ID,
+        docStore: @json(route('sm.doc-entries.store')) + '?scheduleId=' + SCHEDULE_ID,
+        docUpdate: (id) => @json(route('sm.doc-entries.update')) + '?scheduleId=' + SCHEDULE_ID + '&id=' + id,
+        docDestroy: (id) => @json(route('sm.doc-entries.destroy')) + '?scheduleId=' + SCHEDULE_ID + '&id=' + id,
+        tagStore: @json(route('sm.doc-tags.store')) + '?scheduleId=' + SCHEDULE_ID,
     };
 
     /* ================================================================= */
@@ -340,7 +203,6 @@
         ['clean'],
     ];
     const _editors = {};
-    /** Lazily create (once) a Quill editor on the given element id. */
     async function mountEditor(elId, placeholder = '') {
         await ensureQuill();
         if (!_editors[elId]) {
@@ -356,17 +218,15 @@
         q.setContents([]);
         if (html && html.trim() !== '') q.clipboard.dangerouslyPasteHTML(html);
     }
-    /** Editor HTML, or '' when the editor holds no visible text. */
     function editorHtml(q) {
         return q && q.getText().trim() !== '' ? q.root.innerHTML : '';
     }
 
     /* ================================================================= */
-    /* 1) Protocol                                                       */
+    /* Protocol                                                          */
     /* ================================================================= */
     let PROTOCOL_HTML = @json($protocol->protocolContent ?? '');
     let protocolEditor = null;
-    // The Protocol tab is the default view, so mount its editor on load.
     mountEditor('protocolEditor', 'Write or paste the protocol here…')
         .then((q) => { protocolEditor = q; setEditorHtml(q, PROTOCOL_HTML); })
         .catch(() => {});
@@ -398,270 +258,263 @@
     });
 
     /* ================================================================= */
-    /* 2) Introduction (Quill 2, lazy-loaded from CDN)                   */
+    /* Documents (unified: introduction / critical rule / custom tag)    */
     /* ================================================================= */
-    let quill = null;
-    let INTRO_HTML = @json($activeVersion?->globalActivityNote ?? '');
+    const ENTRIES = @json($docEntriesSeed->isEmpty() ? new stdClass() : $docEntriesSeed);
+    let TAGS = @json($docTagsSeed);
 
-    /* Preload assets the first time the Introduction tab is shown. */
-    document.addEventListener('doc-intro-shown', () => { ensureQuill().catch(() => {}); }, { once: true });
+    const BUILTIN = [
+        { value: 'introduction', label: 'Introduction' },
+        { value: 'critical_rule', label: 'Critical Rule' },
+    ];
+    const TYPE_CLASS = { introduction: 'doc-badge-introduction', critical_rule: 'doc-badge-critical_rule', custom: 'doc-badge-custom' };
 
-    const introIdle = document.getElementById('introIdle');
-    const introEditWrap = document.getElementById('introEditWrap');
-    const introPreview = document.getElementById('introPreview');
-    const introClearBtn = document.getElementById('introClearBtn');
+    const listEl = document.getElementById('docList');
+    const emptyEl = document.getElementById('docEmpty');
+    const countEl = document.getElementById('docCount');
+    const fld = (id) => document.getElementById(id);
 
-    function refreshIntroPreview() {
-        if (INTRO_HTML && INTRO_HTML.trim() !== '') {
-            introPreview.innerHTML = INTRO_HTML;
-            introClearBtn.classList.remove('hidden');
-        } else {
-            introPreview.innerHTML = '<p class="text-gray-400 italic">No introduction yet.</p>';
-            introClearBtn.classList.add('hidden');
-        }
+    const fmtSize = (bytes) => {
+        const n = Number(bytes || 0);
+        if (n < 1024) return n + ' B';
+        if (n < 1024 * 1024) return (n / 1024).toFixed(1) + ' KB';
+        return (n / (1024 * 1024)).toFixed(1) + ' MB';
+    };
+    const ext = (name) => ((name || '').split('.').pop() || 'FILE').toUpperCase().slice(0, 4);
+
+    function fileChipHtml(f) {
+        const inner = f.isImage && f.url
+            ? `<img src="${escapeHtml(f.url)}" alt="${escapeHtml(f.name)}" class="w-7 h-7 rounded object-cover shrink-0">`
+            : `<span class="doc-file-ext">${escapeHtml(ext(f.name))}</span>`;
+        const open = f.url ? ` href="${escapeHtml(f.url)}" target="_blank" rel="noopener"` : '';
+        return `<a class="doc-file-chip"${open}>
+            ${inner}
+            <span class="min-w-0">
+                <span class="block truncate text-xs font-semibold text-gray-800">${escapeHtml(f.name)}</span>
+                <span class="block text-[10px] text-gray-400">${escapeHtml(fmtSize(f.size))}</span>
+            </span>
+        </a>`;
     }
 
-    async function saveIntro(html) {
-        const res = await api(URLS.globalNote, { method: 'POST', body: { globalActivityNote: html } });
-        INTRO_HTML = (res.data && res.data.globalActivityNote) || '';
-        refreshIntroPreview();
-        return res;
-    }
-
-    if (ACTIVE_VERSION_ID) {
-        document.getElementById('introEditBtn').addEventListener('click', async () => {
-            const btn = document.getElementById('introEditBtn');
-            btn.disabled = true;
-            try {
-                await ensureQuill();
-                if (!quill) {
-                    quill = new Quill('#introEditor', {
-                        theme: 'snow',
-                        placeholder: 'Write the introduction…',
-                        modules: {
-                            toolbar: [
-                                [{ header: [1, 2, 3, false] }],
-                                ['bold', 'italic', 'underline'],
-                                [{ list: 'ordered' }, { list: 'bullet' }],
-                                ['link'],
-                                ['clean'],
-                            ],
-                        },
-                    });
-                }
-                quill.setContents([]);
-                if (INTRO_HTML) quill.clipboard.dangerouslyPasteHTML(INTRO_HTML);
-                introIdle.classList.add('hidden');
-                introEditWrap.classList.remove('hidden');
-            } catch (e) {
-                toast(e.message, 'error');
-            } finally {
-                btn.disabled = false;
-            }
-        });
-
-        document.getElementById('introCancelBtn').addEventListener('click', () => {
-            introEditWrap.classList.add('hidden');
-            introIdle.classList.remove('hidden');
-        });
-
-        document.getElementById('introSaveBtn').addEventListener('click', async () => {
-            const btn = document.getElementById('introSaveBtn');
-            const html = quill && quill.getText().trim() !== '' ? quill.root.innerHTML : '';
-            btn.disabled = true;
-            try {
-                const res = await saveIntro(html);
-                introEditWrap.classList.add('hidden');
-                introIdle.classList.remove('hidden');
-                toast(res.message);
-            } catch (e) {
-                toast(e.message, 'error');
-            } finally {
-                btn.disabled = false;
-            }
-        });
-
-        introClearBtn.addEventListener('click', async () => {
-            const ok = await confirmAction({
-                title: 'Clear introduction?',
-                message: 'The rich-text introduction for the active version will be removed.',
-                confirmText: 'Clear',
-            });
-            if (!ok) return;
-            try {
-                const res = await saveIntro('');
-                toast(res.message);
-            } catch (e) {
-                toast(e.message, 'error');
-            }
-        });
-    }
-
-    /* ================================================================= */
-    /* 3) Attachments                                                    */
-    /* ================================================================= */
-    @php
-        $attachmentsSeed = $schedule->attachments->mapWithKeys(fn ($aa) => [$aa->id => [
-            'id' => $aa->id,
-            'filename' => $aa->filename,
-            'fileSize' => (int) $aa->fileSize,
-            'description' => $aa->description,
-            'url' => $aa->getPublicUrl(),
-            'isImage' => $aa->isImage(),
-        ]]);
-    @endphp
-    const ATTACHMENTS = @json($attachmentsSeed->isEmpty() ? new stdClass() : $attachmentsSeed);
-
-    const grid = document.getElementById('attachmentsGrid');
-    const attachmentsEmpty = document.getElementById('attachmentsEmpty');
-    const attachmentsCountEl = document.getElementById('docAttachmentsCount');
-
-    function refreshAttachmentsState() {
-        const n = grid.querySelectorAll('.attachment-card').length;
-        attachmentsEmpty.classList.toggle('hidden', n > 0);
-        attachmentsCountEl.textContent = n;
-    }
-
-    function renderAttachmentCard(a) {
-        const ext = ((a.filename || '').split('.').pop() || 'FILE').toUpperCase();
-        const el = document.createElement('div');
-        el.className = 'card overflow-hidden attachment-card';
-        el.dataset.id = a.id;
-        const thumb = a.isImage && a.url
-            ? `<img src="${escapeHtml(a.url)}" alt="${escapeHtml(a.filename)}" class="w-full h-full object-cover" loading="lazy">`
-            : `<div class="flex flex-col items-center gap-1.5 text-gray-400">
-                    <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                    <span class="badge badge-gray uppercase">${escapeHtml(ext)}</span>
-               </div>`;
-        const desc = a.description
-            ? `<div class="rich-mini text-xs text-gray-500 mt-1 line-clamp-3 js-desc">${a.description}</div>`
-            : `<p class="text-xs text-gray-400 italic mt-1 js-desc">No description.</p>`;
-        el.innerHTML = `
-            <div class="h-[130px] bg-gray-100 flex items-center justify-center overflow-hidden">${thumb}</div>
-            <div class="p-3">
-                <p class="text-sm font-semibold text-gray-900 truncate js-filename" title="${escapeHtml(a.filename)}">${escapeHtml(a.filename)}</p>
-                <p class="text-xs text-gray-400 mt-0.5">${fmtNumber(a.fileSize / 1024, 1)} KB</p>
-                ${desc}
-                <div class="flex gap-1 mt-2">
-                    <button type="button" class="btn btn-sm btn-ghost js-edit" aria-label="Edit description">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+    function entryCardHtml(e) {
+        const badgeClass = TYPE_CLASS[e.type] || 'doc-badge-custom';
+        const title = e.title ? `<span class="font-bold text-gray-900 leading-snug">${escapeHtml(e.title)}</span>` : '';
+        const content = e.content ? `<div class="rich-text text-sm text-gray-700 mt-2 js-content">${e.content}</div>` : '';
+        const files = (e.files && e.files.length)
+            ? `<div class="flex flex-wrap gap-2 mt-3 js-files">${e.files.map(fileChipHtml).join('')}</div>`
+            : '';
+        return `
+            <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0 grow">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="doc-badge ${badgeClass}">${escapeHtml(e.typeLabel)}</span>
+                        ${title}
+                    </div>
+                    ${content}
+                    ${files}
+                </div>
+                <div class="flex gap-1 shrink-0">
+                    <button type="button" class="btn btn-sm btn-ghost js-edit" aria-label="Edit document">
+                        <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     </button>
-                    <button type="button" class="btn btn-sm btn-ghost text-red-600 js-delete" aria-label="Delete attachment">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    <button type="button" class="btn btn-sm btn-ghost text-red-600 js-delete" aria-label="Delete document">
+                        <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                     </button>
                 </div>
             </div>`;
-        return el;
     }
 
-    /* --- upload sheet --- */
-    const progressWrap = document.getElementById('attachmentProgressWrap');
-    const progressBar = document.getElementById('attachmentProgressBar');
-    const progressLabel = document.getElementById('attachmentProgressLabel');
-    let uploading = false;
+    function upsertCard(e) {
+        let card = listEl.querySelector('.doc-entry-card[data-id="' + e.id + '"]');
+        if (!card) {
+            card = document.createElement('div');
+            card.className = 'card p-4 doc-entry-card';
+            card.dataset.id = e.id;
+            listEl.appendChild(card);
+        }
+        card.innerHTML = entryCardHtml(e);
+    }
 
-    let attachmentUploadEditor = null;
-    document.querySelectorAll('[data-attachment-upload]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-            document.getElementById('attachmentFile').value = '';
-            progressWrap.classList.add('hidden');
-            progressBar.style.width = '0%';
-            openSheet('attachmentUploadSheet');
-            mountEditor('attachmentDescriptionEditor', 'What is this? e.g. Foliar mixing chart for DAS 20–35…')
-                .then((q) => { attachmentUploadEditor = q; setEditorHtml(q, ''); })
-                .catch((e) => toast(e.message, 'error'));
-        });
+    function refreshEmptyState() {
+        const n = listEl.querySelectorAll('.doc-entry-card').length;
+        emptyEl.classList.toggle('hidden', n > 0);
+        countEl.textContent = n;
+    }
+
+    function renderAll() {
+        listEl.innerHTML = '';
+        Object.values(ENTRIES).forEach(upsertCard);
+        refreshEmptyState();
+    }
+
+    /* ---- type dropdown ---- */
+    function typeSelectValue(e) {
+        return e.type === 'custom' ? ('custom:' + e.tagId) : e.type;
+    }
+    function buildTypeOptions(selectedValue) {
+        const sel = fld('docType');
+        let html = '';
+        BUILTIN.forEach((b) => { html += `<option value="${b.value}">${escapeHtml(b.label)}</option>`; });
+        if (TAGS.length) {
+            html += '<optgroup label="Tags">';
+            TAGS.forEach((t) => { html += `<option value="custom:${t.id}">${escapeHtml(t.name)}</option>`; });
+            html += '</optgroup>';
+        }
+        html += '<option value="__new__">+ Add new tag…</option>';
+        sel.innerHTML = html;
+        if (selectedValue) sel.value = selectedValue;
+    }
+
+    fld('docType').addEventListener('change', () => {
+        const isNew = fld('docType').value === '__new__';
+        fld('docNewTagWrap').classList.toggle('hidden', !isNew);
+        if (isNew) fld('docNewTag').focus();
     });
 
-    document.getElementById('attachmentUploadBtn').addEventListener('click', () => {
-        if (uploading) return;
-        const fileInput = document.getElementById('attachmentFile');
-        if (!fileInput.files.length) { toast('Pick an image (or PDF) to upload.', 'error'); return; }
-        const file = fileInput.files[0];
-        if (file.size > 10 * 1024 * 1024) { toast('File is too large — max 10 MB.', 'error'); return; }
+    fld('docNewTagAdd').addEventListener('click', async () => {
+        const name = fld('docNewTag').value.trim();
+        if (!name) { toast('Enter a tag name.', 'error'); return; }
+        const btn = fld('docNewTagAdd');
+        btn.disabled = true;
+        try {
+            const res = await api(URLS.tagStore, { method: 'POST', body: { name } });
+            const tag = res.data;
+            if (!TAGS.some((t) => t.id === tag.id)) TAGS.push(tag);
+            buildTypeOptions('custom:' + tag.id);
+            fld('docNewTag').value = '';
+            fld('docNewTagWrap').classList.add('hidden');
+            toast(res.message);
+        } catch (e) {
+            toast(e.message, 'error');
+        } finally {
+            btn.disabled = false;
+        }
+    });
+
+    /* ---- files in the sheet: new picks + kept existing ---- */
+    let newFiles = [];   // File[]
+    let keepFiles = [];  // existing file objects to keep
+
+    function renderSheetFiles() {
+        const wrap = fld('docFileList');
+        const existing = keepFiles.map((f, i) => `
+            <span class="doc-file-chip" data-keep="${i}">
+                ${f.isImage && f.url ? `<img src="${escapeHtml(f.url)}" class="w-7 h-7 rounded object-cover shrink-0">` : `<span class="doc-file-ext">${escapeHtml(ext(f.name))}</span>`}
+                <span class="min-w-0"><span class="block truncate text-xs font-semibold text-gray-800">${escapeHtml(f.name)}</span><span class="block text-[10px] text-gray-400">${escapeHtml(fmtSize(f.size))}</span></span>
+                <button type="button" class="doc-file-x" data-remove-keep="${i}" aria-label="Remove">✕</button>
+            </span>`).join('');
+        const picked = newFiles.map((f, i) => `
+            <span class="doc-file-chip doc-file-new" data-new="${i}">
+                <span class="doc-file-ext">${escapeHtml(ext(f.name))}</span>
+                <span class="min-w-0"><span class="block truncate text-xs font-semibold text-gray-800">${escapeHtml(f.name)}</span><span class="block text-[10px] text-gray-400">${escapeHtml(fmtSize(f.size))}</span></span>
+                <button type="button" class="doc-file-x" data-remove-new="${i}" aria-label="Remove">✕</button>
+            </span>`).join('');
+        wrap.innerHTML = existing + picked;
+    }
+
+    fld('docFiles').addEventListener('change', (ev) => {
+        for (const f of ev.target.files) {
+            if (f.size > 10 * 1024 * 1024) { toast(`"${f.name}" is over 10 MB — skipped.`, 'error'); continue; }
+            newFiles.push(f);
+        }
+        ev.target.value = '';   // allow re-picking; we keep our own list
+        renderSheetFiles();
+    });
+
+    fld('docFileList').addEventListener('click', (ev) => {
+        const rn = ev.target.closest('[data-remove-new]');
+        const rk = ev.target.closest('[data-remove-keep]');
+        if (rn) { newFiles.splice(Number(rn.dataset.removeNew), 1); renderSheetFiles(); }
+        else if (rk) { keepFiles.splice(Number(rk.dataset.removeKeep), 1); renderSheetFiles(); }
+    });
+
+    /* ---- open sheet (add / edit) ---- */
+    let docEditor = null;
+    async function openDocSheet(entry = null) {
+        fld('docId').value = entry ? entry.id : '';
+        fld('docSheetTitle').textContent = entry ? 'Edit Document' : 'Add Document';
+        buildTypeOptions(entry ? typeSelectValue(entry) : 'introduction');
+        fld('docNewTagWrap').classList.add('hidden');
+        fld('docNewTag').value = '';
+        fld('docTitle').value = entry ? (entry.title || '') : '';
+        newFiles = [];
+        keepFiles = entry && entry.files ? entry.files.slice() : [];
+        renderSheetFiles();
+        openSheet('docSheet');
+        try {
+            docEditor = await mountEditor('docContentEditor', 'Write the document…');
+            setEditorHtml(docEditor, entry ? (entry.content || '') : '');
+        } catch (e) {
+            toast(e.message, 'error');
+        }
+    }
+
+    document.querySelectorAll('[data-doc-add]').forEach((btn) => btn.addEventListener('click', () => openDocSheet(null)));
+
+    /* ---- save ---- */
+    fld('docSaveBtn').addEventListener('click', async () => {
+        const id = fld('docId').value;
+        const typeVal = fld('docType').value;
+        if (typeVal === '__new__') { toast('Add the new tag first, or pick a type.', 'error'); return; }
+
+        let type = typeVal, tagId = null;
+        if (typeVal.startsWith('custom:')) { type = 'custom'; tagId = typeVal.slice(7); }
+
+        const content = editorHtml(docEditor);
+        const title = fld('docTitle').value.trim();
+        if (!content && !title && !newFiles.length && !keepFiles.length) {
+            toast('Add some text, a title, or a file.', 'error');
+            return;
+        }
 
         const fd = new FormData();
-        fd.append('file', file);
-        fd.append('description', editorHtml(attachmentUploadEditor));
+        fd.append('type', type);
+        if (tagId) fd.append('tagId', tagId);
+        fd.append('title', title);
+        fd.append('content', content);
+        newFiles.forEach((f) => fd.append('files[]', f));
+        keepFiles.forEach((f) => fd.append('keepPaths[]', f.path));
 
-        const btn = document.getElementById('attachmentUploadBtn');
-        uploading = true;
+        const btn = fld('docSaveBtn');
         btn.disabled = true;
-        progressWrap.classList.remove('hidden');
-        progressBar.style.width = '0%';
-        progressLabel.textContent = 'Uploading… 0%';
-
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', URLS.attachmentStore);
-        xhr.setRequestHeader('X-CSRF-TOKEN', CSRF);
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.setRequestHeader('Accept', 'application/json');
-
-        xhr.upload.onprogress = (e) => {
-            if (!e.lengthComputable) return;
-            const pct = Math.round((e.loaded / e.total) * 100);
-            progressBar.style.width = pct + '%';
-            progressLabel.textContent = pct >= 100 ? 'Processing…' : 'Uploading… ' + pct + '%';
-        };
-
-        const fail = (msg) => {
-            uploading = false;
+        try {
+            const res = await api(id ? URLS.docUpdate(id) : URLS.docStore, { method: 'POST', body: fd });
+            const e = res.data;
+            ENTRIES[e.id] = e;
+            upsertCard(e);
+            refreshEmptyState();
+            closeSheet('docSheet');
+            toast(res.message);
+        } catch (err) {
+            toast(err.message, 'error');
+        } finally {
             btn.disabled = false;
-            progressWrap.classList.add('hidden');
-            toast(msg, 'error');
-        };
-
-        xhr.onload = () => {
-            let json = null;
-            try { json = JSON.parse(xhr.responseText); } catch (e) { /* non-JSON */ }
-            if (xhr.status >= 200 && xhr.status < 300 && json && json.success) {
-                uploading = false;
-                btn.disabled = false;
-                ATTACHMENTS[json.data.id] = json.data;
-                grid.prepend(renderAttachmentCard(json.data));
-                refreshAttachmentsState();
-                closeSheet('attachmentUploadSheet');
-                toast(json.message);
-            } else {
-                const msg = (json && (json.message === 'Validation failed.' && json.errors
-                    ? Object.values(json.errors).flat()[0]
-                    : json.message)) || 'Upload failed (' + xhr.status + ').';
-                fail(msg);
-            }
-        };
-        xhr.onerror = () => fail('Upload failed — network error.');
-        xhr.send(fd);
+        }
     });
 
-    /* --- edit description / delete --- */
-    grid.addEventListener('click', async (e) => {
-        const card = e.target.closest('.attachment-card');
+    /* ---- row actions ---- */
+    listEl.addEventListener('click', async (e) => {
+        const card = e.target.closest('.doc-entry-card');
         if (!card) return;
         const id = card.dataset.id;
-        const a = ATTACHMENTS[id];
 
         if (e.target.closest('.js-edit')) {
-            document.getElementById('attachmentEditId').value = id;
-            document.getElementById('attachmentEditFilename').textContent = a ? a.filename : '';
-            openSheet('attachmentEditSheet');
-            mountEditor('attachmentEditDescriptionEditor', 'Describe this attachment…')
-                .then((q) => { attachmentEditEditor = q; setEditorHtml(q, a ? (a.description || '') : ''); })
-                .catch((err) => toast(err.message, 'error'));
+            openDocSheet(ENTRIES[id] || null);
             return;
         }
         if (e.target.closest('.js-delete')) {
+            const label = ENTRIES[id] ? (ENTRIES[id].title || ENTRIES[id].typeLabel) : 'this document';
             const ok = await confirmAction({
-                title: 'Delete attachment?',
-                message: '"' + (a ? a.filename : 'This file') + '" will be removed from the schedule.',
-                detail: 'The file itself stays on disk until a future cleanup.',
+                title: 'Delete document?',
+                message: '"' + label + '" will be removed from this schedule.',
                 confirmText: 'Delete',
             });
             if (!ok) return;
             try {
-                const res = await api(URLS.attachmentDestroy(id), { method: 'DELETE' });
-                delete ATTACHMENTS[id];
+                const res = await api(URLS.docDestroy(id), { method: 'DELETE' });
+                delete ENTRIES[id];
                 card.remove();
-                refreshAttachmentsState();
+                refreshEmptyState();
                 toast(res.message);
             } catch (err) {
                 toast(err.message, 'error');
@@ -669,197 +522,14 @@
         }
     });
 
-    let attachmentEditEditor = null;
-    document.getElementById('attachmentEditSaveBtn').addEventListener('click', async () => {
-        const id = document.getElementById('attachmentEditId').value;
-        if (!id) return;
-        const btn = document.getElementById('attachmentEditSaveBtn');
-        btn.disabled = true;
-        try {
-            const res = await api(URLS.attachmentUpdate(id), {
-                method: 'PUT',
-                body: { description: editorHtml(attachmentEditEditor) || null },
-            });
-            ATTACHMENTS[id] = res.data;
-            const card = grid.querySelector('.attachment-card[data-id="' + id + '"]');
-            if (card) card.replaceWith(renderAttachmentCard(res.data));
-            closeSheet('attachmentEditSheet');
-            toast(res.message);
-        } catch (e) {
-            toast(e.message, 'error');
-        } finally {
-            btn.disabled = false;
-        }
-    });
-
-    /* ================================================================= */
-    /* 4) Critical rules                                                 */
-    /* ================================================================= */
-    const rulesList = document.getElementById('rulesList');
-    const rulesEmpty = document.getElementById('rulesEmpty');
-    const rulesCountEl = document.getElementById('docRulesCount');
-
-    function refreshRulesState() {
-        const n = rulesList.querySelectorAll('.rule-row').length;
-        rulesEmpty.classList.toggle('hidden', n > 0);
-        rulesCountEl.textContent = n;
+    // app.js (deferred) defines the shared globals (escapeHtml/api/toast/…).
+    // It runs after this inline script, so hold the first render until the
+    // document is ready and those globals exist.
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', renderAll, { once: true });
+    } else {
+        renderAll();
     }
-
-    function renderRuleRow(rule) {
-        const el = document.createElement('div');
-        el.className = 'rule-row border-l-4 border-red-400 bg-red-50 rounded-xl p-3 flex items-start gap-2';
-        el.draggable = true;
-        el.dataset.id = rule.id;
-        el.innerHTML = `
-            <div class="rule-handle hidden md:flex items-center text-red-300 cursor-grab pt-1 shrink-0" title="Drag to reorder">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg>
-            </div>
-            <div class="flex flex-col gap-1 md:hidden shrink-0">
-                <button type="button" class="p-1.5 rounded-lg bg-white/80 border border-red-100 text-gray-500 js-up" aria-label="Move up">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
-                </button>
-                <button type="button" class="p-1.5 rounded-lg bg-white/80 border border-red-100 text-gray-500 js-down" aria-label="Move down">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                </button>
-            </div>
-            <div class="grow min-w-0 text-sm text-gray-800 pt-1 rich-text js-text">${rule.ruleText}</div>
-            <div class="flex gap-1 shrink-0">
-                <button type="button" class="btn btn-sm btn-ghost js-edit" aria-label="Edit rule">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                </button>
-                <button type="button" class="btn btn-sm btn-ghost text-red-600 js-delete" aria-label="Delete rule">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                </button>
-            </div>`;
-        return el;
-    }
-
-    /* --- persist order silently (toast only on error) --- */
-    async function persistRuleOrder() {
-        const items = [...rulesList.querySelectorAll('.rule-row')].map((r, i) => ({
-            id: parseInt(r.dataset.id, 10),
-            sortOrder: i + 1,
-        }));
-        if (!items.length) return;
-        try {
-            await api(URLS.ruleReorder, { method: 'POST', body: { items } });
-        } catch (e) {
-            toast('Failed to save order: ' + e.message, 'error');
-        }
-    }
-
-    /* --- HTML5 drag & drop (desktop) --- */
-    let dragEl = null;
-    let dragMoved = false;
-    rulesList.addEventListener('dragstart', (e) => {
-        const row = e.target.closest('.rule-row');
-        if (!row) return;
-        dragEl = row;
-        dragMoved = false;
-        row.classList.add('opacity-50');
-        e.dataTransfer.effectAllowed = 'move';
-        try { e.dataTransfer.setData('text/plain', row.dataset.id); } catch (err) { /* IE quirk */ }
-    });
-    rulesList.addEventListener('dragover', (e) => {
-        if (!dragEl) return;
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'move';
-        const row = e.target.closest('.rule-row');
-        if (!row || row === dragEl) return;
-        const rect = row.getBoundingClientRect();
-        const before = e.clientY < rect.top + rect.height / 2;
-        rulesList.insertBefore(dragEl, before ? row : row.nextSibling);
-        dragMoved = true;
-    });
-    rulesList.addEventListener('drop', (e) => { if (dragEl) e.preventDefault(); });
-    rulesList.addEventListener('dragend', () => {
-        if (!dragEl) return;
-        dragEl.classList.remove('opacity-50');
-        dragEl = null;
-        if (dragMoved) persistRuleOrder();
-    });
-
-    /* --- sheet open helpers --- */
-    let ruleEditor = null;
-    function openRuleSheet(id = null, html = '') {
-        document.getElementById('ruleEditId').value = id || '';
-        document.getElementById('ruleSheetTitle').textContent = id ? 'Edit Critical Rule' : 'Add Critical Rule';
-        openSheet('ruleSheet');
-        mountEditor('ruleTextEditor', 'e.g. NEVER spray when winds exceed 15 km/h.')
-            .then((q) => { ruleEditor = q; setEditorHtml(q, html); })
-            .catch((e) => toast(e.message, 'error'));
-    }
-    document.querySelectorAll('[data-rule-add]').forEach((btn) => {
-        btn.addEventListener('click', () => openRuleSheet(null));
-    });
-
-    /* --- save (store / update) --- */
-    document.getElementById('ruleSaveBtn').addEventListener('click', async () => {
-        const id = document.getElementById('ruleEditId').value;
-        const html = editorHtml(ruleEditor);
-        if (!html) { toast('Enter the rule text.', 'error'); return; }
-
-        const btn = document.getElementById('ruleSaveBtn');
-        btn.disabled = true;
-        try {
-            const res = await api(id ? URLS.ruleUpdate(id) : URLS.ruleStore, {
-                method: id ? 'PUT' : 'POST',
-                body: { ruleText: html },
-            });
-            if (id) {
-                const row = rulesList.querySelector('.rule-row[data-id="' + id + '"]');
-                if (row) row.querySelector('.js-text').innerHTML = res.data.ruleText;
-            } else {
-                rulesList.appendChild(renderRuleRow(res.data));
-            }
-            refreshRulesState();
-            closeSheet('ruleSheet');
-            toast(res.message);
-        } catch (e) {
-            toast(e.message, 'error');
-        } finally {
-            btn.disabled = false;
-        }
-    });
-
-    /* --- row actions: arrows / edit / delete --- */
-    rulesList.addEventListener('click', async (e) => {
-        const row = e.target.closest('.rule-row');
-        if (!row) return;
-        const id = row.dataset.id;
-
-        if (e.target.closest('.js-up')) {
-            const prev = row.previousElementSibling;
-            if (prev) { rulesList.insertBefore(row, prev); persistRuleOrder(); }
-            return;
-        }
-        if (e.target.closest('.js-down')) {
-            const next = row.nextElementSibling;
-            if (next) { rulesList.insertBefore(next, row); persistRuleOrder(); }
-            return;
-        }
-        if (e.target.closest('.js-edit')) {
-            openRuleSheet(id, row.querySelector('.js-text').innerHTML);
-            return;
-        }
-        if (e.target.closest('.js-delete')) {
-            const ok = await confirmAction({
-                title: 'Delete critical rule?',
-                message: 'This reminder will be removed from every worker document.',
-                confirmText: 'Delete',
-            });
-            if (!ok) return;
-            try {
-                const res = await api(URLS.ruleDestroy(id), { method: 'DELETE' });
-                row.remove();
-                refreshRulesState();
-                persistRuleOrder();
-                toast(res.message);
-            } catch (err) {
-                toast(err.message, 'error');
-            }
-        }
-    });
 })();
 </script>
 @endpush

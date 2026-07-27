@@ -14,18 +14,10 @@ class DocumentationController extends BaseScheduleController
     public function page(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request, 'id');
-        $schedule->load(['protocol', 'attachments', 'criticalRules', 'versions']);
-
-        // Active version resolution mirrors the mother app's fallback
-        // chain: isActive -> isOriginal -> first (may be null when the
-        // schedule has no versions yet).
-        $activeVersion = $schedule->versions->first(fn ($v) => $v->isActive)
-            ?? $schedule->versions->first(fn ($v) => $v->isOriginal)
-            ?? $schedule->versions->first();
+        $schedule->load(['protocol', 'docTags', 'docEntries.tag']);
 
         return view('sm.documentation', [
             'schedule' => $schedule,
-            'activeVersion' => $activeVersion,
         ]);
     }
 }

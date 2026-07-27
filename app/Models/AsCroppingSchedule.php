@@ -89,6 +89,20 @@ class AsCroppingSchedule extends BaseModel
         return $this->hasMany(AsScheduleService::class, 'croppingScheduleId')->where('as_schedule_services.deleteStatus', 1);
     }
 
+    public function docTags()
+    {
+        return $this->hasMany(AsScheduleDocTag::class, 'croppingScheduleId')
+            ->where('as_schedule_doc_tags.deleteStatus', 1)
+            ->orderBy('sortOrder')->orderBy('name');
+    }
+
+    public function docEntries()
+    {
+        return $this->hasMany(AsScheduleDocEntry::class, 'croppingScheduleId')
+            ->where('as_schedule_doc_entries.deleteStatus', 1)
+            ->orderBy('sortOrder')->orderBy('id');
+    }
+
     public function versions()
     {
         return $this->hasMany(AsScheduleActivityVersion::class, 'croppingScheduleId')

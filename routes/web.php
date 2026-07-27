@@ -157,6 +157,12 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-critical-rules-delete', [App\Http\Controllers\Manager\CriticalRuleController::class, 'destroy'])->name('sm.critical-rules.destroy');
     Route::post('/app/sm-critical-rules-reorder', [App\Http\Controllers\Manager\CriticalRuleController::class, 'reorder'])->name('sm.critical-rules.reorder');
 
+    // --- Documentation entries (unified: introduction / critical rule / custom tag) ---
+    Route::post('/app/sm-doc-entries-store', [App\Http\Controllers\Manager\DocEntryController::class, 'store'])->name('sm.doc-entries.store');
+    Route::post('/app/sm-doc-entries-update', [App\Http\Controllers\Manager\DocEntryController::class, 'update'])->name('sm.doc-entries.update');
+    Route::delete('/app/sm-doc-entries-delete', [App\Http\Controllers\Manager\DocEntryController::class, 'destroy'])->name('sm.doc-entries.destroy');
+    Route::post('/app/sm-doc-tags-store', [App\Http\Controllers\Manager\DocEntryController::class, 'storeTag'])->name('sm.doc-tags.store');
+
     // --- Activities (main module) ---
     Route::post('/app/sm-activities-store', [App\Http\Controllers\Manager\ActivityController::class, 'store'])->name('sm.activities.store');
     Route::get('/app/sm-activities-show', [App\Http\Controllers\Manager\ActivityController::class, 'show'])->name('sm.activities.show');
