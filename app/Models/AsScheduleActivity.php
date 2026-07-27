@@ -18,6 +18,7 @@ class AsScheduleActivity extends BaseModel
         'seed_treatment' => 'Seed Treatment',
         'planting'       => 'Planting',
         'irrigation'     => 'Irrigation',
+        'service'        => 'Service',
         'fertilizer'     => 'Fertilizer (Granular)',
         'foliar_spray'   => 'Foliar Spray',
         'microbial'      => 'Microbial / Bio',
@@ -60,6 +61,7 @@ class AsScheduleActivity extends BaseModel
         'priority',
         'activityType',
         'waterTask',
+        'servicePrice',
         'isDayZero',
         'isDraft',
         'isHidden',
@@ -74,6 +76,7 @@ class AsScheduleActivity extends BaseModel
     protected $casts = [
         'targetDate' => 'date:Y-m-d',
         'targetEndDate' => 'date:Y-m-d',
+        'servicePrice' => 'decimal:2',
         'imagePaths' => 'array',
         'isDayZero' => 'boolean',
         'isDraft' => 'boolean',

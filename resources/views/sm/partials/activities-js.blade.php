@@ -157,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         star: '<svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>',
         clock: '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
         water: '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3s6 6.686 6 11a6 6 0 11-12 0c0-4.314 6-11 6-11z"/></svg>',
+        service: '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5a4 4 0 105.03 5.03l4.35 4.35a2 2 0 11-2.83 2.83l-4.35-4.35A4 4 0 0111 5zM5 19l4-4"/></svg>',
         dayNumber: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
         share: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z"/></svg>',
     };
@@ -371,6 +372,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const wt = (a.waterTask && WATER_TASK_LABELS[a.waterTask]) ? a.waterTask : 'irrigate';
             const color = WATER_TASK_COLORS[wt] || '#2f8fd8';
             typeBadge = `<span class="badge water-task-badge" style="--wt:${color}">${SVG.water || '💧'} ${esc(WATER_TASK_LABELS[wt])}</span>`;
+        } else if (a.activityType === 'service') {
+            const priceTxt = (a.servicePrice != null && a.servicePrice !== '') ? ` <span class="item-tag-price">₱${esc(fmtMoney(a.servicePrice))}</span>` : '';
+            typeBadge = `<span class="badge service-badge">${SVG.service || '🛠'} Service${priceTxt}</span>`;
         } else {
             typeBadge = typeLabel ? `<span class="badge badge-green activity-type-badge">${esc(typeLabel)}</span>` : '';
         }
@@ -949,8 +953,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function refreshDayZeroToggleVisibility() {
         const panel = $id('activityDayZeroPanel');
         if (!panel) return;
-        // Day 0 doesn't apply to irrigation entries.
-        if (activityMode === 'irrigation') {
+        // Day 0 only applies to task activities.
+        if (activityMode !== 'task') {
             $id('activityIsDayZero').checked = false;
             panel.classList.add('hidden');
             return;
@@ -1070,27 +1074,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ---- Task / Irrigation mode tabs ----
-    // Irrigation activities hide the Day-0 marker, services (materials only),
-    // and reference images — none of those apply to a watering entry.
+    // Each mode reveals only the fields that apply:
+    //   task       → activity type, materials/items, reference images, Day 0
+    //   irrigation → water task, materials only (no images, no Day 0)
+    //   service    → service price + lot (no type/items/images/Day 0)
+    function animateField(el) {
+        if (!el || el.classList.contains('hidden')) return;
+        el.classList.remove('mode-field-in');
+        void el.offsetWidth;            // reflow so the animation re-runs
+        el.classList.add('mode-field-in');
+    }
     function setActivityMode(mode) {
-        activityMode = mode === 'irrigation' ? 'irrigation' : 'task';
+        activityMode = ['irrigation', 'service'].includes(mode) ? mode : 'task';
         $qsa('#activityModeTabs .activity-mode-tab').forEach((tab) => {
             const on = tab.getAttribute('data-mode') === activityMode;
             tab.classList.toggle('is-active', on);
             tab.setAttribute('aria-selected', on ? 'true' : 'false');
         });
+        const task = activityMode === 'task';
         const irr = activityMode === 'irrigation';
-        $id('activityTypeWrap')?.classList.toggle('hidden', irr);
+        const svc = activityMode === 'service';
+        $id('activityTypeWrap')?.classList.toggle('hidden', !task);
         $id('activityWaterTaskWrap')?.classList.toggle('hidden', !irr);
-        $id('activityImagesSection')?.classList.toggle('hidden', irr);
+        $id('activityServicePriceWrap')?.classList.toggle('hidden', !svc);
+        $id('activityImagesSection')?.classList.toggle('hidden', !task);
+        $id('activityItemsSection')?.classList.toggle('hidden', svc);
         const secLabel = $id('itemsSectionLabel');
         if (secLabel) secLabel.textContent = irr ? 'Materials' : 'Materials & Items';
         const titleEl = $id('activityTitle');
-        if (titleEl) titleEl.setAttribute('placeholder', irr ? 'e.g. Irrigate Lot A — Day 20–35' : 'e.g. Basal Fertilizer Application');
-        if (irr) {
-            setActivityImages([]);   // no reference images for irrigation
-        }
+        if (titleEl) titleEl.setAttribute('placeholder',
+            svc ? 'e.g. Land preparation (tractor)'
+            : irr ? 'e.g. Irrigate Lot A — Day 20–35'
+            : 'e.g. Basal Fertilizer Application');
+        if (!task) setActivityImages([]);   // reference images are task-only
         refreshDayZeroToggleVisibility();
+        // Animate whichever mode-specific field is now visible.
+        animateField($id('activityTypeWrap'));
+        animateField($id('activityWaterTaskWrap'));
+        animateField($id('activityServicePriceWrap'));
     }
     $qsa('#activityModeTabs .activity-mode-tab').forEach((tab) => {
         tab.addEventListener('click', () => setActivityMode(tab.getAttribute('data-mode')));
@@ -1362,6 +1383,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('activityPriority').value = 'medium';
         $id('activityType').value = '';
         if ($id('activityWaterTask')) $id('activityWaterTask').value = 'irrigate';
+        if ($id('activityServicePrice')) $id('activityServicePrice').value = '';
         setActivityMode('task');
         $id('activityTimeRequired').value = 'half';
         $id('activityIsDayZero').checked = false;
@@ -1424,6 +1446,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (a.activityType === 'irrigation') {
                 setActivityMode('irrigation');
                 if ($id('activityWaterTask')) $id('activityWaterTask').value = a.waterTask || 'irrigate';
+            } else if (a.activityType === 'service') {
+                setActivityMode('service');
+                if ($id('activityServicePrice')) $id('activityServicePrice').value = a.servicePrice != null ? a.servicePrice : '';
             } else {
                 setActivityMode('task');
                 $id('activityType').value = a.activityType || '';
@@ -1471,6 +1496,7 @@ document.addEventListener('DOMContentLoaded', () => {
             priority: a.priority,
             activityType: a.activityType || '',
             waterTask: a.waterTask || '',
+            servicePrice: a.servicePrice != null ? a.servicePrice : '',
             description: a.description || '',
             imagePaths: (a.images && a.images.length ? a.images.map((img) => img.path) : (a.imagePaths || (a.imagePath ? [a.imagePath] : []))).filter(Boolean),
             timeRequired: a.timeRequired,
@@ -1497,13 +1523,16 @@ document.addEventListener('DOMContentLoaded', () => {
             unitOfMeasure: tag.getAttribute('data-unit') || '',
         })).filter((it) => it.itemName);
         const isIrrigation = activityMode === 'irrigation';
+        const isService = activityMode === 'service';
+        const activityType = isIrrigation ? 'irrigation' : (isService ? 'service' : ($id('activityType').value || ''));
         const payload = {
             activityTitle: $id('activityTitle').value,
             targetDate: startDateVal,
             targetEndDate: endDateVal || null,
             priority: $id('activityPriority').value,
-            activityType: isIrrigation ? 'irrigation' : ($id('activityType').value || ''),
+            activityType,
             waterTask: isIrrigation ? ($id('activityWaterTask').value || 'irrigate') : '',
+            servicePrice: isService ? ($id('activityServicePrice').value || '') : '',
             description: getDescriptionContent(),
             imagePaths: ACTIVITY_IMAGES.map((img) => img.path),
             timeRequired: $id('activityTimeRequired').value,
@@ -1511,7 +1540,7 @@ document.addEventListener('DOMContentLoaded', () => {
             isDraft: (!id && ADD_AS_DRAFT) ? 1 : 0,
             lotIds: getActivityLotIds(),   // empty = N/A (not lot-specific)
             workerIds: getActivityWorkerIds(),
-            items,
+            items: isService ? [] : items,
         };
         if (!payload.activityTitle) {
             toast('Activity title is required', 'error');

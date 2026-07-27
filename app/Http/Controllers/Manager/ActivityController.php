@@ -796,6 +796,7 @@ class ActivityController extends BaseScheduleController
             'priority'        => 'required|in:critical,high,medium,low',
             'activityType'    => ['nullable', 'string', Rule::in(array_keys(AsScheduleActivity::ACTIVITY_TYPES))],
             'waterTask'       => ['nullable', 'string', Rule::in(array_keys(AsScheduleActivity::WATER_TASKS))],
+            'servicePrice'    => 'nullable|numeric|min:0|max:99999999',
             'isDayZero'       => 'nullable|boolean',
             'isDraft'         => 'nullable|boolean',
             'description'     => 'nullable|string|max:20000',
@@ -882,6 +883,10 @@ class ActivityController extends BaseScheduleController
             // Water task only applies to irrigation activities.
             'waterTask'          => $activityType === 'irrigation'
                 ? ($request->filled('waterTask') ? $request->waterTask : 'irrigate')
+                : null,
+            // Service price only applies to service activities.
+            'servicePrice'       => $activityType === 'service'
+                ? ($request->filled('servicePrice') ? $request->servicePrice : null)
                 : null,
             'isDayZero'          => $request->boolean('isDayZero'),
             // Sanitize client rich text — it is rendered raw and shared with the admin app.

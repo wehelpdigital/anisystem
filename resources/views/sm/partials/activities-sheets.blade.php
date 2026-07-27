@@ -14,8 +14,8 @@
     <div class="sheet-body">
         <input type="hidden" id="activityId">
         <div class="space-y-4">
-            {{-- Task vs Irrigation mode — an irrigation is saved as an activity
-                 of type "irrigation" and shows on the timeline like any other. --}}
+            {{-- Task / Irrigation / Service — each saved as an activity of the
+                 matching type and shown on the timeline like any other. --}}
             <div class="activity-mode-tabs" id="activityModeTabs" role="tablist">
                 <button type="button" class="activity-mode-tab is-active" data-mode="task" aria-selected="true">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
@@ -24,6 +24,10 @@
                 <button type="button" class="activity-mode-tab" data-mode="irrigation" aria-selected="false">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3s6 6.686 6 11a6 6 0 11-12 0c0-4.314 6-11 6-11z"/></svg>
                     Irrigation
+                </button>
+                <button type="button" class="activity-mode-tab" data-mode="service" aria-selected="false">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5a4 4 0 105.03 5.03l4.35 4.35a2 2 0 11-2.83 2.83l-4.35-4.35A4 4 0 0111 5zM5 19l4-4"/></svg>
+                    Service
                 </button>
             </div>
 
@@ -91,7 +95,7 @@
                 <select id="activityType" class="form-select">
                     <option value="">— select a type —</option>
                     @foreach ($activityTypes as $slug => $label)
-                        @if ($slug !== 'irrigation')
+                        @if (!in_array($slug, ['irrigation', 'service'], true))
                             <option value="{{ $slug }}">{{ $label }}</option>
                         @endif
                     @endforeach
@@ -104,6 +108,11 @@
                         <option value="{{ $slug }}">{{ $label }}</option>
                     @endforeach
                 </select>
+            </div>
+            <div id="activityServicePriceWrap" class="hidden">
+                <label class="form-label" for="activityServicePrice">Service price (₱)</label>
+                <input type="number" id="activityServicePrice" class="form-input" min="0" step="any" placeholder="0.00" inputmode="decimal">
+                <p class="form-hint">The cost of this hired service for the lot(s) it applies to.</p>
             </div>
 
             <div class="grid grid-cols-2 gap-3">
@@ -166,7 +175,7 @@
             {{-- Materials & Items — a self-contained box so it reads as its own
                  section. Items are free-form: name + price + quantity + unit,
                  with names/prices remembered per schedule (datalists). --}}
-            <div class="rounded-xl border border-gray-200 bg-gray-50/60 p-3">
+            <div class="rounded-xl border border-gray-200 bg-gray-50/60 p-3" id="activityItemsSection">
                 <div class="flex items-center justify-between gap-2">
                     <span class="form-label mb-0!"><span id="itemsSectionLabel">Materials &amp; Items</span> <span class="text-gray-400 font-normal">(optional)</span></span>
                     <button type="button" id="itemsToggleBtn" class="btn btn-white btn-sm shrink-0" aria-expanded="false">

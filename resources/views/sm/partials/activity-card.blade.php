@@ -45,6 +45,12 @@
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3s6 6.686 6 11a6 6 0 11-12 0c0-4.314 6-11 6-11z"/></svg>
                         {{ $wtm['label'] }}
                     </span>
+                @elseif($a->activityType === 'service')
+                    @php $svcPriceText = $a->servicePrice !== null ? '₱' . number_format((float) $a->servicePrice, 2) : ''; @endphp
+                    <span class="badge service-badge">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5a4 4 0 105.03 5.03l4.35 4.35a2 2 0 11-2.83 2.83l-4.35-4.35A4 4 0 0111 5zM5 19l4-4"/></svg>
+                        Service <span class="item-tag-price">{{ $svcPriceText }}</span>
+                    </span>
                 @elseif($typeLabel)
                     <span class="badge badge-green activity-type-badge">{{ $typeLabel }}</span>
                 @endif

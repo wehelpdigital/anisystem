@@ -186,13 +186,20 @@
 
         /* Task / Irrigation mode tabs (add-activity sheet) */
         .activity-mode-tabs { display: inline-flex; gap: .25rem; padding: .25rem; background: #f1f3f7; border-radius: .75rem; width: 100%; }
-        .activity-mode-tab { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: .4rem; padding: .6rem .75rem; border: none; background: transparent; border-radius: .55rem; font-size: .9rem; font-weight: 600; color: #5b6472; cursor: pointer; }
+        .activity-mode-tab { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: .4rem; padding: .6rem .75rem; border: none; background: transparent; border-radius: .55rem; font-size: .9rem; font-weight: 600; color: #5b6472; cursor: pointer; transition: background .25s ease, color .25s ease, box-shadow .25s ease; }
         .activity-mode-tab.is-active { background: #fff; color: #1f2937; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+        .activity-mode-tab:active { transform: scale(.97); }
         html.dark .activity-mode-tabs { background: #1c2136; }
         html.dark .activity-mode-tab.is-active { background: #2a3050; color: #e5e9f5; }
 
+        /* Fade + slide the mode-specific field into view when tabs change. */
+        @keyframes modeFieldIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+        .mode-field-in { animation: modeFieldIn .28s cubic-bezier(.22, 1, .36, 1) both; }
+
         /* Water-task badge on irrigation activity cards — tint from --wt */
         .water-task-badge { background: color-mix(in srgb, var(--wt) 14%, transparent); color: var(--wt); border: 1px solid color-mix(in srgb, var(--wt) 42%, transparent); }
+        .service-badge { background: #eef4ec; color: #3d6a1c; border: 1px solid #cfe1c4; }
+        html.dark .service-badge { background: #22331c; color: #b7d69a; border-color: #33502a; }
 
         /* Reference-image thumbnails on cards (multiple) */
         .activity-card-images { display: flex; flex-wrap: wrap; gap: .4rem; }
