@@ -594,11 +594,15 @@ html.dark .rich-editor .ql-toolbar.ql-snow { background: var(--color-gray-100); 
     padding: .1rem .5rem; border-radius: .5rem;
     font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .02em;
 }
+.doc-badge-protocol { background: #e7f5ec; color: #1f7a44; }
 .doc-badge-introduction { background: #e8effb; color: #2c3e8c; }
 .doc-badge-critical_rule { background: #fdeaea; color: #9c1c1c; }
+.doc-badge-miscellaneous { background: #fdf1e3; color: #a15c17; }
 .doc-badge-custom { background: var(--color-gray-100); color: var(--color-gray-600); }
+html.dark .doc-badge-protocol { background: #1f3a2b; color: #a7dcbc; }
 html.dark .doc-badge-introduction { background: #26324d; color: #aec4ef; }
 html.dark .doc-badge-critical_rule { background: #3a2323; color: #f0a6a6; }
+html.dark .doc-badge-miscellaneous { background: #3a2f1f; color: #e6c197; }
 
 .doc-file-chip {
     display: inline-flex; align-items: center; gap: .5rem;

@@ -5,85 +5,27 @@
 @section('page-subtitle', $schedule->title)
 @section('back', route('sm.hub', ['id' => $schedule->id]))
 
-@php
-    $protocol = $schedule->protocol;
-    $hasProtocolFile = $protocol && $protocol->protocolFile;
-@endphp
-
 @section('content')
 @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'documentation'])
 
-<div x-data="{ tab: 'documents' }">
+<div>
+    <button type="button" class="btn btn-primary w-full mb-4 hidden md:inline-flex" data-doc-add>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        Add Document
+        <span class="badge badge-gray ml-1" id="docCount">{{ $schedule->docEntries->count() }}</span>
+    </button>
 
-    {{-- Sub-tab pills --}}
-    <div class="scroll-chips mb-4">
-        <button type="button" class="chip shrink-0" :class="tab === 'documents' && 'is-selected'" @click="tab = 'documents'">
-            Documents
-            <span class="badge badge-gray" id="docCount">{{ $schedule->docEntries->count() }}</span>
-        </button>
-        <button type="button" class="chip shrink-0" :class="tab === 'protocol' && 'is-selected'" @click="tab = 'protocol'">
-            Protocol
-        </button>
+    <div id="docList" class="space-y-3" data-animate-list></div>
+
+    <div class="card p-8 text-center hidden mt-3" id="docEmpty">
+        <svg class="w-12 h-12 mx-auto text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <p class="font-semibold text-gray-700 mt-3">No documents yet</p>
+        <p class="text-sm text-gray-500 mt-1">Add a protocol, introduction, critical rule, miscellaneous note, or any tagged reference — each with rich text and files.</p>
+        <button type="button" class="btn btn-primary mt-4" data-doc-add>Add Document</button>
     </div>
 
-    {{-- ============================== DOCUMENTS ============================== --}}
-    <div x-show="tab === 'documents'">
-        <button type="button" class="btn btn-primary w-full mb-4 hidden md:inline-flex" data-doc-add>
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-            Add Document
-        </button>
-
-        <div id="docList" class="space-y-3" data-animate-list></div>
-
-        <div class="card p-8 text-center hidden mt-3" id="docEmpty">
-            <svg class="w-12 h-12 mx-auto text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-            <p class="font-semibold text-gray-700 mt-3">No documents yet</p>
-            <p class="text-sm text-gray-500 mt-1">Add an introduction, a critical rule, or any tagged reference — each with rich text and files.</p>
-            <button type="button" class="btn btn-primary mt-4" data-doc-add>Add Document</button>
-        </div>
-    </div>
-
-    {{-- ============================== PROTOCOL ============================== --}}
-    <div x-show="tab === 'protocol'" x-cloak>
-        <div class="card p-4 sm:p-6">
-            <div class="flex items-start gap-3 mb-4">
-                <span class="doc-section-icon bg-brand-50 text-brand-600">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                </span>
-                <div class="min-w-0">
-                    <h2 class="font-bold text-gray-900 text-lg leading-tight">Protocol Document</h2>
-                    <p class="text-sm text-gray-500 mt-0.5">Write the season protocol as rich text, attach a document, or both.</p>
-                </div>
-            </div>
-
-            <div class="mb-5">
-                <label class="form-label">Protocol Text</label>
-                <div class="rich-editor">
-                    <div id="protocolEditor"></div>
-                </div>
-                <p class="form-hint">Use headings, bold and lists to structure the protocol — it prints on the worker documents.</p>
-            </div>
-
-            <div class="border-t border-gray-100 pt-4 mb-5">
-                <label class="form-label" for="protocolFile">Protocol File</label>
-                <div id="protocolCurrentFile" class="{{ $hasProtocolFile ? '' : 'hidden' }} mb-2">
-                    <a href="{{ route('sm.protocol.download', ['scheduleId' => $schedule->id]) }}"
-                        class="badge badge-green !text-sm !py-1.5 !px-3 hover:bg-brand-200 transition" download>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4"/></svg>
-                        <span id="protocolCurrentFileName">{{ $protocol->protocolFileOriginalName ?? 'protocol' }}</span>
-                    </a>
-                </div>
-                <input type="file" id="protocolFile" accept=".pdf,.doc,.docx,.txt"
-                    class="flex items-center w-full text-sm text-gray-600 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:text-brand-700 file:font-semibold file:px-4 file:py-2.5 file:cursor-pointer cursor-pointer">
-                <p class="form-hint">PDF, DOC, DOCX or TXT — max 10 MB. Uploading a new file replaces the current one.</p>
-            </div>
-
-            <button type="button" class="btn btn-primary w-full sm:w-auto" id="protocolSaveBtn">Save Protocol</button>
-        </div>
-    </div>
-
-    {{-- Mobile FAB (documents) --}}
-    <button type="button" x-show="tab === 'documents'" data-doc-add aria-label="Add document"
+    {{-- Mobile FAB --}}
+    <button type="button" data-doc-add aria-label="Add document"
         class="fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full btn-primary shadow-lg md:hidden flex items-center justify-center bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
     </button>
@@ -168,7 +110,6 @@
 (function () {
     const SCHEDULE_ID = @json($schedule->id);
     const URLS = {
-        protocolSave: @json(route('sm.protocol.save')) + '?scheduleId=' + SCHEDULE_ID,
         docStore: @json(route('sm.doc-entries.store')) + '?scheduleId=' + SCHEDULE_ID,
         docUpdate: (id) => @json(route('sm.doc-entries.update')) + '?scheduleId=' + SCHEDULE_ID + '&id=' + id,
         docDestroy: (id) => @json(route('sm.doc-entries.destroy')) + '?scheduleId=' + SCHEDULE_ID + '&id=' + id,
@@ -223,51 +164,24 @@
     }
 
     /* ================================================================= */
-    /* Protocol                                                          */
-    /* ================================================================= */
-    let PROTOCOL_HTML = @json($protocol->protocolContent ?? '');
-    let protocolEditor = null;
-    mountEditor('protocolEditor', 'Write or paste the protocol here…')
-        .then((q) => { protocolEditor = q; setEditorHtml(q, PROTOCOL_HTML); })
-        .catch(() => {});
-
-    document.getElementById('protocolSaveBtn').addEventListener('click', async () => {
-        const btn = document.getElementById('protocolSaveBtn');
-        const fileInput = document.getElementById('protocolFile');
-        const fd = new FormData();
-        fd.append('protocolContent', editorHtml(protocolEditor));
-        if (fileInput.files.length) {
-            const f = fileInput.files[0];
-            if (f.size > 10 * 1024 * 1024) { toast('Protocol file is too large — max 10 MB.', 'error'); return; }
-            fd.append('protocolFile', f);
-        }
-        btn.disabled = true;
-        try {
-            const res = await api(URLS.protocolSave, { method: 'POST', body: fd });
-            if (res.data && res.data.protocolFile) {
-                document.getElementById('protocolCurrentFile').classList.remove('hidden');
-                document.getElementById('protocolCurrentFileName').textContent = res.data.protocolFileOriginalName || 'protocol';
-            }
-            fileInput.value = '';
-            toast(res.message);
-        } catch (e) {
-            toast(e.message, 'error');
-        } finally {
-            btn.disabled = false;
-        }
-    });
-
-    /* ================================================================= */
-    /* Documents (unified: introduction / critical rule / custom tag)    */
+    /* Documents (unified list — protocol / intro / rule / misc / tag)   */
     /* ================================================================= */
     const ENTRIES = @json($docEntriesSeed->isEmpty() ? new stdClass() : $docEntriesSeed);
     let TAGS = @json($docTagsSeed);
 
     const BUILTIN = [
+        { value: 'protocol', label: 'Protocol' },
         { value: 'introduction', label: 'Introduction' },
         { value: 'critical_rule', label: 'Critical Rule' },
+        { value: 'miscellaneous', label: 'Miscellaneous' },
     ];
-    const TYPE_CLASS = { introduction: 'doc-badge-introduction', critical_rule: 'doc-badge-critical_rule', custom: 'doc-badge-custom' };
+    const TYPE_CLASS = {
+        protocol: 'doc-badge-protocol',
+        introduction: 'doc-badge-introduction',
+        critical_rule: 'doc-badge-critical_rule',
+        miscellaneous: 'doc-badge-miscellaneous',
+        custom: 'doc-badge-custom',
+    };
 
     const listEl = document.getElementById('docList');
     const emptyEl = document.getElementById('docEmpty');
@@ -433,7 +347,7 @@
     async function openDocSheet(entry = null) {
         fld('docId').value = entry ? entry.id : '';
         fld('docSheetTitle').textContent = entry ? 'Edit Document' : 'Add Document';
-        buildTypeOptions(entry ? typeSelectValue(entry) : 'introduction');
+        buildTypeOptions(entry ? typeSelectValue(entry) : 'protocol');
         fld('docNewTagWrap').classList.add('hidden');
         fld('docNewTag').value = '';
         fld('docTitle').value = entry ? (entry.title || '') : '';

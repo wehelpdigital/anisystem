@@ -20,8 +20,10 @@ use Illuminate\Validation\Rule;
 class DocEntryController extends BaseScheduleController
 {
     private const TYPES = [
+        AsScheduleDocEntry::TYPE_PROTOCOL,
         AsScheduleDocEntry::TYPE_INTRODUCTION,
         AsScheduleDocEntry::TYPE_CRITICAL_RULE,
+        AsScheduleDocEntry::TYPE_MISCELLANEOUS,
         AsScheduleDocEntry::TYPE_CUSTOM,
     ];
 

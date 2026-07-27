@@ -1019,7 +1019,7 @@
             // Unified documentation entries, grouped by their placement.
             $wpIntroEntries = $schedule->docEntries->where('type', 'introduction')->values();
             $wpRuleEntries = $schedule->docEntries->where('type', 'critical_rule')->values();
-            $wpCustomEntries = $schedule->docEntries->where('type', 'custom')->values();
+            $wpCustomEntries = $schedule->docEntries->whereNotIn('type', ['introduction', 'critical_rule'])->values();
             $docFileView = function ($files) {
                 return collect($files ?? [])->map(fn ($f) => [
                     'name' => $f['name'] ?? 'file',

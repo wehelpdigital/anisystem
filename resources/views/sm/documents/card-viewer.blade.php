@@ -979,7 +979,7 @@
                 @php
                     $cvIntroEntries = $schedule->docEntries->where('type', 'introduction')->values();
                     $cvRuleEntries = $schedule->docEntries->where('type', 'critical_rule')->values();
-                    $cvCustomEntries = $schedule->docEntries->where('type', 'custom')->values();
+                    $cvCustomEntries = $schedule->docEntries->whereNotIn('type', ['introduction', 'critical_rule'])->values();
                     $cvHasIntro = ($activeVersion && !empty($activeVersion->globalActivityNote)) || $cvIntroEntries->count() > 0;
                     $cvHasRules = $criticalRules->count() > 0 || $cvRuleEntries->count() > 0;
                 @endphp

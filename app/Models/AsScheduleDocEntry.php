@@ -12,14 +12,18 @@ class AsScheduleDocEntry extends BaseModel
 {
     protected $table = 'as_schedule_doc_entries';
 
+    public const TYPE_PROTOCOL = 'protocol';
     public const TYPE_INTRODUCTION = 'introduction';
     public const TYPE_CRITICAL_RULE = 'critical_rule';
+    public const TYPE_MISCELLANEOUS = 'miscellaneous';
     public const TYPE_CUSTOM = 'custom';
 
     /** Built-in type => label. Custom entries take their label from the tag. */
     public const TYPE_LABELS = [
+        self::TYPE_PROTOCOL => 'Protocol',
         self::TYPE_INTRODUCTION => 'Introduction',
         self::TYPE_CRITICAL_RULE => 'Critical Rule',
+        self::TYPE_MISCELLANEOUS => 'Miscellaneous',
     ];
 
     protected $fillable = [

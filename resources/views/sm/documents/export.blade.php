@@ -396,7 +396,7 @@
 
         $exIntroEntries = $schedule->docEntries->where('type', 'introduction')->values();
         $exRuleEntries = $schedule->docEntries->where('type', 'critical_rule')->values();
-        $exCustomEntries = $schedule->docEntries->where('type', 'custom')->values();
+        $exCustomEntries = $schedule->docEntries->whereNotIn('type', ['introduction', 'critical_rule'])->values();
         $exDocFileView = function ($files) {
             return collect($files ?? [])->map(fn ($f) => [
                 'name' => $f['name'] ?? 'file',
