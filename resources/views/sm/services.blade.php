@@ -20,7 +20,10 @@
         <div class="card p-4 service-card" data-id="{{ $s->id }}">
             <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0 grow">
-                    <h3 class="font-bold text-gray-900 leading-snug js-name">{{ $s->serviceName }}</h3>
+                    <h3 class="font-bold text-gray-900 leading-snug js-name">
+                        {{ $s->serviceName }}
+                        <span class="js-lot text-xs font-semibold text-gray-500 {{ $s->lotId && $s->lot ? '' : 'hidden' }}">· {{ $s->lot->lotName ?? '' }}</span>
+                    </h3>
                     <p class="text-sm font-semibold text-brand-700 mt-1 js-cost">₱ {{ number_format((float) $s->serviceCost, 2) }}</p>
                     @if (filled($s->description))
                         <p class="text-sm text-gray-500 mt-1 js-desc">{{ $s->description }}</p>
@@ -73,6 +76,16 @@
             <label class="form-label" for="serviceDescription">Description</label>
             <textarea id="serviceDescription" class="form-textarea" rows="2" maxlength="2000" placeholder="Optional notes about this service…"></textarea>
         </div>
+        <div class="mb-4">
+            <label class="form-label" for="serviceLot">Lot</label>
+            <select id="serviceLot" class="form-select">
+                <option value="">Not tied to a lot</option>
+                @foreach ($schedule->lots as $lot)
+                    <option value="{{ $lot->id }}">{{ $lot->lotName }}</option>
+                @endforeach
+            </select>
+            <p class="form-hint">Optional — leave as "Not tied to a lot" for a whole-schedule service.</p>
+        </div>
         <div class="mb-2">
             <label class="form-label" for="serviceCost">Cost <span class="text-red-500">*</span></label>
             <div class="flex items-center gap-2">
@@ -104,9 +117,12 @@
             'serviceName' => $ss->serviceName,
             'description' => $ss->description,
             'serviceCost' => (float) $ss->serviceCost,
+            'lotId' => $ss->lotId,
+            'lotName' => $ss->lotId ? optional($ss->lot)->lotName : null,
         ]]);
     @endphp
     const SERVICES = @json($servicesSeed->isEmpty() ? new stdClass() : $servicesSeed);
+    const LOT_NAMES = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->lotName]));
 
     const list = document.getElementById('servicesList');
     const emptyEl = document.getElementById('servicesEmpty');
@@ -119,7 +135,7 @@
         el.innerHTML = `
             <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0 grow">
-                    <h3 class="font-bold text-gray-900 leading-snug js-name">${escapeHtml(s.serviceName)}</h3>
+                    <h3 class="font-bold text-gray-900 leading-snug js-name">${escapeHtml(s.serviceName)}${s.lotName ? ` <span class="text-xs font-semibold text-gray-500">· ${escapeHtml(s.lotName)}</span>` : ''}</h3>
                     <p class="text-sm font-semibold text-brand-700 mt-1 js-cost">${escapeHtml(fmtPeso(s.serviceCost))}</p>
                     <p class="text-sm text-gray-500 mt-1 js-desc ${s.description ? '' : 'hidden'}">${escapeHtml(s.description || '')}</p>
                 </div>
@@ -144,6 +160,7 @@
         fld('serviceSheetTitle').textContent = s ? 'Edit Service' : 'Add Service';
         fld('serviceName').value = s ? s.serviceName : '';
         fld('serviceDescription').value = s ? (s.description || '') : '';
+        fld('serviceLot').value = s && s.lotId ? String(s.lotId) : '';
         fld('serviceCost').value = s ? s.serviceCost : 0;
         openSheet('serviceSheet');
     }
@@ -158,6 +175,7 @@
             serviceName: fld('serviceName').value.trim(),
             description: fld('serviceDescription').value.trim() || null,
             serviceCost: fld('serviceCost').value,
+            lotId: fld('serviceLot').value || null,
         };
         if (!payload.serviceName) { toast('Service name is required.', 'error'); return; }
         if (payload.serviceCost === '' || Number(payload.serviceCost) < 0) { toast('Enter a valid cost.', 'error'); return; }
@@ -171,6 +189,8 @@
                 serviceName: res.data.serviceName,
                 description: res.data.description,
                 serviceCost: Number(res.data.serviceCost),
+                lotId: res.data.lotId || null,
+                lotName: res.data.lotName || (res.data.lotId ? (LOT_NAMES[res.data.lotId] || null) : null),
             };
             SERVICES[s.id] = s;
             const fresh = renderCard(s);

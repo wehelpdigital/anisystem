@@ -8,6 +8,7 @@ class AsScheduleService extends BaseModel
 
     protected $fillable = [
         'croppingScheduleId',
+        'lotId',
         'serviceName',
         'description',
         'serviceCost',
@@ -22,5 +23,10 @@ class AsScheduleService extends BaseModel
     public function schedule()
     {
         return $this->belongsTo(AsCroppingSchedule::class, 'croppingScheduleId');
+    }
+
+    public function lot()
+    {
+        return $this->belongsTo(AsScheduleLot::class, 'lotId');
     }
 }
