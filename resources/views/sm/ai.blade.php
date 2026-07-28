@@ -8,47 +8,49 @@
 @push('head')
     <style>
         /* Real-chat layout: fixed height column, own scroll, pinned composer. */
-        .aichat { display: flex; flex-direction: column; height: calc(100dvh - 12.5rem); min-height: 24rem; }
-        .aichat-thread { flex: 1 1 auto; overflow-y: auto; padding: .25rem .1rem 1rem; scroll-behavior: smooth; }
+        .aichat { display: flex; flex-direction: column; height: calc(100dvh - 11rem); min-height: 26rem; max-width: 52rem; margin: 0 auto; width: 100%; }
+        .aichat-thread { flex: 1 1 auto; overflow-y: auto; padding: .5rem .25rem 1.25rem; scroll-behavior: smooth; }
         .aichat-day { text-align: center; margin: .5rem 0; }
-        .aichat-day span { font-size: 11px; font-weight: 700; color: var(--tl-text-faint, #9ca3af); background: var(--color-gray-100); padding: .15rem .7rem; border-radius: 999px; }
+        .aichat-day span { font-size: 12px; font-weight: 700; color: var(--tl-text-faint, #9ca3af); background: var(--color-gray-100); padding: .15rem .7rem; border-radius: 999px; }
 
-        .aimsg { display: flex; gap: .55rem; margin-bottom: .7rem; align-items: flex-end; }
+        .aimsg { display: flex; gap: .65rem; margin-bottom: 1rem; align-items: flex-end; }
         .aimsg.me { flex-direction: row-reverse; }
         .aimsg-face {
-            width: 1.9rem; height: 1.9rem; border-radius: 999px; flex-shrink: 0; overflow: hidden;
+            width: 2.4rem; height: 2.4rem; border-radius: 999px; flex-shrink: 0; overflow: hidden;
             display: flex; align-items: center; justify-content: center; margin-bottom: .1rem;
-            background: var(--color-brand-50); color: var(--color-brand-700); font-size: .62rem; font-weight: 800;
+            background: var(--color-brand-50); color: var(--color-brand-700); font-size: .78rem; font-weight: 800;
         }
         .aimsg-face img { width: 100%; height: 100%; object-fit: cover; }
         .aimsg.me .aimsg-face { background: var(--color-brand-600); color: #fff; }
 
         .aibubble {
-            max-width: 80%; border-radius: 1.15rem; padding: .55rem .85rem; font-size: .9rem; line-height: 1.5;
+            max-width: 82%; border-radius: 1.3rem; padding: .75rem 1.05rem; font-size: 1.02rem; line-height: 1.6;
             background: var(--color-white); border: 1px solid var(--color-gray-200);
-            border-bottom-left-radius: .3rem;
+            border-bottom-left-radius: .35rem;
         }
         .aimsg.me .aibubble {
             background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff;
-            border-bottom-left-radius: 1.15rem; border-bottom-right-radius: .3rem;
+            border-bottom-left-radius: 1.3rem; border-bottom-right-radius: .35rem;
         }
-        .aibubble p { margin: .3rem 0; } .aibubble p:first-child { margin-top: 0; } .aibubble p:last-child { margin-bottom: 0; }
-        .aibubble ul { list-style: disc; padding-left: 1.1rem; margin: .3rem 0; }
-        .aibubble ol { list-style: decimal; padding-left: 1.3rem; margin: .3rem 0; }
+        .aibubble p { margin: .4rem 0; } .aibubble p:first-child { margin-top: 0; } .aibubble p:last-child { margin-bottom: 0; }
+        .aibubble ul { list-style: disc; padding-left: 1.25rem; margin: .4rem 0; }
+        .aibubble ol { list-style: decimal; padding-left: 1.4rem; margin: .4rem 0; }
+        .aibubble li { margin: .2rem 0; }
         .aibubble strong { font-weight: 700; }
-        .aibubble img { max-width: 100%; max-height: 220px; border-radius: .55rem; margin-top: .35rem; }
-        .aibubble-cost { font-size: 10px; font-weight: 700; opacity: .55; margin-top: .35rem; }
+        .aibubble img { max-width: 100%; max-height: 260px; border-radius: .6rem; margin-top: .4rem; }
+        .aibubble-cost { font-size: 11px; font-weight: 700; opacity: .55; margin-top: .45rem; }
 
         .aichat-composer { flex-shrink: 0; padding-top: .5rem; }
-        .aichat-box { border: 1px solid var(--color-gray-200); border-radius: 1.3rem; background: var(--color-white); padding: .35rem .35rem .35rem .5rem; }
-        #aiText { resize: none; max-height: 7rem; }
+        .aichat-box { border: 1px solid var(--color-gray-200); border-radius: 1.5rem; background: var(--color-white); padding: .45rem .45rem .45rem .65rem; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+        #aiText { resize: none; max-height: 8rem; font-size: 1rem; }
 
-        .aidots { display: inline-flex; gap: .2rem; align-items: center; height: 1.1rem; }
-        .aidots i { width: .35rem; height: .35rem; border-radius: 999px; background: currentColor; opacity: .35; animation: aidot 1.1s ease-in-out infinite; }
+        .aidots { display: inline-flex; gap: .22rem; align-items: center; height: 1.2rem; }
+        .aidots i { width: .4rem; height: .4rem; border-radius: 999px; background: currentColor; opacity: .35; animation: aidot 1.1s ease-in-out infinite; }
         .aidots i:nth-child(2) { animation-delay: .18s; } .aidots i:nth-child(3) { animation-delay: .36s; }
         @keyframes aidot { 0%,60%,100% { opacity:.25; transform: translateY(0); } 30% { opacity:.9; transform: translateY(-2px); } }
 
-        .aisuggest { border: 1px dashed var(--color-gray-300); border-radius: .8rem; padding: .5rem .75rem; font-size: .82rem; font-weight: 600; text-align: left; }
+        .aisuggest { border: 1px dashed var(--color-gray-300); border-radius: 1rem; padding: .75rem 1rem; font-size: .95rem; font-weight: 600; text-align: left; transition: background .15s ease, border-color .15s ease; }
+        .aisuggest:hover { background: var(--color-brand-50); border-color: var(--color-brand-300); }
     </style>
 @endpush
 
@@ -67,8 +69,8 @@
                 @endif
             </span>
             <div class="min-w-0">
-                <p class="font-bold text-gray-900 text-sm truncate leading-tight">{{ $settings->assistantName }}</p>
-                <p class="text-xs text-gray-500">Crop questions for this plan</p>
+                <p class="font-bold text-gray-900 text-base truncate leading-tight">{{ $settings->assistantName }}</p>
+                <p class="text-sm text-gray-500">Crop questions for this plan</p>
             </div>
         </div>
         <div class="flex items-center gap-1.5 shrink-0">
@@ -122,17 +124,17 @@
                 </div>
             </div>
         @empty
-            <div class="text-center py-4" id="aiWelcome">
-                <span class="aimsg-face mx-auto" style="width:3.25rem;height:3.25rem">
+            <div class="text-center py-6" id="aiWelcome">
+                <span class="aimsg-face mx-auto" style="width:4rem;height:4rem">
                     @if ($settings->avatarPath)
                         <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($settings->avatarPath) }}" alt="">
                     @else
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
+                        <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
                     @endif
                 </span>
-                <p class="font-bold text-gray-900 mt-2">Ask about {{ \Illuminate\Support\Str::limit($schedule->cropType ?: 'this crop', 24) }}</p>
-                <p class="text-sm text-gray-500 mt-1 max-w-sm mx-auto">Fertiliser rates, pests, water, timing, harvest. Snap a leaf and I'll take a look.</p>
-                <div class="grid gap-2 mt-4 max-w-md mx-auto">
+                <p class="text-xl font-bold text-gray-900 mt-3">Ask about {{ \Illuminate\Support\Str::limit($schedule->cropType ?: 'this crop', 24) }}</p>
+                <p class="text-base text-gray-500 mt-1.5 max-w-md mx-auto">Fertiliser rates, pests, water, timing, harvest. Snap a leaf and I'll take a look.</p>
+                <div class="grid gap-2.5 mt-5 max-w-md mx-auto">
                     <button type="button" class="aisuggest js-suggest">My leaves are yellowing at the tips — what should I check?</button>
                     <button type="button" class="aisuggest js-suggest">How much urea per hectare for the first top dressing?</button>
                     <button type="button" class="aisuggest js-suggest">When should I stop irrigating before harvest?</button>
@@ -155,8 +157,8 @@
             </label>
             <textarea id="aiText" rows="1" class="form-textarea border-0! shadow-none! focus:ring-0! p-2 grow bg-transparent!"
                       maxlength="4000" placeholder="Ask about your crop…" {{ $settings->isUsable() ? '' : 'disabled' }}></textarea>
-            <button type="button" class="w-9 h-9 rounded-full bg-brand-600 text-white flex items-center justify-center shrink-0 disabled:opacity-40" id="aiSendBtn" {{ $settings->isUsable() ? '' : 'disabled' }} aria-label="Send">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
+            <button type="button" class="w-11 h-11 rounded-full bg-brand-600 text-white flex items-center justify-center shrink-0 disabled:opacity-40" id="aiSendBtn" {{ $settings->isUsable() ? '' : 'disabled' }} aria-label="Send">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
             </button>
         </div>
     </div>
