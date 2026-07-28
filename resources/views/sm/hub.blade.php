@@ -139,6 +139,7 @@
     </div>
 
     @include('sm.partials.quick-capture', ['fixedScheduleId' => $schedule->id])
+    @include('sm.partials.ai-float', ['schedule' => $schedule])
 @endsection
 
 @push('scripts')

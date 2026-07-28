@@ -917,6 +917,8 @@
 </div>
 
 </div>{{-- /#activitiesRoot --}}
+
+@include('sm.partials.ai-float', ['schedule' => $schedule])
 @endsection
 
 @push('sheets')
