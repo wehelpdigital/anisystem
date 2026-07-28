@@ -48,24 +48,23 @@
             <input type="text" id="workerName" maxlength="255" class="form-input" placeholder="e.g. Juan Dela Cruz">
         </div>
 
-        <div>
-            <label for="workerEmail" class="form-label">Email <span class="text-gray-400 font-normal">(optional)</span></label>
-            <input type="email" id="workerEmail" maxlength="255" class="form-input" placeholder="e.g. juan@email.com">
-            <p class="form-hint">Used to email this worker today's or tomorrow's plan from Quick Share.</p>
-        </div>
-
         <div class="grid grid-cols-2 gap-3">
             <div>
-                <label for="workerCost" class="form-label">Cost / Half Day</label>
-                <div class="relative">
-                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-semibold pointer-events-none">₱</span>
-                    <input type="number" id="workerCost" min="0" step="0.01" class="form-input pl-9!" placeholder="0.00">
-                </div>
+                <label for="workerEmail" class="form-label">Email <span class="text-gray-400 font-normal">(optional)</span></label>
+                <input type="email" id="workerEmail" maxlength="255" class="form-input" placeholder="e.g. juan@email.com">
             </div>
             <div>
-                <label for="workerPriority" class="form-label">Priority</label>
-                <input type="number" id="workerPriority" min="1" class="form-input" value="1">
-                <p class="form-hint">1 = first pick</p>
+                <label for="workerPhone" class="form-label">Phone <span class="text-gray-400 font-normal">(optional)</span></label>
+                <input type="tel" id="workerPhone" maxlength="32" class="form-input" placeholder="e.g. 0917 123 4567">
+            </div>
+        </div>
+        <p class="form-hint -mt-2">Email is used to send this worker today's or tomorrow's plan from Quick Share.</p>
+
+        <div>
+            <label for="workerCost" class="form-label">Cost / Half Day</label>
+            <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-semibold pointer-events-none">₱</span>
+                <input type="number" id="workerCost" min="0" step="0.01" class="form-input pl-9!" placeholder="0.00">
             </div>
         </div>
 
@@ -132,6 +131,7 @@
         'id' => $w->id,
         'workerName' => $w->workerName,
         'email' => $w->email,
+        'phone' => $w->phone,
         'costPerHalfDay' => $w->costPerHalfDay,
         'priority' => (int) $w->priority,
         'skills' => $w->skills ?? [],
@@ -175,11 +175,11 @@ const __init = () => {
                 <div class="flex items-start justify-between gap-3">
                     <div class="min-w-0">
                         <div class="flex items-center gap-2 flex-wrap mb-1">
-                            <span class="badge bg-brand-600 text-white" title="Priority — 1 is first pick">#${Number(w.priority) || 1}</span>
                             <h3 class="font-bold text-gray-900">${escapeHtml(w.workerName)}</h3>
                         </div>
                         <p class="text-sm text-gray-600 mb-1.5">${fmtPeso(w.costPerHalfDay)} <span class="text-gray-400">/ half day</span></p>
                         ${w.email ? `<p class="text-xs text-gray-500 mb-1.5 flex items-center gap-1 truncate"><svg class="w-3.5 h-3.5 shrink-0 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>${escapeHtml(w.email)}</p>` : ''}
+                        ${w.phone ? `<p class="text-xs text-gray-500 mb-1.5 flex items-center gap-1 truncate"><svg class="w-3.5 h-3.5 shrink-0 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>${escapeHtml(w.phone)}</p>` : ''}
                         ${skills ? `<div class="flex flex-wrap gap-1.5 mb-1.5">${skills}</div>` : ''}
                         <p class="text-xs ${offRulesSummary(w) === 'No off rules' ? 'text-gray-400' : 'text-orange-700 font-medium'} off-rules-line">${escapeHtml(offRulesSummary(w))}</p>
                         ${w.notes ? `<p class="text-xs text-gray-500 mt-1.5">${escapeHtml(w.notes)}</p>` : ''}
@@ -215,8 +215,8 @@ const __init = () => {
         document.getElementById('workerId').value = w ? w.id : '';
         document.getElementById('workerName').value = w ? (w.workerName || '') : '';
         document.getElementById('workerEmail').value = w ? (w.email || '') : '';
+        document.getElementById('workerPhone').value = w ? (w.phone || '') : '';
         document.getElementById('workerCost').value = w ? (parseFloat(w.costPerHalfDay) || 0) : '';
-        document.getElementById('workerPriority').value = w ? (w.priority || 1) : 1;
         document.getElementById('workerNotes').value = w ? (w.notes || '') : '';
         const selected = (w?.skills || []).map(String);
         document.querySelectorAll('#workerSkills .chip').forEach((c) => {
@@ -231,8 +231,8 @@ const __init = () => {
         const body = {
             workerName: document.getElementById('workerName').value.trim(),
             email: document.getElementById('workerEmail').value.trim() || null,
+            phone: document.getElementById('workerPhone').value.trim() || null,
             costPerHalfDay: document.getElementById('workerCost').value || 0,
-            priority: Number(document.getElementById('workerPriority').value) || 1,
             skills: chipValues(document.getElementById('workerSkills')),
             notes: document.getElementById('workerNotes').value || null,
         };
@@ -256,6 +256,7 @@ const __init = () => {
                 id: res.data.id,
                 workerName: res.data.workerName,
                 email: res.data.email,
+                phone: res.data.phone,
                 costPerHalfDay: res.data.costPerHalfDay,
                 priority: Number(res.data.priority) || 1,
                 skills: res.data.skills || [],

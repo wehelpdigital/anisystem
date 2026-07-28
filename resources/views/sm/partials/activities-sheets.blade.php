@@ -150,7 +150,7 @@
                 <div id="activityWorkersContainer" class="flex flex-wrap gap-2">
                     @foreach ($schedule->workers as $w)
                         <button type="button" class="chip worker-chip" data-worker-id="{{ $w->id }}" aria-pressed="false">
-                            {{ $w->workerName }} <span class="opacity-70">#{{ $w->priority }}</span>
+                            {{ $w->workerName }}
                         </button>
                     @endforeach
                     @if ($schedule->workers->isEmpty())
@@ -701,7 +701,7 @@
                     </div>
                     <div class="scroll-chips mt-1" id="laborWorkersContainer" data-chip-group>
                         @foreach ($schedule->workers as $w)
-                            <button type="button" class="chip shrink-0 min-h-9! py-1! text-xs" data-value="{{ $w->id }}">{{ $w->workerName }} <span class="opacity-70">#{{ $w->priority }}</span></button>
+                            <button type="button" class="chip shrink-0 min-h-9! py-1! text-xs" data-value="{{ $w->id }}">{{ $w->workerName }}</button>
                         @endforeach
                     </div>
                 </div>

@@ -24,6 +24,7 @@ class AsScheduleWorker extends BaseModel
         'croppingScheduleId',
         'workerName',
         'email',
+        'phone',
         'costPerHalfDay',
         'priority',
         'skills',

@@ -35,8 +35,8 @@ class WorkerController extends BaseScheduleController
         $validator = Validator::make($request->all(), [
             'workerName' => 'required|string|max:255',
             'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|string|max:32',
             'costPerHalfDay' => 'nullable|numeric|min:0',
-            'priority' => 'required|integer|min:1',
             'skills' => 'nullable|array',
             'skills.*' => ['string', Rule::in($allowedSkillKeys)],
             'notes' => 'nullable|string|max:2000',
@@ -46,12 +46,19 @@ class WorkerController extends BaseScheduleController
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
         }
 
+        // Priority is no longer edited; append new workers to the end so the
+        // existing list order is preserved.
+        $nextPriority = (int) AsScheduleWorker::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->max('priority') + 1;
+
         $worker = AsScheduleWorker::create([
             'croppingScheduleId' => $schedule->id,
             'workerName' => $request->workerName,
             'email' => $request->filled('email') ? $request->email : null,
+            'phone' => $request->filled('phone') ? trim($request->phone) : null,
             'costPerHalfDay' => is_numeric($request->costPerHalfDay) ? $request->costPerHalfDay : 0,
-            'priority' => $request->priority,
+            'priority' => $nextPriority,
             'skills' => $this->normalizeSkills($request->input('skills', []), $allowedSkillKeys),
             'notes' => $request->notes,
             'deleteStatus' => 1,
@@ -71,8 +78,8 @@ class WorkerController extends BaseScheduleController
         $validator = Validator::make($request->all(), [
             'workerName' => 'required|string|max:255',
             'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|string|max:32',
             'costPerHalfDay' => 'nullable|numeric|min:0',
-            'priority' => 'required|integer|min:1',
             'skills' => 'nullable|array',
             'skills.*' => ['string', Rule::in($allowedSkillKeys)],
             'notes' => 'nullable|string|max:2000',
@@ -85,8 +92,8 @@ class WorkerController extends BaseScheduleController
         $worker->update([
             'workerName' => $request->workerName,
             'email' => $request->filled('email') ? $request->email : null,
+            'phone' => $request->filled('phone') ? trim($request->phone) : null,
             'costPerHalfDay' => is_numeric($request->costPerHalfDay) ? $request->costPerHalfDay : 0,
-            'priority' => $request->priority,
             'skills' => $this->normalizeSkills($request->input('skills', []), $allowedSkillKeys),
             'notes' => $request->notes,
         ]);
