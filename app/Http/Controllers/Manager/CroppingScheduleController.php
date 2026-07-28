@@ -361,6 +361,125 @@ class CroppingScheduleController extends Controller
     }
 
     /**
+     * Deep-duplicate an entire schedule — every module and version — into a
+     * new "Copy of …" schedule owned by the same client. Child ids are remapped
+     * so the copy is fully independent (uploaded files are shared by path).
+     */
+    public function duplicate(Request $request)
+    {
+        $old = $this->findOwnedOrFail($request->query('id'), true);
+
+        try {
+            $new = DB::transaction(function () use ($old) {
+                $copy = $old->replicate();
+                $copy->title = 'Copy of ' . $old->title;
+                $copy->status = 'setup';
+                $copy->isPublic = 0;
+                $copy->publishedAt = null;
+                $copy->publicSummary = null;
+                $copy->publicRegion = null;
+                $copy->deleteStatus = 1;
+                // shareToken is unique — a copy needs its own.
+                if (\Illuminate\Support\Facades\Schema::hasColumn('as_cropping_schedules', 'shareToken')) {
+                    $copy->shareToken = \Illuminate\Support\Str::random(32);
+                }
+                $copy->save();
+
+                $rep = function ($row, array $attrs = []) use ($copy) {
+                    $c = $row->replicate();
+                    $c->croppingScheduleId = $copy->id;
+                    foreach ($attrs as $k => $v) $c->{$k} = $v;
+                    $c->save();
+                    return $c;
+                };
+                $mapIds = fn ($ids, $map) => collect($ids)->map(fn ($i) => $map[$i] ?? null)->filter()->values()->all();
+
+                // Lots
+                $lotMap = [];
+                foreach ($old->lots as $lot) $lotMap[$lot->id] = $rep($lot)->id;
+
+                // Workers + their off dates/days
+                $workerMap = [];
+                foreach ($old->workers()->with(['offDates', 'offDays'])->get() as $w) {
+                    $nw = $rep($w);
+                    $workerMap[$w->id] = $nw->id;
+                    foreach ($w->offDates as $od) { $x = $od->replicate(); $x->workerId = $nw->id; $x->save(); }
+                    foreach ($w->offDays as $od) { $x = $od->replicate(); $x->workerId = $nw->id; $x->save(); }
+                }
+
+                if ($old->protocol) $rep($old->protocol);
+                foreach ($old->materials as $m) $rep($m);
+                foreach ($old->services as $s) $rep($s);
+
+                // Doc tags → entries (remap tagId)
+                $tagMap = [];
+                foreach ($old->docTags as $t) $tagMap[$t->id] = $rep($t)->id;
+                foreach ($old->docEntries as $e) $rep($e, ['tagId' => $e->tagId ? ($tagMap[$e->tagId] ?? null) : null]);
+
+                // Versions
+                $versionMap = [];
+                foreach ($old->versions as $v) $versionMap[$v->id] = $rep($v)->id;
+
+                // Activities (all versions + drafts) + items + lot/worker pivots
+                $activities = \App\Models\AsScheduleActivity::where('croppingScheduleId', $old->id)
+                    ->where('deleteStatus', 1)->with(['items', 'lots:id', 'workers:id'])->get();
+                foreach ($activities as $a) {
+                    $na = $rep($a, [
+                        'versionId' => $a->versionId ? ($versionMap[$a->versionId] ?? null) : null,
+                        'sourceActivityId' => null,
+                    ]);
+                    foreach ($a->items as $it) { $x = $it->replicate(); $x->activityId = $na->id; $x->save(); }
+                    $na->lots()->attach($mapIds($a->lots->pluck('id'), $lotMap));
+                    $na->workers()->attach($mapIds($a->workers->pluck('id'), $workerMap));
+                }
+
+                // Date notes + progress markers (all versions)
+                foreach (\App\Models\AsScheduleDateNote::where('croppingScheduleId', $old->id)->where('deleteStatus', 1)->get() as $n) {
+                    $rep($n, ['versionId' => $n->versionId ? ($versionMap[$n->versionId] ?? null) : null]);
+                }
+                foreach (\App\Models\AsScheduleProgressMarker::where('croppingScheduleId', $old->id)->where('deleteStatus', 1)->get() as $n) {
+                    $rep($n, ['versionId' => $n->versionId ? ($versionMap[$n->versionId] ?? null) : null]);
+                }
+
+                // Irrigations + pivots
+                foreach ($old->irrigations()->with(['lots:id', 'workers:id'])->get() as $irr) {
+                    $ni = $rep($irr, ['assignedWorkerId' => $irr->assignedWorkerId ? ($workerMap[$irr->assignedWorkerId] ?? null) : null]);
+                    $ni->lots()->attach($mapIds($irr->lots->pluck('id'), $lotMap));
+                    $ni->workers()->attach($mapIds($irr->workers->pluck('id'), $workerMap));
+                }
+
+                foreach ($old->attachments as $x) $rep($x);
+                foreach ($old->criticalRules as $x) $rep($x);
+
+                // Default groupings + lot pivot
+                foreach ($old->defaultGroupings()->with('lots:id')->get() as $g) {
+                    $ng = $rep($g);
+                    $ng->lots()->attach($mapIds($g->lots->pluck('id'), $lotMap));
+                }
+
+                // Post-harvest observations (remap lotId) + notes
+                foreach (\App\Models\AsSchedulePostHarvest::where('croppingScheduleId', $old->id)->where('deleteStatus', 1)->get() as $ph) {
+                    $rep($ph, ['lotId' => $ph->lotId ? ($lotMap[$ph->lotId] ?? null) : null]);
+                }
+                foreach (\App\Models\AsScheduleNote::where('croppingScheduleId', $old->id)->where('deleteStatus', 1)->get() as $nt) {
+                    $rep($nt);
+                }
+
+                return $copy;
+            });
+        } catch (\Throwable $e) {
+            Log::error('Schedule duplicate failed', ['id' => $old->id, 'error' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => 'Could not duplicate the schedule: ' . $e->getMessage()], 500);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Schedule duplicated.',
+            'data' => ['id' => $new->id, 'title' => $new->title, 'hubUrl' => route('sm.hub', ['id' => $new->id])],
+        ]);
+    }
+
+    /**
      * Resolve an owned schedule from `?id=` or abort.
      * `$json = true` for AJAX endpoints (JSON envelope aborts),
      * false for page views (plain HTTP aborts).

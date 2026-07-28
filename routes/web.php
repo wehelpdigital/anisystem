@@ -92,6 +92,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-hub', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'hub'])->name('sm.hub');
     Route::put('/app/sm-update', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'update'])->name('sm.update');
     Route::delete('/app/sm-delete', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'destroy'])->name('sm.destroy');
+    Route::post('/app/sm-duplicate', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'duplicate'])->name('sm.duplicate');
 
     // --- Module pages (each takes ?id={scheduleId}) ---
     Route::get('/app/sm-settings', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'settingsPage'])->name('sm.settings');

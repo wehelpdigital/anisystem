@@ -106,6 +106,12 @@
                         <div class="flex items-center gap-2">
                             <a href="{{ route('sm.hub', ['id' => $s->id]) }}" class="btn btn-primary flex-1">Open</a>
                             <button type="button"
+                                class="btn btn-ghost px-3! text-gray-500 hover:bg-gray-100!"
+                                data-duplicate-schedule="{{ $s->id }}" data-title="{{ $s->title }}"
+                                title="Duplicate this schedule" aria-label="Duplicate schedule">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                            </button>
+                            <button type="button"
                                 class="btn btn-ghost px-3! text-red-500 hover:bg-red-50!"
                                 data-delete-schedule="{{ $s->id }}" data-title="{{ $s->title }}"
                                 aria-label="Delete schedule">
@@ -208,6 +214,32 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!document.querySelector('[data-schedule-card]')) window.location.reload();
         } catch (err) {
             toast(err.message, 'error');
+        }
+    });
+
+    document.addEventListener('click', async (e) => {
+        const btn = e.target.closest('[data-duplicate-schedule]');
+        if (!btn) return;
+
+        const id = btn.getAttribute('data-duplicate-schedule');
+        const title = btn.getAttribute('data-title') || 'this schedule';
+
+        const ok = await confirmAction({
+            title: 'Duplicate schedule?',
+            message: `A full copy of "${title}" — every module, activity and version — will be created as "Copy of ${title}".`,
+            confirmText: 'Duplicate',
+            confirmClass: 'btn-primary',
+        });
+        if (!ok) return;
+
+        btn.disabled = true;
+        try {
+            const res = await api(`{{ route('sm.duplicate') }}?id=${id}`, { method: 'POST' });
+            toast(res.message);
+            window.location.href = res.data.hubUrl;
+        } catch (err) {
+            toast(err.message, 'error');
+            btn.disabled = false;
         }
     });
 });
