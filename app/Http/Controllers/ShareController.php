@@ -21,13 +21,16 @@ class ShareController extends Controller
         $schedule = $this->resolve($token);
         $schedule->load(['lots', 'workers', 'activities.lots', 'activities.workers']);
 
+        $aliases = $this->privacyAliases($schedule);
         $lotDayZero = $this->lotDayZero($schedule);
-        $timeline = $this->groupedTimeline($schedule, $lotDayZero);
+        $timeline = $this->groupedTimeline($schedule, $lotDayZero, $aliases['lots']);
 
         return view('share.schedule', [
             'schedule' => $schedule,
             'timeline' => $timeline,
             'lotDayZero' => $lotDayZero,
+            'workerAlias' => $aliases['workers'],
+            'lotAlias' => $aliases['lots'],
             'ogDescription' => $this->scheduleSummary($schedule),
         ]);
     }
@@ -46,13 +49,16 @@ class ShareController extends Controller
             abort(404);
         }
 
-        $schedule->load('activities');   // for day-zero anchor
+        $schedule->load(['activities', 'lots', 'workers']);   // for day-zero anchor + aliases
         $lotDayZero = $this->lotDayZero($schedule);
+        $aliases = $this->privacyAliases($schedule);
 
         return view('share.activity', [
             'schedule' => $schedule,
             'activity' => $activity,
-            'dasLabels' => $this->activityDasLabels($activity, $lotDayZero, $schedule->dayType ?: 'DAS'),
+            'dasLabels' => $this->activityDasLabels($activity, $lotDayZero, $schedule->dayType ?: 'DAS', $aliases['lots']),
+            'workerAlias' => $aliases['workers'],
+            'lotAlias' => $aliases['lots'],
             'ogDescription' => $this->activitySummary($activity),
         ]);
     }
@@ -69,9 +75,10 @@ class ShareController extends Controller
         }
         $target = $carbon->format('Y-m-d');
 
-        $schedule->load(['lots', 'activities.lots', 'activities.workers']);
+        $schedule->load(['lots', 'workers', 'activities.lots', 'activities.workers']);
         $lotDayZero = $this->lotDayZero($schedule);
         $dayType = $schedule->dayType ?: 'DAS';
+        $aliases = $this->privacyAliases($schedule);
 
         $rows = [];
         foreach ($schedule->activities as $a) {
@@ -85,7 +92,7 @@ class ShareController extends Controller
             }
             $rows[] = [
                 'activity' => $a,
-                'das' => $this->activityDasLabels($a, $lotDayZero, $dayType),
+                'das' => $this->activityDasLabels($a, $lotDayZero, $dayType, $aliases['lots']),
                 'isStart' => $target === $start,
             ];
         }
@@ -96,6 +103,8 @@ class ShareController extends Controller
             'schedule' => $schedule,
             'date' => $carbon,
             'rows' => $rows,
+            'workerAlias' => $aliases['workers'],
+            'lotAlias' => $aliases['lots'],
             'ogDescription' => $this->daySummary($schedule, $carbon, count($rows)),
         ]);
     }
@@ -146,8 +155,8 @@ class ShareController extends Controller
         return $map;
     }
 
-    /** DAS/DAT labels for an activity's lots, e.g. "Lot A · DAS 21". */
-    private function activityDasLabels(AsScheduleActivity $activity, array $lotDayZero, string $dayType): array
+    /** DAS/DAT labels for an activity's lots, e.g. "Lot 1 · DAS 21" (aliased). */
+    private function activityDasLabels(AsScheduleActivity $activity, array $lotDayZero, string $dayType, array $lotAlias = []): array
     {
         if (! $activity->targetDate) {
             return [];
@@ -158,7 +167,7 @@ class ShareController extends Controller
             $anchor = $lotDayZero[$lot->id] ?? null;
             $das = $anchor ? (int) $anchor->copy()->startOfDay()->diffInDays($target, false) : null;
             $labels[] = [
-                'lot' => $lot->lotName,
+                'lot' => $lotAlias[$lot->id] ?? $lot->lotName,
                 'das' => $das === null ? null : $dayType . ' ' . $das,
             ];
         }
@@ -167,7 +176,7 @@ class ShareController extends Controller
     }
 
     /** Timeline grouped by date, each activity carrying its DAS labels. */
-    private function groupedTimeline(AsCroppingSchedule $schedule, array $lotDayZero): array
+    private function groupedTimeline(AsCroppingSchedule $schedule, array $lotDayZero, array $lotAlias = []): array
     {
         $dayType = $schedule->dayType ?: 'DAS';
         $sorted = $schedule->activities
@@ -180,11 +189,35 @@ class ShareController extends Controller
             $key = $a->targetDate ? Carbon::parse($a->targetDate)->format('Y-m-d') : 'no-date';
             $groups[$key][] = [
                 'activity' => $a,
-                'das' => $this->activityDasLabels($a, $lotDayZero, $dayType),
+                'das' => $this->activityDasLabels($a, $lotDayZero, $dayType, $lotAlias),
             ];
         }
 
         return $groups;
+    }
+
+    /**
+     * Privacy aliases for a public share: real worker/lot names are replaced by
+     * "Worker 1/2/3…" and "Lot 1/2/3…" so a shared plan never leaks who works a
+     * grower's fields or what their parcels are called. Stable ordering (lot by
+     * id, worker by priority then id) so the same entity keeps the same number.
+     *
+     * @return array{workers: array<int,string>, lots: array<int,string>}
+     */
+    private function privacyAliases(AsCroppingSchedule $schedule): array
+    {
+        $lots = [];
+        foreach ($schedule->lots->sortBy('id')->values() as $i => $lot) {
+            $lots[$lot->id] = 'Lot ' . ($i + 1);
+        }
+
+        $workers = [];
+        $ordered = $schedule->workers->sortBy(fn ($w) => [(int) ($w->priority ?? 999), (int) $w->id])->values();
+        foreach ($ordered as $i => $worker) {
+            $workers[$worker->id] = 'Worker ' . ($i + 1);
+        }
+
+        return ['workers' => $workers, 'lots' => $lots];
     }
 
     private function scheduleSummary(AsCroppingSchedule $schedule): string

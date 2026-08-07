@@ -68,4 +68,104 @@ class CommunityConnection extends BaseModel
             ->values()
             ->all();
     }
+
+    /**
+     * "People you may know" — non-contacts ranked by signal strength:
+     *   mutual co-farmers (friends-of-friends)  ×5   (the strongest cue)
+     *   same city                                +4
+     *   same province                            +2
+     * Each candidate carries recoMutual, recoReason and connStatus so the card
+     * can render a reason line and the right Connect button. Highest first.
+     *
+     * @return \Illuminate\Support\Collection<int, User>
+     */
+    public static function recommendationsFor(int $viewerId, int $limit = 8): \Illuminate\Support\Collection
+    {
+        $viewer = User::find($viewerId);
+        if (! $viewer) {
+            return collect();
+        }
+
+        $friends = static::connectedIds($viewerId);
+        $friendSet = array_flip($friends);
+        $excludeSet = array_flip(array_merge([$viewerId], $friends));
+
+        // Mutual counts: one pass over accepted connections that touch a friend.
+        $mutual = [];
+        if (! empty($friends)) {
+            $conns = static::active()->where('status', 'accepted')
+                ->where(function ($q) use ($friends) {
+                    $q->whereIn('userId', $friends)->orWhereIn('friendUserId', $friends);
+                })
+                ->get(['userId', 'friendUserId']);
+            foreach ($conns as $c) {
+                $a = (int) $c->userId;
+                $b = (int) $c->friendUserId;
+                if (isset($friendSet[$a]) && ! isset($excludeSet[$b])) {
+                    $mutual[$b] = ($mutual[$b] ?? 0) + 1;
+                }
+                if (isset($friendSet[$b]) && ! isset($excludeSet[$a])) {
+                    $mutual[$a] = ($mutual[$a] ?? 0) + 1;
+                }
+            }
+        }
+
+        $province = trim((string) $viewer->province);
+        $city = trim((string) $viewer->city);
+
+        // Location candidates (non-contacts in the same city/province).
+        $locIds = [];
+        if ($province !== '' || $city !== '') {
+            $locIds = User::where('deleteStatus', 1)
+                ->whereNotIn('id', array_keys($excludeSet) ?: [0])
+                ->where(function ($q) use ($province, $city) {
+                    if ($city !== '') {
+                        $q->orWhere('city', $city);
+                    }
+                    if ($province !== '') {
+                        $q->orWhere('province', $province);
+                    }
+                })
+                ->limit(80)->pluck('id')->all();
+        }
+
+        $ids = array_values(array_unique(array_merge(array_keys($mutual), $locIds)));
+        if (empty($ids)) {
+            return collect();
+        }
+
+        $users = User::where('deleteStatus', 1)->whereIn('id', $ids)->get()->keyBy('id');
+        $out = collect();
+        foreach ($ids as $id) {
+            $u = $users->get($id);
+            if (! $u || isset($excludeSet[$id])) {
+                continue;
+            }
+            $m = $mutual[$id] ?? 0;
+            $sameCity = $city !== '' && trim((string) $u->city) === $city;
+            $sameProvince = $province !== '' && trim((string) $u->province) === $province;
+            $score = $m * 5 + ($sameCity ? 4 : 0) + ($sameProvince ? 2 : 0);
+            if ($score <= 0) {
+                continue;
+            }
+
+            $reasons = [];
+            if ($m > 0) {
+                $reasons[] = $m . ' mutual co-farmer' . ($m > 1 ? 's' : '');
+            }
+            if ($sameCity && $u->city) {
+                $reasons[] = 'Also in ' . $u->city;
+            } elseif ($sameProvince && $u->province) {
+                $reasons[] = 'Also in ' . $u->province;
+            }
+
+            $u->recoMutual = $m;
+            $u->recoScore = $score;
+            $u->recoReason = implode(' · ', $reasons);
+            $u->connStatus = static::statusFor($viewerId, $id);
+            $out->push($u);
+        }
+
+        return $out->sortByDesc('recoScore')->take($limit)->values();
+    }
 }

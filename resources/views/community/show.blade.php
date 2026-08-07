@@ -8,6 +8,7 @@
 @section('back', route('community.index'))
 
 @push('head')
+@include('community.partials.plaza-css')
     <style>
         .stars { display: inline-flex; gap: .05rem; }
         .stars svg { width: .85rem; height: .85rem; }
@@ -63,6 +64,11 @@
                 @endif
                 @if ($plan->publicRegion)
                     <span class="badge badge-gray">{{ $plan->publicRegion }}</span>
+                @endif
+                @if ($plan->status === 'completed')
+                    <span class="badge badge-green">✅ Completed</span>
+                @elseif ($plan->status === 'setup')
+                    <span class="badge" style="background:#fef3c7;color:#92400e;border:1px solid #fde68a;">🌱 Still setting up</span>
                 @endif
             </div>
         </div>
@@ -225,14 +231,17 @@
         <textarea id="commentBody" class="form-textarea" rows="3" maxlength="4000"
                   placeholder="{{ $isOwner ? 'Add a note for readers…' : 'Ask the grower something, or say what you learned…' }}"></textarea>
         <div class="flex items-center justify-between gap-3 mt-2">
-            @if (! $isOwner)
-                <label class="flex items-center gap-2 text-sm text-gray-600">
-                    <input type="checkbox" id="commentIsQuestion" class="form-checkbox" checked>
-                    This is a question
-                </label>
-            @else
-                <span></span>
-            @endif
+            <div class="flex items-center gap-2">
+                <button type="button" class="emoji-btn js-emoji-btn" data-target="commentBody" aria-label="Add an emoji" title="Emoji">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </button>
+                @if (! $isOwner)
+                    <label class="flex items-center gap-2 text-sm text-gray-600">
+                        <input type="checkbox" id="commentIsQuestion" class="form-checkbox" checked>
+                        This is a question
+                    </label>
+                @endif
+            </div>
             <button type="button" class="btn btn-primary btn-sm" id="commentPostBtn">Post</button>
         </div>
     </div>
@@ -255,6 +264,7 @@
 
 @push('scripts')
     @include('community.partials.publish-js')
+@include('community.partials.emoji-js')
 <script>
 (() => {
 const __init = () => {

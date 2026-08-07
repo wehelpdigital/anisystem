@@ -5,6 +5,52 @@
 @section('page-subtitle', $schedule->title)
 @section('back', route('sm.hub', ['id' => $schedule->id]))
 
+@if (request()->boolean('embed'))
+@push('head')
+<script>document.documentElement.classList.add('collab-embed');</script>
+<style>
+    /* Collab Room embed (?embed=1): show only the activities board. Hide the app
+       chrome (header/tabbar/footer), module switching, quick share, the Collab
+       button and the floating widgets — keep add/move, versions, notes, markers. */
+    html.collab-embed header.sticky, html.collab-embed .tabbar, html.collab-embed footer { display: none !important; }
+    html.collab-embed main { padding: .6rem .75rem 1rem !important; max-width: none !important; }
+    /* The sticky toolbar bleeds full-width via -mx-4/-mx-6 in the normal app; that
+       bleed (up to 24px each side) exceeds the embed's smaller padding and causes a
+       horizontal scrollbar. Neutralize it so the toolbar fits the embed width. */
+    html.collab-embed .sticky.top-14 { top: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-left: 0 !important; padding-right: 0 !important; }
+    html.collab-embed, html.collab-embed body { overflow-x: clip; }
+    html.collab-embed #modulesBtn,
+    html.collab-embed #collabRoomBtn,
+    html.collab-embed #quickShareBtn,
+    html.collab-embed #aiFloat,
+    html.collab-embed #teamChat,
+    html.collab-embed #scheduleBoard,
+    html.collab-embed .activity-action-row[data-forward="quickShareBtn"],
+    html.collab-embed .activity-action-row[data-forward="openReportBtn"] { display: none !important; }
+</style>
+<script>
+    // Tell the Collab Room parent once the board has actually painted, so it can
+    // hide its loader at the right moment (the iframe 'load' event fires before
+    // this heavy page finishes its init + first paint).
+    (() => {
+        const signal = () => requestAnimationFrame(() => requestAnimationFrame(() => {
+            try {
+                if (window.parent && window.parent !== window) {
+                    window.parent.postMessage({ type: 'collab:activities-ready' }, window.location.origin);
+                }
+            } catch (_) { /* cross-origin — ignore */ }
+        }));
+        // setTimeout(0) after DOMContentLoaded runs after the board's own init handler.
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => setTimeout(signal, 0), { once: true });
+        } else {
+            setTimeout(signal, 0);
+        }
+    })();
+</script>
+@endpush
+@endif
+
 @push('head')
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
     <style>
@@ -80,7 +126,46 @@
         .date-header-day { font-weight: 800; font-size: .8rem; color: var(--date-color); text-transform: uppercase; }
         .date-header-date { font-weight: 800; font-size: 1rem; color: var(--tl-text); }
         .date-header-range { display: inline-flex; align-items: center; gap: .2rem; font-size: 11px; font-weight: 600; color: var(--tl-text-soft); background: var(--tl-hover); border-radius: 999px; padding: .1rem .5rem; }
-        .date-header-count { font-size: 11px; font-weight: 700; color: var(--date-color); background: var(--tl-pill); border-radius: 999px; padding: .12rem .55rem; margin-left: auto; }
+        .date-header-count { font-size: 11px; font-weight: 700; color: var(--date-color); background: var(--tl-pill); border-radius: 999px; padding: .12rem .55rem; margin-left: auto; flex-shrink: 0; }
+        /* Per-day weather chips in the date header — scroll/drag if they overflow. */
+        .date-header-weather { min-width: 0; flex: 0 1 auto; }
+        .date-header-weather.scroll-chips { gap: .25rem; padding: 0; margin: 0; }
+        .wx-chip { display: inline-flex; align-items: center; gap: .22rem; flex-shrink: 0; font-size: 10.5px; font-weight: 700; padding: .1rem .42rem; border-radius: 999px; background: var(--tl-pill); color: var(--tl-text-muted); white-space: nowrap; cursor: pointer; border: 1px solid transparent; transition: border-color .15s ease; }
+        .wx-chip:hover { border-color: var(--date-color, #4A90E2); }
+        .wx-chip .wx-emoji { font-size: 12px; line-height: 1; }
+        .wx-chip .wx-loc { color: var(--tl-text-soft); max-width: 6rem; overflow: hidden; text-overflow: ellipsis; }
+        .wx-chip .wx-temp { color: var(--tl-text); font-variant-numeric: tabular-nums; }
+        .rest-day-weather { margin-top: .35rem; max-width: 100%; }
+        .wx-cloud { display: inline-block; animation: wxCloudFloat 1.6s ease-in-out infinite; }
+        @keyframes wxCloudFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+        @media (prefers-reduced-motion: reduce) { .wx-cloud { animation: none; } }
+        /* Per-day agronomic reminder pill in the date header. Quiet/grey once
+           every reminder is acknowledged; amber + pulsing while any is unread. */
+        .day-warn-btn { display: inline-flex; align-items: center; gap: .2rem; flex-shrink: 0; height: 1.5rem; padding: 0 .5rem; border-radius: 999px; background: var(--tl-pill); color: var(--tl-text-muted); border: 1px solid transparent; font-size: 11px; font-weight: 800; cursor: pointer; transition: transform .15s ease, background .15s ease; }
+        .day-warn-btn:hover { transform: translateY(-1px); }
+        .day-warn-btn svg { width: .95rem; height: .95rem; }
+        .day-warn-btn .cnt { font-variant-numeric: tabular-nums; }
+        .day-warn-btn.has-unread { background: #fef3c7; color: #b45309; border-color: #fcd34d; animation: warnPulse 2.4s ease-in-out infinite; }
+        .day-warn-btn.has-unread:hover { background: #fde68a; }
+        @keyframes warnPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(245,158,11,0); } 50% { box-shadow: 0 0 0 3px rgba(245,158,11,.20); } }
+        @media (prefers-reduced-motion: reduce) { .day-warn-btn.has-unread { animation: none; } }
+        html.dark .day-warn-btn.has-unread { background: #3a2c07; color: #fbbf24; border-color: #6b4e0e; }
+        html.dark .day-warn-btn.has-unread:hover { background: #4a3a0a; }
+        /* Reminder cards inside the day-warning sheet. */
+        .warn-item { display: flex; gap: .7rem; padding: .8rem .85rem; border-radius: .85rem; border: 1px solid #fde68a; background: #fffbeb; transition: opacity .2s ease; }
+        html.dark .warn-item { border-color: #6b4e0e; background: #241b06; }
+        .warn-item.is-read { opacity: .55; }
+        .warn-item.is-read .warn-item-title { text-decoration: line-through; }
+        .warn-item-ico { font-size: 1.3rem; line-height: 1.1; flex-shrink: 0; }
+        .warn-item-title { font-weight: 800; color: #92400e; font-size: .9rem; }
+        html.dark .warn-item-title { color: #fcd34d; }
+        .warn-item-lots { display: flex; flex-wrap: wrap; gap: .3rem; margin: .35rem 0; }
+        .warn-item-lots .lot { font-size: 10.5px; font-weight: 700; color: #fff; padding: .06rem .5rem; border-radius: 999px; }
+        .warn-item-detail { font-size: .8rem; color: #7c6f57; line-height: 1.5; }
+        html.dark .warn-item-detail { color: #c3b79f; }
+        .warn-read-check { margin-top: .6rem; display: inline-flex; align-items: center; gap: .45rem; font-size: 11.5px; font-weight: 800; color: #a16207; cursor: pointer; user-select: none; }
+        .warn-read-check input { width: 1rem; height: 1rem; border-radius: .25rem; accent-color: #d97706; }
+        html.dark .warn-read-check { color: #fcd34d; }
         .date-header-btn {
             display: inline-flex; align-items: center; justify-content: center;
             width: 2.6rem; height: 2.6rem; border-radius: .6rem; color: var(--tl-text-muted); flex-shrink: 0;
@@ -94,19 +179,205 @@
         .date-header-delete-btn:hover { color: #dc2626; background: var(--tl-hover); }
         html.dark .date-header-delete-btn:hover { color: #f47c7c; }
 
+        /* Icon buttons swap to this mini spinner while their fetch is in flight. */
+        .btn-spin { animation: btnspin .7s linear infinite; }
+        @keyframes btnspin { to { transform: rotate(360deg); } }
+        @media (prefers-reduced-motion: reduce) { .btn-spin { animation-duration: 1.4s; } }
+
+        /* Accordion: a day folds down to its header; the chevron flags state.
+           The body is a 1fr→0fr grid row so height animates without knowing
+           the content size (old browsers simply snap — still correct). */
+        .date-chevron { width: 1rem; height: 1rem; flex-shrink: 0; color: var(--date-color); transition: transform .18s ease; }
+        .date-group:not(.is-folded) .date-chevron { transform: rotate(90deg); }
+        .date-body { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+        .date-body-inner { overflow: hidden; min-height: 0; }
+        .date-group.is-folded .date-body { grid-template-rows: 0fr; }
+        /* Restoring the remembered open days on load applies instantly. */
+        #activitiesList.no-fold-anim .date-body,
+        #activitiesList.no-fold-anim .date-chevron { transition: none; }
+        @media (prefers-reduced-motion: reduce) { .date-body, .date-chevron { transition: none; } }
+
         .date-activities { display: flex; flex-direction: column; gap: .55rem; padding: .7rem; }
         .date-activities.drag-over { outline: 2px dashed #86b556; outline-offset: -4px; border-radius: .8rem; background: color-mix(in srgb, #86b556 12%, var(--tl-surface)); }
 
         .date-note-block {
             margin: .55rem .7rem 0; background: var(--tl-note-bg); border: 1px solid var(--tl-note-border); border-radius: .6rem;
             padding: .5rem .7rem; font-size: .8rem; color: var(--tl-note-text); white-space: pre-wrap;
+            cursor: pointer; position: relative; transition: box-shadow .15s ease, border-color .15s ease;
         }
+        .date-note-block:hover { border-color: #f5c518; box-shadow: 0 1px 6px rgb(0 0 0 / .06); }
+        /* Edit + delete buttons — reveal on hover (desktop), always shown on
+           touch. Delete = red trash, edit = green pencil, on a white chip. */
+        .date-note-inner { padding-right: 2.2rem; }
+        .date-note-edit, .date-note-del {
+            position: absolute; top: .3rem; width: 1.9rem; height: 1.9rem; border-radius: 999px;
+            display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+            background: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .2); opacity: 0;
+            transition: opacity .15s ease, background .15s ease, transform .1s ease;
+        }
+        .date-note-del { right: .35rem; color: #dc2626; }
+        .date-note-edit { right: 2.6rem; color: var(--color-brand-700); }
+        .date-note-edit svg, .date-note-del svg { width: 1.1rem; height: 1.1rem; }
+        .date-note-block:hover .date-note-edit, .date-note-block:hover .date-note-del { opacity: 1; }
+        .date-note-del:hover { background: #fee2e2; }
+        .date-note-edit:hover { background: #eef7e8; }
+        .date-note-del:active, .date-note-edit:active { transform: scale(.9); }
+        .date-note-block.dragging, .progress-marker.dragging { opacity: .45; }
+        .progress-marker[draggable="true"] { cursor: grab; }
+        html.dark .date-note-block:hover { border-color: #eec155; }
+        html.dark .date-note-edit, html.dark .date-note-del { background: #232b1a; }
+        html.dark .date-note-del { color: #f87171; }
+        html.dark .date-note-edit { color: #9fd979; }
+        @media (hover: none), (pointer: coarse) {
+            .date-note-edit, .date-note-del { opacity: 1; width: 2.4rem; height: 2.4rem; }
+            .date-note-inner { padding-right: 2.8rem; }
+            .date-note-edit { right: 3rem; }
+            .date-note-edit svg, .date-note-del svg { width: 1.35rem; height: 1.35rem; }
+        }
+        @media (prefers-reduced-motion: reduce) { .date-note-block { transition: none; } }
+
+        /* Moving a note/marker to another day: a spinner + dim while the save
+           runs, then the note animates into its new home (never a blank snap). */
+        .date-note-block.is-moving, .progress-marker.is-moving { pointer-events: none; opacity: .65; position: relative; }
+        .date-note-block.is-moving::after { opacity: 0 !important; }
+        .note-move-spin { position: absolute; top: .3rem; right: .5rem; color: #b45309; display: inline-flex; }
+        .note-move-spin svg { width: 1rem; height: 1rem; animation: btnspin .7s linear infinite; }
+        html.dark .note-move-spin { color: #eec155; }
+        @keyframes noteLandIn { from { opacity: 0; transform: translateY(-10px) scale(.97); } to { opacity: 1; transform: none; } }
+        .note-landed { animation: noteLandIn .34s cubic-bezier(.22,1,.36,1); }
+        @media (prefers-reduced-motion: reduce) { .note-move-spin svg { animation-duration: 1.4s; } .note-landed { animation: none; } }
+
+        /* ---- Inline sticky notes: multiple per day, dropped between cards ---- */
+        .inline-note {
+            position: relative; background: var(--tl-note-bg); border: 1px dashed var(--tl-note-border);
+            border-radius: .6rem; padding: .5rem 3.5rem .5rem 1.85rem; font-size: .82rem; color: var(--tl-note-text);
+            word-break: break-word; cursor: grab;
+            user-select: none; -webkit-user-select: none;
+            transition: box-shadow .15s ease, border-color .15s ease;
+        }
+        .inline-note:hover { border-color: #f5c518; box-shadow: 0 1px 6px rgb(0 0 0 / .06); }
+        .inline-note.is-editing { cursor: text; user-select: text; -webkit-user-select: text; border-style: solid; border-color: #f5c518; background: var(--tl-surface); color: var(--tl-text); }
+        /* Grip: the clear drag affordance (whole note is still draggable). */
+        .inline-note-grip { position: absolute; left: .05rem; top: 50%; transform: translateY(-50%); display: inline-flex; align-items: center; justify-content: center; padding: .3rem; color: var(--tl-note-border); cursor: grab; touch-action: none; }
+        .inline-note-grip:active { cursor: grabbing; }
+        .inline-note:hover .inline-note-grip { color: #d9a441; }
+        .inline-note.is-editing .inline-note-grip { display: none; }
+        html.dark .inline-note-grip { color: #6b5a2a; }
+        .inline-note.is-editing .inline-note-body { outline: none; }
+        .inline-note.dragging { opacity: .45; }
+        .inline-note[draggable="true"] { cursor: grab; }
+        /* Small "Note" title so the sticky note announces itself as a note. */
+        .inline-note-tag {
+            display: inline-flex; align-items: center; gap: .2rem; line-height: 1;
+            font-size: .58rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+            color: #b45309; opacity: .8; margin-bottom: .15rem; user-select: none;
+        }
+        .inline-note-tag svg { width: .72rem; height: .72rem; }
+        html.dark .inline-note-tag { color: #e0b457; }
+        .inline-note-body { min-height: 1em; white-space: pre-wrap; }
+        /* Keep the note compact — drawings/images never blow up its height. */
+        .inline-note-body img { max-width: 100%; max-height: 10rem; border-radius: .4rem; display: inline-block; margin: .2rem 0; }
+        .inline-note-body p { margin: .15rem 0; }
+        .inline-note-body ul { list-style: disc; padding-left: 1.15rem; }
+        .inline-note-body ol { list-style: decimal; padding-left: 1.3rem; }
+        .inline-note-media:not(:has(.nm)) { display: none; }
+        .inline-note-media { display: grid; grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr)); gap: .35rem; margin-top: .4rem; }
+        .inline-note-media .nm { position: relative; border-radius: .45rem; overflow: hidden; background: #000; aspect-ratio: 1; }
+        .inline-note-media .nm img, .inline-note-media .nm video { width: 100%; height: 100%; object-fit: cover; display: block; }
+        /* Per-day (amber) note media gallery — same look. */
+        .date-note-block .date-note-media:empty { display: none; }
+        .date-note-block .date-note-media { display: grid; grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr)); gap: .35rem; margin-top: .4rem; white-space: normal; }
+        .date-note-block .date-note-media .nm { position: relative; border-radius: .45rem; overflow: hidden; background: #000; aspect-ratio: 1; }
+        .date-note-block .date-note-media .nm img, .date-note-block .date-note-media .nm video { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .date-note-block img { max-width: 100%; max-height: 10rem; border-radius: .4rem; }
+        /* Edit + delete: ALWAYS visible (also on touch), clearly coloured on a
+           solid white chip so they stand out on the yellow note. Delete = red
+           trash, edit = green pencil. Bigger tap targets on phones. */
+        .inline-note-del, .inline-note-edit {
+            position: absolute; top: .3rem; width: 2rem; height: 2rem; border-radius: 999px;
+            display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+            background: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .2); opacity: 1;
+            transition: background .15s ease, transform .1s ease;
+        }
+        .inline-note-del { right: .35rem; color: #dc2626; }
+        .inline-note-edit { right: 2.65rem; color: var(--color-brand-700); }
+        .inline-note-del svg, .inline-note-edit svg { width: 1.15rem; height: 1.15rem; }
+        .inline-note-del:active, .inline-note-edit:active { transform: scale(.9); }
+        .inline-note-del:hover { background: #fee2e2; }
+        .inline-note-edit:hover { background: #eef7e8; }
+        html.dark .inline-note-del, html.dark .inline-note-edit { background: #232b1a; box-shadow: 0 1px 3px rgb(0 0 0 / .4); }
+        html.dark .inline-note-del { color: #f87171; }
+        html.dark .inline-note-edit { color: #9fd979; }
+        /* Phones: bigger tap targets. */
+        @media (hover: none), (pointer: coarse) {
+            .inline-note-del, .inline-note-edit { width: 2.5rem; height: 2.5rem; }
+            .inline-note-edit { right: 3.2rem; }
+            .inline-note-del svg, .inline-note-edit svg { width: 1.4rem; height: 1.4rem; }
+        }
+        /* While saving/moving, the spinner owns the top-right corner (the action
+           buttons are non-interactive during the move anyway) — no overlap. */
+        .inline-note.is-moving .inline-note-del, .inline-note.is-moving .inline-note-edit { display: none; }
+        .inline-note.note-landed { animation: noteLandIn .34s cubic-bezier(.22,1,.36,1); }
+
+        /* ---- Per-day extra expenses strip ------------------------------- */
+        .day-expense-block { margin: .55rem .7rem 0; }
+        .day-expense-block:empty { display: none; }
+        .dx-card {
+            background: #fff7ed; border: 1px solid #fed7aa; border-radius: .6rem; overflow: hidden;
+        }
+        .dx-head {
+            display: flex; align-items: center; gap: .5rem; padding: .45rem .6rem;
+            font-size: .74rem; font-weight: 700; color: #9a3412; letter-spacing: .01em;
+        }
+        .dx-head .dx-total { margin-left: auto; font-variant-numeric: tabular-nums; }
+        .dx-list { display: flex; flex-direction: column; }
+        .dx-row {
+            display: flex; align-items: center; gap: .5rem; padding: .4rem .6rem;
+            border-top: 1px dashed #fed7aa; font-size: .8rem; color: #7c2d12;
+        }
+        .dx-row .dx-amt { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+        .dx-row .dx-note { color: #9a3412; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .dx-row .dx-actions { margin-left: auto; display: flex; gap: .1rem; flex-shrink: 0; }
+        .dx-row .dx-btn {
+            display: inline-flex; align-items: center; justify-content: center; width: 1.7rem; height: 1.7rem;
+            border-radius: .4rem; color: #c2410c; transition: background .15s ease, color .15s ease;
+        }
+        .dx-row .dx-btn:hover { background: #ffedd5; }
+        .dx-row .dx-btn.dx-del:hover { background: #fee2e2; color: #dc2626; }
+        .dx-add {
+            display: inline-flex; align-items: center; gap: .35rem; padding: .4rem .6rem; width: 100%;
+            border-top: 1px dashed #fed7aa; font-size: .76rem; font-weight: 700; color: #c2410c;
+            transition: background .15s ease;
+        }
+        .dx-add:hover { background: #ffedd5; }
+        .dx-add.dx-add-solo { border-top: 0; }
+        /* Empty-state: a slim ghost "+ expense" when a day has none yet. */
+        .dx-empty {
+            display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .55rem;
+            border: 1px dashed var(--tl-border); border-radius: .5rem; background: transparent;
+            font-size: .72rem; font-weight: 600; color: var(--tl-text-faint);
+            transition: border-color .15s ease, color .15s ease, background .15s ease;
+        }
+        .dx-empty:hover { border-color: #fdba74; color: #c2410c; background: #fff7ed; }
+
+        html.dark .dx-card { background: #2b1c0e; border-color: #4a3115; }
+        html.dark .dx-head { color: #f0a868; }
+        html.dark .dx-row { color: #e9c9a3; border-color: #4a3115; }
+        html.dark .dx-row .dx-note { color: #d1a878; }
+        html.dark .dx-row .dx-btn { color: #f0a868; }
+        html.dark .dx-row .dx-btn:hover { background: #3a2712; }
+        html.dark .dx-row .dx-btn.dx-del:hover { background: #3d1c1f; color: #f47c7c; }
+        html.dark .dx-add { color: #f0a868; border-color: #4a3115; }
+        html.dark .dx-add:hover { background: #3a2712; }
+        html.dark .dx-empty:hover { border-color: #7a5220; color: #f0a868; background: #2b1c0e; }
 
         /* ---- Activity card ----------------------------------------------
            Left rail carries the priority colour so the top-right stays free
            for actions. Tapping the card body opens the editor. */
         .activity-card {
-            border: 1px solid var(--tl-border-soft); border-left: 3px solid var(--prio-color, #d1d5db);
+            /* Left accent = the lot's auto colour (falls back to priority when the
+               activity isn't tied to a lot). Priority still shows in the pill. */
+            border: 1px solid var(--tl-border-soft); border-left: 4px solid var(--lot-accent, var(--prio-color, #d1d5db));
             border-radius: .85rem; background: var(--tl-surface); padding: .75rem .85rem;
             user-select: none; -webkit-user-select: none;
             transition: box-shadow .15s ease, border-color .15s ease;
@@ -123,8 +394,71 @@
             font-weight: 700; font-size: .95rem; line-height: 1.35; color: var(--tl-text);
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
         }
+        /* Photos embedded in description notes stay thumbnail-sized on cards. */
+        .activity-description-content img { max-height: 9rem; border-radius: .5rem; display: inline-block; margin: .3rem .3rem 0 0; vertical-align: top; }
+
+        /* Done cards: every action collapses down to a single "add note" button. */
+        .activity-card.is-done .done-hide { display: none !important; }
+        .activity-card:not(.is-done) .add-note-activity-btn { display: none; }
+
+        /* Big "done" checkbox: checking locks the activity (no drag/edit). */
+        .done-check {
+            width: 1.9rem; height: 1.9rem; border-radius: .55rem; flex-shrink: 0;
+            border: 2px solid var(--color-gray-300); background: var(--tl-surface); color: transparent;
+            display: flex; align-items: center; justify-content: center; margin-top: .2rem; cursor: pointer;
+            transition: background .18s ease, border-color .18s ease, transform .12s ease;
+        }
+        .done-check svg { width: 1.1rem; height: 1.1rem; }
+        .done-check:hover { border-color: var(--color-brand-500); }
+        .done-check:active { transform: scale(.88); }
+        .done-check.is-checked { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; animation: donePop .25s cubic-bezier(.22,1,.36,1); }
+        @keyframes donePop { 0% { transform: scale(.7); } 60% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        .activity-card.is-done { opacity: .8; }
+        .activity-card.is-done .activity-card-title { text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: var(--color-brand-500); }
+        .activity-card.is-done[draggable="false"] { cursor: default; }
+        @media (prefers-reduced-motion: reduce) { .done-check.is-checked { animation: none; } .done-check { transition: none; } }
+
+        /* Type chip before the title: task / irrigation / service at a glance. */
+        .type-ico { width: 2.1rem; height: 2.1rem; border-radius: .6rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-top: .05rem; }
+        .type-ico svg { width: 1.2rem; height: 1.2rem; }
+        .type-ico-task { background: var(--color-brand-50); color: var(--color-brand-700); }
+        .type-ico-irrigation { background: rgb(47 143 216 / .14); color: #2f8fd8; }
+        html.dark .type-ico-irrigation { background: rgb(47 143 216 / .2); color: #6db5e8; }
+        .type-ico-service { background: rgb(224 145 46 / .15); color: #c26d13; }
+        html.dark .type-ico-service { background: rgb(224 145 46 / .2); color: #f3a257; }
         .activity-card-badges { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .3rem; }
         .activity-card-lots { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .45rem; }
+        /* Lot header: shown ABOVE the title as a bold, unmissable label so you
+           know which lot each activity belongs to at a glance. */
+        .activity-card-lothead { margin-top: 0; margin-bottom: .35rem; gap: .35rem; }
+        .activity-card-lothead .lot-tag {
+            background: #3f4bb5; color: #fff; font-size: 12px; font-weight: 800;
+            padding: .22rem .55rem .22rem .42rem; border-radius: .5rem; box-shadow: 0 1px 2px rgb(0 0 0 / .15);
+        }
+        .activity-card-lothead .lot-tag::before {
+            content: ""; width: .82rem; height: .82rem; flex-shrink: 0; background: currentColor;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z'/%3E%3C/svg%3E") center/contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z'/%3E%3C/svg%3E") center/contain no-repeat;
+        }
+        .activity-card-lothead .activity-na-tag { font-weight: 700; }
+        html.dark .activity-card-lothead .lot-tag { background: #5b67d6; color: #fff; }
+        /* Variety + DAS, below the title, as regular neutral tags. */
+        .activity-card-lotmeta { margin-top: .4rem; }
+        .activity-card-lotmeta:empty { display: none; margin-top: 0; }
+        .activity-card-lotmeta .lot-meta-tag { background: #f3f4f6; color: #4b5563; font-weight: 600; }
+        html.dark .activity-card-lotmeta .lot-meta-tag { background: var(--tl-surface-2); color: var(--tl-text-faint); }
+        /* Day-counter type converter dropdown (DAS / DAT / DAP). */
+        .day-type-menu { position: absolute; top: calc(100% + .35rem); left: 0; z-index: 30; min-width: 14.5rem; background: var(--tl-surface); border: 1px solid var(--tl-border); border-radius: .75rem; box-shadow: 0 14px 34px -10px rgb(0 0 0 / .35); padding: .35rem; animation: app-pop-in .18s cubic-bezier(.22,1,.36,1) both; }
+        .day-type-menu.hidden { display: none; }
+        .day-type-menu-hd { font-size: .64rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--tl-text-faint); padding: .3rem .5rem .35rem; }
+        .day-type-opt { display: flex; align-items: baseline; gap: .5rem; width: 100%; text-align: left; padding: .5rem .55rem; border-radius: .55rem; color: var(--tl-text); }
+        .day-type-opt:hover { background: var(--tl-hover); }
+        .day-type-opt strong { font-size: .85rem; font-weight: 800; min-width: 2.5rem; }
+        .day-type-opt span { font-size: .72rem; color: var(--tl-text-faint); }
+        .day-type-opt.is-current { background: var(--color-brand-50); }
+        .day-type-opt.is-current strong { color: var(--color-brand-700); }
+        html.dark .day-type-opt.is-current { background: rgb(107 159 61 / .16); }
+        @media (prefers-reduced-motion: reduce) { .day-type-menu { animation: none; } }
         /* Meta strip: time + workers + materials/services on one wrapped row. */
         .activity-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .55rem; }
         .meta-time {
@@ -136,23 +470,25 @@
         .date-header.dragging { opacity: .55; }
         .date-group.drag-over-group { outline: 2px dashed var(--date-color, #4A90E2); outline-offset: 2px; }
         /* "Hide empty dates" filter */
-        body.hide-empty-dates .rest-day-marker { display: none; }
+        /* Hiding empty dates folds each row shut instead of snapping away.
+           (The collapsed-state rules live with .rest-day-marker below.) */
 
         /* ---- SPA shell ---------------------------------------------------
            `module-hidden` beats component classes that set their own display
            (the reason a plain `hidden` utility can lose here). */
         .module-hidden { display: none !important; }
-        /* On phones the activity tools collapse into #activityActionsBtn; these
-           individual buttons show only from md up. The rule wins over the
-           buttons' own display/`hidden` toggling on small screens.
+        /* On phones the remaining desktop-only tools (undo / redo / show-hidden)
+           collapse into the Tools menu; they show only from md up. The rule
+           wins over the buttons' own display/`hidden` toggling on small screens.
            These carry !important because `.btn` is unlayered CSS and would
            otherwise beat Tailwind's layered `hidden` / `md:hidden` utilities. */
         @media (max-width: 767px) {
             .toolbar-desktop-action { display: none !important; }
         }
-        @media (min-width: 768px) {
-            #activityActionsBtn { display: none !important; }
-        }
+        /* Drafts / Report / Search / Calendar / Weather now live only inside the
+           Tools menu (#activityActionsBtn) on every screen size. They stay in the
+           DOM so the menu rows can forward clicks to their real handlers. */
+        .toolbar-in-menu { display: none !important; }
         #toggleHiddenBtn.hidden { display: none !important; }
         /* !important so the disabled dimming survives the sheet's fade-in
            animation (which otherwise forces opacity back to 1). */
@@ -191,6 +527,23 @@
         .activity-mode-tab:active { transform: scale(.97); }
         html.dark .activity-mode-tabs { background: #1c2136; }
         html.dark .activity-mode-tab.is-active { background: #2a3050; color: #e5e9f5; }
+
+        /* Date ↔ DAS chooser inside the activity sheet (smaller sibling of the mode tabs) */
+        .when-tabs { display: inline-flex; gap: .25rem; padding: .2rem; background: #f1f3f7; border-radius: .65rem; width: 100%; margin-bottom: .5rem; }
+        .when-tab { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: .35rem; padding: .45rem .6rem; border: none; background: transparent; border-radius: .5rem; font-size: .8rem; font-weight: 600; color: #5b6472; cursor: pointer; transition: background .25s ease, color .25s ease, box-shadow .25s ease; }
+        .when-tab.is-active { background: #fff; color: #1f2937; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+        .when-tab:active { transform: scale(.97); }
+        .when-tab:disabled { opacity: .45; cursor: not-allowed; }
+        html.dark .when-tabs { background: #1c2136; }
+        html.dark .when-tab.is-active { background: #2a3050; color: #e5e9f5; }
+        .when-pane.hidden { display: none !important; }
+        .when-pane-in { animation: modeFieldIn .28s cubic-bezier(.22,1,.36,1); }
+        @media (prefers-reduced-motion: reduce) { .when-pane-in { animation: none; } }
+
+        /* Pop-in for buttons that appear after a done-check swap */
+        @keyframes btnPopIn { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: none; } }
+        .btn-pop-in { animation: btnPopIn .28s cubic-bezier(.22,1,.36,1); }
+        @media (prefers-reduced-motion: reduce) { .btn-pop-in { animation: none; } }
 
         /* Fade + slide the mode-specific field into view when tabs change. */
         @keyframes modeFieldIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
@@ -234,6 +587,7 @@
         .item-tag-price { font-weight: 700; opacity: .85; }
         .activity-na-tag { background: #f3f4f6; color: #6b7280; border: 1px dashed #d1d5db; }
         .day-zero-badge { background: #ff9800; color: #fff; }
+        .transplant-badge { background: #16a34a; color: #fff; }
 
         /* Touch targets: 44px on phones, tighter once there's a mouse. */
         .icon-btn {
@@ -254,7 +608,15 @@
         .rest-day-marker {
             display: flex; align-items: center; gap: .6rem; padding: .55rem .8rem;
             border: 1.5px dashed #d1d5db; border-radius: .8rem; color: #6b7280; background: #fafafa; margin-bottom: .9rem;
+            max-height: 6rem; overflow: hidden;
+            transition: max-height .28s cubic-bezier(.22,1,.36,1), opacity .2s ease,
+                margin-bottom .28s cubic-bezier(.22,1,.36,1), padding .28s cubic-bezier(.22,1,.36,1), border-width .28s ease;
         }
+        body.hide-empty-dates .rest-day-marker,
+        .rest-day-marker.filters-active {
+            max-height: 0; opacity: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; border-width: 0;
+        }
+        @media (prefers-reduced-motion: reduce) { .rest-day-marker { transition: none; } }
         .rest-day-marker.drag-over { border-color: #6b9f3d; background: #f3f8ec; }
         .rest-day-date { display: block; font-weight: 600; font-size: .82rem; color: #4b5563; }
         .rest-day-tag { display: block; font-size: .72rem; color: #9ca3af; }
@@ -280,11 +642,12 @@
         body.show-hidden-activities .rest-day-substitute { display: none; }
         .activity-card.filter-hidden { display: none !important; }
         .date-group.group-collapsed { display: none; }
-        .rest-day-marker.filters-active { display: none; }
+        /* .filters-active shares the animated collapse defined above. */
 
         /* DAS / Day-0 panels inside the activity sheet */
         .das-panel { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: .75rem; padding: .75rem; }
         .day-zero-panel { background: #fffbeb; border: 1px solid #fde68a; border-radius: .75rem; padding: .75rem; }
+        .transplant-panel { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: .75rem; padding: .75rem; }
 
         /* Quill wrapper with HTML-source toggle */
         .sm-quill-wrap .ql-toolbar { border-top-left-radius: .75rem; border-top-right-radius: .75rem; border-color: #d1d5db; }
@@ -312,6 +675,7 @@
         html.dark .service-tag { background: #0e2b23; color: #63c8a5; }
         html.dark .activity-na-tag { background: var(--tl-surface-2); color: var(--tl-text-faint); border-color: var(--tl-border); }
         html.dark .day-zero-badge { background: #b56b00; color: #fff; }
+        html.dark .transplant-badge { background: #15803d; color: #fff; }
 
         html.dark .icon-btn { color: var(--tl-text-faint); }
         html.dark .icon-btn:active { background: #333a44; }
@@ -328,8 +692,32 @@
         html.dark .progress-marker-bookmark { background: var(--tl-note-bg); border-color: var(--tl-note-border); color: var(--tl-note-text); }
         html.dark .progress-marker-note { background: var(--tl-note-bg); border-color: var(--tl-note-border); color: var(--tl-note-text); }
 
+        .das-panel.das-locked select, .das-panel.das-locked input { opacity: .5; cursor: not-allowed; }
         html.dark .das-panel { background: #151f30; border-color: #24354f; }
         html.dark .day-zero-panel { background: var(--tl-note-bg); border-color: var(--tl-note-border); }
+        /* The panel labels are literal blue-900/amber-900 ink — invisible on the
+           dark washes above, so they get bright counterparts. */
+        .das-panel .form-label { color: #1e3a8a; }
+        html.dark .das-panel .form-label { color: #cfe0f7 !important; }
+        html.dark .das-panel p, html.dark .das-panel .text-blue-800 { color: #a9c5ea; }
+        html.dark .das-panel .form-select, html.dark .das-panel .form-input { color: #e6eefb; }
+        /* Inactive tab text was a dim grey on the dark tab bar — lift it. */
+        html.dark .when-tab { color: #aeb8ce; }
+        /* In-sheet day-type converter pills (inside the By-DAS panel). */
+        .das-daytype { display: flex; align-items: center; gap: .35rem; flex-wrap: wrap; margin-top: .6rem; padding-top: .55rem; border-top: 1px solid #bfdbfe; }
+        html.dark .das-daytype { border-color: #24354f; }
+        .das-daytype span { font-size: .66rem; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; color: #3b6bb3; margin-right: .1rem; }
+        html.dark .das-daytype span { color: #9ab7e0; }
+        .das-dt-opt { font-size: .72rem; font-weight: 800; padding: .22rem .55rem; border-radius: 999px; background: #dbeafe; color: #1e40af; }
+        .das-dt-opt:hover { background: #c7dbfd; }
+        .das-dt-opt.is-current { background: #2563eb; color: #fff; }
+        html.dark .das-dt-opt { background: #22314b; color: #bcd3f5; }
+        html.dark .das-dt-opt.is-current { background: #3b82f6; color: #fff; }
+        html.dark .day-zero-panel .text-amber-900 { color: #f5d896; }
+        html.dark .day-zero-panel .text-amber-800\/80 { color: #eec155; }
+        html.dark .transplant-panel { background: #0f2318; border-color: #1f4a30; }
+        html.dark .transplant-panel .text-green-900 { color: #a7e8bd; }
+        html.dark .transplant-panel .text-green-800\/80 { color: #7fd39a; }
 
         html.dark .sm-quill-wrap .ql-toolbar,
         html.dark .sm-quill-wrap .ql-container { border-color: var(--tl-border); background: var(--tl-surface); }
@@ -419,7 +807,7 @@
         html.dark .cal-day.is-dayzero .cal-daynum { box-shadow: inset 0 0 0 2px #d98b1f; }
 
         .cal-chip {
-            display: block; width: 100%; font-size: 10.5px; font-weight: 700; line-height: 1.25;
+            display: block; width: 100%; font-size: 12px; font-weight: 700; line-height: 1.3;
             border-radius: .3rem; padding: .1rem .25rem;
             border-left: 3px solid var(--prio-color, #d1d5db);
             background: var(--tl-surface-2); color: var(--tl-text);
@@ -430,6 +818,13 @@
         .cal-chip.prio-medium   { --prio-color: #f1b44c; }
         .cal-chip.prio-low      { --prio-color: #cbd5e1; }
         .cal-chip.is-continuation { opacity: .55; font-style: italic; }
+        /* Inline type icon inside a month chip, tinted like the list cards. */
+        .cal-chip svg { width: 11px; height: 11px; display: inline-block; vertical-align: -1.5px; margin-right: .2rem; }
+        .cal-chip.type-task svg { color: var(--color-brand-700); }
+        .cal-chip.type-irrigation svg { color: #2f8fd8; }
+        html.dark .cal-chip.type-irrigation svg { color: #6db5e8; }
+        .cal-chip.type-service svg { color: #c26d13; }
+        html.dark .cal-chip.type-service svg { color: #f3a257; }
         .cal-more { font-size: 10px; font-weight: 700; color: var(--tl-text-faint); padding-left: .2rem; }
 
         /* Rows in the day sheet — full-width, unlike the chips in the grid. */
@@ -459,6 +854,8 @@
                 width: .4rem; height: .4rem; padding: 0; border-radius: 999px; border-left: 0;
                 background: var(--prio-color, #9ca3af); text-indent: -999em; overflow: hidden;
             }
+            /* Dots have no room for icons (text-indent doesn't move SVGs). */
+            .cal-chip svg { display: none; }
             .cal-dots { display: flex; flex-wrap: wrap; gap: 2px; justify-content: center; }
             .cal-more { font-size: 9px; }
         }
@@ -492,6 +889,25 @@
         foreach ($a->lots as $lot) {
             if (!isset($lotDayZeroEff[$lot->id]) || $aDate->lt($lotDayZeroEff[$lot->id])) {
                 $lotDayZeroEff[$lot->id] = $aDate->copy();
+            }
+        }
+    }
+
+    // ---- Effective transplant anchor (DAT 0) per lot: manual transplantDate
+    // overridden by the EARLIEST isTransplant activity covering the lot. On/after
+    // this date, activities count in DAT (a fresh counter) instead of DAS.
+    $lotTransplantEff = [];
+    foreach ($schedule->lots as $lot) {
+        if ($lot->transplantDate) {
+            $lotTransplantEff[$lot->id] = Carbon::parse($lot->transplantDate);
+        }
+    }
+    foreach ($schedule->activities as $a) {
+        if (!$a->isTransplant || !$a->targetDate) continue;
+        $aDate = Carbon::parse($a->targetDate);
+        foreach ($a->lots as $lot) {
+            if (!isset($lotTransplantEff[$lot->id]) || $aDate->lt($lotTransplantEff[$lot->id])) {
+                $lotTransplantEff[$lot->id] = $aDate->copy();
             }
         }
     }
@@ -566,15 +982,21 @@
      another module is showing, the activities-only buttons hide. --}}
 <div class="sticky top-14 md:top-16 z-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 py-2 mb-3 border-b border-gray-100">
     <div class="flex items-center gap-2 flex-wrap">
+        <button type="button" id="moduleBackBtn" class="btn btn-white btn-sm hidden" title="Back to activities">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+            <span>Activities</span>
+        </button>
         <button type="button" id="modulesBtn" class="btn btn-white btn-sm" title="Switch module">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             <span id="currentModuleLabel">Modules - Activities</span>
         </button>
 
-        {{-- Phones: one menu holding the activity tools; the individual buttons
-             below are desktop-only. --}}
-        <button type="button" id="activityActionsBtn" class="btn btn-white btn-sm relative md:hidden" data-activities-only title="Activity tools" aria-label="Activity tools">
+        {{-- Tools menu: collapses Drafts / Report / Search / Calendar / Weather
+             (and, on phones, undo/redo/show-hidden) into one hamburger, like the
+             Modules button. Each row forwards to the real button below. --}}
+        <button type="button" id="activityActionsBtn" class="btn btn-white btn-sm relative" data-activities-only title="Tools" aria-label="Tools">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <span class="hidden sm:inline">Tools</span>
             <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
             <span id="activityActionsDot" class="absolute -top-1 -right-1 hidden w-2.5 h-2.5 rounded-full bg-brand-600"></span>
         </button>
@@ -588,37 +1010,59 @@
                   class="absolute -top-1.5 -right-1.5 {{ $readiness['count'] > 0 ? 'inline-flex' : 'hidden' }} min-w-5 h-5 px-1 rounded-full {{ $readiness['blocking'] > 0 ? 'bg-red-500 text-white' : 'bg-accent-500 text-ink' }} text-[10px] font-bold items-center justify-center">{{ $readiness['count'] }}</span>
         </button>
 
-        <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative toolbar-desktop-action" data-activities-only disabled title="Nothing to undo">
+        <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative" data-activities-only disabled title="Nothing to undo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
             Undo
             <span id="activityUndoCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-accent-500 text-ink text-[10px] font-bold items-center justify-center">0</span>
         </button>
-        <button type="button" id="activityRedoBtn" class="btn btn-white btn-sm relative toolbar-desktop-action" data-activities-only disabled title="Nothing to redo">
+        <button type="button" id="activityRedoBtn" class="btn btn-white btn-sm relative" data-activities-only disabled title="Nothing to redo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg>
             Redo
             <span id="activityRedoCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-accent-500 text-ink text-[10px] font-bold items-center justify-center">0</span>
         </button>
-        <button type="button" id="openDraftsBtn" class="btn btn-white btn-sm toolbar-desktop-action" data-activities-only>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
-            Drafts <span id="draftsBadge" class="badge badge-gray">{{ $draftsCount }}</span>
-        </button>
-        <button type="button" id="openReportBtn" class="btn btn-white btn-sm toolbar-desktop-action" data-activities-only>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-            Report
-        </button>
-        <button type="button" id="openSearchBtn" data-sheet-open="filtersSheet" class="btn btn-white btn-sm relative toolbar-desktop-action" data-activities-only>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
-            Search
-            <span id="activeFilterCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-brand-600 text-white text-[10px] font-bold items-center justify-center">0</span>
-        </button>
+        {{-- Calendar view + Add note: quick actions kept in the toolbar, right
+             after Redo. Calendar collapses into the Tools menu on phones. --}}
         <button type="button" id="viewToggleBtn" class="btn btn-white btn-sm toolbar-desktop-action" data-activities-only
                 title="Switch to calendar view" aria-pressed="false">
             <svg id="viewIconCalendar" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
             <svg id="viewIconList" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             <span id="viewToggleLabel">Calendar</span>
         </button>
+        <button type="button" id="openNotesBtn" class="btn btn-white btn-sm" data-activities-only
+                title="Open the schedule notebook">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            <span class="hidden sm:inline">Notes</span>
+        </button>
+        @if (\App\Support\ScheduleTeam::hasTeam($schedule))
+        <a href="{{ route('sm.collab', ['id' => $schedule->id]) }}" id="collabRoomBtn" data-collab-open class="btn btn-primary btn-sm" data-activities-only title="Open the team Collab Room">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-3-3.87M9 20H4v-1a4 4 0 013-3.87m0 0a4 4 0 115.5-5.8M7 15.13A4 4 0 0112 8m5 7.13A4 4 0 0012 8"/></svg>
+            <span class="hidden sm:inline">Collab Room</span>
+        </a>
+        @endif
+        <button type="button" id="openDraftsBtn" class="btn btn-white btn-sm toolbar-in-menu" data-activities-only>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+            Drafts <span id="draftsBadge" class="badge badge-gray">{{ $draftsCount }}</span>
+        </button>
+        <button type="button" id="openReportBtn" class="btn btn-white btn-sm toolbar-in-menu" data-activities-only>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            Report
+        </button>
+        <button type="button" id="openSearchBtn" data-sheet-open="filtersSheet" class="btn btn-white btn-sm relative toolbar-in-menu" data-activities-only>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
+            Search
+            <span id="activeFilterCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-brand-600 text-white text-[10px] font-bold items-center justify-center">0</span>
+        </button>
+        <button type="button" id="weatherBtn" class="btn btn-white btn-sm relative toolbar-in-menu" data-activities-only title="Weather forecast for each lot" aria-label="Weather forecast">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg>
+            <span class="hidden sm:inline">Weather</span>
+        </button>
     </div>
 </div>
+
+{{-- Collab Room member picker (only rendered when the team has other members). --}}
+@if (\App\Support\ScheduleTeam::hasTeam($schedule))
+    @include('sm.partials.collab-enter-modal', ['schedule' => $schedule])
+@endif
 
 {{-- Module host: other modules are fetched as partials and injected here.
      Activities stays in the DOM (hidden) so its listeners survive. --}}
@@ -640,7 +1084,10 @@
 <div id="activitiesRoot">
 {{-- ============================ VERSIONS STRIP ============================ --}}
 <div class="flex items-center gap-1 mb-3">
-    <div class="scroll-chips grow" id="versionStrip">
+    {{-- min-w-0: without it this grow item refuses to shrink below its content
+         width (flex min-width:auto), so long version lists would overflow the
+         row instead of engaging the strip's own swipe scroll. --}}
+    <div class="scroll-chips grow min-w-0" id="versionStrip">
         @foreach ($schedule->versions as $v)
             <button type="button"
                 class="chip shrink-0 version-chip {{ $v->isActive ? 'is-selected' : '' }}"
@@ -663,23 +1110,23 @@
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
     </button>
     <button type="button" id="todayTomorrowBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
-            title="Jump to today &amp; tomorrow">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 15h2m4 0h.01"/></svg>
-        <span class="hidden sm:inline">Today &amp; Tomorrow</span>
+            title="Scroll to today">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
+        <span class="hidden sm:inline">Today</span>
+    </button>
+    <button type="button" id="toggleEmptyDatesBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
+            title="Show or hide the empty &quot;no activities&quot; dates">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+        <span id="toggleEmptyDatesLabel" class="hidden sm:inline">Hide empty dates</span>
     </button>
     <button type="button" id="toggleHiddenBtn" class="btn btn-white btn-sm shrink-0 toolbar-desktop-action {{ $hiddenCount ? '' : 'hidden' }}">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
         <span id="toggleHiddenLabel">Show Hidden ({{ $hiddenCount }})</span>
     </button>
-    <button type="button" id="quickShareBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
+    <button type="button" id="quickShareBtn" class="btn btn-white btn-sm shrink-0 toolbar-in-menu" data-activities-only
             title="Share this whole plan or email workers">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z"/></svg>
         <span class="hidden sm:inline">Quick Share</span>
-    </button>
-    <button type="button" id="addDateNoteBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
-            title="Add a note for a date">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-        <span class="hidden sm:inline">Add Note</span>
     </button>
     <div class="shrink-0" id="addActivityWrap" data-activities-only>
         <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm">
@@ -739,16 +1186,6 @@
             </div>
         @endif
 
-        <div>
-            <label class="text-xs font-semibold text-gray-500">Display</label>
-            <div class="mt-1.5 flex flex-wrap gap-2">
-                <button type="button" id="toggleEmptyDatesBtn" class="btn btn-white btn-sm">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v3m8-3v3M4 9h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>
-                    <span id="toggleEmptyDatesLabel">Hide empty dates</span>
-                </button>
-            </div>
-            <p class="form-hint">Empty dates are the "no activities scheduled" rows between your working days.</p>
-        </div>
     </div>
     <div class="sheet-footer">
         <button type="button" id="clearFiltersBtn" class="btn btn-ghost">Clear filters</button>
@@ -808,7 +1245,7 @@
                 </div>
             @elseif ($item['type'] === 'marker')
                 @php $marker = $item['marker']; @endphp
-                <div class="progress-marker" data-marker-id="{{ $marker->id }}" data-date="{{ $item['date'] }}">
+                <div class="progress-marker" data-marker-id="{{ $marker->id }}" data-date="{{ $item['date'] }}" draggable="true" title="Drag to move this marker to another day">
                     <div class="progress-marker-line">
                         <span class="progress-marker-bookmark">
                             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
@@ -858,8 +1295,9 @@
                         <button type="button" class="btn btn-white btn-sm rest-day-add-btn shrink-0" data-date="{{ $dateKey }}">+ Add</button>
                     </div>
                 @endif
-                <div class="date-group date-color-{{ $item['color'] }} {{ $allHidden ? 'all-hidden' : '' }}" data-date="{{ $dateKey }}">
+                <div class="date-group date-color-{{ $item['color'] }} {{ $allHidden ? 'all-hidden' : '' }} is-folded" data-date="{{ $dateKey }}">
                     <div class="date-header"@if ($dateCarbon) draggable="true" title="Drag this header to move the whole day to another date"@endif>
+                        <svg class="date-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                         @if ($dateCarbon)
                             <span class="date-header-day">{{ $dateCarbon->format('D') }}</span>
                             <span class="date-header-date">{{ $dateCarbon->format('M j, Y') }}</span>
@@ -878,8 +1316,11 @@
                             </button>
                             {{-- Secondary day actions: inline on desktop, overflow sheet on phones. --}}
                             <span class="hidden md:flex items-center gap-0.5">
-                                <button type="button" class="date-header-btn date-note-btn {{ $noteRow ? 'has-note' : '' }}" data-date="{{ $dateKey }}" title="{{ $noteRow ? 'Edit the note for this date' : 'Add a note for this date' }}">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                <button type="button" class="date-header-btn date-note-btn" data-date="{{ $dateKey }}" title="Add a note to this day">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.5 20H7a2 2 0 01-2-2V5a2 2 0 012-2h6l4 4v3M9 8h3M9 12h3"/><path stroke-linecap="round" stroke-linejoin="round" d="M17 15v5m2.5-2.5h-5"/></svg>
+                                </button>
+                                <button type="button" class="date-header-btn day-expense-btn" data-date="{{ $dateKey }}" title="Add an extra expense for this day">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v10M14.4 9.4a2.3 2.3 0 00-2.4-1.3c-1.3.1-2.3.8-2.3 1.9s1 1.7 2.5 1.9 2.6.8 2.6 2-1.1 1.9-2.5 1.9a2.4 2.4 0 01-2.4-1.3"/></svg>
                                 </button>
                                 <button type="button" class="date-header-btn date-marker-btn {{ $existingMarker ? 'has-marker' : '' }}" data-date="{{ $dateKey }}" title="{{ $existingMarker ? 'Edit the resume-here marker' : 'Drop a resume-here marker after this date' }}">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
@@ -890,7 +1331,7 @@
                                 <button type="button" class="date-header-btn change-group-date-btn" data-date="{{ $dateKey }}" title="Change date for all activities in this group">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                                 </button>
-                                <button type="button" class="date-header-btn move-group-das-btn" data-date="{{ $dateKey }}" title="Move this whole day to a {{ $schedule->dayType }} number">
+                                <button type="button" class="date-header-btn move-group-das-btn" data-date="{{ $dateKey }}" title="Move this whole day to a specific day number">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 </button>
                                 <button type="button" class="date-header-btn date-header-delete-btn delete-group-date-btn" data-date="{{ $dateKey }}" title="Delete every activity in this group">
@@ -902,14 +1343,39 @@
                             </button>
                         @endif
                     </div>
+                    <div class="date-body"><div class="date-body-inner">
                     @if ($dateKey !== '__no-date__')
-                        <div class="date-note-block rich-text" data-date="{{ $dateKey }}" @if(!$noteRow) style="display:none;" @endif>{!! $noteRow?->noteContent !!}</div>
+                        @php
+                            $dnMedia = collect(is_array($noteRow?->media) ? $noteRow->media : [])
+                                ->map(fn ($m) => empty($m['path']) ? null : [
+                                    'type' => $m['type'] ?? 'image',
+                                    'path' => $m['path'],
+                                    'url' => \Illuminate\Support\Facades\Storage::disk('public')->url($m['path']),
+                                    'poster' => $m['poster'] ?? null,
+                                    'posterUrl' => ! empty($m['poster']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($m['poster']) : null,
+                                ])->filter()->values();
+                        @endphp
+                        <div class="date-note-block" data-date="{{ $dateKey }}" data-content="{{ $noteRow?->noteContent }}" data-media="{{ $dnMedia->toJson() }}" title="Drag to place it between activities · click to edit" @if(!$noteRow) style="display:none;" @endif><div class="date-note-inner rich-text">{!! $noteRow?->noteContent !!}@if ($dnMedia->count())<div class="date-note-media">@include('sm.partials.note-media', ['media' => $dnMedia])</div>@endif</div><button type="button" class="date-note-edit" title="Edit note" aria-label="Edit note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button type="button" class="date-note-del" title="Delete note" aria-label="Delete note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg></button></div>
+                        <div class="day-expense-block" data-date="{{ $dateKey }}"></div>
                     @endif
+                    @php
+                        // Interleave positioned inline notes with the day's cards by order.
+                        $dayInlineNotes = $dateKey !== '__no-date__' ? ($inlineNotesByDate[$dateKey] ?? collect()) : collect();
+                        $dayItems = collect();
+                        foreach ($activitiesForDate as $a) { $dayItems->push(['order' => (int) $a->sequenceOrder, 'kind' => 'card', 'a' => $a]); }
+                        foreach ($dayInlineNotes as $nn) { $dayItems->push(['order' => (int) $nn->sortKey, 'kind' => 'note', 'note' => $nn]); }
+                        $dayItems = $dayItems->sortBy(fn ($it) => sprintf('%08d%d', $it['order'] + 1000000, $it['kind'] === 'card' ? 0 : 1))->values();
+                    @endphp
                     <div class="date-activities" data-date="{{ $dateKey }}">
-                        @foreach ($activitiesForDate as $a)
-                            @include('sm.partials.activity-card', ['a' => $a, 'schedule' => $schedule, 'activityTypes' => $activityTypes, 'lotDayZeroEff' => $lotDayZeroEff])
+                        @foreach ($dayItems as $it)
+                            @if ($it['kind'] === 'card')
+                                @include('sm.partials.activity-card', ['a' => $it['a'], 'schedule' => $schedule, 'activityTypes' => $activityTypes, 'lotDayZeroEff' => $lotDayZeroEff, 'lotTransplantEff' => $lotTransplantEff])
+                            @else
+                                @include('sm.partials.inline-note', ['note' => $it['note']])
+                            @endif
                         @endforeach
                     </div>
+                    </div></div>
                 </div>
             @endif
         @endforeach
@@ -919,6 +1385,7 @@
 </div>{{-- /#activitiesRoot --}}
 
 @include('sm.partials.ai-float', ['schedule' => $schedule])
+{{-- Team chat + whiteboard now live in the Collab Room (Collab Room button). --}}
 @endsection
 
 @push('sheets')
@@ -927,6 +1394,45 @@
     'activityTypes' => $activityTypes,
     'activeVersion' => $activeVersion,
 ])
+<div class="sheet hidden" id="weatherSheet" style="--sheet-width:38rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Weather — this week, by lot</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body" id="weatherBody">
+        <div class="flex items-center gap-2 rounded-lg border border-gray-100 bg-gray-50/60 px-3 py-4">
+            <span class="wx-cloud text-2xl leading-none" aria-hidden="true">☁️</span>
+            <span class="text-xs font-semibold text-gray-500">Loading weather forecast…</span>
+        </div>
+    </div>
+</div>
+
+{{-- Agronomic reminders for a single day (spray overload, same-lot double-up,
+     granular-on-granular, spraying before forecast rain). Populated by JS. --}}
+<div class="sheet hidden" id="dayWarnSheet" style="--sheet-width:34rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <div class="min-w-0">
+            <h3 class="sheet-title flex items-center gap-2">
+                <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+                Things to double-check
+            </h3>
+            <p class="text-xs text-gray-500 mt-0.5" id="dayWarnSubtitle"></p>
+        </div>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div id="dayWarnBody" class="space-y-2.5"></div>
+        <div class="mt-4 flex justify-end">
+            <button type="button" id="dayWarnMarkAll" class="btn btn-white btn-sm">Mark all as read</button>
+        </div>
+    </div>
+</div>
+@include('sm.partials.draw-canvas')
+@include('sm.partials.note-editor')
+@include('sm.partials.note-lightbox')
+@include('community.partials.video-js')
 @endpush
 
 @push('scripts')
@@ -975,10 +1481,12 @@
     const loaded = new Map();           // key -> injected wrapper element
     let current = 'activities';
     let busy = false;
+    let activitiesScrollY = 0;   // remembered scroll position for Activities
 
     const setActivitiesChrome = (on) => {
         document.querySelectorAll('[data-activities-only]').forEach((el) => {
-            el.classList.toggle('module-hidden', !on);
+            if (window.animToggleHidden) window.animToggleHidden(el, !on, 'module-hidden');
+            else el.classList.toggle('module-hidden', !on);
         });
     };
 
@@ -996,6 +1504,9 @@
         if (busy || !MODULES[key] || key === current) { closeSheet('modulesSheet'); return; }
         busy = true;
         closeSheet('modulesSheet');
+
+        // Remember where you were in Activities so returning restores it.
+        if (current === 'activities') activitiesScrollY = window.scrollY || window.pageYOffset || 0;
 
         // Hide whatever is showing.
         activitiesRoot.classList.add('module-hidden');
@@ -1048,11 +1559,21 @@
         if (pageTitle) pageTitle.textContent = MODULES[key].label;
         document.title = MODULES[key].label + ' — ' + @json($schedule->title);
         setActivitiesChrome(key === 'activities');
+        // Show a "back to Activities" button whenever another module is open.
+        document.getElementById('moduleBackBtn')?.classList.toggle('hidden', key === 'activities');
+        // The AI module IS the technician chat — hide the floating one there.
+        document.getElementById('aiFloat')?.classList.toggle('ai-float-off', key === 'ai');
         document.querySelectorAll('#modulesSheet .module-nav-row').forEach((row) => {
             row.querySelector('.module-nav-check')?.classList.toggle('hidden', row.dataset.module !== key);
         });
         if (push) history.pushState({ module: key }, '', shellUrl(key));
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Returning to Activities restores your prior scroll; other modules start at the top.
+        if (key === 'activities') {
+            const y = activitiesScrollY;
+            requestAnimationFrame(() => window.scrollTo({ top: y, behavior: 'auto' }));
+        } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
         busy = false;
         // Leaving a module usually means something was just added or removed.
         window.smRefreshReadiness?.();
@@ -1072,6 +1593,12 @@
 
     window.addEventListener('popstate', (e) => showModule((e.state && e.state.module) || 'activities', false));
     window.smShowModule = showModule;
+
+    // Toolbar "Notes" button opens the schedule notebook module (distinct from
+    // the per-date notes in the timeline).
+    document.getElementById('openNotesBtn')?.addEventListener('click', () => showModule('notes'));
+    // "Back to Activities" from any open module.
+    document.getElementById('moduleBackBtn')?.addEventListener('click', () => showModule('activities'));
 
     // Deep link: the hub tiles open this shell with ?module=<key>, so the module
     // loads here (with the hamburger) instead of as its own cut-off page. The
@@ -1120,15 +1647,6 @@
             // Drafts / Search filter counts.
             mirrorBadge('openDraftsBtn', 'actDraftsBadge', 'draftsBadge');
             mirrorBadge('openSearchBtn', 'actFilterBadge', 'activeFilterCount');
-
-            // Undo / Redo: disabled + count.
-            [['activityUndoBtn', 'actUndoBadge', 'activityUndoCount'],
-             ['activityRedoBtn', 'actRedoBadge', 'activityRedoCount']].forEach(([btnId, badgeId, countId]) => {
-                const btn = document.getElementById(btnId);
-                const row = document.querySelector(`.activity-action-row[data-forward="${btnId}"]`);
-                if (row && btn) row.disabled = btn.disabled;
-                mirrorBadge(btnId, badgeId, countId);
-            });
 
             // Calendar / List label mirrors the real toggle.
             const viewLabel = document.getElementById('actViewLabel');
@@ -1180,11 +1698,34 @@
     const esc = (s) => String(s == null ? '' : s)
         .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+    // The Notice can be "dismissed" so it stops pulsing without disappearing.
+    // We store a signature of the current items; if that set later changes, the
+    // mute no longer matches and the Notice starts blinking again on its own.
+    const READINESS_MUTE_KEY = 'readinessMuted:' + @json($schedule->id);
+    function readinessSignature() {
+        const items = (READINESS.items || [])
+            .map((it) => (it.module || '') + ':' + (it.label || '')).sort().join('|');
+        return (READINESS.count || 0) + '/' + (READINESS.blocking || 0) + '/' + items;
+    }
+    function isReadinessMuted() {
+        try { return localStorage.getItem(READINESS_MUTE_KEY) === readinessSignature(); }
+        catch (_) { return false; }
+    }
+    function setReadinessMuted(on) {
+        try {
+            if (on) localStorage.setItem(READINESS_MUTE_KEY, readinessSignature());
+            else localStorage.removeItem(READINESS_MUTE_KEY);
+        } catch (_) { /* private mode — just skip persistence */ }
+        paintReadiness();
+    }
+
     function paintReadiness() {
         if (!readinessBtn) return;
         const n = READINESS.count || 0;
         const blocking = READINESS.blocking || 0;
-        readinessBtn.classList.toggle('has-alerts', n > 0);
+        const muted = isReadinessMuted();
+        // Muted keeps the button + count but drops the pulsing ring and nudge.
+        readinessBtn.classList.toggle('has-alerts', n > 0 && !muted);
         readinessBtn.classList.toggle('has-blocking', blocking > 0);
         readinessBtn.title = n > 0
             ? n + (n === 1 ? ' thing still needs' : ' things still need') + ' setting up'
@@ -1218,6 +1759,18 @@
                 </span>
                 <svg class="w-4 h-4 text-gray-300 shrink-0 mt-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </button>`).join('');
+
+        const muteBar = document.getElementById('readinessMuteBar');
+        const muteHint = document.getElementById('readinessMuteHint');
+        const muteBtn = document.getElementById('readinessMuteBtn');
+        if (muteBar && muteHint && muteBtn) {
+            muteBar.classList.toggle('hidden', n === 0);
+            muteBar.classList.toggle('flex', n > 0);
+            muteHint.textContent = muted
+                ? 'Reminder paused — the Notice stays, but won’t blink.'
+                : 'The Notice keeps blinking until these are set up.';
+            muteBtn.textContent = muted ? 'Turn reminder back on' : 'Stop the blinking';
+        }
     }
 
     async function refreshReadiness() {
@@ -1232,6 +1785,7 @@
     }
 
     readinessBtn?.addEventListener('click', () => { openSheet('readinessSheet'); refreshReadiness(); });
+    document.getElementById('readinessMuteBtn')?.addEventListener('click', () => setReadinessMuted(!isReadinessMuted()));
     document.addEventListener('click', (e) => {
         const row = e.target.closest('[data-readiness-module]');
         if (!row) return;
@@ -1247,6 +1801,25 @@
 })();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.min.js"></script>
+@php
+    // Built in a raw-PHP block (not inside @json's argument) so Blade's
+    // directive parser never sees the array-literal brackets.
+    $dayExpensesForJs = ($expensesByDate ?? collect())->map(function ($grp) {
+        return $grp->map(fn ($e) => [
+            'id'     => $e->id,
+            'amount' => (float) $e->amount,
+            'note'   => $e->note,
+        ])->values();
+    });
+@endphp
+<script>
+    // Per-day extra expenses (amount + note), keyed by date. Seeded from the
+    // server; kept live by the expense sheet so day strips re-render without a
+    // reload. { 'YYYY-MM-DD': [{id, amount, note}, ...] }
+    window.DAY_EXPENSES = @json($dayExpensesForJs);
+    // A keyed collection JSON-encodes to an object; an empty one becomes [].
+    if (Array.isArray(window.DAY_EXPENSES)) window.DAY_EXPENSES = {};
+</script>
 @include('sm.partials.activities-js', [
     'schedule' => $schedule,
     'activityTypes' => $activityTypes,
@@ -1254,6 +1827,7 @@
     'draftsCount' => $draftsCount,
 ])
 @include('sm.partials.activities-calendar-js', ['schedule' => $schedule])
+@include('community.partials.lightbox-js')
 <script>
     // Filter-sheet extras: active-filter count badge on the toolbar button, and
     // a "Clear filters" action. Reuses the events the activities filter logic
@@ -1283,6 +1857,7 @@
             const label = byId('toggleEmptyDatesLabel');
             if (label) label.textContent = on ? 'Show empty dates' : 'Hide empty dates';
             byId('toggleEmptyDatesBtn')?.classList.toggle('btn-primary', on);
+            byId('toggleEmptyDatesBtn')?.classList.toggle('btn-white', !on);
             try { localStorage.setItem(HIDE_EMPTY_KEY, on ? '1' : '0'); } catch (_) { /* noop */ }
         }
         byId('toggleEmptyDatesBtn')?.addEventListener('click', () => {

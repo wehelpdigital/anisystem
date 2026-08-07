@@ -62,11 +62,29 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0.625rem 1.25rem;
     touch-action: manipulation;
 }
+/* .btn is plain CSS emitted after the Tailwind import, so its display would
+   otherwise beat the `hidden` utility — re-assert it. */
+.btn.hidden { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
     .btn { @apply active:scale-100; }
 }
 .btn-sm { min-height: 2.25rem; padding: 0.375rem 0.875rem; @apply text-sm rounded-lg; }
 .btn-lg { min-height: 3.25rem; padding: 0.875rem 1.75rem; @apply text-lg rounded-2xl; }
+
+/* Desktop hand-cursor: every interactive control shows a pointer when there's
+   a real mouse (fine pointer). Touch devices are excluded so nothing changes
+   there. Disabled controls keep the not-allowed cursor. */
+@media (hover: hover) and (pointer: fine) {
+    button, summary, label[for], [role="button"], [role="tab"], [role="switch"],
+    [role="menuitem"], [role="option"], [onclick], [data-action], [data-sheet-open],
+    [data-sheet-close], .btn, .icon-btn, .chip, .draw-tool, .wall-act,
+    a[href]:not([href=""]), select {
+        cursor: pointer;
+    }
+    button:disabled, .btn:disabled, [aria-disabled="true"], [disabled] {
+        cursor: not-allowed;
+    }
+}
 
 .btn-primary { @apply bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800; }
 .btn-accent { @apply bg-accent-500 text-ink hover:bg-accent-600; }
@@ -196,6 +214,14 @@ input[type="file"].form-input::-webkit-file-upload-button { margin-right: .75rem
         transition: opacity 0.18s ease-out, transform 0.18s ease-out, visibility 0s;
     }
 }
+/* Note editors size to their CONTENT (free height) — a compact bottom sheet on
+   phones, a centered modal on desktop — never stretched to the whole screen.
+   They just get more headroom than a default sheet before they start to scroll. */
+.sheet.sheet-full { max-height: 92dvh; }
+@media (min-width: 640px) {
+    .sheet.sheet-full { max-height: 92vh; }
+}
+
 .sheet-handle { @apply mx-auto mt-3 mb-1 h-1.5 w-12 rounded-full bg-gray-300 sm:hidden; }
 .sheet-header { @apply flex items-center justify-between gap-3 px-5 pt-3 pb-3 border-b border-gray-100 shrink-0; }
 .sheet-title { @apply text-lg font-bold text-gray-900; font-family: var(--font-heading); }
@@ -239,11 +265,33 @@ input[type="file"].form-input::-webkit-file-upload-button { margin-right: .75rem
 .scroll-chips {
     @apply flex gap-2 overflow-x-auto pb-1 -mx-1 px-1;
     scrollbar-width: none;
+    cursor: grab;
 }
+.scroll-chips:active { cursor: grabbing; }
 .scroll-chips::-webkit-scrollbar { display: none; }
 
 /* Skeleton pulse */
 .skeleton { @apply animate-pulse bg-gray-200 rounded-lg; }
+
+/* Blocking overlay + spinner for heavy transitions (version switches, big
+   duplications, reloads) — without it the app looks frozen while the server
+   works. Dark translucent in both themes. */
+.screen-loader {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .8rem;
+    background: rgb(0 0 0 / .45); backdrop-filter: blur(2px);
+    animation: screenLoaderIn .15s ease;
+}
+.screen-loader.hidden { display: none; }
+.screen-loader .spin {
+    width: 2.75rem; height: 2.75rem; border-radius: 999px;
+    border: 3.5px solid rgb(255 255 255 / .3); border-top-color: #fff;
+    animation: screenLoaderSpin .7s linear infinite;
+}
+.screen-loader p { color: #fff; font-weight: 700; font-size: .95rem; }
+@keyframes screenLoaderSpin { to { transform: rotate(360deg); } }
+@keyframes screenLoaderIn { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .screen-loader { animation: none; } }
 
 /* ------------------------------------------------------------------ */
 /* Public marketing site — motion + decorative helpers                 */

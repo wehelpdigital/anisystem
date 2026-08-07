@@ -13,8 +13,15 @@ Route::get('/s/{token}', [App\Http\Controllers\ShareController::class, 'schedule
 Route::get('/s/{token}/a/{activity}', [App\Http\Controllers\ShareController::class, 'activity'])->name('share.activity');
 Route::get('/s/{token}/d/{date}', [App\Http\Controllers\ShareController::class, 'day'])->where('date', '\d{4}-\d{2}-\d{2}')->name('share.day');
 
+// Worker login invite (no auth) — set a password from the emailed link.
+Route::get('/worker-invite/{token}', [App\Http\Controllers\WorkerInviteController::class, 'show'])->name('worker.invite.show');
+Route::post('/worker-invite/{token}', [App\Http\Controllers\WorkerInviteController::class, 'accept'])->name('worker.invite.accept');
+
 Route::get('/', [App\Http\Controllers\PublicController::class, 'home'])->name('home');
 Route::get('/about', [App\Http\Controllers\PublicController::class, 'about'])->name('about');
+
+// Editable legal / info pages (Privacy, Terms, Cookies, About) — public.
+Route::get('/legal/{slug}', [App\Http\Controllers\LegalController::class, 'show'])->where('slug', '[a-z0-9\-]+')->name('legal.show');
 Route::get('/tutorial', [App\Http\Controllers\PublicController::class, 'tutorial'])->name('tutorial');
 Route::get('/contact', [App\Http\Controllers\PublicController::class, 'contact'])->name('contact');
 Route::post('/contact', [App\Http\Controllers\PublicController::class, 'submitContact'])->name('contact.submit');
@@ -60,10 +67,24 @@ Route::middleware('auth')->group(function () {
     |----------------------------------------------------------------------
     */
     Route::get('/account', [App\Http\Controllers\AccountController::class, 'index'])->name('account.index');
+    Route::post('/app/worker-switch-farm', [App\Http\Controllers\AccountController::class, 'switchFarm'])->name('worker.switch');
     Route::put('/account/profile', [App\Http\Controllers\AccountController::class, 'updateProfile'])->name('account.profile.update');
     Route::put('/account/password', [App\Http\Controllers\AccountController::class, 'updatePassword'])->name('account.password.update');
     Route::get('/account/subscription', [App\Http\Controllers\AccountController::class, 'subscription'])->name('account.subscription');
     Route::post('/account/subscription/refresh', [App\Http\Controllers\AccountController::class, 'refreshSubscription'])->name('account.subscription.refresh');
+
+    // Support tickets (client side).
+    Route::get('/app/tutorials', [App\Http\Controllers\TutorialController::class, 'index'])->name('tutorials.index');
+    Route::get('/app/notes', [App\Http\Controllers\NotesHubController::class, 'index'])->name('notes.hub');
+    Route::post('/app/notes-store', [App\Http\Controllers\NotesHubController::class, 'store'])->name('notes.hub.store');
+    Route::delete('/app/notes-delete', [App\Http\Controllers\NotesHubController::class, 'destroy'])->name('notes.hub.destroy');
+    Route::post('/app/notes-draw', [App\Http\Controllers\NotesHubController::class, 'drawUpload'])->name('notes.hub.draw');
+    Route::post('/app/notes-image-upload', [App\Http\Controllers\NotesHubController::class, 'imageUpload'])->name('notes.hub.image-upload');
+    Route::post('/app/notes-video-upload', [App\Http\Controllers\NotesHubController::class, 'videoUpload'])->name('notes.hub.video-upload');
+    Route::get('/app/support', [App\Http\Controllers\SupportController::class, 'index'])->name('support.index');
+    Route::post('/app/support', [App\Http\Controllers\SupportController::class, 'store'])->name('support.store');
+    Route::get('/app/support/{id}', [App\Http\Controllers\SupportController::class, 'show'])->whereNumber('id')->name('support.show');
+    Route::post('/app/support/{id}/reply', [App\Http\Controllers\SupportController::class, 'reply'])->whereNumber('id')->name('support.reply');
 
     // Top-bar notification bell.
     Route::get('/notifications', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
@@ -83,6 +104,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app', [App\Http\Controllers\AppController::class, 'dashboard'])->name('app.dashboard');
+    Route::get('/app/weather', [App\Http\Controllers\WeatherController::class, 'forecast'])->name('app.weather');
+    Route::get('/app/sm-weather', [App\Http\Controllers\WeatherController::class, 'scheduleForecast'])->name('sm.weather');
 
     // --- Cropping schedules (list / create / hub / settings) ---
     Route::get('/app/sm', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'index'])->name('sm.index');
@@ -96,6 +119,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
 
     // --- Module pages (each takes ?id={scheduleId}) ---
     Route::get('/app/sm-settings', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'settingsPage'])->name('sm.settings');
+    Route::post('/app/sm-day-type', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'setDayType'])->name('sm.day-type');
     Route::get('/app/sm-lots', [App\Http\Controllers\Manager\LotController::class, 'page'])->name('sm.lots');
     Route::get('/app/sm-workers', [App\Http\Controllers\Manager\WorkerController::class, 'page'])->name('sm.workers');
     Route::get('/app/sm-documentation', [App\Http\Controllers\Manager\DocumentationController::class, 'page'])->name('sm.documentation');
@@ -108,6 +132,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::put('/app/sm-notes-update', [App\Http\Controllers\Manager\NoteController::class, 'update'])->name('sm.notes.update');
     Route::delete('/app/sm-notes-delete', [App\Http\Controllers\Manager\NoteController::class, 'destroy'])->name('sm.notes.destroy');
     Route::post('/app/sm-notes-image-upload', [App\Http\Controllers\Manager\NoteController::class, 'uploadImage'])->name('sm.notes.image-upload');
+    Route::post('/app/sm-notes-video-upload', [App\Http\Controllers\Manager\NoteController::class, 'uploadVideo'])->name('sm.notes.video-upload');
 
     // Quick Share — email today's / tomorrow's plan to workers with an email.
     Route::post('/app/sm-quick-share-email', [App\Http\Controllers\Manager\ScheduleShareController::class, 'emailWorkers'])->name('sm.quick-share.email');
@@ -129,6 +154,35 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-workers-delete', [App\Http\Controllers\Manager\WorkerController::class, 'destroy'])->name('sm.workers.destroy');
     Route::get('/app/sm-workers-rules', [App\Http\Controllers\Manager\WorkerController::class, 'rules'])->name('sm.workers.rules');
     Route::post('/app/sm-workers-rules-save', [App\Http\Controllers\Manager\WorkerController::class, 'saveRules'])->name('sm.workers.rules.save');
+    Route::post('/app/sm-workers-access-grant', [App\Http\Controllers\Manager\WorkerAccessController::class, 'grant'])->name('sm.workers.access.grant');
+    Route::post('/app/sm-workers-access-password', [App\Http\Controllers\Manager\WorkerAccessController::class, 'setPassword'])->name('sm.workers.access.password');
+    Route::delete('/app/sm-workers-access-revoke', [App\Http\Controllers\Manager\WorkerAccessController::class, 'revoke'])->name('sm.workers.access.revoke');
+
+    // --- Schedule team group chat ---
+    Route::get('/app/sm-chat', [App\Http\Controllers\Manager\ScheduleChatController::class, 'messages'])->name('sm.chat');
+    Route::get('/app/sm-chat-members', [App\Http\Controllers\Manager\ScheduleChatController::class, 'members'])->name('sm.chat.members');
+    Route::post('/app/sm-chat-send', [App\Http\Controllers\Manager\ScheduleChatController::class, 'send'])->name('sm.chat.send');
+
+    // --- Schedule team collaborative whiteboard ---
+    Route::get('/app/sm-board', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'events'])->name('sm.board');
+    Route::post('/app/sm-board-push', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'push'])->name('sm.board.push');
+    Route::get('/app/sm-board-pages', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'pages'])->name('sm.board.pages');
+    Route::post('/app/sm-board-page', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'createPage'])->name('sm.board.page-create');
+    Route::post('/app/sm-board-save-notes', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'saveToNotes'])->name('sm.board.save-notes');
+
+    // --- Collab Room (shared team workspace: chat + drawing + activities + AI) ---
+    Route::get('/app/sm-collab', [App\Http\Controllers\Manager\CollabRoomController::class, 'page'])->name('sm.collab');
+    Route::get('/app/sm-ai-group', [App\Http\Controllers\Manager\ScheduleAiController::class, 'messages'])->name('sm.ai.group.messages');
+    Route::post('/app/sm-ai-group-ask', [App\Http\Controllers\Manager\ScheduleAiController::class, 'ask'])->name('sm.ai.group.ask');
+    Route::get('/app/sm-ai-group-sessions', [App\Http\Controllers\Manager\ScheduleAiController::class, 'sessions'])->name('sm.ai.group.sessions');
+    Route::post('/app/sm-ai-group-session', [App\Http\Controllers\Manager\ScheduleAiController::class, 'createSession'])->name('sm.ai.group.session-create');
+    Route::post('/app/sm-ai-group-session-note', [App\Http\Controllers\Manager\ScheduleAiController::class, 'saveSessionNote'])->name('sm.ai.group.session-note');
+
+    // --- Collab Room calls (LiveKit media + Pusher ring signalling) ---
+    Route::post('/app/sm-call-token', [App\Http\Controllers\Manager\ScheduleCallController::class, 'token'])->name('sm.call.token');
+    Route::post('/app/sm-call-ring', [App\Http\Controllers\Manager\ScheduleCallController::class, 'ring'])->name('sm.call.ring');
+    Route::post('/app/sm-call-end', [App\Http\Controllers\Manager\ScheduleCallController::class, 'end'])->name('sm.call.end');
+    Route::post('/app/sm-call-mute', [App\Http\Controllers\Manager\ScheduleCallController::class, 'mute'])->name('sm.call.mute');
 
     // --- Protocol ---
     Route::post('/app/sm-protocol-save', [App\Http\Controllers\Manager\ProtocolController::class, 'save'])->name('sm.protocol.save');
@@ -159,6 +213,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-activities-delete', [App\Http\Controllers\Manager\ActivityController::class, 'destroy'])->name('sm.activities.destroy');
     Route::post('/app/sm-activities-image-upload', [App\Http\Controllers\Manager\ActivityController::class, 'uploadImage'])->name('sm.activities.image-upload');
     Route::post('/app/sm-activities-toggle-hidden', [App\Http\Controllers\Manager\ActivityController::class, 'toggleHidden'])->name('sm.activities.toggle-hidden');
+    Route::post('/app/sm-activities-toggle-done', [App\Http\Controllers\Manager\ActivityController::class, 'toggleDone'])->name('sm.activities.toggle-done');
+    Route::post('/app/sm-activities-append-note', [App\Http\Controllers\Manager\ActivityController::class, 'appendNote'])->name('sm.activities.append-note');
     Route::post('/app/sm-activities-duplicate', [App\Http\Controllers\Manager\ActivityController::class, 'duplicate'])->name('sm.activities.duplicate');
     Route::post('/app/sm-activities-set-date', [App\Http\Controllers\Manager\ActivityController::class, 'setDate'])->name('sm.activities.set-date');
     Route::post('/app/sm-activities-reorder', [App\Http\Controllers\Manager\ActivityController::class, 'reorder'])->name('sm.activities.reorder');
@@ -175,12 +231,32 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/ai-photo', [App\Http\Controllers\AiController::class, 'uploadImage'])->name('ai.photo');
     Route::post('/app/ai-conversation-new', [App\Http\Controllers\AiController::class, 'newConversation'])->name('ai.conversation.new');
     Route::delete('/app/ai-conversation-delete', [App\Http\Controllers\AiController::class, 'deleteConversation'])->name('ai.conversation.delete');
+    Route::post('/app/ai-conversation-rename', [App\Http\Controllers\AiController::class, 'renameConversation'])->name('ai.conversation.rename');
+    Route::post('/app/ai-conversation-link', [App\Http\Controllers\AiController::class, 'linkConversation'])->name('ai.conversation.link');
     Route::get('/app/ai-credits', [App\Http\Controllers\AiCreditController::class, 'index'])->name('ai.credits');
     Route::get('/app/ai-credits/{packKey}', [App\Http\Controllers\AiCreditController::class, 'payment'])->name('ai.credits.payment');
     Route::post('/app/ai-credits/{packKey}', [App\Http\Controllers\AiCreditController::class, 'submit'])->name('ai.credits.submit');
 
     // --- Community: browse, question and rate published plans ---
-    Route::get('/app/community', [App\Http\Controllers\CommunityController::class, 'index'])->name('community.index');
+    Route::get('/app/community', [App\Http\Controllers\CommunityController::class, 'feed'])->name('community.index');
+    Route::get('/app/community-plans', [App\Http\Controllers\CommunityController::class, 'index'])->name('community.plans');
+    Route::get('/app/community/co-farmers', [App\Http\Controllers\CommunityConnectController::class, 'cofarmers'])->name('community.cofarmers');
+    Route::get('/app/community/co-farmers-list', [App\Http\Controllers\CommunityConnectController::class, 'cofarmersList'])->name('community.cofarmers.list');
+    Route::get('/app/community/feed-more', [App\Http\Controllers\CommunityController::class, 'feedMore'])->name('community.feed-more');
+    Route::get('/app/community/hashtag/{tag}', [App\Http\Controllers\CommunityController::class, 'hashtag'])->name('community.hashtag');
+    Route::get('/app/community/location/{slug}', [App\Http\Controllers\CommunityController::class, 'location'])->name('community.location');
+    Route::get('/app/community/blog', [App\Http\Controllers\CommunityBlogController::class, 'index'])->name('community.blog');
+    Route::get('/app/community/blog/{id}', [App\Http\Controllers\CommunityBlogController::class, 'show'])->whereNumber('id')->name('community.blog.show');
+    Route::post('/app/community/blog/{id}/comment', [App\Http\Controllers\CommunityBlogController::class, 'comment'])->whereNumber('id')->name('community.blog.comment');
+    Route::get('/app/community/mention-search', [App\Http\Controllers\CommunityConnectController::class, 'mentionSearch'])->name('community.mention-search');
+    Route::post('/app/community/status', [App\Http\Controllers\CommunityConnectController::class, 'updateStatus'])->name('community.status.update');
+
+    // Direct messages (Messenger-style dock)
+    Route::get('/app/community/messages', [App\Http\Controllers\CommunityMessageController::class, 'threads'])->name('community.messages.threads');
+    Route::get('/app/community/messages/unread', [App\Http\Controllers\CommunityMessageController::class, 'unreadCount'])->name('community.messages.unread');
+    Route::get('/app/community/messages/poll', [App\Http\Controllers\CommunityMessageController::class, 'poll'])->name('community.messages.poll');
+    Route::get('/app/community/messages/{userId}', [App\Http\Controllers\CommunityMessageController::class, 'thread'])->whereNumber('userId')->name('community.messages.thread');
+    Route::post('/app/community/messages/{userId}', [App\Http\Controllers\CommunityMessageController::class, 'send'])->whereNumber('userId')->name('community.messages.send');
     Route::get('/app/community-plan', [App\Http\Controllers\CommunityController::class, 'show'])->name('community.show');
     Route::post('/app/community-publish', [App\Http\Controllers\CommunityController::class, 'togglePublish'])->name('community.publish');
     Route::post('/app/community-comment', [App\Http\Controllers\CommunityController::class, 'comment'])->name('community.comment');
@@ -195,13 +271,22 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/community/groups/{id}/join', [App\Http\Controllers\CommunityGroupController::class, 'join'])->whereNumber('id')->name('community.groups.join');
     Route::post('/app/community/groups/{id}/leave', [App\Http\Controllers\CommunityGroupController::class, 'leave'])->whereNumber('id')->name('community.groups.leave');
     Route::post('/app/community/groups/{id}/post', [App\Http\Controllers\CommunityGroupController::class, 'storePost'])->whereNumber('id')->name('community.groups.post');
+    Route::get('/app/community/groups/{id}/chat', [App\Http\Controllers\CommunityGroupController::class, 'chatMessages'])->whereNumber('id')->name('community.groups.chat');
+    Route::get('/app/community/groups/{id}/chat-members', [App\Http\Controllers\CommunityGroupController::class, 'chatMembers'])->whereNumber('id')->name('community.groups.chat.members');
+    Route::post('/app/community/groups/{id}/chat', [App\Http\Controllers\CommunityGroupController::class, 'chatSend'])->whereNumber('id')->name('community.groups.chat.send');
     Route::post('/app/community/posts/{postId}/reply', [App\Http\Controllers\CommunityGroupController::class, 'storeReply'])->whereNumber('postId')->name('community.groups.reply');
     Route::delete('/app/community/posts/{postId}', [App\Http\Controllers\CommunityGroupController::class, 'deletePost'])->whereNumber('postId')->name('community.groups.post.delete');
+    Route::post('/app/community/react', [App\Http\Controllers\CommunityGroupController::class, 'react'])->name('community.react');
+    Route::get('/app/community/gif-search', [App\Http\Controllers\CommunityGroupController::class, 'gifSearch'])->name('community.gif-search');
 
     // --- Community: co-farmer connections (friend requests) ---
     Route::get('/app/community/members', [App\Http\Controllers\CommunityConnectController::class, 'members'])->name('community.connect.members');
     Route::get('/app/community/requests', [App\Http\Controllers\CommunityConnectController::class, 'requests'])->name('community.connect.requests');
     Route::get('/app/community/members/{userId}', [App\Http\Controllers\CommunityConnectController::class, 'profile'])->whereNumber('userId')->name('community.connect.profile');
+    Route::post('/app/community/profile/photos', [App\Http\Controllers\CommunityConnectController::class, 'uploadPhotos'])->name('community.profile.photos.store');
+    Route::delete('/app/community/profile/photos/{photoId}', [App\Http\Controllers\CommunityConnectController::class, 'deletePhoto'])->whereNumber('photoId')->name('community.profile.photos.delete');
+    Route::post('/app/community/profile/videos', [App\Http\Controllers\CommunityConnectController::class, 'uploadVideo'])->name('community.profile.videos.store');
+    Route::delete('/app/community/profile/videos/{videoId}', [App\Http\Controllers\CommunityConnectController::class, 'deleteVideo'])->whereNumber('videoId')->name('community.profile.videos.delete');
     Route::post('/app/community/members/{userId}/connect', [App\Http\Controllers\CommunityConnectController::class, 'connect'])->whereNumber('userId')->name('community.connect.request');
     Route::post('/app/community/members/{userId}/accept', [App\Http\Controllers\CommunityConnectController::class, 'accept'])->whereNumber('userId')->name('community.connect.accept');
     Route::post('/app/community/members/{userId}/decline', [App\Http\Controllers\CommunityConnectController::class, 'decline'])->whereNumber('userId')->name('community.connect.decline');
@@ -210,8 +295,11 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // --- Community: account walls ---
     Route::get('/app/community/members/{userId}/wall', [App\Http\Controllers\CommunityWallController::class, 'posts'])->whereNumber('userId')->name('community.wall.posts');
     Route::post('/app/community/members/{userId}/wall', [App\Http\Controllers\CommunityWallController::class, 'storePost'])->whereNumber('userId')->name('community.wall.post');
+    Route::get('/app/community/wall/{postId}/comments', [App\Http\Controllers\CommunityWallController::class, 'comments'])->whereNumber('postId')->name('community.wall.comments');
     Route::post('/app/community/wall/{postId}/comment', [App\Http\Controllers\CommunityWallController::class, 'storeComment'])->whereNumber('postId')->name('community.wall.comment');
     Route::delete('/app/community/wall/{postId}', [App\Http\Controllers\CommunityWallController::class, 'deletePost'])->whereNumber('postId')->name('community.wall.post.delete');
+    Route::delete('/app/community/wall-comment/{commentId}', [App\Http\Controllers\CommunityWallController::class, 'deleteComment'])->whereNumber('commentId')->name('community.wall.comment.delete');
+    Route::delete('/app/community/reply/{replyId}', [App\Http\Controllers\CommunityGroupController::class, 'deleteReply'])->whereNumber('replyId')->name('community.groups.reply.delete');
 
     // Post-harvest observations
     Route::get('/app/sm-post-harvest', [App\Http\Controllers\Manager\PostHarvestController::class, 'page'])->name('sm.post-harvest');
@@ -220,9 +308,21 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-post-harvest-delete', [App\Http\Controllers\Manager\PostHarvestController::class, 'destroy'])->name('sm.post-harvest.destroy');
     Route::post('/app/sm-post-harvest-restore', [App\Http\Controllers\Manager\PostHarvestController::class, 'restore'])->name('sm.post-harvest.restore');
     Route::post('/app/sm-post-harvest-image-upload', [App\Http\Controllers\Manager\PostHarvestController::class, 'uploadImage'])->name('sm.post-harvest.image-upload');
+    Route::get('/app/sm-revenue-report', [App\Http\Controllers\Manager\RevenueReportController::class, 'page'])->name('sm.revenue-report');
+    Route::get('/app/sm-revenue-report-compute', [App\Http\Controllers\Manager\RevenueReportController::class, 'compute'])->name('sm.revenue-report.compute');
+    Route::post('/app/sm-revenue-report-store', [App\Http\Controllers\Manager\RevenueReportController::class, 'store'])->name('sm.revenue-report.store');
+    Route::delete('/app/sm-revenue-report-delete', [App\Http\Controllers\Manager\RevenueReportController::class, 'destroy'])->name('sm.revenue-report.destroy');
     Route::get('/app/sm-activities-labor', [App\Http\Controllers\Manager\ActivityController::class, 'laborSummary'])->name('sm.activities.labor');
+    Route::get('/app/sm-labor-report', [App\Http\Controllers\Manager\ActivityController::class, 'laborReportPage'])->name('sm.labor.report');
+    Route::get('/app/sm-reports', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'reports'])->name('sm.reports');
+    Route::post('/app/sm-status', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'setStatus'])->name('sm.status');
     Route::post('/app/sm-activities-date-note-save', [App\Http\Controllers\Manager\ActivityController::class, 'saveDateNote'])->name('sm.activities.date-note.save');
     Route::delete('/app/sm-activities-date-note-delete', [App\Http\Controllers\Manager\ActivityController::class, 'deleteDateNote'])->name('sm.activities.date-note.delete');
+    Route::post('/app/sm-activities-inline-note-save', [App\Http\Controllers\Manager\ActivityController::class, 'inlineNoteSave'])->name('sm.activities.inline-note.save');
+    Route::delete('/app/sm-activities-inline-note-delete', [App\Http\Controllers\Manager\ActivityController::class, 'inlineNoteDelete'])->name('sm.activities.inline-note.delete');
+    Route::get('/app/sm-activities-day-expenses', [App\Http\Controllers\Manager\ActivityController::class, 'listDayExpenses'])->name('sm.activities.day-expense.list');
+    Route::post('/app/sm-activities-day-expense-save', [App\Http\Controllers\Manager\ActivityController::class, 'saveDayExpense'])->name('sm.activities.day-expense.save');
+    Route::delete('/app/sm-activities-day-expense-delete', [App\Http\Controllers\Manager\ActivityController::class, 'deleteDayExpense'])->name('sm.activities.day-expense.delete');
 
     // --- Progress markers ---
     Route::post('/app/sm-markers-save', [App\Http\Controllers\Manager\MarkerController::class, 'save'])->name('sm.markers.save');

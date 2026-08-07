@@ -46,7 +46,7 @@
                 @foreach($schedule->lots as $lot)
                     <div class="card p-3.5">
                         <div class="flex items-center justify-between gap-2">
-                            <span class="font-semibold text-gray-900 truncate">{{ $lot->lotName }}</span>
+                            <span class="font-semibold text-gray-900 truncate">{{ $lotAlias[$lot->id] ?? $lot->lotName }}</span>
                             @if($lot->lotSize)
                                 <span class="text-xs text-gray-500 shrink-0">{{ rtrim(rtrim(number_format((float) $lot->lotSize, 4, '.', ''), '0'), '.') }} {{ $lot->lotSizeUnit }}</span>
                             @endif
@@ -69,7 +69,7 @@
             <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Workers</h2>
             <div class="flex flex-wrap gap-2">
                 @foreach($schedule->workers as $worker)
-                    <span class="item-tag worker-tag">{{ $worker->workerName }}</span>
+                    <span class="item-tag worker-tag">{{ $workerAlias[$worker->id] ?? $worker->workerName }}</span>
                 @endforeach
             </div>
         </section>
@@ -115,7 +115,7 @@
                                     @if($a->workers->count())
                                         <div class="flex flex-wrap gap-1.5 mt-2">
                                             @foreach($a->workers as $w)
-                                                <span class="item-tag worker-tag">{{ $w->workerName }}</span>
+                                                <span class="item-tag worker-tag">{{ $workerAlias[$w->id] ?? $w->workerName }}</span>
                                             @endforeach
                                         </div>
                                     @endif

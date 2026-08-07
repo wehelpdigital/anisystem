@@ -16,8 +16,8 @@
 
 @section('content')
 
-    {{-- Top bar: search + desktop CTA --}}
-    <div class="flex flex-col md:flex-row md:items-center gap-3 mb-4 md:mb-6">
+    {{-- Top bar: search on its own row, the desktop CTAs on a second row below. --}}
+    <div class="flex flex-col gap-3 mb-4 md:mb-6">
         {{-- Search runs as you type (see the script below); the button-less form
              still submits on Enter as a no-JS fallback. --}}
         <form method="GET" action="{{ route('sm.index') }}" role="search" id="scheduleSearchForm" class="flex-1">
@@ -35,7 +35,11 @@
         {{-- Desktop CTA. Wrapped so `hidden` reliably hides it on phones (a
              bare `.btn` is unlayered CSS and would otherwise beat `hidden`);
              the floating + button is the phone equivalent. --}}
-        <div class="hidden md:flex shrink-0 gap-2">
+        <div class="hidden md:flex md:justify-end gap-2">
+            <a href="{{ route('notes.hub') }}" class="btn btn-white" title="All your notes">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                Notes
+            </a>
             @if ($allSchedules->isNotEmpty())
                 <button type="button" id="quickCaptureBtn" class="btn btn-white">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -129,7 +133,12 @@
     @endif
     </div>{{-- /#scheduleResults --}}
 
-    {{-- Mobile floating action buttons --}}
+    {{-- Mobile floating action buttons (stacked above the tab bar) --}}
+    <a href="{{ route('notes.hub') }}"
+        class="md:hidden fixed {{ $allSchedules->isNotEmpty() ? 'bottom-56' : 'bottom-40' }} right-4 z-30 w-14 h-14 rounded-full bg-white text-brand-600 border border-gray-200 shadow-lg flex items-center justify-center"
+        aria-label="All your notes" title="Notes">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+    </a>
     @if ($allSchedules->isNotEmpty())
         <button type="button" id="quickCaptureFab"
             class="md:hidden fixed bottom-40 right-4 z-30 w-14 h-14 rounded-full bg-white text-brand-600 border border-gray-200 shadow-lg flex items-center justify-center"
@@ -233,11 +242,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!ok) return;
 
         btn.disabled = true;
+        const loader = screenLoader(`Duplicating "${title}"…`);
         try {
             const res = await api(`{{ route('sm.duplicate') }}?id=${id}`, { method: 'POST' });
             toast(res.message);
             window.location.href = res.data.hubUrl;
         } catch (err) {
+            loader.hide();
             toast(err.message, 'error');
             btn.disabled = false;
         }

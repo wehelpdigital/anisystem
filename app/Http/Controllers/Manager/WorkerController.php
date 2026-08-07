@@ -24,7 +24,32 @@ class WorkerController extends BaseScheduleController
         $schedule = $this->schedule($request->query('id'));
         $schedule->load(['workers.offDates', 'workers.offDays']);
 
-        return view('sm.workers', compact('schedule'));
+        // Login grants for this boss, mapped to each worker card so it can show
+        // its login state (none / pending invite / active). Only the boss (the
+        // tier that can create logins) sees these controls.
+        $grantByWorker = [];
+        if ($request->user()->canWorkerAccounts()) {
+            $grants = \App\Models\WorkerGrant::active()
+                ->where('bossUserId', $schedule->anisystemUserId)
+                ->get();
+            foreach ($schedule->workers as $w) {
+                $g = $grants->firstWhere('scheduleWorkerId', $w->id);
+                if (! $g && $w->email) {
+                    $g = $grants->first(fn ($x) => mb_strtolower((string) $x->invitedEmail) === mb_strtolower((string) $w->email));
+                }
+                if ($g) {
+                    $grantByWorker[$w->id] = [
+                        'id' => $g->id,
+                        'status' => $g->status,
+                        'scheduleAccess' => $g->scheduleAccess,
+                        'communityAccess' => (bool) $g->communityAccess,
+                        'workerUserId' => $g->workerUserId ? (int) $g->workerUserId : null,
+                    ];
+                }
+            }
+        }
+
+        return view('sm.workers', compact('schedule', 'grantByWorker'));
     }
 
     public function store(Request $request)

@@ -69,6 +69,8 @@ class MarkerController extends BaseScheduleController
             ]);
         }
 
+        $this->broadcastBoard($schedule, 'reload', [], $marker->versionId);
+
         return $this->jsonOk('Marker saved.', [
             'data' => [
                 'id'          => $marker->id,
@@ -92,6 +94,7 @@ class MarkerController extends BaseScheduleController
             ->first();
         if (!$marker) return $this->jsonFail('Marker not found.', 404);
         $marker->update(['deleteStatus' => 0]);
+        $this->broadcastBoard($schedule, 'reload', [], $marker->versionId);
         return $this->jsonOk('Marker removed.');
     }
 

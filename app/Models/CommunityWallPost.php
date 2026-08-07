@@ -6,7 +6,9 @@ class CommunityWallPost extends BaseModel
 {
     protected $table = 'as_community_wall_posts';
 
-    protected $fillable = ['wallUserId', 'authorUserId', 'body', 'imagePath', 'deleteStatus'];
+    protected $fillable = ['wallUserId', 'authorUserId', 'body', 'imagePath', 'videoPath', 'videoPoster', 'isRestricted', 'restrictedReason', 'deleteStatus'];
+
+    protected $casts = ['isRestricted' => 'boolean'];
 
     public function author()
     {

@@ -26,6 +26,12 @@ class EnsureSubscriptionActive
             return redirect()->route('login');
         }
 
+        // Mother-site super admins get full access without an AniSystem
+        // subscription (they're bridged in via SuperAdminBridge).
+        if ($user->isSuperAdmin()) {
+            return $next($request);
+        }
+
         // Throttled sync so admin verifications in /ecom-orders unlock access quickly.
         $this->subscriptions->syncUser($user);
 

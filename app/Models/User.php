@@ -23,9 +23,23 @@ class User extends Authenticatable
         'city',
         'province',
         'bio',
+        'headline',
+        'profession',
+        'yearsFarming',
+        'farmSize',
+        'cropsGrown',
+        'farmingMethod',
+        'statusBubble',
+        'allowMessages',
         'avatarPath',
+        'coverPath',
+        'adminUserId',
+        'lastSeenAt',
         'deleteStatus',
     ];
+
+    /** A member is "online" if seen within this many minutes. */
+    public const ONLINE_WINDOW_MINUTES = 5;
 
     protected $hidden = [
         'password',
@@ -37,9 +51,18 @@ class User extends Authenticatable
         return [
             'password' => 'hashed',
             'deleteStatus' => 'integer',
+            'adminUserId' => 'integer',
+            'lastSeenAt' => 'datetime',
             'created_at' => 'datetime:Y-m-d H:i:s',
             'updated_at' => 'datetime:Y-m-d H:i:s',
         ];
+    }
+
+    /** Whether this member was active within the online window. */
+    public function isOnline(): bool
+    {
+        return $this->lastSeenAt !== null
+            && $this->lastSeenAt->gt(now()->subMinutes(self::ONLINE_WINDOW_MINUTES));
     }
 
     public function freshTimestamp()
@@ -105,6 +128,85 @@ class User extends Authenticatable
     public function hasActiveSubscription(): bool
     {
         return $this->activeSubscription() !== null;
+    }
+
+    /**
+     * A mother-site super admin bridged into AniSystem (see SuperAdminBridge).
+     * Such members get full access without an AniSystem subscription.
+     */
+    public function isSuperAdmin(): bool
+    {
+        return ! empty($this->adminUserId);
+    }
+
+    /**
+     * Which subscription tier this member is on: basic | boss | lifetime | none.
+     * Derived from the active plan's key/name (see config/tiers.php). Any active
+     * paid plan that matches no tier keyword counts as 'boss' so existing
+     * subscribers are never silently downgraded.
+     */
+    public function planTier(): string
+    {
+        // Mother-site super admins get the top tier so every feature is unlocked.
+        if ($this->isSuperAdmin()) {
+            return 'lifetime';
+        }
+
+        $sub = $this->activeSubscription()
+            ?? $this->subscriptions()->where('status', 'active')->first();
+        if (! $sub) {
+            return 'none';
+        }
+
+        $hay = mb_strtolower(($sub->planKey ?? '') . ' ' . ($sub->planName ?? ''));
+        foreach (config('tiers', []) as $tier => $cfg) {
+            foreach (($cfg['match'] ?? []) as $needle) {
+                if ($needle !== '' && str_contains($hay, $needle)) {
+                    return $tier;
+                }
+            }
+        }
+
+        return 'boss';
+    }
+
+    /** The config block for this member's current tier (falls back to boss). */
+    public function tierConfig(): array
+    {
+        return config('tiers.' . $this->planTier(), config('tiers.boss', []));
+    }
+
+    /** Basic tier (and no-subscription) cannot use AI or buy AI credits. */
+    public function canUseAi(): bool
+    {
+        return $this->planTier() !== 'none' && (bool) ($this->tierConfig()['ai'] ?? true);
+    }
+
+    /** Only Boss/Lifetime can create worker logins + send worker notifications. */
+    public function canWorkerAccounts(): bool
+    {
+        return $this->planTier() !== 'none' && (bool) ($this->tierConfig()['workers'] ?? true);
+    }
+
+    /** Max schedules the tier allows (null = unlimited, 0 = none). */
+    public function scheduleLimit(): ?int
+    {
+        if ($this->planTier() === 'none') {
+            return 0;
+        }
+
+        return $this->tierConfig()['maxSchedules'] ?? null;
+    }
+
+    /** Whether this member may create another cropping schedule right now. */
+    public function canCreateSchedule(): bool
+    {
+        $limit = $this->scheduleLimit();
+        if ($limit === null) {
+            return true;
+        }
+
+        return $this->schedules()->count() < $limit;
     }
 
     public function schedules()

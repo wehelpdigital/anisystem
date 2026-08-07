@@ -26,6 +26,9 @@ class AiCreditController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
+        if (! $user->canUseAi()) {
+            return view('ai.locked', ['tier' => $user->planTier()]);
+        }
 
         return view('ai.credits', [
             'balance' => $this->credits->balance($user->id),
@@ -39,6 +42,9 @@ class AiCreditController extends Controller
     public function payment(Request $request, string $packKey)
     {
         $user = $request->user();
+        if (! $user->canUseAi()) {
+            return redirect()->route('account.subscription')->with('error', 'AI credits are available on Boss and Lifetime plans.');
+        }
         if ($pending = $this->pendingPurchase($user->id)) {
             return redirect()->route('ai.credits')
                 ->with('success', 'Order ' . $pending->orderNumber . ' is still awaiting verification.');
@@ -54,6 +60,10 @@ class AiCreditController extends Controller
     {
         $pack = $this->resolvePack($packKey);
         $user = $request->user();
+
+        if (! $user->canUseAi()) {
+            return redirect()->route('account.subscription')->with('error', 'AI credits are available on Boss and Lifetime plans.');
+        }
 
         $request->merge([
             'gcashPhone' => preg_replace('/[\s\-]+/', '', (string) $request->input('gcashPhone')) ?: null,

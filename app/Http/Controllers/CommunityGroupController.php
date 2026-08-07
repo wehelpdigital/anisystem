@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\CommunityGroup;
 use App\Models\CommunityGroupMember;
+use App\Models\CommunityGroupMessage;
 use App\Models\CommunityGroupPost;
 use App\Models\CommunityGroupReply;
+use App\Models\User;
 use App\Services\NotificationService;
 use App\Support\UploadHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -62,6 +65,7 @@ class CommunityGroupController extends Controller
         $isMember = $this->isMember($group->id, $userId);
 
         $posts = $this->pagePosts($group->id, 1);
+        $this->withReactions($posts['items']);
 
         return view('community.groups.show', [
             'group' => $group,
@@ -79,6 +83,7 @@ class CommunityGroupController extends Controller
         $group = $this->group($id);
         $page = max(1, (int) $request->query('page', 1));
         $posts = $this->pagePosts($group->id, $page);
+        $this->withReactions($posts['items']);
 
         return response()->json([
             'success' => true,
@@ -95,14 +100,21 @@ class CommunityGroupController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:150',
             'description' => 'nullable|string|max:500',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
         ]);
 
+        $coverPath = null;
+        if ($request->hasFile('image')) {
+            $coverPath = $this->storeImage($request->file('image'), 'community-groups/covers');
+        }
+
         $group = null;
-        DB::transaction(function () use ($data, &$group) {
+        DB::transaction(function () use ($data, $coverPath, &$group) {
             $group = CommunityGroup::create([
                 'name' => $data['name'],
                 'slug' => $this->uniqueSlug($data['name']),
                 'description' => $data['description'] ?? null,
+                'coverImagePath' => $coverPath,
                 'createdByUserId' => Auth::id(),
                 'deleteStatus' => 1,
             ]);
@@ -116,7 +128,7 @@ class CommunityGroupController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Group created.',
+            'message' => 'Discussion created.',
             'data' => ['url' => route('community.groups.show', ['id' => $group->id])],
         ]);
     }
@@ -136,7 +148,7 @@ class CommunityGroupController extends Controller
     {
         $group = $this->group($id);
         if ((int) $group->createdByUserId === (int) Auth::id()) {
-            return response()->json(['success' => false, 'message' => 'The owner cannot leave their own group.'], 422);
+            return response()->json(['success' => false, 'message' => 'The owner cannot leave their own discussion.'], 422);
         }
         CommunityGroupMember::where('groupId', $group->id)->where('userId', Auth::id())->update(['deleteStatus' => 0]);
 
@@ -147,14 +159,19 @@ class CommunityGroupController extends Controller
     {
         $group = $this->group($id);
         if (! $this->isMember($group->id, Auth::id())) {
-            return response()->json(['success' => false, 'message' => 'Join the group to post.'], 403);
+            return response()->json(['success' => false, 'message' => 'Join the discussion to post.'], 403);
         }
 
         $request->validate([
-            'title' => 'nullable|string|max:191',
-            'body' => 'required|string|max:8000',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'title' => 'required|string|max:191',
+            'body' => 'required|string|max:20000',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:8192',
         ]);
+        // The body arrives as WYSIWYG HTML — sanitize to a safe subset on store.
+        $safeBody = \App\Support\CommunityText::safeHtml($request->input('body'));
+        if (trim(strip_tags($safeBody)) === '') {
+            return response()->json(['success' => false, 'message' => 'Write something first.'], 422);
+        }
 
         $imagePath = null;
         if ($request->hasFile('image')) {
@@ -165,10 +182,27 @@ class CommunityGroupController extends Controller
             'groupId' => $group->id,
             'userId' => Auth::id(),
             'title' => $request->input('title') ?: null,
-            'body' => $request->input('body'),
+            'body' => $safeBody,
             'imagePath' => $imagePath,
             'deleteStatus' => 1,
         ]);
+
+        // @mention notifications for anyone tagged in the topic body.
+        $actor = Auth::user();
+        $url = route('community.groups.show', ['id' => $group->id]);
+        foreach (\App\Support\CommunityText::mentionedUserIds($post->body) as $mid) {
+            if ($mid === (int) Auth::id()) {
+                continue;
+            }
+            $this->notifications->notify(
+                userId: $mid,
+                type: 'mention',
+                title: ($actor->full_name ?: 'A member') . ' mentioned you in ' . $group->name,
+                body: Str::limit(trim(strip_tags((string) $post->body)), 90),
+                url: $url,
+                actorUserId: (int) Auth::id(),
+            );
+        }
 
         return response()->json([
             'success' => true,
@@ -184,34 +218,121 @@ class CommunityGroupController extends Controller
             return response()->json(['success' => false, 'message' => 'Post not found.'], 404);
         }
         if (! $this->isMember($post->groupId, Auth::id())) {
-            return response()->json(['success' => false, 'message' => 'Join the group to reply.'], 403);
+            return response()->json(['success' => false, 'message' => 'Join the discussion to reply.'], 403);
         }
 
-        $request->validate(['body' => 'required|string|max:4000']);
+        $request->validate([
+            'body' => 'required_without:image|nullable|string|max:4000',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:8192',
+            'parentId' => 'nullable|integer',
+        ]);
+
+        // Replying to a reply: threads stay two levels deep, so it re-attaches
+        // to the thread's top reply.
+        $parent = null;
+        if ($request->filled('parentId')) {
+            $parent = CommunityGroupReply::active()
+                ->where('id', (int) $request->input('parentId'))
+                ->where('postId', $post->id)
+                ->first();
+            if (! $parent) {
+                return response()->json(['success' => false, 'message' => 'Reply not found.'], 404);
+            }
+            if ($parent->parentId) {
+                $parent = CommunityGroupReply::active()->find($parent->parentId) ?: $parent;
+            }
+        }
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $this->storeImage($request->file('image'), 'community-groups/' . $post->groupId);
+        }
 
         $reply = CommunityGroupReply::create([
             'postId' => $post->id,
+            'parentId' => $parent?->id,
             'userId' => Auth::id(),
-            'body' => $request->input('body'),
+            'body' => $request->input('body') ?: '',
+            'imagePath' => $imagePath,
             'deleteStatus' => 1,
         ]);
 
-        // Tell the topic author someone replied.
+        // Tell the parent reply's author (on nested replies) and the topic
+        // author — each once, never the actor.
         $actor = Auth::user();
-        $this->notifications->notify(
-            userId: (int) $post->userId,
-            type: 'reply',
-            title: ($actor->full_name ?: 'A member') . ' replied in a group',
-            body: Str::limit(trim(strip_tags($request->input('body'))), 90),
-            url: route('community.groups.show', ['id' => $post->groupId]),
-            actorUserId: (int) Auth::id(),
-        );
+        $preview = Str::limit(trim(strip_tags((string) $request->input('body'))) ?: 'Shared a photo.', 90);
+        $url = route('community.groups.show', ['id' => $post->groupId]);
+        $targets = [];
+        if ($parent && (int) $parent->userId !== (int) Auth::id()) {
+            $targets[(int) $parent->userId] = ' replied to your comment';
+        }
+        if ((int) $post->userId !== (int) Auth::id() && ! isset($targets[(int) $post->userId])) {
+            $targets[(int) $post->userId] = ' replied in a group';
+        }
+        foreach ($targets as $targetId => $verb) {
+            $this->notifications->notify(
+                userId: $targetId,
+                type: 'reply',
+                title: ($actor->full_name ?: 'A member') . $verb,
+                body: $preview,
+                url: $url,
+                actorUserId: (int) Auth::id(),
+            );
+        }
+
+        // @mention notifications — anyone tagged who isn't already notified.
+        foreach (\App\Support\CommunityText::mentionedUserIds($reply->body) as $mid) {
+            if ($mid === (int) Auth::id() || isset($targets[$mid])) {
+                continue;
+            }
+            $this->notifications->notify(
+                userId: $mid,
+                type: 'mention',
+                title: ($actor->full_name ?: 'A member') . ' mentioned you in a reply',
+                body: $preview,
+                url: $url,
+                actorUserId: (int) Auth::id(),
+            );
+        }
 
         return response()->json([
             'success' => true,
             'message' => 'Reply posted.',
-            'data' => ['html' => view('community.groups.partials.reply', ['reply' => $reply->load('author')])->render()],
+            'data' => [
+                'parentId' => $reply->parentId,
+                'html' => view('community.groups.partials.reply', [
+                    'reply' => $reply->load('author'),
+                    'isReply' => (bool) $reply->parentId,
+                    'children' => collect(),
+                ])->render(),
+            ],
         ]);
+    }
+
+    /**
+     * Tombstone a member's own group reply: keep the row (replies to it stay
+     * anchored), blank the body + photo, flag isDeleted. UI shows the "deleted"
+     * placeholder.
+     */
+    public function deleteReply(Request $request, int $replyId)
+    {
+        $reply = CommunityGroupReply::where('deleteStatus', 1)->where('id', $replyId)->first();
+        if (! $reply) {
+            return response()->json(['success' => false, 'message' => 'Reply not found.'], 404);
+        }
+        if ((int) $reply->userId !== (int) Auth::id()) {
+            return response()->json(['success' => false, 'message' => 'You can only delete your own reply.'], 403);
+        }
+        if ($reply->imagePath) {
+            try {
+                Storage::disk('public')->delete($reply->imagePath);
+            } catch (\Throwable $e) {
+                // Non-fatal.
+            }
+        }
+        $reply->update(['isDeleted' => true, 'body' => '', 'imagePath' => null]);
+
+        return response()->json(['success' => true, 'message' => 'Reply deleted.']);
     }
 
     public function deletePost(Request $request, int $postId)
@@ -235,7 +356,276 @@ class CommunityGroupController extends Controller
         return response()->json(['success' => true, 'message' => 'Post removed.']);
     }
 
+    /** Proxy GIF search to Giphy so the API key never reaches the browser. */
+    public function gifSearch(Request $request)
+    {
+        $key = config('services.giphy.key');
+        if (! $key) {
+            return response()->json(['success' => false, 'message' => 'GIF search is not configured.'], 422);
+        }
+
+        $q = trim((string) $request->query('q', ''));
+        $endpoint = $q === '' ? 'https://api.giphy.com/v1/gifs/trending' : 'https://api.giphy.com/v1/gifs/search';
+        try {
+            $res = Http::timeout(10)->get($endpoint, array_filter([
+                'api_key' => $key,
+                'q' => $q ?: null,
+                'limit' => 24,
+                'rating' => 'g',
+            ]));
+        } catch (\Throwable $e) {
+            return response()->json(['success' => false, 'message' => 'GIF search is unreachable right now.'], 502);
+        }
+        if (! $res->successful()) {
+            return response()->json(['success' => false, 'message' => 'GIF search failed.'], 502);
+        }
+
+        $gifs = collect($res->json('data') ?? [])->map(fn ($g) => [
+            'id' => $g['id'] ?? '',
+            'preview' => $g['images']['fixed_width_small']['url'] ?? ($g['images']['fixed_width']['url'] ?? null),
+            'url' => $g['images']['downsized']['url'] ?? ($g['images']['original']['url'] ?? null),
+        ])->filter(fn ($g) => $g['preview'] && $g['url'])->values();
+
+        return response()->json(['success' => true, 'data' => ['gifs' => $gifs]]);
+    }
+
+    /**
+     * Download a chosen Giphy GIF and store it like any uploaded image, so
+     * feeds (and the admin app) keep rendering a plain local file. Only
+     * giphy.com media is fetched, capped at 8 MB, and the payload must
+     * actually be a GIF (magic bytes) — no open proxying.
+     */
+    private function storeGiphyGif(string $url, string $dir): ?string
+    {
+        $host = parse_url($url, PHP_URL_HOST) ?: '';
+        if (! preg_match('/(^|\.)giphy\.com$/i', $host)) {
+            return null;
+        }
+        try {
+            $res = Http::timeout(15)->get($url);
+        } catch (\Throwable $e) {
+            return null;
+        }
+        if (! $res->successful()) {
+            return null;
+        }
+        $bytes = $res->body();
+        if (strlen($bytes) < 100 || strlen($bytes) > 8 * 1024 * 1024 || substr($bytes, 0, 3) !== 'GIF') {
+            return null;
+        }
+        $path = $dir . '/' . Str::uuid()->toString() . '.gif';
+        Storage::disk('public')->put($path, $bytes);
+
+        return $path;
+    }
+
+    /**
+     * Tap-to-react on a post or reply: same reaction again removes it,
+     * a different one switches. Returns fresh counts + the caller's own.
+     */
+    public function react(Request $request)
+    {
+        $data = $request->validate([
+            'targetType' => 'required|in:post,reply,wallpost,wallcomment,blogcomment',
+            'targetId' => 'required|integer',
+            'reaction' => 'required|in:' . implode(',', \App\Models\CommunityReaction::REACTIONS),
+        ]);
+
+        // Same reaction table serves group posts/replies, wall posts/comments,
+        // and Technician's Blog comments.
+        $target = match ($data['targetType']) {
+            'post' => CommunityGroupPost::active()->where('id', $data['targetId'])->first(),
+            'reply' => CommunityGroupReply::where('deleteStatus', 1)->where('id', $data['targetId'])->first(),
+            'wallpost' => \App\Models\CommunityWallPost::where('deleteStatus', 1)->where('id', $data['targetId'])->first(),
+            'wallcomment' => \App\Models\CommunityWallComment::where('deleteStatus', 1)->where('id', $data['targetId'])->first(),
+            'blogcomment' => \App\Models\AsCommunityBlogComment::where('deleteStatus', 1)->where('id', $data['targetId'])->first(),
+            default => null,
+        };
+        if (! $target) {
+            return response()->json(['success' => false, 'message' => 'That post is gone.'], 404);
+        }
+
+        $userId = (int) Auth::id();
+        $existing = \App\Models\CommunityReaction::where('targetType', $data['targetType'])
+            ->where('targetId', $data['targetId'])
+            ->where('userId', $userId)
+            ->first();
+
+        if ($existing && $existing->reaction === $data['reaction']) {
+            $existing->delete();
+            $mine = null;
+        } elseif ($existing) {
+            $existing->update(['reaction' => $data['reaction']]);
+            $mine = $data['reaction'];
+        } else {
+            \App\Models\CommunityReaction::create([
+                'targetType' => $data['targetType'],
+                'targetId' => $data['targetId'],
+                'userId' => $userId,
+                'reaction' => $data['reaction'],
+            ]);
+            $mine = $data['reaction'];
+        }
+
+        $summary = \App\Models\CommunityReaction::summaryFor($data['targetType'], [$data['targetId']], $userId);
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'counts' => $summary[$data['targetId']]['counts'] ?? new \stdClass(),
+                'mine' => $mine,
+            ],
+        ]);
+    }
+
+    /** Attach reactionSummary to posts and their replies before rendering. */
+    private function withReactions($posts): void
+    {
+        $userId = (int) Auth::id();
+        $postIds = collect($posts)->pluck('id')->all();
+        $replyIds = collect($posts)->flatMap(fn ($p) => $p->replies ? $p->replies->pluck('id') : collect())->all();
+        $postMap = \App\Models\CommunityReaction::summaryFor('post', $postIds, $userId);
+        $replyMap = \App\Models\CommunityReaction::summaryFor('reply', $replyIds, $userId);
+        foreach ($posts as $p) {
+            $p->reactionSummary = $postMap[$p->id] ?? ['counts' => [], 'mine' => null];
+            if ($p->replies) {
+                foreach ($p->replies as $r) {
+                    $r->reactionSummary = $replyMap[$r->id] ?? ['counts' => [], 'mine' => null];
+                }
+            }
+        }
+    }
+
     // ------------------------------------------------------------------
+
+    /**
+     * Group chat messages. Initial load (after=0) returns the most recent
+     * window; subsequent polls pass ?after=<lastId> for just the new ones.
+     * Members only.
+     */
+    public function chatMessages(Request $request, int $id)
+    {
+        $group = $this->group($id);
+        $meId = (int) Auth::id();
+        if (! $this->isMember($group->id, $meId)) {
+            return response()->json(['success' => false, 'message' => 'Join the group to see the chat.'], 403);
+        }
+
+        $after = (int) $request->query('after', 0);
+        if ($after > 0) {
+            $rows = CommunityGroupMessage::where('groupId', $group->id)->where('deleteStatus', 1)
+                ->where('id', '>', $after)->orderBy('id')->limit(100)->get();
+        } else {
+            $rows = CommunityGroupMessage::where('groupId', $group->id)->where('deleteStatus', 1)
+                ->orderByDesc('id')->limit(60)->get()->sortBy('id')->values();
+        }
+
+        $users = User::whereIn('id', $rows->pluck('userId')->unique()->values() ?: [0])
+            ->get()->keyBy('id');
+
+        $items = $rows->map(fn ($m) => $this->presentChatMessage($m, $users->get($m->userId), $meId))->values();
+        $maxId = (int) (CommunityGroupMessage::where('groupId', $group->id)->where('deleteStatus', 1)->max('id') ?? 0);
+
+        return response()->json(['success' => true, 'data' => ['messages' => $items, 'maxId' => $maxId]]);
+    }
+
+    /** Group members with presence (online/offline) for the chat sidebar. */
+    public function chatMembers(Request $request, int $id)
+    {
+        $group = $this->group($id);
+        $meId = (int) Auth::id();
+        if (! $this->isMember($group->id, $meId)) {
+            return response()->json(['success' => false, 'message' => 'Members only.'], 403);
+        }
+
+        $memberIds = CommunityGroupMember::active()->where('groupId', $group->id)->pluck('userId');
+        $users = User::whereIn('id', $memberIds->all() ?: [0])
+            ->where('deleteStatus', 1)
+            ->orderBy('firstName')
+            ->get();
+
+        $items = $users->map(fn ($u) => [
+            'id' => $u->id,
+            'name' => $u->full_name,
+            'avatar' => $u->avatarPath ? Storage::disk('public')->url($u->avatarPath) : null,
+            'initials' => $u->initials,
+            'online' => $u->isOnline(),
+            'allowMessages' => (bool) $u->allowMessages,
+            'isMe' => (int) $u->id === $meId,
+        ])->sortByDesc('online')->values();
+
+        return response()->json(['success' => true, 'data' => [
+            'members' => $items,
+            'online' => $items->where('online', true)->count(),
+            'total' => $items->count(),
+        ]]);
+    }
+
+    /** Post a chat message (text and/or a photo). Members only. */
+    public function chatSend(Request $request, int $id)
+    {
+        $group = $this->group($id);
+        $meId = (int) Auth::id();
+        if (! $this->isMember($group->id, $meId)) {
+            return response()->json(['success' => false, 'message' => 'Join the group to chat.'], 403);
+        }
+
+        $data = $request->validate([
+            'body' => 'nullable|string|max:5000',
+            'image' => 'nullable|image|max:8192',
+            'video' => 'nullable|file|max:307200', // 300 MB; VideoOptimizer enforces the mime
+        ]);
+        $body = trim((string) ($data['body'] ?? ''));
+        $imagePath = $request->hasFile('image')
+            ? \App\Support\MediaOptimizer::storeImageAsWebp($request->file('image'), 'community/group-chat/' . $group->id)
+            : null;
+
+        $videoPath = $videoPoster = null;
+        if ($request->hasFile('video')) {
+            try {
+                $vid = \App\Support\VideoOptimizer::storeCompressed($request->file('video'), 'community/group-chat/' . $group->id . '/videos');
+                $videoPath = $vid['video'];
+                $videoPoster = $vid['poster'];
+            } catch (\Throwable $e) {
+                return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
+            }
+        }
+
+        if ($body === '' && ! $imagePath && ! $videoPath) {
+            return response()->json(['success' => false, 'message' => 'Write a message or add a photo/video.'], 422);
+        }
+
+        $msg = CommunityGroupMessage::create([
+            'groupId' => $group->id,
+            'userId' => $meId,
+            'body' => $body,
+            'imagePath' => $imagePath,
+            'videoPath' => $videoPath,
+            'videoPoster' => $videoPoster,
+            'deleteStatus' => 1,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => $this->presentChatMessage($msg, Auth::user(), $meId),
+        ]);
+    }
+
+    private function presentChatMessage(CommunityGroupMessage $m, ?User $user, int $meId): array
+    {
+        return [
+            'id' => $m->id,
+            'body' => $m->body,
+            'image' => $m->imagePath ? Storage::disk('public')->url($m->imagePath) : null,
+            'video' => $m->videoPath ? Storage::disk('public')->url($m->videoPath) : null,
+            'poster' => $m->videoPoster ? Storage::disk('public')->url($m->videoPoster) : null,
+            'mine' => (int) $m->userId === $meId,
+            'name' => optional($user)->full_name ?: 'Member',
+            'avatar' => optional($user)->avatarPath ? Storage::disk('public')->url($user->avatarPath) : null,
+            'initials' => optional($user)->initials ?: '?',
+            'at' => $m->created_at?->diffForHumans(null, true),
+        ];
+    }
 
     private function group(int $id): CommunityGroup
     {
@@ -288,10 +678,8 @@ class CommunityGroupController extends Controller
 
     private function storeImage($file, string $dir): string
     {
-        $ext = UploadHelper::safeExtension($file, ['jpg', 'jpeg', 'png', 'webp']);
-        $stem = Str::uuid()->toString();
-        Storage::disk('public')->putFileAs($dir, $file, $stem . '.' . $ext);
-
-        return $dir . '/' . $stem . '.' . $ext;
+        // Compress photos to WebP; animated GIFs pass through untouched so they
+        // keep their motion (used for GIF reactions in discussions).
+        return \App\Support\MediaOptimizer::storeImageAsWebp($file, $dir);
     }
 }

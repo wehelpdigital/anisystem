@@ -1,0 +1,5 @@
+@extends('errors.layout')
+@section('code', '503')
+@section('emoji', '🌧️')
+@section('title', 'Down for a quick tune-up')
+@section('message', "We're doing some maintenance to make things better. This usually takes only a few minutes — please check back shortly.")

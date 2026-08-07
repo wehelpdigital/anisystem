@@ -19,6 +19,28 @@ class AccountController extends Controller
         ]);
     }
 
+    /**
+     * Switch which farm a worker is viewing (#25). bossId 0 = their own account.
+     */
+    public function switchFarm(Request $request)
+    {
+        $bossId = (int) $request->input('bossId');
+        if ($bossId === 0) {
+            $request->session()->forget('activeBossId');
+        } else {
+            $ok = \App\Models\WorkerGrant::active()
+                ->where('workerUserId', $request->user()->id)
+                ->where('bossUserId', $bossId)
+                ->where('status', \App\Models\WorkerGrant::STATUS_ACTIVE)
+                ->exists();
+            if ($ok) {
+                $request->session()->put('activeBossId', $bossId);
+            }
+        }
+
+        return redirect()->route('sm.index');
+    }
+
     public function updateProfile(Request $request)
     {
         $request->merge([
@@ -31,10 +53,28 @@ class AccountController extends Controller
             'phone' => ['required', 'regex:/^09\d{9}$/'],
             'city' => ['nullable', 'string', 'max:100'],
             'province' => ['nullable', 'string', 'max:100'],
+            'headline' => ['nullable', 'string', 'max:120'],
             'bio' => ['nullable', 'string', 'max:500'],
+            'profession' => ['nullable', 'string', 'max:60'],
+            'yearsFarming' => ['nullable', 'integer', 'min:0', 'max:120'],
+            'farmSize' => ['nullable', 'string', 'max:60'],
+            'cropsGrown' => ['nullable', 'string', 'max:255'],
+            'farmingMethod' => ['nullable', 'string', 'max:60'],
+            'allowMessages' => ['nullable', 'boolean'],
+            'cover' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
         ], [
             'phone.regex' => 'Enter a valid PH mobile number in the format 09XXXXXXXXX (11 digits).',
+            'cover.max' => 'The cover photo must be 8 MB or smaller.',
         ]);
+
+        // Cover is a file, not a text column — pull it out before the mass update.
+        unset($data['cover']);
+        $data['allowMessages'] = $request->boolean('allowMessages');
+        $data['headline'] = trim((string) $request->input('headline')) ?: null;
+
+        if ($request->hasFile('cover')) {
+            $data['coverPath'] = \App\Support\MediaOptimizer::storeImageAsWebp($request->file('cover'), 'community/covers');
+        }
 
         $request->user()->update($data);
 

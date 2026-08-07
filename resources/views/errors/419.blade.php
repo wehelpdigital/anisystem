@@ -1,0 +1,5 @@
+@extends('errors.layout')
+@section('code', '419')
+@section('emoji', '⏳')
+@section('title', 'Your session expired')
+@section('message', 'For your security, the page sat idle too long. Just head back and sign in again — nothing was lost.')

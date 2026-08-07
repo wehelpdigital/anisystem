@@ -9,12 +9,20 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
         commands: __DIR__.'/../routes/console.php',
+        channels: __DIR__.'/../routes/channels.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'subscription' => \App\Http\Middleware\EnsureSubscriptionActive::class,
             'no-cache' => \App\Http\Middleware\NoCacheHeaders::class,
+        ]);
+        // Runs after StartSession — drops a session whose public IP changed,
+        // then refreshes the member's last-seen (online) timestamp.
+        $middleware->web(append: [
+            \App\Http\Middleware\BindSessionToIp::class,
+            \App\Http\Middleware\EnforceSingleSession::class,
+            \App\Http\Middleware\UpdateLastSeen::class,
         ]);
         $middleware->redirectGuestsTo(fn () => route('login'));
         $middleware->redirectUsersTo(fn () => route('app.dashboard'));

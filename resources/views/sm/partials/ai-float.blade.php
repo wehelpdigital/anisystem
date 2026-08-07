@@ -14,7 +14,7 @@
         : null;
 @endphp
 @if ($aiFloatSettings && $aiFloatSettings->isUsable())
-<div id="aiFloat" class="ai-float">
+<div id="aiFloat" class="ai-float{{ request('module') === 'ai' ? ' ai-float-off' : '' }}">
     <button type="button" id="aiFloatFab" class="ai-float-fab" aria-label="Ask the AI Technician" title="Ask the AI Technician">
         @if ($aiFloatAvatar)
             <img src="{{ $aiFloatAvatar }}" alt="">
@@ -25,13 +25,16 @@
 
     <div id="aiFloatPanel" class="ai-float-panel hidden">
         <div class="ai-float-head">
-            <span class="ai-float-face">
-                @if ($aiFloatAvatar)<img src="{{ $aiFloatAvatar }}" alt="">@else<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7z"/></svg>@endif
+            <span class="ai-float-avatar">
+                <span class="ai-float-face">
+                    @if ($aiFloatAvatar)<img src="{{ $aiFloatAvatar }}" alt="">@else<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7z"/></svg>@endif
+                </span>
             </span>
             <div class="min-w-0 grow">
-                <p class="font-bold text-gray-900 text-sm leading-tight truncate">{{ $aiFloatSettings->assistantName }}</p>
-                <a href="{{ route('ai.credits') }}" class="text-xs text-gray-500 hover:text-brand-700">
-                    <span id="aiFloatBalance">{{ rtrim(rtrim(number_format($aiFloatBalance, 2), '0'), '.') }}</span> credits
+                <p class="ai-float-name truncate">{{ $aiFloatSettings->assistantName }}</p>
+                <a href="{{ route('ai.credits') }}" class="ai-float-credits">
+                    <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>
+                    <span id="aiFloatBalance">{{ rtrim(rtrim(number_format($aiFloatBalance, 2), '0'), '.') }}</span>&nbsp;credits
                 </a>
             </div>
             <a href="{{ route('sm.ai', ['id' => $schedule->id]) }}" class="ai-float-icon" title="Open full chat" aria-label="Open full chat">
@@ -44,15 +47,31 @@
 
         <div class="ai-float-thread" id="aiFloatThread">
             <div class="ai-float-welcome" id="aiFloatWelcome">
-                <p class="font-semibold text-gray-800">Ask about {{ \Illuminate\Support\Str::limit($schedule->cropType ?: 'this crop', 24) }}</p>
+                <span class="ai-float-hero">
+                    @if ($aiFloatAvatar)<img src="{{ $aiFloatAvatar }}" alt="">@else<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>@endif
+                </span>
+                <p class="font-semibold text-gray-800 mt-2">Ask about {{ \Illuminate\Support\Str::limit($schedule->cropType ?: 'this crop', 24) }}</p>
                 <p class="text-sm text-gray-500 mt-1">Fertiliser rates, pests, water, timing — or snap a leaf.</p>
+                <button type="button" class="ai-float-sug js-float-suggest">
+                    <span class="ic" aria-hidden="true"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 21c.5-4.5 2.5-15 16-17-.5 13.5-8 16-12 16-1.33 0-2.67 0-4 1zm0 0c2-6 5-10 10-12"/></svg></span>
+                    <span class="t">My leaves are yellowing at the tips — what should I check?</span>
+                </button>
+                <button type="button" class="ai-float-sug js-float-suggest">
+                    <span class="ic" aria-hidden="true"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3s6 6.5 6 11a6 6 0 11-12 0c0-4.5 6-11 6-11z"/></svg></span>
+                    <span class="t">Is it a good time to irrigate today?</span>
+                </button>
             </div>
         </div>
 
         <div class="ai-float-nocredits hidden" id="aiFloatNoCredits">
-            <p class="text-sm font-semibold text-gray-900">You're out of AI credits</p>
-            <p class="text-xs text-gray-500 mt-0.5">Purchase AI chat credits to keep asking.</p>
-            <a href="{{ route('ai.credits') }}" class="btn btn-primary btn-sm mt-2">Purchase AI credits</a>
+            <span class="ico">
+                <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>
+            </span>
+            <div>
+                <p class="text-sm font-semibold text-gray-900">You're out of AI credits</p>
+                <p class="text-xs text-gray-500 mt-0.5">Purchase AI chat credits to keep asking.</p>
+                <a href="{{ route('ai.credits') }}" class="btn btn-accent btn-sm mt-2">Purchase AI credits</a>
+            </div>
         </div>
 
         <div class="ai-float-composer">
@@ -61,7 +80,7 @@
                 <button type="button" id="aiFloatPhotoRemove" class="text-red-600 font-bold">Remove</button>
             </div>
             <div class="ai-float-box">
-                <label class="ai-float-icon cursor-pointer shrink-0" title="Attach a photo">
+                <label class="ai-float-cam shrink-0" title="Attach a photo">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     <input type="file" id="aiFloatPhoto" accept="image/*" capture="environment" class="hidden">
                 </label>
@@ -75,16 +94,26 @@
 </div>
 
 <style>
+    /* Same "Field Advisor" language as the full AI page, pocket-sized.
+       Theme vars only — html.dark's variable repoint restyles it for free. */
     .ai-float { position: fixed; right: 1rem; bottom: 5.5rem; z-index: 60; }
+    /* The activities shell adds this while the AI module itself is showing. */
+    .ai-float.ai-float-off { display: none; }
     @media (min-width: 768px) { .ai-float { bottom: 1.25rem; right: 1.25rem; } }
     .ai-float-fab {
         width: 3.5rem; height: 3.5rem; border-radius: 999px; overflow: hidden;
         display: flex; align-items: center; justify-content: center;
-        background: var(--color-brand-600); color: #fff; box-shadow: 0 6px 20px rgba(0,0,0,.22);
+        background: linear-gradient(140deg, #6b9f3d, #3d6823); color: #fff;
+        box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px rgb(74 124 42 / .35), 0 6px 20px rgba(0,0,0,.22);
         transition: transform .15s ease, filter .15s ease;
+        animation: aiFabPulse .9s ease 1;
     }
     .ai-float-fab:hover { filter: brightness(1.05); } .ai-float-fab:active { transform: scale(.95); }
     .ai-float-fab img { width: 100%; height: 100%; object-fit: cover; }
+    @keyframes aiFabPulse {
+        from { box-shadow: 0 0 0 2px var(--color-white), 0 0 0 0 rgb(74 124 42 / .45), 0 6px 20px rgba(0,0,0,.22); }
+        to { box-shadow: 0 0 0 2px var(--color-white), 0 0 0 14px rgb(74 124 42 / 0), 0 6px 20px rgba(0,0,0,.22); }
+    }
 
     .ai-float-panel {
         position: absolute; right: 0; bottom: 4.25rem; width: min(24rem, calc(100vw - 2rem));
@@ -93,39 +122,98 @@
         border-radius: 1.1rem; box-shadow: 0 16px 44px rgba(0,0,0,.24); overflow: hidden;
         animation: aiFloatIn .18s ease both;
     }
+    /* This inline sheet loads after Tailwind, so re-assert the hidden toggle
+       or `display:flex` above would win and the ✕ could never close the panel. */
+    .ai-float-panel.hidden { display: none; }
     @keyframes aiFloatIn { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } }
 
-    .ai-float-head { display: flex; align-items: center; gap: .5rem; padding: .6rem .75rem; border-bottom: 1px solid var(--color-gray-100); }
+    .ai-float-head { display: flex; align-items: center; gap: .5rem; padding: .6rem .75rem; border-bottom: 1px solid var(--color-brand-100); background: linear-gradient(115deg, var(--color-brand-50), var(--color-white) 70%); }
+    .ai-float-avatar { position: relative; flex-shrink: 0; }
+    .ai-float-avatar .ai-float-face { box-shadow: 0 0 0 2px var(--color-white), 0 0 0 3px var(--color-brand-200); }
+    .ai-float-avatar::after { content: ""; position: absolute; right: -1px; bottom: -1px; width: .6rem; height: .6rem; border-radius: 999px; background: var(--color-brand-500); border: 2px solid var(--color-white); }
     .ai-float-face { width: 2rem; height: 2rem; border-radius: 999px; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--color-brand-50); color: var(--color-brand-700); }
     .ai-float-face img { width: 100%; height: 100%; object-fit: cover; }
-    .ai-float-icon { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; border-radius: .55rem; color: #6b7280; flex-shrink: 0; }
-    .ai-float-icon:hover { background: var(--color-gray-100); color: #374151; }
+    .ai-float-name { font-family: var(--font-heading); font-weight: 700; font-size: .95rem; line-height: 1.2; color: var(--color-gray-900); }
+    /* Literal amber: accent-700 fails contrast on the cream wash in light mode. */
+    .ai-float-credits { display: inline-flex; align-items: center; gap: .25rem; margin-top: .1rem; padding: .1rem .5rem; border-radius: 999px; background: rgb(245 197 24 / .16); color: #8a6100; font-size: .72rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+    .ai-float-credits:hover { background: rgb(245 197 24 / .26); }
+    .ai-float-icon { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; border-radius: .55rem; color: var(--color-gray-500); flex-shrink: 0; }
+    .ai-float-icon:hover { background: var(--color-gray-100); color: var(--color-gray-700); }
 
-    .ai-float-thread { flex: 1 1 auto; overflow-y: auto; padding: .75rem; scroll-behavior: smooth; }
-    .ai-float-welcome { text-align: center; padding: 1.25rem .5rem; }
-    .ai-float-msg { display: flex; gap: .45rem; margin-bottom: .6rem; align-items: flex-end; }
+    .ai-float-thread { flex: 1 1 auto; overflow-y: auto; padding: .75rem; scroll-behavior: smooth; display: flex; flex-direction: column; scrollbar-width: thin; scrollbar-color: var(--color-gray-300) transparent; }
+    .ai-float-thread::-webkit-scrollbar { width: 5px; }
+    .ai-float-thread::-webkit-scrollbar-track { background: transparent; }
+    .ai-float-thread::-webkit-scrollbar-thumb { background: var(--color-gray-300); border-radius: 999px; }
+    /* Welcome centers; a short conversation grows up from the composer. */
+    #aiFloatWelcome { margin: auto 0; }
+    .ai-float-msg:first-child { margin-top: auto; }
+    /* Hide the launcher while the panel is open — no doubled controls in the corner. */
+    .ai-float.is-open .ai-float-fab { display: none; }
+    .ai-float-welcome { text-align: center; padding: 1.25rem .5rem .75rem; }
+    .ai-float-hero { width: 3rem; height: 3rem; border-radius: 999px; overflow: hidden; margin: 0 auto; display: flex; align-items: center; justify-content: center; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-brand-200); }
+    .ai-float-hero img { width: 100%; height: 100%; object-fit: cover; }
+    .ai-float-sug { display: flex; align-items: center; gap: .6rem; width: 100%; margin-top: .9rem; padding: .6rem .75rem; text-align: left; border: 1px solid var(--color-gray-200); border-radius: .9rem; background: var(--color-white); box-shadow: var(--shadow-card); font-size: .9rem; font-weight: 700; color: var(--color-gray-800); cursor: pointer; transition: transform .18s ease, border-color .18s ease; }
+    .ai-float-sug:hover { transform: translateY(-1px); border-color: var(--color-brand-300); }
+    .ai-float-sug .ic { width: 1.9rem; height: 1.9rem; border-radius: .6rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--color-brand-50); color: var(--color-brand-700); }
+    .ai-float-sug .t { flex: 1 1 auto; min-width: 0; }
+
+    .ai-float-msg { display: flex; gap: .45rem; margin-bottom: .6rem; align-items: flex-end; animation: aiRise .28s cubic-bezier(.22,1,.36,1) both; }
     .ai-float-msg.me { flex-direction: row-reverse; }
-    .ai-float-msg .b { max-width: 84%; border-radius: 1rem; padding: .5rem .75rem; font-size: .92rem; line-height: 1.5; background: var(--color-gray-50); border: 1px solid var(--color-gray-200); border-bottom-left-radius: .3rem; }
-    .ai-float-msg.me .b { background: var(--color-brand-600); color: #fff; border-color: var(--color-brand-600); border-bottom-left-radius: 1rem; border-bottom-right-radius: .3rem; }
+    @keyframes aiRise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .ai-float-msg .b { max-width: 84%; padding: .5rem .75rem; font-size: .92rem; line-height: 1.5; background: var(--color-white); border: 1px solid var(--color-gray-100); border-radius: .9rem .9rem .9rem .25rem; box-shadow: 0 1px 2px rgb(26 26 26 / .06); }
+    /* Literal hex: brand-700 repoints bright in dark mode and would sink white text. */
+    .ai-float-msg.me .b { background: linear-gradient(135deg, #4a7c2a, #3d6823); color: #fff; border-color: transparent; border-radius: .9rem .9rem .25rem .9rem; }
     .ai-float-msg .b p { margin: .25rem 0; } .ai-float-msg .b p:first-child { margin-top: 0; } .ai-float-msg .b p:last-child { margin-bottom: 0; }
     .ai-float-msg .b ul { list-style: disc; padding-left: 1.1rem; margin: .25rem 0; }
     .ai-float-msg .b ol { list-style: decimal; padding-left: 1.25rem; margin: .25rem 0; }
     .ai-float-msg .b img { max-width: 100%; max-height: 180px; border-radius: .5rem; margin-top: .3rem; }
-    .ai-float-msg .b .cost { font-size: 10px; font-weight: 700; opacity: .55; margin-top: .3rem; }
+    .ai-float-msg .b .cost { display: inline-flex; align-items: center; gap: .25rem; margin-top: .35rem; padding: .1rem .45rem; border-radius: 999px; font-size: 10px; font-weight: 800; font-variant-numeric: tabular-nums; color: #8a6100; background: rgb(245 197 24 / .15); }
+    .ai-float-msg .b .cost::before { content: ""; width: .32rem; height: .32rem; border-radius: 999px; background: var(--color-accent-500); }
+    .ai-float-msg.me .b .cost { background: rgb(255 255 255 / .2); color: #fff; }
+    .ai-float-msg.me .b .cost::before { background: #fff; }
 
-    .ai-float-nocredits { margin: 0 .75rem .5rem; padding: .7rem .8rem; border: 1px solid #f3d9a6; background: #fef7e8; border-radius: .7rem; }
+    /* Out-of-credits purchase card, rendered as an assistant turn. */
+    .ai-float-msg .b.is-buy { border-color: rgb(245 197 24 / .4); background: linear-gradient(115deg, rgb(245 197 24 / .14), rgb(245 197 24 / .04)), var(--color-white); }
+    .ai-buyc { display: flex; gap: .6rem; align-items: flex-start; }
+    .ai-buyc .ico { width: 2rem; height: 2rem; border-radius: .7rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--color-accent-500); color: #1a1a1a; }
+    .ai-buyc h3 { font-family: var(--font-heading); font-size: .92rem; font-weight: 700; color: var(--color-gray-900); }
+    .ai-buyc p { font-size: .8rem; color: var(--color-gray-600); }
+
+    .ai-float-nocredits { display: flex; gap: .6rem; align-items: flex-start; margin: 0 .75rem .5rem; padding: .7rem .8rem; border: 1px solid rgb(245 197 24 / .4); background: linear-gradient(115deg, rgb(245 197 24 / .14), rgb(245 197 24 / .04)), var(--color-white); border-radius: .9rem; }
+    .ai-float-nocredits.hidden { display: none; }
+    /* Literal ink: var(--color-ink) flips near-white in dark mode. */
+    .ai-float-nocredits .ico { width: 2rem; height: 2rem; border-radius: .7rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--color-accent-500); color: #1a1a1a; }
+
     .ai-float-composer { flex-shrink: 0; padding: .6rem .75rem .75rem; border-top: 1px solid var(--color-gray-100); }
-    .ai-float-photochip { display: flex; align-items: center; gap: .4rem; font-size: .72rem; font-weight: 600; color: #6b7280; margin-bottom: .4rem; }
-    .ai-float-photochip img { width: 1.9rem; height: 1.9rem; border-radius: .4rem; object-fit: cover; }
-    .ai-float-box { display: flex; align-items: flex-end; gap: .25rem; border: 1px solid var(--color-gray-200); border-radius: 1.1rem; padding: .25rem .25rem .25rem .4rem; }
+    .ai-float-photochip { display: flex; align-items: center; gap: .4rem; font-size: .72rem; font-weight: 600; color: var(--color-gray-500); margin-bottom: .4rem; background: var(--color-gray-100); border-radius: .6rem; padding: .3rem .5rem; }
+    .ai-float-photochip.hidden { display: none; }
+    .ai-float-photochip img { width: 1.9rem; height: 1.9rem; border-radius: .4rem; object-fit: cover; box-shadow: 0 0 0 2px var(--color-brand-200); }
+    .ai-float-box { display: flex; align-items: flex-end; gap: .25rem; border: 1.5px solid var(--color-gray-200); border-radius: 1.1rem; padding: .25rem .25rem .25rem .4rem; background: var(--color-white); transition: border-color .15s ease, box-shadow .15s ease; }
+    .ai-float-box:focus-within { border-color: var(--color-brand-500); box-shadow: 0 0 0 3px rgb(107 159 61 / .18); }
+    .ai-float-cam { width: 2.25rem; height: 2.25rem; border-radius: .75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--color-brand-50); color: var(--color-brand-700); cursor: pointer; transition: background .15s ease; }
+    .ai-float-cam:hover { background: var(--color-brand-100); }
     #aiFloatText { resize: none; border: 0; outline: none; background: transparent; flex: 1 1 auto; max-height: 6rem; padding: .4rem .25rem; font-size: .95rem; color: inherit; }
-    .ai-float-send { width: 2.25rem; height: 2.25rem; border-radius: 999px; background: var(--color-brand-600); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ai-float-send { width: 2.25rem; height: 2.25rem; border-radius: 999px; background: linear-gradient(140deg, #6b9f3d, #3d6823); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 8px -2px rgb(45 80 22 / .5); transition: transform .15s ease; }
+    .ai-float-send:hover:not(:disabled) { transform: scale(1.06); }
     .ai-float-send:disabled { opacity: .4; }
     .ai-float-dots { display: inline-flex; gap: .2rem; align-items: center; height: 1rem; }
-    .ai-float-dots i { width: .35rem; height: .35rem; border-radius: 999px; background: currentColor; opacity: .35; animation: aidot 1.1s ease-in-out infinite; }
-    .ai-float-dots i:nth-child(2) { animation-delay: .18s; } .ai-float-dots i:nth-child(3) { animation-delay: .36s; }
-    html.dark .ai-float-panel { background: #171b2e; border-color: #2a3050; }
-    html.dark .ai-float-msg .b { background: #1f2440; border-color: #2a3050; color: #d6ddf5; }
+    .ai-float-dots i { width: .35rem; height: .35rem; border-radius: 999px; background: var(--color-brand-500); opacity: .35; animation: aidot .9s cubic-bezier(.4,0,.2,1) infinite; }
+    .ai-float-dots i:nth-child(2) { animation-delay: .15s; } .ai-float-dots i:nth-child(3) { animation-delay: .3s; }
+    /* The full page defines these too, but the float renders on pages that
+       never load that stylesheet — without this the dots freeze. */
+    @keyframes aidot { 0%, 60%, 100% { opacity: .3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+
+    html.dark .ai-float-credits { color: var(--color-accent-400); }
+    html.dark .ai-float-msg .b .cost { color: var(--color-accent-400); }
+    html.dark .ai-float-msg.me .b .cost { color: #fff; }
+    html.dark .ai-float-box:focus-within { box-shadow: 0 0 0 3px rgb(124 184 79 / .22); }
+    html.dark .ai-float-nocredits { border-color: rgb(245 197 24 / .25); background: linear-gradient(115deg, rgb(245 197 24 / .10), rgb(245 197 24 / .03)), var(--color-white); }
+    html.dark .ai-float-msg .b.is-buy { border-color: rgb(245 197 24 / .25); background: linear-gradient(115deg, rgb(245 197 24 / .10), rgb(245 197 24 / .03)), var(--color-white); }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ai-float-fab, .ai-float-msg, .ai-float-panel { animation: none; }
+        .ai-float-sug, .ai-float-box, .ai-float-send { transition: none; }
+    }
 </style>
 
 <script>
@@ -144,6 +232,8 @@
         const AVATAR = @json($aiFloatAvatar);
         const MY = @json(auth()->user()->initials ?? '');
         const BOT = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7z"/></svg>';
+        const COIN = '<svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>';
+        const buyCard = (msg) => `<div class="ai-buyc"><span class="ico">${COIN}</span><div><h3>You're out of AI Credits</h3><p>${escapeHtml(msg)}</p><a class="btn btn-accent btn-sm mt-2" href="${escapeHtml(URLS.credits)}">Purchase AI credits</a></div></div>`;
         let conversationId = null, photoPath = null, busy = false;
 
         const face = (me) => me ? escapeHtml(MY) : (AVATAR ? `<img src="${escapeHtml(AVATAR)}" alt="">` : BOT);
@@ -178,12 +268,17 @@
 
         const openPanel = (open) => {
             panel.classList.toggle('hidden', !open);
+            $('aiFloat')?.classList.toggle('is-open', open);
             if (open) setTimeout(() => $('aiFloatText')?.focus(), 60);
         };
         fab.addEventListener('click', () => openPanel(panel.classList.contains('hidden')));
         $('aiFloatClose')?.addEventListener('click', () => openPanel(false));
 
         const input = $('aiFloatText');
+        panel.querySelectorAll('.js-float-suggest').forEach((b) => b.addEventListener('click', () => {
+            input.value = (b.querySelector('.t')?.textContent || b.textContent).trim();
+            input.dispatchEvent(new Event('input')); input.focus();
+        }));
         input?.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 96) + 'px'; });
         input?.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey && window.matchMedia('(min-width: 768px)').matches) { e.preventDefault(); send(); }
@@ -217,7 +312,7 @@
                 thinking.remove();
                 if (err.data && err.data.outOfCredits) {
                     setBalance(err.data.balance || 0);
-                    addTurn(false, `<p>${escapeHtml(err.message)}</p><p style="margin-top:.4rem"><a class="btn btn-primary btn-sm" href="${escapeHtml(URLS.credits)}">Purchase AI credits</a></p>`);
+                    addTurn(false, buyCard(err.message)).querySelector('.b').classList.add('is-buy');
                 } else { addTurn(false, '<p>' + escapeHtml(err.message) + '</p>'); }
                 input.value = message; input.dispatchEvent(new Event('input'));
             } finally { busy = false; $('aiFloatSend').disabled = false; input.focus(); }

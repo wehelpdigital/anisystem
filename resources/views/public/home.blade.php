@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('title', 'Cropping Schedule Manager for Filipino Farmers')
-@section('meta_description', 'AniSystem by AniSenso — plan every cropping season like a pro. Manage lots, workers, materials, activities and irrigation in one mobile-friendly web app built for Filipino farmers.')
+@section('meta_description', 'AniSystem by AniSenso — plan every cropping season like a pro. Manage lots, activities, workers and costs, ask the built-in AI Technician, and learn from a community of Filipino farmers — all in one mobile-friendly web app.')
 
 @section('content')
 
@@ -30,7 +30,7 @@
 
                     <p class="mt-5 text-base sm:text-lg text-gray-200 leading-relaxed max-w-xl">
                         AniSystem is the AniSenso cropping schedule manager, now in your hands. Map your lots,
-                        schedule every activity from land prep to harvest, and track workers, materials and irrigation —
+                        schedule every activity from land prep to harvest, track workers and costs, and ask the built-in AI Technician —
                         all from your phone, wherever your farm is.
                     </p>
 
@@ -48,7 +48,7 @@
                                 ['t' => 'Mobile-first', 's' => 'Runs on any phone'],
                                 ['t' => 'Day-0 / DAS', 's' => 'Accurate timing'],
                                 ['t' => '₱ Costing', 's' => 'Built right in'],
-                                ['t' => 'AniSenso', 's' => 'Technician protocol'],
+                                ['t' => 'AI Technician', 's' => 'Ask anytime, 24/7'],
                             ];
                         @endphp
                         @foreach ($trust as $item)
@@ -147,9 +147,14 @@
                             'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>',
                         ],
                         [
-                            'title' => 'Irrigation Planner',
-                            'text' => 'Plan watering windows by DAS day ranges or exact dates per lot group, so no lot ever misses its irrigation.',
-                            'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3s6 6.5 6 11a6 6 0 11-12 0c0-4.5 6-11 6-11z"/>',
+                            'title' => 'AI Technician',
+                            'text' => 'Ask crop questions anytime — fertilizer rates, pests, timing — or snap a photo of a leaf and let the AI Technician take a look.',
+                            'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/>',
+                        ],
+                        [
+                            'title' => 'Farmer Community',
+                            'text' => 'Join crop groups, post questions with photos or GIFs, react to advice that works, and learn from plans other farmers share.',
+                            'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/>',
                         ],
                     ];
                 @endphp
@@ -275,7 +280,7 @@
                     ['dim' => 'Labor cost tracking',    'trad' => 'Totalled by hand at the end — often a nasty surprise.',            'gain' => 'Worker rates add up live in ₱ as you build the plan.'],
                     ['dim' => 'Materials & budget',     'trad' => 'Rough estimates; overspending creeps in unnoticed.',              'gain' => 'Fertilizers, seeds and services priced upfront — know the budget first.'],
                     ['dim' => 'Worker scheduling',      'trad' => 'Called in last-minute; clashes and idle days happen.',            'gain' => 'Assign workers to activities ahead of time, by skill.'],
-                    ['dim' => 'Irrigation timing',      'trad' => 'Watered by feel; some lots miss their window.',                   'gain' => 'Irrigation windows planned per lot by DAS range or exact date.'],
+                    ['dim' => 'Expert advice',          'trad' => 'Wait for a technician visit or ask around the barangay.',         'gain' => 'The AI Technician answers crop questions anytime — even from a leaf photo.'],
                     ['dim' => 'Records & photos',       'trad' => 'Little proof of what was done, and when.',                        'gain' => 'Keep photos and notes attached to every stage.'],
                     ['dim' => 'Sharing the plan',       'trad' => 'Hard to hand over to family or workers.',                        'gain' => 'Export, print, or walk your team through it on screen.'],
                     ['dim' => 'Missed / late tasks',    'trad' => 'Critical steps slip through the cracks.',                        'gain' => 'Nothing falls off — every critical activity lands on time.'],
@@ -392,7 +397,7 @@
                             'Plan by Day-0 / DAS accurately for each and every lot.',
                             'Keep every lot on its own schedule, variety and sowing date.',
                             'Track workers and labor by skill and daily rate.',
-                            'Plan irrigation windows so no lot misses its watering.',
+                            'Ask the AI Technician anytime — even with a photo of a sick leaf.',
                             'Keep photos and documentation with every stage.',
                             'Export, print and share the plan with your whole team.',
                             'Run it from any phone, right in the middle of the field.',

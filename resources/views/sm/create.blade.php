@@ -20,9 +20,8 @@
         ],
         'lotUnits' => ['hectare', 'sqm', 'acre'],
         'dayTypes' => [
-            ['value' => 'DAP', 'label' => 'DAP — Days After Planting'],
-            ['value' => 'DAS', 'label' => 'DAS — Days After Seeding'],
-            ['value' => 'DAT', 'label' => 'DAT — Days After Transplanting'],
+            ['value' => 'DAP', 'label' => 'DAP — Days After Planting (one count)'],
+            ['value' => 'DAS', 'label' => 'DAS / DAT — Seeded, then Transplanted'],
         ],
         'skills' => \App\Models\AsScheduleWorker::SKILLS,
         'materialTypes' => ['granular', 'foliar', 'pesticide', 'herbicide', 'molluscicide', 'fungicide', 'fertilizer', 'seed', 'other'],
@@ -31,7 +30,7 @@
 @endphp
 
 @section('content')
-    <div class="max-w-2xl mx-auto" x-data="scheduleWizard({{ \Illuminate\Support\Js::from($wizardConfig) }})">
+    <div class="max-w-4xl mx-auto" x-data="scheduleWizard({{ \Illuminate\Support\Js::from($wizardConfig) }})">
 
         {{-- ===== Dotted stepper ===== --}}
         <div class="mb-6">
@@ -128,16 +127,17 @@
                     </div>
 
                     <div class="mt-5">
-                        <label class="form-label">How do you count crop days?</label>
-                        <div class="grid grid-cols-3 gap-2">
+                        <label class="form-label">Default day counter</label>
+                        <div class="grid grid-cols-2 gap-2">
                             <template x-for="d in dayTypes" :key="d.value">
                                 <button type="button" @click="form.dayType = d.value"
                                         class="rounded-xl border-2 px-2 py-2.5 text-center text-sm font-bold transition"
                                         :class="form.dayType === d.value ? 'border-brand-600 bg-brand-600 text-white' : 'border-gray-200 bg-white text-gray-700 hover:border-brand-300'"
-                                        x-text="d.value"></button>
+                                        x-text="d.value === 'DAP' ? 'DAP' : 'DAS / DAT'"></button>
                             </template>
                         </div>
                         <p class="form-hint" x-text="dayTypes.find(d => d.value === form.dayType)?.label"></p>
+                        <p class="form-hint">Applied to every lot — you can change it per lot later in the Lots module.</p>
                     </div>
                 </div>
 

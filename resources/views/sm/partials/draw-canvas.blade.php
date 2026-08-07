@@ -1,0 +1,466 @@
+{{-- Reusable drawing pad — object/vector editor. Include once per page.
+     Exposes:
+       window.openDrawCanvas(onSaveDataUrl [, existingPngUrl])
+         → opens the full-screen pad; onSaveDataUrl(pngDataUrl) on save.
+     Tools: select (move/resize/delete), pen (freehand), line, arrow, box,
+     circle, text, and an object eraser. Works with mouse, pen and touch. --}}
+<div class="draw-modal" id="drawModal" aria-hidden="true">
+    <div class="draw-shell">
+        <div class="draw-toolbar">
+            <div class="draw-tools" id="drawTools">
+                <button type="button" class="draw-tool" data-tool="select" title="Select · move · resize (marquee)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l7 16 2-6 6-2z" stroke-linejoin="round"/></svg>
+                </button>
+                <button type="button" class="draw-tool is-active" data-tool="pen" title="Pen (freehand)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20l4-1 10-10-3-3L5 16l-1 4z" stroke-linejoin="round"/></svg>
+                </button>
+                <button type="button" class="draw-tool" data-tool="line" title="Line">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20L20 4" stroke-linecap="round"/></svg>
+                </button>
+                <button type="button" class="draw-tool" data-tool="arrow" title="Arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20L20 4M20 4h-7M20 4v7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button type="button" class="draw-tool" data-tool="rect" title="Box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg>
+                </button>
+                <button type="button" class="draw-tool" data-tool="ellipse" title="Circle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="12" rx="8" ry="7"/></svg>
+                </button>
+                <button type="button" class="draw-tool" data-tool="text" title="Text">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 6h14M12 6v13M9 19h6" stroke-linecap="round"/></svg>
+                </button>
+                <button type="button" class="draw-tool" data-tool="eraser" title="Eraser (rub out a shape)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15l7-7 6 6-4 4H8l-4-3z" stroke-linejoin="round"/><path d="M8 18h11" stroke-linecap="round"/></svg>
+                </button>
+            </div>
+            <span class="draw-div"></span>
+            <div class="draw-colors" id="drawColors"></div>
+            <label class="draw-size">
+                <span>Size</span>
+                <input type="range" id="drawSize" min="1" max="40" value="4">
+            </label>
+            <span class="draw-div"></span>
+            <button type="button" class="draw-tool" id="drawDelete" title="Delete selected (Del)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button type="button" class="draw-tool" id="drawGrid" title="Toggle grid">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9h18M3 15h18M9 3v18M15 3v18" stroke-linecap="round"/></svg>
+            </button>
+            <button type="button" class="draw-tool" id="drawUndo" title="Undo">↶</button>
+            <button type="button" class="draw-tool" id="drawClear" title="Clear all">Clear</button>
+            <span class="grow"></span>
+            <button type="button" class="btn btn-ghost btn-sm" id="drawCancel">Cancel</button>
+            <button type="button" class="btn btn-primary btn-sm" id="drawSave">Save drawing</button>
+        </div>
+        <div class="draw-stage" id="drawStage">
+            <canvas id="drawCanvas"></canvas>
+        </div>
+        <p class="draw-hint" id="drawHint">Pick a tool, colour and size. Hold <b>Shift</b> for a perfect square/circle. Use <b>Select</b> to move, resize or delete anything you drew — including text.</p>
+    </div>
+</div>
+
+<style>
+    /* Above every app overlay: sheets (z-50), toasts (z-70), the note editor's
+       emoji popover (z-200). Below the blocking screen-loader (z-9999). */
+    .draw-modal { position:fixed; inset:0; z-index:400; display:none; flex-direction:column;
+        background:rgb(0 0 0 / .6); }
+    .draw-modal.show { display:flex; animation:drawBackdropIn .18s ease both; }
+    /* Whole-screen pad (no small modal box). */
+    .draw-shell { width:100%; height:100%; background:var(--color-white); overflow:hidden;
+        display:flex; flex-direction:column; }
+    .draw-modal.show .draw-shell { animation:drawShellIn .3s cubic-bezier(.22,1,.36,1) both; transform-origin:center; }
+    @keyframes drawBackdropIn { from { opacity:0; } to { opacity:1; } }
+    @keyframes drawShellIn { from { opacity:0; transform:scale(.96) translateY(10px); } to { opacity:1; transform:none; } }
+    @media (prefers-reduced-motion: reduce) {
+        .draw-modal.show, .draw-modal.show .draw-shell { animation:none; }
+    }
+    .draw-toolbar { display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; padding:.55rem .7rem;
+        border-bottom:1px solid var(--color-gray-100); flex-shrink:0; }
+    .draw-tools { display:flex; gap:.15rem; }
+    .draw-div { width:1px; align-self:stretch; background:var(--color-gray-200); margin:.15rem .15rem; }
+    .draw-colors { display:flex; gap:.25rem; }
+    .draw-colors button { width:1.5rem; height:1.5rem; border-radius:999px; border:2px solid transparent; cursor:pointer; }
+    .draw-colors button.is-active { border-color:var(--color-gray-900); transform:scale(1.12); }
+    .draw-size { display:flex; align-items:center; gap:.35rem; font-size:.72rem; color:var(--color-gray-500); font-weight:700; }
+    .draw-size input { width:5.5rem; }
+    .draw-tool { display:inline-flex; align-items:center; justify-content:center; min-width:2rem; height:2rem;
+        font-size:.85rem; font-weight:700; padding:0 .45rem; border-radius:.5rem;
+        background:var(--color-gray-50); color:var(--color-gray-700); cursor:pointer;
+        transition:background .15s ease, color .15s ease, transform .1s ease; }
+    .draw-tool svg { width:1.2rem; height:1.2rem; }
+    .draw-tool:hover { background:var(--color-gray-100); }
+    .draw-tool:active { transform:scale(.92); }
+    .draw-tool.is-active { background:var(--color-brand-100); color:var(--color-brand-800); }
+    .draw-stage { flex:1; min-height:0; background:#eef1f4; overflow:hidden; touch-action:none;
+        display:flex; align-items:center; justify-content:center; padding:.75rem; }
+    #drawCanvas { display:block; background:#fff; box-shadow:0 6px 24px -8px rgb(0 0 0 / .3);
+        border-radius:.35rem; touch-action:none; cursor:crosshair; }
+    .draw-hint { font-size:.72rem; color:var(--color-gray-400); padding:.4rem .7rem; flex-shrink:0; }
+    .draw-hint b { color:var(--color-gray-600); }
+    html.dark .draw-shell { background:#151b12; }
+    html.dark .draw-toolbar { border-color:#2b3a1c; }
+    html.dark .draw-stage { background:#0f130c; }
+    html.dark .draw-tool { background:#1c2416; color:#cdd8c0; }
+    html.dark .draw-tool:hover { background:#243019; }
+    html.dark .draw-div { background:#2b3a1c; }
+</style>
+
+<script>
+(function drawPad() {
+    if (window.__drawPadBound) return;
+    window.__drawPadBound = true;
+
+    const COLORS = ['#111827', '#dc2626', '#ea580c', '#ca8a04', '#16a34a', '#2563eb', '#7c3aed', '#db2777', '#ffffff'];
+    const modal = document.getElementById('drawModal');
+    const canvas = document.getElementById('drawCanvas');
+    const stage = document.getElementById('drawStage');
+    const ctx = canvas.getContext('2d');
+    const sizeInput = document.getElementById('drawSize');
+    const colorsWrap = document.getElementById('drawColors');
+    const toolsWrap = document.getElementById('drawTools');
+    const hint = document.getElementById('drawHint');
+
+    const W = 1280, H = 900;          // fixed internal resolution → crisp export
+    const HANDLE = 9;                 // resize-handle half-size (canvas units)
+
+    let color = '#111827';
+    let tool = 'pen';
+    let onSave = null;
+    let uid = 1;
+    let gridOn = false;               // show a grid guide (not saved into the PNG)
+    let exporting = false;            // suppresses the grid while capturing the export
+    const GRID = 40;                  // grid spacing in canvas units
+    const nextId = () => uid++;
+
+    let objects = [];                 // the scene
+    let selected = new Set();         // selected object ids
+    const undoStack = [];             // JSON snapshots
+
+    // gesture state
+    let mode = null;                  // 'draw' | 'move' | 'resize' | 'erase' | 'marquee'
+    let cur = null;                   // object being drawn
+    let drawOrigin = null;            // origin for rect/ellipse
+    let moveStart = null;
+    let resizeHandle = null;
+    let startBBox = null;             // bbox at resize start
+    let startClones = null;           // id → clone at gesture start
+    let marquee = null;               // {x,y,w,h}
+
+    const strokeW = () => parseInt(sizeInput.value, 10) || 4;
+    const fontPx = () => Math.max(14, strokeW() * 4);
+    const clone = (o) => JSON.parse(JSON.stringify(o));
+
+    /* ---------- palette + tools ---------- */
+    COLORS.forEach((c, i) => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.style.background = c; b.setAttribute('data-color', c);
+        if (i === 0) b.classList.add('is-active');
+        if (c === '#ffffff') b.style.border = '2px solid #d1d5db';
+        colorsWrap.appendChild(b);
+    });
+    colorsWrap.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-color]');
+        if (!b) return;
+        color = b.getAttribute('data-color');
+        colorsWrap.querySelectorAll('button').forEach((x) => x.classList.remove('is-active'));
+        b.classList.add('is-active');
+        // Recolour a live selection so the swatch also acts as a "fill".
+        if (selected.size) { pushUndo(); objects.forEach((o) => { if (selected.has(o.id)) o.color = color; }); render(); }
+    });
+    toolsWrap.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-tool]');
+        if (!b) return;
+        setTool(b.getAttribute('data-tool'));
+    });
+    function setTool(t) {
+        tool = t;
+        toolsWrap.querySelectorAll('[data-tool]').forEach((x) => x.classList.toggle('is-active', x.getAttribute('data-tool') === t));
+        if (t !== 'select') { selected.clear(); render(); }
+        canvas.style.cursor = t === 'select' ? 'default' : (t === 'eraser' ? 'cell' : 'crosshair');
+    }
+
+    /* ---------- geometry helpers ---------- */
+    function bbox(o) {
+        if (o.type === 'path') {
+            let xs = o.points.map((p) => p.x), ys = o.points.map((p) => p.y);
+            const pad = (o.width || 2) / 2;
+            return norm(Math.min(...xs) - pad, Math.min(...ys) - pad, Math.max(...xs) + pad, Math.max(...ys) + pad);
+        }
+        if (o.type === 'line' || o.type === 'arrow') {
+            const pad = (o.width || 2) / 2 + 4;
+            return norm(Math.min(o.x1, o.x2) - pad, Math.min(o.y1, o.y2) - pad, Math.max(o.x1, o.x2) + pad, Math.max(o.y1, o.y2) + pad);
+        }
+        if (o.type === 'text') {
+            ctx.font = 'bold ' + o.size + 'px sans-serif';
+            const w = ctx.measureText(o.text).width;
+            return { x: o.x, y: o.y - o.size, w: Math.max(w, 8), h: o.size * 1.3 };
+        }
+        // rect / ellipse
+        return norm(o.x, o.y, o.x + o.w, o.y + o.h);
+    }
+    function norm(x1, y1, x2, y2) { return { x: Math.min(x1, x2), y: Math.min(y1, y2), w: Math.abs(x2 - x1), h: Math.abs(y2 - y1) }; }
+    function inBox(b, x, y, pad = 6) { return x >= b.x - pad && x <= b.x + b.w + pad && y >= b.y - pad && y <= b.y + b.h + pad; }
+    function boxesHit(a, b) { return !(b.x > a.x + a.w || b.x + b.w < a.x || b.y > a.y + a.h || b.y + b.h < a.y); }
+
+    // Map an object's geometry from one bbox to another (move + resize unified).
+    function remap(o, from, to) {
+        const sx = from.w ? to.w / from.w : 1, sy = from.h ? to.h / from.h : 1;
+        const mx = (x) => to.x + (x - from.x) * sx;
+        const my = (y) => to.y + (y - from.y) * sy;
+        if (o.type === 'path') o.points.forEach((p) => { p.x = mx(p.x); p.y = my(p.y); });
+        else if (o.type === 'line' || o.type === 'arrow') { o.x1 = mx(o.x1); o.y1 = my(o.y1); o.x2 = mx(o.x2); o.y2 = my(o.y2); }
+        else if (o.type === 'text') { const b = bbox(o); o.x = mx(o.x); o.size = Math.max(6, o.size * sy); o.y = my(b.y) + o.size; }
+        else { const nx = mx(o.x), ny = my(o.y); o.x = nx; o.y = ny; o.w *= sx; o.h *= sy; }
+    }
+
+    /* ---------- rendering ---------- */
+    function drawObject(o) {
+        ctx.strokeStyle = o.color; ctx.fillStyle = o.color;
+        ctx.lineWidth = o.width || 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+        if (o.type === 'path') {
+            ctx.beginPath();
+            o.points.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y));
+            if (o.points.length === 1) { ctx.lineTo(o.points[0].x + 0.1, o.points[0].y); }
+            ctx.stroke();
+        } else if (o.type === 'line' || o.type === 'arrow') {
+            ctx.beginPath(); ctx.moveTo(o.x1, o.y1); ctx.lineTo(o.x2, o.y2); ctx.stroke();
+            if (o.type === 'arrow') {
+                const a = Math.atan2(o.y2 - o.y1, o.x2 - o.x1), len = 10 + (o.width || 2) * 2.2;
+                ctx.beginPath();
+                ctx.moveTo(o.x2, o.y2); ctx.lineTo(o.x2 - len * Math.cos(a - 0.4), o.y2 - len * Math.sin(a - 0.4));
+                ctx.moveTo(o.x2, o.y2); ctx.lineTo(o.x2 - len * Math.cos(a + 0.4), o.y2 - len * Math.sin(a + 0.4));
+                ctx.stroke();
+            }
+        } else if (o.type === 'rect') {
+            const b = norm(o.x, o.y, o.x + o.w, o.y + o.h);
+            ctx.strokeRect(b.x, b.y, b.w, b.h);
+        } else if (o.type === 'ellipse') {
+            const b = norm(o.x, o.y, o.x + o.w, o.y + o.h);
+            ctx.beginPath(); ctx.ellipse(b.x + b.w / 2, b.y + b.h / 2, Math.max(b.w / 2, 1), Math.max(b.h / 2, 1), 0, 0, 7); ctx.stroke();
+        } else if (o.type === 'text') {
+            ctx.font = 'bold ' + o.size + 'px sans-serif'; ctx.textBaseline = 'alphabetic';
+            ctx.fillText(o.text, o.x, o.y);
+        }
+    }
+    function drawSelection() {
+        if (!selected.size) return;
+        ctx.save();
+        ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 1.5; ctx.setLineDash([6, 4]);
+        let single = null;
+        objects.forEach((o) => { if (selected.has(o.id)) { const b = bbox(o); ctx.strokeRect(b.x, b.y, b.w, b.h); single = o; } });
+        ctx.setLineDash([]);
+        if (selected.size === 1 && single) {
+            const b = bbox(single);
+            ctx.fillStyle = '#2563eb';
+            handlePoints(b).forEach((h) => { ctx.fillRect(h.x - HANDLE / 2, h.y - HANDLE / 2, HANDLE, HANDLE); });
+        }
+        ctx.restore();
+    }
+    function handlePoints(b) {
+        const mx = b.x + b.w / 2, my = b.y + b.h / 2;
+        return [
+            { n: 'nw', x: b.x, y: b.y }, { n: 'n', x: mx, y: b.y }, { n: 'ne', x: b.x + b.w, y: b.y },
+            { n: 'e', x: b.x + b.w, y: my }, { n: 'se', x: b.x + b.w, y: b.y + b.h },
+            { n: 's', x: mx, y: b.y + b.h }, { n: 'sw', x: b.x, y: b.y + b.h }, { n: 'w', x: b.x, y: my },
+        ];
+    }
+    function drawGrid() {
+        ctx.save();
+        ctx.strokeStyle = 'rgba(37, 99, 235, .12)'; ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let x = GRID; x < W; x += GRID) { ctx.moveTo(x + .5, 0); ctx.lineTo(x + .5, H); }
+        for (let y = GRID; y < H; y += GRID) { ctx.moveTo(0, y + .5); ctx.lineTo(W, y + .5); }
+        ctx.stroke();
+        ctx.restore();
+    }
+    function render() {
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, W, H);
+        if (gridOn && !exporting) drawGrid();
+        objects.forEach(drawObject);
+        drawSelection();
+        if (marquee) {
+            ctx.save(); ctx.strokeStyle = '#2563eb'; ctx.fillStyle = 'rgba(37,99,235,.08)';
+            ctx.setLineDash([5, 3]); ctx.fillRect(marquee.x, marquee.y, marquee.w, marquee.h);
+            ctx.strokeRect(marquee.x, marquee.y, marquee.w, marquee.h); ctx.restore();
+        }
+    }
+
+    /* ---------- hit testing ---------- */
+    function hitObject(x, y) {
+        for (let i = objects.length - 1; i >= 0; i--) { if (inBox(bbox(objects[i]), x, y)) return objects[i]; }
+        return null;
+    }
+    function hitHandle(x, y) {
+        if (selected.size !== 1) return null;
+        const o = objects.find((k) => selected.has(k.id));
+        if (!o) return null;
+        for (const h of handlePoints(bbox(o))) { if (Math.abs(x - h.x) <= HANDLE && Math.abs(y - h.y) <= HANDLE) return h.n; }
+        return null;
+    }
+    const CURSORS = { nw: 'nwse-resize', se: 'nwse-resize', ne: 'nesw-resize', sw: 'nesw-resize', n: 'ns-resize', s: 'ns-resize', e: 'ew-resize', w: 'ew-resize' };
+
+    /* ---------- undo ---------- */
+    function pushUndo() { undoStack.push(JSON.stringify(objects)); if (undoStack.length > 40) undoStack.shift(); }
+
+    /* ---------- pointer input ---------- */
+    function pos(e) {
+        const r = canvas.getBoundingClientRect();
+        const sx = W / r.width, sy = H / r.height;
+        return { x: (e.clientX - r.left) * sx, y: (e.clientY - r.top) * sy };
+    }
+    canvas.addEventListener('pointerdown', (e) => {
+        e.preventDefault(); canvas.setPointerCapture?.(e.pointerId);
+        const p = pos(e);
+
+        if (tool === 'select') {
+            const h = hitHandle(p.x, p.y);
+            if (h) { const o = objects.find((k) => selected.has(k.id)); pushUndo(); mode = 'resize'; resizeHandle = h; startBBox = bbox(o); startClones = { [o.id]: clone(o) }; return; }
+            const o = hitObject(p.x, p.y);
+            if (o) {
+                if (!e.shiftKey && !selected.has(o.id)) selected = new Set([o.id]);
+                else selected.add(o.id);
+                pushUndo(); mode = 'move'; moveStart = p;
+                startClones = {}; objects.forEach((k) => { if (selected.has(k.id)) startClones[k.id] = { obj: k, box: bbox(k) }; });
+            } else { selected.clear(); mode = 'marquee'; drawOrigin = p; marquee = { x: p.x, y: p.y, w: 0, h: 0 }; }
+            render(); return;
+        }
+        if (tool === 'eraser') { pushUndo(); mode = 'erase'; eraseAt(p); return; }
+        if (tool === 'text') {
+            const t = prompt('Text to add:');
+            if (t && t.trim()) { pushUndo(); const o = { id: nextId(), type: 'text', color, size: fontPx(), x: p.x, y: p.y + fontPx() * 0.4, text: t.trim() }; objects.push(o); selected = new Set([o.id]); setTool('select'); }
+            render(); return;
+        }
+        // freehand / shapes
+        pushUndo(); mode = 'draw';
+        if (tool === 'pen') cur = { id: nextId(), type: 'path', color, width: strokeW(), points: [p] };
+        else if (tool === 'line' || tool === 'arrow') cur = { id: nextId(), type: tool, color, width: strokeW(), x1: p.x, y1: p.y, x2: p.x, y2: p.y };
+        else { drawOrigin = p; cur = { id: nextId(), type: tool, color, width: strokeW(), x: p.x, y: p.y, w: 0, h: 0 }; }
+        objects.push(cur); render();
+    });
+    canvas.addEventListener('pointermove', (e) => {
+        const p = pos(e);
+        if (!mode) {
+            if (tool === 'select') { const h = hitHandle(p.x, p.y); canvas.style.cursor = h ? CURSORS[h] : (hitObject(p.x, p.y) ? 'move' : 'default'); }
+            return;
+        }
+        e.preventDefault();
+        if (mode === 'draw') {
+            if (cur.type === 'path') cur.points.push(p);
+            else if (cur.type === 'line' || cur.type === 'arrow') { cur.x2 = p.x; cur.y2 = p.y; }
+            else {
+                let w = p.x - drawOrigin.x, h = p.y - drawOrigin.y;
+                // Hold Shift to keep box/circle a perfect square/circle.
+                if (e.shiftKey) { const m = Math.max(Math.abs(w), Math.abs(h)); w = (w < 0 ? -m : m); h = (h < 0 ? -m : m); }
+                cur.x = drawOrigin.x; cur.y = drawOrigin.y; cur.w = w; cur.h = h;
+            }
+        } else if (mode === 'move') {
+            const dx = p.x - moveStart.x, dy = p.y - moveStart.y;
+            Object.values(startClones).forEach(({ obj, box }) => { remap(obj, box, { x: box.x + dx, y: box.y + dy, w: box.w, h: box.h }); });
+            // keep clones' box in sync so successive moves compose
+            Object.keys(startClones).forEach((id) => { startClones[id].box = bbox(startClones[id].obj); });
+            moveStart = p;
+        } else if (mode === 'resize') {
+            const o = objects.find((k) => selected.has(k.id)); if (!o) return;
+            let { x, y, w, h } = startBBox; let l = x, t = y, r = x + w, bt = y + h;
+            if (resizeHandle.includes('w')) l = p.x; if (resizeHandle.includes('e')) r = p.x;
+            if (resizeHandle.includes('n')) t = p.y; if (resizeHandle.includes('s')) bt = p.y;
+            const to = norm(l, t, r, bt); to.w = Math.max(to.w, 6); to.h = Math.max(to.h, 6);
+            const fresh = clone(startClones[o.id]); remap(fresh, startBBox, to);
+            Object.assign(o, fresh);
+        } else if (mode === 'erase') { eraseAt(p); }
+        else if (mode === 'marquee') { marquee = norm(drawOrigin.x, drawOrigin.y, p.x, p.y); }
+        render();
+    });
+    function endGesture() {
+        if (mode === 'draw' && cur) {
+            const b = bbox(cur);
+            const trivial = (cur.type === 'path' && cur.points.length < 2 && b.w < 3 && b.h < 3) ||
+                ((cur.type === 'rect' || cur.type === 'ellipse') && Math.abs(cur.w) < 3 && Math.abs(cur.h) < 3) ||
+                ((cur.type === 'line' || cur.type === 'arrow') && Math.hypot(cur.x2 - cur.x1, cur.y2 - cur.y1) < 3);
+            if (trivial) objects.pop();
+        }
+        if (mode === 'marquee' && marquee) {
+            selected = new Set(objects.filter((o) => boxesHit(marquee, bbox(o))).map((o) => o.id));
+            marquee = null;
+        }
+        mode = null; cur = null; startClones = null; render();
+    }
+    canvas.addEventListener('pointerup', endGesture);
+    canvas.addEventListener('pointercancel', endGesture);
+
+    function eraseAt(p) {
+        const o = hitObject(p.x, p.y);
+        if (o) { objects = objects.filter((k) => k !== o); selected.delete(o.id); render(); }
+    }
+    function deleteSelected() {
+        if (!selected.size) return;
+        pushUndo(); objects = objects.filter((o) => !selected.has(o.id)); selected.clear(); render();
+    }
+
+    /* ---------- toolbar buttons ---------- */
+    document.getElementById('drawDelete').addEventListener('click', deleteSelected);
+    document.getElementById('drawUndo').addEventListener('click', () => {
+        if (!undoStack.length) return;
+        objects = JSON.parse(undoStack.pop()); selected.clear(); render();
+    });
+    document.getElementById('drawClear').addEventListener('click', () => { pushUndo(); objects = []; selected.clear(); render(); });
+    document.getElementById('drawGrid').addEventListener('click', (e) => {
+        gridOn = !gridOn;
+        e.currentTarget.classList.toggle('is-active', gridOn);
+        render();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('show')) return;
+        if ((e.key === 'Delete' || e.key === 'Backspace') && selected.size) { e.preventDefault(); deleteSelected(); }
+        if (e.key === 'Escape') close();
+    });
+
+    /* ---------- fit + open/close ---------- */
+    function fitStage() {
+        const availW = stage.clientWidth - 24, availH = stage.clientHeight - 24;
+        if (availW <= 0 || availH <= 0) return;
+        const scale = Math.min(availW / W, availH / H);
+        canvas.style.width = Math.round(W * scale) + 'px';
+        canvas.style.height = Math.round(H * scale) + 'px';
+    }
+    window.addEventListener('resize', () => { if (modal.classList.contains('show')) fitStage(); });
+
+    function close() { modal.classList.remove('show'); modal.setAttribute('aria-hidden', 'true'); onSave = null; document.body.style.overflow = ''; }
+    document.getElementById('drawCancel').addEventListener('click', close);
+    document.getElementById('drawSave').addEventListener('click', () => {
+        selected.clear(); marquee = null;
+        // Capture without the grid guide, then restore the on-screen view.
+        exporting = true; render();
+        const data = canvas.toDataURL('image/png');
+        exporting = false; render();
+        if (onSave) onSave(data);
+        close();
+    });
+
+    function reset(existingUrl) {
+        objects = []; selected.clear(); undoStack.length = 0; marquee = null; mode = null; cur = null; uid = 1;
+        canvas.width = W; canvas.height = H;
+        setTool('pen'); render();
+        if (existingUrl) {
+            const img = new Image(); img.crossOrigin = 'anonymous';
+            img.onload = () => { ctx.drawImage(img, 0, 0, W, H); try { objects = []; } catch (_) {} render(); };
+            img.src = existingUrl; // note: loaded as a backdrop only (not an editable object)
+        }
+    }
+
+    window.openDrawCanvas = function (cb, existingUrl) {
+        onSave = cb || null;
+        // Re-parent to <body> so `position:fixed` is relative to the viewport —
+        // never trapped/cramped inside a transformed ancestor (the notes module
+        // wrapper, an open sheet, etc.). Also sidesteps any duplicate #drawModal.
+        if (modal.parentElement !== document.body) document.body.appendChild(modal);
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        reset(existingUrl);
+        requestAnimationFrame(fitStage);
+    };
+})();
+</script>

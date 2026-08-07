@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
 @section('title', 'Requests — Community')
-@section('page-title', 'Connection requests')
+@section('page-title', 'Community')
 @section('page-subtitle', 'Members who want to connect')
 @section('back', route('community.connect.members'))
 
 @section('content')
+@include('community.partials.nav', ['active' => 'members'])
+
 @if ($rows->isEmpty())
     <div class="card p-8 text-center text-sm text-gray-500">No pending requests.</div>
 @else

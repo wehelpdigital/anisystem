@@ -25,7 +25,7 @@
     };
 @endphp
 
-<div class="max-w-2xl mx-auto space-y-5">
+<div class="max-w-4xl mx-auto space-y-5">
 
     {{-- Locked banner --}}
     @if ($locked)
@@ -57,6 +57,33 @@
             </div>
         </div>
     @endif
+
+    {{-- Plan tiers --}}
+    @php $currentTier = $user->planTier(); @endphp
+    <div class="mb-5">
+        <h2 class="text-base font-bold text-gray-900 mb-1">Plans</h2>
+        <p class="text-sm text-gray-500 mb-3">Pricing is set in the AniSenso store; choose the tier that fits your farm.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            @foreach (config('tiers') as $key => $tier)
+                <div class="card p-4 {{ $currentTier === $key ? 'ring-2 ring-brand-500' : '' }}">
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="font-bold text-gray-900" style="font-family:var(--font-heading)">{{ $tier['name'] }}</span>
+                        @if ($currentTier === $key)<span class="badge badge-green">Current</span>@endif
+                    </div>
+                    <p class="text-2xl font-extrabold text-gray-900 mt-1">₱{{ number_format($tier['price']) }}<span class="text-xs font-medium text-gray-400">/{{ $tier['period'] }}</span></p>
+                    <p class="text-xs text-gray-500 mt-0.5">{{ $tier['tagline'] }}</p>
+                    <ul class="mt-3 space-y-1.5">
+                        @foreach ($tier['features'] as $f)
+                            <li class="text-xs text-gray-600 flex items-start gap-1.5"><span class="text-brand-600 mt-0.5">✓</span><span>{{ $f }}</span></li>
+                        @endforeach
+                        @foreach ($tier['excludes'] as $f)
+                            <li class="text-xs text-gray-400 flex items-start gap-1.5"><span class="mt-0.5">✕</span><span>{{ $f }}</span></li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endforeach
+        </div>
+    </div>
 
     {{-- Current subscription card --}}
     <div class="card">

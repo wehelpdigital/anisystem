@@ -27,8 +27,10 @@ class CroppingScheduleController extends Controller
 {
     public function index(Request $request)
     {
+        // Workers list their active boss's schedules; owners list their own.
+        $ownerId = \App\Support\WorkerContext::effectiveOwnerId();
         $query = AsCroppingSchedule::active()
-            ->forClient(Auth::id())
+            ->forClient($ownerId)
             ->withCount([
                 'lots as lots_count' => fn ($q) => $q->where('as_schedule_lots.deleteStatus', 1),
                 'workers as workers_count' => fn ($q) => $q->where('as_schedule_workers.deleteStatus', 1),
@@ -47,7 +49,7 @@ class CroppingScheduleController extends Controller
 
         // Full list (not just this page) for the Quick Capture schedule picker.
         $allSchedules = AsCroppingSchedule::active()
-            ->forClient(Auth::id())
+            ->forClient($ownerId)
             ->orderBy('title')
             ->get(['id', 'title']);
 
@@ -56,11 +58,36 @@ class CroppingScheduleController extends Controller
 
     public function create()
     {
+        if ($redirect = $this->guardScheduleLimit()) {
+            return $redirect;
+        }
+
         return view('sm.create');
+    }
+
+    /**
+     * Basic tier caps the number of schedules. Returns a redirect when the
+     * member is over their limit, or null when they may create another.
+     */
+    private function guardScheduleLimit()
+    {
+        $user = Auth::user();
+        if ($user && ! $user->canCreateSchedule()) {
+            $limit = $user->scheduleLimit();
+            return redirect()->route('sm.index')->with('error',
+                'Your ' . ucfirst($user->planTier()) . ' plan allows ' . ($limit === 0 ? 'no' : ('up to ' . $limit))
+                . ' cropping schedules. Upgrade to Boss for unlimited schedules.');
+        }
+
+        return null;
     }
 
     public function store(Request $request)
     {
+        if ($redirect = $this->guardScheduleLimit()) {
+            return $redirect;
+        }
+
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:5000',
@@ -114,6 +141,13 @@ class CroppingScheduleController extends Controller
      */
     public function storeWizard(Request $request)
     {
+        if ($request->user() && ! $request->user()->canCreateSchedule()) {
+            $limit = $request->user()->scheduleLimit();
+            return response()->json(['success' => false, 'message' =>
+                'Your ' . ucfirst($request->user()->planTier()) . ' plan allows ' . ($limit === 0 ? 'no' : ('up to ' . $limit))
+                . ' schedules. Upgrade to Boss for unlimited.'], 403);
+        }
+
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:5000',
@@ -141,8 +175,13 @@ class CroppingScheduleController extends Controller
         $materialTypes = ['granular', 'foliar', 'pesticide', 'herbicide', 'molluscicide', 'fungicide', 'fertilizer', 'seed', 'other'];
         $materialUnits = ['kg', 'g', 'ml', 'l', 'bottle', 'sachet', 'piece', 'pack'];
 
+        // Day counter is per-lot now (DAP, or DAS→DAT). The wizard's pick is the
+        // default applied to every lot; lots can be changed later in the Lots
+        // module. DAT collapses into the DAS/DAT mode.
+        $scheduleDayType = $request->input('dayType') === 'DAP' ? 'DAP' : 'DAS';
+
         try {
-            $schedule = DB::transaction(function () use ($request, $lotUnits, $skillKeys, $materialTypes, $materialUnits) {
+            $schedule = DB::transaction(function () use ($request, $lotUnits, $skillKeys, $materialTypes, $materialUnits, $scheduleDayType) {
                 $schedule = AsCroppingSchedule::create([
                     'anisystemUserId' => Auth::id(),
                     'usersId' => (int) config('anisystem.order_users_id', 1),
@@ -179,6 +218,7 @@ class CroppingScheduleController extends Controller
                         'lotSizeUnit' => in_array($unit, $lotUnits, true) ? $unit : 'hectare',
                         'variety' => ! empty($row['variety']) ? mb_substr(trim($row['variety']), 0, 255) : null,
                         'dayZeroDate' => $this->sanitizeDate($row['dayZeroDate'] ?? null),
+                        'dayType' => ($row['dayType'] ?? null) === 'DAP' ? 'DAP' : $scheduleDayType,
                         'notes' => ! empty($row['notes']) ? mb_substr(trim($row['notes']), 0, 2000) : null,
                         'deleteStatus' => 1,
                     ]);
@@ -283,6 +323,13 @@ class CroppingScheduleController extends Controller
     {
         $schedule = $this->findOwnedOrFail($request->query('id'));
 
+        // Ensure a public share token exists so the hub's Share sheet always
+        // has a link to hand out (older schedules were created without one).
+        if (empty($schedule->shareToken)) {
+            $schedule->shareToken = \Illuminate\Support\Str::random(32);
+            $schedule->save();
+        }
+
         $schedule->loadCount([
             'lots',
             'workers',
@@ -310,6 +357,37 @@ class CroppingScheduleController extends Controller
         return view('sm.hub', compact('schedule', 'documentationCount', 'postHarvestCount', 'notesCount'));
     }
 
+    /** Reports landing for a schedule — labor, post-harvest, and more. */
+    public function reports(Request $request)
+    {
+        $schedule = $this->findOwnedOrFail($request->query('id'));
+
+        $postHarvestCount = \App\Models\AsSchedulePostHarvest::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->count();
+
+        return view('sm.reports', compact('schedule', 'postHarvestCount'));
+    }
+
+    /** Toggle a schedule between 'setup' (editable) and 'completed' (locked). */
+    public function setStatus(Request $request)
+    {
+        if (! \App\Support\WorkerContext::canEdit()) {
+            return response()->json(['success' => false, 'message' => 'You have view-only access to this schedule.'], 403);
+        }
+        $schedule = $this->findOwnedOrFail($request->input('id'), true);
+        $completed = $request->input('status') === AsCroppingSchedule::STATUS_COMPLETED;
+        $schedule->update(['status' => $completed ? AsCroppingSchedule::STATUS_COMPLETED : AsCroppingSchedule::STATUS_SETUP]);
+
+        return response()->json([
+            'success' => true,
+            'message' => $completed
+                ? 'Schedule marked completed — it is now locked.'
+                : 'Schedule reopened for editing.',
+            'data' => ['status' => $schedule->status, 'locked' => $schedule->isLocked()],
+        ]);
+    }
+
     /**
      * Settings module page (Basic Info + Default Groupings).
      */
@@ -328,7 +406,6 @@ class CroppingScheduleController extends Controller
         $validator = Validator::make($request->all(), [
             'title'              => 'required|string|max:255',
             'description'        => 'nullable|string|max:5000',
-            'dayType'            => 'nullable|in:DAP,DAS,DAT',
             'defaultStaggerDays' => 'nullable|integer|min:0',
         ]);
 
@@ -340,9 +417,6 @@ class CroppingScheduleController extends Controller
             'title'       => $request->title,
             'description' => $request->description,
         ];
-        if ($request->filled('dayType')) {
-            $payload['dayType'] = $request->dayType;
-        }
         if ($request->has('defaultStaggerDays')) {
             $payload['defaultStaggerDays'] = (int) $request->input('defaultStaggerDays', 0);
         }
@@ -352,8 +426,37 @@ class CroppingScheduleController extends Controller
         return response()->json(['success' => true, 'message' => 'Schedule updated.', 'data' => $schedule]);
     }
 
+    /**
+     * Convert the schedule's day-counter type (e.g. DAS → DAT). Lightweight
+     * endpoint so the Activities view can switch it in place and relabel every
+     * counter without a full settings save.
+     */
+    public function setDayType(Request $request)
+    {
+        $schedule = $this->findOwnedOrFail($request->query('id'), true);
+
+        $validator = Validator::make($request->all(), [
+            'dayType' => 'required|in:DAP,DAS,DAT',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => 'Invalid day type.'], 422);
+        }
+
+        $schedule->update(['dayType' => $request->dayType]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Counters now use ' . $request->dayType . '.',
+            'data' => ['dayType' => $schedule->dayType],
+        ]);
+    }
+
     public function destroy(Request $request)
     {
+        // Only the owner may delete a schedule — never a worker (even editors).
+        if (\App\Support\WorkerContext::isWorker()) {
+            return response()->json(['success' => false, 'message' => 'Only the farm owner can delete a schedule.'], 403);
+        }
         $schedule = $this->findOwnedOrFail($request->query('id'), true);
         $schedule->update(['deleteStatus' => 0]);
 
@@ -494,7 +597,7 @@ class CroppingScheduleController extends Controller
         }
 
         $schedule = AsCroppingSchedule::active()
-            ->forClient(Auth::id())
+            ->forClient(\App\Support\WorkerContext::effectiveOwnerId())
             ->where('id', $id)
             ->first();
 

@@ -35,4 +35,23 @@ return [
         ],
     ],
 
+    // Community GIF search. The key stays server-side; the app proxies searches.
+    'giphy' => [
+        'key' => env('GIPHY_API_KEY'),
+    ],
+
+    // ffmpeg / ffprobe binaries for compressing uploaded/recorded videos.
+    'ffmpeg' => [
+        'bin' => env('FFMPEG_BIN', 'ffmpeg'),
+        'ffprobe' => env('FFPROBE_BIN', 'ffprobe'),
+    ],
+
+    // LiveKit — realtime audio/video calls in the Collab Room. `url` is the
+    // wss:// server; `key`/`secret` sign short-lived join tokens server-side.
+    'livekit' => [
+        'url' => env('LIVEKIT_URL'),
+        'key' => env('LIVEKIT_API_KEY'),
+        'secret' => env('LIVEKIT_API_SECRET'),
+    ],
+
 ];

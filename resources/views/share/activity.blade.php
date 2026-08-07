@@ -61,7 +61,7 @@
                 <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Assigned</p>
                 <div class="flex flex-wrap gap-1.5">
                     @foreach($activity->workers as $w)
-                        <span class="item-tag worker-tag">{{ $w->workerName }}</span>
+                        <span class="item-tag worker-tag">{{ $workerAlias[$w->id] ?? $w->workerName }}</span>
                     @endforeach
                 </div>
             </div>

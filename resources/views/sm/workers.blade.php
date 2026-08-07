@@ -6,17 +6,64 @@
 @section('back', route('sm.hub', ['id' => $schedule->id]))
 
 @section('content')
+    @php $canWorkerLogins = auth()->user()->canWorkerAccounts(); @endphp
     @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'workers'])
 
-    <div class="max-w-3xl">
-        <div class="flex justify-end mb-4">
-            <button type="button" class="btn btn-primary w-full md:w-auto" data-add-worker>
+    <div>
+        {{-- Worker logins (Boss/Lifetime only) --}}
+        @if (auth()->user()->canWorkerAccounts())
+            <div class="card p-4 mb-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 rounded-xl bg-brand-50 flex items-center justify-center shrink-0 text-lg">🔑</div>
+                    <div class="min-w-0 grow">
+                        <p class="font-bold text-gray-900">Worker logins</p>
+                        <p class="text-xs text-gray-500">Give a worker their own login with view or edit access. They set their password from an emailed link.</p>
+                    </div>
+                    <button type="button" id="grantAccessBtn" class="btn btn-white btn-sm shrink-0">Give access</button>
+                </div>
+                <div id="grantForm" class="hidden mt-3 pt-3 border-t border-gray-100 space-y-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div>
+                            <label class="form-label" for="grantEmail">Worker email</label>
+                            <input type="email" id="grantEmail" class="form-input" placeholder="worker@email.com">
+                        </div>
+                        <div>
+                            <label class="form-label" for="grantAccess">Schedule access</label>
+                            <select id="grantAccess" class="form-input">
+                                <option value="view">View only</option>
+                                <option value="edit">Can edit</option>
+                                <option value="none">No schedule access</option>
+                            </select>
+                        </div>
+                    </div>
+                    <label class="flex items-center gap-2 text-sm text-gray-700">
+                        <input type="checkbox" id="grantCommunity" checked class="rounded"> Allow community access (own profile &amp; posting)
+                    </label>
+                    <div class="flex justify-end gap-2">
+                        <button type="button" id="grantCancel" class="btn btn-ghost btn-sm">Cancel</button>
+                        <button type="button" id="grantSubmit" class="btn btn-primary btn-sm">Send invite</button>
+                    </div>
+                </div>
+            </div>
+        @else
+            <div class="card p-4 mb-4 border-amber-200">
+                <p class="text-sm text-gray-700"><strong>🔒 Worker logins</strong> are a <strong>Boss/Lifetime</strong> feature. <a href="{{ route('account.subscription') }}" class="text-brand-600 font-semibold">Upgrade</a> to give workers their own login and email notifications.</p>
+            </div>
+        @endif
+
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+            <p class="text-sm text-gray-500">
+                <span id="workerCount" class="font-bold text-gray-900">0</span> <span id="workerCountLabel">workers</span> on this schedule
+            </p>
+            <button type="button" class="btn btn-primary w-full sm:w-auto shrink-0" data-add-worker>
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
                 Add Worker
             </button>
         </div>
 
-        <div id="workersList" class="space-y-3" data-animate-list>
+        {{-- Full-width responsive grid — one card per worker. Kept separate from
+             the empty state below so renderList()'s innerHTML reset can't wipe it. --}}
+        <div id="workersList" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3" data-animate-list></div>
 
         <div id="workersEmpty" class="card hidden">
             <div class="card-body text-center py-12">
@@ -81,6 +128,57 @@
             <label for="workerNotes" class="form-label">Notes</label>
             <textarea id="workerNotes" rows="3" maxlength="2000" class="form-textarea" placeholder="Anything worth remembering about this worker…"></textarea>
         </div>
+
+        @if ($canWorkerLogins)
+        {{-- Login access: give an already-added worker their own login by
+             sending a registration link OR setting a password for them. Shows
+             only when editing an existing worker. --}}
+        <div id="workerLoginSection" class="hidden mt-1 pt-4 border-t border-gray-100">
+            <div class="rounded-2xl border border-gray-200 bg-gray-50/60 p-4 space-y-4">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-9 h-9 rounded-xl bg-brand-50 flex items-center justify-center shrink-0 text-lg">🔑</span>
+                    <div class="min-w-0 grow">
+                        <p class="font-bold text-gray-900 text-sm">Login access</p>
+                        <p class="text-xs text-gray-500" id="wlStatus">No login yet.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="form-label" for="wlAccess">Schedule access</label>
+                    <select id="wlAccess" class="form-select">
+                        <option value="view">View only</option>
+                        <option value="edit">Can edit</option>
+                        <option value="none">No schedule access</option>
+                    </select>
+                </div>
+
+                <label for="wlCommunity" class="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 cursor-pointer select-none">
+                    <input type="checkbox" id="wlCommunity" checked class="w-5 h-5 rounded border-gray-300 mt-0.5 shrink-0">
+                    <span class="min-w-0">
+                        <span class="block text-sm font-semibold text-gray-900">Community access</span>
+                        <span class="block text-xs text-gray-500">Let them use their own profile and post in the community.</span>
+                    </span>
+                </label>
+
+                <div class="flex flex-wrap items-center gap-2">
+                    <button type="button" id="wlSendLink" class="btn btn-white btn-sm">✉️ Send registration link</button>
+                    <button type="button" id="wlSetPwToggle" class="btn btn-white btn-sm">🔒 Set a password</button>
+                    <button type="button" id="wlRevoke" class="btn btn-ghost btn-sm text-red-500 hover:bg-red-50! hidden ml-auto">Revoke access</button>
+                </div>
+
+                <div id="wlPwRow" class="hidden pt-1">
+                    <label class="form-label" for="wlPassword">Password for this worker</label>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <input type="text" id="wlPassword" class="form-input grow" placeholder="At least 8 characters" autocomplete="new-password">
+                        <button type="button" id="wlCreateLogin" class="btn btn-primary btn-sm shrink-0 whitespace-nowrap w-full sm:w-auto">Create login</button>
+                    </div>
+                    <p class="form-hint">Share the email above + this password so they can sign in.</p>
+                </div>
+
+                <p class="form-hint mt-0!">Uses the worker's <strong>email</strong> above — add one if it's blank.</p>
+            </div>
+        </div>
+        @endif
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
@@ -138,6 +236,7 @@
         'notes' => $w->notes,
         'offDays' => $w->offDays->pluck('dayOfWeek')->map(fn ($d) => (int) $d)->values(),
         'offDates' => $w->offDates->map(fn ($d) => $d->offDate->format('Y-m-d'))->values(),
+        'login' => ($grantByWorker ?? [])[$w->id] ?? null,
     ])->values();
 @endphp
 <script>
@@ -148,9 +247,24 @@ const __init = () => {
     const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     let WORKERS = @json($jsWorkers);
+    const CAN_LOGINS = @json($canWorkerLogins);
+    let editingWorker = null;   // the worker whose sheet is open (for login controls)
 
     const list = document.getElementById('workersList');
     const empty = document.getElementById('workersEmpty');
+
+    function loginPillHtml(login) {
+        if (!login) return '';
+        if (login.status === 'active') return '<span class="inline-flex items-center gap-1 text-xs font-semibold text-green-700 bg-green-50 border border-green-100 rounded-full px-2 py-0.5">🔑 Login</span>';
+        if (login.status === 'pending') return '<span class="inline-flex items-center gap-1 text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-100 rounded-full px-2 py-0.5">🔑 Invite sent</span>';
+        return '';
+    }
+    // PM a worker who has a login: reuse the in-schedule float if present (shell),
+    // else deep-link into the community DM (same conversation + history).
+    function openWorkerPm(userId, name) {
+        if (typeof window.scheduleTeamPm === 'function') window.scheduleTeamPm(userId, name);
+        else window.location.href = '{{ route('community.index') }}?dm=' + userId;
+    }
 
     const fmtDate = (iso) => new Date(`${iso}T00:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
@@ -165,32 +279,49 @@ const __init = () => {
         return parts.length ? parts.join(' · ') : 'No off rules';
     }
 
+    // Initials for the avatar (first letters of up to two name words).
+    function workerInitials(name) {
+        const parts = String(name || '').trim().split(/\s+/).filter(Boolean);
+        const ini = parts.slice(0, 2).map((p) => p[0] || '').join('');
+        return (ini || '?').toUpperCase();
+    }
+
     function workerCardHtml(w) {
         const skills = (w.skills || [])
             .map((s) => `<span class="badge badge-gray">${escapeHtml(SKILLS[s] || s)}</span>`)
             .join(' ');
+        const hue = ((Number(w.id) || 0) * 137) % 360;   // golden-angle → stable, distinct per worker
+        const offRules = offRulesSummary(w);
+        const contactLine = (icon, value) => `<p class="text-xs text-gray-500 flex items-center gap-1.5 truncate"><svg class="w-3.5 h-3.5 shrink-0 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">${icon}</svg><span class="truncate">${escapeHtml(value)}</span></p>`;
 
         return `
-            <div class="card-body py-4!">
-                <div class="flex items-start justify-between gap-3">
-                    <div class="min-w-0">
-                        <div class="flex items-center gap-2 flex-wrap mb-1">
-                            <h3 class="font-bold text-gray-900">${escapeHtml(w.workerName)}</h3>
+            <div class="card-body h-full flex flex-col py-4! gap-3">
+                <div class="flex items-start gap-3">
+                    <span class="w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-sm shrink-0" style="background:hsl(${hue}, 55%, 45%)" aria-hidden="true">${escapeHtml(workerInitials(w.workerName))}</span>
+                    <div class="min-w-0 grow">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <h3 class="font-bold text-gray-900 truncate">${escapeHtml(w.workerName)}</h3>
+                            ${CAN_LOGINS ? loginPillHtml(w.login) : ''}
                         </div>
-                        <p class="text-sm text-gray-600 mb-1.5">${fmtPeso(w.costPerHalfDay)} <span class="text-gray-400">/ half day</span></p>
-                        ${w.email ? `<p class="text-xs text-gray-500 mb-1.5 flex items-center gap-1 truncate"><svg class="w-3.5 h-3.5 shrink-0 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>${escapeHtml(w.email)}</p>` : ''}
-                        ${w.phone ? `<p class="text-xs text-gray-500 mb-1.5 flex items-center gap-1 truncate"><svg class="w-3.5 h-3.5 shrink-0 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>${escapeHtml(w.phone)}</p>` : ''}
-                        ${skills ? `<div class="flex flex-wrap gap-1.5 mb-1.5">${skills}</div>` : ''}
-                        <p class="text-xs ${offRulesSummary(w) === 'No off rules' ? 'text-gray-400' : 'text-orange-700 font-medium'} off-rules-line">${escapeHtml(offRulesSummary(w))}</p>
-                        ${w.notes ? `<p class="text-xs text-gray-500 mt-1.5">${escapeHtml(w.notes)}</p>` : ''}
+                        <p class="text-sm text-gray-600 mt-0.5"><span class="font-semibold text-gray-900">${fmtPeso(w.costPerHalfDay)}</span> <span class="text-gray-400">/ half day</span></p>
                     </div>
-                    <div class="flex flex-col sm:flex-row items-end sm:items-center gap-1.5 shrink-0">
-                        <button type="button" class="btn btn-white btn-sm" data-rules-worker="${w.id}">Rules</button>
-                        <button type="button" class="btn btn-white btn-sm" data-edit-worker="${w.id}">Edit</button>
-                        <button type="button" class="btn btn-ghost btn-sm px-2.5! text-red-500 hover:bg-red-50!" data-delete-worker="${w.id}" aria-label="Delete worker">
-                            <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16m-10 4v6m4-6v6"/></svg>
-                        </button>
-                    </div>
+                </div>
+
+                <div class="min-w-0 grow space-y-1.5">
+                    ${w.email ? contactLine('<path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>', w.email) : ''}
+                    ${w.phone ? contactLine('<path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>', w.phone) : ''}
+                    ${skills ? `<div class="flex flex-wrap gap-1.5 pt-0.5">${skills}</div>` : ''}
+                    <p class="text-xs ${offRules === 'No off rules' ? 'text-gray-400' : 'text-orange-700 font-medium'} off-rules-line flex items-center gap-1.5"><svg class="w-3.5 h-3.5 shrink-0 ${offRules === 'No off rules' ? 'text-gray-300' : 'text-orange-400'}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18"/></svg><span class="truncate">${escapeHtml(offRules)}</span></p>
+                    ${w.notes ? `<p class="text-xs text-gray-500 pt-0.5 line-clamp-2">${escapeHtml(w.notes)}</p>` : ''}
+                </div>
+
+                <div class="flex items-center gap-1.5 pt-3 border-t border-gray-100">
+                    ${w.login && w.login.workerUserId ? `<button type="button" class="btn btn-white btn-sm px-2.5!" data-pm-worker="${w.login.workerUserId}" data-pm-name="${escapeHtml(w.workerName)}" title="Message ${escapeHtml(w.workerName)}" aria-label="Message ${escapeHtml(w.workerName)}"><svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12a8 8 0 01-11.6 7.1L3 20l1-5.5A8 8 0 1121 12z"/></svg></button>` : ''}
+                    <button type="button" class="btn btn-white btn-sm" data-rules-worker="${w.id}">Rules</button>
+                    <button type="button" class="btn btn-white btn-sm" data-edit-worker="${w.id}">Edit</button>
+                    <button type="button" class="btn btn-ghost btn-sm px-2.5! text-red-500 hover:bg-red-50! ml-auto" data-delete-worker="${w.id}" aria-label="Delete worker">
+                        <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16m-10 4v6m4-6v6"/></svg>
+                    </button>
                 </div>
             </div>`;
     }
@@ -200,12 +331,16 @@ const __init = () => {
         list.innerHTML = '';
         WORKERS.forEach((w) => {
             const card = document.createElement('div');
-            card.className = 'card';
+            card.className = 'card h-full';   // h-full → equal-height cards across a grid row
             card.dataset.workerCard = w.id;
             card.innerHTML = workerCardHtml(w);
             list.appendChild(card);
         });
         empty.classList.toggle('hidden', WORKERS.length > 0);
+        const countEl = document.getElementById('workerCount');
+        if (countEl) countEl.textContent = WORKERS.length;
+        const labelEl = document.getElementById('workerCountLabel');
+        if (labelEl) labelEl.textContent = WORKERS.length === 1 ? 'worker' : 'workers';
     }
 
     /* ---------------- Worker sheet ---------------- */
@@ -222,8 +357,92 @@ const __init = () => {
         document.querySelectorAll('#workerSkills .chip').forEach((c) => {
             c.classList.toggle('is-selected', selected.includes(c.getAttribute('data-value')));
         });
+        // Login controls only make sense for a saved worker (needs an id to link).
+        editingWorker = w;
+        paintLogin(w);
         openSheet('workerSheet');
     }
+
+    /* ---------------- Worker login controls ---------------- */
+
+    function paintLogin(w) {
+        const sec = document.getElementById('workerLoginSection');
+        if (!sec) return;   // not the boss / no login controls rendered
+        const show = !!(w && w.id);
+        sec.classList.toggle('hidden', !show);
+        if (!show) return;
+        const login = w.login || null;
+        const statusEl = document.getElementById('wlStatus');
+        if (login && login.status === 'active') statusEl.textContent = 'Active — this worker can log in.';
+        else if (login && login.status === 'pending') statusEl.textContent = 'Invite sent — waiting for them to set a password.';
+        else statusEl.textContent = 'No login yet.';
+        document.getElementById('wlAccess').value = (login && login.scheduleAccess) || 'view';
+        document.getElementById('wlCommunity').checked = login ? !!login.communityAccess : true;
+        document.getElementById('wlRevoke').classList.toggle('hidden', !login);
+        document.getElementById('wlPwRow').classList.add('hidden');
+        document.getElementById('wlPassword').value = '';
+    }
+
+    function applyGrant(grant) {
+        if (!editingWorker) return;
+        editingWorker.login = grant || null;   // editingWorker is a live ref in WORKERS
+        paintLogin(editingWorker);
+        renderList();
+    }
+    const loginEmail = () => (document.getElementById('workerEmail').value || '').trim();
+
+    document.getElementById('wlSendLink')?.addEventListener('click', async (e) => {
+        const email = loginEmail();
+        if (!email) { toast('Add the worker\'s email above first.', 'error'); document.getElementById('workerEmail').focus(); return; }
+        const btn = e.currentTarget; btn.disabled = true;
+        try {
+            const res = await api(@json(route('sm.workers.access.grant')), { method: 'POST', body: {
+                scheduleWorkerId: editingWorker && editingWorker.id,
+                email,
+                scheduleAccess: document.getElementById('wlAccess').value,
+                communityAccess: document.getElementById('wlCommunity').checked ? 1 : 0,
+            } });
+            toast(res.message);
+            applyGrant(res.data && res.data.grant);
+        } catch (err) { toast(err.message, 'error'); } finally { btn.disabled = false; }
+    });
+
+    document.getElementById('wlSetPwToggle')?.addEventListener('click', () => {
+        const row = document.getElementById('wlPwRow');
+        row.classList.toggle('hidden');
+        if (!row.classList.contains('hidden')) document.getElementById('wlPassword').focus();
+    });
+
+    document.getElementById('wlCreateLogin')?.addEventListener('click', async (e) => {
+        const email = loginEmail();
+        if (!email) { toast('Add the worker\'s email above first.', 'error'); document.getElementById('workerEmail').focus(); return; }
+        const pw = document.getElementById('wlPassword').value;
+        if (pw.length < 8) { toast('Password must be at least 8 characters.', 'error'); return; }
+        const btn = e.currentTarget; btn.disabled = true;
+        try {
+            const res = await api(@json(route('sm.workers.access.password')), { method: 'POST', body: {
+                scheduleWorkerId: editingWorker && editingWorker.id,
+                name: editingWorker && editingWorker.workerName,
+                email, password: pw,
+                scheduleAccess: document.getElementById('wlAccess').value,
+                communityAccess: document.getElementById('wlCommunity').checked ? 1 : 0,
+            } });
+            toast(res.message);
+            applyGrant(res.data && res.data.grant);
+        } catch (err) { toast(err.message, 'error'); } finally { btn.disabled = false; }
+    });
+
+    document.getElementById('wlRevoke')?.addEventListener('click', async (e) => {
+        if (!editingWorker || !editingWorker.login || !editingWorker.login.id) return;
+        const ok = await confirmAction({ title: 'Revoke access?', message: 'This worker will no longer be able to log in.', confirmText: 'Revoke' });
+        if (!ok) return;
+        const btn = e.currentTarget; btn.disabled = true;
+        try {
+            const res = await api(@json(route('sm.workers.access.revoke')), { method: 'DELETE', body: { id: editingWorker.login.id } });
+            toast(res.message);
+            applyGrant(null);
+        } catch (err) { toast(err.message, 'error'); } finally { btn.disabled = false; }
+    });
 
     document.getElementById('saveWorkerBtn').addEventListener('click', async (e) => {
         const btn = e.currentTarget;
@@ -263,6 +482,7 @@ const __init = () => {
                 notes: res.data.notes,
                 offDays: prev ? prev.offDays : [],
                 offDates: prev ? prev.offDates : [],
+                login: prev ? prev.login : null,
             };
             if (prev) {
                 WORKERS[WORKERS.indexOf(prev)] = saved;
@@ -379,6 +599,12 @@ const __init = () => {
             return;
         }
 
+        const pmBtn = e.target.closest('[data-pm-worker]');
+        if (pmBtn) {
+            openWorkerPm(pmBtn.getAttribute('data-pm-worker'), pmBtn.getAttribute('data-pm-name') || 'Worker');
+            return;
+        }
+
         const editBtn = e.target.closest('[data-edit-worker]');
         if (editBtn) {
             const w = WORKERS.find((x) => String(x.id) === editBtn.getAttribute('data-edit-worker'));
@@ -421,6 +647,37 @@ const __init = () => {
     // SPA injection: document is already complete, so run now.
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', __init, { once: true });
     else __init();
+})();
+</script>
+
+<script>
+// Worker login grants (Boss/Lifetime)
+(function workerGrants() {
+    const $ = (id) => document.getElementById(id);
+    const form = $('grantForm');
+    if (!form) return;
+    $('grantAccessBtn')?.addEventListener('click', () => { form.classList.toggle('hidden'); $('grantEmail').focus(); });
+    $('grantCancel')?.addEventListener('click', () => form.classList.add('hidden'));
+    $('grantSubmit')?.addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+        const email = $('grantEmail').value.trim();
+        if (!email) { window.toast && toast('Enter the worker\'s email.', 'error'); return; }
+        btn.disabled = true;
+        try {
+            const res = await window.api(@json(route('sm.workers.access.grant')), {
+                method: 'POST',
+                body: {
+                    email,
+                    scheduleAccess: $('grantAccess').value,
+                    communityAccess: $('grantCommunity').checked ? 1 : 0,
+                },
+            });
+            window.toast && toast(res.message || 'Invite sent.');
+            $('grantEmail').value = '';
+            form.classList.add('hidden');
+        } catch (err) { window.toast && toast(err.message, 'error'); }
+        finally { btn.disabled = false; }
+    });
 })();
 </script>
 @endpush

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Manager;
 
 use App\Models\AsScheduleNote;
 use App\Support\HtmlSanitizer;
+use App\Support\MediaOptimizer;
 use App\Support\UploadHelper;
+use App\Support\VideoOptimizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -91,21 +93,48 @@ class NoteController extends BaseScheduleController
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
         }
 
-        $file = $request->file('image');
-        $ext = UploadHelper::safeExtension($file, ['jpg', 'jpeg', 'png', 'webp']);
-        $stem = Str::uuid()->toString();
-        $dir = 'schedule-notes/' . $schedule->id;
-
+        // Re-encode + downscale to WebP so a phone photo doesn't cost megabytes.
         try {
-            Storage::disk('public')->putFileAs($dir, $file, $stem . '.' . $ext);
+            $path = MediaOptimizer::storeImageAsWebp($request->file('image'), 'schedule-notes/' . $schedule->id, 1600, 82);
         } catch (\Throwable $e) {
             return $this->jsonFail('Photo upload failed: ' . $e->getMessage(), 500);
         }
 
-        $path = $dir . '/' . $stem . '.' . $ext;
-
         return $this->jsonOk('Photo attached.', [
-            'data' => ['path' => $path, 'url' => Storage::disk('public')->url($path)],
+            'data' => ['type' => 'image', 'path' => $path, 'url' => Storage::disk('public')->url($path)],
+        ]);
+    }
+
+    /** Attach or record a video — compressed to ≤720p H.264 with a poster. */
+    public function uploadVideo(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+
+        $validator = Validator::make($request->all(), [
+            'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-msvideo|max:307200',
+        ], [
+            'video.required' => 'Pick a video first.',
+            'video.max' => 'Video is too large — max 300 MB.',
+            'video.mimetypes' => 'That file is not a supported video.',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
+
+        try {
+            $out = VideoOptimizer::storeCompressed($request->file('video'), 'schedule-notes/' . $schedule->id . '/videos');
+        } catch (\Throwable $e) {
+            return $this->jsonFail('Video processing failed: ' . $e->getMessage(), 500);
+        }
+
+        return $this->jsonOk('Video attached.', [
+            'data' => [
+                'type' => 'video',
+                'path' => $out['video'],
+                'poster' => $out['poster'] ?? null,
+                'url' => Storage::disk('public')->url($out['video']),
+                'posterUrl' => ! empty($out['poster']) ? Storage::disk('public')->url($out['poster']) : null,
+            ],
         ]);
     }
 
@@ -128,6 +157,10 @@ class NoteController extends BaseScheduleController
             'title' => 'required|string|max:191',
             'body' => 'nullable|string|max:50000',
             'imagePath' => 'nullable|string|max:500',
+            'media' => 'nullable|array|max:20',
+            'media.*.type' => 'required_with:media|in:image,video',
+            'media.*.path' => 'required_with:media|string|max:500',
+            'media.*.poster' => 'nullable|string|max:500',
         ]);
         if ($validator->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
@@ -137,6 +170,14 @@ class NoteController extends BaseScheduleController
         // Body is client rich text → same allow-list the descriptions use.
         $data['body'] = filled($data['body'] ?? null) ? HtmlSanitizer::rich($data['body']) : null;
         $data['imagePath'] = $data['imagePath'] ?? null;
+        $data['media'] = collect($data['media'] ?? [])
+            ->filter(fn ($m) => in_array($m['type'] ?? '', ['image', 'video'], true) && filled($m['path'] ?? null))
+            ->map(fn ($m) => array_filter([
+                'type' => $m['type'],
+                'path' => $m['path'],
+                'poster' => $m['poster'] ?? null,
+            ], fn ($v) => $v !== null))
+            ->values()->all() ?: null;
 
         return $data;
     }
@@ -145,7 +186,23 @@ class NoteController extends BaseScheduleController
     {
         return array_merge($n->toArray(), [
             'imageUrl' => $n->imagePath ? Storage::disk('public')->url($n->imagePath) : null,
+            'media' => $this->mediaWithUrls($n->media),
             'updatedForHumans' => $n->updated_at?->diffForHumans(),
         ]);
+    }
+
+    /** Resolve each stored media item's path/poster to a public URL. */
+    private function mediaWithUrls($media): array
+    {
+        return collect(is_array($media) ? $media : [])
+            ->map(fn ($m) => [
+                'type' => $m['type'] ?? 'image',
+                'path' => $m['path'] ?? null,
+                'poster' => $m['poster'] ?? null,
+                'url' => ! empty($m['path']) ? Storage::disk('public')->url($m['path']) : null,
+                'posterUrl' => ! empty($m['poster']) ? Storage::disk('public')->url($m['poster']) : null,
+            ])
+            ->filter(fn ($m) => $m['url'])
+            ->values()->all();
     }
 }

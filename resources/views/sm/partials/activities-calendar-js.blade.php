@@ -41,6 +41,14 @@ const __init = () => {
         'July', 'August', 'September', 'October', 'November', 'December'];
     const MAX_CHIPS = 3;
 
+    // Type icons — same trio as the list cards (task / irrigation / service).
+    const TYPE_ICO = {
+        irrigation: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3s6 6.686 6 11a6 6 0 11-12 0c0-4.314 6-11 6-11z"/></svg>',
+        service: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5a4 4 0 105.03 5.03l4.35 4.35a2 2 0 11-2.83 2.83l-4.35-4.35A4 4 0 0111 5zM5 19l4-4"/></svg>',
+        task: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>',
+    };
+    const typeKey = (t) => (t === 'irrigation' || t === 'service') ? t : 'task';
+
     // Local-noon dates throughout: parsing 'YYYY-MM-DD' as UTC would shift the
     // day backwards for anyone east of Greenwich, which is everyone here.
     const parse = (iso) => {
@@ -89,6 +97,7 @@ const __init = () => {
             const entry = {
                 id: card.getAttribute('data-id'),
                 title: (card.querySelector('.activity-card-title')?.textContent || 'Activity').trim(),
+                type: typeKey(card.getAttribute('data-activity-type') || ''),
                 priority: (card.className.match(/prio-(critical|high|medium|low)/) || [])[1] || 'low',
                 isDayZero: card.getAttribute('data-is-day-zero') === '1',
                 lots: [...card.querySelectorAll('.activity-card-lots .item-tag[data-lot-name]')]
@@ -162,8 +171,8 @@ const __init = () => {
                 + `<span class="cal-daynum">${day.getDate()}</span>`
                 + `<span class="cal-dots">`
                 + shown.map((it) =>
-                    `<span class="cal-chip prio-${escapeHtml(it.priority)}${it.isContinuation ? ' is-continuation' : ''}"`
-                    + ` title="${escapeHtml(it.title)}">${escapeHtml(it.title)}</span>`).join('')
+                    `<span class="cal-chip prio-${escapeHtml(it.priority)} type-${it.type}${it.isContinuation ? ' is-continuation' : ''}"`
+                    + ` title="${escapeHtml(it.title)}">${TYPE_ICO[it.type]}${escapeHtml(it.title)}</span>`).join('')
                 + `</span>`
                 + (extra > 0 ? `<span class="cal-more">+${extra}</span>` : '')
                 + `</button>`;
@@ -201,6 +210,13 @@ const __init = () => {
         list.classList.toggle('hidden', isCal);
 
         byId('viewToggleLabel').textContent = isCal ? 'List' : 'Calendar';
+        // Empty-date rows only exist in the list, so its toggle hides here.
+        // Squeeze-animate on user switches; snap on the initial restore.
+        const emptyBtn = byId('toggleEmptyDatesBtn');
+        if (emptyBtn) {
+            if (remember && window.animToggleHidden) window.animToggleHidden(emptyBtn, isCal);
+            else emptyBtn.classList.toggle('hidden', isCal);
+        }
         byId('viewIconCalendar').classList.toggle('hidden', isCal);
         byId('viewIconList').classList.toggle('hidden', !isCal);
         toggle.title = isCal ? 'Switch to list view' : 'Switch to calendar view';
@@ -261,6 +277,7 @@ const __init = () => {
                 <button type="button" class="cal-day-row prio-${escapeHtml(it.priority)} js-cal-open"
                         data-id="${escapeHtml(it.id)}">
                     <span class="cal-day-rail"></span>
+                    <span class="type-ico type-ico-${it.type}" aria-hidden="true">${TYPE_ICO[it.type]}</span>
                     <span class="min-w-0 grow">
                         <span class="block font-bold text-gray-900 text-sm leading-snug">${escapeHtml(it.title)}</span>
                         ${it.lots.length ? `<span class="block text-xs text-gray-500 mt-0.5">${escapeHtml(it.lots.join(', '))}</span>` : ''}

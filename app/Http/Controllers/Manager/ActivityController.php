@@ -6,6 +6,7 @@ use App\Models\AsScheduleActivity;
 use App\Models\AsScheduleActivityItem;
 use App\Models\AsScheduleActivityVersion;
 use App\Models\AsScheduleDateNote;
+use App\Models\AsScheduleDayExpense;
 use App\Models\AsScheduleDefaultGroupingLot;
 use App\Models\AsScheduleLot;
 use App\Models\AsScheduleMaterial;
@@ -48,6 +49,7 @@ class ActivityController extends BaseScheduleController
             'activities.items.material',
             'activities.items.service',
             'dateNotes',
+            'dayExpenses',
             'progressMarkers',
             'defaultGroupings.lots',
         ]);
@@ -59,17 +61,29 @@ class ActivityController extends BaseScheduleController
 
         $dateNotesByDate = $schedule->dateNotes->keyBy(fn ($n) => $n->noteDate->format('Y-m-d'));
         $markersByDate = $schedule->progressMarkers->keyBy(fn ($m) => $m->markerDate->format('Y-m-d'));
+        $expensesByDate = $schedule->dayExpenses->groupBy(fn ($e) => $e->expenseDate->format('Y-m-d'));
 
         $activeVersion = $schedule->versions->firstWhere('isActive', true)
             ?? $schedule->versions->firstWhere('isOriginal', true)
             ?? $schedule->versions->first();
 
+        // Positioned sticky notes that interleave with the day's activity cards.
+        $inlineNotesByDate = \App\Models\AsInlineNote::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->where('versionId', $activeVersion?->id)
+            ->orderBy('sortKey')
+            ->orderBy('id')
+            ->get()
+            ->groupBy(fn ($n) => $n->noteDate->format('Y-m-d'));
+
         return view('sm.activities', [
-            'schedule'        => $schedule,
-            'draftsCount'     => $draftsCount,
-            'dateNotesByDate' => $dateNotesByDate,
-            'markersByDate'   => $markersByDate,
-            'activeVersion'   => $activeVersion,
+            'schedule'          => $schedule,
+            'draftsCount'       => $draftsCount,
+            'dateNotesByDate'   => $dateNotesByDate,
+            'inlineNotesByDate' => $inlineNotesByDate,
+            'expensesByDate'    => $expensesByDate,
+            'markersByDate'     => $markersByDate,
+            'activeVersion'     => $activeVersion,
             'activityTypes'   => AsScheduleActivity::ACTIVITY_TYPES,
             'waterTasks'      => AsScheduleActivity::WATER_TASKS,
             'itemCatalog'     => $this->itemCatalog($schedule),
@@ -129,6 +143,9 @@ class ActivityController extends BaseScheduleController
     public function destroy(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request);
+        if ($schedule->isLocked()) {
+            return $this->jsonFail('This schedule is marked completed and locked. Reopen it in the Hub to make changes.', 423);
+        }
         $id = $this->queryId($request);
         $activity = AsScheduleActivity::active()->where('croppingScheduleId', $schedule->id)->where('id', $id)->first();
         if (!$activity) return $this->jsonFail('Activity not found.', 404);
@@ -136,6 +153,7 @@ class ActivityController extends BaseScheduleController
         // Soft-delete is reversible, so we keep the image file on disk
         // even after deletion — restoration brings it back wired up.
         $activity->update(['deleteStatus' => 0]);
+        $this->broadcastBoard($schedule, 'deleted', ['id' => $activity->id], $activity->versionId);
         return $this->jsonOk('Activity deleted.');
     }
 
@@ -156,11 +174,79 @@ class ActivityController extends BaseScheduleController
 
         $next = !((bool) $activity->isHidden);
         $activity->update(['isHidden' => $next]);
+        $this->broadcastBoard($schedule, 'toggle-hidden', ['id' => $activity->id, 'isHidden' => $next], $activity->versionId);
 
         return $this->jsonOk($next ? 'Activity hidden from presentations.' : 'Activity restored to presentations.', [
             'data' => [
                 'id'       => $activity->id,
                 'isHidden' => $next,
+            ],
+        ]);
+    }
+
+    /**
+     * Toggle the per-activity isDone flag. Done activities lock on the
+     * timeline: no dragging, no full edit — only appended notes.
+     */
+    public function toggleDone(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        $id = $this->queryId($request);
+        $activity = AsScheduleActivity::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->where('id', $id)
+            ->first();
+        if (!$activity) return $this->jsonFail('Activity not found.', 404);
+
+        $next = !((bool) $activity->isDone);
+        $activity->update(['isDone' => $next]);
+        $this->broadcastBoard($schedule, 'toggle-done', ['id' => $activity->id, 'isDone' => $next], $activity->versionId);
+
+        return $this->jsonOk($next ? 'Marked as done — the activity is now locked.' : 'Reopened for editing.', [
+            'data' => [
+                'id'     => $activity->id,
+                'isDone' => $next,
+            ],
+        ]);
+    }
+
+    /**
+     * Append a timestamped note paragraph to a (locked) activity's
+     * description without touching anything else on it.
+     */
+    public function appendNote(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        $id = $this->queryId($request);
+        $activity = AsScheduleActivity::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->where('id', $id)
+            ->first();
+        if (!$activity) return $this->jsonFail('Activity not found.', 404);
+
+        $note = trim((string) $request->input('note', ''));
+        // Photos attached to the note: paths from prior image-upload calls,
+        // constrained to this schedule's own upload directory.
+        $images = collect((array) $request->input('images', []))
+            ->filter(fn ($p) => is_string($p) && str_starts_with($p, 'schedule-activities/' . $schedule->id . '/'))
+            ->take(8)
+            ->values();
+        if ($note === '' && $images->isEmpty()) {
+            return $this->jsonFail('Write the note first.', 422);
+        }
+
+        $stamp = now()->format('M j, Y g:i A');
+        $paragraph = '<p><em>Note (' . e($stamp) . '):</em>' . ($note !== '' ? ' ' . e($note) : '') . '</p>';
+        foreach ($images as $p) {
+            $paragraph .= '<img src="' . e(Storage::disk('public')->url($p)) . '" alt="Note photo">';
+        }
+        $activity->update(['description' => trim(($activity->description ?? '') . $paragraph)]);
+        $this->broadcastBoard($schedule, 'reload', ['id' => $activity->id], $activity->versionId);
+
+        return $this->jsonOk('Note added.', [
+            'data' => [
+                'id'          => $activity->id,
+                'description' => $activity->description,
             ],
         ]);
     }
@@ -220,6 +306,15 @@ class ActivityController extends BaseScheduleController
      * Optional query filters: groupIds[] (resolved to lotIds), lotIds[],
      * workerIds[], dasMin/dasMax, startDate/endDate (pro-rated window).
      */
+    /** The Labor Report page — charts + breakdown; data comes from laborSummary. */
+    public function laborReportPage(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request, 'id');
+        $schedule->load('workers');
+
+        return view('sm.labor-report', ['schedule' => $schedule]);
+    }
+
     public function laborSummary(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request);
@@ -545,6 +640,7 @@ class ActivityController extends BaseScheduleController
                     'targetEndDate' => $a->targetEndDate ? $a->targetEndDate->format('Y-m-d') : null,
                     'priority'      => $a->priority,
                     'isDayZero'     => (bool) $a->isDayZero,
+                    'isTransplant'  => (bool) $a->isTransplant,
                     'updatedAt'     => $a->updated_at ? $a->updated_at->format('Y-m-d H:i') : null,
                     'lots'          => $a->lots->map(fn ($l) => ['id' => $l->id, 'lotName' => $l->lotName])->values(),
                 ];
@@ -605,25 +701,26 @@ class ActivityController extends BaseScheduleController
         $items = (array) $request->input('items');
         $ids = array_map(fn ($it) => (int) $it['id'], $items);
 
-        // Only allow updates to activities owned by this schedule.
-        $validIds = AsScheduleActivity::active()
+        // Only allow updates to activities owned by this schedule; done
+        // activities are locked in place — only their sequence may change.
+        $rows = AsScheduleActivity::active()
             ->where('croppingScheduleId', $schedule->id)
             ->whereIn('id', $ids)
-            ->pluck('id')
-            ->all();
-        $validSet = array_flip($validIds);
+            ->get(['id', 'isDone']);
+        $validSet = $rows->pluck('id')->flip()->all();
+        $doneSet = $rows->where('isDone', true)->pluck('id')->flip()->all();
 
         try {
-            DB::transaction(function () use ($items, $validSet) {
+            DB::transaction(function () use ($items, $validSet, $doneSet) {
                 foreach ($items as $it) {
                     $id = (int) $it['id'];
                     if (!isset($validSet[$id])) continue;
-                    $update = [
-                        'targetDate'    => $it['targetDate'],
-                        'sequenceOrder' => (int) $it['sequenceOrder'],
-                    ];
-                    if (array_key_exists('targetEndDate', $it)) {
-                        $update['targetEndDate'] = !empty($it['targetEndDate']) ? $it['targetEndDate'] : null;
+                    $update = ['sequenceOrder' => (int) $it['sequenceOrder']];
+                    if (!isset($doneSet[$id])) {
+                        $update['targetDate'] = $it['targetDate'];
+                        if (array_key_exists('targetEndDate', $it)) {
+                            $update['targetEndDate'] = !empty($it['targetEndDate']) ? $it['targetEndDate'] : null;
+                        }
                     }
                     AsScheduleActivity::where('id', $id)->update($update);
                 }
@@ -632,6 +729,7 @@ class ActivityController extends BaseScheduleController
             return $this->jsonFail('Failed to reorder: ' . $e->getMessage(), 500);
         }
 
+        $this->broadcastBoard($schedule, 'reordered', ['items' => $items], $this->activeVersionIdFor($schedule->id));
         return $this->jsonOk('Order saved.', ['count' => count($items)]);
     }
 
@@ -655,8 +753,12 @@ class ActivityController extends BaseScheduleController
             ->where('id', $id)
             ->first();
         if (!$activity) return $this->jsonFail('Activity not found.', 404);
+        if ($activity->isDone) {
+            return $this->jsonFail('This activity is marked done and locked in place.', 422);
+        }
 
         $activity->update(['targetDate' => $request->targetDate]);
+        $this->broadcastBoard($schedule, 'set-date', ['id' => $activity->id, 'targetDate' => $request->targetDate], $activity->versionId);
 
         return $this->jsonOk('Activity moved.', [
             'data' => ['id' => $activity->id, 'targetDate' => $request->targetDate],
@@ -715,6 +817,7 @@ class ActivityController extends BaseScheduleController
         $data['lotIds'] = $fresh->lots->pluck('id');
         $data['workerIds'] = $fresh->workers->pluck('id');
 
+        $this->broadcastBoard($schedule, 'saved', $data, $fresh->versionId);
         return $this->jsonOk('Activity duplicated.', ['data' => $data]);
     }
 
@@ -788,6 +891,9 @@ class ActivityController extends BaseScheduleController
     private function saveActivity(Request $request, $id = null)
     {
         $schedule = $this->scheduleFromRequest($request);
+        if ($schedule->isLocked()) {
+            return $this->jsonFail('This schedule is marked completed and locked. Reopen it in the Hub to make changes.', 423);
+        }
 
         $validator = Validator::make($request->all(), [
             'activityTitle'   => 'required|string|max:255',
@@ -798,6 +904,7 @@ class ActivityController extends BaseScheduleController
             'waterTask'       => ['nullable', 'string', Rule::in(array_keys(AsScheduleActivity::WATER_TASKS))],
             'servicePrice'    => 'nullable|numeric|min:0|max:99999999',
             'isDayZero'       => 'nullable|boolean',
+            'isTransplant'    => 'nullable|boolean',
             'isDraft'         => 'nullable|boolean',
             'description'     => 'nullable|string|max:20000',
             // imagePath(s) are relative paths under the `public` disk, set by
@@ -824,6 +931,18 @@ class ActivityController extends BaseScheduleController
 
         if ($validator->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
+
+        // A done activity is locked — only notes (appendNote) or unchecking
+        // (toggleDone) may touch it.
+        if ($id !== null) {
+            $locked = AsScheduleActivity::active()
+                ->where('croppingScheduleId', $schedule->id)
+                ->where('id', $id)
+                ->value('isDone');
+            if ($locked) {
+                return $this->jsonFail('This activity is marked done and locked. Un-check it to edit.', 422);
+            }
         }
 
         // Lots must belong to this schedule. Empty array is allowed (N/A).
@@ -889,6 +1008,7 @@ class ActivityController extends BaseScheduleController
                 ? ($request->filled('servicePrice') ? $request->servicePrice : null)
                 : null,
             'isDayZero'          => $request->boolean('isDayZero'),
+            'isTransplant'       => $request->boolean('isTransplant'),
             // Sanitize client rich text — it is rendered raw and shared with the admin app.
             'description'        => \App\Support\HtmlSanitizer::rich($request->description),
             'imagePath'          => $submittedImagePath,
@@ -967,6 +1087,8 @@ class ActivityController extends BaseScheduleController
         $data['images'] = $fresh->imageList();
         $data['items'] = $this->serializeItems($fresh);
 
+        $this->broadcastBoard($schedule, 'saved', $data, $fresh->versionId);
+
         return $this->jsonOk($id ? 'Activity updated.' : 'Activity added.', [
             'data' => $data,
         ]);
@@ -983,6 +1105,10 @@ class ActivityController extends BaseScheduleController
         $validator = Validator::make($request->all(), [
             'noteDate'    => 'required|date',
             'noteContent' => 'nullable|string|max:20000',
+            'media'          => 'nullable|array|max:20',
+            'media.*.type'   => 'required_with:media|in:image,video',
+            'media.*.path'   => 'required_with:media|string|max:500',
+            'media.*.poster' => 'nullable|string|max:500',
         ]);
         if ($validator->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
@@ -995,11 +1121,9 @@ class ActivityController extends BaseScheduleController
 
         $noteDate = $request->input('noteDate');
         // Notes are rich text from the WYSIWYG editor — sanitize like activity
-        // descriptions. Markup with no visible text counts as empty (clears it).
-        $content  = \App\Support\HtmlSanitizer::rich($request->input('noteContent'));
-        if (! filled(trim(strip_tags($content)))) {
-            $content = '';
-        }
+        // descriptions. No text, no drawing and no media clears the note.
+        $content = \App\Support\HtmlSanitizer::rich($request->input('noteContent'));
+        $media = $this->normalizeNoteMedia($request->input('media'));
 
         $existing = AsScheduleDateNote::active()
             ->forSchedule($schedule->id)
@@ -1007,8 +1131,7 @@ class ActivityController extends BaseScheduleController
             ->whereDate('noteDate', $noteDate)
             ->first();
 
-        // Empty content → treat as "remove note for this date".
-        if ($content === '') {
+        if (! $this->noteHasBody($content) && empty($media)) {
             if ($existing) {
                 $existing->update(['deleteStatus' => 0]);
             }
@@ -1016,7 +1139,7 @@ class ActivityController extends BaseScheduleController
         }
 
         if ($existing) {
-            $existing->update(['noteContent' => $content]);
+            $existing->update(['noteContent' => $content, 'media' => $media]);
             $note = $existing;
         } else {
             $note = AsScheduleDateNote::create([
@@ -1024,15 +1147,19 @@ class ActivityController extends BaseScheduleController
                 'versionId'          => $versionId,
                 'noteDate'           => $noteDate,
                 'noteContent'        => $content,
+                'media'              => $media,
                 'deleteStatus'       => 1,
             ]);
         }
+
+        $this->broadcastBoard($schedule, 'reload', ['noteDate' => $note->noteDate->format('Y-m-d')], $versionId);
 
         return $this->jsonOk($existing ? 'Note updated.' : 'Note added.', [
             'data' => [
                 'id'          => $note->id,
                 'noteDate'    => $note->noteDate->format('Y-m-d'),
                 'noteContent' => $note->noteContent,
+                'media'       => $this->mediaWithUrls($note->media),
             ],
         ]);
     }
@@ -1063,6 +1190,283 @@ class ActivityController extends BaseScheduleController
             ->update(['deleteStatus' => 0]);
 
         return $this->jsonOk('Note deleted.');
+    }
+
+    /**
+     * Create/update/move a positioned inline note (the ones that sit between
+     * a day's activity cards). Upsert by id; empty content removes it.
+     */
+    public function inlineNoteSave(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+
+        $validator = Validator::make($request->all(), [
+            'id'       => 'nullable|integer',
+            'noteDate' => 'required|date',
+            'sortKey'  => 'nullable|integer',
+            'content'  => 'nullable|string|max:20000',
+            'media'          => 'nullable|array|max:20',
+            'media.*.type'   => 'required_with:media|in:image,video',
+            'media.*.path'   => 'required_with:media|string|max:500',
+            'media.*.poster' => 'nullable|string|max:500',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
+
+        $versionId = $this->activeVersionIdFor($schedule->id);
+        if (!$versionId) {
+            return $this->jsonFail('No active version found for this schedule.', 422);
+        }
+
+        $content = \App\Support\HtmlSanitizer::rich($request->input('content'));
+        $media = $this->normalizeNoteMedia($request->input('media'));
+
+        $id = (int) $request->input('id');
+        $note = $id
+            ? \App\Models\AsInlineNote::active()->forSchedule($schedule->id)->forVersion($versionId)->where('id', $id)->first()
+            : null;
+
+        // Nothing to keep (no text, no drawing, no media) clears/skips the note.
+        if (! $this->noteHasBody($content) && empty($media)) {
+            if ($note) {
+                $note->update(['deleteStatus' => 0]);
+                $this->broadcastBoard($schedule, 'reload', [], null);
+
+                return $this->jsonOk('Note removed.', ['data' => null, 'removed' => true]);
+            }
+
+            return $this->jsonOk('Nothing to save.', ['data' => null]);
+        }
+
+        $payload = [
+            'noteDate' => $request->input('noteDate'),
+            'sortKey'  => (int) $request->input('sortKey', 0),
+            'content'  => $content,
+            'media'    => $media,
+        ];
+
+        if ($note) {
+            $note->update($payload);
+        } else {
+            $note = \App\Models\AsInlineNote::create($payload + [
+                'croppingScheduleId' => $schedule->id,
+                'versionId'          => $versionId,
+                'deleteStatus'       => 1,
+            ]);
+        }
+
+        $this->broadcastBoard($schedule, 'reload', ['noteDate' => $note->noteDate->format('Y-m-d')], $versionId);
+
+        return $this->jsonOk($id ? 'Note updated.' : 'Note added.', [
+            'data' => [
+                'id'       => $note->id,
+                'noteDate' => $note->noteDate->format('Y-m-d'),
+                'sortKey'  => $note->sortKey,
+                'content'  => $note->content,
+                'media'    => $this->mediaWithUrls($note->media),
+            ],
+        ]);
+    }
+
+    /** A note has real content if it has visible text, an image, or media. */
+    private function noteHasBody(?string $content): bool
+    {
+        $content = (string) $content;
+
+        return filled(trim(strip_tags($content))) || str_contains($content, '<img');
+    }
+
+    /** Keep only well-formed {type,path,poster} media rows. */
+    private function normalizeNoteMedia($media): ?array
+    {
+        return collect(is_array($media) ? $media : [])
+            ->filter(fn ($m) => in_array($m['type'] ?? '', ['image', 'video'], true) && filled($m['path'] ?? null))
+            ->map(fn ($m) => array_filter([
+                'type' => $m['type'],
+                'path' => $m['path'],
+                'poster' => $m['poster'] ?? null,
+            ], fn ($v) => $v !== null))
+            ->values()->all() ?: null;
+    }
+
+    /** Resolve each stored media item's path/poster to a public URL. */
+    private function mediaWithUrls($media): array
+    {
+        return collect(is_array($media) ? $media : [])
+            ->map(fn ($m) => [
+                'type' => $m['type'] ?? 'image',
+                'path' => $m['path'] ?? null,
+                'poster' => $m['poster'] ?? null,
+                'url' => ! empty($m['path']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($m['path']) : null,
+                'posterUrl' => ! empty($m['poster']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($m['poster']) : null,
+            ])
+            ->filter(fn ($m) => $m['url'])
+            ->values()->all();
+    }
+
+    /** Soft-delete a positioned inline note. */
+    public function inlineNoteDelete(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        $versionId = $this->activeVersionIdFor($schedule->id);
+
+        \App\Models\AsInlineNote::active()
+            ->forSchedule($schedule->id)
+            ->forVersion($versionId)
+            ->where('id', (int) ($request->input('id') ?? $request->query('id')))
+            ->update(['deleteStatus' => 0]);
+        $this->broadcastBoard($schedule, 'reload', [], null);
+
+        return $this->jsonOk('Note removed.');
+    }
+
+    /**
+     * List the extra expenses logged against a single date (active version),
+     * with the running total. Used to refresh the day's expense block after
+     * an add/edit/delete without a full page reload.
+     */
+    public function listDayExpenses(Request $request)
+    {
+        $schedule = $this->schedule($request->query('id'));
+
+        $validator = Validator::make($request->all(), [
+            'expenseDate' => 'required|date',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
+
+        $versionId = $this->activeVersionIdFor($schedule->id);
+        $rows = AsScheduleDayExpense::active()
+            ->forSchedule($schedule->id)
+            ->forVersion($versionId)
+            ->whereDate('expenseDate', $request->input('expenseDate'))
+            ->orderBy('sortOrder', 'asc')
+            ->orderBy('id', 'asc')
+            ->get();
+
+        return $this->jsonOk('Expenses loaded.', [
+            'data'  => $this->serializeExpenses($rows),
+            'total' => (float) $rows->sum('amount'),
+        ]);
+    }
+
+    /**
+     * Create or update one extra expense (amount + note) for a date. Pass an
+     * `expenseId` to edit an existing row, omit it to add a new one.
+     */
+    public function saveDayExpense(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+
+        $validator = Validator::make($request->all(), [
+            'expenseId'   => 'nullable|integer',
+            'expenseDate' => 'required|date',
+            'amount'      => 'required|numeric|min:0|max:99999999',
+            'note'        => 'nullable|string|max:500',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
+
+        $versionId = $this->activeVersionIdFor($schedule->id);
+        if (!$versionId) {
+            return $this->jsonFail('No active version found for this schedule.', 422);
+        }
+
+        $expenseDate = $request->input('expenseDate');
+        $amount = round((float) $request->input('amount'), 2);
+        $note   = trim((string) $request->input('note', ''));
+
+        $expenseId = $request->input('expenseId');
+        if ($expenseId) {
+            $expense = AsScheduleDayExpense::active()
+                ->forSchedule($schedule->id)
+                ->where('id', (int) $expenseId)
+                ->first();
+            if (!$expense) {
+                return $this->jsonFail('Expense not found.', 404);
+            }
+            $expense->update([
+                'expenseDate' => $expenseDate,
+                'amount'      => $amount,
+                'note'        => $note !== '' ? $note : null,
+            ]);
+        } else {
+            $nextOrder = (int) AsScheduleDayExpense::active()
+                ->forSchedule($schedule->id)
+                ->forVersion($versionId)
+                ->whereDate('expenseDate', $expenseDate)
+                ->max('sortOrder');
+            $expense = AsScheduleDayExpense::create([
+                'croppingScheduleId' => $schedule->id,
+                'versionId'          => $versionId,
+                'expenseDate'        => $expenseDate,
+                'amount'             => $amount,
+                'note'               => $note !== '' ? $note : null,
+                'sortOrder'          => $nextOrder + 1,
+                'deleteStatus'       => 1,
+            ]);
+        }
+
+        // Return the whole day's list + total so the UI can re-render cleanly.
+        $rows = AsScheduleDayExpense::active()
+            ->forSchedule($schedule->id)
+            ->forVersion($versionId)
+            ->whereDate('expenseDate', $expenseDate)
+            ->orderBy('sortOrder', 'asc')
+            ->orderBy('id', 'asc')
+            ->get();
+
+        return $this->jsonOk($expenseId ? 'Expense updated.' : 'Expense added.', [
+            'data'  => $this->serializeExpenses($rows),
+            'total' => (float) $rows->sum('amount'),
+        ]);
+    }
+
+    /**
+     * Soft-delete one extra expense and return the remaining day list + total.
+     */
+    public function deleteDayExpense(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+
+        $expenseId = (int) $request->input('expenseId');
+        $expense = AsScheduleDayExpense::active()
+            ->forSchedule($schedule->id)
+            ->where('id', $expenseId)
+            ->first();
+        if (!$expense) {
+            return $this->jsonFail('Expense not found.', 404);
+        }
+
+        $expenseDate = $expense->expenseDate->format('Y-m-d');
+        $versionId = $expense->versionId;
+        $expense->update(['deleteStatus' => 0]);
+
+        $rows = AsScheduleDayExpense::active()
+            ->forSchedule($schedule->id)
+            ->forVersion($versionId)
+            ->whereDate('expenseDate', $expenseDate)
+            ->orderBy('sortOrder', 'asc')
+            ->orderBy('id', 'asc')
+            ->get();
+
+        return $this->jsonOk('Expense deleted.', [
+            'data'  => $this->serializeExpenses($rows),
+            'total' => (float) $rows->sum('amount'),
+        ]);
+    }
+
+    private function serializeExpenses($rows): array
+    {
+        return $rows->map(fn ($e) => [
+            'id'          => $e->id,
+            'expenseDate' => $e->expenseDate->format('Y-m-d'),
+            'amount'      => (float) $e->amount,
+            'note'        => $e->note,
+        ])->values()->all();
     }
 
     /**

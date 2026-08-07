@@ -8,17 +8,20 @@
 @section('content')
     @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'lots'])
 
-    <div class="max-w-3xl">
-        <div class="flex justify-end mb-4">
-            <button type="button" class="btn btn-primary w-full md:w-auto" data-add-lot>
+    <div>
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+            <p class="text-sm text-gray-500">
+                <span id="lotCount" class="font-bold text-gray-900">0</span> <span id="lotCountLabel">lots</span> on this schedule
+            </p>
+            <button type="button" class="btn btn-primary w-full sm:w-auto shrink-0" data-add-lot>
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
                 Add Lot
             </button>
         </div>
 
-        {{-- JS fills this; it must be closed here or renderList() would wipe
-             whatever follows it (the empty state). --}}
-        <div id="lotsList" class="space-y-3" data-animate-list></div>
+        {{-- Full-width responsive grid — one card per lot. The empty state below
+             is a sibling so renderList()'s innerHTML reset can't wipe it. --}}
+        <div id="lotsList" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3" data-animate-list></div>
 
         <div id="lotsEmpty" class="card hidden">
             <div class="card-body text-center py-12">
@@ -71,13 +74,44 @@
         </div>
 
         <div>
-            <label for="lotDayZeroDate" class="form-label">Day 0 Date <span class="text-gray-400 font-normal">(optional)</span></label>
-            <div class="flex gap-2">
-                <input type="date" id="lotDayZeroDate" class="form-input cal-only" inputmode="none">
-                <button type="button" id="lotDayZeroDateClear" class="btn btn-ghost shrink-0" title="Clear date">Clear</button>
-            </div>
-            <p class="form-hint">Anchor for {{ $schedule->dayType }} labels — day numbers count from this date.</p>
+            <label for="lotDayType" class="form-label">Day counter</label>
+            <select id="lotDayType" class="form-select">
+                <option value="DAP">DAP — Days After Planting</option>
+                <option value="DAS">DAS / DAT — Seeded, then Transplanted</option>
+            </select>
+            <p class="form-hint">How this lot's day numbers are counted. <strong>DAP</strong> is a single count from planting. <strong>DAS/DAT</strong> counts DAS from sowing, then flips to DAT once you flag the transplant activity.</p>
         </div>
+
+        {{-- Lot address — town + province power the local weather forecast. --}}
+        <div class="rounded-xl border border-gray-100 p-3 space-y-3">
+            <div class="flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <span class="form-label mb-0">Location <span class="text-gray-400 font-normal">(optional)</span></span>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label for="lotBarangay" class="form-label text-xs">Barangay</label>
+                    <input type="text" id="lotBarangay" maxlength="120" class="form-input" placeholder="e.g. San Jose">
+                </div>
+                <div>
+                    <label for="lotZone" class="form-label text-xs">Zone #</label>
+                    <input type="text" id="lotZone" maxlength="60" class="form-input" placeholder="e.g. 3">
+                </div>
+                <div>
+                    <label for="lotProvince" class="form-label text-xs">Province</label>
+                    <select id="lotProvince" class="form-select"><option value="">— Select —</option></select>
+                </div>
+                <div>
+                    <label for="lotTown" class="form-label text-xs">Town / City</label>
+                    <select id="lotTown" class="form-select" disabled><option value="">Select province first</option></select>
+                </div>
+            </div>
+            <p class="form-hint">Add the town &amp; province to see this lot's 5-day weather on your dashboard.</p>
+        </div>
+
+        {{-- Day 0 (DAS) and transplant (DAT) anchors are set on the activities
+             themselves (via the "Mark as Day 0" / "Mark as transplant" toggles),
+             so they live in one place only. No date fields on the lot. --}}
 
         <div>
             <label for="lotNotes" class="form-label">Notes</label>
@@ -99,7 +133,12 @@
         'lotSize' => $l->lotSize,
         'lotSizeUnit' => $l->lotSizeUnit,
         'variety' => $l->variety,
-        'dayZeroDate' => $l->dayZeroDate ? $l->dayZeroDate->format('Y-m-d') : null,
+        'locBarangay' => $l->locBarangay,
+        'locZone' => $l->locZone,
+        'locTown' => $l->locTown,
+        'locProvince' => $l->locProvince,
+        'fullAddress' => $l->full_address,
+        'dayType' => $l->dayType ?: 'DAS',
         'notes' => $l->notes,
     ])->values();
 @endphp
@@ -129,6 +168,42 @@ const __init = () => {
 
     const UNIT_LABELS = { hectare: 'ha', sqm: 'sqm', acre: 'ac' };
 
+    /* ---- Philippine province → town/city cascading dropdowns ---- */
+    const PH_URL = @json(asset('data/ph-locations.json'));
+    const provinceSel = document.getElementById('lotProvince');
+    const townSel = document.getElementById('lotTown');
+    let PH = null, phPromise = null;
+
+    const ensureLocations = () => {
+        if (PH) return Promise.resolve(PH);
+        if (!phPromise) {
+            phPromise = fetch(PH_URL, { headers: { Accept: 'application/json' } })
+                .then((r) => r.json())
+                .then((data) => (PH = data || {}))
+                .catch(() => (PH = {}));
+        }
+        return phPromise;
+    };
+    const optionList = (values, selected) => {
+        let has = false;
+        let html = '<option value="">— Select —</option>';
+        values.forEach((v) => { if (v === selected) has = true; html += `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`; });
+        // Preserve a saved value (e.g. older free-text) that isn't in the list.
+        if (selected && !has) html += `<option value="${escapeHtml(selected)}">${escapeHtml(selected)}</option>`;
+        return html;
+    };
+    const fillProvinces = (selected) => {
+        provinceSel.innerHTML = optionList(Object.keys(PH || {}).sort((a, b) => a.localeCompare(b)), selected || '');
+        provinceSel.value = selected || '';
+    };
+    const fillTowns = (province, selected) => {
+        townSel.innerHTML = optionList((PH && PH[province]) ? PH[province] : [], selected || '');
+        townSel.disabled = !province;
+        townSel.value = selected || '';
+    };
+    provinceSel.addEventListener('change', () => fillTowns(provinceSel.value, ''));
+    ensureLocations(); // warm the cache
+
     const fmtDate = (iso) => {
         if (!iso) return '';
         return new Date(`${iso}T00:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -137,39 +212,58 @@ const __init = () => {
         const n = parseFloat(v);
         return Number.isFinite(n) ? n.toLocaleString('en-PH', { maximumFractionDigits: 4 }) : '0';
     };
+    // Mirrors AsScheduleLot::getFullAddressAttribute so a freshly-saved lot shows
+    // its address without a reload.
+    const composeAddress = (l) => [
+        l.locBarangay ? 'Brgy. ' + l.locBarangay : null,
+        l.locZone ? 'Zone ' + l.locZone : null,
+        l.locTown || null,
+        l.locProvince || null,
+    ].filter(Boolean).join(', ');
+
+    // Initials for the avatar (first letters of up to two name words, e.g.
+    // "Masin 3" → "M3", "Lot A — riverside" → "LA").
+    function lotInitials(name) {
+        const parts = String(name || '').trim().split(/\s+/).filter(Boolean);
+        const ini = parts.slice(0, 2).map((p) => p[0] || '').join('');
+        return (ini || '?').toUpperCase();
+    }
 
     function lotCardHtml(lot) {
-        const dayZero = lot.dayZeroDate ? `
-            <span class="badge badge-blue" title="Anchor for ${escapeHtml(DAY_TYPE)} labels">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/><path stroke-linecap="round" d="M12 2v2m0 16v2M2 12h2m16 0h2"/></svg>
-                Day 0: ${escapeHtml(fmtDate(lot.dayZeroDate))}
-            </span>` : '';
+        // Same golden-angle hue the lot gets on its activity cards, so the colour
+        // reads as "this lot" consistently across modules.
+        const hue = ((Number(lot.id) || 0) * 137) % 360;
+        const sizeText = `${fmtSize(lot.lotSize)} ${escapeHtml(UNIT_LABELS[lot.lotSizeUnit] || lot.lotSizeUnit || '')}`.trim();
         const variety = lot.variety ? `
             <span class="badge badge-green">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 21c0-7 4-13 14-16-1 10-6 15-13 15m-1 1c2-5 5-8 9-10"/></svg>
                 ${escapeHtml(lot.variety)}
             </span>` : '';
+        const dayTypeBadge = (lot.dayType === 'DAP')
+            ? '<span class="badge badge-gray">DAP</span>'
+            : '<span class="badge badge-gray">DAS → DAT</span>';
 
         return `
-            <div class="card-body py-4!">
-                <div class="flex items-start justify-between gap-3">
-                    <div class="min-w-0">
-                        <div class="flex items-center gap-2 flex-wrap mb-1">
-                            <h3 class="font-bold text-gray-900">${escapeHtml(lot.lotName)}</h3>
-                            ${dayZero}
-                        </div>
-                        <div class="flex items-center gap-2 flex-wrap text-sm text-gray-600">
-                            <span>${fmtSize(lot.lotSize)} ${escapeHtml(UNIT_LABELS[lot.lotSizeUnit] || lot.lotSizeUnit || '')}</span>
-                            ${variety}
-                        </div>
-                        ${lot.notes ? `<p class="text-xs text-gray-500 mt-1.5">${escapeHtml(lot.notes)}</p>` : ''}
+            <div class="card-body h-full flex flex-col py-4! gap-3">
+                <div class="flex items-start gap-3">
+                    <span class="w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-sm shrink-0" style="background:hsl(${hue}, 55%, 40%)" aria-hidden="true">${escapeHtml(lotInitials(lot.lotName))}</span>
+                    <div class="min-w-0 grow">
+                        <h3 class="font-bold text-gray-900 truncate">${escapeHtml(lot.lotName)}</h3>
+                        <p class="text-sm text-gray-600 mt-0.5"><span class="font-semibold text-gray-900">${sizeText}</span></p>
                     </div>
-                    <div class="flex items-center gap-1.5 shrink-0">
-                        <button type="button" class="btn btn-white btn-sm" data-edit-lot="${lot.id}">Edit</button>
-                        <button type="button" class="btn btn-ghost btn-sm px-2.5! text-red-500 hover:bg-red-50!" data-delete-lot="${lot.id}" aria-label="Delete lot">
-                            <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16m-10 4v6m4-6v6"/></svg>
-                        </button>
-                    </div>
+                </div>
+
+                <div class="min-w-0 grow space-y-1.5">
+                    <div class="flex flex-wrap gap-1.5">${variety}${dayTypeBadge}</div>
+                    ${lot.fullAddress ? `<p class="text-xs text-gray-500 flex items-start gap-1.5"><svg class="w-3.5 h-3.5 mt-px shrink-0 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>${escapeHtml(lot.fullAddress)}</span></p>` : ''}
+                    ${lot.notes ? `<p class="text-xs text-gray-500 line-clamp-2">${escapeHtml(lot.notes)}</p>` : ''}
+                </div>
+
+                <div class="flex items-center gap-1.5 pt-3 border-t border-gray-100">
+                    <button type="button" class="btn btn-white btn-sm" data-edit-lot="${lot.id}">Edit</button>
+                    <button type="button" class="btn btn-ghost btn-sm px-2.5! text-red-500 hover:bg-red-50! ml-auto" data-delete-lot="${lot.id}" aria-label="Delete lot">
+                        <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16m-10 4v6m4-6v6"/></svg>
+                    </button>
                 </div>
             </div>`;
     }
@@ -178,31 +272,41 @@ const __init = () => {
         list.innerHTML = '';
         LOTS.forEach((lot) => {
             const card = document.createElement('div');
-            card.className = 'card';
+            card.className = 'card h-full';   // h-full → equal-height cards across a grid row
             card.dataset.lotCard = lot.id;
             card.innerHTML = lotCardHtml(lot);
             list.appendChild(card);
         });
         empty.classList.toggle('hidden', LOTS.length > 0);
+        const countEl = document.getElementById('lotCount');
+        if (countEl) countEl.textContent = LOTS.length;
+        const labelEl = document.getElementById('lotCountLabel');
+        if (labelEl) labelEl.textContent = LOTS.length === 1 ? 'lot' : 'lots';
     }
 
     /* ---------------- Sheet open / fill ---------------- */
 
-    function openLotSheet(lot = null) {
+    async function openLotSheet(lot = null) {
         document.getElementById('lotSheetTitle').textContent = lot ? 'Edit Lot' : 'Add Lot';
         document.getElementById('lotId').value = lot ? lot.id : '';
         document.getElementById('lotName').value = lot ? (lot.lotName || '') : '';
         document.getElementById('lotSize').value = lot ? parseFloat(lot.lotSize) || 0 : '';
         document.getElementById('lotSizeUnit').value = lot ? (lot.lotSizeUnit || 'hectare') : 'hectare';
         document.getElementById('lotVariety').value = lot ? (lot.variety || '') : '';
-        document.getElementById('lotDayZeroDate').value = lot ? (lot.dayZeroDate || '') : '';
+        document.getElementById('lotDayType').value = lot ? (lot.dayType || 'DAS') : 'DAS';
+        document.getElementById('lotBarangay').value = lot ? (lot.locBarangay || '') : '';
+        document.getElementById('lotZone').value = lot ? (lot.locZone || '') : '';
         document.getElementById('lotNotes').value = lot ? (lot.notes || '') : '';
+        // Province → town/city selects (async: the dataset loads once, cached).
+        const prov = lot ? (lot.locProvince || '') : '';
+        const town = lot ? (lot.locTown || '') : '';
+        fillProvinces(prov);
+        fillTowns(prov, town);
         openSheet('lotSheet');
+        await ensureLocations();
+        fillProvinces(prov);
+        fillTowns(prov, town);
     }
-
-    document.getElementById('lotDayZeroDateClear').addEventListener('click', () => {
-        document.getElementById('lotDayZeroDate').value = '';
-    });
 
     document.addEventListener('click', async (e) => {
         if (e.target.closest('[data-add-lot]')) {
@@ -249,7 +353,11 @@ const __init = () => {
             lotSize: document.getElementById('lotSize').value || 0,
             lotSizeUnit: document.getElementById('lotSizeUnit').value,
             variety: document.getElementById('lotVariety').value.trim() || null,
-            dayZeroDate: document.getElementById('lotDayZeroDate').value || null,
+            locBarangay: document.getElementById('lotBarangay').value.trim() || null,
+            locZone: document.getElementById('lotZone').value.trim() || null,
+            locTown: document.getElementById('lotTown').value.trim() || null,
+            locProvince: document.getElementById('lotProvince').value.trim() || null,
+            dayType: document.getElementById('lotDayType').value || 'DAS',
             notes: document.getElementById('lotNotes').value || null,
         };
 
@@ -273,7 +381,12 @@ const __init = () => {
                 lotSize: res.data.lotSize,
                 lotSizeUnit: res.data.lotSizeUnit,
                 variety: res.data.variety,
-                dayZeroDate: res.data.dayZeroDate || null,
+                locBarangay: res.data.locBarangay,
+                locZone: res.data.locZone,
+                locTown: res.data.locTown,
+                locProvince: res.data.locProvince,
+                fullAddress: composeAddress(res.data),
+                dayType: res.data.dayType || 'DAS',
                 notes: res.data.notes,
             };
             const idx = LOTS.findIndex((l) => String(l.id) === String(saved.id));

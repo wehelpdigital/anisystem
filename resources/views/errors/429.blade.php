@@ -1,0 +1,5 @@
+@extends('errors.layout')
+@section('code', '429')
+@section('emoji', '🐢')
+@section('title', 'Slow down a little')
+@section('message', "You're moving faster than we can keep up. Please wait a few seconds and try again.")

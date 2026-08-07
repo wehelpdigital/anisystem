@@ -25,6 +25,215 @@ class CommunityController extends Controller
     ) {
     }
 
+    /**
+     * The community's front door: a wall feed of what members are sharing,
+     * ranked so friends and farmers from the same area surface first.
+     */
+    public function feed(Request $request)
+    {
+        $me = Auth::user();
+        $friendIds = \App\Models\CommunityConnection::connectedIds((int) $me->id);
+
+        $posts = \App\Models\CommunityWallPost::where('deleteStatus', 1)
+            ->with(['author', 'comments.author'])
+            ->withCount('comments')
+            ->orderByDesc('created_at')
+            ->limit(120)
+            ->get()
+            ->filter(fn ($p) => $p->author && (int) $p->author->deleteStatus === 1);
+
+        // Newest first, always — a fresh post lands on top (the composer reloads
+        // onto page 1), and the wall reads chronologically. feedMore() continues
+        // older posts beneath, in the same order.
+        $posts = $posts->sortByDesc(fn ($p) => [$p->created_at->timestamp, $p->id])->values()->take(40);
+
+        \App\Models\CommunityReaction::attach($posts, 'wallpost', (int) $me->id);
+        \App\Models\CommunityReaction::attach($posts->flatMap->comments, 'wallcomment', (int) $me->id);
+
+        // Left rail — incoming friend (co-farmer) requests.
+        $requestRows = \App\Models\CommunityConnection::active()
+            ->where('friendUserId', (int) $me->id)
+            ->where('status', 'pending')
+            ->orderByDesc('id')
+            ->get();
+        $friendRequestCount = $requestRows->count();
+        $friendRequests = \App\Models\User::whereIn('id', $requestRows->pluck('userId'))
+            ->where('deleteStatus', 1)
+            ->orderByDesc('id')
+            ->limit(6)
+            ->get();
+
+        // Right rail — recent discussions (groups).
+        $recentGroups = \App\Models\CommunityGroup::active()
+            ->withCount(['members as member_count'])
+            ->orderByDesc('id')
+            ->limit(6)
+            ->get();
+
+        return view('community.feed', [
+            'posts' => $posts,
+            'friendIds' => $friendIds,
+            'recommendations' => \App\Models\CommunityConnection::recommendationsFor((int) $me->id, 8),
+            'friendRequests' => $friendRequests,
+            'friendRequestCount' => $friendRequestCount,
+            'recentGroups' => $recentGroups,
+            // No sponsor inventory yet — the rail hides while this is empty.
+            'sponsors' => collect(),
+        ]);
+    }
+
+    /**
+     * Infinite-scroll for the feed: older wall posts (created before the
+     * client's cursor), newest-first. Page 1 stays ranked (friends/nearby
+     * first) in feed(); this continues chronologically beneath it, and the
+     * client dedupes any post the ranked page already surfaced.
+     */
+    public function feedMore(Request $request)
+    {
+        $me = Auth::user();
+        $before = $request->query('before');
+        $beforeTs = $before ? \Illuminate\Support\Carbon::parse($before) : now();
+        $friendIds = \App\Models\CommunityConnection::connectedIds((int) $me->id);
+
+        $rows = \App\Models\CommunityWallPost::where('deleteStatus', 1)
+            ->where('created_at', '<', $beforeTs)
+            ->with(['author', 'comments.author'])->withCount('comments')
+            ->orderByDesc('created_at')
+            ->limit(11)->get()
+            ->filter(fn ($p) => $p->author && (int) $p->author->deleteStatus === 1)
+            ->values();
+
+        $hasMore = $rows->count() > 10;
+        $items = $rows->take(10)->values();
+        \App\Models\CommunityReaction::attach($items, 'wallpost', (int) $me->id);
+        \App\Models\CommunityReaction::attach($items->flatMap->comments, 'wallcomment', (int) $me->id);
+
+        $html = '';
+        foreach ($items as $post) {
+            $html .= view('community.partials.feed-post', ['post' => $post, 'friendIds' => $friendIds])->render();
+        }
+
+        return response()->json(['success' => true, 'data' => [
+            'html' => $html,
+            'hasMore' => $hasMore,
+            'before' => optional($items->last()?->created_at)->toIso8601String(),
+        ]]);
+    }
+
+    /**
+     * A hashtag page: every wall post (and the group posts you can see) that
+     * carries #tag, newest first. Reached by clicking a #hashtag anywhere.
+     */
+    public function hashtag(Request $request, string $tag)
+    {
+        $tag = ltrim(mb_strtolower(trim($tag)), '#');
+        if ($tag === '' || ! preg_match('/^[\p{L}0-9_]{1,50}$/u', $tag)) {
+            abort(404);
+        }
+        $me = Auth::user();
+        $like = '%#' . $tag . '%';
+        $hasTag = fn ($p) => in_array($tag, \App\Support\CommunityText::hashtags($p->body), true);
+
+        // Wall posts are public on profiles — safe to surface here.
+        $wallPosts = \App\Models\CommunityWallPost::where('deleteStatus', 1)
+            ->where('body', 'like', $like)
+            ->with('author')->withCount('comments')
+            ->orderByDesc('id')->limit(80)->get()
+            ->filter(fn ($p) => $hasTag($p) && $p->author && (int) $p->author->deleteStatus === 1)
+            ->values();
+        \App\Models\CommunityReaction::attach($wallPosts, 'wallpost', (int) $me->id);
+
+        // Group posts only from groups you belong to (respects membership).
+        $myGroupIds = \App\Models\CommunityGroupMember::where('userId', (int) $me->id)
+            ->pluck('groupId')->all();
+        $groupPosts = \App\Models\CommunityGroupPost::active()
+            ->where('body', 'like', $like)
+            ->whereIn('groupId', $myGroupIds ?: [-1])
+            ->with(['author', 'group'])
+            ->orderByDesc('id')->limit(80)->get()
+            ->filter($hasTag)->values();
+
+        return view('community.hashtag', [
+            'tag' => $tag,
+            'wallPosts' => $wallPosts,
+            'groupPosts' => $groupPosts,
+            'friendIds' => \App\Models\CommunityConnection::connectedIds((int) $me->id),
+        ]);
+    }
+
+    /**
+     * A place page: every member from a town/province, plus wall posts either
+     * written by them or tagging the location via @[Town, Province](loc:slug).
+     * The slug is stable — slug("{city} {province}") — so it round-trips from
+     * the mention token without needing a locations table.
+     */
+    public function location(Request $request, string $slug)
+    {
+        $slug = mb_strtolower(trim($slug));
+        if ($slug === '' || ! preg_match('/^[a-z0-9\-]{1,80}$/', $slug)) {
+            abort(404);
+        }
+        $me = Auth::user();
+
+        // Resolve members at this location by matching the computed slug.
+        $candidates = \App\Models\User::where('deleteStatus', 1)
+            ->where(function ($w) {
+                $w->where(fn ($c) => $c->whereNotNull('city')->where('city', '!=', ''))
+                    ->orWhere(fn ($c) => $c->whereNotNull('province')->where('province', '!=', ''));
+            })
+            ->orderBy('firstName')
+            ->limit(500)
+            ->get(['id', 'firstName', 'lastName', 'avatarPath', 'city', 'province', 'statusBubble']);
+
+        $label = null;
+        $memberIds = [];
+        $members = collect();
+        foreach ($candidates as $u) {
+            $s = Str::slug(trim(($u->city ?? '') . ' ' . ($u->province ?? '')));
+            if ($s !== $slug) {
+                continue;
+            }
+            if ($label === null) {
+                $label = collect([$u->city, $u->province])->filter(fn ($p) => filled($p))->implode(', ');
+            }
+            $memberIds[] = (int) $u->id;
+            $members->push($u);
+        }
+        if ($label === null) {
+            // Prefer the gazetteer's proper label (e.g. "Brgy X, City, Province").
+            $label = \App\Models\AsLocation::where('slug', $slug)->value('label')
+                ?: ucwords(str_replace('-', ' ', $slug));
+        }
+
+        // Posts tagging this place (📍[Label] or legacy (loc:slug)), or written
+        // by members from here.
+        $locLike = '%(loc:' . $slug . ')%';
+        $pinLike = '%📍[' . $label . ']%';
+        $pinLike2 = '%📍 [' . $label . ']%';
+        $wallPosts = \App\Models\CommunityWallPost::where('deleteStatus', 1)
+            ->where(function ($q) use ($memberIds, $locLike, $pinLike, $pinLike2) {
+                $q->where('body', 'like', $locLike)
+                    ->orWhere('body', 'like', $pinLike)
+                    ->orWhere('body', 'like', $pinLike2);
+                if (! empty($memberIds)) {
+                    $q->orWhereIn('authorUserId', $memberIds);
+                }
+            })
+            ->with('author')->withCount('comments')
+            ->orderByDesc('id')->limit(60)->get()
+            ->filter(fn ($p) => $p->author && (int) $p->author->deleteStatus === 1)
+            ->values();
+        \App\Models\CommunityReaction::attach($wallPosts, 'wallpost', (int) $me->id);
+
+        return view('community.location', [
+            'slug' => $slug,
+            'label' => $label,
+            'members' => $members,
+            'wallPosts' => $wallPosts,
+            'friendIds' => \App\Models\CommunityConnection::connectedIds((int) $me->id),
+        ]);
+    }
+
     public function index(Request $request)
     {
         $userId = Auth::id();

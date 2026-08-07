@@ -28,18 +28,6 @@
                     <textarea id="settingsDescription" rows="3" maxlength="5000" class="form-textarea">{{ $schedule->description }}</textarea>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label for="settingsDayType" class="form-label">Day Type</label>
-                        <select id="settingsDayType" class="form-select">
-                            <option value="DAP" @selected($schedule->dayType === 'DAP')>DAP — Days After Planting</option>
-                            <option value="DAS" @selected($schedule->dayType === 'DAS')>DAS — Days After Seeding</option>
-                            <option value="DAT" @selected($schedule->dayType === 'DAT')>DAT — Days After Transplanting</option>
-                        </select>
-                        <p class="form-hint">Label used for day numbers across the schedule.</p>
-                    </div>
-                </div>
-
                 <div class="flex justify-end">
                     <button type="button" id="saveBasicBtn" class="btn btn-primary w-full sm:w-auto">Save Basic Info</button>
                 </div>
@@ -66,7 +54,6 @@ const __init = () => {
                 body: {
                     title: document.getElementById('settingsTitle').value.trim(),
                     description: document.getElementById('settingsDescription').value,
-                    dayType: document.getElementById('settingsDayType').value,
                 },
             });
             toast(res.message);

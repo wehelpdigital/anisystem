@@ -65,49 +65,77 @@
                 <span class="badge shrink-0 capitalize {{ $statusBadges[$schedule->status] ?? 'bg-gray-100 text-gray-600' }}">{{ $schedule->status }}</span>
             </div>
 
-            <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-3">
+            <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-3 flex-wrap">
                 @include('sm.partials.community-switch', ['schedule' => $schedule])
-                @if ($schedule->isPublic)
-                    <a href="{{ route('community.show', ['id' => $schedule->id]) }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 shrink-0">View in Community →</a>
-                @endif
+                <div class="flex items-center gap-3 shrink-0">
+                    @if ($schedule->isPublic)
+                        <a href="{{ route('community.show', ['id' => $schedule->id]) }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700">View in Community →</a>
+                    @endif
+                    <button type="button" id="statusToggleBtn" data-locked="{{ $schedule->isLocked() ? 1 : 0 }}" class="btn btn-sm {{ $schedule->isLocked() ? 'btn-white' : 'btn-primary' }}">
+                        {{ $schedule->isLocked() ? 'Reopen' : 'Mark completed' }}
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
-    {{-- Featured: Activities (left) + big Quick Capture (right column) --}}
+    {{-- Featured: Activities (2/3) + Quick Capture (1/3) as matched CTA tiles --}}
+    <style>
+        .cta-tile { cursor: pointer; text-decoration: none; transition: background-color .15s ease, color .15s ease, transform .1s ease; }
+        .cta-tile:active { transform: scale(.99); }
+        .cta-tile .cta-chip { color: #fff; transition: background-color .15s ease; }
+        .cta-tile .cta-arrow { opacity: .5; }
+
+        /* Activities — green */
+        .act-cta { background-color: #dcecd2; color: #234a19; }
+        .act-cta:hover { background-color: #c6e0b5; color: #1c3d14; }
+        .act-cta .cta-chip { background-color: #4c8a39; }
+        .act-cta:hover .cta-chip { background-color: #3d7129; }
+        .act-cta .cta-sub { color: #3f6b2c; }
+
+        /* Quick Capture — orange, darkens on hover */
+        .qc-cta { background-color: #fbe6c8; color: #6f3806; }
+        .qc-cta:hover { background-color: #f0b263; color: #5a2c02; }
+        .qc-cta .cta-chip { background-color: #e0912e; }
+        .qc-cta:hover .cta-chip { background-color: #b5680b; }
+        .qc-cta .cta-sub { color: #834710; }
+        .qc-cta:hover .cta-sub { color: #5a2c02; }
+    </style>
+
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+        {{-- Activities (2/3) --}}
         <a href="{{ route('sm.activities', ['id' => $schedule->id]) }}"
-            class="sm:col-span-2 card card-hover block border-l-4 border-l-accent-500!">
-            <div class="card-body h-full">
-                <div class="flex items-center gap-4 h-full">
-                    <div class="w-14 h-14 rounded-xl bg-accent-500/15 flex items-center justify-center shrink-0">
-                        <svg class="w-7 h-7 text-accent-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    </div>
-                    <div class="min-w-0 grow">
-                        <div class="flex items-center gap-2 flex-wrap">
-                            <h3 class="text-lg font-bold text-gray-900">Activities</h3>
-                            <span class="badge badge-yellow">{{ $schedule->activities_count }}</span>
-                        </div>
-                        <p class="text-sm text-gray-500">The heart of your schedule — the day-by-day timeline.</p>
-                    </div>
-                    <span class="btn btn-primary shrink-0 hidden sm:inline-flex">Open</span>
-                    <svg class="w-6 h-6 text-gray-400 sm:hidden shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                </div>
-            </div>
+            class="cta-tile act-cta sm:col-span-2 rounded-2xl p-5 flex items-center gap-4">
+            <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </span>
+            <span class="min-w-0 grow">
+                <span class="flex items-center gap-2 flex-wrap">
+                    <span class="text-lg font-bold leading-tight">Activities</span>
+                    <span class="badge badge-yellow">{{ $schedule->activities_count }}</span>
+                </span>
+                <span class="cta-sub block text-sm leading-snug mt-0.5">The heart of your schedule — the day-by-day timeline.</span>
+            </span>
+            <svg class="cta-arrow w-6 h-6 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
 
+        {{-- Quick Capture (1/3) --}}
         <button type="button" id="quickCaptureBtn"
-            class="quick-capture-cta card-hover flex flex-col items-start justify-center gap-2 rounded-2xl p-5 text-left transition hover:brightness-[.98] active:scale-[.99]"
-            style="background-color: #fbe6c8; color: #8a4b0f;">
-            <span class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 text-white" style="background-color: #e0912e;">
+            class="cta-tile qc-cta rounded-2xl p-5 flex flex-col items-start justify-center gap-2 text-left">
+            <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
             </span>
             <span class="text-lg font-bold leading-tight">Quick Capture</span>
-            <span class="text-sm leading-snug" style="color: #a5651f;">Snap a photo → notes or AI</span>
+            <span class="cta-sub text-sm leading-snug">Snap a photo → notes or AI</span>
         </button>
     </div>
 
-    {{-- Module grid --}}
+    {{-- Collab Room, Share and Reports live as square tiles in the grid below. --}}
+    @if (\App\Support\ScheduleTeam::hasTeam($schedule))
+        @include('sm.partials.collab-enter-modal', ['schedule' => $schedule])
+    @endif
+
+    {{-- Module grid + the team/share/report actions, all as matched square tiles. --}}
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 stagger-children">
         @foreach ($moduleCards as [$label, $moduleKey, $count, $iconPath])
             <a href="{{ route('sm.activities', ['id' => $schedule->id, 'module' => $moduleKey]) }}" class="card card-hover block">
@@ -124,6 +152,38 @@
                 </div>
             </a>
         @endforeach
+
+        {{-- Collab Room — right after AI Technician --}}
+        @if (\App\Support\ScheduleTeam::hasTeam($schedule))
+            <a href="{{ route('sm.collab', ['id' => $schedule->id]) }}" data-collab-open class="card card-hover block">
+                <div class="p-4 flex flex-col gap-3">
+                    <div class="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-3-3.87M9 20H4v-1a4 4 0 013-3.87m0 0a4 4 0 115.5-5.8M7 15.13A4 4 0 0112 8m5 7.13A4 4 0 0012 8"/></svg>
+                    </div>
+                    <span class="font-bold text-gray-900 text-sm">Collab Room</span>
+                </div>
+            </a>
+        @endif
+
+        {{-- Share this schedule --}}
+        <button type="button" id="shareScheduleBtn" class="card card-hover block w-full text-left">
+            <div class="p-4 flex flex-col gap-3">
+                <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
+                    <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                </div>
+                <span class="font-bold text-gray-900 text-sm">Share</span>
+            </div>
+        </button>
+
+        {{-- Reports --}}
+        <a href="{{ route('sm.reports', ['id' => $schedule->id]) }}" class="card card-hover block">
+            <div class="p-4 flex flex-col gap-3">
+                <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
+                    <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-6h13M9 5v.01M9 11v.01M4 7h.01M4 12h.01M4 17h.01M12 5h9M12 17h9"/></svg>
+                </div>
+                <span class="font-bold text-gray-900 text-sm">Reports</span>
+            </div>
+        </a>
     </div>
 
     {{-- Danger zone --}}
@@ -138,8 +198,10 @@
         </div>
     </div>
 
+    @include('sm.partials.share-sheet', ['schedule' => $schedule])
     @include('sm.partials.quick-capture', ['fixedScheduleId' => $schedule->id])
     @include('sm.partials.ai-float', ['schedule' => $schedule])
+    {{-- Team chat + whiteboard now live in the Collab Room. --}}
 @endsection
 
 @push('scripts')
@@ -161,6 +223,26 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             toast(err.message, 'error');
         }
+    });
+
+    // Mark completed (lock) / reopen (unlock).
+    document.getElementById('statusToggleBtn')?.addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+        const locked = btn.getAttribute('data-locked') === '1';
+        if (!locked) {
+            const ok = await confirmAction({
+                title: 'Mark as completed?',
+                message: 'The schedule will be locked (read-only) until you reopen it.',
+                confirmText: 'Mark completed',
+            });
+            if (!ok) return;
+        }
+        btn.disabled = true;
+        try {
+            const res = await api(@json(route('sm.status')), { method: 'POST', body: { id: {{ $schedule->id }}, status: locked ? 'setup' : 'completed' } });
+            toast(res.message);
+            setTimeout(() => window.location.reload(), 500);
+        } catch (err) { toast(err.message || 'Could not update.', 'error'); btn.disabled = false; }
     });
 });
 </script>

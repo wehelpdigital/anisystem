@@ -60,7 +60,7 @@
                     @if ($a->workers->count())
                         <div class="flex flex-wrap gap-1.5 mt-2">
                             @foreach ($a->workers as $w)
-                                <span class="item-tag worker-tag">{{ $w->workerName }}</span>
+                                <span class="item-tag worker-tag">{{ $workerAlias[$w->id] ?? $w->workerName }}</span>
                             @endforeach
                         </div>
                     @endif

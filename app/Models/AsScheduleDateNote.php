@@ -11,11 +11,13 @@ class AsScheduleDateNote extends BaseModel
         'versionId',
         'noteDate',
         'noteContent',
+        'media',
         'deleteStatus',
     ];
 
     protected $casts = [
         'noteDate'     => 'date:Y-m-d',
+        'media'        => 'array',
         'deleteStatus' => 'integer',
     ];
 

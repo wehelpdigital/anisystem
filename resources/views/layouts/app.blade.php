@@ -51,6 +51,8 @@
                         <a href="{{ route('app.dashboard') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('app.dashboard') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Dashboard</a>
                         <a href="{{ route('sm.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('sm.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Schedules</a>
                         <a href="{{ route('community.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('community.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Community</a>
+                        <a href="{{ route('tutorials.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('tutorials.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Tutorials</a>
+                        <a href="{{ route('support.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('support.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Support</a>
                         <a href="{{ route('account.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('account.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Account</a>
                     </nav>
 
@@ -129,6 +131,30 @@
                             </form>
                         </div>
                     </div>
+
+                    {{-- Farm switcher (workers under one or more bosses) --}}
+                    @php $__farmGrants = \App\Support\WorkerContext::grants(); @endphp
+                    @if ($__farmGrants->isNotEmpty())
+                        @php $__activeGrant = \App\Support\WorkerContext::activeGrant(); @endphp
+                        <div class="relative" x-data="{ open: false }" @click.outside="open = false" title="Switch farm">
+                            <button type="button" @click="open = !open"
+                                class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-brand-50 text-brand-700 hover:bg-brand-100 transition text-lg"
+                                aria-label="Switch farm">🏡</button>
+                            <div x-show="open" x-cloak x-transition class="absolute right-0 mt-2 w-64 card p-2 z-50">
+                                <p class="px-3 py-1 text-xs font-bold text-gray-400 uppercase tracking-wide">Switch farm</p>
+                                @foreach ($__farmGrants as $__g)
+                                    <form method="POST" action="{{ route('worker.switch') }}">
+                                        @csrf
+                                        <input type="hidden" name="bossId" value="{{ $__g->bossUserId }}">
+                                        <button type="submit" class="w-full text-left rounded-lg px-3 py-2.5 text-sm {{ optional($__activeGrant)->bossUserId === $__g->bossUserId ? 'bg-brand-50 text-brand-700 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
+                                            🌾 {{ optional($__g->boss)->full_name ?: 'Farm' }}
+                                            <span class="text-xs text-gray-400">· {{ ucfirst($__g->scheduleAccess) }}</span>
+                                        </button>
+                                    </form>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -188,9 +214,23 @@
         };
     </script>
 
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-4 md:py-8 page-safe-bottom app-enter">
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-4 md:py-8 app-enter">
         @yield('content')
     </main>
+
+    {{-- Footer: legal links + breathing room at the bottom of every page.
+         Extra bottom padding on phones clears the fixed tab bar. --}}
+    <footer class="mt-10 border-t border-gray-100 pb-28 md:pb-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p class="text-xs text-gray-400">© {{ date('Y') }} AniSystem. All rights reserved.</p>
+            <nav class="flex flex-wrap items-center justify-center text-xs" style="column-gap:1.75rem;row-gap:.5rem;" aria-label="Legal">
+                <a href="{{ route('legal.show', ['slug' => 'privacy']) }}" class="text-gray-500 hover:text-brand-700 font-semibold">Privacy</a>
+                <a href="{{ route('legal.show', ['slug' => 'terms']) }}" class="text-gray-500 hover:text-brand-700 font-semibold">Terms</a>
+                <a href="{{ route('legal.show', ['slug' => 'cookies']) }}" class="text-gray-500 hover:text-brand-700 font-semibold">Cookies</a>
+                <a href="{{ route('legal.show', ['slug' => 'about']) }}" class="text-gray-500 hover:text-brand-700 font-semibold">About</a>
+            </nav>
+        </div>
+    </footer>
 
     {{-- Mobile bottom tab bar --}}
     <nav class="tabbar">
@@ -211,6 +251,20 @@
             <span>Account</span>
         </a>
     </nav>
+
+    {{-- Messenger dock — community pages + the dashboard (which shows the
+         co-farmer feed with its Message buttons). Kept off the schedule pages
+         so it stays clear of the AI float. Needs plaza-css tokens, which both
+         the community pages and the dashboard include. --}}
+    @auth
+        @if (request()->is('app') || request()->is('app/community') || request()->is('app/community/*') || request()->routeIs('app.dashboard'))
+            @include('community.partials.messenger')
+            {{-- Emoji picker + photo lightbox for the dock (guarded singletons —
+                 safe even when the page already includes them). --}}
+            @include('community.partials.emoji-js')
+            @include('community.partials.lightbox-js')
+        @endif
+    @endauth
 
     @stack('sheets')
     @stack('scripts')

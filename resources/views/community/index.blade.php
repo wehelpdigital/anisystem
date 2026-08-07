@@ -4,8 +4,14 @@
 @section('page-title', 'Community')
 @section('page-subtitle', 'Crop plans shared by other members')
 
+@php use App\Support\CommunityAvatar; @endphp
+
 @push('head')
+    @include('community.partials.plaza-css')
     <style>
+        .chip.is-selected { box-shadow: 0 2px 8px -2px rgb(74 124 42 / .45); }
+        .plan-row { border-radius: .75rem; padding: .5rem .75rem; margin: 0 -.25rem; transition: background-color .18s cubic-bezier(.22,1,.36,1); }
+        .plan-row:hover { background: var(--color-gray-100); }
         .stars { display: inline-flex; gap: .05rem; }
         .stars svg { width: .85rem; height: .85rem; }
         .star-on { color: #f5c518; }
@@ -17,12 +23,7 @@
 @section('content')
 
 {{-- Community sections --}}
-<div class="scroll-chips mb-4">
-    <span class="chip is-selected shrink-0">Shared Plans</span>
-    <a href="{{ route('community.groups.index') }}" class="chip shrink-0">Groups</a>
-    <a href="{{ route('community.connect.members') }}" class="chip shrink-0">Members</a>
-    <a href="{{ route('community.connect.profile', ['userId' => auth()->id()]) }}" class="chip shrink-0">My Wall</a>
-</div>
+@include('community.partials.nav', ['active' => 'plans'])
 
 {{-- Your own shared plans, so the owner can find their inbox --}}
 @if ($myPlans->isNotEmpty())
@@ -30,16 +31,19 @@
         <h3 class="font-bold text-gray-900 mb-3">Your shared plans</h3>
         <div class="space-y-2">
             @foreach ($myPlans as $mine)
-                <div class="flex items-center justify-between gap-3">
-                    <a href="{{ route('community.show', ['id' => $mine->id]) }}" class="min-w-0 grow">
-                        <span class="block font-semibold text-gray-900 truncate">{{ $mine->title }}</span>
-                        <span class="block text-xs text-gray-500">
-                            {{ $mine->commentCount }} {{ \Illuminate\Support\Str::plural('comment', $mine->commentCount) }}
-                            @if ($mine->ratingCount)
-                                · {{ $mine->avgRating }}★ from {{ $mine->ratingCount }}
-                            @else
-                                · not rated yet
-                            @endif
+                <div class="flex items-center justify-between gap-3 plan-row">
+                    <a href="{{ route('community.show', ['id' => $mine->id]) }}" class="flex items-center gap-2.5 min-w-0 grow">
+                        <span class="avatar avatar-sm {{ CommunityAvatar::hue(auth()->user()->full_name ?? '?') }}">{{ auth()->user()->initials ?? '?' }}</span>
+                        <span class="min-w-0">
+                            <span class="block font-semibold text-gray-900 truncate">{{ $mine->title }}</span>
+                            <span class="block text-xs text-gray-500">
+                                💬 {{ $mine->commentCount }}
+                                @if ($mine->ratingCount)
+                                    · {{ $mine->avgRating }}<span class="star-on">★</span> from {{ $mine->ratingCount }}
+                                @else
+                                    · not rated yet
+                                @endif
+                            </span>
                         </span>
                     </a>
                     <button type="button" class="btn btn-white btn-sm shrink-0 js-unpublish"
@@ -51,7 +55,7 @@
 @endif
 
 {{-- Search + crop filter --}}
-<form method="GET" action="{{ route('community.index') }}" class="mb-4">
+<form method="GET" action="{{ route('community.plans') }}" class="mb-4">
     <div class="relative">
         <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
         <input type="search" name="q" value="{{ $filters['q'] }}" class="form-input pl-10!"
@@ -59,10 +63,10 @@
     </div>
     @if ($crops->isNotEmpty())
         <div class="scroll-chips mt-3">
-            <a href="{{ route('community.index', array_filter(['q' => $filters['q']])) }}"
+            <a href="{{ route('community.plans', array_filter(['q' => $filters['q']])) }}"
                class="chip shrink-0 {{ $filters['crop'] === '' ? 'is-selected' : '' }}">All crops</a>
             @foreach ($crops as $crop)
-                <a href="{{ route('community.index', array_filter(['q' => $filters['q'], 'crop' => $crop])) }}"
+                <a href="{{ route('community.plans', array_filter(['q' => $filters['q'], 'crop' => $crop])) }}"
                    class="chip shrink-0 {{ $filters['crop'] === $crop ? 'is-selected' : '' }}">{{ $crop }}</a>
             @endforeach
         </div>
@@ -98,20 +102,24 @@
             <p class="text-sm text-gray-600 mt-2">{{ $plan->publicSummary }}</p>
         @endif
 
-        <p class="text-xs text-gray-500 mt-3">
-            {{ $plan->activityCount }} {{ \Illuminate\Support\Str::plural('step', $plan->activityCount) }}
-            · {{ $plan->commentCount }} {{ \Illuminate\Support\Str::plural('comment', $plan->commentCount) }}
-            · shared by {{ optional($plan->owner)->firstName ?: 'a member' }}
+        <p class="text-xs text-gray-500 mt-3 flex items-center flex-wrap gap-x-1.5 gap-y-1">
+            <span>📋 {{ $plan->activityCount }} {{ \Illuminate\Support\Str::plural('step', $plan->activityCount) }}</span>
+            <span>· 💬 {{ $plan->commentCount }}</span>
+            <span class="inline-flex items-center gap-1.5">· <span class="avatar overflow-hidden {{ CommunityAvatar::hue(optional($plan->owner)->full_name ?: '?') }}" style="width:1.5rem;height:1.5rem;font-size:.55rem;">@if (optional($plan->owner)->avatarPath)<img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($plan->owner->avatarPath) }}" alt="" class="w-full h-full object-cover">@else{{ optional($plan->owner)->initials ?: '?' }}@endif</span>
+            <span class="font-medium text-gray-700">{{ optional($plan->owner)->full_name ?: 'a member' }}</span></span>
+            @if (filled(optional($plan->owner)->statusBubble))
+                <span class="text-brand-700 font-medium">· 💭 {{ \Illuminate\Support\Str::limit($plan->owner->statusBubble, 32) }}</span>
+            @endif
             @if ($plan->publishedAt)
-                {{ $plan->publishedAt->diffForHumans() }}
+                <span>{{ $plan->publishedAt->diffForHumans() }}</span>
             @endif
         </p>
     </a>
 @empty
     <div class="card p-8 text-center">
-        <svg class="w-12 h-12 mx-auto text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg>
-        <p class="font-semibold text-gray-700 mt-3">
-            {{ ($filters['q'] || $filters['crop']) ? 'Nothing matches that search' : 'No plans shared yet' }}
+        <div class="empty-tile">🌾</div>
+        <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">
+            {{ ($filters['q'] || $filters['crop']) ? 'Nothing matches that search' : 'Wala pang shared plans 🌱' }}
         </p>
         <p class="text-sm text-gray-500 mt-1">
             {{ ($filters['q'] || $filters['crop'])
@@ -119,7 +127,7 @@
                 : 'You are early. Yours will be the first one other members read.' }}
         </p>
         @if ($filters['q'] || $filters['crop'])
-            <a href="{{ route('community.index') }}" class="btn btn-white mt-4">Clear search</a>
+            <a href="{{ route('community.plans') }}" class="btn btn-white mt-4">Clear search</a>
         @endif
     </div>
 @endforelse

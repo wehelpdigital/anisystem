@@ -48,32 +48,33 @@
         </p>
 
         @if (app()->environment('local'))
-            {{-- Demo credentials — only rendered in the local environment. --}}
+            {{-- Quick-fill test logins — only rendered in the local environment. --}}
             <div class="mt-6 rounded-2xl border border-dashed border-brand-300 bg-brand-50/70 p-4"
-                 x-data="{ email: 'demo@anisystem.test', password: 'demo1234' }">
-                <div class="flex items-center gap-2 mb-2">
-                    <span class="badge badge-yellow">Test account</span>
+                 x-data="{ fill(email, password) {
+                     document.getElementById('email').value = email;
+                     document.getElementById('password').value = password;
+                     document.getElementById('password').focus();
+                 } }">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="badge badge-yellow">Test logins</span>
                     <span class="text-xs text-gray-500">Local preview only</span>
                 </div>
-                <dl class="text-sm text-gray-700 space-y-1">
+                <div class="space-y-2">
                     <div class="flex items-center justify-between gap-3">
-                        <dt class="text-gray-500">Email</dt>
-                        <dd class="font-semibold" x-text="email">demo@anisystem.test</dd>
+                        <div class="min-w-0">
+                            <p class="text-sm font-semibold text-gray-800">Member</p>
+                            <p class="text-xs text-gray-500 truncate">demo@anisystem.test · demo1234</p>
+                        </div>
+                        <button type="button" @click="fill('demo@anisystem.test', 'demo1234')" class="btn btn-outline btn-sm shrink-0">Fill</button>
                     </div>
                     <div class="flex items-center justify-between gap-3">
-                        <dt class="text-gray-500">Password</dt>
-                        <dd class="font-semibold" x-text="password">demo1234</dd>
+                        <div class="min-w-0">
+                            <p class="text-sm font-semibold text-gray-800">Super admin <span class="font-normal text-gray-400">· mother site</span></p>
+                            <p class="text-xs text-gray-500 truncate">admin@themesbrand.com · 12345678</p>
+                        </div>
+                        <button type="button" @click="fill('admin@themesbrand.com', '12345678')" class="btn btn-outline btn-sm shrink-0">Fill</button>
                     </div>
-                </dl>
-                <button type="button"
-                        @click="
-                            document.getElementById('email').value = email;
-                            document.getElementById('password').value = password;
-                            document.getElementById('password').focus();
-                        "
-                        class="btn btn-outline btn-sm w-full mt-3">
-                    Fill in test login
-                </button>
+                </div>
             </div>
         @endif
     </div>

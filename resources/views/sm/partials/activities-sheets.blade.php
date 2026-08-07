@@ -39,55 +39,78 @@
                 <input type="text" id="activityTitle" class="form-input" maxlength="255" placeholder="e.g. Basal Fertilizer Application">
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
-                <div>
-                    <label class="form-label" for="activityTargetDate">Start date <span class="text-red-500">*</span></label>
-                    <input type="date" id="activityTargetDate" class="form-input cal-only" inputmode="none">
+            {{-- When: choose between calendar dates and day-number (DAS/DAP/DAT) planning.
+                 Both write the same date inputs — the date is what gets saved. --}}
+            <div>
+                <div class="when-tabs" id="whenTabs" role="tablist">
+                    <button type="button" class="when-tab is-active" id="whenTabDate" aria-selected="true">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        Start / End date
+                    </button>
+                    <button type="button" class="when-tab" id="whenTabDas" aria-selected="false">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/></svg>
+                        By <span class="day-type-label">{{ $schedule->dayType }}</span>
+                    </button>
                 </div>
-                <div>
-                    <label class="form-label" for="activityTargetEndDate">End date <span class="text-gray-400 font-normal">(optional)</span></label>
-                    <input type="date" id="activityTargetEndDate" class="form-input cal-only" inputmode="none">
+                <div id="whenPaneDate" class="when-pane">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="form-label" for="activityTargetDate">Start date <span class="text-red-500">*</span></label>
+                            <input type="date" id="activityTargetDate" class="form-input cal-only" inputmode="none">
+                        </div>
+                        <div>
+                            <label class="form-label" for="activityTargetEndDate">End date <span class="text-gray-400 font-normal">(optional)</span></label>
+                            <input type="date" id="activityTargetEndDate" class="form-input cal-only" inputmode="none">
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            {{-- DAS day-number lens over the date inputs (shown only when an anchored lot is selected) --}}
-            <div id="activityDasRow" class="das-panel hidden">
+            {{-- DAS day-number lens over the date inputs (second pane of the chooser above) --}}
+            <div id="activityDasRow" class="das-panel when-pane hidden">
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
-                        <label class="form-label text-blue-900!" for="activityDasRefLot">Reference lot</label>
+                        <label class="form-label" for="activityDasRefLot">Reference lot</label>
                         <select id="activityDasRefLot" class="form-select"></select>
                     </div>
                     <div>
-                        <label class="form-label text-blue-900!" for="activityStartDas">Start <span class="day-type-label">{{ $schedule->dayType }}</span></label>
+                        <label class="form-label" for="activityStartDas">Start <span class="day-type-label">{{ $schedule->dayType }}</span></label>
                         <input type="number" id="activityStartDas" class="form-input" step="1" placeholder="e.g. 21">
                     </div>
                     <div>
-                        <label class="form-label text-blue-900!" for="activityEndDas">End <span class="day-type-label">{{ $schedule->dayType }}</span></label>
+                        <label class="form-label" for="activityEndDas">End <span class="day-type-label">{{ $schedule->dayType }}</span></label>
                         <input type="number" id="activityEndDas" class="form-input" step="1" placeholder="optional">
                     </div>
                 </div>
                 <p class="text-xs text-blue-800 mt-2" id="activityDasAnchorNote"></p>
             </div>
+            </div>
 
             <div>
                 <span class="form-label">Lots</span>
-                @if ($schedule->lots->count())
-                    <div id="activityLotsContainer" class="flex flex-wrap gap-2">
-                        <button type="button" class="chip chip-dashed lot-chip lot-chip-na" data-lot-na="1" aria-pressed="false"
-                            title="Applies generally — not tied to any specific lot">N/A — Not lot-specific</button>
-                        @foreach ($schedule->lots as $lot)
-                            <button type="button" class="chip lot-chip" data-lot-id="{{ $lot->id }}" aria-pressed="false">
-                                {{ $lot->lotName }}@if(!empty($lot->variety)) · {{ $lot->variety }}@endif
-                            </button>
-                        @endforeach
+                <div id="activityLotsContainer" class="flex flex-wrap gap-2 {{ $schedule->lots->count() ? '' : '' }}">
+                    <button type="button" class="chip chip-dashed lot-chip lot-chip-na" data-lot-na="1" aria-pressed="false"
+                        title="Applies generally — not tied to any specific lot">N/A — Not lot-specific</button>
+                    @foreach ($schedule->lots as $lot)
+                        <button type="button" class="chip lot-chip" data-lot-id="{{ $lot->id }}" aria-pressed="false">
+                            {{ $lot->lotName }}@if(!empty($lot->variety)) · {{ $lot->variety }}@endif
+                        </button>
+                    @endforeach
+                    <button type="button" class="chip chip-dashed" id="quickAddLotBtn" data-chip-manual>+ Lot</button>
+                </div>
+                <div id="quickAddLotForm" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-gray-500 uppercase">New lot</span>
+                        <button type="button" class="btn-ghost rounded-full w-7 h-7 flex items-center justify-center text-gray-400 hover:text-gray-700 js-quick-form-close" data-form="quickAddLotForm" aria-label="Close">✕</button>
                     </div>
-                @else
-                    <div class="rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-sm px-4 py-3">
-                        No lots defined yet — the activity will be saved as general (N/A).
-                        <a href="{{ route('sm.lots', ['id' => $schedule->id]) }}" class="font-semibold underline">Add lots</a>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="qalName" class="form-input" placeholder="Lot name *" maxlength="255">
+                        <input type="text" id="qalVariety" class="form-input" placeholder="Variety (optional)" maxlength="255">
                     </div>
-                    <div id="activityLotsContainer" class="hidden"></div>
-                @endif
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="number" id="qalSize" class="form-input" placeholder="Size" value="1" min="0" step="any" inputmode="decimal">
+                        <input type="text" id="qalUnit" class="form-input" placeholder="Unit" value="ha" maxlength="50">
+                    </div>
+                    <button type="button" id="qalSave" class="btn btn-primary btn-sm w-full">Add lot</button>
+                </div>
             </div>
 
             <div id="activityTypeWrap">
@@ -139,8 +162,18 @@
                 <label class="flex items-start gap-3 cursor-pointer select-none">
                     <input type="checkbox" id="activityIsDayZero" class="mt-1 w-5 h-5 rounded border-amber-400 text-amber-600 focus:ring-amber-300">
                     <span class="text-sm text-amber-900">
-                        <strong>Mark this activity as <span class="day-type-label">{{ $schedule->dayType }}</span> 0</strong><br>
-                        <span class="text-amber-800/80">Its start date becomes Day 0 for every lot it covers. When several anchors conflict, the earliest date wins.</span>
+                        <strong>Mark this activity as Day 0</strong><br>
+                        <span class="text-amber-800/80">Its start date becomes the day-counter's Day 0 for every lot it covers (DAS 0 for DAS/DAT lots, DAP 0 for DAP lots). When several anchors conflict, the earliest date wins.</span>
+                    </span>
+                </label>
+            </div>
+
+            <div class="transplant-panel" id="activityTransplantPanel">
+                <label class="flex items-start gap-3 cursor-pointer select-none">
+                    <input type="checkbox" id="activityIsTransplant" class="mt-1 w-5 h-5 rounded border-green-400 text-green-600 focus:ring-green-300">
+                    <span class="text-sm text-green-900">
+                        <strong>Mark this activity as the transplant (DAT 0)</strong><br>
+                        <span class="text-green-800/80">For transplanted crops (e.g. rice): activities before this date count in DAS from sowing; on or after it they count in DAT — a fresh counter starting from this activity's start date.</span>
                     </span>
                 </label>
             </div>
@@ -153,18 +186,28 @@
                             {{ $w->workerName }}
                         </button>
                     @endforeach
-                    @if ($schedule->workers->isEmpty())
-                        <p class="text-xs text-gray-400">No workers defined yet.</p>
-                    @endif
+                    <button type="button" class="chip chip-dashed" id="quickAddWorkerBtn" data-chip-manual>+ Worker</button>
+                </div>
+                <div id="quickAddWorkerForm" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-gray-500 uppercase">New worker</span>
+                        <button type="button" class="btn-ghost rounded-full w-7 h-7 flex items-center justify-center text-gray-400 hover:text-gray-700 js-quick-form-close" data-form="quickAddWorkerForm" aria-label="Close">✕</button>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="qawName" class="form-input" placeholder="Worker name *" maxlength="255">
+                        <input type="number" id="qawRate" class="form-input" placeholder="₱ per half-day" min="0" step="any" inputmode="decimal">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="email" id="qawEmail" class="form-input" placeholder="Email (optional)" maxlength="255">
+                        <input type="tel" id="qawPhone" class="form-input" placeholder="Phone (optional)" maxlength="32">
+                    </div>
+                    <button type="button" id="qawSave" class="btn btn-primary btn-sm w-full">Add worker</button>
                 </div>
             </div>
 
             <div>
-                <div class="flex items-center justify-between mb-1.5">
+                <div class="mb-1.5">
                     <label class="form-label mb-0!" for="activityDescription">Description</label>
-                    <button type="button" id="toggleDescriptionMode" class="text-xs font-semibold text-brand-700">
-                        <span id="toggleDescriptionModeLabel">Edit HTML source</span>
-                    </button>
                 </div>
                 <div class="sm-quill-wrap" id="activityDescriptionWrap">
                     <div class="quill-host-wrap"><div id="activityDescription"></div></div>
@@ -172,22 +215,24 @@
                 </div>
             </div>
 
-            {{-- Materials & Items — a self-contained box so it reads as its own
-                 section. Items are free-form: name + price + quantity + unit,
+            {{-- Materials & Items — same dashed quick-add pattern as lots and
+                 workers. Items are free-form: name + price + quantity + unit,
                  with names/prices remembered per schedule (datalists). --}}
-            <div class="rounded-xl border border-gray-200 bg-gray-50/60 p-3" id="activityItemsSection">
-                <div class="flex items-center justify-between gap-2">
-                    <span class="form-label mb-0!"><span id="itemsSectionLabel">Materials &amp; Items</span> <span class="text-gray-400 font-normal">(optional)</span></span>
-                    <button type="button" id="itemsToggleBtn" class="btn btn-white btn-sm shrink-0" aria-expanded="false">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-                        <span id="itemsToggleLabel">Add item</span>
+            <div id="activityItemsSection">
+                <span class="form-label"><span id="itemsSectionLabel">Materials &amp; Items</span> <span class="text-gray-400 font-normal">(optional)</span></span>
+                <div class="flex flex-wrap items-center gap-1.5">
+                    <div id="itemsContainer" class="contents"></div>
+                    <button type="button" id="itemsToggleBtn" class="chip chip-dashed" aria-expanded="false" data-chip-manual>
+                        <span id="itemsToggleLabel">+ Item</span>
                     </button>
                 </div>
+                <p id="itemsContainerEmpty" class="text-xs text-gray-400 mt-1.5">No items added yet.</p>
 
-                <div id="itemsContainer" class="flex flex-wrap gap-1.5 mt-3"></div>
-                <p id="itemsContainerEmpty" class="text-xs text-gray-400 mt-3">No items added yet.</p>
-
-                <div id="itemPickerPanel" class="hidden mt-3 pt-3 border-t border-gray-200 space-y-2.5">
+                <div id="itemPickerPanel" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-gray-500 uppercase">New item</span>
+                        <button type="button" class="btn-ghost rounded-full w-7 h-7 flex items-center justify-center text-gray-400 hover:text-gray-700 js-quick-form-close" data-form="itemPickerPanel" aria-label="Close">✕</button>
+                    </div>
                     <div>
                         <label class="form-label text-xs! mb-1!" for="itemNameInput">Item name</label>
                         <input type="text" id="itemNameInput" class="form-input bg-white!" list="itemNameList" maxlength="255" placeholder="e.g. Urea 46-0-0" autocomplete="off">
@@ -281,12 +326,13 @@
     </div>
 </div>
 
-{{-- Activity tools (phones): one menu holding the toolbar actions. Each row
-     forwards to the real (desktop-only) button, so every handler is reused. --}}
+{{-- Tools menu: one sheet holding the toolbar actions (Drafts, Report, Search,
+     Calendar, Weather, …). Each row forwards to the real button, so every
+     handler is reused. Opens on every screen size. --}}
 <div class="sheet hidden" id="activityActionsSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Activity tools</h3>
+        <h3 class="sheet-title">Tools</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full -mr-1" aria-label="Close">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
@@ -298,9 +344,9 @@
                 ['openReportBtn', 'Report', 'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z', '', ''],
                 ['openSearchBtn', 'Search & filter', 'M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z', 'actFilterBadge', ''],
                 ['viewToggleBtn', 'Calendar', 'M8 7V3m8 4V3M4 11h16M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z', '', 'actViewLabel'],
+                ['quickShareBtn', 'Quick Share', 'M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z', '', ''],
+                ['weatherBtn', 'Weather', 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z', '', ''],
                 ['toggleHiddenBtn', 'Show Hidden', 'M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21', '', 'actHiddenLabel'],
-                ['activityUndoBtn', 'Undo', 'M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4', 'actUndoBadge', ''],
-                ['activityRedoBtn', 'Redo', 'M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4', 'actRedoBadge', ''],
             ];
         @endphp
         @foreach ($actRows as [$target, $label, $icon, $badgeId, $labelId])
@@ -330,8 +376,12 @@
     </div>
     <div class="sheet-body space-y-1">
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50" data-action="date-note-btn">
-            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-            Note for this day
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.5 20H7a2 2 0 01-2-2V5a2 2 0 012-2h6l4 4v3M9 8h3M9 12h3"/><path stroke-linecap="round" stroke-linejoin="round" d="M17 15v5m2.5-2.5h-5"/></svg>
+            Add a note to this day
+        </button>
+        <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50" data-action="day-expense-btn">
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v10M14.4 9.4a2.3 2.3 0 00-2.4-1.3c-1.3.1-2.3.8-2.3 1.9s1 1.7 2.5 1.9 2.6.8 2.6 2-1.1 1.9-2.5 1.9a2.4 2.4 0 01-2.4-1.3"/></svg>
+            Add extra expense
         </button>
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50" data-action="date-marker-btn">
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
@@ -405,6 +455,14 @@
                 More…
             </button>
         </div>
+        {{-- Send this day straight to a community connection --}}
+        <div>
+            <label class="form-label">Send to a co-farmer</label>
+            <div class="js-share-cofarmers space-y-1 max-h-52 overflow-y-auto rounded-xl border border-gray-100 p-1" data-link-input="dayShareLink">
+                <p class="text-sm text-gray-400 px-2 py-3 text-center">Loading your co-farmers…</p>
+            </div>
+            <p class="form-hint">Only your accepted connections show here. They open the public link — no login needed.</p>
+        </div>
     </div>
 </div>
 
@@ -436,6 +494,16 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     Email
                 </a>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-200"></div>
+
+        <div>
+            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Send to a co-farmer</p>
+            <p class="text-sm text-gray-600 mb-2">Send the public plan link to one of your community connections as a message.</p>
+            <div class="js-share-cofarmers space-y-1 max-h-52 overflow-y-auto rounded-xl border border-gray-100 p-1" data-link-input="quickShareLink">
+                <p class="text-sm text-gray-400 px-2 py-3 text-center">Loading your co-farmers…</p>
             </div>
         </div>
 
@@ -528,6 +596,12 @@
     <div class="sheet-body">
         <p class="text-sm text-gray-600 mb-2" id="readinessIntro"></p>
         <div id="readinessList"></div>
+        {{-- Dismiss: silences the pulsing Notice without hiding it. Re-arms
+             itself if the outstanding items later change. --}}
+        <div id="readinessMuteBar" class="hidden mt-4 pt-3 border-t border-gray-100 items-center justify-between gap-3">
+            <span class="text-xs text-gray-500" id="readinessMuteHint"></span>
+            <button type="button" id="readinessMuteBtn" class="btn btn-white btn-sm shrink-0"></button>
+        </div>
         <div id="readinessAllClear" class="hidden text-center py-8">
             <div class="w-14 h-14 mx-auto rounded-full bg-brand-50 text-brand-600 flex items-center justify-center mb-3">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
@@ -571,7 +645,7 @@
 </div>
 
 {{-- ============================ DATE NOTE ============================ --}}
-<div class="sheet hidden" id="dateNoteSheet" style="--sheet-width:30rem">
+<div class="sheet sheet-full hidden" id="dateNoteSheet" style="--sheet-width:30rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
         <h3 class="sheet-title" id="dateNoteSheetTitle">Note for this date</h3>
@@ -584,17 +658,51 @@
             <input type="date" id="dateNoteDatePicker" class="form-input cal-only" inputmode="none">
         </div>
         <div>
-            <label class="form-label">Note</label>
-            <div class="rich-editor">
+            <div class="flex items-center justify-between gap-2">
+                <label class="form-label mb-0">Note</label>
+                <button type="button" id="dateNoteDrawBtn" class="btn btn-white btn-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1 10-10-3-3L5 16l-1 4z"/></svg>
+                    Draw
+                </button>
+            </div>
+            <div class="rich-editor mt-1.5">
                 <div id="dateNoteEditor" style="min-height: 8rem;"></div>
             </div>
         </div>
-        <p class="form-hint">Notes are scoped to the current version — forks carry their own copies. They render on printed documents too.</p>
+        <p class="form-hint">Notes are scoped to the current version — forks carry their own copies. They render on printed documents too. Use <b>Draw</b> to sketch and drop it straight into the note.</p>
     </div>
     <div class="sheet-footer">
         <button type="button" id="dateNoteClearBtn" class="btn btn-danger-outline mr-auto hidden">Clear Note</button>
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
         <button type="button" id="dateNoteSaveBtn" class="btn btn-primary">Save Note</button>
+    </div>
+</div>
+
+{{-- ============================ DAY EXPENSE ============================ --}}
+<div class="sheet hidden" id="dayExpenseSheet" style="--sheet-width:28rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="dayExpenseSheetTitle">Add extra expense</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-3">
+        <input type="hidden" id="dayExpenseDate">
+        <input type="hidden" id="dayExpenseId">
+        <p class="text-sm text-gray-600" id="dayExpenseForDate"></p>
+        <div>
+            <label class="form-label" for="dayExpenseAmount">Amount (₱)</label>
+            <input type="number" id="dayExpenseAmount" class="form-input" inputmode="decimal" step="0.01" min="0" placeholder="0.00">
+        </div>
+        <div>
+            <label class="form-label" for="dayExpenseNote">Note / description</label>
+            <input type="text" id="dayExpenseNote" class="form-input" maxlength="500" placeholder="e.g. Fuel for the water pump">
+        </div>
+        <p class="form-hint">Extra costs beyond materials &amp; labour — logged against this date and rolled into your reports.</p>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" id="dayExpenseDeleteBtn" class="btn btn-danger-outline mr-auto hidden">Delete</button>
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" id="dayExpenseSaveBtn" class="btn btn-primary">Save Expense</button>
     </div>
 </div>
 
@@ -649,94 +757,40 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </span>
             <span class="grow">
-                <span class="block">Labor Costings</span>
-                <span class="block text-xs font-normal text-gray-400">Cost of workers across the plan</span>
+                <span class="block">Labor Report</span>
+                <span class="block text-xs font-normal text-gray-400">Costs, busiest months and worker earnings</span>
             </span>
             <svg class="w-4 h-4 text-gray-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
     </div>
 </div>
 
-{{-- ============================ LABOR SUMMARY ============================ --}}
-<div class="sheet hidden" id="laborSheet" style="--sheet-width:56rem">
+{{-- ==================== NOTE ON A DONE (LOCKED) ACTIVITY ==================== --}}
+<div class="sheet hidden" id="doneNoteSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Labor Expenses</h3>
+        <h3 class="sheet-title">Add a note</h3>
         <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
-        <div class="rounded-xl bg-gray-100 text-gray-600 text-xs px-4 py-2.5 mb-3">
-            <strong class="text-gray-800">cost = Σ(worker half-day rates) × units/day × days</strong>
-            &nbsp;·&nbsp; whole = 2 units, half = 1, N/A = 0 &nbsp;·&nbsp; drafts excluded
+        <p class="text-sm text-gray-500 mb-2">
+            <strong class="text-gray-800" id="doneNoteTitle">This activity</strong> is marked done and locked.
+            You can still add a note — it is stamped with the date and appended to the activity.
+        </p>
+        <textarea id="doneNoteText" class="form-textarea" rows="4" maxlength="2000"
+            placeholder="e.g. Harvested 40 sacks; left the wet rows for tomorrow."></textarea>
+        <div class="mt-3">
+            <input type="file" id="doneNoteImages" accept="image/*" capture="environment" class="hidden" multiple>
+            <div id="doneNoteThumbs" class="grid grid-cols-4 gap-2 mb-2"></div>
+            <button type="button" id="doneNoteAddImages" class="btn btn-white btn-sm w-full">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Add photos or use camera
+            </button>
         </div>
-
-        <div class="card p-3 mb-3 space-y-3">
-            @if ($schedule->defaultGroupings->count())
-                <div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-gray-500 uppercase">Groups</span>
-                        <span>
-                            <button type="button" id="laborSelectAllGroups" class="text-xs font-semibold text-brand-700">All</button>
-                            <span class="text-gray-300">·</span>
-                            <button type="button" id="laborClearGroups" class="text-xs font-semibold text-brand-700">None</button>
-                        </span>
-                    </div>
-                    <div class="scroll-chips mt-1" id="laborGroupsContainer" data-chip-group>
-                        @foreach ($schedule->defaultGroupings as $g)
-                            <button type="button" class="chip shrink-0 min-h-9! py-1! text-xs" data-value="{{ $g->id }}"
-                                data-lot-ids="{{ $g->lots->pluck('id')->implode(',') }}">{{ $g->groupName }}</button>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-            @if ($schedule->workers->count())
-                <div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-gray-500 uppercase">Workers</span>
-                        <span>
-                            <button type="button" id="laborSelectAllWorkers" class="text-xs font-semibold text-brand-700">All</button>
-                            <span class="text-gray-300">·</span>
-                            <button type="button" id="laborClearWorkers" class="text-xs font-semibold text-brand-700">None</button>
-                        </span>
-                    </div>
-                    <div class="scroll-chips mt-1" id="laborWorkersContainer" data-chip-group>
-                        @foreach ($schedule->workers as $w)
-                            <button type="button" class="chip shrink-0 min-h-9! py-1! text-xs" data-value="{{ $w->id }}">{{ $w->workerName }}</button>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                <div>
-                    <label class="form-label text-xs!" for="laborDasMin"><span class="day-type-label">{{ $schedule->dayType }}</span> min</label>
-                    <input type="number" id="laborDasMin" class="form-input" step="1" placeholder="−∞">
-                </div>
-                <div>
-                    <label class="form-label text-xs!" for="laborDasMax"><span class="day-type-label">{{ $schedule->dayType }}</span> max</label>
-                    <input type="number" id="laborDasMax" class="form-input" step="1" placeholder="+∞">
-                </div>
-                <div>
-                    <label class="form-label text-xs!" for="laborStartDate">From date</label>
-                    <input type="date" id="laborStartDate" class="form-input">
-                </div>
-                <div>
-                    <label class="form-label text-xs!" for="laborEndDate">To date</label>
-                    <input type="date" id="laborEndDate" class="form-input">
-                </div>
-            </div>
-            <div class="flex items-center gap-2 flex-wrap">
-                <button type="button" id="laborApplyFiltersBtn" class="btn btn-primary btn-sm">Apply Filters</button>
-                <button type="button" id="laborResetFiltersBtn" class="btn btn-white btn-sm">Reset</button>
-                <span id="laborFilterHint" class="text-xs text-gray-500"></span>
-            </div>
-        </div>
-
-        <div id="laborSummaryBody"></div>
     </div>
     <div class="sheet-footer">
-        <button type="button" id="laborCopyBtn" class="btn btn-white mr-auto">Copy as Text</button>
-        <button type="button" id="laborPrintBtn" class="btn btn-white">Print</button>
-        <button type="button" class="btn btn-ghost" data-sheet-close>Close</button>
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" id="saveDoneNoteBtn" class="btn btn-primary">Save note</button>
     </div>
 </div>
 

@@ -173,6 +173,8 @@ class ActivityVersionController extends BaseScheduleController
             return $this->jsonFail('Failed to switch version: ' . $e->getMessage(), 500);
         }
 
+        $this->broadcastBoard($schedule, 'version-active', ['versionId' => $version->id], null);
+
         return $this->jsonOk('Active version switched.', ['data' => $version->fresh()]);
     }
 

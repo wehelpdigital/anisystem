@@ -1,11 +1,65 @@
-{{-- A single reply on a group post. Expects: $reply. --}}
-<div class="flex items-start gap-2.5 group-reply" data-reply-id="{{ $reply->id }}">
-    <span class="w-7 h-7 rounded-full bg-gray-200 text-gray-600 text-[10px] font-bold flex items-center justify-center shrink-0">
-        {{ optional($reply->author)->initials ?: '?' }}
-    </span>
-    <div class="min-w-0 bg-gray-50 rounded-xl px-3 py-2 grow">
-        <p class="text-xs font-semibold text-gray-900">{{ optional($reply->author)->full_name ?: 'Member' }}
-            <span class="text-gray-400 font-normal">· {{ $reply->created_at?->diffForHumans() }}</span></p>
-        <p class="text-sm text-gray-700 whitespace-pre-line break-words">{{ $reply->body }}</p>
+{{-- A single reply on a group post, with its child replies when top-level.
+     Expects: $reply; optional $children (nested replies), $isReply. The
+     Sumagot button carries the thread's top reply id so replies-to-replies
+     stay in the same thread. --}}
+@php
+    $rAuthor = optional($reply->author);
+    $rSummary = $reply->reactionSummary ?? ['counts' => [], 'mine' => null];
+    $rMine = $rSummary['mine'] ?? null;
+    $rCounts = $rSummary['counts'] ?? [];
+    $isReply = $isReply ?? false;
+    $threadId = $reply->parentId ?: $reply->id;
+    $rIsGif = $reply->imagePath && str_ends_with(mb_strtolower($reply->imagePath), '.gif');
+    $isMine = (int) $reply->userId === (int) auth()->id();
+    $gone = (bool) ($reply->isDeleted ?? false);
+@endphp
+<div class="group-reply" data-reply-id="{{ $reply->id }}">
+    <div class="flex items-start gap-2.5">
+        @include('community.partials.avatar', ['user' => $reply->author, 'size' => 'avatar-sm'])
+        <div class="min-w-0 grow">
+            @if ($gone)
+                <div class="bg-gray-50 rounded-xl rounded-tl-md px-3 py-2 text-xs text-gray-400 italic group-reply-tombstone">
+                    This comment was deleted
+                </div>
+            @else
+                <div class="bg-gray-50 rounded-xl rounded-tl-md px-3 py-2">
+                    <p class="text-xs font-semibold text-gray-900">@if ($reply->author)<a href="{{ route('community.connect.profile', ['userId' => $reply->author->id]) }}" class="hover:text-brand-700">{{ $rAuthor->full_name }}</a>@else{{ 'Member' }}@endif
+                        <span class="text-gray-400 font-normal" title="{{ $reply->created_at }}">· {{ $reply->created_at?->diffForHumans(null, true) }}</span></p>
+                    @if ($reply->isRestricted ?? false)
+                        @include('community.partials.restricted', ['reason' => $reply->restrictedReason ?? null])
+                    @else
+                        @if ($reply->body)
+                            <p class="text-sm text-gray-700 whitespace-pre-line break-words">{!! \App\Support\CommunityText::render($reply->body) !!}</p>
+                        @endif
+                        @if ($reply->imagePath)
+                            <span class="post-media reply-media"><img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($reply->imagePath) }}" alt="Reply photo" loading="lazy">@if ($rIsGif)<span class="gif-badge">GIF</span>@endif</span>
+                        @endif
+                    @endif
+                </div>
+                <div class="react-bar react-bar-mini">
+                    @foreach (\App\Models\CommunityReaction::REACTION_META as $rk => $meta)
+                        <button type="button" class="react-btn {{ $rMine === $rk ? 'is-mine' : '' }}"
+                            data-react="{{ $rk }}" data-target-type="reply" data-target-id="{{ $reply->id }}"
+                            aria-pressed="{{ $rMine === $rk ? 'true' : 'false' }}"
+                            title="{{ $meta['label'] }}" aria-label="{{ $meta['label'] }}">
+                            <span class="e">{{ $meta['emoji'] }}</span><span class="react-count">{{ ($rCounts[$rk] ?? 0) > 0 ? $rCounts[$rk] : '' }}</span>
+                        </button>
+                    @endforeach
+                    <button type="button" class="js-group-reply reply-link" data-parent-id="{{ $threadId }}"
+                            @if ($reply->author && ! $isMine) data-author-id="{{ $reply->author->id }}" data-author-name="{{ $reply->author->full_name }}" @endif>Reply</button>
+                    @if ($isMine)
+                        <button type="button" class="js-reply-delete reply-link" data-reply-id="{{ $reply->id }}">Delete</button>
+                    @endif
+                    @include('community.partials.dm-btn', ['user' => $reply->author])
+                </div>
+            @endif
+        </div>
     </div>
+    @unless ($isReply)
+        <div class="reply-thread" data-parent-id="{{ $reply->id }}">
+            @foreach (($children ?? collect()) as $child)
+                @include('community.groups.partials.reply', ['reply' => $child, 'isReply' => true, 'children' => collect()])
+            @endforeach
+        </div>
+    @endunless
 </div>

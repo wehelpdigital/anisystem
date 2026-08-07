@@ -40,6 +40,16 @@ class AsCroppingSchedule extends BaseModel
         'publishedAt' => 'datetime',
     ];
 
+    /** Lifecycle status. 'setup' = still being built, 'completed' = locked. */
+    public const STATUS_SETUP = 'setup';
+    public const STATUS_COMPLETED = 'completed';
+
+    /** A completed schedule is locked — read-only until the owner reopens it. */
+    public function isLocked(): bool
+    {
+        return $this->status === self::STATUS_COMPLETED;
+    }
+
     /**
      * Mother-app owner scoping (usersId). Kept for compatibility.
      */
@@ -200,6 +210,27 @@ class AsCroppingSchedule extends BaseModel
                     ->where('as_schedule_activity_versions.deleteStatus', 1);
             })
             ->orderBy('markerDate', 'asc');
+    }
+
+    /**
+     * Ad-hoc extra expenses logged against a date (fuel, rentals, snacks...).
+     * Scoped to the active version via the same correlated-subquery trick as
+     * dateNotes()/progressMarkers() so each fork carries its own expenses.
+     */
+    public function dayExpenses()
+    {
+        return $this->hasMany(AsScheduleDayExpense::class, 'croppingScheduleId')
+            ->where('as_schedule_day_expenses.deleteStatus', 1)
+            ->whereIn('as_schedule_day_expenses.versionId', function ($sub) {
+                $sub->select('id')
+                    ->from('as_schedule_activity_versions')
+                    ->whereColumn('as_schedule_activity_versions.croppingScheduleId', 'as_schedule_day_expenses.croppingScheduleId')
+                    ->where('as_schedule_activity_versions.isActive', 1)
+                    ->where('as_schedule_activity_versions.deleteStatus', 1);
+            })
+            ->orderBy('expenseDate', 'asc')
+            ->orderBy('sortOrder', 'asc')
+            ->orderBy('id', 'asc');
     }
 
     public function irrigations()

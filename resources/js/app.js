@@ -358,3 +358,118 @@ window.chipValues = function chipValues(groupEl) {
         .map((c) => c.getAttribute('data-value'))
         .filter((v) => v !== null);
 };
+
+/* Blocking full-screen loader for heavy transitions (version switches, big
+   duplications) where the page will reload or redirect: shows a translucent
+   overlay + spinner so the app never looks frozen. Returns { hide } for
+   failure paths; a successful navigation replaces the DOM and clears it. */
+window.screenLoader = function screenLoader(label = 'Working…') {
+    let el = document.getElementById('screenLoaderOverlay');
+    if (!el) {
+        el = document.createElement('div');
+        el.id = 'screenLoaderOverlay';
+        el.className = 'screen-loader';
+        el.innerHTML = '<span class="spin" aria-hidden="true"></span><p data-loader-label></p>';
+        document.body.appendChild(el);
+    }
+    el.querySelector('[data-loader-label]').textContent = label;
+    el.classList.remove('hidden');
+    return { hide: () => el.classList.add('hidden') };
+};
+
+/* Animate a button (or toolbar item) that would otherwise snap in/out via a
+   display:none class: squeeze the width + fade with the house easing, then
+   apply the class so the steady state stays plain CSS. The margin compensates
+   the parent's flex gap so neighbours slide instead of jumping. */
+window.animToggleHidden = function animToggleHidden(el, hide, cls = 'hidden') {
+    if (!el) return;
+    if (!!hide === el.classList.contains(cls) && !el.__animHideTimer) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        el.classList.toggle(cls, !!hide);
+        return;
+    }
+    if (el.__animHideTimer) { clearTimeout(el.__animHideTimer); el.__animHideTimer = null; }
+
+    const EASE = '.28s cubic-bezier(.22,1,.36,1)';
+    const gap = parseFloat(getComputedStyle(el.parentElement).columnGap) || 0;
+    const props = ['width', 'minWidth', 'paddingLeft', 'paddingRight', 'marginLeft',
+        'opacity', 'transform', 'overflow', 'whiteSpace', 'pointerEvents', 'transition'];
+    const clear = () => props.forEach((p) => { el.style[p] = ''; });
+    const prep = () => {
+        el.style.overflow = 'hidden';
+        el.style.whiteSpace = 'nowrap';
+        el.style.minWidth = '0';
+    };
+    const squeeze = () => {
+        el.style.width = '0px';
+        el.style.paddingLeft = '0px';
+        el.style.paddingRight = '0px';
+        if (gap) el.style.marginLeft = -gap + 'px';
+        el.style.opacity = '0';
+        el.style.transform = 'scale(.9)';
+    };
+    const run = `width ${EASE}, padding ${EASE}, margin ${EASE}, opacity ${EASE}, transform ${EASE}`;
+
+    if (hide) {
+        el.style.width = el.getBoundingClientRect().width + 'px';
+        prep();
+        el.style.pointerEvents = 'none';
+        void el.offsetWidth;
+        el.style.transition = run;
+        squeeze();
+        el.__animHideTimer = setTimeout(() => {
+            el.__animHideTimer = null;
+            el.classList.add(cls);
+            clear();
+        }, 300);
+    } else {
+        el.classList.remove(cls);
+        const w = el.getBoundingClientRect().width;
+        prep();
+        squeeze();
+        void el.offsetWidth;
+        el.style.transition = run;
+        el.style.width = w + 'px';
+        el.style.paddingLeft = '';
+        el.style.paddingRight = '';
+        el.style.marginLeft = '';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.__animHideTimer = setTimeout(() => {
+            el.__animHideTimer = null;
+            clear();
+        }, 300);
+    }
+};
+
+/* Chip strips (.scroll-chips) pan natively under a finger, but a mouse has no
+   native drag-to-scroll — grab-and-slide for desktop, delegated so strips
+   injected later (SPA modules) work too. A real drag swallows the click that
+   follows it, so sliding never activates a chip. */
+document.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    const strip = e.target.closest('.scroll-chips');
+    if (!strip || strip.scrollWidth <= strip.clientWidth) return;
+    const startX = e.clientX;
+    const startLeft = strip.scrollLeft;
+    let dragged = false;
+    const move = (ev) => {
+        const dx = ev.clientX - startX;
+        if (!dragged && Math.abs(dx) > 4) dragged = true;
+        if (dragged) strip.scrollLeft = startLeft - dx;
+    };
+    const up = () => {
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', up);
+        if (dragged) {
+            strip.addEventListener('click', (ce) => {
+                ce.preventDefault();
+                ce.stopPropagation();
+            }, { capture: true, once: true });
+            // The once-listener lingers if no click follows; harmless, it
+            // clears on the next real click, which a fresh drag re-adds.
+        }
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+});

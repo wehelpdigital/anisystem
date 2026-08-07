@@ -31,6 +31,11 @@ class AiController extends Controller
 
     public function index(Request $request)
     {
+        // AI is a Boss/Lifetime feature — Basic can't use it.
+        if (! $request->user()->canUseAi()) {
+            return view('ai.locked', ['tier' => $request->user()->planTier()]);
+        }
+
         $userId = Auth::id();
         $settings = AiSetting::current();
 
@@ -43,6 +48,7 @@ class AiController extends Controller
             'messages' => $conversation ? $conversation->messages : collect(),
             'conversations' => AiConversation::active()
                 ->where('userId', $userId)
+                ->with('linkedActivity')
                 ->orderByDesc('updated_at')
                 ->limit(20)
                 ->get(),
@@ -53,6 +59,10 @@ class AiController extends Controller
     /** Ask a question. Charges credits based on the tokens actually used. */
     public function ask(Request $request)
     {
+        if (! $request->user()->canUseAi()) {
+            return $this->json(false, 'AI is available on Boss and Lifetime plans. Upgrade to unlock the AI Technician.', [], 403);
+        }
+
         $userId = Auth::id();
         $settings = AiSetting::current();
 
@@ -86,8 +96,10 @@ class AiController extends Controller
 
         $conversation = $this->resolveConversation($request, $userId, true);
 
-        // Attach the plan the question is about, when one is selected.
+        // Attach the plan the question is about, when one is selected — plus the
+        // day/activity this thread is pinned to, when the farmer set one.
         $context = $this->scheduleContext($request->input('scheduleId'), $userId);
+        $context = $this->applyLinkContext($context, $conversation);
 
         $userMessage = AiMessage::create([
             'conversationId' => $conversation->id,
@@ -204,6 +216,28 @@ class AiController extends Controller
         return $this->json(true, 'Started a new conversation.', ['conversationId' => $conversation->id]);
     }
 
+    /** Rename a chat session (titles otherwise come from the first question). */
+    public function renameConversation(Request $request)
+    {
+        $conversation = AiConversation::active()
+            ->where('userId', Auth::id())
+            ->where('id', $request->input('id'))
+            ->first();
+
+        if (! $conversation) {
+            return $this->json(false, 'Conversation not found.', [], 404);
+        }
+
+        $title = trim((string) $request->input('title', ''));
+        if ($title === '') {
+            return $this->json(false, 'Give the chat a name.', [], 422);
+        }
+
+        $conversation->update(['title' => \Illuminate\Support\Str::limit($title, 60, '')]);
+
+        return $this->json(true, 'Renamed.', ['title' => $conversation->fresh()->title]);
+    }
+
     public function deleteConversation(Request $request)
     {
         $conversation = AiConversation::active()
@@ -220,7 +254,95 @@ class AiController extends Controller
         return $this->json(true, 'Conversation deleted.');
     }
 
+    /** Pin this thread to a day or an activity of its schedule (or clear it). */
+    public function linkConversation(Request $request)
+    {
+        $conversation = AiConversation::active()
+            ->where('userId', Auth::id())
+            ->where('id', $request->input('conversationId'))
+            ->first();
+
+        if (! $conversation) {
+            return $this->json(false, 'Conversation not found.', [], 404);
+        }
+
+        $linkType = $request->input('linkType'); // 'date' | 'activity' | 'none'
+        $conversation->linkedDate = null;
+        $conversation->linkedActivityId = null;
+
+        if ($linkType === 'date') {
+            $date = $request->input('linkedDate');
+            if (! $date || ! strtotime($date)) {
+                return $this->json(false, 'Pick a day.', [], 422);
+            }
+            $conversation->linkedDate = date('Y-m-d', strtotime($date));
+        } elseif ($linkType === 'activity') {
+            $activity = $conversation->croppingScheduleId
+                ? \App\Models\AsScheduleActivity::where('id', (int) $request->input('linkedActivityId'))
+                    ->where('croppingScheduleId', $conversation->croppingScheduleId)->first()
+                : null;
+            if (! $activity) {
+                return $this->json(false, 'That activity is not part of this plan.', [], 422);
+            }
+            $conversation->linkedActivityId = $activity->id;
+        }
+
+        $conversation->save();
+        $conversation->loadMissing('linkedActivity');
+
+        return $this->json(true, $linkType === 'none' ? 'Link removed.' : 'Thread linked.', [
+            'linkLabel' => $conversation->link_label,
+            'linkedDate' => $conversation->linkedDate?->format('Y-m-d'),
+            'linkedActivityId' => $conversation->linkedActivityId,
+        ]);
+    }
+
     // ------------------------------------------------------------------
+
+    /** Fold the pinned day/activity into the plan preamble sent to the model. */
+    private function applyLinkContext(string $context, ?AiConversation $conversation): string
+    {
+        $focus = $this->linkFocusText($conversation);
+        if ($focus === '') {
+            return $context;
+        }
+        if ($context === '') {
+            return $focus . "\n\nQuestion: ";
+        }
+
+        return str_replace("\n\nQuestion: ", "\n" . $focus . "\n\nQuestion: ", $context);
+    }
+
+    private function linkFocusText(?AiConversation $conversation): string
+    {
+        if (! $conversation) {
+            return '';
+        }
+        if ($conversation->linkedActivityId && ($a = $conversation->linkedActivity)) {
+            $when = $a->targetDate ? \Illuminate\Support\Carbon::parse($a->targetDate)->format('M j, Y') : 'no set date';
+            $desc = trim(strip_tags((string) $a->description));
+            $t = 'This thread is focused on the activity "' . ($a->activityTitle ?: 'Activity') . '" (scheduled ' . $when . ').';
+            if ($desc !== '') {
+                $t .= ' Details: ' . Str::limit($desc, 400) . '.';
+            }
+
+            return $t;
+        }
+        if ($conversation->linkedDate && $conversation->schedule) {
+            $day = $conversation->linkedDate->format('Y-m-d');
+            $titles = $conversation->schedule->activities
+                ->filter(fn ($a) => $a->targetDate && \Illuminate\Support\Carbon::parse($a->targetDate)->format('Y-m-d') === $day)
+                ->pluck('activityTitle')->filter()->take(12)->implode('; ');
+            $t = 'This thread is focused on ' . $conversation->linkedDate->format('M j, Y') . '.';
+            if ($titles !== '') {
+                $t .= ' Activities that day: ' . $titles . '.';
+            }
+
+            return $t;
+        }
+
+        return '';
+    }
 
     private function resolveConversation(Request $request, int $userId, bool $createIfMissing = false): ?AiConversation
     {
@@ -272,6 +394,7 @@ class AiController extends Controller
             $request->merge(['scheduleId' => $schedule->id]),
             $userId
         );
+        $conversation?->loadMissing('linkedActivity');
 
         return view('sm.ai', [
             'schedule' => $schedule,
@@ -282,6 +405,7 @@ class AiController extends Controller
             'conversations' => AiConversation::active()
                 ->where('userId', $userId)
                 ->where('croppingScheduleId', $schedule->id)
+                ->with('linkedActivity')
                 ->orderByDesc('updated_at')
                 ->limit(30)
                 ->get(),

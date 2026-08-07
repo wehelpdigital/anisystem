@@ -6,6 +6,15 @@
 
 @push('head')
     <style>
+        /* Desktop: a history rail on the left, the chat on the right. On smaller
+           screens the rail is hidden and history lives in the bottom sheet. */
+        .ai-layout { display: grid; grid-template-columns: 1fr; gap: 1.25rem; align-items: start; }
+        @media (min-width: 1024px) {
+            .ai-layout { grid-template-columns: 17.5rem minmax(0, 1fr); }
+            .ai-history-rail { position: sticky; top: 5rem; max-height: calc(100dvh - 7rem); }
+        }
+        .ai-history-rail .rail-scroll { overflow-y: auto; }
+
         .ai-shell { display: flex; flex-direction: column; min-height: calc(100dvh - 14rem); }
         .ai-thread { display: flex; flex-direction: column; gap: 1rem; padding-bottom: 1rem; }
 
@@ -59,6 +68,7 @@
         .ai-dots i:nth-child(2) { animation-delay: .18s; }
         .ai-dots i:nth-child(3) { animation-delay: .36s; }
         @keyframes ai-dot { 0%, 60%, 100% { opacity: .25; transform: translateY(0); } 30% { opacity: .9; transform: translateY(-2px); } }
+        @keyframes ai-spin { to { transform: rotate(360deg); } }
         @media (prefers-reduced-motion: reduce) { .ai-dots i { animation: none; opacity: .5; } }
 
         .ai-suggest {
@@ -69,6 +79,33 @@
 @endpush
 
 @section('content')
+
+{{-- Dynamic breadcrumbs — the last crumb tracks the open chat and updates
+     without a reload when you start a new question. --}}
+<nav class="flex items-center gap-1.5 text-xs font-semibold text-gray-400 mb-3 flex-wrap" aria-label="Breadcrumb">
+    <a href="{{ route('app.dashboard') }}" class="hover:text-brand-700 transition inline-flex items-center gap-1">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-8 9 8M5 10v10a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V10"/></svg>
+        Dashboard
+    </a>
+    <span class="text-gray-300">/</span>
+    <a href="{{ route('ai.index') }}" class="hover:text-brand-700 transition">{{ $settings->assistantName }}</a>
+    <span class="text-gray-300">/</span>
+    <span id="aiCrumbCurrent" class="text-gray-700 truncate max-w-[45vw] sm:max-w-xs">{{ $conversation && $messages->isNotEmpty() ? \Illuminate\Support\Str::limit($conversation->title, 40) : 'New question' }}</span>
+</nav>
+
+<div class="ai-layout">
+
+    {{-- Desktop-only history rail --}}
+    <aside class="ai-history-rail hidden lg:flex flex-col card overflow-hidden">
+        <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-100 shrink-0">
+            <svg class="w-5 h-5 text-brand-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <h2 class="font-bold text-gray-900 text-sm">Past questions</h2>
+        </div>
+        <div class="rail-scroll grow p-2 space-y-1">
+            @include('ai.partials.history-list')
+        </div>
+    </aside>
+
 <div class="ai-shell">
 
     {{-- Balance + controls --}}
@@ -91,7 +128,7 @@
                 <svg class="w-4 h-4 text-accent-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>
                 <span id="aiBalance">{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</span>
             </a>
-            <button type="button" class="btn btn-white btn-sm" id="aiHistoryBtn" title="Past questions">
+            <button type="button" class="btn btn-white btn-sm lg:hidden" id="aiHistoryBtn" title="Past questions">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
         </div>
@@ -160,6 +197,29 @@
         @endforelse
     </div>
 
+    {{-- Welcome markup reused by JS when a new question resets the thread. --}}
+    <template id="aiWelcomeTpl">
+        <div class="text-center py-6" id="aiWelcome">
+            <span class="ai-face mx-auto" style="width:3.5rem;height:3.5rem">
+                @if ($settings->avatarPath)
+                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($settings->avatarPath) }}" alt="">
+                @else
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
+                @endif
+            </span>
+            <p class="font-bold text-gray-900 mt-3">Ask me about your crop</p>
+            <p class="text-sm text-gray-500 mt-1 max-w-sm mx-auto">
+                Fertiliser rates, pests and diseases, water, timing, harvest and storage.
+                Snap a photo of a problem leaf and I will take a look.
+            </p>
+            <div class="grid gap-2 mt-5 max-w-md mx-auto">
+                <button type="button" class="ai-suggest js-suggest">My rice leaves are yellowing at the tips 25 days after sowing. What should I check?</button>
+                <button type="button" class="ai-suggest js-suggest">How much urea per hectare for the first top dressing on inbred rice?</button>
+                <button type="button" class="ai-suggest js-suggest">When should I stop irrigating before harvest?</button>
+            </div>
+        </div>
+    </template>
+
     {{-- Composer --}}
     <div class="ai-composer">
         <div id="aiPhotoChip" class="hidden mb-2 flex items-center gap-2 text-xs font-semibold text-gray-600">
@@ -193,7 +253,8 @@
             </div>
         </div>
     </div>
-</div>
+</div>{{-- /.ai-shell --}}
+</div>{{-- /.ai-layout --}}
 @endsection
 
 @push('sheets')
@@ -204,25 +265,7 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-1">
-        <button type="button" class="w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-brand-700 hover:bg-gray-50" id="aiNewBtn">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-            Start a new question
-        </button>
-        @foreach ($conversations as $c)
-            <div class="flex items-center gap-1">
-                <a href="{{ route('ai.index', ['c' => $c->id]) }}"
-                   class="grow min-w-0 rounded-xl px-3 py-3 font-semibold text-gray-700 hover:bg-gray-50 {{ $conversation && $conversation->id === $c->id ? 'bg-brand-50 text-brand-700' : '' }}">
-                    <span class="block truncate">{{ $c->title }}</span>
-                    <span class="block text-xs font-normal text-gray-400">{{ $c->updated_at?->diffForHumans() }}</span>
-                </a>
-                <button type="button" class="icon-btn text-red-600 shrink-0 js-del-convo" data-id="{{ $c->id }}" aria-label="Delete conversation">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                </button>
-            </div>
-        @endforeach
-        @if ($conversations->isEmpty())
-            <p class="text-sm text-gray-500 text-center py-6">Nothing yet.</p>
-        @endif
+        @include('ai.partials.history-list')
     </div>
 </div>
 @endpush
@@ -326,12 +369,13 @@ const __init = () => {
         }
     });
 
-    document.querySelectorAll('.js-suggest').forEach((btn) => {
-        btn.addEventListener('click', () => {
-            input.value = btn.textContent.trim();
-            input.dispatchEvent(new Event('input'));
-            input.focus();
-        });
+    // Delegated so suggestion chips added by a reset-to-welcome also work.
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.js-suggest');
+        if (!btn || !input) return;
+        input.value = btn.textContent.trim();
+        input.dispatchEvent(new Event('input'));
+        input.focus();
     });
 
     /* ---- Photo ---- */
@@ -411,14 +455,67 @@ const __init = () => {
 
     /* ---- Conversations ---- */
     byId('aiHistoryBtn')?.addEventListener('click', () => openSheet('aiHistorySheet'));
-    byId('aiNewBtn')?.addEventListener('click', async () => {
+
+    const AI_INDEX = @json(route('ai.index'));
+    const SPIN_SVG = '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="animation:ai-spin .6s linear infinite"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.4" stroke-opacity=".25"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
+
+    const setCrumb = (title) => { const el = byId('aiCrumbCurrent'); if (el) el.textContent = title || 'New question'; };
+    function resetToWelcome() {
+        const tpl = byId('aiWelcomeTpl');
+        thread.innerHTML = '';
+        if (tpl && tpl.content) thread.appendChild(tpl.content.cloneNode(true));
+    }
+    function markConvoActive(id) {
+        document.querySelectorAll('.ai-history-rail .rail-scroll a, #aiHistorySheet .sheet-body a').forEach((a) => {
+            const on = a.getAttribute('href') === AI_INDEX + '?c=' + id;
+            a.classList.toggle('bg-brand-50', on);
+            a.classList.toggle('text-brand-700', on);
+        });
+    }
+    function addConvoEntry(id, title) {
+        const entry = `<div class="flex items-center gap-1">
+            <a href="${AI_INDEX}?c=${id}" class="grow min-w-0 rounded-xl px-3 py-3 font-semibold text-gray-700 hover:bg-gray-50 bg-brand-50 text-brand-700">
+                <span class="block truncate">${escapeHtml(title)}</span>
+                <span class="block text-xs font-normal text-gray-400">just now</span>
+            </a>
+            <button type="button" class="icon-btn text-red-600 shrink-0 js-del-convo" data-id="${id}" aria-label="Delete conversation">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+            </button>
+        </div>`;
+        document.querySelectorAll('.ai-history-rail .rail-scroll, #aiHistorySheet .sheet-body').forEach((cont) => {
+            cont.querySelectorAll('a').forEach((a) => a.classList.remove('bg-brand-50', 'text-brand-700'));
+            cont.querySelectorAll('p').forEach((p) => { if (/Nothing yet/.test(p.textContent)) p.remove(); });
+            const nb = cont.querySelector('.js-ai-new');
+            if (nb) nb.insertAdjacentHTML('afterend', entry);
+        });
+    }
+
+    // "Start a new question" — dynamic (no reload): reset the thread, refresh the
+    // breadcrumb + history list, update the URL. Shows a loader while it runs.
+    document.querySelectorAll('.js-ai-new').forEach((b) => b.addEventListener('click', async () => {
+        if (b.dataset.loading) return;
+        const prev = b.innerHTML;
+        b.dataset.loading = '1';
+        b.disabled = true;
+        b.innerHTML = SPIN_SVG + '<span>Starting…</span>';
         try {
             const res = await api(URLS.newConvo, { method: 'POST', body: { scheduleId: byId('aiSchedule')?.value || null } });
-            window.location.href = '{{ route('ai.index') }}?c=' + res.data.conversationId;
+            conversationId = res.data.conversationId;
+            resetToWelcome();
+            setCrumb('New question');
+            addConvoEntry(conversationId, 'New question');
+            markConvoActive(conversationId);
+            history.replaceState({}, '', AI_INDEX + '?c=' + conversationId);
+            window.closeSheet && window.closeSheet('aiHistorySheet');
+            byId('aiInput')?.focus();
         } catch (err) {
             toast(err.message, 'error');
+        } finally {
+            b.disabled = false;
+            delete b.dataset.loading;
+            b.innerHTML = prev;
         }
-    });
+    }));
     document.addEventListener('click', async (e) => {
         const btn = e.target.closest('.js-del-convo');
         if (!btn) return;
