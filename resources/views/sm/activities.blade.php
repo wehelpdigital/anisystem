@@ -294,7 +294,10 @@
                has to go on that box — the flex item of this row — not on the
                button inside it, or nothing pushes it to the right. */
             .activity-card > .flex.items-start.justify-between > .flex.items-center {
-                flex: 0 0 auto; align-self: center; margin-left: auto;
+                /* Top-right corner of the card: the auto margin pushes it to
+                   the right edge, flex-start keeps it level with the top of
+                   the row rather than floating down to the row's middle. */
+                flex: 0 0 auto; align-self: flex-start; margin-left: auto;
             }
             .activity-card .card-menu-btn { flex: 0 0 auto; }
 
