@@ -284,7 +284,7 @@
         @media (max-width: 767px) {
             /* "Jun 17, 2026" -> "Jun 17, 26" and "2 activities" -> "2", so the
                date, the count and the kebab all fit on one line. */
-            .dh-long, .dh-word { display: none; }
+            .dh-long, .dh-word, .dh-modprefix { display: none; }
             .dh-short { display: inline; }
 
             /* A multi-day group reads as one range instead of a start date plus
@@ -1185,7 +1185,9 @@
         </button>
         <button type="button" id="modulesBtn" class="btn btn-white btn-sm" title="Switch module">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            <span id="currentModuleLabel">Modules - Activities</span>
+            {{-- "Modules - " is dropped on phones so the label stays short and
+                 leaves the toolbar room for Tools, Undo and Redo on one line. --}}
+            <span id="currentModuleLabel"><span class="dh-modprefix">Modules - </span>Activities</span>
         </button>
 
         {{-- Tools menu: collapses Drafts / Report / Search / Calendar / Weather
@@ -1209,12 +1211,12 @@
 
         <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative" data-activities-only disabled title="Nothing to undo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
-            Undo
+            <span class="hidden sm:inline">Undo</span>
             <span id="activityUndoCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-accent-500 text-ink text-[10px] font-bold items-center justify-center">0</span>
         </button>
         <button type="button" id="activityRedoBtn" class="btn btn-white btn-sm relative" data-activities-only disabled title="Nothing to redo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg>
-            Redo
+            <span class="hidden sm:inline">Redo</span>
             <span id="activityRedoCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-accent-500 text-ink text-[10px] font-bold items-center justify-center">0</span>
         </button>
         {{-- Calendar view + Add note: quick actions kept in the toolbar, right
@@ -1225,13 +1227,13 @@
             <svg id="viewIconList" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             <span id="viewToggleLabel">Calendar</span>
         </button>
-        <button type="button" id="openNotesBtn" class="btn btn-white btn-sm" data-activities-only
+        <button type="button" id="openNotesBtn" class="btn btn-white btn-sm toolbar-desktop-action" data-activities-only
                 title="Open the schedule notebook">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             <span class="hidden sm:inline">Notes</span>
         </button>
         @if (\App\Support\ScheduleTeam::hasTeam($schedule))
-        <a href="{{ route('sm.collab', ['id' => $schedule->id]) }}" id="collabRoomBtn" data-collab-open class="btn btn-primary btn-sm" data-activities-only title="Open the team Collab Room">
+        <a href="{{ route('sm.collab', ['id' => $schedule->id]) }}" id="collabRoomBtn" data-collab-open class="btn btn-primary btn-sm toolbar-desktop-action" data-activities-only title="Open the team Collab Room">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-3-3.87M9 20H4v-1a4 4 0 013-3.87m0 0a4 4 0 115.5-5.8M7 15.13A4 4 0 0112 8m5 7.13A4 4 0 0012 8"/></svg>
             <span class="hidden sm:inline">Collab Room</span>
         </a>
@@ -1764,7 +1766,9 @@
             shownEl.classList.add('sm-view-in');
             shownEl.addEventListener('animationend', () => shownEl.classList.remove('sm-view-in'), { once: true });
         }
-        label.textContent = 'Modules - ' + MODULES[key].label;
+        // Keep the prefix in its own span so CSS can drop it on phones; using
+        // textContent here would flatten it away on the first module switch.
+        label.innerHTML = '<span class="dh-modprefix">Modules - </span>' + escapeHtml(MODULES[key].label);
         // Keep the app header + browser tab in step with the swapped module.
         const pageTitle = document.getElementById('appPageTitle');
         if (pageTitle) pageTitle.textContent = MODULES[key].label;
