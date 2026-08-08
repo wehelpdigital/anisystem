@@ -413,7 +413,7 @@
 <div class="sheet hidden" id="activityInfoSheet" style="--sheet-width:30rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Activity details</h3>
+        <h3 class="sheet-title" id="activityInfoTitle">Activity details</h3>
         <button type="button" class="icon-btn" data-sheet-close aria-label="Close">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>

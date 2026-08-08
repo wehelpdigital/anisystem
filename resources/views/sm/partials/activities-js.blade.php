@@ -2391,6 +2391,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Single-card move-to-date (mobile fallback for drag & drop).
     let CARD_MENU = { id: null, name: '' };
     let INFO_ID = null;
+    let INFO_EDIT = null;   // what the sheet's Edit button opens for a note
 
     /**
      * Show one activity in full on a phone.
@@ -2406,9 +2407,35 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!body || !card) return;
 
         INFO_ID = card.getAttribute('data-id');
-        const clone = card.cloneNode(true);
+        $id('activityInfoTitle').textContent = 'Activity details';
+        $id('activityInfoEdit').classList.remove('hidden');
+        showInfoClone(body, card);
+    }
+
+    /**
+     * The same read view for a note. Notes are clamped to one line on a phone
+     * for the same reason cards are, so a tap has to be able to show the rest
+     * without dropping the reader straight into an editor.
+     */
+    function openNoteInfo(noteEl, editFn) {
+        const body = $id('activityInfoBody');
+        if (!body || !noteEl) return;
+
+        INFO_ID = null;
+        $id('activityInfoTitle').textContent = 'Note';
+        const edit = $id('activityInfoEdit');
+        edit.classList.toggle('hidden', !editFn);
+        INFO_EDIT = editFn || null;
+        showInfoClone(body, noteEl);
+    }
+
+    function showInfoClone(body, el) {
+        const clone = el.cloneNode(true);
         clone.removeAttribute('draggable');
-        clone.querySelectorAll('button, [data-sheet-open]').forEach((el) => el.remove());
+        // Strip the controls: this is somewhere to read, and its own footer
+        // carries the one action that makes sense from here.
+        clone.querySelectorAll('button, [data-sheet-open], .inline-note-grip').forEach((n) => n.remove());
+        clone.classList.remove('is-editing');
         body.innerHTML = '';
         body.appendChild(clone);
         openSheet('activityInfoSheet');
@@ -2416,7 +2443,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     $id('activityInfoEdit')?.addEventListener('click', () => {
         const id = INFO_ID;
+        const noteEdit = INFO_EDIT;
         closeSheet('activityInfoSheet');
+        if (noteEdit) { noteEdit(); return; }
         if (id) openEditActivitySheet(id);
     });
 
@@ -3317,7 +3346,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const block = e.target.closest('.date-note-block[data-date]');
         if (block && block.style.display !== 'none' && !e.target.closest('a, .nm, .date-note-edit, .date-note-del')) {
             e.preventDefault();
-            openDateNoteEditor(block.getAttribute('data-date') || '');
+            const dk = block.getAttribute('data-date') || '';
+            // Same rule as the inline note: on a phone the body is clamped to
+            // one line, so tapping it opens the note to read, not to edit.
+            if (window.matchMedia('(pointer: coarse)').matches) {
+                openNoteInfo(block, () => openDateNoteEditor(dk));
+                return;
+            }
+            openDateNoteEditor(dk);
         }
     });
 
@@ -4041,7 +4077,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const edit = e.target.closest && e.target.closest('.inline-note-edit');
         if (edit) { e.preventDefault(); const note = edit.closest('.inline-note'); if (note) openInlineNoteEditor(note); return; }
         const note = e.target.closest && e.target.closest('.inline-note');
-        if (note && !e.target.closest('.inline-note-grip, .nm, a')) openInlineNoteEditor(note);
+        if (note && !e.target.closest('.inline-note-grip, .nm, a')) {
+            // Clamped to one line on a phone, so a tap means "let me read it".
+            // Editing is a button away, here and in the sheet's footer.
+            if (window.matchMedia('(pointer: coarse)').matches && !note.classList.contains('is-editing')) {
+                openNoteInfo(note, () => openInlineNoteEditor(note));
+                return;
+            }
+            openInlineNoteEditor(note);
+        }
     });
 
     /* ---- Pointer-based drag for inline notes (mouse + touch + pen) --------

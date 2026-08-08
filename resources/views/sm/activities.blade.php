@@ -266,6 +266,19 @@
         }
         .activity-info-body .activity-card .activity-card-badges { flex-wrap: wrap; }
 
+        /* Notes read in full inside the sheet — three classes again, to beat
+           the one-line rules below on specificity rather than source order. */
+        .activity-info-body .inline-note .inline-note-body,
+        .activity-info-body .date-note-block .date-note-inner {
+            display: block; white-space: pre-wrap; overflow: visible;
+            text-overflow: clip; -webkit-line-clamp: unset; max-height: none;
+            padding-right: 0;
+        }
+        .activity-info-body .inline-note,
+        .activity-info-body .date-note-block {
+            padding-right: .7rem; cursor: default; border-style: solid;
+        }
+
         /* ---- Mobile: day header, notes and activity cards ----
            Everything below is phone-only; the desktop layout is untouched. */
         @media (max-width: 767px) {
@@ -311,6 +324,15 @@
            reserved unconditionally above. */
         @media (hover: none), (pointer: coarse) {
             .date-note-edit, .date-note-del { opacity: 1; }
+
+            /* Notes read as one line here, like the cards around them, so a day
+               with several notes still fits on a screen. Tapping one opens it
+               in full — see openNoteInfo. */
+            .inline-note .inline-note-body,
+            .date-note-block .date-note-inner {
+                display: block; white-space: nowrap;
+                overflow: hidden; text-overflow: ellipsis;
+            }
 
             /* Card head on one row: done, type icon, lot, kebab — with the
                title and its badges on full-width rows underneath.
