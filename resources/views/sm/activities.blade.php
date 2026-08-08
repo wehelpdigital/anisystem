@@ -328,11 +328,21 @@
             /* Notes read as one line here, like the cards around them, so a day
                with several notes still fits on a screen. Tapping one opens it
                in full — see openNoteInfo. */
+            /* Clamped, not nowrap: a note's text sits inside <p> elements, and
+               text-overflow cannot trim a block child — the ellipsis had
+               nothing to act on, so the note simply kept its full height. A
+               line clamp counts rendered lines, so it works through them. */
             .inline-note .inline-note-body,
             .date-note-block .date-note-inner {
-                display: block; white-space: nowrap;
-                overflow: hidden; text-overflow: ellipsis;
+                display: -webkit-box; -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1; overflow: hidden; white-space: normal;
             }
+            /* Keep the children inline so the clamp measures one flowing line
+               rather than one line per paragraph. */
+            .inline-note .inline-note-body > *,
+            .date-note-block .date-note-inner > * { display: inline; margin: 0; }
+            .inline-note .inline-note-body img,
+            .date-note-block .date-note-inner img { display: none; }
 
             /* Card head on one row: done, type icon, lot, kebab — with the
                title and its badges on full-width rows underneath.
