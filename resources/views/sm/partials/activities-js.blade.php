@@ -3177,10 +3177,21 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('dateNoteClearBtn').classList.toggle('hidden', !existing);
         openSheet('dateNoteSheet');
         setDateNoteContent(existing);
-        // On a phone, focusing the editor throws the keyboard up over the note
-        // you just tapped to read. Let the sheet settle and leave the caret to
-        // a deliberate tap; a mouse still lands ready to type.
-        if (!window.matchMedia('(pointer: coarse)').matches) {
+        // On a phone the keyboard would cover the note you just tapped to read,
+        // before you have decided whether to change it. Skipping our own focus
+        // call is not enough: mounting Quill and filling it takes focus by
+        // itself, so hand it back to nothing once the sheet has settled. A
+        // mouse still lands ready to type, and a deliberate tap on the editor
+        // brings the keyboard up as expected.
+        if (window.matchMedia('(pointer: coarse)').matches) {
+            const drop = () => {
+                if (document.activeElement && $id('dateNoteSheet')?.contains(document.activeElement)) {
+                    document.activeElement.blur();
+                }
+            };
+            setTimeout(drop, 60);
+            setTimeout(drop, 320);   // after the sheet's open animation
+        } else {
             setTimeout(() => dateNoteQuill && dateNoteQuill.focus(), 250);
         }
     }
