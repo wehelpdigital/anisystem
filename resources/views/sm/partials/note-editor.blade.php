@@ -199,7 +199,28 @@
         del.textContent = opts.deleteLabel || 'Delete';
         $('noteEditorSave').textContent = opts.saveLabel || 'Save note';
         window.openSheet?.('noteEditorSheet');
-        setTimeout(() => quill && quill.focus(), 250);
+
+        // On a phone the keyboard would cover the note you just opened, before
+        // you have decided whether to change it. Focus cannot simply be cleared
+        // afterwards — Quill takes it while mounting and again when the body is
+        // set, so anything reacting later is racing it. The keyboard follows a
+        // focusable contenteditable, so do not present one: open read-only, and
+        // let the first tap enable editing and place the caret where the finger
+        // landed. Writing still takes a single tap. A mouse opens ready to type.
+        if (window.matchMedia('(pointer: coarse)').matches) {
+            const root = quill && quill.root;
+            if (root) {
+                root.setAttribute('contenteditable', 'false');
+                try { quill.blur(); } catch (_) {}
+                root.blur?.();
+                root.addEventListener('pointerdown', () => {
+                    root.setAttribute('contenteditable', 'true');
+                    setTimeout(() => { try { quill.focus(); } catch (_) {} }, 0);
+                }, { once: true });
+            }
+        } else {
+            setTimeout(() => quill && quill.focus(), 250);
+        }
     };
 })();
 </script>
