@@ -2516,6 +2516,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // On a phone the card is clamped to one line, so a tap means "show me
         // the rest", not "edit". The details sheet has an Edit button for when
         // that is what was wanted. On a mouse, tapping still opens the editor.
+        // A card that was just dragged to another day must not also count as a
+        // tap and open the details sheet on top of the move.
+        if (cardDragSwallowClick) return;
         if (window.matchMedia('(pointer: coarse)').matches) {
             openActivityInfo(card);
             return;
@@ -4590,6 +4593,101 @@ document.addEventListener('DOMContentLoaded', () => {
     let touchDrag = null;
 
     /** Translucent clone of `el`, sized to match and parked on <body>. */
+    /* ---- Touch drag for activity cards ---------------------------------
+     * Cards move between days with native HTML5 drag, which phones never fire
+     * for touch — so dragging an activity to another date simply did not work
+     * there. This is the same pointer-based approach the inline notes already
+     * use, kept deliberately small: it decides a target DAY and hands over to
+     * moveSingleActivity(), which already does the persistence, the undo entry
+     * and the renumbering.
+     */
+    let CARD_DRAG = null;
+    let cardDragSwallowClick = false;
+
+    function cardDragCleanup() {
+        if (!CARD_DRAG) return;
+        CARD_DRAG.ghost?.remove();
+        CARD_DRAG.card.classList.remove('dragging');
+        $qsa('.date-activities.drag-over').forEach((c) => c.classList.remove('drag-over'));
+        document.body.classList.remove('is-touch-dragging');
+        CARD_DRAG = null;
+    }
+
+    document.addEventListener('pointerdown', (e) => {
+        if (e.pointerType !== 'touch' || !window.matchMedia('(pointer: coarse)').matches) return;
+        const card = e.target.closest && e.target.closest('#activitiesList .activity-card[data-id]');
+        if (!card || card.getAttribute('data-is-done') === '1') return;
+        // Controls own their taps; a drag must not start from one.
+        if (e.target.closest('button, a, input, label, .item-tag, [contenteditable]')) return;
+
+        CARD_DRAG = { card, id: e.pointerId, startX: e.clientX, startY: e.clientY, active: false, ghost: null, offX: 0, offY: 0 };
+    }, { passive: true });
+
+    document.addEventListener('pointermove', (e) => {
+        if (!CARD_DRAG || e.pointerId !== CARD_DRAG.id) return;
+
+        if (!CARD_DRAG.active) {
+            // A finger wanders on a plain tap, so wait for real travel before
+            // claiming the gesture — otherwise tapping a card to read it would
+            // flinch into a drag.
+            if (Math.hypot(e.clientX - CARD_DRAG.startX, e.clientY - CARD_DRAG.startY) < THRESH_TOUCH) return;
+            CARD_DRAG.active = true;
+            const rect = CARD_DRAG.card.getBoundingClientRect();
+            CARD_DRAG.offX = CARD_DRAG.startX - rect.left;
+            CARD_DRAG.offY = CARD_DRAG.startY - rect.top;
+            CARD_DRAG.ghost = buildDragGhost(CARD_DRAG.card);
+            CARD_DRAG.card.classList.add('dragging');
+            document.body.classList.add('is-touch-dragging');
+            try { CARD_DRAG.card.setPointerCapture(e.pointerId); } catch (_) { /* noop */ }
+        }
+
+        e.preventDefault();
+        CARD_DRAG.ghost.style.transform = `translate(${e.clientX - CARD_DRAG.offX}px, ${e.clientY - CARD_DRAG.offY}px)`;
+
+        // Highlight the day under the finger. The ghost is under the pointer,
+        // so it has to be ignored while asking what is beneath.
+        CARD_DRAG.ghost.style.pointerEvents = 'none';
+        const under = document.elementFromPoint(e.clientX, e.clientY);
+        const container = under && under.closest ? under.closest('.date-activities[data-date]') : null;
+        $qsa('.date-activities.drag-over').forEach((c) => { if (c !== container) c.classList.remove('drag-over'); });
+        if (container) container.classList.add('drag-over');
+
+        // Reaching a day that is off-screen needs the page to come to you.
+        const pad = 90;
+        if (e.clientY < pad) window.scrollBy(0, -14);
+        else if (e.clientY > window.innerHeight - pad) window.scrollBy(0, 14);
+    }, { passive: false });
+
+    function endCardDrag(commit) {
+        if (!CARD_DRAG) return;
+        const { card, active } = CARD_DRAG;
+        const target = $qs('.date-activities.drag-over');
+        const newDate = target ? (target.getAttribute('data-date') || '').trim() : '';
+        const oldDate = (card.getAttribute('data-target-date') || '').trim();
+        cardDragCleanup();
+
+        if (!active) return;
+        // A drag that ended on a card must not also register as a tap opening
+        // the details sheet.
+        cardDragSwallowClick = true;
+        setTimeout(() => { cardDragSwallowClick = false; }, 400);
+
+        if (commit && newDate && newDate !== oldDate) {
+            moveSingleActivity(card.getAttribute('data-id'), newDate);
+        }
+    }
+
+    // Only the finger that started the drag may end it, so scrolling with a
+    // second finger does not drop the card mid-move.
+    document.addEventListener('pointerup', (e) => {
+        if (CARD_DRAG && e.pointerId !== CARD_DRAG.id) return;
+        endCardDrag(true);
+    });
+    document.addEventListener('pointercancel', (e) => {
+        if (CARD_DRAG && e.pointerId !== CARD_DRAG.id) return;
+        endCardDrag(false);
+    });
+
     function buildDragGhost(el) {
         const rect = el.getBoundingClientRect();
         const ghost = el.cloneNode(true);
