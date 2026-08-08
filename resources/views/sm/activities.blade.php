@@ -293,12 +293,17 @@
             /* The kebab is wrapped in its own actions box, so the auto margin
                has to go on that box — the flex item of this row — not on the
                button inside it, or nothing pushes it to the right. */
+            /* Pin the kebab to the card's own top-right corner rather than
+               aligning it within the head row. As a flex item its position
+               depended on how tall the lot row happened to be, so it drifted
+               off the line the check and type icon sit on; anchored to the
+               card it is in the corner regardless of what the row contains.
+               The row reserves space so a long lot name cannot run under it. */
+            .activity-card { position: relative; }
             .activity-card > .flex.items-start.justify-between > .flex.items-center {
-                /* Top-right corner of the card: the auto margin pushes it to
-                   the right edge, flex-start keeps it level with the top of
-                   the row rather than floating down to the row's middle. */
-                flex: 0 0 auto; align-self: flex-start; margin-left: auto;
+                position: absolute; top: .55rem; right: .55rem; margin: 0;
             }
+            .activity-card > .flex.items-start.justify-between { padding-right: 2.4rem; }
             .activity-card .card-menu-btn { flex: 0 0 auto; }
 
             /* Title and tags each claim their own full-width row. */
