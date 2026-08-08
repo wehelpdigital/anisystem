@@ -278,12 +278,25 @@
             .activity-card .done-check,
             .activity-card .type-ico { flex: 0 0 auto; align-self: center; }
             .activity-card .activity-card-lothead {
+                /* The tag's cap height sits high in its box, so centring the
+                   box still reads as high against the round icons either side.
+                   Nudge it down to sit on their optical centre. */
+                /* Nudged with position, not margin: on a centred flex item a
+                   top margin grows the margin box and the centring gives back
+                   half of it, so the tag barely moves. */
                 flex: 1 1 auto; min-width: 0; align-self: center;
+                position: relative; top: .18rem;
                 display: flex; flex-wrap: nowrap; gap: .25rem;
                 overflow-x: auto; scrollbar-width: none;
             }
             .activity-card .activity-card-lothead::-webkit-scrollbar { display: none; }
-            .activity-card .card-menu-btn { flex: 0 0 auto; align-self: center; margin-left: auto; }
+            /* The kebab is wrapped in its own actions box, so the auto margin
+               has to go on that box — the flex item of this row — not on the
+               button inside it, or nothing pushes it to the right. */
+            .activity-card > .flex.items-start.justify-between > .flex.items-center {
+                flex: 0 0 auto; align-self: center; margin-left: auto;
+            }
+            .activity-card .card-menu-btn { flex: 0 0 auto; }
 
             /* Title and tags each claim their own full-width row. */
             .activity-card .activity-card-title,
