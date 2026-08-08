@@ -2390,6 +2390,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Single-card move-to-date (mobile fallback for drag & drop).
     let CARD_MENU = { id: null, name: '' };
+    let INFO_ID = null;
+
+    /**
+     * Show one activity in full on a phone.
+     *
+     * The body is a clone of the card rather than a rebuilt copy: the card is
+     * already rendered twice (Blade and JS) and a third spelling would be a
+     * third thing to keep in step. Cloning also means anything added to a card
+     * later shows up here for free. Controls are stripped from the clone —
+     * acting on the activity belongs to the kebab sheet, not to a read view.
+     */
+    function openActivityInfo(card) {
+        const body = $id('activityInfoBody');
+        if (!body || !card) return;
+
+        INFO_ID = card.getAttribute('data-id');
+        const clone = card.cloneNode(true);
+        clone.removeAttribute('draggable');
+        clone.querySelectorAll('button, [data-sheet-open]').forEach((el) => el.remove());
+        body.innerHTML = '';
+        body.appendChild(clone);
+        openSheet('activityInfoSheet');
+    }
+
+    $id('activityInfoEdit')?.addEventListener('click', () => {
+        const id = INFO_ID;
+        closeSheet('activityInfoSheet');
+        if (id) openEditActivitySheet(id);
+    });
 
     function moveSingleActivity(id, newDate) {
         const card = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
@@ -2650,6 +2679,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (done) Promise.resolve(toggleActivityHidden(hideBtn.getAttribute('data-id'))).finally(done);
             return;
         }
+        // Tapping the card body on a phone opens the full activity. Cards clamp
+        // their title and description to one line to stay scannable, so without
+        // this the trimmed detail would be unreachable. Only when the tap is not
+        // on a control, and only where the clamping happens.
+        const infoCard = e.target.closest('.activity-card');
+        if (infoCard
+            && window.matchMedia('(pointer: coarse)').matches
+            && !e.target.closest('button, a, input, label, .item-tag, [data-sheet-open], [contenteditable]')) {
+            openActivityInfo(infoCard);
+            return;
+        }
+
         const menuBtn = e.target.closest('.card-menu-btn');
         if (menuBtn) {
             CARD_MENU = { id: menuBtn.getAttribute('data-id'), name: menuBtn.getAttribute('data-name') || 'Activity' };

@@ -406,10 +406,31 @@
     </div>
 </div>
 
+{{-- Activity details (phones). Cards clamp their title and description to one
+     line to stay scannable, so tapping one opens the whole thing here. The body
+     is filled with a clone of the card itself, which keeps this in step with
+     whatever a card shows without a third copy of that markup to maintain. --}}
+<div class="sheet hidden" id="activityInfoSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Activity details</h3>
+        <button type="button" class="icon-btn" data-sheet-close aria-label="Close">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+    </div>
+    <div class="sheet-body activity-info-body" id="activityInfoBody"></div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost" data-sheet-close>Close</button>
+        <button type="button" class="btn btn-primary" id="activityInfoEdit">Edit</button>
+    </div>
+</div>
+
 <div class="sheet hidden" id="cardMenuSheet" style="--sheet-width:24rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title truncate" id="cardMenuTitle">Activity</h3>
+        {{-- Not truncated: this sheet exists to act on one activity, so which
+             one it is has to be legible. Two lines, then an ellipsis. --}}
+        <h3 class="sheet-title card-menu-title" id="cardMenuTitle">Activity</h3>
         <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">

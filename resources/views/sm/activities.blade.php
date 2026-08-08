@@ -235,6 +235,28 @@
            badge; the folded range is a phone-only spelling. */
         .dh-short, .dh-rangeshort { display: none; }
 
+        /* The kebab sheet names the activity it is about to act on, so the name
+           has to be readable — two lines before it gives up, not one clipped. */
+        .card-menu-title {
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+            overflow: hidden; line-height: 1.3;
+        }
+
+        /* The details sheet is where the trimmed text is meant to be readable,
+           so undo the card's clamping inside it — these override the one-line
+           rules because they are later and carry the extra class. */
+        .activity-info-body .activity-card {
+            border: 0; box-shadow: none; padding: 0; background: transparent;
+        }
+        .activity-info-body .activity-card-title {
+            display: block; white-space: normal; overflow: visible;
+            text-overflow: clip; -webkit-line-clamp: unset; font-size: 1.05rem;
+        }
+        .activity-info-body .activity-description-content {
+            display: block; -webkit-line-clamp: unset; overflow: visible;
+        }
+        .activity-info-body .activity-card-lothead { overflow: visible; flex-wrap: wrap; }
+
         /* ---- Mobile: day header, notes and activity cards ----
            Everything below is phone-only; the desktop layout is untouched. */
         @media (max-width: 767px) {
