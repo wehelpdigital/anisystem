@@ -3161,16 +3161,38 @@ document.addEventListener('DOMContentLoaded', () => {
         dateNoteQuill.setContents([]);
         if (html && html.trim() !== '') dateNoteQuill.clipboard.dangerouslyPasteHTML(html);
 
-        // Pasting the existing note leaves the caret in the editor, and a caret
-        // in a contenteditable is what raises the phone keyboard — so the sheet
-        // opened with half of itself hidden. Drop the selection here, right
-        // after the paste that caused it, rather than on a timer that has to
-        // outrace Quill. Both the Quill selection and the DOM focus have to go:
-        // clearing only the former leaves the element focused.
-        if (window.matchMedia('(pointer: coarse)').matches) {
-            try { dateNoteQuill.blur(); } catch (_) {}
-            dateNoteQuill.root?.blur?.();
-        }
+        disarmDateNoteEditorOnTouch();
+    }
+
+    /**
+     * On a phone, open the note read-only.
+     *
+     * Chasing the focus did not work: Quill takes it while mounting, again when
+     * dangerouslyPasteHTML() drops the caret in, and a blur on a timer has to
+     * win a race it does not reliably win. A contenteditable element is what
+     * the keyboard follows, so simply do not present one until it is wanted —
+     * then nothing can steal focus, because there is nothing focusable.
+     *
+     * The first tap on the editor turns editing on and puts the caret where the
+     * finger landed, so writing a note still takes one tap, exactly as before.
+     */
+    function disarmDateNoteEditorOnTouch() {
+        if (!dateNoteQuill || !window.matchMedia('(pointer: coarse)').matches) return;
+
+        const root = dateNoteQuill.root;
+        if (!root) return;
+
+        root.setAttribute('contenteditable', 'false');
+        try { dateNoteQuill.blur(); } catch (_) {}
+        root.blur?.();
+
+        const arm = () => {
+            root.setAttribute('contenteditable', 'true');
+            // Focus after the tap has been processed, so the caret lands where
+            // it was tapped instead of at the start of the note.
+            setTimeout(() => { try { dateNoteQuill.focus(); } catch (_) {} }, 0);
+        };
+        root.addEventListener('pointerdown', arm, { once: true });
     }
     function getDateNoteContent() {
         if (!dateNoteQuill) return '';
@@ -3194,15 +3216,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // itself, so hand it back to nothing once the sheet has settled. A
         // mouse still lands ready to type, and a deliberate tap on the editor
         // brings the keyboard up as expected.
-        if (window.matchMedia('(pointer: coarse)').matches) {
-            const drop = () => {
-                if (document.activeElement && $id('dateNoteSheet')?.contains(document.activeElement)) {
-                    document.activeElement.blur();
-                }
-            };
-            setTimeout(drop, 60);
-            setTimeout(drop, 320);   // after the sheet's open animation
-        } else {
+        // Touch opens read-only (see disarmDateNoteEditorOnTouch), so there is
+        // nothing to blur here — and a delayed blur would now fire after a
+        // quick tap and shut the keyboard just as you started typing.
+        if (!window.matchMedia('(pointer: coarse)').matches) {
             setTimeout(() => dateNoteQuill && dateNoteQuill.focus(), 250);
         }
     }
