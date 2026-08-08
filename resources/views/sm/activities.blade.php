@@ -1372,7 +1372,8 @@
                         <svg class="date-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                         @if ($dateCarbon)
                             <span class="date-header-day">{{ $dateCarbon->format('D') }}</span>
-                            <span class="date-header-date">{{ $dateCarbon->format('M j, Y') }}</span>
+                            {{-- Twin of the JS renderer: both spellings, CSS picks one. --}}
+                            <span class="date-header-date"><span class="dh-long">{{ $dateCarbon->format('M j, Y') }}</span><span class="dh-short">{{ $dateCarbon->format('M j, y') }}</span></span>
                             @if ($latestEndCarbon)
                                 <span class="date-header-range" title="At least one activity extends through {{ $latestEndCarbon->format('M j, Y') }}">
                                     &rarr; {{ $latestEndCarbon->format('M j') }}@if($latestEndCarbon->year !== $dateCarbon->year), {{ $latestEndCarbon->year }}@endif ({{ $groupSpanDays }}d)
@@ -1381,7 +1382,7 @@
                         @else
                             <span class="date-header-date">No date</span>
                         @endif
-                        <span class="date-header-count">{{ $activitiesForDate->count() }} {{ Str::plural('activity', $activitiesForDate->count()) }}</span>
+                        <span class="date-header-count">{{ $activitiesForDate->count() }}<span class="dh-word"> {{ Str::plural('activity', $activitiesForDate->count()) }}</span></span>
                         @if ($dateKey !== '__no-date__')
                             <button type="button" class="date-header-btn group-add-activity-btn" data-date="{{ $dateKey }}" title="Add a new activity to this date">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
