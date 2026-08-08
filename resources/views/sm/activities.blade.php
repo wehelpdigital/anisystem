@@ -252,9 +252,18 @@
                the weather chips. On a phone that wrap is what threw the + and
                the kebab onto a second line: keep one row and let the chips —
                the only thing here that can afford to lose width — give way. */
-            .date-header { flex-wrap: nowrap; }
+            /* Keep the date, count, + and kebab together on the first line, and
+               drop the weather onto a full-width line of its own beneath them.
+               Squeezing it into the same row is what clipped the forecast: the
+               chips are a scrolling strip, so denying them width hides days
+               rather than shrinking them. Order puts them last whatever their
+               position in the markup. */
+            .date-header { flex-wrap: wrap; }
             .date-header > * { flex-shrink: 0; }
-            .date-header-weather { flex: 0 1 auto; min-width: 0; overflow: hidden; }
+            .date-header-weather {
+                order: 10; flex: 1 0 100%; width: 100%; min-width: 0;
+                overflow-x: auto; overflow-y: hidden;
+            }
             .date-header-range { flex: 0 1 auto; min-width: 0; overflow: hidden; }
         }
 
