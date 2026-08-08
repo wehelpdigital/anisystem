@@ -191,7 +191,16 @@
         cfg = opts || {};
         ensureQuill();
         $('noteEditorTitle').textContent = opts.title || 'Note';
-        if (quill) quill.root.innerHTML = opts.bodyHtml || '';
+        // Load through Quill rather than assigning root.innerHTML. Quill decides
+        // whether to draw the placeholder from its own ql-blank class, which it
+        // only maintains for content it applied itself — writing the HTML in
+        // behind its back left it believing the editor was empty, so the
+        // placeholder sat on top of the note.
+        if (quill) {
+            const bodyHtml = opts.bodyHtml || '';
+            quill.setContents([]);
+            if (bodyHtml.trim() !== '') quill.clipboard.dangerouslyPasteHTML(bodyHtml);
+        }
         media = Array.isArray(opts.media) ? opts.media.map((m) => ({ ...m })) : [];
         renderThumbs();
         const del = $('noteEditorDelete');
