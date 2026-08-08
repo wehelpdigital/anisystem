@@ -611,8 +611,15 @@ document.addEventListener('DOMContentLoaded', () => {
             rangeBadge = `<span class="date-header-range" title="At least one activity extends through ${esc(prettyDate(isoFromDate(latestEndObj)))}">&rarr; ${esc(endLabel)} (${spanDays}d)</span>`;
         }
 
+        // Two spellings of the same date, picked by CSS rather than a resize
+        // listener. On a phone the full year plus the word "activities" pushed
+        // the kebab onto a second line, so the short forms carry the mobile
+        // header: "Jun 17, 26" and a bare count.
+        const dateShort = dateObj
+            ? `${MONTH_SHORT[dateObj.getMonth()]} ${dateObj.getDate()}, ${String(dateObj.getFullYear()).slice(-2)}`
+            : '';
         const headerDate = dateObj
-            ? `<span class="date-header-day">${DAY_SHORT[dateObj.getDay()]}</span><span class="date-header-date">${esc(prettyDate(dateKey))}</span>${rangeBadge}`
+            ? `<span class="date-header-day">${DAY_SHORT[dateObj.getDay()]}</span><span class="date-header-date"><span class="dh-long">${esc(prettyDate(dateKey))}</span><span class="dh-short">${esc(dateShort)}</span></span>${rangeBadge}`
             : '<span class="date-header-date">No date</span>';
 
         const hasNote = !isNoDate && (noteContent || '') !== '';
@@ -638,7 +645,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="date-header"${dateObj ? ' draggable="true" title="Drag this header to move the whole day to another date"' : ''}>
                 <svg class="date-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 ${headerDate}
-                <span class="date-header-count">${count} ${count === 1 ? 'activity' : 'activities'}</span>
+                <span class="date-header-count">${count}<span class="dh-word"> ${count === 1 ? 'activity' : 'activities'}</span></span>
                 ${buttons}
             </div>
             <div class="date-body"><div class="date-body-inner">
@@ -1746,6 +1753,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const activitySheetEl = $id('activitySheet');
     activitySheetEl?.addEventListener('sheet:open', () => {
         setTimeout(initDescriptionEditor, 40);   // Quill needs a visible mount
+        // Mounting the editor takes focus, which on a phone throws the keyboard
+        // up the instant the sheet appears — covering half the form before you
+        // have picked a lot or a type. Drop focus on touch devices; tapping the
+        // field you actually want still brings the keyboard up.
+        if (window.matchMedia('(pointer: coarse)').matches) {
+            const drop = () => document.activeElement?.blur?.();
+            setTimeout(drop, 90);
+            setTimeout(drop, 300);   // after the sheet's open animation settles
+        }
     });
     activitySheetEl?.addEventListener('sheet:close', () => {
         destroyDescriptionEditor();

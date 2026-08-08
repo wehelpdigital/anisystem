@@ -5,6 +5,10 @@
 @section('page-subtitle', $schedule->title)
 @section('back', route('sm.hub', ['id' => $schedule->id]))
 
+{{-- The activity board is the work surface: on a phone the bottom tab bar eats
+     a strip of it for navigation that Back already provides. --}}
+@section('body-class', 'hide-tabbar')
+
 @if (request()->boolean('embed'))
 @push('head')
 <script>document.documentElement.classList.add('collab-embed');</script>
@@ -222,6 +226,52 @@
         .date-note-del:hover { background: #fee2e2; }
         .date-note-edit:hover { background: #eef7e8; }
         .date-note-del:active, .date-note-edit:active { transform: scale(.9); }
+
+        /* Desktop keeps the full date and the word "activities". */
+        .dh-short { display: none; }
+
+        /* ---- Mobile: day header, notes and activity cards ----
+           Everything below is phone-only; the desktop layout is untouched. */
+        @media (max-width: 767px) {
+            /* "Jun 17, 2026" -> "Jun 17, 26" and "2 activities" -> "2", so the
+               date, the count and the kebab all fit on one line. */
+            .dh-long, .dh-word { display: none; }
+            .dh-short { display: inline; }
+
+            /* The note text reserved 2.2rem on the right, but the edit button
+               starts at 2.6rem — so both buttons sat on top of the words. Clear
+               the pair properly, and keep them visible: there is no hover on a
+               phone, so a reveal-on-hover control is one you can never see. */
+            .date-note-inner { padding-right: 4.9rem; }
+            .date-note-edit, .date-note-del { opacity: 1; }
+
+            /* Card head on one row: done, type icon, lot, kebab — with the
+               title and its badges on full-width rows underneath.
+               `display: contents` lifts the two wrapper divs out of the way so
+               their children become items of the head row directly, which lets
+               the row wrap where we want without restructuring the markup (the
+               Blade partial and the JS renderer are twins and must stay
+               identical, so a DOM change would have to be made twice). */
+            .activity-card > .flex.items-start.justify-between { flex-wrap: wrap; row-gap: .4rem; }
+            .activity-card > .flex.items-start.justify-between > .flex.items-start { display: contents; }
+            .activity-card > .flex.items-start.justify-between > .flex.items-start > .min-w-0.grow { display: contents; }
+
+            .activity-card .done-check,
+            .activity-card .type-ico { flex: 0 0 auto; align-self: center; }
+            .activity-card .activity-card-lothead {
+                flex: 1 1 auto; min-width: 0; align-self: center;
+                display: flex; flex-wrap: nowrap; gap: .25rem;
+                overflow-x: auto; scrollbar-width: none;
+            }
+            .activity-card .activity-card-lothead::-webkit-scrollbar { display: none; }
+            .activity-card .card-menu-btn { flex: 0 0 auto; align-self: center; margin-left: auto; }
+
+            /* Title and tags each claim their own full-width row. */
+            .activity-card .activity-card-title,
+            .activity-card .activity-card-badges,
+            .activity-card .activity-card-lotmeta { flex: 0 0 100%; width: 100%; min-width: 0; }
+            .activity-card .activity-card-title { margin-top: .1rem; }
+        }
         .date-note-block.dragging, .progress-marker.dragging { opacity: .45; }
         .progress-marker[draggable="true"] { cursor: grab; }
         html.dark .date-note-block:hover { border-color: #eec155; }
