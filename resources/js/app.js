@@ -110,6 +110,37 @@ Alpine.start();
 })();
 
 /* ------------------------------------------------------------------ */
+/* Release the page-entrance class once it has played                   */
+/*                                                                      */
+/* .app-enter animates <main>'s opacity, and an element with a running  */
+/* or filling animation on opacity is a stacking context. Every fixed   */
+/* overlay rendered inside the page — the AI float, the team chat panel */
+/* and its camera/call buttons, Quick Capture, the note editor, the     */
+/* whiteboard — is therefore trapped inside <main> and painted beneath  */
+/* the mobile tab bar (.tabbar, z-30), however high its own z-index is. */
+/* Dropping the class after the fade removes the stacking context, so   */
+/* those overlays stack against the viewport as their z-index intends.  */
+/* Nothing moves: the animation has already finished at opacity 1.      */
+/* ------------------------------------------------------------------ */
+(function releasePageEntrance() {
+    const start = () => {
+        document.querySelectorAll('.app-enter').forEach((el) => {
+            const release = () => el.classList.remove('app-enter');
+            el.addEventListener('animationend', release, { once: true });
+            // Reduced motion sets `animation: none`, so animationend never
+            // fires — and a trapped overlay is worse than a missing fade.
+            setTimeout(release, 800);
+        });
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+    } else {
+        start();
+    }
+})();
+
+/* ------------------------------------------------------------------ */
 /* CSRF + API helper                                                    */
 /* All schedule-manager endpoints reply {success, message, data}.       */
 /* ------------------------------------------------------------------ */
