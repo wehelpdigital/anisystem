@@ -192,6 +192,21 @@ input[type="file"].form-input::-webkit-file-upload-button { margin-right: .75rem
     pointer-events: none;
     transition: transform 0.3s ease-out, visibility 0s linear 0.3s;
 }
+/* While a sheet is open the page's floating widgets step aside. They are
+   stacked above sheets (the AI float is z-60 against the sheet's z-50), so a
+   bubble would otherwise sit on top of the sheet's Cancel/Save row and take
+   the taps meant for it. Fading rather than snapping, per the house easing. */
+html.sheet-open .ai-float,
+html.sheet-open .team-float {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .28s cubic-bezier(.22, 1, .36, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+    html.sheet-open .ai-float,
+    html.sheet-open .team-float { transition: none; }
+}
+
 .sheet.is-open {
     transform: translateY(0);
     visibility: visible;

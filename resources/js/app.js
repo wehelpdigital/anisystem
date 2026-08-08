@@ -264,6 +264,10 @@ window.openSheet = function openSheet(id) {
     });
     openSheets.push(el);
     document.documentElement.style.overflow = 'hidden';
+    // Floating widgets (the AI technician, the team chat) sit above sheets in
+    // the stack, so their bubbles landed on top of a sheet's Cancel/Save row.
+    // A sheet is modal: nothing else should be reachable while it is open.
+    document.documentElement.classList.add('sheet-open');
     el.dispatchEvent(new CustomEvent('sheet:open'));
 };
 
@@ -276,6 +280,7 @@ window.closeSheet = function closeSheet(id) {
     if (openSheets.length === 0) {
         ensureBackdrop().classList.remove('is-open');
         document.documentElement.style.overflow = '';
+        document.documentElement.classList.remove('sheet-open');
     }
     setTimeout(() => {
         el.classList.add('hidden');
