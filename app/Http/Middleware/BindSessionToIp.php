@@ -83,7 +83,17 @@ class BindSessionToIp
         return $this->networkPrefix($bound, $boundV4) !== $this->networkPrefix($current, $currentV4);
     }
 
-    /** Leading bytes that identify the network: IPv4 /24 (3 bytes), IPv6 /48 (6 bytes). */
+    /**
+     * Leading bytes that identify the network: IPv4 /16 (2 bytes), IPv6 /48
+     * (6 bytes).
+     *
+     * IPv4 was compared at /24, which is far too tight for the carrier-grade
+     * NAT most Filipino users reach us through: a phone sitting still on mobile
+     * data hops around its provider's pool all day — 152.233.68.x to
+     * 152.233.15.x within one session was enough to force a sign-out mid-edit.
+     * Those are the same ISP allocation, and /16 keeps them together while a
+     * jump to a genuinely different provider still ends the session.
+     */
     private function networkPrefix(string $ip, bool $isV4): ?string
     {
         $packed = @inet_pton($ip);
@@ -91,6 +101,6 @@ class BindSessionToIp
             return $ip; // unparseable — fall back to the whole string
         }
 
-        return substr($packed, 0, $isV4 ? 3 : 6);
+        return substr($packed, 0, $isV4 ? 2 : 6);
     }
 }

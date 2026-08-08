@@ -21,8 +21,33 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class EnforceSingleSession
 {
+    /**
+     * Development hosts do not compete for the slot.
+     *
+     * Local and deployed now run against one shared database, so they also
+     * share `currentSessionId`. Being signed in on localhost and on the live
+     * site at once made every request from one flush the other, the remember
+     * cookie re-claimed it, and the two bounced forever — a save or a card move
+     * landing on the losing side simply signed the user out. Real users are all
+     * on the deployed host, so ignoring dev origins costs the deterrent nothing.
+     */
+    private function isDevHost(Request $request): bool
+    {
+        $host = strtolower((string) $request->getHost());
+
+        return $host === 'localhost'
+            || $host === '127.0.0.1'
+            || $host === '::1'
+            || str_ends_with($host, '.test')
+            || str_ends_with($host, '.localhost');
+    }
+
     public function handle(Request $request, Closure $next): Response
     {
+        if ($this->isDevHost($request)) {
+            return $next($request);
+        }
+
         if (Auth::check()) {
             $user = Auth::user();
             $sid = $request->session()->getId();
