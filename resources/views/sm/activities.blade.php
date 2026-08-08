@@ -248,14 +248,23 @@
         .activity-info-body .activity-card {
             border: 0; box-shadow: none; padding: 0; background: transparent;
         }
-        .activity-info-body .activity-card-title {
+        /* Three class selectors on purpose. The card's one-line rules are
+           `.activity-card .activity-card-title` — the same weight as a
+           two-class override — and they sit later in this file, so an equal
+           match would lose on source order and the sheet built to show the
+           full text would keep hiding it. */
+        .activity-info-body .activity-card .activity-card-title {
             display: block; white-space: normal; overflow: visible;
             text-overflow: clip; -webkit-line-clamp: unset; font-size: 1.05rem;
         }
-        .activity-info-body .activity-description-content {
+        .activity-info-body .activity-card .activity-description-content {
             display: block; -webkit-line-clamp: unset; overflow: visible;
+            max-height: none;
         }
-        .activity-info-body .activity-card-lothead { overflow: visible; flex-wrap: wrap; }
+        .activity-info-body .activity-card .activity-card-lothead {
+            overflow: visible; flex-wrap: wrap;
+        }
+        .activity-info-body .activity-card .activity-card-badges { flex-wrap: wrap; }
 
         /* ---- Mobile: day header, notes and activity cards ----
            Everything below is phone-only; the desktop layout is untouched. */
