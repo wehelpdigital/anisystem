@@ -4052,7 +4052,12 @@ document.addEventListener('DOMContentLoaded', () => {
      * anywhere on the note. */
     (function inlineNotePointerDrag() {
         let d = null;
+        // How far a pointer must travel before a press becomes a drag. A mouse
+        // is precise, but a finger rolls several pixels on a plain tap — at 5px
+        // that made tapping a note start a drag, so the note dimmed, a ghost
+        // appeared and both were undone on release. That flinch is the "shake".
         const THRESH = 5;
+        const THRESH_TOUCH = 14;
         let swallowClick = false;
         document.addEventListener('click', (e) => {
             if (!swallowClick) return;
@@ -4091,7 +4096,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('pointermove', (e) => {
             if (!d || e.pointerId !== d.id) return;
             if (!d.active) {
-                if (Math.hypot(e.clientX - d.startX, e.clientY - d.startY) < THRESH) return;
+                const slop = e.pointerType === 'touch' ? THRESH_TOUCH : THRESH;
+                if (Math.hypot(e.clientX - d.startX, e.clientY - d.startY) < slop) return;
                 d.active = true;
                 if (d.lpTimer) { clearTimeout(d.lpTimer); d.lpTimer = null; }
                 try { d.note.setPointerCapture(e.pointerId); } catch (_) { /* noop */ }
