@@ -327,7 +327,28 @@
             .activity-card .activity-card-title,
             .activity-card .activity-card-badges,
             .activity-card .activity-card-lotmeta { flex: 0 0 100%; width: 100%; min-width: 0; }
-            .activity-card .activity-card-title { margin-top: .1rem; }
+            /* One line each, trimmed with an ellipsis. A long title used to wrap
+               to three or four lines and push everything below it down the
+               screen, so a card told you less per scroll than a short one did.
+               The full text is a tap away in the activity itself. */
+            .activity-card .activity-card-title {
+                margin-top: .1rem;
+                /* The two-line clamp further down this file is a -webkit-box,
+                   which cannot survive here: on mobile the title is a flex item
+                   (its wrappers are display:contents), and a flex item blockifies
+                   that box, so the clamp silently stops applying. Take the title
+                   out of flex layout with a block display, then a plain
+                   single-line ellipsis works. */
+                display: block;
+                white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            }
+            /* The description is rich text, so its children are blocks and
+               text-overflow has nothing to act on — clamp the box instead. */
+            .activity-card .activity-description-content {
+                display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .activity-card .activity-description-content > * { margin: 0; }
         }
         .date-note-block.dragging, .progress-marker.dragging { opacity: .45; }
         .progress-marker[draggable="true"] { cursor: grab; }
