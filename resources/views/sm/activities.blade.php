@@ -299,7 +299,10 @@
         html.dark .date-note-edit { color: #9fd979; }
         @media (hover: none), (pointer: coarse) {
             .date-note-edit, .date-note-del { opacity: 1; width: 2.4rem; height: 2.4rem; }
-            .date-note-inner { padding-right: 2.8rem; }
+            /* Clears the edit button's far edge: right 3rem + 2.4rem wide, plus
+               a gap. It was 2.8rem, which did not even reach the button's near
+               edge — so on a phone the note text ran underneath both buttons. */
+            .date-note-inner { padding-right: 5.7rem; }
             .date-note-edit { right: 3rem; }
             .date-note-edit svg, .date-note-del svg { width: 1.35rem; height: 1.35rem; }
         }
