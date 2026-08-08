@@ -3177,7 +3177,12 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('dateNoteClearBtn').classList.toggle('hidden', !existing);
         openSheet('dateNoteSheet');
         setDateNoteContent(existing);
-        setTimeout(() => dateNoteQuill && dateNoteQuill.focus(), 250);
+        // On a phone, focusing the editor throws the keyboard up over the note
+        // you just tapped to read. Let the sheet settle and leave the caret to
+        // a deliberate tap; a mouse still lands ready to type.
+        if (!window.matchMedia('(pointer: coarse)').matches) {
+            setTimeout(() => dateNoteQuill && dateNoteQuill.focus(), 250);
+        }
     }
 
     // The per-day note now uses the shared rich editor (draw + emoji + media).
