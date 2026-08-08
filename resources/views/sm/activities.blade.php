@@ -212,7 +212,11 @@
         .date-note-block:hover { border-color: #f5c518; box-shadow: 0 1px 6px rgb(0 0 0 / .06); }
         /* Edit + delete buttons — reveal on hover (desktop), always shown on
            touch. Delete = red trash, edit = green pencil, on a white chip. */
-        .date-note-inner { padding-right: 2.2rem; }
+        /* Clears the edit button's far edge (right 2.6rem + 1.9rem wide) plus a
+           gap. Unconditional on purpose: the buttons are absolutely positioned
+           over this text, and tying the reservation to a media query means the
+           two drift apart the moment either is touched. */
+        .date-note-inner { padding-right: 4.9rem; }
         .date-note-edit, .date-note-del {
             position: absolute; top: .3rem; width: 1.9rem; height: 1.9rem; border-radius: 999px;
             display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
@@ -242,7 +246,22 @@
                starts at 2.6rem — so both buttons sat on top of the words. Clear
                the pair properly, and keep them visible: there is no hover on a
                phone, so a reveal-on-hover control is one you can never see. */
-            .date-note-inner { padding-right: 4.9rem; }
+            .date-note-edit, .date-note-del { opacity: 1; }
+
+            /* The header is wrap-enabled for desktop, where there is room for
+               the weather chips. On a phone that wrap is what threw the + and
+               the kebab onto a second line: keep one row and let the chips —
+               the only thing here that can afford to lose width — give way. */
+            .date-header { flex-wrap: nowrap; }
+            .date-header > * { flex-shrink: 0; }
+            .date-header-weather { flex: 0 1 auto; min-width: 0; overflow: hidden; }
+            .date-header-range { flex: 0 1 auto; min-width: 0; overflow: hidden; }
+        }
+
+        /* Touch has no hover, so a reveal-on-hover control is one you can never
+           see — show the day-note pair outright. The room they need is already
+           reserved unconditionally above. */
+        @media (hover: none), (pointer: coarse) {
             .date-note-edit, .date-note-del { opacity: 1; }
 
             /* Card head on one row: done, type icon, lot, kebab — with the
@@ -300,7 +319,10 @@
         /* ---- Inline sticky notes: multiple per day, dropped between cards ---- */
         .inline-note {
             position: relative; background: var(--tl-note-bg); border: 1px dashed var(--tl-note-border);
-            border-radius: .6rem; padding: .5rem 3.5rem .5rem 1.85rem; font-size: .82rem; color: var(--tl-note-text);
+            /* Right padding clears the edit button at its largest — touch sizes
+               it 2.5rem wide at right 3.2rem — so the text never runs under it
+               on any device. 3.5rem only cleared the desktop pair. */
+            border-radius: .6rem; padding: .5rem 6.1rem .5rem 1.85rem; font-size: .82rem; color: var(--tl-note-text);
             word-break: break-word; cursor: grab;
             user-select: none; -webkit-user-select: none;
             transition: box-shadow .15s ease, border-color .15s ease;
