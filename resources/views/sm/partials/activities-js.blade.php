@@ -2484,6 +2484,13 @@ document.addEventListener('DOMContentLoaded', () => {
             openDoneNoteSheet(card.getAttribute('data-id'), $qs('.activity-card-title', card)?.textContent || 'Activity');
             return;
         }
+        // On a phone the card is clamped to one line, so a tap means "show me
+        // the rest", not "edit". The details sheet has an Edit button for when
+        // that is what was wanted. On a mouse, tapping still opens the editor.
+        if (window.matchMedia('(pointer: coarse)').matches) {
+            openActivityInfo(card);
+            return;
+        }
         openEditActivitySheet(card.getAttribute('data-id'));
     });
 
@@ -2679,18 +2686,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (done) Promise.resolve(toggleActivityHidden(hideBtn.getAttribute('data-id'))).finally(done);
             return;
         }
-        // Tapping the card body on a phone opens the full activity. Cards clamp
-        // their title and description to one line to stay scannable, so without
-        // this the trimmed detail would be unreachable. Only when the tap is not
-        // on a control, and only where the clamping happens.
-        const infoCard = e.target.closest('.activity-card');
-        if (infoCard
-            && window.matchMedia('(pointer: coarse)').matches
-            && !e.target.closest('button, a, input, label, .item-tag, [data-sheet-open], [contenteditable]')) {
-            openActivityInfo(infoCard);
-            return;
-        }
-
         const menuBtn = e.target.closest('.card-menu-btn');
         if (menuBtn) {
             CARD_MENU = { id: menuBtn.getAttribute('data-id'), name: menuBtn.getAttribute('data-name') || 'Activity' };
