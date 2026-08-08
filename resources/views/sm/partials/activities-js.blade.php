@@ -3160,6 +3160,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!dateNoteQuill) return;
         dateNoteQuill.setContents([]);
         if (html && html.trim() !== '') dateNoteQuill.clipboard.dangerouslyPasteHTML(html);
+
+        // Pasting the existing note leaves the caret in the editor, and a caret
+        // in a contenteditable is what raises the phone keyboard — so the sheet
+        // opened with half of itself hidden. Drop the selection here, right
+        // after the paste that caused it, rather than on a timer that has to
+        // outrace Quill. Both the Quill selection and the DOM focus have to go:
+        // clearing only the former leaves the element focused.
+        if (window.matchMedia('(pointer: coarse)').matches) {
+            try { dateNoteQuill.blur(); } catch (_) {}
+            dateNoteQuill.root?.blur?.();
+        }
     }
     function getDateNoteContent() {
         if (!dateNoteQuill) return '';
