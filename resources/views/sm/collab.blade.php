@@ -5,6 +5,11 @@
 @section('page-subtitle', $schedule->title)
 @section('back', route('sm.hub', ['id' => $schedule->id]))
 
+{{-- The room is a workspace, not a page you scroll: on a phone the bottom tab
+     bar covers the drawing surface and chat composer, so drop it here and give
+     the panels that strip back. Navigation is still one tap away via Back. --}}
+@section('body-class', 'hide-tabbar')
+
 @section('content')
 <div class="collab-wrap" id="collabRoom" data-schedule="{{ $schedule->id }}" data-owner="{{ (int) $schedule->anisystemUserId }}">
 
@@ -72,7 +77,11 @@
 @push('head')
 <style>
     .collab-wrap { display: flex; flex-direction: column; gap: .5rem; height: calc(100dvh - 8.5rem); min-height: 26rem; }
-    @media (max-width: 767px) { .collab-wrap { height: calc(100dvh - 7rem); } }
+    /* 7rem allowed for the header plus the tab bar; with the bar gone (see the
+       hide-tabbar body class above) 5rem lands the panel exactly on the bottom
+       edge — measured at 390x780, the surface gains 32px and stops being
+       clipped by the bar it used to sit under. */
+    @media (max-width: 767px) { .collab-wrap { height: calc(100dvh - 5rem); } }
 
     .collab-presence { display: flex; gap: .55rem; overflow-x: auto; padding: .15rem .1rem .35rem; scrollbar-width: none; flex-shrink: 0; }
     .collab-presence::-webkit-scrollbar { display: none; }

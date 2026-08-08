@@ -31,7 +31,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
 </head>
-<body class="min-h-screen bg-gray-50">
+{{-- `body-class` lets a page opt into layout-level changes, e.g. the Collab
+     Room hiding the mobile tab bar to use the full screen. --}}
+<body class="min-h-screen bg-gray-50 @yield('body-class')">
 
     {{-- Top app bar --}}
     <header class="sticky top-0 z-40 bg-white border-b border-gray-200">

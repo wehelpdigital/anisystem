@@ -261,6 +261,21 @@ input[type="file"].form-input::-webkit-file-upload-button { margin-right: .75rem
 .page-safe-bottom { padding-bottom: 5.5rem; }
 @media (min-width: 768px) { .page-safe-bottom { padding-bottom: 2rem; } }
 
+/* Pages that need the whole phone screen (the Collab Room) drop the tab bar,
+   via `@section('body-class', 'hide-tabbar')`. Desktop is untouched — .tabbar
+   is md:hidden already — but every offset that exists purely to clear the bar
+   has to come back down with it, otherwise hiding it just leaves a dead strip
+   where it used to be and nothing actually gets bigger. */
+.hide-tabbar .tabbar { display: none; }
+
+@media (max-width: 767px) {
+    .hide-tabbar .page-safe-bottom { padding-bottom: 1rem; }
+    .hide-tabbar footer { padding-bottom: 2rem; }
+    .hide-tabbar .ai-float,
+    .hide-tabbar .team-float { bottom: 1rem; }
+    .hide-tabbar .team-float.has-ai { bottom: 5rem; }
+}
+
 /* Simple utility for horizontal scrolling chip rows on mobile */
 .scroll-chips {
     @apply flex gap-2 overflow-x-auto pb-1 -mx-1 px-1;
