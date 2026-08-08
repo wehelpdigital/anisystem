@@ -615,11 +615,21 @@ document.addEventListener('DOMContentLoaded', () => {
         // listener. On a phone the full year plus the word "activities" pushed
         // the kebab onto a second line, so the short forms carry the mobile
         // header: "Jun 17, 26" and a bare count.
+        const yy = dateObj ? String(dateObj.getFullYear()).slice(-2) : '';
         const dateShort = dateObj
-            ? `${MONTH_SHORT[dateObj.getMonth()]} ${dateObj.getDate()}, ${String(dateObj.getFullYear()).slice(-2)}`
+            ? `${MONTH_SHORT[dateObj.getMonth()]} ${dateObj.getDate()}, ${yy}`
+            : '';
+        // A multi-day group spelled as one range — "Sep 25–28, 26" — instead of
+        // the start date plus an arrow badge repeating it. Same information in
+        // roughly half the width, which is what kept pushing the kebab off the
+        // line. The month is repeated only when the range crosses one.
+        const rangeShort = (dateObj && latestEndObj)
+            ? (latestEndObj.getMonth() === dateObj.getMonth() && latestEndObj.getFullYear() === dateObj.getFullYear()
+                ? `${MONTH_SHORT[dateObj.getMonth()]} ${dateObj.getDate()}–${latestEndObj.getDate()}, ${yy}`
+                : `${MONTH_SHORT[dateObj.getMonth()]} ${dateObj.getDate()} – ${MONTH_SHORT[latestEndObj.getMonth()]} ${latestEndObj.getDate()}, ${yy}`)
             : '';
         const headerDate = dateObj
-            ? `<span class="date-header-day">${DAY_SHORT[dateObj.getDay()]}</span><span class="date-header-date"><span class="dh-long">${esc(prettyDate(dateKey))}</span><span class="dh-short">${esc(dateShort)}</span></span>${rangeBadge}`
+            ? `<span class="date-header-day">${DAY_SHORT[dateObj.getDay()]}</span><span class="date-header-date${rangeShort ? ' has-range' : ''}"><span class="dh-long">${esc(prettyDate(dateKey))}</span><span class="dh-short">${esc(dateShort)}</span>${rangeShort ? `<span class="dh-rangeshort">${esc(rangeShort)}</span>` : ''}</span>${rangeBadge}`
             : '<span class="date-header-date">No date</span>';
 
         const hasNote = !isNoDate && (noteContent || '') !== '';

@@ -231,8 +231,9 @@
         .date-note-edit:hover { background: #eef7e8; }
         .date-note-del:active, .date-note-edit:active { transform: scale(.9); }
 
-        /* Desktop keeps the full date and the word "activities". */
-        .dh-short { display: none; }
+        /* Desktop keeps the full date, the word "activities" and the arrow
+           badge; the folded range is a phone-only spelling. */
+        .dh-short, .dh-rangeshort { display: none; }
 
         /* ---- Mobile: day header, notes and activity cards ----
            Everything below is phone-only; the desktop layout is untouched. */
@@ -241,6 +242,13 @@
                date, the count and the kebab all fit on one line. */
             .dh-long, .dh-word { display: none; }
             .dh-short { display: inline; }
+
+            /* A multi-day group reads as one range instead of a start date plus
+               an arrow badge repeating it — same information, about half the
+               width, and the kebab keeps its place on the line. */
+            .date-header-date.has-range .dh-short { display: none; }
+            .date-header-date.has-range .dh-rangeshort { display: inline; white-space: nowrap; }
+            .date-header-range { display: none; }
 
             /* The note text reserved 2.2rem on the right, but the edit button
                starts at 2.6rem — so both buttons sat on top of the words. Clear
@@ -1405,8 +1413,21 @@
                         <svg class="date-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                         @if ($dateCarbon)
                             <span class="date-header-day">{{ $dateCarbon->format('D') }}</span>
-                            {{-- Twin of the JS renderer: both spellings, CSS picks one. --}}
-                            <span class="date-header-date"><span class="dh-long">{{ $dateCarbon->format('M j, Y') }}</span><span class="dh-short">{{ $dateCarbon->format('M j, y') }}</span></span>
+                            {{-- Twin of the JS renderer: every spelling, CSS picks one.
+                                 dh-rangeshort folds a multi-day group into a single
+                                 "Sep 25–28, 26" for phones, replacing the start date
+                                 plus the arrow badge that repeats it. --}}
+                            @php
+                                $sameMonth = $latestEndCarbon
+                                    && $latestEndCarbon->month === $dateCarbon->month
+                                    && $latestEndCarbon->year === $dateCarbon->year;
+                                $rangeShort = $latestEndCarbon
+                                    ? ($sameMonth
+                                        ? $dateCarbon->format('M j') . '–' . $latestEndCarbon->format('j') . ', ' . $dateCarbon->format('y')
+                                        : $dateCarbon->format('M j') . ' – ' . $latestEndCarbon->format('M j') . ', ' . $dateCarbon->format('y'))
+                                    : null;
+                            @endphp
+                            <span class="date-header-date{{ $rangeShort ? ' has-range' : '' }}"><span class="dh-long">{{ $dateCarbon->format('M j, Y') }}</span><span class="dh-short">{{ $dateCarbon->format('M j, y') }}</span>@if($rangeShort)<span class="dh-rangeshort">{{ $rangeShort }}</span>@endif</span>
                             @if ($latestEndCarbon)
                                 <span class="date-header-range" title="At least one activity extends through {{ $latestEndCarbon->format('M j, Y') }}">
                                     &rarr; {{ $latestEndCarbon->format('M j') }}@if($latestEndCarbon->year !== $dateCarbon->year), {{ $latestEndCarbon->year }}@endif ({{ $groupSpanDays }}d)
