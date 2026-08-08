@@ -484,11 +484,17 @@
             } catch (_) { /* transient */ }
         }
         function startRealtime() {
-            const live = !!window.Echo;
+            const configured = !!window.Echo;
             const liveEl = document.getElementById('sbLive');
-            liveEl.textContent = live ? '● Live' : '● Syncing';
-            liveEl.classList.toggle('on', live);
-            if (live) {
+            // Reflect the socket's real state, not just that Echo was built —
+            // it starts 'connecting', so the badge settles on the next tick.
+            const paintBadge = () => {
+                const live = window.realtimeReady?.() ?? false;
+                liveEl.textContent = live ? '● Live' : '● Syncing';
+                liveEl.classList.toggle('on', live);
+            };
+            paintBadge();
+            if (configured) {
                 try {
                     channel = window.Echo.private('schedule-board.' + SCHEDULE_ID);
                     // Only paint strokes that belong to the page I'm looking at.
@@ -497,11 +503,21 @@
                     channel.listen('.board.page', (ev) => { if (ev && Array.isArray(ev.pages)) { pages = ev.pages; renderPageBar(); } });
                 } catch (_) { channel = null; }
             }
-            pollTimer = setInterval(reconcile, live ? 4000 : 1000);
+            // Re-decide the cadence every tick instead of freezing it at load:
+            // back off to 4s only while the socket is genuinely delivering, and
+            // fall to 1s the moment it drops. Previously a key that could never
+            // connect still counted as "live" and slowed sync to 4s — no push
+            // AND lazy polling, which is what made the board feel dead.
+            const tick = async () => {
+                await reconcile();
+                paintBadge();
+                pollTimer = setTimeout(tick, window.realtimeReady?.() ? 4000 : 1000);
+            };
+            pollTimer = setTimeout(tick, 1000);
         }
         function stopRealtime() {
             if (channel) { try { window.Echo.leave('schedule-board.' + SCHEDULE_ID); } catch (_) {} channel = null; }
-            if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+            if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
         }
 
         /* ---------- shared: rebuild board state + go live ---------- */

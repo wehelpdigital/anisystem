@@ -4,6 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- Realtime endpoints resolved at request time rather than baked into the
+         bundle, so a key change needs no rebuild and an unexpanded
+         "${PUSHER_APP_KEY}" from a hosting dashboard can never reach Echo. --}}
+    @if (\App\Support\RealtimeConfig::pusherKey())
+        <meta name="pusher-key" content="{{ \App\Support\RealtimeConfig::pusherKey() }}">
+        <meta name="pusher-cluster" content="{{ \App\Support\RealtimeConfig::pusherCluster() }}">
+    @endif
+    @if (\App\Support\RealtimeConfig::livekitUrl())
+        <meta name="livekit-url" content="{{ \App\Support\RealtimeConfig::livekitUrl() }}">
+    @endif
     <title>@yield('title', 'Dashboard') | AniSystem</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -2,7 +2,13 @@
 
 return [
 
-    'default' => env('BROADCAST_CONNECTION', 'null'),
+    /*
+     * Credentials are enough to turn broadcasting on. Requiring a separate
+     * BROADCAST_CONNECTION alongside them meant a deploy could carry a full set
+     * of working Pusher keys and still publish nothing, with no error anywhere
+     * to say why — the events simply went to the null driver.
+     */
+    'default' => env('BROADCAST_CONNECTION', env('PUSHER_APP_KEY') ? 'pusher' : 'null'),
 
     'connections' => [
 

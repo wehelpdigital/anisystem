@@ -346,15 +346,19 @@
             if (started) return; started = true;
             await loadSessions();
             await openSession(currentSession);
-            const live = !!window.Echo;
-            if (live) {
+            if (window.Echo) {
                 try {
                     channel = window.Echo.private('schedule-board.' + SCHEDULE_ID);
                     channel.listen('.ai.question', onQuestion).listen('.ai.answer', onAnswer).listen('.ai.session', onSession);
                 } catch (_) {}
             }
-            pollTimer = setInterval(reconcile, live ? 6000 : 2500);
-            sessTimer = setInterval(() => loadSessions(), live ? 20000 : 12000);
+            // Cadence follows the socket's real state, so a Pusher key that
+            // never connects polls fast rather than backing off to 6s.
+            const live = () => window.realtimeReady?.() ?? false;
+            const tick = async () => { await reconcile(); pollTimer = setTimeout(tick, live() ? 6000 : 2500); };
+            const sessTick = async () => { await loadSessions(); sessTimer = setTimeout(sessTick, live() ? 20000 : 12000); };
+            pollTimer = setTimeout(tick, 2500);
+            sessTimer = setTimeout(sessTick, 12000);
         }
 
         /* ---------- sidebar toggle (mobile) ---------- */
