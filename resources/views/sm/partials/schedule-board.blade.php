@@ -52,6 +52,10 @@
         <button type="button" id="sbSaveNotes" class="sb-btn" title="Save pages to schedule notes" aria-label="Save to notes">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a1 1 0 011-1h9l4 4v10a1 1 0 01-1 1H6a1 1 0 01-1-1V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 4v4h6M8 19v-5h8v5"/></svg>
         </button>
+        <button type="button" id="sbDrafts" class="sb-btn" title="Past drawings" aria-label="Past drawings">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7a1 1 0 011-1h4l2 2h8a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V7z"/></svg>
+            <span class="sb-badge hidden" id="sbDraftCount">0</span>
+        </button>
         <button type="button" id="sbGrid" class="sb-btn" title="Toggle grid" aria-label="Toggle grid">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4z"/><path stroke-linecap="round" d="M4 10h16M4 15h16M10 4v16M15 4v16"/></svg>
         </button>
@@ -68,6 +72,24 @@
         </div>
         {{-- The team chat panel is docked in here while the board is open. --}}
         <div class="sb-side" id="sbSide"></div>
+    </div>
+
+    {{-- Past drawings. Previews are painted from the stored strokes with the
+         same renderer as the board, so no server-side rasterising is needed and
+         a preview can never drift from what reopening actually gives you. --}}
+    <div class="sb-modal hidden" id="sbDraftsModal" aria-hidden="true">
+        <div class="sb-modal-card sb-drafts-card">
+            <div class="sb-modal-head">
+                <span class="sb-modal-title">Past drawings</span>
+                <button type="button" id="sbDraftsX" class="sb-modal-x" aria-label="Close">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <p class="sb-modal-hint">Drawings kept when the room emptied. Open one to carry on with it — your changes update that drawing. Anything saved to the notebook lives there instead.</p>
+            <div class="sb-drafts" id="sbDraftsList">
+                <p class="sb-drafts-empty">Loading…</p>
+            </div>
+        </div>
     </div>
 
     {{-- Save-to-notes modal: title + description, with a saving loader. --}}
@@ -140,6 +162,21 @@
     .sb-modal-spin { width: 1rem; height: 1rem; border-radius: 999px; border: 2px solid rgb(255 255 255 / .4); border-top-color: #fff; animation: sbSpin .7s linear infinite; }
     .sb-modal-spin.hidden { display: none; }
     @media (prefers-reduced-motion: reduce) { .sb-modal-card { animation: none; } .sb-modal-spin { animation-duration: 1.4s; } }
+
+    /* Past drawings */
+    .sb-btn { position: relative; }
+    .sb-badge { position: absolute; top: -.2rem; right: -.2rem; min-width: 1.05rem; height: 1.05rem; padding: 0 .22rem; border-radius: 999px; background: var(--color-brand-600); color: #fff; font-size: .62rem; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; }
+    .sb-badge.hidden { display: none; }
+    .sb-drafts-card { width: min(44rem, 100%); }
+    .sb-drafts { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: .7rem; max-height: 60vh; overflow-y: auto; }
+    .sb-draft { border: 1px solid var(--color-gray-200); border-radius: .8rem; overflow: hidden; background: var(--color-white); text-align: left; transition: border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .sb-draft:hover { border-color: var(--color-brand-400); transform: translateY(-2px); }
+    .sb-draft canvas { display: block; width: 100%; height: 6rem; background: #fff; border-bottom: 1px solid var(--color-gray-100); }
+    .sb-draft-meta { padding: .45rem .55rem .55rem; }
+    .sb-draft-title { font-size: .78rem; font-weight: 700; color: var(--color-gray-800); display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sb-draft-sub { font-size: .68rem; color: var(--color-gray-500); }
+    .sb-drafts-empty { font-size: .82rem; color: var(--color-gray-500); grid-column: 1 / -1; padding: 1.5rem 0; text-align: center; }
+    @media (prefers-reduced-motion: reduce) { .sb-draft:hover { transform: none; } }
     .sb-pages { display: inline-flex; align-items: center; gap: .1rem; padding: .1rem .2rem; background: var(--color-gray-100); border-radius: .7rem; }
     .sb-pg { width: 1.7rem; height: 1.7rem; border-radius: .45rem; display: inline-flex; align-items: center; justify-content: center; color: var(--color-gray-600); }
     .sb-pg:hover:not(:disabled) { background: var(--color-gray-200); color: var(--color-gray-900); }
@@ -178,6 +215,8 @@
             events: @json(route('sm.board')), push: @json(route('sm.board.push')),
             pages: @json(route('sm.board.pages')), pageCreate: @json(route('sm.board.page-create')),
             saveNotes: @json(route('sm.board.save-notes')),
+            open: @json(route('sm.board.open')), heartbeat: @json(route('sm.board.heartbeat')),
+            drafts: @json(route('sm.board.drafts')), draftOpen: @json(route('sm.board.draft-open')),
         };
 
         let color = '#111827', width = 6, tool = 'pen';   // pen|eraser|line|arrow|rect|circle|text
@@ -500,7 +539,15 @@
                     // Only paint strokes that belong to the page I'm looking at.
                     channel.listen('.stroke', (ev) => { if ((ev.page || 1) === currentPage) applyEvent(ev, false); });
                     // Keep the page strip in sync when a teammate adds a page.
-                    channel.listen('.board.page', (ev) => { if (ev && Array.isArray(ev.pages)) { pages = ev.pages; renderPageBar(); } });
+                    channel.listen('.board.page', (ev) => {
+                        if (!ev || !Array.isArray(ev.pages)) return;
+                        pages = ev.pages;
+                        renderPageBar();
+                        // A new session started, or someone reopened a past
+                        // drawing: the canvas underneath us is a different one
+                        // now, so repaint rather than drawing onto a ghost.
+                        if (ev.action === 'reset') { currentPage = 1; renderPageBar(); rebuildPage(); }
+                    });
                 } catch (_) { channel = null; }
             }
             // Re-decide the cadence every tick instead of freezing it at load:
@@ -518,6 +565,9 @@
         function stopRealtime() {
             if (channel) { try { window.Echo.leave('schedule-board.' + SCHEDULE_ID); } catch (_) {} channel = null; }
             if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
+            // Stop claiming the room, so the next person to open it gets a
+            // fresh canvas instead of being treated as joining us.
+            if (beatTimer) { clearTimeout(beatTimer); beatTimer = null; }
         }
 
         /* ---------- shared: rebuild board state + go live ---------- */
@@ -537,7 +587,109 @@
             renderPageBar();
             await rebuildPage();
         }
+        /* ---------- drawing sessions: fresh canvas, past drawings ---------- */
+        const $ = (id) => document.getElementById(id);
+        let beatTimer = null;
+
+        // Tell the server we are in the room. It replies whether we got a fresh
+        // page 1 (room was empty, previous drawing archived) or joined a canvas
+        // someone is already working on — which must never be wiped by arriving.
+        async function openSession() {
+            try {
+                const r = await api(`${U.open}?scheduleId=${SCHEDULE_ID}`, { method: 'POST' });
+                setDraftCount(r.data.draftCount || 0);
+                const a = r.data.archived;
+                if (a && a.isDraft && window.toast) {
+                    toast('Previous drawing kept under Past drawings.', 'success');
+                }
+            } catch (_) { /* board still works; it just will not have reset */ }
+        }
+
+        function startHeartbeat() {
+            const beat = async () => {
+                try { await api(`${U.heartbeat}?scheduleId=${SCHEDULE_ID}`, { method: 'POST' }); } catch (_) {}
+                beatTimer = setTimeout(beat, 20000);
+            };
+            beatTimer = setTimeout(beat, 20000);
+        }
+
+        function setDraftCount(n) {
+            const el = $('sbDraftCount');
+            if (!el) return;
+            el.textContent = n;
+            el.classList.toggle('hidden', !n);
+        }
+
+        // Paint a draft's strokes into a small canvas using the board's own
+        // renderer, so the thumbnail is the drawing, not a stale snapshot of it.
+        function paintPreview(cv, strokes) {
+            const g = cv.getContext('2d');
+            const w = cv.width, h = cv.height;
+            g.fillStyle = '#fff'; g.fillRect(0, 0, w, h);
+            (strokes.events || []).filter((e) => (e.page || 1) === 1).forEach((e) => {
+                const pts = (e.points || []).map((p) => ({ x: p[0] * w, y: p[1] * h }));
+                if (!pts.length) return;
+                g.save();
+                g.strokeStyle = e.mode === 'eraser' ? '#fff' : (e.color || '#111827');
+                g.lineWidth = Math.max(0.6, (e.width || 4) * (w / 1280));
+                g.lineCap = 'round'; g.lineJoin = 'round';
+                g.beginPath(); g.moveTo(pts[0].x, pts[0].y);
+                pts.slice(1).forEach((p) => g.lineTo(p.x, p.y));
+                g.stroke(); g.restore();
+            });
+        }
+
+        async function showDrafts() {
+            const list = $('sbDraftsList');
+            list.innerHTML = '<p class="sb-drafts-empty">Loading…</p>';
+            $('sbDraftsModal').classList.remove('hidden');
+            try {
+                const r = await api(`${U.drafts}?scheduleId=${SCHEDULE_ID}`);
+                const drafts = r.data.drafts || [];
+                setDraftCount(drafts.length);
+                if (!drafts.length) {
+                    list.innerHTML = '<p class="sb-drafts-empty">No past drawings yet. When everyone leaves the room, whatever is on the board is kept here.</p>';
+                    return;
+                }
+                list.innerHTML = '';
+                drafts.forEach((d) => {
+                    const card = document.createElement('button');
+                    card.type = 'button';
+                    card.className = 'sb-draft';
+                    card.innerHTML = `<canvas width="300" height="180"></canvas>
+                        <div class="sb-draft-meta">
+                            <span class="sb-draft-title">${escapeHtml(d.title || 'Drawing')}</span>
+                            <span class="sb-draft-sub">${escapeHtml(d.archivedAt || '')} · ${d.pageCount} page${d.pageCount === 1 ? '' : 's'}</span>
+                        </div>`;
+                    paintPreview(card.querySelector('canvas'), d.strokes || {});
+                    card.addEventListener('click', () => openDraft(d.id));
+                    list.appendChild(card);
+                });
+            } catch (e) {
+                list.innerHTML = `<p class="sb-drafts-empty">${escapeHtml(e.message || 'Could not load past drawings.')}</p>`;
+            }
+        }
+
+        async function openDraft(id) {
+            try {
+                const r = await api(`${U.draftOpen}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { id } });
+                $('sbDraftsModal').classList.add('hidden');
+                if (window.toast) toast(r.message || 'Drawing opened.', 'success');
+                currentPage = 1;
+                await loadPages();
+                await rebuildPage();
+            } catch (e) {
+                if (window.toast) toast(e.message || 'Could not open that drawing.', 'error');
+            }
+        }
+
+        $('sbDrafts')?.addEventListener('click', showDrafts);
+        $('sbDraftsX')?.addEventListener('click', () => $('sbDraftsModal').classList.add('hidden'));
+        $('sbDraftsModal')?.addEventListener('click', (e) => { if (e.target === $('sbDraftsModal')) $('sbDraftsModal').classList.add('hidden'); });
+
         async function startBoard() {
+            await openSession();   // decides fresh-vs-join before anything paints
+            startHeartbeat();
             await loadPages();
             resizeCanvas();
             await rebuildPage();

@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Manager;
 use App\Events\BoardStrokePushed;
 use App\Events\ScheduleBoardPagePushed;
 use App\Models\AsScheduleNote;
+use App\Models\ScheduleBoardDraft;
 use App\Models\ScheduleBoardEvent;
 use App\Models\ScheduleBoardPage;
+use App\Models\ScheduleBoardPresence;
+use App\Models\ScheduleBoardState;
+use App\Support\BoardSession;
 use App\Support\ScheduleTeam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +29,172 @@ use Illuminate\Support\Str;
  */
 class ScheduleBoardController extends BaseScheduleController
 {
+    /**
+     * Opening the drawing. Starts a fresh page 1 when the room is empty,
+     * archiving whatever was there, or joins the live canvas when a teammate
+     * is already drawing on it.
+     */
+    public function open(Request $request)
+    {
+        $schedule = $this->schedule($request->query('scheduleId'));
+        $meId = (int) Auth::id();
+        if (! ScheduleTeam::canAccess($schedule, $meId)) {
+            return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+
+        $result = BoardSession::open($schedule->id, $meId);
+
+        if ($result['fresh']) {
+            // Anyone still holding the old canvas repaints from scratch.
+            $this->emitPage($schedule->id, [
+                'action' => 'reset',
+                'page' => 1,
+                'pages' => $this->pageList($schedule->id),
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'fresh' => $result['fresh'],
+                'archived' => $result['archived'],
+                'pages' => $this->pageList($schedule->id),
+                'draftCount' => $this->draftCount($schedule->id),
+            ],
+        ]);
+    }
+
+    /** Keep the room occupancy fresh while the drawing is open. */
+    public function heartbeat(Request $request)
+    {
+        $schedule = $this->schedule($request->query('scheduleId'));
+        $meId = (int) Auth::id();
+        if (! ScheduleTeam::canAccess($schedule, $meId)) {
+            return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+
+        ScheduleBoardPresence::touch_($schedule->id, $meId);
+
+        return response()->json(['success' => true, 'data' => ['ok' => true]]);
+    }
+
+    /** Past drawings that were never kept as notes. */
+    public function drafts(Request $request)
+    {
+        $schedule = $this->schedule($request->query('scheduleId'));
+        $meId = (int) Auth::id();
+        if (! ScheduleTeam::canAccess($schedule, $meId)) {
+            return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+
+        $drafts = ScheduleBoardDraft::active()
+            ->where('scheduleId', $schedule->id)
+            ->whereNull('savedNoteId')
+            ->orderByDesc('archivedAt')
+            ->limit(60)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'drafts' => $drafts->map(fn ($d) => [
+                    'id' => $d->id,
+                    'title' => $d->title,
+                    'pageCount' => (int) $d->pageCount,
+                    'archivedAt' => $d->archivedAt ? $d->archivedAt->format('M j, Y g:i A') : null,
+                    // The strokes themselves — the list paints its own previews
+                    // with the board's renderer, and reopening needs them anyway.
+                    'strokes' => $d->strokes(),
+                ])->values()->all(),
+            ],
+        ]);
+    }
+
+    /**
+     * Put a past drawing back on the canvas. From here on it is the live board,
+     * and further edits update that same drawing rather than making a copy.
+     */
+    public function openDraft(Request $request)
+    {
+        $schedule = $this->schedule($request->query('scheduleId'));
+        $meId = (int) Auth::id();
+        // Same gate as push(): anyone on the team who can draw can reopen.
+        if (! ScheduleTeam::canAccess($schedule, $meId)) {
+            return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+
+        $draft = ScheduleBoardDraft::active()
+            ->where('scheduleId', $schedule->id)
+            ->find($request->input('id'));
+
+        if (! $draft) {
+            return $this->jsonFail('That drawing is no longer available.', 404);
+        }
+
+        // Whatever is on the canvas now is itself a session — keep it before
+        // replacing it, or reopening an old drawing would discard a new one.
+        BoardSession::archive($schedule->id, $meId);
+        BoardSession::clear($schedule->id);
+        $maxId = $this->restore($schedule->id, $meId, $draft->strokes());
+
+        ScheduleBoardState::forSchedule($schedule->id)->update([
+            'savedUpToEventId' => $maxId,
+            'currentDraftId' => $draft->savedNoteId ? null : $draft->id,
+            'currentNoteId' => $draft->savedNoteId,
+        ]);
+
+        $this->emitPage($schedule->id, [
+            'action' => 'reset',
+            'page' => 1,
+            'pages' => $this->pageList($schedule->id),
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Opened “' . $draft->title . '”. Changes now update this drawing.',
+            'data' => ['pages' => $this->pageList($schedule->id)],
+        ]);
+    }
+
+    /** Write archived strokes back onto the live board. */
+    private function restore(int $scheduleId, int $userId, array $strokes): int
+    {
+        foreach (($strokes['pages'] ?? []) as $p) {
+            ScheduleBoardPage::updateOrCreate(
+                ['scheduleId' => $scheduleId, 'page' => max(1, (int) ($p['page'] ?? 1))],
+                ['orientation' => ($p['orientation'] ?? 'landscape') === 'portrait' ? 'portrait' : 'landscape', 'deleteStatus' => 1]
+            );
+        }
+
+        $maxId = 0;
+        foreach (($strokes['events'] ?? []) as $e) {
+            $row = ScheduleBoardEvent::create([
+                'scheduleId' => $scheduleId,
+                'page' => max(1, (int) ($e['page'] ?? 1)),
+                'userId' => $userId,
+                'type' => $e['type'] ?? 'draw',
+                'strokeUid' => $e['uid'] ?? null,
+                'color' => $e['color'] ?? null,
+                'width' => (int) ($e['width'] ?? 4),
+                'mode' => $e['mode'] ?? 'pen',
+                'shapeText' => $e['text'] ?? null,
+                'points' => json_encode($e['points'] ?? []),
+                'deleteStatus' => 1,
+            ]);
+            $maxId = (int) $row->id;
+        }
+
+        return $maxId;
+    }
+
+    private function draftCount(int $scheduleId): int
+    {
+        return ScheduleBoardDraft::active()
+            ->where('scheduleId', $scheduleId)
+            ->whereNull('savedNoteId')
+            ->count();
+    }
+
     /** Rebuild / reconcile: active events on a page after `?after=<id>`. */
     public function events(Request $request)
     {
@@ -204,6 +374,14 @@ class ScheduleBoardController extends BaseScheduleController
             'media' => $media,
             'deleteStatus' => 1,
         ]);
+
+        // Bind the canvas to the note it just became. The images are a flat
+        // picture; archiving alongside them keeps the strokes, so reopening the
+        // note gives back a drawing you can still change rather than a JPEG of
+        // one — and later edits update this note instead of piling up drafts.
+        $state = ScheduleBoardState::forSchedule($schedule->id);
+        $state->update(['currentNoteId' => $note->id, 'currentDraftId' => null, 'savedUpToEventId' => 0]);
+        BoardSession::archive($schedule->id, $meId);
 
         return response()->json([
             'success' => true,
