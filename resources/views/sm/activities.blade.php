@@ -714,6 +714,11 @@
             user-select: none; -webkit-user-select: none;
             -webkit-touch-callout: none; overscroll-behavior: contain;
         }
+        /* The element being dragged opts out of browser touch handling, so a
+           scroll started with a second finger cannot claim the finger that is
+           doing the dragging — the browser would otherwise cancel that pointer
+           and the drag with it. The page still scrolls; the drag survives. */
+        .dragging { touch-action: none; }
         .activity-card, .date-header[draggable="true"] { -webkit-touch-callout: none; }
         .activity-card-image img { max-width: 100%; max-height: 260px; border-radius: .6rem; border: 1px solid #eef0f3; }
 

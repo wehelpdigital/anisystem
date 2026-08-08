@@ -4205,8 +4205,18 @@ document.addEventListener('DOMContentLoaded', () => {
             cur.note.setAttribute('data-sort-key', key);
             saveInlineNote(cur.note, newDate, key);
         }
-        document.addEventListener('pointerup', () => finish(true));
-        document.addEventListener('pointercancel', () => finish(false));
+        // Only the finger that started the drag may end it. These listened to
+        // every pointer, so scrolling with a second finger while dragging ended
+        // the drag the moment that finger lifted — or cancelled it outright
+        // when the browser claimed that pointer for the scroll.
+        document.addEventListener('pointerup', (e) => {
+            if (d && e.pointerId !== d.id) return;
+            finish(true);
+        });
+        document.addEventListener('pointercancel', (e) => {
+            if (d && e.pointerId !== d.id) return;
+            finish(false);
+        });
     })();
 
     document.addEventListener('dragstart', (e) => {
