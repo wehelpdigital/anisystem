@@ -12,12 +12,17 @@ use Symfony\Component\HttpFoundation\Response;
  * currently owns the account; when a request arrives from a different session,
  * that session is signed out.
  *
- * Designed to coexist with the always-remember login (LoginController): the
- * losing session is dropped WITHOUT cycling the remember token, so the browser's
- * remember cookie stays valid — returning to that device re-authenticates
- * automatically and re-claims the slot. Two people sharing one account therefore
- * keep bouncing each other out (the intended deterrent), while a single person
- * on one device is never disturbed.
+ * Logging in somewhere new signs the other devices out, and they stay out: the
+ * losing session is fully logged out, remember token included, so it cannot
+ * re-authenticate itself on the next request.
+ *
+ * That last part matters. The losing session used to keep its remember cookie,
+ * on the theory that a shared account would keep evicting itself as a
+ * deterrent. In practice it meant one person with a phone and a PC was signed
+ * out of whichever they were using, repeatedly, because each device kept
+ * silently taking the account back from the other. Sharing an account is still
+ * discouraged — the other person is signed out for real — without punishing the
+ * ordinary case of owning two devices.
  */
 class EnforceSingleSession
 {
@@ -61,11 +66,20 @@ class EnforceSingleSession
                     $user->forceFill(['currentSessionId' => $sid])->saveQuietly();
                 }
             } elseif ($stored !== $sid) {
-                // A newer login elsewhere owns the account now. End this session
-                // but leave the remember cookie intact (session flush does not
-                // cycle the remember token) so a return visit re-logs in.
-                $request->session()->flush();
-                $request->session()->regenerate();
+                // A newer login owns the account, so this device signs out — and
+                // stays signed out.
+                //
+                // It used to keep its remember cookie, which meant the next
+                // request re-claimed the slot automatically, displacing the
+                // other device, which then re-claimed it back. One person with
+                // a phone and a PC was thrown out of whichever they were
+                // actually using, over and over. Auth::logout() cycles the
+                // remember token as well, so this browser cannot silently take
+                // the account back; the device that logged in most recently
+                // keeps it until someone deliberately logs in elsewhere.
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
 
                 $message = 'Signed out — your account was opened on another device. Log in again to continue here.';
                 if ($request->expectsJson() || $request->ajax()) {
