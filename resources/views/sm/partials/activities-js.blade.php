@@ -4702,15 +4702,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    /**
+     * Clear the drag's visible traces whatever happened.
+     *
+     * The state object is not a reliable guide here: pointer capture can send
+     * the release somewhere unexpected, and a successful move re-renders the
+     * list, replacing the very card the cleanup meant to tidy. Either left the
+     * ghost on screen and the card stuck at drag opacity, with nothing holding
+     * the pointer any more. Sweeping the DOM cannot miss for those reasons.
+     */
+    function sweepCardDragArtifacts() {
+        $qsa('.drag-ghost').forEach((g) => g.remove());
+        $qsa('.activity-card.dragging').forEach((c) => {
+            c.classList.remove('dragging');
+            c.style.touchAction = '';
+        });
+        $qsa('.date-activities.drag-over').forEach((c) => c.classList.remove('drag-over'));
+        document.body.classList.remove('is-touch-dragging');
+    }
+
     // Only the finger that started the drag may end it, so scrolling with a
-    // second finger does not drop the card mid-move.
+    // second finger does not drop the card mid-move. The sweep runs either way:
+    // a stranded ghost is worse than an early tidy-up.
     document.addEventListener('pointerup', (e) => {
         if (CARD_DRAG && e.pointerId !== CARD_DRAG.id) return;
         endCardDrag(true);
+        sweepCardDragArtifacts();
     });
     document.addEventListener('pointercancel', (e) => {
         if (CARD_DRAG && e.pointerId !== CARD_DRAG.id) return;
         endCardDrag(false);
+        sweepCardDragArtifacts();
+    });
+    // Capture is also lost on a normal release, and this can arrive before the
+    // pointerup that carries the drop — so it only tidies up, never ends the
+    // drag. Cancelling here would throw away perfectly good drops.
+    document.addEventListener('lostpointercapture', () => {
+        if (CARD_DRAG && CARD_DRAG.active) return;
+        sweepCardDragArtifacts();
     });
 
     function buildDragGhost(el) {
