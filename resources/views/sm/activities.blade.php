@@ -7,7 +7,7 @@
 
 {{-- The activity board is the work surface: on a phone the bottom tab bar eats
      a strip of it for navigation that Back already provides. --}}
-@section('body-class', 'hide-tabbar')
+@section('body-class', 'hide-tabbar no-zoom')
 
 @if (request()->boolean('embed'))
 @push('head')
@@ -714,12 +714,14 @@
             user-select: none; -webkit-user-select: none;
             -webkit-touch-callout: none; overscroll-behavior: contain;
         }
-        /* Releasing a dragged card reads to the browser as the second tap of a
-           double-tap, so the board zoomed in after a drop. `manipulation` drops
-           double-tap zoom while keeping panning and pinch zoom — the board
-           stops jumping, and anyone who needs to magnify the page still can.
-           An inline touch-action set during a drag still wins over this. */
-        #activitiesList, #activitiesList * { touch-action: manipulation; }
+        /* No zoom on this screen. Releasing a dragged card reads as the second
+           tap of a double-tap, so the board jumped after every drop, and a
+           pinch part-way through a drag left the page magnified mid-move.
+           `manipulation` only stopped the double-tap half; permitting panning
+           alone stops both. Scrolling is unaffected, and this is scoped to the
+           page rather than the viewport meta, so zoom still works everywhere
+           else in the app. An inline touch-action set while dragging wins. */
+        body.no-zoom, body.no-zoom * { touch-action: pan-x pan-y; }
 
         /* The element being dragged opts out of browser touch handling, so a
            scroll started with a second finger cannot claim the finger that is
