@@ -4606,8 +4606,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function cardDragCleanup() {
         if (!CARD_DRAG) return;
+        clearTimeout(CARD_DRAG.lpTimer);
         CARD_DRAG.ghost?.remove();
         CARD_DRAG.card.classList.remove('dragging');
+        CARD_DRAG.card.style.touchAction = '';   // hand scrolling back
         $qsa('.date-activities.drag-over').forEach((c) => c.classList.remove('drag-over'));
         document.body.classList.remove('is-touch-dragging');
         CARD_DRAG = null;
@@ -4620,25 +4622,48 @@ document.addEventListener('DOMContentLoaded', () => {
         // Controls own their taps; a drag must not start from one.
         if (e.target.closest('button, a, input, label, .item-tag, [contenteditable]')) return;
 
-        CARD_DRAG = { card, id: e.pointerId, startX: e.clientX, startY: e.clientY, active: false, ghost: null, offX: 0, offY: 0 };
+        CARD_DRAG = { card, id: e.pointerId, startX: e.clientX, startY: e.clientY, active: false, ghost: null, offX: 0, offY: 0, lpTimer: null };
+
+        // Press and hold to pick a card up, rather than starting on travel.
+        // Moving a card to another day means dragging VERTICALLY, which is the
+        // same gesture as scrolling the list — so a distance trigger left the
+        // browser and this code racing for it, and the browser usually won by
+        // scrolling and cancelling the pointer. That race is why dragging
+        // worked only sometimes. A hold is unambiguous: nothing else claims it.
+        CARD_DRAG.lpTimer = setTimeout(() => {
+            if (!CARD_DRAG || CARD_DRAG.active) return;
+            startCardDrag(CARD_DRAG.startX, CARD_DRAG.startY, e.pointerId);
+            if (navigator.vibrate) { try { navigator.vibrate(15); } catch (_) { /* noop */ } }
+        }, 320);
     }, { passive: true });
+
+    function startCardDrag(x, y, pointerId) {
+        const card = CARD_DRAG.card;
+        CARD_DRAG.active = true;
+        const rect = card.getBoundingClientRect();
+        CARD_DRAG.offX = x - rect.left;
+        CARD_DRAG.offY = y - rect.top;
+        CARD_DRAG.ghost = buildDragGhost(card);
+        card.classList.add('dragging');
+        // Opt the card out of browser touch handling only once the drag is
+        // real, so the list still scrolls normally the rest of the time.
+        card.style.touchAction = 'none';
+        document.body.classList.add('is-touch-dragging');
+        try { card.setPointerCapture(pointerId); } catch (_) { /* noop */ }
+    }
 
     document.addEventListener('pointermove', (e) => {
         if (!CARD_DRAG || e.pointerId !== CARD_DRAG.id) return;
 
         if (!CARD_DRAG.active) {
-            // A finger wanders on a plain tap, so wait for real travel before
-            // claiming the gesture — otherwise tapping a card to read it would
-            // flinch into a drag.
-            if (Math.hypot(e.clientX - CARD_DRAG.startX, e.clientY - CARD_DRAG.startY) < THRESH_TOUCH) return;
-            CARD_DRAG.active = true;
-            const rect = CARD_DRAG.card.getBoundingClientRect();
-            CARD_DRAG.offX = CARD_DRAG.startX - rect.left;
-            CARD_DRAG.offY = CARD_DRAG.startY - rect.top;
-            CARD_DRAG.ghost = buildDragGhost(CARD_DRAG.card);
-            CARD_DRAG.card.classList.add('dragging');
-            document.body.classList.add('is-touch-dragging');
-            try { CARD_DRAG.card.setPointerCapture(e.pointerId); } catch (_) { /* noop */ }
+            // Moving before the hold completes means the finger is scrolling,
+            // not picking the card up. Let go of the gesture entirely so the
+            // list scrolls as it always did.
+            if (Math.hypot(e.clientX - CARD_DRAG.startX, e.clientY - CARD_DRAG.startY) > 10) {
+                clearTimeout(CARD_DRAG.lpTimer);
+                CARD_DRAG = null;
+            }
+            return;
         }
 
         e.preventDefault();
