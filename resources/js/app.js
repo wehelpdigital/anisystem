@@ -268,6 +268,19 @@ window.openSheet = function openSheet(id) {
     // the stack, so their bubbles landed on top of a sheet's Cancel/Save row.
     // A sheet is modal: nothing else should be reachable while it is open.
     document.documentElement.classList.add('sheet-open');
+
+    // On a phone, opening a sheet must not raise the keyboard. A field that
+    // takes focus as the sheet mounts covers half of it before the user has
+    // read what it says, and several sheets do that without ever calling
+    // focus() — a date or number input can pick it up on its own. Blur once
+    // the sheet has settled; tapping the field you want still works normally.
+    // Guarded to the sheet's own contents so nothing else loses focus.
+    if (window.matchMedia('(pointer: coarse)').matches) {
+        setTimeout(() => {
+            const active = document.activeElement;
+            if (active && el.contains(active) && typeof active.blur === 'function') active.blur();
+        }, 120);
+    }
     el.dispatchEvent(new CustomEvent('sheet:open'));
 };
 

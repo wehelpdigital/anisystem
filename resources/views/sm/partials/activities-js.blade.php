@@ -2610,7 +2610,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('doneNoteText').value = '';
         renderDoneNoteThumbs();
         openSheet('doneNoteSheet');
-        setTimeout(() => $id('doneNoteText').focus(), 250);
+        if (!window.matchMedia("(pointer: coarse)").matches) setTimeout(() => $id('doneNoteText').focus(), 250);
     }
 
     function renderDoneNoteThumbs() {
@@ -3550,7 +3550,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('dayExpenseSheetTitle').textContent = existing ? 'Edit expense' : 'Add extra expense';
         $id('dayExpenseDeleteBtn').classList.toggle('hidden', !existing);
         openSheet('dayExpenseSheet');
-        setTimeout(() => $id('dayExpenseAmount')?.focus(), 250);
+        if (!window.matchMedia("(pointer: coarse)").matches) setTimeout(() => $id('dayExpenseAmount')?.focus(), 250);
     }
 
     async function deleteExpense(dateKey, expenseId) {
@@ -3801,7 +3801,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('markerSheetTitle').textContent = info ? 'Edit resume-here marker' : 'Drop resume-here marker';
         $id('progressMarkerClearBtn').classList.toggle('hidden', !info);
         openSheet('markerSheet');
-        setTimeout(() => $id('progressMarkerNote').focus(), 250);
+        if (!window.matchMedia("(pointer: coarse)").matches) setTimeout(() => $id('progressMarkerNote').focus(), 250);
     }
 
     document.addEventListener('click', async (e) => {
@@ -5137,7 +5137,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (active) $id('newVersionSource').value = active.getAttribute('data-version-id');
             $id('newVersionSetActive').checked = true;
             openSheet('versionSheet');
-            setTimeout(() => $id('newVersionName').focus(), 250);
+            if (!window.matchMedia("(pointer: coarse)").matches) setTimeout(() => $id('newVersionName').focus(), 250);
             return;
         }
         const chip = e.target.closest('.version-chip');
