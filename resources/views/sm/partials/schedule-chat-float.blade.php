@@ -339,7 +339,11 @@
             if (open) {
                 $('teamChatDot').classList.add('hidden');
                 if (mode === 'group') { toGroup(); } else { startTimers(); }
-                setTimeout(() => $('teamText')?.focus(), 60);
+                // On a phone the keyboard would swallow half the room before a
+                // word of chat has been read; a tap on the box still opens it.
+                if (!window.matchMedia('(pointer: coarse)').matches) {
+                    setTimeout(() => $('teamText')?.focus(), 60);
+                }
             } else { stopTimers(); }
         }
 

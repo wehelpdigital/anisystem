@@ -8,22 +8,47 @@
 {{-- The room is a workspace, not a page you scroll: on a phone the bottom tab
      bar covers the drawing surface and chat composer, so drop it here and give
      the panels that strip back. Navigation is still one tap away via Back. --}}
-@section('body-class', 'hide-tabbar')
+@section('body-class', 'hide-tabbar no-footer')
 
 @section('content')
 <div class="collab-wrap" id="collabRoom" data-schedule="{{ $schedule->id }}" data-owner="{{ (int) $schedule->anisystemUserId }}">
 
-    {{-- Who's in the room (live online dots). --}}
-    <div class="collab-presence" id="collabPresence">
-        @foreach ($members as $m)
-            <span class="collab-mem {{ $m->isOnline() ? 'on' : '' }}" data-uid="{{ $m->id }}" title="{{ $m->full_name }}{{ (int) $m->id === (int) $schedule->anisystemUserId ? ' (owner)' : '' }}">
-                <span class="collab-mem-face">
-                    @if ($m->avatarPath)<img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($m->avatarPath) }}" alt="">@else{{ $m->initials }}@endif
-                    <span class="collab-mem-dot"></span>
-                </span>
-                <span class="collab-mem-name">{{ \Illuminate\Support\Str::of($m->full_name)->explode(' ')->first() }}</span>
+    {{-- Members live in the page header as a stack of faces (moved there by JS
+         — Blade cannot reach into the layout's header). The strip they used to
+         occupy here goes back to the tabs, which need every vertical pixel on
+         a phone. Tapping the stack opens the full list. --}}
+    <button type="button" id="collabMembersPill" class="collab-mems-pill" hidden
+            aria-label="Show room members" title="Room members">
+        @foreach ($members->take(4) as $m)
+            <span class="collab-pill-face {{ $m->isOnline() ? 'on' : '' }}" data-uid="{{ $m->id }}">
+                @if ($m->avatarPath)<img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($m->avatarPath) }}" alt="">@else{{ $m->initials }}@endif
+                <span class="collab-mem-dot"></span>
             </span>
         @endforeach
+        @if ($members->count() > 4)<span class="collab-pill-more">+{{ $members->count() - 4 }}</span>@endif
+    </button>
+
+    {{-- Full member list, opened from the pill. --}}
+    <div class="sheet hidden" id="collabMembersSheet" style="--sheet-width:24rem">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+            <h3 class="sheet-title">In this room</h3>
+            <button type="button" class="icon-btn" data-sheet-close aria-label="Close">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="sheet-body" id="collabPresence">
+            @foreach ($members as $m)
+                <div class="collab-mem {{ $m->isOnline() ? 'on' : '' }}" data-uid="{{ $m->id }}">
+                    <span class="collab-mem-face">
+                        @if ($m->avatarPath)<img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($m->avatarPath) }}" alt="">@else{{ $m->initials }}@endif
+                        <span class="collab-mem-dot"></span>
+                    </span>
+                    <span class="collab-mem-name">{{ $m->full_name }}{{ (int) $m->id === (int) $schedule->anisystemUserId ? ' · owner' : '' }}</span>
+                    <span class="collab-mem-state">{{ $m->isOnline() ? 'online' : 'offline' }}</span>
+                </div>
+            @endforeach
+        </div>
     </div>
 
     {{-- Tabs --}}
@@ -83,14 +108,32 @@
        clipped by the bar it used to sit under. */
     @media (max-width: 767px) { .collab-wrap { height: calc(100dvh - 5rem); } }
 
-    .collab-presence { display: flex; gap: .55rem; overflow-x: auto; padding: .15rem .1rem .35rem; scrollbar-width: none; flex-shrink: 0; }
-    .collab-presence::-webkit-scrollbar { display: none; }
-    .collab-mem { display: flex; flex-direction: column; align-items: center; gap: .15rem; width: 3rem; flex-shrink: 0; }
-    .collab-mem-face { position: relative; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: var(--color-brand-50); color: var(--color-brand-700); font-size: .72rem; font-weight: 800; }
+    /* Face stack in the page header: overlapped circles, newest under. */
+    .collab-mems-pill { display: inline-flex; align-items: center; flex-shrink: 0; padding: .2rem .3rem; border-radius: 999px; }
+    .collab-mems-pill:active { transform: scale(.95); }
+    .collab-pill-face { position: relative; width: 1.75rem; height: 1.75rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; background: var(--color-brand-50); color: var(--color-brand-700); font-size: .6rem; font-weight: 800; border: 2px solid var(--color-white); overflow: visible; }
+    .collab-pill-face + .collab-pill-face, .collab-pill-face + .collab-pill-more { margin-left: -.5rem; }
+    .collab-pill-face img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+    .collab-pill-more { position: relative; width: 1.75rem; height: 1.75rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; background: var(--color-gray-100); color: var(--color-gray-600); font-size: .62rem; font-weight: 800; border: 2px solid var(--color-white); }
+
+    /* Member rows inside the sheet. */
+    .collab-mem { display: flex; align-items: center; gap: .65rem; padding: .5rem .25rem; }
+    .collab-mem + .collab-mem { border-top: 1px solid var(--color-gray-100); }
+    .collab-mem-face { position: relative; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: var(--color-brand-50); color: var(--color-brand-700); font-size: .72rem; font-weight: 800; flex-shrink: 0; }
     .collab-mem-face img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
     .collab-mem-dot { position: absolute; right: -1px; bottom: -1px; width: .62rem; height: .62rem; border-radius: 999px; border: 2px solid var(--color-white); background: var(--color-gray-300); }
-    .collab-mem.on .collab-mem-dot { background: #22c55e; }
-    .collab-mem-name { font-size: .6rem; color: var(--color-gray-600); max-width: 3rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .collab-mem.on .collab-mem-dot, .collab-pill-face.on .collab-mem-dot { background: #22c55e; }
+    .collab-mem-name { font-size: .85rem; font-weight: 700; color: var(--color-gray-800); min-width: 0; flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .collab-mem-state { font-size: .68rem; font-weight: 800; color: var(--color-gray-400); text-transform: uppercase; letter-spacing: .04em; }
+    .collab-mem.on .collab-mem-state { color: #16a34a; }
+
+    /* Phones: the room takes the whole width — the page gutters were dead
+       space beside a full-height workspace. */
+    @media (max-width: 767px) {
+        body.is-collab main { padding-left: 0; padding-right: 0; padding-bottom: 0; }
+        body.is-collab .collab-panels { border-radius: 0; border-left: 0; border-right: 0; }
+        body.is-collab .collab-tabs { margin: 0 .5rem; }
+    }
 
     .collab-tabs { display: flex; gap: .25rem; padding: .25rem; background: var(--color-gray-100); border-radius: .8rem; flex-shrink: 0; overflow-x: auto; scrollbar-width: none; }
     .collab-tabs::-webkit-scrollbar { display: none; }
@@ -135,6 +178,18 @@
     let current = 'chat';
 
     document.body.classList.add('is-collab');
+
+    // The member stack belongs beside the page title, but Blade sections
+    // cannot reach the layout's header — so it renders in the content and is
+    // walked up there here. Tapping it opens the full list.
+    const pill = document.getElementById('collabMembersPill');
+    const titleEl = document.getElementById('appPageTitle');
+    if (pill && titleEl) {
+        const titleWrap = titleEl.closest('div');
+        titleWrap?.parentElement?.insertBefore(pill, titleWrap.nextSibling);
+        pill.hidden = false;
+        pill.addEventListener('click', () => window.openSheet?.('collabMembersSheet'));
+    }
 
     /* ---------- per-tab loading overlay ---------- */
     const LABELS = { chat: 'Loading chat…', drawing: 'Loading board…', activities: 'Loading activities…', ai: 'Loading AI…' };
@@ -221,7 +276,16 @@
             const res = await fetch(`{{ route('sm.chat.members') }}?scheduleId={{ $schedule->id }}`, { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
             const d = (await res.json()).data;
             const online = new Set((d.members || []).filter((m) => m.online).map((m) => String(m.id)));
-            presence.querySelectorAll('.collab-mem').forEach((el) => el.classList.toggle('on', online.has(el.dataset.uid)));
+            presence.querySelectorAll('.collab-mem').forEach((el) => {
+                const on = online.has(el.dataset.uid);
+                el.classList.toggle('on', on);
+                const state = el.querySelector('.collab-mem-state');
+                if (state) state.textContent = on ? 'online' : 'offline';
+            });
+            // The header stack shows the same truth at a glance.
+            document.querySelectorAll('.collab-pill-face[data-uid]').forEach((el) => {
+                el.classList.toggle('on', online.has(el.dataset.uid));
+            });
         } catch (_) { /* keep last */ }
     }
     setInterval(refreshPresence, 30000);

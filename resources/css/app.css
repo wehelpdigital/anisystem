@@ -276,6 +276,10 @@ html.sheet-open .team-float {
 .page-safe-bottom { padding-bottom: 5.5rem; }
 @media (min-width: 768px) { .page-safe-bottom { padding-bottom: 2rem; } }
 
+/* A page that IS a workspace has no use for the legal footer under it —
+   the Collab Room claims every vertical pixel. */
+body.no-footer footer { display: none; }
+
 /* Pages that need the whole phone screen (the Collab Room) drop the tab bar,
    via `@section('body-class', 'hide-tabbar')`. Desktop is untouched — .tabbar
    is md:hidden already — but every offset that exists purely to clear the bar
