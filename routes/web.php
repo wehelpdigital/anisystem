@@ -194,6 +194,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-map', [App\Http\Controllers\Manager\ScheduleMapController::class, 'objects'])->name('sm.map');
     Route::post('/app/sm-map-push', [App\Http\Controllers\Manager\ScheduleMapController::class, 'push'])->name('sm.map.push');
     Route::delete('/app/sm-map-remove', [App\Http\Controllers\Manager\ScheduleMapController::class, 'remove'])->name('sm.map.remove');
+    Route::post('/app/sm-map-update', [App\Http\Controllers\Manager\ScheduleMapController::class, 'update'])->name('sm.map.update');
     Route::post('/app/sm-map-clear', [App\Http\Controllers\Manager\ScheduleMapController::class, 'clear'])->name('sm.map.clear');
     Route::post('/app/sm-map-loc', [App\Http\Controllers\Manager\ScheduleMapController::class, 'location'])->name('sm.map.loc');
     // Drawing sessions: a fresh page 1 per session, past drawings kept as drafts.

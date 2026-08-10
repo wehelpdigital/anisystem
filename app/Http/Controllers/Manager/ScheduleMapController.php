@@ -72,6 +72,37 @@ class ScheduleMapController extends BaseScheduleController
         return response()->json(['success' => true, 'data' => ['object' => $object->shaped()]]);
     }
 
+    /** Move or reshape an existing object; the team sees it land live. */
+    public function update(Request $request)
+    {
+        $schedule = $this->schedule($request->query('scheduleId'));
+        $meId = (int) Auth::id();
+        if (! ScheduleTeam::canAccess($schedule, $meId)) {
+            return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|integer',
+            'points' => 'required|array|min:1|max:2000',
+            'points.*' => 'array|size:2',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail($validator->errors()->first(), 422);
+        }
+
+        $object = ScheduleMapObject::active()
+            ->where('scheduleId', $schedule->id)
+            ->find($request->input('id'));
+        if (! $object) {
+            return $this->jsonFail('That shape no longer exists.', 404);
+        }
+
+        $object->update(['points' => json_encode($request->input('points'))]);
+        $this->emit($schedule->id, ['action' => 'update', 'object' => $object->fresh()->shaped(), 'actorUserId' => $meId]);
+
+        return response()->json(['success' => true, 'data' => ['object' => $object->fresh()->shaped()]]);
+    }
+
     public function remove(Request $request)
     {
         $schedule = $this->schedule($request->query('scheduleId'));

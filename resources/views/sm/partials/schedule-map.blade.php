@@ -17,6 +17,9 @@
         <button type="button" class="cmap-tool is-active" data-mtool="pan" title="Move the map" aria-label="Move the map">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v20M2 12h20M12 2L9 5m3-3l3 3M12 22l-3-3m3 3l3-3M2 12l3-3m-3 3l3 3M22 12l-3-3m3 3l-3 3"/></svg>
         </button>
+        <button type="button" class="cmap-tool" data-mtool="edit" title="Edit — tap a shape to move or reshape it" aria-label="Edit a shape">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4l7 16 2-6 6-2z"/></svg>
+        </button>
         <button type="button" class="cmap-tool" data-mtool="pen" title="Freehand draw" aria-label="Freehand draw">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L18 9l-3-3L5 16l-1 4z"/></svg>
         </button>
@@ -81,6 +84,18 @@
     .cmap-lbl-g { background: rgb(17 24 39 / .82); border-radius: .45rem; padding: .1rem .4rem; white-space: nowrap; }
     .cmap-txt-g { background: #fff; border: 1.5px solid #111827; border-radius: .45rem; padding: .12rem .45rem; box-shadow: 0 2px 6px rgb(0 0 0 / .25); }
     .cmap-me-g { background: rgb(17 24 39 / .82); border-radius: .45rem; padding: .05rem .35rem; }
+    /* Live-position dots are HTML overlays, not markers: markers cannot
+       ripple, and two stacked markers is what buried the name UNDER the dot.
+       Here the name hangs below and the ring breathes. */
+    .cmap-dot-wrap { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: .18rem; pointer-events: none; }
+    .cmap-dot { position: relative; width: 16px; height: 16px; border-radius: 999px; background: var(--dot, #16a34a); border: 2.5px solid #fff; box-shadow: 0 1px 4px rgb(0 0 0 / .45); }
+    .cmap-dot::after { content: ''; position: absolute; inset: -3px; border-radius: 999px; border: 2px solid var(--dot, #16a34a); animation: cmapRipple 1.6s ease-out infinite; }
+    @keyframes cmapRipple { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(2.6); opacity: 0; } }
+    .cmap-dot-name { background: rgb(17 24 39 / .82); color: #fff; border-radius: .45rem; padding: .05rem .4rem; font-size: 10px; font-weight: 800; white-space: nowrap; }
+    @media (prefers-reduced-motion: reduce) {
+        .cmap-dot::after { animation: cmapBreathe 2.2s ease-in-out infinite; }
+        @keyframes cmapBreathe { 0%, 100% { opacity: .2; transform: scale(1.5); } 50% { opacity: .7; transform: scale(1.5); } }
+    }
     html.dark .cmap-bar { border-color: #2b3a1c; }
     html.dark .cmap-tool { background: #1c2416; color: #cdd8c0; }
     html.dark .cmap-tool:hover { background: #243019; }
@@ -96,6 +111,7 @@
     const URLS = {
         objects: @json(route('sm.map')),
         push: @json(route('sm.map.push')),
+        update: @json(route('sm.map.update')),
         remove: @json(route('sm.map.remove')),
         clear: @json(route('sm.map.clear')),
         loc: @json(route('sm.map.loc')),
@@ -166,13 +182,21 @@
             segLabels(parts, pts, true);
             parts.push(textMark(centerOf(pts), fmtA(areaOf(pts)), 'cmap-lbl-g'));
         } else if (o.kind === 'text') {
-            parts.push(textMark(pts[0], o.label || '', 'cmap-txt-g', '#111827'));
+            const tm = textMark(pts[0], o.label || '', 'cmap-txt-g', '#111827');
+            // Labels are decoration, but a text OBJECT must catch taps or it
+            // could never be erased or moved.
+            tm.setClickable(true);
+            parts.push(tm);
         }
-        // The eraser removes whole shapes for everyone.
+        // Taps on a shape route by tool: erase removes it for everyone, edit
+        // picks it up for dragging and reshaping.
         parts.forEach((p) => p.addListener && p.addListener('click', () => {
-            if (tool !== 'erase') return;
-            api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: o.id } }).catch(() => {});
-            dropObject(o.id);
+            if (tool === 'erase') {
+                api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: o.id } }).catch(() => {});
+                dropObject(o.id);
+            } else if (tool === 'edit') {
+                beginEdit(o, parts);
+            }
         }));
         layers.set(o.id, parts);
     }
@@ -206,7 +230,9 @@
         clearTemp();
         document.querySelectorAll('.cmap-tool[data-mtool]').forEach((b) => b.classList.toggle('is-active', b.dataset.mtool === t));
         // Pan keeps native gestures; every drawing tool takes the finger.
-        map.setOptions({ gestureHandling: t === 'pan' ? 'greedy' : 'none', draggableCursor: t === 'pan' ? null : 'crosshair' });
+        if (t !== 'edit') endEdit();
+        const free = (t === 'pan' || t === 'edit' || t === 'erase');
+        map.setOptions({ gestureHandling: free ? 'greedy' : 'none', draggableCursor: free ? null : 'crosshair' });
     }
     function onTap(latLng) {
         const p = [latLng.lat(), latLng.lng()];
@@ -259,25 +285,109 @@
         };
         el.addEventListener('pointerup', up);
         el.addEventListener('pointercancel', up);
-        el.addEventListener('touchmove', (e) => { if (tool !== 'pan') e.preventDefault(); }, { passive: false });
+        el.addEventListener('touchmove', (e) => { if (tool !== 'pan' && tool !== 'edit' && tool !== 'erase') e.preventDefault(); }, { passive: false });
+    }
+
+    /* ---------- editing ----------
+     * The edit tool picks one shape up: whole-shape dragging for everything,
+     * vertex handles for the measured kinds. Pen strokes drag only — hundreds
+     * of vertex handles help nobody — and a rect stays a rect: its corners are
+     * re-derived from bounds on save. Saves debounce behind the gesture and
+     * re-render, so the measurement labels land on the new geometry. */
+    let editing = null, saveTimer = null;
+    function geometryOf(o, parts) {
+        const first = parts[0];
+        if (o.kind === 'text') { const pos = first.getPosition(); return [[pos.lat(), pos.lng()]]; }
+        const pts = [];
+        first.getPath().forEach((v) => pts.push([v.lat(), v.lng()]));
+        if (o.kind === 'rect') {
+            const b = new (G().LatLngBounds)();
+            pts.forEach((p) => b.extend(LL(p)));
+            return [[b.getSouthWest().lat(), b.getSouthWest().lng()], [b.getNorthEast().lat(), b.getNorthEast().lng()]];
+        }
+        return pts;
+    }
+    function scheduleSave() {
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(async () => {
+            if (!editing) return;
+            const { o, parts } = editing;
+            const pts = geometryOf(o, parts);
+            try {
+                const res = await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: o.id, points: pts } });
+                endEdit();
+                dropObject(o.id);
+                renderObject(res.data.object);
+                // Stay picked up, so nudging can continue without re-tapping.
+                if (tool === 'edit') beginEdit(res.data.object, layers.get(res.data.object.id));
+            } catch (e) { if (window.toast) toast(e.message, 'error'); }
+        }, 700);
+    }
+    function beginEdit(o, parts) {
+        if (editing && editing.o.id === o.id) return;
+        endEdit();
+        const first = parts[0];
+        if (first.setOptions) {
+            first.setOptions({
+                draggable: true,
+                editable: (o.kind === 'line' || o.kind === 'path' || o.kind === 'area'),
+            });
+        } else if (first.setDraggable) {
+            first.setDraggable(true);
+        }
+        editing = { o, parts, listeners: [] };
+        if (first.getPath) {
+            const path = first.getPath();
+            editing.listeners.push(path.addListener('set_at', scheduleSave));
+            editing.listeners.push(path.addListener('insert_at', scheduleSave));
+            editing.listeners.push(path.addListener('remove_at', scheduleSave));
+        }
+        editing.listeners.push(first.addListener('dragend', scheduleSave));
+    }
+    function endEdit() {
+        if (!editing) return;
+        clearTimeout(saveTimer);
+        editing.listeners.forEach((l) => l.remove());
+        const first = editing.parts[0];
+        if (first.setOptions) first.setOptions({ draggable: false, editable: false });
+        else if (first.setDraggable) first.setDraggable(false);
+        editing = null;
     }
 
     /* ---------- live GPS ---------- */
-    let gpsWatch = null, lastSent = 0;
+    let gpsWatch = null, lastSent = 0, DotClass = null, centeredOnMe = false;
+    function dotClass() {
+        if (DotClass) return DotClass;
+        // An OverlayView so the dot is real HTML: markers cannot ripple, and a
+        // second marker for the name is what buried the text under the dot.
+        DotClass = class extends (G().OverlayView) {
+            constructor(p) { super(); this.p = p; this.div = null; this.setMap(map); }
+            onAdd() {
+                const d = document.createElement('div');
+                d.className = 'cmap-dot-wrap';
+                d.innerHTML = '<span class="cmap-dot" style="--dot:' + hue(this.p.userId) + '"></span>'
+                    + '<span class="cmap-dot-name">' + escapeHtml((this.p.name || '') + (this.p.userId === ME ? ' (you)' : '')) + '</span>';
+                this.div = d;
+                this.getPanes().overlayMouseTarget.appendChild(d);
+            }
+            draw() {
+                if (!this.div || !this.getProjection()) return;
+                const pt = this.getProjection().fromLatLngToDivPixel(LL([this.p.lat, this.p.lng]));
+                if (pt) { this.div.style.left = pt.x + 'px'; this.div.style.top = pt.y + 'px'; }
+            }
+            move(lat, lng) { this.p.lat = lat; this.p.lng = lng; this.draw(); }
+            onRemove() { if (this.div) { this.div.remove(); this.div = null; } }
+        };
+        return DotClass;
+    }
     function renderLoc(p) {
-        const old = locMarks.get(p.userId);
-        if (old) old.parts.forEach((m) => m.setMap(null));
-        const parts = [
-            new (G().Marker)({
-                map, position: LL([p.lat, p.lng]), clickable: false, zIndex: 9000,
-                icon: { path: G().SymbolPath.CIRCLE, scale: 8, fillColor: hue(p.userId), fillOpacity: 1, strokeColor: '#fff', strokeWeight: 2 },
-            }),
-            textMark([p.lat, p.lng], (p.name || '') + (p.userId === ME ? ' (you)' : ''), 'cmap-me-g'),
-        ];
-        locMarks.set(p.userId, { parts, at: Date.now() });
+        const cur = locMarks.get(p.userId);
+        if (cur) { cur.ov.move(p.lat, p.lng); cur.at = Date.now(); return; }
+        const D = dotClass();
+        locMarks.set(p.userId, { ov: new D(p), at: Date.now() });
     }
     setInterval(() => {
-        locMarks.forEach((v, k) => { if (Date.now() - v.at > 75000) { v.parts.forEach((m) => m.setMap(null)); locMarks.delete(k); } });
+        locMarks.forEach((v, k) => { if (Date.now() - v.at > 75000) { v.ov.setMap(null); locMarks.delete(k); } });
     }, 15000);
     function toggleGps(btn) {
         if (gpsWatch !== null) {
@@ -290,6 +400,7 @@
         gpsWatch = navigator.geolocation.watchPosition((pos) => {
             const { latitude: lat, longitude: lng, accuracy: acc } = pos.coords;
             renderLoc({ userId: ME, name: 'Me', lat, lng, acc });
+            if (!centeredOnMe && !layers.size) { centeredOnMe = true; map.setCenter({ lat, lng }); map.setZoom(17); }
             if (Date.now() - lastSent > 5000) {
                 lastSent = Date.now();
                 api(`${URLS.loc}?scheduleId=${SID}`, { method: 'POST', body: { lat, lng, acc } }).catch(() => {});
@@ -348,12 +459,20 @@
             if (any) map.fitBounds(b, 48);
         }).catch(() => {});
 
+        // On by default: seeing each other on the land is why the map exists.
+        // The browser still asks permission; declining just leaves it off.
+        toggleGps(document.getElementById('cmapGps'));
+
         if (window.Echo) {
             try {
                 const ch = window.Echo.private('schedule-board.' + SID);
                 ch.listen('.map.object', (p) => {
                     if (!p || p.actorUserId === ME) return;
                     if (p.action === 'add' && p.object) renderObject(p.object);
+                    else if (p.action === 'update' && p.object) {
+                        if (editing && editing.o.id === p.object.id) endEdit();
+                        dropObject(p.object.id); renderObject(p.object);
+                    }
                     else if (p.action === 'remove') dropObject(p.id);
                     else if (p.action === 'clear') dropAll();
                 });
