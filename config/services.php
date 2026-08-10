@@ -48,6 +48,12 @@ return [
 
     // LiveKit — realtime audio/video calls in the Collab Room. `url` is the
     // wss:// server; `key`/`secret` sign short-lived join tokens server-side.
+    // Google Maps JS API — powers the Collab Room map tab. Needs a key with
+    // the Maps JavaScript API enabled (billing on, generous free tier).
+    'google_maps' => [
+        'key' => env('GOOGLE_MAPS_KEY'),
+    ],
+
     'livekit' => [
         'url' => env('LIVEKIT_URL'),
         'key' => env('LIVEKIT_API_KEY'),
