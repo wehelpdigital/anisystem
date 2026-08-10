@@ -7,7 +7,7 @@
 
 {{-- The activity board is the work surface: on a phone the bottom tab bar eats
      a strip of it for navigation that Back already provides. --}}
-@section('body-class', 'hide-tabbar no-zoom is-activities')
+@section('body-class', 'hide-tabbar no-zoom is-activities' . (request('module', 'activities') === 'activities' ? ' act-module-open' : ''))
 
 @if (request()->boolean('embed'))
 @push('head')
@@ -1831,6 +1831,11 @@
         document.getElementById('moduleBackBtn')?.classList.toggle('hidden', key === 'activities');
         // The AI module IS the technician chat — hide the floating one there.
         document.getElementById('aiFloat')?.classList.toggle('ai-float-off', key === 'ai');
+        // On phones the fab hides only while the ACTIVITIES module is showing
+        // (its Tools menu takes over). The other modules keep the bubble —
+        // their Tools hamburger is hidden with the rest of the activities
+        // chrome, so without the fab they would have no way into the chat.
+        document.body.classList.toggle('act-module-open', key === 'activities');
         document.querySelectorAll('#modulesSheet .module-nav-row').forEach((row) => {
             row.querySelector('.module-nav-check')?.classList.toggle('hidden', row.dataset.module !== key);
         });

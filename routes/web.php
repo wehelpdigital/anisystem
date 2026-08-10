@@ -17,7 +17,23 @@ Route::get('/s/{token}/d/{date}', [App\Http\Controllers\ShareController::class, 
 // Runtime uploads on Railway live only in storage/app/public (public/storage
 // is a committed directory there, not a symlink) — misses fall through to
 // this and stream from the real disk. See StorageFallbackController.
-Route::get('/storage/{path}', App\Http\Controllers\StorageFallbackController::class)->where('path', '.+')->name('storage.fallback');
+// Cookie-free on purpose: these responses carry Cache-Control public/immutable,
+// and StartSession would stamp a Set-Cookie onto them — a session cookie inside
+// a publicly cacheable object. Media needs no session; the app middlewares
+// below it are auth-gated and no-op without one.
+Route::get('/storage/{path}', App\Http\Controllers\StorageFallbackController::class)
+    ->where('path', '.+')
+    ->withoutMiddleware([
+        Illuminate\Cookie\Middleware\EncryptCookies::class,
+        Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
+        Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+        Illuminate\Session\Middleware\StartSession::class,
+        Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        App\Http\Middleware\BindSessionToIp::class,
+        App\Http\Middleware\EnforceSingleSession::class,
+        App\Http\Middleware\UpdateLastSeen::class,
+    ])
+    ->name('storage.fallback');
 
 Route::get('/worker-invite/{token}', [App\Http\Controllers\WorkerInviteController::class, 'show'])->name('worker.invite.show');
 Route::post('/worker-invite/{token}', [App\Http\Controllers\WorkerInviteController::class, 'accept'])->name('worker.invite.accept');

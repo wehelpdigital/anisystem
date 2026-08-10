@@ -2568,9 +2568,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.closest('[data-lightbox] img')) return;   // image clicks open the lightbox
         const card = e.target.closest('#activitiesList .activity-card[data-id]');
         if (!card) return;
-        // A card that was just dragged to another day must not also count as a
-        // tap and toggle itself on top of the move.
-        if (cardDragSwallowClick) return;
+        // A drag that just ended never reaches here: the touch-drag system
+        // swallows its trailing click at capture phase (see swallowNextClick).
         // On a phone a tap folds the card open or shut — the accordion IS the
         // read view, so this applies to done cards too. Editing and the done
         // note stay a deliberate action away (kebab / desktop click).
@@ -4652,171 +4651,26 @@ document.addEventListener('DOMContentLoaded', () => {
     let touchDrag = null;
 
     /** Translucent clone of `el`, sized to match and parked on <body>. */
-    /* ---- Touch drag for activity cards ---------------------------------
-     * Cards move between days with native HTML5 drag, which phones never fire
-     * for touch — so dragging an activity to another date simply did not work
-     * there. This is the same pointer-based approach the inline notes already
-     * use, kept deliberately small: it decides a target DAY and hands over to
-     * moveSingleActivity(), which already does the persistence, the undo entry
-     * and the renumbering.
+    /* ---- Touch-drag guards ----------------------------------------------
+     * The long-press touch drag for cards, day headers and notes lives below
+     * (touchstart / beginTouchDrag / endTouchDrag). What kept killing it on
+     * real phones: cards are draggable="true" for the desktop mouse path, and
+     * a STATIONARY long-press on such an element is exactly the gesture
+     * mobile browsers answer with a NATIVE HTML5 drag - cancelling the touch
+     * moments after the hold granted it. Long-press text selection and the
+     * context menu do the same. While a press is armed or a drag is live,
+     * veto all three; capture phase on dragstart so the desktop DnD handlers
+     * never see the touch-born event. touchDrag only exists while a finger is
+     * down, so the mouse path is blind to these guards.
      */
-    let CARD_DRAG = null;
-    let cardDragSwallowClick = false;
-
-    function cardDragCleanup() {
-        if (!CARD_DRAG) return;
-        clearTimeout(CARD_DRAG.lpTimer);
-        CARD_DRAG.ghost?.remove();
-        CARD_DRAG.card.classList.remove('dragging');
-        CARD_DRAG.card.style.touchAction = '';   // hand scrolling back
-        $qsa('.date-activities.drag-over').forEach((c) => c.classList.remove('drag-over'));
-        document.body.classList.remove('is-touch-dragging');
-        CARD_DRAG = null;
-    }
-
-    document.addEventListener('pointerdown', (e) => {
-        if (e.pointerType !== 'touch' || !window.matchMedia('(pointer: coarse)').matches) return;
-        const card = e.target.closest && e.target.closest('#activitiesList .activity-card[data-id]');
-        if (!card || card.getAttribute('data-is-done') === '1') return;
-        // Controls own their taps; a drag must not start from one.
-        if (e.target.closest('button, a, input, label, .item-tag, [contenteditable]')) return;
-
-        CARD_DRAG = { card, id: e.pointerId, startX: e.clientX, startY: e.clientY, active: false, ghost: null, offX: 0, offY: 0, lpTimer: null };
-
-        // Press and hold to pick a card up, rather than starting on travel.
-        // Moving a card to another day means dragging VERTICALLY, which is the
-        // same gesture as scrolling the list — so a distance trigger left the
-        // browser and this code racing for it, and the browser usually won by
-        // scrolling and cancelling the pointer. That race is why dragging
-        // worked only sometimes. A hold is unambiguous: nothing else claims it.
-        CARD_DRAG.lpTimer = setTimeout(() => {
-            if (!CARD_DRAG || CARD_DRAG.active) return;
-            startCardDrag(CARD_DRAG.startX, CARD_DRAG.startY, e.pointerId);
-            if (navigator.vibrate) { try { navigator.vibrate(15); } catch (_) { /* noop */ } }
-        }, 320);
-    }, { passive: true });
-
-    function startCardDrag(x, y, pointerId) {
-        const card = CARD_DRAG.card;
-        CARD_DRAG.active = true;
-        const rect = card.getBoundingClientRect();
-        CARD_DRAG.offX = x - rect.left;
-        CARD_DRAG.offY = y - rect.top;
-        CARD_DRAG.ghost = buildDragGhost(card);
-        // Place the ghost under the finger NOW. .drag-ghost is fixed at the
-        // viewport origin and the hold fires while the finger is still, so
-        // there is no pointermove coming to position it — without this it sat
-        // at the top-left corner until the first move.
-        CARD_DRAG.ghost.style.transform = `translate(${x - CARD_DRAG.offX}px, ${y - CARD_DRAG.offY}px)`;
-        CARD_DRAG.ghost.style.pointerEvents = 'none';
-        card.classList.add('dragging');
-        document.body.classList.add('is-touch-dragging');
-        try { card.setPointerCapture(pointerId); } catch (_) { /* noop */ }
-    }
-
-    // touch-action set once a gesture is underway has no effect on THAT
-    // gesture — the browser already chose. So when the finger moved after the
-    // hold, the browser began a scroll and fired pointercancel, killing the
-    // drag it had just granted. Cancelling the touchmove itself is the only
-    // thing that stops the scroll mid-gesture; passive:false is what makes
-    // preventDefault real. Everything not mid-drag passes through untouched.
-    document.addEventListener('touchmove', (e) => {
-        if (CARD_DRAG && CARD_DRAG.active) e.preventDefault();
-    }, { passive: false });
-
-    // A hold on Android can also summon the context menu part-way through.
-    document.addEventListener('contextmenu', (e) => {
-        if (CARD_DRAG) e.preventDefault();
+    document.addEventListener("contextmenu", (e) => {
+        if (touchDrag) e.preventDefault();
     });
-
-    document.addEventListener('pointermove', (e) => {
-        if (!CARD_DRAG || e.pointerId !== CARD_DRAG.id) return;
-
-        if (!CARD_DRAG.active) {
-            // Moving before the hold completes means the finger is scrolling,
-            // not picking the card up. Let go of the gesture entirely so the
-            // list scrolls as it always did.
-            if (Math.hypot(e.clientX - CARD_DRAG.startX, e.clientY - CARD_DRAG.startY) > 10) {
-                clearTimeout(CARD_DRAG.lpTimer);
-                CARD_DRAG = null;
-            }
-            return;
-        }
-
-        e.preventDefault();
-        CARD_DRAG.ghost.style.transform = `translate(${e.clientX - CARD_DRAG.offX}px, ${e.clientY - CARD_DRAG.offY}px)`;
-
-        // Highlight the day under the finger. The ghost is under the pointer,
-        // so it has to be ignored while asking what is beneath.
-        CARD_DRAG.ghost.style.pointerEvents = 'none';
-        const under = document.elementFromPoint(e.clientX, e.clientY);
-        const container = under && under.closest ? under.closest('.date-activities[data-date]') : null;
-        $qsa('.date-activities.drag-over').forEach((c) => { if (c !== container) c.classList.remove('drag-over'); });
-        if (container) container.classList.add('drag-over');
-
-        // Reaching a day that is off-screen needs the page to come to you.
-        const pad = 90;
-        if (e.clientY < pad) window.scrollBy(0, -14);
-        else if (e.clientY > window.innerHeight - pad) window.scrollBy(0, 14);
-    }, { passive: false });
-
-    function endCardDrag(commit) {
-        if (!CARD_DRAG) return;
-        const { card, active } = CARD_DRAG;
-        const target = $qs('.date-activities.drag-over');
-        const newDate = target ? (target.getAttribute('data-date') || '').trim() : '';
-        const oldDate = (card.getAttribute('data-target-date') || '').trim();
-        cardDragCleanup();
-
-        if (!active) return;
-        // A drag that ended on a card must not also register as a tap opening
-        // the details sheet.
-        cardDragSwallowClick = true;
-        setTimeout(() => { cardDragSwallowClick = false; }, 400);
-
-        if (commit && newDate && newDate !== oldDate) {
-            moveSingleActivity(card.getAttribute('data-id'), newDate);
-        }
-    }
-
-    /**
-     * Clear the drag's visible traces whatever happened.
-     *
-     * The state object is not a reliable guide here: pointer capture can send
-     * the release somewhere unexpected, and a successful move re-renders the
-     * list, replacing the very card the cleanup meant to tidy. Either left the
-     * ghost on screen and the card stuck at drag opacity, with nothing holding
-     * the pointer any more. Sweeping the DOM cannot miss for those reasons.
-     */
-    function sweepCardDragArtifacts() {
-        $qsa('.drag-ghost').forEach((g) => g.remove());
-        $qsa('.activity-card.dragging').forEach((c) => {
-            c.classList.remove('dragging');
-            c.style.touchAction = '';
-        });
-        $qsa('.date-activities.drag-over').forEach((c) => c.classList.remove('drag-over'));
-        document.body.classList.remove('is-touch-dragging');
-    }
-
-    // Only the finger that started the drag may end it, so scrolling with a
-    // second finger does not drop the card mid-move. The sweep runs either way:
-    // a stranded ghost is worse than an early tidy-up.
-    document.addEventListener('pointerup', (e) => {
-        if (CARD_DRAG && e.pointerId !== CARD_DRAG.id) return;
-        endCardDrag(true);
-        sweepCardDragArtifacts();
-    });
-    document.addEventListener('pointercancel', (e) => {
-        if (CARD_DRAG && e.pointerId !== CARD_DRAG.id) return;
-        endCardDrag(false);
-        sweepCardDragArtifacts();
-    });
-    // Capture is also lost on a normal release, and this can arrive before the
-    // pointerup that carries the drop — so it only tidies up, never ends the
-    // drag. Cancelling here would throw away perfectly good drops.
-    document.addEventListener('lostpointercapture', () => {
-        if (CARD_DRAG && CARD_DRAG.active) return;
-        sweepCardDragArtifacts();
+    document.addEventListener("dragstart", (e) => {
+        if (touchDrag) e.preventDefault();
+    }, true);
+    document.addEventListener("selectstart", (e) => {
+        if (touchDrag) e.preventDefault();
     });
 
     function buildDragGhost(el) {

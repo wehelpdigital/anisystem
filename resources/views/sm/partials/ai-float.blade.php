@@ -120,7 +120,7 @@
         height: min(32rem, calc(100dvh - 9rem)); display: flex; flex-direction: column;
         background: var(--color-white); border: 1px solid var(--color-gray-200);
         border-radius: 1.1rem; box-shadow: 0 16px 44px rgba(0,0,0,.24); overflow: hidden;
-        animation: aiFloatIn .18s ease both;
+        animation: aiFloatIn .28s cubic-bezier(.22,1,.36,1) both;
     }
     /* This inline sheet loads after Tailwind, so re-assert the hidden toggle
        or `display:flex` above would win and the ✕ could never close the panel. */
@@ -246,7 +246,24 @@
         }
         /* The bubble stays out of the activities board entirely — the Tools
            menu opens the chat there. Other schedule pages keep the bubble. */
-        body.is-activities .ai-float-fab { display: none; }
+        body.act-module-open .ai-float-fab { display: none; }
+    }
+
+    /* ---- Appear / disappear ----
+       Opening already rode aiFloatIn; closing snapped shut because .hidden is
+       display:none and no animation survives that. is-closing holds the panel
+       visible just long enough for the exit to play (openPanel removes it and
+       adds .hidden after). The overlay fades with the same rhythm. */
+    .ai-float.is-closing .ai-float-panel { animation: aiFloatOut .22s ease both; }
+    @keyframes aiFloatOut { to { opacity: 0; transform: translateY(12px) scale(.98); } }
+    .ai-float.is-open::before { animation: aiOverlayIn .28s ease both; }
+    .ai-float.is-closing::before { animation: aiOverlayOut .22s ease both; }
+    @keyframes aiOverlayIn { from { opacity: 0; } }
+    @keyframes aiOverlayOut { to { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+        .ai-float.is-closing .ai-float-panel,
+        .ai-float.is-open::before,
+        .ai-float.is-closing::before { animation: none; }
     }
 </style>
 
@@ -300,14 +317,34 @@
             $('aiFloatNoCredits').classList.toggle('hidden', v > 0);
         }
 
+        let closeTimer = null;
         const openPanel = (open) => {
-            panel.classList.toggle('hidden', !open);
-            $('aiFloat')?.classList.toggle('is-open', open);
-            // On a phone, focusing on open throws the keyboard over the chat
-            // before a word has been read. A tap on the box still opens it.
-            if (open && !window.matchMedia('(pointer: coarse)').matches) {
-                setTimeout(() => $('aiFloatText')?.focus(), 60);
+            const root = $('aiFloat');
+            clearTimeout(closeTimer);
+            if (open) {
+                root?.classList.remove('is-closing');
+                panel.classList.remove('hidden');
+                root?.classList.add('is-open');
+                // On a phone, focusing on open throws the keyboard over the
+                // chat before a word has been read. A tap still opens it.
+                if (!window.matchMedia('(pointer: coarse)').matches) {
+                    setTimeout(() => $('aiFloatText')?.focus(), 60);
+                }
+                return;
             }
+            if (panel.classList.contains('hidden')) return;
+            // .hidden is display:none, which no exit animation survives — so
+            // is-closing plays the exit first and the hide lands after it.
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                panel.classList.add('hidden');
+                root?.classList.remove('is-open');
+                return;
+            }
+            root?.classList.add('is-closing');
+            closeTimer = setTimeout(() => {
+                panel.classList.add('hidden');
+                root?.classList.remove('is-open', 'is-closing');
+            }, 230);
         };
         fab.addEventListener('click', () => openPanel(panel.classList.contains('hidden')));
         $('aiFloatClose')?.addEventListener('click', () => openPanel(false));
