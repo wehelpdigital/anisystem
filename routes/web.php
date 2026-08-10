@@ -190,6 +190,12 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-board-pages', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'pages'])->name('sm.board.pages');
     Route::post('/app/sm-board-page', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'createPage'])->name('sm.board.page-create');
     Route::post('/app/sm-board-save-notes', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'saveToNotes'])->name('sm.board.save-notes');
+    // --- Collab Room map (persistent shapes + ephemeral live positions) ---
+    Route::get('/app/sm-map', [App\Http\Controllers\Manager\ScheduleMapController::class, 'objects'])->name('sm.map');
+    Route::post('/app/sm-map-push', [App\Http\Controllers\Manager\ScheduleMapController::class, 'push'])->name('sm.map.push');
+    Route::delete('/app/sm-map-remove', [App\Http\Controllers\Manager\ScheduleMapController::class, 'remove'])->name('sm.map.remove');
+    Route::post('/app/sm-map-clear', [App\Http\Controllers\Manager\ScheduleMapController::class, 'clear'])->name('sm.map.clear');
+    Route::post('/app/sm-map-loc', [App\Http\Controllers\Manager\ScheduleMapController::class, 'location'])->name('sm.map.loc');
     // Drawing sessions: a fresh page 1 per session, past drawings kept as drafts.
     Route::post('/app/sm-board-open', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'open'])->name('sm.board.open');
     Route::post('/app/sm-board-heartbeat', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'heartbeat'])->name('sm.board.heartbeat');

@@ -61,6 +61,10 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536M9 11l6-6 3 3-6 6H9v-3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h16"/></svg>
             <span>Drawing</span>
         </button>
+        <button type="button" class="collab-tab" data-tab="map" role="tab" aria-selected="false">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+            <span>Map</span>
+        </button>
         <button type="button" class="collab-tab" data-tab="activities" role="tab" aria-selected="false">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
             <span>Activities</span>
@@ -75,6 +79,7 @@
     <div class="collab-panels">
         <div class="collab-panel is-active" data-panel="chat" id="collabChat"></div>
         <div class="collab-panel" data-panel="drawing" id="collabDrawing"></div>
+        <div class="collab-panel" data-panel="map" id="collabMap">@include("sm.partials.schedule-map", ["schedule" => $schedule])</div>
         <div class="collab-panel" data-panel="activities" id="collabActivities">
             {{-- Eager (no lazy) so it preloads in the background the moment the
                  Collab Room opens — switching to Activities is then instant. --}}
@@ -149,8 +154,8 @@
     #collabActivities.is-active { display: block; }
     #collabActivitiesFrame { width: 100%; height: 100%; border: 0; display: block; }
     /* Chat + AI panels host a column layout; drawing hosts the canvas board. */
-    #collabChat.is-active, #collabAi.is-active, #collabDrawing.is-active { display: flex; }
-    #collabChat, #collabAi, #collabDrawing { flex-direction: column; }
+    #collabChat.is-active, #collabAi.is-active, #collabDrawing.is-active, #collabMap.is-active { display: flex; }
+    #collabChat, #collabAi, #collabDrawing, #collabMap { flex-direction: column; }
     /* Chat/whiteboard are tabs here, not floats — hide the floating launcher. */
     body.is-collab #teamChat .team-fab { display: none !important; }
 
@@ -192,7 +197,7 @@
     }
 
     /* ---------- per-tab loading overlay ---------- */
-    const LABELS = { chat: 'Loading chat…', drawing: 'Loading board…', activities: 'Loading activities…', ai: 'Loading AI…' };
+    const LABELS = { chat: 'Loading chat…', drawing: 'Loading board…', map: 'Loading map…', activities: 'Loading activities…', ai: 'Loading AI…' };
     const loader = document.getElementById('collabLoader');
     const loaderText = document.getElementById('collabLoaderText');
     const frame = document.getElementById('collabActivitiesFrame');
@@ -239,6 +244,9 @@
         } else if (tab === 'drawing') {
             if (typeof window.mountScheduleBoard === 'function') window.mountScheduleBoard(document.getElementById('collabDrawing'));
             rafReady('drawing');
+        } else if (tab === 'map') {
+            if (typeof window.initCollabMap === 'function') window.initCollabMap();
+            rafReady('map');
         } else if (tab === 'ai') {
             rafReady('ai');
         } else if (tab === 'activities') {
