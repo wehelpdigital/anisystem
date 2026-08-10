@@ -6,6 +6,18 @@
      circle, text, and an object eraser. Works with mouse, pen and touch. --}}
 <div class="draw-modal" id="drawModal" aria-hidden="true">
     <div class="draw-shell">
+        {{-- Header: the way out and the way to keep the work, both on top where
+             a full-screen page puts them — buried at the end of a wrapping
+             toolbar they read as just more tools. --}}
+        <div class="draw-head">
+            <button type="button" class="draw-tool" id="drawBack" aria-label="Back" title="Back — discards the drawing">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <span class="draw-title">Drawing</span>
+            <span class="grow"></span>
+            <button type="button" class="btn btn-ghost btn-sm" id="drawCancel">Cancel</button>
+            <button type="button" class="btn btn-primary btn-sm" id="drawSave">Save drawing</button>
+        </div>
         <div class="draw-toolbar">
             <div class="draw-tools" id="drawTools">
                 <button type="button" class="draw-tool" data-tool="select" title="Select · move · resize (marquee)">
@@ -48,9 +60,6 @@
             </button>
             <button type="button" class="draw-tool" id="drawUndo" title="Undo">↶</button>
             <button type="button" class="draw-tool" id="drawClear" title="Clear all">Clear</button>
-            <span class="grow"></span>
-            <button type="button" class="btn btn-ghost btn-sm" id="drawCancel">Cancel</button>
-            <button type="button" class="btn btn-primary btn-sm" id="drawSave">Save drawing</button>
         </div>
         <div class="draw-stage" id="drawStage">
             <canvas id="drawCanvas"></canvas>
@@ -74,6 +83,9 @@
     @media (prefers-reduced-motion: reduce) {
         .draw-modal.show, .draw-modal.show .draw-shell { animation:none; }
     }
+    .draw-head { display:flex; align-items:center; gap:.5rem; padding:.55rem .7rem;
+        border-bottom:1px solid var(--color-gray-100); flex-shrink:0; }
+    .draw-title { font-family:var(--font-heading); font-weight:800; font-size:.95rem; color:var(--color-gray-900); }
     .draw-toolbar { display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; padding:.55rem .7rem;
         border-bottom:1px solid var(--color-gray-100); flex-shrink:0; }
     .draw-tools { display:flex; gap:.15rem; }
@@ -93,12 +105,16 @@
     .draw-tool.is-active { background:var(--color-brand-100); color:var(--color-brand-800); }
     .draw-stage { flex:1; min-height:0; background:#eef1f4; overflow:hidden; touch-action:none;
         display:flex; align-items:center; justify-content:center; padding:.75rem; }
+    /* Phones: the sheet goes edge to edge — the margin was dead space. */
+    @media (max-width: 767px) { .draw-stage { padding:0; } #drawCanvas { border-radius:0; box-shadow:none; } }
     #drawCanvas { display:block; background:#fff; box-shadow:0 6px 24px -8px rgb(0 0 0 / .3);
         border-radius:.35rem; touch-action:none; cursor:crosshair; }
     .draw-hint { font-size:.72rem; color:var(--color-gray-400); padding:.4rem .7rem; flex-shrink:0; }
     .draw-hint b { color:var(--color-gray-600); }
     html.dark .draw-shell { background:#151b12; }
     html.dark .draw-toolbar { border-color:#2b3a1c; }
+    html.dark .draw-head { border-color:#2b3a1c; }
+    html.dark .draw-title { color:#e6eddd; }
     html.dark .draw-stage { background:#0f130c; }
     html.dark .draw-tool { background:#1c2416; color:#cdd8c0; }
     html.dark .draw-tool:hover { background:#243019; }
@@ -120,7 +136,8 @@
     const toolsWrap = document.getElementById('drawTools');
     const hint = document.getElementById('drawHint');
 
-    const W = 1280, H = 900;          // fixed internal resolution → crisp export
+    const W0 = 1280, H0 = 900;        // the space existing drawings were made in
+    let W = W0, H = H0;               // internal resolution → crisp export
     const HANDLE = 9;                 // resize-handle half-size (canvas units)
 
     let color = '#111827';
@@ -419,7 +436,9 @@
 
     /* ---------- fit + open/close ---------- */
     function fitStage() {
-        const availW = stage.clientWidth - 24, availH = stage.clientHeight - 24;
+        const cs = getComputedStyle(stage);
+        const availW = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+        const availH = stage.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
         if (availW <= 0 || availH <= 0) return;
         const scale = Math.min(availW / W, availH / H);
         canvas.style.width = Math.round(W * scale) + 'px';
@@ -429,6 +448,7 @@
 
     function close() { modal.classList.remove('show'); modal.setAttribute('aria-hidden', 'true'); onSave = null; document.body.style.overflow = ''; }
     document.getElementById('drawCancel').addEventListener('click', close);
+    document.getElementById('drawBack').addEventListener('click', close);
     document.getElementById('drawSave').addEventListener('click', () => {
         selected.clear(); marquee = null;
         // Capture without the grid guide, then restore the on-screen view.
@@ -441,6 +461,15 @@
 
     function reset(existingUrl) {
         objects = []; selected.clear(); undoStack.length = 0; marquee = null; mode = null; cur = null; uid = 1;
+        // A new drawing takes the aspect of the screen it opens on, so the
+        // white sheet fills the stage instead of letterboxing inside it. An
+        // existing drawing keeps the space it was made in — reshaping that
+        // would stretch what the user already drew.
+        if (existingUrl) { W = W0; H = H0; }
+        else {
+            const aw = Math.max(1, stage.clientWidth), ah = Math.max(1, stage.clientHeight);
+            W = W0; H = Math.min(2600, Math.max(520, Math.round(W0 * ah / aw)));
+        }
         canvas.width = W; canvas.height = H;
         setTool('pen'); render();
         if (existingUrl) {
