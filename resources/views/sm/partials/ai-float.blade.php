@@ -37,9 +37,6 @@
                     <span id="aiFloatBalance">{{ rtrim(rtrim(number_format($aiFloatBalance, 2), '0'), '.') }}</span>&nbsp;credits
                 </a>
             </div>
-            <a href="{{ route('sm.ai', ['id' => $schedule->id]) }}" class="ai-float-icon" title="Open full chat" aria-label="Open full chat">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
-            </a>
             <button type="button" id="aiFloatClose" class="ai-float-icon" aria-label="Close">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
@@ -314,7 +311,12 @@
         }
         function setBalance(v) {
             const el = $('aiFloatBalance'); if (el) el.textContent = String(Math.round(v * 100) / 100);
-            $('aiFloatNoCredits').classList.toggle('hidden', v > 0);
+            // A failed send already answers with a purchase card in the thread,
+            // right where the user is looking — the banner on top of it said
+            // the same thing twice. It still covers opening the chat when the
+            // credits were already gone, where no card exists yet.
+            const saidInChat = !!thread.querySelector('.is-buy');
+            $('aiFloatNoCredits').classList.toggle('hidden', v > 0 || saidInChat);
         }
 
         let closeTimer = null;
@@ -386,8 +388,10 @@
             } catch (err) {
                 thinking.remove();
                 if (err.data && err.data.outOfCredits) {
-                    setBalance(err.data.balance || 0);
+                    // Card first: setBalance keeps the banner down when the
+                    // thread already carries the purchase card.
                     addTurn(false, buyCard(err.message)).querySelector('.b').classList.add('is-buy');
+                    setBalance(err.data.balance || 0);
                 } else { addTurn(false, '<p>' + escapeHtml(err.message) + '</p>'); }
                 input.value = message; input.dispatchEvent(new Event('input'));
             } finally { busy = false; $('aiFloatSend').disabled = false; input.focus(); }
