@@ -159,8 +159,8 @@
         @if (\App\Support\ScheduleTeam::hasTeam($schedule))
             <a href="{{ route('sm.collab', ['id' => $schedule->id]) }}" data-collab-open class="card card-hover block">
                 <div class="p-4 flex flex-col gap-3">
-                    <div class="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4h18M5 4v11a2 2 0 002 2h10a2 2 0 002-2V4M8 9h8M8 12h5M12 17v4m-3 0h6"/></svg>
+                    <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4h18M5 4v11a2 2 0 002 2h10a2 2 0 002-2V4M8 9h8M8 12h5M12 17v4m-3 0h6"/></svg>
                     </div>
                     <span class="font-bold text-gray-900 text-sm">Collab Room</span>
                 </div>
