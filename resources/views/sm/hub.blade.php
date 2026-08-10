@@ -29,8 +29,10 @@
             'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
         ['Post-harvest', 'post-harvest', (int) $postHarvestCount,
             'M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z'],
+        // Pencil-over-page, not the document glyph: Documentation two rows up
+        // wears that one, and two tiles with the same icon read as one.
         ['Notes', 'notes', (int) $notesCount,
-            'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
+            'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'],
         ['AI Technician', 'ai', null,
             'M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5'],
     ];
@@ -158,7 +160,7 @@
             <a href="{{ route('sm.collab', ['id' => $schedule->id]) }}" data-collab-open class="card card-hover block">
                 <div class="p-4 flex flex-col gap-3">
                     <div class="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-3-3.87M9 20H4v-1a4 4 0 013-3.87m0 0a4 4 0 115.5-5.8M7 15.13A4 4 0 0112 8m5 7.13A4 4 0 0012 8"/></svg>
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4h18M5 4v11a2 2 0 002 2h10a2 2 0 002-2V4M8 9h8M8 12h5M12 17v4m-3 0h6"/></svg>
                     </div>
                     <span class="font-bold text-gray-900 text-sm">Collab Room</span>
                 </div>
@@ -179,7 +181,7 @@
         <a href="{{ route('sm.reports', ['id' => $schedule->id]) }}" class="card card-hover block">
             <div class="p-4 flex flex-col gap-3">
                 <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
-                    <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-6h13M9 5v.01M9 11v.01M4 7h.01M4 12h.01M4 17h.01M12 5h9M12 17h9"/></svg>
+                    <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9 9 0 1020.945 13H12a1 1 0 01-1-1V3.055zM15 3.936A9.02 9.02 0 0120.064 9H15V3.936z"/></svg>
                 </div>
                 <span class="font-bold text-gray-900 text-sm">Reports</span>
             </div>
