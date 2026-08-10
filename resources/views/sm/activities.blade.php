@@ -312,6 +312,18 @@
                position in the markup. */
             .date-header { flex-wrap: wrap; }
             .date-header > * { flex-shrink: 0; }
+            /* The one thing on the control line that can give way is the date
+               text — everything else is a button. flex-shrink cannot deliver
+               that here: in a wrapping flex container items hop to the next
+               line INSTEAD of shrinking, so the kebab wrapped before the date
+               was ever squeezed. Reserve the controls' room outright instead:
+               the cap is the worst-case width of everything fixed on the line
+               (chevron, day, count, +, kebab, the warnings pill and the gaps),
+               so the date ellipsizes and the buttons always fit. */
+            .date-header-date {
+                min-width: 0; max-width: calc(100% - 15rem);
+                white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            }
             .date-header-weather {
                 order: 10; flex: 1 0 100%; width: 100%; min-width: 0;
                 overflow-x: auto; overflow-y: hidden;
