@@ -33,7 +33,12 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            'serve' => true,
+            // The framework's serve feature claims GET /storage/{path} at boot,
+            // before web.php loads, and 403s anything unsigned — which starved
+            // the storage.fallback route that serves runtime uploads on
+            // Railway. Nothing here issues temporaryUrl() links, so the signed
+            // serving it exists for is unused anyway.
+            'serve' => false,
             'throw' => false,
             'report' => false,
         ],

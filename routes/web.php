@@ -14,6 +14,11 @@ Route::get('/s/{token}/a/{activity}', [App\Http\Controllers\ShareController::cla
 Route::get('/s/{token}/d/{date}', [App\Http\Controllers\ShareController::class, 'day'])->where('date', '\d{4}-\d{2}-\d{2}')->name('share.day');
 
 // Worker login invite (no auth) — set a password from the emailed link.
+// Runtime uploads on Railway live only in storage/app/public (public/storage
+// is a committed directory there, not a symlink) — misses fall through to
+// this and stream from the real disk. See StorageFallbackController.
+Route::get('/storage/{path}', App\Http\Controllers\StorageFallbackController::class)->where('path', '.+')->name('storage.fallback');
+
 Route::get('/worker-invite/{token}', [App\Http\Controllers\WorkerInviteController::class, 'show'])->name('worker.invite.show');
 Route::post('/worker-invite/{token}', [App\Http\Controllers\WorkerInviteController::class, 'accept'])->name('worker.invite.accept');
 

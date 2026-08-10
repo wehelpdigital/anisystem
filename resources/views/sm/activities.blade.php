@@ -7,7 +7,7 @@
 
 {{-- The activity board is the work surface: on a phone the bottom tab bar eats
      a strip of it for navigation that Back already provides. --}}
-@section('body-class', 'hide-tabbar no-zoom')
+@section('body-class', 'hide-tabbar no-zoom is-activities')
 
 @if (request()->boolean('embed'))
 @push('head')
@@ -386,6 +386,29 @@
             .activity-card > .flex.items-start.justify-between { padding-right: 2.4rem; }
             .activity-card .card-menu-btn { flex: 0 0 auto; }
 
+            /* ---- Card accordion (phones) ----
+               A day of full cards is a wall; collapsed to their head row the
+               whole day scans at a glance and a drag has short distances to
+               travel. Tap expands one card, tap again folds it; the open set
+               persists per schedule (see CARD_OPEN in the JS).
+               The head row is the card's first child, so everything after it
+               folds away; badges and lot meta live INSIDE the head (promoted
+               by the display:contents restructure above), so they are named
+               separately. Three-class selectors on purpose: the clamps they
+               override sit later in this file, and equal specificity would
+               lose on source order — the trap this file keeps springing. */
+            .activity-card.act-collapsed > :not(:first-child) { display: none; }
+            .activity-card.act-collapsed .activity-card-badges,
+            .activity-card.act-collapsed .activity-card-lotmeta { display: none; }
+            /* An expanded card is the read view, so the scanning clamps come
+               off: full title, full description. */
+            .activity-card:not(.act-collapsed) .activity-card-title {
+                white-space: normal; overflow: visible; text-overflow: clip;
+            }
+            .activity-card:not(.act-collapsed) .activity-description-content {
+                display: block; -webkit-line-clamp: unset; overflow: visible;
+            }
+
             /* Title and tags each claim their own full-width row. */
             .activity-card .activity-card-title,
             .activity-card .activity-card-badges,
@@ -510,6 +533,17 @@
             .inline-note-del, .inline-note-edit { width: 2.5rem; height: 2.5rem; }
             .inline-note-edit { right: 3.2rem; }
             .inline-note-del svg, .inline-note-edit svg { width: 1.4rem; height: 1.4rem; }
+            /* The note body clamps to one line on phones, so the box is now
+               shorter than these buttons — pinned to top:.3rem they hung out
+               below it. Centre on the box instead, which fits any height, and
+               keep the press feedback inside the same transform so :active
+               does not undo the centring. The min-height keeps a short note
+               tall enough to be a comfortable tap target at all. */
+            .inline-note, .date-note-block { min-height: 3.1rem; }
+            .inline-note-del, .inline-note-edit,
+            .date-note-edit, .date-note-del { top: 50%; transform: translateY(-50%); }
+            .inline-note-del:active, .inline-note-edit:active,
+            .date-note-del:active, .date-note-edit:active { transform: translateY(-50%) scale(.9); }
         }
         /* While saving/moving, the spinner owns the top-right corner (the action
            buttons are non-interactive during the move anyway) — no overlap. */
@@ -1248,7 +1282,7 @@
         </button>
         @if (\App\Support\ScheduleTeam::hasTeam($schedule))
         <a href="{{ route('sm.collab', ['id' => $schedule->id]) }}" id="collabRoomBtn" data-collab-open class="btn btn-primary btn-sm toolbar-desktop-action" data-activities-only title="Open the team Collab Room">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-3-3.87M9 20H4v-1a4 4 0 013-3.87m0 0a4 4 0 115.5-5.8M7 15.13A4 4 0 0112 8m5 7.13A4 4 0 0012 8"/></svg>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4h18M5 4v11a2 2 0 002 2h10a2 2 0 002-2V4M8 9h8M8 12h5M12 17v4m-3 0h6"/></svg>
             <span class="hidden sm:inline">Collab Room</span>
         </a>
         @endif
@@ -1256,8 +1290,13 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
             Drafts <span id="draftsBadge" class="badge badge-gray">{{ $draftsCount }}</span>
         </button>
+        {{-- Lives only in the Tools menu; the menu row forwards its click here. --}}
+        <button type="button" id="contractAllBtn" class="btn btn-white btn-sm toolbar-in-menu" data-activities-only>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 11l7-7 7 7M5 19l7-7 7 7"/></svg>
+            Contract All
+        </button>
         <button type="button" id="openReportBtn" class="btn btn-white btn-sm toolbar-in-menu" data-activities-only>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9 9 0 1020.945 13H12a1 1 0 01-1-1V3.055zM15 3.936A9.02 9.02 0 0120.064 9H15V3.936z"/></svg>
             Report
         </button>
         <button type="button" id="openSearchBtn" data-sheet-open="filtersSheet" class="btn btn-white btn-sm relative toolbar-in-menu" data-activities-only>

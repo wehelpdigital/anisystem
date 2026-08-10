@@ -341,15 +341,22 @@
         @php
             $actRows = [
                 ['openDraftsBtn', 'Drafts', 'M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4', 'actDraftsBadge', ''],
-                ['openReportBtn', 'Report', 'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z', '', ''],
+                ['openReportBtn', 'Report', 'M11 3.055A9 9 0 1020.945 13H12a1 1 0 01-1-1V3.055zM15 3.936A9.02 9.02 0 0120.064 9H15V3.936z', '', ''],
                 ['openSearchBtn', 'Search & filter', 'M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z', 'actFilterBadge', ''],
                 ['viewToggleBtn', 'Calendar', 'M8 7V3m8 4V3M4 11h16M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z', '', 'actViewLabel'],
                 ['quickShareBtn', 'Quick Share', 'M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z', '', ''],
                 ['weatherBtn', 'Weather', 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z', '', ''],
                 ['openNotesBtn', 'Notes', 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z', '', ''],
-                ['collabRoomBtn', 'Collab Room', 'M17 20h5v-1a4 4 0 00-3-3.87M9 20H4v-1a4 4 0 013-3.87m0 0a4 4 0 115.5-5.8M7 15.13A4 4 0 0112 8m5 7.13A4 4 0 0012 8', '', ''],
+                ['collabRoomBtn', 'Collab Room', 'M3 4h18M5 4v11a2 2 0 002 2h10a2 2 0 002-2V4M8 9h8M8 12h5M12 17v4m-3 0h6', '', ''],
+                ['contractAllBtn', 'Contract All', 'M5 11l7-7 7 7M5 19l7-7 7 7', '', ''],
                 ['toggleHiddenBtn', 'Show Hidden', 'M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21', '', 'actHiddenLabel'],
             ];
+            // The AI chat bubble is hidden on phones (it covered the board), so
+            // the menu is how it opens there. Forwarding to the bubble's own
+            // launcher keeps a single open/close code path.
+            if (\App\Models\AiSetting::current()?->isUsable()) {
+                $actRows[] = ['aiFloatFab', 'AI Technician', 'M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5', '', ''];
+            }
         @endphp
         @foreach ($actRows as [$target, $label, $icon, $badgeId, $labelId])
             <button type="button" class="activity-action-row w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:pointer-events-none"

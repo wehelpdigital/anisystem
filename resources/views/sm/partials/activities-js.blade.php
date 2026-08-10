@@ -2504,23 +2504,82 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tapping the card body opens the editor — the primary action on a phone,
     // where aiming for a small pencil icon is awkward. Interactive bits and the
     // lot chips (used by the lot filter) keep their own behaviour.
+    /* ---- Card accordion (phones) ----------------------------------------
+     * Cards start folded to their head row so a day scans at a glance and a
+     * drag has short distances to travel; a tap expands one in place. Which
+     * cards are open persists per schedule, exactly like the day accordion.
+     */
+    const CARD_OPEN_KEY = 'cardOpen:' + @json($schedule->id);
+    const CARD_OPEN = new Set((() => {
+        try { return JSON.parse(localStorage.getItem(CARD_OPEN_KEY) || '[]'); } catch (_) { return []; }
+    })());
+    function saveCardOpen() {
+        try { localStorage.setItem(CARD_OPEN_KEY, JSON.stringify([...CARD_OPEN])); } catch (_) { /* private mode */ }
+    }
+    function applyCardCollapse() {
+        if (!window.matchMedia('(pointer: coarse)').matches) return;
+        $qsa('#activitiesList .activity-card[data-id]').forEach((c) => {
+            c.classList.toggle('act-collapsed', !CARD_OPEN.has(c.getAttribute('data-id')));
+        });
+    }
+    function toggleCardExpand(card) {
+        const id = card.getAttribute('data-id');
+        const opening = card.classList.contains('act-collapsed');
+        if (opening) CARD_OPEN.add(id); else CARD_OPEN.delete(id);
+        saveCardOpen();
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            card.classList.toggle('act-collapsed', !opening);
+            return;
+        }
+        // Height is animated from measured to measured because the card's
+        // children cannot be re-wrapped: the markup is rendered twice (Blade
+        // and JS) and both copies would have to change in step forever.
+        const from = card.getBoundingClientRect().height;
+        card.classList.toggle('act-collapsed', !opening);
+        const to = card.getBoundingClientRect().height;
+        card.style.height = from + 'px';
+        card.style.overflow = 'hidden';
+        void card.offsetHeight;
+        card.style.transition = 'height .28s cubic-bezier(.22,1,.36,1)';
+        card.style.height = to + 'px';
+        setTimeout(() => {
+            card.style.height = ''; card.style.overflow = ''; card.style.transition = '';
+        }, 300);
+    }
+    // Re-rendered and freshly added cards fold according to the saved set —
+    // without this every JS re-render came back fully expanded.
+    if (document.getElementById('activitiesList')) {
+        new MutationObserver(() => applyCardCollapse())
+            .observe(document.getElementById('activitiesList'), { childList: true, subtree: true });
+    }
+    applyCardCollapse();
+
+    // Tools → Contract All: every card folded, every day folded, both saved.
+    $id('contractAllBtn')?.addEventListener('click', () => {
+        CARD_OPEN.clear(); saveCardOpen(); applyCardCollapse();
+        $qsa('#activitiesList .date-group').forEach((g) => g.classList.add('is-folded'));
+        OPEN_DAYS.clear(); saveOpenDays();
+        if (window.toast) toast('Everything folded up.');
+    });
+
     document.addEventListener('click', (e) => {
         if (e.target.closest('button, a, input, textarea, select, label, .item-tag')) return;
         if (e.target.closest('[data-lightbox] img')) return;   // image clicks open the lightbox
         const card = e.target.closest('#activitiesList .activity-card[data-id]');
         if (!card) return;
-        if (card.getAttribute('data-is-done') === '1') {
-            openDoneNoteSheet(card.getAttribute('data-id'), $qs('.activity-card-title', card)?.textContent || 'Activity');
+        // A card that was just dragged to another day must not also count as a
+        // tap and toggle itself on top of the move.
+        if (cardDragSwallowClick) return;
+        // On a phone a tap folds the card open or shut — the accordion IS the
+        // read view, so this applies to done cards too. Editing and the done
+        // note stay a deliberate action away (kebab / desktop click).
+        if (window.matchMedia('(pointer: coarse)').matches) {
+            toggleCardExpand(card);
             return;
         }
-        // On a phone the card is clamped to one line, so a tap means "show me
-        // the rest", not "edit". The details sheet has an Edit button for when
-        // that is what was wanted. On a mouse, tapping still opens the editor.
-        // A card that was just dragged to another day must not also count as a
-        // tap and open the details sheet on top of the move.
-        if (cardDragSwallowClick) return;
-        if (window.matchMedia('(pointer: coarse)').matches) {
-            openActivityInfo(card);
+        if (card.getAttribute('data-is-done') === '1') {
+            openDoneNoteSheet(card.getAttribute('data-id'), $qs('.activity-card-title', card)?.textContent || 'Activity');
             return;
         }
         openEditActivitySheet(card.getAttribute('data-id'));
@@ -4644,13 +4703,31 @@ document.addEventListener('DOMContentLoaded', () => {
         CARD_DRAG.offX = x - rect.left;
         CARD_DRAG.offY = y - rect.top;
         CARD_DRAG.ghost = buildDragGhost(card);
+        // Place the ghost under the finger NOW. .drag-ghost is fixed at the
+        // viewport origin and the hold fires while the finger is still, so
+        // there is no pointermove coming to position it — without this it sat
+        // at the top-left corner until the first move.
+        CARD_DRAG.ghost.style.transform = `translate(${x - CARD_DRAG.offX}px, ${y - CARD_DRAG.offY}px)`;
+        CARD_DRAG.ghost.style.pointerEvents = 'none';
         card.classList.add('dragging');
-        // Opt the card out of browser touch handling only once the drag is
-        // real, so the list still scrolls normally the rest of the time.
-        card.style.touchAction = 'none';
         document.body.classList.add('is-touch-dragging');
         try { card.setPointerCapture(pointerId); } catch (_) { /* noop */ }
     }
+
+    // touch-action set once a gesture is underway has no effect on THAT
+    // gesture — the browser already chose. So when the finger moved after the
+    // hold, the browser began a scroll and fired pointercancel, killing the
+    // drag it had just granted. Cancelling the touchmove itself is the only
+    // thing that stops the scroll mid-gesture; passive:false is what makes
+    // preventDefault real. Everything not mid-drag passes through untouched.
+    document.addEventListener('touchmove', (e) => {
+        if (CARD_DRAG && CARD_DRAG.active) e.preventDefault();
+    }, { passive: false });
+
+    // A hold on Android can also summon the context menu part-way through.
+    document.addEventListener('contextmenu', (e) => {
+        if (CARD_DRAG) e.preventDefault();
+    });
 
     document.addEventListener('pointermove', (e) => {
         if (!CARD_DRAG || e.pointerId !== CARD_DRAG.id) return;

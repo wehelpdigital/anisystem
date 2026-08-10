@@ -214,6 +214,40 @@
         .ai-float-fab, .ai-float-msg, .ai-float-panel { animation: none; }
         .ai-float-sug, .ai-float-box, .ai-float-send { transition: none; }
     }
+
+    /* ---- Green identity ----
+       The panel wore the page's white-on-white; against a busy schedule board
+       it disappeared. The header takes the technician's green (same gradient
+       as the fab and send button) and the border rings the panel in it, so
+       the chat reads as one thing at a glance. Later in the sheet than the
+       rules it overrides, deliberately. */
+    .ai-float-panel { border: 2px solid #4a7c2a; }
+    .ai-float-head { background: linear-gradient(140deg, #6b9f3d, #3d6823); border-bottom-color: transparent; }
+    .ai-float-head .ai-float-name { color: #fff; }
+    .ai-float-head .ai-float-credits { background: rgb(255 255 255 / .2); color: #fff; }
+    .ai-float-head .ai-float-credits:hover { background: rgb(255 255 255 / .3); }
+    .ai-float-head .ai-float-icon { color: rgb(255 255 255 / .85); }
+    .ai-float-head .ai-float-icon:hover { background: rgb(255 255 255 / .18); color: #fff; }
+    .ai-float-head .ai-float-avatar::after { border-color: #4a7c2a; background: var(--color-accent-500); }
+    html.dark .ai-float-head .ai-float-credits { color: #fff; }
+
+    /* ---- Phones: the chat takes the whole screen ----
+       A 24rem bubble over the activities board was cramped and half-covered.
+       Fullscreen with a dimmed backdrop behind it (visible in the safe-area
+       fringes) makes it a place you are IN rather than a widget in the way.
+       position:fixed escapes the .ai-float container, which stays where it
+       is; its z-index still scopes the whole thing above the page. */
+    @media (max-width: 767px) {
+        .ai-float.is-open { z-index: 200; }
+        .ai-float.is-open::before { content: ''; position: fixed; inset: 0; background: rgb(15 23 42 / .5); }
+        .ai-float-panel {
+            position: fixed; inset: 0; width: auto; height: auto; max-height: none;
+            border-radius: 0;
+        }
+        /* The bubble stays out of the activities board entirely — the Tools
+           menu opens the chat there. Other schedule pages keep the bubble. */
+        body.is-activities .ai-float-fab { display: none; }
+    }
 </style>
 
 <script>
@@ -269,7 +303,11 @@
         const openPanel = (open) => {
             panel.classList.toggle('hidden', !open);
             $('aiFloat')?.classList.toggle('is-open', open);
-            if (open) setTimeout(() => $('aiFloatText')?.focus(), 60);
+            // On a phone, focusing on open throws the keyboard over the chat
+            // before a word has been read. A tap on the box still opens it.
+            if (open && !window.matchMedia('(pointer: coarse)').matches) {
+                setTimeout(() => $('aiFloatText')?.focus(), 60);
+            }
         };
         fab.addEventListener('click', () => openPanel(panel.classList.contains('hidden')));
         $('aiFloatClose')?.addEventListener('click', () => openPanel(false));

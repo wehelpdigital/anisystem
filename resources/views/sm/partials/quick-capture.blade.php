@@ -13,7 +13,10 @@
 @endphp
 @push('head')
 <style>
-    .qc-overlay { position: fixed; inset: 0; z-index: 60; background: rgba(17,24,39,.55); display: flex; align-items: flex-end; justify-content: center; padding: 0; }
+    /* z-index above the AI float (60) and team float (61-62): Quick Capture is
+       a modal you summoned, so nothing ambient may sit on top of it — at equal
+       z the float painted over it purely by coming later in the DOM. */
+    .qc-overlay { position: fixed; inset: 0; z-index: 130; background: rgba(17,24,39,.55); display: flex; align-items: flex-end; justify-content: center; padding: 0; }
     /* Two-class selector beats the unlayered `.qc-overlay { display:flex }`,
        so the `hidden` utility actually hides the modal. */
     .qc-overlay.hidden { display: none !important; }
@@ -22,6 +25,10 @@
        hex, so the modal reads correctly in both light and dark. */
     .qc-modal { background: var(--color-white); color: var(--color-gray-900); width: 100%; max-width: 34rem; max-height: 92vh; display: flex; flex-direction: column;
         border-radius: 1rem 1rem 0 0; overflow: hidden; animation: qc-rise .22s ease; }
+    /* Phones: the whole screen, not a bottom sheet — a capture flow with the
+       board peeking around it read as two competing screens. The dimmed
+       overlay stays behind it for the edges the modal does not reach. */
+    @media (max-width: 639px) { .qc-modal { height: 100dvh; max-height: 100dvh; border-radius: 0; } }
     @media (min-width: 640px) { .qc-modal { border-radius: 1rem; } }
     @keyframes qc-rise { from { transform: translateY(24px); opacity: .6; } to { transform: none; opacity: 1; } }
     .qc-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: 1rem 1.25rem; border-bottom: 1px solid var(--color-gray-200); }
