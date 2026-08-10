@@ -729,6 +729,27 @@
         body.module-booting #activitiesRoot,
         body.module-booting [data-activities-only] { display: none !important; }
         body.module-booting #moduleLoader { display: block !important; }
+        /* While booting, a plain page-coloured sheet with a spinner covers
+           everything — the header retitling, the back button popping in, the
+           chrome settling — so the first thing seen IS the module. Pseudo
+           elements so there is no markup to clean up; the sheet vanishes with
+           the class once applyDeepLink lands the module. */
+        body.module-booting::after {
+            content: ''; position: fixed; inset: 0; z-index: 300;
+            background: var(--color-gray-50);
+        }
+        body.module-booting::before {
+            content: ''; position: fixed; z-index: 301;
+            top: 42%; left: 50%; width: 2.25rem; height: 2.25rem;
+            margin-left: -1.125rem; border-radius: 999px;
+            border: 3px solid var(--color-brand-200);
+            border-top-color: var(--color-brand-600);
+            animation: modBootSpin .8s linear infinite;
+        }
+        @keyframes modBootSpin { to { transform: rotate(360deg); } }
+        @media (prefers-reduced-motion: reduce) {
+            body.module-booting::before { animation-duration: 1.6s; }
+        }
         /* On phones the remaining desktop-only tools (undo / redo / show-hidden)
            collapse into the Tools menu; they show only from md up. The rule
            wins over the buttons' own display/`hidden` toggling on small screens.
