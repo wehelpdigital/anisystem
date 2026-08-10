@@ -7,7 +7,7 @@
 
 {{-- The activity board is the work surface: on a phone the bottom tab bar eats
      a strip of it for navigation that Back already provides. --}}
-@section('body-class', 'hide-tabbar no-zoom is-activities' . (request('module', 'activities') === 'activities' ? ' act-module-open' : ''))
+@section('body-class', 'hide-tabbar no-zoom is-activities' . (request('module', 'activities') === 'activities' ? ' act-module-open' : ' module-booting'))
 
 @if (request()->boolean('embed'))
 @push('head')
@@ -720,6 +720,15 @@
            `module-hidden` beats component classes that set their own display
            (the reason a plain `hidden` utility can lose here). */
         .module-hidden { display: none !important; }
+        /* Deep-linked straight into a module (?module=notes): the JS swap only
+           runs at DOMContentLoaded, so without this the whole Activities board
+           painted first and then vanished — Notes appeared to route through
+           Activities. Hide the board and its chrome from FIRST PAINT and show
+           the loader instead; applyDeepLink lifts the class once the module
+           has actually landed (or immediately, for an unknown key). */
+        body.module-booting #activitiesRoot,
+        body.module-booting [data-activities-only] { display: none !important; }
+        body.module-booting #moduleLoader { display: block !important; }
         /* On phones the remaining desktop-only tools (undo / redo / show-hidden)
            collapse into the Tools menu; they show only from md up. The rule
            wins over the buttons' own display/`hidden` toggling on small screens.
@@ -1896,8 +1905,15 @@
         const wanted = new URLSearchParams(location.search).get('module');
         if (wanted && MODULES[wanted] && wanted !== 'activities') {
             history.replaceState({ module: wanted }, '', shellUrl(wanted));
-            showModule(wanted, false);
+            // module-booting kept the server-painted board out of sight; lift
+            // it only once the module has actually landed, so Activities never
+            // shows on the way in. setActivitiesChrome has re-hidden the
+            // chrome with module-hidden by then, so nothing pops back.
+            Promise.resolve(showModule(wanted, false))
+                .finally(() => document.body.classList.remove('module-booting'));
         } else {
+            // Unknown or absent key: this IS the Activities view — unhide it.
+            document.body.classList.remove('module-booting');
             history.replaceState({ module: 'activities' }, '', shellUrl('activities'));
         }
     };
