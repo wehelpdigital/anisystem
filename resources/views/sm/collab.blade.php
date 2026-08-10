@@ -135,9 +135,10 @@
     /* Phones: the room takes the whole width — the page gutters were dead
        space beside a full-height workspace. */
     @media (max-width: 767px) {
-        body.is-collab main { padding-left: 0; padding-right: 0; padding-bottom: 0; }
+        body.is-collab main { padding: .35rem 0 0; }
         body.is-collab .collab-panels { border-radius: 0; border-left: 0; border-right: 0; }
-        body.is-collab .collab-tabs { margin: 0 .5rem; }
+        body.is-collab .collab-tabs { margin: 0; border-radius: 0; }
+        body.is-collab .collab-wrap { gap: .35rem; height: calc(100dvh - 4.35rem); }
     }
 
     .collab-tabs { display: flex; gap: .25rem; padding: .25rem; background: var(--color-gray-100); border-radius: .8rem; flex-shrink: 0; overflow-x: auto; scrollbar-width: none; }
@@ -145,7 +146,7 @@
     .collab-tab { flex: 1 1 auto; display: inline-flex; align-items: center; justify-content: center; gap: .4rem; padding: .55rem .6rem; border-radius: .6rem; font-size: .9rem; font-weight: 700; color: var(--color-gray-500); white-space: nowrap; transition: background .15s ease, color .15s ease; }
     .collab-tab:hover { color: var(--color-gray-800); }
     .collab-tab.is-active { background: var(--color-white); color: var(--color-gray-900); box-shadow: 0 1px 3px rgb(0 0 0 / .1); }
-    @media (max-width: 520px) { .collab-tab span { display: none; } .collab-tab { flex: 1 1 0; } }
+    @media (max-width: 767px) { .collab-tab span { display: none; } .collab-tab { flex: 1 1 0; } }
 
     .collab-panels { flex: 1 1 auto; position: relative; min-height: 0; background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: 1rem; overflow: hidden; }
     .collab-panel { position: absolute; inset: 0; display: none; }
