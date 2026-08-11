@@ -267,7 +267,9 @@
             max-height: none;
         }
         .activity-info-body .activity-card .activity-card-lothead {
-            overflow: visible; flex-wrap: wrap;
+            /* The sheet has no kebab to make room for, so the card's cap on
+               this box would only squeeze the tags it exists to show. */
+            overflow: visible; flex-wrap: wrap; max-width: none;
         }
         .activity-info-body .activity-card .activity-card-badges { flex-wrap: wrap; }
 
@@ -368,7 +370,7 @@
                the row wrap where we want without restructuring the markup (the
                Blade partial and the JS renderer are twins and must stay
                identical, so a DOM change would have to be made twice). */
-            .activity-card > .flex.items-start.justify-between { flex-wrap: wrap; row-gap: .4rem; }
+            .activity-card > .flex.items-start.justify-between { flex-wrap: wrap; row-gap: .4rem; justify-content: flex-start; }
             .activity-card > .flex.items-start.justify-between > .flex.items-start { display: contents; }
             .activity-card > .flex.items-start.justify-between > .flex.items-start > .min-w-0.grow { display: contents; }
 
@@ -381,26 +383,43 @@
                 /* Nudged with position, not margin: on a centred flex item a
                    top margin grows the margin box and the centring gives back
                    half of it, so the tag barely moves. */
-                flex: 1 1 auto; min-width: 0; align-self: center;
+                /* Sized to its tags, not to the row: a growing lot would push
+                   the kebab back out to the far edge instead of letting it
+                   sit right after the name. The max-width is what keeps the
+                   two together — a wrapping flex line breaks BEFORE it
+                   shrinks, so a card with two long lot tags used to throw the
+                   lots onto their own line and the kebab onto a third. Capped
+                   to the space the row has left, the box never triggers that
+                   break and scrolls its tags internally instead. */
+                /* 8.5rem = the check, the type icon, the 44px kebab and the
+                   three gaps beside it, measured rather than guessed. */
+                flex: 0 1 auto; min-width: 0; max-width: calc(100% - 8.5rem); align-self: center;
                 position: relative; top: .18rem;
                 display: flex; flex-wrap: nowrap; gap: .25rem;
                 overflow-x: auto; scrollbar-width: none;
             }
             .activity-card .activity-card-lothead::-webkit-scrollbar { display: none; }
-            /* The kebab is wrapped in its own actions box, so the auto margin
-               has to go on that box — the flex item of this row — not on the
-               button inside it, or nothing pushes it to the right. */
-            /* Pin the kebab to the card's own top-right corner rather than
-               aligning it within the head row. As a flex item its position
-               depended on how tall the lot row happened to be, so it drifted
-               off the line the check and type icon sit on; anchored to the
-               card it is in the corner regardless of what the row contains.
-               The row reserves space so a long lot name cannot run under it. */
+            /* Tags keep their own width inside that capped box — left to
+               shrink they broke "Lot A — North Field" over three lines and
+               made the head row as tall as the card. They scroll instead. */
+            .activity-card .activity-card-lothead > .item-tag { flex: 0 0 auto; white-space: nowrap; }
+            /* The kebab rides the head row again, right after the lot name.
+               It is back in flow, so `order` is what keeps it on that first
+               line: the title, badges and lot meta are full-width items of
+               this same wrapped row (their wrappers are display:contents) and
+               in source order they come BEFORE the actions box, which would
+               otherwise strand the kebab on a line of its own underneath.
+               The corner it used to be pinned to now belongs to the drag
+               grip; the row still reserves that column so a long lot name
+               cannot run under the grip or the fold chevron. */
             .activity-card { position: relative; }
             .activity-card > .flex.items-start.justify-between > .flex.items-center {
-                position: absolute; top: .55rem; right: .55rem; margin: 0;
+                position: static; order: 1; align-self: center; margin: 0;
             }
-            .activity-card > .flex.items-start.justify-between { padding-right: 2.4rem; }
+            .activity-card .activity-card-title,
+            .activity-card .activity-card-badges,
+            .activity-card .activity-card-lotmeta { order: 2; }
+            .activity-card > .flex.items-start.justify-between { padding-right: 1.9rem; }
             .activity-card .card-menu-btn { flex: 0 0 auto; }
 
             /* ---- Card accordion (phones) ----
@@ -469,10 +488,11 @@
             /* A grip says the card can be dragged — the same six dots the
                inline notes use, drawn in CSS like the chevron so the twin
                renderers stay byte-identical, and pointer-events:none so the
-               drag listeners still get every touch. It sits in the card's
-               existing left padding gutter, so nothing reflows. */
+               drag listeners still get every touch. It holds the card's
+               top-right corner, above the fold chevron, in the column the
+               head row already reserves — so nothing reflows around it. */
             .activity-card::after {
-                content: ''; position: absolute; left: .3rem; top: 1.3rem;
+                content: ''; position: absolute; right: .62rem; top: .72rem;
                 width: 2px; height: 2px; border-radius: 50%;
                 pointer-events: none; opacity: .55;
                 background: var(--tl-text-faint, #9ca3af);
@@ -827,7 +847,22 @@
                phone it sat alone above the fold chevron and read as clutter.
                !important for the same unlayered-CSS reason as above. */
             .add-note-activity-btn { display: none !important; }
+            /* Both day filters live behind the eye button here; the real
+               buttons stay in the DOM so the sheet can forward to them. */
+            #toggleEmptyDatesBtn, #toggleDoneDaysBtn { display: none !important; }
         }
+        #viewFilterBtn.is-filtering { background: var(--color-brand-50); border-color: var(--color-brand-400); color: var(--color-brand-800); }
+        .view-filter-row { width: 100%; display: flex; align-items: center; gap: .75rem; text-align: left;
+            padding: .7rem .8rem; border-radius: .8rem; background: var(--color-white);
+            border: 1px solid var(--color-gray-200); margin-bottom: .45rem; }
+        .vf-ico { width: 2.25rem; height: 2.25rem; border-radius: .7rem; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--color-brand-50); color: var(--color-brand-600); }
+        .vf-name { display: block; font-weight: 700; color: var(--color-gray-800); }
+        .vf-sub { display: block; font-size: .72rem; color: var(--color-gray-500); }
+        .vf-state { flex-shrink: 0; font-size: .7rem; font-weight: 800; text-transform: uppercase;
+            padding: .2rem .5rem; border-radius: 999px; background: var(--color-brand-50); color: var(--color-brand-700); }
+        .vf-state.is-off { background: var(--color-gray-100); color: var(--color-gray-500); }
         /* Drafts / Report / Search / Calendar / Weather now live only inside the
            Tools menu (#activityActionsBtn) on every screen size. They stay in the
            DOM so the menu rows can forward clicks to their real handlers. */
@@ -1504,6 +1539,12 @@
             title="Scroll to today">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
         <span class="hidden sm:inline">Today</span>
+    </button>
+    {{-- Phones: one eye button owns both day filters (see #viewFilterSheet),
+         so the toolbar carries one control instead of two toggles. --}}
+    <button type="button" id="viewFilterBtn" class="btn btn-white btn-sm shrink-0 md:hidden" data-activities-only
+            title="What the board shows" aria-label="What the board shows">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
     </button>
     <button type="button" id="toggleEmptyDatesBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
             title="Show or hide the empty &quot;no activities&quot; dates">

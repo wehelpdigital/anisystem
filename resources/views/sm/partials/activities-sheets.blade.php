@@ -329,6 +329,42 @@
 {{-- Tools menu: one sheet holding the toolbar actions (Drafts, Report, Search,
      Calendar, Weather, …). Each row forwards to the real button, so every
      handler is reused. Opens on every screen size. --}}
+{{-- What the board shows (phones): both day filters behind one eye button,
+     so the toolbar carries one control instead of two toggles. Rows forward
+     to the real toolbar buttons and the sheet stays open, so you can set both
+     and watch the board change behind it. --}}
+<div class="sheet hidden" id="viewFilterSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">What the board shows</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full -mr-1" aria-label="Close">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+    </div>
+    <div class="sheet-body" style="padding-bottom:1rem">
+        <button type="button" class="view-filter-row" data-view-filter="empty">
+            <span class="vf-ico">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+            </span>
+            <span class="grow min-w-0">
+                <span class="vf-name">Empty dates</span>
+                <span class="vf-sub">Days with nothing scheduled</span>
+            </span>
+            <span class="vf-state" id="vfEmptyState">Shown</span>
+        </button>
+        <button type="button" class="view-filter-row" data-view-filter="done">
+            <span class="vf-ico">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </span>
+            <span class="grow min-w-0">
+                <span class="vf-name">Finished days</span>
+                <span class="vf-sub">Days where every activity is done</span>
+            </span>
+            <span class="vf-state" id="vfDoneState">Shown</span>
+        </button>
+    </div>
+</div>
+
 {{-- Plan versions (phones): pick one or start a new one; rows forward to
      the real chips in #versionStrip so all the existing logic runs. --}}
 <div class="sheet hidden" id="versionsSheet" style="--sheet-width:26rem">
@@ -363,7 +399,6 @@
                 ['collabRoomBtn', 'Collab Room', 'M3 4h18M5 4v11a2 2 0 002 2h10a2 2 0 002-2V4M8 9h8M8 12h5M12 17v4m-3 0h6', '', ''],
                 ['contractAllBtn', 'Contract All', 'M5 11l7-7 7 7M5 19l7-7 7 7', '', ''],
                 ['toggleHiddenBtn', 'Show Hidden', 'M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21', '', 'actHiddenLabel'],
-                ['toggleDoneDaysBtn', 'Hide Done Days', 'M5 13l4 4L19 7', '', 'actDoneDaysLabel'],
             ];
             // The AI chat bubble is hidden on phones (it covered the board), so
             // the menu is how it opens there. Forwarding to the bubble's own

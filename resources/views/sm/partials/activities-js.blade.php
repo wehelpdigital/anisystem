@@ -5468,5 +5468,36 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('activities:rendered', () => apply(false));
         apply(false);
     })();
+
+    /* ---- "What the board shows" (phones) ------------------------------
+     * One eye button instead of two toggles in a crowded toolbar. The rows
+     * forward to the real buttons — which still own the logic and the
+     * persistence — and the sheet stays open so both can be set in one go,
+     * with the board visibly changing behind it. */
+    (() => {
+        const btn = $id('viewFilterBtn');
+        if (!btn) return;
+        function paint() {
+            const emptyHidden = document.body.classList.contains('hide-empty-dates');
+            const doneHidden = $id('toggleDoneDaysBtn')?.getAttribute('aria-pressed') === 'true';
+            [['vfEmptyState', emptyHidden], ['vfDoneState', doneHidden]].forEach(([id, hidden]) => {
+                const el = $id(id);
+                if (!el) return;
+                el.textContent = hidden ? 'Hidden' : 'Shown';
+                el.classList.toggle('is-off', hidden);
+            });
+            btn.classList.toggle('is-filtering', emptyHidden || doneHidden);
+        }
+        btn.addEventListener('click', () => { paint(); openSheet('viewFilterSheet'); });
+        document.addEventListener('click', (e) => {
+            const row = e.target.closest('.view-filter-row');
+            if (!row) return;
+            $id(row.dataset.viewFilter === 'empty' ? 'toggleEmptyDatesBtn' : 'toggleDoneDaysBtn')?.click();
+            // Let the real toggle finish its own repaint before reading it.
+            setTimeout(paint, 60);
+        });
+        document.addEventListener('activities:rendered', paint);
+        paint();
+    })();
 });
 </script>
