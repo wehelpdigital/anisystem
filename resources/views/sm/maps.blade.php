@@ -27,8 +27,11 @@
                row of two buttons: the page's top padding, the bar's own
                padding and its bottom margin all stacked. Trimmed to about
                half here — the map is the page. */
+            /* Nothing above the toolbar — the row tucks under the header —
+               but the map keeps clear of the bar's divider underneath it,
+               which otherwise looked like the map was hanging off the row. */
             body.smap-open main { padding-top: 0; }
-            body.smap-open main > .sticky { margin-bottom: 0; }
+            body.smap-open main > .sticky { margin-bottom: .5rem; }
         }
 
         @media (max-width: 767px) {
