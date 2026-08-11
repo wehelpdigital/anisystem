@@ -458,12 +458,6 @@
             .act-jumps.bar-visible { opacity: 0; pointer-events: none; transform: translateY(.5rem); }
             .act-jumps .act-fab-add { background: var(--color-brand-600); color: #fff; border-color: transparent; }
             @media (prefers-reduced-motion: reduce) { .act-jumps { transition: none; } }
-            /* Phones swap the versions chip strip for the Versions button;
-               the strip stays the source of truth (the sheet forwards to its
-               chips) but takes no space. Desktop is untouched. */
-            @media (max-width: 767px) {
-                #versionStrip { display: none !important; }
-            }
             .version-sheet-row { width: 100%; display: flex; align-items: center; justify-content: space-between;
                 gap: .6rem; text-align: left; padding: .7rem .8rem; border-radius: .8rem; font-weight: 700;
                 color: var(--color-gray-800); background: var(--color-white); border: 1px solid var(--color-gray-200);
@@ -850,6 +844,16 @@
             /* Both day filters live behind the eye button here; the real
                buttons stay in the DOM so the sheet can forward to them. */
             #toggleEmptyDatesBtn, #toggleDoneDaysBtn { display: none !important; }
+            /* The versions chip strip folds behind the Versions button. This
+               is keyed on WIDTH alone: it used to sit inside the touch-only
+               media query, so any narrow screen reporting a fine pointer (a
+               phone asking for the desktop site, a touch laptop) kept the
+               strip, grew this row past the screen and pushed the eye and Add
+               buttons off the right edge where nothing could reach them. */
+            #versionStrip { display: none !important; }
+            /* And if a row ever does outgrow the screen, it wraps rather than
+               hiding controls off-edge. */
+            #actHeaderBar { flex-wrap: wrap; row-gap: .35rem; }
         }
         #viewFilterBtn.is-filtering { background: var(--color-brand-50); border-color: var(--color-brand-400); color: var(--color-brand-800); }
         .view-filter-row { width: 100%; display: flex; align-items: center; gap: .75rem; text-align: left;
