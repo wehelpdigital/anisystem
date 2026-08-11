@@ -152,6 +152,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-weather', [App\Http\Controllers\WeatherController::class, 'scheduleForecast'])->name('sm.weather');
     // Weather as a schedule module: the 6-day view plus an hourly tab.
     Route::get('/app/sm-weather-page', [App\Http\Controllers\WeatherController::class, 'page'])->name('sm.weather.page');
+    // What the forecast said for one day, kept for reports and the AI.
+    Route::get('/app/sm-weather-saved', [App\Http\Controllers\WeatherController::class, 'savedDay'])->name('sm.weather.saved');
 
     // --- Cropping schedules (list / create / hub / settings) ---
     Route::get('/app/sm', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'index'])->name('sm.index');

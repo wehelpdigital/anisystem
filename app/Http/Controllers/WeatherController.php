@@ -134,12 +134,117 @@ class WeatherController extends Controller
             }
         }
 
+        $savedDates = $this->rememberForecast($scheduleId, $resolved);
+
         return response()->json([
             'success' => true,
             'data' => [
                 'located' => ! empty($resolved),
                 'locations' => $resolved,
                 'lots' => $lotList,
+                // Which dates now have a stored reading, so the board can offer
+                // "View saved weather" on exactly those days.
+                'savedDates' => $savedDates,
+            ],
+        ]);
+    }
+
+    /**
+     * Keep what the forecast said, so a report or the AI technician can look
+     * back at the weather a decision was made under. One row per schedule +
+     * location + date, overwritten as the forecast changes: the store holds
+     * the latest reading for each day rather than a pile of revisions.
+     *
+     * Best-effort — a farmer reading the forecast should never see an error
+     * because writing the copy failed.
+     */
+    private function rememberForecast(int $scheduleId, array $resolved): array
+    {
+        $dates = [];
+        try {
+            $now = now('Asia/Manila');
+            foreach ($resolved as $key => $loc) {
+                if (empty($loc['ok']) || empty($loc['days'])) {
+                    continue;
+                }
+                // Hours belong to the day they fall on, so the saved day can
+                // show its own hour-by-hour rather than the whole fetch.
+                $hoursByDate = [];
+                foreach ($loc['hours'] ?? [] as $hour) {
+                    $d = substr((string) ($hour['time'] ?? ''), 0, 10);
+                    if ($d !== '') {
+                        $hoursByDate[$d][] = $hour;
+                    }
+                }
+
+                foreach ($loc['days'] as $day) {
+                    $date = $day['date'] ?? null;
+                    if (! $date) {
+                        continue;
+                    }
+                    $values = [
+                        'place' => $loc['place'] ?? null,
+                        'day' => $day,
+                        'capturedAt' => $now,
+                        'deleteStatus' => 1,
+                    ];
+                    // Only overwrite the hours when this fetch actually carried
+                    // them: the chips ask for days alone, and that must not
+                    // erase the hour-by-hour a previous look already stored.
+                    if (! empty($hoursByDate[$date])) {
+                        $values['hours'] = $hoursByDate[$date];
+                    }
+                    \App\Models\AsScheduleWeatherDay::updateOrCreate(
+                        [
+                            'croppingScheduleId' => $scheduleId,
+                            'locationKey' => (string) $key,
+                            'forecastDate' => $date,
+                        ],
+                        $values
+                    );
+                    $dates[$date] = true;
+                }
+            }
+        } catch (\Throwable $e) {
+            return array_keys($dates);
+        }
+
+        return array_keys($dates);
+    }
+
+    /** The saved reading for one date, newest capture per location. */
+    public function savedDay(Request $request)
+    {
+        $scheduleId = (int) $request->query('scheduleId');
+        $owned = $scheduleId && \App\Models\AsCroppingSchedule::active()
+            ->forClient(\App\Support\WorkerContext::effectiveOwnerId())
+            ->where('id', $scheduleId)
+            ->exists();
+        if (! $owned) {
+            return response()->json(['success' => false, 'message' => 'Not your schedule.'], 403);
+        }
+
+        $date = (string) $request->query('date');
+        if (! preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+            return response()->json(['success' => false, 'message' => 'Bad date.'], 422);
+        }
+
+        $rows = \App\Models\AsScheduleWeatherDay::where('deleteStatus', 1)
+            ->where('croppingScheduleId', $scheduleId)
+            ->whereDate('forecastDate', $date)
+            ->orderBy('place')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'date' => $date,
+                'entries' => $rows->map(fn ($r) => [
+                    'place' => $r->place,
+                    'day' => $r->day,
+                    'hours' => $r->hours ?: [],
+                    'capturedAt' => $r->capturedAt?->timezone('Asia/Manila')->format('M j, Y g:ia'),
+                ])->all(),
             ],
         ]);
     }

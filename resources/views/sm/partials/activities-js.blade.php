@@ -2535,6 +2535,9 @@ document.addEventListener('DOMContentLoaded', () => {
         dayMenuDate = btn.getAttribute('data-date') || '';
         const label = $id('dayMenuTitle');
         if (label) label.textContent = dayMenuDate ? prettyDateFull(dayMenuDate) : 'This day';
+        // The saved-weather row is offered only for days the store actually
+        // holds a reading for — an empty sheet is worse than no row.
+        $id('daySavedWxRow')?.classList.toggle('hidden', !window.SAVED_WX_DATES?.has(dayMenuDate));
         openSheet('dayMenuSheet');
     });
 
@@ -2543,10 +2546,68 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!row || !dayMenuDate) return;
         const cls = row.getAttribute('data-action');
         closeSheet('dayMenuSheet');
+        // This one has no twin button on the day header — it reads the store.
+        if (cls === 'view-saved-weather') {
+            const date = dayMenuDate;
+            setTimeout(() => openSavedWeather(date), 260);
+            return;
+        }
         const target = $qs(`#activitiesList .date-group[data-date="${dayMenuDate}"] .${cls}`);
         // Defer so the sheet is closed before the next one opens.
         setTimeout(() => target?.click(), 260);
     });
+
+    /* ---- Saved weather for one day --------------------------------------
+     * What the forecast said, as last written by a weather load. Read-only:
+     * this is the record a report or the AI technician looks back at, so it
+     * shows when it was captured rather than pretending to be live. */
+    window.SAVED_WX_DATES = new Set(@json($savedWeatherDates ?? []));
+    async function openSavedWeather(date) {
+        const body = $id('savedWeatherBody');
+        const title = $id('savedWeatherTitle');
+        if (!body) return;
+        if (title) title.textContent = 'Saved weather — ' + prettyDateFull(date);
+        body.innerHTML = '<p class="text-sm text-gray-500 text-center py-6">Loading the saved reading…</p>';
+        openSheet('savedWeatherSheet');
+        try {
+            const res = await fetch(`{{ route('sm.weather.saved') }}?scheduleId=${SCHEDULE_ID}&date=${encodeURIComponent(date)}`,
+                { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
+            const json = await res.json();
+            const entries = (json && json.data && json.data.entries) || [];
+            if (!entries.length) {
+                body.innerHTML = '<p class="text-sm text-gray-500 text-center py-6">Nothing saved for this day yet.</p>';
+                return;
+            }
+            body.innerHTML = entries.map((e) => {
+                const d = e.day || {};
+                const hrs = e.hours || [];
+                const rail = hrs.length ? `<div class="wx-hours mt-3">${hrs.map((h) => `
+                        <div class="wx-hour" title="${esc(h.text || '')}">
+                            <div class="wx-hour-time">${esc(h.hour || '')}</div>
+                            <div class="wx-hour-emoji">${h.emoji || ''}</div>
+                            <div class="wx-hour-temp">${h.temp != null ? h.temp + '&deg;' : '&ndash;'}</div>
+                            <div class="wx-hour-pop ${(h.pop || 0) < 20 ? 'is-dry' : ''}">&#128167;${h.pop != null ? h.pop + '%' : '&mdash;'}</div>
+                        </div>`).join('')}</div>`
+                    : '<p class="wx-legend mt-2">No hour-by-hour was saved for this day.</p>';
+                return `<div class="card mb-3"><div class="card-body">
+                    <div class="flex items-start justify-between gap-2">
+                        <div class="min-w-0">
+                            <p class="font-bold text-gray-900 text-sm">${esc(e.place || 'Location')}</p>
+                            <p class="wx-legend">Captured ${esc(e.capturedAt || 'earlier')}</p>
+                        </div>
+                        <span class="text-3xl leading-none">${d.emoji || '&#9925;'}</span>
+                    </div>
+                    <div class="wx-verdict mt-3"><span class="wx-verdict-emoji">&#128220;</span><span class="wx-verdict-text">
+                        ${esc(d.text || 'No reading')}${d.max != null ? `, high of <b>${d.max}&deg;</b>` : ''}${d.min != null ? `, low of <b>${d.min}&deg;</b>` : ''}.
+                        Chance of rain that day was <b>${d.pop != null ? d.pop + '%' : '&mdash;'}</b>.
+                    </span></div>
+                    ${rail}
+                </div></div>`;
+            }).join('');
+        } catch (_) {
+            body.innerHTML = '<p class="text-sm text-gray-500 text-center py-6">Could not load the saved reading.</p>';
+        }
+    }
 
     // Tapping the card body opens the editor — the primary action on a phone,
     // where aiming for a small pencil icon is awkward. Interactive bits and the
@@ -3809,6 +3870,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const res = await fetch(U.weather() + (withHours ? '&hourly=1' : ''), { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
                 const json = await res.json();
                 WX = (json && json.success && json.data) ? json.data : null;
+                // Every load writes the forecast to the store; take the dates
+                // it wrote so the day menu offers them without a reload.
+                (WX && WX.savedDates || []).forEach((d) => window.SAVED_WX_DATES?.add(d));
             } catch (_) { if (!withHours) WX = null; }
             buildByDate();
             return WX;

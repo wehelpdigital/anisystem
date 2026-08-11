@@ -76,7 +76,19 @@ class ActivityController extends BaseScheduleController
             ->get()
             ->groupBy(fn ($n) => $n->noteDate->format('Y-m-d'));
 
+        // Days the forecast store already holds a reading for, so the day
+        // menu can offer "View saved weather" on exactly those.
+        $savedWeatherDates = \App\Models\AsScheduleWeatherDay::where('deleteStatus', 1)
+            ->where('croppingScheduleId', $schedule->id)
+            ->orderBy('forecastDate')
+            ->pluck('forecastDate')
+            ->map(fn ($d) => $d instanceof \Illuminate\Support\Carbon ? $d->format('Y-m-d') : (string) $d)
+            ->unique()
+            ->values()
+            ->all();
+
         return view('sm.activities', [
+            'savedWeatherDates' => $savedWeatherDates,
             'schedule'          => $schedule,
             'draftsCount'       => $draftsCount,
             'dateNotesByDate'   => $dateNotesByDate,
