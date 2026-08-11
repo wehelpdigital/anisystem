@@ -138,6 +138,46 @@ class ScheduleMapController extends BaseScheduleController
         return response()->json(['success' => true, 'message' => 'Map cleared for the team.']);
     }
 
+    /**
+     * Drawing-in-progress relay: the half-drawn shape under a member's finger,
+     * so the room watches it grow instead of having it pop in finished.
+     * Broadcast-only; `done` tells viewers to drop the ghost.
+     */
+    public function trace(Request $request)
+    {
+        $schedule = $this->schedule($request->query('scheduleId'));
+        $me = Auth::user();
+        if (! ScheduleTeam::canAccess($schedule, (int) $me->id)) {
+            return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'done' => 'nullable|boolean',
+            'kind' => 'nullable|in:pen,line,path,rect,area',
+            'color' => 'nullable|string|max:16',
+            'points' => 'nullable|array|max:200',
+            'points.*' => 'array|size:2',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail('Bad trace.', 422);
+        }
+
+        try {
+            broadcast(new \App\Events\ScheduleMapTrace($schedule->id, [
+                'userId' => (int) $me->id,
+                'name' => (string) \Illuminate\Support\Str::of($me->full_name)->explode(' ')->first(),
+                'done' => (bool) $request->boolean('done'),
+                'kind' => $request->input('kind'),
+                'color' => $request->input('color'),
+                'points' => $request->input('points', []),
+            ]));
+        } catch (\Throwable $e) {
+            // best-effort — a lost frame just makes the ghost jump
+        }
+
+        return response()->json(['success' => true]);
+    }
+
     /** Live GPS position — broadcast to the room, never stored. */
     public function location(Request $request)
     {

@@ -165,6 +165,7 @@
         remove: @json(route('sm.map.remove')),
         clear: @json(route('sm.map.clear')),
         loc: @json(route('sm.map.loc')),
+        trace: @json(route('sm.map.trace')),
     };
     let map = null, proj = null, satOn = true;
     let tool = 'pan', color = '#f5c518', width = 3;
@@ -273,10 +274,22 @@
     }
 
     /* ---------- drawing ---------- */
+    /* The half-drawn shape streams to the room (throttled, broadcast-only,
+       like the GPS beacons) so teammates watch it grow instead of having the
+       finished shape pop in. done tells them to drop the ghost. */
+    let traceLast = 0, traceOn = false;
+    function sendTrace(done) {
+        if (done && !traceOn) return;
+        traceOn = !done;
+        api(`${URLS.trace}?scheduleId=${SID}`, { method: 'POST', body: done
+            ? { done: 1 }
+            : { kind: tool, color, points: tempPts.slice(-120) } }).catch(() => {});
+    }
     function clearTemp() {
         tempPts = [];
         if (tempShape) { tempShape.setMap(null); tempShape = null; }
         document.getElementById('cmapFinish').hidden = true;
+        sendTrace(true);
     }
     function previewTemp(closed) {
         if (tempShape) tempShape.setMap(null);
@@ -284,6 +297,7 @@
         tempShape = closed
             ? new (G().Polygon)({ ...opts, paths: tempPts.map(LL), fillColor: color, fillOpacity: .06 })
             : new (G().Polyline)({ ...opts, path: tempPts.map(LL) });
+        if (Date.now() - traceLast > 250) { traceLast = Date.now(); sendTrace(false); }
     }
     function setTool(t) {
         tool = t;
@@ -425,6 +439,24 @@
         editing = null;
     }
 
+    /* ---------- teammates' drawing ghosts ---------- */
+    const ghosts = new Map();   // userId -> { shape, label, at }
+    function dropGhost(uid) {
+        const g = ghosts.get(uid);
+        if (g) { g.shape.setMap(null); g.label.setMap(null); ghosts.delete(uid); }
+    }
+    function renderGhost(p) {
+        dropGhost(p.userId);
+        if (p.done || !Array.isArray(p.points) || !p.points.length) return;
+        const closed = (p.kind === 'rect' || p.kind === 'area');
+        const opts = { map, strokeColor: p.color || hue(p.userId), strokeWeight: 3, strokeOpacity: .55, clickable: false };
+        const shape = closed
+            ? new (G().Polygon)({ ...opts, paths: p.points.map(LL), fillColor: opts.strokeColor, fillOpacity: .05 })
+            : new (G().Polyline)({ ...opts, path: p.points.map(LL) });
+        const label = textMark(p.points[p.points.length - 1], (p.name || '') + ' is drawing…', 'cmap-me-g');
+        ghosts.set(p.userId, { shape, label, at: Date.now() });
+    }
+
     /* ---------- live GPS ---------- */
     let gpsWatch = null, lastSent = 0, DotClass = null, centeredOnMe = false;
     function dotClass() {
@@ -459,6 +491,8 @@
     }
     setInterval(() => {
         locMarks.forEach((v, k) => { if (Date.now() - v.at > 75000) { v.ov.setMap(null); locMarks.delete(k); } });
+        // A ghost whose artist stopped reporting is an abandoned gesture.
+        ghosts.forEach((v, k) => { if (Date.now() - v.at > 8000) dropGhost(k); });
     }, 15000);
     function toggleGps(btn) {
         if (gpsWatch !== null) {
@@ -564,6 +598,7 @@
                     else if (p.action === 'clear') dropAll();
                 });
                 ch.listen('.map.loc', (p) => { if (p && p.userId !== ME) renderLoc(p); });
+                ch.listen('.map.trace', (p) => { if (p && p.userId !== ME) renderGhost(p); });
             } catch (_) { /* map still works solo */ }
         }
     }
