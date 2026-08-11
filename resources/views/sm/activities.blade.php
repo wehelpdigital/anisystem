@@ -797,6 +797,10 @@
            otherwise beat Tailwind's layered `hidden` / `md:hidden` utilities. */
         @media (max-width: 767px) {
             .toolbar-desktop-action { display: none !important; }
+            /* Done cards keep their "add note" button on desktop only — on a
+               phone it sat alone above the fold chevron and read as clutter.
+               !important for the same unlayered-CSS reason as above. */
+            .add-note-activity-btn { display: none !important; }
         }
         /* Drafts / Report / Search / Calendar / Weather now live only inside the
            Tools menu (#activityActionsBtn) on every screen size. They stay in the
