@@ -152,14 +152,14 @@
     @media (max-width: 767px) { .collab-tab span { display: none; } .collab-tab { flex: 1 1 0; } }
 
     .collab-panels { flex: 1 1 auto; position: relative; min-height: 0; background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: 1rem; overflow: hidden; }
-    .collab-panel { position: absolute; inset: 0; display: none; }
-    .collab-panel.is-active { display: block; }
-    #collabActivities { display: none; }
-    #collabActivities.is-active { display: block; }
+    /* Panels stay rendered and only swap visibility — display:none threw
+       away scroll positions, so the activities tab greeted every return
+       scrolled back to the top. */
+    .collab-panel { position: absolute; inset: 0; visibility: hidden; pointer-events: none; }
+    .collab-panel.is-active { visibility: visible; pointer-events: auto; }
     #collabActivitiesFrame { width: 100%; height: 100%; border: 0; display: block; }
     /* Chat + AI panels host a column layout; drawing hosts the canvas board. */
-    #collabChat.is-active, #collabAi.is-active, #collabDrawing.is-active, #collabMap.is-active { display: flex; }
-    #collabChat, #collabAi, #collabDrawing, #collabMap { flex-direction: column; }
+    #collabChat, #collabAi, #collabDrawing, #collabMap { display: flex; flex-direction: column; }
     /* Chat/whiteboard are tabs here, not floats — hide the floating launcher. */
     body.is-collab #teamChat .team-fab { display: none !important; }
 
