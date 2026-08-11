@@ -18,6 +18,7 @@
 
         /* Accordion: each note folds to its header; the chevron flags state. */
         .note-head { cursor: pointer; }
+        .note-origin { margin-top: .2rem; display: inline-flex; }
         .note-fold { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
         .note-fold-inner { overflow: hidden; min-height: 0; }
         .note-card.is-collapsed .note-fold { grid-template-rows: 0fr; }
@@ -46,33 +47,6 @@
     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
     New note
 </button>
-
-@if (($mapSaves ?? collect())->isNotEmpty())
-    <div class="card mb-3">
-        <div class="card-body">
-            <div class="flex items-center gap-2 mb-2">
-                <span class="w-8 h-8 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
-                </span>
-                <h3 class="font-bold text-gray-900 text-sm grow">Saved team maps</h3>
-                <span class="badge badge-gray">{{ $mapSaves->count() }}</span>
-            </div>
-            <div class="space-y-1.5">
-                @foreach ($mapSaves as $ms)
-                    <a href="{{ route('sm.maps', ['id' => $schedule->id, 'save' => $ms['id']]) }}"
-                       class="flex items-center gap-3 rounded-xl border border-gray-200 px-3 py-2.5 hover:border-brand-400 transition-colors">
-                        <span class="min-w-0 grow">
-                            <span class="block font-bold text-gray-900 text-sm truncate">{{ $ms['title'] }}</span>
-                            <span class="block text-xs text-gray-500">{{ $ms['shapes'] }} {{ \Illuminate\Support\Str::plural('shape', $ms['shapes']) }} · {{ $ms['by'] }} · {{ $ms['when'] }}</span>
-                        </span>
-                        <svg class="w-4 h-4 text-gray-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                    </a>
-                @endforeach
-            </div>
-            <p class="text-xs text-gray-500 mt-2">Opening one shows it in the Maps module, where the team can load it back onto the live map.</p>
-        </div>
-    </div>
-@endif
 
 <div class="space-y-3" id="notesList" data-animate-list>
     @foreach ($notes as $n)
@@ -112,6 +86,13 @@
                     <svg class="note-chevron w-4 h-4 mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                     <div class="min-w-0 grow">
                         <h3 class="font-bold text-gray-900 leading-snug js-title">{{ $n->title }}</h3>
+                        @if ($saveIdForNote)
+                            {{-- Where this note came from. The card that used to
+                                 list saved maps separately said the same thing
+                                 twice; the note is the record, this is its
+                                 provenance. --}}
+                            <span class="badge badge-green note-origin">Team map</span>
+                        @endif
                         <p class="text-xs text-gray-400 mt-0.5 js-time">{{ $n->updated_at?->diffForHumans() }}</p>
                     </div>
                 </div>
@@ -246,7 +227,9 @@ const __init = () => {
                 ];
             })->filter()->values()->all();
         };
+        $mapNoteIds = ($mapSaves ?? collect())->pluck('noteId')->filter()->flip();
         $seed = $notes->mapWithKeys(fn ($n) => [$n->id => [
+            'fromMap' => $mapNoteIds->has($n->id),
             'id' => $n->id, 'title' => $n->title, 'body' => $n->body,
             'imagePath' => $n->imagePath,
             'imageUrl' => $n->imagePath ? \Illuminate\Support\Facades\Storage::disk('public')->url($n->imagePath) : null,
@@ -425,6 +408,7 @@ const __init = () => {
                     <svg class="note-chevron w-4 h-4 mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                     <div class="min-w-0 grow">
                         <h3 class="font-bold text-gray-900 leading-snug js-title">${escapeHtml(n.title)}</h3>
+                        ${n.fromMap ? '<span class="badge badge-green note-origin">Team map</span>' : ''}
                         <p class="text-xs text-gray-400 mt-0.5 js-time">just now</p>
                     </div>
                 </div>
