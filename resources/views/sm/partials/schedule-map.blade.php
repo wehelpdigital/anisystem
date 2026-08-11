@@ -267,6 +267,7 @@
         padding: .6rem .75rem; background: var(--color-white);
         transition: border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
     .cmap-saverow:hover { border-color: var(--color-brand-400); transform: translateY(-1px); }
+    .cmap-saverow.is-wanted { border-color: var(--color-brand-500); background: var(--color-brand-50); }
     .cmap-saverow-t { display: block; font-size: .85rem; font-weight: 800; color: var(--color-gray-900);
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .cmap-saverow-s { display: block; font-size: .7rem; color: var(--color-gray-500); margin-top: .1rem; }
@@ -1100,6 +1101,10 @@
         return cv.toDataURL('image/png');
     }
 
+    const WANT_SAVE = (() => {
+        const v = parseInt(new URLSearchParams(location.search).get('save') || '', 10);
+        return Number.isFinite(v) ? v : 0;
+    })();
     let saveMode = 'map';
     function openSaveSheet(mode) {
         saveMode = mode;
@@ -1150,6 +1155,12 @@
                 sub.textContent = sv.count + ' shape' + (sv.count === 1 ? '' : 's') + ' · ' + sv.by + ' · ' + sv.when;
                 b.appendChild(t); b.appendChild(sub);
                 b.addEventListener('click', () => loadSavedMap(sv));
+                // Arrived from a note about this map: point straight at it,
+                // but still let the team confirm before it replaces the live map.
+                if (WANT_SAVE && sv.id === WANT_SAVE) {
+                    b.classList.add('is-wanted');
+                    setTimeout(() => b.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 320);
+                }
                 list.appendChild(b);
             });
             window.openSheet?.('cmapSavesSheet');
@@ -1292,6 +1303,11 @@
 
         // Existing shapes, then follow the room live.
         loadObjects(true).catch(() => {});
+
+        // ?save=<id> — a note about a saved map sent us here. Open the list on
+        // that entry rather than loading it silently: loading replaces the
+        // live map for the whole team, which is nobody's idea of a link.
+        if (WANT_SAVE) setTimeout(openSaves, 500);
 
         // On by default: seeing each other on the land is why the map exists.
         // The browser still asks permission; declining just leaves it off.

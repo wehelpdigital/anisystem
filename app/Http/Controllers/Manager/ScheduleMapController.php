@@ -356,7 +356,7 @@ class ScheduleMapController extends BaseScheduleController
         $bodyText = $description !== '' ? $description : null;
         if ($mode === 'map') {
             $bodyText = trim(($description !== '' ? $description . "\n\n" : '')
-                . 'Saved team map — reopen it from the Collab Room map tools.');
+                . 'Saved team map — tap View map to open it.');
         }
         $note = AsScheduleNote::create([
             'croppingScheduleId' => $schedule->id,

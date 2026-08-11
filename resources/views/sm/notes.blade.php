@@ -47,6 +47,33 @@
     New note
 </button>
 
+@if (($mapSaves ?? collect())->isNotEmpty())
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="flex items-center gap-2 mb-2">
+                <span class="w-8 h-8 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
+                </span>
+                <h3 class="font-bold text-gray-900 text-sm grow">Saved team maps</h3>
+                <span class="badge badge-gray">{{ $mapSaves->count() }}</span>
+            </div>
+            <div class="space-y-1.5">
+                @foreach ($mapSaves as $ms)
+                    <a href="{{ route('sm.maps', ['id' => $schedule->id, 'save' => $ms['id']]) }}"
+                       class="flex items-center gap-3 rounded-xl border border-gray-200 px-3 py-2.5 hover:border-brand-400 transition-colors">
+                        <span class="min-w-0 grow">
+                            <span class="block font-bold text-gray-900 text-sm truncate">{{ $ms['title'] }}</span>
+                            <span class="block text-xs text-gray-500">{{ $ms['shapes'] }} {{ \Illuminate\Support\Str::plural('shape', $ms['shapes']) }} · {{ $ms['by'] }} · {{ $ms['when'] }}</span>
+                        </span>
+                        <svg class="w-4 h-4 text-gray-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </a>
+                @endforeach
+            </div>
+            <p class="text-xs text-gray-500 mt-2">Opening one shows it in the Maps module, where the team can load it back onto the live map.</p>
+        </div>
+    </div>
+@endif
+
 <div class="space-y-3" id="notesList" data-animate-list>
     @foreach ($notes as $n)
         @php
@@ -58,7 +85,12 @@
             // Activities shell a link is matched by its base path, and
             // /app/sm-activities matches the Activities module itself — so the
             // shell answered a tap on "View map" by showing the board.
-            $mapUrl = route('sm.maps', ['id' => $schedule->id]);
+            // A note the map save created points at its own snapshot, so
+            // "View map" lands on the map that note is about.
+            $saveIdForNote = ($mapSaves ?? collect())->firstWhere('noteId', $n->id)['id'] ?? null;
+            $mapUrl = $saveIdForNote
+                ? route('sm.maps', ['id' => $schedule->id, 'save' => $saveIdForNote])
+                : route('sm.maps', ['id' => $schedule->id]);
             foreach ((is_array($n->media) ? $n->media : []) as $m) {
                 if (empty($m['path'])) continue;
                 // Maps saved before they announced themselves are recognised by

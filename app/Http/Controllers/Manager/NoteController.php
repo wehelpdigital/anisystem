@@ -28,7 +28,29 @@ class NoteController extends BaseScheduleController
             ->orderByDesc('id')
             ->get();
 
-        return view('sm.notes', ['schedule' => $schedule, 'notes' => $notes]);
+        // Saved team maps belong here too: a map the team named and kept is a
+        // record of the season like any note, and hunting for it inside the
+        // map's own tool menu is a detour.
+        $saves = \App\Models\ScheduleMapSave::active()
+            ->where('scheduleId', $schedule->id)
+            ->orderByDesc('id')
+            ->limit(50)
+            ->get();
+        $savers = \App\Models\User::whereIn('id', $saves->pluck('userId')->unique())->get()->keyBy('id');
+        $mapSaves = $saves->map(fn ($m) => [
+            'id' => (int) $m->id,
+            'noteId' => $m->noteId ? (int) $m->noteId : null,
+            'title' => $m->title,
+            'shapes' => count(json_decode((string) $m->objects, true) ?: []),
+            'by' => (string) \Illuminate\Support\Str::of(optional($savers->get($m->userId))->full_name ?? 'Someone')->explode(' ')->first(),
+            'when' => $m->created_at?->timezone('Asia/Manila')->format('M j, Y'),
+        ]);
+
+        return view('sm.notes', [
+            'schedule' => $schedule,
+            'notes' => $notes,
+            'mapSaves' => $mapSaves,
+        ]);
     }
 
     public function store(Request $request)
