@@ -777,8 +777,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const notesByDate = {};
         $qsa('.date-note-block[data-date]', list).forEach((el) => {
             const key = (el.getAttribute('data-date') || '').trim();
-            const content = (el.innerHTML || '').trim();
-            if (key && el.style.display !== 'none' && content !== '') notesByDate[key] = content;
+            // The note's BODY, not the block's innerHTML — that also holds the
+            // edit and delete buttons, and feeding them back in nested a copy
+            // of the note inside itself and doubled its buttons every reorder.
+            const content = (el.querySelector('.date-note-inner')?.innerHTML || '').trim();
+            if (key && el.style.display !== 'none' && content !== '') {
+                notesByDate[key] = { html: content, media: el.getAttribute('data-media') || '[]' };
+            }
+        });
+        // Inline notes sit BETWEEN the cards, so the wipe below takes them with
+        // it — nothing rebuilt them, which is why a note vanished the moment
+        // its day was reordered. Remember each one with the card it sits above,
+        // so it can land back in the same slot whatever the new order is.
+        const inlineByDate = {};
+        $qsa('.inline-note', list).forEach((el) => {
+            const key = (el.closest('.date-activities')?.getAttribute('data-date') || '').trim();
+            if (!key) return;
+            let anchor = el.nextElementSibling;
+            while (anchor && !anchor.matches('.activity-card[data-id]')) anchor = anchor.nextElementSibling;
+            (inlineByDate[key] = inlineByDate[key] || []).push({
+                el, beforeId: anchor ? anchor.getAttribute('data-id') : null,
+            });
         });
         const markersByDate = snapshotMarkers(list);
 
@@ -798,9 +817,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 list.insertAdjacentHTML('beforeend', buildRestDayHtml(key, true));
             }
             const markerInfo = key !== '__no-date__' ? (markersByDate[key] || null) : null;
-            const groupEl = buildDateGroupShell(key, item.color, groupCards, notesByDate[key] || '', !!markerInfo, allHidden);
+            const noteInfo = notesByDate[key] || null;
+            const groupEl = buildDateGroupShell(key, item.color, groupCards, noteInfo ? noteInfo.html : '', !!markerInfo, allHidden);
+            const noteEl = $qs('.date-note-block', groupEl);
+            if (noteEl && noteInfo) noteEl.setAttribute('data-media', noteInfo.media);
             const holder = $qs('.date-activities', groupEl);
             groupCards.forEach((el) => holder.appendChild(el));
+            // The day's inline notes go back between the cards they belonged
+            // to; one whose card left the day lands at the end of it.
+            (inlineByDate[key] || []).forEach((n) => {
+                const anchor = n.beforeId ? $qs(`.activity-card[data-id="${n.beforeId}"]`, holder) : null;
+                holder.insertBefore(n.el, anchor);
+            });
+            // A note's stored key is derived from its neighbours' order, so a
+            // reorder can leave it pointing at the wrong slot — persist the new
+            // one, or a reload would show the note somewhere else.
+            if (/^\d{4}-\d{2}-\d{2}$/.test(key)) {
+                (inlineByDate[key] || []).forEach((n) => {
+                    if (!n.el.getAttribute('data-inline-note')) return;
+                    const fresh = inlineNoteKey(n.el);
+                    if (fresh === (parseInt(n.el.getAttribute('data-sort-key') || '0', 10) || 0)) return;
+                    n.el.setAttribute('data-sort-key', String(fresh));
+                    saveInlineNote(n.el, key, fresh);
+                });
+            }
+            delete inlineByDate[key];
             list.appendChild(groupEl);
             if (markerInfo) {
                 list.insertAdjacentHTML('beforeend', buildMarkerHtml(key, markerInfo));
