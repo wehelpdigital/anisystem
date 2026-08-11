@@ -26,9 +26,17 @@
                the header. */
             .smap-stage {
                 height: calc(100dvh - 9.5rem);
-                width: 100vw; margin-left: 50%; transform: translateX(-50%);
-                margin-top: -1rem; margin-bottom: -1rem;
-                border-radius: 0; border-left: 0; border-right: 0;
+                /* Half the page's padding back, not all of it: a thin even
+                   frame reads as deliberate where a raw bleed reads as broken,
+                   and the map still gets all but 8px of the screen. No blind
+                   negative margin on top — in the module shell the stage sits
+                   under the toolbar, and pulling it up closed that gap. */
+                margin-left: -.5rem; margin-right: -.5rem;
+                /* The stage ends 8px above the floor; without this the page's
+                   own bottom padding would sit under it and leave the page
+                   scrollable by exactly that much. */
+                margin-bottom: -1rem;
+                border-radius: .6rem;
             }
         }
     </style>
@@ -57,11 +65,20 @@
                differ per device, and a hard calc() left a band of dead page
                under the map on some and clipped it on others. */
             const stage = document.querySelector('.smap-stage');
+            const GAP = 8;   // the same thin frame the sides get
             function fit() {
                 if (!stage || !window.matchMedia('(max-width: 767px)').matches) return;
+                // A tab bar that is not rendered still answers with a rect —
+                // top 0 — which collapsed the map to its minimum height. The
+                // activities shell hides the bar, so its presence has to be
+                // measured. Height, not offsetParent: the bar is
+                // position:fixed, and fixed elements report no offsetParent
+                // even when they are plainly on screen.
                 const bar = document.querySelector('.tabbar');
-                const floor = bar ? bar.getBoundingClientRect().top : window.innerHeight;
-                const h = Math.max(260, Math.round(floor - stage.getBoundingClientRect().top));
+                const barBox = bar ? bar.getBoundingClientRect() : null;
+                const floor = barBox && barBox.height > 0 ? barBox.top : window.innerHeight;
+                const h = Math.max(260, Math.round(floor - stage.getBoundingClientRect().top - GAP));
+                if (stage.style.height === h + 'px') return;   // no resize loop
                 stage.style.height = h + 'px';
                 // Google needs telling when its container changes size.
                 if (window.google?.maps?.event) window.google.maps.event.trigger(window, 'resize');
