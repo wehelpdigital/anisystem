@@ -106,6 +106,46 @@
         .qc-cta:hover .cta-chip { background-color: #b5680b; }
         .qc-cta .cta-sub { color: #834710; }
         .qc-cta:hover .cta-sub { color: #5a2c02; }
+
+        @media (max-width: 767px) {
+            /* Phones read the hub as a list of places to go, and a column
+               tile spends most of its height on air under a big icon: eleven
+               of them ran past 1,400px, so Reports and the danger zone were a
+               long thumb-drag away. Each tile becomes a row — icon, name,
+               count — which halves the grid without dropping anything.
+               `display: contents` dissolves the icon/badge wrapper so all
+               three become items of that row; the markup is untouched. */
+            .hub-grid { gap: .5rem; }
+            .hub-grid > * > div {
+                flex-direction: row; align-items: center;
+                gap: .6rem; padding: .7rem .75rem;
+            }
+            /* The wrapper, not the icon — both carry `flex`, and dissolving
+               the icon would un-centre the glyph inside it. */
+            .hub-grid > * > div > .justify-between { display: contents; }
+            .hub-grid > * > div > span {
+                order: 1; flex: 1 1 auto; min-width: 0; line-height: 1.15;
+                font-size: .84rem;
+                white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            }
+            .hub-grid .badge { order: 2; margin-left: auto; flex-shrink: 0; }
+            /* A grey badge is a zero — it says nothing the tile does not, and
+               on a phone it was costing the name its last 30px: "Documentation"
+               came out clipped mid-word. Counts that exist still show. */
+            .hub-grid .badge-gray { display: none; }
+            .hub-grid .w-11 { width: 2.3rem; height: 2.3rem; border-radius: .65rem; }
+            .hub-grid .w-11 svg { width: 1.2rem; height: 1.2rem; }
+
+            /* Quick Capture matches the Activities tile above it instead of
+               standing as a tall block of its own. */
+            .qc-cta { flex-direction: row; flex-wrap: wrap; align-items: center;
+                gap: 0 .8rem; padding: .85rem .95rem; }
+            .qc-cta .cta-chip { width: 2.6rem; height: 2.6rem; }
+            .qc-cta .cta-chip svg { width: 1.5rem; height: 1.5rem; }
+            .qc-cta > span:not(.cta-chip):not(.cta-sub) { flex: 1 1 auto; font-size: 1rem; }
+            .qc-cta .cta-sub { flex: 1 1 100%; padding-left: 3.4rem; }
+            .act-cta { padding: .95rem 1rem; }
+        }
     </style>
 
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
@@ -142,7 +182,7 @@
     @endif
 
     {{-- Module grid + the team/share/report actions, all as matched square tiles. --}}
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 stagger-children">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 stagger-children hub-grid">
         @foreach ($moduleCards as [$label, $moduleKey, $count, $iconPath])
             <a href="{{ route('sm.activities', ['id' => $schedule->id, 'module' => $moduleKey]) }}" class="card card-hover block">
                 <div class="p-4 flex flex-col gap-3">
