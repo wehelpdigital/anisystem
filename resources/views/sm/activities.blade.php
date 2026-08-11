@@ -1897,10 +1897,13 @@
     'activityTypes' => $activityTypes,
     'activeVersion' => $activeVersion,
 ])
+{{-- Same panels the Weather module shows, so the sheet and the module
+     cannot drift apart. --}}
+@include('sm.partials.weather-panels')
 <div class="sheet hidden" id="weatherSheet" style="--sheet-width:38rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Weather — this week, by lot</h3>
+        <h3 class="sheet-title">Weather by lot</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body" id="weatherBody">

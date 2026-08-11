@@ -3797,14 +3797,19 @@ document.addEventListener('DOMContentLoaded', () => {
         let wxByDate = null;      // isoDate → [{ place, day }]  (distinct locations)
         let loaded = false;
 
-        async function ensureWeather() {
-            if (loaded) return WX;
+        let loadedHours = false;
+        /* The day-header chips only need days, and hours would treble that
+           payload on every board load — so they are fetched once, when the
+           sheet that shows them is actually opened. */
+        async function ensureWeather(withHours) {
+            if (loaded && (!withHours || loadedHours)) return WX;
             loaded = true;
+            if (withHours) loadedHours = true;
             try {
-                const res = await fetch(U.weather(), { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
+                const res = await fetch(U.weather() + (withHours ? '&hourly=1' : ''), { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
                 const json = await res.json();
                 WX = (json && json.success && json.data) ? json.data : null;
-            } catch (_) { WX = null; }
+            } catch (_) { if (!withHours) WX = null; }
             buildByDate();
             return WX;
         }
@@ -3893,37 +3898,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Modal: one card per lot → its location + a 6-day forecast row.
-        function dayCell(d, isToday) {
-            const today = isToday || d.isToday;
-            return `<div class="flex-1 min-w-0 text-center px-0.5 py-1">
-                <p class="text-[10px] font-bold ${today ? 'text-brand-700' : 'text-gray-500'} truncate">${esc(today ? 'Today' : d.dow)}</p>
-                <div class="text-xl leading-none my-0.5" title="${esc(d.text)}">${d.emoji}</div>
-                <p class="text-[11px] font-bold ${today ? 'text-brand-700' : 'text-gray-800'}">${d.max != null ? d.max + '°' : '–'}<span class="text-gray-400 font-medium">${d.min != null ? '/' + d.min + '°' : ''}</span></p>
-                ${d.pop != null ? `<p class="text-[9px] font-semibold text-blue-500">💧${d.pop}%</p>` : ''}
-            </div>`;
-        }
+        /* The sheet shows the SAME panels as the Weather module — tabs and
+           all — through the shared renderer, so there is one implementation
+           of the forecast rather than two that drift. */
         function renderModal() {
             const body = $id('weatherBody');
-            if (!body) return;
-            if (!WX || !WX.lots || !WX.lots.length) {
-                body.innerHTML = '<p class="text-sm text-gray-500 text-center py-6">Add a lot address in the Lots module to see local weather.</p>';
-                return;
-            }
-            const locs = WX.locations || {};
-            body.innerHTML = WX.lots.map((lot) => {
-                const loc = lot.locationKey ? locs[lot.locationKey] : null;
-                let inner;
-                if (!loc) inner = '<p class="text-xs text-gray-400 mt-1">No location set — add one in the Lots module.</p>';
-                else if (loc.ok === false) inner = `<p class="text-xs text-gray-400 mt-1">🌦️ Weather unavailable for ${esc(loc.place || lot.address || 'this location')}</p>`;
-                else inner = `<p class="text-[11px] font-semibold text-gray-500 mb-1 truncate">📍 ${esc(loc.place)}</p><div class="flex gap-0.5">${loc.days.map((d, i) => dayCell(d, i === 0)).join('')}</div>`;
-                return `<div class="rounded-xl border border-gray-100 p-3 mb-2"><p class="font-bold text-gray-900 text-sm mb-1">🌾 ${esc(lot.name)}</p>${inner}</div>`;
-            }).join('');
+            if (!body || typeof window.wxRenderPanels !== 'function') return;
+            window.wxRenderPanels(body, WX || {});
         }
 
         async function openModal() {
             openSheet('weatherSheet');
-            await ensureWeather();
+            await ensureWeather(true);
             renderModal();
         }
         $id('weatherBtn')?.addEventListener('click', openModal);
