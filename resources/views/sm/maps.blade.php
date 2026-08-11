@@ -27,8 +27,8 @@
                row of two buttons: the page's top padding, the bar's own
                padding and its bottom margin all stacked. Trimmed to about
                half here — the map is the page. */
-            body.smap-open main { padding-top: .5rem; }
-            body.smap-open main > .sticky { margin-bottom: .5rem; }
+            body.smap-open main { padding-top: 0; }
+            body.smap-open main > .sticky { margin-bottom: 0; }
         }
 
         @media (max-width: 767px) {
