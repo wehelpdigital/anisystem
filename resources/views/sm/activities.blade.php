@@ -578,6 +578,11 @@
         /* Grip: the clear drag affordance (whole note is still draggable). */
         .inline-note-grip { position: absolute; left: .05rem; top: 50%; transform: translateY(-50%); display: inline-flex; align-items: center; justify-content: center; padding: .3rem; color: var(--tl-note-border); cursor: grab; touch-action: none; }
         .inline-note-grip:active { cursor: grabbing; }
+        /* A finger needs more than the six dots to aim at — the note's left
+           padding already reserves this room, so nothing shifts. */
+        @media (hover: none), (pointer: coarse) {
+            .inline-note-grip { padding: .5rem .4rem; }
+        }
         .inline-note:hover .inline-note-grip { color: #d9a441; }
         .inline-note.is-editing .inline-note-grip { display: none; }
         html.dark .inline-note-grip { color: #6b5a2a; }
@@ -932,8 +937,17 @@
         /* The element being dragged opts out of browser touch handling, so a
            scroll started with a second finger cannot claim the finger that is
            doing the dragging — the browser would otherwise cancel that pointer
-           and the drag with it. The page still scrolls; the drag survives. */
-        .dragging { touch-action: none; }
+           and the drag with it. The page still scrolls; the drag survives.
+           These carry `body.no-zoom` because the rule above matches
+           `body.no-zoom *` — one class AND an element name, which outweighs a
+           lone class and quietly handed these elements back to the browser.
+           That is what stopped notes being draggable on phones at all: cards
+           drag on touch events and can preventDefault their way out, but a
+           note drags on POINTER events, where only touch-action can stop the
+           browser scrolling and cancelling the pointer mid-drag. */
+        .dragging,
+        body.no-zoom .dragging,
+        body.no-zoom .inline-note-grip { touch-action: none; }
         .activity-card, .date-header[draggable="true"] { -webkit-touch-callout: none; }
         .activity-card-image img { max-width: 100%; max-height: 260px; border-radius: .6rem; border: 1px solid #eef0f3; }
 
