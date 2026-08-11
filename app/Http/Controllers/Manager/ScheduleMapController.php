@@ -319,14 +319,22 @@ class ScheduleMapController extends BaseScheduleController
         // Best-effort picture; the reopenable snapshot never depends on it.
         $media = [];
 
+        // "Save as image note" means exactly that: a picture to look at, which
+        // notes render as a picture. Only the reopenable snapshot is typed as a
+        // map, because only that one has a map to go back to. The filenames
+        // differ for the same reason — notes recognise older map pictures by
+        // the "map-" name, and an image save must not be caught by it.
+        $mediaType = $mode === 'map' ? 'map' : 'image';
+        $namePrefix = $mode === 'map' ? 'map-' : 'mapimg-';
+
         // Preferred: the canvas the client composed, which carries the points
         // and measurement labels. Static Maps can draw the shapes but cannot
         // write their sizes, so that path is the fallback, not the goal.
         $binary = $this->decodeDataUrlImage((string) $request->input('image'));
         if ($binary !== null) {
-            $path = 'schedule-notes/' . $schedule->id . '/map-' . \Illuminate\Support\Str::random(20) . '.png';
+            $path = 'schedule-notes/' . $schedule->id . '/' . $namePrefix . \Illuminate\Support\Str::random(20) . '.png';
             \Illuminate\Support\Facades\Storage::disk('public')->put($path, $binary);
-            $media[] = ['type' => 'map', 'path' => $path, 'poster' => null];
+            $media[] = ['type' => $mediaType, 'path' => $path, 'poster' => null];
         }
 
         $url = $media ? null : $this->staticMapUrl(
@@ -340,9 +348,9 @@ class ScheduleMapController extends BaseScheduleController
             try {
                 $img = \Illuminate\Support\Facades\Http::timeout(20)->get($url);
                 if ($img->ok() && str_starts_with((string) $img->header('Content-Type'), 'image/')) {
-                    $path = 'schedule-notes/' . $schedule->id . '/map-' . \Illuminate\Support\Str::random(20) . '.png';
+                    $path = 'schedule-notes/' . $schedule->id . '/' . $namePrefix . \Illuminate\Support\Str::random(20) . '.png';
                     \Illuminate\Support\Facades\Storage::disk('public')->put($path, $img->body());
-                    $media[] = ['type' => 'map', 'path' => $path, 'poster' => null];
+                    $media[] = ['type' => $mediaType, 'path' => $path, 'poster' => null];
                 }
             } catch (\Throwable $e) {
                 // fall through — picture is optional for mode=map
