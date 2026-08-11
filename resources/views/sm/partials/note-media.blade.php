@@ -2,7 +2,7 @@
      shared lightbox (needs note-lightbox on the page). Expects:
      $media = [['type'=>'image|video','url'=>..,'posterUrl'=>..], ...]. --}}
 @foreach (($media ?? []) as $m)
-    @if (($m['type'] ?? '') === 'map')
+    @if (($m['type'] ?? '') === 'map' && ! empty($m['mapUrl']))
         {{-- A saved map opens in the Maps module: it is a place to work on,
              not a picture to squint at, and the module can pan, measure and
              draw where a thumbnail cannot. --}}

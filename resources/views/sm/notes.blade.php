@@ -54,7 +54,11 @@
             if (filled($n->imagePath)) {
                 $mediaItems[] = ['type' => 'image', 'url' => \Illuminate\Support\Facades\Storage::disk('public')->url($n->imagePath)];
             }
-            $mapUrl = route('sm.activities', ['id' => $schedule->id, 'module' => 'maps']);
+            // The module's OWN url, not the shell's ?module=maps: inside the
+            // Activities shell a link is matched by its base path, and
+            // /app/sm-activities matches the Activities module itself — so the
+            // shell answered a tap on "View map" by showing the board.
+            $mapUrl = route('sm.maps', ['id' => $schedule->id]);
             foreach ((is_array($n->media) ? $n->media : []) as $m) {
                 if (empty($m['path'])) continue;
                 // Maps saved before they announced themselves are recognised by
@@ -190,7 +194,7 @@ const __init = () => {
     @php
         // Same classification as the server-rendered list above, so a note
         // re-rendered after an edit keeps its "View map" tile.
-        $mapModuleUrl = route('sm.activities', ['id' => $schedule->id, 'module' => 'maps']);
+        $mapModuleUrl = route('sm.maps', ['id' => $schedule->id]);
         $mediaUrls = function ($items) use ($mapModuleUrl) {
             return collect(is_array($items) ? $items : [])->map(function ($m) use ($mapModuleUrl) {
                 if (empty($m['path'])) {
@@ -270,6 +274,10 @@ const __init = () => {
         const q = await ensureQuill();
         q.root.innerHTML = note && note.body ? note.body : '';
     }
+
+    // Where a saved map opens. Read by noteMediaThumb for tiles it builds
+    // after an edit, which have no per-item link of their own.
+    window.NOTE_MAP_URL = @json(route('sm.maps', ['id' => $schedule->id]));
 
     document.querySelectorAll('[data-note-add]').forEach((b) => b.addEventListener('click', () => openNoteSheet(null)));
     // Emoji → insert into the note body at the cursor.

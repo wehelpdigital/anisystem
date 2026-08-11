@@ -73,8 +73,15 @@
                 + '<span class="nm-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1 10-10-3-3L5 16l-1 4z"/></svg></span>'
                 + `${extra || ''}</div>`;
         }
-        if (m.type === 'map') {
-            const href = m.mapUrl || '';
+        // A map saved before the type existed is known by the filename the map
+        // save writes, so old attachments get the link too.
+        const looksLikeMap = m.type === 'map'
+            || /\/map-[A-Za-z0-9]+\.png$/.test(m.path || m.url || '');
+        // The link is the same for every map in a schedule, so the page states
+        // it once rather than threading it through every payload.
+        const mapHref = m.mapUrl || window.NOTE_MAP_URL || '';
+        if (looksLikeMap && mapHref) {
+            const href = mapHref;
             return `<a class="nm nm-map" href="${esc(href)}" title="Open this map in the Maps module">`
                 + '<svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>'
                 + `<span>View map</span>${extra || ''}</a>`;
