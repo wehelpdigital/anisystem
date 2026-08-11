@@ -198,6 +198,9 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-map-clear', [App\Http\Controllers\Manager\ScheduleMapController::class, 'clear'])->name('sm.map.clear');
     Route::post('/app/sm-map-loc', [App\Http\Controllers\Manager\ScheduleMapController::class, 'location'])->name('sm.map.loc');
     Route::post('/app/sm-map-trace', [App\Http\Controllers\Manager\ScheduleMapController::class, 'trace'])->name('sm.map.trace');
+    Route::get('/app/sm-map-saves', [App\Http\Controllers\Manager\ScheduleMapController::class, 'saves'])->name('sm.map.saves');
+    Route::post('/app/sm-map-save', [App\Http\Controllers\Manager\ScheduleMapController::class, 'saveMap'])->name('sm.map.save');
+    Route::post('/app/sm-map-load', [App\Http\Controllers\Manager\ScheduleMapController::class, 'loadSave'])->name('sm.map.load');
     // Drawing sessions: a fresh page 1 per session, past drawings kept as drafts.
     Route::post('/app/sm-board-open', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'open'])->name('sm.board.open');
     Route::post('/app/sm-board-heartbeat', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'heartbeat'])->name('sm.board.heartbeat');

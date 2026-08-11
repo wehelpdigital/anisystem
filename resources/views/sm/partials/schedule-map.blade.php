@@ -49,6 +49,10 @@
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 21L21 3M8.5 15.5l1.8 1.8M12 12l1.8 1.8M15.5 8.5l1.8 1.8"/></svg>
                     <span>Line — drag, shows distance</span>
                 </button>
+                <button type="button" class="cmap-mrow" data-mtool="arrow" data-short="Arrow">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20L18 6M18 6h-7M18 6v7"/></svg>
+                    <span>Arrow — drag to point at</span>
+                </button>
                 <button type="button" class="cmap-mrow" data-mtool="path" data-short="Multi-line">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l5-6 4 3 6-8"/><path stroke-linecap="round" d="M3 17h.01M8 11h.01M12 14h.01M18 6h.01"/></svg>
                     <span>Multi-line — tap points</span>
@@ -68,6 +72,19 @@
                 <button type="button" class="cmap-mrow" data-mtool="erase" data-short="Erase">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l7-7 6 6-4 4H8l-4-3z"/><path stroke-linecap="round" d="M8 18h11"/></svg>
                     <span>Erase a shape</span>
+                </button>
+                <div class="cmap-msep"></div>
+                <button type="button" class="cmap-mrow" data-maction="open">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>
+                    <span>Open a saved map</span>
+                </button>
+                <button type="button" class="cmap-mrow" data-maction="savemap">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 3h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2z"/><path stroke-linecap="round" d="M9 8h6M9 12h6M9 16h4"/></svg>
+                    <span>Save map to notes</span>
+                </button>
+                <button type="button" class="cmap-mrow" data-maction="saveimage">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-4.5-4.5L9 18"/></svg>
+                    <span>Save as image note</span>
                 </button>
             </div>
         </div>
@@ -107,6 +124,35 @@
                 <button type="button" class="cmap-swatch" data-mcolor="#111827" style="--c:#111827" aria-label="Black"></button>
             </div>
         </div>
+        <div class="sheet hidden" id="cmapSavesSheet" style="--sheet-width:26rem">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+                <h3 class="sheet-title">Saved team maps</h3>
+                <button type="button" class="icon-btn" data-sheet-close aria-label="Close">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="sheet-body" style="padding-bottom:1rem">
+                <div class="cmap-saves" id="cmapSavesList"></div>
+            </div>
+        </div>
+        <div class="sheet hidden" id="cmapSaveSheet" style="--sheet-width:26rem">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+                <h3 class="sheet-title" id="cmapSaveTitleH">Save map to notes</h3>
+                <button type="button" class="icon-btn" data-sheet-close aria-label="Close">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="sheet-body" style="padding-bottom:1.1rem">
+                <p class="cmap-save-hint" id="cmapSaveHint"></p>
+                <label class="cmap-save-label" for="cmapSaveName">Title</label>
+                <input type="text" id="cmapSaveName" class="form-input" placeholder="e.g. North lot irrigation plan" autocomplete="off">
+                <label class="cmap-save-label" for="cmapSaveDesc">What is this map about?</label>
+                <textarea id="cmapSaveDesc" class="form-input" rows="2" placeholder="Optional"></textarea>
+                <button type="button" class="cmap-save-go" id="cmapSaveGo"><span id="cmapSaveGoTxt">Save</span></button>
+            </div>
+        </div>
         <span class="cmap-div"></span>
         <button type="button" class="cmap-tool" id="cmapUndo" disabled title="Undo" aria-label="Undo">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
@@ -128,7 +174,13 @@
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>
         </button>
     </div>
-    <div class="cmap-map" id="cmapMap"></div>
+    <div class="cmap-stage">
+        <div class="cmap-map" id="cmapMap"></div>
+        <div class="cmap-veil" id="cmapVeil">
+            <span class="cmap-veil-spin"></span>
+            <span class="cmap-veil-txt">Finding your ground…</span>
+        </div>
+    </div>
 @endif
 </div>
 
@@ -181,7 +233,38 @@
     html.dark .cmap-mrow { color: #cdd8c0; }
     html.dark .cmap-mrow:hover { background: #1c2416; }
     html.dark .cmap-search { background: #1c2416; border-color: #2b3a1c; }
+    .cmap-stage { position: relative; flex: 1 1 auto; min-height: 0; display: flex; }
     .cmap-map { flex: 1 1 auto; min-height: 0; }
+    /* Holds the screen until the map knows WHERE to look — no country-level
+       flash and jump to the field. */
+    .cmap-veil { position: absolute; inset: 0; z-index: 5; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: .65rem;
+        background: #161d16; color: #cbd5c0; font-size: .8rem; font-weight: 700;
+        transition: opacity .45s cubic-bezier(.22,1,.36,1); }
+    .cmap-veil.is-done { opacity: 0; pointer-events: none; }
+    .cmap-veil-spin { width: 1.7rem; height: 1.7rem; border-radius: 999px;
+        border: 3px solid rgb(255 255 255 / .14); border-top-color: #f5c518;
+        animation: cmapVeilSpin .8s linear infinite; }
+    @keyframes cmapVeilSpin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) {
+        .cmap-veil { transition: opacity .01s linear; }
+        .cmap-veil-spin { animation: none; border-top-color: rgb(255 255 255 / .14); }
+    }
+    .cmap-msep { height: 1px; background: var(--color-gray-100); margin: .35rem .2rem; }
+    .cmap-save-hint { font-size: .78rem; color: var(--color-gray-500); line-height: 1.5; margin-bottom: .8rem; }
+    .cmap-save-label { display: block; font-size: .72rem; font-weight: 700; color: var(--color-gray-600); margin: .6rem 0 .3rem; }
+    .cmap-save-go { width: 100%; margin-top: .9rem; padding: .6rem; border-radius: .7rem; font-weight: 800;
+        font-size: .88rem; color: #fff; background: linear-gradient(140deg, #6b9f3d, #3d6823); }
+    .cmap-save-go:disabled { opacity: .6; }
+    .cmap-saves { display: flex; flex-direction: column; gap: .45rem; }
+    .cmap-saverow { text-align: left; border: 1px solid var(--color-gray-200); border-radius: .8rem;
+        padding: .6rem .75rem; background: var(--color-white);
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .cmap-saverow:hover { border-color: var(--color-brand-400); transform: translateY(-1px); }
+    .cmap-saverow-t { display: block; font-size: .85rem; font-weight: 800; color: var(--color-gray-900);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cmap-saverow-s { display: block; font-size: .7rem; color: var(--color-gray-500); margin-top: .1rem; }
+    .cmap-saves-empty { font-size: .8rem; color: var(--color-gray-500); text-align: center; padding: 1.2rem 0; }
     /* Measurement labels ride Google marker labels — these classes style them. */
     .cmap-lbl-g { background: rgb(17 24 39 / .82); border-radius: .45rem; padding: .1rem .4rem; white-space: nowrap; }
     .cmap-txt-g { background: #fff; border: 1.5px solid #111827; border-radius: .45rem; padding: .12rem .45rem; box-shadow: 0 2px 6px rgb(0 0 0 / .25); }
@@ -218,6 +301,9 @@
         clear: @json(route('sm.map.clear')),
         loc: @json(route('sm.map.loc')),
         trace: @json(route('sm.map.trace')),
+        saves: @json(route('sm.map.saves')),
+        save: @json(route('sm.map.save')),
+        load: @json(route('sm.map.load')),
     };
     let map = null, proj = null, satOn = true;
     let tool = 'pan', color = '#f5c518', width = 3;
@@ -270,9 +356,11 @@
         const parts = [];
         const style = { map, strokeColor: o.color || '#f5c518', strokeWeight: o.width || 3, clickable: true };
         const pts = o.points;
-        if (o.kind === 'pen' || o.kind === 'line' || o.kind === 'path') {
-            parts.push(new (G().Polyline)({ ...style, path: pts.map(LL) }));
-            if (o.kind !== 'pen') {
+        if (o.kind === 'pen' || o.kind === 'line' || o.kind === 'path' || o.kind === 'arrow') {
+            parts.push(new (G().Polyline)({ ...style, path: pts.map(LL),
+                icons: o.kind === 'arrow' ? [ARROW_HEAD(style.strokeColor)] : null }));
+            if (o.kind === 'arrow') vertexDots(parts, pts, style.strokeColor);
+            else if (o.kind !== 'pen') {
                 vertexDots(parts, pts, style.strokeColor);
                 segLabels(parts, pts, false);
                 if (o.kind === 'path' && pts.length > 2) {
@@ -399,6 +487,8 @@
     const PIN = 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z';
     const pinIcon = () => ({ path: PIN, scale: 1.35, anchor: new (G().Point)(12, 22),
         fillColor: color, fillOpacity: 1, strokeColor: '#fff', strokeWeight: 1.5 });
+    const ARROW_HEAD = (c) => ({ icon: { path: G().SymbolPath.FORWARD_CLOSED_ARROW, scale: 3.4,
+        fillColor: c, fillOpacity: 1, strokeColor: c, strokeWeight: 1 }, offset: '100%' });
     /* Segment distances paint WHILE the shape is being made, not only after
        Finish. Labels are reused (moved, retexted) instead of recreated, so
        drag frames don't flicker. Pen is exempt — hundreds of tiny segments. */
@@ -441,8 +531,9 @@
         const opts = { map, strokeColor: color, strokeWeight: width, clickable: false };
         tempShape = closed
             ? new (G().Polygon)({ ...opts, paths: tempPts.map(LL), fillColor: color, fillOpacity: .06 })
-            : new (G().Polyline)({ ...opts, path: tempPts.map(LL) });
-        if (tool === 'pen') dropTempLabels();
+            : new (G().Polyline)({ ...opts, path: tempPts.map(LL), icons: tool === 'arrow' ? [ARROW_HEAD(color)] : null });
+        // An arrow points, it does not measure — no label clutter on it.
+        if (tool === 'pen' || tool === 'arrow') dropTempLabels();
         else refreshTempLabels(closed);
         if (Date.now() - traceLast > 250) { traceLast = Date.now(); sendTrace(false); }
     }
@@ -496,7 +587,7 @@
         };
         // Point-then-point felt like surveying; point-and-DRAG feels like
         // drawing. Line and box ride the same pointer plumbing as the pen.
-        const DRAG_TOOLS = ['pen', 'line', 'rect'];
+        const DRAG_TOOLS = ['pen', 'line', 'rect', 'arrow'];
         const rectCorners = (a, b) => {
             const bd = new (G().LatLngBounds)(LL(a), LL(b));
             const sw = bd.getSouthWest(), ne = bd.getNorthEast();
@@ -515,7 +606,7 @@
             if (!penDown || !DRAG_TOOLS.includes(tool)) return;
             const p = ll(e); lastPt = p;
             if (tool === 'pen') { penPts.push(p); tempPts = penPts; previewTemp(false); }
-            else if (tool === 'line') { tempPts = [penPts[0], p]; previewTemp(false); }
+            else if (tool === 'line' || tool === 'arrow') { tempPts = [penPts[0], p]; previewTemp(false); }
             else { tempPts = rectCorners(penPts[0], p); previewTemp(true); }
             e.preventDefault();
         });
@@ -526,7 +617,7 @@
             const stream = penPts.filter((_, i) => i % 2 === 0);
             clearTemp();
             if (t === 'pen' && stream.length > 1) saveObject('pen', stream);
-            else if (t === 'line' && dist(start, end) > 0.5) saveObject('line', [start, end]);
+            else if ((t === 'line' || t === 'arrow') && dist(start, end) > 0.5) saveObject(t, [start, end]);
             else if (t === 'rect' && dist(start, end) > 0.5) {
                 const b = new (G().LatLngBounds)(LL(start), LL(end));
                 saveObject('rect', [[b.getSouthWest().lat(), b.getSouthWest().lng()], [b.getNorthEast().lat(), b.getNorthEast().lng()]]);
@@ -584,7 +675,7 @@
         if (first.setOptions) {
             first.setOptions({
                 draggable: true,
-                editable: (o.kind === 'line' || o.kind === 'path' || o.kind === 'area'),
+                editable: (o.kind === 'line' || o.kind === 'path' || o.kind === 'area' || o.kind === 'arrow'),
             });
         } else if (first.setDraggable) {
             first.setDraggable(true);
@@ -674,7 +765,7 @@
         gpsWatch = navigator.geolocation.watchPosition((pos) => {
             const { latitude: lat, longitude: lng, accuracy: acc } = pos.coords;
             renderLoc({ userId: ME, name: 'Me', lat, lng, acc });
-            if (!centeredOnMe && !layers.size) { centeredOnMe = true; map.setCenter({ lat, lng }); map.setZoom(17); }
+            if (!centeredOnMe && !layers.size) { centeredOnMe = true; map.setCenter({ lat, lng }); map.setZoom(17); dropVeil(); }
             if (Date.now() - lastSent > 5000) {
                 lastSent = Date.now();
                 api(`${URLS.loc}?scheduleId=${SID}`, { method: 'POST', body: { lat, lng, acc } }).catch(() => {});
@@ -683,11 +774,104 @@
         { enableHighAccuracy: true, maximumAge: 3000, timeout: 15000 });
     }
 
+    /* ---------- saved maps ---------- */
+    function loadObjects(fit) {
+        return api(`${URLS.objects}?scheduleId=${SID}`).then((r) => {
+            (r.data.objects || []).forEach(renderObject);
+            if (!fit) return false;
+            const b = new (G().LatLngBounds)();
+            let any = false;
+            (r.data.objects || []).forEach((o) => o.kind !== 'text' && o.points.forEach((p) => { b.extend(LL(p)); any = true; }));
+            if (any) { map.fitBounds(b, 48); G().event.addListenerOnce(map, 'idle', dropVeil); }
+            return any;
+        });
+    }
+    let saveMode = 'map';
+    function openSaveSheet(mode) {
+        saveMode = mode;
+        document.getElementById('cmapSaveTitleH').textContent = mode === 'map' ? 'Save map to notes' : 'Save as image note';
+        document.getElementById('cmapSaveHint').textContent = mode === 'map'
+            ? 'Keeps this map reopenable from the tools, and files a picture of it in the schedule notebook.'
+            : 'Files a picture of the map, shapes and all, in the schedule notebook.';
+        window.openSheet?.('cmapSaveSheet');
+    }
+    async function doSaveMap() {
+        const btn = document.getElementById('cmapSaveGo');
+        const c = map.getCenter();
+        btn.disabled = true;
+        document.getElementById('cmapSaveGoTxt').textContent = 'Saving…';
+        try {
+            const r = await api(`${URLS.save}?scheduleId=${SID}`, { method: 'POST', body: {
+                mode: saveMode,
+                title: document.getElementById('cmapSaveName').value.trim(),
+                description: document.getElementById('cmapSaveDesc').value.trim(),
+                lat: c ? c.lat() : null, lng: c ? c.lng() : null,
+                zoom: map.getZoom(), maptype: satOn ? 'hybrid' : 'roadmap',
+            } });
+            window.closeSheet?.('cmapSaveSheet');
+            document.getElementById('cmapSaveName').value = '';
+            document.getElementById('cmapSaveDesc').value = '';
+            if (window.toast) toast((r && r.message) || 'Saved.');
+        } catch (e) { if (window.toast) toast(e.message, 'error'); }
+        btn.disabled = false;
+        document.getElementById('cmapSaveGoTxt').textContent = 'Save';
+    }
+    async function openSaves() {
+        try {
+            const r = await api(`${URLS.saves}?scheduleId=${SID}`);
+            const list = document.getElementById('cmapSavesList');
+            const rows = r.data.saves || [];
+            list.innerHTML = '';
+            if (!rows.length) list.innerHTML = '<p class="cmap-saves-empty">No saved maps yet — draw one, then “Save map to notes”.</p>';
+            rows.forEach((sv) => {
+                const b = document.createElement('button');
+                b.type = 'button'; b.className = 'cmap-saverow';
+                const t = document.createElement('span'); t.className = 'cmap-saverow-t'; t.textContent = sv.title;
+                const sub = document.createElement('span'); sub.className = 'cmap-saverow-s';
+                sub.textContent = sv.count + ' shape' + (sv.count === 1 ? '' : 's') + ' · ' + sv.by + ' · ' + sv.when;
+                b.appendChild(t); b.appendChild(sub);
+                b.addEventListener('click', () => loadSavedMap(sv));
+                list.appendChild(b);
+            });
+            window.openSheet?.('cmapSavesSheet');
+        } catch (e) { if (window.toast) toast(e.message, 'error'); }
+    }
+    async function loadSavedMap(sv) {
+        const ok = window.confirmAction
+            ? await confirmAction({ title: 'Load “' + sv.title + '”?', message: 'Replaces the current shapes for the whole team.', confirmText: 'Load map' })
+            : confirm('Load this map for everyone? It replaces the current shapes.');
+        if (!ok) return;
+        try {
+            await api(`${URLS.load}?scheduleId=${SID}`, { method: 'POST', body: { id: sv.id } });
+            window.closeSheet?.('cmapSavesSheet');
+            endEdit(); dropAll();
+            histUndo.length = 0; histRedo.length = 0; syncHistBtns();
+            await loadObjects(true);
+            if (window.toast) toast('Map loaded for the team.');
+        } catch (e) { if (window.toast) toast(e.message, 'error'); }
+    }
+
     /* ---------- boot ---------- */
-    let booted = false, loading = false;
+    let booted = false, loading = false, veilDone = false;
+    function dropVeil() {
+        if (veilDone) return;
+        veilDone = true;
+        const v = document.getElementById('cmapVeil');
+        if (!v) return;
+        v.classList.add('is-done');
+        setTimeout(() => v.remove(), 500);
+    }
     function buildMap() {
+        // The last viewport this device used opens INSTANTLY zoomed-in; a
+        // first-ever open keeps the veil up until GPS or the team's shapes
+        // reveal where to look. Either way, no country view blinking away.
+        let storedView = null;
+        try { storedView = JSON.parse(localStorage.getItem('cmapView:' + SID) || 'null'); } catch (_) {}
+        if (storedView && !(storedView.lat && storedView.lng && storedView.zoom)) storedView = null;
+        if (storedView) centeredOnMe = true;
         map = new (G().Map)(document.getElementById('cmapMap'), {
-            center: { lat: 12.88, lng: 121.77 }, zoom: 6,
+            center: storedView ? { lat: storedView.lat, lng: storedView.lng } : { lat: 12.88, lng: 121.77 },
+            zoom: storedView ? storedView.zoom : 6,
             mapTypeId: 'hybrid',                       // farmers plan on what the land looks like
             mapTypeControl: false, streetViewControl: false, fullscreenControl: false,
             gestureHandling: 'greedy',
@@ -699,12 +883,28 @@
         proj.onAdd = function () {}; proj.draw = function () {}; proj.onRemove = function () {};
         proj.setMap(map);
 
+        G().event.addListenerOnce(map, 'tilesloaded', () => { if (storedView) dropVeil(); });
+        setTimeout(dropVeil, 6000);
+        // Remember where the team looks, but never a zoomed-out fallback view.
+        map.addListener('idle', () => {
+            try {
+                const c = map.getCenter();
+                if (c && map.getZoom() >= 10) localStorage.setItem('cmapView:' + SID, JSON.stringify({ lat: c.lat(), lng: c.lng(), zoom: map.getZoom() }));
+            } catch (_) {}
+        });
+
         map.addListener('click', (e) => { if (tool !== 'pan' && tool !== 'pen' && tool !== 'erase') onTap(e.latLng); });
         bindPen(map.getDiv());
 
         document.querySelectorAll('[data-mtool]').forEach((b) =>
             b.addEventListener('click', () => setTool(b.dataset.mtool)));
         document.getElementById('cmapToolsBtn').addEventListener('click', () => window.openSheet?.('cmapToolsSheet'));
+        document.querySelectorAll('[data-maction]').forEach((b) => b.addEventListener('click', () => {
+            window.closeSheet?.('cmapToolsSheet');
+            if (b.dataset.maction === 'open') openSaves();
+            else openSaveSheet(b.dataset.maction === 'savemap' ? 'map' : 'image');
+        }));
+        document.getElementById('cmapSaveGo').addEventListener('click', doSaveMap);
         document.getElementById('cmapUndo').addEventListener('click', () => stepHist(histUndo, histRedo));
         document.getElementById('cmapRedo').addEventListener('click', () => stepHist(histRedo, histUndo));
         document.getElementById('cmapColorBtn').addEventListener('click', () => window.openSheet?.('cmapColorSheet'));
@@ -766,13 +966,7 @@
         });
 
         // Existing shapes, then follow the room live.
-        api(`${URLS.objects}?scheduleId=${SID}`).then((r) => {
-            (r.data.objects || []).forEach(renderObject);
-            const b = new (G().LatLngBounds)();
-            let any = false;
-            (r.data.objects || []).forEach((o) => o.kind !== 'text' && o.points.forEach((p) => { b.extend(LL(p)); any = true; }));
-            if (any) map.fitBounds(b, 48);
-        }).catch(() => {});
+        loadObjects(true).catch(() => {});
 
         // On by default: seeing each other on the land is why the map exists.
         // The browser still asks permission; declining just leaves it off.
@@ -790,6 +984,12 @@
                     }
                     else if (p.action === 'remove') dropObject(p.id);
                     else if (p.action === 'clear') dropAll();
+                    else if (p.action === 'reload') {
+                        // Someone loaded a saved map — take the fresh set whole.
+                        endEdit(); dropAll();
+                        histUndo.length = 0; histRedo.length = 0; syncHistBtns();
+                        loadObjects(true).catch(() => {});
+                    }
                 });
                 ch.listen('.map.loc', (p) => { if (p && p.userId !== ME) renderLoc(p); });
                 ch.listen('.map.trace', (p) => { if (p && p.userId !== ME) renderGhost(p); });
@@ -809,7 +1009,12 @@
         s.src = 'https://maps.googleapis.com/maps/api/js?key=' + encodeURIComponent(KEY)
             + '&libraries=geometry,places&v=weekly&loading=async&callback=__cmapBoot';
         s.async = true;
-        s.onerror = () => { loading = false; if (window.toast) toast('Could not load Google Maps — check the API key.', 'error'); };
+        s.onerror = () => {
+            loading = false;
+            const t = document.querySelector('#cmapVeil .cmap-veil-txt');
+            if (t) t.textContent = 'Could not load Google Maps.';
+            if (window.toast) toast('Could not load Google Maps — check the API key.', 'error');
+        };
         document.head.appendChild(s);
     };
 })();

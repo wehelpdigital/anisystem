@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Manager;
 
 use App\Events\ScheduleMapLocation;
 use App\Events\ScheduleMapPushed;
+use App\Models\AsScheduleNote;
 use App\Models\ScheduleMapObject;
 use App\Support\ScheduleTeam;
 use Illuminate\Http\Request;
@@ -45,7 +46,7 @@ class ScheduleMapController extends BaseScheduleController
         }
 
         $validator = Validator::make($request->all(), [
-            'kind' => 'required|in:pen,line,path,rect,area,text',
+            'kind' => 'required|in:pen,line,path,rect,area,text,arrow',
             'color' => 'nullable|string|max:16',
             'width' => 'nullable|integer|min:1|max:20',
             'points' => 'required|array|min:1|max:2000',
@@ -153,7 +154,7 @@ class ScheduleMapController extends BaseScheduleController
 
         $validator = Validator::make($request->all(), [
             'done' => 'nullable|boolean',
-            'kind' => 'nullable|in:pen,line,path,rect,area',
+            'kind' => 'nullable|in:pen,line,path,rect,area,arrow',
             'color' => 'nullable|string|max:16',
             'points' => 'nullable|array|max:200',
             'points.*' => 'array|size:2',
@@ -176,6 +177,255 @@ class ScheduleMapController extends BaseScheduleController
         }
 
         return response()->json(['success' => true]);
+    }
+
+    /** Named map snapshots the team saved, newest first. */
+    public function saves(Request $request)
+    {
+        $schedule = $this->schedule($request->query('scheduleId'));
+        if (! ScheduleTeam::canAccess($schedule, (int) Auth::id())) {
+            return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+
+        $rows = \App\Models\ScheduleMapSave::active()
+            ->where('scheduleId', $schedule->id)
+            ->orderByDesc('id')
+            ->limit(50)
+            ->get();
+        $users = \App\Models\User::whereIn('id', $rows->pluck('userId')->unique())->get()->keyBy('id');
+
+        return response()->json([
+            'success' => true,
+            'data' => ['saves' => $rows->map(fn ($r) => [
+                'id' => (int) $r->id,
+                'title' => $r->title,
+                'by' => (string) \Illuminate\Support\Str::of(optional($users->get($r->userId))->full_name ?? 'Someone')->explode(' ')->first(),
+                'when' => $r->created_at?->timezone('Asia/Manila')->format('M j, Y g:ia'),
+                'count' => count(json_decode((string) $r->objects, true) ?: []),
+            ])->all()],
+        ]);
+    }
+
+    /**
+     * Save the whole map. mode=map keeps a reopenable snapshot AND files a
+     * picture note in the notebook; mode=image files only the picture. The
+     * picture comes from the Static Maps API with every shape drawn on it —
+     * the live WebGL map cannot be screenshotted from JS.
+     */
+    public function saveMap(Request $request)
+    {
+        $schedule = $this->schedule($request->query('scheduleId'));
+        $meId = (int) Auth::id();
+        if (! ScheduleTeam::canAccess($schedule, $meId)) {
+            return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'mode' => 'required|in:map,image',
+            'title' => 'nullable|string|max:180',
+            'description' => 'nullable|string|max:2000',
+            'lat' => 'nullable|numeric|between:-90,90',
+            'lng' => 'nullable|numeric|between:-180,180',
+            'zoom' => 'nullable|integer|min:1|max:21',
+            'maptype' => 'nullable|in:roadmap,hybrid',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail($validator->errors()->first(), 422);
+        }
+
+        $objects = ScheduleMapObject::active()
+            ->where('scheduleId', $schedule->id)
+            ->orderBy('id')
+            ->limit(2000)
+            ->get()
+            ->map(fn ($o) => $o->shaped())
+            ->all();
+        if (empty($objects)) {
+            return $this->jsonFail('The map has no shapes to save yet.', 422);
+        }
+
+        $mode = $request->input('mode');
+        $title = trim((string) $request->input('title')) ?: 'Team map';
+        $description = trim((string) $request->input('description'));
+
+        // Best-effort picture; the reopenable snapshot never depends on it.
+        $media = [];
+        $url = $this->staticMapUrl(
+            $objects,
+            $request->input('lat'),
+            $request->input('lng'),
+            $request->input('zoom'),
+            $request->input('maptype', 'hybrid')
+        );
+        if ($url !== null) {
+            try {
+                $img = \Illuminate\Support\Facades\Http::timeout(20)->get($url);
+                if ($img->ok() && str_starts_with((string) $img->header('Content-Type'), 'image/')) {
+                    $path = 'schedule-notes/' . $schedule->id . '/map-' . \Illuminate\Support\Str::random(20) . '.png';
+                    \Illuminate\Support\Facades\Storage::disk('public')->put($path, $img->body());
+                    $media[] = ['type' => 'image', 'path' => $path, 'poster' => null];
+                }
+            } catch (\Throwable $e) {
+                // fall through — picture is optional for mode=map
+            }
+        }
+
+        if ($mode === 'image' && empty($media)) {
+            return $this->jsonFail('Could not take the map picture — the Static Maps API may not be enabled for this key.', 422);
+        }
+
+        $bodyText = $description !== '' ? $description : null;
+        if ($mode === 'map') {
+            $bodyText = trim(($description !== '' ? $description . "\n\n" : '')
+                . 'Saved team map — reopen it from the Collab Room map tools.');
+        }
+        $note = AsScheduleNote::create([
+            'croppingScheduleId' => $schedule->id,
+            'userId' => $meId,
+            'title' => mb_substr($title, 0, 180),
+            'body' => $bodyText !== null
+                ? \App\Support\HtmlSanitizer::rich('<p>' . nl2br(e($bodyText)) . '</p>')
+                : null,
+            'media' => $media,
+            'deleteStatus' => 1,
+        ]);
+
+        if ($mode === 'map') {
+            \App\Models\ScheduleMapSave::create([
+                'scheduleId' => $schedule->id,
+                'userId' => $meId,
+                'title' => mb_substr($title, 0, 180),
+                'objects' => json_encode(array_map(fn ($o) => [
+                    'kind' => $o['kind'], 'color' => $o['color'], 'width' => $o['width'],
+                    'points' => $o['points'], 'label' => $o['label'],
+                ], $objects)),
+                'noteId' => $note->id,
+                'deleteStatus' => 1,
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $mode === 'map'
+                ? 'Map saved — reopen it any time from the tools' . (empty($media) ? ' (no picture: Static Maps API unavailable).' : ', picture filed in the notebook.')
+                : 'Map picture filed in the schedule notebook.',
+        ]);
+    }
+
+    /** Replace the live team map with a saved snapshot, for everyone. */
+    public function loadSave(Request $request)
+    {
+        $schedule = $this->schedule($request->query('scheduleId'));
+        $meId = (int) Auth::id();
+        if (! ScheduleTeam::canAccess($schedule, $meId)) {
+            return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+
+        $save = \App\Models\ScheduleMapSave::active()
+            ->where('scheduleId', $schedule->id)
+            ->find($request->input('id'));
+        if (! $save) {
+            return $this->jsonFail('That saved map no longer exists.', 404);
+        }
+
+        $objects = json_decode((string) $save->objects, true) ?: [];
+        ScheduleMapObject::active()->where('scheduleId', $schedule->id)->update(['deleteStatus' => 0]);
+        foreach (array_slice($objects, 0, 2000) as $o) {
+            if (! is_array($o['points'] ?? null) || empty($o['points'])) {
+                continue;
+            }
+            ScheduleMapObject::create([
+                'scheduleId' => $schedule->id,
+                'userId' => $meId,
+                'kind' => $o['kind'] ?? 'pen',
+                'color' => $o['color'] ?? null,
+                'width' => (int) ($o['width'] ?? 3),
+                'points' => json_encode($o['points']),
+                'label' => $o['label'] ?? null,
+                'deleteStatus' => 1,
+            ]);
+        }
+
+        // One event; every client refetches rather than replaying a giant diff.
+        $this->emit($schedule->id, ['action' => 'reload', 'actorUserId' => $meId]);
+
+        return response()->json(['success' => true, 'message' => 'Map loaded for the team.']);
+    }
+
+    /**
+     * A Static Maps URL with the team's shapes drawn on. Auto-fits to the
+     * shapes when any are drawable; stops adding paths near the URL length
+     * cap rather than producing a request Google will reject.
+     */
+    private function staticMapUrl(array $objects, $lat, $lng, $zoom, ?string $maptype): ?string
+    {
+        $key = (string) config('services.google_maps.key');
+        if ($key === '') {
+            return null;
+        }
+
+        $base = 'https://maps.googleapis.com/maps/api/staticmap?size=640x640&scale=2'
+            . '&maptype=' . ($maptype === 'roadmap' ? 'roadmap' : 'hybrid')
+            . '&key=' . rawurlencode($key);
+        $url = $base;
+        $drawn = 0;
+
+        foreach ($objects as $o) {
+            $pts = $o['points'];
+            $color = ltrim((string) ($o['color'] ?: '#f5c518'), '#');
+            if (! preg_match('/^[0-9a-fA-F]{6}$/', $color)) {
+                $color = 'f5c518';
+            }
+
+            if ($o['kind'] === 'text') {
+                $piece = '&markers=' . rawurlencode('size:small|color:0x' . $color . '|'
+                    . round($pts[0][0], 6) . ',' . round($pts[0][1], 6));
+            } else {
+                $keep = $pts;
+                if ($o['kind'] === 'rect' && count($pts) >= 2) {
+                    [$sw, $ne] = [$pts[0], $pts[1]];
+                    $keep = [[$sw[0], $sw[1]], [$sw[0], $ne[1]], [$ne[0], $ne[1]], [$ne[0], $sw[1]], [$sw[0], $sw[1]]];
+                } else {
+                    $step = max(1, (int) ceil(count($pts) / 50));
+                    $keep = [];
+                    foreach ($pts as $i => $p) {
+                        if ($i % $step === 0) {
+                            $keep[] = $p;
+                        }
+                    }
+                    if (end($pts) !== end($keep)) {
+                        $keep[] = end($pts);
+                    }
+                    if ($o['kind'] === 'area' && count($keep) > 2) {
+                        $keep[] = $keep[0];
+                    }
+                }
+                $enc = 'color:0x' . $color . 'ff|weight:' . max(2, (int) ($o['width'] ?: 3));
+                if ($o['kind'] === 'rect' || $o['kind'] === 'area') {
+                    $enc .= '|fillcolor:0x' . $color . '33';
+                }
+                foreach ($keep as $p) {
+                    $enc .= '|' . round($p[0], 6) . ',' . round($p[1], 6);
+                }
+                $piece = '&path=' . rawurlencode($enc);
+            }
+
+            if (strlen($url) + strlen($piece) > 7500) {
+                break;
+            }
+            $url .= $piece;
+            $drawn++;
+        }
+
+        if ($drawn === 0) {
+            // Nothing framed the picture — need an explicit viewport.
+            if ($lat === null || $lng === null || $zoom === null) {
+                return null;
+            }
+            $url .= '&center=' . round((float) $lat, 6) . ',' . round((float) $lng, 6) . '&zoom=' . (int) $zoom;
+        }
+
+        return $url;
     }
 
     /** Live GPS position — broadcast to the room, never stored. */
