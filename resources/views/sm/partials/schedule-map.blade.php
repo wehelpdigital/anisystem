@@ -86,6 +86,27 @@
                 <input type="search" id="cmapSearch" class="form-input" placeholder="Town, barangay, landmark…" autocomplete="off">
             </div>
         </div>
+        <button type="button" class="cmap-tool" id="cmapColorBtn" title="Drawing colour" aria-label="Choose drawing colour">
+            <span class="cmap-color-dot" id="cmapColorDot"></span>
+        </button>
+        <div class="sheet hidden" id="cmapColorSheet" style="--sheet-width:22rem">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+                <h3 class="sheet-title">Drawing colour</h3>
+                <button type="button" class="icon-btn" data-sheet-close aria-label="Close">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="sheet-body cmap-swatches" style="padding-bottom:1.1rem">
+                <button type="button" class="cmap-swatch is-active" data-mcolor="#f5c518" style="--c:#f5c518" aria-label="Yellow"></button>
+                <button type="button" class="cmap-swatch" data-mcolor="#ffffff" style="--c:#ffffff" aria-label="White"></button>
+                <button type="button" class="cmap-swatch" data-mcolor="#ef4444" style="--c:#ef4444" aria-label="Red"></button>
+                <button type="button" class="cmap-swatch" data-mcolor="#22c55e" style="--c:#22c55e" aria-label="Green"></button>
+                <button type="button" class="cmap-swatch" data-mcolor="#3b82f6" style="--c:#3b82f6" aria-label="Blue"></button>
+                <button type="button" class="cmap-swatch" data-mcolor="#a855f7" style="--c:#a855f7" aria-label="Purple"></button>
+                <button type="button" class="cmap-swatch" data-mcolor="#111827" style="--c:#111827" aria-label="Black"></button>
+            </div>
+        </div>
         <span class="cmap-div"></span>
         <button type="button" class="cmap-tool" id="cmapUndo" disabled title="Undo" aria-label="Undo">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
@@ -131,6 +152,12 @@
        "use two fingers to move the map" scrim would flash over every stroke —
        one finger here IS the tool, not a mistake. */
     .cmap-map .gm-style-moc { display: none !important; }
+    .cmap-color-dot { width: 1.05rem; height: 1.05rem; border-radius: 999px; background: #f5c518;
+        border: 2px solid rgb(255 255 255 / .9); box-shadow: 0 0 0 1px rgb(0 0 0 / .12); }
+    .cmap-swatches { display: flex; flex-wrap: wrap; gap: .55rem; }
+    .cmap-swatch { width: 2.1rem; height: 2.1rem; border-radius: 999px; background: var(--c);
+        border: 2px solid rgb(0 0 0 / .08); transition: transform .15s ease, box-shadow .15s ease; }
+    .cmap-swatch.is-active { box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-500); transform: scale(1.05); }
     .cmap-finish { background: var(--color-brand-600); color: #fff; width: auto; padding: 0 .6rem; gap: .3rem; font-size: .78rem; font-weight: 800; }
     .cmap-finish:hover { background: var(--color-brand-700); color: #fff; }
     .cmap-danger { color: #dc2626; }
@@ -409,12 +436,18 @@
         const p = [latLng.lat(), latLng.lng()];
         if (tool === 'path' || tool === 'area') {
             tempPts.push(p); previewTemp(tool === 'area');
-            // Each tapped corner shows itself at once — a bare tap that draws
-            // nothing reads as a tap that did nothing.
-            tempDots.push(new (G().Marker)({
-                map, position: LL(p), clickable: false,
-                icon: { path: G().SymbolPath.CIRCLE, scale: 4.5, fillColor: color, fillOpacity: 1, strokeColor: '#fff', strokeWeight: 1.5 },
-            }));
+            // Each tapped corner shows itself at once — and stays grabbable:
+            // drag a dot to move the point and the line re-shapes under it.
+            const idx = tempPts.length - 1;
+            const dot = new (G().Marker)({
+                map, position: LL(p), draggable: true, crossOnDrag: false,
+                icon: { path: G().SymbolPath.CIRCLE, scale: 5.5, fillColor: color, fillOpacity: 1, strokeColor: '#fff', strokeWeight: 1.5 },
+            });
+            dot.addListener('drag', (ev) => {
+                tempPts[idx] = [ev.latLng.lat(), ev.latLng.lng()];
+                previewTemp(tool === 'area');
+            });
+            tempDots.push(dot);
             document.getElementById('cmapFinish').hidden = tempPts.length < 2;
         } else if (tool === 'text') {
             const t = prompt('Label text:');
@@ -645,6 +678,19 @@
         document.getElementById('cmapToolsBtn').addEventListener('click', () => window.openSheet?.('cmapToolsSheet'));
         document.getElementById('cmapUndo').addEventListener('click', () => stepHist(histUndo, histRedo));
         document.getElementById('cmapRedo').addEventListener('click', () => stepHist(histRedo, histUndo));
+        document.getElementById('cmapColorBtn').addEventListener('click', () => window.openSheet?.('cmapColorSheet'));
+        document.querySelectorAll('#cmapColorSheet .cmap-swatch').forEach((b) => b.addEventListener('click', () => {
+            color = b.dataset.mcolor;
+            document.querySelectorAll('#cmapColorSheet .cmap-swatch').forEach((x) => x.classList.toggle('is-active', x === b));
+            const dotEl = document.getElementById('cmapColorDot');
+            if (dotEl) dotEl.style.background = color;
+            window.closeSheet?.('cmapColorSheet');
+            // A half-drawn shape repaints on the spot, dots included.
+            if (tempPts.length) {
+                previewTemp(tool === 'area');
+                tempDots.forEach((m) => { const ic = m.getIcon(); ic.fillColor = color; m.setIcon(ic); });
+            }
+        }));
         document.getElementById('cmapSearchBtn').addEventListener('click', () => {
             window.openSheet?.('cmapSearchSheet');
             // Search means typing — focusing here is the point, not a nuisance.
