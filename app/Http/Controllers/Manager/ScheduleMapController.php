@@ -179,6 +179,61 @@ class ScheduleMapController extends BaseScheduleController
         return response()->json(['success' => true]);
     }
 
+    /**
+     * Plain map imagery for the given viewport, streamed from our own origin.
+     * The client draws the shapes, points and measurements over it on a canvas
+     * — which is the only way the saved picture can carry the same labels the
+     * screen shows, since Static Maps can letter a marker but not write
+     * "12.34 m", and a canvas that has loaded a googleapis.com image directly
+     * is tainted and cannot be exported at all.
+     */
+    public function basemap(Request $request)
+    {
+        $schedule = $this->schedule($request->query('scheduleId'));
+        if (! ScheduleTeam::canAccess($schedule, (int) Auth::id())) {
+            return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'lat' => 'required|numeric|between:-90,90',
+            'lng' => 'required|numeric|between:-180,180',
+            'zoom' => 'required|numeric|between:1,22',
+            'maptype' => 'nullable|in:roadmap,hybrid',
+            'size' => 'nullable|integer|min:256|max:640',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail($validator->errors()->first(), 422);
+        }
+
+        $key = (string) config('services.google_maps.key');
+        if ($key === '') {
+            return $this->jsonFail('No map key configured.', 404);
+        }
+
+        $size = (int) $request->input('size', 640);
+        $url = 'https://maps.googleapis.com/maps/api/staticmap'
+            . '?size=' . $size . 'x' . $size
+            . '&scale=2'
+            . '&maptype=' . ($request->input('maptype') === 'roadmap' ? 'roadmap' : 'hybrid')
+            . '&center=' . round((float) $request->input('lat'), 6) . ',' . round((float) $request->input('lng'), 6)
+            . '&zoom=' . (int) round((float) $request->input('zoom'))
+            . '&key=' . rawurlencode($key);
+
+        try {
+            $res = \Illuminate\Support\Facades\Http::timeout(20)->get($url);
+            if (! $res->ok() || ! str_starts_with((string) $res->header('Content-Type'), 'image/')) {
+                return $this->jsonFail('Could not fetch the map imagery.', 502);
+            }
+
+            return response($res->body(), 200, [
+                'Content-Type' => $res->header('Content-Type'),
+                'Cache-Control' => 'private, max-age=120',
+            ]);
+        } catch (\Throwable $e) {
+            return $this->jsonFail('Could not fetch the map imagery.', 502);
+        }
+    }
+
     /** Named map snapshots the team saved, newest first. */
     public function saves(Request $request)
     {
@@ -222,6 +277,9 @@ class ScheduleMapController extends BaseScheduleController
 
         $validator = Validator::make($request->all(), [
             'mode' => 'required|in:map,image',
+            // A PNG data URL the client composed: imagery, shapes, points and
+            // every measurement label, exactly as the screen shows them.
+            'image' => 'nullable|string',
             'title' => 'nullable|string|max:180',
             'description' => 'nullable|string|max:2000',
             'lat' => 'nullable|numeric|between:-90,90',
@@ -250,7 +308,18 @@ class ScheduleMapController extends BaseScheduleController
 
         // Best-effort picture; the reopenable snapshot never depends on it.
         $media = [];
-        $url = $this->staticMapUrl(
+
+        // Preferred: the canvas the client composed, which carries the points
+        // and measurement labels. Static Maps can draw the shapes but cannot
+        // write their sizes, so that path is the fallback, not the goal.
+        $binary = $this->decodeDataUrlImage((string) $request->input('image'));
+        if ($binary !== null) {
+            $path = 'schedule-notes/' . $schedule->id . '/map-' . \Illuminate\Support\Str::random(20) . '.png';
+            \Illuminate\Support\Facades\Storage::disk('public')->put($path, $binary);
+            $media[] = ['type' => 'image', 'path' => $path, 'poster' => null];
+        }
+
+        $url = $media ? null : $this->staticMapUrl(
             $objects,
             $request->input('lat'),
             $request->input('lng'),
@@ -350,6 +419,33 @@ class ScheduleMapController extends BaseScheduleController
         $this->emit($schedule->id, ['action' => 'reload', 'actorUserId' => $meId]);
 
         return response()->json(['success' => true, 'message' => 'Map loaded for the team.']);
+    }
+
+    /**
+     * A PNG/JPEG data URL from the client's canvas → raw bytes, or null when
+     * it is absent or not an image we recognise. Size-capped: this arrives in
+     * a normal form post, not an upload.
+     */
+    private function decodeDataUrlImage(string $dataUrl): ?string
+    {
+        if ($dataUrl === '' || strlen($dataUrl) > 12_000_000) {
+            return null;
+        }
+        if (! preg_match('~^data:image/(png|jpe?g);base64,~i', $dataUrl, $m)) {
+            return null;
+        }
+
+        $binary = base64_decode(substr($dataUrl, strlen($m[0])), true);
+        if ($binary === false || strlen($binary) < 100) {
+            return null;
+        }
+        // Trust the bytes, not the prefix.
+        $info = @getimagesizefromstring($binary);
+        if (! $info || ! in_array($info[2], [IMAGETYPE_PNG, IMAGETYPE_JPEG], true)) {
+            return null;
+        }
+
+        return $binary;
     }
 
     /**

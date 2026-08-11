@@ -319,6 +319,7 @@
         loc: @json(route('sm.map.loc')),
         trace: @json(route('sm.map.trace')),
         saves: @json(route('sm.map.saves')),
+        basemap: @json(route('sm.map.basemap')),
         save: @json(route('sm.map.save')),
         load: @json(route('sm.map.load')),
     };
@@ -1000,6 +1001,105 @@
             return any;
         });
     }
+    /* The saved picture is composed here rather than server-side, because the
+       numbers ARE the map: Static Maps can draw a shape but cannot write
+       "12.34 m" beside it. The imagery comes through our own origin (a
+       googleapis.com image would taint the canvas and block export), then the
+       shapes, their points and every measurement are drawn over it with the
+       same helpers and formats the live map uses — so the note shows exactly
+       what was on screen. */
+    function loadImg(src) {
+        return new Promise((res, rej) => {
+            const im = new Image();
+            im.onload = () => res(im);
+            im.onerror = () => rej(new Error('Could not load the map imagery.'));
+            im.src = src;
+        });
+    }
+    async function composeMapPng() {
+        const g = G();
+        const proj = map.getProjection();
+        const centre = map.getCenter();
+        if (!proj || !centre) return null;
+        const SIZE = 640, SCALE = 2, zoom = Math.round(map.getZoom() || 15);
+        const img = await loadImg(`${URLS.basemap}?scheduleId=${SID}&lat=${centre.lat()}&lng=${centre.lng()}`
+            + `&zoom=${zoom}&maptype=${satOn ? 'hybrid' : 'roadmap'}&size=${SIZE}`);
+
+        const cv = document.createElement('canvas');
+        cv.width = SIZE * SCALE; cv.height = SIZE * SCALE;
+        const ctx = cv.getContext('2d');
+        ctx.drawImage(img, 0, 0, cv.width, cv.height);
+
+        // Same Mercator the imagery was rendered in, so overlay and ground line up.
+        const world0 = proj.fromLatLngToPoint(centre);
+        const k = Math.pow(2, zoom) * SCALE;
+        const px = (p) => {
+            const w = proj.fromLatLngToPoint(LL(p));
+            return [(w.x - world0.x) * k + cv.width / 2, (w.y - world0.y) * k + cv.height / 2];
+        };
+        const label = (p, text) => {
+            const [x, y] = px(p);
+            ctx.font = '700 22px system-ui, -apple-system, "Segoe UI", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            const w = ctx.measureText(text).width + 16;
+            ctx.fillStyle = 'rgba(17,24,39,.72)';
+            ctx.beginPath();
+            const r = 8, x0 = x - w / 2, y0 = y - 16;
+            ctx.roundRect ? ctx.roundRect(x0, y0, w, 32, r) : ctx.rect(x0, y0, w, 32);
+            ctx.fill();
+            ctx.fillStyle = '#fff';
+            ctx.fillText(text, x, y);
+        };
+        const dot = (p, colour) => {
+            const [x, y] = px(p);
+            ctx.beginPath(); ctx.arc(x, y, 7, 0, Math.PI * 2);
+            ctx.fillStyle = colour; ctx.fill();
+            ctx.lineWidth = 3; ctx.strokeStyle = '#fff'; ctx.stroke();
+        };
+
+        [...objIndex.values()].forEach((o) => {
+            const colour = o.color || '#f5c518';
+            const pts = o.kind === 'rect' && o.points.length >= 2
+                ? (() => {
+                    const b = new (g.LatLngBounds)(LL(o.points[0]), LL(o.points[1]));
+                    const sw = b.getSouthWest(), ne = b.getNorthEast();
+                    return [[sw.lat(), sw.lng()], [sw.lat(), ne.lng()], [ne.lat(), ne.lng()], [ne.lat(), sw.lng()]];
+                })()
+                : o.points;
+            const closed = (o.kind === 'rect' || o.kind === 'area');
+
+            if (o.kind === 'text') { label(pts[0], o.label || ''); return; }
+
+            ctx.beginPath();
+            pts.forEach((p, i) => { const [x, y] = px(p); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
+            if (closed) ctx.closePath();
+            ctx.lineWidth = (o.width || 3) * SCALE;
+            ctx.strokeStyle = colour;
+            ctx.lineJoin = ctx.lineCap = 'round';
+            if (closed) { ctx.fillStyle = colour + '22'; ctx.fill(); }
+            ctx.stroke();
+
+            if (o.kind === 'pen') return;               // a freehand line has no useful numbers
+            pts.forEach((p) => dot(p, colour));
+            if (o.kind === 'arrow') return;             // an arrow points, it does not measure
+
+            const n = closed ? pts.length : pts.length - 1;
+            for (let i = 0; i < n; i++) {
+                const j = (i + 1) % pts.length;
+                label(mid(pts[i], pts[j]), fmtM(dist(pts[i], pts[j])));
+            }
+            if (closed) label(centerOf(pts), fmtA(areaOf(pts)));
+            else if (o.kind === 'path' && pts.length > 2) {
+                let total = 0;
+                for (let i = 0; i < pts.length - 1; i++) total += dist(pts[i], pts[i + 1]);
+                label(pts[pts.length - 1], 'Σ ' + fmtM(total));
+            }
+        });
+
+        return cv.toDataURL('image/png');
+    }
+
     let saveMode = 'map';
     function openSaveSheet(mode) {
         saveMode = mode;
@@ -1014,9 +1114,14 @@
         const c = map.getCenter();
         btn.disabled = true;
         document.getElementById('cmapSaveGoTxt').textContent = 'Saving…';
+        // Compose the picture here so it carries the points and measurements;
+        // if that fails the server still draws a plain one from Static Maps.
+        let image = null;
+        try { image = await composeMapPng(); } catch (e) { image = null; }
         try {
             const r = await api(`${URLS.save}?scheduleId=${SID}`, { method: 'POST', body: {
                 mode: saveMode,
+                image,
                 title: document.getElementById('cmapSaveName').value.trim(),
                 description: document.getElementById('cmapSaveDesc').value.trim(),
                 lat: c ? c.lat() : null, lng: c ? c.lng() : null,
