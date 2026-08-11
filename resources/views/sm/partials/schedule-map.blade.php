@@ -16,12 +16,23 @@
     <div class="cmap-bar">
         {{-- One labelled menu instead of a row of mystery glyphs: each tool
              carries its name, and the button always shows what is active. --}}
-        <div class="cmap-menu-wrap">
-            <button type="button" class="cmap-tool cmap-menu-btn" id="cmapToolsBtn" aria-haspopup="true" aria-expanded="false">
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-                <span id="cmapToolLabel">Move map</span>
-            </button>
-            <div class="cmap-menu hidden" id="cmapToolsMenu">
+        {{-- A bottom sheet, not a dropdown: the bar is an overflow-x scroller,
+             and a scroll container clips BOTH axes — a dropdown nested in it
+             opened invisibly. openSheet re-parents the sheet to <body>, where
+             nothing can clip it. --}}
+        <button type="button" class="cmap-tool cmap-menu-btn" id="cmapToolsBtn" aria-haspopup="true">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <span id="cmapToolLabel">Move map</span>
+        </button>
+        <div class="sheet hidden" id="cmapToolsSheet" style="--sheet-width:22rem">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+                <h3 class="sheet-title">Map tools</h3>
+                <button type="button" class="icon-btn" data-sheet-close aria-label="Close">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="sheet-body cmap-menu-body">
                 <button type="button" class="cmap-mrow is-active" data-mtool="pan">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v20M2 12h20M12 2L9 5m3-3l3 3M12 22l-3-3m3 3l3-3M2 12l3-3m-3 3l3 3M22 12l-3-3m3 3l-3 3"/></svg>
                     <span>Move map</span>
@@ -62,8 +73,9 @@
         </div>
         <input type="search" id="cmapSearch" class="cmap-search" placeholder="Search a place…" autocomplete="off">
         <span class="cmap-div"></span>
-        <button type="button" class="cmap-tool cmap-finish" id="cmapFinish" hidden title="Finish this shape" aria-label="Finish this shape">
+        <button type="button" class="cmap-tool cmap-finish" id="cmapFinish" hidden title="Finish and save this shape">
             <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>Finish</span>
         </button>
         <button type="button" class="cmap-tool is-active" id="cmapLayer" title="Toggle map / satellite" aria-label="Toggle map or satellite view" aria-pressed="true">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg>
@@ -94,7 +106,7 @@
     .cmap-tool:hover { background: var(--color-gray-200); color: var(--color-gray-800); }
     .cmap-tool:active { transform: scale(.92); }
     .cmap-tool.is-active { background: var(--color-brand-100); color: var(--color-brand-800); }
-    .cmap-finish { background: var(--color-brand-600); color: #fff; }
+    .cmap-finish { background: var(--color-brand-600); color: #fff; width: auto; padding: 0 .6rem; gap: .3rem; font-size: .78rem; font-weight: 800; }
     .cmap-finish:hover { background: var(--color-brand-700); color: #fff; }
     .cmap-danger { color: #dc2626; }
     .cmap-danger:hover { background: #fee2e2; color: #b91c1c; }
@@ -105,6 +117,7 @@
         background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: .8rem;
         box-shadow: 0 14px 34px -10px rgb(0 0 0 / .3); padding: .3rem; }
     .cmap-menu.hidden { display: none; }
+    .cmap-menu-body { display: flex; flex-direction: column; gap: .15rem; padding-bottom: .6rem; }
     .cmap-mrow { display: flex; align-items: center; gap: .55rem; width: 100%; text-align: left;
         padding: .5rem .6rem; border-radius: .55rem; font-size: .82rem; font-weight: 700; color: var(--color-gray-700); }
     .cmap-mrow svg { width: 1.05rem; height: 1.05rem; flex-shrink: 0; }
@@ -255,6 +268,7 @@
                 method: 'POST', body: { kind, points: pts, color, width, label: label || null },
             });
             renderObject(res.data.object);
+            if (kind !== 'pen' && window.toast) toast('Saved to the team map.');
         } catch (e) { if (window.toast) toast(e.message, 'error'); }
     }
 
@@ -278,7 +292,7 @@
         const row = document.querySelector('.cmap-mrow[data-mtool="' + t + '"] span');
         const lab = document.getElementById('cmapToolLabel');
         if (row && lab) lab.textContent = row.textContent;
-        document.getElementById('cmapToolsMenu')?.classList.add('hidden');
+        window.closeSheet?.('cmapToolsSheet');
         // Pan keeps native gestures; every drawing tool takes the finger.
         if (t !== 'edit') endEdit();
         const free = (t === 'pan' || t === 'edit' || t === 'erase');
@@ -487,14 +501,7 @@
 
         document.querySelectorAll('[data-mtool]').forEach((b) =>
             b.addEventListener('click', () => setTool(b.dataset.mtool)));
-        const tmenu = document.getElementById('cmapToolsMenu'), tbtn = document.getElementById('cmapToolsBtn');
-        tbtn.addEventListener('click', () => {
-            const open = !tmenu.classList.toggle('hidden');
-            tbtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        });
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.cmap-menu-wrap')) tmenu.classList.add('hidden');
-        });
+        document.getElementById('cmapToolsBtn').addEventListener('click', () => window.openSheet?.('cmapToolsSheet'));
         // Search jumps the map anywhere by name; without Places on the key the
         // box goes away rather than sitting dead.
         try {
