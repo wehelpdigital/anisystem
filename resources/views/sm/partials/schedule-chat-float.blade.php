@@ -198,7 +198,7 @@
             const who = showWho ? `<span class="who">${escapeHtml(m.name || 'Member')}</span>` : '';
             const img = m.image ? `<img src="${escapeHtml(m.image)}" alt="">` : '';
             const body = m.body ? escapeHtml(m.body) : '';
-            el.innerHTML = `${face}<div class="col">${who}<div class="b">${body}${img}</div><span class="at">${escapeHtml(m.at || '')}</span></div>`;
+            el.innerHTML = `${face}<div class="col">${who}<div class="b"${m.image ? ' data-lightbox' : ''}>${body}${img}</div><span class="at">${escapeHtml(m.at || '')}</span></div>`;
             thread.appendChild(el);
             return el;
         }
@@ -411,4 +411,6 @@
     else init();
 })();
 </script>
+{{-- Chat photos expand into the shared lightbox (include is self-guarded). --}}
+@include('community.partials.lightbox-js')
 @endif
