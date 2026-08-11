@@ -706,9 +706,39 @@ class ActivityController extends BaseScheduleController
         $rows = AsScheduleActivity::active()
             ->where('croppingScheduleId', $schedule->id)
             ->whereIn('id', $ids)
-            ->get(['id', 'isDone']);
+            ->get(['id', 'isDone', 'versionId', 'targetDate', 'isDraft']);
         $validSet = $rows->pluck('id')->flip()->all();
         $doneSet = $rows->where('isDone', true)->pluck('id')->flip()->all();
+
+        // Dragging a card to another day comes through here, so this is where
+        // a day gets overfilled. Count what each destination is gaining and
+        // refuse the whole move if it would push a day past its ceiling —
+        // rejecting before the transaction leaves the board untouched.
+        $arrivalsByDate = [];
+        foreach ($items as $it) {
+            $id = (int) $it['id'];
+            $row = $rows->firstWhere('id', $id);
+            if (! $row || isset($doneSet[$id]) || $row->isDraft) {
+                continue;
+            }
+            $to = Carbon::parse($it['targetDate'])->format('Y-m-d');
+            $from = $row->targetDate ? Carbon::parse($row->targetDate)->format('Y-m-d') : null;
+            if ($to === $from) {
+                continue;   // reordering within a day changes no day's size
+            }
+            $arrivalsByDate[$to][] = $id;
+        }
+        foreach ($arrivalsByDate as $date => $incomingIds) {
+            $versionId = $rows->firstWhere('id', $incomingIds[0])->versionId;
+            $already = $this->activitiesOnDate($schedule->id, $versionId, $date);
+            if ($already + count($incomingIds) > self::MAX_ACTIVITIES_PER_DATE) {
+                return $this->jsonFail(
+                    'That day would go past ' . self::MAX_ACTIVITIES_PER_DATE
+                        . ' activities — the most one day can hold. Move some to another day first.',
+                    422
+                );
+            }
+        }
 
         try {
             DB::transaction(function () use ($items, $validSet, $doneSet) {
@@ -757,6 +787,18 @@ class ActivityController extends BaseScheduleController
             return $this->jsonFail('This activity is marked done and locked in place.', 422);
         }
 
+        // Dropping onto a day that is already full is refused, so the drag
+        // springs back instead of quietly building an unusable day.
+        $full = $this->dateFullMessage(
+            $schedule->id,
+            $activity->versionId,
+            Carbon::parse($request->targetDate)->format('Y-m-d'),
+            (int) $activity->id
+        );
+        if ($full) {
+            return $this->jsonFail($full, 422);
+        }
+
         $activity->update(['targetDate' => $request->targetDate]);
         $this->broadcastBoard($schedule, 'set-date', ['id' => $activity->id, 'targetDate' => $request->targetDate], $activity->versionId);
 
@@ -782,6 +824,18 @@ class ActivityController extends BaseScheduleController
         if (!$source) return $this->jsonFail('Activity not found.', 404);
 
         $activeVersionId = $this->activeVersionIdFor($schedule->id);
+
+        // The copy lands on the source's day, so that day needs room for it.
+        if (! $source->isDraft) {
+            $full = $this->dateFullMessage(
+                $schedule->id,
+                $activeVersionId,
+                $source->targetDate ? Carbon::parse($source->targetDate)->format('Y-m-d') : null
+            );
+            if ($full) {
+                return $this->jsonFail($full, 422);
+            }
+        }
 
         try {
             $new = DB::transaction(function () use ($source, $activeVersionId) {
@@ -1027,6 +1081,29 @@ class ActivityController extends BaseScheduleController
                 $payload['versionId'] = $activeVersionId;
             }
             $payload['isDraft'] = $request->boolean('isDraft') ? 1 : 0;
+
+            // Drafts sit off the board, so they do not fill a day.
+            if (! $payload['isDraft']) {
+                $full = $this->dateFullMessage($schedule->id, $activeVersionId, $request->targetDate);
+                if ($full) {
+                    return $this->jsonFail($full, 422);
+                }
+            }
+        } else {
+            // An edit only needs checking when it carries the activity to a
+            // different day; staying put can never overfill anything.
+            $existing = AsScheduleActivity::active()
+                ->where('croppingScheduleId', $schedule->id)
+                ->where('id', $id)
+                ->first(['id', 'versionId', 'targetDate', 'isDraft']);
+            $movingTo = $request->targetDate ? Carbon::parse($request->targetDate)->format('Y-m-d') : null;
+            $wasOn = $existing?->targetDate ? Carbon::parse($existing->targetDate)->format('Y-m-d') : null;
+            if ($existing && ! $existing->isDraft && $movingTo && $movingTo !== $wasOn) {
+                $full = $this->dateFullMessage($schedule->id, $existing->versionId, $movingTo, (int) $existing->id);
+                if ($full) {
+                    return $this->jsonFail($full, 422);
+                }
+            }
         }
 
         try {
@@ -1473,6 +1550,55 @@ class ActivityController extends BaseScheduleController
      * Resolve the active version id for a schedule, falling back to whichever
      * version exists (preferring Original) if no row is flagged isActive.
      */
+    /**
+     * A day's ceiling. Less a business rule than a floor under the board: the
+     * day header, its counts and the per-day layouts are built for a number of
+     * activities a person can actually read, and a runaway import or a stuck
+     * duplicate button should hit a wall rather than produce a day nobody can
+     * use. Two digits is also what the header reserves room for.
+     */
+    private const MAX_ACTIVITIES_PER_DATE = 99;
+
+    /**
+     * How many activities that day already carries, counted the way the board
+     * counts them: same schedule, same version, not a draft. `$ignoreId` skips
+     * the row being moved, so re-saving an activity onto its own date is never
+     * blocked by itself.
+     */
+    private function activitiesOnDate(int $scheduleId, ?int $versionId, ?string $date, ?int $ignoreId = null): int
+    {
+        if (! $date) {
+            return 0;
+        }
+
+        $query = AsScheduleActivity::active()
+            ->where('croppingScheduleId', $scheduleId)
+            ->whereDate('targetDate', $date)
+            ->where(function ($w) {
+                $w->where('isDraft', 0)->orWhereNull('isDraft');
+            });
+
+        if ($versionId) {
+            $query->where('versionId', $versionId);
+        }
+        if ($ignoreId) {
+            $query->where('id', '!=', $ignoreId);
+        }
+
+        return (int) $query->count();
+    }
+
+    /** The message a full day gets, or null when there is still room. */
+    private function dateFullMessage(int $scheduleId, ?int $versionId, ?string $date, ?int $ignoreId = null): ?string
+    {
+        if (! $date || $this->activitiesOnDate($scheduleId, $versionId, $date, $ignoreId) < self::MAX_ACTIVITIES_PER_DATE) {
+            return null;
+        }
+
+        return 'That day already has ' . self::MAX_ACTIVITIES_PER_DATE
+            . ' activities — the most one day can hold. Move some to another day first.';
+    }
+
     private function activeVersionIdFor(int $scheduleId): ?int
     {
         $active = AsScheduleActivityVersion::active()

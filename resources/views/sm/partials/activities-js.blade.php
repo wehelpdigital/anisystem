@@ -2517,7 +2517,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 recomputeLotDayZero();
                 pushUndo('Move activity to ' + newDate, () => restoreBoardSnapshot(snapshot));
             })
-            .catch((err) => toast(err.message, 'error'));
+            .catch((err) => {
+                // The server refused the move (a full day, most likely), so put
+                // the card back where it came from rather than leaving the
+                // board showing a move that was never saved.
+                restoreBoardSnapshot(snapshot);
+                toast(err.message, 'error');
+            });
     }
 
     // Day overflow menu (phones). Rows forward to the real date-header buttons,
