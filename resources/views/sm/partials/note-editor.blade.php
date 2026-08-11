@@ -98,7 +98,7 @@
 
     function renderThumbs() {
         $('noteEditorMedia').innerHTML = media.map((m, i) => window.noteMediaThumb
-            ? window.noteMediaThumb(m, `<button type="button" class="rm" data-rm="${i}" aria-label="Remove">✕</button>`)
+            ? window.noteMediaThumb(m, `<button type="button" class="rm" data-rm="${i}" aria-label="Remove">✕</button>`, i)
             : '').join('');
     }
 
@@ -138,20 +138,45 @@
         media.splice(parseInt(rm.getAttribute('data-rm'), 10), 1); renderThumbs();
     });
 
-    // ---- Draw → upload → add as an attachment (not inline in the body)
+    /* ---- Draw → upload → attach ------------------------------------------
+     * Two ways to keep it, chosen in the canvas: "Save as image" leaves a flat
+     * picture, "Save as drawing" also stores the strokes so the drawing can be
+     * reopened and changed later. The strokes ride in the note's own media
+     * record rather than a file, which also means they survive a wiped disk.
+     * `index` reopens an existing drawing in place instead of adding another. */
+    async function uploadDrawing(dataUrl, objects, index) {
+        try {
+            const res = await fetch(cfg.drawUploadUrl, { method: 'POST', headers: { 'X-CSRF-TOKEN': CSRF, 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ image: dataUrl }), credentials: 'same-origin' });
+            const json = await res.json().catch(() => ({}));
+            if (!json.success || !json.data?.url) throw new Error(json.message || 'Upload failed.');
+            const entry = objects && objects.length
+                ? { type: 'drawing', path: json.data.path, url: json.data.url, strokes: objects }
+                : { type: 'image', path: json.data.path, url: json.data.url };
+            if (index != null && media[index]) media[index] = entry;
+            else media.push(entry);
+            renderThumbs();
+            window.toast?.(entry.type === 'drawing' ? 'Drawing saved — tap it to edit again.' : 'Drawing added.');
+        } catch (err) { window.toast?.(err.message || 'Could not add drawing.', 'error'); }
+    }
+
     $('noteEditorDraw').addEventListener('click', () => {
         if (typeof window.openDrawCanvas !== 'function') { window.toast?.('Drawing tool unavailable.', 'error'); return; }
-        window.openDrawCanvas(async (dataUrl) => {
-            try {
-                const res = await fetch(cfg.drawUploadUrl, { method: 'POST', headers: { 'X-CSRF-TOKEN': CSRF, 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ image: dataUrl }), credentials: 'same-origin' });
-                const json = await res.json().catch(() => ({}));
-                if (!json.success || !json.data?.url) throw new Error(json.message || 'Upload failed.');
-                media.push({ type: 'image', path: json.data.path, url: json.data.url });
-                renderThumbs();
-                window.toast?.('Drawing added.');
-            } catch (err) { window.toast?.(err.message || 'Could not add drawing.', 'error'); }
-        });
+        window.openDrawCanvas((dataUrl, objects) => uploadDrawing(dataUrl, objects, null), null, { editable: true });
     });
+
+    // Tapping a saved drawing in the editor reopens it with its strokes.
+    $('noteEditorMedia').addEventListener('click', (e) => {
+        if (e.target.closest('[data-rm]')) return;              // the remove ✕
+        const tile = e.target.closest('[data-edit-draw]');
+        if (!tile) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const i = parseInt(tile.getAttribute('data-edit-draw'), 10);
+        const m = media[i];
+        if (!m || typeof window.openDrawCanvas !== 'function') return;
+        window.openDrawCanvas((dataUrl, objects) => uploadDrawing(dataUrl, objects, i), m.url,
+            { editable: true, objects: m.strokes || [] });
+    }, true);
 
     // ---- Emoji popover → insert into the body
     const pop = document.createElement('div');

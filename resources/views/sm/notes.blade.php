@@ -202,6 +202,7 @@ const __init = () => {
                 return [
                     'type' => $isMap ? 'map' : ($m['type'] ?? 'image'),
                     'path' => $m['path'],
+                    'strokes' => $m['strokes'] ?? null,
                     'url' => \Illuminate\Support\Facades\Storage::disk('public')->url($m['path']),
                     'poster' => $m['poster'] ?? null,
                     'posterUrl' => ! empty($m['poster']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($m['poster']) : null,

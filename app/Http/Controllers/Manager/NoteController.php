@@ -158,9 +158,12 @@ class NoteController extends BaseScheduleController
             'body' => 'nullable|string|max:50000',
             'imagePath' => 'nullable|string|max:500',
             'media' => 'nullable|array|max:20',
-            'media.*.type' => 'required_with:media|in:image,video',
+            // 'drawing' is an image that also carries its strokes, so it can be
+            // reopened and edited; 'map' is a saved map picture.
+            'media.*.type' => 'required_with:media|in:image,video,drawing,map',
             'media.*.path' => 'required_with:media|string|max:500',
             'media.*.poster' => 'nullable|string|max:500',
+            'media.*.strokes' => 'nullable|array|max:4000',
         ]);
         if ($validator->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
@@ -171,11 +174,14 @@ class NoteController extends BaseScheduleController
         $data['body'] = filled($data['body'] ?? null) ? HtmlSanitizer::rich($data['body']) : null;
         $data['imagePath'] = $data['imagePath'] ?? null;
         $data['media'] = collect($data['media'] ?? [])
-            ->filter(fn ($m) => in_array($m['type'] ?? '', ['image', 'video'], true) && filled($m['path'] ?? null))
+            ->filter(fn ($m) => in_array($m['type'] ?? '', ['image', 'video', 'drawing', 'map'], true) && filled($m['path'] ?? null))
             ->map(fn ($m) => array_filter([
                 'type' => $m['type'],
                 'path' => $m['path'],
                 'poster' => $m['poster'] ?? null,
+                // Kept with the note rather than in a file: strokes are what
+                // makes a drawing reopenable, and the disk is not permanent.
+                'strokes' => ($m['type'] ?? '') === 'drawing' ? ($m['strokes'] ?? null) : null,
             ], fn ($v) => $v !== null))
             ->values()->all() ?: null;
 
@@ -199,6 +205,9 @@ class NoteController extends BaseScheduleController
                 'type' => $m['type'] ?? 'image',
                 'path' => $m['path'] ?? null,
                 'poster' => $m['poster'] ?? null,
+                // Without the strokes a reopened drawing would come back as a
+                // flat picture — editable is the whole point of the type.
+                'strokes' => $m['strokes'] ?? null,
                 'url' => ! empty($m['path']) ? Storage::disk('public')->url($m['path']) : null,
                 'posterUrl' => ! empty($m['poster']) ? Storage::disk('public')->url($m['poster']) : null,
             ])

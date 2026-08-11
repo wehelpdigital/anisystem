@@ -27,6 +27,12 @@
     .nm-map svg { width: 1.6rem; height: 1.6rem; }
     .nm-map span { font-size: .68rem; font-weight: 800; line-height: 1.2; }
     .nm-map::before { display: none; }
+    /* A drawing wears a pencil, so an editable one is told apart from a flat
+       picture at a glance. */
+    .nm-badge { position: absolute; left: .2rem; bottom: .2rem; width: 1.35rem; height: 1.35rem;
+        border-radius: 999px; background: rgb(17 24 39 / .72); color: #fff;
+        display: inline-flex; align-items: center; justify-content: center; z-index: 2; pointer-events: none; }
+    .nm-badge svg { width: .85rem; height: .85rem; }
     /* An image that never arrives used to shimmer forever, which reads as
        "still loading" long after the file has gone. */
     .nm.is-gone::before { display: none; }
@@ -55,8 +61,18 @@
 
     const ONLOAD = ` onload="this.classList.add('is-loaded')"`
         + ` onerror="this.closest('.nm')?.classList.add('is-gone'); this.remove();"`;
-    window.noteMediaThumb = function (m, extra) {
+    window.noteMediaThumb = function (m, extra, editIndex) {
         const url = m.url || '', poster = m.posterUrl || '';
+        if (m.type === 'drawing') {
+            // In the editor (editIndex given) the tile reopens the drawing; in
+            // a read view it behaves like any other picture.
+            const edit = editIndex != null
+                ? ` data-edit-draw="${editIndex}" title="Tap to edit this drawing"`
+                : ` data-lb-type="image" data-lb-url="${esc(url)}"`;
+            return `<div class="nm nm-draw"${edit}><img src="${esc(url)}" alt="" loading="lazy"${ONLOAD}>`
+                + '<span class="nm-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1 10-10-3-3L5 16l-1 4z"/></svg></span>'
+                + `${extra || ''}</div>`;
+        }
         if (m.type === 'map') {
             const href = m.mapUrl || '';
             return `<a class="nm nm-map" href="${esc(href)}" title="Open this map in the Maps module">`

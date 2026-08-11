@@ -16,7 +16,11 @@
             <span class="draw-title">Drawing</span>
             <span class="grow"></span>
             <button type="button" class="btn btn-ghost btn-sm" id="drawCancel">Cancel</button>
-            <button type="button" class="btn btn-primary btn-sm" id="drawSave">Save drawing</button>
+            {{-- Two ways out, because they are different things: a flat picture
+                 to look at, or a drawing that can be reopened and changed. The
+                 second only appears for callers that can store the strokes. --}}
+            <button type="button" class="btn btn-white btn-sm" id="drawSaveEditable" hidden>Save as drawing</button>
+            <button type="button" class="btn btn-primary btn-sm" id="drawSave">Save as image</button>
         </div>
         <div class="draw-toolbar">
             <div class="draw-tools" id="drawTools">
@@ -449,17 +453,28 @@
     function close() { modal.classList.remove('show'); modal.setAttribute('aria-hidden', 'true'); onSave = null; document.body.style.overflow = ''; }
     document.getElementById('drawCancel').addEventListener('click', close);
     document.getElementById('drawBack').addEventListener('click', close);
-    document.getElementById('drawSave').addEventListener('click', () => {
+    function exportPng() {
         selected.clear(); marquee = null;
         // Capture without the grid guide, then restore the on-screen view.
         exporting = true; render();
         const data = canvas.toDataURL('image/png');
         exporting = false; render();
-        if (onSave) onSave(data);
+        return data;
+    }
+    document.getElementById('drawSave').addEventListener('click', () => {
+        const data = exportPng();
+        if (onSave) onSave(data, null);
+        close();
+    });
+    /* The strokes travel with the picture, so reopening gives back a drawing
+       that can still be changed rather than a photograph of one. */
+    document.getElementById('drawSaveEditable').addEventListener('click', () => {
+        const data = exportPng();
+        if (onSave) onSave(data, JSON.parse(JSON.stringify(objects || [])));
         close();
     });
 
-    function reset(existingUrl) {
+    function reset(existingUrl, existingObjects) {
         objects = []; selected.clear(); undoStack.length = 0; marquee = null; mode = null; cur = null; uid = 1;
         // A new drawing takes the aspect of the screen it opens on, so the
         // white sheet fills the stage instead of letterboxing inside it. An
@@ -472,15 +487,29 @@
         }
         canvas.width = W; canvas.height = H;
         setTool('pen'); render();
-        if (existingUrl) {
+        if (existingObjects && existingObjects.length) {
+            // Real strokes, so each one can be selected, moved and undone again
+            // — unlike a PNG backdrop, which can only be drawn over.
+            objects = JSON.parse(JSON.stringify(existingObjects));
+            uid = objects.reduce((m, o) => Math.max(m, (o && o.id) || 0), 0) + 1;
+            render();
+        } else if (existingUrl) {
             const img = new Image(); img.crossOrigin = 'anonymous';
             img.onload = () => { ctx.drawImage(img, 0, 0, W, H); try { objects = []; } catch (_) {} render(); };
             img.src = existingUrl; // note: loaded as a backdrop only (not an editable object)
         }
     }
 
-    window.openDrawCanvas = function (cb, existingUrl) {
+    /**
+     * openDrawCanvas(cb, existingPngUrl, opts)
+     *   cb(dataUrl, objects)  objects is null unless "Save as drawing" was used
+     *   opts.objects          strokes from a previous drawing save, to reopen
+     *   opts.editable         offer the "Save as drawing" button
+     */
+    window.openDrawCanvas = function (cb, existingUrl, opts) {
+        opts = opts || {};
         onSave = cb || null;
+        document.getElementById('drawSaveEditable').hidden = !opts.editable;
         // Re-parent to <body> so `position:fixed` is relative to the viewport —
         // never trapped/cramped inside a transformed ancestor (the notes module
         // wrapper, an open sheet, etc.). Also sidesteps any duplicate #drawModal.
@@ -488,7 +517,7 @@
         modal.classList.add('show');
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
-        reset(existingUrl);
+        reset(existingUrl, opts.objects);
         requestAnimationFrame(fitStage);
     };
 })();
