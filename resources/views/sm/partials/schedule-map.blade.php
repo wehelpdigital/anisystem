@@ -33,46 +33,66 @@
                 </button>
             </div>
             <div class="sheet-body cmap-menu-body">
-                <button type="button" class="cmap-mrow is-active" data-mtool="pan">
+                <button type="button" class="cmap-mrow is-active" data-mtool="pan" data-short="Move map">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v20M2 12h20M12 2L9 5m3-3l3 3M12 22l-3-3m3 3l3-3M2 12l3-3m-3 3l3 3M22 12l-3-3m3 3l-3 3"/></svg>
                     <span>Move map</span>
                 </button>
-                <button type="button" class="cmap-mrow" data-mtool="edit">
+                <button type="button" class="cmap-mrow" data-mtool="edit" data-short="Select">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4l7 16 2-6 6-2z"/></svg>
                     <span>Select &amp; edit a shape</span>
                 </button>
-                <button type="button" class="cmap-mrow" data-mtool="pen">
+                <button type="button" class="cmap-mrow" data-mtool="pen" data-short="Pen">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L18 9l-3-3L5 16l-1 4z"/></svg>
                     <span>Freehand draw</span>
                 </button>
-                <button type="button" class="cmap-mrow" data-mtool="line">
+                <button type="button" class="cmap-mrow" data-mtool="line" data-short="Line">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 21L21 3M8.5 15.5l1.8 1.8M12 12l1.8 1.8M15.5 8.5l1.8 1.8"/></svg>
                     <span>Line — drag, shows distance</span>
                 </button>
-                <button type="button" class="cmap-mrow" data-mtool="path">
+                <button type="button" class="cmap-mrow" data-mtool="path" data-short="Multi-line">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l5-6 4 3 6-8"/><path stroke-linecap="round" d="M3 17h.01M8 11h.01M12 14h.01M18 6h.01"/></svg>
                     <span>Multi-line — tap points</span>
                 </button>
-                <button type="button" class="cmap-mrow" data-mtool="rect">
+                <button type="button" class="cmap-mrow" data-mtool="rect" data-short="Box">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg>
                     <span>Box — drag, sides + area</span>
                 </button>
-                <button type="button" class="cmap-mrow" data-mtool="area">
+                <button type="button" class="cmap-mrow" data-mtool="area" data-short="Area">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l8 6-3 10H7L4 9l8-6z"/></svg>
                     <span>Area — tap corners, hectares</span>
                 </button>
-                <button type="button" class="cmap-mrow" data-mtool="text">
+                <button type="button" class="cmap-mrow" data-mtool="text" data-short="Text">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 6h14M12 6v13M9 19h6"/></svg>
                     <span>Text label</span>
                 </button>
-                <button type="button" class="cmap-mrow" data-mtool="erase">
+                <button type="button" class="cmap-mrow" data-mtool="erase" data-short="Erase">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l7-7 6 6-4 4H8l-4-3z"/><path stroke-linecap="round" d="M8 18h11"/></svg>
                     <span>Erase a shape</span>
                 </button>
             </div>
         </div>
-        <input type="search" id="cmapSearch" class="cmap-search" placeholder="Search a place…" autocomplete="off">
+        <button type="button" class="cmap-tool" id="cmapSearchBtn" title="Search a place" aria-label="Search a place">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
+        </button>
+        <div class="sheet hidden" id="cmapSearchSheet" style="--sheet-width:26rem">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+                <h3 class="sheet-title">Find a place</h3>
+                <button type="button" class="icon-btn" data-sheet-close aria-label="Close">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="sheet-body" style="padding-bottom:1rem">
+                <input type="search" id="cmapSearch" class="form-input" placeholder="Town, barangay, landmark…" autocomplete="off">
+            </div>
+        </div>
         <span class="cmap-div"></span>
+        <button type="button" class="cmap-tool" id="cmapUndo" disabled title="Undo" aria-label="Undo">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
+        </button>
+        <button type="button" class="cmap-tool" id="cmapRedo" disabled title="Redo" aria-label="Redo">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg>
+        </button>
         <button type="button" class="cmap-tool cmap-finish" id="cmapFinish" hidden title="Finish and save this shape">
             <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             <span>Finish</span>
@@ -106,6 +126,11 @@
     .cmap-tool:hover { background: var(--color-gray-200); color: var(--color-gray-800); }
     .cmap-tool:active { transform: scale(.92); }
     .cmap-tool.is-active { background: var(--color-brand-100); color: var(--color-brand-800); }
+    .cmap-tool:disabled { opacity: .35; pointer-events: none; }
+    /* Cooperative mode keeps two-finger pinch alive while drawing, but its
+       "use two fingers to move the map" scrim would flash over every stroke —
+       one finger here IS the tool, not a mistake. */
+    .cmap-map .gm-style-moc { display: none !important; }
     .cmap-finish { background: var(--color-brand-600); color: #fff; width: auto; padding: 0 .6rem; gap: .3rem; font-size: .78rem; font-weight: 800; }
     .cmap-finish:hover { background: var(--color-brand-700); color: #fff; }
     .cmap-danger { color: #dc2626; }
@@ -214,6 +239,7 @@
        recomputed from the points, so every viewer reads identical numbers. */
     function renderObject(o) {
         if (layers.has(o.id)) return;
+        objIndex.set(o.id, o);
         const parts = [];
         const style = { map, strokeColor: o.color || '#f5c518', strokeWeight: o.width || 3, clickable: true };
         const pts = o.points;
@@ -252,6 +278,7 @@
         // picks it up for dragging and reshaping.
         parts.forEach((p) => p.addListener && p.addListener('click', () => {
             if (tool === 'erase') {
+                pushHist({ type: 'remove', object: objIndex.get(o.id) || o });
                 api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: o.id } }).catch(() => {});
                 dropObject(o.id);
             } else if (tool === 'edit') {
@@ -260,15 +287,76 @@
         }));
         layers.set(o.id, parts);
     }
-    function dropObject(id) { (layers.get(id) || []).forEach((p) => p.setMap(null)); layers.delete(id); }
-    function dropAll() { layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); }
+    function dropObject(id) { (layers.get(id) || []).forEach((p) => p.setMap(null)); layers.delete(id); objIndex.delete(id); }
+    function dropAll() { layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); }
 
+    /* Undo is a history of inverse calls against the same endpoints the
+       actions used, so every step also lands live for the team. Re-adding a
+       removed shape mints a fresh id — the entries swap ids as they flow
+       between the stacks, so chains keep working. */
+    const objIndex = new Map();     // id -> shaped object (latest)
+    const histUndo = [], histRedo = [];
+    function syncHistBtns() {
+        const u = document.getElementById('cmapUndo'), r = document.getElementById('cmapRedo');
+        if (u) u.disabled = !histUndo.length;
+        if (r) r.disabled = !histRedo.length;
+    }
+    function pushHist(entry) {
+        histUndo.push(entry);
+        if (histUndo.length > 30) histUndo.shift();
+        histRedo.length = 0;
+        syncHistBtns();
+    }
+    async function reAdd(object) {
+        const res = await api(`${URLS.push}?scheduleId=${SID}`, {
+            method: 'POST', body: { kind: object.kind, points: object.points, color: object.color, width: object.width, label: object.label },
+        });
+        renderObject(res.data.object);
+        return res.data.object;
+    }
+    async function applyStep(step, into) {
+        if (step.type === 'add') {
+            await api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: step.object.id } }).catch(() => {});
+            dropObject(step.object.id);
+            into.push({ type: 'remove', object: step.object });
+        } else if (step.type === 'remove') {
+            const fresh = await reAdd(step.object);
+            into.push({ type: 'add', object: fresh });
+        } else if (step.type === 'update') {
+            await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: step.id, points: step.before } }).catch(() => {});
+            const cur = objIndex.get(step.id);
+            dropObject(step.id);
+            if (cur) renderObject({ ...cur, points: step.before });
+            into.push({ type: 'update', id: step.id, before: step.after, after: step.before });
+        } else if (step.type === 'clear') {
+            const restored = [];
+            for (const o of step.objects) restored.push(await reAdd(o));
+            into.push({ type: 'unclear', objects: restored });
+        } else if (step.type === 'unclear') {
+            for (const o of step.objects) {
+                await api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: o.id } }).catch(() => {});
+                dropObject(o.id);
+            }
+            into.push({ type: 'clear', objects: step.objects });
+        }
+    }
+    let histBusy = false;
+    async function stepHist(from, into) {
+        if (histBusy) return;
+        const step = from.pop();
+        if (!step) return;
+        histBusy = true;
+        try { await applyStep(step, into); } catch (e) { if (window.toast) toast(e.message, 'error'); }
+        histBusy = false;
+        syncHistBtns();
+    }
     async function saveObject(kind, pts, label) {
         try {
             const res = await api(`${URLS.push}?scheduleId=${SID}`, {
                 method: 'POST', body: { kind, points: pts, color, width, label: label || null },
             });
             renderObject(res.data.object);
+            pushHist({ type: 'add', object: res.data.object });
             if (kind !== 'pen' && window.toast) toast('Saved to the team map.');
         } catch (e) { if (window.toast) toast(e.message, 'error'); }
     }
@@ -277,6 +365,8 @@
     /* The half-drawn shape streams to the room (throttled, broadcast-only,
        like the GPS beacons) so teammates watch it grow instead of having the
        finished shape pop in. done tells them to drop the ghost. */
+    let tempDots = [];
+    function dropTempDots() { tempDots.forEach((m) => m.setMap(null)); tempDots = []; }
     let traceLast = 0, traceOn = false;
     function sendTrace(done) {
         if (done && !traceOn) return;
@@ -289,6 +379,7 @@
         tempPts = [];
         if (tempShape) { tempShape.setMap(null); tempShape = null; }
         document.getElementById('cmapFinish').hidden = true;
+        dropTempDots();
         sendTrace(true);
     }
     function previewTemp(closed) {
@@ -303,19 +394,27 @@
         tool = t;
         clearTemp();
         document.querySelectorAll('[data-mtool]').forEach((b) => b.classList.toggle('is-active', b.dataset.mtool === t));
-        const row = document.querySelector('.cmap-mrow[data-mtool="' + t + '"] span');
+        const row = document.querySelector('.cmap-mrow[data-mtool="' + t + '"]');
         const lab = document.getElementById('cmapToolLabel');
-        if (row && lab) lab.textContent = row.textContent;
+        if (row && lab) lab.textContent = row.dataset.short || row.textContent;
         window.closeSheet?.('cmapToolsSheet');
         // Pan keeps native gestures; every drawing tool takes the finger.
         if (t !== 'edit') endEdit();
         const free = (t === 'pan' || t === 'edit' || t === 'erase');
-        map.setOptions({ gestureHandling: free ? 'greedy' : 'none', draggableCursor: free ? null : 'crosshair' });
+        // Drawing tools take ONE finger; two fingers stay the map's — pinch
+        // zoom and rotate keep working mid-drawing. 'none' killed them all.
+        map.setOptions({ gestureHandling: free ? 'greedy' : 'cooperative', draggableCursor: free ? null : 'crosshair' });
     }
     function onTap(latLng) {
         const p = [latLng.lat(), latLng.lng()];
         if (tool === 'path' || tool === 'area') {
             tempPts.push(p); previewTemp(tool === 'area');
+            // Each tapped corner shows itself at once — a bare tap that draws
+            // nothing reads as a tap that did nothing.
+            tempDots.push(new (G().Marker)({
+                map, position: LL(p), clickable: false,
+                icon: { path: G().SymbolPath.CIRCLE, scale: 4.5, fillColor: color, fillOpacity: 1, strokeColor: '#fff', strokeWeight: 1.5 },
+            }));
             document.getElementById('cmapFinish').hidden = tempPts.length < 2;
         } else if (tool === 'text') {
             const t = prompt('Label text:');
@@ -344,6 +443,9 @@
         let lastPt = null;
         el.addEventListener('pointerdown', (e) => {
             if (!DRAG_TOOLS.includes(tool) || !proj.getProjection()) return;
+            // A second finger joining means the first was a pinch, not a
+            // stroke — abandon the half-drawn shape and let the map take it.
+            if (penDown) { penDown = false; clearTemp(); return; }
             penDown = true; penPts = [ll(e)]; lastPt = penPts[0];
             e.preventDefault();
         });
@@ -370,7 +472,11 @@
         };
         el.addEventListener('pointerup', up);
         el.addEventListener('pointercancel', up);
-        el.addEventListener('touchmove', (e) => { if (tool !== 'pan' && tool !== 'edit' && tool !== 'erase') e.preventDefault(); }, { passive: false });
+        // Only a SINGLE finger is claimed for drawing; a second finger means
+        // a zoom or rotate gesture, which stays the map's to handle.
+        el.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 1 && tool !== 'pan' && tool !== 'edit' && tool !== 'erase') e.preventDefault();
+        }, { passive: false });
     }
 
     /* ---------- editing ----------
@@ -400,6 +506,7 @@
             const pts = geometryOf(o, parts);
             try {
                 const res = await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: o.id, points: pts } });
+                pushHist({ type: 'update', id: o.id, before: o.points, after: res.data.object.points });
                 endEdit();
                 dropObject(o.id);
                 renderObject(res.data.object);
@@ -536,6 +643,13 @@
         document.querySelectorAll('[data-mtool]').forEach((b) =>
             b.addEventListener('click', () => setTool(b.dataset.mtool)));
         document.getElementById('cmapToolsBtn').addEventListener('click', () => window.openSheet?.('cmapToolsSheet'));
+        document.getElementById('cmapUndo').addEventListener('click', () => stepHist(histUndo, histRedo));
+        document.getElementById('cmapRedo').addEventListener('click', () => stepHist(histRedo, histUndo));
+        document.getElementById('cmapSearchBtn').addEventListener('click', () => {
+            window.openSheet?.('cmapSearchSheet');
+            // Search means typing — focusing here is the point, not a nuisance.
+            setTimeout(() => document.getElementById('cmapSearch')?.focus(), 320);
+        });
         // Search jumps the map anywhere by name; without Places on the key the
         // box goes away rather than sitting dead.
         try {
@@ -544,10 +658,11 @@
             ac.addListener('place_changed', () => {
                 const g = ac.getPlace().geometry;
                 if (!g) return;
+                window.closeSheet?.('cmapSearchSheet');
                 if (g.viewport) map.fitBounds(g.viewport);
                 else { map.setCenter(g.location); map.setZoom(17); }
             });
-        } catch (_) { document.getElementById('cmapSearch')?.remove(); }
+        } catch (_) { document.getElementById('cmapSearchBtn')?.remove(); }
         document.getElementById('cmapFinish').addEventListener('click', () => {
             if (tempPts.length < 2) return;
             const pts = tempPts, kind = tool === 'area' ? 'area' : 'path';
@@ -567,8 +682,12 @@
                 ? await confirmAction({ title: 'Clear the map?', message: 'Removes every shape for the whole team.', confirmText: 'Clear map' })
                 : confirm('Clear the map for everyone?');
             if (!ok) return;
-            try { await api(`${URLS.clear}?scheduleId=${SID}`, { method: 'POST' }); dropAll(); }
-            catch (err) { if (window.toast) toast(err.message, 'error'); }
+            const snapshot = [...objIndex.values()];
+            try {
+                await api(`${URLS.clear}?scheduleId=${SID}`, { method: 'POST' });
+                dropAll();
+                if (snapshot.length) pushHist({ type: 'clear', objects: snapshot });
+            } catch (err) { if (window.toast) toast(err.message, 'error'); }
         });
 
         // Existing shapes, then follow the room live.
