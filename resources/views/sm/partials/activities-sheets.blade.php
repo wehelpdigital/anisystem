@@ -329,6 +329,19 @@
 {{-- Tools menu: one sheet holding the toolbar actions (Drafts, Report, Search,
      Calendar, Weather, …). Each row forwards to the real button, so every
      handler is reused. Opens on every screen size. --}}
+{{-- Plan versions (phones): pick one or start a new one; rows forward to
+     the real chips in #versionStrip so all the existing logic runs. --}}
+<div class="sheet hidden" id="versionsSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Plan versions</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full -mr-1" aria-label="Close">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+    </div>
+    <div class="sheet-body" id="versionsSheetList" style="padding-bottom:1rem"></div>
+</div>
+
 <div class="sheet hidden" id="activityActionsSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">

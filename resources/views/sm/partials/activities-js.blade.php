@@ -2559,6 +2559,44 @@ document.addEventListener('DOMContentLoaded', () => {
     $id('actJumpTop')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     $id('actJumpBottom')?.addEventListener('click', () => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' }));
 
+    // Phones: one Versions button opens a sheet of the strip's chips. Rows
+    // are rebuilt from the strip on every open, so renames, adds and the
+    // current selection are always fresh; taps forward to the real chips.
+    (() => {
+        const btn = $id('versionsSheetBtn');
+        if (!btn) return;
+        function buildRows() {
+            const list = $id('versionsSheetList');
+            if (!list) return;
+            list.innerHTML = '';
+            $qsa('#versionStrip .version-chip').forEach((chip) => {
+                const current = chip.classList.contains('is-selected');
+                const row = document.createElement('button');
+                row.type = 'button';
+                row.className = 'version-sheet-row' + (current ? ' is-current' : '');
+                const name = document.createElement('span');
+                name.className = 'vsr-name';
+                name.textContent = (chip.dataset.isOriginal === '1' ? '★ ' : '') + (chip.dataset.versionName || chip.textContent.trim());
+                row.appendChild(name);
+                if (current) {
+                    const now = document.createElement('span');
+                    now.className = 'vsr-now';
+                    now.textContent = 'current';
+                    row.appendChild(now);
+                }
+                row.addEventListener('click', () => { closeSheet('versionsSheet'); setTimeout(() => chip.click(), 240); });
+                list.appendChild(row);
+            });
+            const add = document.createElement('button');
+            add.type = 'button';
+            add.className = 'version-sheet-row vsr-add';
+            add.textContent = '+ Add a new version';
+            add.addEventListener('click', () => { closeSheet('versionsSheet'); setTimeout(() => $id('addVersionBtn')?.click(), 240); });
+            list.appendChild(add);
+        }
+        btn.addEventListener('click', () => { buildRows(); openSheet('versionsSheet'); });
+    })();
+
     // The buttons only earn their place once the header bar (versions +
     // Today) has scrolled off screen — while it shows, they stay hidden.
     // The same page runs inside the Collab Room iframe, so both get it.

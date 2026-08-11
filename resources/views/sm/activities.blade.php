@@ -433,6 +433,20 @@
             .act-jumps { transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
             .act-jumps.bar-visible { opacity: 0; pointer-events: none; transform: translateY(.5rem); }
             @media (prefers-reduced-motion: reduce) { .act-jumps { transition: none; } }
+            /* Phones swap the versions chip strip for the Versions button;
+               the strip stays the source of truth (the sheet forwards to its
+               chips) but takes no space. Desktop is untouched. */
+            @media (max-width: 767px) {
+                #versionStrip { display: none !important; }
+            }
+            .version-sheet-row { width: 100%; display: flex; align-items: center; justify-content: space-between;
+                gap: .6rem; text-align: left; padding: .7rem .8rem; border-radius: .8rem; font-weight: 700;
+                color: var(--color-gray-800); background: var(--color-white); border: 1px solid var(--color-gray-200);
+                margin-bottom: .45rem; }
+            .version-sheet-row.is-current { border-color: var(--color-brand-500); background: var(--color-brand-50); }
+            .vsr-now { font-size: .68rem; font-weight: 800; color: var(--color-brand-700); text-transform: uppercase; flex-shrink: 0; }
+            .vsr-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            .vsr-add { justify-content: center; border-style: dashed; color: var(--color-gray-500); }
 
             /* A chevron says the card folds — drawn by CSS so the twin Blade
                and JS renderers stay byte-identical. */
@@ -1421,6 +1435,11 @@
     {{-- min-w-0: without it this grow item refuses to shrink below its content
          width (flex min-width:auto), so long version lists would overflow the
          row instead of engaging the strip's own swipe scroll. --}}
+    {{-- Phones: the chip strip folds behind one button + bottom sheet. --}}
+    <button type="button" id="versionsSheetBtn" class="btn btn-white btn-sm shrink-0 md:hidden" title="Switch or add a plan version">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg>
+        <span>Versions</span>
+    </button>
     <div class="scroll-chips grow min-w-0" id="versionStrip">
         @foreach ($schedule->versions as $v)
             <button type="button"
@@ -1457,16 +1476,15 @@
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
         <span id="toggleHiddenLabel">Show Hidden ({{ $hiddenCount }})</span>
     </button>
+    <button type="button" id="toggleDoneDaysBtn" class="btn btn-white btn-sm shrink-0 toolbar-desktop-action" data-activities-only
+            title="Hide the days where every activity is already done" aria-pressed="false">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        <span id="toggleDoneDaysLabel" class="hidden sm:inline">Hide done days</span>
+    </button>
     <button type="button" id="quickShareBtn" class="btn btn-white btn-sm shrink-0 toolbar-in-menu" data-activities-only
             title="Share this whole plan or email workers">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z"/></svg>
         <span class="hidden sm:inline">Quick Share</span>
-    </button>
-    {{-- Beside Add Activity on every size: fold away the fully-done days. --}}
-    <button type="button" id="toggleDoneDaysBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
-            title="Hide the days where every activity is already done" aria-pressed="false">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-        <span id="toggleDoneDaysLabel" class="hidden sm:inline">Hide done days</span>
     </button>
     <div class="shrink-0" id="addActivityWrap" data-activities-only>
         <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm">
