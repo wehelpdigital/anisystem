@@ -427,6 +427,12 @@
             .act-jumps button svg { width: 1.2rem; height: 1.2rem; }
             .act-jumps button:active { transform: scale(.92); }
             .act-jumps.module-hidden { display: none; }
+            /* The jump buttons earn their place only once the header bar
+               (versions + Today) has scrolled away — while it is on screen
+               they stay out of the way. Animated, per the house rule. */
+            .act-jumps { transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+            .act-jumps.bar-visible { opacity: 0; pointer-events: none; transform: translateY(.5rem); }
+            @media (prefers-reduced-motion: reduce) { .act-jumps { transition: none; } }
 
             /* A chevron says the card folds — drawn by CSS so the twin Blade
                and JS renderers stay byte-identical. */

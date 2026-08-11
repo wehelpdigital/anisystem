@@ -2559,6 +2559,19 @@ document.addEventListener('DOMContentLoaded', () => {
     $id('actJumpTop')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     $id('actJumpBottom')?.addEventListener('click', () => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' }));
 
+    // The buttons only earn their place once the header bar (versions +
+    // Today) has scrolled off screen — while it shows, they stay hidden.
+    // The same page runs inside the Collab Room iframe, so both get it.
+    (() => {
+        const jumps = document.querySelector('.act-jumps');
+        const bar = $id('versionStrip')?.closest('div');
+        if (!jumps || !bar || !('IntersectionObserver' in window)) return;
+        jumps.classList.add('bar-visible');
+        new IntersectionObserver(([e]) => {
+            jumps.classList.toggle('bar-visible', e.isIntersecting);
+        }, { threshold: 0 }).observe(bar);
+    })();
+
     // Tools → Contract All: every card folded, every day folded, both saved.
     $id('contractAllBtn')?.addEventListener('click', () => {
         CARD_OPEN.clear(); saveCardOpen(); applyCardCollapse();
