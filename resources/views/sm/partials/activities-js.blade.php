@@ -5518,24 +5518,40 @@ document.addEventListener('DOMContentLoaded', () => {
     (() => {
         const btn = $id('viewFilterBtn');
         if (!btn) return;
+        const VF_TARGETS = {
+            empty: 'toggleEmptyDatesBtn',
+            done: 'toggleDoneDaysBtn',
+            hidden: 'toggleHiddenBtn',
+            contract: 'contractAllBtn',
+        };
         function paint() {
             const emptyHidden = document.body.classList.contains('hide-empty-dates');
             const doneHidden = $id('toggleDoneDaysBtn')?.getAttribute('aria-pressed') === 'true';
-            [['vfEmptyState', emptyHidden], ['vfDoneState', doneHidden]].forEach(([id, hidden]) => {
+            const hiddenShown = document.body.classList.contains('show-hidden-activities');
+            [['vfEmptyState', emptyHidden], ['vfDoneState', doneHidden], ['vfHiddenState', !hiddenShown]].forEach(([id, hidden]) => {
                 const el = $id(id);
                 if (!el) return;
                 el.textContent = hidden ? 'Hidden' : 'Shown';
                 el.classList.toggle('is-off', hidden);
             });
+            // Nothing hidden, nothing to offer.
+            const n = $qsa('#activitiesList .activity-card.is-hidden').length;
+            $id('vfHiddenRow')?.classList.toggle('is-gone', n === 0);
+            const sub = $id('vfHiddenSub');
+            if (sub) sub.textContent = n + (n === 1 ? ' activity kept out of prints' : ' activities kept out of prints');
             btn.classList.toggle('is-filtering', emptyHidden || doneHidden);
         }
         btn.addEventListener('click', () => { paint(); openSheet('viewFilterSheet'); });
         document.addEventListener('click', (e) => {
             const row = e.target.closest('.view-filter-row');
             if (!row) return;
-            $id(row.dataset.viewFilter === 'empty' ? 'toggleEmptyDatesBtn' : 'toggleDoneDaysBtn')?.click();
-            // Let the real toggle finish its own repaint before reading it.
-            setTimeout(paint, 60);
+            const target = VF_TARGETS[row.dataset.viewFilter];
+            if (!target) return;
+            $id(target)?.click();
+            // Contract all is a one-shot action — get out of the way so the
+            // folded board is what you see. The rest are toggles: stay open.
+            if (row.dataset.viewFilter === 'contract') closeSheet('viewFilterSheet');
+            else setTimeout(paint, 60);   // let the real toggle repaint first
         });
         document.addEventListener('activities:rendered', paint);
         paint();

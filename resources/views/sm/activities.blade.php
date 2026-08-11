@@ -320,17 +320,23 @@
             .date-header { flex-wrap: wrap; }
             .date-header > * { flex-shrink: 0; }
             /* The one thing on the control line that can give way is the date
-               text — everything else is a button. flex-shrink cannot deliver
-               that here: in a wrapping flex container items hop to the next
-               line INSTEAD of shrinking, so the kebab wrapped before the date
-               was ever squeezed. Reserve the controls' room outright instead:
-               the cap is the worst-case width of everything fixed on the line
-               (chevron, day, count, +, kebab, the warnings pill and the gaps),
-               so the date ellipsizes and the buttons always fit. */
+               text — everything else is a button. In a wrapping flex container
+               items hop to the next line INSTEAD of shrinking, so the kebab
+               wrapped before the date was ever squeezed. A hand-measured
+               reserve used to hold the room for it, but it only fitted the
+               buttons of the day it was measured on: a two-digit activity
+               count, a warnings pill or a range badge each ate into it until
+               the kebab dropped a line again. `flex-basis: 0` retires the
+               guess — the date claims no width of its own, so it can never
+               push anything off the line, and simply grows into whatever the
+               buttons leave, ellipsizing when that is little. */
             .date-header-date {
-                min-width: 0; max-width: calc(100% - 15rem);
+                flex: 1 1 0; min-width: 0;
                 white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             }
+            /* One and two digits cost the same, so the line does not reflow
+               when a day ticks over from 9 to 10 activities. */
+            .date-header-count { min-width: 1.9rem; text-align: center; }
             .date-header-weather {
                 order: 10; flex: 1 0 100%; width: 100%; min-width: 0;
                 overflow-x: auto; overflow-y: hidden;
@@ -854,6 +860,11 @@
             /* And if a row ever does outgrow the screen, it wraps rather than
                hiding controls off-edge. */
             #actHeaderBar { flex-wrap: wrap; row-gap: .35rem; }
+            /* These two moved into the eye sheet on phones; the Tools rows
+               would be the duplicates now. They stay for desktop, where
+               Contract All has no other entry point at all. */
+            .activity-action-row[data-forward="contractAllBtn"],
+            .activity-action-row[data-forward="toggleHiddenBtn"] { display: none !important; }
         }
         /* Phones only. `md:hidden` alone does NOT hold here: `.btn` is
            unlayered CSS and beats Tailwind's layered utility, so the button
@@ -871,6 +882,12 @@
         .vf-state { flex-shrink: 0; font-size: .7rem; font-weight: 800; text-transform: uppercase;
             padding: .2rem .5rem; border-radius: 999px; background: var(--color-brand-50); color: var(--color-brand-700); }
         .vf-state.is-off { background: var(--color-gray-100); color: var(--color-gray-500); }
+        /* An action, not a state: "Contract all" does a thing and closes. */
+        .vf-go { flex-shrink: 0; font-size: .7rem; font-weight: 800; text-transform: uppercase;
+            padding: .2rem .5rem; border-radius: 999px; background: var(--color-gray-100); color: var(--color-gray-600); }
+        /* Own class, not Tailwind's `hidden`: .view-filter-row's display is
+           unlayered CSS here and would beat the layered utility. */
+        .view-filter-row.is-gone { display: none !important; }
         /* Drafts / Report / Search / Calendar / Weather now live only inside the
            Tools menu (#activityActionsBtn) on every screen size. They stay in the
            DOM so the menu rows can forward clicks to their real handlers. */
