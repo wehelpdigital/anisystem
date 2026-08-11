@@ -18,6 +18,16 @@ use Illuminate\Support\Facades\Validator;
  */
 class ScheduleMapController extends BaseScheduleController
 {
+    /**
+     * The map as a schedule module of its own, for planning outside a call.
+     * Same partial the Collab Room embeds, so the tools, the saved maps and
+     * the live team drawing are the same map — not a copy of one.
+     */
+    public function page(Request $request)
+    {
+        return view('sm.maps', ['schedule' => $this->scheduleFromRequest($request, 'id')]);
+    }
+
     public function objects(Request $request)
     {
         $schedule = $this->schedule($request->query('scheduleId'));

@@ -33,6 +33,10 @@
         // wears that one, and two tiles with the same icon read as one.
         ['Notes', 'notes', (int) $notesCount,
             'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'],
+        // Folded map, not a pin: the module is for drawing the ground, and a
+        // pin reads as "where am I" rather than "plan the field".
+        ['Maps', 'maps', null,
+            'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2M15 11.5a2 2 0 11-4 0 2 2 0 014 0z'],
         ['AI Technician', 'ai', null,
             'M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5'],
     ];
