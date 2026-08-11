@@ -2572,6 +2572,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { threshold: 0 }).observe(bar);
     })();
 
+    /* Phone toolbar trio (after Undo/Redo): proxies that forward to the real
+       Add / empty-dates / done-days buttons and mirror their pressed tint —
+       the behaviour itself stays in one place. */
+    (() => {
+        const syncTint = () => {
+            const e = $id('toggleEmptyDatesBtn'), me = $id('mToggleEmptyBtn');
+            if (e && me) {
+                const on = e.classList.contains('btn-primary');
+                me.classList.toggle('btn-primary', on);
+                me.classList.toggle('btn-white', !on);
+            }
+            const d = $id('toggleDoneDaysBtn'), md = $id('mToggleDoneBtn');
+            if (d && md) {
+                md.setAttribute('aria-pressed', d.getAttribute('aria-pressed') || 'false');
+                md.title = d.title;
+            }
+        };
+        [['mAddActivityBtn', 'addActivityBtn'], ['mToggleEmptyBtn', 'toggleEmptyDatesBtn'], ['mToggleDoneBtn', 'toggleDoneDaysBtn']]
+            .forEach(([proxy, target]) => {
+                $id(proxy)?.addEventListener('click', () => { $id(target)?.click(); setTimeout(syncTint, 60); });
+            });
+        document.addEventListener('activities:rendered', syncTint);
+        syncTint();
+    })();
+
     // Tools → Contract All: every card folded, every day folded, both saved.
     $id('contractAllBtn')?.addEventListener('click', () => {
         CARD_OPEN.clear(); saveCardOpen(); applyCardCollapse();

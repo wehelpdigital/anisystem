@@ -954,7 +954,8 @@
         /* Fully-done days folded away by the toolbar toggle (the fold/unfold
            itself is height-animated in JS with the house easing). */
         .date-group.done-day-away { display: none; }
-        #toggleDoneDaysBtn[aria-pressed="true"] { background: var(--color-brand-50); border-color: var(--color-brand-400); color: var(--color-brand-800); }
+        #toggleDoneDaysBtn[aria-pressed="true"],
+        #mToggleDoneBtn[aria-pressed="true"] { background: var(--color-brand-50); border-color: var(--color-brand-400); color: var(--color-brand-800); }
         body.show-hidden-activities .rest-day-substitute { display: none; }
         .activity-card.filter-hidden { display: none !important; }
         .date-group.group-collapsed { display: none; }
@@ -1338,6 +1339,18 @@
             <span class="hidden sm:inline">Redo</span>
             <span id="activityRedoCount" class="absolute -top-1.5 -right-1.5 hidden min-w-5 h-5 px-1 rounded-full bg-accent-500 text-ink text-[10px] font-bold items-center justify-center">0</span>
         </button>
+        {{-- Phone-only quick trio right after Undo/Redo: Add, empty-dates
+             toggle, done-days toggle. Proxies — they forward to the real
+             buttons below so each behaviour keeps ONE code path. --}}
+        <button type="button" id="mAddActivityBtn" class="btn btn-primary btn-sm md:hidden" data-activities-only title="Add an activity" aria-label="Add an activity">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        </button>
+        <button type="button" id="mToggleEmptyBtn" class="btn btn-white btn-sm md:hidden" data-activities-only title="Show or hide the empty dates" aria-label="Show or hide the empty dates">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+        </button>
+        <button type="button" id="mToggleDoneBtn" class="btn btn-white btn-sm md:hidden" data-activities-only aria-pressed="false" title="Hide the days where every activity is done" aria-label="Hide the fully done days">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </button>
         {{-- Calendar view + Add note: quick actions kept in the toolbar, right
              after Redo. Calendar collapses into the Tools menu on phones. --}}
         <button type="button" id="viewToggleBtn" class="btn btn-white btn-sm toolbar-desktop-action" data-activities-only
@@ -1448,7 +1461,7 @@
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
         <span class="hidden sm:inline">Today</span>
     </button>
-    <button type="button" id="toggleEmptyDatesBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
+    <button type="button" id="toggleEmptyDatesBtn" class="btn btn-white btn-sm shrink-0 hidden md:inline-flex" data-activities-only
             title="Show or hide the empty &quot;no activities&quot; dates">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
         <span id="toggleEmptyDatesLabel" class="hidden sm:inline">Hide empty dates</span>
@@ -1467,7 +1480,7 @@
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z"/></svg>
         <span class="hidden sm:inline">Quick Share</span>
     </button>
-    <div class="shrink-0" id="addActivityWrap" data-activities-only>
+    <div class="shrink-0 hidden md:block" id="addActivityWrap" data-activities-only>
         <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
             <span class="hidden sm:inline">Add Activity</span>
