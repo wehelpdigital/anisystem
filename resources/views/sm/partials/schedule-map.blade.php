@@ -313,8 +313,10 @@
     const G = () => window.google.maps;
 
     const hue = (uid) => 'hsl(' + ((uid * 137) % 360) + ', 70%, 45%)';
-    const fmtM = (m) => m < 1000 ? Math.round(m) + ' m' : (m / 1000).toFixed(2) + ' km';
-    const fmtA = (m2) => m2 < 10000 ? Math.round(m2).toLocaleString() + ' m²' : (m2 / 10000).toFixed(2) + ' ha';
+    const fmtM = (m) => m < 1000 ? m.toFixed(2) + ' m' : (m / 1000).toFixed(2) + ' km';
+    const fmtA = (m2) => m2 < 10000
+        ? m2.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' m²'
+        : (m2 / 10000).toFixed(2) + ' ha';
     const LL = (p) => new (G().LatLng)(p[0], p[1]);
     const dist = (a, b) => G().geometry.spherical.computeDistanceBetween(LL(a), LL(b));
     const areaOf = (pts) => G().geometry.spherical.computeArea(pts.map(LL));
@@ -373,8 +375,79 @@
                     renderObject(res.data.object);
                 } catch (e) { if (window.toast) toast(e.message, 'error'); }
             });
+            // Hold a pin (~half a second, without dragging) and it becomes
+            // the live end of the shape: taps on the map grow it from there,
+            // a tap on ANOTHER pin closes the ring into an area.
+            let lpTimer = null;
+            m.addListener('mousedown', () => {
+                clearTimeout(lpTimer);
+                lpTimer = setTimeout(() => beginExtend(o, i, m), 550);
+            });
+            m.addListener('mouseup', () => clearTimeout(lpTimer));
+            m.addListener('dragstart', () => {
+                clearTimeout(lpTimer);
+                if (extending && extending.id === o.id && extending.index === i) cancelExtend();
+            });
+            m.addListener('click', () => {
+                if (!extending || extending.id !== o.id) return;
+                if (Date.now() - extending.at < 700) return;      // the long-press's own tail
+                if (extending.index === i) { cancelExtend(); if (window.toast) toast('Done drawing from that point.'); return; }
+                closeExtendInto(o);
+            });
+            if (pendingExtend && pendingExtend.id === o.id && pendingExtend.index === i) {
+                pendingExtend = null;
+                beginExtend(o, i, m, true);
+            }
             parts.push(m);
         });
+    }
+    let extending = null, pendingExtend = null;
+    function beginExtend(o, i, marker, quiet) {
+        if (o.kind === 'rect' || o.kind === 'area') return;       // already closed shapes
+        cancelExtend();
+        extending = { id: o.id, index: i, marker, color: o.color || '#f5c518', at: Date.now() };
+        marker.setIcon(pinIcon(extending.color, 1.6));
+        marker.setZIndex(9999);
+        if (!quiet && window.toast) toast('Drawing from this point — tap the map to add, tap another point to close.');
+    }
+    function cancelExtend() {
+        if (!extending) return;
+        try { extending.marker.setIcon(pinIcon(extending.color, 1.2)); extending.marker.setZIndex(null); } catch (_) {}
+        extending = null;
+    }
+    async function extendTo(latLng) {
+        const cur = objIndex.get(extending.id);
+        if (!cur) { cancelExtend(); return; }
+        const q = [latLng.lat(), latLng.lng()];
+        const np = cur.points.slice();
+        let ni;
+        if (extending.index === 0) { np.unshift(q); ni = 0; }
+        else { ni = extending.index + 1; np.splice(ni, 0, q); }
+        try {
+            const res = await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: cur.id, points: np } });
+            pushHist({ type: 'update', id: cur.id, before: cur.points, after: res.data.object.points });
+            pendingExtend = { id: cur.id, index: ni };            // re-arm on the fresh render
+            dropObject(cur.id);
+            renderObject(res.data.object);
+        } catch (e) { pendingExtend = null; if (window.toast) toast(e.message, 'error'); }
+    }
+    async function closeExtendInto(o) {
+        const cur = objIndex.get(o.id) || o;
+        if ((cur.points || []).length < 3) { if (window.toast) toast('Need at least 3 points to close a shape.', 'error'); return; }
+        cancelExtend();
+        try {
+            const res = await api(`${URLS.push}?scheduleId=${SID}`, {
+                method: 'POST', body: { kind: 'area', points: cur.points, color: cur.color, width: cur.width, label: cur.label },
+            });
+            renderObject(res.data.object);
+            // Two history steps in this order: one undo re-opens the ring,
+            // a second removes the area again.
+            pushHist({ type: 'add', object: res.data.object });
+            pushHist({ type: 'remove', object: cur });
+            await api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: cur.id } }).catch(() => {});
+            dropObject(cur.id);
+            if (window.toast) toast('Closed into an area.');
+        } catch (e) { if (window.toast) toast(e.message, 'error'); }
     }
     function centerOf(pts) {
         const b = new (G().LatLngBounds)();
@@ -436,8 +509,12 @@
         }));
         layers.set(o.id, parts);
     }
-    function dropObject(id) { (layers.get(id) || []).forEach((p) => p.setMap(null)); layers.delete(id); objIndex.delete(id); }
-    function dropAll() { layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); }
+    function dropObject(id) {
+        if (extending && extending.id === id) cancelExtend();
+        (layers.get(id) || []).forEach((p) => p.setMap(null));
+        layers.delete(id); objIndex.delete(id);
+    }
+    function dropAll() { cancelExtend(); layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); }
 
     /* Undo is a history of inverse calls against the same endpoints the
        actions used, so every step also lands live for the team. Re-adding a
@@ -574,6 +651,7 @@
     function setTool(t) {
         tool = t;
         clearTemp();
+        cancelExtend();
         document.querySelectorAll('[data-mtool]').forEach((b) => b.classList.toggle('is-active', b.dataset.mtool === t));
         const row = document.querySelector('.cmap-mrow[data-mtool="' + t + '"]');
         const lab = document.getElementById('cmapToolLabel');
@@ -942,7 +1020,10 @@
             } catch (_) {}
         });
 
-        map.addListener('click', (e) => { if (tool !== 'pan' && tool !== 'pen' && tool !== 'erase') onTap(e.latLng); });
+        map.addListener('click', (e) => {
+            if (extending) { extendTo(e.latLng); return; }
+            if (tool !== 'pan' && tool !== 'pen' && tool !== 'erase') onTap(e.latLng);
+        });
         bindPen(map.getDiv());
 
         document.querySelectorAll('[data-mtool]').forEach((b) =>
