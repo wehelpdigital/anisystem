@@ -180,6 +180,12 @@
             <span class="cmap-veil-spin"></span>
             <span class="cmap-veil-txt">Finding your ground…</span>
         </div>
+        <div class="cmap-editbar hidden" id="cmapEditBar">
+            <span class="cmap-editbar-lbl" id="cmapEditLbl">Editing</span>
+            <button type="button" id="cmapDelPoint" hidden>Delete point</button>
+            <button type="button" id="cmapDelObj">Delete shape</button>
+            <button type="button" id="cmapEditDone">Done</button>
+        </div>
     </div>
 @endif
 </div>
@@ -265,6 +271,17 @@
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .cmap-saverow-s { display: block; font-size: .7rem; color: var(--color-gray-500); margin-top: .1rem; }
     .cmap-saves-empty { font-size: .8rem; color: var(--color-gray-500); text-align: center; padding: 1.2rem 0; }
+    /* Select-tool action bar: floats over the map while a shape is held. */
+    .cmap-editbar { position: absolute; left: 50%; bottom: .85rem; transform: translateX(-50%) translateY(0);
+        z-index: 6; display: flex; align-items: center; gap: .4rem; padding: .4rem .55rem; border-radius: 999px;
+        background: var(--color-white); box-shadow: 0 10px 30px rgb(0 0 0 / .25);
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .cmap-editbar.hidden { display: flex; opacity: 0; transform: translateX(-50%) translateY(.6rem); pointer-events: none; }
+    .cmap-editbar-lbl { font-size: .72rem; font-weight: 800; color: var(--color-gray-500); padding: 0 .2rem 0 .45rem; white-space: nowrap; }
+    .cmap-editbar button { font-size: .75rem; font-weight: 800; padding: .34rem .7rem; border-radius: 999px; white-space: nowrap; }
+    #cmapDelPoint, #cmapDelObj { background: #fee2e2; color: #b91c1c; }
+    #cmapEditDone { background: var(--color-gray-100); color: var(--color-gray-700); }
+    @media (prefers-reduced-motion: reduce) { .cmap-editbar { transition: none; } }
     /* Measurement labels ride Google marker labels — these classes style them. */
     .cmap-lbl-g { background: rgb(17 24 39 / .82); border-radius: .45rem; padding: .1rem .4rem; white-space: nowrap; }
     .cmap-txt-g { background: #fff; border: 1.5px solid #111827; border-radius: .45rem; padding: .12rem .45rem; box-shadow: 0 2px 6px rgb(0 0 0 / .25); }
@@ -349,25 +366,28 @@
             });
             m.addListener('drag', (ev) => {
                 const path = parts[0].getPath ? parts[0].getPath() : null;
-                if (!path) return;
-                if (o.kind === 'rect') {
-                    const b = new (G().LatLngBounds)(LL(pts[(i + 2) % 4]), ev.latLng);
-                    const sw = b.getSouthWest(), ne = b.getNorthEast();
-                    [[sw.lat(), sw.lng()], [sw.lat(), ne.lng()], [ne.lat(), ne.lng()], [ne.lat(), sw.lng()]]
-                        .forEach((c2, j) => path.setAt(j, LL(c2)));
-                } else {
-                    path.setAt(i, ev.latLng);
-                }
+                if (path) path.setAt(i, ev.latLng);
             });
             m.addListener('dragend', async (ev) => {
                 const q = [ev.latLng.lat(), ev.latLng.lng()];
-                let np;
+                const cur = objIndex.get(o.id) || o;
                 if (o.kind === 'rect') {
-                    const b = new (G().LatLngBounds)(LL(pts[(i + 2) % 4]), LL(q));
-                    np = [[b.getSouthWest().lat(), b.getSouthWest().lng()], [b.getNorthEast().lat(), b.getNorthEast().lng()]];
-                } else {
-                    np = (objIndex.get(o.id) || o).points.map((pp, j) => (j === i ? q : pp));
+                    // A dragged corner walks free — square no more, polygon
+                    // still: the box converts to an area with that corner moved.
+                    const corners = pts.map((pp, j) => (j === i ? q : pp));
+                    try {
+                        const res = await api(`${URLS.push}?scheduleId=${SID}`, {
+                            method: 'POST', body: { kind: 'area', points: corners, color: cur.color, width: cur.width, label: cur.label },
+                        });
+                        renderObject(res.data.object);
+                        pushHist({ type: 'add', object: res.data.object });
+                        pushHist({ type: 'remove', object: cur });
+                        await api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: cur.id } }).catch(() => {});
+                        dropObject(cur.id);
+                    } catch (e) { if (window.toast) toast(e.message, 'error'); }
+                    return;
                 }
+                const np = cur.points.map((pp, j) => (j === i ? q : pp));
                 try {
                     const res = await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: o.id, points: np } });
                     pushHist({ type: 'update', id: o.id, before: o.points, after: res.data.object.points });
@@ -389,10 +409,13 @@
                 if (extending && extending.id === o.id && extending.index === i) cancelExtend();
             });
             m.addListener('click', () => {
-                if (!extending || extending.id !== o.id) return;
-                if (Date.now() - extending.at < 700) return;      // the long-press's own tail
-                if (extending.index === i) { cancelExtend(); if (window.toast) toast('Done drawing from that point.'); return; }
-                closeExtendInto(o);
+                if (extending && extending.id === o.id) {
+                    if (Date.now() - extending.at < 700) return;  // the long-press's own tail
+                    if (extending.index === i) { cancelExtend(); if (window.toast) toast('Done drawing from that point.'); return; }
+                    closeExtendInto(o);
+                    return;
+                }
+                if (tool === 'edit') selectVertex(o, i, m, parts);
             });
             if (pendingExtend && pendingExtend.id === o.id && pendingExtend.index === i) {
                 pendingExtend = null;
@@ -466,8 +489,9 @@
         if (o.kind === 'pen' || o.kind === 'line' || o.kind === 'path' || o.kind === 'arrow') {
             parts.push(new (G().Polyline)({ ...style, path: pts.map(LL),
                 icons: o.kind === 'arrow' ? [ARROW_HEAD(style.strokeColor)] : null }));
-            if (o.kind === 'arrow') vertexPins(parts, o, pts, style.strokeColor);
-            else if (o.kind !== 'pen') {
+            // Arrow tips stay clean — no teardrop pins. Move or reshape an
+            // arrow with the Select tool.
+            if (o.kind !== 'pen' && o.kind !== 'arrow') {
                 vertexPins(parts, o, pts, style.strokeColor);
                 segLabels(parts, pts, false);
                 if (o.kind === 'path' && pts.length > 2) {
@@ -507,14 +531,16 @@
                 beginEdit(o, parts);
             }
         }));
+        if (pendingEdit === o.id) { pendingEdit = null; beginEdit(o, parts); }
         layers.set(o.id, parts);
     }
     function dropObject(id) {
         if (extending && extending.id === id) cancelExtend();
+        if (editing && editing.o.id === id) endEdit();
         (layers.get(id) || []).forEach((p) => p.setMap(null));
         layers.delete(id); objIndex.delete(id);
     }
-    function dropAll() { cancelExtend(); layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); }
+    function dropAll() { cancelExtend(); endEdit(); layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); }
 
     /* Undo is a history of inverse calls against the same endpoints the
        actions used, so every step also lands live for the team. Re-adding a
@@ -765,7 +791,59 @@
      * of vertex handles help nobody — and a rect stays a rect: its corners are
      * re-derived from bounds on save. Saves debounce behind the gesture and
      * re-render, so the measurement labels land on the new geometry. */
-    let editing = null, saveTimer = null;
+    let editing = null, saveTimer = null, pendingEdit = null, selVertex = null;
+    function showEditBar(o) {
+        const KINDS = { pen: 'drawing', line: 'line', path: 'multi-line', rect: 'box', area: 'area', text: 'label', arrow: 'arrow' };
+        document.getElementById('cmapEditLbl').textContent = 'Editing ' + (KINDS[o.kind] || 'shape');
+        document.getElementById('cmapDelPoint').hidden = true;
+        document.getElementById('cmapEditBar').classList.remove('hidden');
+    }
+    function clearSelVertex() {
+        if (!selVertex) return;
+        try { selVertex.marker.setIcon(pinIcon(selVertex.color, 1.2)); } catch (_) {}
+        selVertex = null;
+        const btn = document.getElementById('cmapDelPoint');
+        if (btn) btn.hidden = true;
+    }
+    /* Tapping a pin with the Select tool holds that exact point: the bar
+       offers to delete it (box corners and single-point labels excluded —
+       a box corner reshapes instead, a label has only itself). */
+    function selectVertex(o, i, m, parts) {
+        beginEdit(o, parts);
+        clearSelVertex();
+        if (o.kind === 'rect' || o.kind === 'text') return;
+        selVertex = { id: o.id, index: i, marker: m, color: o.color || '#f5c518' };
+        m.setIcon(pinIcon(selVertex.color, 1.5));
+        document.getElementById('cmapDelPoint').hidden = false;
+    }
+    async function deleteSelPoint() {
+        if (!selVertex) return;
+        const cur = objIndex.get(selVertex.id);
+        if (!cur) { clearSelVertex(); return; }
+        const min = cur.kind === 'area' ? 3 : 2;
+        if ((cur.points || []).length <= min) {
+            if (window.toast) toast('Too few points left — delete the whole shape instead.', 'error');
+            return;
+        }
+        const np = cur.points.filter((_, j) => j !== selVertex.index);
+        clearSelVertex();
+        try {
+            const res = await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: cur.id, points: np } });
+            pushHist({ type: 'update', id: cur.id, before: cur.points, after: res.data.object.points });
+            pendingEdit = cur.id;                 // stay holding the shape
+            dropObject(cur.id);
+            renderObject(res.data.object);
+        } catch (e) { if (window.toast) toast(e.message, 'error'); }
+    }
+    async function deleteEditedObj() {
+        if (!editing) return;
+        const o = objIndex.get(editing.o.id) || editing.o;
+        endEdit();
+        pushHist({ type: 'remove', object: o });
+        api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: o.id } }).catch(() => {});
+        dropObject(o.id);
+        if (window.toast) toast('Removed from the map.');
+    }
     function geometryOf(o, parts) {
         const first = parts[0];
         if (o.kind === 'text') { const pos = first.getPosition(); return [[pos.lat(), pos.lng()]]; }
@@ -815,6 +893,7 @@
             editing.listeners.push(path.addListener('remove_at', scheduleSave));
         }
         editing.listeners.push(first.addListener('dragend', scheduleSave));
+        showEditBar(o);
     }
     function endEdit() {
         if (!editing) return;
@@ -824,6 +903,9 @@
         if (first.setOptions) first.setOptions({ draggable: false, editable: false });
         else if (first.setDraggable) first.setDraggable(false);
         editing = null;
+        clearSelVertex();
+        const bar = document.getElementById('cmapEditBar');
+        if (bar) bar.classList.add('hidden');
     }
 
     /* ---------- teammates' drawing ghosts ---------- */
@@ -1035,6 +1117,9 @@
             else openSaveSheet(b.dataset.maction === 'savemap' ? 'map' : 'image');
         }));
         document.getElementById('cmapSaveGo').addEventListener('click', doSaveMap);
+        document.getElementById('cmapDelPoint').addEventListener('click', deleteSelPoint);
+        document.getElementById('cmapDelObj').addEventListener('click', deleteEditedObj);
+        document.getElementById('cmapEditDone').addEventListener('click', endEdit);
         document.getElementById('cmapUndo').addEventListener('click', () => stepHist(histUndo, histRedo));
         document.getElementById('cmapRedo').addEventListener('click', () => stepHist(histRedo, histUndo));
         document.getElementById('cmapColorBtn').addEventListener('click', () => window.openSheet?.('cmapColorSheet'));
