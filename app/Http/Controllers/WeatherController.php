@@ -68,11 +68,32 @@ class WeatherController extends Controller
      * the activities board can show each lot's own weather. Locations are still
      * resolved once per distinct address; each lot maps to its location key.
      */
+    /**
+     * The weather as a schedule module: the same per-lot forecast the day
+     * headers summarise, plus an hour-by-hour tab for deciding when in the day
+     * to work. Data arrives over the endpoint below; the page ships empty.
+     */
+    public function page(Request $request)
+    {
+        // Same gate every other module uses, so an invited worker reaches it
+        // through the boss they work for rather than being locked out.
+        $schedule = \App\Models\AsCroppingSchedule::active()
+            ->forClient(\App\Support\WorkerContext::effectiveOwnerId())
+            ->where('id', (int) $request->query('id'))
+            ->firstOrFail();
+
+        return view('sm.weather', ['schedule' => $schedule]);
+    }
+
     public function scheduleForecast(Request $request)
     {
-        $user = $request->user();
         $scheduleId = (int) $request->query('scheduleId');
-        $owned = $scheduleId && $user->schedules()->where('id', $scheduleId)->exists();
+        // forClient, not the caller's own rows: an invited worker sees the
+        // farm they work for, exactly as they do in every other module.
+        $owned = $scheduleId && \App\Models\AsCroppingSchedule::active()
+            ->forClient(\App\Support\WorkerContext::effectiveOwnerId())
+            ->where('id', $scheduleId)
+            ->exists();
         if (! $owned) {
             return response()->json(['success' => true, 'data' => ['located' => false, 'locations' => [], 'lots' => []]]);
         }
@@ -97,12 +118,20 @@ class WeatherController extends Controller
             }
         }
 
+        // Hour-by-hour is only for the Weather module's own tab — the day
+        // headers just want the daily chips, and fetching hours for every
+        // location would treble that response for nothing.
+        $wantHourly = $request->boolean('hourly');
+
         $resolved = [];
         foreach (array_slice($locations, 0, self::MAX_LOCATIONS, true) as $key => $info) {
             $fc = $this->weather->forecastForPlace($info['query'], 6);
             $resolved[$key] = $fc
                 ? ['ok' => true, 'place' => $fc['place'], 'days' => $fc['days']]
                 : ['ok' => false, 'place' => $info['label']];
+            if ($wantHourly && $fc) {
+                $resolved[$key]['hours'] = $this->weather->hourly($fc['lat'], $fc['lon'], 24) ?: [];
+            }
         }
 
         return response()->json([

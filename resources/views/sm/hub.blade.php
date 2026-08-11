@@ -35,6 +35,8 @@
             'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'],
         // Folded map, not a pin: the module is for drawing the ground, and a
         // pin reads as "where am I" rather than "plan the field".
+        ['Weather', 'weather', null,
+            'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z'],
         ['Maps', 'maps', null,
             'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2M15 11.5a2 2 0 11-4 0 2 2 0 014 0z'],
         ['AI Technician', 'ai', null,

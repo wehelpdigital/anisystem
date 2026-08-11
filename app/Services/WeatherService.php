@@ -165,6 +165,88 @@ class WeatherService
     }
 
     /**
+     * Hour-by-hour for the next stretch, starting at the current hour in the
+     * location's own timezone — a farmer planning a spray wants "is it raining
+     * at 2pm", which a daily maximum cannot answer. Cached half an hour: the
+     * upstream data only refreshes hourly, and this rides the same free tier.
+     */
+    public function hourly(float $lat, float $lon, int $hours = 24): ?array
+    {
+        $hours = max(6, min(48, $hours));
+        $key = sprintf('weather:hr:%.2f,%.2f:%d', $lat, $lon, $hours);
+        $cached = Cache::get($key);
+        if (is_array($cached)) {
+            return $cached;
+        }
+
+        try {
+            $res = Http::timeout(8)->retry(1, 200)->get(self::FORECAST_URL, [
+                'latitude' => $lat,
+                'longitude' => $lon,
+                'hourly' => 'weather_code,temperature_2m,precipitation_probability,precipitation,relative_humidity_2m,wind_speed_10m',
+                'timezone' => 'auto',
+                // Two calendar days always covers the next 24 hours, whatever
+                // the time of day this is asked.
+                'forecast_days' => 3,
+            ]);
+        } catch (\Throwable $e) {
+            return null;
+        }
+
+        if (! $res->ok()) {
+            return null;
+        }
+
+        $h = $res->json('hourly');
+        if (! is_array($h) || empty($h['time'])) {
+            return null;
+        }
+
+        // Open-Meteo returns whole days in local time; start at the hour we are
+        // actually in, so the first card is "now" rather than midnight.
+        $tz = $res->json('timezone') ?: 'UTC';
+        $now = Carbon::now($tz);
+        $out = [];
+        foreach ($h['time'] as $i => $iso) {
+            $when = Carbon::parse($iso, $tz);
+            if ($when->lt($now->copy()->startOfHour()) || count($out) >= $hours) {
+                continue;
+            }
+            $meta = $this->codeMeta((int) ($h['weather_code'][$i] ?? 0));
+            $out[] = [
+                'time' => $iso,
+                'hour' => $when->isoFormat('h A'),
+                'dow' => $when->isoFormat('ddd'),
+                'isNow' => empty($out),
+                'newDay' => $when->hour === 0,
+                'text' => $meta['text'],
+                'emoji' => $meta['emoji'],
+                'temp' => isset($h['temperature_2m'][$i]) ? (int) round($h['temperature_2m'][$i]) : null,
+                'pop' => isset($h['precipitation_probability'][$i]) ? (int) $h['precipitation_probability'][$i] : null,
+                'mm' => isset($h['precipitation'][$i]) ? round((float) $h['precipitation'][$i], 1) : null,
+                'humidity' => isset($h['relative_humidity_2m'][$i]) ? (int) $h['relative_humidity_2m'][$i] : null,
+                'wind' => isset($h['wind_speed_10m'][$i]) ? (int) round($h['wind_speed_10m'][$i]) : null,
+            ];
+        }
+
+        if (empty($out)) {
+            return null;
+        }
+
+        Cache::put($key, $out, now()->addMinutes(30));
+
+        return $out;
+    }
+
+    /** Hour-by-hour for a free-text place, or null if it cannot resolve. */
+    public function hourlyForPlace(?string $place, int $hours = 24): ?array
+    {
+        $geo = $this->geocode(trim((string) $place));
+
+        return $geo ? $this->hourly($geo['lat'], $geo['lon'], $hours) : null;
+    }
+
+    /**
      * Normalise a PSGC town name into something the geocoder resolves well:
      * drop "(Bitulok & Sabani)" parentheticals and unwrap "City Of Gapan" /
      * "Science City Of Muñoz" down to the place name itself.
