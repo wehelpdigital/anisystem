@@ -17,6 +17,20 @@
             border: 1px solid var(--color-gray-200); border-radius: 1rem; overflow: hidden;
             background: var(--color-white);
         }
+        /* The AI bubble parks itself bottom-right, which on a map is directly
+           over the ground you are drawing on — and unlike a list, a map has no
+           dead corner. It stands down while the map is open. */
+        body.smap-open #aiFloat { display: none !important; }
+
+        @media (max-width: 767px) {
+            /* 81px of chrome sat between the header and the map for a single
+               row of two buttons: the page's top padding, the bar's own
+               padding and its bottom margin all stacked. Trimmed to about
+               half here — the map is the page. */
+            body.smap-open main { padding-top: .5rem; }
+            body.smap-open main > .sticky { margin-bottom: .5rem; }
+        }
+
         @media (max-width: 767px) {
             /* A map is the one thing that wants the whole screen: the page's
                padding and the stage's own frame were taking 47px of width and
@@ -92,6 +106,10 @@
             const phone = () => window.matchMedia('(max-width: 767px)').matches;
             function chrome() {
                 const shown = !!stage && stage.getBoundingClientRect().height > 0;
+                // Its own class rather than the shell's ai-float-off: the shell
+                // drives that one for the AI module, and two owners toggling
+                // one class fight each other when you switch between them.
+                document.body.classList.toggle('smap-open', shown);
                 document.body.classList.toggle('no-footer', shown && phone());
             }
             if (stage && window.ResizeObserver) {
