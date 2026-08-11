@@ -40,6 +40,13 @@
     <button type="button" id="ccallRingNo" class="ccall-ring-no" aria-label="Dismiss">✕</button>
 </div>
 
+{{-- Connecting pill: a call takes a moment to stand up — say so, offer out. --}}
+<div id="ccallConnecting" class="ccall-connecting hidden" role="status">
+    <span class="ccall-conn-spin"></span>
+    <span class="ccall-conn-text" id="ccallConnectingText">Starting the call…</span>
+    <button type="button" id="ccallConnectingCancel" class="ccall-conn-cancel">Cancel</button>
+</div>
+
 <style>
     .ccall { position: fixed; right: 1rem; bottom: 1rem; z-index: 150; width: min(30rem, calc(100vw - 2rem));
         background: #111827; color: #fff; border-radius: 1rem; box-shadow: 0 16px 44px rgba(0,0,0,.4); overflow: hidden; }
@@ -71,6 +78,25 @@
     .ccall-btn:hover { background: rgb(255 255 255 / .2); }
     .ccall-btn.is-off { background: #ef4444; }
     .ccall-leave { background: #ef4444; } .ccall-leave:hover { background: #dc2626; }
+
+    .ccall-connecting { position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); z-index: 160;
+        display: flex; align-items: center; gap: .65rem; padding: .6rem .8rem; border-radius: 999px;
+        background: #0b1220; color: #fff; box-shadow: 0 16px 44px rgb(0 0 0 / .45);
+        animation: ccallConnIn .28s cubic-bezier(.22,1,.36,1) both; }
+    .ccall-connecting.hidden { display: none; }
+    @keyframes ccallConnIn { from { opacity: 0; transform: translateX(-50%) translateY(-.5rem); } }
+    .ccall-conn-spin { width: 1.15rem; height: 1.15rem; border-radius: 999px; flex-shrink: 0;
+        border: 2.5px solid rgb(255 255 255 / .2); border-top-color: #22c55e;
+        animation: ccallConnSpin .7s linear infinite; }
+    @keyframes ccallConnSpin { to { transform: rotate(360deg); } }
+    .ccall-conn-text { font-size: .82rem; font-weight: 700; }
+    .ccall-conn-cancel { font-size: .74rem; font-weight: 800; color: #fca5a5; padding: .25rem .55rem;
+        border-radius: 999px; background: rgb(255 255 255 / .08); }
+    .ccall-conn-cancel:hover { background: rgb(255 255 255 / .16); }
+    @media (prefers-reduced-motion: reduce) {
+        .ccall-connecting { animation: none; }
+        .ccall-conn-spin { animation-duration: 1.4s; }
+    }
 
     .ccall-ring { position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); z-index: 160; display: flex; align-items: center; gap: .7rem;
         width: min(24rem, calc(100vw - 2rem)); background: #fff; border: 1px solid var(--color-gray-200); border-radius: 1rem; box-shadow: 0 16px 44px rgba(0,0,0,.28); padding: .7rem .85rem; animation: ccallDrop .2s ease both; }
@@ -158,14 +184,27 @@
         }
 
         /* ---------- join / leave ---------- */
+        /* Standing a call up takes visible seconds (token, module, connect) —
+           the pill says so the moment the button is pressed, and Cancel is
+           honoured at every await boundary. */
+        let joining = false, joinCancelled = false;
+        const showConnecting = (t) => { $('ccallConnectingText').textContent = t || 'Starting the call…'; $('ccallConnecting').classList.remove('hidden'); };
+        const hideConnecting = () => $('ccallConnecting').classList.add('hidden');
+        $('ccallConnectingCancel').addEventListener('click', () => { joinCancelled = true; hideConnecting(); });
         async function joinRoom(kind, withUserId, title) {
             if (active) { showPanel(); return true; }
+            if (joining) return false;
+            joining = true; joinCancelled = false;
+            showConnecting(kind === 'group' ? 'Starting the team call…' : 'Calling…');
+            try {
             let data;
             try {
                 const res = await api(URLS.token, { method: 'POST', body: { scheduleId: SCHEDULE_ID, kind, withUserId } });
                 data = res.data;
             } catch (err) { if (window.toast) toast(err.message || 'Could not start the call.', 'error'); return false; }
+            if (joinCancelled) return false;
             try { LK = LK || await window.loadLivekit(); } catch (_) { if (window.toast) toast('Could not load the call module.', 'error'); return false; }
+            if (joinCancelled) return false;
 
             room = new LK.Room({ adaptiveStream: true, dynacast: true });
             roomName = data.room; active = true;
@@ -177,6 +216,7 @@
                 if (window.toast) toast('Could not connect: ' + (err && err.message ? err.message : err), 'error');
                 cleanup(); return false;
             }
+            if (joinCancelled) { cleanup(); return false; }
             // Connected. Enabling the mic needs a SECURE context (https:// or
             // localhost) + permission — if it fails, stay in the call, muted.
             camOn = false;
@@ -196,6 +236,7 @@
             });
             showPanel(); updateCount(); refreshMuteBadges(); paintMic(); paintCam();
             return true;
+            } finally { joining = false; hideConnecting(); }
         }
         function cleanup() {
             try { room && room.disconnect(); } catch (_) {}
