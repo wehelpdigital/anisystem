@@ -3845,6 +3845,33 @@ document.addEventListener('DOMContentLoaded', () => {
             return strip;
         }
 
+        /* A farm with many lots has many forecasts, and on a phone the strip
+           then runs off the edge — a row of chips you can only reach by
+           swiping something most people never try. When it genuinely does not
+           fit, it becomes one button showing the day's first sky, which opens
+           the full per-lot forecast. Measured, not guessed: only a strip that
+           actually overflows is folded away. */
+        function collapseIfCramped(strip) {
+            if (!window.matchMedia('(max-width: 767px)').matches) return;
+            requestAnimationFrame(() => {
+                if (!strip.isConnected || strip.scrollWidth <= strip.clientWidth + 4) return;
+                const first = strip.querySelector('.wx-emoji');
+                const n = strip.querySelectorAll('.js-wx-chip').length;
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'wx-mini-btn';
+                btn.title = 'Weather for each lot';
+                btn.setAttribute('aria-label', 'Weather for each lot');
+                btn.innerHTML = '<span class="wx-emoji">' + (first ? first.textContent : '⛅') + '</span>'
+                    + '<span>Weather</span><span class="wx-mini-n">' + n + '</span>';
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();          // not a fold of the day
+                    $id('weatherBtn')?.click();
+                });
+                strip.replaceWith(btn);
+            });
+        }
+
         // Decorate every in-window date header + empty rest-day marker.
         function renderHeaderWeather() {
             if (!wxByDate) return;
@@ -3855,6 +3882,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!strip) return;
                 const count = header.querySelector('.date-header-count');
                 count ? header.insertBefore(strip, count) : header.appendChild(strip);
+                collapseIfCramped(strip);
             });
             $qsa('#activitiesList .rest-day-marker[data-date]').forEach((m) => {
                 if (m.querySelector('.date-header-weather')) return;

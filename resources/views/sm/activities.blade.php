@@ -341,6 +341,17 @@
                 order: 10; flex: 1 0 100%; width: 100%; min-width: 0;
                 overflow-x: auto; overflow-y: hidden;
             }
+            /* What the strip becomes when the day has more forecasts than the
+               screen can carry (see collapseIfCramped). */
+            .wx-mini-btn {
+                order: 10; flex: 0 0 auto; display: inline-flex; align-items: center; gap: .3rem;
+                font-size: 11px; font-weight: 700; color: var(--tl-text-soft);
+                background: var(--tl-hover); border-radius: 999px; padding: .15rem .55rem;
+            }
+            .wx-mini-btn .wx-mini-n {
+                font-size: 10px; font-weight: 800; color: var(--tl-text-faint);
+                border-left: 1px solid var(--tl-border-soft); padding-left: .3rem;
+            }
             .date-header-range { flex: 0 1 auto; min-width: 0; overflow: hidden; }
         }
 
