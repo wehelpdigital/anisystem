@@ -148,8 +148,8 @@
                 <p class="cmap-save-hint" id="cmapSaveHint"></p>
                 <label class="cmap-save-label" for="cmapSaveName">Title</label>
                 <input type="text" id="cmapSaveName" class="form-input" placeholder="e.g. North lot irrigation plan" autocomplete="off">
-                <label class="cmap-save-label" for="cmapSaveDesc">What is this map about?</label>
-                <textarea id="cmapSaveDesc" class="form-input" rows="2" placeholder="Optional"></textarea>
+                <label class="cmap-save-label" for="cmapSaveDesc">What is this map about? (optional)</label>
+                <textarea id="cmapSaveDesc" class="form-textarea" rows="3"></textarea>
                 <button type="button" class="cmap-save-go" id="cmapSaveGo"><span id="cmapSaveGoTxt">Save</span></button>
             </div>
         </div>
