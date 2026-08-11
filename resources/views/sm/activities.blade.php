@@ -855,6 +855,10 @@
                hiding controls off-edge. */
             #actHeaderBar { flex-wrap: wrap; row-gap: .35rem; }
         }
+        /* Phones only. `md:hidden` alone does NOT hold here: `.btn` is
+           unlayered CSS and beats Tailwind's layered utility, so the button
+           kept showing next to the two real toggles on desktop. */
+        @media (min-width: 768px) { #viewFilterBtn { display: none !important; } }
         #viewFilterBtn.is-filtering { background: var(--color-brand-50); border-color: var(--color-brand-400); color: var(--color-brand-800); }
         .view-filter-row { width: 100%; display: flex; align-items: center; gap: .75rem; text-align: left;
             padding: .7rem .8rem; border-radius: .8rem; background: var(--color-white);
