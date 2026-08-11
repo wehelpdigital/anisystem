@@ -749,6 +749,11 @@
         let lastPt = null;
         el.addEventListener('pointerdown', (e) => {
             if (!DRAG_TOOLS.includes(tool) || !proj.getProjection()) return;
+            // A press that starts ON a pin, GPS dot or label belongs to that
+            // marker — drag it, hold it — never to a fresh drawing. Without
+            // this, readjusting a line's endpoint also drew a new line.
+            const panes = proj.getPanes && proj.getPanes();
+            if (panes && panes.overlayMouseTarget && panes.overlayMouseTarget.contains(e.target)) return;
             // A second finger joining means the first was a pinch, not a
             // stroke — abandon the half-drawn shape and let the map take it.
             if (penDown) { penDown = false; clearTemp(); return; }
