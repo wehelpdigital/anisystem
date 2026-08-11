@@ -2559,6 +2559,24 @@ document.addEventListener('DOMContentLoaded', () => {
     $id('actJumpTop')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     $id('actJumpBottom')?.addEventListener('click', () => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' }));
 
+    // The floating add + day-toggle twins forward to the real toolbar
+    // buttons and mirror their on/off state.
+    (() => {
+        function syncFabs() {
+            $id('actFabEmpty')?.classList.toggle('is-on', document.body.classList.contains('hide-empty-dates'));
+            $id('actFabDone')?.classList.toggle('is-on', $id('toggleDoneDaysBtn')?.getAttribute('aria-pressed') === 'true');
+        }
+        const pairs = [['actFabAdd', 'addActivityBtn'], ['actFabEmpty', 'toggleEmptyDatesBtn'], ['actFabDone', 'toggleDoneDaysBtn']];
+        pairs.forEach(([fab, real]) => $id(fab)?.addEventListener('click', () => {
+            $id(real)?.click();
+            setTimeout(syncFabs, 50);
+        }));
+        ['toggleEmptyDatesBtn', 'toggleDoneDaysBtn'].forEach((id) =>
+            $id(id)?.addEventListener('click', () => setTimeout(syncFabs, 50)));
+        document.addEventListener('activities:rendered', syncFabs);
+        syncFabs();
+    })();
+
     // Phones: one Versions button opens a sheet of the strip's chips. Rows
     // are rebuilt from the strip on every open, so renames, adds and the
     // current selection are always fresh; taps forward to the real chips.

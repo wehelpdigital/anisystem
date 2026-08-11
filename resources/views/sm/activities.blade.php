@@ -432,6 +432,8 @@
                they stay out of the way. Animated, per the house rule. */
             .act-jumps { transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
             .act-jumps.bar-visible { opacity: 0; pointer-events: none; transform: translateY(.5rem); }
+            .act-jumps .act-fab-add { background: var(--color-brand-600); color: #fff; border-color: transparent; }
+            .act-jumps button.is-on { background: var(--color-brand-50); color: var(--color-brand-700); border-color: var(--color-brand-400); }
             @media (prefers-reduced-motion: reduce) { .act-jumps { transition: none; } }
             /* Phones swap the versions chip strip for the Versions button;
                the strip stays the source of truth (the sheet forwards to its
@@ -1408,6 +1410,18 @@
 {{-- Long-board jump buttons (phones): the toolbar and the version bar sit at
      opposite ends of a list that can be thousands of pixels tall. --}}
 <div class="act-jumps md:hidden" data-activities-only>
+    {{-- Once the header has scrolled away these stand in for it: add an
+         activity plus the two day toggles, then the jump-to-end pair. Each
+         forwards to its real toolbar button so all logic stays in one place. --}}
+    <button type="button" id="actFabAdd" class="act-fab-add" aria-label="Add an activity" title="Add an activity">
+        <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+    </button>
+    <button type="button" id="actFabEmpty" aria-label="Show or hide the empty dates" title="Show or hide the empty dates">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+    </button>
+    <button type="button" id="actFabDone" aria-label="Hide or show the fully-done days" title="Hide or show the fully-done days">
+        <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+    </button>
     <button type="button" id="actJumpTop" aria-label="Jump to the top">
         <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
     </button>
