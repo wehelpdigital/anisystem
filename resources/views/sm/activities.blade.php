@@ -248,6 +248,11 @@
         .activity-info-body .activity-card {
             border: 0; box-shadow: none; padding: 0; background: transparent;
         }
+        /* The sheet is a read view — the clone drops the buttons, so drop the
+           fold chevron and drag grip with them (they promise actions the
+           sheet does not offer, and the grip has no padding gutter here). */
+        .activity-info-body .activity-card::before,
+        .activity-info-body .activity-card::after { display: none; }
         /* Three class selectors on purpose. The card's one-line rules are
            `.activity-card .activity-card-title` — the same weight as a
            two-class override — and they sit later in this file, so an equal
@@ -460,6 +465,27 @@
                 transition: transform .28s cubic-bezier(.22,1,.36,1);
             }
             .activity-card:not(.act-collapsed)::before { transform: rotate(225deg); }
+
+            /* A grip says the card can be dragged — the same six dots the
+               inline notes use, drawn in CSS like the chevron so the twin
+               renderers stay byte-identical, and pointer-events:none so the
+               drag listeners still get every touch. It sits in the card's
+               existing left padding gutter, so nothing reflows. */
+            .activity-card::after {
+                content: ''; position: absolute; left: .3rem; top: 1.3rem;
+                width: 2px; height: 2px; border-radius: 50%;
+                pointer-events: none; opacity: .55;
+                background: var(--tl-text-faint, #9ca3af);
+                box-shadow: 4px 0 0 var(--tl-text-faint, #9ca3af),
+                            0 5px 0 var(--tl-text-faint, #9ca3af),
+                            4px 5px 0 var(--tl-text-faint, #9ca3af),
+                            0 10px 0 var(--tl-text-faint, #9ca3af),
+                            4px 10px 0 var(--tl-text-faint, #9ca3af);
+            }
+            /* A done card is locked (draggable="false") — no grip to promise
+               otherwise. Same for one mid-drag: the ghost carries its own. */
+            .activity-card.is-done::after,
+            .activity-card.dragging::after { display: none; }
 
             /* Title and tags each claim their own full-width row. */
             .activity-card .activity-card-title,
