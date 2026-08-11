@@ -226,7 +226,7 @@ class ScheduleMapController extends BaseScheduleController
             'description' => 'nullable|string|max:2000',
             'lat' => 'nullable|numeric|between:-90,90',
             'lng' => 'nullable|numeric|between:-180,180',
-            'zoom' => 'nullable|integer|min:1|max:21',
+            'zoom' => 'nullable|numeric|between:1,22',
             'maptype' => 'nullable|in:roadmap,hybrid',
         ]);
         if ($validator->fails()) {
@@ -422,7 +422,7 @@ class ScheduleMapController extends BaseScheduleController
             if ($lat === null || $lng === null || $zoom === null) {
                 return null;
             }
-            $url .= '&center=' . round((float) $lat, 6) . ',' . round((float) $lng, 6) . '&zoom=' . (int) $zoom;
+            $url .= '&center=' . round((float) $lat, 6) . ',' . round((float) $lng, 6) . '&zoom=' . (int) round((float) $zoom);
         }
 
         return $url;

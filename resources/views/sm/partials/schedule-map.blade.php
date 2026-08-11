@@ -806,7 +806,7 @@
                 title: document.getElementById('cmapSaveName').value.trim(),
                 description: document.getElementById('cmapSaveDesc').value.trim(),
                 lat: c ? c.lat() : null, lng: c ? c.lng() : null,
-                zoom: map.getZoom(), maptype: satOn ? 'hybrid' : 'roadmap',
+                zoom: Math.round(map.getZoom() || 15), maptype: satOn ? 'hybrid' : 'roadmap',
             } });
             window.closeSheet?.('cmapSaveSheet');
             document.getElementById('cmapSaveName').value = '';
