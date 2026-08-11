@@ -394,6 +394,32 @@
        finished shape pop in. done tells them to drop the ghost. */
     let tempDots = [];
     function dropTempDots() { tempDots.forEach((m) => m.setMap(null)); tempDots = []; }
+    // The classic map pin — its tip IS the point, so what you grab is
+    // exactly what you placed.
+    const PIN = 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z';
+    const pinIcon = () => ({ path: PIN, scale: 1.35, anchor: new (G().Point)(12, 22),
+        fillColor: color, fillOpacity: 1, strokeColor: '#fff', strokeWeight: 1.5 });
+    /* Segment distances paint WHILE the shape is being made, not only after
+       Finish. Labels are reused (moved, retexted) instead of recreated, so
+       drag frames don't flicker. Pen is exempt — hundreds of tiny segments. */
+    let tempLabels = [];
+    function dropTempLabels() { tempLabels.forEach((m) => m.setMap(null)); tempLabels = []; }
+    function refreshTempLabels(closed) {
+        const ring = closed && tempPts.length > 2;
+        const n = tempPts.length < 2 ? 0 : (ring ? tempPts.length : tempPts.length - 1);
+        for (let i = 0; i < n; i++) {
+            const j = (i + 1) % tempPts.length;
+            const at = mid(tempPts[i], tempPts[j]);
+            const txt = fmtM(dist(tempPts[i], tempPts[j]));
+            if (tempLabels[i]) {
+                tempLabels[i].setPosition(LL(at));
+                tempLabels[i].setLabel({ text: txt, className: 'cmap-lbl-g', color: '#fff', fontSize: '11px', fontWeight: '800' });
+            } else {
+                tempLabels[i] = textMark(at, txt, 'cmap-lbl-g');
+            }
+        }
+        while (tempLabels.length > n) tempLabels.pop().setMap(null);
+    }
     let traceLast = 0, traceOn = false;
     function sendTrace(done) {
         if (done && !traceOn) return;
@@ -407,6 +433,7 @@
         if (tempShape) { tempShape.setMap(null); tempShape = null; }
         document.getElementById('cmapFinish').hidden = true;
         dropTempDots();
+        dropTempLabels();
         sendTrace(true);
     }
     function previewTemp(closed) {
@@ -415,6 +442,8 @@
         tempShape = closed
             ? new (G().Polygon)({ ...opts, paths: tempPts.map(LL), fillColor: color, fillOpacity: .06 })
             : new (G().Polyline)({ ...opts, path: tempPts.map(LL) });
+        if (tool === 'pen') dropTempLabels();
+        else refreshTempLabels(closed);
         if (Date.now() - traceLast > 250) { traceLast = Date.now(); sendTrace(false); }
     }
     function setTool(t) {
@@ -441,7 +470,7 @@
             const idx = tempPts.length - 1;
             const dot = new (G().Marker)({
                 map, position: LL(p), draggable: true, crossOnDrag: false,
-                icon: { path: G().SymbolPath.CIRCLE, scale: 5.5, fillColor: color, fillOpacity: 1, strokeColor: '#fff', strokeWeight: 1.5 },
+                icon: pinIcon(),
             });
             dot.addListener('drag', (ev) => {
                 tempPts[idx] = [ev.latLng.lat(), ev.latLng.lng()];
@@ -688,7 +717,7 @@
             // A half-drawn shape repaints on the spot, dots included.
             if (tempPts.length) {
                 previewTemp(tool === 'area');
-                tempDots.forEach((m) => { const ic = m.getIcon(); ic.fillColor = color; m.setIcon(ic); });
+                tempDots.forEach((m) => m.setIcon(pinIcon()));
             }
         }));
         document.getElementById('cmapSearchBtn').addEventListener('click', () => {
