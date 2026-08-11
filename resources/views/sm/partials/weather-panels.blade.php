@@ -54,7 +54,10 @@
     /* The plain-language line above each strip. */
     .wx-verdict { display: flex; align-items: flex-start; gap: .6rem; padding: .7rem .8rem;
         border-radius: .9rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-200); }
-    .wx-verdict-emoji { font-size: 1.4rem; line-height: 1; }
+    /* Outline glyphs like the rest of the app, not emoji: an emoji renders in
+       whatever style the device feels like and sat oddly against the UI. */
+    .wx-verdict-ico { flex-shrink: 0; width: 1.3rem; height: 1.3rem; color: var(--color-brand-600); }
+    .wx-verdict-ico svg { width: 100%; height: 100%; }
     .wx-verdict-text { font-size: .84rem; color: var(--color-gray-700); line-height: 1.45; }
     .wx-verdict-text b { color: var(--color-gray-900); }
 
@@ -105,7 +108,7 @@
                 </div>
                 <span class="text-3xl leading-none">${today ? today.emoji : '&#9925;'}</span>
             </div>
-            <div class="wx-verdict mt-3"><span class="wx-verdict-emoji">&#127782;</span><span class="wx-verdict-text">${verdict}</span></div>
+            <div class="wx-verdict mt-3"><span class="wx-verdict-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg></span><span class="wx-verdict-text">${verdict}</span></div>
             <div class="mt-3">${dayStrip(loc.days || [])}</div>
             <p class="wx-legend mt-2">&#128167; is the chance of rain that day. Two figures are the day's high and low.</p>
         </div></div>`;
@@ -141,7 +144,7 @@
                     <div class="text-[11px] text-gray-500">now</div>
                 </div>
             </div>
-            <div class="wx-verdict mt-3"><span class="wx-verdict-emoji">&#9201;</span><span class="wx-verdict-text">${verdict}</span></div>
+            <div class="wx-verdict mt-3"><span class="wx-verdict-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 2"/></svg></span><span class="wx-verdict-text">${verdict}</span></div>
             <div class="wx-hours mt-3">${hours.map((h) => `
                 <div class="wx-hour ${h.isNow ? 'is-now' : ''}" title="${esc(h.text)}${h.mm != null ? ' &middot; ' + h.mm + ' mm' : ''}">
                     <div class="wx-hour-time">${esc(h.isNow ? 'Now' : h.hour)}</div>

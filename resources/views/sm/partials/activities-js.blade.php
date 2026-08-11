@@ -2597,7 +2597,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <span class="text-3xl leading-none">${d.emoji || '&#9925;'}</span>
                     </div>
-                    <div class="wx-verdict mt-3"><span class="wx-verdict-emoji">&#128220;</span><span class="wx-verdict-text">
+                    <div class="wx-verdict mt-3"><span class="wx-verdict-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M8 3H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2h-2M9 3h6v3H9V3zM8 12h8M8 16h5"/></svg></span><span class="wx-verdict-text">
                         ${esc(d.text || 'No reading')}${d.max != null ? `, high of <b>${d.max}&deg;</b>` : ''}${d.min != null ? `, low of <b>${d.min}&deg;</b>` : ''}.
                         Chance of rain that day was <b>${d.pop != null ? d.pop + '%' : '&mdash;'}</b>.
                     </span></div>

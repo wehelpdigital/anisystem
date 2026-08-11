@@ -101,6 +101,64 @@
             : `<img src="${esc(url)}" alt="">`;
         lb.classList.add('is-open'); lb.setAttribute('aria-hidden', 'false');
         zoomExpand(stage.firstElementChild, fromRect);
+        if (type !== 'video') pinch(stage.firstElementChild);
+    }
+
+    /* Opening a photo full screen is only half of looking at it — a note about
+       a leaf or a receipt is worth a closer look. Pinch to any level up to 4x,
+       double-tap to jump in and out, drag to pan once zoomed. touch-action is
+       what makes it possible: without it the browser claims the gesture and
+       scrolls the page behind. */
+    function pinch(img) {
+        if (!img) return;
+        let scale = 1, tx = 0, ty = 0, start = null;
+        const pts = new Map();
+        const paint = (animated) => {
+            img.style.transition = animated ? 'transform .2s ease-out' : 'none';
+            img.style.transform = scale === 1 && !tx && !ty
+                ? '' : `translate(${tx}px, ${ty}px) scale(${scale})`;
+        };
+        img.style.touchAction = 'none';
+        img.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            if (scale > 1) { scale = 1; tx = 0; ty = 0; } else { scale = 2.5; }
+            paint(true);
+        });
+        img.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            scale = Math.min(4, Math.max(1, scale * (e.deltaY < 0 ? 1.15 : 1 / 1.15)));
+            if (scale === 1) { tx = 0; ty = 0; }
+            paint(true);
+        }, { passive: false });
+        img.addEventListener('pointerdown', (e) => {
+            pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+            start = { scale, tx, ty, pts: [...pts.values()].map((p) => ({ ...p })) };
+            if (img.setPointerCapture) { try { img.setPointerCapture(e.pointerId); } catch (_) {} }
+            if (scale > 1 || pts.size === 2) e.preventDefault();
+        });
+        img.addEventListener('pointermove', (e) => {
+            if (!pts.has(e.pointerId) || !start) return;
+            pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+            const cur = [...pts.values()];
+            if (cur.length === 2 && start.pts.length === 2) {
+                const d0 = Math.hypot(start.pts[0].x - start.pts[1].x, start.pts[0].y - start.pts[1].y) || 1;
+                const d1 = Math.hypot(cur[0].x - cur[1].x, cur[0].y - cur[1].y);
+                scale = Math.min(4, Math.max(1, start.scale * (d1 / d0)));
+                paint(false);
+            } else if (cur.length === 1 && scale > 1) {
+                tx = start.tx + (cur[0].x - start.pts[0].x);
+                ty = start.ty + (cur[0].y - start.pts[0].y);
+                paint(false);
+            }
+        });
+        const lift = (e) => {
+            pts.delete(e.pointerId);
+            start = pts.size ? { scale, tx, ty, pts: [...pts.values()].map((p) => ({ ...p })) } : null;
+            // Snapped back to life size: drop any pan with it.
+            if (scale === 1 && (tx || ty)) { tx = 0; ty = 0; paint(true); }
+        };
+        img.addEventListener('pointerup', lift);
+        img.addEventListener('pointercancel', lift);
     }
     // Grow the opened media out of the thumbnail it was tapped from.
     function zoomExpand(media, fromRect) {
