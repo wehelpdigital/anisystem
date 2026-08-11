@@ -11,6 +11,11 @@
         <button type="button" id="ccallMin" class="ccall-mini" title="Minimize / expand" aria-label="Minimize">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14"/></svg>
         </button>
+        {{-- Leaving from the header matters most when minimized: the controls
+             (and their red leave button) are hidden in that state. --}}
+        <button type="button" id="ccallClose" class="ccall-mini ccall-close" title="Leave the call" aria-label="Leave the call">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
     </div>
     <div class="ccall-body">
         <div class="ccall-tiles" id="ccallTiles"></div>
@@ -59,6 +64,10 @@
     .ccall-count { font-size: .68rem; font-weight: 700; background: rgb(255 255 255 / .14); padding: .05rem .45rem; border-radius: 999px; }
     .ccall-mini { margin-left: auto; width: 1.9rem; height: 1.9rem; border-radius: .5rem; display: flex; align-items: center; justify-content: center; color: #cbd5e1; }
     .ccall-mini:hover { background: rgb(255 255 255 / .1); }
+    /* Only the first control claims the free space; the close button sits
+       beside it rather than being pushed to its own edge. */
+    .ccall-close { margin-left: 0; }
+    .ccall-close:hover { background: #ef4444; color: #fff; }
     .ccall.min .ccall-body { display: none; }
     .ccall-body { padding: .6rem; }
     .ccall-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr)); gap: .5rem; max-height: 46vh; overflow-y: auto; }
@@ -245,9 +254,15 @@
             room = null; active = false; roomName = null;
             panel.classList.add('hidden');
         }
+        /* Leaving takes you out; it does not shut the call. Only the last one
+           out announces the end — that signal pulls the ringing prompt from
+           teammates who have not answered yet, which with people still talking
+           would hide an invite to a call that is very much still running. */
         async function leave() {
-            const rn = roomName;
+            const others = room ? room.remoteParticipants.size : 0;
             cleanup();
+            if (window.toast) toast(others ? 'You left the call — it carries on without you.' : 'Call ended.');
+            if (others > 0) return;
             try { await api(URLS.end, { method: 'POST', body: { scheduleId: SCHEDULE_ID } }); } catch (_) {}
         }
 
@@ -293,6 +308,7 @@
             paintCam();
         });
         $('ccallLeave').addEventListener('click', leave);
+        $('ccallClose').addEventListener('click', leave);
         $('ccallMin').addEventListener('click', () => panel.classList.toggle('min'));
 
         /* ---------- public triggers ---------- */
