@@ -471,6 +471,10 @@
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg>
             View saved weather
         </button>
+        <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50" data-action="add-income">
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v10M9 10h4.2a1.8 1.8 0 010 3.6H9M9 7h6"/></svg>
+            Add income
+        </button>
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50" data-action="date-marker-btn">
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
             Resume-here marker
@@ -827,6 +831,40 @@
         <button type="button" id="dayExpenseDeleteBtn" class="btn btn-danger-outline mr-auto hidden">Delete</button>
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
         <button type="button" id="dayExpenseSaveBtn" class="btn btn-primary">Save Expense</button>
+    </div>
+</div>
+
+{{-- Money the day brought in: the mirror of the expense sheet above, for
+     the services a farm sells alongside the crop. --}}
+<div class="sheet hidden" id="dayIncomeSheet" style="--sheet-width:28rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="dayIncomeSheetTitle">Add income</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">&#10005;</button>
+    </div>
+    <div class="sheet-body space-y-3">
+        <input type="hidden" id="dayIncomeDate">
+        <input type="hidden" id="dayIncomeId">
+        <p class="text-sm text-gray-600" id="dayIncomeForDate"></p>
+        <div>
+            <label class="form-label" for="dayIncomeAmount">Amount (&#8369;)</label>
+            <input type="number" id="dayIncomeAmount" class="form-input" inputmode="decimal" step="0.01" min="0" placeholder="0.00">
+        </div>
+        <div>
+            <label class="form-label" for="dayIncomeTitle">Title</label>
+            <input type="text" id="dayIncomeTitle" class="form-input" maxlength="191" placeholder="e.g. Tractor rental to a neighbour">
+        </div>
+        <div>
+            <label class="form-label" for="dayIncomeNote">Description (optional)</label>
+            <input type="text" id="dayIncomeNote" class="form-input" maxlength="500" placeholder="Anything worth remembering about it">
+        </div>
+        <div id="dayIncomeList" class="space-y-1"></div>
+        <p class="form-hint">Earnings during the season that are not the harvest itself &mdash; logged against this date.</p>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" id="dayIncomeDeleteBtn" class="btn btn-danger-outline mr-auto hidden">Delete</button>
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" id="dayIncomeSaveBtn" class="btn btn-primary">Save income</button>
     </div>
 </div>
 

@@ -69,6 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
         noteImageUpload:  ()  => `{{ route('sm.notes.image-upload') }}?scheduleId=${SCHEDULE_ID}`,
         noteVideoUpload:  ()  => `{{ route('sm.notes.video-upload') }}?scheduleId=${SCHEDULE_ID}`,
         weather:          ()  => `{{ route('sm.weather') }}?scheduleId=${SCHEDULE_ID}`,
+        dayIncomeList:    ()  => `{{ route('sm.activities.day-income.list') }}?id=${SCHEDULE_ID}`,
+        dayIncomeSave:    ()  => `{{ route('sm.activities.day-income.save') }}?scheduleId=${SCHEDULE_ID}`,
+        dayIncomeDelete:  (id) => `{{ route('sm.activities.day-income.delete') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
         dayExpenseSave:   ()  => `{{ route('sm.activities.day-expense.save') }}?scheduleId=${SCHEDULE_ID}`,
         dayExpenseDelete: ()  => `{{ route('sm.activities.day-expense.delete') }}?scheduleId=${SCHEDULE_ID}`,
         markerSave:       ()  => `{{ route('sm.markers.save') }}?scheduleId=${SCHEDULE_ID}`,
@@ -648,7 +651,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const noteBlock = isNoDate ? ''
             : `<div class="date-note-block" data-date="${esc(dateKey)}" data-content="${esc(noteContent || '')}" data-media="[]" title="Drag to place it between activities · click to edit"${hasNote ? '' : ' style="display:none;"'}><div class="date-note-inner rich-text">${noteContent || ''}</div>${DATE_NOTE_EDIT}${DATE_NOTE_DEL}</div>`;
-        const expenseBlock = isNoDate ? '' : `<div class="day-expense-block" data-date="${esc(dateKey)}"></div>`;
+        const expenseBlock = isNoDate ? ''
+            : `<div class="day-expense-block" data-date="${esc(dateKey)}"></div>`
+              + `<div class="day-income-block" data-date="${esc(dateKey)}" hidden></div>`;
 
         const wrap = document.createElement('div');
         wrap.innerHTML = `<div class="date-group date-color-${colorIdx}${allHidden ? ' all-hidden' : ''}${OPEN_DAYS.has(dateKey) ? '' : ' is-folded'}" data-date="${esc(dateKey)}">
@@ -2552,10 +2557,134 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => openSavedWeather(date), 260);
             return;
         }
+        if (cls === 'add-income') {
+            const date = dayMenuDate;
+            setTimeout(() => openDayIncome(date), 260);
+            return;
+        }
         const target = $qs(`#activitiesList .date-group[data-date="${dayMenuDate}"] .${cls}`);
         // Defer so the sheet is closed before the next one opens.
         setTimeout(() => target?.click(), 260);
     });
+
+    /* ---- Income for one day ---------------------------------------------
+     * The mirror of extra expenses: money the day brought in, for services a
+     * farm sells alongside the crop. Entries already logged for that day are
+     * listed inside the sheet, so a second one does not overwrite the first
+     * and an existing one can be corrected. */
+    let incomeDate = null, incomeRows = [];
+    const peso = (n) => '₱' + Number(n || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    function paintIncomeList() {
+        const box = $id('dayIncomeList');
+        if (!box) return;
+        if (!incomeRows.length) { box.innerHTML = ''; return; }
+        const total = incomeRows.reduce((a, r) => a + Number(r.amount || 0), 0);
+        box.innerHTML = '<p class="form-label mb-1">Already logged this day</p>'
+            + incomeRows.map((r) => `
+                <button type="button" class="w-full flex items-center gap-2 rounded-lg border border-gray-200 px-2.5 py-2 text-left hover:border-brand-400" data-income-edit="${r.id}">
+                    <span class="grow min-w-0">
+                        <span class="block text-sm font-bold text-gray-900 truncate">${esc(r.title || 'Income')}</span>
+                        ${r.note ? `<span class="block text-xs text-gray-500 truncate">${esc(r.note)}</span>` : ''}
+                    </span>
+                    <span class="text-sm font-extrabold text-brand-700 shrink-0">${peso(r.amount)}</span>
+                </button>`).join('')
+            + `<p class="text-xs text-gray-500 pt-1">Total for the day: <b class="text-gray-800">${peso(total)}</b></p>`;
+    }
+
+    function resetIncomeForm() {
+        $id('dayIncomeId').value = '';
+        $id('dayIncomeAmount').value = '';
+        $id('dayIncomeTitle').value = '';
+        $id('dayIncomeNote').value = '';
+        $id('dayIncomeDeleteBtn').classList.add('hidden');
+        $id('dayIncomeSheetTitle').textContent = 'Add income';
+    }
+
+    async function openDayIncome(date) {
+        incomeDate = date;
+        $id('dayIncomeDate').value = date;
+        $id('dayIncomeForDate').textContent = prettyDateFull(date);
+        resetIncomeForm();
+        incomeRows = [];
+        paintIncomeList();
+        openSheet('dayIncomeSheet');
+        // Typing is the point here, but not before the sheet has settled.
+        setTimeout(() => $id('dayIncomeAmount')?.focus({ preventScroll: true }), 340);
+        try {
+            const res = await api(`${U.dayIncomeList()}&incomeDate=${encodeURIComponent(date)}`);
+            incomeRows = res.data || [];
+            paintIncomeList();
+        } catch (_) { /* an empty list is a fine starting point */ }
+    }
+
+    document.addEventListener('click', (e) => {
+        const row = e.target.closest('[data-income-edit]');
+        if (!row) return;
+        const r = incomeRows.find((x) => String(x.id) === row.getAttribute('data-income-edit'));
+        if (!r) return;
+        $id('dayIncomeId').value = r.id;
+        $id('dayIncomeAmount').value = r.amount;
+        $id('dayIncomeTitle').value = r.title || '';
+        $id('dayIncomeNote').value = r.note || '';
+        $id('dayIncomeDeleteBtn').classList.remove('hidden');
+        $id('dayIncomeSheetTitle').textContent = 'Edit income';
+    });
+
+    $id('dayIncomeSaveBtn')?.addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+        const amount = parseFloat($id('dayIncomeAmount').value);
+        if (!(amount >= 0)) { toast('Enter the amount first.', 'error'); return; }
+        btn.disabled = true;
+        try {
+            const res = await api(U.dayIncomeSave(), { method: 'POST', body: {
+                incomeId: $id('dayIncomeId').value || null,
+                incomeDate: incomeDate,
+                amount,
+                title: $id('dayIncomeTitle').value.trim(),
+                note: $id('dayIncomeNote').value.trim(),
+            } });
+            incomeRows = res.data || [];
+            resetIncomeForm();
+            paintIncomeList();
+            renderDayIncome(incomeDate);
+            toast(res.message || 'Income saved.');
+        } catch (err) { toast(err.message, 'error'); }
+        btn.disabled = false;
+    });
+
+    $id('dayIncomeDeleteBtn')?.addEventListener('click', async () => {
+        const id = $id('dayIncomeId').value;
+        if (!id) return;
+        const ok = window.confirmAction
+            ? await confirmAction({ title: 'Remove this income?', message: 'It will no longer count towards the day.', confirmText: 'Remove' })
+            : confirm('Remove this income entry?');
+        if (!ok) return;
+        try {
+            const res = await api(U.dayIncomeDelete(id), { method: 'DELETE', body: { incomeId: id } });
+            incomeRows = res.data || [];
+            resetIncomeForm();
+            paintIncomeList();
+            renderDayIncome(incomeDate);
+            toast(res.message || 'Income removed.');
+        } catch (err) { toast(err.message, 'error'); }
+    });
+
+    /* The day's own strip, under the expenses one, so a day that earned
+       something says so without opening anything. */
+    async function renderDayIncome(date) {
+        const host = $qs(`#activitiesList .day-income-block[data-date="${date}"]`);
+        if (!host) return;
+        try {
+            const res = await api(`${U.dayIncomeList()}&incomeDate=${encodeURIComponent(date)}`);
+            const rows = res.data || [];
+            if (!rows.length) { host.innerHTML = ''; host.hidden = true; return; }
+            host.hidden = false;
+            host.innerHTML = `<span class="day-income-total">${peso(res.total)} in</span>`
+                + rows.map((r) => `<span class="day-income-chip">${esc(r.title || 'Income')} &middot; ${peso(r.amount)}</span>`).join('');
+        } catch (_) { /* leave whatever is there */ }
+    }
+    window.renderDayIncome = renderDayIncome;
 
     /* ---- Saved weather for one day --------------------------------------
      * What the forecast said, as last written by a weather load. Read-only:
@@ -3756,10 +3885,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderExpenseBlockFor(dateKey) {
         $qsa(`#activitiesList .day-expense-block[data-date="${dateKey}"]`).forEach(renderExpenseBlock);
+        if (typeof window.renderDayIncome === 'function') window.renderDayIncome(dateKey);
     }
 
     function hydrateAllExpenseBlocks() {
         $qsa('#activitiesList .day-expense-block').forEach(renderExpenseBlock);
+        $qsa('#activitiesList .day-income-block[data-date]').forEach((el) => {
+            if (typeof window.renderDayIncome === 'function') window.renderDayIncome(el.getAttribute('data-date'));
+        });
     }
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', hydrateAllExpenseBlocks, { once: true });

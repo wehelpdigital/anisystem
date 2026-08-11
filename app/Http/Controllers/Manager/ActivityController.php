@@ -1415,6 +1415,149 @@ class ActivityController extends BaseScheduleController
      * with the running total. Used to refresh the day's expense block after
      * an add/edit/delete without a full page reload.
      */
+    /* ---- Day income -------------------------------------------------------
+     * The mirror of the extra expenses below: money a day brought in, for the
+     * services a farm sells alongside the crop. Same shape, same day menu,
+     * separate table — see AsScheduleDayIncome for why. */
+
+    public function listDayIncomes(Request $request)
+    {
+        $schedule = $this->schedule($request->query('id'));
+
+        $validator = Validator::make($request->all(), [
+            'incomeDate' => 'required|date',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
+
+        $rows = \App\Models\AsScheduleDayIncome::active()
+            ->forSchedule($schedule->id)
+            ->forVersion($this->activeVersionIdFor($schedule->id))
+            ->whereDate('incomeDate', $request->input('incomeDate'))
+            ->orderBy('sortOrder', 'asc')
+            ->orderBy('id', 'asc')
+            ->get();
+
+        return $this->jsonOk('Income loaded.', [
+            'data'  => $this->serializeIncomes($rows),
+            'total' => (float) $rows->sum('amount'),
+        ]);
+    }
+
+    /** Create or update one income entry; pass incomeId to edit. */
+    public function saveDayIncome(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+
+        $validator = Validator::make($request->all(), [
+            'incomeId'   => 'nullable|integer',
+            'incomeDate' => 'required|date',
+            'amount'     => 'required|numeric|min:0|max:99999999',
+            'title'      => 'nullable|string|max:191',
+            'note'       => 'nullable|string|max:500',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
+
+        $versionId = $this->activeVersionIdFor($schedule->id);
+        if (!$versionId) {
+            return $this->jsonFail('No active version found for this schedule.', 422);
+        }
+
+        $date = $request->input('incomeDate');
+        $amount = round((float) $request->input('amount'), 2);
+        $title = trim((string) $request->input('title', ''));
+        $note = trim((string) $request->input('note', ''));
+
+        $id = $request->input('incomeId');
+        if ($id) {
+            $income = \App\Models\AsScheduleDayIncome::active()
+                ->forSchedule($schedule->id)
+                ->where('id', (int) $id)
+                ->first();
+            if (!$income) {
+                return $this->jsonFail('Income entry not found.', 404);
+            }
+            $income->update([
+                'incomeDate' => $date,
+                'amount' => $amount,
+                'title' => $title !== '' ? $title : null,
+                'note' => $note !== '' ? $note : null,
+            ]);
+        } else {
+            $nextOrder = (int) \App\Models\AsScheduleDayIncome::active()
+                ->forSchedule($schedule->id)
+                ->forVersion($versionId)
+                ->whereDate('incomeDate', $date)
+                ->max('sortOrder');
+            $income = \App\Models\AsScheduleDayIncome::create([
+                'croppingScheduleId' => $schedule->id,
+                'versionId' => $versionId,
+                'incomeDate' => $date,
+                'amount' => $amount,
+                'title' => $title !== '' ? $title : null,
+                'note' => $note !== '' ? $note : null,
+                'sortOrder' => $nextOrder + 1,
+                'deleteStatus' => 1,
+            ]);
+        }
+
+        $rows = \App\Models\AsScheduleDayIncome::active()
+            ->forSchedule($schedule->id)
+            ->forVersion($versionId)
+            ->whereDate('incomeDate', $date)
+            ->orderBy('sortOrder')->orderBy('id')
+            ->get();
+        $this->broadcastBoard($schedule, 'reload', ['incomeDate' => $date], $versionId);
+
+        return $this->jsonOk('Income saved.', [
+            'data' => $this->serializeIncomes($rows),
+            'total' => (float) $rows->sum('amount'),
+            'saved' => (int) $income->id,
+        ]);
+    }
+
+    public function deleteDayIncome(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        $income = \App\Models\AsScheduleDayIncome::active()
+            ->forSchedule($schedule->id)
+            ->where('id', (int) $request->input('incomeId'))
+            ->first();
+        if (!$income) {
+            return $this->jsonFail('Income entry not found.', 404);
+        }
+
+        $date = $income->incomeDate?->format('Y-m-d');
+        $income->update(['deleteStatus' => 0]);
+
+        $rows = \App\Models\AsScheduleDayIncome::active()
+            ->forSchedule($schedule->id)
+            ->forVersion($this->activeVersionIdFor($schedule->id))
+            ->whereDate('incomeDate', $date)
+            ->orderBy('sortOrder')->orderBy('id')
+            ->get();
+        $this->broadcastBoard($schedule, 'reload', ['incomeDate' => $date], $this->activeVersionIdFor($schedule->id));
+
+        return $this->jsonOk('Income removed.', [
+            'data' => $this->serializeIncomes($rows),
+            'total' => (float) $rows->sum('amount'),
+        ]);
+    }
+
+    private function serializeIncomes($rows): array
+    {
+        return $rows->map(fn ($r) => [
+            'id' => (int) $r->id,
+            'amount' => (float) $r->amount,
+            'title' => $r->title,
+            'note' => $r->note,
+            'date' => $r->incomeDate?->format('Y-m-d'),
+        ])->all();
+    }
+
     public function listDayExpenses(Request $request)
     {
         $schedule = $this->schedule($request->query('id'));

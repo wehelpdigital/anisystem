@@ -388,6 +388,10 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-activities-date-note-delete', [App\Http\Controllers\Manager\ActivityController::class, 'deleteDateNote'])->name('sm.activities.date-note.delete');
     Route::post('/app/sm-activities-inline-note-save', [App\Http\Controllers\Manager\ActivityController::class, 'inlineNoteSave'])->name('sm.activities.inline-note.save');
     Route::delete('/app/sm-activities-inline-note-delete', [App\Http\Controllers\Manager\ActivityController::class, 'inlineNoteDelete'])->name('sm.activities.inline-note.delete');
+    // Money a day brought in - the mirror of the extra expenses below.
+    Route::get('/app/sm-activities-day-incomes', [App\Http\Controllers\Manager\ActivityController::class, 'listDayIncomes'])->name('sm.activities.day-income.list');
+    Route::post('/app/sm-activities-day-income-save', [App\Http\Controllers\Manager\ActivityController::class, 'saveDayIncome'])->name('sm.activities.day-income.save');
+    Route::delete('/app/sm-activities-day-income-delete', [App\Http\Controllers\Manager\ActivityController::class, 'deleteDayIncome'])->name('sm.activities.day-income.delete');
     Route::get('/app/sm-activities-day-expenses', [App\Http\Controllers\Manager\ActivityController::class, 'listDayExpenses'])->name('sm.activities.day-expense.list');
     Route::post('/app/sm-activities-day-expense-save', [App\Http\Controllers\Manager\ActivityController::class, 'saveDayExpense'])->name('sm.activities.day-expense.save');
     Route::delete('/app/sm-activities-day-expense-delete', [App\Http\Controllers\Manager\ActivityController::class, 'deleteDayExpense'])->name('sm.activities.day-expense.delete');

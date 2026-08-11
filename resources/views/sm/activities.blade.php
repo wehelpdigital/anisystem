@@ -667,6 +667,14 @@
         /* ---- Per-day extra expenses strip ------------------------------- */
         .day-expense-block { margin: .55rem .7rem 0; }
         .day-expense-block:empty { display: none; }
+        /* What the day earned, under what it cost — green against the
+           expenses' red so the two never get read for each other. */
+        .day-income-block { margin: .35rem .7rem 0; display: flex; flex-wrap: wrap; gap: .3rem; align-items: center; }
+        .day-income-block:empty, .day-income-block[hidden] { display: none; }
+        .day-income-total { font-size: .7rem; font-weight: 800; color: var(--color-brand-700);
+            background: var(--color-brand-50); border-radius: 999px; padding: .1rem .5rem; }
+        .day-income-chip { font-size: .68rem; font-weight: 600; color: var(--color-gray-600);
+            background: var(--tl-hover, var(--color-gray-100)); border-radius: 999px; padding: .1rem .5rem; }
         .dx-card {
             background: #fff7ed; border: 1px solid #fed7aa; border-radius: .6rem; overflow: hidden;
         }
@@ -1860,6 +1868,7 @@
                         @endphp
                         <div class="date-note-block" data-date="{{ $dateKey }}" data-content="{{ $noteRow?->noteContent }}" data-media="{{ $dnMedia->toJson() }}" title="Drag to place it between activities · click to edit" @if(!$noteRow) style="display:none;" @endif><div class="date-note-inner rich-text">{!! $noteRow?->noteContent !!}@if ($dnMedia->count())<div class="date-note-media">@include('sm.partials.note-media', ['media' => $dnMedia])</div>@endif</div><button type="button" class="date-note-edit" title="Edit note" aria-label="Edit note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button type="button" class="date-note-del" title="Delete note" aria-label="Delete note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg></button></div>
                         <div class="day-expense-block" data-date="{{ $dateKey }}"></div>
+                        <div class="day-income-block" data-date="{{ $dateKey }}" hidden></div>
                     @endif
                     @php
                         // Interleave positioned inline notes with the day's cards by order.
