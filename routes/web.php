@@ -35,6 +35,29 @@ Route::get('/storage/{path}', App\Http\Controllers\StorageFallbackController::cl
     ])
     ->name('storage.fallback');
 
+/**
+ * Which build is actually serving? "The fix is pushed" and "the fix is live"
+ * are different claims, and without this the difference is guesswork: it
+ * reports whether the deployed source carries a couple of named markers, plus
+ * the commit Railway built. Feature names and a short SHA only — nothing that
+ * is not already visible in the UI or the repo.
+ */
+Route::get('/deploy-check', function () {
+    $activities = resource_path('views/sm/activities.blade.php');
+    $source = is_file($activities) ? (string) file_get_contents($activities) : '';
+
+    return response()->json([
+        'commit' => substr((string) env('RAILWAY_GIT_COMMIT_SHA', 'unknown'), 0, 7),
+        'builtAt' => (string) env('RAILWAY_DEPLOYMENT_ID', 'unknown'),
+        'markers' => [
+            'eyeFilterButton' => str_contains($source, 'id="viewFilterBtn"'),
+            'dragGrip' => str_contains($source, 'A grip says the card can be dragged'),
+            'versionsButton' => str_contains($source, 'id="versionsSheetBtn"'),
+        ],
+        'viewCacheCompiled' => count(glob(storage_path('framework/views/*.php')) ?: []),
+    ]);
+})->name('deploy.check');
+
 Route::get('/worker-invite/{token}', [App\Http\Controllers\WorkerInviteController::class, 'show'])->name('worker.invite.show');
 Route::post('/worker-invite/{token}', [App\Http\Controllers\WorkerInviteController::class, 'accept'])->name('worker.invite.accept');
 
