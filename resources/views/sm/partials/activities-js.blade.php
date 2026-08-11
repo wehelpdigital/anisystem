@@ -5343,5 +5343,72 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (e) { softReload(); }
         });
     })();
+
+    /* ---- Hide fully-done days -------------------------------------------
+     * One toolbar toggle folds away every date where ALL activities are
+     * checked done. Height-animated with the house easing, remembered per
+     * schedule, re-applied after every re-render (both renderers land in
+     * the same DOM, so this filter only ever reads the live list). */
+    (() => {
+        const btn = $id('toggleDoneDaysBtn');
+        if (!btn) return;
+        const KEY = `actHideDoneDays:${SCHEDULE_ID}`;
+        let on = false;
+        try { on = localStorage.getItem(KEY) === '1'; } catch (e) { /* private mode */ }
+        const EASE = '.28s cubic-bezier(.22,1,.36,1)';
+        const allDone = (g) => {
+            const cards = $qsa('.activity-card', g);
+            return cards.length > 0 && cards.every((c) => c.getAttribute('data-is-done') === '1');
+        };
+        function fold(g, hide, animate) {
+            if (g.classList.contains('done-day-away') === hide) return;
+            const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!animate || reduce) { g.classList.toggle('done-day-away', hide); return; }
+            if (hide) {
+                g.style.height = `${g.offsetHeight}px`;
+                g.style.overflow = 'hidden';
+                void g.offsetHeight;
+                g.style.transition = `height ${EASE}, opacity ${EASE}, margin ${EASE}`;
+                g.style.height = '0px'; g.style.opacity = '0';
+                g.style.marginTop = '0'; g.style.marginBottom = '0';
+                setTimeout(() => { g.classList.add('done-day-away'); g.style.cssText = ''; }, 300);
+            } else {
+                g.classList.remove('done-day-away');
+                const h = g.offsetHeight;
+                g.style.height = '0px'; g.style.opacity = '0'; g.style.overflow = 'hidden';
+                g.style.marginTop = '0'; g.style.marginBottom = '0';
+                void g.offsetHeight;
+                g.style.transition = `height ${EASE}, opacity ${EASE}, margin ${EASE}`;
+                g.style.height = `${h}px`; g.style.opacity = '1';
+                g.style.marginTop = ''; g.style.marginBottom = '';
+                setTimeout(() => { g.style.cssText = ''; }, 320);
+            }
+        }
+        function paint() {
+            btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+            btn.title = on ? 'Show the days where every activity is done' : 'Hide the days where every activity is already done';
+            const label = on ? 'Show done days' : 'Hide done days';
+            const lbl = $id('toggleDoneDaysLabel');
+            if (lbl) lbl.textContent = label;
+            const sheetLbl = $id('actDoneDaysLabel');
+            if (sheetLbl) sheetLbl.textContent = label;
+        }
+        function apply(animate) {
+            $qsa('#activitiesList .date-group').forEach((g) => fold(g, on && allDone(g), animate));
+            paint();
+        }
+        btn.addEventListener('click', () => {
+            on = !on;
+            try { localStorage.setItem(KEY, on ? '1' : '0'); } catch (e) { /* fine */ }
+            apply(true);
+        });
+        // Checking a day's last open activity folds it away on the spot;
+        // unchecking one brings the day back.
+        document.addEventListener('click', (e) => {
+            if (on && e.target.closest('.done-check')) setTimeout(() => apply(true), 350);
+        });
+        document.addEventListener('activities:rendered', () => apply(false));
+        apply(false);
+    })();
 });
 </script>

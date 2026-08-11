@@ -945,6 +945,10 @@
         .activity-card.is-hidden { display: none; }
         body.show-hidden-activities .activity-card.is-hidden { display: block; opacity: .55; filter: grayscale(.4); }
         body:not(.show-hidden-activities) .date-group.all-hidden { display: none; }
+        /* Fully-done days folded away by the toolbar toggle (the fold/unfold
+           itself is height-animated in JS with the house easing). */
+        .date-group.done-day-away { display: none; }
+        #toggleDoneDaysBtn[aria-pressed="true"] { background: var(--color-brand-50); border-color: var(--color-brand-400); color: var(--color-brand-800); }
         body.show-hidden-activities .rest-day-substitute { display: none; }
         .activity-card.filter-hidden { display: none !important; }
         .date-group.group-collapsed { display: none; }
@@ -1446,6 +1450,11 @@
     <button type="button" id="toggleHiddenBtn" class="btn btn-white btn-sm shrink-0 toolbar-desktop-action {{ $hiddenCount ? '' : 'hidden' }}">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
         <span id="toggleHiddenLabel">Show Hidden ({{ $hiddenCount }})</span>
+    </button>
+    <button type="button" id="toggleDoneDaysBtn" class="btn btn-white btn-sm shrink-0 toolbar-desktop-action" data-activities-only
+            title="Hide the days where every activity is already done" aria-pressed="false">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        <span id="toggleDoneDaysLabel" class="hidden sm:inline">Hide done days</span>
     </button>
     <button type="button" id="quickShareBtn" class="btn btn-white btn-sm shrink-0 toolbar-in-menu" data-activities-only
             title="Share this whole plan or email workers">
