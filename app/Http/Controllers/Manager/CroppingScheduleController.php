@@ -357,16 +357,12 @@ class CroppingScheduleController extends Controller
         return view('sm.hub', compact('schedule', 'documentationCount', 'postHarvestCount', 'notesCount'));
     }
 
-    /** Reports landing for a schedule — labor, post-harvest, and more. */
+    /** Reports landing for a schedule — labor and post-harvest figures. */
     public function reports(Request $request)
     {
-        $schedule = $this->findOwnedOrFail($request->query('id'));
-
-        $postHarvestCount = \App\Models\AsSchedulePostHarvest::active()
-            ->where('croppingScheduleId', $schedule->id)
-            ->count();
-
-        return view('sm.reports', compact('schedule', 'postHarvestCount'));
+        // The observations count went with the row that showed it: that entry
+        // only linked to the Post-harvest module, which has its own hub tile.
+        return view('sm.reports', ['schedule' => $this->findOwnedOrFail($request->query('id'))]);
     }
 
     /** Toggle a schedule between 'setup' (editable) and 'completed' (locked). */
