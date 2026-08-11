@@ -54,12 +54,19 @@
             if (filled($n->imagePath)) {
                 $mediaItems[] = ['type' => 'image', 'url' => \Illuminate\Support\Facades\Storage::disk('public')->url($n->imagePath)];
             }
+            $mapUrl = route('sm.activities', ['id' => $schedule->id, 'module' => 'maps']);
             foreach ((is_array($n->media) ? $n->media : []) as $m) {
                 if (empty($m['path'])) continue;
+                // Maps saved before they announced themselves are recognised by
+                // the filename the map save writes, so old notes get the link
+                // too rather than a thumbnail that may no longer resolve.
+                $isMap = ($m['type'] ?? '') === 'map'
+                    || (bool) preg_match('~/map-[A-Za-z0-9]+\.png$~', (string) $m['path']);
                 $mediaItems[] = [
-                    'type' => $m['type'] ?? 'image',
+                    'type' => $isMap ? 'map' : ($m['type'] ?? 'image'),
                     'url' => \Illuminate\Support\Facades\Storage::disk('public')->url($m['path']),
                     'posterUrl' => ! empty($m['poster']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($m['poster']) : null,
+                    'mapUrl' => $isMap ? $mapUrl : null,
                 ];
             }
         @endphp
@@ -181,14 +188,26 @@ const __init = () => {
     };
     const CSRF = document.querySelector('meta[name=csrf-token]').content;
     @php
-        $mediaUrls = function ($items) {
-            return collect(is_array($items) ? $items : [])->map(fn ($m) => empty($m['path']) ? null : [
-                'type' => $m['type'] ?? 'image',
-                'path' => $m['path'],
-                'url' => \Illuminate\Support\Facades\Storage::disk('public')->url($m['path']),
-                'poster' => $m['poster'] ?? null,
-                'posterUrl' => ! empty($m['poster']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($m['poster']) : null,
-            ])->filter()->values()->all();
+        // Same classification as the server-rendered list above, so a note
+        // re-rendered after an edit keeps its "View map" tile.
+        $mapModuleUrl = route('sm.activities', ['id' => $schedule->id, 'module' => 'maps']);
+        $mediaUrls = function ($items) use ($mapModuleUrl) {
+            return collect(is_array($items) ? $items : [])->map(function ($m) use ($mapModuleUrl) {
+                if (empty($m['path'])) {
+                    return null;
+                }
+                $isMap = ($m['type'] ?? '') === 'map'
+                    || (bool) preg_match('~/map-[A-Za-z0-9]+\.png$~', (string) $m['path']);
+
+                return [
+                    'type' => $isMap ? 'map' : ($m['type'] ?? 'image'),
+                    'path' => $m['path'],
+                    'url' => \Illuminate\Support\Facades\Storage::disk('public')->url($m['path']),
+                    'poster' => $m['poster'] ?? null,
+                    'posterUrl' => ! empty($m['poster']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($m['poster']) : null,
+                    'mapUrl' => $isMap ? $mapModuleUrl : null,
+                ];
+            })->filter()->values()->all();
         };
         $seed = $notes->mapWithKeys(fn ($n) => [$n->id => [
             'id' => $n->id, 'title' => $n->title, 'body' => $n->body,

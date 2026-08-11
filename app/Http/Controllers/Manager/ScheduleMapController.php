@@ -326,7 +326,7 @@ class ScheduleMapController extends BaseScheduleController
         if ($binary !== null) {
             $path = 'schedule-notes/' . $schedule->id . '/map-' . \Illuminate\Support\Str::random(20) . '.png';
             \Illuminate\Support\Facades\Storage::disk('public')->put($path, $binary);
-            $media[] = ['type' => 'image', 'path' => $path, 'poster' => null];
+            $media[] = ['type' => 'map', 'path' => $path, 'poster' => null];
         }
 
         $url = $media ? null : $this->staticMapUrl(
@@ -342,7 +342,7 @@ class ScheduleMapController extends BaseScheduleController
                 if ($img->ok() && str_starts_with((string) $img->header('Content-Type'), 'image/')) {
                     $path = 'schedule-notes/' . $schedule->id . '/map-' . \Illuminate\Support\Str::random(20) . '.png';
                     \Illuminate\Support\Facades\Storage::disk('public')->put($path, $img->body());
-                    $media[] = ['type' => 'image', 'path' => $path, 'poster' => null];
+                    $media[] = ['type' => 'map', 'path' => $path, 'poster' => null];
                 }
             } catch (\Throwable $e) {
                 // fall through — picture is optional for mode=map

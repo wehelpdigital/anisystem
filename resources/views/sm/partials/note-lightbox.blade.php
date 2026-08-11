@@ -18,6 +18,20 @@
     .nm img.is-loaded { opacity: 1; }
     @keyframes nmShimmer { from { background-position: 220% 0; } to { background-position: -220% 0; } }
     .nm-video { background: linear-gradient(135deg, #263041, #111827); }
+    /* A saved map is a place, not a picture: linking to the module beats a
+       thumbnail of it, which cannot be panned, measured or drawn on — and
+       which vanishes with the file if the disk is wiped. */
+    .nm-map { display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: .25rem; background: linear-gradient(135deg, #1f3a2b, #142218); color: #cfe8d6;
+        text-decoration: none; padding: .4rem; text-align: center; }
+    .nm-map svg { width: 1.6rem; height: 1.6rem; }
+    .nm-map span { font-size: .68rem; font-weight: 800; line-height: 1.2; }
+    .nm-map::before { display: none; }
+    /* An image that never arrives used to shimmer forever, which reads as
+       "still loading" long after the file has gone. */
+    .nm.is-gone::before { display: none; }
+    .nm.is-gone { display: flex; align-items: center; justify-content: center; cursor: default; }
+    .nm.is-gone::after { content: 'File missing'; font-size: .64rem; font-weight: 700; color: #94a3b8; padding: .3rem; text-align: center; }
     @media (prefers-reduced-motion: reduce) { .nm::before { animation: none; } .nm img { transition: none; } }
     .nm-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; pointer-events: none; text-shadow: 0 1px 6px rgb(0 0 0 / .6); }
     .nm-play svg { width: 2rem; height: 2rem; }
@@ -39,9 +53,16 @@
     const esc = window.escapeHtml || ((s) => String(s ?? ''));
     const PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
 
-    const ONLOAD = ` onload="this.classList.add('is-loaded')"`;
+    const ONLOAD = ` onload="this.classList.add('is-loaded')"`
+        + ` onerror="this.closest('.nm')?.classList.add('is-gone'); this.remove();"`;
     window.noteMediaThumb = function (m, extra) {
         const url = m.url || '', poster = m.posterUrl || '';
+        if (m.type === 'map') {
+            const href = m.mapUrl || '';
+            return `<a class="nm nm-map" href="${esc(href)}" title="Open this map in the Maps module">`
+                + '<svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>'
+                + `<span>View map</span>${extra || ''}</a>`;
+        }
         if (m.type === 'video') {
             return `<div class="nm nm-video" data-lb-type="video" data-lb-url="${esc(url)}" data-lb-poster="${esc(poster)}">${poster ? `<img src="${esc(poster)}" alt=""${ONLOAD}>` : ''}<span class="nm-play">${PLAY}</span>${extra || ''}</div>`;
         }
