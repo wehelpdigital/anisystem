@@ -134,6 +134,9 @@
 
     /* Phones: the room takes the whole width — the page gutters were dead
        space beside a full-height workspace. */
+    /* The page itself never scrolls in the room — a stray scrollbar from the
+       (hidden) footer slack broke the workspace feel. Panels scroll inside. */
+    body.is-collab { overflow: hidden; height: 100dvh; }
     @media (max-width: 767px) {
         body.is-collab main { padding: .35rem 0 0; }
         body.is-collab .collab-panels { border-radius: 0; border-left: 0; border-right: 0; }

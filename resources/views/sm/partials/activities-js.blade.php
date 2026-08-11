@@ -2555,6 +2555,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     applyCardCollapse();
 
+    // Long boards: one tap to either end.
+    $id('actJumpTop')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    $id('actJumpBottom')?.addEventListener('click', () => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' }));
+
     // Tools → Contract All: every card folded, every day folded, both saved.
     $id('contractAllBtn')?.addEventListener('click', () => {
         CARD_OPEN.clear(); saveCardOpen(); applyCardCollapse();
@@ -4667,8 +4671,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (touchDrag) e.preventDefault();
     });
     document.addEventListener("dragstart", (e) => {
-        if (touchDrag) e.preventDefault();
+        if (touchDrag) { e.preventDefault(); return; }
+        // Native HTML5 drag has no touch story at all: when it half-starts on
+        // a phone (dense days make this easy to trigger) the card is left at
+        // drag opacity with no drag behind it. On coarse pointers the long-
+        // press system owns cards — the native path is vetoed outright.
+        if (window.matchMedia("(pointer: coarse)").matches && e.target.closest && e.target.closest(".activity-card")) {
+            e.preventDefault();
+        }
     }, true);
+    // Whatever ends a native drag, no card stays stranded translucent.
+    document.addEventListener("dragend", () => {
+        document.querySelectorAll("#activitiesList .activity-card.dragging").forEach((c) => c.classList.remove("dragging"));
+    });
     document.addEventListener("selectstart", (e) => {
         if (touchDrag) e.preventDefault();
     });

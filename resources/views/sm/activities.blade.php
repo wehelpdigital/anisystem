@@ -421,6 +421,25 @@
                 display: block; -webkit-line-clamp: unset; overflow: visible;
             }
 
+            /* Jump buttons: bottom-right, clear of the day headers. */
+            .act-jumps { position: fixed; right: .8rem; bottom: 1rem; z-index: 40; display: flex; flex-direction: column; gap: .45rem; }
+            .act-jumps button { width: 2.6rem; height: 2.6rem; border-radius: 999px; background: var(--color-white); color: var(--color-gray-600); border: 1px solid var(--color-gray-200); box-shadow: 0 4px 14px rgb(0 0 0 / .18); display: flex; align-items: center; justify-content: center; }
+            .act-jumps button svg { width: 1.2rem; height: 1.2rem; }
+            .act-jumps button:active { transform: scale(.92); }
+            .act-jumps.module-hidden { display: none; }
+
+            /* A chevron says the card folds — drawn by CSS so the twin Blade
+               and JS renderers stay byte-identical. */
+            .activity-card::before {
+                content: ''; position: absolute; right: 1.05rem; top: 3.1rem;
+                width: .5rem; height: .5rem; pointer-events: none;
+                border-right: 2px solid var(--tl-text-faint, #9ca3af);
+                border-bottom: 2px solid var(--tl-text-faint, #9ca3af);
+                transform: rotate(45deg);
+                transition: transform .28s cubic-bezier(.22,1,.36,1);
+            }
+            .activity-card:not(.act-collapsed)::before { transform: rotate(225deg); }
+
             /* Title and tags each claim their own full-width row. */
             .activity-card .activity-card-title,
             .activity-card .activity-card-badges,
@@ -1361,6 +1380,17 @@
 {{-- Module host: other modules are fetched as partials and injected here.
      Activities stays in the DOM (hidden) so its listeners survive. --}}
 <div id="moduleHost" class="hidden"></div>
+
+{{-- Long-board jump buttons (phones): the toolbar and the version bar sit at
+     opposite ends of a list that can be thousands of pixels tall. --}}
+<div class="act-jumps md:hidden" data-activities-only>
+    <button type="button" id="actJumpTop" aria-label="Jump to the top">
+        <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+    </button>
+    <button type="button" id="actJumpBottom" aria-label="Jump to the bottom">
+        <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+    </button>
+</div>
 
 {{-- Full-surface loader while a module is being fetched --}}
 <div id="moduleLoader" class="hidden">

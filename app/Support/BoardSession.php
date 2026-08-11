@@ -35,7 +35,15 @@ class BoardSession
     {
         ScheduleBoardPresence::touch_($scheduleId, $userId);
 
-        if (ScheduleBoardPresence::othersPresent($scheduleId, $userId) > 0) {
+        // A drawing untouched for a day is a finished session whoever is
+        // nominally "present": archive it and start clean. Within 24 hours the
+        // team is plausibly coming back to it, so it stays.
+        $latest = ScheduleBoardEvent::active()
+            ->where('scheduleId', $scheduleId)
+            ->max('created_at');
+        $expired = $latest && Carbon::parse($latest)->lt(Carbon::now('Asia/Manila')->subDay());
+
+        if (! $expired && ScheduleBoardPresence::othersPresent($scheduleId, $userId) > 0) {
             return ['fresh' => false, 'archived' => null];
         }
 

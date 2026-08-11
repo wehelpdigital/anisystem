@@ -14,33 +14,53 @@
     </div>
 @else
     <div class="cmap-bar">
-        <button type="button" class="cmap-tool is-active" data-mtool="pan" title="Move the map" aria-label="Move the map">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v20M2 12h20M12 2L9 5m3-3l3 3M12 22l-3-3m3 3l3-3M2 12l3-3m-3 3l3 3M22 12l-3-3m3 3l-3 3"/></svg>
-        </button>
-        <button type="button" class="cmap-tool" data-mtool="edit" title="Edit — tap a shape to move or reshape it" aria-label="Edit a shape">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4l7 16 2-6 6-2z"/></svg>
-        </button>
-        <button type="button" class="cmap-tool" data-mtool="pen" title="Freehand draw" aria-label="Freehand draw">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L18 9l-3-3L5 16l-1 4z"/></svg>
-        </button>
-        <button type="button" class="cmap-tool" data-mtool="line" title="Line — shows its distance" aria-label="Measured line">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 21L21 3M8.5 15.5l1.8 1.8M12 12l1.8 1.8M15.5 8.5l1.8 1.8"/></svg>
-        </button>
-        <button type="button" class="cmap-tool" data-mtool="path" title="Multi-line — a distance per segment" aria-label="Measured multi-line">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l5-6 4 3 6-8"/><path stroke-linecap="round" d="M3 17h.01M8 11h.01M12 14h.01M18 6h.01"/></svg>
-        </button>
-        <button type="button" class="cmap-tool" data-mtool="rect" title="Box — side lengths and area" aria-label="Measured box">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg>
-        </button>
-        <button type="button" class="cmap-tool" data-mtool="area" title="Area — tap corners, finish to see hectares" aria-label="Measured area">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l8 6-3 10H7L4 9l8-6z"/></svg>
-        </button>
-        <button type="button" class="cmap-tool" data-mtool="text" title="Text label" aria-label="Text label">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 6h14M12 6v13M9 19h6"/></svg>
-        </button>
-        <button type="button" class="cmap-tool" data-mtool="erase" title="Erase — tap a shape to remove it" aria-label="Erase a shape">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l7-7 6 6-4 4H8l-4-3z"/><path stroke-linecap="round" d="M8 18h11"/></svg>
-        </button>
+        {{-- One labelled menu instead of a row of mystery glyphs: each tool
+             carries its name, and the button always shows what is active. --}}
+        <div class="cmap-menu-wrap">
+            <button type="button" class="cmap-tool cmap-menu-btn" id="cmapToolsBtn" aria-haspopup="true" aria-expanded="false">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                <span id="cmapToolLabel">Move map</span>
+            </button>
+            <div class="cmap-menu hidden" id="cmapToolsMenu">
+                <button type="button" class="cmap-mrow is-active" data-mtool="pan">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v20M2 12h20M12 2L9 5m3-3l3 3M12 22l-3-3m3 3l3-3M2 12l3-3m-3 3l3 3M22 12l-3-3m3 3l-3 3"/></svg>
+                    <span>Move map</span>
+                </button>
+                <button type="button" class="cmap-mrow" data-mtool="edit">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4l7 16 2-6 6-2z"/></svg>
+                    <span>Select &amp; edit a shape</span>
+                </button>
+                <button type="button" class="cmap-mrow" data-mtool="pen">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L18 9l-3-3L5 16l-1 4z"/></svg>
+                    <span>Freehand draw</span>
+                </button>
+                <button type="button" class="cmap-mrow" data-mtool="line">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 21L21 3M8.5 15.5l1.8 1.8M12 12l1.8 1.8M15.5 8.5l1.8 1.8"/></svg>
+                    <span>Line — drag, shows distance</span>
+                </button>
+                <button type="button" class="cmap-mrow" data-mtool="path">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l5-6 4 3 6-8"/><path stroke-linecap="round" d="M3 17h.01M8 11h.01M12 14h.01M18 6h.01"/></svg>
+                    <span>Multi-line — tap points</span>
+                </button>
+                <button type="button" class="cmap-mrow" data-mtool="rect">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg>
+                    <span>Box — drag, sides + area</span>
+                </button>
+                <button type="button" class="cmap-mrow" data-mtool="area">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l8 6-3 10H7L4 9l8-6z"/></svg>
+                    <span>Area — tap corners, hectares</span>
+                </button>
+                <button type="button" class="cmap-mrow" data-mtool="text">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 6h14M12 6v13M9 19h6"/></svg>
+                    <span>Text label</span>
+                </button>
+                <button type="button" class="cmap-mrow" data-mtool="erase">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l7-7 6 6-4 4H8l-4-3z"/><path stroke-linecap="round" d="M8 18h11"/></svg>
+                    <span>Erase a shape</span>
+                </button>
+            </div>
+        </div>
+        <input type="search" id="cmapSearch" class="cmap-search" placeholder="Search a place…" autocomplete="off">
         <span class="cmap-div"></span>
         <button type="button" class="cmap-tool cmap-finish" id="cmapFinish" hidden title="Finish this shape" aria-label="Finish this shape">
             <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
@@ -79,6 +99,23 @@
     .cmap-danger { color: #dc2626; }
     .cmap-danger:hover { background: #fee2e2; color: #b91c1c; }
     .cmap-div { width: 1px; align-self: stretch; background: var(--color-gray-200); flex-shrink: 0; }
+    .cmap-menu-wrap { position: relative; flex-shrink: 0; }
+    .cmap-menu-btn { width: auto; padding: 0 .6rem; gap: .4rem; font-size: .78rem; font-weight: 800; }
+    .cmap-menu { position: absolute; top: calc(100% + .35rem); left: 0; z-index: 40; min-width: 15.5rem;
+        background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: .8rem;
+        box-shadow: 0 14px 34px -10px rgb(0 0 0 / .3); padding: .3rem; }
+    .cmap-menu.hidden { display: none; }
+    .cmap-mrow { display: flex; align-items: center; gap: .55rem; width: 100%; text-align: left;
+        padding: .5rem .6rem; border-radius: .55rem; font-size: .82rem; font-weight: 700; color: var(--color-gray-700); }
+    .cmap-mrow svg { width: 1.05rem; height: 1.05rem; flex-shrink: 0; }
+    .cmap-mrow:hover { background: var(--color-gray-50); }
+    .cmap-mrow.is-active { background: var(--color-brand-50); color: var(--color-brand-800); }
+    .cmap-search { flex: 1 1 8rem; min-width: 6rem; height: 2.15rem; border: 1px solid var(--color-gray-200);
+        border-radius: .6rem; padding: 0 .6rem; font-size: .8rem; background: var(--color-white); color: inherit; }
+    html.dark .cmap-menu { background: #151b12; border-color: #2b3a1c; }
+    html.dark .cmap-mrow { color: #cdd8c0; }
+    html.dark .cmap-mrow:hover { background: #1c2416; }
+    html.dark .cmap-search { background: #1c2416; border-color: #2b3a1c; }
     .cmap-map { flex: 1 1 auto; min-height: 0; }
     /* Measurement labels ride Google marker labels — these classes style them. */
     .cmap-lbl-g { background: rgb(17 24 39 / .82); border-radius: .45rem; padding: .1rem .4rem; white-space: nowrap; }
@@ -147,6 +184,12 @@
             parts.push(textMark(mid(pts[i], pts[j]), fmtM(dist(pts[i], pts[j])), 'cmap-lbl-g'));
         }
     }
+    function vertexDots(parts, pts, colorStr) {
+        pts.forEach((p) => parts.push(new (G().Marker)({
+            map, position: LL(p), clickable: false,
+            icon: { path: G().SymbolPath.CIRCLE, scale: 3.5, fillColor: colorStr, fillOpacity: 1, strokeColor: '#fff', strokeWeight: 1.5 },
+        })));
+    }
     function centerOf(pts) {
         const b = new (G().LatLngBounds)();
         pts.forEach((p) => b.extend(LL(p)));
@@ -163,6 +206,7 @@
         if (o.kind === 'pen' || o.kind === 'line' || o.kind === 'path') {
             parts.push(new (G().Polyline)({ ...style, path: pts.map(LL) }));
             if (o.kind !== 'pen') {
+                vertexDots(parts, pts, style.strokeColor);
                 segLabels(parts, pts, false);
                 if (o.kind === 'path' && pts.length > 2) {
                     let total = 0;
@@ -175,10 +219,12 @@
             const sw = b.getSouthWest(), ne = b.getNorthEast();
             const c = [[sw.lat(), sw.lng()], [sw.lat(), ne.lng()], [ne.lat(), ne.lng()], [ne.lat(), sw.lng()]];
             parts.push(new (G().Polygon)({ ...style, paths: c.map(LL), fillColor: style.strokeColor, fillOpacity: .08 }));
+            vertexDots(parts, c, style.strokeColor);
             segLabels(parts, c, true);
             parts.push(textMark(centerOf(c), fmtA(areaOf(c)), 'cmap-lbl-g'));
         } else if (o.kind === 'area') {
             parts.push(new (G().Polygon)({ ...style, paths: pts.map(LL), fillColor: style.strokeColor, fillOpacity: .1 }));
+            vertexDots(parts, pts, style.strokeColor);
             segLabels(parts, pts, true);
             parts.push(textMark(centerOf(pts), fmtA(areaOf(pts)), 'cmap-lbl-g'));
         } else if (o.kind === 'text') {
@@ -228,7 +274,11 @@
     function setTool(t) {
         tool = t;
         clearTemp();
-        document.querySelectorAll('.cmap-tool[data-mtool]').forEach((b) => b.classList.toggle('is-active', b.dataset.mtool === t));
+        document.querySelectorAll('[data-mtool]').forEach((b) => b.classList.toggle('is-active', b.dataset.mtool === t));
+        const row = document.querySelector('.cmap-mrow[data-mtool="' + t + '"] span');
+        const lab = document.getElementById('cmapToolLabel');
+        if (row && lab) lab.textContent = row.textContent;
+        document.getElementById('cmapToolsMenu')?.classList.add('hidden');
         // Pan keeps native gestures; every drawing tool takes the finger.
         if (t !== 'edit') endEdit();
         const free = (t === 'pan' || t === 'edit' || t === 'erase');
@@ -236,19 +286,9 @@
     }
     function onTap(latLng) {
         const p = [latLng.lat(), latLng.lng()];
-        if (tool === 'line') {
-            tempPts.push(p); previewTemp(false);
-            if (tempPts.length === 2) { const pts = tempPts; clearTemp(); saveObject('line', pts); }
-        } else if (tool === 'path' || tool === 'area') {
+        if (tool === 'path' || tool === 'area') {
             tempPts.push(p); previewTemp(tool === 'area');
             document.getElementById('cmapFinish').hidden = tempPts.length < 2;
-        } else if (tool === 'rect') {
-            tempPts.push(p);
-            if (tempPts.length === 2) {
-                const b = new (G().LatLngBounds)(LL(tempPts[0]), LL(tempPts[1]));
-                const pts = [[b.getSouthWest().lat(), b.getSouthWest().lng()], [b.getNorthEast().lat(), b.getNorthEast().lng()]];
-                clearTemp(); saveObject('rect', pts);
-            } else { previewTemp(false); }
         } else if (tool === 'text') {
             const t = prompt('Label text:');
             if (t && t.trim()) saveObject('text', [p], t.trim().slice(0, 500));
@@ -265,23 +305,40 @@
             const latLng = proj.getProjection().fromContainerPixelToLatLng(pt);
             return [latLng.lat(), latLng.lng()];
         };
+        // Point-then-point felt like surveying; point-and-DRAG feels like
+        // drawing. Line and box ride the same pointer plumbing as the pen.
+        const DRAG_TOOLS = ['pen', 'line', 'rect'];
+        const rectCorners = (a, b) => {
+            const bd = new (G().LatLngBounds)(LL(a), LL(b));
+            const sw = bd.getSouthWest(), ne = bd.getNorthEast();
+            return [[sw.lat(), sw.lng()], [sw.lat(), ne.lng()], [ne.lat(), ne.lng()], [ne.lat(), sw.lng()]];
+        };
+        let lastPt = null;
         el.addEventListener('pointerdown', (e) => {
-            if (tool !== 'pen' || !proj.getProjection()) return;
-            penDown = true; penPts = [ll(e)];
+            if (!DRAG_TOOLS.includes(tool) || !proj.getProjection()) return;
+            penDown = true; penPts = [ll(e)]; lastPt = penPts[0];
             e.preventDefault();
         });
         el.addEventListener('pointermove', (e) => {
-            if (!penDown || tool !== 'pen') return;
-            penPts.push(ll(e));
-            tempPts = penPts; previewTemp(false);
+            if (!penDown || !DRAG_TOOLS.includes(tool)) return;
+            const p = ll(e); lastPt = p;
+            if (tool === 'pen') { penPts.push(p); tempPts = penPts; previewTemp(false); }
+            else if (tool === 'line') { tempPts = [penPts[0], p]; previewTemp(false); }
+            else { tempPts = rectCorners(penPts[0], p); previewTemp(true); }
             e.preventDefault();
         });
         const up = () => {
             if (!penDown) return;
             penDown = false;
-            const pts = penPts.filter((_, i) => i % 2 === 0);
+            const t = tool, start = penPts[0], end = lastPt || start;
+            const stream = penPts.filter((_, i) => i % 2 === 0);
             clearTemp();
-            if (pts.length > 1) saveObject('pen', pts);
+            if (t === 'pen' && stream.length > 1) saveObject('pen', stream);
+            else if (t === 'line' && dist(start, end) > 0.5) saveObject('line', [start, end]);
+            else if (t === 'rect' && dist(start, end) > 0.5) {
+                const b = new (G().LatLngBounds)(LL(start), LL(end));
+                saveObject('rect', [[b.getSouthWest().lat(), b.getSouthWest().lng()], [b.getNorthEast().lat(), b.getNorthEast().lng()]]);
+            }
         };
         el.addEventListener('pointerup', up);
         el.addEventListener('pointercancel', up);
@@ -417,6 +474,9 @@
             mapTypeId: 'hybrid',                       // farmers plan on what the land looks like
             mapTypeControl: false, streetViewControl: false, fullscreenControl: false,
             gestureHandling: 'greedy',
+            // Vector rendering is what makes two-finger rotate and tilt work.
+            renderingType: 'VECTOR',
+            headingInteractionEnabled: true, tiltInteractionEnabled: true,
         });
         proj = new (G().OverlayView)();
         proj.onAdd = function () {}; proj.draw = function () {}; proj.onRemove = function () {};
@@ -425,8 +485,28 @@
         map.addListener('click', (e) => { if (tool !== 'pan' && tool !== 'pen' && tool !== 'erase') onTap(e.latLng); });
         bindPen(map.getDiv());
 
-        document.querySelectorAll('.cmap-tool[data-mtool]').forEach((b) =>
+        document.querySelectorAll('[data-mtool]').forEach((b) =>
             b.addEventListener('click', () => setTool(b.dataset.mtool)));
+        const tmenu = document.getElementById('cmapToolsMenu'), tbtn = document.getElementById('cmapToolsBtn');
+        tbtn.addEventListener('click', () => {
+            const open = !tmenu.classList.toggle('hidden');
+            tbtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.cmap-menu-wrap')) tmenu.classList.add('hidden');
+        });
+        // Search jumps the map anywhere by name; without Places on the key the
+        // box goes away rather than sitting dead.
+        try {
+            const inp = document.getElementById('cmapSearch');
+            const ac = new (G().places.Autocomplete)(inp, { fields: ['geometry'] });
+            ac.addListener('place_changed', () => {
+                const g = ac.getPlace().geometry;
+                if (!g) return;
+                if (g.viewport) map.fitBounds(g.viewport);
+                else { map.setCenter(g.location); map.setZoom(17); }
+            });
+        } catch (_) { document.getElementById('cmapSearch')?.remove(); }
         document.getElementById('cmapFinish').addEventListener('click', () => {
             if (tempPts.length < 2) return;
             const pts = tempPts, kind = tool === 'area' ? 'area' : 'path';
@@ -491,7 +571,7 @@
         window.__cmapBoot = () => { booted = true; buildMap(); };
         const s = document.createElement('script');
         s.src = 'https://maps.googleapis.com/maps/api/js?key=' + encodeURIComponent(KEY)
-            + '&libraries=geometry&v=weekly&loading=async&callback=__cmapBoot';
+            + '&libraries=geometry,places&v=weekly&loading=async&callback=__cmapBoot';
         s.async = true;
         s.onerror = () => { loading = false; if (window.toast) toast('Could not load Google Maps — check the API key.', 'error'); };
         document.head.appendChild(s);
