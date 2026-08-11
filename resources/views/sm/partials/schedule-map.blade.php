@@ -55,7 +55,7 @@
                 </button>
                 <button type="button" class="cmap-mrow" data-mtool="path" data-short="Multi-line">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l5-6 4 3 6-8"/><path stroke-linecap="round" d="M3 17h.01M8 11h.01M12 14h.01M18 6h.01"/></svg>
-                    <span>Multi-line — tap points</span>
+                    <span>Multi-line — tap points, tap the 1st to close</span>
                 </button>
                 <button type="button" class="cmap-mrow" data-mtool="rect" data-short="Box">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg>
@@ -336,11 +336,45 @@
             parts.push(textMark(mid(pts[i], pts[j]), fmtM(dist(pts[i], pts[j])), 'cmap-lbl-g'));
         }
     }
-    function vertexDots(parts, pts, colorStr) {
-        pts.forEach((p) => parts.push(new (G().Marker)({
-            map, position: LL(p), clickable: false,
-            icon: { path: G().SymbolPath.CIRCLE, scale: 3.5, fillColor: colorStr, fillOpacity: 1, strokeColor: '#fff', strokeWeight: 1.5 },
-        })));
+    /* Finished shapes keep the same pins the drawing had — grab one and the
+       shape reshapes live under it, saving for the whole team on release.
+       A dragged box corner re-derives the box from the opposite corner. */
+    function vertexPins(parts, o, pts, colorStr) {
+        pts.forEach((p, i) => {
+            const m = new (G().Marker)({
+                map, position: LL(p), draggable: true, crossOnDrag: false,
+                icon: pinIcon(colorStr, 1.2),
+            });
+            m.addListener('drag', (ev) => {
+                const path = parts[0].getPath ? parts[0].getPath() : null;
+                if (!path) return;
+                if (o.kind === 'rect') {
+                    const b = new (G().LatLngBounds)(LL(pts[(i + 2) % 4]), ev.latLng);
+                    const sw = b.getSouthWest(), ne = b.getNorthEast();
+                    [[sw.lat(), sw.lng()], [sw.lat(), ne.lng()], [ne.lat(), ne.lng()], [ne.lat(), sw.lng()]]
+                        .forEach((c2, j) => path.setAt(j, LL(c2)));
+                } else {
+                    path.setAt(i, ev.latLng);
+                }
+            });
+            m.addListener('dragend', async (ev) => {
+                const q = [ev.latLng.lat(), ev.latLng.lng()];
+                let np;
+                if (o.kind === 'rect') {
+                    const b = new (G().LatLngBounds)(LL(pts[(i + 2) % 4]), LL(q));
+                    np = [[b.getSouthWest().lat(), b.getSouthWest().lng()], [b.getNorthEast().lat(), b.getNorthEast().lng()]];
+                } else {
+                    np = (objIndex.get(o.id) || o).points.map((pp, j) => (j === i ? q : pp));
+                }
+                try {
+                    const res = await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: o.id, points: np } });
+                    pushHist({ type: 'update', id: o.id, before: o.points, after: res.data.object.points });
+                    dropObject(o.id);
+                    renderObject(res.data.object);
+                } catch (e) { if (window.toast) toast(e.message, 'error'); }
+            });
+            parts.push(m);
+        });
     }
     function centerOf(pts) {
         const b = new (G().LatLngBounds)();
@@ -359,9 +393,9 @@
         if (o.kind === 'pen' || o.kind === 'line' || o.kind === 'path' || o.kind === 'arrow') {
             parts.push(new (G().Polyline)({ ...style, path: pts.map(LL),
                 icons: o.kind === 'arrow' ? [ARROW_HEAD(style.strokeColor)] : null }));
-            if (o.kind === 'arrow') vertexDots(parts, pts, style.strokeColor);
+            if (o.kind === 'arrow') vertexPins(parts, o, pts, style.strokeColor);
             else if (o.kind !== 'pen') {
-                vertexDots(parts, pts, style.strokeColor);
+                vertexPins(parts, o, pts, style.strokeColor);
                 segLabels(parts, pts, false);
                 if (o.kind === 'path' && pts.length > 2) {
                     let total = 0;
@@ -374,12 +408,12 @@
             const sw = b.getSouthWest(), ne = b.getNorthEast();
             const c = [[sw.lat(), sw.lng()], [sw.lat(), ne.lng()], [ne.lat(), ne.lng()], [ne.lat(), sw.lng()]];
             parts.push(new (G().Polygon)({ ...style, paths: c.map(LL), fillColor: style.strokeColor, fillOpacity: .08 }));
-            vertexDots(parts, c, style.strokeColor);
+            vertexPins(parts, o, c, style.strokeColor);
             segLabels(parts, c, true);
             parts.push(textMark(centerOf(c), fmtA(areaOf(c)), 'cmap-lbl-g'));
         } else if (o.kind === 'area') {
             parts.push(new (G().Polygon)({ ...style, paths: pts.map(LL), fillColor: style.strokeColor, fillOpacity: .1 }));
-            vertexDots(parts, pts, style.strokeColor);
+            vertexPins(parts, o, pts, style.strokeColor);
             segLabels(parts, pts, true);
             parts.push(textMark(centerOf(pts), fmtA(areaOf(pts)), 'cmap-lbl-g'));
         } else if (o.kind === 'text') {
@@ -485,8 +519,8 @@
     // The classic map pin — its tip IS the point, so what you grab is
     // exactly what you placed.
     const PIN = 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z';
-    const pinIcon = () => ({ path: PIN, scale: 1.35, anchor: new (G().Point)(12, 22),
-        fillColor: color, fillOpacity: 1, strokeColor: '#fff', strokeWeight: 1.5 });
+    const pinIcon = (c, sc) => ({ path: PIN, scale: sc || 1.35, anchor: new (G().Point)(12, 22),
+        fillColor: c || color, fillOpacity: 1, strokeColor: '#fff', strokeWeight: 1.5 });
     const ARROW_HEAD = (c) => ({ icon: { path: G().SymbolPath.FORWARD_CLOSED_ARROW, scale: 3.4,
         fillColor: c, fillOpacity: 1, strokeColor: c, strokeWeight: 1 }, offset: '100%' });
     /* Segment distances paint WHILE the shape is being made, not only after
@@ -552,9 +586,21 @@
         // zoom and rotate keep working mid-drawing. 'none' killed them all.
         map.setOptions({ gestureHandling: free ? 'greedy' : 'cooperative', draggableCursor: free ? null : 'crosshair' });
     }
+    /* Multi-line taps can loop home: touching the first pin again closes
+       the ring and saves it as an area. */
+    function closeTempAsArea() {
+        const pts = tempPts.slice();
+        clearTemp();
+        saveObject('area', pts);
+    }
     function onTap(latLng) {
         const p = [latLng.lat(), latLng.lng()];
         if (tool === 'path' || tool === 'area') {
+            if (tempPts.length >= 3 && proj.getProjection()) {
+                const a = proj.getProjection().fromLatLngToContainerPixel(latLng);
+                const f = proj.getProjection().fromLatLngToContainerPixel(LL(tempPts[0]));
+                if (a && f && Math.hypot(a.x - f.x, a.y - f.y) < 18) { closeTempAsArea(); return; }
+            }
             tempPts.push(p); previewTemp(tool === 'area');
             // Each tapped corner shows itself at once — and stays grabbable:
             // drag a dot to move the point and the line re-shapes under it.
@@ -566,6 +612,9 @@
             dot.addListener('drag', (ev) => {
                 tempPts[idx] = [ev.latLng.lat(), ev.latLng.lng()];
                 previewTemp(tool === 'area');
+            });
+            if (idx === 0) dot.addListener('click', () => {
+                if ((tool === 'path' || tool === 'area') && tempPts.length >= 3) closeTempAsArea();
             });
             tempDots.push(dot);
             document.getElementById('cmapFinish').hidden = tempPts.length < 2;
