@@ -514,12 +514,12 @@
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg>
             View saved weather
         </button>
-        <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50" data-action="attendance">
-            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>
-            Attendance
-        </button>
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50" data-action="add-income">
-            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v10M9 10h4.2a1.8 1.8 0 010 3.6H9M9 7h6"/></svg>
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <rect x="2.5" y="7.5" width="19" height="11" rx="2"/>
+                <circle cx="12" cy="13" r="2.4"/>
+                <path stroke-linecap="round" d="M6 11.5v3M18 11.5v3"/>
+            </svg>
             Add income
         </button>
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50" data-action="date-marker-btn">
@@ -597,23 +597,6 @@
             <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="draft">Move to drafts</button>
             <button type="button" class="btn btn-ghost justify-start! text-red-600!" data-card-menu-action="delete">Delete</button>
         </div>
-    </div>
-</div>
-
-{{-- ==================== WHO TURNED UP ==================== --}}
-<div class="sheet hidden" id="attendanceSheet" style="--sheet-width:26rem">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header">
-        <h3 class="sheet-title truncate" id="attendanceTitle">Attendance</h3>
-        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
-    </div>
-    <div class="sheet-body" style="padding-bottom:1rem">
-        <div class="att-head">
-            <span class="att-head-label">To pay for this day</span>
-            <span class="att-head-amt" id="attendancePayable">₱0.00</span>
-            <span class="att-head-sub" id="attendancePlanned"></span>
-        </div>
-        <div id="attendanceList" class="mt-3"></div>
     </div>
 </div>
 
