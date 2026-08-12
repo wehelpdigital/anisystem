@@ -169,7 +169,7 @@
            not need costs nothing. `flex-basis: 0` is what makes it yield —
            auto would have it claim its content width first and push the cost
            down to a third line. */
-        .date-header-weather { min-width: 0; flex: 1 1 0; }
+        .date-header-weather { min-width: 0; flex: 1 1 auto; }
         .date-header-cash { flex: 0 0 auto; }
         .date-header-weather.scroll-chips { gap: .25rem; padding: 0; margin: 0; }
         .wx-chip { display: inline-flex; align-items: center; gap: .22rem; flex-shrink: 0; font-size: 10.5px; font-weight: 700; padding: .1rem .42rem; border-radius: 999px; background: var(--tl-pill); color: var(--tl-text-muted); white-space: nowrap; cursor: pointer; border: 1px solid transparent; transition: border-color .15s ease; }
@@ -380,7 +380,7 @@
                not need; `1 0 100%` claimed the lot and pushed the cost onto a
                third line. The break element above is what put them here. */
             .date-header-weather {
-                order: 91; flex: 1 1 0; min-width: 0;
+                order: 91; flex: 1 1 auto; min-width: 0;
                 overflow-x: auto; overflow-y: hidden;
             }
             /* What the strip becomes when the day has more forecasts than the

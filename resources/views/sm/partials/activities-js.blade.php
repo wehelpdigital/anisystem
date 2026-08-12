@@ -4580,13 +4580,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!strip.isConnected || strip.scrollWidth <= strip.clientWidth + 4) return;
                 const first = strip.querySelector('.wx-emoji');
                 const n = strip.querySelectorAll('.js-wx-chip').length;
+                // One forecast is never worth hiding. "Weather 1" tells you
+                // nothing you did not already know — the day has weather —
+                // where the chip itself tells you what it is. If it is a
+                // little too wide it can scroll, which is what the strip is
+                // for.
+                if (n <= 1) return;
                 const btn = document.createElement('button');
                 btn.type = 'button';
                 btn.className = 'wx-mini-btn';
                 btn.title = 'Weather for each lot';
                 btn.setAttribute('aria-label', 'Weather for each lot');
+                // "3 lots", not "Weather 3": the icon already says weather,
+                // and the number means places, which the word never did.
                 btn.innerHTML = '<span class="wx-emoji">' + (first ? first.textContent : '⛅') + '</span>'
-                    + '<span>Weather</span><span class="wx-mini-n">' + n + '</span>';
+                    + '<span>' + n + ' lots</span>';
                 btn.dataset.wxFor = strip.dataset.wxFor || '';
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();          // not a fold of the day
