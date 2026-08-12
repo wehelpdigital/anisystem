@@ -112,11 +112,19 @@ class AsScheduleActivity extends BaseModel
             return (float) $custom;          // an agreed figure beats any rule
         }
 
+        $half = (float) ($worker->costPerHalfDay ?? 0);
+
+        // A worker checklist is a day's attendance, not a slice of a task:
+        // being on the list means a day's pay. Half and whole simply do not
+        // apply there, which is why the checklist never asks.
+        if ($this->activityType === 'worker_payroll') {
+            return $half * 2;
+        }
+
         $part = $this->dayPartFor($worker);
         if ($part === null) {
             return 0.0;                      // no basis to work one out
         }
-        $half = (float) ($worker->costPerHalfDay ?? 0);
 
         return $part === 'half' ? $half : $half * 2;
     }

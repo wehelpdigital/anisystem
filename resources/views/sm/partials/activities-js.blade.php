@@ -623,15 +623,32 @@ document.addEventListener('DOMContentLoaded', () => {
         const date = box.closest('[data-att-date]')?.getAttribute('data-att-date');
         if (!row || !date) return;
         row.classList.toggle('is-out', !box.checked);
+
+        // Move the day's figure now, not when the server answers. The card
+        // carries what this person costs, so the sum can be adjusted here and
+        // the header follows in the same breath as the tick.
+        const card = row.closest('.activity-card');
+        const worth = Number((row.querySelector('.act-check-pay')?.textContent || '').replace(/[^0-9.]/g, '')) || 0;
+        if (card) {
+            const was = Number(card.getAttribute('data-labour')) || 0;
+            card.setAttribute('data-labour', String(Math.max(0, was + (box.checked ? worth : -worth))));
+            paintAllDayCash();
+        }
+
         try {
             await api(U.attendanceMark(), {
                 method: 'POST',
                 body: { date, workerId: parseInt(row.getAttribute('data-att-worker'), 10), present: box.checked ? 1 : 0 },
             });
-            paintAllDayCash();
         } catch (err) {
+            // Put the tick and the figure back exactly as they were.
             box.checked = !box.checked;
             row.classList.toggle('is-out', !box.checked);
+            if (card) {
+                const now = Number(card.getAttribute('data-labour')) || 0;
+                card.setAttribute('data-labour', String(Math.max(0, now + (box.checked ? worth : -worth))));
+                paintAllDayCash();
+            }
             toast(err.message || 'Could not save that.', 'error');
         }
     });
@@ -1826,9 +1843,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return (v === 'whole' || v === 'half') ? v : null;
     }
     function defaultPay(id, dayPart) {
+        const half = Number(WORKER_RATES[id] || 0);
+        // On a checklist, being there is a day — half and whole are a task's
+        // idea, not attendance's.
+        if (activityMode === 'payroll') return half * 2;
         const part = dayPart || inheritedPart();
         if (!part) return 0;
-        const half = Number(WORKER_RATES[id] || 0);
         return part === 'half' ? half : half * 2;
     }
     function payFor(id) {
@@ -1885,12 +1905,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <input type="checkbox" data-pay-on ${ticked ? 'checked' : ''}>
                     <span></span>
                 </label>` : ''}
-                <span class="wp-name">${esc(WORKER_NAMES[id] || 'Worker')}${payroll && !ticked ? `<span class="wp-rate">${esc(rate)} if they worked</span>` : ''}</span>
-                ${!payroll || ticked ? `<span class="wp-part">
-                    <button type="button" class="${part === 'whole' ? 'is-on' : ''}" data-pay-part="whole">Whole</button>
-                    <button type="button" class="${part === 'half' ? 'is-on' : ''}" data-pay-part="half">Half</button>
-                </span>
-                <input type="number" class="form-input wp-amount text-right" data-pay-amount min="0" step="any" inputmode="decimal"
+                <span class="wp-name">${esc(WORKER_NAMES[id] || 'Worker')}${!ticked ? `<span class="wp-rate">${esc(rate)} if they worked</span>` : ''}</span>
+                ${ticked ? `<input type="number" class="form-input wp-amount text-right" data-pay-amount min="0" step="any" inputmode="decimal"
                     value="${st.amount === null || st.amount === undefined ? '' : esc(st.amount)}" placeholder="${defaultPay(id, part).toFixed(2)}">` : ''}
             </div>`;
         }).join('');

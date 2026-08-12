@@ -133,6 +133,14 @@
                 </button>
             </div>
             <div class="sheet-body" style="padding-bottom:1rem">
+                {{-- A season builds up maps. Finding one by name beats reading
+                     the whole list, and the count says whether the search
+                     found anything without a second look. --}}
+                <div class="cmap-savesearch">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+                    <input type="text" id="cmapSaveSearch" placeholder="Search saved maps…" autocomplete="off">
+                    <span id="cmapSaveCount"></span>
+                </div>
                 <div class="cmap-saves" id="cmapSavesList"></div>
             </div>
         </div>
@@ -271,6 +279,27 @@
     .cmap-saverow-t { display: block; font-size: .85rem; font-weight: 800; color: var(--color-gray-900);
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .cmap-saverow-s { display: block; font-size: .7rem; color: var(--color-gray-500); margin-top: .1rem; }
+    .cmap-savesearch { display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem; padding: .5rem .7rem;
+        border-radius: .7rem; border: 1px solid var(--color-gray-200); background: var(--color-white); }
+    .cmap-savesearch svg { width: 1rem; height: 1rem; color: var(--color-gray-400); flex-shrink: 0; }
+    .cmap-savesearch input { flex: 1 1 auto; min-width: 0; border: 0; outline: none; background: transparent;
+        font-size: .88rem; color: var(--color-gray-900); }
+    .cmap-savesearch span { font-size: .7rem; font-weight: 700; color: var(--color-gray-400); white-space: nowrap; }
+    .cmap-saverow { display: flex; align-items: flex-start; gap: .6rem; width: 100%; text-align: left;
+        padding: .55rem; border-radius: .75rem; }
+    .cmap-thumb { width: 3.4rem; height: 2.6rem; border-radius: .5rem; overflow: hidden; flex-shrink: 0;
+        background: var(--color-gray-100); }
+    .cmap-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .cmap-saverow-main { min-width: 0; display: flex; flex-direction: column; gap: .15rem; }
+    .cmap-tags { display: flex; flex-wrap: wrap; gap: .25rem; }
+    .cmap-tag { font-size: .64rem; font-weight: 800; text-transform: uppercase; letter-spacing: .02em;
+        padding: .1rem .4rem; border-radius: 999px; background: var(--color-gray-100); color: var(--color-gray-500); }
+    .cmap-tag.is-team { background: #dbeafe; color: #1d4ed8; }
+    .cmap-tag.is-solo { background: #dcfce7; color: #15803d; }
+    .cmap-tag.is-warn { background: #fef3c7; color: #92400e; }
+    html.dark .cmap-savesearch { background: #141a10; border-color: #2b3a1c; }
+    html.dark .cmap-savesearch input { color: #e6eddd; }
+    html.dark .cmap-tag { background: #1c2416; color: #a9b89b; }
     .cmap-saves-empty { font-size: .8rem; color: var(--color-gray-500); text-align: center; padding: 1.2rem 0; }
     /* Select-tool action bar: floats over the map while a shape is held. */
     .cmap-editbar { position: absolute; left: 50%; bottom: .85rem; transform: translateX(-50%) translateY(0);
@@ -1126,6 +1155,9 @@
         try {
             const r = await api(`${URLS.save}?scheduleId=${SID}`, { method: 'POST', body: {
                 mode: saveMode,
+                // Drawn with the team or drawn alone: the same tool, but not
+                // the same thing to whoever loads it later.
+                source: @json(request()->routeIs('sm.collab') ? 'team' : 'solo'),
                 image,
                 title: document.getElementById('cmapSaveName').value.trim(),
                 description: document.getElementById('cmapSaveDesc').value.trim(),
@@ -1140,32 +1172,68 @@
         btn.disabled = false;
         document.getElementById('cmapSaveGoTxt').textContent = 'Save';
     }
+    let SAVED_MAPS = [];
+
+    function paintSaves(term) {
+        const list = document.getElementById('cmapSavesList');
+        const count = document.getElementById('cmapSaveCount');
+        const q = (term || '').trim().toLowerCase();
+        const rows = q
+            ? SAVED_MAPS.filter((sv) => (sv.title + ' ' + sv.by).toLowerCase().includes(q))
+            : SAVED_MAPS;
+
+        count.textContent = SAVED_MAPS.length
+            ? (q ? rows.length + ' of ' + SAVED_MAPS.length : SAVED_MAPS.length + (SAVED_MAPS.length === 1 ? ' map' : ' maps'))
+            : '';
+
+        if (!SAVED_MAPS.length) {
+            list.innerHTML = '<p class="cmap-saves-empty">No saved maps yet — draw one, then “Save map to notes”.</p>';
+            return;
+        }
+        if (!rows.length) {
+            list.innerHTML = '<p class="cmap-saves-empty">Nothing matches that.</p>';
+            return;
+        }
+
+        list.innerHTML = '';
+        rows.forEach((sv) => {
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'cmap-saverow' + (WANT_SAVE && sv.id === WANT_SAVE ? ' is-wanted' : '');
+            const shapes = sv.count + ' shape' + (sv.count === 1 ? '' : 's');
+            b.innerHTML = `
+                <span class="cmap-thumb">${sv.imageUrl ? `<img src="${esc(sv.imageUrl)}" alt="" loading="lazy">` : ''}</span>
+                <span class="cmap-saverow-main">
+                    <span class="cmap-saverow-t">${esc(sv.title || 'Map')}</span>
+                    <span class="cmap-tags">
+                        <span class="cmap-tag ${sv.source === 'team' ? 'is-team' : 'is-solo'}">${sv.source === 'team' ? 'Team map' : 'My map'}</span>
+                        <span class="cmap-tag">${esc(shapes)}</span>
+                        ${sv.imageUrl ? '' : '<span class="cmap-tag is-warn">No picture</span>'}
+                    </span>
+                    <span class="cmap-saverow-s">${esc(sv.by)} · ${esc(sv.when)}</span>
+                </span>`;
+            b.addEventListener('click', () => loadSavedMap(sv));
+            // Arrived from a note about this map: point straight at it, but
+            // still let the team confirm before it replaces the live map.
+            if (WANT_SAVE && sv.id === WANT_SAVE) {
+                setTimeout(() => b.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 320);
+            }
+            list.appendChild(b);
+        });
+    }
+
     async function openSaves() {
         try {
             const r = await api(`${URLS.saves}?scheduleId=${SID}`);
-            const list = document.getElementById('cmapSavesList');
-            const rows = r.data.saves || [];
-            list.innerHTML = '';
-            if (!rows.length) list.innerHTML = '<p class="cmap-saves-empty">No saved maps yet — draw one, then “Save map to notes”.</p>';
-            rows.forEach((sv) => {
-                const b = document.createElement('button');
-                b.type = 'button'; b.className = 'cmap-saverow';
-                const t = document.createElement('span'); t.className = 'cmap-saverow-t'; t.textContent = sv.title;
-                const sub = document.createElement('span'); sub.className = 'cmap-saverow-s';
-                sub.textContent = sv.count + ' shape' + (sv.count === 1 ? '' : 's') + ' · ' + sv.by + ' · ' + sv.when;
-                b.appendChild(t); b.appendChild(sub);
-                b.addEventListener('click', () => loadSavedMap(sv));
-                // Arrived from a note about this map: point straight at it,
-                // but still let the team confirm before it replaces the live map.
-                if (WANT_SAVE && sv.id === WANT_SAVE) {
-                    b.classList.add('is-wanted');
-                    setTimeout(() => b.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 320);
-                }
-                list.appendChild(b);
-            });
+            SAVED_MAPS = r.data.saves || [];
+            const search = document.getElementById('cmapSaveSearch');
+            if (search) search.value = '';
+            paintSaves('');
             window.openSheet?.('cmapSavesSheet');
         } catch (e) { if (window.toast) toast(e.message, 'error'); }
     }
+
+    document.getElementById('cmapSaveSearch')?.addEventListener('input', (e) => paintSaves(e.target.value));
     async function loadSavedMap(sv) {
         const ok = window.confirmAction
             ? await confirmAction({ title: 'Load “' + sv.title + '”?', message: 'Replaces the current shapes for the whole team.', confirmText: 'Load map' })

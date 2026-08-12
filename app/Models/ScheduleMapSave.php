@@ -13,7 +13,7 @@ class ScheduleMapSave extends BaseModel
     protected $table = 'as_schedule_map_saves';
 
     protected $fillable = [
-        'scheduleId', 'userId', 'title', 'objects', 'noteId', 'deleteStatus',
+        'scheduleId', 'userId', 'title', 'source', 'objects', 'noteId', 'deleteStatus',
     ];
 
     protected $casts = [

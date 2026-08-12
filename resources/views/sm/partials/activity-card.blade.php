@@ -237,7 +237,9 @@
     {{-- What the labour on this activity costs, per worker and in total.
          Mirrors labourLine() in the JS renderer. --}}
     @php $labour = $a->labourTotal(); @endphp
-    @if ($labour > 0)
+    {{-- A payroll card already lists every name and figure in its checklist;
+         repeating them underneath is the same information twice. --}}
+    @if ($labour > 0 && $a->activityType !== 'worker_payroll')
         <div class="activity-labour">
             <span class="al-total">₱{{ number_format($labour, 2) }}</span>
             <span class="al-parts">{{ $a->workers->map(function ($w) use ($a) {

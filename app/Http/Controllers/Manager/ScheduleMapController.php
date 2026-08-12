@@ -286,6 +286,11 @@ class ScheduleMapController extends BaseScheduleController
                     'by' => (string) \Illuminate\Support\Str::of(optional($users->get($r->userId))->full_name ?? 'Someone')->explode(' ')->first(),
                     'when' => $r->created_at?->timezone('Asia/Manila')->format('M j, Y g:ia'),
                     'count' => count(json_decode((string) $r->objects, true) ?: []),
+                    // Where it was drawn. A map made in the Collab Room is the
+                    // team's; one made in the Maps module is your own working
+                    // copy, and telling them apart matters when you are about
+                    // to replace what is on screen.
+                    'source' => $r->source === 'team' ? 'team' : 'solo',
                     'imagePath' => $path,
                     'imageUrl' => \App\Support\MediaStore::url($path),
                 ];
@@ -336,6 +341,7 @@ class ScheduleMapController extends BaseScheduleController
 
         $mode = $request->input('mode');
         $title = trim((string) $request->input('title')) ?: 'Team map';
+        $source = $request->input('source') === 'team' ? 'team' : 'solo';
         $description = trim((string) $request->input('description'));
 
         // Best-effort picture; the reopenable snapshot never depends on it.
@@ -406,6 +412,7 @@ class ScheduleMapController extends BaseScheduleController
                 'scheduleId' => $schedule->id,
                 'userId' => $meId,
                 'title' => mb_substr($title, 0, 180),
+                'source' => $source,
                 'objects' => json_encode(array_map(fn ($o) => [
                     'kind' => $o['kind'], 'color' => $o['color'], 'width' => $o['width'],
                     'points' => $o['points'], 'label' => $o['label'],
