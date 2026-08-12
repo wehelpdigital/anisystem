@@ -22,7 +22,7 @@
             aria-label="Show room members" title="Room members">
         @foreach ($members->take(4) as $m)
             <span class="collab-pill-face {{ $m->isOnline() ? 'on' : '' }}" data-uid="{{ $m->id }}">
-                @if ($m->avatarPath)<img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($m->avatarPath) }}" alt="">@else{{ $m->initials }}@endif
+                @if ($m->avatarPath)<img src="{{ \App\Support\MediaStore::url($m->avatarPath) }}" alt="">@else{{ $m->initials }}@endif
                 <span class="collab-mem-dot"></span>
             </span>
         @endforeach
@@ -42,7 +42,7 @@
             @foreach ($members as $m)
                 <div class="collab-mem {{ $m->isOnline() ? 'on' : '' }}" data-uid="{{ $m->id }}">
                     <span class="collab-mem-face">
-                        @if ($m->avatarPath)<img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($m->avatarPath) }}" alt="">@else{{ $m->initials }}@endif
+                        @if ($m->avatarPath)<img src="{{ \App\Support\MediaStore::url($m->avatarPath) }}" alt="">@else{{ $m->initials }}@endif
                         <span class="collab-mem-dot"></span>
                     </span>
                     <span class="collab-mem-name">{{ $m->full_name }}{{ (int) $m->id === (int) $schedule->anisystemUserId ? ' · owner' : '' }}</span>

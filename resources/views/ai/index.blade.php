@@ -113,7 +113,7 @@
         <div class="flex items-center gap-2 min-w-0">
             <span class="ai-face">
                 @if ($settings->avatarPath)
-                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($settings->avatarPath) }}" alt="">
+                    <img src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="">
                 @else
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
                 @endif
@@ -159,7 +159,7 @@
                     @if ($m->role === 'user')
                         {{ auth()->user()->initials }}
                     @elseif ($settings->avatarPath)
-                        <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($settings->avatarPath) }}" alt="">
+                        <img src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="">
                     @else
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
                     @endif
@@ -167,7 +167,7 @@
                 <div class="ai-bubble">
                     {!! \App\Support\AiMarkdown::toHtml($m->content) !!}
                     @if ($m->imagePath)
-                        <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($m->imagePath) }}" alt="Attached photo">
+                        <img src="{{ \App\Support\MediaStore::url($m->imagePath) }}" alt="Attached photo">
                     @endif
                     @if ($m->role === 'assistant' && (float) $m->creditsCharged > 0)
                         <p class="ai-cost">{{ rtrim(rtrim(number_format((float) $m->creditsCharged, 2), '0'), '.') }} credits</p>
@@ -178,7 +178,7 @@
             <div class="text-center py-6" id="aiWelcome">
                 <span class="ai-face mx-auto" style="width:3.5rem;height:3.5rem">
                     @if ($settings->avatarPath)
-                        <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($settings->avatarPath) }}" alt="">
+                        <img src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="">
                     @else
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
                     @endif
@@ -202,7 +202,7 @@
         <div class="text-center py-6" id="aiWelcome">
             <span class="ai-face mx-auto" style="width:3.5rem;height:3.5rem">
                 @if ($settings->avatarPath)
-                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($settings->avatarPath) }}" alt="">
+                    <img src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="">
                 @else
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
                 @endif
@@ -280,7 +280,7 @@ const __init = () => {
         newConvo: @json(route('ai.conversation.new')),
         delConvo: (id) => @json(route('ai.conversation.delete')) + '?id=' + id,
     };
-    const AVATAR = @json($settings->avatarPath ? \Illuminate\Support\Facades\Storage::disk('public')->url($settings->avatarPath) : null);
+    const AVATAR = @json($settings->avatarPath ? \App\Support\MediaStore::url($settings->avatarPath) : null);
     const MY_INITIALS = @json(auth()->user()->initials);
     const BOT_SVG = '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>';
 

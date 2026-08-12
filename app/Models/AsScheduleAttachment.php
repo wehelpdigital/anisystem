@@ -38,7 +38,7 @@ class AsScheduleAttachment extends BaseModel
     public function getPublicUrl(): ?string
     {
         if (!$this->storagePath) return null;
-        return Storage::disk('public')->url($this->storagePath);
+        return \App\Support\MediaStore::url($this->storagePath);
     }
 
     /**

@@ -14,7 +14,7 @@
 <{{ $tag }} @if($doLink) href="{{ route('community.connect.profile', ['userId' => $user->id]) }}" @endif
     class="avatar {{ $sz }} {{ $hue }} overflow-hidden" title="{{ optional($user)->full_name }}{{ $onlineDot ? ' · Online' : '' }}">
     @if ($photo)
-        <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($photo) }}" alt="{{ optional($user)->full_name }}" class="w-full h-full object-cover">
+        <img src="{{ \App\Support\MediaStore::url($photo) }}" alt="{{ optional($user)->full_name }}" class="w-full h-full object-cover">
     @else
         {{ optional($user)->initials ?: '?' }}
     @endif

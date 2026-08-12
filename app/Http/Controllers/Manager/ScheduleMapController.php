@@ -287,7 +287,7 @@ class ScheduleMapController extends BaseScheduleController
                     'when' => $r->created_at?->timezone('Asia/Manila')->format('M j, Y g:ia'),
                     'count' => count(json_decode((string) $r->objects, true) ?: []),
                     'imagePath' => $path,
-                    'imageUrl' => $path ? \Illuminate\Support\Facades\Storage::disk('public')->url($path) : null,
+                    'imageUrl' => \App\Support\MediaStore::url($path),
                 ];
             })->all()],
         ]);
@@ -354,9 +354,10 @@ class ScheduleMapController extends BaseScheduleController
         // write their sizes, so that path is the fallback, not the goal.
         $binary = $this->decodeDataUrlImage((string) $request->input('image'));
         if ($binary !== null) {
-            $path = 'schedule-notes/' . $schedule->id . '/' . $namePrefix . \Illuminate\Support\Str::random(20) . '.png';
-            \Illuminate\Support\Facades\Storage::disk('public')->put($path, $binary);
-            $media[] = ['type' => $mediaType, 'path' => $path, 'poster' => null];
+            $path = \App\Support\MediaStore::putBinary($binary, 'maps', 'png', $schedule->id, $namePrefix);
+            if ($path !== null) {
+                $media[] = ['type' => $mediaType, 'path' => $path, 'poster' => null];
+            }
         }
 
         $url = $media ? null : $this->staticMapUrl(
@@ -370,9 +371,10 @@ class ScheduleMapController extends BaseScheduleController
             try {
                 $img = \Illuminate\Support\Facades\Http::timeout(20)->get($url);
                 if ($img->ok() && str_starts_with((string) $img->header('Content-Type'), 'image/')) {
-                    $path = 'schedule-notes/' . $schedule->id . '/' . $namePrefix . \Illuminate\Support\Str::random(20) . '.png';
-                    \Illuminate\Support\Facades\Storage::disk('public')->put($path, $img->body());
-                    $media[] = ['type' => $mediaType, 'path' => $path, 'poster' => null];
+                    $path = \App\Support\MediaStore::putBinary($img->body(), 'maps', 'png', $schedule->id, $namePrefix);
+                    if ($path !== null) {
+                        $media[] = ['type' => $mediaType, 'path' => $path, 'poster' => null];
+                    }
                 }
             } catch (\Throwable $e) {
                 // fall through — picture is optional for mode=map

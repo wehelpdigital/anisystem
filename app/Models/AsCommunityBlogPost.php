@@ -31,7 +31,7 @@ class AsCommunityBlogPost extends BaseModel
     public function coverUrl(): ?string
     {
         return $this->coverImagePath
-            ? \Illuminate\Support\Facades\Storage::disk('public')->url($this->coverImagePath)
+            ? \App\Support\MediaStore::url($this->coverImagePath)
             : null;
     }
 }

@@ -28,7 +28,7 @@
                 <div>
                     <label class="form-label">Cover photo <span class="text-gray-400 font-normal">(optional)</span></label>
                     <div id="accountCoverPreview" class="w-full h-32 sm:h-40 rounded-xl bg-gray-100 bg-center bg-cover flex items-center justify-center text-center px-4 text-xs text-gray-400 border border-gray-200 overflow-hidden"
-                         @if ($user->coverPath) style="background-image:url('{{ \Illuminate\Support\Facades\Storage::disk('public')->url($user->coverPath) }}')" @endif>
+                         @if ($user->coverPath) style="background-image:url('{{ \App\Support\MediaStore::url($user->coverPath) }}')" @endif>
                         <span id="accountCoverHint" class="{{ $user->coverPath ? 'hidden' : '' }}">No cover yet — a wide landscape photo looks best.</span>
                     </div>
                     <label class="btn btn-white btn-sm cursor-pointer mt-2 mb-0">

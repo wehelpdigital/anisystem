@@ -48,7 +48,7 @@ class CommunityMessageController extends Controller
             return [
                 'userId' => (int) $otherId,
                 'name' => $u->full_name,
-                'avatar' => $u->avatarPath ? Storage::disk('public')->url($u->avatarPath) : null,
+                'avatar' => $u->avatarPath ? \App\Support\MediaStore::url($u->avatarPath) : null,
                 'initials' => $u->initials,
                 'lastBody' => ((int) $t['last']->senderId === $meId ? 'You: ' : '') . Str::limit($t['last']->body, 48),
                 'lastAt' => $t['last']->created_at?->diffForHumans(null, true),
@@ -86,7 +86,7 @@ class CommunityMessageController extends Controller
         $msgs = $rows->map(fn ($m) => [
             'id' => $m->id,
             'body' => $m->body,
-            'image' => $m->imagePath ? Storage::disk('public')->url($m->imagePath) : null,
+            'image' => $m->imagePath ? \App\Support\MediaStore::url($m->imagePath) : null,
             'mine' => (int) $m->senderId === $meId,
             'at' => $m->created_at?->diffForHumans(null, true),
             'replyTo' => $this->replySnippet($byId->get($m->replyToId), $meId),
@@ -96,7 +96,7 @@ class CommunityMessageController extends Controller
             'user' => [
                 'id' => $other->id,
                 'name' => $other->full_name,
-                'avatar' => $other->avatarPath ? Storage::disk('public')->url($other->avatarPath) : null,
+                'avatar' => $other->avatarPath ? \App\Support\MediaStore::url($other->avatarPath) : null,
                 'initials' => $other->initials,
             ],
             'canMessage' => (bool) $other->allowMessages || (int) $other->id === $meId,
@@ -190,7 +190,7 @@ class CommunityMessageController extends Controller
         return response()->json(['success' => true, 'data' => [
             'id' => $msg->id,
             'body' => $msg->body,
-            'image' => $imagePath ? Storage::disk('public')->url($imagePath) : null,
+            'image' => $imagePath ? \App\Support\MediaStore::url($imagePath) : null,
             'mine' => true,
             'at' => 'now',
             'replyTo' => $this->replySnippet($replyRow, $meId),
@@ -238,10 +238,10 @@ class CommunityMessageController extends Controller
             'id' => (int) $m->id,
             'senderId' => (int) $m->senderId,
             'senderName' => optional($users->get((int) $m->senderId))->full_name ?? 'Member',
-            'senderAvatar' => optional($users->get((int) $m->senderId))->avatarPath ? Storage::disk('public')->url($users->get((int) $m->senderId)->avatarPath) : null,
+            'senderAvatar' => optional($users->get((int) $m->senderId))->avatarPath ? \App\Support\MediaStore::url($users->get((int) $m->senderId)->avatarPath) : null,
             'senderInitials' => optional($users->get((int) $m->senderId))->initials ?? '?',
             'body' => $m->body,
-            'image' => $m->imagePath ? Storage::disk('public')->url($m->imagePath) : null,
+            'image' => $m->imagePath ? \App\Support\MediaStore::url($m->imagePath) : null,
             'replyTo' => $this->replySnippet($parents->get($m->replyToId), $meId),
         ])->values();
 

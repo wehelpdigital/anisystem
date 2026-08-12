@@ -330,7 +330,7 @@ class ScheduleAiController extends BaseScheduleController
             'sessionId' => (int) $m->sessionId,
             'role' => $m->role,
             'content' => $m->content,
-            'image' => $m->imagePath ? Storage::disk('public')->url($m->imagePath) : null,
+            'image' => $m->imagePath ? \App\Support\MediaStore::url($m->imagePath) : null,
             'userId' => (int) $m->userId,
             'mine' => (int) $m->userId === $meId && $m->role === 'user',
             'name' => $m->role === 'assistant' ? 'AI Technician' : ($author?->full_name ?: 'Member'),

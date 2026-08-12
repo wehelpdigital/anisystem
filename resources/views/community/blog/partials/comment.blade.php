@@ -11,7 +11,7 @@
                 <p class="text-sm text-gray-700 whitespace-pre-line break-words mt-0.5">{!! \App\Support\CommunityText::render($comment->body) !!}</p>
             @endif
             @if ($comment->imagePath)
-                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($comment->imagePath) }}" alt="Comment photo" loading="lazy" data-lightbox class="post-img rounded-lg mt-2 max-h-64 w-auto">
+                <img src="{{ \App\Support\MediaStore::url($comment->imagePath) }}" alt="Comment photo" loading="lazy" data-lightbox class="post-img rounded-lg mt-2 max-h-64 w-auto">
             @endif
         </div>
         <div class="mt-1 ml-1">

@@ -51,7 +51,7 @@ class ScheduleDrawController extends BaseScheduleController
                     // a drawing is actually opened for editing.
                     'editable' => $type === 'drawing' && ! empty($m['strokes']),
                     'team' => $team,
-                    'url' => $path ? Storage::disk('public')->url($path) : null,
+                    'url' => \App\Support\MediaStore::url($path),
                     'when' => $note->updated_at?->timezone('Asia/Manila')->format('M j, Y'),
                 ];
             }
@@ -81,7 +81,7 @@ class ScheduleDrawController extends BaseScheduleController
         return response()->json(['success' => true, 'data' => [
             'title' => (string) $note->title,
             'strokes' => $media[$i]['strokes'] ?? null,
-            'url' => ($media[$i]['path'] ?? null) ? Storage::disk('public')->url($media[$i]['path']) : null,
+            'url' => \App\Support\MediaStore::url($media[$i]['path'] ?? null),
         ]]);
     }
 
@@ -115,8 +115,10 @@ class ScheduleDrawController extends BaseScheduleController
 
         $editable = $request->boolean('editable');
         $strokes = $editable ? ($request->input('strokes') ?: null) : null;
-        $path = 'schedule-notes/' . $schedule->id . '/draw-' . Str::random(20) . '.png';
-        Storage::disk('public')->put($path, $binary);
+        $path = \App\Support\MediaStore::putBinary($binary, 'drawings', 'png', $schedule->id);
+        if ($path === null) {
+            return $this->jsonFail('Could not keep that drawing.', 500);
+        }
 
         $entry = array_filter([
             'type' => $editable ? 'drawing' : 'image',
@@ -138,7 +140,7 @@ class ScheduleDrawController extends BaseScheduleController
             $note->media = array_values($media);
             $note->save();
             if ($old && $old !== $path) {
-                Storage::disk('public')->delete($old);
+                \App\Support\MediaStore::delete($old);
             }
         } else {
             $note = AsScheduleNote::create([
@@ -154,7 +156,7 @@ class ScheduleDrawController extends BaseScheduleController
         return response()->json(['success' => true, 'message' => 'Drawing saved.', 'data' => [
             'noteId' => (int) $note->id,
             'index' => (int) $request->input('index', 0),
-            'url' => Storage::disk('public')->url($path),
+            'url' => \App\Support\MediaStore::url($path),
             'editable' => $editable,
             'title' => (string) $note->title,
         ]]);
@@ -183,7 +185,7 @@ class ScheduleDrawController extends BaseScheduleController
             $note->save();
         }
         if ($path) {
-            Storage::disk('public')->delete($path);
+            \App\Support\MediaStore::delete($path);
         }
 
         return $this->jsonOk('Drawing deleted.');

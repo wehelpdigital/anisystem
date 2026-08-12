@@ -57,7 +57,7 @@ class CommunityConnectController extends Controller
                 'type' => 'user',
                 'id' => $u->id,
                 'name' => $u->full_name,
-                'avatar' => $u->avatarPath ? \Illuminate\Support\Facades\Storage::disk('public')->url($u->avatarPath) : null,
+                'avatar' => $u->avatarPath ? \App\Support\MediaStore::url($u->avatarPath) : null,
                 'initials' => $u->initials,
                 'isFriend' => isset($friendSet[$u->id]),
             ])->values();
@@ -119,7 +119,7 @@ class CommunityConnectController extends Controller
             ->map(fn ($u) => [
                 'id' => $u->id,
                 'name' => $u->full_name,
-                'avatar' => $u->avatarPath ? Storage::disk('public')->url($u->avatarPath) : null,
+                'avatar' => $u->avatarPath ? \App\Support\MediaStore::url($u->avatarPath) : null,
                 'initials' => $u->initials,
                 'allowMessages' => (bool) $u->allowMessages,
             ])->values();
@@ -268,7 +268,7 @@ class CommunityConnectController extends Controller
 
         foreach (CommunityProfilePhoto::active()->where('userId', $memberId)->get() as $p) {
             $items->push([
-                'url' => Storage::disk('public')->url($p->imagePath),
+                'url' => \App\Support\MediaStore::url($p->imagePath),
                 'deletable' => $isSelf,
                 'deleteId' => $p->id,
                 'ts' => optional($p->created_at)->timestamp ?? $p->id,
@@ -281,7 +281,7 @@ class CommunityConnectController extends Controller
             ->get();
         foreach ($wallImages as $wp) {
             $items->push([
-                'url' => Storage::disk('public')->url($wp->imagePath),
+                'url' => \App\Support\MediaStore::url($wp->imagePath),
                 'deletable' => false,
                 'deleteId' => null,
                 'ts' => optional($wp->created_at)->timestamp ?? 0,
@@ -298,8 +298,8 @@ class CommunityConnectController extends Controller
 
         foreach (CommunityProfileVideo::active()->where('userId', $memberId)->get() as $v) {
             $items->push([
-                'url' => Storage::disk('public')->url($v->videoPath),
-                'poster' => $v->posterPath ? Storage::disk('public')->url($v->posterPath) : null,
+                'url' => \App\Support\MediaStore::url($v->videoPath),
+                'poster' => $v->posterPath ? \App\Support\MediaStore::url($v->posterPath) : null,
                 'deletable' => $isSelf,
                 'deleteId' => $v->id,
                 'ts' => optional($v->created_at)->timestamp ?? $v->id,
@@ -312,8 +312,8 @@ class CommunityConnectController extends Controller
             ->get();
         foreach ($wallVideos as $wv) {
             $items->push([
-                'url' => Storage::disk('public')->url($wv->videoPath),
-                'poster' => $wv->videoPoster ? Storage::disk('public')->url($wv->videoPoster) : null,
+                'url' => \App\Support\MediaStore::url($wv->videoPath),
+                'poster' => $wv->videoPoster ? \App\Support\MediaStore::url($wv->videoPoster) : null,
                 'deletable' => false,
                 'deleteId' => null,
                 'ts' => optional($wv->created_at)->timestamp ?? 0,
@@ -341,7 +341,7 @@ class CommunityConnectController extends Controller
                 'deleteStatus' => 1,
             ]);
             $created[] = view('community.connect.partials.photo-tile', ['item' => [
-                'url' => Storage::disk('public')->url($path),
+                'url' => \App\Support\MediaStore::url($path),
                 'deletable' => true,
                 'deleteId' => $photo->id,
             ]])->render();
@@ -390,8 +390,8 @@ class CommunityConnectController extends Controller
         ]);
 
         $html = view('community.connect.partials.video-tile', ['item' => [
-            'url' => Storage::disk('public')->url($stored['video']),
-            'poster' => $stored['poster'] ? Storage::disk('public')->url($stored['poster']) : null,
+            'url' => \App\Support\MediaStore::url($stored['video']),
+            'poster' => $stored['poster'] ? \App\Support\MediaStore::url($stored['poster']) : null,
             'deletable' => true,
             'deleteId' => $video->id,
         ]])->render();

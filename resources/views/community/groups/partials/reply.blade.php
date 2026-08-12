@@ -32,7 +32,7 @@
                             <p class="text-sm text-gray-700 whitespace-pre-line break-words">{!! \App\Support\CommunityText::render($reply->body) !!}</p>
                         @endif
                         @if ($reply->imagePath)
-                            <span class="post-media reply-media"><img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($reply->imagePath) }}" alt="Reply photo" loading="lazy">@if ($rIsGif)<span class="gif-badge">GIF</span>@endif</span>
+                            <span class="post-media reply-media"><img src="{{ \App\Support\MediaStore::url($reply->imagePath) }}" alt="Reply photo" loading="lazy">@if ($rIsGif)<span class="gif-badge">GIF</span>@endif</span>
                         @endif
                     @endif
                 </div>

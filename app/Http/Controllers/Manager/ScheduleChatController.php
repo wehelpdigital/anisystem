@@ -61,7 +61,7 @@ class ScheduleChatController extends BaseScheduleController
         $members = ScheduleTeam::members($schedule)->map(fn ($u) => [
             'id' => $u->id,
             'name' => $u->full_name ?: 'Member',
-            'avatar' => $u->avatarPath ? Storage::disk('public')->url($u->avatarPath) : null,
+            'avatar' => $u->avatarPath ? \App\Support\MediaStore::url($u->avatarPath) : null,
             'initials' => $u->initials,
             'online' => $u->isOnline(),
             'isMe' => $u->id === $meId,
@@ -127,11 +127,11 @@ class ScheduleChatController extends BaseScheduleController
         return [
             'id' => $m->id,
             'body' => $m->body,
-            'image' => $m->imagePath ? Storage::disk('public')->url($m->imagePath) : null,
+            'image' => $m->imagePath ? \App\Support\MediaStore::url($m->imagePath) : null,
             'mine' => (int) $m->userId === $meId,
             'userId' => (int) $m->userId,
             'name' => $author?->full_name ?: 'Member',
-            'avatar' => $author && $author->avatarPath ? Storage::disk('public')->url($author->avatarPath) : null,
+            'avatar' => $author && $author->avatarPath ? \App\Support\MediaStore::url($author->avatarPath) : null,
             'initials' => $author?->initials ?: '·',
             'at' => optional($m->created_at)->format('M j, g:i A'),
         ];

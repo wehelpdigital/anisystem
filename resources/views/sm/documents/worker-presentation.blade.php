@@ -1023,7 +1023,7 @@
             $docFileView = function ($files) {
                 return collect($files ?? [])->map(fn ($f) => [
                     'name' => $f['name'] ?? 'file',
-                    'url' => isset($f['path']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($f['path']) : null,
+                    'url' => isset($f['path']) ? \App\Support\MediaStore::url($f['path']) : null,
                     'isImage' => isset($f['mime']) && str_starts_with((string) $f['mime'], 'image/'),
                     'ext' => strtoupper(pathinfo($f['name'] ?? '', PATHINFO_EXTENSION) ?: 'FILE'),
                 ]);

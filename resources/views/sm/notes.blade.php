@@ -54,7 +54,7 @@
         @php
             $mediaItems = [];
             if (filled($n->imagePath)) {
-                $mediaItems[] = ['type' => 'image', 'url' => \Illuminate\Support\Facades\Storage::disk('public')->url($n->imagePath)];
+                $mediaItems[] = ['type' => 'image', 'url' => \App\Support\MediaStore::url($n->imagePath)];
             }
             // The module's OWN url, not the shell's ?module=maps: inside the
             // Activities shell a link is matched by its base path, and
@@ -80,8 +80,8 @@
                     || (bool) preg_match('~/map-[A-Za-z0-9]+\.png$~', (string) $m['path']);
                 $mediaItems[] = [
                     'type' => $isMap ? 'map' : ($m['type'] ?? 'image'),
-                    'url' => \Illuminate\Support\Facades\Storage::disk('public')->url($m['path']),
-                    'posterUrl' => ! empty($m['poster']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($m['poster']) : null,
+                    'url' => \App\Support\MediaStore::url($m['path']),
+                    'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
                     'mapUrl' => $isMap ? $mapUrl : null,
                 ];
             }
@@ -225,9 +225,9 @@ const __init = () => {
                     'type' => $isMap ? 'map' : ($m['type'] ?? 'image'),
                     'path' => $m['path'],
                     'strokes' => $m['strokes'] ?? null,
-                    'url' => \Illuminate\Support\Facades\Storage::disk('public')->url($m['path']),
+                    'url' => \App\Support\MediaStore::url($m['path']),
                     'poster' => $m['poster'] ?? null,
-                    'posterUrl' => ! empty($m['poster']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($m['poster']) : null,
+                    'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
                     'mapUrl' => $isMap ? $mapModuleUrl : null,
                 ];
             })->filter()->values()->all();
@@ -241,7 +241,7 @@ const __init = () => {
             'fromDraw' => $fromBoardIds->has($n->id),
             'id' => $n->id, 'title' => $n->title, 'body' => $n->body,
             'imagePath' => $n->imagePath,
-            'imageUrl' => $n->imagePath ? \Illuminate\Support\Facades\Storage::disk('public')->url($n->imagePath) : null,
+            'imageUrl' => $n->imagePath ? \App\Support\MediaStore::url($n->imagePath) : null,
             'media' => $mediaUrls($n->media),
         ]]);
     @endphp

@@ -117,13 +117,27 @@ class NoteController extends BaseScheduleController
 
         // Re-encode + downscale to WebP so a phone photo doesn't cost megabytes.
         try {
-            $path = MediaOptimizer::storeImageAsWebp($request->file('image'), 'schedule-notes/' . $schedule->id, 1600, 82);
+            $local = MediaOptimizer::storeImageAsWebp($request->file('image'), 'schedule-notes/' . $schedule->id, 1600, 82);
         } catch (\Throwable $e) {
             return $this->jsonFail('Photo upload failed: ' . $e->getMessage(), 500);
         }
 
+        // Shrink first, then hand the small version to the store that keeps
+        // things — no point shipping a 6MB phone photo across to be filed.
+        $path = $local;
+        if (\App\Support\MediaStore::enabled()) {
+            $ext = pathinfo($local, PATHINFO_EXTENSION) ?: 'webp';
+            $kept = \App\Support\MediaStore::putBinary(
+                Storage::disk('public')->get($local), 'notes', $ext, $schedule->id
+            );
+            if ($kept !== null && $kept !== $local) {
+                Storage::disk('public')->delete($local);
+                $path = $kept;
+            }
+        }
+
         return $this->jsonOk('Photo attached.', [
-            'data' => ['type' => 'image', 'path' => $path, 'url' => Storage::disk('public')->url($path)],
+            'data' => ['type' => 'image', 'path' => $path, 'url' => \App\Support\MediaStore::url($path)],
         ]);
     }
 
@@ -154,8 +168,8 @@ class NoteController extends BaseScheduleController
                 'type' => 'video',
                 'path' => $out['video'],
                 'poster' => $out['poster'] ?? null,
-                'url' => Storage::disk('public')->url($out['video']),
-                'posterUrl' => ! empty($out['poster']) ? Storage::disk('public')->url($out['poster']) : null,
+                'url' => \App\Support\MediaStore::url($out['video']),
+                'posterUrl' => ! empty($out['poster']) ? \App\Support\MediaStore::url($out['poster']) : null,
             ],
         ]);
     }
@@ -213,7 +227,7 @@ class NoteController extends BaseScheduleController
     private function present(AsScheduleNote $n): array
     {
         return array_merge($n->toArray(), [
-            'imageUrl' => $n->imagePath ? Storage::disk('public')->url($n->imagePath) : null,
+            'imageUrl' => $n->imagePath ? \App\Support\MediaStore::url($n->imagePath) : null,
             'media' => $this->mediaWithUrls($n->media),
             'updatedForHumans' => $n->updated_at?->diffForHumans(),
         ]);
@@ -230,8 +244,8 @@ class NoteController extends BaseScheduleController
                 // Without the strokes a reopened drawing would come back as a
                 // flat picture — editable is the whole point of the type.
                 'strokes' => $m['strokes'] ?? null,
-                'url' => ! empty($m['path']) ? Storage::disk('public')->url($m['path']) : null,
-                'posterUrl' => ! empty($m['poster']) ? Storage::disk('public')->url($m['poster']) : null,
+                'url' => ! empty($m['path']) ? \App\Support\MediaStore::url($m['path']) : null,
+                'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
             ])
             ->filter(fn ($m) => $m['url'])
             ->values()->all();

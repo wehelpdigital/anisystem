@@ -547,7 +547,7 @@ class CommunityGroupController extends Controller
         $items = $users->map(fn ($u) => [
             'id' => $u->id,
             'name' => $u->full_name,
-            'avatar' => $u->avatarPath ? Storage::disk('public')->url($u->avatarPath) : null,
+            'avatar' => $u->avatarPath ? \App\Support\MediaStore::url($u->avatarPath) : null,
             'initials' => $u->initials,
             'online' => $u->isOnline(),
             'allowMessages' => (bool) $u->allowMessages,
@@ -616,12 +616,12 @@ class CommunityGroupController extends Controller
         return [
             'id' => $m->id,
             'body' => $m->body,
-            'image' => $m->imagePath ? Storage::disk('public')->url($m->imagePath) : null,
-            'video' => $m->videoPath ? Storage::disk('public')->url($m->videoPath) : null,
-            'poster' => $m->videoPoster ? Storage::disk('public')->url($m->videoPoster) : null,
+            'image' => $m->imagePath ? \App\Support\MediaStore::url($m->imagePath) : null,
+            'video' => $m->videoPath ? \App\Support\MediaStore::url($m->videoPath) : null,
+            'poster' => $m->videoPoster ? \App\Support\MediaStore::url($m->videoPoster) : null,
             'mine' => (int) $m->userId === $meId,
             'name' => optional($user)->full_name ?: 'Member',
-            'avatar' => optional($user)->avatarPath ? Storage::disk('public')->url($user->avatarPath) : null,
+            'avatar' => optional($user)->avatarPath ? \App\Support\MediaStore::url($user->avatarPath) : null,
             'initials' => optional($user)->initials ?: '?',
             'at' => $m->created_at?->diffForHumans(null, true),
         ];

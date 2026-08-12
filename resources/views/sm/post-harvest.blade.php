@@ -147,7 +147,7 @@
                 <div class="ph-notes text-gray-600 mt-2">{!! $o->notes !!}</div>
             @endif
             @if (filled($o->imagePath))
-                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($o->imagePath) }}"
+                <img src="{{ \App\Support\MediaStore::url($o->imagePath) }}"
                      alt="" class="ph-photo mt-3" loading="lazy">
             @endif
         </div>
@@ -294,11 +294,11 @@ const __init = () => {
             'buyer' => $o->buyer,
             'notes' => $o->notes,
             'images' => collect(! empty($o->imagePaths) ? $o->imagePaths : array_filter([$o->imagePath]))
-                ->map(fn ($p) => ['path' => $p, 'url' => \Illuminate\Support\Facades\Storage::disk('public')->url($p)])
+                ->map(fn ($p) => ['path' => $p, 'url' => \App\Support\MediaStore::url($p)])
                 ->values(),
             'imageUrl' => ! empty($o->imagePaths)
-                ? \Illuminate\Support\Facades\Storage::disk('public')->url($o->imagePaths[0])
-                : ($o->imagePath ? \Illuminate\Support\Facades\Storage::disk('public')->url($o->imagePath) : null),
+                ? \App\Support\MediaStore::url($o->imagePaths[0])
+                : ($o->imagePath ? \App\Support\MediaStore::url($o->imagePath) : null),
         ]]);
     @endphp
     const OBS = @json($seed->isEmpty() ? new stdClass() : $seed);

@@ -10,7 +10,7 @@
         ? app(\App\Services\AiCreditService::class)->balance(auth()->id())
         : 0;
     $aiFloatAvatar = $aiFloatSettings && $aiFloatSettings->avatarPath
-        ? \Illuminate\Support\Facades\Storage::disk('public')->url($aiFloatSettings->avatarPath)
+        ? \App\Support\MediaStore::url($aiFloatSettings->avatarPath)
         : null;
 @endphp
 @if ($aiFloatSettings && $aiFloatSettings->isUsable())

@@ -25,7 +25,7 @@ class AsTutorial extends BaseModel
     public function coverUrl(): ?string
     {
         if ($this->coverImagePath) {
-            return \Illuminate\Support\Facades\Storage::disk('public')->url($this->coverImagePath);
+            return \App\Support\MediaStore::url($this->coverImagePath);
         }
         if ($this->youtubeId) {
             return 'https://i.ytimg.com/vi/' . $this->youtubeId . '/hqdefault.jpg';

@@ -1950,9 +1950,9 @@
                                 ->map(fn ($m) => empty($m['path']) ? null : [
                                     'type' => $m['type'] ?? 'image',
                                     'path' => $m['path'],
-                                    'url' => \Illuminate\Support\Facades\Storage::disk('public')->url($m['path']),
+                                    'url' => \App\Support\MediaStore::url($m['path']),
                                     'poster' => $m['poster'] ?? null,
-                                    'posterUrl' => ! empty($m['poster']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($m['poster']) : null,
+                                    'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
                                 ])->filter()->values();
                         @endphp
                         <div class="date-note-block" data-date="{{ $dateKey }}" data-content="{{ $noteRow?->noteContent }}" data-media="{{ $dnMedia->toJson() }}" title="Drag to place it between activities · click to edit" @if(!$noteRow) style="display:none;" @endif><div class="date-note-inner rich-text">{!! $noteRow?->noteContent !!}@if ($dnMedia->count())<div class="date-note-media">@include('sm.partials.note-media', ['media' => $dnMedia])</div>@endif</div><button type="button" class="date-note-edit" title="Edit note" aria-label="Edit note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button type="button" class="date-note-del" title="Delete note" aria-label="Delete note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg></button></div>

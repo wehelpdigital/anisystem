@@ -251,7 +251,7 @@ class ActivityController extends BaseScheduleController
         $stamp = now()->format('M j, Y g:i A');
         $paragraph = '<p><em>Note (' . e($stamp) . '):</em>' . ($note !== '' ? ' ' . e($note) : '') . '</p>';
         foreach ($images as $p) {
-            $paragraph .= '<img src="' . e(Storage::disk('public')->url($p)) . '" alt="Note photo">';
+            $paragraph .= '<img src="' . e(\App\Support\MediaStore::url($p)) . '" alt="Note photo">';
         }
         $activity->update(['description' => trim(($activity->description ?? '') . $paragraph)]);
         $this->broadcastBoard($schedule, 'reload', ['id' => $activity->id], $activity->versionId);
@@ -1403,8 +1403,8 @@ class ActivityController extends BaseScheduleController
                 'path' => $m['path'] ?? null,
                 'poster' => $m['poster'] ?? null,
                 'strokes' => $m['strokes'] ?? null,
-                'url' => ! empty($m['path']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($m['path']) : null,
-                'posterUrl' => ! empty($m['poster']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($m['poster']) : null,
+                'url' => ! empty($m['path']) ? \App\Support\MediaStore::url($m['path']) : null,
+                'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
             ])
             ->filter(fn ($m) => $m['url'])
             ->values()->all();
@@ -1463,7 +1463,7 @@ class ActivityController extends BaseScheduleController
                 $drawings[] = [
                     'ref' => $note->id . ':' . $i,
                     'label' => (string) $note->title,
-                    'url' => Storage::disk('public')->url($path),
+                    'url' => \App\Support\MediaStore::url($path),
                 ];
             }
         }

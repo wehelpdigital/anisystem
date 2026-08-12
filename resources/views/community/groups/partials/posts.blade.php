@@ -47,7 +47,7 @@
                 @endif
                 @if ($post->imagePath)
                     <div class="post-media">
-                        <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($post->imagePath) }}" alt="Attachment" loading="lazy">
+                        <img src="{{ \App\Support\MediaStore::url($post->imagePath) }}" alt="Attachment" loading="lazy">
                         @if ($isGif)<span class="gif-badge">GIF</span>@endif
                     </div>
                 @endif

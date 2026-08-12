@@ -243,7 +243,7 @@ class DocEntryController extends BaseScheduleController
             'name' => $f['name'] ?? 'file',
             'size' => (int) ($f['size'] ?? 0),
             'mime' => $f['mime'] ?? null,
-            'url' => isset($f['path']) ? Storage::disk('public')->url($f['path']) : null,
+            'url' => isset($f['path']) ? \App\Support\MediaStore::url($f['path']) : null,
             'isImage' => isset($f['mime']) && str_starts_with((string) $f['mime'], 'image/'),
         ], $entry->files ?? []));
 

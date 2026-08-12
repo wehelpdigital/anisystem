@@ -105,7 +105,7 @@
         <p class="text-xs text-gray-500 mt-3 flex items-center flex-wrap gap-x-1.5 gap-y-1">
             <span>📋 {{ $plan->activityCount }} {{ \Illuminate\Support\Str::plural('step', $plan->activityCount) }}</span>
             <span>· 💬 {{ $plan->commentCount }}</span>
-            <span class="inline-flex items-center gap-1.5">· <span class="avatar overflow-hidden {{ CommunityAvatar::hue(optional($plan->owner)->full_name ?: '?') }}" style="width:1.5rem;height:1.5rem;font-size:.55rem;">@if (optional($plan->owner)->avatarPath)<img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($plan->owner->avatarPath) }}" alt="" class="w-full h-full object-cover">@else{{ optional($plan->owner)->initials ?: '?' }}@endif</span>
+            <span class="inline-flex items-center gap-1.5">· <span class="avatar overflow-hidden {{ CommunityAvatar::hue(optional($plan->owner)->full_name ?: '?') }}" style="width:1.5rem;height:1.5rem;font-size:.55rem;">@if (optional($plan->owner)->avatarPath)<img src="{{ \App\Support\MediaStore::url($plan->owner->avatarPath) }}" alt="" class="w-full h-full object-cover">@else{{ optional($plan->owner)->initials ?: '?' }}@endif</span>
             <span class="font-medium text-gray-700">{{ optional($plan->owner)->full_name ?: 'a member' }}</span></span>
             @if (filled(optional($plan->owner)->statusBubble))
                 <span class="text-brand-700 font-medium">· 💭 {{ \Illuminate\Support\Str::limit($plan->owner->statusBubble, 32) }}</span>

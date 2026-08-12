@@ -31,7 +31,7 @@
                             <p class="text-sm text-gray-700 whitespace-pre-line break-words">{!! \App\Support\CommunityText::render($comment->body) !!}</p>
                         @endif
                         @if ($comment->imagePath)
-                            <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($comment->imagePath) }}"
+                            <img src="{{ \App\Support\MediaStore::url($comment->imagePath) }}"
                                  alt="Comment photo" loading="lazy" class="post-img rounded-lg mt-1 max-h-48 w-auto">
                         @endif
                         @if ($comment->videoPath ?? null)

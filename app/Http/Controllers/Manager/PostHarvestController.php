@@ -133,7 +133,7 @@ class PostHarvestController extends BaseScheduleController
         $path = $relativeDir . '/' . $stem . '.' . $ext;
 
         return $this->jsonOk('Photo uploaded.', [
-            'data' => ['path' => $path, 'url' => Storage::disk('public')->url($path)],
+            'data' => ['path' => $path, 'url' => \App\Support\MediaStore::url($path)],
         ]);
     }
 
@@ -200,7 +200,7 @@ class PostHarvestController extends BaseScheduleController
         $paths = ! empty($o->imagePaths) ? $o->imagePaths : array_filter([$o->imagePath]);
         $images = array_values(array_map(fn ($p) => [
             'path' => $p,
-            'url' => Storage::disk('public')->url($p),
+            'url' => \App\Support\MediaStore::url($p),
         ], $paths));
 
         return array_merge($o->toArray(), [

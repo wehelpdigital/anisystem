@@ -39,7 +39,7 @@
                 <div class="group-cap {{ $hue }}"></div>
                 <div class="card-body flex flex-col grow pt-4!">
                     <div class="flex items-start gap-3 min-w-0">
-                        <span class="avatar avatar-md avatar-sq overflow-hidden {{ $hue }}">@if ($g->coverImagePath)<img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($g->coverImagePath) }}" alt="" class="w-full h-full object-cover">@else{{ CommunityAvatar::monogram($g->name) }}@endif</span>
+                        <span class="avatar avatar-md avatar-sq overflow-hidden {{ $hue }}">@if ($g->coverImagePath)<img src="{{ \App\Support\MediaStore::url($g->coverImagePath) }}" alt="" class="w-full h-full object-cover">@else{{ CommunityAvatar::monogram($g->name) }}@endif</span>
                         <a href="{{ route('community.groups.show', ['id' => $g->id]) }}" class="min-w-0 grow">
                             <h3 class="font-bold text-gray-900 leading-snug" style="font-family:var(--font-heading)">{{ $g->name }}
                                 <span class="badge badge-green group-joined-tag align-middle {{ $g->joined ? '' : 'hidden' }}" data-group-id="{{ $g->id }}">Joined</span>

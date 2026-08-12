@@ -200,7 +200,7 @@ class AiController extends Controller
 
         return $this->json(true, 'Photo attached.', [
             'path' => $path,
-            'url' => Storage::disk('public')->url($path),
+            'url' => \App\Support\MediaStore::url($path),
         ]);
     }
 

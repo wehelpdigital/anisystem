@@ -38,7 +38,7 @@
     <div class="card p-4 mb-4 group-hero {{ CommunityAvatar::hue($group->name) }}">
         <div class="flex items-start justify-between gap-3">
             <div class="flex items-start gap-3 min-w-0">
-                <span class="avatar avatar-lg avatar-sq overflow-hidden {{ CommunityAvatar::hue($group->name) }}">@if ($group->coverImagePath)<img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($group->coverImagePath) }}" alt="" class="w-full h-full object-cover">@else{{ CommunityAvatar::monogram($group->name) }}@endif</span>
+                <span class="avatar avatar-lg avatar-sq overflow-hidden {{ CommunityAvatar::hue($group->name) }}">@if ($group->coverImagePath)<img src="{{ \App\Support\MediaStore::url($group->coverImagePath) }}" alt="" class="w-full h-full object-cover">@else{{ CommunityAvatar::monogram($group->name) }}@endif</span>
                 <div class="min-w-0">
                     <h2 class="text-xl font-bold text-gray-900 leading-snug" style="font-family:var(--font-heading)">{{ $group->name }}</h2>
                     @if ($group->description)

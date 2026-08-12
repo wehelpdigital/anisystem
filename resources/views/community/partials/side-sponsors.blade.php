@@ -8,7 +8,7 @@
             <a @if (!empty($sponsor['url'])) href="{{ $sponsor['url'] }}" target="_blank" rel="nofollow noopener" @endif
                class="block rounded-lg overflow-hidden border border-gray-100 hover:border-brand-200 transition">
                 @if (!empty($sponsor['imagePath']))
-                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($sponsor['imagePath']) }}" alt="{{ $sponsor['title'] ?? '' }}" loading="lazy" class="w-full h-auto">
+                    <img src="{{ \App\Support\MediaStore::url($sponsor['imagePath']) }}" alt="{{ $sponsor['title'] ?? '' }}" loading="lazy" class="w-full h-auto">
                 @endif
                 <div class="p-2.5">
                     <p class="text-sm font-semibold text-gray-900 leading-snug">{{ $sponsor['title'] ?? '' }}</p>

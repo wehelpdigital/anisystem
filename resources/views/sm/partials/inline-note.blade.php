@@ -5,9 +5,9 @@
         ->map(fn ($m) => empty($m['path']) ? null : [
             'type' => $m['type'] ?? 'image',
             'path' => $m['path'],
-            'url' => \Illuminate\Support\Facades\Storage::disk('public')->url($m['path']),
+            'url' => \App\Support\MediaStore::url($m['path']),
             'poster' => $m['poster'] ?? null,
-            'posterUrl' => ! empty($m['poster']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($m['poster']) : null,
+            'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
         ])
         ->filter()->values();
 @endphp

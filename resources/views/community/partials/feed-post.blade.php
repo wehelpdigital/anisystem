@@ -30,7 +30,7 @@
         @endif
         @if ($post->imagePath)
             <div class="post-media">
-                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($post->imagePath) }}" alt="" loading="lazy">
+                <img src="{{ \App\Support\MediaStore::url($post->imagePath) }}" alt="" loading="lazy">
             </div>
         @endif
         @if ($post->videoPath ?? null)

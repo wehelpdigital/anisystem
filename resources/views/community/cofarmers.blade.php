@@ -50,7 +50,7 @@
                                 </div>
                             @endif
                             @if ($latest->imagePath)
-                                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($latest->imagePath) }}"
+                                <img src="{{ \App\Support\MediaStore::url($latest->imagePath) }}"
                                      alt="Photo from {{ $friend->full_name }}" loading="lazy"
                                      class="post-img rounded-lg mt-2 max-h-40 w-auto border border-gray-100">
                             @elseif (!$latest->body)

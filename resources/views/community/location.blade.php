@@ -68,7 +68,7 @@
         </header>
         <p class="text-sm text-gray-700 mt-2 whitespace-pre-line break-words">{!! \App\Support\CommunityText::render($post->body) !!}</p>
         @if ($post->imagePath)
-            <div class="post-media"><img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($post->imagePath) }}" alt="" loading="lazy"></div>
+            <div class="post-media"><img src="{{ \App\Support\MediaStore::url($post->imagePath) }}" alt="" loading="lazy"></div>
         @endif
         @include('community.partials.react-bar', ['type' => 'wallpost', 'id' => $post->id, 'summary' => $post->reactionSummary ?? null])
         <div class="mt-3 pt-2 border-t border-gray-100">

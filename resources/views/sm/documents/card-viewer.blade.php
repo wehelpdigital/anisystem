@@ -1014,7 +1014,7 @@
                                 <strong>{{ $entry->type_label }}@if($entry->title): {{ $entry->title }}@endif</strong>
                                 @if($entry->content)<div class="rich-inline">{!! $entry->content !!}</div>@endif
                                 @foreach(collect($entry->files ?? []) as $f)
-                                    @php $url = isset($f['path']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($f['path']) : null; @endphp
+                                    @php $url = isset($f['path']) ? \App\Support\MediaStore::url($f['path']) : null; @endphp
                                     @if($url)<a href="{{ $url }}" style="color:#2c3e8c; text-decoration:underline; margin-right:8px;">{{ $f['name'] ?? 'file' }}</a>@endif
                                 @endforeach
                             </div>

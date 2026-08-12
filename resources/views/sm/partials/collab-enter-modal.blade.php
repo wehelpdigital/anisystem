@@ -27,7 +27,7 @@
                 <label class="ce-item">
                     <input type="checkbox" class="ce-check" value="{{ (int) $m->id }}" checked>
                     <span class="ce-face">
-                        @if ($m->avatarPath)<img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($m->avatarPath) }}" alt="">@else{{ $m->initials }}@endif
+                        @if ($m->avatarPath)<img src="{{ \App\Support\MediaStore::url($m->avatarPath) }}" alt="">@else{{ $m->initials }}@endif
                     </span>
                     <span class="ce-name">{{ $m->full_name }}@if ((int) $m->id === $ceOwnerId)<span class="ce-tag">owner</span>@endif</span>
                     <span class="ce-mark"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>

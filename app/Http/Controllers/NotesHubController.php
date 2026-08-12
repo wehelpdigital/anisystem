@@ -122,7 +122,7 @@ class NotesHubController extends Controller
             return response()->json(['success' => false, 'message' => 'Photo upload failed: ' . $e->getMessage()], 500);
         }
 
-        return response()->json(['success' => true, 'data' => ['type' => 'image', 'path' => $path, 'url' => Storage::disk('public')->url($path)]]);
+        return response()->json(['success' => true, 'data' => ['type' => 'image', 'path' => $path, 'url' => \App\Support\MediaStore::url($path)]]);
     }
 
     /** Video for a global note — compressed to ≤720p H.264 with a poster. */
@@ -144,8 +144,8 @@ class NotesHubController extends Controller
             'type' => 'video',
             'path' => $out['video'],
             'poster' => $out['poster'] ?? null,
-            'url' => Storage::disk('public')->url($out['video']),
-            'posterUrl' => ! empty($out['poster']) ? Storage::disk('public')->url($out['poster']) : null,
+            'url' => \App\Support\MediaStore::url($out['video']),
+            'posterUrl' => ! empty($out['poster']) ? \App\Support\MediaStore::url($out['poster']) : null,
         ]]);
     }
 
@@ -164,8 +164,8 @@ class NotesHubController extends Controller
         return collect(is_array($media) ? $media : [])
             ->map(fn ($m) => empty($m['path']) ? null : [
                 'type' => $m['type'] ?? 'image',
-                'url' => Storage::disk('public')->url($m['path']),
-                'posterUrl' => ! empty($m['poster']) ? Storage::disk('public')->url($m['poster']) : null,
+                'url' => \App\Support\MediaStore::url($m['path']),
+                'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
             ])
             ->filter()->values()->all();
     }
@@ -209,7 +209,7 @@ class NotesHubController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => ['path' => $path, 'url' => \Illuminate\Support\Facades\Storage::disk('public')->url($path)],
+            'data' => ['path' => $path, 'url' => \App\Support\MediaStore::url($path)],
         ]);
     }
 
@@ -220,7 +220,7 @@ class NotesHubController extends Controller
             'type' => $type,
             'title' => $title ?: 'Untitled',
             'body' => $body,
-            'imageUrl' => $imagePath ? Storage::disk('public')->url($imagePath) : null,
+            'imageUrl' => $imagePath ? \App\Support\MediaStore::url($imagePath) : null,
             'media' => $this->mediaWithUrls($media),
             'address' => $address,
             'url' => $url,

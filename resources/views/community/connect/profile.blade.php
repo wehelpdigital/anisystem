@@ -17,7 +17,7 @@
     <div class="card p-5 mb-4">
         @if (filled($member->coverPath))
             <div class="-mx-5 -mt-5 mb-4 h-32 sm:h-44 rounded-t-xl bg-gray-100 bg-center bg-cover"
-                 style="background-image:url('{{ \Illuminate\Support\Facades\Storage::disk('public')->url($member->coverPath) }}')"></div>
+                 style="background-image:url('{{ \App\Support\MediaStore::url($member->coverPath) }}')"></div>
         @endif
         <div class="flex items-start gap-4">
             <span class="status-avatar inline-block shrink-0 relative" style="width:4rem;height:4rem;" data-self="{{ $isSelf ? 1 : 0 }}">

@@ -415,9 +415,10 @@ class ScheduleBoardController extends BaseScheduleController
             if ($binary === null) {
                 continue;
             }
-            $path = 'schedule-notes/' . $schedule->id . '/board-' . Str::random(20) . '.png';
-            Storage::disk('public')->put($path, $binary);
-            $media[] = ['type' => 'image', 'path' => $path, 'poster' => null];
+            $path = \App\Support\MediaStore::putBinary($binary, 'board', 'png', $schedule->id, 'board-');
+            if ($path !== null) {
+                $media[] = ['type' => 'image', 'path' => $path, 'poster' => null];
+            }
         }
 
         if (empty($media)) {

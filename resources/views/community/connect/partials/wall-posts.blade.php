@@ -34,7 +34,7 @@
                 @endif
             @endif
             @if ($post->imagePath)
-                <div class="mt-2"><img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($post->imagePath) }}" alt="Photo" loading="lazy" class="post-img rounded-lg max-h-72 w-auto"></div>
+                <div class="mt-2"><img src="{{ \App\Support\MediaStore::url($post->imagePath) }}" alt="Photo" loading="lazy" class="post-img rounded-lg max-h-72 w-auto"></div>
             @endif
             @if ($post->videoPath ?? null)
                 @include('community.partials.video-embed', ['src' => $post->videoPath, 'poster' => $post->videoPoster ?? null])
