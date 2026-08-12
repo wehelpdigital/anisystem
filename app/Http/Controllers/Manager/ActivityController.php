@@ -1583,7 +1583,14 @@ class ActivityController extends BaseScheduleController
     {
         return [
             'workerPay' => $activity->workers->mapWithKeys(fn ($w) => [(string) $w->id => [
-                'dayPart' => $activity->dayPartFor($w),
+                // The stored choice, which is null when this worker simply
+                // follows the task's own length. Sending the resolved value
+                // here made the sheet think a choice had been made, and saving
+                // then wrote it down — so a task later changed to a whole day
+                // kept paying half, because "half" had been baked into the
+                // worker's row by an edit that never touched it.
+                'dayPart' => $w->pivot->dayPart ?: null,
+                'effectivePart' => $activity->dayPartFor($w),
                 'amount' => $w->pivot->salaryAmount !== null ? (float) $w->pivot->salaryAmount : null,
                 'total' => $activity->workerPay($w),
                 'name' => $w->workerName,

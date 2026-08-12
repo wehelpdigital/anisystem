@@ -1893,7 +1893,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function setWorkerPay(pay) {
         workerPayState = {};
         Object.entries(pay || {}).forEach(([id, v]) => {
-            workerPayState[id] = { dayPart: v.dayPart === 'half' ? 'half' : 'whole', amount: v.amount ?? null };
+            // Keep "nothing chosen" as nothing. Reading it as a choice is what
+            // froze a worker at half a day on a task that later became whole.
+            const part = (v.dayPart === 'half' || v.dayPart === 'whole') ? v.dayPart : null;
+            workerPayState[id] = { dayPart: part, amount: v.amount ?? null };
         });
         renderWorkerPay();
     }
