@@ -84,6 +84,40 @@
                         </a>
                     @endif
 
+                    <style>
+                        /* Sits above the app (z-50 sheets) and below the drawing
+                           pad (z-400), like the rest of the app's overlays. */
+                        .notif-sheet {
+                            position: fixed; left: 0; right: 0; bottom: 0; z-index: 200;
+                            background: var(--color-white, #fff);
+                            border-top-left-radius: 1.1rem; border-top-right-radius: 1.1rem;
+                            box-shadow: 0 -18px 50px -20px rgb(0 0 0 / .45);
+                            max-height: min(78vh, 40rem); display: flex; flex-direction: column;
+                            padding-bottom: env(safe-area-inset-bottom, 0px);
+                        }
+                        @media (min-width: 768px) {
+                            /* On a desk it keeps its own width and sits in the
+                               corner it came from, still rising from the bottom. */
+                            .notif-sheet { left: auto; right: 1.25rem; width: 24rem; border-radius: 1.1rem; bottom: 1.25rem; }
+                        }
+                        .notif-grip { width: 2.5rem; height: .25rem; border-radius: 999px; background: #d1d5db; margin: .5rem auto .25rem; }
+                        @media (min-width: 768px) { .notif-grip { display: none; } }
+                        .notif-body { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+                        html.dark .notif-sheet { background: #151b12; }
+                    </style>
+
+                    {{-- "You are working on a saved file" — set by a module
+                         (the map, so far) when what is on screen came from
+                         somewhere and will go back there. Hidden until one
+                         says so, because on a new file there is nothing to
+                         say. window.setEditingNotice(text) turns it on;
+                         calling it with nothing turns it off. --}}
+                    <button type="button" id="editingNoticeBtn" hidden
+                        class="relative flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full text-brand-700 bg-brand-50 hover:bg-brand-100 transition"
+                        aria-label="What you are editing">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 11v5m0-8h.01"/></svg>
+                    </button>
+
                     {{-- Notification bell --}}
                     <div class="relative" x-data="notificationBell()" x-init="init()" @click.outside="open = false">
                         <button type="button" @click="toggle()"
@@ -94,14 +128,35 @@
                                 class="absolute -top-0.5 -right-0.5 min-w-[1.15rem] h-[1.15rem] px-1 rounded-full bg-red-500 text-white text-[10px] font-bold inline-flex items-center justify-center"
                                 x-text="unread > 99 ? '99+' : unread"></span>
                         </button>
-                        <div x-show="open" x-cloak x-transition
-                            class="absolute right-0 mt-2 w-80 max-w-[calc(100vw-2rem)] card p-0 z-50 overflow-hidden">
+                        {{-- A sheet from the bottom, not a dropdown pinned to a
+                             corner. Every other list in the app arrives that way —
+                             the day menu, the tools, the filters — and on a phone a
+                             320px card hanging off the top-right corner was the one
+                             thing you had to reach for rather than have handed to
+                             you. Backdrop included, so a tap anywhere shuts it. --}}
+                        <div x-show="open" x-cloak x-transition.opacity
+                            class="fixed inset-0 z-[190] bg-black/40" @click="open = false"></div>
+                        <div x-show="open" x-cloak
+                            x-transition:enter="transition transform ease-out duration-300"
+                            x-transition:enter-start="translate-y-full"
+                            x-transition:enter-end="translate-y-0"
+                            x-transition:leave="transition transform ease-in duration-200"
+                            x-transition:leave-start="translate-y-0"
+                            x-transition:leave-end="translate-y-full"
+                            class="notif-sheet">
+                            <div class="notif-grip"></div>
                             <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100">
                                 <p class="font-bold text-gray-900 text-sm">Notifications</p>
-                                <button type="button" @click="markAll()" x-show="unread > 0"
-                                    class="text-xs font-semibold text-brand-600 hover:text-brand-700">Mark all read</button>
+                                <div class="flex items-center gap-3">
+                                    <button type="button" @click="markAll()" x-show="unread > 0"
+                                        class="text-xs font-semibold text-brand-600 hover:text-brand-700">Mark all read</button>
+                                    <button type="button" @click="open = false"
+                                        class="btn-ghost p-1.5 rounded-full text-gray-400" aria-label="Close">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="max-h-96 overflow-y-auto">
+                            <div class="notif-body">
                                 <template x-if="loading">
                                     <div class="px-4 py-8 text-center text-sm text-gray-400">Loading…</div>
                                 </template>
@@ -204,6 +259,22 @@
     </header>
 
     <script>
+        /* One line for any module to say what file is open. It shows an info
+           button beside the bell, and tapping it says the same thing in
+           words — a badge nobody can read is decoration. */
+        window.setEditingNotice = function (text) {
+            const btn = document.getElementById('editingNoticeBtn');
+            if (!btn) return;
+            btn.hidden = !text;
+            btn.dataset.notice = text || '';
+        };
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('#editingNoticeBtn');
+            if (!btn) return;
+            const text = btn.dataset.notice || '';
+            if (text && window.toast) window.toast(text);
+        });
+
         // Top-bar notification bell (Alpine component). Defined before Alpine
         // inits so x-data="notificationBell()" resolves.
         window.notificationBell = function () {

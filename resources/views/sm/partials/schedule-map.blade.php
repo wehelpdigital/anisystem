@@ -20,9 +20,15 @@
              and a scroll container clips BOTH axes — a dropdown nested in it
              opened invisibly. openSheet re-parents the sheet to <body>, where
              nothing can clip it. --}}
+        {{-- Bigger, filled, and no longer a hamburger: there are two other
+             hamburgers within an inch of this one (the page's and the
+             shell's), and three identical glyphs meaning three different
+             things is how a tap goes to the wrong place. --}}
         <button type="button" class="cmap-tool cmap-menu-btn" id="cmapToolsBtn" aria-haspopup="true">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5a4 4 0 105.03 5.03l4.35 4.35a2 2 0 11-2.83 2.83l-4.35-4.35A4 4 0 0111 5zM5 19l4-4"/></svg>
+            <span class="cmap-menu-lead">Tools</span>
             <span id="cmapToolLabel">Move map</span>
+            <svg class="cmap-menu-caret" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </button>
         <div class="sheet hidden" id="cmapToolsSheet" style="--sheet-width:22rem">
             <div class="sheet-handle"></div>
@@ -158,7 +164,10 @@
                 <input type="text" id="cmapSaveName" class="form-input" placeholder="e.g. North lot irrigation plan" autocomplete="off">
                 <label class="cmap-save-label" for="cmapSaveDesc">What is this map about? (optional)</label>
                 <textarea id="cmapSaveDesc" class="form-textarea" rows="3"></textarea>
-                <button type="button" class="cmap-save-go" id="cmapSaveGo"><span id="cmapSaveGoTxt">Save</span></button>
+                {{-- Shown only when the shapes on screen came from a saved
+                     map: the usual answer is "this one, changed". --}}
+                <button type="button" class="cmap-save-go cmap-save-over" id="cmapSaveOver" hidden><span id="cmapSaveOverLabel">Save over this map</span></button>
+                <button type="button" class="cmap-save-go" id="cmapSaveGo"><span id="cmapSaveGoTxt">Save as a new map</span></button>
             </div>
         </div>
         <span class="cmap-div"></span>
@@ -230,7 +239,17 @@
     .cmap-danger:hover { background: #fee2e2; color: #b91c1c; }
     .cmap-div { width: 1px; align-self: stretch; background: var(--color-gray-200); flex-shrink: 0; }
     .cmap-menu-wrap { position: relative; flex-shrink: 0; }
-    .cmap-menu-btn { width: auto; padding: 0 .6rem; gap: .4rem; font-size: .78rem; font-weight: 800; }
+    /* The one control that opens everything else, so it looks like it:
+       filled, taller than the tool chips beside it, and it names both what it
+       is (Tools) and what is currently active. */
+    .cmap-menu-btn { width: auto; padding: 0 .75rem; gap: .4rem; font-size: .8rem; font-weight: 800;
+        height: 2.6rem; background: #4a7c2a; color: #fff; border-color: #4a7c2a;
+        box-shadow: 0 6px 16px -8px rgb(61 104 35 / .9); }
+    .cmap-menu-btn:hover { background: #3d6823; border-color: #3d6823; color: #fff; }
+    .cmap-menu-btn svg { width: 1.15rem; height: 1.15rem; }
+    .cmap-menu-lead { font-size: .62rem; text-transform: uppercase; letter-spacing: .06em;
+        opacity: .75; padding-right: .3rem; border-right: 1px solid rgb(255 255 255 / .35); }
+    .cmap-menu-caret { width: .85rem !important; height: .85rem !important; opacity: .8; }
     .cmap-menu { position: absolute; top: calc(100% + .35rem); left: 0; z-index: 40; min-width: 15.5rem;
         background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: .8rem;
         box-shadow: 0 14px 34px -10px rgb(0 0 0 / .3); padding: .3rem; }
@@ -287,6 +306,13 @@
     .cmap-savesearch span { font-size: .7rem; font-weight: 700; color: var(--color-gray-400); white-space: nowrap; }
     .cmap-saverow { display: flex; align-items: flex-start; gap: .6rem; width: 100%; text-align: left;
         padding: .55rem; border-radius: .75rem; }
+    .cmap-save-over { background: #4a7c2a !important; color: #fff !important; margin-bottom: .5rem; }
+    .cmap-save-over:hover { background: #3d6823 !important; }
+    .cmap-mark { width: 2.6rem; height: 2.6rem; border-radius: .7rem; flex-shrink: 0;
+        display: inline-flex; align-items: center; justify-content: center;
+        background: #e4efd4; color: #3d6823; }
+    .cmap-mark.is-team { background: #dbeafe; color: #1d4ed8; }
+    .cmap-mark svg { width: 1.3rem; height: 1.3rem; }
     .cmap-thumb { width: 3.4rem; height: 2.6rem; border-radius: .5rem; overflow: hidden; flex-shrink: 0;
         background: var(--color-gray-100); }
     .cmap-thumb img { width: 100%; height: 100%; object-fit: cover; }
@@ -1140,19 +1166,39 @@
         return Number.isFinite(v) ? v : 0;
     })();
     let saveMode = 'map';
+    /* Which saved map the shapes on screen came from, if any. It is what makes
+       "save over this one" possible — and what the header notice reports. */
+    let LOADED_SAVE = null;
+    function setLoadedSave(sv) {
+        LOADED_SAVE = sv ? { id: sv.id, title: sv.title || 'Map' } : null;
+        window.setEditingNotice?.(LOADED_SAVE
+            ? 'You are working on the saved map “' + LOADED_SAVE.title + '”. Saving can replace it or keep it and make a new one.'
+            : '');
+    }
     function openSaveSheet(mode) {
         saveMode = mode;
         document.getElementById('cmapSaveTitleH').textContent = mode === 'map' ? 'Save map to notes' : 'Save as image note';
         document.getElementById('cmapSaveHint').textContent = mode === 'map'
             ? 'Keeps this map reopenable from the tools, and files a picture of it in the schedule notebook.'
             : 'Files a picture of the map, shapes and all, in the schedule notebook.';
+        // Opened from a saved map: the common answer is "this one, changed",
+        // and until now the only thing on offer was a second copy of it.
+        const over = document.getElementById('cmapSaveOver');
+        const overLbl = document.getElementById('cmapSaveOverLabel');
+        const showOver = mode === 'map' && !!LOADED_SAVE;
+        if (over) over.hidden = !showOver;
+        if (showOver && overLbl) overLbl.textContent = 'Save over “' + LOADED_SAVE.title + '”';
+        const name = document.getElementById('cmapSaveName');
+        if (name && !name.value && LOADED_SAVE) name.value = LOADED_SAVE.title;
         window.openSheet?.('cmapSaveSheet');
     }
-    async function doSaveMap() {
-        const btn = document.getElementById('cmapSaveGo');
+    async function doSaveMap(replace) {
+        const btn = document.getElementById(replace ? 'cmapSaveOver' : 'cmapSaveGo');
         const c = map.getCenter();
         btn.disabled = true;
-        document.getElementById('cmapSaveGoTxt').textContent = 'Saving…';
+        const label = document.getElementById(replace ? 'cmapSaveOverLabel' : 'cmapSaveGoTxt');
+        const was = label.textContent;
+        label.textContent = 'Saving…';
         // Compose the picture here so it carries the points and measurements;
         // if that fails the server still draws a plain one from Static Maps.
         let image = null;
@@ -1160,6 +1206,8 @@
         try {
             const r = await api(`${URLS.save}?scheduleId=${SID}`, { method: 'POST', body: {
                 mode: saveMode,
+                // Which file to write into. Absent means a new one.
+                saveId: replace && LOADED_SAVE ? LOADED_SAVE.id : null,
                 // Drawn with the team or drawn alone: the same tool, but not
                 // the same thing to whoever loads it later.
                 source: @json(request()->routeIs('sm.collab') ? 'team' : 'solo'),
@@ -1172,10 +1220,15 @@
             window.closeSheet?.('cmapSaveSheet');
             document.getElementById('cmapSaveName').value = '';
             document.getElementById('cmapSaveDesc').value = '';
+            // A brand new map becomes the one being worked on, so the next
+            // save can replace it rather than making a third copy.
+            if (r && r.data && r.data.saveId) {
+                setLoadedSave({ id: r.data.saveId, title: r.data.title || 'Map' });
+            }
             if (window.toast) toast((r && r.message) || 'Saved.');
         } catch (e) { if (window.toast) toast(e.message, 'error'); }
         btn.disabled = false;
-        document.getElementById('cmapSaveGoTxt').textContent = 'Save';
+        label.textContent = was;
     }
     let SAVED_MAPS = [];
 
@@ -1206,14 +1259,19 @@
             b.type = 'button';
             b.className = 'cmap-saverow' + (WANT_SAVE && sv.id === WANT_SAVE ? ' is-wanted' : '');
             const shapes = sv.count + ' shape' + (sv.count === 1 ? '' : 's');
+            // An icon, not a picture: the thumbnails were a download each,
+            // told you nothing a title does not, and turned into a column of
+            // broken frames whenever a file went missing.
             b.innerHTML = `
-                <span class="cmap-thumb">${sv.imageUrl ? `<img src="${esc(sv.imageUrl)}" alt="" loading="lazy">` : ''}</span>
+                <span class="cmap-mark ${sv.source === 'team' ? 'is-team' : ''}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
+                </span>
                 <span class="cmap-saverow-main">
                     <span class="cmap-saverow-t">${esc(sv.title || 'Map')}</span>
                     <span class="cmap-tags">
                         <span class="cmap-tag ${sv.source === 'team' ? 'is-team' : 'is-solo'}">${sv.source === 'team' ? 'Team map' : 'My map'}</span>
                         <span class="cmap-tag">${esc(shapes)}</span>
-                        ${sv.imageUrl ? '' : '<span class="cmap-tag is-warn">No picture</span>'}
+
                     </span>
                     <span class="cmap-saverow-s">${esc(sv.by)} · ${esc(sv.when)}</span>
                 </span>`;
@@ -1247,6 +1305,7 @@
         if (!ok) return;
         try {
             await api(`${URLS.load}?scheduleId=${SID}`, { method: 'POST', body: { id: sv.id } });
+            setLoadedSave(sv);
             window.closeSheet?.('cmapSavesSheet');
             endEdit(); dropAll();
             histUndo.length = 0; histRedo.length = 0; syncHistBtns();
@@ -1311,7 +1370,8 @@
             if (b.dataset.maction === 'open') openSaves();
             else openSaveSheet(b.dataset.maction === 'savemap' ? 'map' : 'image');
         }));
-        document.getElementById('cmapSaveGo').addEventListener('click', doSaveMap);
+        document.getElementById('cmapSaveGo').addEventListener('click', () => doSaveMap(false));
+        document.getElementById('cmapSaveOver').addEventListener('click', () => doSaveMap(true));
         document.getElementById('cmapDelPoint').addEventListener('click', deleteSelPoint);
         document.getElementById('cmapDelObj').addEventListener('click', deleteEditedObj);
         document.getElementById('cmapEditDone').addEventListener('click', endEdit);

@@ -314,6 +314,8 @@ class ScheduleMapController extends BaseScheduleController
 
         $validator = Validator::make($request->all(), [
             'mode' => 'required|in:map,image',
+            // Which saved map to write into. Absent means a new one.
+            'saveId' => 'nullable|integer',
             // A PNG data URL the client composed: imagery, shapes, points and
             // every measurement label, exactly as the screen shows them.
             'image' => 'nullable|string',
@@ -407,25 +409,51 @@ class ScheduleMapController extends BaseScheduleController
             'deleteStatus' => 1,
         ]);
 
+        $saveId = null;
         if ($mode === 'map') {
-            \App\Models\ScheduleMapSave::create([
-                'scheduleId' => $schedule->id,
-                'userId' => $meId,
-                'title' => mb_substr($title, 0, 180),
-                'source' => $source,
-                'objects' => json_encode(array_map(fn ($o) => [
-                    'kind' => $o['kind'], 'color' => $o['color'], 'width' => $o['width'],
-                    'points' => $o['points'], 'label' => $o['label'],
-                ], $objects)),
-                'noteId' => $note->id,
-                'deleteStatus' => 1,
-            ]);
+            $shapes = json_encode(array_map(fn ($o) => [
+                'kind' => $o['kind'], 'color' => $o['color'], 'width' => $o['width'],
+                'points' => $o['points'], 'label' => $o['label'],
+            ], $objects));
+
+            // Writing back into the file this map was opened from: the same
+            // record keeps its place in the list and its note keeps its
+            // history, rather than the team ending up with three copies of one
+            // plan and no way to tell which is current.
+            $existing = $request->filled('saveId')
+                ? \App\Models\ScheduleMapSave::where('scheduleId', $schedule->id)
+                    ->where('id', (int) $request->input('saveId'))
+                    ->where('deleteStatus', 1)
+                    ->first()
+                : null;
+
+            if ($existing) {
+                $existing->update([
+                    'title' => mb_substr($title, 0, 180),
+                    'objects' => $shapes,
+                    'noteId' => $note->id,
+                ]);
+                $saveId = $existing->id;
+            } else {
+                $saveId = \App\Models\ScheduleMapSave::create([
+                    'scheduleId' => $schedule->id,
+                    'userId' => $meId,
+                    'title' => mb_substr($title, 0, 180),
+                    'source' => $source,
+                    'objects' => $shapes,
+                    'noteId' => $note->id,
+                    'deleteStatus' => 1,
+                ])->id;
+            }
         }
 
         return response()->json([
             'success' => true,
+            'data' => ['saveId' => $saveId, 'title' => mb_substr($title, 0, 180)],
             'message' => $mode === 'map'
-                ? 'Map saved — reopen it any time from the tools' . (empty($media) ? ' (no picture: Static Maps API unavailable).' : ', picture filed in the notebook.')
+                ? (($saveId && $request->filled('saveId'))
+                    ? 'Saved over “' . mb_substr($title, 0, 60) . '”.'
+                    : 'Map saved — reopen it any time from the tools' . (empty($media) ? ' (no picture: Static Maps API unavailable).' : ', picture filed in the notebook.'))
                 : 'Map picture filed in the schedule notebook.',
         ]);
     }
