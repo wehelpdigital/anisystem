@@ -153,6 +153,12 @@
             background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
         html.dark .payroll-badge { background: rgb(120 53 15 / .35); color: #fcd34d; border-color: rgb(180 83 9 / .5); }
 
+        .act-check-total { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem;
+            margin-top: .25rem; padding-top: .35rem; border-top: 1px dashed var(--tl-border, rgb(0 0 0 / .12));
+            font-size: .74rem; font-weight: 800; color: var(--tl-text, var(--color-gray-800)); }
+        .type-ico-payroll { background: #fef3c7; color: #92400e; }
+        html.dark .type-ico-payroll { background: rgb(120 53 15 / .35); color: #fcd34d; }
+
         /* The roster on a payroll card. Compact, because it sits inside a card
            that already carries a title and a date. */
         .act-check { display: flex; flex-direction: column; gap: .1rem; margin-top: .5rem; padding: .35rem .5rem;
@@ -967,6 +973,10 @@
         #activitySheet .space-y-4.on-workers > * { display: none; }
         #activitySheet .space-y-4.on-workers > #activityWorkersPane,
         #activitySheet .space-y-4.on-workers > .keep-on-workers { display: block; }
+        /* Half or whole day says nothing about attendance, so the checklist
+           keeps the priority beside it and drops the length. */
+        #activitySheet .space-y-4.on-workers > .keep-on-workers { display: grid; }
+        #activitySheet .space-y-4.on-workers .js-time-required { display: none; }
         #activitySheet .space-y-4.on-workers > #activityModeTabs { display: flex; }
 
         /* The wage bill for an activity: the total leads, the breakdown follows

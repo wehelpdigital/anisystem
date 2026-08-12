@@ -477,7 +477,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const priceTxt = (a.servicePrice != null && a.servicePrice !== '') ? ` <span class="item-tag-price">₱${esc(fmtMoney(a.servicePrice))}</span>` : '';
             typeBadge = `<span class="badge service-badge">${SVG.service || '🛠'} Service${priceTxt}</span>`;
         } else if (a.activityType === 'worker_payroll') {
-            typeBadge = `<span class="badge payroll-badge">${SVG.people || ''} Worker checklist</span>`;
+            typeBadge = '';        // it lives beside the kebab now
         } else {
             typeBadge = typeLabel ? `<span class="badge badge-green activity-type-badge">${esc(typeLabel)}</span>` : '';
         }
@@ -561,6 +561,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         </div>
         <div class="flex items-center shrink-0">
+            ${a.activityType === 'worker_payroll' ? '<span class="badge payroll-badge mr-1">Worker checklist</span>' : ''}
             <button type="button" class="icon-btn add-note-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Add a note (activity is locked)">${SVG.note}</button>
             <div class="hidden md:flex items-center gap-0.5 done-hide">
                 <button type="button" class="icon-btn hide-activity-toggle" data-id="${a.id}" title="Toggle visibility in presentations and exports" aria-pressed="${isHiddenFlag ? 'true' : 'false'}">${SVG.eye}</button>
@@ -611,6 +612,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="act-check-pay">${esc(money(w.total || 0))}</span>
                 </label>`;
             }).join('')
+            + `<div class="act-check-total"><span>To pay</span><span data-att-total>${esc(money(
+                ids.reduce((t, id) => t + (pay[id].present === false ? 0 : (pay[id].total || 0)), 0)
+            ))}</span></div>`
             + '</div>';
     }
 
@@ -629,9 +633,22 @@ document.addEventListener('DOMContentLoaded', () => {
         // the header follows in the same breath as the tick.
         const card = row.closest('.activity-card');
         const worth = Number((row.querySelector('.act-check-pay')?.textContent || '').replace(/[^0-9.]/g, '')) || 0;
+        const retotal = () => {
+            const block = row.closest('.act-check');
+            const out = block?.querySelector('[data-att-total]');
+            if (!out) return;
+            let sum = 0;
+            block.querySelectorAll('.act-check-row').forEach((r) => {
+                if (r.querySelector('input')?.checked) {
+                    sum += Number((r.querySelector('.act-check-pay')?.textContent || '').replace(/[^0-9.]/g, '')) || 0;
+                }
+            });
+            out.textContent = money(sum);
+        };
         if (card) {
             const was = Number(card.getAttribute('data-labour')) || 0;
             card.setAttribute('data-labour', String(Math.max(0, was + (box.checked ? worth : -worth))));
+            retotal();
             paintAllDayCash();
         }
 
@@ -647,6 +664,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (card) {
                 const now = Number(card.getAttribute('data-labour')) || 0;
                 card.setAttribute('data-labour', String(Math.max(0, now + (box.checked ? worth : -worth))));
+                retotal();
                 paintAllDayCash();
             }
             toast(err.message || 'Could not save that.', 'error');

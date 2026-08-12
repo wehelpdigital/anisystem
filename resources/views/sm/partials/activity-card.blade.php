@@ -46,8 +46,12 @@
                 aria-pressed="{{ $a->isDone ? 'true' : 'false' }}" aria-label="Mark activity as done">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>
-            <span class="type-ico {{ $a->activityType === 'irrigation' ? 'type-ico-irrigation' : ($a->activityType === 'service' ? 'type-ico-service' : 'type-ico-task') }}" aria-hidden="true">
-                @if($a->activityType === 'irrigation')
+            <span class="type-ico {{ $a->activityType === 'irrigation' ? 'type-ico-irrigation' : ($a->activityType === 'service' ? 'type-ico-service' : ($a->activityType === 'worker_payroll' ? 'type-ico-payroll' : 'type-ico-task')) }}" aria-hidden="true">
+                @if($a->activityType === 'worker_payroll')
+                    {{-- People, not a clipboard: what this day is about is who
+                         came, and the icon should say so before the title does. --}}
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
+                @elseif($a->activityType === 'irrigation')
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3s6 6.686 6 11a6 6 0 11-12 0c0-4.314 6-11 6-11z"/></svg>
                 @elseif($a->activityType === 'service')
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5a4 4 0 105.03 5.03l4.35 4.35a2 2 0 11-2.83 2.83l-4.35-4.35A4 4 0 0111 5zM5 19l4-4"/></svg>
@@ -90,12 +94,8 @@
                         Service <span class="item-tag-price">{{ $svcPriceText }}</span>
                     </span>
                 @elseif($a->activityType === 'worker_payroll')
-                    {{-- Its own mark: a payroll day is people, and wearing the
-                         same green chip as a field task made it read as one. --}}
-                    <span class="badge payroll-badge">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
-                        Worker checklist
-                    </span>
+                    {{-- Nothing here: the tag sits up beside the kebab, where
+                         there is room, rather than alone on a row of its own. --}}
                 @elseif($typeLabel)
                     <span class="badge badge-green activity-type-badge">{{ $typeLabel }}</span>
                 @endif
@@ -163,6 +163,9 @@
             </div>
         </div>
         <div class="flex items-center shrink-0">
+            @if($a->activityType === 'worker_payroll')
+                <span class="badge payroll-badge mr-1">Worker checklist</span>
+            @endif
             <button type="button" class="icon-btn add-note-activity-btn" data-id="{{ $a->id }}" data-name="{{ $a->activityTitle }}" title="Add a note (activity is locked)">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             </button>
@@ -231,6 +234,14 @@
                     <span class="act-check-pay">₱{{ number_format($a->workerPay($w), 2) }}</span>
                 </label>
             @endforeach
+            @php
+                $due = $a->workers->reject(fn ($w) => in_array($w->id, $absent, true))
+                    ->sum(fn ($w) => $a->workerPay($w));
+            @endphp
+            <div class="act-check-total">
+                <span>To pay</span>
+                <span data-att-total>₱{{ number_format($due, 2) }}</span>
+            </div>
         </div>
     @endif
 

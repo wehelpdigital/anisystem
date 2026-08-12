@@ -152,7 +152,10 @@
                 <p class="form-hint">The cost of this hired service for the lot(s) it applies to.</p>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
+            {{-- Priority stays on the worker checklist too: a crew day can be
+                 the critical one of the week, and its length cannot — which is
+                 why the field beside it is not offered there. --}}
+            <div class="grid grid-cols-2 gap-3 keep-on-workers">
                 <div>
                     <label class="form-label" for="activityPriority">Priority</label>
                     <select id="activityPriority" class="form-select">
@@ -162,7 +165,7 @@
                         <option value="low">Low</option>
                     </select>
                 </div>
-                <div>
+                <div class="js-time-required">
                     <label class="form-label" for="activityTimeRequired">Time required</label>
                     <select id="activityTimeRequired" class="form-select">
                         <option value="half" selected>Half Day</option>
