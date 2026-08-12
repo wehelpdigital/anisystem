@@ -745,35 +745,62 @@ document.addEventListener('DOMContentLoaded', () => {
        it, one line per extra expense, and the total they add up to. */
     function openDayCash(group) {
         const dateKey = (group.getAttribute('data-date') || '').trim();
-        const rows = [];
+        const wages = [];
         $qsa('.activity-card[data-labour]', group).forEach((card) => {
             const amount = Number(card.getAttribute('data-labour')) || 0;
             if (amount <= 0) return;
-            rows.push({
+            wages.push({
                 name: (card.querySelector('.activity-card-title')?.textContent || 'Activity').trim(),
                 detail: (card.querySelector('.activity-labour .al-parts')?.textContent || '').trim(),
                 amount,
             });
         });
-        const wages = rows.reduce((t, r) => t + r.amount, 0);
         const extras = _expenseRowsFor(dateKey).map((r) => ({
             name: r.note || 'Extra expense', detail: '', amount: Number(r.amount) || 0,
         }));
-        const total = wages + extras.reduce((t, r) => t + r.amount, 0);
 
-        const line = (r) => `<div class="dc-row">
+        const wageSum = wages.reduce((t, r) => t + r.amount, 0);
+        const extraSum = extras.reduce((t, r) => t + r.amount, 0);
+        const grand = wageSum + extraSum;
+        const share = grand > 0 ? Math.round((wageSum / grand) * 100) : 0;
+
+        const line = (r, tone) => `<div class="dc-row">
+            <span class="dc-dot dc-dot-${tone}"></span>
             <span class="dc-name">${esc(r.name)}${r.detail ? `<span class="dc-detail">${esc(r.detail)}</span>` : ''}</span>
             <span class="dc-amt">${esc(money(r.amount))}</span>
         </div>`;
 
+        const section = (title, tone, icon, list, sum) => !list.length ? '' : `
+            <div class="dc-sec dc-sec-${tone}">
+                <div class="dc-sec-head">
+                    <span class="dc-sec-ico">${icon}</span>
+                    <span class="dc-sec-title">${esc(title)}</span>
+                    <span class="dc-sec-sum">${esc(money(sum))}</span>
+                </div>
+                <div class="dc-sec-body">${list.map((r) => line(r, tone)).join('')}</div>
+            </div>`;
+
+        const ICON_WAGES = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>';
+        const ICON_EXTRA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v10M14.4 9.4a2.3 2.3 0 00-2.4-1.3c-1.3.1-2.3.8-2.3 1.9s1 1.7 2.5 1.9 2.6.8 2.6 2-1.1 1.9-2.5 1.9a2.4 2.4 0 01-2.4-1.3"/></svg>';
+
+        const counts = [
+            wages.length ? wages.length + (wages.length === 1 ? ' activity' : ' activities') : '',
+            extras.length ? extras.length + (extras.length === 1 ? ' expense' : ' expenses') : '',
+        ].filter(Boolean).join(' · ');
+
         $id('dayCashTitle').textContent = 'Cash for ' + prettyDateFull(dateKey);
-        $id('dayCashBody').innerHTML =
-            (rows.length ? `<h4 class="dc-h">Wages</h4>${rows.map(line).join('')}` : '')
-            + (extras.length ? `<h4 class="dc-h">Extra expenses</h4>${extras.map(line).join('')}` : '')
-            + `<div class="dc-total"><span>Total to prepare</span><span>${esc(money(total))}</span></div>`
-            + (rows.length
-                ? '<p class="dc-foot">Wages come from each activity: a worker with no half or whole day of their own is paid for as long as the task itself takes.</p>'
-                : '<p class="dc-foot">No wages for this day — nobody is assigned to its activities yet.</p>');
+        $id('dayCashBody').innerHTML = `
+            <div class="dc-hero">
+                <span class="dc-hero-label">Cash to prepare</span>
+                <span class="dc-hero-amt">${esc(money(grand))}</span>
+                <span class="dc-hero-sub">${esc(prettyDateFull(dateKey))}${counts ? ' · ' + esc(counts) : ''}</span>
+                ${wageSum > 0 && extraSum > 0 ? `<span class="dc-split" title="Wages ${share}% · expenses ${100 - share}%"><span class="dc-split-wages" style="width:${share}%"></span></span>` : ''}
+            </div>
+            ${section('Wages', 'wages', ICON_WAGES, wages, wageSum)}
+            ${section('Extra expenses', 'extra', ICON_EXTRA, extras, extraSum)}
+            <p class="dc-foot">${wages.length
+                ? 'Wages come from each activity: a worker with no half or whole day of their own is paid for as long as the task itself takes.'
+                : 'No wages here yet — nobody is assigned to this day.'}</p>`;
         openSheet('dayCashSheet');
     }
     document.addEventListener('click', (e) => {

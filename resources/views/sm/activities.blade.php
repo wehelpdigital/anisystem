@@ -147,19 +147,59 @@
         .date-header-cash svg { width: .85rem; height: .85rem; }
         .date-header-cash { cursor: pointer; }
         .date-header-cash:hover { filter: brightness(.97); }
-        /* The breakdown behind the figure. */
-        .dc-h { font-size: .68rem; font-weight: 800; text-transform: uppercase; color: var(--color-gray-400);
-            margin: .75rem 0 .35rem; }
-        .dc-h:first-child { margin-top: 0; }
-        .dc-row { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem;
-            padding: .4rem 0; border-bottom: 1px dashed var(--color-gray-200); }
-        .dc-name { min-width: 0; font-size: .85rem; font-weight: 700; color: var(--color-gray-800); }
-        .dc-detail { display: block; font-size: .7rem; font-weight: 600; color: var(--color-gray-400); }
+        /* The breakdown behind the day's figure. Money reads better grouped
+           than listed: the total leads, then wages and extras as two blocks
+           you can weigh against each other, each in its own colour so a glance
+           is enough to tell which is which. */
+        .dc-hero { border-radius: 1rem; padding: 1rem 1.1rem 1.1rem; margin-bottom: .9rem;
+            display: flex; flex-direction: column; gap: .1rem;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border: 1px solid #fde68a; }
+        .dc-hero-label { font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: #b45309; }
+        .dc-hero-amt { font-family: var(--font-heading); font-size: 1.9rem; line-height: 1.15; font-weight: 800; color: #78350f; }
+        .dc-hero-sub { font-size: .74rem; color: #92400e; opacity: .85; }
+        /* How the day divides — the same two colours the sections wear, so it
+           needs no legend. */
+        .dc-split { display: block; height: .35rem; border-radius: 999px; margin-top: .7rem; overflow: hidden; background: #f59e0b; }
+        .dc-split-wages { display: block; height: 100%; background: #15803d; }
+
+        .dc-sec { border: 1px solid var(--color-gray-200); border-radius: .85rem; overflow: hidden;
+            margin-bottom: .7rem; background: var(--color-white); }
+        .dc-sec-head { display: flex; align-items: center; gap: .5rem; padding: .5rem .7rem; }
+        .dc-sec-ico { display: inline-flex; align-items: center; justify-content: center; width: 1.6rem; height: 1.6rem;
+            border-radius: .5rem; flex-shrink: 0; }
+        .dc-sec-ico svg { width: .95rem; height: .95rem; }
+        .dc-sec-title { font-size: .74rem; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; }
+        .dc-sec-sum { margin-left: auto; font-size: .88rem; font-weight: 800; }
+        .dc-sec-body { padding: .1rem .7rem .55rem; }
+        .dc-sec-wages .dc-sec-head { background: #f0fdf4; }
+        .dc-sec-wages .dc-sec-ico { background: #dcfce7; color: #15803d; }
+        .dc-sec-wages .dc-sec-title, .dc-sec-wages .dc-sec-sum { color: #14532d; }
+        .dc-sec-extra .dc-sec-head { background: #fffbeb; }
+        .dc-sec-extra .dc-sec-ico { background: #fef3c7; color: #b45309; }
+        .dc-sec-extra .dc-sec-title, .dc-sec-extra .dc-sec-sum { color: #78350f; }
+
+        .dc-row { display: flex; align-items: baseline; gap: .55rem; padding: .5rem 0; }
+        .dc-row + .dc-row { border-top: 1px solid var(--color-gray-100); }
+        .dc-dot { width: .4rem; height: .4rem; border-radius: 999px; flex-shrink: 0; transform: translateY(-.15rem); }
+        .dc-dot-wages { background: #22c55e; }
+        .dc-dot-extra { background: #f59e0b; }
+        .dc-name { min-width: 0; flex: 1 1 auto; font-size: .85rem; font-weight: 700; color: var(--color-gray-800); }
+        .dc-detail { display: block; font-size: .7rem; font-weight: 600; color: var(--color-gray-400); margin-top: .1rem; }
         .dc-amt { font-size: .85rem; font-weight: 800; color: var(--color-gray-900); white-space: nowrap; }
-        .dc-total { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem;
-            margin-top: .75rem; padding-top: .6rem; border-top: 2px solid var(--color-gray-200);
-            font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
-        .dc-foot { margin-top: .6rem; font-size: .72rem; line-height: 1.5; color: var(--color-gray-400); }
+        .dc-foot { margin-top: .5rem; font-size: .72rem; line-height: 1.5; color: var(--color-gray-400); }
+
+        html.dark .dc-hero { background: linear-gradient(135deg, #292014 0%, #3b2c14 100%); border-color: #6b4b12; }
+        html.dark .dc-hero-label { color: #fbbf24; }
+        html.dark .dc-hero-amt { color: #fde68a; }
+        html.dark .dc-hero-sub { color: #fcd34d; }
+        html.dark .dc-sec { background: #141a10; border-color: #2b3a1c; }
+        html.dark .dc-sec-wages .dc-sec-head { background: #16220f; }
+        html.dark .dc-sec-wages .dc-sec-title, html.dark .dc-sec-wages .dc-sec-sum { color: #bbf7d0; }
+        html.dark .dc-sec-extra .dc-sec-head { background: #241b0c; }
+        html.dark .dc-sec-extra .dc-sec-title, html.dark .dc-sec-extra .dc-sec-sum { color: #fde68a; }
+        html.dark .dc-name { color: #e6eddd; }
+        html.dark .dc-amt { color: #f3f7ee; }
+        html.dark .dc-row + .dc-row { border-color: #223018; }
         .date-header-cash[hidden] { display: none; }
         html.dark .date-header-cash { color: #fcd34d; background: rgb(120 53 15 / .35); border-color: rgb(180 83 9 / .5); }
         .date-header-count { font-size: 11px; font-weight: 700; color: var(--date-color); background: var(--tl-pill); border-radius: 999px; padding: .12rem .55rem; margin-left: auto; flex-shrink: 0; }
