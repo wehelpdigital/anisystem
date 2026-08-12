@@ -23,6 +23,14 @@
         body.smap-open #aiFloat { display: none !important; }
 
         @media (max-width: 767px) {
+            /* The map already fills everything below the toolbar, so there is
+               nothing under it to reach — but a stray pixel of overflow still
+               let the page drag down to a blank band. With the module open the
+               page itself does not scroll; the map handles its own gestures. */
+            body.smap-open { overflow: hidden; }
+        }
+
+        @media (max-width: 767px) {
             /* 81px of chrome sat between the header and the map for a single
                row of two buttons: the page's top padding, the bar's own
                padding and its bottom margin all stacked. Trimmed to about
@@ -116,9 +124,19 @@
                 document.body.classList.toggle('no-footer', shown && phone());
             }
             if (stage && window.ResizeObserver) {
-                new ResizeObserver(() => { chrome(); fit(); }).observe(stage);
+                const ro = new ResizeObserver(() => { chrome(); fit(); });
+                ro.observe(stage);
+                // The stage keeping its size is not the same as the page
+                // keeping its shape: the toolbar collapsing, fonts landing or
+                // Google's own chrome arriving all move the stage without
+                // resizing it, and only a fit afterwards is the right height.
+                ro.observe(document.body);
             }
             requestAnimationFrame(() => { chrome(); fit(); });
+            // First paint is the worst moment to measure — the module is
+            // injected, scripts re-run, then the map boots. A few passes catch
+            // whatever settles late, and fit() is a no-op once it agrees.
+            [60, 200, 500, 1000, 1800].forEach((ms) => setTimeout(() => { chrome(); fit(); }, ms));
             window.addEventListener('resize', () => { chrome(); fit(); });
             window.addEventListener('orientationchange', () => setTimeout(fit, 200));
         })();
