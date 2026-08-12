@@ -1109,6 +1109,11 @@
 
         /* Task / Irrigation mode tabs (add-activity sheet) */
         .activity-mode-tabs { display: inline-flex; gap: .25rem; padding: .25rem; background: #f1f3f7; border-radius: .75rem; width: 100%; }
+        /* Hiding the strip when editing has to be said here. This rule is
+           unlayered, so its display beats Tailwind's .hidden utility — adding
+           that class did nothing at all, which is why the type was still
+           changeable on an activity that already exists. */
+        .activity-mode-tabs.is-locked { display: none !important; }
         /* A fourth tab does not fit a phone at the width the other three want,
            and squeezing all four cut the labels in half. They keep their size
            and the strip slides instead — the same gesture the version strip

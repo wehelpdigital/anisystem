@@ -2556,7 +2556,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setDescriptionContent('');
         pendingDescription = '';
         setActPane('details');
-        $id('activityModeTabs')?.classList.remove('hidden');
+        $id('activityModeTabs')?.classList.remove('is-locked');
         setActivityLots([]);
         setWorkerPay({});
         setActivityWorkers([]);
@@ -2635,7 +2635,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // change it here invites turning a day's payroll into an
             // irrigation task by mistake, and the fields behind the two have
             // nothing in common.
-            $id('activityModeTabs')?.classList.add('hidden');
+            $id('activityModeTabs')?.classList.add('is-locked');
             setDescriptionContent(a.description || '');
             setActivityImages(a.images || (a.imagePath ? [{ path: a.imagePath, url: a.imageUrl }] : []));
             (a.items || []).forEach((it) => {
