@@ -1798,8 +1798,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!panel || !rows) return;
 
         const payroll = activityMode === 'payroll';
+
+        // Only a payroll day is priced per worker. On a task, an irrigation or
+        // a service the crew is already chosen with the chips, and each of
+        // them earns their own rate for however long the task takes — so a
+        // second panel asking the same question in different words is just a
+        // way to disagree with yourself.
+        if (!payroll) {
+            panel.classList.add('hidden');
+            rows.innerHTML = '';
+            paintWorkerCount();
+            return;
+        }
+
         const on = new Set(getActivityWorkerIds().map(String));
-        const listed = payroll ? Object.keys(WORKER_NAMES) : [...on];
+        const listed = Object.keys(WORKER_NAMES);
 
         panel.classList.toggle('hidden', listed.length === 0);
         if (!listed.length) { $id('workerPayTotal').textContent = money(0); paintWorkerCount(); return; }
