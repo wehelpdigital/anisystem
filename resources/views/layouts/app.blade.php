@@ -170,6 +170,21 @@
                                 aria-label="Switch farm">🏡</button>
                             <div x-show="open" x-cloak x-transition class="absolute right-0 mt-2 w-64 card p-2 z-50">
                                 <p class="px-3 py-1 text-xs font-bold text-gray-400 uppercase tracking-wide">Switch farm</p>
+                                {{-- Your own land first, and only when there is
+                                     any: someone who owns nothing has no farm to
+                                     switch back to, and offering one would be a
+                                     door onto an empty room. Posting 0 clears
+                                     the choice, which is how "mine" is stored. --}}
+                                @if (\App\Support\WorkerContext::ownsSchedules())
+                                    <form method="POST" action="{{ route('worker.switch') }}">
+                                        @csrf
+                                        <input type="hidden" name="bossId" value="0">
+                                        <button type="submit" class="w-full text-left rounded-lg px-3 py-2.5 text-sm {{ $__activeGrant === null ? 'bg-brand-50 text-brand-700 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
+                                            🏡 My farm
+                                            <span class="text-xs text-gray-400">· Owner</span>
+                                        </button>
+                                    </form>
+                                @endif
                                 @foreach ($__farmGrants as $__g)
                                     <form method="POST" action="{{ route('worker.switch') }}">
                                         @csrf
