@@ -127,7 +127,9 @@
                 <select id="activityType" class="form-select">
                     <option value="">— select a type —</option>
                     @foreach ($activityTypes as $slug => $label)
-                        @if (!in_array($slug, ['irrigation', 'service'], true))
+                        {{-- The three kinds with a tab of their own are picked
+                             up there, not buried in this list. --}}
+                        @if (!in_array($slug, ['irrigation', 'service', 'worker_payroll'], true))
                             <option value="{{ $slug }}">{{ $label }}</option>
                         @endif
                     @endforeach
