@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Notes')
-@section('page-title', 'Notes')
+@section('title', 'Global Notes')
+@section('page-title', 'Global Notes')
 @section('page-subtitle', 'Everything you\'ve jotted down')
 @section('back', route('sm.index'))
 

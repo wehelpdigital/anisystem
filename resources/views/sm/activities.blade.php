@@ -1471,15 +1471,18 @@
      another module is showing, the activities-only buttons hide. --}}
 <div class="sticky top-14 md:top-16 z-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 py-2 mb-3 border-b border-gray-100">
     <div class="flex items-center gap-2 flex-wrap">
-        <button type="button" id="moduleBackBtn" class="btn btn-white btn-sm hidden" title="Back to activities">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-            <span>Activities</span>
-        </button>
         <button type="button" id="modulesBtn" class="btn btn-white btn-sm" title="Switch module">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             {{-- "Modules - " is dropped on phones so the label stays short and
                  leaves the toolbar room for Tools, Undo and Redo on one line. --}}
             <span id="currentModuleLabel"><span class="dh-modprefix">Modules - </span>Activities</span>
+        </button>
+        {{-- The way in on the left, the way out on the right: the hamburger
+             opens things and belongs where the eye starts, while "back to
+             Activities" is where a phone's thumb expects to leave from. --}}
+        <button type="button" id="moduleBackBtn" class="btn btn-white btn-sm hidden ml-auto" title="Back to activities">
+            <span>Activities</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
 
         {{-- Tools menu: collapses Drafts / Report / Search / Calendar / Weather
