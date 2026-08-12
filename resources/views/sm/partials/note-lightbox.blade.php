@@ -237,8 +237,9 @@
 
     document.addEventListener('click', (e) => {
         if (e.target.closest('.rm')) return;                       // remove button, not preview
-        // Thumbnails, and the chips that replaced them in note lists.
-        const cell = e.target.closest('.nm[data-lb-url], .na[data-lb-url]');
+        // Anything that declares what it wants shown: a thumbnail, an
+        // attachment chip, a Media Box cell. The attribute is the contract.
+        const cell = e.target.closest('[data-lb-url]');
         if (cell) { e.preventDefault(); open(cell.getAttribute('data-lb-type'), cell.getAttribute('data-lb-url'), cell.getAttribute('data-lb-poster'), cell.getBoundingClientRect()); return; }
         if (e.target.closest('.note-lb-close') || e.target === lb) close();
     });

@@ -38,6 +38,10 @@
         // pin reads as "where am I" rather than "plan the field".
         ['Weather', 'weather', null,
             'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z'],
+        // One shelf for every picture and video the season has produced,
+        // whichever module happened to be open when it was taken.
+        ['Media Box', 'media', (int) $mediaCount,
+            'M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM4 15l4-4 4 4 3-3 5 5'],
         ['Maps', 'maps', null,
             'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2M15 11.5a2 2 0 11-4 0 2 2 0 014 0z'],
         // A pencil on a sheet, distinct from the Notes pencil-over-page: this

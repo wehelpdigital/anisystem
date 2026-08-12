@@ -354,7 +354,28 @@ class CroppingScheduleController extends Controller
             ->where('croppingScheduleId', $schedule->id)
             ->count();
 
-        return view('sm.hub', compact('schedule', 'documentationCount', 'postHarvestCount', 'notesCount'));
+        // How many pictures and videos the season has, counted the same way
+        // the Media Box gathers them so the tile and the module agree.
+        $mediaCount = 0;
+        foreach (\App\Models\AsScheduleNote::active()->where('croppingScheduleId', $schedule->id)->get() as $n) {
+            $mediaCount += (int) filled($n->imagePath);
+            foreach ((array) ($n->media ?? []) as $m) {
+                if (in_array($m['type'] ?? 'image', ['image', 'video', 'drawing'], true) && filled($m['path'] ?? null)) {
+                    $mediaCount++;
+                }
+            }
+        }
+        foreach (\App\Models\AsInlineNote::active()->where('croppingScheduleId', $schedule->id)->get() as $n) {
+            foreach ((array) ($n->media ?? []) as $m) {
+                if (in_array($m['type'] ?? 'image', ['image', 'video', 'drawing'], true) && filled($m['path'] ?? null)) {
+                    $mediaCount++;
+                }
+            }
+        }
+        $mediaCount += \App\Models\ScheduleAiMessage::active()->where('scheduleId', $schedule->id)
+            ->whereNotNull('imagePath')->count();
+
+        return view('sm.hub', compact('schedule', 'documentationCount', 'postHarvestCount', 'notesCount', 'mediaCount'));
     }
 
     /** Reports landing for a schedule — labor and post-harvest figures. */

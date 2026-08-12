@@ -233,6 +233,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // the same partial as a tab).
     // "How to use" — one page per module per device, written in the mother app.
     Route::get('/app/help/{module}', [App\Http\Controllers\HelpController::class, 'show'])->name('help.show');
+    // Media Box: every picture and video this schedule has, in one place.
+    Route::get('/app/sm-media', [App\Http\Controllers\Manager\MediaBoxController::class, 'page'])->name('sm.media');
     Route::get('/app/sm-draw', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'page'])->name('sm.draw');
     Route::get('/app/sm-draw-one', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'one'])->name('sm.draw.one');
     Route::post('/app/sm-draw-save', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'save'])->name('sm.draw.save');
