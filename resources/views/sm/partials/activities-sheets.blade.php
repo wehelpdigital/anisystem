@@ -198,6 +198,13 @@
             <div id="activityWorkersPane">
                 <span class="form-label">Workers <span class="text-gray-400 font-normal">(optional)</span></span>
                 <div id="activityWorkersContainer" class="flex flex-wrap gap-2">
+                    {{-- Saying "nobody" out loud, now that pay has somewhere
+                         else to live: a task can be work the owner does, or
+                         work whose crew is recorded on a worker checklist of
+                         its own, and leaving the row blank could not tell those
+                         apart from forgetting to fill it in. --}}
+                    <button type="button" class="chip chip-dashed worker-chip worker-chip-na" data-worker-na="1"
+                        aria-pressed="false" title="Nobody is assigned — pay is handled elsewhere, or there is none">N/A — No workers</button>
                     @foreach ($schedule->workers as $w)
                         <button type="button" class="chip worker-chip" data-worker-id="{{ $w->id }}" aria-pressed="false">
                             {{ $w->workerName }}

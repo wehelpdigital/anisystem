@@ -1834,23 +1834,51 @@ document.addEventListener('DOMContentLoaded', () => {
     $id('activityWorkersContainer')?.addEventListener('click', (e) => {
         const chip = e.target.closest('.worker-chip');
         if (!chip) return;
-        chip.classList.toggle('is-selected');
-        chip.setAttribute('aria-pressed', chip.classList.contains('is-selected') ? 'true' : 'false');
+
+        // "Nobody" and "these people" are answers to the same question, so
+        // choosing one clears the other.
+        if (chip.hasAttribute('data-worker-na')) {
+            const on = !chip.classList.contains('is-selected');
+            if (on) {
+                $qsa('#activityWorkersContainer .worker-chip:not([data-worker-na])').forEach((c) => {
+                    c.classList.remove('is-selected');
+                    c.setAttribute('aria-pressed', 'false');
+                });
+            }
+            chip.classList.toggle('is-selected', on);
+            chip.setAttribute('aria-pressed', on ? 'true' : 'false');
+        } else {
+            const na = $qs('#activityWorkersContainer .worker-chip[data-worker-na]');
+            if (na) {
+                na.classList.remove('is-selected');
+                na.setAttribute('aria-pressed', 'false');
+            }
+            chip.classList.toggle('is-selected');
+            chip.setAttribute('aria-pressed', chip.classList.contains('is-selected') ? 'true' : 'false');
+        }
         renderWorkerPay();
     });
 
-    function setActivityWorkers(workerIds) {
+    function setActivityWorkers(workerIds, sayNobody) {
         const ids = (workerIds || []).map(Number);
-        $qsa('#activityWorkersContainer .worker-chip').forEach((c) => {
+        $qsa('#activityWorkersContainer .worker-chip:not([data-worker-na])').forEach((c) => {
             const on = ids.includes(parseInt(c.getAttribute('data-worker-id'), 10));
             c.classList.toggle('is-selected', on);
             c.setAttribute('aria-pressed', on ? 'true' : 'false');
         });
+        // Reopening work that nobody was assigned to shows "N/A" rather than a
+        // blank row, so an answered question does not look like a skipped one.
+        const na = $qs('#activityWorkersContainer .worker-chip[data-worker-na]');
+        if (na) {
+            const nobody = !!sayNobody && ids.length === 0;
+            na.classList.toggle('is-selected', nobody);
+            na.setAttribute('aria-pressed', nobody ? 'true' : 'false');
+        }
         renderWorkerPay();
     }
 
     function getActivityWorkerIds() {
-        return $qsa('#activityWorkersContainer .worker-chip.is-selected')
+        return $qsa('#activityWorkersContainer .worker-chip.is-selected:not([data-worker-na])')
             .map((c) => parseInt(c.getAttribute('data-worker-id'), 10));
     }
 
@@ -2744,7 +2772,7 @@ document.addEventListener('DOMContentLoaded', () => {
             $id('activityIsTransplant').checked = !!boolFlag(a.isTransplant);
             setActivityLots(a.lotIds || (a.lots || []).map((l) => l.id));
             setWorkerPay(a.workerPay || {});
-            setActivityWorkers(a.workerIds || (a.workers || []).map((w) => w.id));
+            setActivityWorkers(a.workerIds || (a.workers || []).map((w) => w.id), true);
             if (a.activityType === 'worker_payroll') setActPane('workers');
             // What an activity IS was decided when it was made. Offering to
             // change it here invites turning a day's payroll into an
