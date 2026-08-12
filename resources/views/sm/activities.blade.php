@@ -134,7 +134,13 @@
         /* What the day costs, next to what the sky is doing: two facts about
            the day, on one line. Placement is done in paintDayCash(), which
            knows where the forecast ended up. */
-        .date-header-cash { display: inline-flex; align-items: center; gap: .28rem;
+        /* Both are facts about the day rather than controls, so they drop to a
+           line of their own under the date and its buttons. The break is a
+           zero-height item that fills the row: with a wrapping flex header,
+           that is what forces the two after it onto the next line. */
+        .dh-rowbreak { order: 90; flex-basis: 100%; height: 0; margin: 0; }
+        .date-header-weather, .wx-mini-btn { order: 91; }
+        .date-header-cash { order: 92; display: inline-flex; align-items: center; gap: .28rem;
             font-size: 11px; font-weight: 800; color: var(--color-amber-800, #92400e);
             background: var(--color-amber-50, #fffbeb); border: 1px solid var(--color-amber-200, #fde68a);
             border-radius: 999px; padding: .14rem .5rem .14rem .42rem; flex-shrink: 0; }
@@ -158,7 +164,13 @@
         html.dark .date-header-cash { color: #fcd34d; background: rgb(120 53 15 / .35); border-color: rgb(180 83 9 / .5); }
         .date-header-count { font-size: 11px; font-weight: 700; color: var(--date-color); background: var(--tl-pill); border-radius: 999px; padding: .12rem .55rem; margin-left: auto; flex-shrink: 0; }
         /* Per-day weather chips in the date header — scroll/drag if they overflow. */
-        .date-header-weather { min-width: 0; flex: 0 1 auto; }
+        /* Shares the second line with the cost rather than filling it: the
+           strip scrolls its chips internally, so giving up the space it does
+           not need costs nothing. `flex-basis: 0` is what makes it yield —
+           auto would have it claim its content width first and push the cost
+           down to a third line. */
+        .date-header-weather { min-width: 0; flex: 1 1 0; }
+        .date-header-cash { flex: 0 0 auto; }
         .date-header-weather.scroll-chips { gap: .25rem; padding: 0; margin: 0; }
         .wx-chip { display: inline-flex; align-items: center; gap: .22rem; flex-shrink: 0; font-size: 10.5px; font-weight: 700; padding: .1rem .42rem; border-radius: 999px; background: var(--tl-pill); color: var(--tl-text-muted); white-space: nowrap; cursor: pointer; border: 1px solid transparent; transition: border-color .15s ease; }
         .wx-chip:hover { border-color: var(--date-color, #4A90E2); }
@@ -363,14 +375,18 @@
             /* One and two digits cost the same, so the line does not reflow
                when a day ticks over from 9 to 10 activities. */
             .date-header-count { min-width: 1.9rem; text-align: center; }
+            /* Its own line, but not the whole of it — the day's cost sits at
+               the end of the same row. `1 1 0` yields the space the chips do
+               not need; `1 0 100%` claimed the lot and pushed the cost onto a
+               third line. The break element above is what put them here. */
             .date-header-weather {
-                order: 10; flex: 1 0 100%; width: 100%; min-width: 0;
+                order: 91; flex: 1 1 0; min-width: 0;
                 overflow-x: auto; overflow-y: hidden;
             }
             /* What the strip becomes when the day has more forecasts than the
                screen can carry (see collapseIfCramped). */
             .wx-mini-btn {
-                order: 10; flex: 0 0 auto; display: inline-flex; align-items: center; gap: .3rem;
+                order: 91; flex: 0 0 auto; display: inline-flex; align-items: center; gap: .3rem;
                 font-size: 11px; font-weight: 700; color: var(--tl-text-soft);
                 background: var(--tl-hover); border-radius: 999px; padding: .15rem .55rem;
             }

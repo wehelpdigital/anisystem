@@ -721,19 +721,33 @@ document.addEventListener('DOMContentLoaded', () => {
     function paintDayCash(group) {
         const pill = group.querySelector('.date-header-cash');
         if (!pill) return;
-        // Sit with the weather, not below it. Both are facts about the day
-        // rather than buttons, so they belong together on one line — and the
-        // forecast collapses to its icon to make room when the row is tight.
-        const header = group.querySelector('.date-header');
-        const wx = header && header.querySelector('.date-header-weather, .wx-mini-btn');
-        const anchor = header && header.querySelector('.date-header-count');
-        if (wx && pill.previousElementSibling !== wx) wx.after(pill);
-        else if (!wx && anchor && pill.nextElementSibling !== anchor) anchor.before(pill);
         const total = dayCashTotal(group);
+
         pill.hidden = total <= 0;
-        if (total <= 0) { pill.textContent = ''; return; }
-        pill.innerHTML = `${SVG.wallet}<span>${esc(money(total))}</span>`;
-        pill.title = 'Cash to prepare for this day — wages for everyone on it, plus any extra expense logged against it';
+        if (total > 0) {
+            pill.innerHTML = `${SVG.wallet}<span>${esc(money(total))}</span>`;
+            pill.title = 'Cash to prepare for this day — wages for everyone on it, plus any extra expense logged against it';
+        } else {
+            pill.textContent = '';
+        }
+
+        // The forecast and the cost share a second line. CSS order puts them
+        // after everything else; this is the break that makes "after" mean
+        // "next line" — added only when there is something down there, so a
+        // day with neither does not grow an empty row.
+        const header = group.querySelector('.date-header');
+        if (!header) return;
+        const wx = header.querySelector('.date-header-weather, .wx-mini-btn');
+        let brk = header.querySelector('.dh-rowbreak');
+        if (wx || total > 0) {
+            if (!brk) {
+                brk = document.createElement('span');
+                brk.className = 'dh-rowbreak';
+                header.appendChild(brk);
+            }
+        } else if (brk) {
+            brk.remove();
+        }
     }
     /* A number nobody can check is a number nobody trusts. Tapping it shows
        the same arithmetic in longhand: one line per activity with who is on
@@ -783,6 +797,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function paintAllDayCash() {
         $qsa('#activitiesList .date-group').forEach(paintDayCash);
     }
+    // The weather arrives on its own schedule; when it lands, the second line
+    // has to be recomputed so the break exists for it too.
+    window.__repaintCash = paintAllDayCash;
     // One hook instead of a call at every render site: cards are rebuilt by
     // saves, deletes, reorders, version switches and the live board feed, and
     // a total that only updates on some of those is worse than none.
