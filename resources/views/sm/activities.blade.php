@@ -814,6 +814,32 @@
         @media (prefers-reduced-motion: reduce) { .day-type-menu { animation: none; } }
         /* Meta strip: time + workers + materials/services on one wrapped row. */
         .activity-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .55rem; }
+        /* Two panes in the activity sheet. Hiding is done from the host with
+           one class rather than by toggling each child: the type tabs already
+           show and hide panels of their own, and a pane switch that restored
+           children by hand would fight them. */
+        .act-pane-tabs { display: flex; gap: .25rem; padding: .25rem; border-radius: .8rem;
+            background: var(--color-gray-100); }
+        .act-pane-tab { flex: 1 1 0; display: inline-flex; align-items: center; justify-content: center; gap: .35rem;
+            padding: .45rem .5rem; border-radius: .6rem; font-size: .8rem; font-weight: 700;
+            color: var(--color-gray-500); cursor: pointer;
+            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+        .act-pane-tab.is-on { background: var(--color-white); color: var(--color-brand-700);
+            box-shadow: 0 1px 3px rgb(0 0 0 / .08); }
+        .act-pane-count { min-width: 1.15rem; padding: 0 .25rem; border-radius: 999px; font-size: .65rem;
+            background: var(--color-brand-600); color: #fff; }
+        /* .form-input is unlayered component CSS, so its width:100% beats any
+           Tailwind width utility — the amount box ate the row and squeezed the
+           worker's name to nothing. Width belongs here, at the same level. */
+        .wp-amount { width: 6.5rem !important; flex: 0 0 6.5rem; }
+        #activitySheet .space-y-4.on-workers > * { display: none; }
+        #activitySheet .space-y-4.on-workers > #activityModeTabs,
+        #activitySheet .space-y-4.on-workers > #activityPaneTabs,
+        #activitySheet .space-y-4.on-workers > #activityWorkersPane { display: block; }
+        #activitySheet .space-y-4.on-workers > #activityModeTabs { display: flex; }
+        #activitySheet .space-y-4.on-workers > #activityPaneTabs { display: flex; }
+        @media (prefers-reduced-motion: reduce) { .act-pane-tab { transition: none; } }
+
         /* The wage bill for an activity: the total leads, the breakdown follows
            quietly, and on a narrow screen the breakdown wraps under it. */
         .activity-labour { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem; margin-top: .4rem;

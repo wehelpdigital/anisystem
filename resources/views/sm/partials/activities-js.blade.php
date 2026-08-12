@@ -1607,7 +1607,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!panel || !rows) return;
         const ids = getActivityWorkerIds();
         panel.classList.toggle('hidden', ids.length === 0);
-        if (!ids.length) { $id('workerPayTotal').textContent = money(0); return; }
+        if (!ids.length) { $id('workerPayTotal').textContent = money(0); paintWorkerCount(); return; }
         rows.innerHTML = ids.map((id) => {
             const st = workerPayState[id] || {};
             const part = st.dayPart === 'half' ? 'half' : 'whole';
@@ -1617,11 +1617,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button type="button" class="px-2 py-1 rounded-md text-xs font-bold ${part === 'whole' ? 'bg-white text-brand-700' : 'text-gray-500'}" data-pay-part="whole">Whole</button>
                     <button type="button" class="px-2 py-1 rounded-md text-xs font-bold ${part === 'half' ? 'bg-white text-brand-700' : 'text-gray-500'}" data-pay-part="half">Half</button>
                 </span>
-                <input type="number" class="form-input w-24 shrink-0 text-right" data-pay-amount min="0" step="any" inputmode="decimal"
+                <input type="number" class="form-input wp-amount text-right" data-pay-amount min="0" step="any" inputmode="decimal"
                     value="${st.amount === null || st.amount === undefined ? '' : esc(st.amount)}" placeholder="${defaultPay(id, part).toFixed(2)}">
             </div>`;
         }).join('');
         $id('workerPayTotal').textContent = money(ids.reduce((t, id) => t + payFor(id), 0));
+        paintWorkerCount();
     }
     $id('workerPayRows')?.addEventListener('click', (e) => {
         const btn = e.target.closest('[data-pay-part]');
@@ -1637,6 +1638,33 @@ document.addEventListener('DOMContentLoaded', () => {
         workerPayState[id] = Object.assign({}, workerPayState[id], { amount: input.value === '' ? null : input.value });
         $id('workerPayTotal').textContent = money(getActivityWorkerIds().reduce((t, w) => t + payFor(w), 0));
     });
+    /* ---- The sheet's two panes ---- */
+    function setActPane(which) {
+        const host = $qs('#activitySheet .sheet-body > .space-y-4');
+        if (!host) return;
+        host.classList.toggle('on-workers', which === 'workers');
+        $qsa('#activityPaneTabs .act-pane-tab').forEach((b) => {
+            const on = b.getAttribute('data-act-tab') === which;
+            b.classList.toggle('is-on', on);
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        // The sheet scrolls; switching pane while halfway down a long form
+        // would drop you into the middle of the other one.
+        const body = $qs('#activitySheet .sheet-body');
+        if (body) body.scrollTop = 0;
+    }
+    $id('activityPaneTabs')?.addEventListener('click', (e) => {
+        const tab = e.target.closest('[data-act-tab]');
+        if (tab) setActPane(tab.getAttribute('data-act-tab'));
+    });
+    function paintWorkerCount() {
+        const badge = $id('activityWorkerCount');
+        if (!badge) return;
+        const n = getActivityWorkerIds().length;
+        badge.textContent = n;
+        badge.hidden = n === 0;
+    }
+
     function setWorkerPay(pay) {
         workerPayState = {};
         Object.entries(pay || {}).forEach(([id, v]) => {
@@ -2302,6 +2330,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setWhenTab('date', { instant: true });
         setDescriptionContent('');
         pendingDescription = '';
+        setActPane('details');
         setActivityLots([]);
         setWorkerPay({});
         setActivityWorkers([]);

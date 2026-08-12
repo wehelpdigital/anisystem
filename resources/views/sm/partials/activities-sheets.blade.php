@@ -31,6 +31,18 @@
                 </button>
             </div>
 
+            {{-- What kind of activity is one question; who is on it and for how
+                 much of the day is another. They were stacked in one long
+                 scroll, so the checklist was below everything and easy to miss.
+                 Two panes now, and the tab says how many are picked. --}}
+            <div class="act-pane-tabs" id="activityPaneTabs" role="tablist">
+                <button type="button" class="act-pane-tab is-on" data-act-tab="details" aria-selected="true">Details</button>
+                <button type="button" class="act-pane-tab" data-act-tab="workers" aria-selected="false">
+                    Worker checklist
+                    <span class="act-pane-count" id="activityWorkerCount" hidden>0</span>
+                </button>
+            </div>
+
             <div id="activityDraftHint" class="hidden rounded-lg bg-blue-50 border border-blue-200 text-blue-800 text-xs px-3 py-2">
                 Saved to <strong>Drafts</strong> for the date you pick below — kept off the timeline until you restore it. The Drafts list shows this date.
             </div>
@@ -178,7 +190,7 @@
                 </label>
             </div>
 
-            <div>
+            <div id="activityWorkersPane">
                 <span class="form-label">Workers <span class="text-gray-400 font-normal">(optional)</span></span>
                 <div id="activityWorkersContainer" class="flex flex-wrap gap-2">
                     @foreach ($schedule->workers as $w)
