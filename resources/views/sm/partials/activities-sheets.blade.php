@@ -49,8 +49,11 @@
             </div>
 
             {{-- When: choose between calendar dates and day-number (DAS/DAP/DAT) planning.
-                 Both write the same date inputs — the date is what gets saved. --}}
-            <div>
+                 Both write the same date inputs — the date is what gets saved.
+                 Stays on the worker checklist too: a day's pay is pay for a
+                 particular day, and saving used to fail on a date field that
+                 tab was hiding. --}}
+            <div class="keep-on-workers">
                 <div class="when-tabs" id="whenTabs" role="tablist">
                     <button type="button" class="when-tab is-active" id="whenTabDate" aria-selected="true">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
