@@ -28,7 +28,7 @@
                 </button>
                 <span class="js-video-chip"></span>
             </span>
-            <input type="file" id="noteEditorPhotoInput" accept="image/*" capture="environment" class="hidden" multiple>
+            <input type="file" id="noteEditorPhotoInput" accept="image/*" class="hidden" multiple>
         </div>
         <div class="ne-quill"><div id="noteEditorBody"></div></div>
         <div id="noteEditorMedia" class="ne-thumbs mt-3"></div>

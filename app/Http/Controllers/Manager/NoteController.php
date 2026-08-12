@@ -163,6 +163,26 @@ class NoteController extends BaseScheduleController
             return $this->jsonFail('Video processing failed: ' . $e->getMessage(), 500);
         }
 
+        // Compress here, keep there. The clip and its poster are handed to the
+        // mother app once they are small, so a phone video costs one upload
+        // across rather than its full size, and both survive a deploy.
+        foreach (['video', 'poster'] as $part) {
+            $local = $out[$part] ?? null;
+            if (! $local || ! \App\Support\MediaStore::enabled()) {
+                continue;
+            }
+            $kept = \App\Support\MediaStore::putBinary(
+                Storage::disk('public')->get($local),
+                'notes',
+                pathinfo($local, PATHINFO_EXTENSION) ?: ($part === 'poster' ? 'jpg' : 'mp4'),
+                $schedule->id
+            );
+            if ($kept && $kept !== $local) {
+                Storage::disk('public')->delete($local);
+                $out[$part] = $kept;
+            }
+        }
+
         return $this->jsonOk('Video attached.', [
             'data' => [
                 'type' => 'video',

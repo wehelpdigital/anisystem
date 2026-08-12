@@ -44,8 +44,11 @@ class MediaStore
         string $namePrefix = ''
     ): ?string {
         if (self::enabled()) {
+            // A clip is not an image, and saying so is what makes the other
+            // side willing to read it.
+            $kind = in_array($ext, ['mp4', 'webm'], true) ? 'video' : 'image';
             $remote = self::send([
-                'image' => 'data:image/' . ($ext === 'jpg' ? 'jpeg' : $ext) . ';base64,' . base64_encode($binary),
+                'image' => 'data:' . $kind . '/' . ($ext === 'jpg' ? 'jpeg' : $ext) . ';base64,' . base64_encode($binary),
                 'folder' => $folder,
                 'scope' => (string) $scope,
                 // The app reads meaning out of these names later — a map, a
