@@ -183,6 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
         edit: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>',
         eye: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>',
         tag: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M3 11V4a1 1 0 011-1h7l9 9-8 8-9-9z"/></svg>',
+        wallet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8a2 2 0 012-2h12a2 2 0 012 2M3 8v9a2 2 0 002 2h13a2 2 0 002-2v-2M3 8h16a2 2 0 012 2v1h-4a2 2 0 100 4h4"/></svg>',
         duplicate: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>',
         archive: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>',
         kebab: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>',
@@ -521,6 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
      data-id="${a.id}"
      data-is-done="${isDoneFlag}"
      data-tags="${esc(JSON.stringify(Array.isArray(a.tags) ? a.tags : []))}"
+     data-labour="${Number(a.labourTotal || 0)}"
      data-target-date="${esc(targetDateStr)}"
      data-target-end-date="${esc(targetEndDateStr)}"
      data-lot-signature="${esc(lotSig)}"
@@ -704,6 +706,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    /* ---- What to bring to the field that day ------------------------------
+     * Wages for everyone on the day's activities plus any extra expense logged
+     * against it. Read off the board rather than recomputed: each card already
+     * carries the total the server worked out for it, so the pill can never
+     * disagree with the lines under the cards. */
+    function dayCashTotal(group) {
+        const dateKey = (group.getAttribute('data-date') || '').trim();
+        const labour = $qsa('.activity-card[data-labour]', group)
+            .reduce((t, c) => t + (Number(c.getAttribute('data-labour')) || 0), 0);
+        const extra = _expenseRowsFor(dateKey).reduce((t, r) => t + (Number(r.amount) || 0), 0);
+        return labour + extra;
+    }
+    function paintDayCash(group) {
+        const pill = group.querySelector('.date-header-cash');
+        if (!pill) return;
+        const total = dayCashTotal(group);
+        pill.hidden = total <= 0;
+        if (total <= 0) { pill.textContent = ''; return; }
+        pill.innerHTML = `${SVG.wallet}<span>${esc(money(total))}</span>`;
+        pill.title = 'Cash to prepare for this day — wages for everyone on it, plus any extra expense logged against it';
+    }
+    function paintAllDayCash() {
+        $qsa('#activitiesList .date-group').forEach(paintDayCash);
+    }
+    // One hook instead of a call at every render site: cards are rebuilt by
+    // saves, deletes, reorders, version switches and the live board feed, and
+    // a total that only updates on some of those is worse than none.
+    (() => {
+        // Never during this script's own run: the day's expenses are a const
+        // declared thousands of lines below, and touching it early throws
+        // before it exists — taking every listener after this point with it.
+        const start = () => {
+            const list = document.getElementById('activitiesList');
+            if (!list) return;
+            paintAllDayCash();
+            if (!window.MutationObserver) return;
+            let pending = null;
+            new MutationObserver(() => {
+                if (pending) return;
+                pending = setTimeout(() => { pending = null; paintAllDayCash(); }, 120);
+            }).observe(list, { childList: true, subtree: true });
+        };
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
+        else setTimeout(start, 0);
+    })();
+
     function buildRestDayHtml(dateKey, substitute) {
         return `<div class="rest-day-marker${substitute ? ' rest-day-substitute' : ''}" data-date="${esc(dateKey)}">
             ${SVG.moon}
@@ -805,6 +853,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${headerDate}
                 <span class="date-header-count">${count}<span class="dh-word"> ${count === 1 ? 'activity' : 'activities'}</span></span>
                 ${buttons}
+                <span class="date-header-cash" hidden></span>
             </div>
             <div class="date-body"><div class="date-body-inner">
                 ${noteBlock}
@@ -1591,15 +1640,20 @@ document.addEventListener('DOMContentLoaded', () => {
      * and at what price. Blank means the usual arrangement — a whole day at
      * the worker's own rate — so the common case needs no filling in. */
     let workerPayState = {};
+    // No answer in the checklist means "as long as the task" — the same rule
+    // the server applies, so the figure in the sheet matches the one saved.
+    function inheritedPart() {
+        return ($id('activityTimeRequired')?.value === 'whole') ? 'whole' : 'half';
+    }
     function defaultPay(id, dayPart) {
         const half = Number(WORKER_RATES[id] || 0);
-        return dayPart === 'half' ? half : half * 2;
+        return (dayPart || inheritedPart()) === 'half' ? half : half * 2;
     }
     function payFor(id) {
         const st = workerPayState[id] || {};
         const amount = st.amount;
         return (amount === null || amount === undefined || amount === '')
-            ? defaultPay(id, st.dayPart || 'whole')
+            ? defaultPay(id, st.dayPart)
             : Number(amount) || 0;
     }
     function renderWorkerPay() {
@@ -1610,7 +1664,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!ids.length) { $id('workerPayTotal').textContent = money(0); paintWorkerCount(); return; }
         rows.innerHTML = ids.map((id) => {
             const st = workerPayState[id] || {};
-            const part = st.dayPart === 'half' ? 'half' : 'whole';
+            const part = st.dayPart || inheritedPart();
             return `<div class="flex items-center gap-2" data-pay-row="${id}">
                 <span class="min-w-0 grow text-sm font-semibold text-gray-800 truncate">${esc(WORKER_NAMES[id] || 'Worker')}</span>
                 <span class="flex rounded-lg bg-gray-100 p-0.5 shrink-0">
@@ -1685,7 +1739,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const out = {};
         getActivityWorkerIds().forEach((id) => {
             const st = workerPayState[id] || {};
-            out[id] = { dayPart: st.dayPart === 'half' ? 'half' : 'whole', amount: (st.amount === '' ? null : st.amount) ?? null };
+            // Only send a choice that was actually made; silence means the
+            // activity's own length decides.
+            out[id] = { dayPart: st.dayPart || null, amount: (st.amount === '' ? null : st.amount) ?? null };
         });
         return out;
     }
@@ -1942,7 +1998,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function setActivityMode(mode) {
         activityMode = ['irrigation', 'service'].includes(mode) ? mode : 'task';
-        $qsa('#activityModeTabs .activity-mode-tab[data-mode]').forEach((tab) => {
+        $id('activityTimeRequired')?.addEventListener('change', () => renderWorkerPay());
+    $qsa('#activityModeTabs .activity-mode-tab[data-mode]').forEach((tab) => {
             const on = tab.getAttribute('data-mode') === activityMode;
             tab.classList.toggle('is-active', on);
             tab.setAttribute('aria-selected', on ? 'true' : 'false');

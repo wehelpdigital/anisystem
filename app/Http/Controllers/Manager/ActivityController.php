@@ -1562,8 +1562,11 @@ class ActivityController extends BaseScheduleController
         foreach ($workerIds as $id) {
             $one = (array) ($pay[$id] ?? $pay[(string) $id] ?? []);
             $amount = $one['amount'] ?? null;
+            $part = $one['dayPart'] ?? null;
             $rows[$id] = [
-                'dayPart' => ($one['dayPart'] ?? 'whole') === 'half' ? 'half' : 'whole',
+                // Null, not 'whole': nothing said means "as long as the task",
+                // which the activity already knows.
+                'dayPart' => in_array($part, ['half', 'whole'], true) ? $part : null,
                 'salaryAmount' => ($amount === null || $amount === '') ? null : round((float) $amount, 2),
             ];
         }
@@ -1576,7 +1579,7 @@ class ActivityController extends BaseScheduleController
     {
         return [
             'workerPay' => $activity->workers->mapWithKeys(fn ($w) => [(string) $w->id => [
-                'dayPart' => $w->pivot->dayPart ?: 'whole',
+                'dayPart' => $activity->dayPartFor($w),
                 'amount' => $w->pivot->salaryAmount !== null ? (float) $w->pivot->salaryAmount : null,
                 'total' => $activity->workerPay($w),
                 'name' => $w->workerName,

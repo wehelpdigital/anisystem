@@ -110,7 +110,22 @@ class AsScheduleActivity extends BaseModel
         }
         $half = (float) ($worker->costPerHalfDay ?? 0);
 
-        return ($pivot?->dayPart === 'half') ? $half : $half * 2;
+        return $this->dayPartFor($worker) === 'half' ? $half : $half * 2;
+    }
+
+    /**
+     * Half a day or a whole one for this worker: their own answer where the
+     * checklist has one, and otherwise however long the task itself is. Being
+     * on a half-day job does not make someone a full day's wage.
+     */
+    public function dayPartFor(AsScheduleWorker $worker): string
+    {
+        $chosen = $worker->pivot->dayPart ?? null;
+        if ($chosen === 'half' || $chosen === 'whole') {
+            return $chosen;
+        }
+
+        return $this->timeRequired === 'whole' ? 'whole' : 'half';
     }
 
     /** The wage bill for this activity. */

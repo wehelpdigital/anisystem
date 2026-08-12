@@ -130,6 +130,16 @@
         .date-header-day { font-weight: 800; font-size: .8rem; color: var(--date-color); text-transform: uppercase; }
         .date-header-date { font-weight: 800; font-size: 1rem; color: var(--tl-text); }
         .date-header-range { display: inline-flex; align-items: center; gap: .2rem; font-size: 11px; font-weight: 600; color: var(--tl-text-soft); background: var(--tl-hover); border-radius: 999px; padding: .1rem .5rem; }
+        /* What the day costs. It comes last in the row, so on a phone it wraps
+           to its own line under the kebab — the opposite corner from the
+           weather, which sits with the date. */
+        .date-header-cash { order: 99; margin-left: auto; display: inline-flex; align-items: center; gap: .28rem;
+            font-size: 11px; font-weight: 800; color: var(--color-amber-800, #92400e);
+            background: var(--color-amber-50, #fffbeb); border: 1px solid var(--color-amber-200, #fde68a);
+            border-radius: 999px; padding: .14rem .5rem .14rem .42rem; flex-shrink: 0; }
+        .date-header-cash svg { width: .85rem; height: .85rem; }
+        .date-header-cash[hidden] { display: none; }
+        html.dark .date-header-cash { color: #fcd34d; background: rgb(120 53 15 / .35); border-color: rgb(180 83 9 / .5); }
         .date-header-count { font-size: 11px; font-weight: 700; color: var(--date-color); background: var(--tl-pill); border-radius: 999px; padding: .12rem .55rem; margin-left: auto; flex-shrink: 0; }
         /* Per-day weather chips in the date header — scroll/drag if they overflow. */
         .date-header-weather { min-width: 0; flex: 0 1 auto; }
@@ -1870,6 +1880,10 @@
                             <span class="date-header-date">No date</span>
                         @endif
                         <span class="date-header-count">{{ $activitiesForDate->count() }}<span class="dh-word"> {{ Str::plural('activity', $activitiesForDate->count()) }}</span></span>
+                        {{-- Filled in by paintDayCash() once the board is up:
+                             the figure comes off the cards themselves, so it
+                             cannot drift from the lines under them. --}}
+                        <span class="date-header-cash" hidden></span>
                         @if ($dateKey !== '__no-date__')
                             <button type="button" class="date-header-btn group-add-activity-btn" data-date="{{ $dateKey }}" title="Add a new activity to this date">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>

@@ -28,6 +28,7 @@
      data-id="{{ $a->id }}"
      data-is-done="{{ $a->isDone ? 1 : 0 }}"
      data-tags="{{ json_encode(is_array($a->tags) ? $a->tags : []) }}"
+     data-labour="{{ $a->labourTotal() }}"
      data-target-date="{{ $startC ? $startC->format('Y-m-d') : '' }}"
      data-target-end-date="{{ $endC ? $endC->format('Y-m-d') : '' }}"
      data-lot-signature="{{ $lotSig }}"
@@ -213,7 +214,7 @@
     @if ($labour > 0)
         <div class="activity-labour">
             <span class="al-total">₱{{ number_format($labour, 2) }}</span>
-            <span class="al-parts">{{ $a->workers->map(fn ($w) => $w->workerName . ' ' . (($w->pivot->dayPart ?? 'whole') === 'half' ? '½' : '1') . 'd ₱' . number_format($a->workerPay($w), 2))->join(' · ') }}</span>
+            <span class="al-parts">{{ $a->workers->map(fn ($w) => $w->workerName . ' ' . ($a->dayPartFor($w) === 'half' ? '½' : '1') . 'd ₱' . number_format($a->workerPay($w), 2))->join(' · ') }}</span>
         </div>
     @endif
     {{-- Things this activity points at. The row is always here so the JS can
