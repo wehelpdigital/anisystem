@@ -182,6 +182,10 @@
     }
     function close() { lb.classList.remove('is-open'); lb.setAttribute('aria-hidden', 'true'); stage.innerHTML = ''; }
 
+    /* Modules that build their own tiles (the Draw grid) show a picture the
+       same way the notebook does, rather than shipping a second viewer. */
+    window.openNoteLightbox = function (type, url, poster, fromRect) { open(type || 'image', url, poster, fromRect); };
+
     document.addEventListener('click', (e) => {
         if (e.target.closest('.rm')) return;                       // remove button, not preview
         const cell = e.target.closest('.nm[data-lb-url]');

@@ -327,6 +327,69 @@ class ScheduleBoardController extends BaseScheduleController
         return $this->emit($schedule->id, $event);
     }
 
+    /**
+     * Take back my last stroke on this page — or put it back.
+     *
+     * The board is a shared log, so undo is scoped to the person doing it: it
+     * retires my most recent live stroke and nobody else's. A removal cannot
+     * be expressed as an increment, and the sync is incremental, so a marker
+     * row goes on the log to tell the room to repaint. Only the newest marker
+     * per page is kept live — an older one has already done its work, and the
+     * repaint it asks for is the same repaint.
+     */
+    public function undo(Request $request)
+    {
+        $schedule = $this->schedule($request->query('scheduleId'));
+        $meId = (int) Auth::id();
+        if (! ScheduleTeam::canAccess($schedule, $meId)) {
+            return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+
+        $page = max(1, (int) $request->input('page', 1));
+        $mine = fn () => ScheduleBoardEvent::where('scheduleId', $schedule->id)
+            ->where('page', $page)
+            ->where('userId', $meId)
+            ->where('type', 'draw');
+
+        if ($request->boolean('redo')) {
+            $id = (int) $request->input('id');
+            $event = $mine()->where('id', $id)->where('deleteStatus', 0)->first();
+            if (! $event) {
+                return $this->jsonFail('That stroke cannot come back.', 404);
+            }
+            // A clear since then wiped the page for everyone; bringing one
+            // stroke back through it would be a ghost only I can explain.
+            $wiped = ScheduleBoardEvent::active()
+                ->where('scheduleId', $schedule->id)
+                ->where('page', $page)
+                ->where('type', 'clear')
+                ->where('id', '>', $id)
+                ->exists();
+            if ($wiped) {
+                return $this->jsonFail('The board was cleared since then.', 409);
+            }
+            $event->update(['deleteStatus' => 1]);
+        } else {
+            $event = $mine()->where('deleteStatus', 1)->orderByDesc('id')->first();
+            if (! $event) {
+                return response()->json(['success' => true, 'data' => ['id' => null]]);
+            }
+            $event->update(['deleteStatus' => 0]);
+        }
+
+        ScheduleBoardEvent::where('scheduleId', $schedule->id)
+            ->where('page', $page)
+            ->where('type', 'undo')
+            ->update(['deleteStatus' => 0]);
+        $marker = ScheduleBoardEvent::create([
+            'scheduleId' => $schedule->id, 'page' => $page, 'userId' => $meId,
+            'type' => 'undo', 'deleteStatus' => 1,
+        ]);
+        $this->broadcastEvent($schedule->id, $marker);
+
+        return response()->json(['success' => true, 'data' => ['id' => (int) $event->id]]);
+    }
+
     /** Save an exported page image into the schedule's notebook as a note. */
     public function saveToNotes(Request $request)
     {
@@ -434,6 +497,14 @@ class ScheduleBoardController extends BaseScheduleController
     /** Broadcast (best-effort) + return the shaped event. */
     private function emit(int $scheduleId, ScheduleBoardEvent $event)
     {
+        return response()->json(['success' => true, 'data' => [
+            'event' => $this->broadcastEvent($scheduleId, $event),
+        ]]);
+    }
+
+    /** @return array<string, mixed> the shaped event, broadcast on the way out */
+    private function broadcastEvent(int $scheduleId, ScheduleBoardEvent $event): array
+    {
         $shaped = $this->shape($event);
 
         // Broadcast only when a realtime driver is actually configured, and never
@@ -446,7 +517,7 @@ class ScheduleBoardController extends BaseScheduleController
             }
         }
 
-        return response()->json(['success' => true, 'data' => ['event' => $shaped]]);
+        return $shaped;
     }
 
     /** Broadcast a page-list change (best-effort). */

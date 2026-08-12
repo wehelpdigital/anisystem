@@ -1977,6 +1977,7 @@
         'post-harvest': { label: 'Post-harvest', url: @json(route('sm.post-harvest',  ['id' => $schedule->id])) },
         notes:         { label: 'Notes',         url: @json(route('sm.notes',        ['id' => $schedule->id])) },
         maps:          { label: 'Maps',          url: @json(route('sm.maps',         ['id' => $schedule->id])) },
+        draw:          { label: 'Draw',          url: @json(route('sm.draw',         ['id' => $schedule->id])) },
         weather:       { label: 'Weather',       url: @json(route('sm.weather.page', ['id' => $schedule->id])) },
         ai:            { label: 'AI Technician', url: @json(route('sm.ai',           ['id' => $schedule->id])) },
     };

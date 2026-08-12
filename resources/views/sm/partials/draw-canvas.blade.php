@@ -62,7 +62,12 @@
             <button type="button" class="draw-tool" id="drawGrid" title="Toggle grid">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9h18M3 15h18M9 3v18M15 3v18" stroke-linecap="round"/></svg>
             </button>
-            <button type="button" class="draw-tool" id="drawUndo" title="Undo">↶</button>
+            <button type="button" class="draw-tool" id="drawUndo" title="Undo (Ctrl+Z)" aria-label="Undo" disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 14l-4-4 4-4" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 10h8a5 5 0 010 10h-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button type="button" class="draw-tool" id="drawRedo" title="Redo (Ctrl+Shift+Z)" aria-label="Redo" disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 14l4-4-4-4" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 10h-8a5 5 0 000 10h3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
             <button type="button" class="draw-tool" id="drawClear" title="Clear all">Clear</button>
         </div>
         <div class="draw-stage" id="drawStage">
@@ -106,6 +111,12 @@
     .draw-tool svg { width:1.2rem; height:1.2rem; }
     .draw-tool:hover { background:var(--color-gray-100); }
     .draw-tool:active { transform:scale(.92); }
+    /* Nothing to undo yet reads as greyed-out, not as a missing button: the
+       pair keeps its place in the row so the toolbar does not reflow the
+       moment you draw your first stroke. */
+    .draw-tool:disabled { opacity:.35; cursor:default; }
+    .draw-tool:disabled:hover { background:var(--color-gray-50); }
+    .draw-tool:disabled:active { transform:none; }
     .draw-tool.is-active { background:var(--color-brand-100); color:var(--color-brand-800); }
     .draw-stage { flex:1; min-height:0; background:#eef1f4; overflow:hidden; touch-action:none;
         display:flex; align-items:center; justify-content:center; padding:.75rem; }
@@ -122,6 +133,7 @@
     html.dark .draw-stage { background:#0f130c; }
     html.dark .draw-tool { background:#1c2416; color:#cdd8c0; }
     html.dark .draw-tool:hover { background:#243019; }
+    html.dark .draw-tool:disabled:hover { background:#1c2416; }
     html.dark .draw-div { background:#2b3a1c; }
 </style>
 
@@ -155,7 +167,8 @@
 
     let objects = [];                 // the scene
     let selected = new Set();         // selected object ids
-    const undoStack = [];             // JSON snapshots
+    const undoStack = [];             // JSON snapshots, oldest first
+    const redoStack = [];             // snapshots undone, newest first
 
     // gesture state
     let mode = null;                  // 'draw' | 'move' | 'resize' | 'erase' | 'marquee'
@@ -323,7 +336,34 @@
     const CURSORS = { nw: 'nwse-resize', se: 'nwse-resize', ne: 'nesw-resize', sw: 'nesw-resize', n: 'ns-resize', s: 'ns-resize', e: 'ew-resize', w: 'ew-resize' };
 
     /* ---------- undo ---------- */
-    function pushUndo() { undoStack.push(JSON.stringify(objects)); if (undoStack.length > 40) undoStack.shift(); }
+    /* ---------- history ----------
+       Every change snapshots the scene first. A new change after undoing is a
+       new branch, so the redo trail is dropped then — keeping it would let a
+       redo paste back work that no longer follows from what is on screen. */
+    function pushUndo() {
+        undoStack.push(JSON.stringify(objects));
+        if (undoStack.length > 60) undoStack.shift();
+        redoStack.length = 0;
+        paintHistory();
+    }
+    function paintHistory() {
+        const u = document.getElementById('drawUndo'), r = document.getElementById('drawRedo');
+        if (u) u.disabled = !undoStack.length;
+        if (r) r.disabled = !redoStack.length;
+    }
+    function step(from, to) {
+        if (!from.length) return;
+        to.push(JSON.stringify(objects));
+        objects = JSON.parse(from.pop());
+        // Ids come back with the scene, but the counter does not — without
+        // this a new shape can be handed an id an older one already owns, and
+        // selecting one would select both.
+        uid = Math.max(uid, ...objects.map((o) => (+o.id || 0) + 1), 1);
+        selected.clear(); cur = null; mode = null; marquee = null;
+        paintHistory(); render();
+    }
+    const undo = () => step(undoStack, redoStack);
+    const redo = () => step(redoStack, undoStack);
 
     /* ---------- pointer input ---------- */
     function pos(e) {
@@ -422,10 +462,8 @@
 
     /* ---------- toolbar buttons ---------- */
     document.getElementById('drawDelete').addEventListener('click', deleteSelected);
-    document.getElementById('drawUndo').addEventListener('click', () => {
-        if (!undoStack.length) return;
-        objects = JSON.parse(undoStack.pop()); selected.clear(); render();
-    });
+    document.getElementById('drawUndo').addEventListener('click', undo);
+    document.getElementById('drawRedo').addEventListener('click', redo);
     document.getElementById('drawClear').addEventListener('click', () => { pushUndo(); objects = []; selected.clear(); render(); });
     document.getElementById('drawGrid').addEventListener('click', (e) => {
         gridOn = !gridOn;
@@ -435,6 +473,9 @@
     document.addEventListener('keydown', (e) => {
         if (!modal.classList.contains('show')) return;
         if ((e.key === 'Delete' || e.key === 'Backspace') && selected.size) { e.preventDefault(); deleteSelected(); }
+        // Both spellings of redo: Ctrl+Shift+Z everywhere, Ctrl+Y on Windows.
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'z' || e.key === 'Z')) { e.preventDefault(); e.shiftKey ? redo() : undo(); }
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || e.key === 'Y')) { e.preventDefault(); redo(); }
         if (e.key === 'Escape') close();
     });
 
@@ -475,7 +516,8 @@
     });
 
     function reset(existingUrl, existingObjects) {
-        objects = []; selected.clear(); undoStack.length = 0; marquee = null; mode = null; cur = null; uid = 1;
+        objects = []; selected.clear(); undoStack.length = 0; redoStack.length = 0; marquee = null; mode = null; cur = null; uid = 1;
+        paintHistory();
         // A new drawing takes the aspect of the screen it opens on, so the
         // white sheet fills the stage instead of letterboxing inside it. An
         // existing drawing keeps the space it was made in — reshaping that

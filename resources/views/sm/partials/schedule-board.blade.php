@@ -59,6 +59,12 @@
         <button type="button" id="sbGrid" class="sb-btn" title="Toggle grid" aria-label="Toggle grid">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4z"/><path stroke-linecap="round" d="M4 10h16M4 15h16M10 4v16M15 4v16"/></svg>
         </button>
+        <button type="button" id="sbUndo" class="sb-btn" title="Undo my last stroke" aria-label="Undo">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 14l-4-4 4-4"/><path stroke-linecap="round" stroke-linejoin="round" d="M5 10h8a5 5 0 010 10h-3"/></svg>
+        </button>
+        <button type="button" id="sbRedo" class="sb-btn" title="Redo" aria-label="Redo" disabled>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 14l4-4-4-4"/><path stroke-linecap="round" stroke-linejoin="round" d="M19 10h-8a5 5 0 000 10h3"/></svg>
+        </button>
         <button type="button" id="sbClear" class="sb-btn sb-btn-danger" title="Clear board" aria-label="Clear board">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg>
         </button>
@@ -132,6 +138,10 @@
     .sb-btn:hover { background: var(--color-gray-200); color: var(--color-gray-800); }
     .sb-btn.is-active { background: var(--color-brand-600); color: #fff; }
     .sb-btn-danger:hover { background: #fee2e2; color: #b91c1c; }
+    /* Nothing to redo keeps its place in the row, greyed — a button that comes
+       and goes makes the whole toolbar jump while you are drawing. */
+    .sb-btn:disabled { opacity: .38; }
+    .sb-btn:disabled:hover { background: var(--color-gray-100); color: var(--color-gray-600); }
     .sb-tools { display: inline-flex; gap: .15rem; padding: .15rem .25rem; background: var(--color-gray-100); border-radius: .7rem; }
     .sb-tool { width: 1.95rem; height: 1.95rem; border-radius: .5rem; display: inline-flex; align-items: center; justify-content: center; color: var(--color-gray-600); }
     .sb-tool:hover { background: var(--color-gray-200); }
@@ -214,7 +224,7 @@
         const U = {
             events: @json(route('sm.board')), push: @json(route('sm.board.push')),
             pages: @json(route('sm.board.pages')), pageCreate: @json(route('sm.board.page-create')),
-            saveNotes: @json(route('sm.board.save-notes')),
+            saveNotes: @json(route('sm.board.save-notes')), undo: @json(route('sm.board.undo')),
             open: @json(route('sm.board.open')), heartbeat: @json(route('sm.board.heartbeat')),
             drafts: @json(route('sm.board.drafts')), draftOpen: @json(route('sm.board.draft-open')),
         };
@@ -347,6 +357,11 @@
         /* ---------- apply a remote/loaded event (race-safe while I shape) ---------- */
         function applyEvent(ev, isRebuild) {
             if (ev.id) { if (rendered.has(ev.id)) return; rendered.add(ev.id); if (ev.id > lastId) lastId = ev.id; }
+            // Someone took a stroke back. The sync only ever adds, so there is
+            // no way to say "that one is gone" — the whole page is repainted
+            // from what is still standing. Not for my own marker: I repainted
+            // when I pressed the button.
+            if (ev.type === 'undo') { if (!isRebuild && ev.userId !== ME) scheduleRebuild(); return; }
             const shaping = drawing && !isFreehand() && snapshot;
             if (shaping) ctx.putImageData(snapshot, 0, 0);   // strip my live preview first
             if (ev.type === 'clear') { clearCanvas(); }
@@ -356,6 +371,7 @@
 
         /* ---------- sending ---------- */
         function pushEvent(body) {
+            dropRedo();
             body = Object.assign({ page: currentPage }, body);
             api(`${U.push}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body }).then((r) => {
                 const id = r && r.data && r.data.event && r.data.event.id;
@@ -440,11 +456,50 @@
             canvas.classList.toggle('sb-grid');
             e.currentTarget.classList.toggle('is-active', canvas.classList.contains('sb-grid'));
         });
+        /* ---------- undo / redo ----------
+           A shared board makes this personal: undo takes back MY last stroke,
+           never a teammate's, so two people working at once never pull the rug
+           out from under each other. Redo is a session trail of what I took
+           back; drawing again abandons it, the way it does in every editor. */
+        const myUndone = [];
+        let undoBusy = false, rebuildSoon = null;
+        function scheduleRebuild() {
+            if (rebuildSoon) return;
+            rebuildSoon = setTimeout(() => { rebuildSoon = null; rebuildPage(); }, 120);
+        }
+        function paintUndoBtns() {
+            const r = document.getElementById('sbRedo');
+            if (r) r.disabled = !myUndone.length || undoBusy;
+        }
+        function dropRedo() { if (myUndone.length) { myUndone.length = 0; paintUndoBtns(); } }
+        async function stepUndo(redo) {
+            if (undoBusy || (redo && !myUndone.length)) return;
+            undoBusy = true; paintUndoBtns();
+            try {
+                const body = { page: currentPage, redo: redo ? 1 : 0 };
+                if (redo) body.id = myUndone[myUndone.length - 1];
+                const r = await api(`${U.undo}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body });
+                const id = r && r.data ? r.data.id : null;
+                if (redo) myUndone.pop();
+                else if (id) myUndone.push(id);
+                else { toast('Nothing of yours to undo on this page.'); return; }
+                await rebuildPage();
+            } catch (err) {
+                // A redo the board can no longer honour (someone cleared the
+                // page) is dropped rather than left to fail again.
+                if (redo) myUndone.pop();
+                toast(err.message || 'Could not do that.', 'error');
+            } finally { undoBusy = false; paintUndoBtns(); }
+        }
+        document.getElementById('sbUndo').addEventListener('click', () => stepUndo(false));
+        document.getElementById('sbRedo').addEventListener('click', () => stepUndo(true));
+
         document.getElementById('sbClear').addEventListener('click', async () => {
             const ok = (typeof confirmAction === 'function')
                 ? await confirmAction({ title: 'Clear the page?', message: 'This clears the current whiteboard page for everyone on the team.', confirmText: 'Clear' })
                 : confirm('Clear the page for everyone?');
             if (!ok) return;
+            dropRedo();
             clearCanvas();
             api(`${U.push}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { type: 'clear', page: currentPage } })
                 .then((r) => { const id = r && r.data && r.data.event && r.data.event.id; if (id) { rendered.add(id); if (id > lastId) lastId = id; } })

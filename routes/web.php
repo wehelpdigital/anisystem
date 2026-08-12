@@ -217,6 +217,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-board-pages', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'pages'])->name('sm.board.pages');
     Route::post('/app/sm-board-page', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'createPage'])->name('sm.board.page-create');
     Route::post('/app/sm-board-save-notes', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'saveToNotes'])->name('sm.board.save-notes');
+    Route::post('/app/sm-board-undo', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'undo'])->name('sm.board.undo');
     // --- Collab Room map (persistent shapes + ephemeral live positions) ---
     Route::get('/app/sm-map', [App\Http\Controllers\Manager\ScheduleMapController::class, 'objects'])->name('sm.map');
     Route::post('/app/sm-map-push', [App\Http\Controllers\Manager\ScheduleMapController::class, 'push'])->name('sm.map.push');
@@ -229,6 +230,10 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-map-basemap', [App\Http\Controllers\Manager\ScheduleMapController::class, 'basemap'])->name('sm.map.basemap');
     // The map as its own module in the schedule hub (the Collab Room embeds
     // the same partial as a tab).
+    Route::get('/app/sm-draw', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'page'])->name('sm.draw');
+    Route::get('/app/sm-draw-one', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'one'])->name('sm.draw.one');
+    Route::post('/app/sm-draw-save', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'save'])->name('sm.draw.save');
+    Route::delete('/app/sm-draw-delete', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'remove'])->name('sm.draw.destroy');
     Route::get('/app/sm-maps', [App\Http\Controllers\Manager\ScheduleMapController::class, 'page'])->name('sm.maps');
     Route::post('/app/sm-map-save', [App\Http\Controllers\Manager\ScheduleMapController::class, 'saveMap'])->name('sm.map.save');
     Route::post('/app/sm-map-load', [App\Http\Controllers\Manager\ScheduleMapController::class, 'loadSave'])->name('sm.map.load');

@@ -62,6 +62,11 @@
             // A note the map save created points at its own snapshot, so
             // "View map" lands on the map that note is about.
             $saveIdForNote = ($mapSaves ?? collect())->firstWhere('noteId', $n->id)['id'] ?? null;
+            // A picture the team whiteboard saved, known by the name that save
+            // writes. Same idea as the map tag: the note is the record, the
+            // badge is where it came from.
+            $fromBoard = collect(is_array($n->media) ? $n->media : [])
+                ->contains(fn ($m) => (bool) preg_match('~/board-[A-Za-z0-9]+\.png$~', (string) ($m['path'] ?? '')));
             $mapUrl = $saveIdForNote
                 ? route('sm.maps', ['id' => $schedule->id, 'save' => $saveIdForNote])
                 : route('sm.maps', ['id' => $schedule->id]);
@@ -92,6 +97,9 @@
                                  twice; the note is the record, this is its
                                  provenance. --}}
                             <span class="badge badge-green note-origin">Team map</span>
+                        @endif
+                        @if ($fromBoard)
+                            <span class="badge badge-blue note-origin">Team drawing</span>
                         @endif
                         <p class="text-xs text-gray-400 mt-0.5 js-time">{{ $n->updated_at?->diffForHumans() }}</p>
                     </div>
@@ -228,8 +236,12 @@ const __init = () => {
             })->filter()->values()->all();
         };
         $mapNoteIds = ($mapSaves ?? collect())->pluck('noteId')->filter()->flip();
+        $fromBoardIds = $notes->filter(fn ($n) => collect(is_array($n->media) ? $n->media : [])
+            ->contains(fn ($m) => (bool) preg_match('~/board-[A-Za-z0-9]+\.png$~', (string) ($m['path'] ?? ''))))
+            ->pluck('id')->flip();
         $seed = $notes->mapWithKeys(fn ($n) => [$n->id => [
             'fromMap' => $mapNoteIds->has($n->id),
+            'fromDraw' => $fromBoardIds->has($n->id),
             'id' => $n->id, 'title' => $n->title, 'body' => $n->body,
             'imagePath' => $n->imagePath,
             'imageUrl' => $n->imagePath ? \Illuminate\Support\Facades\Storage::disk('public')->url($n->imagePath) : null,
@@ -409,6 +421,7 @@ const __init = () => {
                     <div class="min-w-0 grow">
                         <h3 class="font-bold text-gray-900 leading-snug js-title">${escapeHtml(n.title)}</h3>
                         ${n.fromMap ? '<span class="badge badge-green note-origin">Team map</span>' : ''}
+                        ${n.fromDraw ? '<span class="badge badge-blue note-origin">Team drawing</span>' : ''}
                         <p class="text-xs text-gray-400 mt-0.5 js-time">just now</p>
                     </div>
                 </div>
