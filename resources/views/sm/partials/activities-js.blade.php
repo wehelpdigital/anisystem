@@ -794,6 +794,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (group) openDayCash(group);
     });
 
+    /* True when a mutation record only moved our own decorations around — the
+       cash line's break, the forecast strip, or the button it collapses into. */
+    function ownBookkeeping(rec) {
+        const ours = (n) => n.nodeType === 1 && (
+            n.classList.contains('dh-rowbreak')
+            || n.classList.contains('date-header-weather')
+            || n.classList.contains('wx-mini-btn')
+            || n.classList.contains('date-header-cash')
+        );
+        const added = Array.from(rec.addedNodes);
+        const removed = Array.from(rec.removedNodes);
+        return (added.length + removed.length) > 0 && added.every(ours) && removed.every(ours);
+    }
+    window.__ownBookkeeping = ownBookkeeping;
+
     function paintAllDayCash() {
         $qsa('#activitiesList .date-group').forEach(paintDayCash);
     }
@@ -813,7 +828,8 @@ document.addEventListener('DOMContentLoaded', () => {
             paintAllDayCash();
             if (!window.MutationObserver) return;
             let pending = null;
-            new MutationObserver(() => {
+            new MutationObserver((records) => {
+                if (records.every(ownBookkeeping)) return;
                 if (pending) return;
                 pending = setTimeout(() => { pending = null; paintAllDayCash(); }, 120);
             }).observe(list, { childList: true, subtree: true });
@@ -4528,11 +4544,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Decorate every in-window date header + empty rest-day marker.
+        // A day already wearing its forecast, in either form. The strip becomes
+        // a button when it does not fit (see collapseIfCramped), so looking
+        // only for the strip meant a collapsed day counted as bare — and got
+        // decorated again, and again, because the replacement is itself a DOM
+        // change that wakes this up. That is where "Weather 1  Weather 1" came
+        // from.
+        const WX_ANY = '.date-header-weather, .wx-mini-btn';
+
         function renderHeaderWeather() {
             if (!wxByDate) return;
             $qsa('#activitiesList .date-group[data-date]').forEach((g) => {
                 const header = $qs('.date-header', g);
-                if (!header || header.querySelector('.date-header-weather')) return;
+                if (! header) return;
+                // Heal a header that already collected duplicates, so a board
+                // showing them does not need a reload to come right.
+                const already = header.querySelectorAll(WX_ANY);
+                if (already.length) {
+                    for (let i = 1; i < already.length; i++) already[i].remove();
+                    return;
+                }
                 const strip = stripFor((g.getAttribute('data-date') || '').trim());
                 if (!strip) return;
                 const count = header.querySelector('.date-header-count');
@@ -4540,7 +4571,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 collapseIfCramped(strip);
             });
             $qsa('#activitiesList .rest-day-marker[data-date]').forEach((m) => {
-                if (m.querySelector('.date-header-weather')) return;
+                const seen = m.querySelectorAll(WX_ANY);
+                if (seen.length) {
+                    for (let i = 1; i < seen.length; i++) seen[i].remove();
+                    return;
+                }
                 const strip = stripFor((m.getAttribute('data-date') || '').trim());
                 if (!strip) return;
                 strip.classList.add('rest-day-weather');
@@ -4571,7 +4606,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const list = document.getElementById('activitiesList');
         if (list && window.MutationObserver) {
             let pending = false;
-            new MutationObserver(() => {
+            new MutationObserver((records) => {
+                // Ignore what the two decorators do to each other: the cash
+                // line's break element and the forecast's own collapse are
+                // both DOM changes, and reacting to them is how a loop starts.
+                if (records.every(ownBookkeeping)) return;
                 if (pending) return;
                 pending = true;
                 requestAnimationFrame(() => { pending = false; renderHeaderWeather(); });
