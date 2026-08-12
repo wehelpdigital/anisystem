@@ -1,5 +1,22 @@
 <?php
 
+/*
+ * Where uploads actually live.
+ *
+ * A container's own filesystem is thrown away on every deploy, so anything a
+ * user saved between deploys — a map picture, a drawing, a photo on a note —
+ * went with it, leaving rows in the database pointing at files that no longer
+ * exist. Mount a persistent volume and point this at it and uploads outlive
+ * the container; with nothing mounted it behaves exactly as before.
+ *
+ * Railway names the mount itself, so a volume attached there needs no extra
+ * configuration; APP_STORAGE_ROOT covers every other host.
+ */
+$publicRoot = env('APP_STORAGE_ROOT')
+    ?: (env('RAILWAY_VOLUME_MOUNT_PATH')
+        ? rtrim((string) env('RAILWAY_VOLUME_MOUNT_PATH'), '/').'/public'
+        : storage_path('app/public'));
+
 return [
 
     /*
@@ -45,7 +62,7 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => $publicRoot,
             'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
             'visibility' => 'public',
             'throw' => false,
@@ -78,8 +95,12 @@ return [
     |
     */
 
+    /*
+     * The symlink has to follow the disk, or `storage:link` would point the
+     * web root at an empty directory while the files sat on the volume.
+     */
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('storage') => $publicRoot,
     ],
 
 ];
