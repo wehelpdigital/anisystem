@@ -213,7 +213,11 @@
             {{-- A payroll card lists every name in its checklist already;
                  repeating them here is the same roster twice. --}}
             @foreach($a->workers as $w)
-                <span class="item-tag worker-tag">{{ $w->workerName }}</span>
+                {{-- Someone down as off this day, put on the work anyway. The
+                     flag stays on the name so the choice is visible later,
+                     rather than the roster quietly disagreeing with the rules.
+                     Mirrors renderActivityCard() in the JS renderer. --}}
+                <span class="item-tag worker-tag">{{ $w->workerName }}@if ($a->targetDate && ! $w->isAvailableOn($a->targetDate))<span class="w-forced" title="Marked off this day — working anyway">forced</span>@endif</span>
             @endforeach
         @endif
         @foreach($a->items as $it)
@@ -236,7 +240,7 @@
                 @php $here = ! in_array($w->id, $absent, true); @endphp
                 <label class="act-check-row{{ $here ? '' : ' is-out' }}" data-att-worker="{{ $w->id }}">
                     <input type="checkbox" @checked($here)>
-                    <span class="act-check-name">{{ $w->workerName }}</span>
+                    <span class="act-check-name">{{ $w->workerName }}@if ($a->targetDate && ! $w->isAvailableOn($a->targetDate))<span class="w-forced" title="Marked off this day">forced</span>@endif</span>
                     <span class="act-check-pay">₱{{ number_format($a->workerPay($w), 2) }}</span>
                 </label>
             @endforeach

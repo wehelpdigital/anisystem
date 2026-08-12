@@ -48,6 +48,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // The half-day rate each worker is normally paid; a whole day is two of
     // them, and a custom amount on the activity overrides both.
     const WORKER_RATES = @json($schedule->workers->mapWithKeys(fn ($w) => [$w->id => (float) ($w->costPerHalfDay ?? 0)]));
+    // Days off, from Workers → Rules: a weekday they never work, and one-off
+    // dates. The board needs them to say who cannot be put on a given day.
+    @php $offMap = \App\Models\AsScheduleWorker::offMapFor((int) $schedule->id); @endphp
+    const WORKER_OFF = @json($schedule->workers->mapWithKeys(fn ($w) => [$w->id => [
+        'days' => array_values($offMap[$w->id]['days'] ?? []),
+        'dates' => array_values(array_filter($offMap[$w->id]['dates'] ?? [])),
+    ]]));
+    /** Is this worker marked off on that date? dateStr is 'YYYY-MM-DD'. */
+    function workerOffOn(workerId, dateStr) {
+        const off = WORKER_OFF[workerId];
+        if (!off || !dateStr) return false;
+        if ((off.dates || []).includes(dateStr)) return true;
+        const d = parseLocalDate(dateStr);
+        return !!d && (off.days || []).includes(d.getDay());
+    }
     const LOT_MANUAL_DAY_ZERO = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->dayZeroDate ? $l->dayZeroDate->format('Y-m-d') : null]));
     const LOT_MANUAL_TRANSPLANT = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->transplantDate ? $l->transplantDate->format('Y-m-d') : null]));
 
@@ -508,7 +523,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Not on a payroll card: its checklist above is the roster, and the
         // half/whole chip beside these means nothing for attendance.
         const workerTags = a.activityType === 'worker_payroll' ? '' : workerIds
-            .map((id) => `<span class="item-tag worker-tag">${esc(WORKER_NAMES[id] || ('Worker #' + id))}</span>`)
+            .map((id) => `<span class="item-tag worker-tag">${esc(WORKER_NAMES[id] || ('Worker #' + id))}`
+                + (workerOffOn(Number(id), (a.targetDate || '').slice(0, 10))
+                    ? '<span class="w-forced" title="Marked off this day — working anyway">forced</span>' : '')
+                + '</span>')
             .join('');
 
         let itemTags = '';
@@ -611,9 +629,11 @@ document.addEventListener('DOMContentLoaded', () => {
             + ids.map((id) => {
                 const w = pay[id];
                 const here = w.present !== false;
+                const forced = workerOffOn(Number(id), date)
+                    ? '<span class="w-forced" title="Marked off this day">forced</span>' : '';
                 return `<label class="act-check-row${here ? '' : ' is-out'}" data-att-worker="${esc(id)}">
                     <input type="checkbox"${here ? ' checked' : ''}>
-                    <span class="act-check-name">${esc(w.name || 'Worker')}</span>
+                    <span class="act-check-name">${esc(w.name || 'Worker')}${forced}</span>
                     <span class="act-check-pay">${esc(money(w.total || 0))}</span>
                 </label>`;
             }).join('')
@@ -1831,9 +1851,62 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ---- Worker chips ----
-    $id('activityWorkersContainer')?.addEventListener('click', (e) => {
+    /** The day this activity is for, as the chips need to know it. */
+    function sheetWorkDate() {
+        return ($id('activityTargetDate')?.value || '').trim().slice(0, 10);
+    }
+    /**
+     * Grey out whoever is down as off that day, and put a red "forced" on
+     * anyone picked anyway. Called whenever the sheet opens or the date moves,
+     * because a worker free on Tuesday may be off on Wednesday.
+     */
+    function markWorkerAvailability() {
+        const dateStr = sheetWorkDate();
+        $qsa('#activityWorkersContainer .worker-chip[data-worker-id]').forEach((chip) => {
+            const id = parseInt(chip.getAttribute('data-worker-id'), 10);
+            const off = workerOffOn(id, dateStr);
+            const picked = chip.classList.contains('is-selected');
+            chip.classList.toggle('is-off', off && !picked);
+            // Picked and off means someone said yes to the question below —
+            // or the date moved onto a rest day after the fact. Either way the
+            // name carries the flag rather than quietly disappearing.
+            chip.classList.toggle('is-forced', off && picked);
+            let tag = chip.querySelector('.chip-forced');
+            if (off && picked && !tag) {
+                tag = document.createElement('span');
+                tag.className = 'chip-forced';
+                tag.textContent = 'forced';
+                chip.appendChild(tag);
+            } else if ((!off || !picked) && tag) {
+                tag.remove();
+            }
+            chip.title = off
+                ? (picked ? 'Marked off this day — working anyway' : 'Marked off this day')
+                : '';
+        });
+    }
+    $id('activityTargetDate')?.addEventListener('change', markWorkerAvailability);
+    $id('activityStartDas')?.addEventListener('change', () => setTimeout(markWorkerAvailability, 0));
+
+    $id('activityWorkersContainer')?.addEventListener('click', async (e) => {
         const chip = e.target.closest('.worker-chip');
         if (!chip) return;
+
+        // A worker down as off that day is not simply unavailable — the farm
+        // may still need them. So the chip refuses the ordinary tap and asks
+        // first, and a yes leaves the reason visible on the name.
+        if (chip.hasAttribute('data-worker-id')
+            && !chip.classList.contains('is-selected')
+            && workerOffOn(parseInt(chip.getAttribute('data-worker-id'), 10), sheetWorkDate())) {
+            const name = chip.textContent.trim();
+            const when = prettyDateFull(sheetWorkDate()) || 'that day';
+            const ok = await confirmAction({
+                title: 'Force ' + name + ' to work?',
+                message: name + ' is marked off on ' + when + '. Add them anyway?',
+                confirmText: 'Force',
+            });
+            if (!ok) return;
+        }
 
         // "Nobody" and "these people" are answers to the same question, so
         // choosing one clears the other.
@@ -1856,6 +1929,7 @@ document.addEventListener('DOMContentLoaded', () => {
             chip.classList.toggle('is-selected');
             chip.setAttribute('aria-pressed', chip.classList.contains('is-selected') ? 'true' : 'false');
         }
+        markWorkerAvailability();
         renderWorkerPay();
     });
 
@@ -1874,6 +1948,7 @@ document.addEventListener('DOMContentLoaded', () => {
             na.classList.toggle('is-selected', nobody);
             na.setAttribute('aria-pressed', nobody ? 'true' : 'false');
         }
+        markWorkerAvailability();
         renderWorkerPay();
     }
 
@@ -2738,6 +2813,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const hint = $id('activityDraftHint');
         if (hint) hint.classList.toggle('hidden', !ADD_AS_DRAFT);
         refreshActivityModalLotState();
+        markWorkerAvailability();
         openSheet('activitySheet');
     }
 

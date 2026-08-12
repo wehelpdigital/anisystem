@@ -64,15 +64,43 @@ class AsScheduleWorker extends BaseModel
         );
     }
 
+    /**
+     * Every worker's days off in one schedule, as
+     * [workerId => ['days' => [0..6], 'dates' => ['Y-m-d', …]]].
+     *
+     * Memoised per schedule: a board draws hundreds of worker names, and
+     * asking the database twice per name per card is the difference between
+     * two queries and two hundred.
+     */
+    public static function offMapFor(int $scheduleId): array
+    {
+        static $cache = [];
+        if (isset($cache[$scheduleId])) {
+            return $cache[$scheduleId];
+        }
+
+        $ids = static::where('croppingScheduleId', $scheduleId)->pluck('id');
+        $map = [];
+        foreach ($ids as $id) {
+            $map[(int) $id] = ['days' => [], 'dates' => []];
+        }
+        foreach (AsScheduleWorkerOffDay::whereIn('workerId', $ids)->get() as $row) {
+            $map[(int) $row->workerId]['days'][] = (int) $row->dayOfWeek;
+        }
+        foreach (AsScheduleWorkerOffDate::whereIn('workerId', $ids)->get() as $row) {
+            $map[(int) $row->workerId]['dates'][] = $row->offDate?->format('Y-m-d');
+        }
+
+        return $cache[$scheduleId] = $map;
+    }
+
+    /** Is this worker free to be put on work that day? */
     public function isAvailableOn(\Carbon\Carbon $date): bool
     {
-        $dow = (int) $date->dayOfWeek; // 0=Sunday
-        if ($this->offDays()->where('dayOfWeek', $dow)->exists()) {
-            return false;
-        }
-        if ($this->offDates()->where('offDate', $date->format('Y-m-d'))->exists()) {
-            return false;
-        }
-        return true;
+        $off = static::offMapFor((int) $this->croppingScheduleId)[(int) $this->id]
+            ?? ['days' => [], 'dates' => []];
+
+        return ! in_array((int) $date->dayOfWeek, $off['days'], true)   // 0 = Sunday
+            && ! in_array($date->format('Y-m-d'), $off['dates'], true);
     }
 }

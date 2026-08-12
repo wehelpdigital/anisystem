@@ -1106,6 +1106,19 @@
         /* !important so the disabled dimming survives the sheet's fade-in
            animation (which otherwise forces opacity back to 1). */
         .activity-action-row:disabled { opacity: .4 !important; pointer-events: none; }
+        /* A worker the rules say is off this day. Still there to be picked —
+           the farm may need them anyway — but it takes a deliberate yes, and
+           the name says so afterwards. */
+        .worker-chip.is-off { opacity: .5; border-style: dashed; }
+        .worker-chip.is-off:hover { opacity: .75; }
+        .worker-chip.is-forced { border-color: #fca5a5; }
+        .chip-forced, .w-forced {
+            margin-left: .3rem; font-size: .58rem; font-weight: 800; letter-spacing: .04em;
+            text-transform: uppercase; color: #dc2626;
+        }
+        .worker-tag .w-forced, .act-check-name .w-forced { color: #dc2626; }
+        html.dark .chip-forced, html.dark .w-forced { color: #fca5a5; }
+
         /* Injected modules keep their own chip nav in the markup — the toolbar
            hamburger replaces it, so hide it inside the shell. */
         #moduleHost .module-chip-nav { display: none; }
