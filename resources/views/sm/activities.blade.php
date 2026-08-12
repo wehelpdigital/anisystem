@@ -2238,11 +2238,25 @@
     // How many module entries this page has pushed — what the chevron unwinds.
     let pushDepth = 0;
 
+    /** Is the module the shell thinks is open actually the one on screen? */
+    function isShowing(key) {
+        const el = key === 'activities' ? activitiesRoot : loaded.get(key);
+        return !!el && !el.classList.contains('module-hidden')
+            && (key === 'activities' || !host.classList.contains('hidden'));
+    }
+
     async function showModule(key, push = true) {
-        if (busy || !MODULES[key] || key === current) { closeSheet('modulesSheet'); return; }
+        if (!MODULES[key]) { closeSheet('modulesSheet'); return; }
+        // Only refuse to re-open a module that is genuinely showing. The flag
+        // and the screen can come apart — a popstate that names a module, a
+        // load that ended badly — and when they do, refusing on the flag alone
+        // leaves a button that does nothing for the rest of the session.
+        if (key === current && isShowing(key)) { closeSheet('modulesSheet'); return; }
+        if (busy) { closeSheet('modulesSheet'); return; }
         busy = true;
         closeSheet('modulesSheet');
 
+        try {
         // Remember where you were in Activities so returning restores it.
         if (current === 'activities') activitiesScrollY = window.scrollY || window.pageYOffset || 0;
 
@@ -2323,9 +2337,13 @@
         } else {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        busy = false;
         // Leaving a module usually means something was just added or removed.
         window.smRefreshReadiness?.();
+        } finally {
+            // Whatever went wrong in there, the shell must not be left refusing
+            // every switch that comes after it.
+            busy = false;
+        }
     }
 
     document.getElementById('modulesBtn')?.addEventListener('click', () => openSheet('modulesSheet'));
