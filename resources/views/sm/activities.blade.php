@@ -1179,26 +1179,37 @@
         .activity-card-image img { max-width: 100%; max-height: 260px; border-radius: .6rem; border: 1px solid #eef0f3; }
 
         /* Task / Irrigation mode tabs (add-activity sheet) */
-        .activity-mode-tabs { display: inline-flex; gap: .25rem; padding: .25rem; background: #f1f3f7; border-radius: .75rem; width: 100%; }
+        /* The four kinds of activity read as tags, not as a segmented strip:
+           same round-bordered pill the lot and worker chips use further down
+           the same form, so picking a kind looks like the picking the rest of
+           the sheet already asks for. They are still tabs — one at a time,
+           arrow keys and all — this is only how they look. */
+        .activity-mode-tabs { display: flex; flex-wrap: wrap; gap: .4rem; padding: 0; background: transparent; border-radius: 0; width: 100%; }
         /* Hiding the strip when editing has to be said here. This rule is
            unlayered, so its display beats Tailwind's .hidden utility — adding
            that class did nothing at all, which is why the type was still
            changeable on an activity that already exists. */
         .activity-mode-tabs.is-locked { display: none !important; }
-        /* A fourth tab does not fit a phone at the width the other three want,
-           and squeezing all four cut the labels in half. They keep their size
-           and the strip slides instead — the same gesture the version strip
-           and the weather chips already use. */
+        /* A fourth kind never fitted a phone in one row; as tags they wrap
+           onto the next line instead of sliding out of sight. */
         @media (max-width: 640px) {
-            .activity-mode-tabs { display: flex; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
-            .activity-mode-tabs::-webkit-scrollbar { display: none; }
-            .activity-mode-tabs .activity-mode-tab { flex: 0 0 auto; scroll-snap-align: start; padding: .55rem .7rem; font-size: .84rem; }
+            .activity-mode-tab { padding: .42rem .65rem; font-size: .8rem; }
         }
-        .activity-mode-tab { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: .4rem; padding: .6rem .75rem; border: none; background: transparent; border-radius: .55rem; font-size: .9rem; font-weight: 600; color: #5b6472; cursor: pointer; transition: background .25s ease, color .25s ease, box-shadow .25s ease; }
-        .activity-mode-tab.is-active { background: #fff; color: #1f2937; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+        .activity-mode-tab {
+            flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+            padding: .45rem .8rem; border: 2px solid var(--color-gray-200, #e5e7eb); background: #fff;
+            border-radius: 999px; font-size: .85rem; font-weight: 600; color: #374151; cursor: pointer;
+            transition: background .25s ease, color .25s ease, border-color .25s ease, transform .15s ease;
+        }
+        .activity-mode-tab:hover { border-color: #a8cc7e; background: #f3f8ec; }
+        .activity-mode-tab.is-active { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+        .activity-mode-tab.is-active:hover { background: #3d6823; border-color: #3d6823; }
         .activity-mode-tab:active { transform: scale(.97); }
-        html.dark .activity-mode-tabs { background: #1c2136; }
-        html.dark .activity-mode-tab.is-active { background: #2a3050; color: #e5e9f5; }
+        .activity-mode-tab .act-pane-count { background: rgb(255 255 255 / .25); }
+        html.dark .activity-mode-tab { background: #1c2136; border-color: #2a3050; color: #cdd8c0; }
+        html.dark .activity-mode-tab:hover { background: #232a45; border-color: #3d6823; }
+        html.dark .activity-mode-tab.is-active { background: #4a7c2a; border-color: #6b9f3d; color: #fff; }
+        @media (prefers-reduced-motion: reduce) { .activity-mode-tab { transition: none; } }
 
         /* Date ↔ DAS chooser inside the activity sheet (smaller sibling of the mode tabs) */
         .when-tabs { display: inline-flex; gap: .25rem; padding: .2rem; background: #f1f3f7; border-radius: .65rem; width: 100%; margin-bottom: .5rem; }
