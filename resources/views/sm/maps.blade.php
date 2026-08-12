@@ -3,6 +3,7 @@
 @section('title', 'Maps — ' . $schedule->title)
 @section('page-title', 'Maps')
 @section('page-subtitle', $schedule->title)
+@section('help-key', 'maps')
 @section('back', route('sm.hub', ['id' => $schedule->id]))
 
 @push('head')

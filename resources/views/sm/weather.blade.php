@@ -3,6 +3,7 @@
 @section('title', 'Weather — ' . $schedule->title)
 @section('page-title', 'Weather')
 @section('page-subtitle', $schedule->title)
+@section('help-key', 'weather')
 @section('back', route('sm.hub', ['id' => $schedule->id]))
 
 @push('head')

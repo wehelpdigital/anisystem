@@ -3,6 +3,7 @@
 @section('title', 'Collab Room — ' . $schedule->title)
 @section('page-title', 'Collab Room')
 @section('page-subtitle', $schedule->title)
+@section('help-key', 'collab')
 @section('back', route('sm.hub', ['id' => $schedule->id]))
 
 {{-- The room is a workspace, not a page you scroll: on a phone the bottom tab

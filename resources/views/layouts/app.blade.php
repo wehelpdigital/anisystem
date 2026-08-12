@@ -68,6 +68,19 @@
                         <a href="{{ route('account.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('account.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Account</a>
                     </nav>
 
+                    {{-- How to use this page. Only appears where a module has
+                         declared itself, so it never points at a guide that
+                         does not describe what is on screen. It blinks until
+                         the reader has opened it once — after that it is just
+                         a button, per module, remembered in this browser. --}}
+                    @hasSection('help-key')
+                        <a href="#" id="appHelpBtn" data-help-key="@yield('help-key')"
+                           class="help-btn" title="How to use this page" aria-label="How to use this page">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.2 9a3.8 3.8 0 117.3 1.4c-.6 1.4-2.5 1.9-2.5 3.6M12 17.5h.01"/></svg>
+                            <span class="help-btn-label">How to use</span>
+                        </a>
+                    @endif
+
                     {{-- Notification bell --}}
                     <div class="relative" x-data="notificationBell()" x-init="init()" @click.outside="open = false">
                         <button type="button" @click="toggle()"
@@ -279,6 +292,42 @@
     @endauth
 
     @stack('sheets')
+    <script>
+        /* The question mark knows which guide it wants and how wide the screen
+           holding it is — the server cannot measure either. It also blinks
+           until it has been opened once for that module, because a help button
+           nobody notices is the same as no help button. */
+        (() => {
+            const btn = document.getElementById('appHelpBtn');
+            if (!btn) return;
+            const KEY = 'helpSeen:';
+            const base = @json(url('/app/help'));
+            const device = () => {
+                const w = Math.min(window.innerWidth, window.outerWidth || window.innerWidth);
+                return w < 768 ? 'mobile' : (w < 1180 ? 'tablet' : 'desktop');
+            };
+            const seen = (k) => { try { return localStorage.getItem(KEY + k) === '1'; } catch (_) { return true; } };
+            const markSeen = (k) => { try { localStorage.setItem(KEY + k, '1'); } catch (_) {} };
+
+            function paint() {
+                const key = btn.getAttribute('data-help-key') || '';
+                btn.classList.toggle('is-new', !!key && !seen(key));
+                btn.setAttribute('href', `${base}/${encodeURIComponent(key)}?device=${device()}`
+                    + `&from=${encodeURIComponent(location.pathname + location.search)}`);
+            }
+            btn.addEventListener('click', () => {
+                const key = btn.getAttribute('data-help-key') || '';
+                if (key) markSeen(key);
+                btn.classList.remove('is-new');
+            });
+            // The module shell swaps modules without reloading, so the button
+            // has to follow whatever is on screen now.
+            window.smHelpKey = (key) => { btn.setAttribute('data-help-key', key || ''); paint(); };
+            window.addEventListener('resize', paint);
+            paint();
+        })();
+    </script>
+
     @stack('scripts')
     <script>
         @if (session('success')) toast(@json(session('success')), 'success'); @endif

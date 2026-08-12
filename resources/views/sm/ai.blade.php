@@ -3,6 +3,7 @@
 @section('title', 'AI Technician — ' . $schedule->title)
 @section('page-title', 'AI Technician')
 @section('page-subtitle', $schedule->title)
+@section('help-key', 'ai')
 @section('back', route('sm.hub', ['id' => $schedule->id]))
 
 @push('head')

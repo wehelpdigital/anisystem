@@ -3,6 +3,7 @@
 @section('title', $schedule->title)
 @section('page-title', $schedule->title)
 @section('page-subtitle', 'Schedule modules')
+@section('help-key', 'hub')
 @section('back', route('sm.index'))
 
 @php

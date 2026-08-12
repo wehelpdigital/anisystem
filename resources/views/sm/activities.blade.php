@@ -3,6 +3,7 @@
 @section('title', 'Activities — ' . $schedule->title)
 @section('page-title', 'Activities')
 @section('page-subtitle', $schedule->title)
+@section('help-key', 'activities')
 @section('back', route('sm.hub', ['id' => $schedule->id]))
 
 {{-- The activity board is the work surface: on a phone the bottom tab bar eats
@@ -130,10 +131,10 @@
         .date-header-day { font-weight: 800; font-size: .8rem; color: var(--date-color); text-transform: uppercase; }
         .date-header-date { font-weight: 800; font-size: 1rem; color: var(--tl-text); }
         .date-header-range { display: inline-flex; align-items: center; gap: .2rem; font-size: 11px; font-weight: 600; color: var(--tl-text-soft); background: var(--tl-hover); border-radius: 999px; padding: .1rem .5rem; }
-        /* What the day costs. It comes last in the row, so on a phone it wraps
-           to its own line under the kebab — the opposite corner from the
-           weather, which sits with the date. */
-        .date-header-cash { order: 99; margin-left: auto; display: inline-flex; align-items: center; gap: .28rem;
+        /* What the day costs, next to what the sky is doing: two facts about
+           the day, on one line. Placement is done in paintDayCash(), which
+           knows where the forecast ended up. */
+        .date-header-cash { display: inline-flex; align-items: center; gap: .28rem;
             font-size: 11px; font-weight: 800; color: var(--color-amber-800, #92400e);
             background: var(--color-amber-50, #fffbeb); border: 1px solid var(--color-amber-200, #fde68a);
             border-radius: 999px; padding: .14rem .5rem .14rem .42rem; flex-shrink: 0; }
@@ -835,7 +836,8 @@
            worker's name to nothing. Width belongs here, at the same level. */
         .wp-amount { width: 6.5rem !important; flex: 0 0 6.5rem; }
         #activitySheet .space-y-4.on-workers > * { display: none; }
-        #activitySheet .space-y-4.on-workers > #activityWorkersPane { display: block; }
+        #activitySheet .space-y-4.on-workers > #activityWorkersPane,
+        #activitySheet .space-y-4.on-workers > .keep-on-workers { display: block; }
         #activitySheet .space-y-4.on-workers > #activityModeTabs { display: flex; }
 
         /* The wage bill for an activity: the total leads, the breakdown follows
@@ -1017,6 +1019,15 @@
 
         /* Task / Irrigation mode tabs (add-activity sheet) */
         .activity-mode-tabs { display: inline-flex; gap: .25rem; padding: .25rem; background: #f1f3f7; border-radius: .75rem; width: 100%; }
+        /* A fourth tab does not fit a phone at the width the other three want,
+           and squeezing all four cut the labels in half. They keep their size
+           and the strip slides instead — the same gesture the version strip
+           and the weather chips already use. */
+        @media (max-width: 640px) {
+            .activity-mode-tabs { display: flex; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
+            .activity-mode-tabs::-webkit-scrollbar { display: none; }
+            .activity-mode-tabs .activity-mode-tab { flex: 0 0 auto; scroll-snap-align: start; padding: .55rem .7rem; font-size: .84rem; }
+        }
         .activity-mode-tab { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: .4rem; padding: .6rem .75rem; border: none; background: transparent; border-radius: .55rem; font-size: .9rem; font-weight: 600; color: #5b6472; cursor: pointer; transition: background .25s ease, color .25s ease, box-shadow .25s ease; }
         .activity-mode-tab.is-active { background: #fff; color: #1f2937; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
         .activity-mode-tab:active { transform: scale(.97); }
@@ -1487,10 +1498,10 @@
                  leaves the toolbar room for Tools, Undo and Redo on one line. --}}
             <span id="currentModuleLabel"><span class="dh-modprefix">Modules - </span>Activities</span>
         </button>
-        {{-- The way in on the left, the way out on the right: the hamburger
-             opens things and belongs where the eye starts, while "back to
-             Activities" is where a phone's thumb expects to leave from. --}}
-        <button type="button" id="moduleBackBtn" class="btn btn-white btn-sm hidden ml-auto" title="Back to activities">
+        {{-- Right after the module it is leaving, not flung to the far edge:
+             pinned right it sat directly under the notification bell, reading
+             as part of the app header rather than as this row's own control. --}}
+        <button type="button" id="moduleBackBtn" class="btn btn-white btn-sm hidden" title="Back to activities">
             <span>Activities</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
@@ -2143,6 +2154,10 @@
         // Keep the app header + browser tab in step with the swapped module.
         const pageTitle = document.getElementById('appPageTitle');
         if (pageTitle) pageTitle.textContent = MODULES[key].label;
+        // The guide follows the module: the shell swaps content without a
+        // reload, and a help button still pointing at Activities would explain
+        // the wrong screen.
+        window.smHelpKey?.(key);
         document.title = MODULES[key].label + ' — ' + @json($schedule->title);
         setActivitiesChrome(key === 'activities');
         // Show a "back to Activities" button whenever another module is open.

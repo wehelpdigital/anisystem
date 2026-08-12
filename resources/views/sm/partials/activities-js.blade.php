@@ -721,6 +721,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function paintDayCash(group) {
         const pill = group.querySelector('.date-header-cash');
         if (!pill) return;
+        // Sit with the weather, not below it. Both are facts about the day
+        // rather than buttons, so they belong together on one line — and the
+        // forecast collapses to its icon to make room when the row is tight.
+        const header = group.querySelector('.date-header');
+        const wx = header && header.querySelector('.date-header-weather, .wx-mini-btn');
+        const anchor = header && header.querySelector('.date-header-count');
+        if (wx && pill.previousElementSibling !== wx) wx.after(pill);
+        else if (!wx && anchor && pill.nextElementSibling !== anchor) anchor.before(pill);
         const total = dayCashTotal(group);
         pill.hidden = total <= 0;
         if (total <= 0) { pill.textContent = ''; return; }

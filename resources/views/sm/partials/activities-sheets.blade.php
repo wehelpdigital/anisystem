@@ -43,7 +43,7 @@
             <div id="activityDraftHint" class="hidden rounded-lg bg-blue-50 border border-blue-200 text-blue-800 text-xs px-3 py-2">
                 Saved to <strong>Drafts</strong> for the date you pick below — kept off the timeline until you restore it. The Drafts list shows this date.
             </div>
-            <div>
+            <div class="keep-on-workers">
                 <label class="form-label" for="activityTitle">Title <span class="text-red-500">*</span></label>
                 <input type="text" id="activityTitle" class="form-input" maxlength="255" placeholder="e.g. Basal Fertilizer Application">
             </div>
@@ -224,7 +224,7 @@
                 </div>
             </div>
 
-            <div>
+            <div class="keep-on-workers">
                 <div class="mb-1.5">
                     <label class="form-label mb-0!" for="activityDescription">Description</label>
                 </div>

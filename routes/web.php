@@ -230,6 +230,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-map-basemap', [App\Http\Controllers\Manager\ScheduleMapController::class, 'basemap'])->name('sm.map.basemap');
     // The map as its own module in the schedule hub (the Collab Room embeds
     // the same partial as a tab).
+    // "How to use" — one page per module per device, written in the mother app.
+    Route::get('/app/help/{module}', [App\Http\Controllers\HelpController::class, 'show'])->name('help.show');
     Route::get('/app/sm-draw', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'page'])->name('sm.draw');
     Route::get('/app/sm-draw-one', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'one'])->name('sm.draw.one');
     Route::post('/app/sm-draw-save', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'save'])->name('sm.draw.save');

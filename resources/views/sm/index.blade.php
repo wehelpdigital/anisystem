@@ -3,6 +3,7 @@
 @section('title', 'Cropping Schedules')
 @section('page-title', 'Cropping Schedules')
 @section('page-subtitle', 'Plan and manage your seasons')
+@section('help-key', 'schedules')
 
 @php
     $statusBadges = [
