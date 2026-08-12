@@ -403,6 +403,10 @@ class CroppingScheduleController extends Controller
             'title'              => 'required|string|max:255',
             'description'        => 'nullable|string|max:5000',
             'defaultStaggerDays' => 'nullable|integer|min:0',
+            // The daily digest, saved from the Notifications tab.
+            'notifyWorkersDaily' => 'nullable|boolean',
+            'notifyOwnerDaily'   => 'nullable|boolean',
+            'notifyHour'         => 'nullable|integer|min:0|max:23',
         ]);
 
         if ($validator->fails()) {
@@ -416,10 +420,39 @@ class CroppingScheduleController extends Controller
         if ($request->has('defaultStaggerDays')) {
             $payload['defaultStaggerDays'] = (int) $request->input('defaultStaggerDays', 0);
         }
+        // Only touched when the notifications tab actually sent them, so a
+        // title edit never quietly switches somebody's mail on or off.
+        if ($request->has('notifyWorkersDaily')) {
+            $payload['notifyWorkersDaily'] = $request->boolean('notifyWorkersDaily');
+            $payload['notifyOwnerDaily'] = $request->boolean('notifyOwnerDaily');
+            $payload['notifyHour'] = max(0, min(23, (int) $request->input('notifyHour', 6)));
+        }
 
         $schedule->update($payload);
 
         return response()->json(['success' => true, 'message' => 'Schedule updated.', 'data' => $schedule]);
+    }
+
+    /**
+     * "Send me one now" from the Notifications tab — the same digest the
+     * morning run would send, to the owner only, so the layout and the wording
+     * can be checked without waiting for tomorrow or mailing the whole crew.
+     */
+    public function sendTestDigest(Request $request, \App\Services\DailyDigestService $digests)
+    {
+        $schedule = $this->findOwnedOrFail($request->query('id'));
+        $result = $digests->sendFor($schedule, null, true);
+
+        if ($result['sent'] < 1) {
+            return response()->json([
+                'success' => false,
+                'message' => $result['skipped'] > 0
+                    ? 'Could not send — check your account has an email address and that SMTP is set up in the mother app.'
+                    : 'Nothing scheduled for today or tomorrow, so there is nothing to send.',
+            ], 422);
+        }
+
+        return response()->json(['success' => true, 'message' => 'Sent. Check your inbox.']);
     }
 
     /**

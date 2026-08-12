@@ -30,7 +30,11 @@ class AsCroppingSchedule extends BaseModel
         'publishedAt',
         'publicSummary',
         'publicRegion',
-    ];
+            'notifyWorkersDaily',
+        'notifyOwnerDaily',
+        'notifyHour',
+        'notifyLastSentDate',
+];
 
     protected $casts = [
         'defaultStaggerDays' => 'integer',
@@ -38,7 +42,11 @@ class AsCroppingSchedule extends BaseModel
         'deleteStatus' => 'integer',
         'isPublic' => 'boolean',
         'publishedAt' => 'datetime',
-    ];
+            'notifyWorkersDaily' => 'boolean',
+        'notifyOwnerDaily' => 'boolean',
+        'notifyHour' => 'integer',
+        'notifyLastSentDate' => 'date:Y-m-d',
+];
 
     /** Lifecycle status. 'setup' = still being built, 'completed' = locked. */
     public const STATUS_SETUP = 'setup';

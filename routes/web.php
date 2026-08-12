@@ -166,6 +166,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-duplicate', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'duplicate'])->name('sm.duplicate');
 
     // --- Module pages (each takes ?id={scheduleId}) ---
+    Route::post('/app/sm-digest-test', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'sendTestDigest'])->name('sm.digest.test');
     Route::get('/app/sm-settings', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'settingsPage'])->name('sm.settings');
     Route::post('/app/sm-day-type', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'setDayType'])->name('sm.day-type');
     Route::get('/app/sm-lots', [App\Http\Controllers\Manager\LotController::class, 'page'])->name('sm.lots');

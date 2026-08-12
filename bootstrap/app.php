@@ -43,6 +43,9 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withSchedule(function (Schedule $schedule): void {
         $schedule->command('anisystem:check-subscriptions')->dailyAt('06:00');
+        // Hourly, because each schedule picks its own send time; the command
+        // itself decides whose hour it is and never sends the same day twice.
+        $schedule->command('digests:send')->hourly();
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         // An expired/stale CSRF token (page left open past the session

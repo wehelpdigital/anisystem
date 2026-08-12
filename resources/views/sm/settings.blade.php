@@ -6,11 +6,34 @@
 @section('help-key', 'settings')
 @section('back', route('sm.hub', ['id' => $schedule->id]))
 
+@push('head')
+    <style>
+        /* Same segmented strip the rest of the app uses for panes. */
+        .set-tabs { display: inline-flex; gap: .25rem; padding: .25rem; border-radius: .8rem;
+            background: var(--color-gray-100); width: 100%; }
+        .set-tab { flex: 1 1 0; padding: .5rem .6rem; border-radius: .6rem; font-size: .85rem; font-weight: 700;
+            color: var(--color-gray-500); cursor: pointer;
+            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+        .set-tab.is-on { background: var(--color-white); color: var(--color-brand-700);
+            box-shadow: 0 1px 3px rgb(0 0 0 / .08); }
+        html.dark .set-tab.is-on { background: #1c2416; }
+        @media (prefers-reduced-motion: reduce) { .set-tab { transition: none; } }
+    </style>
+@endpush
+
 @section('content')
     @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'settings'])
 
     <div class="max-w-3xl space-y-4">
 
+        {{-- Two things live here now, and they are not the same job: what this
+             schedule IS, and who hears about it each morning. --}}
+        <div class="set-tabs" id="setTabs" role="tablist">
+            <button type="button" class="set-tab is-on" data-set-tab="basic" aria-selected="true">Basic info</button>
+            <button type="button" class="set-tab" data-set-tab="notify" aria-selected="false">Notifications</button>
+        </div>
+
+        <div data-set-pane="basic">
         {{-- Basic Info --}}
         <div class="card">
             <div class="card-body space-y-4">
@@ -35,6 +58,63 @@
             </div>
         </div>
 
+        </div>
+
+        <div data-set-pane="notify" hidden>
+            <div class="card">
+                <div class="card-body space-y-4">
+                    <div>
+                        <h2 class="font-bold text-gray-900">Daily schedule email</h2>
+                        <p class="text-sm text-gray-500">
+                            One message each morning with what is on today and what is coming tomorrow, so nobody
+                            has to open the app to find out where to be.
+                        </p>
+                    </div>
+
+                    <label class="flex items-start gap-3 cursor-pointer select-none">
+                        <input type="checkbox" id="notifyWorkersDaily" class="mt-1 w-5 h-5 rounded"
+                               @checked($schedule->notifyWorkersDaily)>
+                        <span class="text-sm text-gray-700">
+                            <strong class="text-gray-900">Email the workers</strong><br>
+                            Each worker gets only the activities they are actually on. A worker with no email
+                            address on file is skipped.
+                        </span>
+                    </label>
+
+                    <label class="flex items-start gap-3 cursor-pointer select-none">
+                        <input type="checkbox" id="notifyOwnerDaily" class="mt-1 w-5 h-5 rounded"
+                               @checked($schedule->notifyOwnerDaily)>
+                        <span class="text-sm text-gray-700">
+                            <strong class="text-gray-900">Email me</strong><br>
+                            The whole day, every activity, whoever is on it.
+                        </span>
+                    </label>
+
+                    <div>
+                        <label class="form-label" for="notifyHour">Send at</label>
+                        <select id="notifyHour" class="form-select" style="max-width:12rem">
+                            @for ($h = 0; $h < 24; $h++)
+                                <option value="{{ $h }}" @selected((int) $schedule->notifyHour === $h)>
+                                    {{ \Carbon\Carbon::createFromTime($h)->format('g:00 A') }}
+                                </option>
+                            @endfor
+                        </select>
+                        <p class="form-hint">Philippine time. Sent once a day — a re-run never sends twice.</p>
+                    </div>
+
+                    <div class="rounded-xl bg-gray-50 border border-gray-200 p-3 text-xs text-gray-500">
+                        Mail goes out through the SMTP set up in the mother app, and the layout is the template
+                        written there — so changing either changes what everyone receives.
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" class="btn btn-primary" id="saveNotifyBtn">Save notifications</button>
+                        <button type="button" class="btn btn-white" id="testNotifyBtn">Send me one now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection
 
@@ -43,6 +123,51 @@
 (() => {
 const __init = () => {
     const SCHEDULE_ID = {{ $schedule->id }};
+
+    /* ---------------- Panes ---------------- */
+    document.getElementById('setTabs')?.addEventListener('click', (e) => {
+        const tab = e.target.closest('[data-set-tab]');
+        if (!tab) return;
+        const which = tab.getAttribute('data-set-tab');
+        document.querySelectorAll('[data-set-tab]').forEach((b) => {
+            const on = b === tab;
+            b.classList.toggle('is-on', on);
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        document.querySelectorAll('[data-set-pane]').forEach((p) => {
+            p.hidden = p.getAttribute('data-set-pane') !== which;
+        });
+    });
+
+    /* ---------------- Daily digest ---------------- */
+    document.getElementById('saveNotifyBtn')?.addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+        btn.disabled = true;
+        try {
+            const res = await api(`{{ route('sm.update') }}?id=${SCHEDULE_ID}`, {
+                method: 'PUT',
+                body: {
+                    // The title comes along because the endpoint requires it;
+                    // sending the current value keeps this save from changing it.
+                    title: document.getElementById('settingsTitle').value.trim(),
+                    description: document.getElementById('settingsDescription').value,
+                    notifyWorkersDaily: document.getElementById('notifyWorkersDaily').checked,
+                    notifyOwnerDaily: document.getElementById('notifyOwnerDaily').checked,
+                    notifyHour: parseInt(document.getElementById('notifyHour').value, 10),
+                },
+            });
+            toast(res.message);
+        } catch (err) { toast(err.message, 'error'); } finally { btn.disabled = false; }
+    });
+
+    document.getElementById('testNotifyBtn')?.addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+        btn.disabled = true;
+        try {
+            const res = await api(`{{ route('sm.digest.test') }}?id=${SCHEDULE_ID}`, { method: 'POST' });
+            toast(res.message);
+        } catch (err) { toast(err.message, 'error'); } finally { btn.disabled = false; }
+    });
 
     /* ---------------- Basic Info ---------------- */
 
