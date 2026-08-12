@@ -810,6 +810,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.__ownBookkeeping = ownBookkeeping;
 
     function paintAllDayCash() {
+        // The forecast goes first: a day that changed lots is about different
+        // ground now, and the cash line's break depends on whether a forecast
+        // ends up on that second row.
+        window.__wxRepaint?.();
         $qsa('#activitiesList .date-group').forEach(paintDayCash);
     }
     // The weather arrives on its own schedule; when it lands, the second line
@@ -4457,7 +4461,8 @@ document.addEventListener('DOMContentLoaded', () => {
      * ================================================================ */
     (function activityWeather() {
         let WX = null;            // { locations, lots }
-        let wxByDate = null;      // isoDate → [{ place, day }]  (distinct locations)
+        let wxByDate = null;      // isoDate → [{ key, place, day }]  (distinct locations)
+        let WX_LOT_PLACE = {};    // lotId → locationKey
         let loaded = false;
 
         let loadedHours = false;
@@ -4483,9 +4488,17 @@ document.addEventListener('DOMContentLoaded', () => {
         function buildByDate() {
             wxByDate = {};
             if (!WX || !WX.locations) return;
-            Object.values(WX.locations).forEach((loc) => {
+            Object.entries(WX.locations).forEach(([key, loc]) => {
                 if (!loc || loc.ok === false || !loc.days) return;
-                loc.days.forEach((d) => { (wxByDate[d.date] = wxByDate[d.date] || []).push({ place: loc.place, day: d }); });
+                loc.days.forEach((d) => {
+                    (wxByDate[d.date] = wxByDate[d.date] || []).push({ key, place: loc.place, day: d });
+                });
+            });
+            // Which place each lot sits in, so a day can be shown the weather
+            // for the ground its work is actually on.
+            WX_LOT_PLACE = {};
+            (WX.lots || []).forEach((lot) => {
+                if (lot && lot.id && lot.locationKey) WX_LOT_PLACE[String(lot.id)] = lot.locationKey;
             });
             // Per-lot, per-date forecast for the day-reminder rain rule.
             const perLot = {};
@@ -4507,13 +4520,52 @@ document.addEventListener('DOMContentLoaded', () => {
             return `<span class="wx-chip js-wx-chip" title="${bits.join(' · ')}"><span class="wx-emoji">${d.emoji}</span><span class="wx-loc">${esc(place)}</span>${d.max != null ? `<span class="wx-temp">${d.max}°</span>` : ''}</span>`;
         }
 
-        function stripFor(dateKey) {
-            const list = wxByDate && wxByDate[dateKey];
+        /**
+         * The forecast for one day.
+         *
+         * Only the places that day's work is actually on: a day whose single
+         * activity is in Apartado has no use for Masin's sky, and a row of
+         * forecasts for ground nobody is standing on is worse than noise —
+         * it is wrong often enough to be believed.
+         *
+         * A day with no lot-specific work (or no work at all) falls back to
+         * every place, because nothing has said otherwise.
+         */
+        function stripFor(dateKey, scope) {
+            let list = wxByDate && wxByDate[dateKey];
             if (!list || !list.length) return null;
+
+            if (scope) {
+                const wanted = new Set();
+                scope.querySelectorAll('.activity-card [data-lot-id]').forEach((tag) => {
+                    const key = WX_LOT_PLACE[String(tag.getAttribute('data-lot-id'))];
+                    if (key) wanted.add(key);
+                });
+                if (wanted.size) {
+                    const only = list.filter((x) => wanted.has(x.key));
+                    if (only.length) list = only;
+                }
+            }
+
             const strip = document.createElement('div');
             strip.className = 'date-header-weather scroll-chips';
+            // What it was built for, so a day that later gains or loses a lot
+            // can be told apart from one that has not changed.
+            strip.dataset.wxFor = list.map((x) => x.key).sort().join(',');
             strip.innerHTML = list.map((x) => wxChip(x.place, x.day)).join('');
             return strip;
+        }
+
+        /** The places a day's work is on right now, as stripFor would compute them. */
+        function placesFor(dateKey, scope) {
+            const list = (wxByDate && wxByDate[dateKey]) || [];
+            const wanted = new Set();
+            scope.querySelectorAll('.activity-card [data-lot-id]').forEach((tag) => {
+                const key = WX_LOT_PLACE[String(tag.getAttribute('data-lot-id'))];
+                if (key) wanted.add(key);
+            });
+            const only = wanted.size ? list.filter((x) => wanted.has(x.key)) : list;
+            return (only.length ? only : list).map((x) => x.key).sort().join(',');
         }
 
         /* A farm with many lots has many forecasts, and on a phone the strip
@@ -4535,6 +4587,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.setAttribute('aria-label', 'Weather for each lot');
                 btn.innerHTML = '<span class="wx-emoji">' + (first ? first.textContent : '⛅') + '</span>'
                     + '<span>Weather</span><span class="wx-mini-n">' + n + '</span>';
+                btn.dataset.wxFor = strip.dataset.wxFor || '';
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();          // not a fold of the day
                     $id('weatherBtn')?.click();
@@ -4559,12 +4612,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (! header) return;
                 // Heal a header that already collected duplicates, so a board
                 // showing them does not need a reload to come right.
+                const dateKey = (g.getAttribute('data-date') || '').trim();
                 const already = header.querySelectorAll(WX_ANY);
                 if (already.length) {
                     for (let i = 1; i < already.length; i++) already[i].remove();
-                    return;
+                    // Move an activity to another lot and the day is about
+                    // different ground now — the forecast has to follow.
+                    const want = placesFor(dateKey, g);
+                    if ((already[0].dataset.wxFor || '') === want) return;
+                    already[0].remove();
                 }
-                const strip = stripFor((g.getAttribute('data-date') || '').trim());
+                const strip = stripFor(dateKey, g);
                 if (!strip) return;
                 const count = header.querySelector('.date-header-count');
                 count ? header.insertBefore(strip, count) : header.appendChild(strip);
@@ -4599,6 +4657,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         $id('weatherBtn')?.addEventListener('click', openModal);
         document.addEventListener('click', (e) => { if (e.target.closest('.js-wx-chip')) { e.preventDefault(); openModal(); } });
+
+        // A named way in, so the board can ask for a redraw after it has
+        // rearranged itself rather than waiting to be noticed.
+        window.__wxRepaint = renderHeaderWeather;
 
         // Re-decorate whenever the board changes (add activity, new day, a
         // rest-day turning into a group, drag/reorder, calendar → list…).
