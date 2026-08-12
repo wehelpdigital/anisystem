@@ -263,6 +263,19 @@ window.registerOverlay = function registerOverlay(key, close) {
     history.pushState({ __overlay: id }, '', location.href);
 };
 
+/**
+ * Drop an overlay's entry without touching history.
+ *
+ * For closing a sheet as part of navigating somewhere: rewinding here would
+ * race the navigation's own pushState, and the popstate would arrive after it
+ * — sending the reader back to where they just came from. The abandoned entry
+ * is swallowed by the popstate handler the next time Back is pressed.
+ */
+window.forgetOverlay = function forgetOverlay(key) {
+    const i = overlayStack.findIndex((o) => o.key === key);
+    if (i >= 0) overlayStack.splice(i, 1);
+};
+
 window.unregisterOverlay = function unregisterOverlay(key) {
     const i = overlayStack.findIndex((o) => o.key === key);
     if (i < 0) return;

@@ -2245,16 +2245,28 @@
             && (key === 'activities' || !host.classList.contains('hidden'));
     }
 
+    /**
+     * Close the modules sheet on the way out, without letting it rewind
+     * history. The sheet owns a history entry so Back can close it; rewinding
+     * that while we are about to push the new module's own entry means the
+     * pop lands after the push, and the shell obediently returns to the module
+     * we just left. That is the "clicking Maps leaves me on Lots" fault.
+     */
+    function closeModulesSheetForNav() {
+        window.forgetOverlay?.('sheet:modulesSheet');
+        closeSheet('modulesSheet');
+    }
+
     async function showModule(key, push = true) {
-        if (!MODULES[key]) { closeSheet('modulesSheet'); return; }
+        if (!MODULES[key]) { closeModulesSheetForNav(); return; }
         // Only refuse to re-open a module that is genuinely showing. The flag
         // and the screen can come apart — a popstate that names a module, a
         // load that ended badly — and when they do, refusing on the flag alone
         // leaves a button that does nothing for the rest of the session.
-        if (key === current && isShowing(key)) { closeSheet('modulesSheet'); return; }
-        if (busy) { closeSheet('modulesSheet'); return; }
+        if (key === current && isShowing(key)) { closeModulesSheetForNav(); return; }
+        if (busy) { closeModulesSheetForNav(); return; }
         busy = true;
-        closeSheet('modulesSheet');
+        closeModulesSheetForNav();
 
         try {
         // Remember where you were in Activities so returning restores it.
@@ -2384,6 +2396,9 @@
         // reading it as "no module named, so Activities" is how closing a
         // sheet could throw you out of the module you were working in.
         if (e.state && e.state.__overlay) return;
+        // A switch already under way owns the outcome; a pop that arrives
+        // mid-flight is older news than what the reader just asked for.
+        if (busy) return;
         if (pushDepth > 0) pushDepth--;
         showModule((e.state && e.state.module) || 'activities', false);
     });
