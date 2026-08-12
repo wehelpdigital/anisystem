@@ -2269,7 +2269,18 @@
             host.classList.add('hidden');
         } else if (loaded.has(key)) {
             host.classList.remove('hidden');
-            loaded.get(key).classList.remove('module-hidden');
+            const el = loaded.get(key);
+            el.classList.remove('module-hidden');
+            // A kept module that will not come back — its node detached by a
+            // re-render, or emptied by a script that ran badly — must not leave
+            // the button dead. Forget it and fetch it again, which is what a
+            // first visit does and is known to work.
+            if (!el.isConnected || !el.innerHTML.trim()) {
+                loaded.delete(key);
+                el.remove();
+                busy = false;
+                return showModule(key, push);
+            }
         } else {
             loaderLabel.textContent = 'Loading ' + MODULES[key].label + '…';
             loader.classList.remove('hidden');
@@ -2305,6 +2316,16 @@
             shownEl.classList.add('sm-view-in');
             shownEl.addEventListener('animationend', () => shownEl.classList.remove('sm-view-in'), { once: true });
         }
+        // Believe the screen, not the bookkeeping: if the module still is not
+        // showing, the kept copy is no good — drop it and load it fresh.
+        if (key !== 'activities' && !isShowing(key) && loaded.has(key)) {
+            loaded.get(key)?.remove();
+            loaded.delete(key);
+            current = null;
+            busy = false;
+            return showModule(key, push);
+        }
+
         // Keep the prefix in its own span so CSS can drop it on phones; using
         // textContent here would flatten it away on the first module switch.
         label.innerHTML = '<span class="dh-modprefix">Modules - </span>' + escapeHtml(MODULES[key].label);
