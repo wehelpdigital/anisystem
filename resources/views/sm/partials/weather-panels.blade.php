@@ -16,7 +16,11 @@
         justify-content: center; gap: .4rem;
         transition: color .28s cubic-bezier(.22,1,.36,1); }
     .wx-tab.is-on { color: var(--color-brand-800); }
-    .wx-tab-pill { position: absolute; top: .25rem; bottom: .25rem; left: .25rem;
+    /* left:0, not left:.25rem. The offset used to be applied twice — once by
+       this rule and again by the transform, which measured from the track's
+       padding edge — so the second tab's pill hung past the right end of the
+       track it is supposed to sit inside. */
+    .wx-tab-pill { position: absolute; top: .25rem; bottom: .25rem; left: 0;
         border-radius: .7rem; background: var(--color-white);
         box-shadow: 0 1px 3px rgb(0 0 0 / .12);
         transition: transform .28s cubic-bezier(.22,1,.36,1), width .28s cubic-bezier(.22,1,.36,1); }
@@ -28,9 +32,19 @@
         .wx-panel.is-on { animation: none; }
     }
 
+    html.dark .wx-tabs { background: #1c2136; }
+    html.dark .wx-tab { color: #94a3b8; }
+    html.dark .wx-tab.is-on { color: #fff; }
+    html.dark .wx-tab-pill { background: #4a7c2a; box-shadow: 0 2px 10px -4px rgb(0 0 0 / .8); }
+
     /* One day in the 6-day strip. */
-    .wx-day { flex: 1 1 0; min-width: 0; text-align: center; padding: .5rem .15rem; border-radius: .7rem; }
-    .wx-day.is-today { background: var(--color-brand-50); }
+    .wx-day { flex: 1 1 0; min-width: 0; text-align: center; padding: .5rem .15rem; border-radius: .7rem;
+        transition: background .25s cubic-bezier(.22,1,.36,1); }
+    .wx-day:hover { background: var(--color-gray-50); }
+    .wx-day.is-today { background: var(--color-brand-50); box-shadow: inset 0 0 0 1px var(--color-brand-200); }
+    html.dark .wx-day.is-today { background: rgb(61 104 35 / .3); box-shadow: inset 0 0 0 1px rgb(107 159 61 / .5); }
+    html.dark .wx-day:hover { background: rgb(255 255 255 / .04); }
+    @media (prefers-reduced-motion: reduce) { .wx-day { transition: none; } }
     .wx-day-dow { font-size: .68rem; font-weight: 800; color: var(--color-gray-500); text-transform: uppercase; }
     .wx-day.is-today .wx-day-dow { color: var(--color-brand-700); }
     .wx-day-emoji { font-size: 1.5rem; line-height: 1.1; margin: .15rem 0; }
@@ -186,9 +200,30 @@
         const tabs = [...host.querySelectorAll('.wx-tab')];
         const pill = host.querySelector('.wx-tab-pill');
         const movePill = (btn) => {
-            pill.style.width = btn.offsetWidth + 'px';
-            pill.style.transform = 'translateX(' + (btn.offsetLeft - btn.parentElement.offsetLeft) + 'px)';
+            // Measured against the track itself rather than through
+            // offsetParent, which is whatever happens to be positioned above
+            // this partial — and differs between the module page and the
+            // sheet the same panels are shown in.
+            const track = btn.parentElement.getBoundingClientRect();
+            const r = btn.getBoundingClientRect();
+            pill.style.width = r.width + 'px';
+            pill.style.transform = 'translateX(' + Math.round(r.left - track.left) + 'px)';
         };
+        // The first paint happens while the panel is still being laid out, so
+        // the pill is placed again once the browser has finished, and again on
+        // resize — a rotated phone is a different track.
+        const settle = () => {
+            const on = tabs.find((t) => t.classList.contains('is-on'));
+            if (on) movePill(on);
+        };
+        requestAnimationFrame(() => requestAnimationFrame(settle));
+        // Belt and braces: if the first frame measured a track that was not
+        // laid out yet, the pill would be a zero-width sliver until the first
+        // tap. Cheap to check again a moment later than to leave it invisible.
+        setTimeout(settle, 60);
+        setTimeout(settle, 300);
+        window.addEventListener('resize', settle);
+
         const show = (key) => {
             tabs.forEach((t) => {
                 const on = t.dataset.wxTab === key;

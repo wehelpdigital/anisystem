@@ -164,6 +164,10 @@ class PostHarvestController extends BaseScheduleController
             'moisturePercent' => 'nullable|numeric|min:0|max:100',
             'pricePerUnit' => 'nullable|numeric|min:0|max:99999999',
             'buyer' => 'nullable|string|max:191',
+            // Whatever this kind of observation asked for beyond the columns:
+            // a pest's severity, a typhoon's length, what to change next year.
+            'details' => 'nullable|array|max:20',
+            'details.*' => 'nullable|string|max:500',
             'notes' => 'nullable|string|max:20000',
             'imagePath' => 'nullable|string|max:500',
             'imagePaths' => 'nullable|array|max:20',
@@ -181,6 +185,14 @@ class PostHarvestController extends BaseScheduleController
         // allow-list the activity descriptions use.
         $data['notes'] = filled($data['notes'] ?? null) ? HtmlSanitizer::rich($data['notes']) : null;
         $data['lotId'] = $data['lotId'] ?? null;
+        // Only the answers this category actually asks for are kept, so a
+        // category switched mid-form cannot leave the previous one's answers
+        // behind where nothing will ever show them again.
+        $asked = collect(\App\Support\PostHarvestFields::for($data['category']))->pluck('key')->all();
+        $details = collect($data['details'] ?? [])
+            ->filter(fn ($v, $k) => in_array($k, $asked, true) && filled($v))
+            ->all();
+        $data['details'] = $details ?: null;
 
         // Normalise the photo list: accept an array of paths, keep the legacy
         // single `imagePath` in sync with the first one for backward compat.
@@ -196,6 +208,16 @@ class PostHarvestController extends BaseScheduleController
     /** Shape a row for the JS renderer (lot name resolved, value precomputed). */
     private function present(AsSchedulePostHarvest $o): array
     {
+        // Details as stored (for the form) and as sentences (for the card):
+        // "severe" is what we keep, "Severe — serious loss" is what a person
+        // reads.
+        $detailRows = collect($o->details ?? [])
+            ->map(fn ($v, $k) => [
+                'key' => $k,
+                'label' => \App\Support\PostHarvestFields::questionFor((string) $o->category, $k) ?: $k,
+                'value' => \App\Support\PostHarvestFields::labelFor((string) $o->category, $k, $v),
+            ])
+            ->values()->all();
         // Prefer the multi-image list; fall back to the legacy single path.
         $paths = ! empty($o->imagePaths) ? $o->imagePaths : array_filter([$o->imagePath]);
         $images = array_values(array_map(fn ($p) => [
@@ -207,6 +229,7 @@ class PostHarvestController extends BaseScheduleController
             'lotName' => $o->lotId ? optional($o->lot)->lotName : null,
             'grossValue' => $o->gross_value,
             'categoryLabel' => AsSchedulePostHarvest::CATEGORIES[$o->category] ?? $o->category,
+            'detailRows' => $detailRows,
             'images' => $images,
             'imageUrl' => $images[0]['url'] ?? null,
         ]);

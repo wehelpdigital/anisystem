@@ -34,6 +34,7 @@ class AsSchedulePostHarvest extends BaseModel
         'pricePerUnit',
         'buyer',
         'notes',
+        'details',
         'imagePath',
         'imagePaths',
         'sortOrder',
@@ -43,6 +44,7 @@ class AsSchedulePostHarvest extends BaseModel
     protected $casts = [
         'observationDate' => 'date',
         'imagePaths' => 'array',
+        'details' => 'array',
         'yieldAmount' => 'decimal:2',
         'moisturePercent' => 'decimal:2',
         'pricePerUnit' => 'decimal:2',

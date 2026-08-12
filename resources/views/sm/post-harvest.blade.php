@@ -140,6 +140,21 @@
                 </dl>
             @endif
 
+            {{-- What this kind of observation was asked, and what it said.
+                 Mirrors the JS renderer below. --}}
+            @php
+                $detailRows = collect($o->details ?? [])->map(fn ($v, $k) => [
+                    'label' => \App\Support\PostHarvestFields::questionFor((string) $o->category, $k) ?: $k,
+                    'value' => \App\Support\PostHarvestFields::labelFor((string) $o->category, $k, $v),
+                ])->values();
+            @endphp
+            @if ($detailRows->count())
+                <dl class="mt-2 grid gap-1">
+                    @foreach ($detailRows as $d)
+                        <div class="ph-detail"><dt>{{ $d['label'] }}:</dt><dd>{{ $d['value'] }}</dd></div>
+                    @endforeach
+                </dl>
+            @endif
             @if (filled($o->buyer))
                 <p class="text-sm text-gray-500 mt-2">Sold to <span class="font-semibold text-gray-700">{{ $o->buyer }}</span></p>
             @endif
@@ -178,13 +193,17 @@
             <label class="form-label" for="phTitle">What are you recording? <span class="text-red-500">*</span></label>
             <input type="text" id="phTitle" class="form-input" maxlength="191" placeholder="e.g. Lot A harvest — 92 sacks">
         </div>
+        {{-- What kind of observation this is, picked as a tag rather than
+             hidden in a dropdown — it decides what the rest of the form asks,
+             so it should be the most visible thing on it. --}}
         <div class="mb-4">
-            <label class="form-label" for="phCategory">Category</label>
-            <select id="phCategory" class="form-select">
+            <label class="form-label">What kind of observation?</label>
+            <div class="ph-cats" id="phCatPick">
                 @foreach ($categories as $key => $label)
-                    <option value="{{ $key }}">{{ $label }}</option>
+                    <button type="button" class="ph-catopt{{ $loop->first ? ' is-on' : '' }}" data-cat="{{ $key }}">{{ $label }}</button>
                 @endforeach
-            </select>
+            </div>
+            <input type="hidden" id="phCategory" value="{{ array_key_first($categories) }}">
         </div>
         <div class="mb-4">
             <label class="form-label" for="phDate">Date <span class="text-gray-400 font-normal">(optional)</span></label>
@@ -200,34 +219,19 @@
             </select>
         </div>
 
-        <div class="mb-4">
-            <label class="form-label" for="phYieldAmount">Yield</label>
-            <input type="number" id="phYieldAmount" class="form-input" step="0.01" min="0" inputmode="decimal" placeholder="e.g. 4600">
-        </div>
-        <div class="mb-4">
-            <label class="form-label" for="phYieldUnit">Unit</label>
-            <input type="text" id="phYieldUnit" class="form-input" maxlength="24" list="phUnitOptions" placeholder="e.g. kg, sacks, cavans">
-            <datalist id="phUnitOptions">
-                <option value="kg"></option>
-                <option value="sacks"></option>
-                <option value="cavans"></option>
-                <option value="tons"></option>
-                <option value="pieces"></option>
-            </datalist>
-        </div>
-        <div class="mb-4">
-            <label class="form-label" for="phMoisture">Moisture (%)</label>
-            <input type="number" id="phMoisture" class="form-input" step="0.1" min="0" max="100" inputmode="decimal" placeholder="e.g. 14">
-        </div>
-        <div class="mb-4">
-            <label class="form-label" for="phPrice">Price per unit</label>
-            <input type="number" id="phPrice" class="form-input" step="0.01" min="0" inputmode="decimal" placeholder="e.g. 23.50">
-        </div>
-        <p class="form-hint -mt-2 mb-4" id="phValueHint"></p>
-        <div class="mb-4">
-            <label class="form-label" for="phBuyer">Buyer</label>
-            <input type="text" id="phBuyer" class="form-input" maxlength="191" placeholder="e.g. NFA, local trader">
-        </div>
+        {{-- Built from the category above. A harvest figure and a lesson for
+             next season have almost nothing to ask in common, and asking both
+             sets every time is how most of these records ended up mostly
+             empty. See App\Support\PostHarvestFields. --}}
+        <div id="phFields" class="mb-1"></div>
+        <p class="form-hint -mt-1 mb-4" id="phValueHint"></p>
+        <datalist id="phUnitOptions">
+            <option value="kg"></option>
+            <option value="sacks"></option>
+            <option value="cavans"></option>
+            <option value="tons"></option>
+            <option value="pieces"></option>
+        </datalist>
 
         <div class="mb-4">
             <label class="form-label">Notes</label>
@@ -264,6 +268,23 @@
         <button type="button" class="btn btn-primary" id="phSaveBtn">Save observation</button>
     </div>
 </div>
+@endpush
+
+@push('head')
+<style>
+    .ph-cats { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .ph-catopt { padding: .38rem .7rem; border: 2px solid var(--color-gray-200); background: var(--color-white);
+        border-radius: 999px; font-size: .78rem; font-weight: 700; color: #374151; cursor: pointer;
+        transition: background .25s ease, border-color .25s ease, color .25s ease; }
+    .ph-catopt:hover { border-color: #a8cc7e; background: #f3f8ec; }
+    .ph-catopt.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+    .ph-detail { display: flex; gap: .4rem; font-size: .78rem; }
+    .ph-detail dt { color: var(--color-gray-400); }
+    .ph-detail dd { color: var(--color-gray-800); font-weight: 600; }
+    html.dark .ph-catopt { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
+    html.dark .ph-detail dd { color: #e5e9f5; }
+    @media (prefers-reduced-motion: reduce) { .ph-catopt { transition: none; } }
+</style>
 @endpush
 
 @push('scripts')
@@ -354,6 +375,8 @@ const __init = () => {
             </div>
             ${figures.length ? `<dl class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-3">${figures.map(([l, v, tone]) =>
                 `<div class="ph-figure"><dt class="text-gray-400">${escapeHtml(l)}</dt><dd class="${tone}">${escapeHtml(v)}</dd></div>`).join('')}</dl>` : ''}
+            ${(o.detailRows || []).length ? `<dl class="mt-2 grid gap-1">${(o.detailRows || []).map((d) =>
+                `<div class="ph-detail"><dt>${escapeHtml(d.label)}:</dt><dd>${escapeHtml(d.value)}</dd></div>`).join('')}</dl>` : ''}
             ${o.buyer ? `<p class="text-sm text-gray-500 mt-2">Sold to <span class="font-semibold text-gray-700">${escapeHtml(o.buyer)}</span></p>` : ''}
             ${o.notes ? `<div class="ph-notes text-gray-600 mt-2">${o.notes}</div>` : ''}
             ${(o.images && o.images.length)
@@ -397,13 +420,74 @@ const __init = () => {
         document.getElementById('phSummaryGrid').innerHTML = cells.join('');
     }
 
+    /* ---- The form the category asks for -----------------------------------
+     * One definition on the server (App\Support\PostHarvestFields) drives the
+     * inputs here and the way the answers read on the card, so the two can
+     * never drift apart. */
+    const PH_FIELDS = @json(\App\Support\PostHarvestFields::all());
+
+    function fieldHtml(f, value) {
+        const v = value === null || value === undefined ? '' : String(value);
+        const ph = f.placeholder ? ` placeholder="${escapeHtml(f.placeholder)}"` : '';
+        let input;
+        if (f.type === 'select') {
+            const opts = Object.keys(f.options || {})
+                .map((k) => `<option value="${escapeHtml(k)}"${v === k ? ' selected' : ''}>${escapeHtml(f.options[k])}</option>`)
+                .join('');
+            input = `<select class="form-select" data-ph-field="${f.key}"><option value="">—</option>${opts}</select>`;
+        } else if (f.type === 'number' || f.type === 'money') {
+            input = `<input type="number" class="form-input" data-ph-field="${f.key}" step="0.01" min="0" inputmode="decimal" value="${escapeHtml(v)}"${ph}>`;
+        } else if (f.type === 'percent') {
+            input = `<input type="number" class="form-input" data-ph-field="${f.key}" step="0.1" min="0" max="100" inputmode="decimal" value="${escapeHtml(v)}"${ph}>`;
+        } else if (f.type === 'unit') {
+            input = `<input type="text" class="form-input" data-ph-field="${f.key}" maxlength="24" list="phUnitOptions" value="${escapeHtml(v)}"${ph}>`;
+        } else {
+            input = `<input type="text" class="form-input" data-ph-field="${f.key}" maxlength="191" value="${escapeHtml(v)}"${ph}>`;
+        }
+        const suffix = f.type === 'percent' ? ' <span class="text-gray-400 font-normal">(%)</span>'
+            : (f.type === 'money' ? ' <span class="text-gray-400 font-normal">(₱)</span>' : '');
+        return `<div class="mb-3"><label class="form-label">${escapeHtml(f.label)}${suffix}</label>${input}</div>`;
+    }
+
+    /** Draw the inputs this category asks for, keeping anything already typed
+     *  that the new category also asks for. */
+    function paintFields(category, source) {
+        const host = fld('phFields');
+        const keep = source || readFields();
+        host.innerHTML = (PH_FIELDS[category] || [])
+            .map((f) => fieldHtml(f, keep[f.key]))
+            .join('') || '<p class="form-hint">Nothing else to fill in — write it in the notes below.</p>';
+        refreshValueHint();
+    }
+
+    /** Whatever the visible inputs currently hold, keyed by field. */
+    function readFields() {
+        const out = {};
+        document.querySelectorAll('#phFields [data-ph-field]').forEach((el) => {
+            const v = (el.value || '').trim();
+            if (v !== '') out[el.getAttribute('data-ph-field')] = v;
+        });
+        return out;
+    }
+
     function refreshValueHint() {
-        const y = num(fld('phYieldAmount').value);
-        const p = num(fld('phPrice').value);
+        const vals = readFields();
+        const y = num(vals.yieldAmount);
+        const p = num(vals.pricePerUnit);
         fld('phValueHint').textContent = (y !== null && p !== null)
             ? 'Gross value: ' + money(y * p)
             : '';
     }
+
+    document.getElementById('phCatPick')?.addEventListener('click', (e) => {
+        const opt = e.target.closest('.ph-catopt');
+        if (!opt) return;
+        const cat = opt.getAttribute('data-cat');
+        fld('phCategory').value = cat;
+        document.querySelectorAll('#phCatPick .ph-catopt').forEach((b) => b.classList.toggle('is-on', b === opt));
+        paintFields(cat);
+    });
+    document.getElementById('phFields')?.addEventListener('input', refreshValueHint);
 
     // Multiple photos per observation, held as {path, url} while the sheet is open.
     let phImages = [];
@@ -500,14 +584,19 @@ const __init = () => {
         fld('phId').value = o ? o.id : '';
         fld('phSheetTitle').textContent = o ? 'Edit observation' : 'Record an observation';
         fld('phTitle').value = o ? o.title : '';
-        fld('phCategory').value = o ? o.category : 'yield';
+        const cat = o ? (o.category || 'yield') : 'yield';
+        fld('phCategory').value = cat;
+        document.querySelectorAll('#phCatPick .ph-catopt').forEach((b) => {
+            b.classList.toggle('is-on', b.getAttribute('data-cat') === cat);
+        });
+        // The columns and the JSON details are one set of answers as far as
+        // the form is concerned.
+        paintFields(cat, o ? Object.assign({}, o.details || {}, {
+            yieldAmount: o.yieldAmount, yieldUnit: o.yieldUnit,
+            moisturePercent: o.moisturePercent, pricePerUnit: o.pricePerUnit, buyer: o.buyer,
+        }) : {});
         fld('phDate').value = o ? (o.observationDate || '') : new Date().toISOString().slice(0, 10);
         fld('phLot').value = o && o.lotId ? String(o.lotId) : '';
-        fld('phYieldAmount').value = o && o.yieldAmount !== null ? o.yieldAmount : '';
-        fld('phYieldUnit').value = o ? (o.yieldUnit || '') : '';
-        fld('phMoisture').value = o && o.moisturePercent !== null ? o.moisturePercent : '';
-        fld('phPrice').value = o && o.pricePerUnit !== null ? o.pricePerUnit : '';
-        fld('phBuyer').value = o ? (o.buyer || '') : '';
         fld('phPhoto').value = '';
         stopCamera();
         setImages(o ? (o.images || []) : []);
@@ -518,8 +607,6 @@ const __init = () => {
     }
 
     document.querySelectorAll('[data-ph-add]').forEach((btn) => btn.addEventListener('click', () => openPhSheet(null)));
-    fld('phYieldAmount').addEventListener('input', refreshValueHint);
-    fld('phPrice').addEventListener('input', refreshValueHint);
     fld('phPhoto').addEventListener('change', async (e) => {
         const files = [...(e.target.files || [])];
         for (const file of files) {
@@ -534,16 +621,24 @@ const __init = () => {
         const title = fld('phTitle').value.trim();
         if (!title) { toast('Give this observation a title.', 'error'); return; }
 
+        const vals = readFields();
+        // Five of these have had columns since the beginning; the rest are
+        // whatever this category asked for and go in as details.
+        const COLUMN_KEYS = ['yieldAmount', 'yieldUnit', 'moisturePercent', 'pricePerUnit', 'buyer'];
+        const details = {};
+        Object.keys(vals).forEach((k) => { if (!COLUMN_KEYS.includes(k)) details[k] = vals[k]; });
+
         const payload = {
             title,
             category: fld('phCategory').value,
             observationDate: fld('phDate').value || null,
             lotId: fld('phLot').value || null,
-            yieldAmount: num(fld('phYieldAmount').value),
-            yieldUnit: fld('phYieldUnit').value.trim() || null,
-            moisturePercent: num(fld('phMoisture').value),
-            pricePerUnit: num(fld('phPrice').value),
-            buyer: fld('phBuyer').value.trim() || null,
+            yieldAmount: num(vals.yieldAmount),
+            yieldUnit: (vals.yieldUnit || '').trim() || null,
+            moisturePercent: num(vals.moisturePercent),
+            pricePerUnit: num(vals.pricePerUnit),
+            buyer: (vals.buyer || '').trim() || null,
+            details: Object.keys(details).length ? details : null,
             // Rich HTML from the WYSIWYG; the server sanitises it (HtmlSanitizer::rich).
             notes: notesHtml(),
             imagePaths: phImages.map((im) => im.path),

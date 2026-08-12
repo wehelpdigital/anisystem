@@ -68,10 +68,17 @@ class HelpController extends Controller
      * desktop for our purposes. The header link fills it in; a bare URL falls
      * back to a reasonable guess from the agent string.
      */
+    /**
+     * Which page to serve. The reader is holding the device the instructions
+     * are about, so the browser's own word is taken for it — no picker, and
+     * no ?device= to get bookmarked and then be wrong forever. The mother app
+     * still writes one page per device; ?device= is honoured only there, where
+     * previewing another device is the whole job.
+     */
     private function device(Request $request): string
     {
         $asked = strtolower((string) $request->query('device'));
-        if (in_array($asked, AsTutorialPage::DEVICES, true)) {
+        if ($request->boolean('preview') && in_array($asked, AsTutorialPage::DEVICES, true)) {
             return $asked;
         }
 

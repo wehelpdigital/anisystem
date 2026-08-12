@@ -30,14 +30,10 @@
             background: #000; }
         .tut-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
         .tut-hr { border: 0; border-top: 1px solid var(--color-gray-200); margin: 1.25rem 0; }
-        .tut-device { display: inline-flex; gap: .25rem; padding: .2rem; border-radius: .7rem; background: var(--color-gray-100); }
-        .tut-device a { padding: .25rem .6rem; border-radius: .5rem; font-size: .74rem; font-weight: 700;
             color: var(--color-gray-500); }
-        .tut-device a.is-on { background: var(--color-white); color: var(--color-brand-700); }
         .tut-more a { display: block; padding: .55rem .7rem; border-radius: .7rem; font-size: .85rem; font-weight: 700;
             color: var(--color-gray-700); }
         .tut-more a:hover { background: var(--color-gray-50); }
-        html.dark .tut-device a.is-on { background: #1c2416; }
     </style>
 @endpush
 
@@ -45,18 +41,16 @@
     <div class="tut-wrap mx-auto">
         <div class="card mb-4">
             <div class="card-body">
-                <div class="flex items-start justify-between gap-3 mb-1">
+                <div class="mb-1">
                     <h2 class="text-xl font-bold text-gray-900 leading-snug">
                         {{ $page->title ?? ('How to use ' . $moduleLabel) }}
                     </h2>
-                    {{-- Reading the phone instructions at a desk is a fair thing
-                         to want — writing them is done here too. --}}
-                    <div class="tut-device shrink-0">
-                        @foreach (['mobile' => 'Phone', 'tablet' => 'Tablet', 'desktop' => 'Desktop'] as $d => $label)
-                            <a href="{{ route('help.show', ['module' => $moduleKey, 'device' => $d] + ($back ? ['from' => $back] : [])) }}"
-                               class="{{ $device === $d ? 'is-on' : '' }}">{{ $label }}</a>
-                        @endforeach
-                    </div>
+                    {{-- No device picker. Someone reading this is holding the
+                         thing the instructions are about, and being asked to
+                         choose between phone, tablet and desktop is being asked
+                         a question the browser already answered. The server
+                         reads the device and serves the page written for it,
+                         falling back to the nearest one that exists. --}}
                 </div>
                 @if ($page?->summary)
                     <p class="text-sm text-gray-500">{{ $page->summary }}</p>
@@ -74,7 +68,7 @@
                             <svg class="w-7 h-7 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.2 9a3.8 3.8 0 117.3 1.4c-.6 1.4-2.5 1.9-2.5 3.6M12 17.5h.01"/></svg>
                         </div>
                         <h3 class="font-bold text-gray-900 mb-1">Nothing written for this one yet</h3>
-                        <p class="text-sm text-gray-500">The guide for {{ $moduleLabel }} on this device hasn't been published.</p>
+                        <p class="text-sm text-gray-500">The guide for {{ $moduleLabel }} hasn't been written yet.</p>
                     </div>
                 @endif
             </div>
@@ -86,7 +80,7 @@
                     <h3 class="text-xs font-bold text-gray-400 uppercase mb-1.5">Other guides</h3>
                     <div class="tut-more grid sm:grid-cols-2 gap-0.5">
                         @foreach ($others as $o)
-                            <a href="{{ route('help.show', ['module' => $o->moduleKey, 'device' => $device]) }}">{{ $o->title }}</a>
+                            <a href="{{ route('help.show', ['module' => $o->moduleKey]) }}">{{ $o->title }}</a>
                         @endforeach
                     </div>
                 </div>
