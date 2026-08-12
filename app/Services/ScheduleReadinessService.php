@@ -122,7 +122,9 @@ class ScheduleReadinessService
             // A worker checklist is about who turned up, not which field, so
             // having no lot is its normal state rather than something missing.
             $noLot = $activities
-                ->reject(fn ($a) => $a->activityType === 'worker_payroll')
+                // Neither a payroll day nor a list of errands belongs to a
+                // patch of ground, so neither is missing anything.
+                ->reject(fn ($a) => in_array($a->activityType, ['worker_payroll', 'reminder_checklist'], true))
                 ->filter(fn ($a) => $a->lots->isEmpty());
             if ($noLot->isNotEmpty()) {
                 $items[] = [

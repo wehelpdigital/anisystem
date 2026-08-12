@@ -31,6 +31,10 @@ class AsScheduleActivity extends BaseModel
         // Paid work priced per worker rather than by the length of the task:
         // who was there, for how much of the day, and at what rate.
         'worker_payroll' => 'Worker Checklist',
+        // Things a day needs that are nobody's task and nobody's wage: a
+        // permit to collect, a delivery to chase, a payment to make. Each
+        // line can carry money, and ticking it is what makes that money real.
+        'reminder_checklist' => 'Reminder Checklist',
         'other'          => 'Other',
     ];
 
@@ -78,6 +82,7 @@ class AsScheduleActivity extends BaseModel
         'imagePath',
         'imagePaths',
         'tags',
+        'reminders',
         'timeRequired',
         'sequenceOrder',
         'deleteStatus',
@@ -89,6 +94,7 @@ class AsScheduleActivity extends BaseModel
         'servicePrice' => 'decimal:2',
         'imagePaths' => 'array',
         'tags' => 'array',
+        'reminders' => 'array',
         'isDayZero' => 'boolean',
         'isTransplant' => 'boolean',
         'isDraft' => 'boolean',
@@ -101,6 +107,47 @@ class AsScheduleActivity extends BaseModel
     public function schedule()
     {
         return $this->belongsTo(AsCroppingSchedule::class, 'croppingScheduleId');
+    }
+
+    /**
+     * The checklist, cleaned up: every line has text, a kind and an amount,
+     * whatever shape it was stored in. Reading it anywhere else can then be
+     * a loop and nothing more.
+     *
+     * @return array<int, array{text: string, kind: string, amount: float, done: bool}>
+     */
+    public function reminderList(): array
+    {
+        $out = [];
+        foreach ((array) ($this->reminders ?? []) as $row) {
+            $text = trim((string) ($row['text'] ?? ''));
+            if ($text === '') {
+                continue;
+            }
+            $kind = in_array($row['kind'] ?? '', ['expense', 'income'], true) ? $row['kind'] : 'none';
+            $out[] = [
+                'text' => $text,
+                'kind' => $kind,
+                'amount' => $kind === 'none' ? 0.0 : round((float) ($row['amount'] ?? 0), 2),
+                'done' => (bool) ($row['done'] ?? false),
+            ];
+        }
+
+        return $out;
+    }
+
+    /** What the ticked lines add up to, one way or the other. */
+    public function reminderTotal(string $kind): float
+    {
+        return (float) array_sum(array_map(
+            fn ($r) => $r['done'] && $r['kind'] === $kind ? $r['amount'] : 0,
+            $this->reminderList()
+        ));
+    }
+
+    public function isReminderChecklist(): bool
+    {
+        return $this->activityType === 'reminder_checklist';
     }
 
     /** What one worker on this activity is owed. */

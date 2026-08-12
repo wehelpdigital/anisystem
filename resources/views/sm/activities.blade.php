@@ -157,6 +157,8 @@
             margin-top: .25rem; padding-top: .35rem; border-top: 1px dashed var(--tl-border, rgb(0 0 0 / .12));
             font-size: .74rem; font-weight: 800; color: var(--tl-text, var(--color-gray-800)); }
         .type-ico-payroll { background: #fef3c7; color: #92400e; }
+        .type-ico-reminder { background: #ede9fe; color: #6d28d9; }
+        html.dark .type-ico-reminder { background: rgb(109 40 217 / .3); color: #c4b5fd; }
         html.dark .type-ico-payroll { background: rgb(120 53 15 / .35); color: #fcd34d; }
 
         /* The roster on a payroll card. Compact, because it sits inside a card
@@ -1106,6 +1108,35 @@
         /* !important so the disabled dimming survives the sheet's fade-in
            animation (which otherwise forces opacity back to 1). */
         .activity-action-row:disabled { opacity: .4 !important; pointer-events: none; }
+        /* Reminder checklist — the builder in the sheet, then the ticks on
+           the card. Both read as a list of small promises about a day. */
+        .rem-rows { display: grid; gap: .5rem; }
+        .rem-row { display: grid; grid-template-columns: 1fr auto; gap: .4rem; align-items: center;
+            border: 1px solid var(--color-gray-200, #e5e7eb); border-radius: .7rem; padding: .5rem; }
+        .rem-row .rem-text { width: 100%; }
+        .rem-row .rem-del { width: 2rem; height: 2rem; border-radius: 999px; color: #9ca3af;
+            display: inline-flex; align-items: center; justify-content: center; }
+        .rem-row .rem-del:hover { background: #fee2e2; color: #b91c1c; }
+        .rem-money { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+        .rem-money .rem-kind { flex: 0 0 auto; }
+        .rem-money .rem-amount { flex: 1 1 7rem; min-width: 6rem; }
+        .rem-money.is-free .rem-amount { display: none; }
+
+        .act-rem { margin-top: .5rem; border-top: 1px dashed var(--color-gray-200, #e5e7eb); padding-top: .5rem; }
+        .act-rem-row { display: flex; align-items: center; gap: .5rem; padding: .3rem .1rem; cursor: pointer; }
+        .act-rem-row input { width: 1.1rem; height: 1.1rem; flex: 0 0 auto; accent-color: #4a7c2a; }
+        .act-rem-name { flex: 1 1 auto; font-size: .85rem; font-weight: 600; color: #374151; }
+        .act-rem-row.is-done .act-rem-name { color: #9ca3af; text-decoration: line-through; }
+        .act-rem-amt { flex: 0 0 auto; font-size: .78rem; font-weight: 800; }
+        .act-rem-amt.is-expense { color: #b91c1c; }
+        .act-rem-amt.is-income { color: #15803d; }
+        .act-rem-total { display: flex; justify-content: space-between; gap: .5rem; margin-top: .35rem;
+            padding-top: .35rem; border-top: 1px solid var(--color-gray-100, #f3f4f6);
+            font-size: .78rem; font-weight: 800; color: #374151; }
+        html.dark .act-rem-name { color: #cdd8c0; }
+        html.dark .act-rem-total { color: #cdd8c0; }
+        html.dark .rem-row { border-color: #2a3050; }
+
         /* The date, said the way a person says it. The native input sits on
            top at zero opacity so the phone's picker still opens on a tap. */
         .date-pill { position: relative; display: inline-flex; align-items: center; gap: .5rem;

@@ -999,6 +999,13 @@ class ActivityController extends BaseScheduleController
             'items.*.quantity'      => 'nullable|numeric|min:0',
             'items.*.unitOfMeasure' => 'nullable|string|max:30',
             'items.*.notes'         => 'nullable|string|max:500',
+            // A reminder checklist: the day's errands, each optionally
+            // carrying money that only counts once the line is ticked.
+            'reminders'             => 'nullable|array|max:60',
+            'reminders.*.text'      => 'required_with:reminders|string|max:255',
+            'reminders.*.kind'      => 'nullable|in:none,expense,income',
+            'reminders.*.amount'    => 'nullable|numeric|min:0|max:99999999',
+            'reminders.*.done'      => 'nullable|boolean',
         ], [
             'lotIds.required' => 'Pick at least one lot for this activity.',
             'lotIds.min'      => 'Pick at least one lot for this activity.',
@@ -1089,6 +1096,9 @@ class ActivityController extends BaseScheduleController
             'imagePath'          => $submittedImagePath,
             'imagePaths'         => $submittedImagePaths ?: null,
             'timeRequired'       => $request->timeRequired,
+            'reminders'          => $activityType === 'reminder_checklist'
+                ? $this->cleanReminders($request->input('reminders'))
+                : null,
             'deleteStatus'       => 1,
         ];
 
@@ -1679,6 +1689,125 @@ class ActivityController extends BaseScheduleController
         }
 
         return $rows;
+    }
+
+    /** Store shape for the checklist: text, kind, amount, done — nothing else. */
+    private function cleanReminders($rows): ?array
+    {
+        $out = collect(is_array($rows) ? $rows : [])
+            ->map(function ($r) {
+                $text = trim((string) ($r['text'] ?? ''));
+                if ($text === '') {
+                    return null;
+                }
+                $kind = in_array($r['kind'] ?? '', ['expense', 'income'], true) ? $r['kind'] : 'none';
+
+                return [
+                    'text' => mb_substr($text, 0, 255),
+                    'kind' => $kind,
+                    'amount' => $kind === 'none' ? 0 : round((float) ($r['amount'] ?? 0), 2),
+                    'done' => (bool) ($r['done'] ?? false),
+                ];
+            })
+            ->filter()
+            ->values()
+            ->all();
+
+        return $out ?: null;
+    }
+
+    /**
+     * Tick or untick one line of a reminder checklist.
+     *
+     * A ticked line that carries money writes an ordinary day expense or day
+     * income row, and unticking removes it again. Doing it that way rather
+     * than inventing a parallel total means the day header, the "why does
+     * this day cost that" breakdown, the income list and every report pick it
+     * up without knowing reminders exist at all.
+     */
+    public function reminderToggle(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        if ($schedule->isLocked()) {
+            return $this->jsonFail('This schedule is marked completed and locked. Reopen it in the Hub to make changes.', 423);
+        }
+
+        $activity = AsScheduleActivity::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->where('id', (int) $request->input('activityId'))
+            ->first();
+        if (! $activity) {
+            return $this->jsonFail('Activity not found.', 404);
+        }
+
+        $rows = (array) ($activity->reminders ?? []);
+        $index = (int) $request->input('index', -1);
+        if (! array_key_exists($index, $rows)) {
+            return $this->jsonFail('That reminder is no longer there.', 404);
+        }
+
+        $done = $request->boolean('done');
+        $rows[$index]['done'] = $done;
+        $activity->update(['reminders' => $rows]);
+
+        $row = $activity->fresh()->reminderList()[$index] ?? null;
+        if ($row && $row['kind'] !== 'none' && $row['amount'] > 0) {
+            $this->syncReminderMoney($activity, $index, $row, $done);
+        }
+
+        $fresh = $activity->fresh();
+        $this->broadcastBoard($schedule, 'reload', ['id' => $activity->id], $activity->versionId);
+
+        return $this->jsonOk($done ? 'Ticked.' : 'Unticked.', ['data' => [
+            'id' => $fresh->id,
+            'reminders' => $fresh->reminderList(),
+            'expenseTotal' => $fresh->reminderTotal('expense'),
+            'incomeTotal' => $fresh->reminderTotal('income'),
+        ]]);
+    }
+
+    /** Put the money row where a ticked reminder says it belongs, or take it away. */
+    private function syncReminderMoney(AsScheduleActivity $activity, int $index, array $row, bool $done): void
+    {
+        $ref = 'reminder:' . $activity->id . ':' . $index;
+        $date = $activity->targetDate?->toDateString();
+        if (! $date) {
+            return;
+        }
+
+        $model = $row['kind'] === 'income'
+            ? \App\Models\AsScheduleDayIncome::class
+            : \App\Models\AsScheduleDayExpense::class;
+        $dateField = $row['kind'] === 'income' ? 'incomeDate' : 'expenseDate';
+
+        $existing = $model::where('croppingScheduleId', $activity->croppingScheduleId)
+            ->where('sourceRef', $ref)
+            ->first();
+
+        if (! $done) {
+            $existing?->update(['deleteStatus' => 0]);
+
+            return;
+        }
+
+        $payload = [
+            'croppingScheduleId' => $activity->croppingScheduleId,
+            'versionId' => $activity->versionId,
+            $dateField => $date,
+            'amount' => $row['amount'],
+            'note' => $row['text'],
+            'sourceRef' => $ref,
+            'deleteStatus' => 1,
+        ];
+        if ($row['kind'] === 'income') {
+            $payload['title'] = $row['text'];
+        }
+
+        if ($existing) {
+            $existing->update($payload);
+        } else {
+            $model::create($payload);
+        }
     }
 
     /** What each worker on an activity is owed, and the bill for the day. */

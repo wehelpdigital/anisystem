@@ -400,6 +400,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // Who actually turned up, day by day.
     Route::get('/app/sm-attendance', [App\Http\Controllers\Manager\ActivityController::class, 'attendance'])->name('sm.attendance');
     Route::post('/app/sm-attendance-mark', [App\Http\Controllers\Manager\ActivityController::class, 'markAttendance'])->name('sm.attendance.mark');
+    // Ticking one line of a reminder checklist (and the money it may carry).
+    Route::post('/app/sm-reminder-toggle', [App\Http\Controllers\Manager\ActivityController::class, 'reminderToggle'])->name('sm.activities.reminder-toggle');
     // Things an activity points at: a drawing, a map, a note.
     Route::get('/app/sm-activity-taggables', [App\Http\Controllers\Manager\ActivityController::class, 'taggables'])->name('sm.activities.taggables');
     Route::post('/app/sm-activity-tag', [App\Http\Controllers\Manager\ActivityController::class, 'tagActivity'])->name('sm.activities.tag');

@@ -19,6 +19,9 @@ class AsScheduleDayIncome extends BaseModel
         'amount',
         'title',
         'note',
+        // Which reminder tick put this row here, so unticking can take
+        // exactly that one away again.
+        'sourceRef',
         'sortOrder',
         'deleteStatus',
     ];

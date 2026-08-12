@@ -12,6 +12,9 @@ class AsScheduleDayExpense extends BaseModel
         'expenseDate',
         'amount',
         'note',
+        // Which reminder tick put this row here, so unticking can take
+        // exactly that one away again.
+        'sourceRef',
         'sortOrder',
         'deleteStatus',
     ];

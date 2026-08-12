@@ -46,8 +46,11 @@
                 aria-pressed="{{ $a->isDone ? 'true' : 'false' }}" aria-label="Mark activity as done">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>
-            <span class="type-ico {{ $a->activityType === 'irrigation' ? 'type-ico-irrigation' : ($a->activityType === 'service' ? 'type-ico-service' : ($a->activityType === 'worker_payroll' ? 'type-ico-payroll' : 'type-ico-task')) }}" aria-hidden="true">
-                @if($a->activityType === 'worker_payroll')
+            <span class="type-ico {{ $a->activityType === 'irrigation' ? 'type-ico-irrigation' : ($a->activityType === 'service' ? 'type-ico-service' : ($a->activityType === 'worker_payroll' ? 'type-ico-payroll' : ($a->activityType === 'reminder_checklist' ? 'type-ico-reminder' : 'type-ico-task'))) }}" aria-hidden="true">
+                @if($a->activityType === 'reminder_checklist')
+                    {{-- A ticked list, because that is the whole activity. --}}
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l1.5 1.5L15 12"/></svg>
+                @elseif($a->activityType === 'worker_payroll')
                     {{-- People, not a clipboard: what this day is about is who
                          came, and the icon should say so before the title does. --}}
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
@@ -252,6 +255,35 @@
                 <span>To pay</span>
                 <span data-att-total>₱{{ number_format($due, 2) }}</span>
             </div>
+        </div>
+    @endif
+
+    {{-- The day's errands. Ticking one here is what makes its money real:
+         the server writes an ordinary day expense or income row for it, so
+         the day header and every report see it without knowing what a
+         reminder is. Mirrors reminderChecklist() in the JS renderer. --}}
+    @if ($a->activityType === 'reminder_checklist' && count($a->reminderList()))
+        @php
+            $rems = $a->reminderList();
+            $remSpend = $a->reminderTotal('expense');
+            $remEarn = $a->reminderTotal('income');
+        @endphp
+        <div class="act-rem" data-rem-activity="{{ $a->id }}">
+            @foreach ($rems as $i => $r)
+                <label class="act-rem-row{{ $r['done'] ? ' is-done' : '' }}" data-rem-index="{{ $i }}">
+                    <input type="checkbox" @checked($r['done'])>
+                    <span class="act-rem-name">{{ $r['text'] }}</span>
+                    @if ($r['kind'] !== 'none' && $r['amount'] > 0)
+                        <span class="act-rem-amt is-{{ $r['kind'] }}">{{ $r['kind'] === 'income' ? '+' : '−' }}₱{{ number_format($r['amount'], 2) }}</span>
+                    @endif
+                </label>
+            @endforeach
+            @if ($remSpend > 0)
+                <div class="act-rem-total"><span>To spend</span><span class="act-rem-amt is-expense">₱{{ number_format($remSpend, 2) }}</span></div>
+            @endif
+            @if ($remEarn > 0)
+                <div class="act-rem-total"><span>To collect</span><span class="act-rem-amt is-income">₱{{ number_format($remEarn, 2) }}</span></div>
+            @endif
         </div>
     @endif
 

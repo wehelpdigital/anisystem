@@ -93,12 +93,14 @@ document.addEventListener('DOMContentLoaded', () => {
         weather:          ()  => `{{ route('sm.weather') }}?scheduleId=${SCHEDULE_ID}`,
         attendance:       (d) => `{{ route('sm.attendance') }}?scheduleId=${SCHEDULE_ID}&date=${encodeURIComponent(d)}`,
         attendanceMark:   ()  => `{{ route('sm.attendance.mark') }}?scheduleId=${SCHEDULE_ID}`,
+        reminderToggle:   ()  => `{{ route('sm.activities.reminder-toggle') }}?scheduleId=${SCHEDULE_ID}`,
         taggables:        ()  => `{{ route('sm.activities.taggables') }}?scheduleId=${SCHEDULE_ID}`,
         tag:              ()  => `{{ route('sm.activities.tag') }}?scheduleId=${SCHEDULE_ID}`,
         untag:            ()  => `{{ route('sm.activities.untag') }}?scheduleId=${SCHEDULE_ID}`,
         dayIncomeList:    ()  => `{{ route('sm.activities.day-income.list') }}?id=${SCHEDULE_ID}`,
         dayIncomeSave:    ()  => `{{ route('sm.activities.day-income.save') }}?scheduleId=${SCHEDULE_ID}`,
         dayIncomeDelete:  (id) => `{{ route('sm.activities.day-income.delete') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
+        dayExpenseList:   (d) => `{{ route('sm.activities.day-expense.list') }}?id=${SCHEDULE_ID}&expenseDate=${encodeURIComponent(d)}`,
         dayExpenseSave:   ()  => `{{ route('sm.activities.day-expense.save') }}?scheduleId=${SCHEDULE_ID}`,
         dayExpenseDelete: ()  => `{{ route('sm.activities.day-expense.delete') }}?scheduleId=${SCHEDULE_ID}`,
         markerSave:       ()  => `{{ route('sm.markers.save') }}?scheduleId=${SCHEDULE_ID}`,
@@ -188,6 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ---- Shared inline SVG snippets (identical to the blade partials) ----
     const SVG = {
+        reminder: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l1.5 1.5L15 12"/></svg>',
         moon: '<svg class="w-5 h-5 text-gray-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>',
         plus: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>',
         note: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>',
@@ -496,14 +499,18 @@ document.addEventListener('DOMContentLoaded', () => {
             typeBadge = `<span class="badge service-badge">${SVG.service || '🛠'} Service${priceTxt}</span>`;
         } else if (a.activityType === 'worker_payroll') {
             typeBadge = '';        // it lives beside the kebab now
+        } else if (a.activityType === 'reminder_checklist') {
+            typeBadge = '';        // the ticked list says what this is
         } else {
             typeBadge = typeLabel ? `<span class="badge badge-green activity-type-badge">${esc(typeLabel)}</span>` : '';
         }
         // Type chip before the title — keep in sync with activity-card.blade.php.
         const typeIcoClass = a.activityType === 'irrigation' ? 'type-ico-irrigation'
-            : (a.activityType === 'service' ? 'type-ico-service' : 'type-ico-task');
+            : (a.activityType === 'service' ? 'type-ico-service'
+            : (a.activityType === 'reminder_checklist' ? 'type-ico-reminder' : 'type-ico-task'));
         const typeIcoSvg = a.activityType === 'irrigation' ? SVG.water
-            : (a.activityType === 'service' ? SVG.service : SVG.task);
+            : (a.activityType === 'service' ? SVG.service
+            : (a.activityType === 'reminder_checklist' ? SVG.reminder : SVG.task));
         const typeIco = `<span class="type-ico ${typeIcoClass}" aria-hidden="true">${typeIcoSvg}</span>`;
         // Day-0 badge label follows the covered lots: DAP 0 only if every lot is
         // DAP, otherwise DAS 0 (the seeding anchor for DAS/DAT lots).
@@ -605,6 +612,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ${itemTags}
     </div>
     ${payrollChecklist(a)}
+    ${reminderChecklist(a)}
     ${a.activityType === 'worker_payroll' ? '' : labourLine(a.labourTotal, a.workerPay)}
     <div class="activity-tags">${activityTagChips(a.tags)}</div>
 </div>`;
@@ -619,6 +627,33 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     /* A payroll day's roster, on the card. Same markup as the Blade renderer:
        tick who turned up without opening anything. */
+    /** A reminder checklist on the card. Mirrors activity-card.blade.php. */
+    function reminderChecklist(a) {
+        if (a.activityType !== 'reminder_checklist') return '';
+        const rows = (a.reminders || []).filter((r) => r && r.text);
+        if (!rows.length) return '';
+        let spend = 0, earn = 0;
+        const body = rows.map((r, i) => {
+            const kind = r.kind === 'expense' || r.kind === 'income' ? r.kind : 'none';
+            const amt = Number(r.amount) || 0;
+            if (r.done && kind === 'expense') spend += amt;
+            if (r.done && kind === 'income') earn += amt;
+            const money = kind === 'none' || !amt ? ''
+                : `<span class="act-rem-amt is-${kind}">${kind === 'income' ? '+' : '−'}${esc(money2(amt))}</span>`;
+            return `<label class="act-rem-row${r.done ? ' is-done' : ''}" data-rem-index="${i}">
+                <input type="checkbox"${r.done ? ' checked' : ''}>
+                <span class="act-rem-name">${esc(r.text)}</span>
+                ${money}
+            </label>`;
+        }).join('');
+        const totals = [];
+        if (spend > 0) totals.push(`<span>To spend</span><span class="act-rem-amt is-expense">${esc(money2(spend))}</span>`);
+        if (earn > 0) totals.push(`<span>To collect</span><span class="act-rem-amt is-income">${esc(money2(earn))}</span>`);
+        const totalRow = totals.map((t) => `<div class="act-rem-total">${t}</div>`).join('');
+        return `<div class="act-rem" data-rem-activity="${esc(a.id)}">${body}${totalRow}</div>`;
+    }
+    const money2 = (n) => money(n);
+
     function payrollChecklist(a) {
         if (a.activityType !== 'worker_payroll') return '';
         const pay = a.workerPay || {};
@@ -695,6 +730,64 @@ document.addEventListener('DOMContentLoaded', () => {
             toast(err.message || 'Could not save that.', 'error');
         }
     });
+
+    /* ---- Ticking a reminder off the card ----------------------------------
+     * The tick is the point of a reminder checklist, so it happens on the
+     * card, and the money follows straight away: the server turns a ticked
+     * line into an ordinary day expense or day income row, which is what the
+     * day header is reading. The board reloads that day's cash from the
+     * server rather than guessing at it here. */
+    document.addEventListener('change', async (e) => {
+        const box = e.target.closest('.act-rem-row input[type=checkbox]');
+        if (!box) return;
+        const row = box.closest('[data-rem-index]');
+        const wrap = box.closest('[data-rem-activity]');
+        if (!row || !wrap) return;
+
+        row.classList.toggle('is-done', box.checked);
+        try {
+            const res = await api(U.reminderToggle(), {
+                method: 'POST',
+                body: {
+                    activityId: parseInt(wrap.getAttribute('data-rem-activity'), 10),
+                    index: parseInt(row.getAttribute('data-rem-index'), 10),
+                    done: box.checked ? 1 : 0,
+                },
+            });
+            paintReminderTotals(wrap, res.data);
+            // A ticked line may have added money to the day; ask the server
+            // what the day costs now rather than adding it up twice.
+            await refreshDayMoney((box.closest('.date-group')?.getAttribute('data-date') || '').trim());
+        } catch (err) {
+            box.checked = !box.checked;
+            row.classList.toggle('is-done', box.checked);
+            toast(err.message || 'Could not save that.', 'error');
+        }
+    });
+
+    /** Re-read one day's expenses, so the header pill and the expense strip
+     *  catch up with a tick that just added or removed money. */
+    async function refreshDayMoney(dateKey) {
+        if (!dateKey) return;
+        try {
+            const res = await api(U.dayExpenseList(dateKey));
+            DAY_EXPENSES[dateKey] = (res && res.data) || [];
+            renderExpenseBlockFor(dateKey);
+            paintAllDayCash();
+        } catch (err) { /* the tick still stands; the pill catches up on reload */ }
+    }
+
+    /** Redraw the "to spend" / "to collect" lines under one checklist. */
+    function paintReminderTotals(wrap, data) {
+        $qsa('.act-rem-total', wrap).forEach((el) => el.remove());
+        const add = (label, amount, tone) => {
+            if (!(amount > 0)) return;
+            wrap.insertAdjacentHTML('beforeend',
+                `<div class="act-rem-total"><span>${label}</span><span class="act-rem-amt is-${tone}">${esc(money(amount))}</span></div>`);
+        };
+        add('To spend', Number(data?.expenseTotal) || 0, 'expense');
+        add('To collect', Number(data?.incomeTotal) || 0, 'income');
+    }
 
     /* What the day's labour on this activity costs, spelled out per worker so
        the number can be checked rather than just trusted. */
@@ -2342,7 +2435,7 @@ document.addEventListener('DOMContentLoaded', () => {
         el.classList.add('mode-field-in');
     }
     function setActivityMode(mode) {
-        activityMode = ['irrigation', 'service', 'payroll'].includes(mode) ? mode : 'task';
+        activityMode = ['irrigation', 'service', 'payroll', 'reminders'].includes(mode) ? mode : 'task';
         $qsa('#activityModeTabs .activity-mode-tab[data-mode]').forEach((tab) => {
             const on = tab.getAttribute('data-mode') === activityMode;
             tab.classList.toggle('is-active', on);
@@ -2352,9 +2445,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const irr = activityMode === 'irrigation';
         const svc = activityMode === 'service';
         const payroll = activityMode === 'payroll';
+        const reminders = activityMode === 'reminders';
         // Payroll is its own kind of day's work: the pay is per worker, so the
         // checklist IS the form and the rest of the task fields step aside.
         setActPane(payroll ? 'workers' : 'details');
+        // A reminder checklist is a list of errands: no crew, no materials, no
+        // lots — the list IS the activity, so everything else steps aside.
+        $id('activityRemindersPane')?.classList.toggle('hidden', !reminders);
+        $id('activityWorkersPane')?.classList.toggle('hidden', reminders);
+        if (reminders && !$qs('#reminderRows .rem-row')) addReminderRow();
         // Its crew is chosen by ticking names, so the chip row would be a
         // second way to say the same thing — and a payroll day is about who
         // turned up, not which patch of ground.
@@ -2365,12 +2464,13 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('activityWaterTaskWrap')?.classList.toggle('hidden', !irr);
         $id('activityServicePriceWrap')?.classList.toggle('hidden', !svc);
         $id('activityImagesSection')?.classList.toggle('hidden', !task);
-        $id('activityItemsSection')?.classList.toggle('hidden', svc);
+        $id('activityItemsSection')?.classList.toggle('hidden', svc || reminders);
         const secLabel = $id('itemsSectionLabel');
         if (secLabel) secLabel.textContent = irr ? 'Materials' : 'Materials & Items';
         const titleEl = $id('activityTitle');
         if (titleEl) titleEl.setAttribute('placeholder',
-            activityMode === 'payroll' ? 'e.g. Weeding crew — Lot B'
+            reminders ? 'e.g. Errands for the day'
+            : activityMode === 'payroll' ? 'e.g. Weeding crew — Lot B'
             : svc ? 'e.g. Land preparation (tractor)'
             : irr ? 'e.g. Irrigate Lot A — Day 20–35'
             : 'e.g. Basal Fertilizer Application');
@@ -2383,6 +2483,92 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     $qsa('#activityModeTabs .activity-mode-tab[data-mode]').forEach((tab) => {
         tab.addEventListener('click', () => setActivityMode(tab.getAttribute('data-mode')));
+    });
+
+    /* ---- Reminder checklist builder ---------------------------------------
+     * One row per errand. Money is opt-in per line: pick "costs" or "brings
+     * in" and an amount appears; leave it alone and the line is just a thing
+     * to remember. */
+    function reminderRowHtml(r) {
+        const kind = (r && r.kind) || 'none';
+        const amount = r && r.amount ? r.amount : '';
+        return `<div class="rem-row">
+            <input type="text" class="form-input rem-text" maxlength="255" placeholder="e.g. Collect the seed permit" value="${esc((r && r.text) || '')}">
+            <button type="button" class="btn-ghost rem-del" aria-label="Remove this reminder">✕</button>
+            <div class="rem-money${kind === 'none' ? ' is-free' : ''}">
+                <select class="form-select rem-kind">
+                    <option value="none"${kind === 'none' ? ' selected' : ''}>No money</option>
+                    <option value="expense"${kind === 'expense' ? ' selected' : ''}>Costs money</option>
+                    <option value="income"${kind === 'income' ? ' selected' : ''}>Brings money in</option>
+                </select>
+                <input type="number" class="form-input rem-amount" step="0.01" min="0" placeholder="Amount" value="${esc(amount)}">
+            </div>
+        </div>`;
+    }
+    function addReminderRow(r) {
+        const host = $id('reminderRows');
+        if (!host) return;
+        host.insertAdjacentHTML('beforeend', reminderRowHtml(r));
+        paintReminderCount();
+    }
+    function setActivityReminders(rows) {
+        const host = $id('reminderRows');
+        if (!host) return;
+        host.innerHTML = '';
+        (rows || []).forEach((r) => {
+            addReminderRow(r);
+            // Editing the wording of a line you already ticked off should not
+            // untick it, so the row carries that fact through the form.
+            if (r && r.done) host.lastElementChild?.setAttribute('data-done', '1');
+        });
+        if (!host.children.length) addReminderRow();
+        paintReminderCount();
+    }
+    function getActivityReminders() {
+        return $qsa('#reminderRows .rem-row').map((row) => {
+            const kind = row.querySelector('.rem-kind')?.value || 'none';
+            return {
+                text: (row.querySelector('.rem-text')?.value || '').trim(),
+                kind,
+                amount: kind === 'none' ? 0 : parseFloat(row.querySelector('.rem-amount')?.value || '0') || 0,
+                // Editing the list never changes what has already been ticked
+                // off on the board; that lives on the card.
+                done: row.getAttribute('data-done') === '1',
+            };
+        }).filter((r) => r.text);
+    }
+    function paintReminderCount() {
+        const n = $qsa('#reminderRows .rem-row').filter((r) => (r.querySelector('.rem-text')?.value || '').trim()).length;
+        const badge = $id('activityReminderCount');
+        if (!badge) return;
+        badge.textContent = n;
+        badge.hidden = n === 0;
+    }
+    $id('addReminderRow')?.addEventListener('click', () => {
+        addReminderRow();
+        $qsa('#reminderRows .rem-text').slice(-1)[0]?.focus();
+    });
+    $id('reminderRows')?.addEventListener('click', (e) => {
+        const del = e.target.closest('.rem-del');
+        if (!del) return;
+        const row = del.closest('.rem-row');
+        if ($qsa('#reminderRows .rem-row').length === 1) {
+            row.querySelector('.rem-text').value = '';
+        } else if (window.animateOut) {
+            window.animateOut(row, () => { row.remove(); paintReminderCount(); });
+            return;
+        } else {
+            row.remove();
+        }
+        paintReminderCount();
+    });
+    $id('reminderRows')?.addEventListener('change', (e) => {
+        const kind = e.target.closest('.rem-kind');
+        if (!kind) return;
+        kind.closest('.rem-money')?.classList.toggle('is-free', kind.value === 'none');
+    });
+    $id('reminderRows')?.addEventListener('input', (e) => {
+        if (e.target.closest('.rem-text')) paintReminderCount();
     });
 
     // ---- Quill description editor (+ HTML source mode) ----
@@ -2736,6 +2922,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ---- Sheet open/reset/fill ----
     function resetActivitySheet() {
+        setActivityReminders([]);
         $id('activityId').value = '';
         $id('activityTitle').value = '';
         setTargetDate('');
@@ -2817,6 +3004,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if ($id('activityServicePrice')) $id('activityServicePrice').value = a.servicePrice != null ? a.servicePrice : '';
             } else if (a.activityType === 'worker_payroll') {
                 setActivityMode('payroll');
+            } else if (a.activityType === 'reminder_checklist') {
+                setActivityMode('reminders');
+                setActivityReminders(a.reminders || []);
             } else {
                 setActivityMode('task');
                 $id('activityType').value = a.activityType || '';
@@ -2902,8 +3092,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const isIrrigation = activityMode === 'irrigation';
         const isService = activityMode === 'service';
         const isPayroll = activityMode === 'payroll';
-        const activityType = isPayroll ? 'worker_payroll'
-            : (isIrrigation ? 'irrigation' : (isService ? 'service' : ($id('activityType').value || '')));
+        const isReminders = activityMode === 'reminders';
+        const activityType = isReminders ? 'reminder_checklist'
+            : (isPayroll ? 'worker_payroll'
+            : (isIrrigation ? 'irrigation' : (isService ? 'service' : ($id('activityType').value || ''))));
         const payload = {
             activityTitle: $id('activityTitle').value,
             targetDate: startDateVal,
@@ -2921,8 +3113,13 @@ document.addEventListener('DOMContentLoaded', () => {
             lotIds: getActivityLotIds(),   // empty = N/A (not lot-specific)
             workerIds: getActivityWorkerIds(),
             workerPay: getWorkerPay(),
-            items: isService ? [] : items,
+            items: (isService || isReminders) ? [] : items,
+            reminders: isReminders ? getActivityReminders() : null,
         };
+        if (isReminders && !payload.reminders.length) {
+            toast('Add at least one reminder to the checklist.', 'error');
+            return;
+        }
         if (!payload.activityTitle) {
             toast('Activity title is required', 'error');
             return;

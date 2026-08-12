@@ -38,6 +38,14 @@
                     Worker checklist
                     <span class="act-pane-count" id="activityWorkerCount" hidden>0</span>
                 </button>
+                {{-- The day's errands: things that are nobody's task and
+                     nobody's wage, but still have to happen — and some of
+                     which cost or bring in money once they do. --}}
+                <button type="button" class="activity-mode-tab" data-mode="reminders" aria-selected="false">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l1.5 1.5L15 12"/></svg>
+                    Reminder checklist
+                    <span class="act-pane-count" id="activityReminderCount" hidden>0</span>
+                </button>
             </div>
 
             <div id="activityDraftHint" class="hidden rounded-lg bg-blue-50 border border-blue-200 text-blue-800 text-xs px-3 py-2">
@@ -203,6 +211,21 @@
                         <span class="text-green-800/80">For transplanted crops (e.g. rice): activities before this date count in DAS from sowing; on or after it they count in DAT — a fresh counter starting from this activity's start date.</span>
                     </span>
                 </label>
+            </div>
+
+            {{-- Reminder checklist builder. One line per errand: what it is,
+                 and — only if it involves money — whether ticking it costs or
+                 earns, and how much. --}}
+            <div id="activityRemindersPane" class="hidden">
+                <span class="form-label">Reminders
+                    <span class="text-gray-400 font-normal">— ticked on the day, as they happen</span>
+                </span>
+                <div id="reminderRows" class="rem-rows"></div>
+                <button type="button" id="addReminderRow" class="btn btn-white btn-sm mt-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                    Add a reminder
+                </button>
+                <p class="form-hint">A line with money attached only counts on the day it is ticked — an expense joins the cash to prepare, income joins the day's earnings.</p>
             </div>
 
             <div id="activityWorkersPane">
