@@ -258,16 +258,38 @@ class ScheduleMapController extends BaseScheduleController
             ->limit(50)
             ->get();
         $users = \App\Models\User::whereIn('id', $rows->pluck('userId')->unique())->get()->keyBy('id');
+        // The picture each save filed in the notebook, so a caller can show it
+        // or attach it elsewhere without reopening the map to redraw it.
+        $notes = \App\Models\AsScheduleNote::active()
+            ->whereIn('id', $rows->pluck('noteId')->filter()->all())
+            ->get()->keyBy('id');
+        $picture = function ($noteId) use ($notes) {
+            $note = $noteId ? $notes->get($noteId) : null;
+            foreach ((is_array($note?->media) ? $note->media : []) as $m) {
+                $path = (string) ($m['path'] ?? '');
+                if (($m['type'] ?? '') === 'map' || preg_match('~/map-[A-Za-z0-9]+\.png$~', $path)) {
+                    return $path;
+                }
+            }
+
+            return null;
+        };
 
         return response()->json([
             'success' => true,
-            'data' => ['saves' => $rows->map(fn ($r) => [
-                'id' => (int) $r->id,
-                'title' => $r->title,
-                'by' => (string) \Illuminate\Support\Str::of(optional($users->get($r->userId))->full_name ?? 'Someone')->explode(' ')->first(),
-                'when' => $r->created_at?->timezone('Asia/Manila')->format('M j, Y g:ia'),
-                'count' => count(json_decode((string) $r->objects, true) ?: []),
-            ])->all()],
+            'data' => ['saves' => $rows->map(function ($r) use ($users, $picture) {
+                $path = $picture($r->noteId ? (int) $r->noteId : null);
+
+                return [
+                    'id' => (int) $r->id,
+                    'title' => $r->title,
+                    'by' => (string) \Illuminate\Support\Str::of(optional($users->get($r->userId))->full_name ?? 'Someone')->explode(' ')->first(),
+                    'when' => $r->created_at?->timezone('Asia/Manila')->format('M j, Y g:ia'),
+                    'count' => count(json_decode((string) $r->objects, true) ?: []),
+                    'imagePath' => $path,
+                    'imageUrl' => $path ? \Illuminate\Support\Facades\Storage::disk('public')->url($path) : null,
+                ];
+            })->all()],
         ]);
     }
 

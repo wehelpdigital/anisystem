@@ -14,9 +14,6 @@
     </div>
     <div class="sheet-body">
         <div class="ne-tools">
-            <button type="button" class="btn btn-white btn-sm" id="noteEditorDraw">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1 10-10-3-3L5 16l-1 4z"/></svg>Draw
-            </button>
             <button type="button" class="btn btn-white btn-sm" id="noteEditorEmoji">😊 Emoji</button>
             <button type="button" class="btn btn-white btn-sm" id="noteEditorPhoto">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Photo
@@ -35,7 +32,7 @@
         </div>
         <div class="ne-quill"><div id="noteEditorBody"></div></div>
         <div id="noteEditorMedia" class="ne-thumbs mt-3"></div>
-        <p class="form-hint">Photos & videos are auto-compressed. Draw and emoji drop straight into the note.</p>
+        <p class="form-hint">Photos &amp; videos are auto-compressed. A drawing already attached can still be tapped to edit it.</p>
     </div>
     <div class="sheet-footer">
         <button type="button" id="noteEditorDelete" class="btn btn-danger-outline mr-auto hidden">Delete</button>
@@ -158,11 +155,6 @@
             window.toast?.(entry.type === 'drawing' ? 'Drawing saved — tap it to edit again.' : 'Drawing added.');
         } catch (err) { window.toast?.(err.message || 'Could not add drawing.', 'error'); }
     }
-
-    $('noteEditorDraw').addEventListener('click', () => {
-        if (typeof window.openDrawCanvas !== 'function') { window.toast?.('Drawing tool unavailable.', 'error'); return; }
-        window.openDrawCanvas((dataUrl, objects) => uploadDrawing(dataUrl, objects, null), null, { editable: true });
-    });
 
     // Tapping a saved drawing in the editor reopens it with its strokes.
     $('noteEditorMedia').addEventListener('click', (e) => {

@@ -28,6 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
      * ================================================================ */
 
     const SCHEDULE_ID = @json($schedule->id);
+    // The Maps module and what it has already saved — the day's "Add a map"
+    // attaches one of those rather than making the day draw its own.
+    const MAPS_URL = @json(route('sm.maps', ['id' => $schedule->id]));
+    const MAP_SAVES_URL = @json(route('sm.map.saves')) + '?scheduleId=' + @json($schedule->id);
     const DAY_TYPE_DEFAULT = @json($schedule->dayType ?: 'DAS');
     const STORAGE_BASE = @json(asset('storage'));
 
@@ -2562,10 +2566,79 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => openDayIncome(date), 260);
             return;
         }
+        if (cls === 'add-drawing') {
+            const date = dayMenuDate;
+            setTimeout(() => addDayDrawing(date), 260);
+            return;
+        }
+        if (cls === 'add-map') {
+            const date = dayMenuDate;
+            setTimeout(() => openDayMapPick(date), 260);
+            return;
+        }
         const target = $qs(`#activitiesList .date-group[data-date="${dayMenuDate}"] .${cls}`);
         // Defer so the sheet is closed before the next one opens.
         setTimeout(() => target?.click(), 260);
     });
+
+    /* ---- A drawing or a map, kept with the day ---------------------------
+     * Both used to be reachable only from inside the note editor, which made
+     * them feel like formatting rather than like things the day has. They hang
+     * off the day now and land in that day's note, so nothing new has to be
+     * invented to store or show them. */
+    async function addDayDrawing(dateKey) {
+        if (typeof window.openDrawCanvas !== 'function') { toast('Drawing pad unavailable.', 'error'); return; }
+        window.openDrawCanvas(async (dataUrl, objects) => {
+            try {
+                const res = await api(NOTES_DRAW_URL, { method: 'POST', body: { image: dataUrl } });
+                const path = res && res.data && res.data.path;
+                if (!path) throw new Error('Upload failed.');
+                // The pad's two exits again: strokes come back only from "Save
+                // as drawing", and only then can it be reopened and changed.
+                const entry = objects
+                    ? { type: 'drawing', path, url: res.data.url, strokes: objects }
+                    : { type: 'image', path, url: res.data.url };
+                await saveDateNoteMedia(dateKey, _dateNoteContentFor(dateKey), _dateNoteMediaFor(dateKey).concat([entry]));
+            } catch (err) { toast(err.message || 'Could not add the drawing.', 'error'); }
+        }, null, { editable: true });
+    }
+
+    let mapPickDate = null;
+    async function openDayMapPick(dateKey) {
+        mapPickDate = dateKey;
+        const list = $id('dayMapList');
+        const link = $id('dayMapNew');
+        if (link) link.setAttribute('href', MAPS_URL);
+        if (list) list.innerHTML = '<p class="text-sm text-gray-400 py-2">Loading saved maps…</p>';
+        openSheet('dayMapPickSheet');
+        try {
+            const res = await api(MAP_SAVES_URL);
+            const saves = ((res.data && res.data.saves) || []).filter((s) => s.imagePath);
+            if (!list) return;
+            list.innerHTML = saves.length
+                ? saves.map((s) => `<button type="button" class="w-full flex items-center gap-3 rounded-xl p-2 text-left hover:bg-gray-50" data-map="${s.id}">
+                        <span class="w-14 h-11 rounded-lg bg-gray-100 overflow-hidden shrink-0">${s.imageUrl ? `<img src="${esc(s.imageUrl)}" alt="" class="w-full h-full object-cover">` : ''}</span>
+                        <span class="min-w-0">
+                            <span class="block font-semibold text-gray-800 text-sm truncate">${esc(s.title || 'Map')}</span>
+                            <span class="block text-xs text-gray-400">${esc(s.by || '')} · ${esc(s.when || '')}</span>
+                        </span>
+                    </button>`).join('')
+                : '<p class="text-sm text-gray-400 py-2">No saved maps yet. Draw one in the Maps module and save it, then it can be attached here.</p>';
+            list.querySelectorAll('[data-map]').forEach((btn) => {
+                btn.addEventListener('click', async () => {
+                    const save = saves.find((s) => String(s.id) === btn.getAttribute('data-map'));
+                    if (!save) return;
+                    closeSheet('dayMapPickSheet');
+                    try {
+                        const entry = { type: 'map', path: save.imagePath, url: save.imageUrl };
+                        await saveDateNoteMedia(mapPickDate, _dateNoteContentFor(mapPickDate), _dateNoteMediaFor(mapPickDate).concat([entry]));
+                    } catch (err) { toast(err.message || 'Could not attach that map.', 'error'); }
+                });
+            });
+        } catch (err) {
+            if (list) list.innerHTML = '<p class="text-sm text-red-500 py-2">Could not load saved maps.</p>';
+        }
+    }
 
     /* ---- Income for one day ---------------------------------------------
      * The mirror of extra expenses: money the day brought in, for services a

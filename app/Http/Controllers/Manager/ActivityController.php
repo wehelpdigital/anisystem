@@ -1195,9 +1195,10 @@ class ActivityController extends BaseScheduleController
             'noteDate'    => 'required|date',
             'noteContent' => 'nullable|string|max:20000',
             'media'          => 'nullable|array|max:20',
-            'media.*.type'   => 'required_with:media|in:image,video',
+            'media.*.type'   => 'required_with:media|in:image,video,drawing,map',
             'media.*.path'   => 'required_with:media|string|max:500',
             'media.*.poster' => 'nullable|string|max:500',
+            'media.*.strokes' => 'nullable|array|max:4000',
         ]);
         if ($validator->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
@@ -1295,9 +1296,10 @@ class ActivityController extends BaseScheduleController
             'sortKey'  => 'nullable|integer',
             'content'  => 'nullable|string|max:20000',
             'media'          => 'nullable|array|max:20',
-            'media.*.type'   => 'required_with:media|in:image,video',
+            'media.*.type'   => 'required_with:media|in:image,video,drawing,map',
             'media.*.path'   => 'required_with:media|string|max:500',
             'media.*.poster' => 'nullable|string|max:500',
+            'media.*.strokes' => 'nullable|array|max:4000',
         ]);
         if ($validator->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
@@ -1370,11 +1372,13 @@ class ActivityController extends BaseScheduleController
     private function normalizeNoteMedia($media): ?array
     {
         return collect(is_array($media) ? $media : [])
-            ->filter(fn ($m) => in_array($m['type'] ?? '', ['image', 'video'], true) && filled($m['path'] ?? null))
+            ->filter(fn ($m) => in_array($m['type'] ?? '', ['image', 'video', 'drawing', 'map'], true) && filled($m['path'] ?? null))
             ->map(fn ($m) => array_filter([
                 'type' => $m['type'],
                 'path' => $m['path'],
                 'poster' => $m['poster'] ?? null,
+                // What makes a drawing reopenable rather than just a picture.
+                'strokes' => ($m['type'] ?? '') === 'drawing' ? ($m['strokes'] ?? null) : null,
             ], fn ($v) => $v !== null))
             ->values()->all() ?: null;
     }
@@ -1387,6 +1391,7 @@ class ActivityController extends BaseScheduleController
                 'type' => $m['type'] ?? 'image',
                 'path' => $m['path'] ?? null,
                 'poster' => $m['poster'] ?? null,
+                'strokes' => $m['strokes'] ?? null,
                 'url' => ! empty($m['path']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($m['path']) : null,
                 'posterUrl' => ! empty($m['poster']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($m['poster']) : null,
             ])

@@ -152,10 +152,6 @@
                 <label class="form-label mb-0">Note</label>
                 <div class="flex items-center gap-1.5">
                     <button type="button" id="noteEmojiBtn" class="btn btn-white btn-sm">😊 Emoji</button>
-                    <button type="button" id="noteDrawBtn" class="btn btn-white btn-sm">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1 10-10-3-3L5 16l-1 4z"/></svg>
-                        Draw
-                    </button>
                 </div>
             </div>
             <div class="note-quill mt-1.5">
@@ -351,20 +347,6 @@ const __init = () => {
     applyFold();
 
     // Draw → upload the sketch → add it as an attachment (not inline).
-    fld('noteDrawBtn')?.addEventListener('click', () => {
-        if (typeof window.openDrawCanvas !== 'function') { toast('Drawing tool unavailable.', 'error'); return; }
-        window.openDrawCanvas(async (dataUrl) => {
-            try {
-                const res = await api(@json(route('notes.hub.draw')), { method: 'POST', body: { image: dataUrl } });
-                const url = res && res.data && res.data.url;
-                if (!url) throw new Error('Upload failed.');
-                media.push({ type: 'image', path: res.data.path, url });
-                renderMthumbs();
-                toast('Drawing added.');
-            } catch (err) { toast(err.message || 'Could not add drawing.', 'error'); }
-        });
-    });
-
     // Add photo(s) — each is compressed server-side and pushed to the gallery.
     fld('notePhoto').addEventListener('change', async (e) => {
         const files = Array.from(e.target.files || []); if (!files.length) return;
