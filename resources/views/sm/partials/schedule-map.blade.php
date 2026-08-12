@@ -338,6 +338,11 @@
 (() => {
     if (window.initCollabMap) return;
     const SID = {{ (int) $schedule->id }};
+    // This file had always reached for the global escapeHtml; the saved-map
+    // list I added called it esc, which exists in the other partials and never
+    // here — so opening the list threw before it drew a single row.
+    const esc = window.escapeHtml || ((v) => String(v == null ? '' : v)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'));
     const ME = {{ (int) auth()->id() }};
     const KEY = @json($cmapKey);
     const URLS = {
@@ -1234,6 +1239,7 @@
     }
 
     document.getElementById('cmapSaveSearch')?.addEventListener('input', (e) => paintSaves(e.target.value));
+    window.__openSavesForTest = openSaves;
     async function loadSavedMap(sv) {
         const ok = window.confirmAction
             ? await confirmAction({ title: 'Load “' + sv.title + '”?', message: 'Replaces the current shapes for the whole team.', confirmText: 'Load map' })
