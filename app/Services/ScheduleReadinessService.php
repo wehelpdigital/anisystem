@@ -73,8 +73,11 @@ class ScheduleReadinessService
                 $items[] = [
                     'key' => 'no-day-zero',
                     'label' => "No {$dayType} 0 anchored",
-                    'detail' => "Nothing is counting days yet. Set a day-0 date on a lot, or tick \"this is day zero\" on the sowing activity, and every card gets its {$dayType} number.",
-                    'module' => 'lots',
+                    // Lands where the fix is made. The message names the
+                    // activity first, so sending the tap to Lots left people
+                    // looking for a tick box that is not there.
+                    'detail' => "Nothing is counting days yet. Add the sowing activity and tick \"this is day zero\" on it — or set a day-0 date on the lot in Lots — and every card gets its {$dayType} number.",
+                    'module' => 'activities',
                     'severity' => 'blocking',
                 ];
             } elseif ($missing->isNotEmpty()) {
@@ -85,9 +88,9 @@ class ScheduleReadinessService
                         ? "1 lot has no {$dayType} 0"
                         : "{$missing->count()} lots have no {$dayType} 0",
                     'detail' => trim($names) !== ''
-                        ? "{$names} will not show day numbers until a day 0 is set."
-                        : "Some lots will not show day numbers until a day 0 is set.",
-                    'module' => 'lots',
+                        ? "{$names} will not show day numbers until a day 0 is set — tick \"this is day zero\" on an activity that covers them, or give the lot a day-0 date."
+                        : "Some lots will not show day numbers until a day 0 is set — tick \"this is day zero\" on an activity that covers them, or give the lot a day-0 date.",
+                    'module' => 'activities',
                     'severity' => 'advice',
                 ];
             }
