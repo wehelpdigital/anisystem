@@ -2922,8 +2922,12 @@ document.addEventListener('DOMContentLoaded', () => {
         incomeRows = [];
         paintIncomeList();
         openSheet('dayIncomeSheet');
-        // Typing is the point here, but not before the sheet has settled.
-        setTimeout(() => $id('dayIncomeAmount')?.focus({ preventScroll: true }), 340);
+        // A mouse lands ready to type; a phone does not. The keyboard rising
+        // with the sheet covers half of what you opened before you have read
+        // it, so on touch the first tap is yours to make.
+        if (!window.matchMedia('(pointer: coarse)').matches) {
+            setTimeout(() => $id('dayIncomeAmount')?.focus({ preventScroll: true }), 340);
+        }
         try {
             const res = await api(`${U.dayIncomeList()}&incomeDate=${encodeURIComponent(date)}`);
             incomeRows = res.data || [];

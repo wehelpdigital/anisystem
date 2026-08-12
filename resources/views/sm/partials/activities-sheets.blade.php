@@ -926,7 +926,7 @@
         </div>
         <div>
             <label class="form-label" for="dayIncomeNote">Description (optional)</label>
-            <input type="text" id="dayIncomeNote" class="form-input" maxlength="500" placeholder="Anything worth remembering about it">
+            <textarea id="dayIncomeNote" class="form-input" maxlength="500" rows="3" style="min-height:5rem; resize:vertical" placeholder="Anything worth remembering about it"></textarea>
         </div>
         <div id="dayIncomeList" class="space-y-1"></div>
         <p class="form-hint">Earnings during the season that are not the harvest itself &mdash; logged against this date.</p>
