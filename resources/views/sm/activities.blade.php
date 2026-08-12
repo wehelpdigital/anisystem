@@ -1109,7 +1109,16 @@
         /* Injected modules keep their own chip nav in the markup — the toolbar
            hamburger replaces it, so hide it inside the shell. */
         #moduleHost .module-chip-nav { display: none; }
-        #moduleHost > div { animation: app-fade-up .3s cubic-bezier(.22,1,.36,1) both; }
+        /* Opacity only, for the same reason <main> fades without moving: a
+           transform here — even the identity matrix `animation-fill-mode: both`
+           leaves behind when the fade is over — makes the pane the containing
+           block for every `position: fixed` child inside it. The module's own
+           sheets then hang off the pane instead of the viewport, and a closed
+           sheet parked below its own content stretched the page by its full
+           height: a long empty scroll under the footer. The module still
+           arrives with motion — showModule adds .sm-view-in, which animates the
+           slide and takes itself off again when it ends. */
+        #moduleHost > div { animation: app-fade-in .3s cubic-bezier(.22,1,.36,1) both; }
         /* The item being dragged stays in place as the live insertion slot,
            dimmed and outlined; a faded copy travels with the pointer/finger. */
         .activity-card.dragging {

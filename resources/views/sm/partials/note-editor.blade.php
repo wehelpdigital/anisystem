@@ -31,6 +31,7 @@
             <input type="file" id="noteEditorPhotoInput" accept="image/*" class="hidden" multiple>
         </div>
         <div class="ne-quill"><div id="noteEditorBody"></div></div>
+        <div id="noteEditorUploads" class="ne-ups mt-3"></div>
         <div id="noteEditorMedia" class="ne-thumbs mt-3"></div>
         <p class="form-hint">Photos &amp; videos are auto-compressed. A drawing already attached can still be tapped to edit it.</p>
     </div>
@@ -48,6 +49,21 @@
     .ne-quill .ql-container { min-height: 11rem; border-bottom-left-radius: .6rem; border-bottom-right-radius: .6rem; font-size: .92rem; }
     .ne-quill .ql-editor { min-height: 11rem; }
     .ne-quill .ql-toolbar { border-top-left-radius: .6rem; border-top-right-radius: .6rem; }
+    /* Upload progress: a phone video is tens of megabytes, and a quiet wait
+       reads as a hang. Percent while the bytes travel, then a word for the
+       compressing the server still has to do. */
+    .ne-ups:empty { display: none; }
+    .ne-ups { display: grid; gap: .4rem; }
+    .ne-up { border: 1px solid var(--color-gray-200); border-radius: .6rem; padding: .45rem .6rem; }
+    .ne-up-top { display: flex; align-items: center; justify-content: space-between; gap: .5rem; font-size: .75rem; font-weight: 700; color: var(--tl-text-muted, #4b5563); }
+    .ne-up-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ne-up-pct { flex: 0 0 auto; font-variant-numeric: tabular-nums; }
+    .ne-up-bar { height: .3rem; border-radius: 999px; background: var(--color-gray-200); overflow: hidden; margin-top: .35rem; }
+    .ne-up-fill { height: 100%; width: 0; border-radius: 999px; background: var(--color-primary, #4a7c2a); transition: width .2s linear; }
+    .ne-up.is-error { border-color: #fecaca; background: #fef2f2; }
+    .ne-up.is-error .ne-up-top { color: #b91c1c; }
+    .ne-up.is-error .ne-up-fill { background: #ef4444; }
+    @media (prefers-reduced-motion: reduce) { .ne-up-fill { transition: none; } }
     .ne-thumbs:empty { display: none; }
     .ne-thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr)); gap: .5rem; }
     /* Emoji popover */
@@ -99,12 +115,55 @@
             : '').join('');
     }
 
-    async function upload(url, field, file) {
-        const form = new FormData(); form.append(field, file);
-        const res = await fetch(url, { method: 'POST', headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' }, body: form, credentials: 'same-origin' });
-        const json = await res.json().catch(() => ({}));
-        if (!json.success) throw new Error(json.message || 'Upload failed.');
-        return json.data;
+    function fmtSize(bytes) {
+        if (!bytes) return '';
+        return bytes >= 1048576 ? (bytes / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(bytes / 1024)) + ' KB';
+    }
+
+    /** Upload one file, saying how far it has got. XHR, not fetch, because
+     *  fetch cannot report upload progress. */
+    function upload(url, field, file) {
+        const row = document.createElement('div');
+        row.className = 'ne-up';
+        row.innerHTML = '<div class="ne-up-top"><span class="ne-up-name"></span><span class="ne-up-pct">0%</span></div>'
+            + '<div class="ne-up-bar"><div class="ne-up-fill"></div></div>';
+        row.querySelector('.ne-up-name').textContent = (file.name || 'File') + (file.size ? ' · ' + fmtSize(file.size) : '');
+        $('noteEditorUploads').appendChild(row);
+        const pct = row.querySelector('.ne-up-pct');
+        const fill = row.querySelector('.ne-up-fill');
+
+        return new Promise((resolve, reject) => {
+            const form = new FormData(); form.append(field, file);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', url, true);
+            xhr.withCredentials = true;
+            xhr.setRequestHeader('X-CSRF-TOKEN', CSRF);
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.upload.addEventListener('progress', (e) => {
+                if (!e.lengthComputable) return;
+                const n = Math.min(99, Math.round((e.loaded / e.total) * 100));
+                pct.textContent = n + '%';
+                fill.style.width = n + '%';
+            });
+            xhr.upload.addEventListener('load', () => { pct.textContent = 'Processing…'; fill.style.width = '100%'; });
+            const fail = (msg) => {
+                row.classList.add('is-error');
+                pct.textContent = 'Failed';
+                setTimeout(() => row.remove(), 4000);
+                reject(new Error(msg));
+            };
+            xhr.addEventListener('load', () => {
+                let json = null;
+                try { json = JSON.parse(xhr.responseText); } catch (_) { /* handled below */ }
+                if (!json || !json.success) return fail((json && json.message) || 'Upload failed.');
+                pct.textContent = 'Done';
+                setTimeout(() => row.remove(), 700);
+                resolve(json.data);
+            });
+            xhr.addEventListener('error', () => fail('Upload failed — check your connection.'));
+            xhr.addEventListener('abort', () => fail('Upload cancelled.'));
+            xhr.send(form);
+        });
     }
 
     // ---- Photos
@@ -121,7 +180,6 @@
     const vInput = document.querySelector('#noteEditorSheet .js-video-file');
     vInput?.addEventListener('change', async () => {
         const file = vInput.files && vInput.files[0]; if (!file) return;
-        window.toast?.('Compressing video…');
         try { const d = await upload(cfg.videoUploadUrl, 'video', file); media.push({ type: 'video', path: d.path, poster: d.poster, url: d.url, posterUrl: d.posterUrl }); renderThumbs(); window.toast?.('Video attached.'); }
         catch (err) { window.toast?.(err.message, 'error'); }
         vInput.value = '';
@@ -219,6 +277,7 @@
             if (bodyHtml.trim() !== '') quill.clipboard.dangerouslyPasteHTML(bodyHtml);
         }
         media = Array.isArray(opts.media) ? opts.media.map((m) => ({ ...m })) : [];
+        $('noteEditorUploads').innerHTML = '';
         renderThumbs();
         const del = $('noteEditorDelete');
         del.classList.toggle('hidden', !opts.onDelete);

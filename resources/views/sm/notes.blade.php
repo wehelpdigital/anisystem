@@ -27,6 +27,38 @@
         .note-card:not(.is-collapsed) .note-chevron { transform: rotate(90deg); }
         @media (prefers-reduced-motion: reduce) { .note-fold, .note-chevron { transition: none; } }
 
+        /* Toolbar: find a note, and fold the lot at once */
+        .note-toolbar { display: flex; align-items: center; gap: .5rem; margin-bottom: .75rem; }
+        .note-search { position: relative; flex: 1 1 auto; min-width: 0; }
+        .note-search .form-input { padding-left: 2.1rem; padding-right: 2.1rem; }
+        .note-search .ns-ico { position: absolute; left: .65rem; top: 50%; transform: translateY(-50%); width: 1rem; height: 1rem; color: #9ca3af; pointer-events: none; }
+        .note-search .ns-clear { position: absolute; right: .4rem; top: 50%; transform: translateY(-50%); width: 1.6rem; height: 1.6rem; border-radius: 999px; color: #9ca3af; display: inline-flex; align-items: center; justify-content: center; font-size: .85rem; }
+        .note-search .ns-clear:hover { background: var(--color-gray-100); color: #4b5563; }
+        .note-fold-all { flex: 0 0 auto; white-space: nowrap; }
+        .note-fold-all .nfa-ico { transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        .note-fold-all.is-allfolded .nfa-ico { transform: rotate(-90deg); }
+        .note-count { font-size: .78rem; color: var(--tl-text-muted, #6b7280); margin: -.35rem 0 .6rem; }
+        /* Unlayered on purpose: `.hidden` from a utility layer loses to the
+           card's own display, so a filtered-out note would stay on screen. */
+        .note-card.is-filtered { display: none !important; }
+        @media (prefers-reduced-motion: reduce) { .note-fold-all .nfa-ico { transition: none; } }
+
+        /* Upload progress — a big video takes real seconds, and silence reads
+           as a hang. Each file gets a row: percent while it travels, then
+           "Processing" while the server compresses it. */
+        .note-ups:empty { display: none; }
+        .note-ups { display: grid; gap: .4rem; margin-bottom: .6rem; }
+        .note-up { border: 1px solid var(--color-gray-200); border-radius: .6rem; padding: .45rem .6rem; }
+        .note-up-top { display: flex; align-items: center; justify-content: space-between; gap: .5rem; font-size: .75rem; font-weight: 700; color: var(--tl-text-muted, #4b5563); }
+        .note-up-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .note-up-pct { flex: 0 0 auto; font-variant-numeric: tabular-nums; }
+        .note-up-bar { height: .3rem; border-radius: 999px; background: var(--color-gray-200); overflow: hidden; margin-top: .35rem; }
+        .note-up-fill { height: 100%; width: 0; border-radius: 999px; background: var(--color-primary, #4a7c2a); transition: width .2s linear; }
+        .note-up.is-error { border-color: #fecaca; background: #fef2f2; }
+        .note-up.is-error .note-up-top { color: #b91c1c; }
+        .note-up.is-error .note-up-fill { background: #ef4444; }
+        @media (prefers-reduced-motion: reduce) { .note-up-fill { transition: none; } }
+
         /* Media gallery on a card */
         .note-media { display: grid; grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr)); gap: .5rem; margin-top: .6rem; }
         .note-media .nm { position: relative; border-radius: .6rem; overflow: hidden; background: #000; aspect-ratio: 1; }
@@ -48,6 +80,19 @@
     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
     New note
 </button>
+
+<div class="note-toolbar {{ $notes->isEmpty() ? 'hidden' : '' }}" id="noteToolbar">
+    <div class="note-search">
+        <svg class="ns-ico" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+        <input type="text" id="noteSearch" class="form-input" placeholder="Search notes…" autocomplete="off" aria-label="Search notes">
+        <button type="button" id="noteSearchClear" class="ns-clear hidden" aria-label="Clear search">✕</button>
+    </div>
+    <button type="button" id="noteFoldAll" class="btn btn-white btn-sm note-fold-all" aria-pressed="false">
+        <svg class="nfa-ico w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        <span id="noteFoldAllLabel">Collapse all</span>
+    </button>
+</div>
+<p class="note-count hidden" id="noteCount" aria-live="polite"></p>
 
 <div class="space-y-3" id="notesList" data-animate-list>
     @foreach ($notes as $n)
@@ -126,6 +171,11 @@
     @endforeach
 </div>
 
+<div class="card p-6 text-center hidden" id="notesNoMatch">
+    <p class="font-semibold text-gray-700">No note matches that</p>
+    <p class="text-sm text-gray-500 mt-1">Try a shorter word — the search looks at titles and note text.</p>
+</div>
+
 <div class="card p-8 text-center {{ $notes->isEmpty() ? '' : 'hidden' }}" id="notesEmpty">
     <svg class="w-12 h-12 mx-auto text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
     <p class="font-semibold text-gray-700 mt-3">No notes yet</p>
@@ -161,6 +211,7 @@
         </div>
         <div class="mb-2" data-video-host>
             <label class="form-label">Photos &amp; videos</label>
+            <div id="noteUploads" class="note-ups"></div>
             <div id="noteMthumbs" class="note-mthumbs mb-2"></div>
             <div class="flex flex-wrap gap-2">
                 <input type="file" id="notePhoto" accept="image/*" class="hidden" multiple>
@@ -288,6 +339,7 @@ const __init = () => {
         fld('noteSheetTitle').textContent = note ? 'Edit note' : 'New note';
         fld('noteTitle').value = note ? note.title : '';
         fld('notePhoto').value = '';
+        fld('noteUploads').innerHTML = '';
         // Seed the gallery: existing media, plus any legacy single photo.
         media = note && Array.isArray(note.media) ? note.media.map((m) => ({ ...m })) : [];
         if (note && note.imageUrl && !media.some((m) => m.url === note.imageUrl)) {
@@ -340,23 +392,168 @@ const __init = () => {
         renderMthumbs();
     });
 
-    /* ---- Accordion fold state (per note, remembered across visits) ---- */
+    /* ---- Accordion fold state (per note, remembered across visits) ----
+     * Two things are remembered: which notes you folded, and whether you last
+     * said "collapse all" — so a note written after that arrives folded like
+     * the rest instead of being the one card standing open. */
     const FOLD_KEY = 'noteFold:' + SCHEDULE_ID;
+    const FOLD_ALL_KEY = 'noteFoldAll:' + SCHEDULE_ID;
     let collapsedIds = (() => { try { return new Set(JSON.parse(localStorage.getItem(FOLD_KEY) || '[]')); } catch (_) { return new Set(); } })();
-    function persistFold() { try { localStorage.setItem(FOLD_KEY, JSON.stringify([...collapsedIds])); } catch (_) { /* ignore */ } }
-    function applyFold() { list.querySelectorAll('.note-card').forEach((c) => c.classList.toggle('is-collapsed', collapsedIds.has(String(c.dataset.id)))); }
+    let foldNewOnes = localStorage.getItem(FOLD_ALL_KEY) === '1';
+    function persistFold() {
+        try {
+            localStorage.setItem(FOLD_KEY, JSON.stringify([...collapsedIds]));
+            localStorage.setItem(FOLD_ALL_KEY, foldNewOnes ? '1' : '0');
+        } catch (_) { /* private mode: the page still works, it just forgets */ }
+    }
+    function cards() { return [...list.querySelectorAll('.note-card')]; }
+    function applyFold() {
+        cards().forEach((c) => {
+            const id = String(c.dataset.id);
+            if (foldNewOnes && !collapsedIds.has(id) && !c.dataset.foldSeen) collapsedIds.add(id);
+            c.dataset.foldSeen = '1';
+            c.classList.toggle('is-collapsed', collapsedIds.has(id));
+        });
+        syncFoldButton();
+    }
+    /** The button offers whichever action there is room for. */
+    function syncFoldButton() {
+        const btn = fld('noteFoldAll');
+        if (!btn) return;
+        const visible = cards().filter((c) => !c.classList.contains('is-filtered'));
+        const anyOpen = visible.some((c) => !c.classList.contains('is-collapsed'));
+        btn.classList.toggle('is-allfolded', !anyOpen);
+        btn.setAttribute('aria-pressed', anyOpen ? 'false' : 'true');
+        fld('noteFoldAllLabel').textContent = anyOpen ? 'Collapse all' : 'Expand all';
+    }
+    fld('noteFoldAll')?.addEventListener('click', () => {
+        const visible = cards().filter((c) => !c.classList.contains('is-filtered'));
+        const collapse = visible.some((c) => !c.classList.contains('is-collapsed'));
+        visible.forEach((c) => {
+            const id = String(c.dataset.id);
+            c.classList.toggle('is-collapsed', collapse);
+            if (collapse) collapsedIds.add(id); else collapsedIds.delete(id);
+        });
+        // Only a fold-all over the whole list decides how new notes arrive; a
+        // fold-all while searching is about those results, not everything.
+        if (!query) foldNewOnes = collapse;
+        persistFold();
+        syncFoldButton();
+    });
+
+    /* ---- Search ------------------------------------------------------------
+     * Title and body, in the browser — the whole notebook is already on the
+     * page, so there is nothing to wait for. A match opens while you search
+     * and folds back to how you left it when the box is cleared. */
+    let query = '';
+    function noteText(card) {
+        if (!card.dataset.searchText) {
+            const t = card.querySelector('.js-title')?.textContent || '';
+            const b = card.querySelector('.note-body')?.textContent || '';
+            card.dataset.searchText = (t + ' ' + b).toLowerCase().replace(/\s+/g, ' ');
+        }
+        return card.dataset.searchText;
+    }
+    function runSearch() {
+        const all = cards();
+        let shown = 0;
+        all.forEach((c) => {
+            const hit = !query || noteText(c).includes(query);
+            c.classList.toggle('is-filtered', !hit);
+            if (hit) shown++;
+            // While searching, a hit shows its text; clearing puts the fold
+            // back where you left it.
+            if (query) c.classList.toggle('is-collapsed', false);
+            else c.classList.toggle('is-collapsed', collapsedIds.has(String(c.dataset.id)));
+        });
+        const count = fld('noteCount');
+        count.textContent = query ? (shown + ' of ' + all.length + ' notes') : '';
+        count.classList.toggle('hidden', !query);
+        fld('notesNoMatch').classList.toggle('hidden', !(query && shown === 0));
+        fld('noteSearchClear').classList.toggle('hidden', !query);
+        syncFoldButton();
+    }
+    fld('noteSearch')?.addEventListener('input', (e) => {
+        query = e.target.value.trim().toLowerCase();
+        runSearch();
+    });
+    fld('noteSearchClear')?.addEventListener('click', () => {
+        fld('noteSearch').value = ''; query = ''; runSearch(); fld('noteSearch').focus();
+    });
+    function refreshToolbar() {
+        fld('noteToolbar').classList.toggle('hidden', cards().length === 0);
+    }
     applyFold();
+
+    /* ---- Uploading, out loud ----------------------------------------------
+     * A phone video is tens of megabytes and takes real seconds to travel;
+     * fetch() cannot say how far it has got, so this uses XHR and shows the
+     * percentage. Once the bytes have all arrived the server still has to
+     * compress them, and that wait gets its own word rather than a bar
+     * sitting at 100% looking stuck. */
+    function fmtSize(bytes) {
+        if (!bytes) return '';
+        return bytes >= 1048576 ? (bytes / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(bytes / 1024)) + ' KB';
+    }
+    function uploadWithProgress(url, field, file) {
+        const row = document.createElement('div');
+        row.className = 'note-up';
+        row.innerHTML = `
+            <div class="note-up-top">
+                <span class="note-up-name"></span>
+                <span class="note-up-pct">0%</span>
+            </div>
+            <div class="note-up-bar"><div class="note-up-fill"></div></div>`;
+        row.querySelector('.note-up-name').textContent = (file.name || 'File') + (file.size ? ' · ' + fmtSize(file.size) : '');
+        fld('noteUploads').appendChild(row);
+        const pct = row.querySelector('.note-up-pct');
+        const fill = row.querySelector('.note-up-fill');
+
+        return new Promise((resolve, reject) => {
+            const form = new FormData();
+            form.append(field, file);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', url, true);
+            xhr.withCredentials = true;
+            xhr.setRequestHeader('X-CSRF-TOKEN', CSRF);
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.upload.addEventListener('progress', (e) => {
+                if (!e.lengthComputable) return;
+                const n = Math.min(99, Math.round((e.loaded / e.total) * 100));
+                pct.textContent = n + '%';
+                fill.style.width = n + '%';
+            });
+            xhr.upload.addEventListener('load', () => {
+                pct.textContent = 'Processing…';
+                fill.style.width = '100%';
+            });
+            const fail = (msg) => {
+                row.classList.add('is-error');
+                pct.textContent = 'Failed';
+                setTimeout(() => row.remove(), 4000);
+                reject(new Error(msg));
+            };
+            xhr.addEventListener('load', () => {
+                let json = null;
+                try { json = JSON.parse(xhr.responseText); } catch (_) { /* below */ }
+                if (!json || !json.success) return fail((json && json.message) || 'Upload failed.');
+                pct.textContent = 'Done';
+                setTimeout(() => row.remove(), 700);
+                resolve(json);
+            });
+            xhr.addEventListener('error', () => fail('Upload failed — check your connection.'));
+            xhr.addEventListener('abort', () => fail('Upload cancelled.'));
+            xhr.send(form);
+        });
+    }
 
     // Draw → upload the sketch → add it as an attachment (not inline).
     // Add photo(s) — each is compressed server-side and pushed to the gallery.
     fld('notePhoto').addEventListener('change', async (e) => {
         const files = Array.from(e.target.files || []); if (!files.length) return;
         for (const file of files) {
-            const form = new FormData(); form.append('image', file);
             try {
-                const res = await fetch(URLS.upload, { method: 'POST', headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' }, body: form, credentials: 'same-origin' });
-                const json = await res.json();
-                if (!json.success) throw new Error(json.message || 'Upload failed.');
+                const json = await uploadWithProgress(URLS.upload, 'image', file);
                 media.push({ type: 'image', path: json.data.path, url: json.data.url });
                 renderMthumbs();
             } catch (err) { toast(err.message, 'error'); }
@@ -369,12 +566,8 @@ const __init = () => {
     const noteVideoInput = document.querySelector('#noteSheet .js-video-file');
     noteVideoInput?.addEventListener('change', async () => {
         const file = noteVideoInput.files && noteVideoInput.files[0]; if (!file) return;
-        toast('Compressing video…');
-        const form = new FormData(); form.append('video', file);
         try {
-            const res = await fetch(URLS.videoUpload, { method: 'POST', headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' }, body: form, credentials: 'same-origin' });
-            const json = await res.json();
-            if (!json.success) throw new Error(json.message || 'Upload failed.');
+            const json = await uploadWithProgress(URLS.videoUpload, 'video', file);
             media.push({ type: 'video', path: json.data.path, poster: json.data.poster, url: json.data.url, posterUrl: json.data.posterUrl });
             renderMthumbs();
             toast('Video attached.');
@@ -422,7 +615,9 @@ const __init = () => {
 
     function refreshEmpty() {
         emptyEl.classList.toggle('hidden', list.querySelectorAll('.note-card').length > 0);
+        refreshToolbar();
     }
+    refreshToolbar();
 
     fld('noteSaveBtn').addEventListener('click', async () => {
         const id = fld('noteId').value;
@@ -444,6 +639,9 @@ const __init = () => {
             const fresh = renderCard(n);
             const existing = list.querySelector('.note-card[data-id="' + n.id + '"]');
             if (existing) existing.replaceWith(fresh); else list.prepend(fresh);
+            // A rewritten card is new to the fold store and to the search
+            // index; both are rebuilt from what is on screen now.
+            applyFold(); runSearch();
             refreshEmpty(); closeSheet('noteSheet'); toast(res.message);
         } catch (err) { toast(err.message, 'error'); } finally { btn.disabled = false; }
     });
@@ -457,6 +655,7 @@ const __init = () => {
             card.classList.toggle('is-collapsed');
             if (card.classList.contains('is-collapsed')) collapsedIds.add(String(id)); else collapsedIds.delete(String(id));
             persistFold();
+            syncFoldButton();
             return;
         }
         if (e.target.closest('.js-delete')) {
@@ -466,7 +665,7 @@ const __init = () => {
             try {
                 const res = await api(URLS.destroy(id), { method: 'DELETE' });
                 delete NOTES[id];
-                const finish = () => { card.remove(); refreshEmpty(); };
+                const finish = () => { card.remove(); refreshEmpty(); runSearch(); };
                 if (window.animateOut) window.animateOut(card, finish); else finish();
                 toast(res.message);
             } catch (err) { toast(err.message, 'error'); }
