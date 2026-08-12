@@ -2355,8 +2355,22 @@
         closeSheet('modulesSheet');
     }
 
-    async function showModule(key, push = true) {
+    /**
+     * @param {string} key    which module
+     * @param {boolean} push  add a history entry
+     * @param {string} extra  query string the module itself understands — the
+     *                        drawing to open, the saved map to load. A module
+     *                        asked for with one is always re-fetched: a pane
+     *                        cached from an earlier visit knows nothing about
+     *                        the thing you just tapped.
+     */
+    async function showModule(key, push = true, extra = '') {
         if (!MODULES[key]) { closeModulesSheetForNav(); return; }
+        if (extra) {
+            const had = loaded.get(key);
+            if (had) { had.remove(); loaded.delete(key); }
+            if (key === current) current = null;
+        }
         // Only refuse to re-open a module that is genuinely showing. The flag
         // and the screen can come apart — a popstate that names a module, a
         // load that ended badly — and when they do, refusing on the flag alone
@@ -2397,7 +2411,7 @@
             host.classList.add('hidden');
             try {
                 const sep = MODULES[key].url.includes('?') ? '&' : '?';
-                const res = await fetch(MODULES[key].url + sep + 'partial=1', {
+                const res = await fetch(MODULES[key].url + sep + 'partial=1' + (extra ? '&' + extra : ''), {
                     headers: { 'X-Requested-With': 'XMLHttpRequest' }, credentials: 'same-origin',
                 });
                 if (!res.ok) throw new Error('Could not load ' + MODULES[key].label);
@@ -2485,7 +2499,15 @@
         const link = e.target.closest('#moduleHost a[href]');
         if (link) {
             const hit = Object.keys(MODULES).find((k) => link.href.split('?')[0] === MODULES[k].url.split('?')[0]);
-            if (hit) { e.preventDefault(); showModule(hit); }
+            if (hit) {
+                e.preventDefault();
+                // "View map" and "Open drawing" name the one they mean in the
+                // query; dropping it landed you in the module's front door
+                // instead of on the thing you tapped.
+                const q = (link.href.split('?')[1] || '')
+                    .split('&').filter((kv) => !/^(id|partial)=/.test(kv)).join('&');
+                showModule(hit, true, q);
+            }
         }
     });
 

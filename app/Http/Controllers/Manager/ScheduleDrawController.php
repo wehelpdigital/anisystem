@@ -46,6 +46,9 @@ class ScheduleDrawController extends BaseScheduleController
                     'noteId' => (int) $note->id,
                     'index' => (int) $i,
                     'title' => (string) $note->title,
+                    // What the drawing is about, so the grid can say more than
+                    // a filename and a date.
+                    'note' => trim(strip_tags((string) $note->body)),
                     // Strokes are not sent with the list — a season of drawings
                     // would be megabytes of them. They come one at a time, when
                     // a drawing is actually opened for editing.
@@ -80,6 +83,7 @@ class ScheduleDrawController extends BaseScheduleController
 
         return response()->json(['success' => true, 'data' => [
             'title' => (string) $note->title,
+            'note' => trim(strip_tags((string) $note->body)),
             'strokes' => $media[$i]['strokes'] ?? null,
             'url' => \App\Support\MediaStore::url($media[$i]['path'] ?? null),
         ]]);
@@ -98,6 +102,8 @@ class ScheduleDrawController extends BaseScheduleController
 
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:191',
+            // A drawing is a note, so it gets to say what it is about.
+            'note' => 'nullable|string|max:2000',
             'image' => 'required|string',
             'editable' => 'nullable|boolean',
             'strokes' => 'nullable|array|max:4000',
@@ -137,6 +143,9 @@ class ScheduleDrawController extends BaseScheduleController
             $old = $media[$i]['path'] ?? null;
             $media[$i] = $entry;
             $note->title = (string) $request->input('title');
+            if ($request->has('note')) {
+                $note->body = $this->drawingBody((string) $request->input('note'));
+            }
             $note->media = array_values($media);
             $note->save();
             if ($old && $old !== $path) {
@@ -147,7 +156,7 @@ class ScheduleDrawController extends BaseScheduleController
                 'croppingScheduleId' => $schedule->id,
                 'userId' => \Illuminate\Support\Facades\Auth::id(),
                 'title' => (string) $request->input('title'),
-                'body' => null,
+                'body' => $this->drawingBody((string) $request->input('note')),
                 'media' => [$entry],
                 'deleteStatus' => 1,
             ]);
@@ -159,7 +168,16 @@ class ScheduleDrawController extends BaseScheduleController
             'url' => \App\Support\MediaStore::url($path),
             'editable' => $editable,
             'title' => (string) $note->title,
+            'note' => trim(strip_tags((string) $note->body)),
         ]]);
+    }
+
+    /** The description, kept as the note body — plain text, one paragraph. */
+    private function drawingBody(string $text): ?string
+    {
+        $text = trim($text);
+
+        return $text === '' ? null : '<p>' . nl2br(e($text)) . '</p>';
     }
 
     /** Remove a drawing — and the note with it when that was all it held. */

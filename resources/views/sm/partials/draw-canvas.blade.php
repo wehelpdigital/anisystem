@@ -13,7 +13,7 @@
             <button type="button" class="draw-tool" id="drawBack" aria-label="Back" title="Back — discards the drawing">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-            <span class="draw-title">Drawing</span>
+            <span class="draw-title" id="drawTitleText">Drawing</span>
             <span class="grow"></span>
             <button type="button" class="btn btn-ghost btn-sm draw-cancel" id="drawCancel">Cancel</button>
             {{-- One button, because on a phone two full-width labels in the
@@ -81,12 +81,25 @@
         <div class="draw-ask" id="drawAsk" hidden>
             <div class="draw-ask-card" role="dialog" aria-modal="true" aria-labelledby="drawAskTitle">
                 <h4 class="draw-ask-title" id="drawAskTitle">Keep this drawing</h4>
+                {{-- Only when you opened something that already exists: the
+                     common answer is "yes, this is that drawing, changed" —
+                     which used to be indistinguishable from starting a new
+                     one. --}}
+                <button type="button" class="draw-ask-opt" data-save-mode="overwrite" id="drawAskOverwrite" hidden>
+                    <span class="draw-ask-ico">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a1 1 0 011-1h9l4 4v10a1 1 0 01-1 1H6a1 1 0 01-1-1V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 4v4h6M8 19v-5h8v5"/></svg>
+                    </span>
+                    <span class="min-w-0">
+                        <span class="draw-ask-name">Save over this drawing</span>
+                        <span class="draw-ask-hint" id="drawAskOverwriteHint">Replaces the one you opened</span>
+                    </span>
+                </button>
                 <button type="button" class="draw-ask-opt" data-save-mode="drawing">
                     <span class="draw-ask-ico">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L20 7a2 2 0 00-3-3L5 16l-1 4zM14 6l4 4"/></svg>
                     </span>
                     <span class="min-w-0">
-                        <span class="draw-ask-name">Save as drawing</span>
+                        <span class="draw-ask-name" id="drawAskNewName">Save as drawing</span>
                         <span class="draw-ask-hint">Reopen it later and keep changing it</span>
                     </span>
                 </button>
@@ -232,6 +245,7 @@
     let color = '#111827';
     let tool = 'pen';
     let onSave = null;
+    let overwriteLabel = '';   // set per open: the drawing being replaced
     let uid = 1;
     let gridOn = false;               // show a grid guide (not saved into the PNG)
     let exporting = false;            // suppresses the grid while capturing the export
@@ -595,13 +609,18 @@
     }
     function saveAs(mode) {
         const data = exportPng();
-        if (onSave) onSave(data, mode === 'drawing' ? JSON.parse(JSON.stringify(objects || [])) : null);
+        // 'overwrite' keeps the strokes as 'drawing' does — the difference is
+        // which file it lands in, which is the caller's business.
+        const strokes = (mode === 'drawing' || mode === 'overwrite')
+            ? JSON.parse(JSON.stringify(objects || []))
+            : null;
+        if (onSave) onSave(data, strokes, mode);
         close();
     }
     document.getElementById('drawSaveBtn').addEventListener('click', () => {
         // Nothing to ask when only one kind is on offer — a dialog with one
         // real answer is a tap for its own sake.
-        if (editableAllowed) showAsk(true);
+        if (editableAllowed || overwriteLabel) showAsk(true);
         else saveAs('image');
     });
     ask.addEventListener('click', (e) => {
@@ -618,10 +637,19 @@
         // white sheet fills the stage instead of letterboxing inside it. An
         // existing drawing keeps the space it was made in — reshaping that
         // would stretch what the user already drew.
-        if (existingUrl) { W = W0; H = H0; }
-        else {
+        // The sheet should fill the screen it is opened on. A new drawing simply
+        // takes the shape of the stage. An old one keeps every pixel it already
+        // had — but grows if this screen is taller in proportion, which is what
+        // a landscape drawing opened on a phone needs: without it the canvas sat
+        // as a band in the middle with dead grey above and below it. It never
+        // shrinks, because shrinking would crop what someone already drew.
+        {
             const aw = Math.max(1, stage.clientWidth), ah = Math.max(1, stage.clientHeight);
-            W = W0; H = Math.min(2600, Math.max(520, Math.round(W0 * ah / aw)));
+            const forThisScreen = Math.min(2600, Math.max(520, Math.round(W0 * ah / aw)));
+            W = W0;
+            H = (existingUrl || (existingObjects && existingObjects.length))
+                ? Math.max(H0, forThisScreen)
+                : forThisScreen;
         }
         canvas.width = W; canvas.height = H;
         setTool('pen'); render();
@@ -633,7 +661,14 @@
             render();
         } else if (existingUrl) {
             const img = new Image(); img.crossOrigin = 'anonymous';
-            img.onload = () => { ctx.drawImage(img, 0, 0, W, H); try { objects = []; } catch (_) {} render(); };
+            img.onload = () => {
+                // Its own proportions, pinned to the top-left. Stretching it to
+                // whatever height this screen wanted would distort the picture.
+                const k = Math.min(W / img.width, H / img.height);
+                ctx.drawImage(img, 0, 0, Math.round(img.width * k), Math.round(img.height * k));
+                try { objects = []; } catch (_) {}
+                render();
+            };
             img.src = existingUrl; // note: loaded as a backdrop only (not an editable object)
         }
     }
@@ -648,6 +683,19 @@
         opts = opts || {};
         onSave = cb || null;
         editableAllowed = !!opts.editable;
+        // What the pad is looking at, if it is looking at something that
+        // already has a name. Drives the "save over this one" answer.
+        overwriteLabel = opts.overwrite ? (opts.overwriteLabel || 'the one you opened') : '';
+        const over = document.getElementById('drawAskOverwrite');
+        if (over) {
+            over.hidden = !overwriteLabel;
+            const hint = document.getElementById('drawAskOverwriteHint');
+            if (hint && overwriteLabel) hint.textContent = 'Replaces ' + overwriteLabel;
+        }
+        const newName = document.getElementById('drawAskNewName');
+        if (newName) newName.textContent = overwriteLabel ? 'Save as a new drawing' : 'Save as drawing';
+        const title = document.getElementById('drawTitleText');
+        if (title) title.textContent = opts.title || 'Drawing';
         showAsk(false);
         // Re-parent to <body> so `position:fixed` is relative to the viewport —
         // never trapped/cramped inside a transformed ancestor (the notes module

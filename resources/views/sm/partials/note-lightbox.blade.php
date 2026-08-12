@@ -1,7 +1,7 @@
 {{-- Shared note ATTACHMENTS: canonical thumbnail markup + an expandable
      lightbox. Include ONCE per page that shows notes (activities/hub/notebook).
      Exposes window.noteMediaThumb(m, extra) and window.noteMediaCells(arr).
-     Any `.nm[data-lb-url]` element opens the lightbox on click. --}}
+     Any `.nm[data-lb-url]` or `.na[data-lb-url]` element opens it on click. --}}
 <div class="note-lb" id="noteLightbox" aria-hidden="true">
     <button type="button" class="note-lb-close" aria-label="Close">✕</button>
     <div class="note-lb-stage"></div>
@@ -9,6 +9,23 @@
 
 <style>
     /* Attachment thumbnail (square icon) */
+    /* Attachment chips: what a note carries, said in words. See
+       note-attachments.blade.php for why these replaced thumbnails. */
+    .note-atts { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .5rem; }
+    .na { display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .6rem;
+        border: 1px solid var(--color-gray-200, #e5e7eb); border-radius: 999px; background: var(--color-white, #fff);
+        font-size: .75rem; font-weight: 700; color: #4b5563; cursor: pointer; text-decoration: none;
+        transition: background .2s ease, border-color .2s ease, color .2s ease; }
+    .na svg { width: .95rem; height: .95rem; flex: 0 0 auto; }
+    .na:hover { background: #f3f8ec; border-color: #a8cc7e; color: #3d6823; }
+    .na-photo svg { color: #2563eb; }
+    .na-video svg { color: #b91c1c; }
+    .na-draw svg { color: #7c3aed; }
+    .na-map svg { color: #15803d; }
+    html.dark .na { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
+    html.dark .na:hover { background: #24301a; border-color: #3d6823; }
+    @media (prefers-reduced-motion: reduce) { .na { transition: none; } }
+
     .nm { position: relative; aspect-ratio: 1; border-radius: .5rem; overflow: hidden; background: #1c2230; cursor: pointer; }
     .nm img, .nm video { width: 100%; height: 100%; object-fit: cover; display: block; }
     /* Loading shimmer behind the image until it decodes — no broken-image flash. */
@@ -92,6 +109,34 @@
         return `<div class="nm" data-lb-type="image" data-lb-url="${esc(url)}"><img src="${esc(url)}" alt="" loading="lazy"${ONLOAD}>${extra || ''}</div>`;
     };
     window.noteMediaCells = function (arr) { return (arr || []).map((m) => window.noteMediaThumb(m)).join(''); };
+
+    /** The chips, client side. Twin of note-attachments.blade.php. */
+    window.noteAttachmentChips = function (arr) {
+        const items = (arr || []).filter((m) => m && (m.url || m.mapUrl));
+        if (!items.length) return '';
+        const ICON = {
+            photo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/><circle cx="9" cy="8.5" r="1.3"/></svg>',
+            video: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg>',
+            draw: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L20 7a2 2 0 00-3-3L5 16l-1 4zM14 6l4 4"/></svg>',
+            map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>',
+        };
+        const cells = items.map((m) => {
+            const looksLikeMap = m.type === 'map' || /\/map-[A-Za-z0-9]+\.png$/.test(m.path || m.url || '');
+            if (looksLikeMap) {
+                const href = m.mapUrl || window.NOTE_MAP_URL || '#';
+                return `<a class="na na-map" href="${esc(href)}" title="Open this map in the Maps module">${ICON.map}<span>Map</span></a>`;
+            }
+            if (m.type === 'drawing') {
+                const href = m.drawUrl || window.NOTE_DRAW_URL || '#';
+                return `<a class="na na-draw" href="${esc(href)}" title="Open this drawing in the Draw module">${ICON.draw}<span>Drawing</span></a>`;
+            }
+            if (m.type === 'video') {
+                return `<button type="button" class="na na-video" data-lb-type="video" data-lb-url="${esc(m.url || '')}" data-lb-poster="${esc(m.posterUrl || '')}" title="Play this video">${ICON.video}<span>Video</span></button>`;
+            }
+            return `<button type="button" class="na na-photo" data-lb-type="image" data-lb-url="${esc(m.url || '')}" title="Open this photo">${ICON.photo}<span>Photo</span></button>`;
+        }).join('');
+        return `<div class="note-atts">${cells}</div>`;
+    };
 
     const lb = document.getElementById('noteLightbox');
     const stage = lb.querySelector('.note-lb-stage');
@@ -192,7 +237,8 @@
 
     document.addEventListener('click', (e) => {
         if (e.target.closest('.rm')) return;                       // remove button, not preview
-        const cell = e.target.closest('.nm[data-lb-url]');
+        // Thumbnails, and the chips that replaced them in note lists.
+        const cell = e.target.closest('.nm[data-lb-url], .na[data-lb-url]');
         if (cell) { e.preventDefault(); open(cell.getAttribute('data-lb-type'), cell.getAttribute('data-lb-url'), cell.getAttribute('data-lb-poster'), cell.getBoundingClientRect()); return; }
         if (e.target.closest('.note-lb-close') || e.target === lb) close();
     });

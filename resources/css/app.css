@@ -267,6 +267,25 @@ html.sheet-open .team-float {
     /* Clear the mobile home indicator so footer buttons are never cut off. */
     padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
 }
+/* On a phone three roomy buttons wrapped onto two rows and the sheet ended
+   in a stack of slabs. They share the row instead: the primary action takes
+   the space it needs, the rest take what they need and no more. Delete keeps
+   its distance from Save — it is not a button anyone should reach by
+   accident. */
+@media (max-width: 640px) {
+    .sheet-footer {
+        @apply gap-2 px-3 py-3 flex-nowrap;
+    }
+    .sheet-footer .btn {
+        @apply px-3 text-sm;
+        min-height: 2.75rem;
+        white-space: nowrap;
+    }
+    .sheet-footer .btn-primary { flex: 1 1 auto; }
+    .sheet-footer .btn-ghost,
+    .sheet-footer .btn-danger-outline,
+    .sheet-footer .btn-white { flex: 0 0 auto; }
+}
 
 /* Toasts */
 #toast-stack { @apply fixed z-[250] top-4 right-4 left-4 sm:left-auto sm:w-96 flex flex-col gap-2 pointer-events-none; }

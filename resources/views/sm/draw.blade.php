@@ -24,6 +24,8 @@
         .dr-meta { padding: .5rem .6rem .6rem; display: flex; flex-direction: column; gap: .3rem; }
         .dr-name { font-size: .8rem; font-weight: 700; color: var(--color-gray-900); line-height: 1.25;
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .dr-note { font-size: .7rem; line-height: 1.35; color: var(--color-gray-500);
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .dr-when { font-size: .66rem; color: var(--color-gray-400); }
         .dr-tags { display: flex; flex-wrap: wrap; gap: .25rem; }
         .dr-acts { display: flex; gap: .25rem; margin-top: .1rem; }
@@ -67,8 +69,13 @@
             </button>
         </div>
         <div class="sheet-body" style="padding-bottom:1rem">
-            <label class="form-label" for="drTitle">Title</label>
+            <label class="form-label" for="drTitle">Title <span class="text-red-500">*</span></label>
             <input type="text" id="drTitle" class="form-input" maxlength="191" placeholder="Field sketch">
+            {{-- A drawing is a note like any other, and a note nobody can read
+                 six weeks later is half a record. What it shows, and why it
+                 was worth drawing. --}}
+            <label class="form-label mt-3" for="drNote">Description <span class="text-gray-400 font-normal">(optional)</span></label>
+            <textarea id="drNote" class="form-input" rows="3" maxlength="2000" placeholder="What this shows, and why it was worth drawing."></textarea>
             <p class="text-xs text-gray-400 mt-1.5" id="drKind"></p>
             <button type="button" class="btn btn-primary w-full mt-3" id="drConfirm">Save drawing</button>
         </div>
@@ -111,6 +118,7 @@
                     <div class="dr-thumb" data-open>${thumb}</div>
                     <div class="dr-meta">
                         <span class="dr-name">${esc(d.title || 'Untitled')}</span>
+                        ${d.note ? `<span class="dr-note">${esc(d.note)}</span>` : ''}
                         <div class="dr-tags">${tags.join('')}</div>
                         <span class="dr-when">${esc(d.when || '')}</span>
                         <div class="dr-acts">
@@ -134,34 +142,48 @@
             function pad(seed) {
                 if (typeof window.openDrawCanvas !== 'function') { toast('Drawing pad unavailable.', 'error'); return; }
                 seed = seed || {};
-                window.openDrawCanvas((dataUrl, objects) => {
-                    // The pad's two exits decide what this becomes: a flat
-                    // picture, or a drawing that carries its strokes back.
+                window.openDrawCanvas((dataUrl, objects, mode) => {
+                    // The pad's exits decide what this becomes: a flat picture,
+                    // a new drawing that carries its strokes back, or the same
+                    // drawing again — which is the only one that keeps the file
+                    // it was opened from.
+                    const over = mode === 'overwrite' && seed.noteId;
                     pending = {
                         image: dataUrl,
                         strokes: objects || null,
                         editable: !!objects,
-                        noteId: seed.noteId || null,
-                        index: seed.index || 0,
+                        noteId: over ? seed.noteId : null,
+                        index: over ? (seed.index || 0) : 0,
                     };
-                    document.getElementById('drTitle').value = seed.title || '';
-                    document.getElementById('drKind').textContent = objects
-                        ? 'Kept as a drawing — you can reopen and change it later.'
-                        : 'Kept as a picture — it can be drawn over, but not edited stroke by stroke.';
+                    document.getElementById('drTitle').value = over ? (seed.title || '') : (seed.newTitle || seed.title || '');
+                    document.getElementById('drNote').value = over ? (seed.note || '') : '';
+                    document.getElementById('drKind').textContent = over
+                        ? 'Saving over the drawing you opened.'
+                        : (objects
+                            ? 'Kept as a drawing — you can reopen and change it later.'
+                            : 'Kept as a picture — it can be drawn over, but not edited stroke by stroke.');
                     window.openSheet('drSaveSheet');
                     setTimeout(() => document.getElementById('drTitle').focus(), 120);
-                }, seed.url || null, { editable: true, objects: seed.objects || null });
+                }, seed.url || null, {
+                    editable: true,
+                    objects: seed.objects || null,
+                    title: seed.title || 'Drawing',
+                    overwrite: !!seed.noteId,
+                    overwriteLabel: seed.title ? `“${seed.title}”` : 'the one you opened',
+                });
             }
 
             async function edit(d) {
                 // A team drawing is the team's record: drawing over it starts a
                 // new one rather than rewriting what the room agreed on.
                 if (d.team) { pad({ url: d.url, title: d.title + ' (copy)' }); return; }
-                if (!d.editable) { pad({ url: d.url, title: d.title, noteId: d.noteId, index: d.index }); return; }
+                if (!d.editable) { pad({ url: d.url, title: d.title, noteId: d.noteId, index: d.index, note: d.note || '' }); return; }
                 try {
                     const r = await api(`${U.one}&noteId=${d.noteId}&index=${d.index}`);
                     pad({
                         url: d.url, title: d.title, noteId: d.noteId, index: d.index,
+                        note: (r.data && r.data.note) || d.note || '',
+                        newTitle: (d.title || 'Drawing') + ' (copy)',
                         objects: (r.data && r.data.strokes) || null,
                     });
                 } catch (err) { toast(err.message || 'Could not open that drawing.', 'error'); }
@@ -204,13 +226,15 @@
             document.getElementById('drConfirm').addEventListener('click', async (e) => {
                 if (!pending) return;
                 const title = (document.getElementById('drTitle').value || '').trim() || 'Drawing';
+                const note = (document.getElementById('drNote').value || '').trim();
                 const btn = e.currentTarget;
                 btn.disabled = true;
                 try {
-                    const r = await api(U.save, { method: 'POST', body: Object.assign({ title }, pending) });
+                    const r = await api(U.save, { method: 'POST', body: Object.assign({ title, note }, pending) });
                     const d = r.data || {};
                     const row = {
                         noteId: d.noteId, index: d.index, title: d.title || title,
+                        note: d.note != null ? d.note : note,
                         editable: !!d.editable, team: false, url: d.url, when: 'Just now',
                     };
                     // Cache-bust: a re-saved drawing keeps its slot in the grid
@@ -230,6 +254,19 @@
             });
 
             paint();
+
+            /* A drawing tapped in Notes (or anywhere else) asks for itself by
+               name: ?open=<noteId>:<index>. Without this the link could only
+               reach the front door of the module and leave you to find it. */
+            (function openFromLink() {
+                const want = new URLSearchParams(window.location.search).get('open')
+                    || @json(request()->query('open'));
+                if (!want) return;
+                const [noteId, index] = String(want).split(':');
+                const d = drawings.find((x) => String(x.noteId) === String(noteId)
+                    && String(x.index) === String(index || 0));
+                if (d) setTimeout(() => edit(d), 150);
+            })();
         })();
     </script>
 @endsection

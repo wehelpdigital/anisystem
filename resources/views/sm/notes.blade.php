@@ -13,9 +13,17 @@
         .note-body ol { list-style: decimal; padding-left: 1.35rem; }
         .note-body img { max-width: 100%; border-radius: .5rem; margin: .35rem 0; }
         .note-photo { max-height: 240px; border-radius: .6rem; }
-        .note-quill .ql-container { min-height: 3.25rem; border-bottom-left-radius: .75rem; border-bottom-right-radius: .75rem; }
-        .note-quill .ql-editor { min-height: 3.25rem; }
+        /* Room to write. Three lines of box for a field asking for a
+           paragraph is a box that asks you not to bother. */
+        .note-quill .ql-container { min-height: 9rem; border-bottom-left-radius: .75rem; border-bottom-right-radius: .75rem; }
+        .note-quill .ql-editor { min-height: 9rem; font-size: .95rem; }
         .note-quill .ql-toolbar { border-top-left-radius: .75rem; border-top-right-radius: .75rem; }
+        /* The attachment buttons are one group, not four loose controls. */
+        .note-attach-box { border: 1px dashed var(--color-gray-300, #d1d5db); border-radius: .75rem; padding: .65rem; }
+        html.dark .note-attach-box { border-color: #2b3a1c; }
+        @media (max-width: 640px) {
+            .note-attach-box .btn { flex: 1 1 8.5rem; justify-content: center; }
+        }
 
         /* Accordion: each note folds to its header; the chevron flags state. */
         .note-head { cursor: pointer; }
@@ -58,6 +66,15 @@
         .note-up.is-error .note-up-top { color: #b91c1c; }
         .note-up.is-error .note-up-fill { background: #ef4444; }
         @media (prefers-reduced-motion: reduce) { .note-up-fill { transition: none; } }
+
+        .note-ico { flex: 0 0 auto; width: 1.6rem; height: 1.6rem; margin-top: .1rem; border-radius: .45rem;
+            display: inline-flex; align-items: center; justify-content: center;
+            background: #e4efd4; color: #3d6823; }
+        .note-ico svg { width: 1rem; height: 1rem; }
+        html.dark .note-ico { background: rgb(61 104 35 / .35); color: #a8cc7e; }
+        /* However long the note is, the way to change or remove it stays where
+           it was: the top-right corner of its own card. */
+        .note-acts { position: sticky; top: .5rem; align-self: flex-start; z-index: 1; }
 
         /* Media gallery on a card */
         .note-media { display: grid; grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr)); gap: .5rem; margin-top: .6rem; }
@@ -116,7 +133,7 @@
             $mapUrl = $saveIdForNote
                 ? route('sm.maps', ['id' => $schedule->id, 'save' => $saveIdForNote])
                 : route('sm.maps', ['id' => $schedule->id]);
-            foreach ((is_array($n->media) ? $n->media : []) as $m) {
+            foreach ((is_array($n->media) ? $n->media : []) as $mIndex => $m) {
                 if (empty($m['path'])) continue;
                 // Maps saved before they announced themselves are recognised by
                 // the filename the map save writes, so old notes get the link
@@ -128,6 +145,11 @@
                     'url' => \App\Support\MediaStore::url($m['path']),
                     'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
                     'mapUrl' => $isMap ? $mapUrl : null,
+                    // A drawing opens where it can be changed, not where it can
+                    // be squinted at: the Draw module, on this exact drawing.
+                    'drawUrl' => ($m['type'] ?? '') === 'drawing'
+                        ? route('sm.draw', ['id' => $schedule->id, 'open' => $n->id . ':' . $mIndex])
+                        : null,
                 ];
             }
         @endphp
@@ -135,6 +157,12 @@
             <div class="note-head flex items-start justify-between gap-3">
                 <div class="flex items-start gap-2 min-w-0 grow">
                     <svg class="note-chevron w-4 h-4 mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    {{-- Every note wears the note icon, drawings included. A
+                         drawing note used to arrive with neither icon nor text
+                         and read as something else entirely. --}}
+                    <span class="note-ico" aria-hidden="true">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    </span>
                     <div class="min-w-0 grow">
                         <h3 class="font-bold text-gray-900 leading-snug js-title">{{ $n->title }}</h3>
                         @if ($saveIdForNote)
@@ -150,7 +178,7 @@
                         <p class="text-xs text-gray-400 mt-0.5 js-time">{{ $n->updated_at?->diffForHumans() }}</p>
                     </div>
                 </div>
-                <div class="flex gap-1 shrink-0">
+                <div class="flex gap-1 shrink-0 note-acts">
                     <button type="button" class="btn btn-sm btn-ghost js-edit" aria-label="Edit note">
                         <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     </button>
@@ -163,9 +191,7 @@
                 @if (filled($n->body))
                     <div class="note-body mt-2">{!! $n->body !!}</div>
                 @endif
-                @if (! empty($mediaItems))
-                    <div class="note-media">@include('sm.partials.note-media', ['media' => $mediaItems])</div>
-                @endif
+                @include('sm.partials.note-attachments', ['media' => $mediaItems])
             </div></div>
         </div>
     @endforeach
@@ -209,15 +235,23 @@
                 <div id="noteEditor"></div>
             </div>
         </div>
-        <div class="mb-2" data-video-host>
-            <label class="form-label">Photos &amp; videos</label>
+        <div class="mb-2 note-attach-box" data-video-host>
+            <label class="form-label">Attachments</label>
             <div id="noteUploads" class="note-ups"></div>
             <div id="noteMthumbs" class="note-mthumbs mb-2"></div>
             <div class="flex flex-wrap gap-2">
                 <input type="file" id="notePhoto" accept="image/*" class="hidden" multiple>
+                {{-- Two ways in, because they are two different moments: one is
+                     "I took this earlier", the other is "look at this now". The
+                     camera one asks the phone for its rear camera directly. --}}
+                <input type="file" id="noteCamera" accept="image/*" capture="environment" class="hidden">
+                <button type="button" id="noteTakePhoto" class="btn btn-white btn-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    Take a photo
+                </button>
                 <button type="button" id="noteAddPhoto" class="btn btn-white btn-sm">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    Add photo
+                    Upload photo
                 </button>
                 <input type="file" class="js-video-file hidden" accept="video/*">
                 <button type="button" class="btn btn-white btn-sm js-video-attach">
@@ -230,7 +264,7 @@
                 </button>
                 <span class="js-video-chip"></span>
             </div>
-            <p class="form-hint">Photos and videos are auto-compressed. Attach as many as you like.</p>
+            <p class="form-hint">Photos and videos are attached to the note, not placed inside the text — they are compressed on the way up, and there is no limit on how many. Drawings are their own thing: make them in the Draw module and they arrive here as an attachment.</p>
         </div>
     </div>
     <div class="sheet-footer">
@@ -354,6 +388,9 @@ const __init = () => {
     // Where a saved map opens. Read by noteMediaThumb for tiles it builds
     // after an edit, which have no per-item link of their own.
     window.NOTE_MAP_URL = @json(route('sm.maps', ['id' => $schedule->id]));
+    // Where a drawing goes when its chip is tapped; the index is appended.
+    const DRAW_URL = @json(route('sm.draw', ['id' => $schedule->id]));
+    window.NOTE_DRAW_URL = DRAW_URL;
 
     document.querySelectorAll('[data-note-add]').forEach((b) => b.addEventListener('click', () => openNoteSheet(null)));
     // Emoji → insert into the note body at the cursor.
@@ -384,6 +421,7 @@ const __init = () => {
     })();
 
     fld('noteAddPhoto').addEventListener('click', () => fld('notePhoto').click());
+    fld('noteTakePhoto')?.addEventListener('click', () => fld('noteCamera').click());
     // Remove a media item from the working gallery.
     fld('noteMthumbs').addEventListener('click', (e) => {
         const rm = e.target.closest('[data-rm]');
@@ -549,7 +587,10 @@ const __init = () => {
 
     // Draw → upload the sketch → add it as an attachment (not inline).
     // Add photo(s) — each is compressed server-side and pushed to the gallery.
-    fld('notePhoto').addEventListener('change', async (e) => {
+    // Both inputs land here: one file or several, taken or picked.
+    fld('noteCamera')?.addEventListener('change', (e) => onPhotosPicked(e));
+    fld('notePhoto').addEventListener('change', (e) => onPhotosPicked(e));
+    async function onPhotosPicked(e) {
         const files = Array.from(e.target.files || []); if (!files.length) return;
         for (const file of files) {
             try {
@@ -559,7 +600,7 @@ const __init = () => {
             } catch (err) { toast(err.message, 'error'); }
         }
         e.target.value = '';
-    });
+    }
 
     // Add / record a video — the shared video partial writes the picked or
     // recorded file into .js-video-file; we compress + attach it here.
@@ -577,12 +618,14 @@ const __init = () => {
         if (host && window.plazaClearVideo) window.plazaClearVideo(host);
     });
 
-    function mediaGalleryHtml(n) {
+    /** Everything this note carries, with a drawing knowing where it lives. */
+    function attachmentsOf(n) {
         const items = [];
         if (n.imageUrl) items.push({ type: 'image', url: n.imageUrl });
-        (n.media || []).forEach((m) => items.push(m));
-        if (!items.length) return '';
-        return `<div class="note-media">${window.noteMediaCells ? window.noteMediaCells(items) : ''}</div>`;
+        (n.media || []).forEach((m, i) => items.push(Object.assign({}, m, {
+            drawUrl: m.type === 'drawing' ? DRAW_URL + '&open=' + n.id + ':' + i : null,
+        })));
+        return items;
     }
 
     /** Mirrors the Blade card above (accordion header + folded body/media). */
@@ -594,6 +637,7 @@ const __init = () => {
             <div class="note-head flex items-start justify-between gap-3">
                 <div class="flex items-start gap-2 min-w-0 grow">
                     <svg class="note-chevron w-4 h-4 mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    <span class="note-ico" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span>
                     <div class="min-w-0 grow">
                         <h3 class="font-bold text-gray-900 leading-snug js-title">${escapeHtml(n.title)}</h3>
                         ${n.fromMap ? '<span class="badge badge-green note-origin">Team map</span>' : ''}
@@ -601,14 +645,14 @@ const __init = () => {
                         <p class="text-xs text-gray-400 mt-0.5 js-time">just now</p>
                     </div>
                 </div>
-                <div class="flex gap-1 shrink-0">
+                <div class="flex gap-1 shrink-0 note-acts">
                     <button type="button" class="btn btn-sm btn-ghost js-edit" aria-label="Edit note"><svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
                     <button type="button" class="btn btn-sm btn-ghost text-red-600 js-delete" aria-label="Delete note"><svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
                 </div>
             </div>
             <div class="note-fold"><div class="note-fold-inner js-note-body-wrap">
                 ${n.body ? `<div class="note-body mt-2">${n.body}</div>` : ''}
-                ${mediaGalleryHtml(n)}
+                ${window.noteAttachmentChips ? window.noteAttachmentChips(attachmentsOf(n)) : ''}
             </div></div>`;
         return el;
     }
