@@ -1803,52 +1803,56 @@ document.addEventListener('DOMContentLoaded', () => {
      * 6. ADD / EDIT ACTIVITY SHEET
      * ================================================================ */
 
-    // ---- Lots chips (mutual exclusion with the N/A pseudo-chip) ----
+    /* ---- Lot chips --------------------------------------------------------
+     * Nothing picked means everywhere, which is what the label now says. A
+     * chip that said the same thing was a second way to answer one question,
+     * and it could disagree with the first. */
     $id('activityLotsContainer')?.addEventListener('click', (e) => {
         const chip = e.target.closest('.lot-chip');
         if (!chip) return;
-        if (chip.hasAttribute('data-lot-na')) {
-            const willActivate = !chip.classList.contains('is-selected');
-            if (willActivate) {
-                $qsa('#activityLotsContainer .lot-chip:not([data-lot-na])').forEach((c) => {
-                    c.classList.remove('is-selected');
-                    c.setAttribute('aria-pressed', 'false');
-                });
-            }
-            chip.classList.toggle('is-selected', willActivate);
-            chip.setAttribute('aria-pressed', willActivate ? 'true' : 'false');
-        } else {
-            const na = $qs('#activityLotsContainer .lot-chip[data-lot-na]');
-            if (na) {
-                na.classList.remove('is-selected');
-                na.setAttribute('aria-pressed', 'false');
-            }
-            chip.classList.toggle('is-selected');
-            chip.setAttribute('aria-pressed', chip.classList.contains('is-selected') ? 'true' : 'false');
-        }
+        chip.classList.toggle('is-selected');
+        chip.setAttribute('aria-pressed', chip.classList.contains('is-selected') ? 'true' : 'false');
         refreshActivityModalLotState();
     });
 
     function setActivityLots(lotIds) {
         const ids = (lotIds || []).map(Number);
-        const useNa = ids.length === 0;
         $qsa('#activityLotsContainer .lot-chip').forEach((c) => {
-            if (c.hasAttribute('data-lot-na')) {
-                c.classList.toggle('is-selected', useNa);
-                c.setAttribute('aria-pressed', useNa ? 'true' : 'false');
-            } else {
-                const on = ids.includes(parseInt(c.getAttribute('data-lot-id'), 10));
-                c.classList.toggle('is-selected', on);
-                c.setAttribute('aria-pressed', on ? 'true' : 'false');
-            }
+            const on = ids.includes(parseInt(c.getAttribute('data-lot-id'), 10));
+            c.classList.toggle('is-selected', on);
+            c.setAttribute('aria-pressed', on ? 'true' : 'false');
         });
     }
 
     function getActivityLotIds() {
-        if ($qs('#activityLotsContainer .lot-chip[data-lot-na].is-selected')) return [];
-        return $qsa('#activityLotsContainer .lot-chip.is-selected:not([data-lot-na])')
-            .map((c) => parseInt(c.getAttribute('data-lot-id'), 10));
+        return $qsa('#activityLotsContainer .lot-chip.is-selected')
+            .map((c) => parseInt(c.getAttribute('data-lot-id'), 10))
+            .filter((n) => !Number.isNaN(n));
     }
+
+    /* ---- The date pill ----------------------------------------------------
+     * One place paints it, and every write to the field goes through
+     * setTargetDate so the words never fall behind the value — including the
+     * writes the DAS pane makes when you type a day number instead. */
+    function paintDateField() {
+        const input = $id('activityTargetDate');
+        const text = $id('activityTargetDateText');
+        const pill = $id('activityDateField');
+        if (!input || !text || !pill) return;
+        const v = (input.value || '').trim();
+        // "January 25, 2026" — the day name is on the board already, and
+        // this is a field, not a sentence.
+        const d = parseLocalDate(v);
+        text.textContent = d ? (MONTH_LONG[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear()) : 'Pick a date';
+        pill.classList.toggle('is-empty', !v);
+    }
+    function setTargetDate(v) {
+        const input = $id('activityTargetDate');
+        if (input) input.value = v || '';
+        paintDateField();
+    }
+    $id('activityTargetDate')?.addEventListener('change', paintDateField);
+    $id('activityTargetDate')?.addEventListener('input', paintDateField);
 
     // ---- Worker chips ----
     /** The day this activity is for, as the chips need to know it. */
@@ -1908,53 +1912,27 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!ok) return;
         }
 
-        // "Nobody" and "these people" are answers to the same question, so
-        // choosing one clears the other.
-        if (chip.hasAttribute('data-worker-na')) {
-            const on = !chip.classList.contains('is-selected');
-            if (on) {
-                $qsa('#activityWorkersContainer .worker-chip:not([data-worker-na])').forEach((c) => {
-                    c.classList.remove('is-selected');
-                    c.setAttribute('aria-pressed', 'false');
-                });
-            }
-            chip.classList.toggle('is-selected', on);
-            chip.setAttribute('aria-pressed', on ? 'true' : 'false');
-        } else {
-            const na = $qs('#activityWorkersContainer .worker-chip[data-worker-na]');
-            if (na) {
-                na.classList.remove('is-selected');
-                na.setAttribute('aria-pressed', 'false');
-            }
-            chip.classList.toggle('is-selected');
-            chip.setAttribute('aria-pressed', chip.classList.contains('is-selected') ? 'true' : 'false');
-        }
+        chip.classList.toggle('is-selected');
+        chip.setAttribute('aria-pressed', chip.classList.contains('is-selected') ? 'true' : 'false');
         markWorkerAvailability();
         renderWorkerPay();
     });
 
-    function setActivityWorkers(workerIds, sayNobody) {
+    function setActivityWorkers(workerIds) {
         const ids = (workerIds || []).map(Number);
-        $qsa('#activityWorkersContainer .worker-chip:not([data-worker-na])').forEach((c) => {
+        $qsa('#activityWorkersContainer .worker-chip').forEach((c) => {
             const on = ids.includes(parseInt(c.getAttribute('data-worker-id'), 10));
             c.classList.toggle('is-selected', on);
             c.setAttribute('aria-pressed', on ? 'true' : 'false');
         });
-        // Reopening work that nobody was assigned to shows "N/A" rather than a
-        // blank row, so an answered question does not look like a skipped one.
-        const na = $qs('#activityWorkersContainer .worker-chip[data-worker-na]');
-        if (na) {
-            const nobody = !!sayNobody && ids.length === 0;
-            na.classList.toggle('is-selected', nobody);
-            na.setAttribute('aria-pressed', nobody ? 'true' : 'false');
-        }
         markWorkerAvailability();
         renderWorkerPay();
     }
 
     function getActivityWorkerIds() {
-        return $qsa('#activityWorkersContainer .worker-chip.is-selected:not([data-worker-na])')
-            .map((c) => parseInt(c.getAttribute('data-worker-id'), 10));
+        return $qsa('#activityWorkersContainer .worker-chip.is-selected')
+            .map((c) => parseInt(c.getAttribute('data-worker-id'), 10))
+            .filter((n) => !Number.isNaN(n));
     }
 
     /* ---- Worker checklist -------------------------------------------------
@@ -2317,7 +2295,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $id('activityStartDas')?.addEventListener('input', function () {
         const anchor = _activityDasAnchor();
         if (!anchor || this.value === '') return;
-        $id('activityTargetDate').value = _dasToDateStr(this.value, anchor);
+        setTargetDate(_dasToDateStr(this.value, anchor));
         updateActivityDasNote();
     });
     $id('activityEndDas')?.addEventListener('input', function () {
@@ -2760,7 +2738,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function resetActivitySheet() {
         $id('activityId').value = '';
         $id('activityTitle').value = '';
-        $id('activityTargetDate').value = '';
+        setTargetDate('');
         $id('activityTargetEndDate').value = '';
         $id('activityPriority').value = 'medium';
         $id('activityType').value = '';
@@ -2809,7 +2787,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('activitySheetTitle').textContent = ADD_AS_DRAFT ? 'Add to Drafts' : 'Add Activity';
         resetActivitySheet();
         BEFORE_SNAPSHOT = null;
-        if (prefillDate) $id('activityTargetDate').value = prefillDate;
+        if (prefillDate) setTargetDate(prefillDate);
         const hint = $id('activityDraftHint');
         if (hint) hint.classList.toggle('hidden', !ADD_AS_DRAFT);
         refreshActivityModalLotState();
@@ -2828,7 +2806,7 @@ document.addEventListener('DOMContentLoaded', () => {
             BEFORE_SNAPSHOT = JSON.parse(JSON.stringify(a));
             $id('activityId').value = a.id;
             $id('activityTitle').value = a.activityTitle || '';
-            $id('activityTargetDate').value = (a.targetDate || '').slice(0, 10);
+            setTargetDate((a.targetDate || '').slice(0, 10));
             $id('activityTargetEndDate').value = (a.targetEndDate || '').slice(0, 10);
             $id('activityPriority').value = a.priority || 'medium';
             if (a.activityType === 'irrigation') {
@@ -2848,7 +2826,7 @@ document.addEventListener('DOMContentLoaded', () => {
             $id('activityIsTransplant').checked = !!boolFlag(a.isTransplant);
             setActivityLots(a.lotIds || (a.lots || []).map((l) => l.id));
             setWorkerPay(a.workerPay || {});
-            setActivityWorkers(a.workerIds || (a.workers || []).map((w) => w.id), true);
+            setActivityWorkers(a.workerIds || (a.workers || []).map((w) => w.id));
             if (a.activityType === 'worker_payroll') setActPane('workers');
             // What an activity IS was decided when it was made. Offering to
             // change it here invites turning a day's payroll into an
@@ -6627,6 +6605,41 @@ document.addEventListener('DOMContentLoaded', () => {
             hidden: 'toggleHiddenBtn',
             contract: 'contractAllBtn',
         };
+
+        /* Day-zero only: the anchors every other date is counted from. Not a
+         * toggle over some other button's state — it owns its own, kept per
+         * schedule like the rest, and folds away any day left with nothing to
+         * show so the board does not fill with empty headers. */
+        const DZ_KEY = `actDayZeroOnly:${SCHEDULE_ID}`;
+        let dzOnly = false;
+        try { dzOnly = localStorage.getItem(DZ_KEY) === '1'; } catch (e) { /* private mode */ }
+        function isAnchor(card) {
+            return card.getAttribute('data-is-day-zero') === '1'
+                || card.getAttribute('data-is-transplant') === '1';
+        }
+        function applyDayZero() {
+            document.body.classList.toggle('only-day-zero', dzOnly);
+            let shown = 0;
+            $qsa('#activitiesList .date-group').forEach((g) => {
+                const cards = $qsa('.activity-card', g);
+                const keep = cards.filter(isAnchor).length;
+                shown += keep;
+                g.classList.toggle('dz-away', dzOnly && keep === 0);
+            });
+            const state = $id('vfDayZeroState');
+            if (state) {
+                state.textContent = dzOnly ? 'On' : 'Off';
+                state.classList.toggle('is-off', !dzOnly);
+            }
+            const sub = $id('vfDayZeroSub');
+            if (sub) {
+                sub.textContent = dzOnly
+                    ? (shown === 1 ? '1 anchor on the board' : shown + ' anchors on the board')
+                    : 'The DAS 0 / DAP 0 / DAT 0 anchors';
+            }
+            const empty = $id('dayZeroNone');
+            if (empty) empty.classList.toggle('hidden', !dzOnly || shown > 0);
+        }
         function paint() {
             const emptyHidden = document.body.classList.contains('hide-empty-dates');
             const doneHidden = $id('toggleDoneDaysBtn')?.getAttribute('aria-pressed') === 'true';
@@ -6642,12 +6655,19 @@ document.addEventListener('DOMContentLoaded', () => {
             $id('vfHiddenRow')?.classList.toggle('is-gone', n === 0);
             const sub = $id('vfHiddenSub');
             if (sub) sub.textContent = n + (n === 1 ? ' activity kept out of prints' : ' activities kept out of prints');
-            btn.classList.toggle('is-filtering', emptyHidden || doneHidden);
+            btn.classList.toggle('is-filtering', emptyHidden || doneHidden || dzOnly);
+            applyDayZero();
         }
         btn.addEventListener('click', () => { paint(); openSheet('viewFilterSheet'); });
         document.addEventListener('click', (e) => {
             const row = e.target.closest('.view-filter-row');
             if (!row) return;
+            if (row.dataset.viewFilter === 'dayzero') {
+                dzOnly = !dzOnly;
+                try { localStorage.setItem(DZ_KEY, dzOnly ? '1' : '0'); } catch (e) { /* fine */ }
+                paint();
+                return;
+            }
             const target = VF_TARGETS[row.dataset.viewFilter];
             if (!target) return;
             $id(target)?.click();

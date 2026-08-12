@@ -67,7 +67,16 @@
                 <div id="whenPaneDate" class="when-pane">
                     <div>
                         <label class="form-label" for="activityTargetDate">Date <span class="text-red-500">*</span></label>
-                        <input type="date" id="activityTargetDate" class="form-input cal-only" inputmode="none">
+                        {{-- A date is one short fact, and a full-width dropdown
+                             box announced it like a paragraph. The real input is
+                             still here, laid over the pill and invisible, so a
+                             tap opens the phone's own picker exactly as before
+                             — only the reading of it changed. --}}
+                        <div class="date-pill is-empty" id="activityDateField">
+                            <svg class="dp-ico" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 21h14a1 1 0 001-1V6a1 1 0 00-1-1H5a1 1 0 00-1 1v14a1 1 0 001 1z"/></svg>
+                            <span class="dp-text" id="activityTargetDateText">Pick a date</span>
+                            <input type="date" id="activityTargetDate" class="dp-input cal-only" inputmode="none" aria-label="Date">
+                        </div>
                     </div>
                     {{-- An activity happens on a day. The end date is kept in the
                          markup, unasked, so work already saved as a range keeps
@@ -94,13 +103,17 @@
             </div>
 
             <div>
-                <span class="form-label">Lots</span>
-                <div id="activityLotsContainer" class="flex flex-wrap gap-2 {{ $schedule->lots->count() ? '' : '' }}">
-                    <button type="button" class="chip chip-dashed lot-chip lot-chip-na" data-lot-na="1" aria-pressed="false"
-                        title="Applies generally — not tied to any specific lot">N/A — Not lot-specific</button>
+                <span class="form-label">Lots
+                    <span class="text-gray-400 font-normal">— pick none and it applies everywhere (N/A)</span>
+                </span>
+                <div id="activityLotsContainer" class="flex flex-wrap gap-2">
+                    {{-- The name alone. The variety made every chip a sentence,
+                         and a row of sentences is not a row you can scan. It is
+                         on the tooltip for anyone who needs it. --}}
                     @foreach ($schedule->lots as $lot)
-                        <button type="button" class="chip lot-chip" data-lot-id="{{ $lot->id }}" aria-pressed="false">
-                            {{ $lot->lotName }}@if(!empty($lot->variety)) · {{ $lot->variety }}@endif
+                        <button type="button" class="chip lot-chip" data-lot-id="{{ $lot->id }}" aria-pressed="false"
+                            @if(!empty($lot->variety)) title="{{ $lot->variety }}" @endif>
+                            {{ $lot->lotName }}
                         </button>
                     @endforeach
                     <button type="button" class="chip chip-dashed" id="quickAddLotBtn" data-chip-manual>+ Lot</button>
@@ -193,15 +206,10 @@
             </div>
 
             <div id="activityWorkersPane">
-                <span class="form-label">Workers <span class="text-gray-400 font-normal">(optional)</span></span>
+                <span class="form-label">Workers
+                    <span class="text-gray-400 font-normal">— pick none for nobody assigned (N/A)</span>
+                </span>
                 <div id="activityWorkersContainer" class="flex flex-wrap gap-2">
-                    {{-- Saying "nobody" out loud, now that pay has somewhere
-                         else to live: a task can be work the owner does, or
-                         work whose crew is recorded on a worker checklist of
-                         its own, and leaving the row blank could not tell those
-                         apart from forgetting to fill it in. --}}
-                    <button type="button" class="chip chip-dashed worker-chip worker-chip-na" data-worker-na="1"
-                        aria-pressed="false" title="Nobody is assigned — pay is handled elsewhere, or there is none">N/A — No workers</button>
                     @foreach ($schedule->workers as $w)
                         <button type="button" class="chip worker-chip" data-worker-id="{{ $w->id }}" aria-pressed="false">
                             {{ $w->workerName }}
@@ -406,6 +414,19 @@
                 <span class="vf-sub" id="vfHiddenSub">Kept out of prints and exports</span>
             </span>
             <span class="vf-state is-off" id="vfHiddenState">Hidden</span>
+        </button>
+        {{-- The anchors the whole calendar counts from. Seeing them alone
+             answers "where does this schedule actually start?" without
+             scrolling the board looking for a badge. --}}
+        <button type="button" class="view-filter-row" data-view-filter="dayzero">
+            <span class="vf-ico">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 8.7l5.4-.8L12 3z"/></svg>
+            </span>
+            <span class="grow min-w-0">
+                <span class="vf-name">Day-zero activities only</span>
+                <span class="vf-sub" id="vfDayZeroSub">The DAS 0 / DAP 0 / DAT 0 anchors</span>
+            </span>
+            <span class="vf-state is-off" id="vfDayZeroState">Off</span>
         </button>
         <button type="button" class="view-filter-row" data-view-filter="contract">
             <span class="vf-ico">

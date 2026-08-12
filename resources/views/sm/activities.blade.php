@@ -1106,6 +1106,33 @@
         /* !important so the disabled dimming survives the sheet's fade-in
            animation (which otherwise forces opacity back to 1). */
         .activity-action-row:disabled { opacity: .4 !important; pointer-events: none; }
+        /* The date, said the way a person says it. The native input sits on
+           top at zero opacity so the phone's picker still opens on a tap. */
+        .date-pill { position: relative; display: inline-flex; align-items: center; gap: .5rem;
+            padding: .5rem .85rem; min-height: 2.75rem; border: 2px solid var(--color-gray-200, #e5e7eb);
+            border-radius: 999px; background: #fff; cursor: pointer; max-width: 100%;
+            transition: border-color .2s ease, background .2s ease; }
+        .date-pill:hover { border-color: #a8cc7e; background: #f3f8ec; }
+        .date-pill:focus-within { border-color: #4a7c2a; }
+        .date-pill .dp-ico { width: 1.15rem; height: 1.15rem; color: #4a7c2a; flex: 0 0 auto; }
+        .date-pill .dp-text { font-size: .92rem; font-weight: 700; color: #1f2937; white-space: nowrap;
+            overflow: hidden; text-overflow: ellipsis; }
+        .date-pill.is-empty .dp-text { font-weight: 500; color: #9ca3af; }
+        .date-pill .dp-input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0;
+            border: 0; padding: 0; margin: 0; cursor: pointer; background: transparent; }
+        html.dark .date-pill { background: #1c2136; border-color: #2a3050; }
+        html.dark .date-pill .dp-text { color: #e5e9f5; }
+        html.dark .date-pill:hover { background: #232a45; border-color: #3d6823; }
+        @media (prefers-reduced-motion: reduce) { .date-pill { transition: none; } }
+
+        /* Day-zero only: hide everything that is not an anchor, and any day
+           header left with nothing under it. Unlayered and !important for the
+           usual reason — these cards carry their own display. */
+        body.only-day-zero #activitiesList .activity-card:not([data-is-day-zero="1"]):not([data-is-transplant="1"]) { display: none !important; }
+        body.only-day-zero .date-group.dz-away { display: none !important; }
+        body.only-day-zero .activity-card { animation: app-fade-in .28s ease both; }
+        @media (prefers-reduced-motion: reduce) { body.only-day-zero .activity-card { animation: none; } }
+
         /* A worker the rules say is off this day. Still there to be picked —
            the farm may need them anyway — but it takes a deliberate yes, and
            the name says so afterwards. */
@@ -1969,6 +1996,13 @@
 </div>
 
 {{-- ============================ TIMELINE ============================ --}}
+{{-- Only ever seen with "day-zero only" on and nothing to show for it:
+     without this the board would just look broken. --}}
+<div id="dayZeroNone" class="card card-body text-center text-gray-500 py-8 hidden">
+    <p class="font-bold text-gray-800 mb-1">No day-zero activity yet</p>
+    <p class="text-sm">Nothing on this plan is marked as the DAS 0 / DAP 0 / DAT 0 anchor. Tick “this is day zero” on the activity that starts the count.</p>
+</div>
+
 <div id="activitiesList" class="activity-timeline">
     @if ($sortedActivities->count() === 0)
         <div id="activitiesEmpty" class="card card-body text-center text-gray-500 py-10">
