@@ -974,8 +974,6 @@ class ActivityController extends BaseScheduleController
             'waterTask'       => ['nullable', 'string', Rule::in(array_keys(AsScheduleActivity::WATER_TASKS))],
             'servicePrice'    => 'nullable|numeric|min:0|max:99999999',
             'isDayZero'       => 'nullable|boolean',
-            // The worker checklist can mark its own day finished.
-            'isDone'          => 'nullable|boolean',
             'isTransplant'    => 'nullable|boolean',
             'isDraft'         => 'nullable|boolean',
             'description'     => 'nullable|string|max:20000',
@@ -1086,7 +1084,6 @@ class ActivityController extends BaseScheduleController
                 : null,
             'isDayZero'          => $request->boolean('isDayZero'),
             'isTransplant'       => $request->boolean('isTransplant'),
-            'isDone'             => $request->boolean('isDone'),
             // Sanitize client rich text — it is rendered raw and shared with the admin app.
             'description'        => \App\Support\HtmlSanitizer::rich($request->description),
             'imagePath'          => $submittedImagePath,

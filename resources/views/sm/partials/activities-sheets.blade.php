@@ -211,12 +211,6 @@
                         <span class="text-sm font-bold text-gray-800" id="workerPayTotal">₱0.00</span>
                     </div>
                     <div id="workerPayRows" class="p-2 space-y-1.5"></div>
-                    {{-- The day's work either happened or it did not, and that
-                         is a different question from who was there for it. --}}
-                    <label class="flex items-center gap-2.5 px-3 py-2.5 border-t border-gray-100 cursor-pointer select-none">
-                        <input type="checkbox" id="activityIsDone" class="w-5 h-5 rounded">
-                        <span class="text-sm font-semibold text-gray-700">Mark this activity as done</span>
-                    </label>
                 </div>
                 <div id="quickAddWorkerForm" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2">
                     <div class="flex items-center justify-between">

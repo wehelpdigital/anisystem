@@ -2552,7 +2552,6 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('activityTimeRequired').value = 'half';
         $id('activityIsDayZero').checked = false;
         if ($id('activityIsTransplant')) $id('activityIsTransplant').checked = false;
-        if ($id('activityIsDone')) $id('activityIsDone').checked = false;
         setWhenTab('date', { instant: true });
         setDescriptionContent('');
         pendingDescription = '';
@@ -2628,7 +2627,6 @@ document.addEventListener('DOMContentLoaded', () => {
             $id('activityTimeRequired').value = a.timeRequired || 'half';
             $id('activityIsDayZero').checked = !!boolFlag(a.isDayZero);
             $id('activityIsTransplant').checked = !!boolFlag(a.isTransplant);
-            if ($id('activityIsDone')) $id('activityIsDone').checked = !!boolFlag(a.isDone);
             setActivityLots(a.lotIds || (a.lots || []).map((l) => l.id));
             setWorkerPay(a.workerPay || {});
             setActivityWorkers(a.workerIds || (a.workers || []).map((w) => w.id));
@@ -2722,9 +2720,6 @@ document.addEventListener('DOMContentLoaded', () => {
             timeRequired: $id('activityTimeRequired').value,
             isDayZero: $id('activityIsDayZero').checked ? 1 : 0,
             isTransplant: $id('activityIsTransplant').checked ? 1 : 0,
-            // Ticked in the worker checklist; the board's own done toggle
-            // writes the same flag from the card.
-            isDone: $id('activityIsDone')?.checked ? 1 : 0,
             isDraft: (!id && ADD_AS_DRAFT) ? 1 : 0,
             lotIds: getActivityLotIds(),   // empty = N/A (not lot-specific)
             workerIds: getActivityWorkerIds(),
