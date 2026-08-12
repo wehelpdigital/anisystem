@@ -147,6 +147,27 @@
         .date-header-cash svg { width: .85rem; height: .85rem; }
         .date-header-cash { cursor: pointer; }
         .date-header-cash:hover { filter: brightness(.97); }
+        /* Attendance: a tick each, and what the day comes to once the people
+           who did not turn up are taken out. */
+        .att-head { display: flex; flex-direction: column; gap: .1rem; padding: .85rem .95rem; border-radius: .9rem;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 1px solid #bbf7d0; }
+        .att-head-label { font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: #15803d; }
+        .att-head-amt { font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; color: #14532d; line-height: 1.2; }
+        .att-head-sub { font-size: .72rem; color: #166534; opacity: .8; }
+        .att-row { display: flex; align-items: center; gap: .6rem; padding: .55rem .1rem; border-bottom: 1px solid var(--color-gray-100); }
+        .att-row:last-child { border-bottom: 0; }
+        .att-row input { width: 1.2rem; height: 1.2rem; border-radius: .35rem; flex-shrink: 0; }
+        .att-name { min-width: 0; flex: 1 1 auto; font-size: .88rem; font-weight: 700; color: var(--color-gray-800); }
+        .att-jobs { display: block; font-size: .68rem; font-weight: 600; color: var(--color-gray-400); }
+        .att-pay { font-size: .85rem; font-weight: 800; color: var(--color-gray-900); white-space: nowrap; }
+        .att-row.is-out .att-name, .att-row.is-out .att-pay { color: var(--color-gray-400); text-decoration: line-through; }
+        .att-row.is-out .att-jobs { text-decoration: none; }
+        .att-empty { padding: 1.5rem .5rem; text-align: center; font-size: .82rem; color: var(--color-gray-400); }
+        html.dark .att-head { background: linear-gradient(135deg, #16220f 0%, #1d2f16 100%); border-color: #2f4a1e; }
+        html.dark .att-head-amt { color: #bbf7d0; }
+        html.dark .att-name, html.dark .att-pay { color: #e6eddd; }
+        html.dark .att-row { border-color: #223018; }
+
         /* The breakdown behind the day's figure. Money reads better grouped
            than listed: the total leads, then wages and extras as two blocks
            you can weigh against each other, each in its own colour so a glance

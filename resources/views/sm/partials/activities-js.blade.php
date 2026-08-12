@@ -76,6 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
         noteImageUpload:  ()  => `{{ route('sm.notes.image-upload') }}?scheduleId=${SCHEDULE_ID}`,
         noteVideoUpload:  ()  => `{{ route('sm.notes.video-upload') }}?scheduleId=${SCHEDULE_ID}`,
         weather:          ()  => `{{ route('sm.weather') }}?scheduleId=${SCHEDULE_ID}`,
+        attendance:       (d) => `{{ route('sm.attendance') }}?scheduleId=${SCHEDULE_ID}&date=${encodeURIComponent(d)}`,
+        attendanceMark:   ()  => `{{ route('sm.attendance.mark') }}?scheduleId=${SCHEDULE_ID}`,
         taggables:        ()  => `{{ route('sm.activities.taggables') }}?scheduleId=${SCHEDULE_ID}`,
         tag:              ()  => `{{ route('sm.activities.tag') }}?scheduleId=${SCHEDULE_ID}`,
         untag:            ()  => `{{ route('sm.activities.untag') }}?scheduleId=${SCHEDULE_ID}`,
@@ -3058,6 +3060,11 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => openDayIncome(date), 260);
             return;
         }
+        if (cls === 'attendance') {
+            const date = dayMenuDate;
+            setTimeout(() => openAttendance(date), 260);
+            return;
+        }
         if (cls === 'add-drawing') {
             const date = dayMenuDate;
             setTimeout(() => addDayDrawing(date), 260);
@@ -3071,6 +3078,65 @@ document.addEventListener('DOMContentLoaded', () => {
         const target = $qs(`#activitiesList .date-group[data-date="${dayMenuDate}"] .${cls}`);
         // Defer so the sheet is closed before the next one opens.
         setTimeout(() => target?.click(), 260);
+    });
+
+    /* ---- Attendance -------------------------------------------------------
+     * The board says who was put on the day's work. This says who turned up,
+     * and the day's wage bill follows the second — an absent worker is not
+     * money you need in your pocket that morning. */
+    let attendanceDate = null;
+
+    function paintAttendance(data) {
+        const list = $id('attendanceList');
+        const workers = (data && data.workers) || [];
+        $id('attendancePayable').textContent = money(data ? data.payable : 0);
+        const planned = data ? data.planned : 0;
+        const short = planned - (data ? data.payable : 0);
+        $id('attendancePlanned').textContent = short > 0
+            ? `${money(planned)} planned · ${money(short)} not being paid`
+            : (workers.length ? 'Everyone is down as present' : '');
+
+        list.innerHTML = workers.length
+            ? workers.map((w) => `<label class="att-row${w.present ? '' : ' is-out'}" data-att="${w.workerId}">
+                    <input type="checkbox" ${w.present ? 'checked' : ''}>
+                    <span class="att-name">${esc(w.name)}<span class="att-jobs">${esc(w.jobs.map((j) => j.title).join(' · '))}</span></span>
+                    <span class="att-pay">${esc(money(w.pay))}</span>
+                </label>`).join('')
+            : '<p class="att-empty">Nobody is on the work for this day yet — assign workers to an activity and they will appear here to tick off.</p>';
+    }
+
+    async function openAttendance(dateKey) {
+        attendanceDate = dateKey;
+        $id('attendanceTitle').textContent = 'Attendance · ' + prettyDateFull(dateKey);
+        $id('attendanceList').innerHTML = '<p class="att-empty">Loading…</p>';
+        paintAttendance(null);
+        openSheet('attendanceSheet');
+        try {
+            paintAttendance((await api(U.attendance(dateKey))).data);
+        } catch (err) {
+            $id('attendanceList').innerHTML = '<p class="att-empty">Could not load the roster.</p>';
+        }
+    }
+
+    $id('attendanceList')?.addEventListener('change', async (e) => {
+        const box = e.target.closest('input[type=checkbox]');
+        if (!box || !attendanceDate) return;
+        const row = box.closest('[data-att]');
+        row.classList.toggle('is-out', !box.checked);
+        try {
+            const res = await api(U.attendanceMark(), {
+                method: 'POST',
+                body: { date: attendanceDate, workerId: parseInt(row.getAttribute('data-att'), 10), present: box.checked ? 1 : 0 },
+            });
+            // The server hands back the whole day again, so the figure on the
+            // board and the figure in this sheet can never drift apart.
+            paintAttendance(res.data);
+            paintAllDayCash();
+        } catch (err) {
+            box.checked = !box.checked;
+            row.classList.toggle('is-out', !box.checked);
+            toast(err.message || 'Could not save that.', 'error');
+        }
     });
 
     /* ---- A drawing or a map, kept with the day ---------------------------

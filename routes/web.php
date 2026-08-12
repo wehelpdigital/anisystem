@@ -397,6 +397,9 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-activities-inline-note-save', [App\Http\Controllers\Manager\ActivityController::class, 'inlineNoteSave'])->name('sm.activities.inline-note.save');
     Route::delete('/app/sm-activities-inline-note-delete', [App\Http\Controllers\Manager\ActivityController::class, 'inlineNoteDelete'])->name('sm.activities.inline-note.delete');
     // Money a day brought in - the mirror of the extra expenses below.
+    // Who actually turned up, day by day.
+    Route::get('/app/sm-attendance', [App\Http\Controllers\Manager\ActivityController::class, 'attendance'])->name('sm.attendance');
+    Route::post('/app/sm-attendance-mark', [App\Http\Controllers\Manager\ActivityController::class, 'markAttendance'])->name('sm.attendance.mark');
     // Things an activity points at: a drawing, a map, a note.
     Route::get('/app/sm-activity-taggables', [App\Http\Controllers\Manager\ActivityController::class, 'taggables'])->name('sm.activities.taggables');
     Route::post('/app/sm-activity-tag', [App\Http\Controllers\Manager\ActivityController::class, 'tagActivity'])->name('sm.activities.tag');

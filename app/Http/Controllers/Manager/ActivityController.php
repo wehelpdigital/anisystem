@@ -1436,6 +1436,109 @@ class ActivityController extends BaseScheduleController
      * services a farm sells alongside the crop. Same shape, same day menu,
      * separate table — see AsScheduleDayIncome for why. */
 
+    /* ---- Attendance -------------------------------------------------------
+     * Who was put on the day's work is the plan; who turned up is the record.
+     * They are kept apart, because a worker taken off an activity next season
+     * should not lose the fact that they were there on Tuesday.
+     */
+
+    /** The day's roster: every worker with work that day, and what they earn. */
+    public function attendance(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        // input(), not query(): marking someone hands the request straight to
+        // this method with the date merged in, and a merged value never
+        // reaches the query string.
+        $date = (string) $request->input('date');
+        if (! $date) {
+            return $this->jsonFail('Which day?', 422);
+        }
+
+        $absent = \App\Models\AsScheduleAttendance::absentOn($schedule->id, $date);
+        $roster = [];
+
+        foreach ($this->dayActivities($schedule->id, $date) as $activity) {
+            foreach ($activity->workers as $worker) {
+                $id = (string) $worker->id;
+                $roster[$id] ??= [
+                    'workerId' => (int) $worker->id,
+                    'name' => $worker->workerName,
+                    'present' => ! in_array($worker->id, $absent, true),
+                    'pay' => 0.0,
+                    'jobs' => [],
+                ];
+                $roster[$id]['pay'] += $activity->workerPay($worker);
+                $roster[$id]['jobs'][] = [
+                    'title' => (string) $activity->activityTitle,
+                    'part' => $activity->dayPartFor($worker),
+                    'pay' => $activity->workerPay($worker),
+                ];
+            }
+        }
+
+        $roster = array_values($roster);
+        usort($roster, fn ($a, $b) => strcasecmp($a['name'], $b['name']));
+
+        return $this->jsonOk('Roster loaded.', ['data' => [
+            'date' => $date,
+            'workers' => $roster,
+            'planned' => round(array_sum(array_column($roster, 'pay')), 2),
+            'payable' => round(array_sum(array_map(
+                fn ($w) => $w['present'] ? $w['pay'] : 0,
+                $roster
+            )), 2),
+        ]]);
+    }
+
+    /** Mark one worker present or absent for a day. */
+    public function markAttendance(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+
+        $data = $request->validate([
+            'date' => 'required|date',
+            'workerId' => 'required|integer',
+            'present' => 'required|boolean',
+            'note' => 'nullable|string|max:191',
+        ]);
+
+        $worker = AsScheduleWorker::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->where('id', $data['workerId'])
+            ->first();
+        if (! $worker) {
+            return $this->jsonFail('That worker is not on this schedule.', 404);
+        }
+
+        \App\Models\AsScheduleAttendance::updateOrCreate(
+            [
+                'croppingScheduleId' => $schedule->id,
+                'workerId' => $worker->id,
+                'workDate' => $data['date'],
+            ],
+            [
+                'isPresent' => (bool) $data['present'],
+                'note' => $data['note'] ?? null,
+                'markedByUserId' => \Illuminate\Support\Facades\Auth::id(),
+            ]
+        );
+
+        // Hand back the day's new total so the board never has to work out for
+        // itself what a tick was worth.
+        return $this->attendance($request->merge(['date' => $data['date']]));
+    }
+
+    /** @return \Illuminate\Support\Collection<int, AsScheduleActivity> */
+    private function dayActivities(int $scheduleId, string $date)
+    {
+        return AsScheduleActivity::active()
+            ->where('croppingScheduleId', $scheduleId)
+            ->where('isDraft', 0)
+            ->whereDate('targetDate', $date)
+            ->with('workers')
+            ->get();
+    }
+
     /* ---- Tags: things an activity points at ------------------------------
      * A drawing, a map or a note already lives somewhere; an activity that
      * needs one should point at it, not hold a second copy that drifts. The
