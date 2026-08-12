@@ -45,6 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const LOT_DAY_TYPE = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => ($l->dayType ?: 'DAS')]));
     const lotDayType = (lotId) => (LOT_DAY_TYPE[lotId] === 'DAP' ? 'DAP' : 'DAS');
     const WORKER_NAMES = @json($schedule->workers->mapWithKeys(fn ($w) => [$w->id => $w->workerName]));
+    // The half-day rate each worker is normally paid; a whole day is two of
+    // them, and a custom amount on the activity overrides both.
+    const WORKER_RATES = @json($schedule->workers->mapWithKeys(fn ($w) => [$w->id => (float) ($w->costPerHalfDay ?? 0)]));
     const LOT_MANUAL_DAY_ZERO = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->dayZeroDate ? $l->dayZeroDate->format('Y-m-d') : null]));
     const LOT_MANUAL_TRANSPLANT = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->transplantDate ? $l->transplantDate->format('Y-m-d') : null]));
 
@@ -97,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const $id = (i) => document.getElementById(i);
     const $qs = (sel, root) => (root || document).querySelector(sel);
     const $qsa = (sel, root) => Array.from((root || document).querySelectorAll(sel));
+    const money = (n) => '₱' + Number(n || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     const esc = window.escapeHtml;
 
     const dayType = () => ($qs('.day-type-label')?.textContent || DAY_TYPE_DEFAULT).trim() || DAY_TYPE_DEFAULT;
@@ -568,6 +572,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ${workerTags}
         ${itemTags}
     </div>
+    ${labourLine(a.labourTotal, a.workerPay)}
     <div class="activity-tags">${activityTagChips(a.tags)}</div>
 </div>`;
     }
@@ -579,6 +584,16 @@ document.addEventListener('DOMContentLoaded', () => {
         map: 'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2',
         note: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
     };
+    /* What the day's labour on this activity costs, spelled out per worker so
+       the number can be checked rather than just trusted. */
+    function labourLine(total, pay) {
+        if (!total || Number(total) <= 0) return '';
+        const parts = Object.values(pay || {})
+            .map((p) => `${esc(p.name || 'Worker')} ${p.dayPart === 'half' ? '½' : '1'}d ${money(p.total)}`)
+            .join(' · ');
+        return `<div class="activity-labour"><span class="al-total">${money(total)}</span>${parts ? `<span class="al-parts">${parts}</span>` : ''}</div>`;
+    }
+
     function activityTagChips(tags) {
         return (Array.isArray(tags) ? tags : []).map((t) => {
             const kind = t.kind || 'note';
@@ -1553,6 +1568,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!chip) return;
         chip.classList.toggle('is-selected');
         chip.setAttribute('aria-pressed', chip.classList.contains('is-selected') ? 'true' : 'false');
+        renderWorkerPay();
     });
 
     function setActivityWorkers(workerIds) {
@@ -1562,11 +1578,79 @@ document.addEventListener('DOMContentLoaded', () => {
             c.classList.toggle('is-selected', on);
             c.setAttribute('aria-pressed', on ? 'true' : 'false');
         });
+        renderWorkerPay();
     }
 
     function getActivityWorkerIds() {
         return $qsa('#activityWorkersContainer .worker-chip.is-selected')
             .map((c) => parseInt(c.getAttribute('data-worker-id'), 10));
+    }
+
+    /* ---- Worker checklist -------------------------------------------------
+     * Picking a worker says they were there; this says for how much of the day
+     * and at what price. Blank means the usual arrangement — a whole day at
+     * the worker's own rate — so the common case needs no filling in. */
+    let workerPayState = {};
+    function defaultPay(id, dayPart) {
+        const half = Number(WORKER_RATES[id] || 0);
+        return dayPart === 'half' ? half : half * 2;
+    }
+    function payFor(id) {
+        const st = workerPayState[id] || {};
+        const amount = st.amount;
+        return (amount === null || amount === undefined || amount === '')
+            ? defaultPay(id, st.dayPart || 'whole')
+            : Number(amount) || 0;
+    }
+    function renderWorkerPay() {
+        const panel = $id('workerPayPanel'), rows = $id('workerPayRows');
+        if (!panel || !rows) return;
+        const ids = getActivityWorkerIds();
+        panel.classList.toggle('hidden', ids.length === 0);
+        if (!ids.length) { $id('workerPayTotal').textContent = money(0); return; }
+        rows.innerHTML = ids.map((id) => {
+            const st = workerPayState[id] || {};
+            const part = st.dayPart === 'half' ? 'half' : 'whole';
+            return `<div class="flex items-center gap-2" data-pay-row="${id}">
+                <span class="min-w-0 grow text-sm font-semibold text-gray-800 truncate">${esc(WORKER_NAMES[id] || 'Worker')}</span>
+                <span class="flex rounded-lg bg-gray-100 p-0.5 shrink-0">
+                    <button type="button" class="px-2 py-1 rounded-md text-xs font-bold ${part === 'whole' ? 'bg-white text-brand-700' : 'text-gray-500'}" data-pay-part="whole">Whole</button>
+                    <button type="button" class="px-2 py-1 rounded-md text-xs font-bold ${part === 'half' ? 'bg-white text-brand-700' : 'text-gray-500'}" data-pay-part="half">Half</button>
+                </span>
+                <input type="number" class="form-input w-24 shrink-0 text-right" data-pay-amount min="0" step="any" inputmode="decimal"
+                    value="${st.amount === null || st.amount === undefined ? '' : esc(st.amount)}" placeholder="${defaultPay(id, part).toFixed(2)}">
+            </div>`;
+        }).join('');
+        $id('workerPayTotal').textContent = money(ids.reduce((t, id) => t + payFor(id), 0));
+    }
+    $id('workerPayRows')?.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-pay-part]');
+        if (!btn) return;
+        const id = btn.closest('[data-pay-row]').getAttribute('data-pay-row');
+        workerPayState[id] = Object.assign({}, workerPayState[id], { dayPart: btn.getAttribute('data-pay-part') });
+        renderWorkerPay();
+    });
+    $id('workerPayRows')?.addEventListener('input', (e) => {
+        const input = e.target.closest('[data-pay-amount]');
+        if (!input) return;
+        const id = input.closest('[data-pay-row]').getAttribute('data-pay-row');
+        workerPayState[id] = Object.assign({}, workerPayState[id], { amount: input.value === '' ? null : input.value });
+        $id('workerPayTotal').textContent = money(getActivityWorkerIds().reduce((t, w) => t + payFor(w), 0));
+    });
+    function setWorkerPay(pay) {
+        workerPayState = {};
+        Object.entries(pay || {}).forEach(([id, v]) => {
+            workerPayState[id] = { dayPart: v.dayPart === 'half' ? 'half' : 'whole', amount: v.amount ?? null };
+        });
+        renderWorkerPay();
+    }
+    function getWorkerPay() {
+        const out = {};
+        getActivityWorkerIds().forEach((id) => {
+            const st = workerPayState[id] || {};
+            out[id] = { dayPart: st.dayPart === 'half' ? 'half' : 'whole', amount: (st.amount === '' ? null : st.amount) ?? null };
+        });
+        return out;
     }
 
     // ---- Day 0 toggle visibility ----
@@ -2219,6 +2303,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setDescriptionContent('');
         pendingDescription = '';
         setActivityLots([]);
+        setWorkerPay({});
         setActivityWorkers([]);
         setActivityImages([]);
         $id('itemsContainer').innerHTML = '';
@@ -2286,6 +2371,7 @@ document.addEventListener('DOMContentLoaded', () => {
             $id('activityIsDayZero').checked = !!boolFlag(a.isDayZero);
             $id('activityIsTransplant').checked = !!boolFlag(a.isTransplant);
             setActivityLots(a.lotIds || (a.lots || []).map((l) => l.id));
+            setWorkerPay(a.workerPay || {});
             setActivityWorkers(a.workerIds || (a.workers || []).map((w) => w.id));
             setDescriptionContent(a.description || '');
             setActivityImages(a.images || (a.imagePath ? [{ path: a.imagePath, url: a.imageUrl }] : []));
@@ -2372,6 +2458,7 @@ document.addEventListener('DOMContentLoaded', () => {
             isDraft: (!id && ADD_AS_DRAFT) ? 1 : 0,
             lotIds: getActivityLotIds(),   // empty = N/A (not lot-specific)
             workerIds: getActivityWorkerIds(),
+            workerPay: getWorkerPay(),
             items: isService ? [] : items,
         };
         if (!payload.activityTitle) {

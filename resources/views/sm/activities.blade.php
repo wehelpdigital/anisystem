@@ -814,6 +814,13 @@
         @media (prefers-reduced-motion: reduce) { .day-type-menu { animation: none; } }
         /* Meta strip: time + workers + materials/services on one wrapped row. */
         .activity-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .55rem; }
+        /* The wage bill for an activity: the total leads, the breakdown follows
+           quietly, and on a narrow screen the breakdown wraps under it. */
+        .activity-labour { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem; margin-top: .4rem;
+            font-size: .7rem; color: var(--color-gray-500); }
+        .activity-labour .al-total { font-size: .78rem; font-weight: 800; color: var(--color-gray-800); }
+        .activity-labour .al-parts { min-width: 0; }
+
         /* Things this activity points at. Read as links, not as more badges —
            a badge describes the activity, a tag goes somewhere. */
         .activity-tags { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .4rem; }

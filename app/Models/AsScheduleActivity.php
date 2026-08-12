@@ -100,6 +100,25 @@ class AsScheduleActivity extends BaseModel
         return $this->belongsTo(AsCroppingSchedule::class, 'croppingScheduleId');
     }
 
+    /** What one worker on this activity is owed. */
+    public function workerPay(AsScheduleWorker $worker): float
+    {
+        $pivot = $worker->pivot ?? null;
+        $custom = $pivot?->salaryAmount;
+        if ($custom !== null && $custom !== '') {
+            return (float) $custom;
+        }
+        $half = (float) ($worker->costPerHalfDay ?? 0);
+
+        return ($pivot?->dayPart === 'half') ? $half : $half * 2;
+    }
+
+    /** The wage bill for this activity. */
+    public function labourTotal(): float
+    {
+        return (float) $this->workers->sum(fn ($w) => $this->workerPay($w));
+    }
+
     public function version()
     {
         return $this->belongsTo(AsScheduleActivityVersion::class, 'versionId');
@@ -137,7 +156,9 @@ class AsScheduleActivity extends BaseModel
             'as_schedule_activity_workers',
             'activityId',
             'workerId'
-        );
+        // Whether they were on it for a whole day or a half, and what was
+        // agreed if it was not their usual rate.
+        )->withPivot(['dayPart', 'salaryAmount']);
     }
 
     /**

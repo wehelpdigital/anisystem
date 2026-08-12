@@ -188,6 +188,16 @@
                     @endforeach
                     <button type="button" class="chip chip-dashed" id="quickAddWorkerBtn" data-chip-manual>+ Worker</button>
                 </div>
+                {{-- Who is on this, for how much of the day, and at what rate.
+                     It appears once someone is picked: an empty checklist is
+                     just a heading in the way. --}}
+                <div id="workerPayPanel" class="hidden mt-2 rounded-xl border border-gray-200 overflow-hidden">
+                    <div class="flex items-center justify-between px-3 py-2 bg-gray-50">
+                        <span class="text-xs font-bold text-gray-500 uppercase">Worker checklist</span>
+                        <span class="text-sm font-bold text-gray-800" id="workerPayTotal">₱0.00</span>
+                    </div>
+                    <div id="workerPayRows" class="p-2 space-y-1.5"></div>
+                </div>
                 <div id="quickAddWorkerForm" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-bold text-gray-500 uppercase">New worker</span>

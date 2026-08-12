@@ -207,6 +207,15 @@
             <span class="item-tag material-tag">{{ $it->displayName() }}{{ $itQtyText }} <span class="item-tag-price">{{ $itPriceText }}</span></span>
         @endforeach
     </div>
+    {{-- What the labour on this activity costs, per worker and in total.
+         Mirrors labourLine() in the JS renderer. --}}
+    @php $labour = $a->labourTotal(); @endphp
+    @if ($labour > 0)
+        <div class="activity-labour">
+            <span class="al-total">₱{{ number_format($labour, 2) }}</span>
+            <span class="al-parts">{{ $a->workers->map(fn ($w) => $w->workerName . ' ' . (($w->pivot->dayPart ?? 'whole') === 'half' ? '½' : '1') . 'd ₱' . number_format($a->workerPay($w), 2))->join(' · ') }}</span>
+        </div>
+    @endif
     {{-- Things this activity points at. The row is always here so the JS can
          fill it after a tag is added; :empty keeps it out of the way. --}}
     <div class="activity-tags">

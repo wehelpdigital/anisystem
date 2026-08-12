@@ -148,6 +148,7 @@ class ActivityController extends BaseScheduleController
         $payload['imageUrl'] = $activity->imageUrl();
         $payload['images'] = $activity->imageList();
         $payload['items'] = $this->serializeItems($activity);
+        $payload = array_merge($payload, $this->serializeWorkerPay($activity));
 
         return $this->jsonOk('Activity loaded.', ['data' => $payload]);
     }
@@ -983,6 +984,11 @@ class ActivityController extends BaseScheduleController
             'lotIds'          => 'nullable|array',
             'lotIds.*'        => 'integer',
             'workerIds'       => 'nullable|array',
+            // Per-worker: a whole day or a half, and an agreed amount when it
+            // is not the worker's usual rate.
+            'workerPay'          => 'nullable|array',
+            'workerPay.*.dayPart' => 'nullable|in:whole,half',
+            'workerPay.*.amount'  => 'nullable|numeric|min:0|max:9999999',
             'workerIds.*'     => 'integer',
             'items'                 => 'nullable|array',
             'items.*.itemName'      => 'required_with:items|string|max:255',
@@ -1160,7 +1166,7 @@ class ActivityController extends BaseScheduleController
 
                 // Replace pivot rows with the submitted lot + worker sets.
                 $activity->lots()->sync($submittedLotIds);
-                $activity->workers()->sync($submittedWorkerIds);
+                $activity->workers()->sync($this->workerPivot($request, $submittedWorkerIds));
 
                 return $activity;
             });
@@ -1175,6 +1181,7 @@ class ActivityController extends BaseScheduleController
         $data['imageUrl'] = $fresh->imageUrl();
         $data['images'] = $fresh->imageList();
         $data['items'] = $this->serializeItems($fresh);
+        $data = array_merge($data, $this->serializeWorkerPay($fresh));
 
         $this->broadcastBoard($schedule, 'saved', $data, $fresh->versionId);
 
@@ -1537,6 +1544,45 @@ class ActivityController extends BaseScheduleController
         }
 
         return $this->jsonOk('Tag removed.', ['data' => ['tags' => $tags]]);
+    }
+
+    /**
+     * Turn the submitted worker list into pivot rows.
+     *
+     * A missing entry means the usual arrangement — a whole day at the
+     * worker's own rate — so nothing has to be filled in for the common case.
+     *
+     * @param  array<int, int>  $workerIds
+     * @return array<int, array<string, mixed>>
+     */
+    private function workerPivot(Request $request, array $workerIds): array
+    {
+        $pay = (array) $request->input('workerPay', []);
+        $rows = [];
+        foreach ($workerIds as $id) {
+            $one = (array) ($pay[$id] ?? $pay[(string) $id] ?? []);
+            $amount = $one['amount'] ?? null;
+            $rows[$id] = [
+                'dayPart' => ($one['dayPart'] ?? 'whole') === 'half' ? 'half' : 'whole',
+                'salaryAmount' => ($amount === null || $amount === '') ? null : round((float) $amount, 2),
+            ];
+        }
+
+        return $rows;
+    }
+
+    /** What each worker on an activity is owed, and the bill for the day. */
+    private function serializeWorkerPay(AsScheduleActivity $activity): array
+    {
+        return [
+            'workerPay' => $activity->workers->mapWithKeys(fn ($w) => [(string) $w->id => [
+                'dayPart' => $w->pivot->dayPart ?: 'whole',
+                'amount' => $w->pivot->salaryAmount !== null ? (float) $w->pivot->salaryAmount : null,
+                'total' => $activity->workerPay($w),
+                'name' => $w->workerName,
+            ]])->all(),
+            'labourTotal' => $activity->labourTotal(),
+        ];
     }
 
     private function activityFor(int $scheduleId, int $id): ?\App\Models\AsScheduleActivity
