@@ -73,6 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
         noteImageUpload:  ()  => `{{ route('sm.notes.image-upload') }}?scheduleId=${SCHEDULE_ID}`,
         noteVideoUpload:  ()  => `{{ route('sm.notes.video-upload') }}?scheduleId=${SCHEDULE_ID}`,
         weather:          ()  => `{{ route('sm.weather') }}?scheduleId=${SCHEDULE_ID}`,
+        taggables:        ()  => `{{ route('sm.activities.taggables') }}?scheduleId=${SCHEDULE_ID}`,
+        tag:              ()  => `{{ route('sm.activities.tag') }}?scheduleId=${SCHEDULE_ID}`,
+        untag:            ()  => `{{ route('sm.activities.untag') }}?scheduleId=${SCHEDULE_ID}`,
         dayIncomeList:    ()  => `{{ route('sm.activities.day-income.list') }}?id=${SCHEDULE_ID}`,
         dayIncomeSave:    ()  => `{{ route('sm.activities.day-income.save') }}?scheduleId=${SCHEDULE_ID}`,
         dayIncomeDelete:  (id) => `{{ route('sm.activities.day-income.delete') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
@@ -175,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         trash: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>',
         edit: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>',
         eye: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>',
+        tag: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M3 11V4a1 1 0 011-1h7l9 9-8 8-9-9z"/></svg>',
         duplicate: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>',
         archive: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>',
         kebab: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>',
@@ -512,6 +516,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return `<div class="activity-card prio-${esc(priority)}${isHiddenFlag ? ' is-hidden' : ''}${isDoneFlag ? ' is-done' : ''}" draggable="${isDoneFlag ? 'false' : 'true'}"
      data-id="${a.id}"
      data-is-done="${isDoneFlag}"
+     data-tags="${esc(JSON.stringify(Array.isArray(a.tags) ? a.tags : []))}"
      data-target-date="${esc(targetDateStr)}"
      data-target-end-date="${esc(targetEndDateStr)}"
      data-lot-signature="${esc(lotSig)}"
@@ -548,6 +553,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="hidden md:flex items-center gap-0.5 done-hide">
                 <button type="button" class="icon-btn hide-activity-toggle" data-id="${a.id}" title="Toggle visibility in presentations and exports" aria-pressed="${isHiddenFlag ? 'true' : 'false'}">${SVG.eye}</button>
                 <button type="button" class="icon-btn edit-activity-btn" data-id="${a.id}" title="Edit">${SVG.edit}</button>
+                <button type="button" class="icon-btn tag-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Tag a drawing, map or note">${SVG.tag}</button>
                 <button type="button" class="icon-btn duplicate-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Duplicate">${SVG.duplicate}</button>
                 <button type="button" class="icon-btn to-draft-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Move to drafts (hide without deleting)">${SVG.archive}</button>
                 <button type="button" class="icon-btn icon-btn-danger delete-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Delete">${SVG.trash}</button>
@@ -562,8 +568,126 @@ document.addEventListener('DOMContentLoaded', () => {
         ${workerTags}
         ${itemTags}
     </div>
+    <div class="activity-tags">${activityTagChips(a.tags)}</div>
 </div>`;
     }
+
+    /* Things an activity points at — a drawing, a map, a note. The chip holds
+       only a name and a way in; the thing itself stays where it lives. */
+    const TAG_ICON = {
+        drawing: 'M4 20l4-1L20 7a2 2 0 00-3-3L5 16l-1 4zM14 6l4 4',
+        map: 'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2',
+        note: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+    };
+    function activityTagChips(tags) {
+        return (Array.isArray(tags) ? tags : []).map((t) => {
+            const kind = t.kind || 'note';
+            return `<a class="act-tag" href="${esc(t.url || '#')}" data-kind="${esc(kind)}" data-url="${esc(t.url || '')}" title="Open this ${esc(kind)}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="${TAG_ICON[kind] || TAG_ICON.note}"/></svg>
+                ${esc(t.label || kind)}
+            </a>`;
+        }).join('');
+    }
+
+    /* ---- Tagging an activity --------------------------------------------
+     * The drawing, the map and the note already exist somewhere. Tagging
+     * points at one; it never copies it, so editing it later is still done in
+     * the one place it lives. */
+    let TAG_FOR = null, TAGGABLES = null, TAG_TAB = 'drawing';
+
+    function paintCardTags(id, tags) {
+        const card = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
+        const row = card && card.querySelector('.activity-tags');
+        if (row) row.innerHTML = activityTagChips(tags);
+    }
+
+    function paintTagCurrent(tags) {
+        const box = $id('activityTagCurrent');
+        if (!box) return;
+        box.innerHTML = (tags && tags.length)
+            ? '<p class="text-xs font-bold text-gray-400 mb-1">On this activity</p>'
+                + tags.map((t, i) => `<div class="flex items-center gap-2 py-1">
+                        <span class="act-tag" style="cursor:default">${esc(t.label || t.kind)}</span>
+                        <button type="button" class="icon-btn icon-btn-danger ml-auto" data-untag="${i}" title="Remove this tag">${SVG.trash}</button>
+                    </div>`).join('')
+            : '';
+    }
+
+    function paintTagList() {
+        const box = $id('activityTagList');
+        if (!box) return;
+        const rows = (TAGGABLES && TAGGABLES[TAG_TAB === 'drawing' ? 'drawings' : (TAG_TAB === 'map' ? 'maps' : 'notes')]) || [];
+        box.innerHTML = rows.length
+            ? rows.map((r) => `<button type="button" class="w-full flex items-center gap-2.5 rounded-xl p-2 text-left hover:bg-gray-50" data-pick="${esc(r.ref)}">
+                    ${r.url && TAG_TAB === 'drawing' ? `<span class="w-11 h-9 rounded-lg bg-gray-100 overflow-hidden shrink-0"><img src="${esc(r.url)}" alt="" class="w-full h-full object-cover"></span>` : ''}
+                    <span class="min-w-0 font-semibold text-gray-800 text-sm truncate">${esc(r.label || 'Untitled')}</span>
+                </button>`).join('')
+            : `<p class="text-sm text-gray-400 py-2">Nothing to tag yet — make a ${TAG_TAB} first and it will be listed here.</p>`;
+    }
+
+    async function openActivityTagSheet(id, name) {
+        TAG_FOR = id;
+        $id('activityTagTitle').textContent = name ? `Tag: ${name}` : 'Tag this activity';
+        const card = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
+        let current = [];
+        try { current = JSON.parse(card?.getAttribute('data-tags') || '[]'); } catch (_) { current = []; }
+        paintTagCurrent(current);
+        $id('activityTagList').innerHTML = '<p class="text-sm text-gray-400 py-2">Loading…</p>';
+        openSheet('activityTagSheet');
+        try {
+            const res = await api(U.taggables());
+            TAGGABLES = res.data || {};
+            paintTagList();
+        } catch (err) {
+            $id('activityTagList').innerHTML = '<p class="text-sm text-red-500 py-2">Could not load what there is to tag.</p>';
+        }
+    }
+
+    function rememberTags(id, tags) {
+        const card = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
+        if (card) card.setAttribute('data-tags', JSON.stringify(tags || []));
+        paintCardTags(id, tags);
+        paintTagCurrent(tags || []);
+    }
+
+    document.addEventListener('click', async (e) => {
+        const tab = e.target.closest('[data-tag-tab]');
+        if (tab) {
+            TAG_TAB = tab.getAttribute('data-tag-tab');
+            $qsa('#activityTagTabs [data-tag-tab]').forEach((b) => b.classList.toggle('is-on', b === tab));
+            paintTagList();
+            return;
+        }
+        const pick = e.target.closest('[data-pick]');
+        if (pick && TAG_FOR) {
+            const ref = pick.getAttribute('data-pick');
+            const rows = (TAGGABLES && TAGGABLES[TAG_TAB === 'drawing' ? 'drawings' : (TAG_TAB === 'map' ? 'maps' : 'notes')]) || [];
+            const row = rows.find((r) => String(r.ref) === ref);
+            if (!row) return;
+            try {
+                const res = await api(U.tag(), { method: 'POST', body: { activityId: TAG_FOR, kind: TAG_TAB, ref, label: row.label || TAG_TAB, url: row.url } });
+                rememberTags(TAG_FOR, res.data.tags);
+                toast('Tagged.');
+            } catch (err) { toast(err.message || 'Could not tag that.', 'error'); }
+            return;
+        }
+        const untag = e.target.closest('[data-untag]');
+        if (untag && TAG_FOR) {
+            try {
+                const res = await api(U.untag(), { method: 'DELETE', body: { activityId: TAG_FOR, index: parseInt(untag.getAttribute('data-untag'), 10) } });
+                rememberTags(TAG_FOR, res.data.tags);
+            } catch (err) { toast(err.message || 'Could not remove that tag.', 'error'); }
+            return;
+        }
+        // A drawing opens where it can be looked at; a map and a note are
+        // modules, so their chip is a plain link the shell already handles.
+        const chip = e.target.closest('.act-tag[data-kind="drawing"]');
+        if (chip && chip.getAttribute('data-url')) {
+            e.preventDefault();
+            if (typeof window.openNoteLightbox === 'function') window.openNoteLightbox('image', chip.getAttribute('data-url'));
+            else window.open(chip.getAttribute('data-url'), '_blank', 'noopener');
+        }
+    });
 
     function buildRestDayHtml(dateKey, substitute) {
         return `<div class="rest-day-marker${substitute ? ' rest-day-substitute' : ''}" data-date="${esc(dateKey)}">
@@ -3159,6 +3283,11 @@ document.addEventListener('DOMContentLoaded', () => {
             openSheet('cardMenuSheet');
             return;
         }
+        const tagBtn = e.target.closest('.tag-activity-btn');
+        if (tagBtn) {
+            openActivityTagSheet(parseInt(tagBtn.getAttribute('data-id'), 10), tagBtn.getAttribute('data-name') || '');
+            return;
+        }
         const menuAction = e.target.closest('[data-card-menu-action]');
         if (menuAction && CARD_MENU.id) {
             const action = menuAction.getAttribute('data-card-menu-action');
@@ -3171,6 +3300,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (cardIsDone && (action === 'edit' || action === 'move')) { openDoneNoteSheet(id, name); return; }
             if (action === 'edit') { const done = spinBtn(kebab); openEditActivitySheet(id).finally(() => done && done()); }
             else if (action === 'duplicate') { const done = spinBtn(kebab); duplicateActivity(id, name).finally(() => done && done()); }
+            else if (action === 'tag') openActivityTagSheet(id, name);
             else if (action === 'draft') moveActivityToDrafts(id, name);
             else if (action === 'delete') deleteActivity(id, name);
             else if (action === 'hide') toggleActivityHidden(id);

@@ -556,9 +556,28 @@
             <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="move">Move to date…</button>
             <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="duplicate">Duplicate</button>
             <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="hide"><span id="cardMenuHideLabel">Hide from presentations</span></button>
+            <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="tag">Tag a drawing, map or note</button>
             <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="draft">Move to drafts</button>
             <button type="button" class="btn btn-ghost justify-start! text-red-600!" data-card-menu-action="delete">Delete</button>
         </div>
+    </div>
+</div>
+
+{{-- ==================== TAG A DRAWING, MAP OR NOTE ONTO AN ACTIVITY ==================== --}}
+<div class="sheet hidden" id="activityTagSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title truncate" id="activityTagTitle">Tag this activity</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-3" style="padding-bottom:1rem">
+        <div id="activityTagCurrent"></div>
+        <div class="flex gap-1 p-1 rounded-xl bg-gray-100" id="activityTagTabs">
+            <button type="button" class="btn btn-sm grow is-on" data-tag-tab="drawing">Drawings</button>
+            <button type="button" class="btn btn-sm grow" data-tag-tab="map">Maps</button>
+            <button type="button" class="btn btn-sm grow" data-tag-tab="note">Notes</button>
+        </div>
+        <div id="activityTagList" class="space-y-1"></div>
     </div>
 </div>
 

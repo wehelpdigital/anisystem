@@ -814,6 +814,20 @@
         @media (prefers-reduced-motion: reduce) { .day-type-menu { animation: none; } }
         /* Meta strip: time + workers + materials/services on one wrapped row. */
         .activity-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .55rem; }
+        /* Things this activity points at. Read as links, not as more badges —
+           a badge describes the activity, a tag goes somewhere. */
+        .activity-tags { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .4rem; }
+        .activity-tags:empty { display: none; }
+        .act-tag { display: inline-flex; align-items: center; gap: .28rem; max-width: 100%;
+            padding: .2rem .5rem .2rem .38rem; border-radius: 999px; font-size: .68rem; font-weight: 700;
+            color: var(--color-brand-800); background: var(--color-brand-50);
+            border: 1px solid var(--color-brand-100); cursor: pointer;
+            transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+        .act-tag:hover { background: var(--color-brand-100); border-color: var(--color-brand-300); }
+        .act-tag svg { width: .85rem; height: .85rem; flex-shrink: 0; }
+        .act-tag { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        #activityTagTabs .btn.is-on { background: var(--color-white); color: var(--color-brand-700); }
+        @media (prefers-reduced-motion: reduce) { .act-tag { transition: none; } }
         .meta-time {
             display: inline-flex; align-items: center; gap: .25rem; background: var(--tl-surface-2); color: var(--tl-text-muted);
             border-radius: .5rem; padding: .2rem .45rem; font-size: 11.5px; font-weight: 600;

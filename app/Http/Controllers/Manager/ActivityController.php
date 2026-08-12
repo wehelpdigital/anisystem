@@ -1425,6 +1425,128 @@ class ActivityController extends BaseScheduleController
      * services a farm sells alongside the crop. Same shape, same day menu,
      * separate table — see AsScheduleDayIncome for why. */
 
+    /* ---- Tags: things an activity points at ------------------------------
+     * A drawing, a map or a note already lives somewhere; an activity that
+     * needs one should point at it, not hold a second copy that drifts. The
+     * tag keeps only what it takes to name it and open it.
+     */
+
+    /** Everything in this schedule an activity could be tagged with. */
+    public function taggables(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+
+        $notes = \App\Models\AsScheduleNote::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->orderByDesc('id')->limit(100)->get();
+
+        $drawings = [];
+        foreach ($notes as $note) {
+            foreach ((is_array($note->media) ? array_values($note->media) : []) as $i => $m) {
+                $path = (string) ($m['path'] ?? '');
+                $isDrawing = ($m['type'] ?? '') === 'drawing'
+                    || preg_match('~/(board|draw)-[A-Za-z0-9]+\.png$~', $path);
+                if (! $isDrawing || $path === '') {
+                    continue;
+                }
+                $drawings[] = [
+                    'ref' => $note->id . ':' . $i,
+                    'label' => (string) $note->title,
+                    'url' => Storage::disk('public')->url($path),
+                ];
+            }
+        }
+
+        $maps = \App\Models\ScheduleMapSave::active()
+            ->where('scheduleId', $schedule->id)
+            ->orderByDesc('id')->limit(50)->get()
+            ->map(fn ($m) => [
+                'ref' => (string) $m->id,
+                'label' => (string) ($m->title ?: 'Map'),
+                'url' => route('sm.maps', ['id' => $schedule->id, 'save' => $m->id]),
+            ])->all();
+
+        return $this->jsonOk('Loaded.', ['data' => [
+            'drawings' => $drawings,
+            'maps' => $maps,
+            'notes' => $notes->map(fn ($n) => [
+                'ref' => (string) $n->id,
+                'label' => (string) $n->title,
+                'url' => route('sm.notes', ['id' => $schedule->id, 'note' => $n->id]),
+            ])->all(),
+        ]]);
+    }
+
+    /** Point an activity at one of them, or take the pointer back. */
+    public function tagActivity(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+
+        $validator = Validator::make($request->all(), [
+            'activityId' => 'required|integer',
+            'kind' => 'required|in:drawing,map,note',
+            'ref' => 'required|string|max:64',
+            'label' => 'required|string|max:120',
+            'url' => 'required|string|max:600',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
+
+        $activity = $this->activityFor($schedule->id, (int) $request->input('activityId'));
+        if (! $activity) {
+            return $this->jsonFail('Activity not found.', 404);
+        }
+
+        $tags = is_array($activity->tags) ? array_values($activity->tags) : [];
+        $tag = [
+            'kind' => $request->input('kind'),
+            'ref' => (string) $request->input('ref'),
+            'label' => (string) $request->input('label'),
+            'url' => (string) $request->input('url'),
+        ];
+        // The same thing tagged twice is still one tag.
+        foreach ($tags as $t) {
+            if (($t['kind'] ?? '') === $tag['kind'] && (string) ($t['ref'] ?? '') === $tag['ref']) {
+                return $this->jsonOk('Already tagged.', ['data' => ['tags' => $tags]]);
+            }
+        }
+        if (count($tags) >= 12) {
+            return $this->jsonFail('That activity already carries 12 tags.', 422);
+        }
+        $tags[] = $tag;
+        $activity->update(['tags' => $tags]);
+
+        return $this->jsonOk('Tagged.', ['data' => ['tags' => $tags]]);
+    }
+
+    public function untagActivity(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        $activity = $this->activityFor($schedule->id, (int) $request->input('activityId'));
+        if (! $activity) {
+            return $this->jsonFail('Activity not found.', 404);
+        }
+
+        $tags = is_array($activity->tags) ? array_values($activity->tags) : [];
+        $i = (int) $request->input('index');
+        if (isset($tags[$i])) {
+            unset($tags[$i]);
+            $tags = array_values($tags);
+            $activity->update(['tags' => $tags ?: null]);
+        }
+
+        return $this->jsonOk('Tag removed.', ['data' => ['tags' => $tags]]);
+    }
+
+    private function activityFor(int $scheduleId, int $id): ?\App\Models\AsScheduleActivity
+    {
+        return $id ? \App\Models\AsScheduleActivity::active()
+            ->where('croppingScheduleId', $scheduleId)
+            ->where('id', $id)
+            ->first() : null;
+    }
+
     public function listDayIncomes(Request $request)
     {
         $schedule = $this->schedule($request->query('id'));

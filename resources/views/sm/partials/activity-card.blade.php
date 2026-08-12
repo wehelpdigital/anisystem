@@ -27,6 +27,7 @@
 <div class="activity-card prio-{{ $a->priority }}{{ $a->isHidden ? ' is-hidden' : '' }}{{ $a->isDone ? ' is-done' : '' }}" draggable="{{ $a->isDone ? 'false' : 'true' }}"
      data-id="{{ $a->id }}"
      data-is-done="{{ $a->isDone ? 1 : 0 }}"
+     data-tags="{{ json_encode(is_array($a->tags) ? $a->tags : []) }}"
      data-target-date="{{ $startC ? $startC->format('Y-m-d') : '' }}"
      data-target-end-date="{{ $endC ? $endC->format('Y-m-d') : '' }}"
      data-lot-signature="{{ $lotSig }}"
@@ -204,6 +205,24 @@
                 $itPriceText = $it->unitPrice !== null ? '@ ₱' . number_format((float) $it->unitPrice, 2) : '';
             @endphp
             <span class="item-tag material-tag">{{ $it->displayName() }}{{ $itQtyText }} <span class="item-tag-price">{{ $itPriceText }}</span></span>
+        @endforeach
+    </div>
+    {{-- Things this activity points at. The row is always here so the JS can
+         fill it after a tag is added; :empty keeps it out of the way. --}}
+    <div class="activity-tags">
+        @foreach ((is_array($a->tags) ? $a->tags : []) as $t)
+            @php
+                $kind = $t['kind'] ?? 'note';
+                $ico = $kind === 'drawing'
+                    ? 'M4 20l4-1L20 7a2 2 0 00-3-3L5 16l-1 4zM14 6l4 4'
+                    : ($kind === 'map'
+                        ? 'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2'
+                        : 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z');
+            @endphp
+            <a class="act-tag" href="{{ $t['url'] ?? '#' }}" data-kind="{{ $kind }}" data-url="{{ $t['url'] ?? '' }}" title="Open this {{ $kind }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $ico }}"/></svg>
+                {{ $t['label'] ?? ucfirst($kind) }}
+            </a>
         @endforeach
     </div>
 </div>
