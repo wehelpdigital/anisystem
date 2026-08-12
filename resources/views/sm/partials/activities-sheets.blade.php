@@ -207,7 +207,7 @@
                      just a heading in the way. --}}
                 <div id="workerPayPanel" class="hidden mt-2 rounded-xl border border-gray-200 overflow-hidden">
                     <div class="flex items-center justify-between px-3 py-2 bg-gray-50">
-                        <span class="text-xs font-bold text-gray-500 uppercase">Who worked today</span>
+                        <span class="text-xs font-bold text-gray-500 uppercase">Who will work in this schedule</span>
                         <span class="text-sm font-bold text-gray-800" id="workerPayTotal">₱0.00</span>
                     </div>
                     <div id="workerPayRows" class="p-2 space-y-1.5"></div>

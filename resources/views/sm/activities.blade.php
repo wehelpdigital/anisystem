@@ -1603,7 +1603,6 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             <span class="hidden sm:inline">Tools</span>
             <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-            <span id="activityActionsDot" class="absolute -top-0.5 -right-0.5 hidden w-2.5 h-2.5 rounded-full bg-brand-600"></span>
         </button>
 
         <button type="button" id="readinessBtn" class="btn btn-white btn-sm relative {{ $readiness['count'] > 0 ? 'has-alerts' : '' }}"
@@ -2381,14 +2380,6 @@
             if (hiddenRow && hiddenBtn) hiddenRow.classList.toggle('hidden', hiddenBtn.classList.contains('hidden'));
             if (hiddenLabel) hiddenLabel.textContent = (document.getElementById('toggleHiddenLabel')?.textContent || 'Show Hidden').replace(/\s*\(\d+\)\s*$/, '');
 
-            // A dot on the hamburger when there is drafts/filter activity worth noticing.
-            const dot = document.getElementById('activityActionsDot');
-            if (dot) {
-                const draftsN = parseInt(document.getElementById('draftsBadge')?.textContent || '0', 10) || 0;
-                const filterN = parseInt(document.getElementById('activeFilterCount')?.textContent || '0', 10) || 0;
-                const filtering = !document.getElementById('activeFilterCount')?.classList.contains('hidden') && filterN > 0;
-                dot.classList.toggle('hidden', !(draftsN > 0 || filtering));
-            }
         }
 
         actionsBtn.addEventListener('click', () => { syncActionsSheet(); openSheet('activityActionsSheet'); });

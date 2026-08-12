@@ -17,6 +17,31 @@
 
 @push('head')
     <style>
+        /* Deleting a season asks for the word, so the dialog is a page of its
+           own rather than a toast you can dismiss by leaning on the screen. */
+        .del-modal { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center;
+            justify-content: center; padding: 1rem; background: rgb(15 23 42 / .55);
+            animation: delIn .18s ease both; }
+        .del-card { width: 100%; max-width: 26rem; background: var(--color-white); border-radius: 1rem;
+            padding: 1.1rem 1.15rem 1.15rem; box-shadow: 0 24px 60px -24px rgb(0 0 0 / .5);
+            animation: delUp .28s cubic-bezier(.22,1,.36,1) both; }
+        .del-title { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800;
+            color: var(--color-gray-900); margin-bottom: .4rem; }
+        .del-text { font-size: .85rem; line-height: 1.55; color: var(--color-gray-600); margin-bottom: .9rem; }
+        .del-label { display: block; font-size: .78rem; font-weight: 700; color: var(--color-gray-700);
+            margin-bottom: .35rem; }
+        .del-actions { display: flex; gap: .5rem; justify-content: flex-end; margin-top: 1rem; }
+        .del-actions .btn-danger { background: #dc2626; color: #fff; }
+        .del-actions .btn-danger:hover { background: #b91c1c; }
+        .del-actions .btn-danger:disabled { opacity: .45; cursor: not-allowed; background: #dc2626; }
+        @keyframes delIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes delUp { from { transform: translateY(10px); opacity: 0; } to { transform: none; opacity: 1; } }
+        html.dark .del-card { background: #141a10; }
+        html.dark .del-title { color: #e6eddd; }
+        html.dark .del-text { color: #bcc9b0; }
+        html.dark .del-label { color: #d7e3cb; }
+        @media (prefers-reduced-motion: reduce) { .del-modal, .del-card { animation: none; } }
+
         /* The created date is part of the counts line on a card that is tight
            for height, and keeps its own line where there is room. */
         .sch-created { flex-basis: 100%; }
@@ -239,12 +264,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const id = btn.getAttribute('data-delete-schedule');
         const title = btn.getAttribute('data-title') || 'this schedule';
 
-        const ok = await confirmAction({
-            title: 'Delete schedule?',
-            message: `"${title}" and its modules will be hidden from your account.`,
-            detail: 'Lots, workers and activities tied to it are preserved but no longer visible.',
-            confirmText: 'Delete',
-        });
+        // A season's worth of work should not go on a mistaken tap. Typing the
+        // word is the one confirmation that cannot be given by reflex.
+        const ok = await confirmDelete(title);
         if (!ok) return;
 
         try {
@@ -256,6 +278,56 @@ document.addEventListener('DOMContentLoaded', () => {
             toast(err.message, 'error');
         }
     });
+
+    /**
+     * Ask for the word DELETE before removing a schedule.
+     *
+     * Resolves true only when it was typed and Delete pressed; Escape, the
+     * backdrop and Cancel all mean no.
+     */
+    function confirmDelete(title) {
+        return new Promise((resolve) => {
+            const wrap = document.createElement('div');
+            wrap.className = 'del-modal';
+            wrap.innerHTML = `
+                <div class="del-card" role="dialog" aria-modal="true" aria-labelledby="delTitle">
+                    <h3 class="del-title" id="delTitle">Delete this schedule?</h3>
+                    <p class="del-text"><strong>${escapeHtml(title)}</strong> and everything filed under it — lots,
+                        workers, activities, notes — disappear from your account.</p>
+                    <label class="del-label" for="delWord">Type <b>DELETE</b> to confirm</label>
+                    <input type="text" id="delWord" class="form-input" autocomplete="off" spellcheck="false" placeholder="DELETE">
+                    <div class="del-actions">
+                        <button type="button" class="btn btn-white" data-del-no>Cancel</button>
+                        <button type="button" class="btn btn-danger" data-del-yes disabled>Delete schedule</button>
+                    </div>
+                </div>`;
+            document.body.appendChild(wrap);
+            document.documentElement.style.overflow = 'hidden';
+
+            const field = wrap.querySelector('#delWord');
+            const go = wrap.querySelector('[data-del-yes]');
+            const done = (answer) => {
+                document.documentElement.style.overflow = '';
+                wrap.remove();
+                document.removeEventListener('keydown', onKey);
+                resolve(answer);
+            };
+            const onKey = (ev) => {
+                if (ev.key === 'Escape') done(false);
+                if (ev.key === 'Enter' && !go.disabled) done(true);
+            };
+
+            field.addEventListener('input', () => {
+                go.disabled = field.value.trim().toUpperCase() !== 'DELETE';
+            });
+            wrap.addEventListener('click', (ev) => {
+                if (ev.target === wrap || ev.target.closest('[data-del-no]')) done(false);
+                else if (ev.target.closest('[data-del-yes]') && !go.disabled) done(true);
+            });
+            document.addEventListener('keydown', onKey);
+            setTimeout(() => field.focus(), 60);
+        });
+    }
 
     document.addEventListener('click', async (e) => {
         const btn = e.target.closest('[data-duplicate-schedule]');
