@@ -76,7 +76,10 @@
                     @hasSection('help-key')
                         <a href="#" id="appHelpBtn" data-help-key="@yield('help-key')"
                            class="help-btn" title="How to use this page" aria-label="How to use this page">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.2 9a3.8 3.8 0 117.3 1.4c-.6 1.4-2.5 1.9-2.5 3.6M12 17.5h.01"/></svg>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="9"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.6 9.4a2.5 2.5 0 014.9.6c0 1.2-1 1.7-1.8 2.2-.5.4-.7.8-.7 1.4M12 16.6h.01"/>
+                            </svg>
                             <span class="help-btn-label">How to use</span>
                         </a>
                     @endif

@@ -286,12 +286,18 @@ html.sheet-open .team-float {
    flash of the button itself, so it reads as an invitation and never as an
    error. Both stop the moment it has been opened, and neither runs for anyone
    who has asked for less motion. */
-.help-btn { display: inline-flex; align-items: center; gap: .35rem; position: relative;
-    padding: .4rem .6rem; border-radius: .7rem; color: var(--color-gray-500); font-size: .78rem; font-weight: 700; }
-.help-btn:hover { background: var(--color-gray-100); color: var(--color-gray-800); }
+.help-btn { display: inline-flex; align-items: center; gap: .4rem; position: relative;
+    padding: .38rem .7rem .38rem .55rem; border-radius: 999px; font-size: .78rem; font-weight: 700;
+    color: var(--color-brand-700); background: var(--color-brand-50);
+    transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+.help-btn:hover { background: var(--color-brand-100); color: var(--color-brand-800); }
+/* On a phone it is the circle alone, so it stays a circle rather than a
+   stubby pill sitting beside two round icons. */
+@media (max-width: 639px) { .help-btn { padding: .38rem; border-radius: 999px; } }
 .help-btn-label { display: none; }
 @media (min-width: 640px) { .help-btn-label { display: inline; } }
 .help-btn.is-new { color: var(--color-brand-700); animation: helpPulse 2.2s ease-in-out infinite; }
+.help-btn.is-new { color: var(--color-brand-700); background: var(--color-brand-100); }
 .help-btn.is-new::after { content: ''; position: absolute; inset: 0; border-radius: inherit;
     border: 2px solid var(--color-brand-500); animation: helpRipple 2.2s cubic-bezier(.22,1,.36,1) infinite; }
 @keyframes helpPulse { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
@@ -304,7 +310,8 @@ html.sheet-open .team-float {
     .help-btn.is-new { animation: none; }
     .help-btn.is-new::after { animation: none; opacity: .7; }
 }
-html.dark .help-btn:hover { background: #1c2416; color: #e6eddd; }
+html.dark .help-btn { background: #1c2416; color: #bfe3a4; }
+html.dark .help-btn:hover { background: #243019; color: #e6eddd; }
 
 /* Content spacing helper so pages clear the tab bar on mobile */
 .page-safe-bottom { padding-bottom: 5.5rem; }
