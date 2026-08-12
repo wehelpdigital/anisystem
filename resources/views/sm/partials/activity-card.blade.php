@@ -203,13 +203,19 @@
         </div>
     @endif
     <div class="activity-meta">
-        <span class="meta-time">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            {{ $timeLabel }}
-        </span>
-        @foreach($a->workers as $w)
-            <span class="item-tag worker-tag">{{ $w->workerName }}</span>
-        @endforeach
+        @if ($a->activityType !== 'worker_payroll')
+            <span class="meta-time">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                {{ $timeLabel }}
+            </span>
+        @endif
+        @if ($a->activityType !== 'worker_payroll')
+            {{-- A payroll card lists every name in its checklist already;
+                 repeating them here is the same roster twice. --}}
+            @foreach($a->workers as $w)
+                <span class="item-tag worker-tag">{{ $w->workerName }}</span>
+            @endforeach
+        @endif
         @foreach($a->items as $it)
             @php
                 $itUnit = $it->displayUnit();

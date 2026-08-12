@@ -505,7 +505,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const hiddenTag = `<span class="badge badge-gray hide-activity-tag"${isHiddenFlag ? '' : ' style="display:none;"'}>Hidden</span>`;
 
         // Meta strip: workers then materials/services (time chip is added inline below).
-        const workerTags = workerIds
+        // Not on a payroll card: its checklist above is the roster, and the
+        // half/whole chip beside these means nothing for attendance.
+        const workerTags = a.activityType === 'worker_payroll' ? '' : workerIds
             .map((id) => `<span class="item-tag worker-tag">${esc(WORKER_NAMES[id] || ('Worker #' + id))}</span>`)
             .join('');
 
@@ -580,12 +582,12 @@ document.addEventListener('DOMContentLoaded', () => {
     ${descHtml ? `<div class="activity-description-content text-sm text-gray-700 mt-2" data-lightbox>${descHtml}</div>` : ''}
     ${imagesHtml}
     <div class="activity-meta">
-        <span class="meta-time">${SVG.clock} ${esc(timeRequiredLabel(a.timeRequired))}</span>
+        ${a.activityType === 'worker_payroll' ? '' : `<span class="meta-time">${SVG.clock} ${esc(timeRequiredLabel(a.timeRequired))}</span>`}
         ${workerTags}
         ${itemTags}
     </div>
     ${payrollChecklist(a)}
-    ${labourLine(a.labourTotal, a.workerPay)}
+    ${a.activityType === 'worker_payroll' ? '' : labourLine(a.labourTotal, a.workerPay)}
     <div class="activity-tags">${activityTagChips(a.tags)}</div>
 </div>`;
     }
