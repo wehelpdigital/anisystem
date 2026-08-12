@@ -69,6 +69,24 @@
             </div>
         </div>
 
+        {{-- What is actually growing here. It belongs to the lot, not to the
+             season: one farm can have corn on the upper block and rice in the
+             paddy, and a single answer for the whole schedule was wrong for
+             one of them. It is also what makes a growth stage answerable. --}}
+        <div>
+            <label class="form-label">Crop <span class="text-gray-400 font-normal">(optional)</span></label>
+            <div class="crop-pick" id="lotCropPick">
+                @foreach (\App\Support\CropStages::options() as $c)
+                    <button type="button" class="crop-opt" data-crop="{{ $c['value'] }}">
+                        <span class="crop-emoji">{{ $c['icon'] }}</span>
+                        <span>{{ $c['label'] }}</span>
+                    </button>
+                @endforeach
+            </div>
+            <input type="hidden" id="lotCrop" value="">
+            <p class="form-hint">Sets the growth stages this lot is read against. Tap a chosen crop again to clear it.</p>
+        </div>
+
         <div>
             <label for="lotVariety" class="form-label">Variety <span class="text-gray-400 font-normal">(optional)</span></label>
             <input type="text" id="lotVariety" maxlength="255" class="form-input" placeholder="e.g. IR64">
@@ -126,6 +144,22 @@
 </div>
 @endpush
 
+@push('head')
+<style>
+    .crop-pick { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .crop-opt { display: inline-flex; align-items: center; gap: .35rem; padding: .4rem .7rem;
+        border: 2px solid var(--color-gray-200); background: var(--color-white); border-radius: 999px;
+        font-size: .8rem; font-weight: 600; color: #374151; cursor: pointer;
+        transition: background .25s ease, border-color .25s ease, color .25s ease; }
+    .crop-opt:hover { border-color: #a8cc7e; background: #f3f8ec; }
+    .crop-opt.is-selected { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+    .crop-emoji { font-size: 1rem; line-height: 1; }
+    .lot-crop-badge { display: inline-flex; align-items: center; gap: .25rem; }
+    html.dark .crop-opt { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
+    @media (prefers-reduced-motion: reduce) { .crop-opt { transition: none; } }
+</style>
+@endpush
+
 @push('scripts')
 @php
     $jsLots = $schedule->lots->map(fn ($l) => [
@@ -134,6 +168,9 @@
         'lotSize' => $l->lotSize,
         'lotSizeUnit' => $l->lotSizeUnit,
         'variety' => $l->variety,
+        'crop' => $l->crop,
+        'cropLabel' => \App\Support\CropStages::label($l->crop),
+        'cropIcon' => \App\Support\CropStages::icon($l->crop),
         'locBarangay' => $l->locBarangay,
         'locZone' => $l->locZone,
         'locTown' => $l->locTown,
@@ -235,6 +272,9 @@ const __init = () => {
         // reads as "this lot" consistently across modules.
         const hue = ((Number(lot.id) || 0) * 137) % 360;
         const sizeText = `${fmtSize(lot.lotSize)} ${escapeHtml(UNIT_LABELS[lot.lotSizeUnit] || lot.lotSizeUnit || '')}`.trim();
+        const cropBadge = lot.cropLabel
+            ? `<span class="badge badge-green lot-crop-badge"><span>${lot.cropIcon || '🌱'}</span>${escapeHtml(lot.cropLabel)}</span>`
+            : '';
         const variety = lot.variety ? `
             <span class="badge badge-green">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 21c0-7 4-13 14-16-1 10-6 15-13 15m-1 1c2-5 5-8 9-10"/></svg>
@@ -255,7 +295,7 @@ const __init = () => {
                 </div>
 
                 <div class="min-w-0 grow space-y-1.5">
-                    <div class="flex flex-wrap gap-1.5">${variety}${dayTypeBadge}</div>
+                    <div class="flex flex-wrap gap-1.5">${cropBadge}${variety}${dayTypeBadge}</div>
                     ${lot.fullAddress ? `<p class="text-xs text-gray-500 flex items-start gap-1.5"><svg class="w-3.5 h-3.5 mt-px shrink-0 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>${escapeHtml(lot.fullAddress)}</span></p>` : ''}
                     ${lot.notes ? `<p class="text-xs text-gray-500 line-clamp-2">${escapeHtml(lot.notes)}</p>` : ''}
                 </div>
@@ -294,6 +334,7 @@ const __init = () => {
         document.getElementById('lotSize').value = lot ? parseFloat(lot.lotSize) || 0 : '';
         document.getElementById('lotSizeUnit').value = lot ? (lot.lotSizeUnit || 'hectare') : 'hectare';
         document.getElementById('lotVariety').value = lot ? (lot.variety || '') : '';
+        setLotCrop(lot ? (lot.crop || '') : '');
         document.getElementById('lotDayType').value = lot ? (lot.dayType || 'DAS') : 'DAS';
         document.getElementById('lotBarangay').value = lot ? (lot.locBarangay || '') : '';
         document.getElementById('lotZone').value = lot ? (lot.locZone || '') : '';
@@ -346,6 +387,21 @@ const __init = () => {
 
     /* ---------------- Save ---------------- */
 
+    /* One crop per lot, and tapping the chosen one again clears it — a lot
+       whose crop was set by mistake needs a way back to "not set". */
+    function setLotCrop(value) {
+        document.getElementById('lotCrop').value = value || '';
+        document.querySelectorAll('#lotCropPick .crop-opt').forEach((b) => {
+            b.classList.toggle('is-selected', b.getAttribute('data-crop') === value);
+        });
+    }
+    document.getElementById('lotCropPick')?.addEventListener('click', (e) => {
+        const opt = e.target.closest('.crop-opt');
+        if (!opt) return;
+        const want = opt.getAttribute('data-crop');
+        setLotCrop(document.getElementById('lotCrop').value === want ? '' : want);
+    });
+
     document.getElementById('saveLotBtn').addEventListener('click', async (e) => {
         const btn = e.currentTarget;
         const id = document.getElementById('lotId').value;
@@ -353,6 +409,7 @@ const __init = () => {
             lotName: document.getElementById('lotName').value.trim(),
             lotSize: document.getElementById('lotSize').value || 0,
             lotSizeUnit: document.getElementById('lotSizeUnit').value,
+            crop: document.getElementById('lotCrop').value || null,
             variety: document.getElementById('lotVariety').value.trim() || null,
             locBarangay: document.getElementById('lotBarangay').value.trim() || null,
             locZone: document.getElementById('lotZone').value.trim() || null,
@@ -381,6 +438,9 @@ const __init = () => {
                 lotName: res.data.lotName,
                 lotSize: res.data.lotSize,
                 lotSizeUnit: res.data.lotSizeUnit,
+                crop: res.data.crop,
+                cropLabel: res.data.cropLabel,
+                cropIcon: res.data.cropIcon,
                 variety: res.data.variety,
                 locBarangay: res.data.locBarangay,
                 locZone: res.data.locZone,

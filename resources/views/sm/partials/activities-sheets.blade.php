@@ -398,6 +398,22 @@
      so the toolbar carries one control instead of two toggles. Rows forward
      to the real toolbar buttons and the sheet stays open, so you can set both
      and watch the board change behind it. --}}
+{{-- What the crop is doing, and what it wants, on one day. Opened from the
+     plant pill in a day header and from Tools. --}}
+<div class="sheet sheet-full hidden" id="growthStageSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <div class="min-w-0">
+            <h3 class="sheet-title">Growth stage</h3>
+            <p class="text-xs text-gray-500" id="growthStageDate"></p>
+        </div>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full -mr-1" aria-label="Close">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+    </div>
+    <div class="sheet-body" id="growthStageList" style="padding-bottom:1rem"></div>
+</div>
+
 <div class="sheet hidden" id="viewFilterSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -495,6 +511,9 @@
                 ['viewToggleBtn', 'Calendar', 'M8 7V3m8 4V3M4 11h16M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z', '', 'actViewLabel'],
                 ['quickShareBtn', 'Quick Share', 'M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z', '', ''],
                 ['weatherBtn', 'Weather', 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z', '', ''],
+                // The same view the plant pill in a day header opens, for
+                // today — so it can be reached without hunting for the day.
+                ['growthStageBtn', 'Growth stage', 'M12 21c0-4 1-7 4-9M12 21c0-5-2-8-6-9m6 9V8m0 0c0-2.5 1.5-4 4-4 0 2.5-1.5 4-4 4zm0 0C12 5.5 10.5 4 6.5 4c0 2.5 1.5 4 5.5 4z', '', ''],
                 ['openNotesBtn', 'Notes', 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z', '', ''],
                 ['openDrawBtn', 'Draw', 'M4 20l4-1L20 7a2 2 0 00-3-3L5 16l-1 4zM14 6l4 4', '', ''],
                 ['openMapsBtn', 'Maps', 'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2', '', ''],

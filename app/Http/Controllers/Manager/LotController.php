@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\Validator;
  */
 class LotController extends BaseScheduleController
 {
+    /** A lot as the module reads it, crop spelled out for the card badge. */
+    private function lotPayload($lot): array
+    {
+        return $lot->toArray() + [
+            'cropLabel' => \App\Support\CropStages::label($lot->crop),
+            'cropIcon' => \App\Support\CropStages::icon($lot->crop),
+        ];
+    }
+
     /**
      * Module page: GET /app/sm-lots?id={scheduleId}
      */
@@ -40,6 +49,7 @@ class LotController extends BaseScheduleController
                 'lotSize'            => $request->lotSize,
                 'lotSizeUnit'        => $request->lotSizeUnit,
                 'variety'            => $request->filled('variety') ? trim($request->variety) : null,
+                'crop'        => \App\Support\CropStages::normalize($request->input('crop')),
                 'dayType'            => $request->input('dayType') === 'DAP' ? 'DAP' : 'DAS',
                 'notes'              => $request->notes,
                 'deleteStatus'       => 1,
@@ -47,7 +57,7 @@ class LotController extends BaseScheduleController
             $this->addressFields($request)
         ));
 
-        return $this->jsonOk('Lot added.', ['data' => $lot]);
+        return $this->jsonOk('Lot added.', ['data' => $this->lotPayload($lot)]);
     }
 
     public function update(Request $request)
@@ -69,13 +79,14 @@ class LotController extends BaseScheduleController
                 'lotSize'     => $request->lotSize,
                 'lotSizeUnit' => $request->lotSizeUnit,
                 'variety'     => $request->filled('variety') ? trim($request->variety) : null,
+                'crop'        => \App\Support\CropStages::normalize($request->input('crop')),
                 'dayType'     => $request->input('dayType') === 'DAP' ? 'DAP' : 'DAS',
                 'notes'       => $request->notes,
             ],
             $this->addressFields($request)
         ));
 
-        return $this->jsonOk('Lot updated.', ['data' => $lot]);
+        return $this->jsonOk('Lot updated.', ['data' => $this->lotPayload($lot)]);
     }
 
     public function destroy(Request $request)
@@ -98,6 +109,9 @@ class LotController extends BaseScheduleController
             'lotSize'     => 'required|numeric|min:0',
             'lotSizeUnit' => 'required|string|max:50',
             'variety'     => 'nullable|string|max:255',
+            // A key from the crop catalogue; anything else is simply not a
+            // crop we have stages for, so it is dropped rather than stored.
+            'crop'        => 'nullable|string|max:60',
             'locBarangay' => 'nullable|string|max:120',
             'locZone'     => 'nullable|string|max:60',
             'locTown'     => 'nullable|string|max:120',

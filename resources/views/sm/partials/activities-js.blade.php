@@ -51,10 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Days off, from Workers → Rules: a weekday they never work, and one-off
     // dates. The board needs them to say who cannot be put on a given day.
     @php $offMap = \App\Models\AsScheduleWorker::offMapFor((int) $schedule->id); @endphp
-    const WORKER_OFF = @json($schedule->workers->mapWithKeys(fn ($w) => [$w->id => [
-        'days' => array_values($offMap[$w->id]['days'] ?? []),
-        'dates' => array_values(array_filter($offMap[$w->id]['dates'] ?? [])),
-    ]]));
+    @php
+        $workerOff = $schedule->workers->mapWithKeys(fn ($w) => [$w->id => [
+            'days' => array_values($offMap[$w->id]['days'] ?? []),
+            'dates' => array_values(array_filter($offMap[$w->id]['dates'] ?? [])),
+        ]])->all();
+    @endphp
+    const WORKER_OFF = @json($workerOff);
     /** Is this worker marked off on that date? dateStr is 'YYYY-MM-DD'. */
     function workerOffOn(workerId, dateStr) {
         const off = WORKER_OFF[workerId];
@@ -63,6 +66,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const d = parseLocalDate(dateStr);
         return !!d && (off.days || []).includes(d.getDay());
     }
+    // What is planted where, and what each crop does at each age. The stage
+    // tables come from the server so one catalogue serves the board, the
+    // sheet, the reports and anything added later.
+    const LOT_CROP = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->crop]));
+    @php
+        // Built here rather than inside @json: the directive takes one
+        // expression on one line, and a nested map over the catalogue is
+        // neither.
+        $cropTables = collect(\App\Support\CropStages::CROPS)->map(fn ($c) => [
+            'label' => $c['label'],
+            'icon' => $c['icon'],
+            'counter' => $c['counter'],
+            'stages' => collect($c['stages'])->map(fn ($st) => [
+                'from' => $st[0], 'label' => $st[1], 'what' => $st[2], 'needs' => $st[3],
+            ])->all(),
+        ])->all();
+    @endphp
+    const CROP_STAGES = @json($cropTables);
     const LOT_MANUAL_DAY_ZERO = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->dayZeroDate ? $l->dayZeroDate->format('Y-m-d') : null]));
     const LOT_MANUAL_TRANSPLANT = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->transplantDate ? $l->transplantDate->format('Y-m-d') : null]));
 
@@ -259,6 +280,170 @@ document.addEventListener('DOMContentLoaded', () => {
         const delta = Math.round((b - a) / 86400000);
         return ' · ' + mode + (delta > 0 ? '+' : '') + delta;
     }
+
+    /* ---- Growth stages ----------------------------------------------------
+     * The board has always known how old a lot is; it never said what that
+     * age means for the plant. Day 21 of rice is active tillering and wants
+     * its second nitrogen — growers know it, and the app made them hold it in
+     * their heads while reading a screen that only counted days.
+     *
+     * Rice is read from transplanting where a lot transplants, and from
+     * sowing where it does not; everything else counts from planting. That is
+     * the same rule the counters on the cards already follow. */
+    function lotDayNumberOn(lotId, dateStr) {
+        const b = parseLocalDate(dateStr);
+        if (!b) return null;
+        const crop = LOT_CROP[lotId];
+        const table = crop && CROP_STAGES[crop];
+        // A crop read from transplanting only counts that way once a lot has
+        // actually been transplanted; before that (or where it never is) the
+        // count runs from day zero, and the label has to say so — calling a
+        // DAS number "DAT" is how a stage gets read against the wrong ruler.
+        if (table && table.counter === 'DAT') {
+            const tp = LOT_TRANSPLANT_DATES[lotId];
+            const t = tp ? parseLocalDate(tp) : null;
+            if (t && b >= t) return { day: Math.round((b - t) / 86400000), counter: 'DAT' };
+        }
+        const anchor = LOT_DAY_ZERO_DATES[lotId];
+        const a = anchor ? parseLocalDate(anchor) : null;
+        if (!a) return null;
+        const delta = Math.round((b - a) / 86400000);
+        if (delta < 0) return null;   // before day zero there is no plant yet
+        return { day: delta, counter: lotDayType(lotId) };
+    }
+
+    function stageOf(crop, day) {
+        const table = CROP_STAGES[crop];
+        if (!table || day === null || day === undefined) return null;
+        let at = -1;
+        table.stages.forEach((st, i) => { if (day >= st.from) at = i; });
+        if (at < 0) return null;
+        const cur = table.stages[at];
+        const next = table.stages[at + 1] || null;
+        const length = next ? next.from - cur.from : null;
+        const inStage = day - cur.from;
+        return {
+            index: at, label: cur.label, what: cur.what, needs: cur.needs,
+            dayInStage: inStage, lengthDays: length,
+            progress: length ? Math.min(1, Math.max(0, inStage / length)) : null,
+            next: next ? { label: next.label, inDays: next.from - day } : null,
+            counter: table.counter, icon: table.icon, cropLabel: table.label,
+        };
+    }
+
+    /** Which lots have activities on this day, or all of them if none do. */
+    function lotsOnDay(group) {
+        const ids = new Set();
+        // The lot chips on each card are where a card says which ground it
+        // covers — there is no separate attribute, and adding one would give
+        // the two renderers something else to keep in step.
+        $qsa('.activity-card .lot-tag[data-lot-id]', group).forEach((tag) => {
+            const n = parseInt(tag.getAttribute('data-lot-id'), 10);
+            if (!Number.isNaN(n)) ids.add(n);
+        });
+        if (!ids.size) Object.keys(LOT_CROP).forEach((id) => ids.add(parseInt(id, 10)));
+        return [...ids];
+    }
+
+    /** One pill per day: what the crop is doing, or nothing if we cannot say. */
+    function paintDayStage(group) {
+        const pill = group.querySelector('.date-header-stage');
+        if (!pill) return;
+        const dateKey = (group.getAttribute('data-date') || '').trim();
+        const rows = dayStageRows(dateKey, group);
+        if (!rows.length) { pill.hidden = true; pill.textContent = ''; return; }
+
+        // One lot: name the stage. Several: name the crop count, because a
+        // header is not the place to list four different answers.
+        const first = rows[0];
+        const label = rows.length === 1
+            ? first.stage.label
+            : rows.length + ' lots';
+        pill.hidden = false;
+        pill.innerHTML = `<span class="dhs-emoji">${first.stage.icon || '🌱'}</span><span>${esc(label)}</span>`;
+        pill.setAttribute('data-date', dateKey);
+    }
+
+    /** The stage of every lot with a crop on a given day. */
+    function dayStageRows(dateKey, group) {
+        const ids = group ? lotsOnDay(group) : Object.keys(LOT_CROP).map(Number);
+        return ids.map((id) => {
+            const crop = LOT_CROP[id];
+            if (!crop) return null;
+            const age = lotDayNumberOn(id, dateKey);
+            if (!age) return null;
+            const stage = stageOf(crop, age.day);
+            if (!stage) return null;
+            return {
+                lotId: id, lotName: LOT_NAMES[id] || ('Lot #' + id),
+                day: age.day, counter: age.counter, crop, stage,
+            };
+        }).filter(Boolean);
+    }
+
+    function openDayStage(dateKey, group) {
+        const rows = dayStageRows(dateKey, group);
+        const box = $id('growthStageList');
+        if (!box) return;
+        $id('growthStageDate').textContent = prettyDateFull(dateKey);
+
+        box.innerHTML = rows.length ? rows.map((r) => {
+            const st = r.stage;
+            const table = CROP_STAGES[r.crop];
+            const steps = table.stages.map((step, i) => `
+                <div class="gs-step${i === st.index ? ' is-now' : (i < st.index ? ' is-past' : '')}">
+                    <span class="gs-dot"></span>
+                    <span class="grow">${esc(step.label)}</span>
+                    <span class="gs-when">${r.counter} ${step.from}+</span>
+                </div>`).join('');
+            return `<div class="gs-lot">
+                <div class="gs-head">
+                    <span class="gs-emoji">${st.icon || '🌱'}</span>
+                    <span class="grow min-w-0">
+                        <span class="gs-lotname">${esc(r.lotName)}</span>
+                        <span class="gs-day block">${esc(st.cropLabel)} · ${r.counter} ${r.day}</span>
+                    </span>
+                </div>
+                <div class="gs-body">
+                    <div class="gs-now">${esc(st.label)}</div>
+                    <div class="gs-what">${esc(st.what)}</div>
+                    <div class="gs-needs"><b>What it needs now</b>${esc(st.needs)}</div>
+                    ${st.progress !== null ? `<div class="gs-bar"><span style="width:${Math.round(st.progress * 100)}%"></span></div>` : ''}
+                    <div class="gs-next">${st.next
+                        ? `Day ${st.dayInStage + 1} of this stage · ${esc(st.next.label)} in about ${st.next.inDays} day${st.next.inDays === 1 ? '' : 's'}`
+                        : 'The last stage — harvest window.'}</div>
+                    <div class="gs-steps">${steps}</div>
+                </div>
+            </div>`;
+        }).join('') + '<p class="gs-foot">Stages are the usual field guidance for each crop — a guide, not a rule. Your own records win.</p>'
+        : `<p class="gs-none">No lot here has a crop set, or the count has not started yet.
+            Set the crop on a lot in the Lots module and give it a day zero.</p>`;
+
+        openSheet('growthStageSheet');
+    }
+
+    // Tools → Growth stage: today if the board has today, else its first day.
+    $id('growthStageBtn')?.addEventListener('click', () => {
+        const today = new Date();
+        const key = today.getFullYear() + '-'
+            + String(today.getMonth() + 1).padStart(2, '0') + '-'
+            + String(today.getDate()).padStart(2, '0');
+        const group = $qs(`#activitiesList .date-group[data-date="${key}"]`)
+            || $qs('#activitiesList .date-group');
+        openDayStage(group ? (group.getAttribute('data-date') || key) : key, group);
+    });
+
+    document.addEventListener('click', (e) => {
+        const pill = e.target.closest('.date-header-stage');
+        if (!pill) return;
+        e.stopPropagation();
+        const group = pill.closest('.date-group');
+        openDayStage((group?.getAttribute('data-date') || '').trim(), group);
+    });
+
+    // Painted alongside the day's money, from the same hook: both read the
+    // cards, and a board that repaints one without the other tells two
+    // different stories about the same day.
 
     function refreshActivityCardDasLabels() {
         $qsa('#activitiesList .activity-card[data-id]').forEach((card) => {
@@ -1054,7 +1239,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // ground now, and the cash line's break depends on whether a forecast
         // ends up on that second row.
         window.__wxRepaint?.();
-        $qsa('#activitiesList .date-group').forEach(paintDayCash);
+        $qsa('#activitiesList .date-group').forEach((g) => { paintDayCash(g); paintDayStage(g); });
     }
     // The weather arrives on its own schedule; when it lands, the second line
     // has to be recomputed so the break exists for it too.
@@ -1185,6 +1370,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${headerDate}
                 <span class="date-header-count">${count}<span class="dh-word"> ${count === 1 ? 'activity' : 'activities'}</span></span>
                 ${buttons}
+                <span class="date-header-stage" hidden title="What the crop is doing on this day"></span>
                 <span class="date-header-cash" hidden></span>
             </div>
             <div class="date-body"><div class="date-body-inner">

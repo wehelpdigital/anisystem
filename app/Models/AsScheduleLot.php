@@ -12,6 +12,7 @@ class AsScheduleLot extends BaseModel
         'lotSize',
         'lotSizeUnit',
         'variety',
+        'crop',
         'locBarangay',
         'locZone',
         'locTown',

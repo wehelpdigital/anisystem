@@ -30,13 +30,19 @@ class ScheduleReadinessService
         $activities = $schedule->activities;
         $dayType = $schedule->dayType ?: 'DAS';
 
-        // ---- Settings -------------------------------------------------
-        if (blank($schedule->cropType)) {
+        // ---- What is planted ------------------------------------------
+        // The crop lives on the lot now: one farm can have corn on the upper
+        // block and rice in the paddy, and it is the lot's crop that decides
+        // which growth stages a day is read against.
+        $cropless = $lots->filter(fn ($l) => blank($l->crop));
+        if ($lots->isNotEmpty() && $cropless->isNotEmpty()) {
             $items[] = [
-                'key' => 'crop-type',
-                'label' => 'No crop type set',
-                'detail' => 'Name the crop this season is for, so the plan reads clearly and can be shared later.',
-                'module' => 'settings',
+                'key' => 'lot-crop',
+                'label' => $cropless->count() === $lots->count()
+                    ? 'No crop set on any lot'
+                    : $cropless->count() . ' ' . ($cropless->count() === 1 ? 'lot has' : 'lots have') . ' no crop set',
+                'detail' => 'Set what each lot is growing and the board can say what stage it is in, and what it needs, on any day.',
+                'module' => 'lots',
                 'severity' => 'advice',
             ];
         }

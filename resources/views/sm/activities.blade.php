@@ -248,6 +248,47 @@
         html.dark .dc-amt { color: #f3f7ee; }
         html.dark .dc-row + .dc-row { border-color: #223018; }
         .date-header-cash[hidden] { display: none; }
+        /* The growth-stage pill sits just before the money one. */
+        .date-header-stage { order: 91; display: inline-flex; align-items: center; gap: .28rem;
+            padding: .12rem .45rem; border-radius: 999px; font-size: .68rem; font-weight: 800;
+            background: #e4efd4; color: #3d6823; border: 1px solid #c9e0ad; cursor: pointer; }
+        .date-header-stage[hidden] { display: none; }
+        .date-header-stage .dhs-emoji { font-size: .8rem; line-height: 1; }
+        .date-header-stage:hover { filter: brightness(.97); }
+        html.dark .date-header-stage { background: rgb(61 104 35 / .35); color: #a8cc7e; border-color: rgb(61 104 35 / .6); }
+
+        /* The sheet: one card per lot, its stage, and the whole run of stages
+           with where today falls in it. */
+        .gs-lot { border: 1px solid var(--color-gray-200); border-radius: .9rem; overflow: hidden; margin-bottom: .75rem; }
+        .gs-head { display: flex; align-items: center; gap: .6rem; padding: .7rem .8rem;
+            background: linear-gradient(135deg, #f3f8ec, #e4efd4); }
+        html.dark .gs-head { background: linear-gradient(135deg, #1c2416, #24301a); }
+        .gs-emoji { font-size: 1.5rem; line-height: 1; }
+        .gs-lotname { font-weight: 800; font-size: .92rem; color: var(--color-gray-900); }
+        html.dark .gs-lotname { color: #e5e9f5; }
+        .gs-day { font-size: .7rem; font-weight: 700; color: #3d6823; }
+        .gs-body { padding: .75rem .8rem; }
+        .gs-now { font-size: 1.05rem; font-weight: 800; color: var(--color-gray-900); }
+        html.dark .gs-now { color: #e5e9f5; }
+        .gs-what { font-size: .84rem; color: var(--tl-text-muted, #4b5563); margin-top: .2rem; line-height: 1.45; }
+        .gs-needs { margin-top: .5rem; padding: .5rem .6rem; border-radius: .6rem; background: #fff7ed;
+            border: 1px solid #fed7aa; font-size: .8rem; color: #9a3412; line-height: 1.4; }
+        html.dark .gs-needs { background: rgb(154 52 18 / .18); border-color: rgb(154 52 18 / .5); color: #fdba74; }
+        .gs-needs b { display: block; font-size: .64rem; text-transform: uppercase; letter-spacing: .05em; margin-bottom: .15rem; }
+        .gs-bar { height: .4rem; border-radius: 999px; background: var(--color-gray-200); overflow: hidden; margin-top: .6rem; }
+        .gs-bar span { display: block; height: 100%; border-radius: 999px; background: #4a7c2a; }
+        .gs-next { font-size: .72rem; color: var(--tl-text-muted, #6b7280); margin-top: .35rem; }
+        .gs-steps { margin-top: .7rem; border-top: 1px dashed var(--color-gray-200); padding-top: .6rem; display: grid; gap: .3rem; }
+        .gs-step { display: flex; align-items: flex-start; gap: .5rem; font-size: .78rem; color: var(--tl-text-muted, #6b7280); }
+        .gs-dot { flex: 0 0 auto; width: .6rem; height: .6rem; border-radius: 999px; margin-top: .35rem;
+            background: var(--color-gray-300); }
+        .gs-step.is-past .gs-dot { background: #a8cc7e; }
+        .gs-step.is-now { color: var(--color-gray-900); font-weight: 700; }
+        html.dark .gs-step.is-now { color: #e5e9f5; }
+        .gs-step.is-now .gs-dot { background: #4a7c2a; box-shadow: 0 0 0 3px rgb(74 124 42 / .2); }
+        .gs-when { flex: 0 0 auto; font-variant-numeric: tabular-nums; opacity: .7; }
+        .gs-none { text-align: center; color: var(--color-gray-400); font-size: .82rem; padding: 1.5rem .5rem; }
+        .gs-foot { font-size: .7rem; color: var(--color-gray-400); text-align: center; margin-top: .25rem; }
         html.dark .date-header-cash { color: #fcd34d; background: rgb(120 53 15 / .35); border-color: rgb(180 83 9 / .5); }
         .date-header-count { font-size: 11px; font-weight: 700; color: var(--date-color); background: var(--tl-pill); border-radius: 999px; padding: .12rem .55rem; margin-left: auto; flex-shrink: 0; }
         /* Per-day weather chips in the date header — scroll/drag if they overflow. */
@@ -1804,7 +1845,13 @@
             Drafts <span id="draftsBadge" class="badge badge-gray">{{ $draftsCount }}</span>
         </button>
         {{-- Lives only in the Tools menu; the menu row forwards its click here. --}}
-        <button type="button" id="contractAllBtn" class="btn btn-white btn-sm toolbar-in-menu" data-activities-only>
+        {{-- Lives only in the Tools menu (like the rest of this row), but the
+         menu forwards clicks to real buttons, so it needs to be one. --}}
+    <button type="button" id="growthStageBtn" class="btn btn-white btn-sm toolbar-in-menu" data-activities-only>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21c0-4 1-7 4-9M12 21c0-5-2-8-6-9m6 9V8"/></svg>
+        Growth stage
+    </button>
+    <button type="button" id="contractAllBtn" class="btn btn-white btn-sm toolbar-in-menu" data-activities-only>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 11l7-7 7 7M5 19l7-7 7 7"/></svg>
             Contract All
         </button>
@@ -2135,6 +2182,10 @@
                         {{-- Filled in by paintDayCash() once the board is up:
                              the figure comes off the cards themselves, so it
                              cannot drift from the lines under them. --}}
+                        {{-- What the crop is doing today, before what the day
+                             costs: the plant's business comes before the
+                             wallet's, and one explains the other. --}}
+                        <span class="date-header-stage" hidden title="What the crop is doing on this day"></span>
                         <span class="date-header-cash" hidden></span>
                         @if ($dateKey !== '__no-date__')
                             <button type="button" class="date-header-btn group-add-activity-btn" data-date="{{ $dateKey }}" title="Add a new activity to this date">
