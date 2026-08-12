@@ -239,6 +239,55 @@ window.toast = function toast(message, type = 'success', timeout = 3200) {
 let backdropEl = null;
 const openSheets = [];
 
+/* ------------------------------------------------------------------ */
+/* Back closes what is on top, instead of leaving the page.            */
+/*                                                                     */
+/* On a phone the system Back button is how people dismiss things. With*/
+/* nothing listening it navigated away from the page while a sheet was */
+/* still open over it — you pressed Back to close a form and landed    */
+/* somewhere else entirely. Every overlay now owns one history entry:  */
+/* opening pushes it, Back pops it and closes the overlay, and closing */
+/* any other way removes it again so the entry never outlives what it  */
+/* stands for.                                                         */
+/* ------------------------------------------------------------------ */
+const overlayStack = [];      // [{ key, close }] — newest last
+let overlayEntries = 0;       // history entries we own
+let unwinding = false;        // we are removing our own entry
+let poppingBack = false;      // Back is closing this one; do not touch history
+
+window.registerOverlay = function registerOverlay(key, close) {
+    if (overlayStack.some((o) => o.key === key)) return;
+    overlayStack.push({ key, close });
+    overlayEntries++;
+    // Same URL: this entry exists to be popped, not to be linked to.
+    history.pushState({ __overlay: overlayEntries }, '', location.href);
+};
+
+window.unregisterOverlay = function unregisterOverlay(key) {
+    const i = overlayStack.findIndex((o) => o.key === key);
+    if (i < 0) return;
+    overlayStack.splice(i, 1);
+    if (poppingBack || overlayEntries <= 0) return;
+    // Only rewind when the entry on top is still ours. A module switch from
+    // inside a sheet pushes its own entry over it; going back then would undo
+    // the navigation instead, so the stale entry is simply forgotten — one
+    // extra Back press, rather than a page yanked out from under you.
+    const mine = history.state && history.state.__overlay === overlayEntries;
+    overlayEntries--;
+    if (!mine) return;
+    unwinding = true;
+    history.back();
+};
+
+window.addEventListener('popstate', () => {
+    if (unwinding) { unwinding = false; return; }
+    if (!overlayStack.length || overlayEntries <= 0) return;
+    overlayEntries--;
+    const top = overlayStack[overlayStack.length - 1];
+    poppingBack = true;
+    try { top.close(); } finally { poppingBack = false; }
+});
+
 function ensureBackdrop() {
     if (!backdropEl) {
         backdropEl = document.createElement('div');
@@ -281,12 +330,14 @@ window.openSheet = function openSheet(id) {
             if (active && el.contains(active) && typeof active.blur === 'function') active.blur();
         }, 120);
     }
+    window.registerOverlay('sheet:' + id, () => window.closeSheet(id));
     el.dispatchEvent(new CustomEvent('sheet:open'));
 };
 
 window.closeSheet = function closeSheet(id) {
     const el = document.getElementById(id);
     if (!el) return;
+    window.unregisterOverlay('sheet:' + id);
     el.classList.remove('is-open');
     const idx = openSheets.indexOf(el);
     if (idx >= 0) openSheets.splice(idx, 1);

@@ -100,6 +100,7 @@
             ? `<video src="${esc(url)}"${poster ? ` poster="${esc(poster)}"` : ''} controls autoplay playsinline></video>`
             : `<img src="${esc(url)}" alt="">`;
         lb.classList.add('is-open'); lb.setAttribute('aria-hidden', 'false');
+        window.registerOverlay?.('noteLightbox', close);
         zoomExpand(stage.firstElementChild, fromRect);
         if (type !== 'video') pinch(stage.firstElementChild);
     }
@@ -180,7 +181,10 @@
         else if (media.tagName === 'VIDEO') { media.videoWidth ? requestAnimationFrame(run) : media.addEventListener('loadedmetadata', () => requestAnimationFrame(run), { once: true }); }
         else requestAnimationFrame(run);
     }
-    function close() { lb.classList.remove('is-open'); lb.setAttribute('aria-hidden', 'true'); stage.innerHTML = ''; }
+    function close() {
+        window.unregisterOverlay?.('noteLightbox');
+        lb.classList.remove('is-open'); lb.setAttribute('aria-hidden', 'true'); stage.innerHTML = '';
+    }
 
     /* Modules that build their own tiles (the Draw grid) show a picture the
        same way the notebook does, rather than shipping a second viewer. */

@@ -29,16 +29,13 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5a4 4 0 105.03 5.03l4.35 4.35a2 2 0 11-2.83 2.83l-4.35-4.35A4 4 0 0111 5zM5 19l4-4"/></svg>
                     Service
                 </button>
-            </div>
-
-            {{-- What kind of activity is one question; who is on it and for how
-                 much of the day is another. They were stacked in one long
-                 scroll, so the checklist was below everything and easy to miss.
-                 Two panes now, and the tab says how many are picked. --}}
-            <div class="act-pane-tabs" id="activityPaneTabs" role="tablist">
-                <button type="button" class="act-pane-tab is-on" data-act-tab="details" aria-selected="true">Details</button>
-                <button type="button" class="act-pane-tab" data-act-tab="workers" aria-selected="false">
-                    Worker checklist
+                {{-- Alongside the three kinds, not underneath one of them: who
+                     is on the job is asked the same way as what the job is. It
+                     does not change the activity's type — that stays whatever
+                     was picked to its left. --}}
+                <button type="button" class="activity-mode-tab" data-act-tab="workers" aria-selected="false">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
+                    Workers
                     <span class="act-pane-count" id="activityWorkerCount" hidden>0</span>
                 </button>
             </div>

@@ -818,14 +818,6 @@
            one class rather than by toggling each child: the type tabs already
            show and hide panels of their own, and a pane switch that restored
            children by hand would fight them. */
-        .act-pane-tabs { display: flex; gap: .25rem; padding: .25rem; border-radius: .8rem;
-            background: var(--color-gray-100); }
-        .act-pane-tab { flex: 1 1 0; display: inline-flex; align-items: center; justify-content: center; gap: .35rem;
-            padding: .45rem .5rem; border-radius: .6rem; font-size: .8rem; font-weight: 700;
-            color: var(--color-gray-500); cursor: pointer;
-            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
-        .act-pane-tab.is-on { background: var(--color-white); color: var(--color-brand-700);
-            box-shadow: 0 1px 3px rgb(0 0 0 / .08); }
         .act-pane-count { min-width: 1.15rem; padding: 0 .25rem; border-radius: 999px; font-size: .65rem;
             background: var(--color-brand-600); color: #fff; }
         /* .form-input is unlayered component CSS, so its width:100% beats any
@@ -833,12 +825,8 @@
            worker's name to nothing. Width belongs here, at the same level. */
         .wp-amount { width: 6.5rem !important; flex: 0 0 6.5rem; }
         #activitySheet .space-y-4.on-workers > * { display: none; }
-        #activitySheet .space-y-4.on-workers > #activityModeTabs,
-        #activitySheet .space-y-4.on-workers > #activityPaneTabs,
         #activitySheet .space-y-4.on-workers > #activityWorkersPane { display: block; }
         #activitySheet .space-y-4.on-workers > #activityModeTabs { display: flex; }
-        #activitySheet .space-y-4.on-workers > #activityPaneTabs { display: flex; }
-        @media (prefers-reduced-motion: reduce) { .act-pane-tab { transition: none; } }
 
         /* The wage bill for an activity: the total leads, the breakdown follows
            quietly, and on a narrow screen the breakdown wraps under it. */
@@ -2076,6 +2064,9 @@
         });
     };
 
+    // How many module entries this page has pushed — what the chevron unwinds.
+    let pushDepth = 0;
+
     async function showModule(key, push = true) {
         if (busy || !MODULES[key] || key === current) { closeSheet('modulesSheet'); return; }
         busy = true;
@@ -2149,7 +2140,7 @@
         document.querySelectorAll('#modulesSheet .module-nav-row').forEach((row) => {
             row.querySelector('.module-nav-check')?.classList.toggle('hidden', row.dataset.module !== key);
         });
-        if (push) history.pushState({ module: key }, '', shellUrl(key));
+        if (push) { history.pushState({ module: key }, '', shellUrl(key)); pushDepth++; }
         // Returning to Activities restores your prior scroll; other modules start at the top.
         if (key === 'activities') {
             const y = activitiesScrollY;
@@ -2174,7 +2165,19 @@
         }
     });
 
-    window.addEventListener('popstate', (e) => showModule((e.state && e.state.module) || 'activities', false));
+    window.addEventListener('popstate', (e) => {
+        if (pushDepth > 0) pushDepth--;
+        showModule((e.state && e.state.module) || 'activities', false);
+    });
+
+    /* The header chevron and the phone's Back button disagreed: Back walked
+       module by module, the chevron jumped straight out to the hub. It now
+       unwinds the same stack — one module at a time while there is one to
+       unwind, and only then out to wherever the page says it came from
+       (which, for a hub tile that deep-linked into a module, is the hub). */
+    document.getElementById('appBackLink')?.addEventListener('click', (e) => {
+        if (pushDepth > 0) { e.preventDefault(); history.back(); }
+    });
     window.smShowModule = showModule;
 
     // Toolbar "Notes" button opens the schedule notebook module (distinct from

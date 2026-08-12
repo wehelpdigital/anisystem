@@ -566,6 +566,7 @@
 
     function close() {
         showAsk(false);
+        window.unregisterOverlay?.('drawPad');
         modal.classList.remove('show'); modal.setAttribute('aria-hidden', 'true');
         onSave = null; document.body.style.overflow = '';
     }
@@ -585,7 +586,13 @@
     const ask = document.getElementById('drawAsk');
     let editableAllowed = false;
     const askOpen = () => !ask.hidden;
-    function showAsk(on) { ask.hidden = !on; }
+    function showAsk(on) {
+        ask.hidden = !on;
+        // Back answers the question by dismissing it, the way it dismisses any
+        // other overlay, rather than walking out of the pad.
+        if (on) window.registerOverlay?.('drawAsk', () => showAsk(false));
+        else window.unregisterOverlay?.('drawAsk');
+    }
     function saveAs(mode) {
         const data = exportPng();
         if (onSave) onSave(data, mode === 'drawing' ? JSON.parse(JSON.stringify(objects || [])) : null);
@@ -648,6 +655,9 @@
         if (modal.parentElement !== document.body) document.body.appendChild(modal);
         modal.classList.add('show');
         modal.setAttribute('aria-hidden', 'false');
+        // A full-screen pad is the clearest case of all: Back should shut it,
+        // not the page underneath it.
+        window.registerOverlay?.('drawPad', close);
         document.body.style.overflow = 'hidden';
         reset(existingUrl, opts.objects);
         requestAnimationFrame(fitStage);

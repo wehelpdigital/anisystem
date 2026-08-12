@@ -1642,10 +1642,19 @@ document.addEventListener('DOMContentLoaded', () => {
     function setActPane(which) {
         const host = $qs('#activitySheet .sheet-body > .space-y-4');
         if (!host) return;
-        host.classList.toggle('on-workers', which === 'workers');
-        $qsa('#activityPaneTabs .act-pane-tab').forEach((b) => {
-            const on = b.getAttribute('data-act-tab') === which;
-            b.classList.toggle('is-on', on);
+        const onWorkers = which === 'workers';
+        host.classList.toggle('on-workers', onWorkers);
+        // The Workers tab shares the strip with the three types but means
+        // something else, so it lights up on its own and hands the highlight
+        // back to whichever type is still selected when you leave it.
+        const wTab = $qs('#activityModeTabs [data-act-tab="workers"]');
+        if (wTab) {
+            wTab.classList.toggle('is-active', onWorkers);
+            wTab.setAttribute('aria-selected', onWorkers ? 'true' : 'false');
+        }
+        $qsa('#activityModeTabs [data-mode]').forEach((b) => {
+            const on = !onWorkers && b.getAttribute('data-mode') === activityMode;
+            b.classList.toggle('is-active', on);
             b.setAttribute('aria-selected', on ? 'true' : 'false');
         });
         // The sheet scrolls; switching pane while halfway down a long form
@@ -1653,7 +1662,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const body = $qs('#activitySheet .sheet-body');
         if (body) body.scrollTop = 0;
     }
-    $id('activityPaneTabs')?.addEventListener('click', (e) => {
+    $id('activityModeTabs')?.addEventListener('click', (e) => {
         const tab = e.target.closest('[data-act-tab]');
         if (tab) setActPane(tab.getAttribute('data-act-tab'));
     });
@@ -1933,7 +1942,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function setActivityMode(mode) {
         activityMode = ['irrigation', 'service'].includes(mode) ? mode : 'task';
-        $qsa('#activityModeTabs .activity-mode-tab').forEach((tab) => {
+        $qsa('#activityModeTabs .activity-mode-tab[data-mode]').forEach((tab) => {
             const on = tab.getAttribute('data-mode') === activityMode;
             tab.classList.toggle('is-active', on);
             tab.setAttribute('aria-selected', on ? 'true' : 'false');
@@ -1960,8 +1969,11 @@ document.addEventListener('DOMContentLoaded', () => {
         animateField($id('activityWaterTaskWrap'));
         animateField($id('activityServicePriceWrap'));
     }
-    $qsa('#activityModeTabs .activity-mode-tab').forEach((tab) => {
-        tab.addEventListener('click', () => setActivityMode(tab.getAttribute('data-mode')));
+    $qsa('#activityModeTabs .activity-mode-tab[data-mode]').forEach((tab) => {
+        tab.addEventListener('click', () => {
+            setActivityMode(tab.getAttribute('data-mode'));
+            setActPane('details');
+        });
     });
 
     // ---- Quill description editor (+ HTML source mode) ----

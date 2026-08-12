@@ -272,6 +272,15 @@ html.sheet-open .team-float {
 .tabbar-item.is-active { @apply text-brand-700; }
 .tabbar-item svg { @apply w-6 h-6; }
 
+/* The footer clears the tab bar and nothing more. It used to carry a flat
+   7rem of bottom padding on phones — more than twice the bar's height — so a
+   module with little in it still scrolled, and what you scrolled to was an
+   empty band under the footer. The bar is 3.5rem plus whatever the device
+   reserves at the bottom; that, and a little air, is the whole requirement.
+   With the tab bar gone the padding goes with it. */
+.footer-safe { padding-bottom: calc(3.5rem + env(safe-area-inset-bottom, 0px) + .75rem); }
+@media (min-width: 768px) { .footer-safe { padding-bottom: 3rem; } }
+
 /* Content spacing helper so pages clear the tab bar on mobile */
 .page-safe-bottom { padding-bottom: 5.5rem; }
 @media (min-width: 768px) { .page-safe-bottom { padding-bottom: 2rem; } }
@@ -289,7 +298,7 @@ body.no-footer footer { display: none; }
 
 @media (max-width: 767px) {
     .hide-tabbar .page-safe-bottom { padding-bottom: 1rem; }
-    .hide-tabbar footer { padding-bottom: 2rem; }
+    .hide-tabbar footer, .hide-tabbar .footer-safe { padding-bottom: 1.5rem; }
     .hide-tabbar .ai-float,
     .hide-tabbar .team-float { bottom: 1rem; }
     .hide-tabbar .team-float.has-ai { bottom: 5rem; }

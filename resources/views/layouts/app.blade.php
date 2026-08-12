@@ -33,7 +33,7 @@
 </head>
 {{-- `body-class` lets a page opt into layout-level changes, e.g. the Collab
      Room hiding the mobile tab bar to use the full screen. --}}
-<body class="min-h-screen bg-gray-50 @yield('body-class')">
+<body class="min-h-screen flex flex-col bg-gray-50 @yield('body-class')">
 
     {{-- Top app bar --}}
     <header class="sticky top-0 z-40 bg-white border-b border-gray-200">
@@ -41,7 +41,7 @@
             <div class="flex items-center justify-between h-14 md:h-16 gap-3">
                 <div class="flex items-center gap-3 min-w-0">
                     @hasSection('back')
-                        <a href="@yield('back')" class="p-2 -ml-2 rounded-full text-gray-500 hover:bg-gray-100 shrink-0" aria-label="Back">
+                        <a href="@yield('back')" id="appBackLink" class="p-2 -ml-2 rounded-full text-gray-500 hover:bg-gray-100 shrink-0" aria-label="Back">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                         </a>
                     @else
@@ -226,13 +226,13 @@
         };
     </script>
 
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-4 md:py-8 app-enter">
+    <main class="w-full max-w-6xl mx-auto px-4 sm:px-6 py-4 md:py-8 app-enter grow">
         @yield('content')
     </main>
 
     {{-- Footer: legal links + breathing room at the bottom of every page.
          Extra bottom padding on phones clears the fixed tab bar. --}}
-    <footer class="mt-10 border-t border-gray-100 pb-28 md:pb-12">
+    <footer class="mt-6 md:mt-10 border-t border-gray-100 footer-safe">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
             <p class="text-xs text-gray-400">© {{ date('Y') }} AniSystem. All rights reserved.</p>
             <nav class="flex flex-wrap items-center justify-center text-xs" style="column-gap:1.75rem;row-gap:.5rem;" aria-label="Legal">
