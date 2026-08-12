@@ -57,7 +57,7 @@
                 <div class="when-tabs" id="whenTabs" role="tablist">
                     <button type="button" class="when-tab is-active" id="whenTabDate" aria-selected="true">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                        Start / End date
+                        Date
                     </button>
                     <button type="button" class="when-tab" id="whenTabDas" aria-selected="false">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/></svg>
@@ -65,33 +65,30 @@
                     </button>
                 </div>
                 <div id="whenPaneDate" class="when-pane">
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="form-label" for="activityTargetDate">Start date <span class="text-red-500">*</span></label>
-                            <input type="date" id="activityTargetDate" class="form-input cal-only" inputmode="none">
-                        </div>
-                        <div>
-                            <label class="form-label" for="activityTargetEndDate">End date <span class="text-gray-400 font-normal">(optional)</span></label>
-                            <input type="date" id="activityTargetEndDate" class="form-input cal-only" inputmode="none">
-                        </div>
+                    <div>
+                        <label class="form-label" for="activityTargetDate">Date <span class="text-red-500">*</span></label>
+                        <input type="date" id="activityTargetDate" class="form-input cal-only" inputmode="none">
                     </div>
+                    {{-- An activity happens on a day. The end date is kept in the
+                         markup, unasked, so work already saved as a range keeps
+                         its span instead of silently losing it on the next
+                         save. --}}
+                    <input type="hidden" id="activityTargetEndDate">
                 </div>
             {{-- DAS day-number lens over the date inputs (second pane of the chooser above) --}}
             <div id="activityDasRow" class="das-panel when-pane hidden">
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="form-label" for="activityDasRefLot">Reference lot</label>
                         <select id="activityDasRefLot" class="form-select"></select>
                     </div>
                     <div>
-                        <label class="form-label" for="activityStartDas">Start <span class="day-type-label">{{ $schedule->dayType }}</span></label>
+                        <label class="form-label" for="activityStartDas"><span class="day-type-label">{{ $schedule->dayType }}</span> day</label>
                         <input type="number" id="activityStartDas" class="form-input" step="1" placeholder="e.g. 21">
                     </div>
-                    <div>
-                        <label class="form-label" for="activityEndDas">End <span class="day-type-label">{{ $schedule->dayType }}</span></label>
-                        <input type="number" id="activityEndDas" class="form-input" step="1" placeholder="optional">
-                    </div>
                 </div>
+                {{-- Same reasoning as the end date: still here, never asked. --}}
+                <input type="hidden" id="activityEndDas">
                 <p class="text-xs text-blue-800 mt-2" id="activityDasAnchorNote"></p>
             </div>
             </div>

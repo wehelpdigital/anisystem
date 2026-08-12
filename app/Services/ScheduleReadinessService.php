@@ -119,7 +119,11 @@ class ScheduleReadinessService
                 ];
             }
 
-            $noLot = $activities->filter(fn ($a) => $a->lots->isEmpty());
+            // A worker checklist is about who turned up, not which field, so
+            // having no lot is its normal state rather than something missing.
+            $noLot = $activities
+                ->reject(fn ($a) => $a->activityType === 'worker_payroll')
+                ->filter(fn ($a) => $a->lots->isEmpty());
             if ($noLot->isNotEmpty()) {
                 $items[] = [
                     'key' => 'activities-no-lot',
