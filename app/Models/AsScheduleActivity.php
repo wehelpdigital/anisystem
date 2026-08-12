@@ -109,26 +109,34 @@ class AsScheduleActivity extends BaseModel
         $pivot = $worker->pivot ?? null;
         $custom = $pivot?->salaryAmount;
         if ($custom !== null && $custom !== '') {
-            return (float) $custom;
+            return (float) $custom;          // an agreed figure beats any rule
+        }
+
+        $part = $this->dayPartFor($worker);
+        if ($part === null) {
+            return 0.0;                      // no basis to work one out
         }
         $half = (float) ($worker->costPerHalfDay ?? 0);
 
-        return $this->dayPartFor($worker) === 'half' ? $half : $half * 2;
+        return $part === 'half' ? $half : $half * 2;
     }
 
     /**
-     * Half a day or a whole one for this worker: their own answer where the
-     * checklist has one, and otherwise however long the task itself is. Being
-     * on a half-day job does not make someone a full day's wage.
+     * Half a day, a whole one, or neither.
+     *
+     * Their own answer where the checklist has one; otherwise however long the
+     * task itself is. A task marked "N/A" has no length to inherit — that is
+     * what N/A means — so nothing is assumed and nothing is charged. Guessing
+     * half a day there quietly put money on days nobody had costed.
      */
-    public function dayPartFor(AsScheduleWorker $worker): string
+    public function dayPartFor(AsScheduleWorker $worker): ?string
     {
         $chosen = $worker->pivot->dayPart ?? null;
         if ($chosen === 'half' || $chosen === 'whole') {
             return $chosen;
         }
 
-        return $this->timeRequired === 'whole' ? 'whole' : 'half';
+        return in_array($this->timeRequired, ['half', 'whole'], true) ? $this->timeRequired : null;
     }
 
     /** The wage bill for this activity. */

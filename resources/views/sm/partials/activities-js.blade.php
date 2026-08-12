@@ -593,7 +593,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function labourLine(total, pay) {
         if (!total || Number(total) <= 0) return '';
         const parts = Object.values(pay || {})
-            .map((p) => `${esc(p.name || 'Worker')} ${p.dayPart === 'half' ? '½' : '1'}d ${money(p.total)}`)
+            .map((p) => {
+                const len = p.effectivePart === 'half' ? '½d' : (p.effectivePart === 'whole' ? '1d' : '—');
+                return `${esc(p.name || 'Worker')} ${len} ${money(p.total)}`;
+            })
             .join(' · ');
         return `<div class="activity-labour"><span class="al-total">${money(total)}</span>${parts ? `<span class="al-parts">${parts}</span>` : ''}</div>`;
     }
@@ -1769,11 +1772,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // No answer in the checklist means "as long as the task" — the same rule
     // the server applies, so the figure in the sheet matches the one saved.
     function inheritedPart() {
-        return ($id('activityTimeRequired')?.value === 'whole') ? 'whole' : 'half';
+        const v = $id('activityTimeRequired')?.value;
+        // "N/A" has no length to inherit, so nothing is assumed — the same
+        // answer the server gives.
+        return (v === 'whole' || v === 'half') ? v : null;
     }
     function defaultPay(id, dayPart) {
+        const part = dayPart || inheritedPart();
+        if (!part) return 0;
         const half = Number(WORKER_RATES[id] || 0);
-        return (dayPart || inheritedPart()) === 'half' ? half : half * 2;
+        return part === 'half' ? half : half * 2;
     }
     function payFor(id) {
         const st = workerPayState[id] || {};
@@ -1821,7 +1829,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         rows.innerHTML = listed.map((id) => {
             const st = workerPayState[id] || {};
-            const part = st.dayPart || inheritedPart();
+            const part = st.dayPart || inheritedPart();   // null when N/A
             const ticked = on.has(String(id));
             const rate = money(defaultPay(id, part));
             return `<div class="wp-row${ticked ? ' is-on' : ''}" data-pay-row="${id}">

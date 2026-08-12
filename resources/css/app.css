@@ -140,7 +140,8 @@ input[type="time"].form-input {
 input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="datetime-local"]::-webkit-calendar-picker-indicator,
 input[type="time"]::-webkit-calendar-picker-indicator {
-    margin-right: -0.5rem;   /* back off the padding a touch, not all of it */
+    /* No negative margin: it was pulling the button back toward the border,
+       undoing a third of the inset it had just been given. */
     opacity: .55;
     cursor: pointer;
 }

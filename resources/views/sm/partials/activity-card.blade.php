@@ -214,7 +214,11 @@
     @if ($labour > 0)
         <div class="activity-labour">
             <span class="al-total">₱{{ number_format($labour, 2) }}</span>
-            <span class="al-parts">{{ $a->workers->map(fn ($w) => $w->workerName . ' ' . ($a->dayPartFor($w) === 'half' ? '½' : '1') . 'd ₱' . number_format($a->workerPay($w), 2))->join(' · ') }}</span>
+            <span class="al-parts">{{ $a->workers->map(function ($w) use ($a) {
+                $part = $a->dayPartFor($w);
+                $len = $part === 'half' ? '½d' : ($part === 'whole' ? '1d' : '—');
+                return $w->workerName . ' ' . $len . ' ₱' . number_format($a->workerPay($w), 2);
+            })->join(' · ') }}</span>
         </div>
     @endif
     {{-- Things this activity points at. The row is always here so the JS can
