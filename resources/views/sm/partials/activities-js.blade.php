@@ -1780,28 +1780,67 @@ document.addEventListener('DOMContentLoaded', () => {
             ? defaultPay(id, st.dayPart)
             : Number(amount) || 0;
     }
+    /**
+     * The checklist.
+     *
+     * On a payroll activity this is the whole form: every worker on the
+     * schedule with a box to tick for "worked today". Ticking one puts them on
+     * the activity and their pay into the day's cost; leaving it clear costs
+     * nothing. The half/whole choice and the agreed amount belong to a ticked
+     * worker only — offering them next to an unticked name reads as though
+     * that person is being paid to stay home.
+     *
+     * For every other kind of activity the panel lists whoever is already on
+     * it, because there the crew is picked with the chips above.
+     */
     function renderWorkerPay() {
         const panel = $id('workerPayPanel'), rows = $id('workerPayRows');
         if (!panel || !rows) return;
-        const ids = getActivityWorkerIds();
-        panel.classList.toggle('hidden', ids.length === 0);
-        if (!ids.length) { $id('workerPayTotal').textContent = money(0); paintWorkerCount(); return; }
-        rows.innerHTML = ids.map((id) => {
+
+        const payroll = activityMode === 'payroll';
+        const on = new Set(getActivityWorkerIds().map(String));
+        const listed = payroll ? Object.keys(WORKER_NAMES) : [...on];
+
+        panel.classList.toggle('hidden', listed.length === 0);
+        if (!listed.length) { $id('workerPayTotal').textContent = money(0); paintWorkerCount(); return; }
+
+        rows.innerHTML = listed.map((id) => {
             const st = workerPayState[id] || {};
             const part = st.dayPart || inheritedPart();
-            return `<div class="flex items-center gap-2" data-pay-row="${id}">
-                <span class="min-w-0 grow text-sm font-semibold text-gray-800 truncate">${esc(WORKER_NAMES[id] || 'Worker')}</span>
-                <span class="flex rounded-lg bg-gray-100 p-0.5 shrink-0">
-                    <button type="button" class="px-2 py-1 rounded-md text-xs font-bold ${part === 'whole' ? 'bg-white text-brand-700' : 'text-gray-500'}" data-pay-part="whole">Whole</button>
-                    <button type="button" class="px-2 py-1 rounded-md text-xs font-bold ${part === 'half' ? 'bg-white text-brand-700' : 'text-gray-500'}" data-pay-part="half">Half</button>
+            const ticked = on.has(String(id));
+            const rate = money(defaultPay(id, part));
+            return `<div class="wp-row${ticked ? ' is-on' : ''}" data-pay-row="${id}">
+                ${payroll ? `<label class="wp-tick">
+                    <input type="checkbox" data-pay-on ${ticked ? 'checked' : ''}>
+                    <span></span>
+                </label>` : ''}
+                <span class="wp-name">${esc(WORKER_NAMES[id] || 'Worker')}${payroll && !ticked ? `<span class="wp-rate">${esc(rate)} if they worked</span>` : ''}</span>
+                ${!payroll || ticked ? `<span class="wp-part">
+                    <button type="button" class="${part === 'whole' ? 'is-on' : ''}" data-pay-part="whole">Whole</button>
+                    <button type="button" class="${part === 'half' ? 'is-on' : ''}" data-pay-part="half">Half</button>
                 </span>
                 <input type="number" class="form-input wp-amount text-right" data-pay-amount min="0" step="any" inputmode="decimal"
-                    value="${st.amount === null || st.amount === undefined ? '' : esc(st.amount)}" placeholder="${defaultPay(id, part).toFixed(2)}">
+                    value="${st.amount === null || st.amount === undefined ? '' : esc(st.amount)}" placeholder="${defaultPay(id, part).toFixed(2)}">` : ''}
             </div>`;
         }).join('');
-        $id('workerPayTotal').textContent = money(ids.reduce((t, id) => t + payFor(id), 0));
+
+        $id('workerPayTotal').textContent = money([...on].reduce((t, id) => t + payFor(id), 0));
         paintWorkerCount();
     }
+
+    /* Ticking a name is the same act as picking that worker — the chips above
+       stay the one record of who is on the job, so nothing can disagree. */
+    $id('workerPayRows')?.addEventListener('change', (e) => {
+        const box = e.target.closest('[data-pay-on]');
+        if (!box) return;
+        const id = box.closest('[data-pay-row]').getAttribute('data-pay-row');
+        const chip = $qs(`#activityWorkersContainer .worker-chip[data-worker-id="${id}"]`);
+        if (chip) {
+            chip.classList.toggle('is-selected', box.checked);
+            chip.setAttribute('aria-pressed', box.checked ? 'true' : 'false');
+        }
+        renderWorkerPay();
+    });
     $id('workerPayRows')?.addEventListener('click', (e) => {
         const btn = e.target.closest('[data-pay-part]');
         if (!btn) return;
@@ -2116,9 +2155,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const task = activityMode === 'task';
         const irr = activityMode === 'irrigation';
         const svc = activityMode === 'service';
+        const payroll = activityMode === 'payroll';
         // Payroll is its own kind of day's work: the pay is per worker, so the
         // checklist IS the form and the rest of the task fields step aside.
-        setActPane(activityMode === 'payroll' ? 'workers' : 'details');
+        setActPane(payroll ? 'workers' : 'details');
+        // Its crew is chosen by ticking names, so the chip row would be a
+        // second way to say the same thing — and a payroll day is about who
+        // turned up, not which patch of ground.
+        $id('activityWorkersContainer')?.classList.toggle('hidden', payroll);
+        $qs('#activityWorkersPane .form-label')?.classList.toggle('hidden', payroll);
+        renderWorkerPay();
         $id('activityTypeWrap')?.classList.toggle('hidden', !task);
         $id('activityWaterTaskWrap')?.classList.toggle('hidden', !irr);
         $id('activityServicePriceWrap')?.classList.toggle('hidden', !svc);
@@ -2506,10 +2552,12 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('activityTimeRequired').value = 'half';
         $id('activityIsDayZero').checked = false;
         if ($id('activityIsTransplant')) $id('activityIsTransplant').checked = false;
+        if ($id('activityIsDone')) $id('activityIsDone').checked = false;
         setWhenTab('date', { instant: true });
         setDescriptionContent('');
         pendingDescription = '';
         setActPane('details');
+        $id('activityModeTabs')?.classList.remove('hidden');
         setActivityLots([]);
         setWorkerPay({});
         setActivityWorkers([]);
@@ -2580,10 +2628,16 @@ document.addEventListener('DOMContentLoaded', () => {
             $id('activityTimeRequired').value = a.timeRequired || 'half';
             $id('activityIsDayZero').checked = !!boolFlag(a.isDayZero);
             $id('activityIsTransplant').checked = !!boolFlag(a.isTransplant);
+            if ($id('activityIsDone')) $id('activityIsDone').checked = !!boolFlag(a.isDone);
             setActivityLots(a.lotIds || (a.lots || []).map((l) => l.id));
             setWorkerPay(a.workerPay || {});
             setActivityWorkers(a.workerIds || (a.workers || []).map((w) => w.id));
             if (a.activityType === 'worker_payroll') setActPane('workers');
+            // What an activity IS was decided when it was made. Offering to
+            // change it here invites turning a day's payroll into an
+            // irrigation task by mistake, and the fields behind the two have
+            // nothing in common.
+            $id('activityModeTabs')?.classList.add('hidden');
             setDescriptionContent(a.description || '');
             setActivityImages(a.images || (a.imagePath ? [{ path: a.imagePath, url: a.imageUrl }] : []));
             (a.items || []).forEach((it) => {
@@ -2668,6 +2722,9 @@ document.addEventListener('DOMContentLoaded', () => {
             timeRequired: $id('activityTimeRequired').value,
             isDayZero: $id('activityIsDayZero').checked ? 1 : 0,
             isTransplant: $id('activityIsTransplant').checked ? 1 : 0,
+            // Ticked in the worker checklist; the board's own done toggle
+            // writes the same flag from the card.
+            isDone: $id('activityIsDone')?.checked ? 1 : 0,
             isDraft: (!id && ADD_AS_DRAFT) ? 1 : 0,
             lotIds: getActivityLotIds(),   // empty = N/A (not lot-specific)
             workerIds: getActivityWorkerIds(),

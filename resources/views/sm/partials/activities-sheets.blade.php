@@ -35,7 +35,7 @@
                      was picked to its left. --}}
                 <button type="button" class="activity-mode-tab" data-mode="payroll" data-act-tab="workers" aria-selected="false">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
-                    Workers
+                    Worker checklist
                     <span class="act-pane-count" id="activityWorkerCount" hidden>0</span>
                 </button>
             </div>
@@ -207,10 +207,16 @@
                      just a heading in the way. --}}
                 <div id="workerPayPanel" class="hidden mt-2 rounded-xl border border-gray-200 overflow-hidden">
                     <div class="flex items-center justify-between px-3 py-2 bg-gray-50">
-                        <span class="text-xs font-bold text-gray-500 uppercase">Worker checklist</span>
+                        <span class="text-xs font-bold text-gray-500 uppercase">Who worked today</span>
                         <span class="text-sm font-bold text-gray-800" id="workerPayTotal">₱0.00</span>
                     </div>
                     <div id="workerPayRows" class="p-2 space-y-1.5"></div>
+                    {{-- The day's work either happened or it did not, and that
+                         is a different question from who was there for it. --}}
+                    <label class="flex items-center gap-2.5 px-3 py-2.5 border-t border-gray-100 cursor-pointer select-none">
+                        <input type="checkbox" id="activityIsDone" class="w-5 h-5 rounded">
+                        <span class="text-sm font-semibold text-gray-700">Mark this activity as done</span>
+                    </label>
                 </div>
                 <div id="quickAddWorkerForm" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2">
                     <div class="flex items-center justify-between">

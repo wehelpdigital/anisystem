@@ -905,6 +905,25 @@
         /* .form-input is unlayered component CSS, so its width:100% beats any
            Tailwind width utility — the amount box ate the row and squeezed the
            worker's name to nothing. Width belongs here, at the same level. */
+        /* The checklist itself: a name, a box to tick, and — once ticked — how
+           much of the day and at what price. An unticked row stays quiet. */
+        .wp-row { display: flex; align-items: center; gap: .55rem; padding: .3rem .15rem; border-radius: .5rem; }
+        .wp-row.is-on { background: var(--color-brand-50); }
+        .wp-tick { display: inline-flex; align-items: center; cursor: pointer; }
+        .wp-tick input { width: 1.15rem; height: 1.15rem; border-radius: .35rem; }
+        .wp-name { min-width: 0; flex: 1 1 auto; font-size: .85rem; font-weight: 700; color: var(--color-gray-800);
+            overflow: hidden; text-overflow: ellipsis; }
+        .wp-row.is-on .wp-name { color: var(--color-brand-900, #14532d); }
+        .wp-rate { display: block; font-size: .68rem; font-weight: 600; color: var(--color-gray-400); }
+        .wp-part { display: flex; gap: .1rem; padding: .12rem; border-radius: .5rem; background: var(--color-gray-100);
+            flex-shrink: 0; }
+        .wp-part button { padding: .22rem .5rem; border-radius: .4rem; font-size: .7rem; font-weight: 700;
+            color: var(--color-gray-500); }
+        .wp-part button.is-on { background: var(--color-white); color: var(--color-brand-700); }
+        html.dark .wp-row.is-on { background: #1a2413; }
+        html.dark .wp-name { color: #e6eddd; }
+        html.dark .wp-part { background: #1c2416; }
+        html.dark .wp-part button.is-on { background: #243019; color: #bfe3a4; }
         .wp-amount { width: 6.5rem !important; flex: 0 0 6.5rem; }
         #activitySheet .space-y-4.on-workers > * { display: none; }
         #activitySheet .space-y-4.on-workers > #activityWorkersPane,
