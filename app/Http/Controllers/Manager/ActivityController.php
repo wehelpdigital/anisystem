@@ -628,6 +628,7 @@ class ActivityController extends BaseScheduleController
         $data = $fresh->toArray();
         $data['lotIds'] = $fresh->lots->pluck('id');
         $data['workerIds'] = $fresh->workers->pluck('id');
+        $data = array_merge($data, $this->serializeWorkerPay($fresh));
 
         return $this->jsonOk('Restored from drafts.', ['data' => $data]);
     }
@@ -685,6 +686,7 @@ class ActivityController extends BaseScheduleController
         $data = $fresh->toArray();
         $data['lotIds'] = $fresh->lots->pluck('id');
         $data['workerIds'] = $fresh->workers->pluck('id');
+        $data = array_merge($data, $this->serializeWorkerPay($fresh));
 
         return $this->jsonOk('Activity restored.', ['data' => $data]);
     }
@@ -883,6 +885,7 @@ class ActivityController extends BaseScheduleController
         $data = $fresh->toArray();
         $data['lotIds'] = $fresh->lots->pluck('id');
         $data['workerIds'] = $fresh->workers->pluck('id');
+        $data = array_merge($data, $this->serializeWorkerPay($fresh));
 
         $this->broadcastBoard($schedule, 'saved', $data, $fresh->versionId);
         return $this->jsonOk('Activity duplicated.', ['data' => $data]);
@@ -1178,6 +1181,7 @@ class ActivityController extends BaseScheduleController
         $data = $fresh->toArray();
         $data['lotIds'] = $fresh->lots->pluck('id');
         $data['workerIds'] = $fresh->workers->pluck('id');
+        $data = array_merge($data, $this->serializeWorkerPay($fresh));
         $data['imageUrl'] = $fresh->imageUrl();
         $data['images'] = $fresh->imageList();
         $data['items'] = $this->serializeItems($fresh);

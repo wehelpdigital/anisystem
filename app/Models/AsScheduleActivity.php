@@ -28,6 +28,9 @@ class AsScheduleActivity extends BaseModel
         'microbial'      => 'Microbial / Bio',
         'harvest'        => 'Harvest',
         'monitoring'     => 'Monitoring',
+        // Paid work priced per worker rather than by the length of the task:
+        // who was there, for how much of the day, and at what rate.
+        'worker_payroll' => 'Worker Checklist',
         'other'          => 'Other',
     ];
 

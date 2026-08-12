@@ -139,6 +139,21 @@
             background: var(--color-amber-50, #fffbeb); border: 1px solid var(--color-amber-200, #fde68a);
             border-radius: 999px; padding: .14rem .5rem .14rem .42rem; flex-shrink: 0; }
         .date-header-cash svg { width: .85rem; height: .85rem; }
+        .date-header-cash { cursor: pointer; }
+        .date-header-cash:hover { filter: brightness(.97); }
+        /* The breakdown behind the figure. */
+        .dc-h { font-size: .68rem; font-weight: 800; text-transform: uppercase; color: var(--color-gray-400);
+            margin: .75rem 0 .35rem; }
+        .dc-h:first-child { margin-top: 0; }
+        .dc-row { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem;
+            padding: .4rem 0; border-bottom: 1px dashed var(--color-gray-200); }
+        .dc-name { min-width: 0; font-size: .85rem; font-weight: 700; color: var(--color-gray-800); }
+        .dc-detail { display: block; font-size: .7rem; font-weight: 600; color: var(--color-gray-400); }
+        .dc-amt { font-size: .85rem; font-weight: 800; color: var(--color-gray-900); white-space: nowrap; }
+        .dc-total { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem;
+            margin-top: .75rem; padding-top: .6rem; border-top: 2px solid var(--color-gray-200);
+            font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
+        .dc-foot { margin-top: .6rem; font-size: .72rem; line-height: 1.5; color: var(--color-gray-400); }
         .date-header-cash[hidden] { display: none; }
         html.dark .date-header-cash { color: #fcd34d; background: rgb(120 53 15 / .35); border-color: rgb(180 83 9 / .5); }
         .date-header-count { font-size: 11px; font-weight: 700; color: var(--date-color); background: var(--tl-pill); border-radius: 999px; padding: .12rem .55rem; margin-left: auto; flex-shrink: 0; }

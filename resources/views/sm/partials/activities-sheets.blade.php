@@ -33,7 +33,7 @@
                      is on the job is asked the same way as what the job is. It
                      does not change the activity's type — that stays whatever
                      was picked to its left. --}}
-                <button type="button" class="activity-mode-tab" data-act-tab="workers" aria-selected="false">
+                <button type="button" class="activity-mode-tab" data-mode="payroll" data-act-tab="workers" aria-selected="false">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
                     Workers
                     <span class="act-pane-count" id="activityWorkerCount" hidden>0</span>
@@ -581,6 +581,18 @@
             <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="draft">Move to drafts</button>
             <button type="button" class="btn btn-ghost justify-start! text-red-600!" data-card-menu-action="delete">Delete</button>
         </div>
+    </div>
+</div>
+
+{{-- ==================== WHY THE DAY COSTS WHAT IT COSTS ==================== --}}
+<div class="sheet hidden" id="dayCashSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title truncate" id="dayCashTitle">Cash for this day</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body" style="padding-bottom:1rem">
+        <div id="dayCashBody"></div>
     </div>
 </div>
 

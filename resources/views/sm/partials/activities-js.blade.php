@@ -735,6 +735,51 @@ document.addEventListener('DOMContentLoaded', () => {
         pill.innerHTML = `${SVG.wallet}<span>${esc(money(total))}</span>`;
         pill.title = 'Cash to prepare for this day — wages for everyone on it, plus any extra expense logged against it';
     }
+    /* A number nobody can check is a number nobody trusts. Tapping it shows
+       the same arithmetic in longhand: one line per activity with who is on
+       it, one line per extra expense, and the total they add up to. */
+    function openDayCash(group) {
+        const dateKey = (group.getAttribute('data-date') || '').trim();
+        const rows = [];
+        $qsa('.activity-card[data-labour]', group).forEach((card) => {
+            const amount = Number(card.getAttribute('data-labour')) || 0;
+            if (amount <= 0) return;
+            rows.push({
+                name: (card.querySelector('.activity-card-title')?.textContent || 'Activity').trim(),
+                detail: (card.querySelector('.activity-labour .al-parts')?.textContent || '').trim(),
+                amount,
+            });
+        });
+        const wages = rows.reduce((t, r) => t + r.amount, 0);
+        const extras = _expenseRowsFor(dateKey).map((r) => ({
+            name: r.note || 'Extra expense', detail: '', amount: Number(r.amount) || 0,
+        }));
+        const total = wages + extras.reduce((t, r) => t + r.amount, 0);
+
+        const line = (r) => `<div class="dc-row">
+            <span class="dc-name">${esc(r.name)}${r.detail ? `<span class="dc-detail">${esc(r.detail)}</span>` : ''}</span>
+            <span class="dc-amt">${esc(money(r.amount))}</span>
+        </div>`;
+
+        $id('dayCashTitle').textContent = 'Cash for ' + prettyDateFull(dateKey);
+        $id('dayCashBody').innerHTML =
+            (rows.length ? `<h4 class="dc-h">Wages</h4>${rows.map(line).join('')}` : '')
+            + (extras.length ? `<h4 class="dc-h">Extra expenses</h4>${extras.map(line).join('')}` : '')
+            + `<div class="dc-total"><span>Total to prepare</span><span>${esc(money(total))}</span></div>`
+            + (rows.length
+                ? '<p class="dc-foot">Wages come from each activity: a worker with no half or whole day of their own is paid for as long as the task itself takes.</p>'
+                : '<p class="dc-foot">No wages for this day — nobody is assigned to its activities yet.</p>');
+        openSheet('dayCashSheet');
+    }
+    document.addEventListener('click', (e) => {
+        const pill = e.target.closest('.date-header-cash');
+        if (!pill) return;
+        e.preventDefault();
+        e.stopPropagation();          // not a fold of the day
+        const group = pill.closest('.date-group');
+        if (group) openDayCash(group);
+    });
+
     function paintAllDayCash() {
         $qsa('#activitiesList .date-group').forEach(paintDayCash);
     }
@@ -901,7 +946,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('click', (e) => {
         const header = e.target.closest && e.target.closest('#activitiesList .date-header');
-        if (!header || e.target.closest('.date-header-btn, .date-header-weather, .day-warn-btn')) return;
+        if (!header || e.target.closest('.date-header-btn, .date-header-weather, .day-warn-btn, .date-header-cash')) return;
         const group = header.closest('.date-group');
         if (!group) return;
         const key = (group.getAttribute('data-date') || '').trim();
@@ -1706,28 +1751,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!host) return;
         const onWorkers = which === 'workers';
         host.classList.toggle('on-workers', onWorkers);
-        // The Workers tab shares the strip with the three types but means
-        // something else, so it lights up on its own and hands the highlight
-        // back to whichever type is still selected when you leave it.
-        const wTab = $qs('#activityModeTabs [data-act-tab="workers"]');
-        if (wTab) {
-            wTab.classList.toggle('is-active', onWorkers);
-            wTab.setAttribute('aria-selected', onWorkers ? 'true' : 'false');
-        }
-        $qsa('#activityModeTabs [data-mode]').forEach((b) => {
-            const on = !onWorkers && b.getAttribute('data-mode') === activityMode;
-            b.classList.toggle('is-active', on);
-            b.setAttribute('aria-selected', on ? 'true' : 'false');
-        });
         // The sheet scrolls; switching pane while halfway down a long form
         // would drop you into the middle of the other one.
         const body = $qs('#activitySheet .sheet-body');
         if (body) body.scrollTop = 0;
     }
-    $id('activityModeTabs')?.addEventListener('click', (e) => {
-        const tab = e.target.closest('[data-act-tab]');
-        if (tab) setActPane(tab.getAttribute('data-act-tab'));
-    });
+    // Re-price anyone still following the task's own length when that changes.
+    $id('activityTimeRequired')?.addEventListener('change', () => renderWorkerPay());
+
     function paintWorkerCount() {
         const badge = $id('activityWorkerCount');
         if (!badge) return;
@@ -2005,9 +2036,8 @@ document.addEventListener('DOMContentLoaded', () => {
         el.classList.add('mode-field-in');
     }
     function setActivityMode(mode) {
-        activityMode = ['irrigation', 'service'].includes(mode) ? mode : 'task';
-        $id('activityTimeRequired')?.addEventListener('change', () => renderWorkerPay());
-    $qsa('#activityModeTabs .activity-mode-tab[data-mode]').forEach((tab) => {
+        activityMode = ['irrigation', 'service', 'payroll'].includes(mode) ? mode : 'task';
+        $qsa('#activityModeTabs .activity-mode-tab[data-mode]').forEach((tab) => {
             const on = tab.getAttribute('data-mode') === activityMode;
             tab.classList.toggle('is-active', on);
             tab.setAttribute('aria-selected', on ? 'true' : 'false');
@@ -2015,6 +2045,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const task = activityMode === 'task';
         const irr = activityMode === 'irrigation';
         const svc = activityMode === 'service';
+        // Payroll is its own kind of day's work: the pay is per worker, so the
+        // checklist IS the form and the rest of the task fields step aside.
+        setActPane(activityMode === 'payroll' ? 'workers' : 'details');
         $id('activityTypeWrap')?.classList.toggle('hidden', !task);
         $id('activityWaterTaskWrap')?.classList.toggle('hidden', !irr);
         $id('activityServicePriceWrap')?.classList.toggle('hidden', !svc);
@@ -2024,7 +2057,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (secLabel) secLabel.textContent = irr ? 'Materials' : 'Materials & Items';
         const titleEl = $id('activityTitle');
         if (titleEl) titleEl.setAttribute('placeholder',
-            svc ? 'e.g. Land preparation (tractor)'
+            activityMode === 'payroll' ? 'e.g. Weeding crew — Lot B'
+            : svc ? 'e.g. Land preparation (tractor)'
             : irr ? 'e.g. Irrigate Lot A — Day 20–35'
             : 'e.g. Basal Fertilizer Application');
         if (!task) setActivityImages([]);   // reference images are task-only
@@ -2035,10 +2069,7 @@ document.addEventListener('DOMContentLoaded', () => {
         animateField($id('activityServicePriceWrap'));
     }
     $qsa('#activityModeTabs .activity-mode-tab[data-mode]').forEach((tab) => {
-        tab.addEventListener('click', () => {
-            setActivityMode(tab.getAttribute('data-mode'));
-            setActPane('details');
-        });
+        tab.addEventListener('click', () => setActivityMode(tab.getAttribute('data-mode')));
     });
 
     // ---- Quill description editor (+ HTML source mode) ----
@@ -2469,6 +2500,8 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (a.activityType === 'service') {
                 setActivityMode('service');
                 if ($id('activityServicePrice')) $id('activityServicePrice').value = a.servicePrice != null ? a.servicePrice : '';
+            } else if (a.activityType === 'worker_payroll') {
+                setActivityMode('payroll');
             } else {
                 setActivityMode('task');
                 $id('activityType').value = a.activityType || '';
@@ -2479,6 +2512,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setActivityLots(a.lotIds || (a.lots || []).map((l) => l.id));
             setWorkerPay(a.workerPay || {});
             setActivityWorkers(a.workerIds || (a.workers || []).map((w) => w.id));
+            if (a.activityType === 'worker_payroll') setActPane('workers');
             setDescriptionContent(a.description || '');
             setActivityImages(a.images || (a.imagePath ? [{ path: a.imagePath, url: a.imageUrl }] : []));
             (a.items || []).forEach((it) => {
@@ -2547,7 +2581,9 @@ document.addEventListener('DOMContentLoaded', () => {
         })).filter((it) => it.itemName);
         const isIrrigation = activityMode === 'irrigation';
         const isService = activityMode === 'service';
-        const activityType = isIrrigation ? 'irrigation' : (isService ? 'service' : ($id('activityType').value || ''));
+        const isPayroll = activityMode === 'payroll';
+        const activityType = isPayroll ? 'worker_payroll'
+            : (isIrrigation ? 'irrigation' : (isService ? 'service' : ($id('activityType').value || '')));
         const payload = {
             activityTitle: $id('activityTitle').value,
             targetDate: startDateVal,
