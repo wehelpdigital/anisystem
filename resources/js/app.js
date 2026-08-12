@@ -250,39 +250,50 @@ const openSheets = [];
 /* any other way removes it again so the entry never outlives what it  */
 /* stands for.                                                         */
 /* ------------------------------------------------------------------ */
-const overlayStack = [];      // [{ key, close }] — newest last
-let overlayEntries = 0;       // history entries we own
+const overlayStack = [];      // [{ key, close, id }] — newest last
+let overlaySeq = 0;           // every entry gets its own id, never reused
 let unwinding = false;        // we are removing our own entry
 let poppingBack = false;      // Back is closing this one; do not touch history
 
 window.registerOverlay = function registerOverlay(key, close) {
     if (overlayStack.some((o) => o.key === key)) return;
-    overlayStack.push({ key, close });
-    overlayEntries++;
+    const id = ++overlaySeq;
+    overlayStack.push({ key, close, id });
     // Same URL: this entry exists to be popped, not to be linked to.
-    history.pushState({ __overlay: overlayEntries }, '', location.href);
+    history.pushState({ __overlay: id }, '', location.href);
 };
 
 window.unregisterOverlay = function unregisterOverlay(key) {
     const i = overlayStack.findIndex((o) => o.key === key);
     if (i < 0) return;
-    overlayStack.splice(i, 1);
-    if (poppingBack || overlayEntries <= 0) return;
-    // Only rewind when the entry on top is still ours. A module switch from
-    // inside a sheet pushes its own entry over it; going back then would undo
-    // the navigation instead, so the stale entry is simply forgotten — one
-    // extra Back press, rather than a page yanked out from under you.
-    const mine = history.state && history.state.__overlay === overlayEntries;
-    overlayEntries--;
-    if (!mine) return;
+    const [entry] = overlayStack.splice(i, 1);
+    if (poppingBack) return;
+    // Rewind only when the entry on top is exactly this one. Overlays do not
+    // always close in the order they opened — the drawing pad hands its
+    // picture to a naming sheet and closes behind it — and counting entries
+    // rather than identifying them meant closing the pad rewound the sheet's
+    // entry instead. One rewind too many lands on the state under the module,
+    // which is how saving a drawing dropped you back into Activities.
+    if (!history.state || history.state.__overlay !== entry.id) return;
     unwinding = true;
     history.back();
 };
 
-window.addEventListener('popstate', () => {
+window.addEventListener('popstate', (e) => {
     if (unwinding) { unwinding = false; return; }
-    if (!overlayStack.length || overlayEntries <= 0) return;
-    overlayEntries--;
+
+    // An entry whose overlay closed out of order is left behind — nothing on
+    // screen answers to it. Landing on one would spend a Back press doing
+    // nothing visible, so it is swallowed and the press carries on to what the
+    // user actually meant. Each swallow consumes one entry, so this ends.
+    const id = e.state && e.state.__overlay;
+    if (id && !overlayStack.some((o) => o.id === id)) {
+        unwinding = true;
+        history.back();
+        return;
+    }
+
+    if (!overlayStack.length) return;
     const top = overlayStack[overlayStack.length - 1];
     poppingBack = true;
     try { top.close(); } finally { poppingBack = false; }

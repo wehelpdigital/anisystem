@@ -2269,6 +2269,10 @@
     });
 
     window.addEventListener('popstate', (e) => {
+        // An overlay's own entry says nothing about which module is open, and
+        // reading it as "no module named, so Activities" is how closing a
+        // sheet could throw you out of the module you were working in.
+        if (e.state && e.state.__overlay) return;
         if (pushDepth > 0) pushDepth--;
         showModule((e.state && e.state.module) || 'activities', false);
     });
