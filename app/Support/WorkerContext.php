@@ -44,12 +44,40 @@ class WorkerContext
             return null;
         }
 
-        $bossId = session('activeBossId');
-        $grant = $bossId ? $grants->firstWhere('bossUserId', (int) $bossId) : null;
+        $chosen = session('activeBossId');
+        if ($chosen) {
+            $grant = $grants->firstWhere('bossUserId', (int) $chosen);
+            if ($grant) {
+                return $grant;
+            }
+            // The picker stores the user's own id for "my own farm".
+            if ((int) $chosen === (int) Auth::id()) {
+                return null;
+            }
+        }
 
-        // Default to the first farm if none chosen yet (single-farm workers
-        // never see a picker).
-        return $grant ?? $grants->first();
+        // Nobody has chosen yet. Someone who farms their own land starts on it:
+        // being lent access to a neighbour's does not make you their worker,
+        // and defaulting the other way hid their own schedules completely —
+        // new ones 404'd the moment they were created, because they belonged to
+        // a farm the request was no longer looking at. A worker with no land of
+        // their own still lands straight in the farm they work, which is the
+        // case this default was written for.
+        return self::ownsSchedules() ? null : $grants->first();
+    }
+
+    /** Does the current user have a farm of their own? */
+    public static function ownsSchedules(): bool
+    {
+        static $cache = [];
+        $uid = (int) Auth::id();
+        if (! $uid) {
+            return false;
+        }
+
+        return $cache[$uid] ??= \App\Models\AsCroppingSchedule::active()
+            ->where('anisystemUserId', $uid)
+            ->exists();
     }
 
     /**
