@@ -738,16 +738,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const header = group.querySelector('.date-header');
         if (!header) return;
         const wx = header.querySelector('.date-header-weather, .wx-mini-btn');
-        let brk = header.querySelector('.dh-rowbreak');
-        if (wx || total > 0) {
-            if (!brk) {
-                brk = document.createElement('span');
-                brk.className = 'dh-rowbreak';
-                header.appendChild(brk);
-            }
-        } else if (brk) {
-            brk.remove();
-        }
+        ensureRowBreak(header, !!wx || total > 0);
     }
     /* A number nobody can check is a number nobody trusts. Tapping it shows
        the same arithmetic in longhand: one line per activity with who is on
@@ -808,6 +799,22 @@ document.addEventListener('DOMContentLoaded', () => {
         return (added.length + removed.length) > 0 && added.every(ours) && removed.every(ours);
     }
     window.__ownBookkeeping = ownBookkeeping;
+
+    /* The zero-height item that starts the header's second row. Both the
+       forecast and the day's cost need it there before they can be measured
+       or placed, so it has one owner and is safe to ask for twice. */
+    function ensureRowBreak(header, want) {
+        if (!header) return;
+        let brk = header.querySelector('.dh-rowbreak');
+        if (want && !brk) {
+            brk = document.createElement('span');
+            brk.className = 'dh-rowbreak';
+            header.appendChild(brk);
+        } else if (!want && brk) {
+            brk.remove();
+        }
+    }
+    window.__ensureRowBreak = ensureRowBreak;
 
     function paintAllDayCash() {
         // The forecast goes first: a day that changed lots is about different
@@ -4576,7 +4583,10 @@ document.addEventListener('DOMContentLoaded', () => {
            actually overflows is folded away. */
         function collapseIfCramped(strip) {
             if (!window.matchMedia('(max-width: 767px)').matches) return;
-            requestAnimationFrame(() => {
+            // Two frames: the first lets the break and the cost pill take their
+            // places, the second measures what is left. One frame measured a
+            // half-built row and folded strips that fit perfectly well.
+            requestAnimationFrame(() => requestAnimationFrame(() => {
                 if (!strip.isConnected || strip.scrollWidth <= strip.clientWidth + 4) return;
                 const first = strip.querySelector('.wx-emoji');
                 const n = strip.querySelectorAll('.js-wx-chip').length;
@@ -4601,7 +4611,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     $id('weatherBtn')?.click();
                 });
                 strip.replaceWith(btn);
-            });
+            }));
         }
 
         // Decorate every in-window date header + empty rest-day marker.
@@ -4632,8 +4642,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 const strip = stripFor(dateKey, g);
                 if (!strip) return;
-                const count = header.querySelector('.date-header-count');
-                count ? header.insertBefore(strip, count) : header.appendChild(strip);
+                // The break first: without it the strip lands on the crowded
+                // top row for a moment, and measuring it there is what folded
+                // forecasts that had a whole line waiting for them.
+                window.__ensureRowBreak?.(header, true);
+                header.appendChild(strip);
                 collapseIfCramped(strip);
             });
             $qsa('#activitiesList .rest-day-marker[data-date]').forEach((m) => {
@@ -4669,6 +4682,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // A named way in, so the board can ask for a redraw after it has
         // rearranged itself rather than waiting to be noticed.
         window.__wxRepaint = renderHeaderWeather;
+
+        /* Folding is a decision about the width available, and that changes:
+           turn the phone, or open the same board on a wider screen, and a
+           button that was the right answer is now hiding chips that fit. The
+           buttons are dropped on resize so the next pass measures again. */
+        let wxResize = null;
+        window.addEventListener('resize', () => {
+            clearTimeout(wxResize);
+            wxResize = setTimeout(() => {
+                $qsa('#activitiesList .wx-mini-btn').forEach((b) => b.remove());
+                renderHeaderWeather();
+            }, 200);
+        });
 
         // Re-decorate whenever the board changes (add activity, new day, a
         // rest-day turning into a group, drag/reorder, calendar → list…).
