@@ -36,6 +36,19 @@ class WorkerContext
         return self::grants()->isNotEmpty();
     }
 
+    /**
+     * True only while the request is actually looking at someone else's farm.
+     *
+     * Not the same question as isWorker(): holding a grant somewhere says
+     * nothing about the farm on screen. Anything that restricts what a worker
+     * may do has to ask this one, or it punishes an owner for having once been
+     * lent a neighbour's keys.
+     */
+    public static function inWorkerContext(): bool
+    {
+        return self::activeGrant() !== null;
+    }
+
     /** The grant for the currently-selected farm, or null (acting as owner). */
     public static function activeGrant(): ?WorkerGrant
     {

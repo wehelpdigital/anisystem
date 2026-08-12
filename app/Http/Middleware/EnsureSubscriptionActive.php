@@ -56,7 +56,8 @@ class EnsureSubscriptionActive
 
         // Workers cannot renew a plan that was never theirs, so send them a
         // message about the farm owner rather than a bill they cannot settle.
-        $isWorker = WorkerContext::isWorker();
+        // Which farm they are standing in decides whose bill this is.
+        $isWorker = WorkerContext::inWorkerContext();
         $message = $isWorker
             ? 'This farm\'s subscription is not active. Please ask the farm owner to renew.'
             : 'Your subscription is not active. Please renew to continue.';

@@ -482,8 +482,11 @@ class CroppingScheduleController extends Controller
 
     public function destroy(Request $request)
     {
-        // Only the owner may delete a schedule — never a worker (even editors).
-        if (\App\Support\WorkerContext::isWorker()) {
+        // Only the owner may delete a schedule — never a worker, even an
+        // editing one. The question is whose farm this request is in, not
+        // whether the user is a worker anywhere: an owner who also helps on a
+        // neighbour's farm was being refused on her own land.
+        if (\App\Support\WorkerContext::inWorkerContext()) {
             return response()->json(['success' => false, 'message' => 'Only the farm owner can delete a schedule.'], 403);
         }
         $schedule = $this->findOwnedOrFail($request->query('id'), true);
