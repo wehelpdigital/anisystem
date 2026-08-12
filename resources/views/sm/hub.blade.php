@@ -55,46 +55,103 @@
 
 @section('content')
 
-    {{-- Header card --}}
-    <div class="card mb-4">
-        <div class="card-body">
-            <div class="flex items-start justify-between gap-3">
-                <div class="min-w-0">
-                    <h2 class="text-xl font-bold text-gray-900 leading-snug">{{ $schedule->title }}</h2>
-                    @if ($schedule->cropType || $schedule->cropVariety)
-                        <div class="flex flex-wrap items-center gap-1.5 mt-1.5">
-                            @if ($schedule->cropType)
-                                <span class="badge badge-green"><i class="not-italic">🌱</i> {{ $schedule->cropType }}</span>
-                            @endif
-                            @if ($schedule->cropVariety)
-                                <span class="badge badge-gray">{{ $schedule->cropVariety }}</span>
-                            @endif
-                            @if ($schedule->dayType)
-                                <span class="badge badge-yellow">{{ $schedule->dayType }}</span>
-                            @endif
-                        </div>
-                    @endif
-                    @if ($schedule->description)
-                        <p class="text-sm text-gray-500 mt-1.5">{{ $schedule->description }}</p>
-                    @endif
-                    <p class="text-xs text-gray-400 mt-2">Created {{ $schedule->created_at->format('M j, Y') }}</p>
-                </div>
-                <span class="badge shrink-0 capitalize {{ $statusBadges[$schedule->status] ?? 'bg-gray-100 text-gray-600' }}">{{ $schedule->status }}</span>
-            </div>
-
-            <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-3 flex-wrap">
-                @include('sm.partials.community-switch', ['schedule' => $schedule])
-                <div class="flex items-center gap-3 shrink-0">
-                    @if ($schedule->isPublic)
-                        <a href="{{ route('community.show', ['id' => $schedule->id]) }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700">View in Community →</a>
-                    @endif
-                    <button type="button" id="statusToggleBtn" data-locked="{{ $schedule->isLocked() ? 1 : 0 }}" class="btn btn-sm {{ $schedule->isLocked() ? 'btn-white' : 'btn-primary' }}">
-                        {{ $schedule->isLocked() ? 'Reopen' : 'Mark completed' }}
+    {{-- The season's own card. It used to be a plain white box with the
+         title, some badges and a button that said "Mark completed" — which
+         reads like a checkbox rather than the end of a season. It now looks
+         like the top of something, says what state the season is in on its
+         own line, and names the crops growing under it (which live on the
+         lots now, so a season with two crops says both). --}}
+    <div class="sched-head mb-4">
+        <div class="sched-head-top">
+            <div class="min-w-0 grow">
+                <div class="flex items-start gap-2">
+                    <h2 class="sched-title" id="schedTitleText">{{ $schedule->title }}</h2>
+                    <button type="button" id="schedRenameBtn" class="sched-pen" title="Rename this schedule" aria-label="Edit name and description">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     </button>
                 </div>
+                <p class="sched-desc" id="schedDescText">{{ $schedule->description ?: 'No description yet — tap the pencil to add one.' }}</p>
+            </div>
+            <span class="sched-state sched-state-{{ $schedule->status }}">{{ ucfirst($schedule->status) }}</span>
+        </div>
+
+        <div class="sched-facts">
+            @php
+                $cropLabels = $schedule->lots->pluck('crop')->filter()
+                    ->map(fn ($c) => \App\Support\CropStages::label($c))->filter()->unique()->values();
+            @endphp
+            @foreach ($cropLabels as $c)
+                <span class="sched-fact"><span class="sf-emoji">{{ \App\Support\CropStages::icon($c) }}</span>{{ $c }}</span>
+            @endforeach
+            <span class="sched-fact"><span class="sf-emoji">📐</span>{{ $schedule->lots_count }} {{ \Illuminate\Support\Str::plural('lot', $schedule->lots_count) }}</span>
+            <span class="sched-fact"><span class="sf-emoji">👷</span>{{ $schedule->workers_count }} {{ \Illuminate\Support\Str::plural('worker', $schedule->workers_count) }}</span>
+            <span class="sched-fact"><span class="sf-emoji">🗓️</span>{{ $schedule->dayType ?: 'DAS' }} counting</span>
+            <span class="sched-fact"><span class="sf-emoji">🌱</span>Started {{ $schedule->created_at->format('M j, Y') }}</span>
+        </div>
+
+        <div class="sched-foot">
+            @include('sm.partials.community-switch', ['schedule' => $schedule])
+            <div class="flex items-center gap-3 shrink-0">
+                @if ($schedule->isPublic)
+                    <a href="{{ route('community.show', ['id' => $schedule->id]) }}" class="text-xs font-semibold text-white/90 hover:text-white">View in Community →</a>
+                @endif
+                {{-- "Mark completed" sounded like ticking a task off. What the
+                     button does is close the season and lock it, and the way
+                     back is Reopen — so it says that. --}}
+                <button type="button" id="statusToggleBtn" data-locked="{{ $schedule->isLocked() ? 1 : 0 }}" class="btn btn-sm {{ $schedule->isLocked() ? 'btn-white' : 'btn-accent' }}">
+                    {{ $schedule->isLocked() ? 'Reopen this season' : 'Close this season' }}
+                </button>
             </div>
         </div>
     </div>
+
+    {{-- Rename / describe. Small on purpose: two fields and a save. --}}
+    <div class="sheet hidden" id="schedRenameSheet" style="--sheet-width:28rem">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+            <h3 class="sheet-title">Name and description</h3>
+            <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full -mr-1" aria-label="Close">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+        </div>
+        <div class="sheet-body">
+            <label class="form-label" for="schedTitleInput">Title <span class="text-red-500">*</span></label>
+            <input type="text" id="schedTitleInput" class="form-input" maxlength="255" value="{{ $schedule->title }}">
+            <label class="form-label mt-3" for="schedDescInput">Description <span class="text-gray-400 font-normal">(optional)</span></label>
+            <textarea id="schedDescInput" class="form-input" rows="4" maxlength="5000">{{ $schedule->description }}</textarea>
+        </div>
+        <div class="sheet-footer">
+            <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+            <button type="button" class="btn btn-primary" id="schedRenameSave">Save</button>
+        </div>
+    </div>
+
+    <style>
+        .sched-head { border-radius: 1.1rem; overflow: hidden; color: #fff;
+            background: linear-gradient(135deg, #3d6823 0%, #4a7c2a 45%, #6b9f3d 100%);
+            box-shadow: 0 18px 40px -28px rgb(61 104 35 / .9); }
+        .sched-head-top { display: flex; align-items: flex-start; gap: .75rem; padding: 1rem 1.1rem .35rem; }
+        .sched-title { font-size: 1.3rem; font-weight: 800; line-height: 1.2; color: #fff; word-break: break-word; }
+        .sched-pen { flex: 0 0 auto; width: 2rem; height: 2rem; border-radius: 999px; margin-top: .1rem;
+            display: inline-flex; align-items: center; justify-content: center;
+            background: rgb(255 255 255 / .16); color: #fff; cursor: pointer;
+            transition: background .25s ease; }
+        .sched-pen:hover { background: rgb(255 255 255 / .3); }
+        .sched-pen svg { width: 1rem; height: 1rem; }
+        .sched-desc { font-size: .85rem; line-height: 1.5; color: rgb(255 255 255 / .82); margin-top: .3rem; }
+        .sched-state { flex: 0 0 auto; font-size: .64rem; font-weight: 800; text-transform: uppercase;
+            letter-spacing: .05em; padding: .2rem .55rem; border-radius: 999px;
+            background: rgb(255 255 255 / .2); color: #fff; }
+        .sched-state-completed { background: #fde68a; color: #78350f; }
+        .sched-facts { display: flex; flex-wrap: wrap; gap: .35rem; padding: .6rem 1.1rem 0; }
+        .sched-fact { display: inline-flex; align-items: center; gap: .3rem; font-size: .72rem; font-weight: 700;
+            padding: .22rem .55rem; border-radius: 999px; background: rgb(255 255 255 / .16); color: #fff; }
+        .sf-emoji { font-size: .85rem; line-height: 1; }
+        .sched-foot { display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+            flex-wrap: wrap; margin-top: .85rem; padding: .7rem 1.1rem;
+            background: rgb(0 0 0 / .16); }
+        @media (prefers-reduced-motion: reduce) { .sched-pen { transition: none; } }
+    </style>
 
     {{-- Featured: Activities (2/3) + Quick Capture (1/3) as matched CTA tiles --}}
     <style>
@@ -184,6 +241,9 @@
             </span>
             <span class="text-lg font-bold leading-tight">Quick Capture</span>
             <span class="cta-sub text-sm leading-snug">Snap a photo → notes or AI</span>
+            {{-- Its neighbour has one and this did not, so the pair read as
+                 two different kinds of thing. Both go somewhere. --}}
+            <svg class="cta-arrow w-6 h-6 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
     </div>
 
@@ -282,15 +342,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Mark completed (lock) / reopen (unlock).
+    /* Rename and describe, from the pencil on the header card. */
+    document.getElementById('schedRenameBtn')?.addEventListener('click', () => {
+        openSheet('schedRenameSheet');
+        setTimeout(() => document.getElementById('schedTitleInput')?.focus(), 150);
+    });
+    document.getElementById('schedRenameSave')?.addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+        const title = document.getElementById('schedTitleInput').value.trim();
+        const description = document.getElementById('schedDescInput').value.trim();
+        if (!title) { toast('Give the schedule a title.', 'error'); return; }
+        btn.disabled = true;
+        try {
+            // The endpoint reads the schedule from the query, not the body.
+            const res = await api(@json(route('sm.update')) + '?id={{ $schedule->id }}', {
+                method: 'PUT',
+                body: { title, description: description || null },
+            });
+            // No reload: the two places the name shows are right here.
+            document.getElementById('schedTitleText').textContent = title;
+            document.getElementById('schedDescText').textContent =
+                description || 'No description yet — tap the pencil to add one.';
+            document.querySelectorAll('[data-page-subtitle]').forEach((el) => { el.textContent = title; });
+            closeSheet('schedRenameSheet');
+            toast(res.message || 'Saved.');
+        } catch (err) {
+            toast(err.message || 'Could not save that.', 'error');
+        } finally { btn.disabled = false; }
+    });
+
+    // Close the season (lock) / reopen it.
     document.getElementById('statusToggleBtn')?.addEventListener('click', async (e) => {
         const btn = e.currentTarget;
         const locked = btn.getAttribute('data-locked') === '1';
         if (!locked) {
             const ok = await confirmAction({
-                title: 'Mark as completed?',
-                message: 'The schedule will be locked (read-only) until you reopen it.',
-                confirmText: 'Mark completed',
+                title: 'Close this season?',
+                message: 'It becomes read-only — nothing can be added or changed until you reopen it. Everything is kept.',
+                confirmText: 'Close the season',
             });
             if (!ok) return;
         }
