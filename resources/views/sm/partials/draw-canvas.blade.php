@@ -15,12 +15,14 @@
             </button>
             <span class="draw-title">Drawing</span>
             <span class="grow"></span>
-            <button type="button" class="btn btn-ghost btn-sm" id="drawCancel">Cancel</button>
-            {{-- Two ways out, because they are different things: a flat picture
-                 to look at, or a drawing that can be reopened and changed. The
-                 second only appears for callers that can store the strokes. --}}
-            <button type="button" class="btn btn-white btn-sm" id="drawSaveEditable" hidden>Save as drawing</button>
-            <button type="button" class="btn btn-primary btn-sm" id="drawSave">Save as image</button>
+            <button type="button" class="btn btn-ghost btn-sm draw-cancel" id="drawCancel">Cancel</button>
+            {{-- One button, because on a phone two full-width labels in the
+                 header left no room for the drawing's name — and the choice
+                 between them is a question, not two separate exits. It asks
+                 when there is something to ask (see #drawAsk). --}}
+            <button type="button" class="draw-save" id="drawSaveBtn" aria-label="Save this drawing" title="Save">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a1 1 0 011-1h9l4 4v10a1 1 0 01-1 1H6a1 1 0 01-1-1V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 4v4h6M8 19v-5h8v5"/></svg>
+            </button>
         </div>
         <div class="draw-toolbar">
             <div class="draw-tools" id="drawTools">
@@ -73,6 +75,33 @@
         <div class="draw-stage" id="drawStage">
             <canvas id="drawCanvas"></canvas>
         </div>
+        {{-- Asked inside the pad, not through the app's sheet layer: the pad
+             sits above every sheet, and a sheet behind it would be a dialog
+             you can hear but not see. --}}
+        <div class="draw-ask" id="drawAsk" hidden>
+            <div class="draw-ask-card" role="dialog" aria-modal="true" aria-labelledby="drawAskTitle">
+                <h4 class="draw-ask-title" id="drawAskTitle">Keep this drawing</h4>
+                <button type="button" class="draw-ask-opt" data-save-mode="drawing">
+                    <span class="draw-ask-ico">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L20 7a2 2 0 00-3-3L5 16l-1 4zM14 6l4 4"/></svg>
+                    </span>
+                    <span class="min-w-0">
+                        <span class="draw-ask-name">Save as drawing</span>
+                        <span class="draw-ask-hint">Reopen it later and keep changing it</span>
+                    </span>
+                </button>
+                <button type="button" class="draw-ask-opt" data-save-mode="image">
+                    <span class="draw-ask-ico">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/><circle cx="9" cy="8.5" r="1.3"/></svg>
+                    </span>
+                    <span class="min-w-0">
+                        <span class="draw-ask-name">Save as image</span>
+                        <span class="draw-ask-hint">A flat picture — it can be drawn over, not edited</span>
+                    </span>
+                </button>
+                <button type="button" class="btn btn-ghost w-full mt-1" id="drawAskCancel">Cancel</button>
+            </div>
+        </div>
         <p class="draw-hint" id="drawHint">Pick a tool, colour and size. Hold <b>Shift</b> for a perfect square/circle. Use <b>Select</b> to move, resize or delete anything you drew — including text.</p>
     </div>
 </div>
@@ -84,7 +113,7 @@
         background:rgb(0 0 0 / .6); }
     .draw-modal.show { display:flex; animation:drawBackdropIn .18s ease both; }
     /* Whole-screen pad (no small modal box). */
-    .draw-shell { width:100%; height:100%; background:var(--color-white); overflow:hidden;
+    .draw-shell { position:relative; width:100%; height:100%; background:var(--color-white); overflow:hidden;
         display:flex; flex-direction:column; }
     .draw-modal.show .draw-shell { animation:drawShellIn .3s cubic-bezier(.22,1,.36,1) both; transform-origin:center; }
     @keyframes drawBackdropIn { from { opacity:0; } to { opacity:1; } }
@@ -95,6 +124,46 @@
     .draw-head { display:flex; align-items:center; gap:.5rem; padding:.55rem .7rem;
         border-bottom:1px solid var(--color-gray-100); flex-shrink:0; }
     .draw-title { font-family:var(--font-heading); font-weight:800; font-size:.95rem; color:var(--color-gray-900); }
+    /* The one action in the header that is not a way out, so it is the only
+       thing in there wearing the brand colour. */
+    .draw-save { display:inline-flex; align-items:center; justify-content:center; width:2.4rem; height:2.4rem;
+        border-radius:.7rem; background:var(--color-brand-600); color:#fff; cursor:pointer; flex-shrink:0;
+        transition:background .28s cubic-bezier(.22,1,.36,1), transform .1s ease; }
+    .draw-save:hover { background:var(--color-brand-700); }
+    .draw-save:active { transform:scale(.94); }
+    .draw-save svg { width:1.25rem; height:1.25rem; }
+    /* The back arrow already discards on a phone; Cancel is the desktop's
+       spelling of the same thing. */
+    @media (max-width:520px) { .draw-cancel { display:none; } }
+
+    /* Which kind of keeping — asked over the pad it belongs to. */
+    .draw-ask { position:absolute; inset:0; z-index:5; display:flex; align-items:flex-end; justify-content:center;
+        background:rgb(15 23 42 / .5); animation:drawAskFade .18s ease both; }
+    .draw-ask[hidden] { display:none; }
+    .draw-ask-card { width:100%; max-width:26rem; background:var(--color-white); border-radius:1rem 1rem 0 0;
+        padding:1rem .9rem 1.1rem; display:flex; flex-direction:column; gap:.5rem;
+        animation:drawAskUp .28s cubic-bezier(.22,1,.36,1) both; }
+    .draw-ask-title { font-family:var(--font-heading); font-weight:800; font-size:1rem; color:var(--color-gray-900);
+        margin-bottom:.15rem; }
+    .draw-ask-opt { display:flex; align-items:center; gap:.7rem; width:100%; text-align:left; padding:.7rem;
+        border:1px solid var(--color-gray-200); border-radius:.85rem; background:var(--color-white); cursor:pointer;
+        transition:border-color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+    .draw-ask-opt:hover { border-color:var(--color-brand-400); background:var(--color-brand-50); }
+    .draw-ask-ico { display:inline-flex; align-items:center; justify-content:center; width:2.4rem; height:2.4rem;
+        border-radius:.7rem; background:var(--color-brand-50); color:var(--color-brand-700); flex-shrink:0; }
+    .draw-ask-ico svg { width:1.3rem; height:1.3rem; }
+    .draw-ask-name { display:block; font-weight:800; font-size:.88rem; color:var(--color-gray-900); }
+    .draw-ask-hint { display:block; font-size:.72rem; color:var(--color-gray-500); }
+    @keyframes drawAskFade { from { opacity:0; } to { opacity:1; } }
+    @keyframes drawAskUp { from { transform:translateY(14%); opacity:0; } to { transform:none; opacity:1; } }
+    @media (min-width:640px) {
+        .draw-ask { align-items:center; }
+        .draw-ask-card { border-radius:1rem; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+        .draw-ask, .draw-ask-card { animation:none; }
+        .draw-save, .draw-ask-opt { transition:none; }
+    }
     .draw-toolbar { display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; padding:.55rem .7rem;
         border-bottom:1px solid var(--color-gray-100); flex-shrink:0; }
     .draw-tools { display:flex; gap:.15rem; }
@@ -130,6 +199,10 @@
     html.dark .draw-toolbar { border-color:#2b3a1c; }
     html.dark .draw-head { border-color:#2b3a1c; }
     html.dark .draw-title { color:#e6eddd; }
+    html.dark .draw-ask-card { background:#141a10; }
+    html.dark .draw-ask-title, html.dark .draw-ask-name { color:#e6eddd; }
+    html.dark .draw-ask-opt { background:#141a10; border-color:#2b3a1c; }
+    html.dark .draw-ask-opt:hover { background:#1c2416; }
     html.dark .draw-stage { background:#0f130c; }
     html.dark .draw-tool { background:#1c2416; color:#cdd8c0; }
     html.dark .draw-tool:hover { background:#243019; }
@@ -476,7 +549,7 @@
         // Both spellings of redo: Ctrl+Shift+Z everywhere, Ctrl+Y on Windows.
         if ((e.ctrlKey || e.metaKey) && (e.key === 'z' || e.key === 'Z')) { e.preventDefault(); e.shiftKey ? redo() : undo(); }
         if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || e.key === 'Y')) { e.preventDefault(); redo(); }
-        if (e.key === 'Escape') close();
+        if (e.key === 'Escape') { if (askOpen()) showAsk(false); else close(); }
     });
 
     /* ---------- fit + open/close ---------- */
@@ -491,7 +564,11 @@
     }
     window.addEventListener('resize', () => { if (modal.classList.contains('show')) fitStage(); });
 
-    function close() { modal.classList.remove('show'); modal.setAttribute('aria-hidden', 'true'); onSave = null; document.body.style.overflow = ''; }
+    function close() {
+        showAsk(false);
+        modal.classList.remove('show'); modal.setAttribute('aria-hidden', 'true');
+        onSave = null; document.body.style.overflow = '';
+    }
     document.getElementById('drawCancel').addEventListener('click', close);
     document.getElementById('drawBack').addEventListener('click', close);
     function exportPng() {
@@ -502,17 +579,29 @@
         exporting = false; render();
         return data;
     }
-    document.getElementById('drawSave').addEventListener('click', () => {
+    /* Two kinds of keeping, one button. "Drawing" sends the strokes with the
+       picture, so reopening gives back something that can still be changed
+       rather than a photograph of it; "image" sends the picture alone. */
+    const ask = document.getElementById('drawAsk');
+    let editableAllowed = false;
+    const askOpen = () => !ask.hidden;
+    function showAsk(on) { ask.hidden = !on; }
+    function saveAs(mode) {
         const data = exportPng();
-        if (onSave) onSave(data, null);
+        if (onSave) onSave(data, mode === 'drawing' ? JSON.parse(JSON.stringify(objects || [])) : null);
         close();
+    }
+    document.getElementById('drawSaveBtn').addEventListener('click', () => {
+        // Nothing to ask when only one kind is on offer — a dialog with one
+        // real answer is a tap for its own sake.
+        if (editableAllowed) showAsk(true);
+        else saveAs('image');
     });
-    /* The strokes travel with the picture, so reopening gives back a drawing
-       that can still be changed rather than a photograph of one. */
-    document.getElementById('drawSaveEditable').addEventListener('click', () => {
-        const data = exportPng();
-        if (onSave) onSave(data, JSON.parse(JSON.stringify(objects || [])));
-        close();
+    ask.addEventListener('click', (e) => {
+        const opt = e.target.closest('[data-save-mode]');
+        if (opt) { saveAs(opt.getAttribute('data-save-mode')); return; }
+        // The backdrop and Cancel close the question, not the drawing.
+        if (e.target === ask || e.target.closest('#drawAskCancel')) showAsk(false);
     });
 
     function reset(existingUrl, existingObjects) {
@@ -551,7 +640,8 @@
     window.openDrawCanvas = function (cb, existingUrl, opts) {
         opts = opts || {};
         onSave = cb || null;
-        document.getElementById('drawSaveEditable').hidden = !opts.editable;
+        editableAllowed = !!opts.editable;
+        showAsk(false);
         // Re-parent to <body> so `position:fixed` is relative to the viewport —
         // never trapped/cramped inside a transformed ancestor (the notes module
         // wrapper, an open sheet, etc.). Also sidesteps any duplicate #drawModal.
