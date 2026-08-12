@@ -435,7 +435,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const searchText = searchBits.filter(Boolean).join(' ').trim();
 
         // Lots row
-        let lotsRow;
+        // Starts empty, not undefined: a payroll card has no lot row at all,
+        // and an unassigned variable printed the word "undefined" straight into
+        // the card, right above the title.
+        let lotsRow = '';
         if (lotIds.length) {
             lotsRow = lotIds.map((id) => {
                 const name = LOT_NAMES[id] || ('Lot #' + id);
@@ -963,6 +966,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
         else setTimeout(start, 0);
     })();
+
+    window.__renderCardForTest = renderActivityCard;
 
     function buildRestDayHtml(dateKey, substitute) {
         return `<div class="rest-day-marker${substitute ? ' rest-day-substitute' : ''}" data-date="${esc(dateKey)}">
