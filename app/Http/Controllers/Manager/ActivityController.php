@@ -1694,6 +1694,12 @@ class ActivityController extends BaseScheduleController
                 // worker's row by an edit that never touched it.
                 'dayPart' => $w->pivot->dayPart ?: null,
                 'effectivePart' => $activity->dayPartFor($w),
+                // Whether they actually turned up, so a payroll card can carry
+                // its own ticks rather than sending you to a sheet to find out.
+                'present' => ! in_array($w->id, \App\Models\AsScheduleAttendance::absentOn(
+                    (int) $activity->croppingScheduleId,
+                    (string) $activity->targetDate?->toDateString()
+                ), true),
                 'amount' => $w->pivot->salaryAmount !== null ? (float) $w->pivot->salaryAmount : null,
                 'total' => $activity->workerPay($w),
                 'name' => $w->workerName,

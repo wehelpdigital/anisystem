@@ -68,7 +68,9 @@
                               data-lot-variety="{{ $lot->variety ?? '' }}"
                               style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}</span>
                     @endforeach
-                @else
+                @elseif ($a->activityType !== 'worker_payroll')
+                    {{-- A payroll day is about who turned up, not which field,
+                         so "no lot" is its normal state rather than a gap. --}}
                     <span class="item-tag activity-na-tag" title="Applies generally — not tied to any specific lot">N/A — Not lot-specific</span>
                 @endif
             </div>
@@ -86,6 +88,13 @@
                     <span class="badge service-badge">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5a4 4 0 105.03 5.03l4.35 4.35a2 2 0 11-2.83 2.83l-4.35-4.35A4 4 0 0111 5zM5 19l4-4"/></svg>
                         Service <span class="item-tag-price">{{ $svcPriceText }}</span>
+                    </span>
+                @elseif($a->activityType === 'worker_payroll')
+                    {{-- Its own mark: a payroll day is people, and wearing the
+                         same green chip as a field task made it read as one. --}}
+                    <span class="badge payroll-badge">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
+                        Worker checklist
                     </span>
                 @elseif($typeLabel)
                     <span class="badge badge-green activity-type-badge">{{ $typeLabel }}</span>
@@ -208,6 +217,23 @@
             <span class="item-tag material-tag">{{ $it->displayName() }}{{ $itQtyText }} <span class="item-tag-price">{{ $itPriceText }}</span></span>
         @endforeach
     </div>
+    {{-- A payroll day carries its roster on the card: tick who turned up
+         without opening anything. Mirrors payrollChecklist() in the JS
+         renderer — the two must produce the same markup. --}}
+    @if ($a->activityType === 'worker_payroll' && $a->workers->count())
+        @php $absent = \App\Models\AsScheduleAttendance::absentOn((int) $a->croppingScheduleId, (string) $a->targetDate?->toDateString()); @endphp
+        <div class="act-check" data-att-date="{{ $a->targetDate?->toDateString() }}">
+            @foreach ($a->workers as $w)
+                @php $here = ! in_array($w->id, $absent, true); @endphp
+                <label class="act-check-row{{ $here ? '' : ' is-out' }}" data-att-worker="{{ $w->id }}">
+                    <input type="checkbox" @checked($here)>
+                    <span class="act-check-name">{{ $w->workerName }}</span>
+                    <span class="act-check-pay">₱{{ number_format($a->workerPay($w), 2) }}</span>
+                </label>
+            @endforeach
+        </div>
+    @endif
+
     {{-- What the labour on this activity costs, per worker and in total.
          Mirrors labourLine() in the JS renderer. --}}
     @php $labour = $a->labourTotal(); @endphp

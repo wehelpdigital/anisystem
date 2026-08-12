@@ -185,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
         edit: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>',
         eye: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>',
         tag: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M3 11V4a1 1 0 011-1h7l9 9-8 8-9-9z"/></svg>',
+        people: '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>',
         wallet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8a2 2 0 012-2h12a2 2 0 012 2M3 8v9a2 2 0 002 2h13a2 2 0 002-2v-2M3 8h16a2 2 0 012 2v1h-4a2 2 0 100 4h4"/></svg>',
         duplicate: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>',
         archive: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>',
@@ -443,7 +444,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const hue = (id * 137) % 360;   // golden-angle → distinct, stable per lot
                 return `<span class="item-tag lot-tag" data-lot-id="${id}" data-lot-name="${esc(name)}" data-lot-variety="${esc(variety)}" style="background:hsl(${hue}, 55%, 40%)">${esc(text)}</span>`;
             }).join('');
-        } else {
+        } else if (a.activityType !== 'worker_payroll') {
+            // A payroll day has no lot by nature, so saying so is noise.
             lotsRow = '<span class="item-tag activity-na-tag" title="Applies generally — not tied to any specific lot">N/A — Not lot-specific</span>';
         }
         // Variety + DAS below the title, as regular neutral tags.
@@ -474,6 +476,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (a.activityType === 'service') {
             const priceTxt = (a.servicePrice != null && a.servicePrice !== '') ? ` <span class="item-tag-price">₱${esc(fmtMoney(a.servicePrice))}</span>` : '';
             typeBadge = `<span class="badge service-badge">${SVG.service || '🛠'} Service${priceTxt}</span>`;
+        } else if (a.activityType === 'worker_payroll') {
+            typeBadge = `<span class="badge payroll-badge">${SVG.people || ''} Worker checklist</span>`;
         } else {
             typeBadge = typeLabel ? `<span class="badge badge-green activity-type-badge">${esc(typeLabel)}</span>` : '';
         }
@@ -576,6 +580,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ${workerTags}
         ${itemTags}
     </div>
+    ${payrollChecklist(a)}
     ${labourLine(a.labourTotal, a.workerPay)}
     <div class="activity-tags">${activityTagChips(a.tags)}</div>
 </div>`;
@@ -588,6 +593,49 @@ document.addEventListener('DOMContentLoaded', () => {
         map: 'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2',
         note: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
     };
+    /* A payroll day's roster, on the card. Same markup as the Blade renderer:
+       tick who turned up without opening anything. */
+    function payrollChecklist(a) {
+        if (a.activityType !== 'worker_payroll') return '';
+        const pay = a.workerPay || {};
+        const ids = Object.keys(pay);
+        if (!ids.length) return '';
+        const date = (a.targetDate || '').slice(0, 10);
+        return `<div class="act-check" data-att-date="${esc(date)}">`
+            + ids.map((id) => {
+                const w = pay[id];
+                const here = w.present !== false;
+                return `<label class="act-check-row${here ? '' : ' is-out'}" data-att-worker="${esc(id)}">
+                    <input type="checkbox"${here ? ' checked' : ''}>
+                    <span class="act-check-name">${esc(w.name || 'Worker')}</span>
+                    <span class="act-check-pay">${esc(money(w.total || 0))}</span>
+                </label>`;
+            }).join('')
+            + '</div>';
+    }
+
+    /* Ticking on the card is the same act as ticking in the attendance sheet,
+       so it goes through the same endpoint and the day's figure follows. */
+    document.addEventListener('change', async (e) => {
+        const box = e.target.closest('.act-check input[type=checkbox]');
+        if (!box) return;
+        const row = box.closest('[data-att-worker]');
+        const date = box.closest('[data-att-date]')?.getAttribute('data-att-date');
+        if (!row || !date) return;
+        row.classList.toggle('is-out', !box.checked);
+        try {
+            await api(U.attendanceMark(), {
+                method: 'POST',
+                body: { date, workerId: parseInt(row.getAttribute('data-att-worker'), 10), present: box.checked ? 1 : 0 },
+            });
+            paintAllDayCash();
+        } catch (err) {
+            box.checked = !box.checked;
+            row.classList.toggle('is-out', !box.checked);
+            toast(err.message || 'Could not save that.', 'error');
+        }
+    });
+
     /* What the day's labour on this activity costs, spelled out per worker so
        the number can be checked rather than just trusted. */
     function labourLine(total, pay) {

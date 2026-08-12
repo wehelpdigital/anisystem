@@ -147,6 +147,24 @@
         .date-header-cash svg { width: .85rem; height: .85rem; }
         .date-header-cash { cursor: pointer; }
         .date-header-cash:hover { filter: brightness(.97); }
+        /* Payroll wears amber, the colour the money already uses on this board,
+           so a wage day is not mistaken for a field task at a glance. */
+        .payroll-badge { display: inline-flex; align-items: center; gap: .25rem;
+            background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+        html.dark .payroll-badge { background: rgb(120 53 15 / .35); color: #fcd34d; border-color: rgb(180 83 9 / .5); }
+
+        /* The roster on a payroll card. Compact, because it sits inside a card
+           that already carries a title and a date. */
+        .act-check { display: flex; flex-direction: column; gap: .1rem; margin-top: .5rem; padding: .35rem .5rem;
+            border-radius: .6rem; background: var(--tl-hover, rgb(0 0 0 / .03)); }
+        .act-check-row { display: flex; align-items: center; gap: .5rem; padding: .22rem 0; cursor: pointer; }
+        .act-check-row input { width: 1.05rem; height: 1.05rem; border-radius: .3rem; flex-shrink: 0; }
+        .act-check-name { min-width: 0; flex: 1 1 auto; font-size: .78rem; font-weight: 700;
+            color: var(--tl-text, var(--color-gray-800)); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .act-check-pay { font-size: .74rem; font-weight: 800; color: var(--tl-text-soft, var(--color-gray-600)); white-space: nowrap; }
+        .act-check-row.is-out .act-check-name,
+        .act-check-row.is-out .act-check-pay { opacity: .45; text-decoration: line-through; }
+
         /* Attendance: a tick each, and what the day comes to once the people
            who did not turn up are taken out. */
         .att-head { display: flex; flex-direction: column; gap: .1rem; padding: .85rem .95rem; border-radius: .9rem;
