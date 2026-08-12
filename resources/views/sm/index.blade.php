@@ -14,6 +14,32 @@
     ];
 @endphp
 
+@push('head')
+    <style>
+        /* The created date is part of the counts line on a card that is tight
+           for height, and keeps its own line where there is room. */
+        .sch-created { flex-basis: 100%; }
+        @media (max-width: 767px) {
+            .sch-created { flex-basis: auto; margin-left: auto; }
+            /* A phone shows one card at a time; every row of chrome inside it
+               is a row of the next card pushed off screen. */
+            .sch-card .card-body { padding: .8rem .9rem; }
+            .sch-card h2 { font-size: .95rem; }
+            .sch-desc {
+                margin-bottom: .55rem; font-size: .78rem;
+                display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+            }
+            .sch-stats { gap: .85rem; margin-bottom: .6rem; }
+            /* Open is what you came for: it takes the width, and the two
+               destructive-ish actions shrink to icons beside it rather than
+               competing for the same emphasis. */
+            .sch-acts .btn:first-child { flex: 1 1 auto; }
+            .sch-acts .btn-ghost { padding-left: .55rem !important; padding-right: .55rem !important; }
+            .sch-quick .btn { justify-content: center; }
+        }
+    </style>
+@endpush
+
 @section('content')
 
     {{-- Top bar: search on its own row, the desktop CTAs on a second row below. --}}
@@ -31,6 +57,23 @@
                 </button>
             </div>
         </form>
+
+        {{-- Phones: the same two secondary actions as a compact row under the
+             search, rather than a tower of floating buttons stacked up the
+             right edge — three FABs covered the list they were meant to act
+             on, and only one of them was the thing you came here to do. --}}
+        <div class="flex md:hidden gap-2 sch-quick">
+            <a href="{{ route('notes.hub') }}" class="btn btn-white btn-sm grow">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                Notes
+            </a>
+            @if ($allSchedules->isNotEmpty())
+                <button type="button" id="quickCaptureFab" class="btn btn-white btn-sm grow">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    Quick capture
+                </button>
+            @endif
+        </div>
 
         {{-- Desktop CTA. Wrapped so `hidden` reliably hides it on phones (a
              bare `.btn` is unlayered CSS and would otherwise beat `hidden`);
@@ -79,7 +122,7 @@
     @else
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-children" id="schedulesGrid">
             @foreach ($schedules as $s)
-                <div class="card card-hover flex flex-col" data-schedule-card="{{ $s->id }}">
+                <div class="card card-hover flex flex-col sch-card" data-schedule-card="{{ $s->id }}">
                     <div class="card-body flex flex-col grow">
                         <div class="flex items-start justify-between gap-2 mb-1.5">
                             <h2 class="font-bold text-gray-900 leading-snug min-w-0">{{ $s->title }}</h2>
@@ -87,10 +130,10 @@
                         </div>
 
                         @if ($s->description)
-                            <p class="text-sm text-gray-500 mb-3">{{ \Illuminate\Support\Str::limit($s->description, 100) }}</p>
+                            <p class="text-sm text-gray-500 mb-3 sch-desc">{{ \Illuminate\Support\Str::limit($s->description, 100) }}</p>
                         @endif
 
-                        <div class="flex items-center gap-4 text-xs text-gray-500 font-medium mt-auto mb-3">
+                        <div class="flex flex-wrap items-center gap-4 text-xs text-gray-500 font-medium mt-auto mb-3 sch-stats">
                             <span class="inline-flex items-center gap-1" title="Lots">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
                                 {{ $s->lots_count }} {{ \Illuminate\Support\Str::plural('lot', $s->lots_count) }}
@@ -103,11 +146,10 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5h11M9 12h11M9 19h11M4 5h.01M4 12h.01M4 19h.01"/></svg>
                                 {{ $s->activities_count }}
                             </span>
+                            <span class="text-gray-400 sch-created">Created {{ $s->created_at->format('M j, Y') }}</span>
                         </div>
 
-                        <p class="text-xs text-gray-400 mb-3">Created {{ $s->created_at->format('M j, Y') }}</p>
-
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 sch-acts">
                             <a href="{{ route('sm.hub', ['id' => $s->id]) }}" class="btn btn-primary flex-1">Open</a>
                             <button type="button"
                                 class="btn btn-ghost px-3! text-gray-500 hover:bg-gray-100!"
@@ -133,19 +175,7 @@
     @endif
     </div>{{-- /#scheduleResults --}}
 
-    {{-- Mobile floating action buttons (stacked above the tab bar) --}}
-    <a href="{{ route('notes.hub') }}"
-        class="md:hidden fixed {{ $allSchedules->isNotEmpty() ? 'bottom-56' : 'bottom-40' }} right-4 z-30 w-14 h-14 rounded-full bg-white text-brand-600 border border-gray-200 shadow-lg flex items-center justify-center"
-        aria-label="All your notes" title="Notes">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-    </a>
-    @if ($allSchedules->isNotEmpty())
-        <button type="button" id="quickCaptureFab"
-            class="md:hidden fixed bottom-40 right-4 z-30 w-14 h-14 rounded-full bg-white text-brand-600 border border-gray-200 shadow-lg flex items-center justify-center"
-            aria-label="Quick capture photo">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-        </button>
-    @endif
+    {{-- One floating button, for the one thing this page exists to start. --}}
     <a href="{{ route('sm.create') }}"
         class="md:hidden fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full btn-primary shadow-lg flex items-center justify-center"
         aria-label="New cropping schedule">
