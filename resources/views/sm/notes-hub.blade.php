@@ -6,7 +6,6 @@
 @section('back', route('sm.index'))
 
 @push('head')
-<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
 <style>
     .nh-tag { font-size:.62rem; font-weight:800; text-transform:uppercase; letter-spacing:.04em; padding:.1rem .4rem; border-radius:.35rem; }
     .nh-tag.global { background:#ede9fe; color:#6d28d9; }
@@ -78,7 +77,6 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.min.js"></script>
 <script>
 (function notesHub() {
     const $ = (id) => document.getElementById(id);

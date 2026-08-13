@@ -532,6 +532,138 @@ window.smLinkPrompt = function smLinkPrompt(current) {
     });
 };
 
+/* ======================================================================
+ * The rich-text engine, swapped under the old name.
+ *
+ * Quill fought every touchscreen it met — stolen focus, toolbar marks lost
+ * on blur, doubled characters under Android keyboards — and the pile of
+ * workarounds below (smQuillTouch) never fully won. The editor is now
+ * SunEditor (MIT, no paid tier), whose editing surface is the browser's own
+ * contenteditable, so the keyboard talks to the browser and not to a
+ * document model.
+ *
+ * It wears Quill's name and the slice of Quill's API this app actually
+ * uses, so every screen that says `new Quill(...)` gets the new engine
+ * without knowing. The lazy CDN loaders all begin with `typeof Quill !==
+ * 'undefined'`, which this global satisfies — so real Quill never loads.
+ * ==================================================================== */
+const SUN_CSS = 'https://cdn.jsdelivr.net/npm/suneditor@2/dist/css/suneditor.min.css';
+const SUN_JS = 'https://cdn.jsdelivr.net/npm/suneditor@2/dist/suneditor.min.js';
+let sunEditorReady = null;
+function loadSunEditor() {
+    if (sunEditorReady) return sunEditorReady;
+    sunEditorReady = new Promise((resolve, reject) => {
+        if (window.SUNEDITOR) return resolve();
+        const css = document.createElement('link');
+        css.rel = 'stylesheet';
+        css.href = SUN_CSS;
+        document.head.appendChild(css);
+        const s = document.createElement('script');
+        s.src = SUN_JS;
+        s.onload = () => resolve();
+        s.onerror = () => reject(new Error('Could not load the editor.'));
+        document.head.appendChild(s);
+    });
+    return sunEditorReady;
+}
+
+window.Quill = class SmRichEditor {
+    constructor(target, opts = {}) {
+        this._host = typeof target === 'string' ? document.querySelector(target) : target;
+        this._editor = null;
+        this._live = null;            // the engine's editable div, once built
+        this._placeholder = opts.placeholder || '';
+        // A staging surface so reads and writes work from the first tick,
+        // before the engine's script has arrived from the CDN. It starts
+        // with whatever the mount already held — Quill adopted pre-seeded
+        // markup, and screens that rely on that must not lose it.
+        this._stage = document.createElement('div');
+        if (this._host) this._stage.innerHTML = this._host.innerHTML;
+        this._wantFocus = false;
+        loadSunEditor().then(() => this._build()).catch(() => this._fallback());
+    }
+
+    _build() {
+        if (!this._host) return this._fallback();
+        const ta = document.createElement('textarea');
+        this._host.innerHTML = '';
+        this._host.appendChild(ta);
+        this._editor = window.SUNEDITOR.create(ta, {
+            // The same marks SM_RICH_TOOLBAR offered, in the new engine's words.
+            buttonList: [
+                ['formatBlock'],
+                ['bold', 'italic', 'underline', 'strike'],
+                ['list'],
+                ['blockquote'],
+                ['link'],
+                ['removeFormat'],
+            ],
+            formats: ['p', 'h2', 'h3'],
+            placeholder: this._placeholder,
+            height: 'auto',
+            minHeight: '110px',
+            defaultStyle: 'font-family: inherit; font-size: .95rem;',
+            resizingBar: false,
+            showPathLabel: false,
+        });
+        this._live = this._editor.core.context.element.wysiwyg;
+        if (this._stage.innerHTML.trim() !== '') this._editor.setContents(this._stage.innerHTML);
+        if (this._wantFocus) { try { this._editor.core.focus(); } catch (_) { /* fine */ } }
+    }
+
+    /* The CDN failed: a plain contenteditable box, so words still work. */
+    _fallback() {
+        if (!this._host) return;
+        this._host.innerHTML = '';
+        this._stage.setAttribute('contenteditable', 'true');
+        this._stage.className = 'sm-editor-fallback rich-text';
+        this._host.appendChild(this._stage);
+        this._live = this._stage;
+    }
+
+    /* Quill's `root` — the editable element. DOM-truthful in the new engine
+       too: SunEditor reads its contents from this node, so callers that get
+       or set root.innerHTML keep working. */
+    get root() { return this._live || this._stage; }
+
+    /* ---- the slice of Quill's API the app calls ---- */
+    getModule() { return null; }                        // disables smQuillTouch's Quill surgery
+    on() { /* the engine handles its own events */ }
+    hasFocus() { return this.root.contains(document.activeElement) || document.activeElement === this.root; }
+    getLength() { return (this.root.textContent || '').length + 1; }
+    getSelection() { return { index: 0, length: 0 }; }  // insertText works at the caret instead
+    setSelection() { /* caret already where the user left it */ }
+    setText(text) { this.root.innerHTML = text ? '<p>' + window.escapeHtml(text) + '</p>' : ''; }
+    setContents() { if (this._editor) this._editor.setContents(''); else this.root.innerHTML = ''; }
+    focus() {
+        if (this._editor) { try { this._editor.core.focus(); } catch (_) { /* fine */ } }
+        else { this._wantFocus = true; try { this.root.focus(); } catch (_) { /* fine */ } }
+    }
+    blur() {
+        if (this._editor) { try { this._editor.core.blur(); } catch (_) { /* fine */ } }
+        try { this.root.blur(); } catch (_) { /* fine */ }
+    }
+    /* Emoji and small strings land at the caret; the index the old callers
+       computed is ignored because the caret is already the truth. */
+    insertText(_index, text) {
+        if (this._editor) {
+            try { this._editor.core.focus(); } catch (_) { /* fine */ }
+            this._editor.insertHTML(window.escapeHtml(text), true);
+            return;
+        }
+        this.root.innerHTML += window.escapeHtml(text);
+    }
+    get clipboard() {
+        const self = this;
+        return {
+            dangerouslyPasteHTML(html) {
+                if (self._editor) self._editor.setContents(html || '');
+                else self.root.innerHTML = html || '';
+            },
+        };
+    }
+};
+
 /**
  * Make a Quill toolbar survive a touchscreen.
  *

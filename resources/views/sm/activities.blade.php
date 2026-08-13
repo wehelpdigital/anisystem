@@ -57,7 +57,8 @@
 @endif
 
 @push('head')
-    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
+    {{-- The rich editor is the app-wide engine defined in app.js (window.Quill);
+         it fetches its own assets on first use. --}}
     <style>
         /* ---- Timeline surfaces ----------------------------------------------
            The timeline paints with literal colours rather than Tailwind
@@ -2997,7 +2998,6 @@
     paintReadiness();
 })();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.min.js"></script>
 @php
     // Built in a raw-PHP block (not inside @json's argument) so Blade's
     // directive parser never sees the array-literal brackets.

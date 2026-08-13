@@ -32,9 +32,10 @@ class HtmlSanitizer
 
         $config = \HTMLPurifier_Config::createDefault();
         $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
-        // Quill / basic formatting tags only.
+        // The rich editors' basic formatting tags only. `del` is how the
+        // current editor spells strikethrough.
         $config->set('HTML.Allowed',
-            'p,br,span[style],strong,b,em,i,u,s,strike,'
+            'p,br,span[style],strong,b,em,i,u,s,strike,del,'
             .'ul,ol,li,blockquote,pre,code,'
             .'h1,h2,h3,h4,h5,h6,'
             .'a[href|title|target|rel],img[src|alt|width|height]'

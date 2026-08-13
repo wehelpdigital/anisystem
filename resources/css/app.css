@@ -796,6 +796,33 @@ html.dark .ql-snow.ql-toolbar button:hover .ql-stroke, html.dark .ql-snow.ql-too
 html.dark .ql-snow.ql-toolbar button:hover .ql-fill, html.dark .ql-snow.ql-toolbar button.ql-active .ql-fill { fill: #8fd45a; }
 
 /* ------------------------------------------------------------------ */
+/* SunEditor — the engine behind window.Quill now (see app.js). The    */
+/* .ql-* rules above STAY: saved notes still carry Quill's classes.    */
+/* ------------------------------------------------------------------ */
+.sun-editor { border: 1px solid var(--color-gray-200); border-radius: .6rem; overflow: hidden;
+    font-family: inherit; }
+.sun-editor .se-toolbar { background: var(--color-gray-50); outline: none;
+    border-bottom: 1px solid var(--color-gray-200); }
+.sun-editor .se-btn { color: var(--color-gray-600); border-radius: .45rem; }
+.sun-editor .se-btn:enabled:hover, .sun-editor .se-btn:enabled:focus { background: rgb(107 159 61 / .12); color: #3d6823; }
+.sun-editor .se-btn.active { background: rgb(107 159 61 / .18); color: #3d6823; }
+.sun-editor .se-wrapper .se-placeholder { font-style: normal; color: var(--color-gray-400); }
+.sun-editor-editable { font-family: inherit; font-size: .95rem; color: var(--color-gray-900);
+    background: var(--color-white); }
+.sun-editor-editable blockquote { border-left: 3px solid var(--color-gray-300); padding-left: .7rem;
+    color: var(--color-gray-600); }
+html.dark .sun-editor { border-color: #2b3a1c; }
+html.dark .sun-editor .se-toolbar { background: rgb(255 255 255 / .04); border-color: #2b3a1c; }
+html.dark .sun-editor .se-btn { color: #cdd8c0; }
+html.dark .sun-editor .se-btn:enabled:hover, html.dark .sun-editor .se-btn.active { background: rgb(107 159 61 / .25); color: #8fd45a; }
+html.dark .sun-editor-editable { background: #151b12; color: #e8efe1; }
+html.dark .sun-editor .se-wrapper .se-placeholder { color: #7d8f6e; }
+/* The CDN-failed fallback: still a writable box, visibly a field. */
+.sm-editor-fallback { min-height: 110px; border: 1px solid var(--color-gray-200); border-radius: .6rem;
+    padding: .6rem .7rem; font-size: .95rem; background: var(--color-white); color: var(--color-gray-900); }
+html.dark .sm-editor-fallback { background: #151b12; border-color: #2b3a1c; color: #e8efe1; }
+
+/* ------------------------------------------------------------------ */
 /* The link dialog a Quill toolbar opens (see smLinkPrompt)              */
 /* ------------------------------------------------------------------ */
 .sm-linkbox { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center;

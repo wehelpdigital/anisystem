@@ -9,7 +9,6 @@
 
 @push('head')
 @include('community.partials.plaza-css')
-<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
 <style>
     /* WYSIWYG topic editor — formatting toolbar, NO raw-HTML source. */
     #postBodyEditor { background:#fff; border:1px solid #d1d5db; border-top:0; border-radius:0 0 .6rem .6rem; }
@@ -204,7 +203,6 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 @include('community.partials.emoji-js')
 @include('community.partials.lightbox-js')
 @include('community.partials.comment-tools-js')
