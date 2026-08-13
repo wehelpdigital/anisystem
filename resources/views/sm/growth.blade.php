@@ -12,8 +12,22 @@
        where the crop is, what that means, what to do, what to watch, and
        where it sits in the season. */
     .gr-date { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; margin-bottom: .85rem; }
-    .gr-date .form-input { max-width: 12rem; }
     .gr-date-lbl { font-size: .78rem; font-weight: 700; color: var(--color-gray-500); }
+    /* The date is a tag, not a form field: tap it and the picker comes up.
+       The real input rides along invisibly — the label forwards the tap to
+       it, and the input is what knows how to show a calendar. */
+    .gr-date-tag { position: relative; display: inline-flex; align-items: center; gap: .45rem;
+        padding: .4rem .85rem; border-radius: 999px; border: 1px solid #cfe3b8; background: #f0f7e8;
+        font-size: .8rem; font-weight: 700; color: #3d6823; cursor: pointer; user-select: none;
+        transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1),
+            transform .28s cubic-bezier(.22,1,.36,1); }
+    .gr-date-tag:hover { background: #e4efd4; border-color: #b7d597; }
+    .gr-date-tag:active { transform: scale(.96); }
+    .gr-date-tag svg { width: .95rem; height: .95rem; }
+    .gr-date-tag input[type="date"] { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+    html.dark .gr-date-tag { background: rgb(61 104 35 / .25); border-color: #3f5626; color: #bfe19a; }
+    html.dark .gr-date-tag:hover { background: rgb(61 104 35 / .4); }
+    @media (prefers-reduced-motion: reduce) { .gr-date-tag { transition: none; } }
 
     .gr-card { border: 1px solid var(--color-gray-200); border-radius: 1rem; overflow: hidden;
         background: var(--color-white); margin-bottom: .9rem; }
@@ -83,7 +97,13 @@
 <form method="GET" action="{{ route('sm.growth') }}" class="gr-date">
     <input type="hidden" name="id" value="{{ $schedule->id }}">
     <span class="gr-date-lbl">Reading the crop on</span>
-    <input type="date" name="on" class="form-input" value="{{ $on->toDateString() }}" onchange="this.form.submit()">
+    <label class="gr-date-tag" title="Pick another date to read the crop on">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        <span>{{ $on->isToday() ? 'Today — ' . $on->format('M j, Y') : $on->format('D, M j, Y') }}</span>
+        <input type="date" name="on" value="{{ $on->toDateString() }}" aria-label="Reading the crop on"
+            onchange="this.form.submit()"
+            onclick="try { this.showPicker && this.showPicker(); } catch (_) {}">
+    </label>
     @if (! $on->isToday())
         <a class="btn btn-white btn-sm" href="{{ route('sm.growth', ['id' => $schedule->id]) }}">Back to today</a>
     @endif

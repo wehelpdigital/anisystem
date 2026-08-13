@@ -50,10 +50,12 @@ class GrowthStageController extends BaseScheduleController
      */
     private function rowsFor($schedule, \Carbon\Carbon $on): array
     {
+        [$dayZeroEff, $transplantEff] = $this->effectiveAnchors($schedule);
+
         $rows = [];
         foreach ($schedule->lots as $lot) {
             $crop = CropStages::normalize($lot->crop);
-            $age = $this->ageOf($lot, $crop, $on);
+            $age = $this->ageOf($lot, $crop, $on, $dayZeroEff[$lot->id] ?? null, $transplantEff[$lot->id] ?? null);
             // The counter is not decoration: rice read in DAS was direct
             // seeded and has a different calendar from transplanted rice.
             $stage = $crop && $age ? CropStages::stageFor($crop, $age['day'], $age['counter']) : null;
@@ -69,11 +71,49 @@ class GrowthStageController extends BaseScheduleController
                 'timeline' => $crop ? CropStages::timeline($crop, $age['day'] ?? null, $age['counter'] ?? null) : [],
                 // Why a lot cannot be read, said plainly, because "no stage"
                 // on its own is not a useful answer.
-                'blocked' => $this->whyBlocked($lot, $crop, $age),
+                'blocked' => $this->whyBlocked($lot, $crop, $age, isset($dayZeroEff[$lot->id])),
             ];
         }
 
         return $rows;
+    }
+
+    /**
+     * The anchors as the activities board reads them: the lot's own dates,
+     * overridden by the EARLIEST day-zero / transplant activity covering it.
+     * Reading only the lot's columns here meant a count started by ticking
+     * "this is day zero" on an activity existed everywhere but on this page.
+     *
+     * @return array{0: array<int, \Carbon\Carbon>, 1: array<int, \Carbon\Carbon>}
+     */
+    private function effectiveAnchors($schedule): array
+    {
+        $dayZero = [];
+        $transplant = [];
+        foreach ($schedule->lots as $lot) {
+            if ($lot->dayZeroDate) {
+                $dayZero[$lot->id] = \Carbon\Carbon::parse($lot->dayZeroDate);
+            }
+            if ($lot->transplantDate) {
+                $transplant[$lot->id] = \Carbon\Carbon::parse($lot->transplantDate);
+            }
+        }
+        foreach ($schedule->activities as $a) {
+            if (! $a->targetDate || (! $a->isDayZero && ! $a->isTransplant)) {
+                continue;
+            }
+            $aDate = \Carbon\Carbon::parse($a->targetDate);
+            foreach ($a->lots as $lot) {
+                if ($a->isDayZero && (! isset($dayZero[$lot->id]) || $aDate->lt($dayZero[$lot->id]))) {
+                    $dayZero[$lot->id] = $aDate->copy();
+                }
+                if ($a->isTransplant && (! isset($transplant[$lot->id]) || $aDate->lt($transplant[$lot->id]))) {
+                    $transplant[$lot->id] = $aDate->copy();
+                }
+            }
+        }
+
+        return [$dayZero, $transplant];
     }
 
     /**
@@ -86,24 +126,28 @@ class GrowthStageController extends BaseScheduleController
      * Reading a direct-seeded field against a transplanted calendar is how a
      * stage ends up a fortnight out.
      *
+     * The anchors arrive resolved (lot date or day-zero/transplant activity,
+     * whichever is earlier) so this page counts from the same day the
+     * activities board does.
+     *
      * @return array{day:int, counter:string}|null
      */
-    private function ageOf($lot, ?string $crop, \Carbon\Carbon $on): ?array
+    private function ageOf($lot, ?string $crop, \Carbon\Carbon $on, ?\Carbon\Carbon $dayZero, ?\Carbon\Carbon $transplant): ?array
     {
         $mode = strtoupper((string) ($lot->dayType ?: 'DAT'));
 
-        if ($mode === 'DAT' && $lot->transplantDate) {
-            $t = $lot->transplantDate->copy()->startOfDay();
+        if ($mode === 'DAT' && $transplant) {
+            $t = $transplant->copy()->startOfDay();
             if ($on->copy()->startOfDay()->gte($t)) {
                 return ['day' => $t->diffInDays($on->copy()->startOfDay()), 'counter' => 'DAT'];
             }
         }
 
-        if (! $lot->dayZeroDate) {
+        if (! $dayZero) {
             return null;
         }
 
-        $z = $lot->dayZeroDate->copy()->startOfDay();
+        $z = $dayZero->copy()->startOfDay();
         $day = $z->diffInDays($on->copy()->startOfDay(), false);
         // Before the transplant a two-phase lot is still counting from sowing,
         // so it is DAS — calling that number DAT would read it against the
@@ -123,13 +167,13 @@ class GrowthStageController extends BaseScheduleController
         };
     }
 
-    private function whyBlocked($lot, ?string $crop, ?array $age): ?string
+    private function whyBlocked($lot, ?string $crop, ?array $age, bool $hasDayZero): ?string
     {
         if (! $crop) {
             return 'No crop set on this lot. Open Lots and say what is growing here.';
         }
         if (! $age) {
-            return $lot->dayZeroDate
+            return $hasDayZero
                 ? 'This date is before the lot\'s day zero — nothing is planted yet.'
                 : 'No day zero on this lot yet. Set one in Lots, or tick "this is day zero" on the activity that starts the count.';
         }
