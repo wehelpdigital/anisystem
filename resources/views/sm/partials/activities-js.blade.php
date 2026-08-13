@@ -1889,31 +1889,34 @@ document.addEventListener('DOMContentLoaded', () => {
             const lotsToday = byDateLot[date] || {};
             const lotsPrev = byDateLot[prev] || {};
 
+            // What is in one tank. This is about the task itself rather than
+            // the ground it lands on, so it is asked once per task and names
+            // every lot that task covers.
+            (byDate[date] || []).forEach((a) => {
+                const mine = actTypes(a);
+                if (mine.length < 2) return;
+                const solo = mine.find((t) => t === 'copper_fungicide' || t === 'herbicide');
+                if (!solo) return;
+                const others = mine.filter((t) => t !== solo).map((t) => warnChem(t)).join(', ');
+                const where = (a.lots || []).length
+                    ? a.lots.map((l) => warnLotName(l)).join(', ')
+                    : 'the whole schedule';
+                push(date, {
+                    sig: `tank|${date}|${a.id}`,
+                    ico: '🧪',
+                    title: warnChem(solo) + ' is mixed with something else',
+                    lots: a.lots || [],
+                    detail: `"${a.title}" on ${where} puts ${warnChem(solo)} in the same tank as ${others}. `
+                        + (solo === 'copper_fungicide'
+                            ? 'Copper burns leaves when it meets oils or acidic partners and knocks most biologicals out. Spray it on its own.'
+                            : 'A herbicide should not share a tank with anything meant to help the crop, and the knapsack wants rinsing before its next job.'),
+                });
+            });
+
             Object.keys(lotsToday).forEach((lidStr) => {
                 const lid = parseInt(lidStr, 10);
                 const todays = lotsToday[lid];
                 const prevs = lotsPrev[lid] || [];
-
-                // Rule 0 — what is in one tank. Copper burns leaves in the
-                // wrong company and a herbicide has no business sharing a
-                // knapsack with anything meant to help the crop.
-                todays.forEach((a) => {
-                    const mine = actTypes(a);
-                    if (mine.length < 2) return;
-                    const solo = mine.find((t) => t === 'copper_fungicide' || t === 'herbicide');
-                    if (!solo) return;
-                    const others = mine.filter((t) => t !== solo).map((t) => warnChem(t)).join(', ');
-                    push(date, {
-                        sig: `tank|${date}|${a.id}`,
-                        ico: '🧪',
-                        title: warnChem(solo) + ' is mixed with something else',
-                        lots: [lid],
-                        detail: `"${a.title}" on ${warnLotName(lid)} puts ${warnChem(solo)} in the same tank as ${others}. `
-                            + (solo === 'copper_fungicide'
-                                ? 'Copper burns leaves when it meets oils or acidic partners and knocks most biologicals out. Spray it on its own.'
-                                : 'A herbicide should not share a tank with anything meant to help the crop, and the knapsack wants rinsing before its next job.'),
-                    });
-                });
 
                 // Rule 2 — two+ activities on the same lot, same day.
                 if (todays.length >= 2) {
