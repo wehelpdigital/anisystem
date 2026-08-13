@@ -43,11 +43,18 @@
         .sch-hero::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
             background: linear-gradient(90deg, #6b9f3d, #b8d38e 55%, transparent); }
         .sch-hero-left { display: flex; align-items: center; gap: .85rem; min-width: 0; }
+        /* A drawn mark, not an emoji: platform emoji arrive as square little
+           pictures and sat in the round badge like a photo in a porthole.
+           The stroke icons match every other icon in the app. */
         .sch-hero-emoji { width: 3rem; height: 3rem; border-radius: 999px; flex-shrink: 0;
-            display: inline-flex; align-items: center; justify-content: center; font-size: 1.45rem; }
-        .tod-morning { background: linear-gradient(135deg, #fff7e0, #fbe6ae); }
-        .tod-afternoon { background: linear-gradient(135deg, #e8f4fd, #cde7fa); }
-        .tod-evening { background: linear-gradient(135deg, #e9e7fb, #d5d2f2); }
+            display: inline-flex; align-items: center; justify-content: center; }
+        .sch-hero-emoji svg { width: 1.55rem; height: 1.55rem; }
+        .tod-morning { background: linear-gradient(135deg, #fff7e0, #fbe6ae); color: #d97706; }
+        .tod-afternoon { background: linear-gradient(135deg, #e8f4fd, #cde7fa); color: #0284c7; }
+        .tod-evening { background: linear-gradient(135deg, #e9e7fb, #d5d2f2); color: #6d28d9; }
+        html.dark .tod-morning { color: #fbbf24; }
+        html.dark .tod-afternoon { color: #7dd3fc; }
+        html.dark .tod-evening { color: #c4b5fd; }
         .sch-hero-h { font-size: 1.15rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.25; }
         .sch-hero-p { font-size: .82rem; color: var(--color-gray-500); margin-top: .15rem; }
         .sch-hero-p b { font-weight: 700; color: var(--color-gray-700); }
@@ -221,9 +228,9 @@
     <div class="sch-hero">
         @php
             $__h = (int) now()->format('G');
-            [$__greet, $__mark, $__tod] = $__h < 12
-                ? ['Good morning', '🌅', 'tod-morning']
-                : ($__h < 18 ? ['Good afternoon', '☀️', 'tod-afternoon'] : ['Good evening', '🌙', 'tod-evening']);
+            [$__greet, $__tod] = $__h < 12
+                ? ['Good morning', 'tod-morning']
+                : ($__h < 18 ? ['Good afternoon', 'tod-afternoon'] : ['Good evening', 'tod-evening']);
             // Built here rather than inline: a trailing full stop after an
             // @endif is not a directive Blade recognises, and the if never
             // closes.
@@ -238,7 +245,18 @@
             }
         @endphp
         <div class="sch-hero-left">
-            <span class="sch-hero-emoji {{ $__tod }}" aria-hidden="true">{{ $__mark }}</span>
+            <span class="sch-hero-emoji {{ $__tod }}" aria-hidden="true">
+                @if ($__tod === 'tod-morning')
+                    {{-- Sunrise: half a sun lifting over the ground line. --}}
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v2M5.3 6.7l1.4 1.4M18.7 6.7l-1.4 1.4M8 15a4 4 0 118 0M2 15h2m16 0h2M3 19h18"/></svg>
+                @elseif ($__tod === 'tod-afternoon')
+                    {{-- Full sun, high. --}}
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4l1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4m11.4-11.4l1.4-1.4"/></svg>
+                @else
+                    {{-- The moon the app already draws elsewhere. --}}
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                @endif
+            </span>
             <div class="min-w-0">
                 <h1 class="sch-hero-h">{{ $__greet }}, {{ auth()->user()->firstName ?: 'farmer' }}</h1>
                 <p class="sch-hero-p">{!! $__say !!}</p>
@@ -254,7 +272,6 @@
             <span class="sch-stat is-today"><b>{{ $summary['today'] }}</b><i>today</i></span>
             <span class="sch-stat"><b>{{ $summary['lots'] }}</b><i>{{ \Illuminate\Support\Str::plural('lot', $summary['lots']) }}</i></span>
             <span class="sch-stat"><b>{{ $summary['workers'] }}</b><i>{{ \Illuminate\Support\Str::plural('worker', $summary['workers']) }}</i></span>
-            <span class="sch-stat"><b>{{ $summary['active'] }}</b><i>running</i></span>
         </div>
     </div>
 
