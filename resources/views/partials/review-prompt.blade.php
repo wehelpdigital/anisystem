@@ -58,7 +58,10 @@
         background: linear-gradient(100deg, transparent 30%, rgb(168 204 126 / .28) 50%, transparent 70%);
         background-size: 250% 100%; animation: rvShine 2.6s ease-out 2; }
     @keyframes rvShine { from { background-position: 140% 0; } to { background-position: -40% 0; } }
-    .rv-x { position: absolute; top: .6rem; right: .7rem; width: 2rem; height: 2rem; border-radius: 999px;
+    /* Above .rv-body: both are positioned, and without this the body —
+       later in the DOM — paints over the corner and swallows every tap
+       on the ✕ while "Not now" inside the body keeps working. */
+    .rv-x { position: absolute; top: .6rem; right: .7rem; width: 2rem; height: 2rem; border-radius: 999px; z-index: 2;
         color: #9ca3af; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
     .rv-x:hover { background: var(--color-gray-100, #f3f4f6); }
     .rv-body { position: relative; padding: 1.4rem 1.3rem 1.2rem; text-align: center; }
