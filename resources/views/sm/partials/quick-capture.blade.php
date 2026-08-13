@@ -16,7 +16,12 @@
     /* z-index above the AI float (60) and team float (61-62): Quick Capture is
        a modal you summoned, so nothing ambient may sit on top of it — at equal
        z the float painted over it purely by coming later in the DOM. */
-    .qc-overlay { position: fixed; inset: 0; z-index: 130; background: rgba(17,24,39,.55); display: flex; align-items: flex-end; justify-content: center; padding: 0; }
+    .qc-overlay { position: fixed; inset: 0; z-index: 130; background: rgba(17,24,39,.55); display: flex; align-items: flex-end; justify-content: center; padding: 0;
+        opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    /* Open/close move on transitions from an .is-open class, so the exit is
+       the entrance run backwards; `hidden` stays the resting state and is put
+       back only after the exit has played (see close()). */
+    .qc-overlay.is-open { opacity: 1; }
     /* Two-class selector beats the unlayered `.qc-overlay { display:flex }`,
        so the `hidden` utility actually hides the modal. */
     .qc-overlay.hidden { display: none !important; }
@@ -24,13 +29,30 @@
     /* Use the palette variables (they flip under html.dark) instead of fixed
        hex, so the modal reads correctly in both light and dark. */
     .qc-modal { background: var(--color-white); color: var(--color-gray-900); width: 100%; max-width: 34rem; max-height: 92vh; display: flex; flex-direction: column;
-        border-radius: 1rem 1rem 0 0; overflow: hidden; animation: qc-rise .22s ease; }
+        border-radius: 1rem 1rem 0 0; overflow: hidden;
+        transform: translateY(100%);
+        transition: transform .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+    .qc-overlay.is-open .qc-modal { transform: none; }
     /* Phones: the whole screen, not a bottom sheet — a capture flow with the
        board peeking around it read as two competing screens. The dimmed
-       overlay stays behind it for the edges the modal does not reach. */
+       overlay stays behind it for the edges the modal does not reach. It
+       slides up from the floor there; on a desktop it pops in place. */
     @media (max-width: 639px) { .qc-modal { height: 100dvh; max-height: 100dvh; border-radius: 0; } }
-    @media (min-width: 640px) { .qc-modal { border-radius: 1rem; } }
-    @keyframes qc-rise { from { transform: translateY(24px); opacity: .6; } to { transform: none; opacity: 1; } }
+    @media (min-width: 640px) {
+        .qc-modal { border-radius: 1rem; transform: translateY(10px) scale(.97); opacity: 0; }
+        .qc-overlay.is-open .qc-modal { transform: none; opacity: 1; }
+    }
+    /* Each step eases in as it takes over; the swap itself is a display
+       toggle, so only the incoming one moves. */
+    @keyframes qcStepIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .qc-modal > [data-qc-step].qc-step-in { animation: qcStepIn .28s cubic-bezier(.22,1,.36,1); }
+    /* A fresh photo lands with a small pop; only the new ones replay. */
+    @keyframes qcThumbIn { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: none; } }
+    .qc-thumb.qc-thumb-in { animation: qcThumbIn .28s cubic-bezier(.22,1,.36,1); }
+    @media (prefers-reduced-motion: reduce) {
+        .qc-overlay, .qc-modal, .qc-camera-wrap video { transition: none; }
+        .qc-modal > [data-qc-step].qc-step-in, .qc-thumb.qc-thumb-in { animation: none; }
+    }
     .qc-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: 1rem 1.25rem; border-bottom: 1px solid var(--color-gray-200); flex: none; }
     /* A step is head + body + foot inside a column that is exactly as tall as
        the screen. Without min-height:0 the body refuses to shrink below its
@@ -59,7 +81,11 @@
     .qc-editor-wrap .ql-toolbar { border-top-left-radius: .6rem; border-top-right-radius: .6rem; }
     /* Live camera */
     .qc-camera-wrap { background: #000; aspect-ratio: 3 / 4; max-height: 70vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .qc-camera-wrap video { width: 100%; height: 100%; object-fit: cover; }
+    /* The stream's first frames arrive as a black flash; the video fades up
+       once it actually has a picture (see the loadeddata handler). */
+    .qc-camera-wrap video { width: 100%; height: 100%; object-fit: cover;
+        opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .qc-camera-wrap video.is-live { opacity: 1; }
     .qc-shutter { width: 3.5rem; height: 3.5rem; border-radius: 999px; border: 3px solid var(--color-gray-300); background: transparent; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
     .qc-shutter span { width: 2.6rem; height: 2.6rem; border-radius: 999px; background: var(--color-brand-600, #4a7c2a); transition: transform .1s ease; }
     .qc-shutter:active span { transform: scale(.88); }
@@ -242,7 +268,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showStep(step) {
         modal.querySelectorAll('[data-qc-step]').forEach((el) => {
-            el.classList.toggle('hidden', el.getAttribute('data-qc-step') !== step);
+            const show = el.getAttribute('data-qc-step') === step;
+            const wasShowing = !el.classList.contains('hidden');
+            el.classList.toggle('hidden', !show);
+            // Only a step that just came on screen eases in — re-asserting
+            // the current one must not replay its entrance.
+            if (show && !wasShowing) {
+                el.classList.remove('qc-step-in');
+                void el.offsetWidth;
+                el.classList.add('qc-step-in');
+            }
         });
     }
 
@@ -285,7 +320,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 audio: false,
             });
-            $('qcVideo').srcObject = stream;
+            const v = $('qcVideo');
+            v.srcObject = stream;
+            // Fade the preview up from the black once it has a real frame.
+            v.classList.remove('is-live');
+            v.addEventListener('loadeddata', () => v.classList.add('is-live'), { once: true });
             showStep('camera');
             openModal();
             return true;
@@ -298,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function stopCamera() {
         if (stream) { stream.getTracks().forEach((t) => t.stop()); stream = null; }
         const v = $('qcVideo');
-        if (v) v.srcObject = null;
+        if (v) { v.srcObject = null; v.classList.remove('is-live'); }
     }
 
     function snapPhoto() {
@@ -317,24 +356,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 'image/jpeg', 0.95);
     }
 
+    /* Open and close play the same transition in opposite directions:
+       `hidden` comes off, a frame later `is-open` goes on; closing removes
+       `is-open` and puts `hidden` back only after the exit has played, the
+       same handoff the shared sheets use. The timer guard keeps a quick
+       reopen from being swallowed by a close still on its way out. */
+    let hideTimer = null;
     function openModal() {
-        if (!modal.classList.contains('hidden')) return;
+        if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+        if (!modal.classList.contains('hidden') && modal.classList.contains('is-open')) return;
         modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+        requestAnimationFrame(() => modal.classList.add('is-open'));
         document.body.style.overflow = 'hidden';
     }
     function close() {
         stopCamera();
-        modal.classList.add('hidden');
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
+        const finish = () => { modal.classList.add('hidden'); hideTimer = null; };
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { finish(); return; }
+        if (hideTimer) clearTimeout(hideTimer);
+        hideTimer = setTimeout(finish, 300);
     }
 
+    // How many thumbs were already on screen: the grid rebuilds wholesale,
+    // and without this every existing photo replayed its entrance on each add.
+    let seenThumbs = 0;
     function renderPreviews() {
         const grid = $('qcPreviews');
         grid.querySelectorAll('[data-qc-thumb]').forEach((n) => n.remove());
         const addBtn = $('qcAddPhoto');
         files.forEach((file, i) => {
             const div = document.createElement('div');
-            div.className = 'qc-thumb'; div.setAttribute('data-qc-thumb', i);
+            div.className = 'qc-thumb' + (i >= seenThumbs ? ' qc-thumb-in' : '');
+            div.setAttribute('data-qc-thumb', i);
             const img = document.createElement('img');
             img.src = URL.createObjectURL(file); img.alt = 'Captured photo';
             const rm = document.createElement('button');
@@ -343,6 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
             div.appendChild(img); div.appendChild(rm);
             grid.insertBefore(div, addBtn);
         });
+        seenThumbs = files.length;
         $('qcContinue').disabled = files.length === 0;
     }
 
@@ -352,6 +410,10 @@ document.addEventListener('DOMContentLoaded', () => {
     $('qcClose').addEventListener('click', close);
     modal.querySelectorAll('[data-qc-cancel]').forEach((b) => b.addEventListener('click', close));
     modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+    // Escape closes it like every other overlay in the app.
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) close();
+    });
 
     /* ---- camera step ---- */
     $('qcShutter')?.addEventListener('click', snapPhoto);
