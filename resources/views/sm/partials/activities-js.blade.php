@@ -6044,7 +6044,9 @@ document.addEventListener('DOMContentLoaded', () => {
     async function saveInlineNote(el, date, key) {
         const id = el.getAttribute('data-inline-note');
         const content = el.querySelector('.inline-note-body')?.innerHTML || '';
-        const mediaSend = inlineNoteMedia(el).map((m) => ({ type: m.type, path: m.path, poster: m.poster || null }));
+        // Strokes travel too: dragging a note was re-saving its media without
+        // them, which flattened every editable drawing the note carried.
+        const mediaSend = inlineNoteMedia(el).map((m) => ({ type: m.type, path: m.path, poster: m.poster || null, strokes: m.strokes || null }));
         _setMoving(el, true);
         try {
             const res = await api(U.inlineNoteSave(), { method: 'POST', body: {

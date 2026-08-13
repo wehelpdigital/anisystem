@@ -268,8 +268,11 @@
         const i = parseInt(tile.getAttribute('data-edit-draw'), 10);
         const m = media[i];
         if (!m || typeof window.openDrawCanvas !== 'function') return;
+        // null, not [] — the pad only falls back to drawing over the PNG when
+        // objects is empty, and a drawing whose strokes were lost (older saves
+        // stripped them) must land on that fallback rather than a blank sheet.
         window.openDrawCanvas((dataUrl, objects) => uploadDrawing(dataUrl, objects, i), m.url,
-            { editable: true, objects: m.strokes || [] });
+            { editable: true, objects: (m.strokes && m.strokes.length) ? m.strokes : null });
     }, true);
 
     // ---- Emoji popover → insert into the body
