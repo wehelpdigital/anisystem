@@ -680,6 +680,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Starts empty, not undefined: a payroll card has no lot row at all,
         // and an unassigned variable printed the word "undefined" straight into
         // the card, right above the title.
+        const isReminderCard = a.activityType === 'reminder_checklist';
         let lotsRow = '';
         if (lotIds.length) {
             lotsRow = lotIds.map((id) => {
@@ -802,10 +803,13 @@ document.addEventListener('DOMContentLoaded', () => {
             </button>
             ${typeIco}
             <div class="min-w-0 grow">
-            <div class="activity-card-lots activity-card-lothead">${lotsRow}</div>
+            <div class="activity-card-lots activity-card-lothead">${isReminderCard
+                ? '<span class="badge reminder-head-badge">Reminder Checklist</span>'
+                : lotsRow}</div>
             <h3 class="activity-card-title">${esc(a.activityTitle || '')}</h3>
             <div class="activity-card-badges">
                 <span class="pill pill-${esc(priority)}">${esc(priorityCap)}</span>
+                ${isReminderCard && lotIds.length ? lotsRow : ''}
                 ${typeBadge}
                 ${dayZeroBadge}
                 ${transplantBadge}
@@ -832,7 +836,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ${descHtml ? `<div class="activity-description-content text-sm text-gray-700 mt-2" data-lightbox>${descHtml}</div>` : ''}
     ${imagesHtml}
     <div class="activity-meta">
-        ${a.activityType === 'worker_payroll' ? '' : `<span class="meta-time">${SVG.clock} ${esc(timeRequiredLabel(a.timeRequired))}</span>`}
+        ${(a.activityType === 'worker_payroll' || isReminderCard) ? ''
+            : `<span class="meta-time">${SVG.clock} ${esc(timeRequiredLabel(a.timeRequired))}</span>`}
         ${workerTags}
         ${itemTags}
     </div>
@@ -2851,6 +2856,9 @@ document.addEventListener('DOMContentLoaded', () => {
         $qs('#activityWorkersPane .form-label')?.classList.toggle('hidden', payroll);
         renderWorkerPay();
         $id('activityTypeWrap')?.classList.toggle('hidden', !task);
+        // How much of a day it takes is not a question a list of errands has.
+        $qs('#activitySheet .js-time-required')?.classList.toggle('hidden', reminders);
+        if (reminders) $id('activityTimeRequired').value = 'n/a';
         $id('activityWaterTaskWrap')?.classList.toggle('hidden', !irr);
         $id('activityServicePriceWrap')?.classList.toggle('hidden', !svc);
         $id('activityImagesSection')?.classList.toggle('hidden', !task);

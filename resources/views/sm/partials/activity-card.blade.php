@@ -70,7 +70,13 @@
             {{-- Lot(s) first, as a prominent label — so it's clear which lot the
                  activity is for before you read the title. --}}
             <div class="activity-card-lots activity-card-lothead">
-                @if($cardLots->count())
+                @if($a->activityType === 'reminder_checklist')
+                    {{-- A reminder checklist is not work on a lot, it is a list
+                         of errands — so the slot that names the ground says what
+                         the card is instead, and the lot (when there is one)
+                         moves down beside the priority. --}}
+                    <span class="badge reminder-head-badge">Reminder Checklist</span>
+                @elseif($cardLots->count())
                     @foreach($cardLots as $lot)
                         {{-- Auto colour per lot (golden-angle hue → distinct + stable). --}}
                         <span class="item-tag lot-tag"
@@ -88,6 +94,15 @@
             <h3 class="activity-card-title">{{ $a->activityTitle }}</h3>
             <div class="activity-card-badges">
                 <span class="pill pill-{{ $a->priority }}">{{ ucfirst($a->priority) }}</span>
+                @if($a->activityType === 'reminder_checklist')
+                    @foreach($cardLots as $lot)
+                        <span class="item-tag lot-tag"
+                              data-lot-id="{{ $lot->id }}"
+                              data-lot-name="{{ $lot->lotName }}"
+                              data-lot-variety="{{ $lot->variety ?? '' }}"
+                              style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}</span>
+                    @endforeach
+                @endif
                 @if($a->activityType === 'irrigation')
                     @php $wtm = $a->waterTaskMeta(); @endphp
                     <span class="badge water-task-badge" style="--wt:{{ $wtm['color'] }}">
@@ -103,6 +118,11 @@
                 @elseif($a->activityType === 'worker_payroll')
                     {{-- Nothing here: the tag sits up beside the kebab, where
                          there is room, rather than alone on a row of its own. --}}
+                @elseif($a->activityType === 'reminder_checklist')
+                    {{-- Nothing here either: this card names itself in the slot
+                         above, where other cards name their lot. The client
+                         renderer has always left it out; this branch is what
+                         kept the two from matching. --}}
                 @elseif($typeLabel)
                     <span class="badge badge-green activity-type-badge">{{ $typeLabel }}</span>
                 @endif
@@ -210,7 +230,9 @@
         </div>
     @endif
     <div class="activity-meta">
-        @if ($a->activityType !== 'worker_payroll')
+        {{-- Half day / whole day answers "how much of a day does this take" —
+             a question a list of errands does not have. --}}
+        @if (! in_array($a->activityType, ['worker_payroll', 'reminder_checklist'], true))
             <span class="meta-time">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 {{ $timeLabel }}

@@ -277,6 +277,10 @@
         html.dark .adv-lbl { color: #e8efe1; }
         html.dark .adv-row.is-none { background: #1c2416; }
 
+        /* The reminder card names itself where other cards name their lot. */
+        .reminder-head-badge { background: #f5f0ff; color: #6d28d9; border: 1px solid #ddd6fe; font-weight: 800; }
+        html.dark .reminder-head-badge { background: rgb(109 40 217 / .18); border-color: rgb(139 92 246 / .45); color: #c4b5fd; }
+
         .tt-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .1rem; }
         .tt-tag { padding: .35rem .7rem; border-radius: 999px; font-size: .78rem; font-weight: 700;
             border: 2px solid var(--color-gray-200); background: var(--color-white); color: #374151;
