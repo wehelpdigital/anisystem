@@ -42,6 +42,21 @@
             padding: .05rem .3rem; border-radius: .3rem; background: #e4efd4; color: #3d6823; }
         .mb-open { display: block; font-size: .64rem; font-weight: 700; color: #4a7c2a; margin-top: .1rem; }
         .mb-empty { text-align: center; color: var(--color-gray-400); font-size: .82rem; padding: 2rem .5rem; }
+        .mb-find { position: relative; margin-bottom: .6rem; }
+        .mb-find .form-input { padding-left: 2.1rem; padding-right: 2.1rem; }
+        .mb-find .mbf-ico { position: absolute; left: .65rem; top: 50%; transform: translateY(-50%);
+            width: 1rem; height: 1rem; color: #9ca3af; pointer-events: none; }
+        .mb-find .mbf-clear { position: absolute; right: .4rem; top: 50%; transform: translateY(-50%);
+            width: 1.6rem; height: 1.6rem; border-radius: 999px; color: #9ca3af;
+            display: inline-flex; align-items: center; justify-content: center; font-size: .85rem; }
+        .mb-count { font-size: .78rem; color: var(--color-gray-500); margin: -.25rem 0 .6rem; }
+        .mb-cell.is-filtered { display: none !important; }
+        .mb-row { display: flex; align-items: center; justify-content: space-between; gap: .4rem; margin-top: .15rem; }
+        .mb-dl { flex: 0 0 auto; width: 1.6rem; height: 1.6rem; border-radius: .45rem; color: #4a7c2a;
+            display: inline-flex; align-items: center; justify-content: center; background: #f3f8ec; }
+        .mb-dl:hover { background: #4a7c2a; color: #fff; }
+        .mb-dl svg { width: .95rem; height: .95rem; }
+        html.dark .mb-dl { background: rgb(61 104 35 / .3); color: #a8cc7e; }
         html.dark .mb-title { color: #e5e9f5; }
         html.dark .mb-cell { background: #151b12; border-color: #2b3a1c; }
         html.dark .mb-src { background: rgb(61 104 35 / .35); color: #a8cc7e; }
@@ -56,6 +71,16 @@
     $photos = collect($items)->where('kind', 'image')->values();
     $videos = collect($items)->where('kind', 'video')->values();
 @endphp
+
+{{-- A season fills this shelf quickly, and "the photo of the pump" is a
+     search, not a scroll. It looks at the title and where the picture came
+     from, which is everything a cell shows. --}}
+<div class="mb-find">
+    <svg class="mbf-ico" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+    <input type="text" id="mbSearch" class="form-input" placeholder="Search photos and videos…" autocomplete="off" aria-label="Search media">
+    <button type="button" id="mbSearchClear" class="mbf-clear hidden" aria-label="Clear search">✕</button>
+</div>
+<p class="mb-count hidden" id="mbCount" aria-live="polite"></p>
 
 <div class="mb-tabs" role="tablist">
     <button type="button" class="mb-tab is-active" data-mb-tab="image" aria-selected="true">
@@ -81,7 +106,8 @@
         @else
             <div class="mb-grid">
                 @foreach ($rows as $m)
-                    <div class="mb-cell" data-lb-type="{{ $m['kind'] }}" data-lb-url="{{ $m['url'] }}" data-lb-poster="{{ $m['posterUrl'] ?? '' }}">
+                    <div class="mb-cell" data-lb-type="{{ $m['kind'] }}" data-lb-url="{{ $m['url'] }}" data-lb-poster="{{ $m['posterUrl'] ?? '' }}"
+                        data-find="{{ mb_strtolower($m['title'] . ' ' . $m['source'] . ' ' . ($m['when'] ?? '')) }}">
                         <div class="mb-shot">
                             @if ($m['kind'] === 'video')
                                 @if (! empty($m['posterUrl']))
@@ -98,12 +124,17 @@
                                 <span class="mb-src">{{ $m['source'] }}</span>
                                 {{ $m['when'] }}
                             </span>
-                            @if (! empty($m['href']))
-                                {{-- The gallery answers "what have we got"; this
-                                     answers "what was it about", which is the
-                                     next question every time. --}}
-                                <a class="mb-open" href="{{ $m['href'] }}" data-mb-go>Where it lives →</a>
-                            @endif
+                            <span class="mb-row">
+                                @if (! empty($m['href']))
+                                    {{-- The gallery answers "what have we got";
+                                         this answers "what was it about", which
+                                         is the next question every time. --}}
+                                    <a class="mb-open" href="{{ $m['href'] }}" data-mb-go>Where it lives →</a>
+                                @endif
+                                <a class="mb-dl" href="{{ $m['url'] }}" download data-mb-go title="Save to this device" aria-label="Download">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v10m0 0l-3.5-3.5M12 14l3.5-3.5M5 19h14"/></svg>
+                                </a>
+                            </span>
                         </div>
                     </div>
                 @endforeach
@@ -135,11 +166,39 @@
                 });
             });
         });
-        // The link out of a cell is a link, not a tap on the picture — without
-        // this the lightbox would open on top of the page you asked for.
-        document.querySelectorAll('[data-mb-go]').forEach((a) => {
-            a.addEventListener('click', (e) => e.stopPropagation());
-        });
+        // The links out of a cell — where it lives, and download — are links,
+        // not taps on the picture; without this the lightbox would open on top
+        // of whatever you asked for.
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('[data-mb-go]')) e.stopPropagation();
+        }, true);
+
+        const search = document.getElementById('mbSearch');
+        const count = document.getElementById('mbCount');
+        const clear = document.getElementById('mbSearchClear');
+        function runFind() {
+            const q = (search.value || '').trim().toLowerCase();
+            let shown = 0, total = 0;
+            document.querySelectorAll('.mb-cell').forEach((c) => {
+                const visiblePane = !c.closest('[data-mb-pane]').classList.contains('hidden');
+                total += visiblePane ? 1 : 0;
+                const hit = !q || (c.getAttribute('data-find') || '').includes(q);
+                c.classList.toggle('is-filtered', !hit);
+                if (hit && visiblePane) shown++;
+            });
+            count.textContent = q ? (shown + ' of ' + total + ' shown') : '';
+            count.classList.toggle('hidden', !q);
+            clear.classList.toggle('hidden', !q);
+            // An empty tab with a search running should say why it is empty.
+            document.querySelectorAll('[data-mb-pane]').forEach((p) => {
+                const empty = p.querySelector('.mb-empty');
+                if (!empty) return;
+                empty.classList.toggle('hidden', !q ? false : false);
+            });
+        }
+        search.addEventListener('input', runFind);
+        clear.addEventListener('click', () => { search.value = ''; runFind(); search.focus(); });
+        document.querySelectorAll('.mb-tab').forEach((t) => t.addEventListener('click', runFind));
     };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
     else init();

@@ -35,21 +35,45 @@
         .note-card:not(.is-collapsed) .note-chevron { transform: rotate(90deg); }
         @media (prefers-reduced-motion: reduce) { .note-fold, .note-chevron { transition: none; } }
 
-        /* Toolbar: find a note, and fold the lot at once */
-        .note-toolbar { display: flex; align-items: center; gap: .5rem; margin-bottom: .75rem; }
-        .note-search { position: relative; flex: 1 1 auto; min-width: 0; }
+        /* Toolbar: find a note, fold the lot, write a new one — one bar. */
+        .note-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-bottom: .85rem; }
+        .note-bar-acts { display: flex; align-items: center; gap: .5rem; flex: 0 0 auto; }
+        .note-iconbtn { display: inline-flex; align-items: center; gap: .35rem; height: 2.75rem;
+            padding: 0 .8rem; border: 1px solid var(--color-gray-200, #e5e7eb); border-radius: .8rem;
+            background: var(--color-white, #fff); font-size: .8rem; font-weight: 700;
+            color: var(--color-gray-600, #4b5563); cursor: pointer; white-space: nowrap;
+            transition: background .25s ease, border-color .25s ease, color .25s ease; }
+        .note-iconbtn:hover { background: #f3f8ec; border-color: #a8cc7e; color: #3d6823; }
+        .note-iconbtn svg { width: 1rem; height: 1rem; }
+        .note-newbtn { display: inline-flex; align-items: center; gap: .4rem; height: 2.75rem;
+            padding: 0 1rem; border-radius: .8rem; background: #4a7c2a; color: #fff;
+            font-size: .85rem; font-weight: 800; cursor: pointer; white-space: nowrap;
+            box-shadow: 0 8px 18px -12px rgb(61 104 35 / .9);
+            transition: background .25s ease; }
+        .note-newbtn:hover { background: #3d6823; }
+        .note-newbtn svg { width: 1.05rem; height: 1.05rem; }
+        html.dark .note-iconbtn { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
+        html.dark .note-iconbtn:hover { background: #24301a; border-color: #3d6823; }
+        @media (max-width: 560px) {
+            /* Search gets the whole first row; the two actions share the next,
+               each half — thumbs, not needles. */
+            .note-search { flex: 1 1 100%; }
+            .note-bar-acts { flex: 1 1 100%; }
+            .note-bar-acts > * { flex: 1 1 0; justify-content: center; }
+        }
+        @media (prefers-reduced-motion: reduce) { .note-iconbtn, .note-newbtn { transition: none; } }
+        .note-search { position: relative; flex: 1 1 12rem; min-width: 0; }
         .note-search .form-input { padding-left: 2.1rem; padding-right: 2.1rem; }
         .note-search .ns-ico { position: absolute; left: .65rem; top: 50%; transform: translateY(-50%); width: 1rem; height: 1rem; color: #9ca3af; pointer-events: none; }
         .note-search .ns-clear { position: absolute; right: .4rem; top: 50%; transform: translateY(-50%); width: 1.6rem; height: 1.6rem; border-radius: 999px; color: #9ca3af; display: inline-flex; align-items: center; justify-content: center; font-size: .85rem; }
         .note-search .ns-clear:hover { background: var(--color-gray-100); color: #4b5563; }
-        .note-fold-all { flex: 0 0 auto; white-space: nowrap; }
-        .note-fold-all .nfa-ico { transition: transform .28s cubic-bezier(.22,1,.36,1); }
-        .note-fold-all.is-allfolded .nfa-ico { transform: rotate(-90deg); }
+        #noteFoldAll .nfa-ico { transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        #noteFoldAll.is-allfolded .nfa-ico { transform: rotate(-90deg); }
         .note-count { font-size: .78rem; color: var(--tl-text-muted, #6b7280); margin: -.35rem 0 .6rem; }
         /* Unlayered on purpose: `.hidden` from a utility layer loses to the
            card's own display, so a filtered-out note would stay on screen. */
         .note-card.is-filtered { display: none !important; }
-        @media (prefers-reduced-motion: reduce) { .note-fold-all .nfa-ico { transition: none; } }
+        @media (prefers-reduced-motion: reduce) { #noteFoldAll .nfa-ico { transition: none; } }
 
         /* Upload progress — a big video takes real seconds, and silence reads
            as a hang. Each file gets a row: percent while it travels, then
@@ -93,21 +117,25 @@
 @section('content')
 @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'notes'])
 
-<button type="button" class="btn btn-primary w-full mb-4 inline-flex" data-note-add>
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-    New note
-</button>
-
-<div class="note-toolbar {{ $notes->isEmpty() ? 'hidden' : '' }}" id="noteToolbar">
+{{-- One bar: find a note, fold the lot, write a new one. Three separate
+     blocks of chrome — a full-width slab, a bare input and a loose button —
+     took up the top third of the screen before a single note appeared. --}}
+<div class="note-bar">
     <div class="note-search">
         <svg class="ns-ico" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
         <input type="text" id="noteSearch" class="form-input" placeholder="Search notes…" autocomplete="off" aria-label="Search notes">
         <button type="button" id="noteSearchClear" class="ns-clear hidden" aria-label="Clear search">✕</button>
     </div>
-    <button type="button" id="noteFoldAll" class="btn btn-white btn-sm note-fold-all" aria-pressed="false">
-        <svg class="nfa-ico w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-        <span id="noteFoldAllLabel">Collapse all</span>
-    </button>
+    <div class="note-bar-acts" id="noteToolbar">
+        <button type="button" id="noteFoldAll" class="note-iconbtn" aria-pressed="false" title="Fold every note">
+            <svg class="nfa-ico" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            <span id="noteFoldAllLabel">Collapse all</span>
+        </button>
+        <button type="button" class="note-newbtn" data-note-add>
+            <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+            <span>New note</span>
+        </button>
+    </div>
 </div>
 <p class="note-count hidden" id="noteCount" aria-live="polite"></p>
 
@@ -519,7 +547,11 @@ const __init = () => {
         fld('noteSearch').value = ''; query = ''; runSearch(); fld('noteSearch').focus();
     });
     function refreshToolbar() {
-        fld('noteToolbar').classList.toggle('hidden', cards().length === 0);
+        // Nothing to search or fold when there are no notes; the New note
+        // button lives in the empty state instead.
+        const none = cards().length === 0;
+        fld('noteToolbar').classList.toggle('hidden', none);
+        document.querySelector('.note-search')?.classList.toggle('hidden', none);
     }
     applyFold();
 

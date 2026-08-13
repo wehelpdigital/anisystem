@@ -93,7 +93,7 @@
             @include('sm.partials.community-switch', ['schedule' => $schedule])
             <div class="flex items-center gap-3 shrink-0">
                 @if ($schedule->isPublic)
-                    <a href="{{ route('community.show', ['id' => $schedule->id]) }}" class="text-xs font-semibold text-white/90 hover:text-white">View in Community →</a>
+                    <a href="{{ route('community.show', ['id' => $schedule->id]) }}" class="text-xs font-semibold text-brand-700 hover:text-brand-800">View in Community →</a>
                 @endif
                 {{-- "Mark completed" sounded like ticking a task off. What the
                      button does is close the season and lock it, and the way
@@ -127,29 +127,63 @@
     </div>
 
     <style>
-        .sched-head { border-radius: 1.1rem; overflow: hidden; color: #fff;
-            background: linear-gradient(135deg, #3d6823 0%, #4a7c2a 45%, #6b9f3d 100%);
-            box-shadow: 0 18px 40px -28px rgb(61 104 35 / .9); }
-        .sched-head-top { display: flex; align-items: flex-start; gap: .75rem; padding: 1rem 1.1rem .35rem; }
-        .sched-title { font-size: 1.3rem; font-weight: 800; line-height: 1.2; color: #fff; word-break: break-word; }
+        /* A card, not a poster. The season's name has to be the most legible
+           thing on the hub, and a full-bleed green panel fought everything
+           placed on it — a light button vanished into it, a dark one looked
+           like a hole. The colour is a band across the top instead, and the
+           card itself is the same surface as every other card on the page, so
+           text and buttons keep the contrast they were designed with. */
+        .sched-head { position: relative; border-radius: 1.1rem; overflow: hidden;
+            background: var(--color-white, #fff);
+            border: 1px solid var(--color-gray-200, #e5e7eb);
+            box-shadow: 0 12px 32px -26px rgb(15 23 42 / .5); }
+        .sched-head::before { content: ''; position: absolute; inset: 0 0 auto 0; height: .35rem;
+            background: linear-gradient(90deg, #3d6823, #6b9f3d 55%, #a8cc7e); }
+        .sched-head-top { display: flex; align-items: flex-start; gap: .75rem; padding: 1.05rem 1.1rem .35rem; }
+        .sched-title { font-size: 1.3rem; font-weight: 800; line-height: 1.2;
+            color: var(--color-gray-900, #111827); word-break: break-word; }
         .sched-pen { flex: 0 0 auto; width: 2rem; height: 2rem; border-radius: 999px; margin-top: .1rem;
             display: inline-flex; align-items: center; justify-content: center;
-            background: rgb(255 255 255 / .16); color: #fff; cursor: pointer;
-            transition: background .25s ease; }
-        .sched-pen:hover { background: rgb(255 255 255 / .3); }
+            background: #f3f8ec; color: #3d6823; cursor: pointer;
+            transition: background .25s ease, color .25s ease; }
+        .sched-pen:hover { background: #4a7c2a; color: #fff; }
         .sched-pen svg { width: 1rem; height: 1rem; }
-        .sched-desc { font-size: .85rem; line-height: 1.5; color: rgb(255 255 255 / .82); margin-top: .3rem; }
+        .sched-desc { font-size: .85rem; line-height: 1.5; color: var(--color-gray-500, #6b7280); margin-top: .3rem; }
         .sched-state { flex: 0 0 auto; font-size: .64rem; font-weight: 800; text-transform: uppercase;
             letter-spacing: .05em; padding: .2rem .55rem; border-radius: 999px;
-            background: rgb(255 255 255 / .2); color: #fff; }
+            background: #e4efd4; color: #3d6823; }
         .sched-state-completed { background: #fde68a; color: #78350f; }
-        .sched-facts { display: flex; flex-wrap: wrap; gap: .35rem; padding: .6rem 1.1rem 0; }
+        .sched-facts { display: flex; flex-wrap: wrap; gap: .35rem; padding: .65rem 1.1rem 0; }
         .sched-fact { display: inline-flex; align-items: center; gap: .3rem; font-size: .72rem; font-weight: 700;
-            padding: .22rem .55rem; border-radius: 999px; background: rgb(255 255 255 / .16); color: #fff; }
+            padding: .24rem .6rem; border-radius: 999px;
+            background: var(--color-gray-50, #f9fafb); border: 1px solid var(--color-gray-200, #e5e7eb);
+            color: var(--color-gray-700, #374151); }
         .sf-emoji { font-size: .85rem; line-height: 1; }
         .sched-foot { display: flex; align-items: center; justify-content: space-between; gap: .75rem;
-            flex-wrap: wrap; margin-top: .85rem; padding: .7rem 1.1rem;
-            background: rgb(0 0 0 / .16); }
+            flex-wrap: wrap; margin-top: .9rem; padding: .7rem 1.1rem;
+            background: var(--color-gray-50, #f9fafb);
+            border-top: 1px solid var(--color-gray-100, #f3f4f6); }
+        /* The one button on this card, and it closes a season — it should read
+           as deliberate in both themes rather than blending into the strip. */
+        .sched-foot .btn-primary, .sched-foot .btn-accent {
+            background: #4a7c2a; border-color: #4a7c2a; color: #fff;
+        }
+        .sched-foot .btn-primary:hover, .sched-foot .btn-accent:hover { background: #3d6823; border-color: #3d6823; }
+
+        html.dark .sched-head { background: #151b12; border-color: #2b3a1c; }
+        html.dark .sched-title { color: #e8efe1; }
+        html.dark .sched-desc { color: #9fb08e; }
+        html.dark .sched-state { background: rgb(107 159 61 / .22); color: #a8cc7e; }
+        html.dark .sched-fact { background: rgb(255 255 255 / .04); border-color: #2b3a1c; color: #cdd8c0; }
+        html.dark .sched-foot { background: rgb(255 255 255 / .03); border-top-color: #2b3a1c; }
+        html.dark .sched-pen { background: rgb(107 159 61 / .2); color: #a8cc7e; }
+        html.dark .sched-pen:hover { background: #4a7c2a; color: #fff; }
+        html.dark .sched-foot .btn-primary, html.dark .sched-foot .btn-accent {
+            background: #6b9f3d; border-color: #6b9f3d; color: #10160c;
+        }
+        html.dark .sched-foot .btn-primary:hover, html.dark .sched-foot .btn-accent:hover {
+            background: #86b556; border-color: #86b556;
+        }
         @media (prefers-reduced-motion: reduce) { .sched-pen { transition: none; } }
     </style>
 
@@ -211,7 +245,12 @@
             .qc-cta .cta-chip { width: 2.6rem; height: 2.6rem; }
             .qc-cta .cta-chip svg { width: 1.5rem; height: 1.5rem; }
             .qc-cta > span:not(.cta-chip):not(.cta-sub) { flex: 1 1 auto; font-size: 1rem; }
-            .qc-cta .cta-sub { flex: 1 1 100%; padding-left: 3.4rem; }
+            /* The subtitle takes a whole row, so anything ordered after it
+               lands on a third line. The arrow is ordered before it and sits
+               where its twin on the Activities tile sits: end of the first
+               row, beside the name. */
+            .qc-cta .cta-arrow { order: 1; flex: 0 0 auto; margin-left: auto; }
+            .qc-cta .cta-sub { order: 2; flex: 1 1 100%; padding-left: 3.4rem; }
             .act-cta { padding: .95rem 1rem; }
         }
     </style>

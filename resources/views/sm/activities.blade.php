@@ -1197,6 +1197,37 @@
         html.dark .date-pill:hover { background: #232a45; border-color: #3d6823; }
         @media (prefers-reduced-motion: reduce) { .date-pill { transition: none; } }
 
+        /* The veil over a board still working out its figures. Absolute over
+           the timeline rather than fixed over the app: the header, the
+           toolbar and the tab bar all still work while it is up. */
+        /* The veil measures against the page body of this module, so it
+           covers the board and nothing above it. Without a positioned
+           ancestor `inset: 0` would resolve against the viewport and put a
+           sheet over the header too. */
+        body.is-activities main { position: relative; }
+        #boardVeil { position: absolute; inset: 0; z-index: 30; display: flex; align-items: flex-start;
+            justify-content: center; padding-top: 4rem; background: var(--color-gray-50, #f9fafb);
+            transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+        #boardVeil.is-done { opacity: 0; pointer-events: none; }
+        #boardVeil[hidden] { display: none; }
+        .bv-card { display: flex; flex-direction: column; align-items: center; gap: .5rem;
+            padding: 1.4rem 1.8rem; border-radius: 1rem; background: var(--color-white, #fff);
+            border: 1px solid var(--color-gray-200, #e5e7eb);
+            box-shadow: 0 20px 45px -30px rgb(15 23 42 / .6); }
+        .bv-spin { width: 2.1rem; height: 2.1rem; border-radius: 999px;
+            border: 3px solid var(--color-gray-200, #e5e7eb); border-top-color: #4a7c2a;
+            animation: bvSpin .8s linear infinite; }
+        @keyframes bvSpin { to { transform: rotate(360deg); } }
+        .bv-text { font-size: .9rem; font-weight: 800; color: var(--color-gray-800, #1f2937); }
+        .bv-sub { font-size: .72rem; color: var(--color-gray-400, #9ca3af); }
+        html.dark #boardVeil { background: #10160c; }
+        html.dark .bv-card { background: #151b12; border-color: #2b3a1c; }
+        html.dark .bv-text { color: #e8efe1; }
+        @media (prefers-reduced-motion: reduce) {
+            .bv-spin { animation-duration: 2.4s; }
+            #boardVeil { transition: none; }
+        }
+
         /* Day-zero only: hide everything that is not an anchor, and any day
            header left with nothing under it. Unlayered and !important for the
            usual reason — these cards carry their own display. */
@@ -1906,6 +1937,19 @@
             </svg>
             <span class="font-semibold" id="moduleLoaderLabel">Loading…</span>
         </div>
+    </div>
+</div>
+
+{{-- The board arrives before the two things it is read for: what the day
+     costs, and what the sky is doing. Both need a round trip, so for a second
+     or two the headers were visibly incomplete and then jumped as the pills
+     landed. This covers that second — the board is drawn underneath and
+     revealed once both have arrived (or given up). --}}
+<div id="boardVeil" aria-hidden="true">
+    <div class="bv-card">
+        <span class="bv-spin" aria-hidden="true"></span>
+        <span class="bv-text" id="boardVeilText">Working out the day…</span>
+        <span class="bv-sub">costs, then the forecast</span>
     </div>
 </div>
 

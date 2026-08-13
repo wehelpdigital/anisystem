@@ -3,6 +3,14 @@
      Exposes window.noteMediaThumb(m, extra) and window.noteMediaCells(arr).
      Any `.nm[data-lb-url]` or `.na[data-lb-url]` element opens it on click. --}}
 <div class="note-lb" id="noteLightbox" aria-hidden="true">
+    {{-- Keeping a copy is the other half of looking at one: a photo of a
+         receipt, a drawing to send to the co-op, a frame the AI commented on.
+         The link carries `download`, so the browser saves rather than
+         navigates, and it is here rather than on every thumbnail in the app
+         because everything opens through this one lightbox. --}}
+    <a class="note-lb-dl" id="noteLbDownload" href="#" download target="_blank" rel="noopener" title="Save to this device" aria-label="Download">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v10m0 0l-3.5-3.5M12 14l3.5-3.5M5 19h14"/></svg>
+    </a>
     <button type="button" class="note-lb-close" aria-label="Close">✕</button>
     <div class="note-lb-stage"></div>
 </div>
@@ -68,6 +76,11 @@
     .note-lb-stage img, .note-lb-stage video { max-width: 94vw; max-height: 90vh; border-radius: .5rem; object-fit: contain; box-shadow: 0 20px 60px -20px rgb(0 0 0 / .8); }
     .note-lb-close { position: fixed; top: 1rem; right: 1rem; width: 2.75rem; height: 2.75rem; border-radius: 999px; background: rgb(255 255 255 / .16); color: #fff; font-size: 1.25rem; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
     .note-lb-close:hover { background: rgb(255 255 255 / .28); }
+    .note-lb-dl { position: fixed; top: 1rem; right: 4.25rem; width: 2.75rem; height: 2.75rem; border-radius: 999px;
+        background: rgb(255 255 255 / .16); color: #fff; display: inline-flex; align-items: center;
+        justify-content: center; cursor: pointer; text-decoration: none; }
+    .note-lb-dl:hover { background: rgb(255 255 255 / .28); }
+    .note-lb-dl svg { width: 1.25rem; height: 1.25rem; }
 </style>
 
 <script>
@@ -144,6 +157,14 @@
         stage.innerHTML = type === 'video'
             ? `<video src="${esc(url)}"${poster ? ` poster="${esc(poster)}"` : ''} controls autoplay playsinline></video>`
             : `<img src="${esc(url)}" alt="">`;
+        const dl = document.getElementById('noteLbDownload');
+        if (dl) {
+            dl.href = url || '#';
+            // A sensible filename rather than the storage hash, where the
+            // browser will take one.
+            const name = (url || '').split('/').pop().split('?')[0];
+            if (name) dl.setAttribute('download', name);
+        }
         lb.classList.add('is-open'); lb.setAttribute('aria-hidden', 'false');
         window.registerOverlay?.('noteLightbox', close);
         zoomExpand(stage.firstElementChild, fromRect);
@@ -241,6 +262,7 @@
         // attachment chip, a Media Box cell. The attribute is the contract.
         const cell = e.target.closest('[data-lb-url]');
         if (cell) { e.preventDefault(); open(cell.getAttribute('data-lb-type'), cell.getAttribute('data-lb-url'), cell.getAttribute('data-lb-poster'), cell.getBoundingClientRect()); return; }
+        if (e.target.closest('.note-lb-dl')) return;   // saving is not closing
         if (e.target.closest('.note-lb-close') || e.target === lb) close();
     });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lb.classList.contains('is-open')) close(); });

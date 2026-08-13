@@ -1234,6 +1234,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.__ensureRowBreak = ensureRowBreak;
 
+    /* ---- The veil -----------------------------------------------------------
+     * Two things have to land before the board reads correctly: the day
+     * figures (drawn from what is already on the cards, so effectively
+     * immediate) and the forecast (a real round trip). The veil lifts when
+     * both report in, and lifts anyway after four seconds — a board you can
+     * read with one pill missing beats a spinner that never goes away. */
+    const boardReady = { cash: false, weather: false };
+    let veilLifted = false;
+    function liftVeil(why) {
+        if (veilLifted) return;
+        veilLifted = true;
+        const veil = $id('boardVeil');
+        if (!veil) return;
+        veil.classList.add('is-done');
+        setTimeout(() => { veil.hidden = true; }, 320);
+    }
+    window.boardVeilStep = (what) => {
+        boardReady[what] = true;
+        const text = $id('boardVeilText');
+        if (text && what === 'cash' && !boardReady.weather) text.textContent = 'Fetching the forecast…';
+        if (boardReady.cash && boardReady.weather) liftVeil('both');
+    };
+    // Nothing may ever answer — no network, no API key, an empty board. The
+    // veil is a courtesy, not a gate.
+    setTimeout(() => liftVeil('timeout'), 4000);
+    document.addEventListener('DOMContentLoaded', () => setTimeout(() => {
+        if (!$qs('#activitiesList .date-group')) liftVeil('nothing to wait for');
+    }, 400));
+
     function paintAllDayCash() {
         // The forecast goes first: a day that changed lots is about different
         // ground now, and the cash line's break depends on whether a forecast
@@ -1255,6 +1284,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const list = document.getElementById('activitiesList');
             if (!list) return;
             paintAllDayCash();
+            window.boardVeilStep?.('cash');
             if (!window.MutationObserver) return;
             let pending = null;
             new MutationObserver((records) => {
@@ -5148,6 +5178,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 (WX && WX.savedDates || []).forEach((d) => window.SAVED_WX_DATES?.add(d));
             } catch (_) { if (!withHours) WX = null; }
             buildByDate();
+            // Answered, one way or the other — the board can be shown now.
+            window.boardVeilStep?.('weather');
             return WX;
         }
 

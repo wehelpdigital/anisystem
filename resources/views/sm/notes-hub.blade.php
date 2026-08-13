@@ -60,10 +60,12 @@
                 <div class="text-sm text-gray-700 mt-1 rich-text whitespace-pre-line break-words">{!! \App\Support\CommunityText::safeHtml($note['body']) !!}</div>
             @endif
             @if ($note['imageUrl'])
-                <div class="nh-draw-preview mt-2"><img src="{{ $note['imageUrl'] }}" alt="drawing" loading="lazy" data-lightbox></div>
+                @include('sm.partials.note-attachments', ['media' => [
+                    ['type' => 'image', 'url' => $note['imageUrl']],
+                ]])
             @endif
             @if (! empty($note['media']))
-                <div class="nh-media">@include('sm.partials.note-media', ['media' => $note['media']])</div>
+                @include('sm.partials.note-attachments', ['media' => $note['media']])
             @endif
         </div>
     @endforeach

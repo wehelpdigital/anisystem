@@ -88,7 +88,12 @@
                         /* Sits above the app (z-50 sheets) and below the drawing
                            pad (z-400), like the rest of the app's overlays. */
                         .notif-sheet {
-                            position: fixed; left: 0; right: 0; bottom: 0; z-index: 200;
+                            /* Above the AI bubble, which parks itself at 60 and
+                               climbs to 200 when opened — the two sit in the
+                               same corner, and the sheet was arriving behind a
+                               button. Still under the toasts (250) and the
+                               drawing pad (400), which both belong on top. */
+                            position: fixed; left: 0; right: 0; bottom: 0; z-index: 240;
                             background: var(--color-white, #fff);
                             border-top-left-radius: 1.1rem; border-top-right-radius: 1.1rem;
                             box-shadow: 0 -18px 50px -20px rgb(0 0 0 / .45);
@@ -135,7 +140,7 @@
                              thing you had to reach for rather than have handed to
                              you. Backdrop included, so a tap anywhere shuts it. --}}
                         <div x-show="open" x-cloak x-transition.opacity
-                            class="fixed inset-0 z-[190] bg-black/40" @click="open = false"></div>
+                            class="fixed inset-0 z-[235] bg-black/40" @click="open = false"></div>
                         <div x-show="open" x-cloak
                             x-transition:enter="transition transform ease-out duration-300"
                             x-transition:enter-start="translate-y-full"
