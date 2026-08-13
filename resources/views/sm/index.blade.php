@@ -32,27 +32,56 @@
         html.dark .del-label { color: #d7e3cb; }
         @media (prefers-reduced-motion: reduce) { .del-modal, .del-card { animation: none; } }
 
-        /* ---- the page's own head — quiet, not a second green field. The
-           page's colour now lives in the season covers below; everything
-           around them is calm neutrals so the seasons are the picture. ---- */
-        .sch-hero { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
-            gap: .75rem 1rem; padding: 1.05rem 1.25rem; margin-bottom: 1rem; border-radius: 1.1rem;
+        /* ---- the greeting card: a hello with the day's answer in it. The
+           badge wears the hour, the line under the name says what today
+           actually holds, and the numbers stand as small labelled tiles —
+           calm neutrals, so the season covers below stay the picture. ---- */
+        .sch-hero { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+            gap: .85rem 1.25rem; padding: 1.05rem 1.25rem; margin-bottom: 1rem; border-radius: 1.1rem;
             background: var(--color-white); border: 1px solid var(--color-gray-200); position: relative; overflow: hidden; }
         /* One restrained accent: a hairline of field-green along the top. */
         .sch-hero::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
             background: linear-gradient(90deg, #6b9f3d, #b8d38e 55%, transparent); }
+        .sch-hero-left { display: flex; align-items: center; gap: .85rem; min-width: 0; }
+        .sch-hero-emoji { width: 3rem; height: 3rem; border-radius: 999px; flex-shrink: 0;
+            display: inline-flex; align-items: center; justify-content: center; font-size: 1.45rem; }
+        .tod-morning { background: linear-gradient(135deg, #fff7e0, #fbe6ae); }
+        .tod-afternoon { background: linear-gradient(135deg, #e8f4fd, #cde7fa); }
+        .tod-evening { background: linear-gradient(135deg, #e9e7fb, #d5d2f2); }
         .sch-hero-h { font-size: 1.15rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.25; }
-        .sch-hero-p { font-size: .84rem; color: var(--color-gray-500); margin-top: .2rem; }
+        .sch-hero-p { font-size: .82rem; color: var(--color-gray-500); margin-top: .15rem; }
+        .sch-hero-p b { font-weight: 700; color: var(--color-gray-700); }
+        .sch-hero-cta { display: inline-flex; align-items: center; gap: .3rem; margin-top: .4rem;
+            font-size: .78rem; font-weight: 700; color: #3d6823; }
+        .sch-hero-cta svg { width: .85rem; height: .85rem; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        .sch-hero-cta:hover svg { transform: translateX(3px); }
+        @media (prefers-reduced-motion: reduce) { .sch-hero-cta svg { transition: none; } }
         .sch-hero-stats { display: flex; gap: .45rem; flex-wrap: wrap; }
-        .sch-stat { display: inline-flex; align-items: baseline; gap: .35rem; padding: .35rem .7rem;
-            border-radius: 999px; background: var(--color-gray-50); border: 1px solid var(--color-gray-200);
-            font-size: .72rem; font-weight: 600; color: var(--color-gray-600); }
-        .sch-stat b { font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
+        .sch-stat { display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-width: 3.9rem; padding: .45rem .65rem; border-radius: .85rem;
+            background: var(--color-gray-50); border: 1px solid var(--color-gray-200); }
+        .sch-stat b { font-size: 1.05rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.15; }
+        .sch-stat i { font-style: normal; font-size: .6rem; font-weight: 700; letter-spacing: .06em;
+            text-transform: uppercase; color: var(--color-gray-400); }
+        /* Today's tile is the one that matters — it gets the accent. */
+        .sch-stat.is-today { background: #f0f7e8; border-color: #cfe3b8; }
+        .sch-stat.is-today b { color: #3d6823; }
+        .sch-stat.is-today i { color: #6b9f3d; }
         html.dark .sch-hero { background: #151b12; border-color: #2b3a1c; }
         html.dark .sch-hero-h { color: #e8efe1; }
         html.dark .sch-hero-p { color: #a8bd93; }
-        html.dark .sch-stat { background: rgb(255 255 255 / .05); border-color: #2b3a1c; color: #cdd8c0; }
+        html.dark .sch-hero-p b { color: #cdd8c0; }
+        html.dark .sch-hero-cta { color: #a5c97e; }
+        html.dark .tod-morning, html.dark .tod-afternoon, html.dark .tod-evening { background: rgb(255 255 255 / .07); }
+        html.dark .sch-stat { background: rgb(255 255 255 / .05); border-color: #2b3a1c; }
         html.dark .sch-stat b { color: #e8efe1; }
+        html.dark .sch-stat.is-today { background: rgb(61 104 35 / .22); border-color: #3f5626; }
+        html.dark .sch-stat.is-today b { color: #bfe19a; }
+        @media (max-width: 640px) {
+            /* The tiles take the second row, evenly, instead of ragging. */
+            .sch-hero-stats { width: 100%; }
+            .sch-hero-stats .sch-stat { flex: 1 1 0; min-width: 0; }
+        }
 
         /* ---- the two quick doors: notes and the camera. Feature buttons
            with a face, not two more grey pills — each carries its own tinted
@@ -187,28 +216,45 @@
 
 @section('content')
 
-    {{-- A summary worth a glance before the list itself. --}}
+    {{-- A hello with the day's answer in it: who you are, what today holds,
+         and the way straight onto the board that holds it. --}}
     <div class="sch-hero">
-        <div class="sch-hero-text">
-            <h1 class="sch-hero-h">
-                @php $__h = (int) now()->format('G'); @endphp
-                {{ $__h < 12 ? 'Good morning' : ($__h < 18 ? 'Good afternoon' : 'Good evening') }}, {{ auth()->user()->firstName ?: 'farmer' }}.
-            </h1>
-            @php
-                // Built here rather than inline: a trailing full stop after an
-                // @endif is not a directive Blade recognises, and the if never
-                // closes.
-                $__say = $summary['schedules'] === 0
-                    ? 'Nothing planned yet — a schedule is where a season starts.'
-                    : $summary['schedules'] . ' ' . \Illuminate\Support\Str::plural('schedule', $summary['schedules'])
-                        . ($summary['active'] ? ', ' . $summary['active'] . ' running now' : '') . '.';
-            @endphp
-            <p class="sch-hero-p">{{ $__say }}</p>
+        @php
+            $__h = (int) now()->format('G');
+            [$__greet, $__mark, $__tod] = $__h < 12
+                ? ['Good morning', '🌅', 'tod-morning']
+                : ($__h < 18 ? ['Good afternoon', '☀️', 'tod-afternoon'] : ['Good evening', '🌙', 'tod-evening']);
+            // Built here rather than inline: a trailing full stop after an
+            // @endif is not a directive Blade recognises, and the if never
+            // closes.
+            $__say = now()->format('l, F j');
+            if ($summary['schedules'] === 0) {
+                $__say .= ' — nothing planned yet. A schedule is where a season starts.';
+            } elseif ($summary['today'] > 0) {
+                $__say .= ' — <b>' . $summary['today'] . ' ' . \Illuminate\Support\Str::plural('activity', $summary['today']) . '</b> on the board today';
+                $__say .= $summary['active'] ? ', ' . $summary['active'] . ' ' . \Illuminate\Support\Str::plural('season', $summary['active']) . ' running.' : '.';
+            } else {
+                $__say .= ' — a quiet day, nothing planned on the boards.';
+            }
+        @endphp
+        <div class="sch-hero-left">
+            <span class="sch-hero-emoji {{ $__tod }}" aria-hidden="true">{{ $__mark }}</span>
+            <div class="min-w-0">
+                <h1 class="sch-hero-h">{{ $__greet }}, {{ auth()->user()->firstName ?: 'farmer' }}</h1>
+                <p class="sch-hero-p">{!! $__say !!}</p>
+                @if (($todayHref ?? null) && $summary['today'] > 0)
+                    <a href="{{ $todayHref }}" class="sch-hero-cta">
+                        Open today's board
+                        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 12h14"/></svg>
+                    </a>
+                @endif
+            </div>
         </div>
         <div class="sch-hero-stats">
-            <span class="sch-stat"><b>{{ $summary['lots'] }}</b>{{ \Illuminate\Support\Str::plural('lot', $summary['lots']) }}</span>
-            <span class="sch-stat"><b>{{ $summary['workers'] }}</b>{{ \Illuminate\Support\Str::plural('worker', $summary['workers']) }}</span>
-            <span class="sch-stat"><b>{{ $summary['active'] }}</b>active</span>
+            <span class="sch-stat is-today"><b>{{ $summary['today'] }}</b><i>today</i></span>
+            <span class="sch-stat"><b>{{ $summary['lots'] }}</b><i>{{ \Illuminate\Support\Str::plural('lot', $summary['lots']) }}</i></span>
+            <span class="sch-stat"><b>{{ $summary['workers'] }}</b><i>{{ \Illuminate\Support\Str::plural('worker', $summary['workers']) }}</i></span>
+            <span class="sch-stat"><b>{{ $summary['active'] }}</b><i>running</i></span>
         </div>
     </div>
 

@@ -132,9 +132,26 @@ class CroppingScheduleController extends Controller
             'workers' => \App\Models\AsScheduleWorker::where('deleteStatus', 1)
                 ->whereIn('croppingScheduleId', AsCroppingSchedule::active()->forClient($ownerId)->select('id'))
                 ->count(),
+            // What TODAY holds across every board — the number a farmer
+            // opens this page wanting, before any totals.
+            'today' => \App\Models\AsScheduleActivity::where('deleteStatus', 1)
+                ->whereIn('croppingScheduleId', AsCroppingSchedule::active()->forClient($ownerId)->select('id'))
+                ->where(function ($q) {
+                    $d = \Illuminate\Support\Carbon::today()->toDateString();
+                    $q->whereDate('targetDate', $d)
+                        ->orWhere(fn ($w) => $w->whereDate('targetDate', '<=', $d)->whereDate('targetEndDate', '>=', $d));
+                })
+                ->count(),
         ];
 
-        return view('sm.index', compact('schedules', 'allSchedules', 'tip', 'summary', 'cards'));
+        // Where "open today's board" lands: the season that is running, or
+        // failing that the newest one on the shelf.
+        $todaySchedule = AsCroppingSchedule::active()->forClient($ownerId)
+            ->where('status', 'active')->orderByDesc('created_at')->first()
+            ?? $schedules->first();
+        $todayHref = $todaySchedule ? route('sm.activities', ['id' => $todaySchedule->id]) : null;
+
+        return view('sm.index', compact('schedules', 'allSchedules', 'tip', 'summary', 'cards', 'todayHref'));
     }
 
     public function create()
