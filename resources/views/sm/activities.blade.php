@@ -253,10 +253,7 @@
             padding: .12rem .45rem; border-radius: 999px; font-size: .68rem; font-weight: 800;
             background: #e4efd4; color: #3d6823; border: 1px solid #c9e0ad; cursor: pointer; }
         .date-header-stage[hidden] { display: none; }
-        .date-header-stage .dhs-emoji { font-size: .9rem; line-height: 1; }
-        /* How many lots are behind one glyph, when it is more than one. */
-        .date-header-stage .dhs-n { font-size: .62rem; font-weight: 800; opacity: .8; }
-        .date-header-stage { padding: .18rem .4rem; }
+        .date-header-stage .dhs-emoji { font-size: .8rem; line-height: 1; }
         .date-header-stage:hover { filter: brightness(.97); }
         html.dark .date-header-stage { background: rgb(61 104 35 / .35); color: #a8cc7e; border-color: rgb(61 104 35 / .6); }
 
@@ -305,14 +302,11 @@
         .date-header-weather { min-width: 0; flex: 1 1 auto; }
         .date-header-cash { flex: 0 0 auto; }
         .date-header-weather.scroll-chips { gap: .25rem; padding: 0; margin: 0; }
-        /* A chip is one glyph now, so it is round and small rather than a
-           pill sized for words. Three lots cost 3 icons instead of three
-           "Apartado 1 · 31°" phrases and a wrapped header. */
-        .wx-chip { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
-            width: 1.35rem; height: 1.35rem; border-radius: 999px; background: var(--tl-pill);
-            cursor: pointer; border: 1px solid transparent; transition: border-color .15s ease; }
+        .wx-chip { display: inline-flex; align-items: center; gap: .22rem; flex-shrink: 0; font-size: 10.5px; font-weight: 700; padding: .1rem .42rem; border-radius: 999px; background: var(--tl-pill); color: var(--tl-text-muted); white-space: nowrap; cursor: pointer; border: 1px solid transparent; transition: border-color .15s ease; }
         .wx-chip:hover { border-color: var(--date-color, #4A90E2); }
-        .wx-chip .wx-emoji { font-size: 13px; line-height: 1; }
+        .wx-chip .wx-emoji { font-size: 12px; line-height: 1; }
+        .wx-chip .wx-loc { color: var(--tl-text-soft); max-width: 6rem; overflow: hidden; text-overflow: ellipsis; }
+        .wx-chip .wx-temp { color: var(--tl-text); font-variant-numeric: tabular-nums; }
         .rest-day-weather { margin-top: .35rem; max-width: 100%; }
         .wx-cloud { display: inline-block; animation: wxCloudFloat 1.6s ease-in-out infinite; }
         @keyframes wxCloudFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }

@@ -366,18 +366,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const rows = dayStageRows(dateKey, group);
         if (!rows.length) { pill.hidden = true; pill.textContent = ''; return; }
 
-        // The plant, and nothing else. "Booting & heading" is eleven
-        // characters of a header that also has to carry a date, a count, a
-        // forecast and a cost — and with three lots it was three of those
-        // phrases. The icon says a crop is being tracked; tapping it says
-        // everything the words used to, for every lot at once.
+        // One lot: name the stage. Several: say how many, because a header is
+        // not the place to list four different answers. A bare icon was tried
+        // and read as decoration — the word is what makes it information.
         const first = rows[0];
+        const label = rows.length === 1
+            ? first.stage.label
+            : rows.length + ' lots';
         const detail = rows.length === 1
             ? rows[0].stage.label
             : rows.map((r) => r.lotName + ': ' + r.stage.label).join(' · ');
         pill.hidden = false;
-        pill.innerHTML = `<span class="dhs-emoji">${first.stage.icon || '🌱'}</span>`
-            + (rows.length > 1 ? `<span class="dhs-n">${rows.length}</span>` : '');
+        pill.innerHTML = `<span class="dhs-emoji">${first.stage.icon || '🌱'}</span><span>${esc(label)}</span>`;
         pill.title = detail;
         pill.setAttribute('aria-label', 'Growth stage — ' + detail);
         pill.setAttribute('data-date', dateKey);
@@ -5232,20 +5232,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (typeof refreshDayWarnings === 'function') refreshDayWarnings();
         }
 
-        /* The sky, as one glyph.
-         *
-         * The chip used to carry the place, the temperature and sometimes the
-         * chance of rain — three lots' worth of that pushed the cost pill onto
-         * a third line and left nothing readable at a glance. What a header is
-         * for is "is it going to rain on this day": the icon answers that, and
-         * everything else is a tap away in the day's own forecast. */
+        /* Which sky, over which ground, and how warm. An icon on its own was
+         * tried and is not enough: two lots with different weather look
+         * identical when both are a cloud, and the place name is half the
+         * point of having a forecast per lot at all. */
         function wxChip(place, d) {
             const bits = [esc(place), esc(d.text)];
             if (d.max != null) bits.push(d.max + '°' + (d.min != null ? '/' + d.min + '°' : ''));
             if (d.pop != null) bits.push('💧' + d.pop + '%');
             const label = bits.join(' · ');
             return `<span class="wx-chip js-wx-chip" title="${label}" aria-label="${label}">`
-                + `<span class="wx-emoji">${d.emoji}</span></span>`;
+                + `<span class="wx-emoji">${d.emoji}</span><span class="wx-loc">${esc(place)}</span>`
+                + (d.max != null ? `<span class="wx-temp">${d.max}°</span>` : '') + '</span>';
         }
 
         /**
@@ -5322,10 +5320,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.className = 'wx-mini-btn';
                 btn.title = 'Weather for each lot';
                 btn.setAttribute('aria-label', 'Weather for each lot');
-                // Icons only now, so a fold is rarer — but when many lots
-                // still overflow, one sky and a count of places.
+                // "3 lots", not "Weather 3": the icon already says weather,
+                // and the number means places, which the word never did.
                 btn.innerHTML = '<span class="wx-emoji">' + (first ? first.textContent : '⛅') + '</span>'
-                    + '<span>' + n + '</span>';
+                    + '<span>' + n + ' lots</span>';
                 btn.dataset.wxFor = strip.dataset.wxFor || '';
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();          // not a fold of the day
