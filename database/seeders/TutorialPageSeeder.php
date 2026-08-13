@@ -119,6 +119,13 @@ class TutorialPageSeeder extends Seeder
                 'steps_desktop' => ['Click New drawing.', 'Pick a tool, colour and size; hold Shift for a perfect square or circle.', 'Select lets you marquee several shapes at once and move them together.', 'Save, then choose picture or drawing.'],
                 'tips' => ['"Save as drawing" keeps the strokes, so it can be edited again. "Save as image" cannot.', 'A drawing saved in the Collab Room is tagged Team drawing.'],
             ],
+            'growth' => [
+                'summary' => 'What each lot is doing today, and what it needs.',
+                'intro' => "The board counts days — DAS from sowing, DAT from transplanting, DAP from planting. This page turns that number into what the plant is actually doing, and what the work of the week is.",
+                'steps_mobile' => ['Set the crop on each lot in the Lots module.', 'Give the lot a day zero, or tick "this is day zero" on the activity that starts the count.', 'Open Growth Stages from the menu or the hub.', 'Change the date at the top to read the crop on any day — next week, or last month.'],
+                'steps_desktop' => ["Set each lot's crop in Lots and give it a day zero.", 'Open Growth Stages from the hub.', 'Each lot shows its stage, what to do now, what to watch for, and where it sits in the season.', 'Change the date to plan ahead.'],
+                'tips' => ['Rice is read from transplanting where a lot has a transplant date, and from sowing where it does not — the label says which.', 'The day header in Activities has the same reading for that day, on the plant pill beside the cost.'],
+            ],
             'media' => [
                 'summary' => 'Every picture and video the season has, in one place.',
                 'intro' => "Photos end up wherever they were taken — in a note, on an activity, in a drawing, attached to a question for the AI. The Media Box gathers all of them so you can find one without remembering where it was put.",

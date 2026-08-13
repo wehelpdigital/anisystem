@@ -11,6 +11,7 @@
         'activities' => ['label' => 'Activities', 'route' => 'sm.activities'],
         'post-harvest' => ['label' => 'Post-harvest', 'route' => 'sm.post-harvest'],
         'notes' => ['label' => 'Notes', 'route' => 'sm.notes'],
+        'growth' => ['label' => 'Growth Stages', 'route' => 'sm.growth'],
         'ai' => ['label' => 'AI Technician', 'route' => 'sm.ai'],
     ];
 @endphp

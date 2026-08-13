@@ -2389,6 +2389,7 @@
         maps:          { label: 'Maps',          url: @json(route('sm.maps',         ['id' => $schedule->id])) },
         draw:          { label: 'Draw',          url: @json(route('sm.draw',         ['id' => $schedule->id])) },
         media:         { label: 'Media Box',     url: @json(route('sm.media',        ['id' => $schedule->id])) },
+        growth:        { label: 'Growth Stages', url: @json(route('sm.growth',       ['id' => $schedule->id])) },
         weather:       { label: 'Weather',       url: @json(route('sm.weather.page', ['id' => $schedule->id])) },
         ai:            { label: 'AI Technician', url: @json(route('sm.ai',           ['id' => $schedule->id])) },
     };
