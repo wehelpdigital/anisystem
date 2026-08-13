@@ -84,7 +84,10 @@
                 @endforeach
             </div>
             <input type="hidden" id="lotCrop" value="">
-            <p class="form-hint">Sets the growth stages this lot is read against. Tap a chosen crop again to clear it.</p>
+            <p class="form-hint">
+                Currently: <strong id="lotCropNow" class="is-none">Not set</strong>.
+                Sets the growth stages this lot is read against — tap a chosen crop again to clear it.
+            </p>
         </div>
 
         <div>
@@ -155,6 +158,8 @@
     .crop-opt.is-selected { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
     .crop-emoji { font-size: 1rem; line-height: 1; }
     .lot-crop-badge { display: inline-flex; align-items: center; gap: .25rem; }
+    #lotCropNow { color: #3d6823; }
+    #lotCropNow.is-none { color: var(--color-gray-400); font-weight: 500; }
     html.dark .crop-opt { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
     @media (prefers-reduced-motion: reduce) { .crop-opt { transition: none; } }
 </style>
@@ -168,7 +173,10 @@
         'lotSize' => $l->lotSize,
         'lotSizeUnit' => $l->lotSizeUnit,
         'variety' => $l->variety,
-        'crop' => $l->crop,
+        // Normalised, not raw: a lot whose crop was stored as free text (an
+        // import, or an older build) would light no chip at all, which reads
+        // exactly like a picker that does not work.
+        'crop' => \App\Support\CropStages::normalize($l->crop),
         'cropLabel' => \App\Support\CropStages::label($l->crop),
         'cropIcon' => \App\Support\CropStages::icon($l->crop),
         'locBarangay' => $l->locBarangay,
@@ -389,11 +397,40 @@ const __init = () => {
 
     /* One crop per lot, and tapping the chosen one again clears it — a lot
        whose crop was set by mistake needs a way back to "not set". */
+    /** Which crop chip is lit, and what the form will send. */
     function setLotCrop(value) {
-        document.getElementById('lotCrop').value = value || '';
+        const want = matchCrop(value);
+        document.getElementById('lotCrop').value = want;
+        let lit = null;
         document.querySelectorAll('#lotCropPick .crop-opt').forEach((b) => {
-            b.classList.toggle('is-selected', b.getAttribute('data-crop') === value);
+            const on = b.getAttribute('data-crop') === want;
+            b.classList.toggle('is-selected', on);
+            if (on) lit = b;
         });
+        const say = document.getElementById('lotCropNow');
+        if (say) {
+            say.textContent = lit ? lit.textContent.trim() : 'Not set';
+            say.classList.toggle('is-none', !lit);
+        }
+    }
+
+    /**
+     * A stored crop turned into the key of a chip. Exact key first, then a
+     * loose match on the label, so "Rice (Palay)" or "RICE" still lights the
+     * rice chip instead of leaving the row looking broken.
+     */
+    function matchCrop(value) {
+        const v = String(value || '').trim().toLowerCase();
+        if (!v) return '';
+        const opts = [...document.querySelectorAll('#lotCropPick .crop-opt')];
+        const exact = opts.find((b) => b.getAttribute('data-crop') === v);
+        if (exact) return v;
+        const loose = opts.find((b) => {
+            const key = b.getAttribute('data-crop');
+            const label = b.textContent.trim().toLowerCase();
+            return v.includes(key) || label.includes(v) || v.includes(label);
+        });
+        return loose ? loose.getAttribute('data-crop') : '';
     }
     document.getElementById('lotCropPick')?.addEventListener('click', (e) => {
         const opt = e.target.closest('.crop-opt');
