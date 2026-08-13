@@ -119,6 +119,13 @@ class TutorialPageSeeder extends Seeder
                 'steps_desktop' => ['Click New drawing.', 'Pick a tool, colour and size; hold Shift for a perfect square or circle.', 'Select lets you marquee several shapes at once and move them together.', 'Save, then choose picture or drawing.'],
                 'tips' => ['"Save as drawing" keeps the strokes, so it can be edited again. "Save as image" cannot.', 'A drawing saved in the Collab Room is tagged Team drawing.'],
             ],
+            'media' => [
+                'summary' => 'Every picture and video the season has, in one place.',
+                'intro' => "Photos end up wherever they were taken — in a note, on an activity, in a drawing, attached to a question for the AI. The Media Box gathers all of them so you can find one without remembering where it was put.",
+                'steps_mobile' => ['Open Media Box from the menu or the hub.', 'Tap Photos or Videos.', 'Tap anything to open it full screen; pinch to zoom.', 'Tap "Where it lives" under a picture to go to the note or activity it belongs to.'],
+                'steps_desktop' => ['Open Media Box from the hub or the modules menu.', 'Switch between the Photos and Videos tabs.', 'Click a tile to open it; scroll to zoom.', 'The link under each tile goes to wherever that picture actually lives.'],
+                'tips' => ['Nothing is copied here — delete a photo in Notes and it leaves the Media Box too.', 'Saved maps are not here: a map is a place to work on, and it has the Maps module.'],
+            ],
             'weather' => [
                 'summary' => 'The forecast for the ground you actually farm.',
                 'intro' => "Weather is read for each lot's own location, not for the nearest city. The general tab is the week ahead; the hourly tab is today in detail.",
