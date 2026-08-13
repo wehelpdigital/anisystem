@@ -22,3 +22,6 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Headless-probe scratch page (see the probe tooling); never a real asset.
+public/__probe_page.html
