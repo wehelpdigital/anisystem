@@ -835,11 +835,53 @@
         <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-3">
-        <p class="text-sm text-gray-600">Move <strong id="moveDateName" class="text-gray-900"></strong> to a new date.</p>
-        <div>
-            <label class="form-label" for="moveDateInput">New date</label>
-            <input type="date" id="moveDateInput" class="form-input">
+        <p class="text-sm text-gray-600">Move <strong id="moveDateName" class="text-gray-900"></strong> to a new day.</p>
+
+        {{-- The same two ways of saying "when" the add-activity sheet offers.
+             A move is the same question — and a grower who plans by day number
+             had to work out the calendar date themselves before they could
+             answer it. --}}
+        <div class="when-tabs" id="moveWhenTabs" role="tablist">
+            <button type="button" class="when-tab is-active" id="moveTabDate" aria-selected="true">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                Date
+            </button>
+            <button type="button" class="when-tab" id="moveTabDas" aria-selected="false">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/></svg>
+                By day number
+            </button>
         </div>
+
+        <div class="when-pane" id="moveWhenDate">
+            <label class="form-label" for="moveDateInput">New date</label>
+            {{-- A pill you tap, with the real input laid over it invisibly, so
+                 the phone opens its own picker — the same control the add
+                 sheet uses. --}}
+            <div class="date-pill is-empty" id="moveDateField">
+                <svg class="dp-ico" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 21h14a1 1 0 001-1V6a1 1 0 00-1-1H5a1 1 0 00-1 1v14a1 1 0 001 1z"/></svg>
+                <span class="dp-text" id="moveDateText">Pick a date</span>
+                <input type="date" id="moveDateInput" class="dp-input cal-only" inputmode="none" aria-label="New date">
+            </div>
+        </div>
+
+        <div class="when-pane hidden das-panel" id="moveWhenDas">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                    <label class="form-label" for="moveDasLot">Reference lot</label>
+                    <select id="moveDasLot" class="form-select"></select>
+                </div>
+                <div>
+                    <label class="form-label" for="moveDasDay"><span id="moveDasLabel">Day</span></label>
+                    <input type="number" id="moveDasDay" class="form-input" step="1" placeholder="e.g. 21">
+                </div>
+            </div>
+            {{-- Which count, when the lot keeps two: a transplanted lot is DAS
+                 until the transplant and DAT after it, and the same number
+                 means a different day in each. --}}
+            <div class="move-counters" id="moveCounters"></div>
+            <p class="text-xs text-blue-800 mt-2" id="moveDasNote"></p>
+        </div>
+
         <p class="form-hint">Multi-day activities keep their duration — the end date shifts by the same number of days.</p>
     </div>
     <div class="sheet-footer">

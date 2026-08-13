@@ -2322,17 +2322,18 @@ document.addEventListener('DOMContentLoaded', () => {
      * One place paints it, and every write to the field goes through
      * setTargetDate so the words never fall behind the value — including the
      * writes the DAS pane makes when you type a day number instead. */
-    function paintDateField() {
-        const input = $id('activityTargetDate');
-        const text = $id('activityTargetDateText');
-        const pill = $id('activityDateField');
-        if (!input || !text || !pill) return;
-        const v = (input.value || '').trim();
+    /** Any date pill: the words follow the value it holds. */
+    function paintPill(pill, text, value) {
+        if (!pill || !text) return;
+        const v = (value || '').trim();
         // "January 25, 2026" — the day name is on the board already, and
         // this is a field, not a sentence.
         const d = parseLocalDate(v);
         text.textContent = d ? (MONTH_LONG[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear()) : 'Pick a date';
         pill.classList.toggle('is-empty', !v);
+    }
+    function paintDateField() {
+        paintPill($id('activityDateField'), $id('activityTargetDateText'), $id('activityTargetDate')?.value);
     }
     function setTargetDate(v) {
         const input = $id('activityTargetDate');
@@ -4456,18 +4457,138 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (action === 'draft') moveActivityToDrafts(id, name);
             else if (action === 'delete') deleteActivity(id, name);
             else if (action === 'hide') toggleActivityHidden(id);
-            else if (action === 'move') {
-                const card = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
-                $id('moveDateName').textContent = name;
-                $id('moveDateInput').value = card ? (card.getAttribute('data-target-date') || '') : '';
-                openSheet('moveDateSheet');
-            }
+            else if (action === 'move') openMoveSheet(id, name);
             return;
         }
     });
 
+    /* ---- Move an activity: by date, or by the count the lot keeps -------
+     * Moving is the same question the add sheet asks — "when?" — so it is
+     * asked the same way, including the day-number lens. A grower planning in
+     * DAS had to convert to a calendar date in their head before they could
+     * answer, which is exactly the arithmetic this app exists to do. */
+    let MOVE_MODE = 'date';        // 'date' | 'das'
+    let MOVE_COUNTER = 'DAS';      // which count the number is in
+
+    /** The lots this move can be counted against: they need an anchor. */
+    function moveAnchorLots() {
+        return Object.keys(LOT_DAY_ZERO_DATES).map(Number).filter((id) => LOT_DAY_ZERO_DATES[id]);
+    }
+
+    /** Which counts the chosen lot keeps, in the order they run. */
+    function moveCountersFor(lotId) {
+        const mode = lotDayType(lotId);
+        if (mode === 'DAP') return ['DAP'];
+        // A sown-then-transplanted lot keeps two, and only once it has a
+        // transplant date to count the second one from.
+        return (mode === 'DAT' && LOT_TRANSPLANT_DATES[lotId]) ? ['DAS', 'DAT'] : ['DAS'];
+    }
+
+    /** Where day 0 of the chosen count sits. */
+    function moveAnchorFor(lotId, counter) {
+        return counter === 'DAT'
+            ? (LOT_TRANSPLANT_DATES[lotId] || null)
+            : (LOT_DAY_ZERO_DATES[lotId] || null);
+    }
+
+    function paintMoveCounters() {
+        const lotId = parseInt($id('moveDasLot').value, 10);
+        const list = moveCountersFor(lotId);
+        if (!list.includes(MOVE_COUNTER)) MOVE_COUNTER = list[0];
+        // One count, nothing to choose — the label already says which.
+        $id('moveCounters').innerHTML = list.length < 2 ? '' : list.map((c) =>
+            `<button type="button" class="move-counter${c === MOVE_COUNTER ? ' is-on' : ''}" data-counter="${c}">${c}</button>`).join('');
+        $id('moveDasLabel').textContent = MOVE_COUNTER + ' day';
+        updateMoveNote();
+    }
+
+    function updateMoveNote() {
+        const lotId = parseInt($id('moveDasLot').value, 10);
+        const anchor = moveAnchorFor(lotId, MOVE_COUNTER);
+        const note = $id('moveDasNote');
+        if (!anchor) {
+            note.innerHTML = 'That lot has no ' + esc(MOVE_COUNTER) + ' 0 yet, so it cannot be counted from.';
+            return;
+        }
+        const n = $id('moveDasDay').value;
+        const dateStr = n === '' ? '' : _dasToDateStr(n, anchor);
+        note.innerHTML = `<strong>${esc(MOVE_COUNTER)} 0</strong> for <strong>${esc(LOT_NAMES[lotId] || ('Lot #' + lotId))}</strong>`
+            + ` = ${esc(prettyDate(anchor))}.`
+            + (dateStr ? ` ${esc(MOVE_COUNTER)} ${esc(String(n))} is <strong>${esc(prettyDate(dateStr))}</strong> — that is the date that gets saved.` : '');
+    }
+
+    function setMoveMode(mode) {
+        MOVE_MODE = mode === 'das' ? 'das' : 'date';
+        const das = MOVE_MODE === 'das';
+        $id('moveTabDate').classList.toggle('is-active', !das);
+        $id('moveTabDate').setAttribute('aria-selected', das ? 'false' : 'true');
+        $id('moveTabDas').classList.toggle('is-active', das);
+        $id('moveTabDas').setAttribute('aria-selected', das ? 'true' : 'false');
+        $id('moveWhenDate').classList.toggle('hidden', das);
+        $id('moveWhenDas').classList.toggle('hidden', !das);
+        if (das) {
+            // Start from where the activity already is, so the number is a
+            // correction rather than a blank to fill.
+            const anchor = moveAnchorFor(parseInt($id('moveDasLot').value, 10), MOVE_COUNTER);
+            const cur = $id('moveDateInput').value;
+            if (anchor && cur) $id('moveDasDay').value = _dateStrToDas(cur, anchor);
+            updateMoveNote();
+        }
+    }
+
+    function openMoveSheet(id, name) {
+        const card = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
+        const current = card ? (card.getAttribute('data-target-date') || '') : '';
+        $id('moveDateName').textContent = name;
+        $id('moveDateInput').value = current;
+        paintPill($id('moveDateField'), $id('moveDateText'), current);
+
+        // The lots to count against: the ones this activity covers first,
+        // since that is what a day number about it would mean.
+        const own = card
+            ? $qsa('.activity-card-lothead .lot-tag[data-lot-id], .activity-card-badges .lot-tag[data-lot-id]', card)
+                .map((t) => parseInt(t.getAttribute('data-lot-id'), 10))
+            : [];
+        const anchored = moveAnchorLots();
+        const ordered = own.filter((l) => anchored.includes(l)).concat(anchored.filter((l) => !own.includes(l)));
+        const sel = $id('moveDasLot');
+        sel.innerHTML = ordered.map((l) => `<option value="${l}">${esc(LOT_NAMES[l] || ('Lot #' + l))}</option>`).join('');
+
+        // No lot has a day zero — the day-number lens has nothing to count
+        // from, so it says so instead of offering an empty form.
+        const canCount = ordered.length > 0;
+        $id('moveTabDas').disabled = !canCount;
+        $id('moveTabDas').title = canCount ? '' : 'No lot has a day zero yet';
+        MOVE_COUNTER = 'DAS';
+        if (canCount) paintMoveCounters();
+        setMoveMode('date');
+        openSheet('moveDateSheet');
+    }
+
+    $id('moveDasLot')?.addEventListener('change', paintMoveCounters);
+    $id('moveDasDay')?.addEventListener('input', updateMoveNote);
+    $id('moveCounters')?.addEventListener('click', (e) => {
+        const b = e.target.closest('.move-counter');
+        if (!b) return;
+        MOVE_COUNTER = b.getAttribute('data-counter');
+        paintMoveCounters();
+    });
+    $id('moveTabDate')?.addEventListener('click', () => setMoveMode('date'));
+    $id('moveTabDas')?.addEventListener('click', () => setMoveMode('das'));
+    $id('moveDateInput')?.addEventListener('change', () => {
+        paintPill($id('moveDateField'), $id('moveDateText'), $id('moveDateInput').value);
+    });
+
     $id('confirmMoveDateBtn')?.addEventListener('click', () => {
-        const newDate = $id('moveDateInput').value;
+        let newDate = $id('moveDateInput').value;
+        if (MOVE_MODE === 'das') {
+            const lotId = parseInt($id('moveDasLot').value, 10);
+            const anchor = moveAnchorFor(lotId, MOVE_COUNTER);
+            const n = $id('moveDasDay').value;
+            if (!anchor) { toast('That lot has no ' + MOVE_COUNTER + ' 0 to count from.', 'error'); return; }
+            if (n === '') { toast('Enter a ' + MOVE_COUNTER + ' day number.', 'error'); return; }
+            newDate = _dasToDateStr(n, anchor);
+        }
         if (!newDate) {
             toast('Pick a date.', 'error');
             return;

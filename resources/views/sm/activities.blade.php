@@ -278,6 +278,17 @@
         html.dark .adv-row.is-none { background: #1c2416; }
 
         /* The reminder card names itself where other cards name their lot. */
+        /* Which count a move is being made in, when the lot keeps two. */
+        .move-counters { display: flex; gap: .3rem; margin-top: .5rem; }
+        .move-counters:empty { display: none; }
+        .move-counter { padding: .3rem .75rem; border-radius: 999px; font-size: .75rem; font-weight: 800;
+            border: 2px solid var(--color-gray-200); background: var(--color-white); color: #374151; cursor: pointer;
+            transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+        html.dark .move-counter { background: #1c2136; border-color: #2a3050; color: #cdd8c0; }
+        .move-counters .move-counter.is-on,
+        html.dark .move-counters .move-counter.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+        @media (prefers-reduced-motion: reduce) { .move-counter { transition: none; } }
+
         .reminder-head-badge { background: #f5f0ff; color: #6d28d9; border: 1px solid #ddd6fe; font-weight: 800; }
         html.dark .reminder-head-badge { background: rgb(109 40 217 / .18); border-color: rgb(139 92 246 / .45); color: #c4b5fd; }
 
