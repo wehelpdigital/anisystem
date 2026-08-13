@@ -13,7 +13,7 @@
 <style>
     /* WYSIWYG topic editor — formatting toolbar, NO raw-HTML source. */
     #postBodyEditor { background:#fff; border:1px solid #d1d5db; border-top:0; border-radius:0 0 .6rem .6rem; }
-    #postBodyEditor .ql-editor { min-height:5rem; font-size:.9rem; padding:.6rem .75rem; }
+    /* Height and look come from the shared rules in app.css. */
     #postBodyEditor .ql-editor.ql-blank::before { font-style:normal; color:#9ca3af; left:.75rem; }
     .ql-toolbar.ql-snow { border:1px solid #d1d5db; border-radius:.6rem .6rem 0 0; }
     html.dark #postBodyEditor, html.dark .ql-toolbar.ql-snow { background:#171f10; border-color:#2b3a1c; }
@@ -285,14 +285,11 @@ document.addEventListener('DOMContentLoaded', () => {
         bodyQuill = new Quill(editorEl, {
             theme: 'snow',
             placeholder: editorEl.getAttribute('data-placeholder') || '',
-            modules: { toolbar: [
-                [{ header: [3, 4, false] }],
-                ['bold', 'italic', 'underline', 'strike'],
-                [{ list: 'ordered' }, { list: 'bullet' }],
-                ['blockquote', 'link'],
-                ['clean'],
-            ] },
+            // The app's one toolbar (resources/js/app.js) — a post is written
+            // the same way a note is.
+            modules: { toolbar: window.SM_RICH_TOOLBAR },
         });
+        window.smQuillTouch?.(bodyQuill);
     }
     const getBodyHtml = () => bodyQuill ? bodyQuill.root.innerHTML : '';
     const getBodyText = () => bodyQuill ? bodyQuill.getText().trim() : '';

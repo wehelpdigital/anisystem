@@ -131,13 +131,6 @@
         });
         return quillLoading;
     }
-    const RICH_TOOLBAR = [
-        [{ header: [2, 3, false] }],
-        ['bold', 'italic', 'underline'],
-        [{ list: 'ordered' }, { list: 'bullet' }],
-        ['link'],
-        ['clean'],
-    ];
     const _editors = {};
     async function mountEditor(elId, placeholder = '') {
         await ensureQuill();
@@ -145,8 +138,12 @@
             _editors[elId] = new Quill('#' + elId, {
                 theme: 'snow',
                 placeholder,
-                modules: { toolbar: RICH_TOOLBAR },
+                // The app's one toolbar (resources/js/app.js). Read here, not
+                // at parse time: this file is inline and runs before the
+                // module bundle that defines it.
+                modules: { toolbar: window.SM_RICH_TOOLBAR },
             });
+            window.smQuillTouch?.(_editors[elId]);
         }
         return _editors[elId];
     }

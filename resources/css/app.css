@@ -719,10 +719,59 @@ html.dark .ql-snow .ql-toolbar button:hover .ql-stroke { stroke: var(--color-bra
     border-bottom-left-radius: .75rem; border-bottom-right-radius: .75rem;
     border-color: var(--color-gray-200); font-family: inherit;
 }
-.rich-editor .ql-editor { min-height: 8rem; font-size: .95rem; line-height: 1.55; }
 .rich-editor #protocolEditor,
 #protocolEditor.ql-container .ql-editor { min-height: 12rem; }
 html.dark .rich-editor .ql-toolbar.ql-snow { background: var(--color-gray-100); }
+
+/* ------------------------------------------------------------------ */
+/* Every rich-text box, wherever it is                                   */
+/* ------------------------------------------------------------------ */
+/* One height and one look for all of them. They had drifted to six
+   different heights — 5rem in the community composer, 6 in quick capture,
+   8 in post-harvest, 9 in notes, 11 in the note editor, 130px in the
+   activity sheet — so the same job felt different on every screen. Ten
+   rems is room for a real paragraph without swallowing a phone. Views can
+   still ask for more where the content genuinely warrants it. */
+/* Every selector here starts at `html` on purpose. Quill's own stylesheet
+   arrives from a CDN at runtime, so it lands after this file with the same
+   specificity and would win on order alone — one element up is enough to
+   settle it without reaching for !important. */
+html .ql-toolbar.ql-snow {
+    border-top-left-radius: .7rem; border-top-right-radius: .7rem;
+    border-color: var(--color-gray-200); background: var(--color-gray-50);
+    padding: .4rem .5rem;
+}
+html .ql-container.ql-snow {
+    border-bottom-left-radius: .7rem; border-bottom-right-radius: .7rem;
+    border-color: var(--color-gray-200); font-family: inherit;
+}
+html .ql-editor {
+    min-height: 10rem; font-size: .95rem; line-height: 1.6;
+}
+html .ql-editor.ql-blank::before { font-style: normal; color: var(--color-gray-400); }
+/* A finger needs a target: Quill's buttons are 24x28, which is well under
+   the 44px a thumb wants and about half of what it can hit reliably. */
+html .ql-snow.ql-toolbar button, html .ql-snow .ql-toolbar button {
+    width: 2rem; height: 2rem; padding: .25rem;
+}
+html .ql-snow.ql-toolbar button:hover, html .ql-snow.ql-toolbar button.ql-active {
+    border-radius: .4rem; background: var(--color-brand-50);
+}
+/* The heading dropdown is a picker, not a button — same height so the row
+   does not look ragged. */
+html .ql-snow.ql-toolbar .ql-picker { height: 2rem; }
+html .ql-snow.ql-toolbar .ql-picker-label { display: flex; align-items: center; }
+html.dark .ql-toolbar.ql-snow { background: rgb(255 255 255 / .04); border-color: #2b3a1c; }
+html.dark .ql-container.ql-snow { background: #151b12; border-color: #2b3a1c; }
+html.dark .ql-editor { color: #e8efe1; }
+html.dark .ql-snow .ql-stroke { stroke: #cdd8c0; }
+html.dark .ql-snow .ql-fill { fill: #cdd8c0; }
+html.dark .ql-snow .ql-picker { color: #cdd8c0; }
+html.dark .ql-snow.ql-toolbar button:hover, html.dark .ql-snow.ql-toolbar button.ql-active {
+    background: rgb(107 159 61 / .25);
+}
+html.dark .ql-snow.ql-toolbar button:hover .ql-stroke, html.dark .ql-snow.ql-toolbar button.ql-active .ql-stroke { stroke: #8fd45a; }
+html.dark .ql-snow.ql-toolbar button:hover .ql-fill, html.dark .ql-snow.ql-toolbar button.ql-active .ql-fill { fill: #8fd45a; }
 
 /* Rendered rich text (rules, previews) — sensible prose defaults.    */
 .rich-text > :first-child { margin-top: 0; }

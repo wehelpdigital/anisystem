@@ -40,7 +40,7 @@
         .ph-notes ul { list-style: disc; padding-left: 1.25rem; }
         .ph-notes ol { list-style: decimal; padding-left: 1.25rem; }
         .ph-photo { max-height: 220px; border-radius: .6rem; }
-        .ph-quill .ql-container { min-height: 8rem; border-bottom-left-radius: .75rem; border-bottom-right-radius: .75rem; }
+        /* Height and look come from the shared rules in app.css. */
         .ph-quill .ql-toolbar { border-top-left-radius: .75rem; border-top-right-radius: .75rem; }
         .ph-video { width: 100%; max-height: 60vh; border-radius: .6rem; background: #000; object-fit: cover; }
         .ph-thumb { position: relative; aspect-ratio: 1; border-radius: .5rem; overflow: hidden; background: #f3f4f6; }
@@ -525,8 +525,9 @@ const __init = () => {
         if (!quill) {
             quill = new Quill('#phNotesEditor', {
                 theme: 'snow', placeholder: 'What happened, what you would do differently…',
-                modules: { toolbar: [['bold', 'italic', 'underline'], [{ list: 'ordered' }, { list: 'bullet' }], ['link', 'clean']] },
+                modules: { toolbar: window.SM_RICH_TOOLBAR },
             });
+            window.smQuillTouch?.(quill);
         }
         return quill;
     }

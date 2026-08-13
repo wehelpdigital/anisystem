@@ -382,7 +382,10 @@ class CroppingScheduleController extends Controller
 
         $tip = \App\Support\FarmTips::forToday((int) \Illuminate\Support\Facades\Auth::id(), $schedule);
 
-        return view('sm.hub', compact('schedule', 'documentationCount', 'postHarvestCount', 'notesCount', 'mediaCount', 'tip'));
+        $albumCount = \App\Models\AsGalleryAlbum::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)->count();
+
+        return view('sm.hub', compact('schedule', 'documentationCount', 'postHarvestCount', 'notesCount', 'mediaCount', 'tip', 'albumCount'));
     }
 
     /** Reports landing for a schedule — labor and post-harvest figures. */

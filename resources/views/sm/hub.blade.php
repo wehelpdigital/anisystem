@@ -46,6 +46,10 @@
         // were always standing in for.
         ['Growth Stages', 'growth', null,
             'M12 21c0-4 1-7 4-9M12 21c0-5-2-8-6-9m6 9V8m0 0c0-2.5 1.5-4 4-4 0 2.5-1.5 4-4 4zm0 0C12 5.5 10.5 4 6.5 4c0 2.5 1.5 4 5.5 4z'],
+        // Albums a grower makes on purpose — the Media Box is everything,
+        // this is what was chosen and named.
+        ['Gallery', 'gallery', (int) $albumCount,
+            'M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM8 14l2.5-3 2 2.5L15 10l3 4'],
         ['Maps', 'maps', null,
             'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2M15 11.5a2 2 0 11-4 0 2 2 0 014 0z'],
         // A pencil on a sheet, distinct from the Notes pencil-over-page: this

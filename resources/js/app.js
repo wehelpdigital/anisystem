@@ -442,6 +442,87 @@ window.confirmAction = function confirmAction({
 /* Small shared utilities                                               */
 /* ------------------------------------------------------------------ */
 
+/* ------------------------------------------------------------------ */
+/* Rich-text toolbars on a touch screen                                  */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Make a Quill toolbar work under a finger.
+ *
+ * Two things went wrong on phones, and they looked like one bug —
+ * "sometimes the buttons do nothing, sometimes they just bring up the
+ * keyboard".
+ *
+ * 1. A tap on a toolbar button moves focus out of the editor before the
+ *    click lands, so the format is applied to a selection that no longer
+ *    exists. Preventing the default on touchstart/mousedown keeps the caret
+ *    where it was; the click still fires.
+ *
+ * 2. Some editors deliberately open read-only, so opening a note does not
+ *    throw the keyboard over it. Tapping a toolbar button on one of those
+ *    formats nothing at all, because there is nothing editable to format —
+ *    and the only way to discover that is to tap the text first. A toolbar
+ *    tap now arms the editor exactly as a tap on the text does.
+ *
+ * Pickers (the header dropdown) are left alone: they need the browser's own
+ * behaviour to open.
+ */
+/**
+ * The toolbar every rich-text box in the app uses.
+ *
+ * There were seven of them, all slightly different: one had headings, one had
+ * strikethrough, one had code blocks nobody asked for, and the note editors
+ * had none of it. Formatting a note should not depend on which screen you
+ * happened to open — these are the marks a farm record actually needs, and
+ * they are the same everywhere.
+ */
+window.SM_RICH_TOOLBAR = [
+    [{ header: [2, 3, false] }],
+    ['bold', 'italic', 'underline', 'strike'],
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    ['blockquote'],
+    ['link'],
+    ['clean'],
+];
+
+window.smQuillTouch = function smQuillTouch(quill) {
+    if (!quill) return quill;
+    const toolbar = quill.getModule && quill.getModule('toolbar');
+    const bar = toolbar && toolbar.container;
+    if (!bar || bar.dataset.smTouchFixed === '1') return quill;
+    bar.dataset.smTouchFixed = '1';
+
+    const root = quill.root;
+
+    const keepFocus = (e) => {
+        const hit = e.target.closest('button, .ql-picker-label');
+        if (!hit) return;
+        // A picker label must keep its default so the menu opens; everything
+        // else only needs its click, not the focus change that comes with it.
+        if (hit.classList.contains('ql-picker-label')) return;
+        e.preventDefault();
+
+        // Read-only until first touch (see the callers): a toolbar tap is just
+        // as clear an intention to write as a tap on the text.
+        if (root.getAttribute('contenteditable') === 'false') {
+            root.setAttribute('contenteditable', 'true');
+        }
+        // Put the caret back where it was — at the end if it was never placed,
+        // so a first tap on Bold starts bold text rather than doing nothing.
+        if (!quill.hasFocus()) {
+            const saved = quill.selection && quill.selection.savedRange;
+            quill.focus();
+            if (saved && saved.length !== undefined) quill.setSelection(saved.index, saved.length, 'silent');
+            else quill.setSelection(quill.getLength(), 0, 'silent');
+        }
+    };
+
+    bar.addEventListener('mousedown', keepFocus);
+    bar.addEventListener('touchstart', keepFocus, { passive: false });
+
+    return quill;
+};
+
 window.escapeHtml = function escapeHtml(value) {
     return String(value ?? '')
         .replaceAll('&', '&amp;')

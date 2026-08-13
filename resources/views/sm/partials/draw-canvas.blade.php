@@ -246,6 +246,7 @@
     let tool = 'pen';
     let onSave = null;
     let overwriteLabel = '';   // set per open: the drawing being replaced
+    let backdropFailed = false;   // the picture we were asked to edit never loaded
     let uid = 1;
     let gridOn = false;               // show a grid guide (not saved into the PNG)
     let exporting = false;            // suppresses the grid while capturing the export
@@ -608,6 +609,13 @@
         else window.unregisterOverlay?.('drawAsk');
     }
     function saveAs(mode) {
+        // A backdrop that never arrived leaves a blank sheet, and saving that
+        // over the drawing it was meant to be editing destroys it — which is
+        // exactly what "I opened my drawing and the note went blank" was.
+        if (backdropFailed && !objects.length) {
+            window.toast?.('That drawing could not be loaded — saving now would replace it with a blank one.', 'error');
+            return;
+        }
         const data = exportPng();
         // 'overwrite' keeps the strokes as 'drawing' does — the difference is
         // which file it lands in, which is the caller's business.
@@ -631,6 +639,7 @@
     });
 
     function reset(existingUrl, existingObjects) {
+        backdropFailed = false;
         objects = []; selected.clear(); undoStack.length = 0; redoStack.length = 0; marquee = null; mode = null; cur = null; uid = 1;
         paintHistory();
         // A new drawing takes the aspect of the screen it opens on, so the
@@ -660,7 +669,21 @@
             uid = objects.reduce((m, o) => Math.max(m, (o && o.id) || 0), 0) + 1;
             render();
         } else if (existingUrl) {
-            const img = new Image(); img.crossOrigin = 'anonymous';
+            const img = new Image();
+            // Cross-origin only where it is actually cross-origin: media now
+            // lives on the mother app, and a canvas that has drawn an image
+            // without CORS permission cannot be exported at all. With the
+            // header in place this succeeds; without it, onerror below keeps
+            // the original safe rather than quietly blanking it.
+            try {
+                if (new URL(existingUrl, window.location.href).origin !== window.location.origin) {
+                    img.crossOrigin = 'anonymous';
+                }
+            } catch (_) { img.crossOrigin = 'anonymous'; }
+            img.onerror = () => {
+                backdropFailed = true;
+                window.toast?.('That drawing could not be loaded. Anything you draw now would replace it, so it is safer to close and reopen.', 'error');
+            };
             img.onload = () => {
                 // Its own proportions, pinned to the top-left. Stretching it to
                 // whatever height this screen wanted would distort the picture.

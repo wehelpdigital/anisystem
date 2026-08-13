@@ -191,6 +191,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
 
     // Quick Capture — save a captured photo group as notes on a schedule.
     Route::post('/app/quick-capture-notes', [App\Http\Controllers\Manager\QuickCaptureController::class, 'storeNotes'])->name('quick-capture.notes');
+    Route::get('/app/quick-capture-albums', [App\Http\Controllers\Manager\QuickCaptureController::class, 'albums'])->name('quick-capture.albums');
+    Route::post('/app/quick-capture-gallery', [App\Http\Controllers\Manager\QuickCaptureController::class, 'storeGallery'])->name('quick-capture.gallery');
 
     // --- Default groupings ---
     Route::post('/app/sm-default-groupings-save', [App\Http\Controllers\Manager\DefaultGroupingController::class, 'save'])->name('sm.default-groupings.save');
@@ -236,6 +238,13 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // the same partial as a tab).
     // "How to use" — one page per module per device, written in the mother app.
     Route::get('/app/help/{module}', [App\Http\Controllers\HelpController::class, 'show'])->name('help.show');
+    // Gallery: albums a grower makes and names, and the pictures in them.
+    Route::get('/app/sm-gallery', [App\Http\Controllers\Manager\GalleryController::class, 'page'])->name('sm.gallery');
+    Route::post('/app/sm-gallery-album', [App\Http\Controllers\Manager\GalleryController::class, 'albumSave'])->name('sm.gallery.album.save');
+    Route::delete('/app/sm-gallery-album', [App\Http\Controllers\Manager\GalleryController::class, 'albumDestroy'])->name('sm.gallery.album.destroy');
+    Route::post('/app/sm-gallery-images', [App\Http\Controllers\Manager\GalleryController::class, 'imageStore'])->name('sm.gallery.image.store');
+    Route::post('/app/sm-gallery-move', [App\Http\Controllers\Manager\GalleryController::class, 'imageMove'])->name('sm.gallery.image.move');
+    Route::delete('/app/sm-gallery-images', [App\Http\Controllers\Manager\GalleryController::class, 'imageDestroy'])->name('sm.gallery.image.destroy');
     // Growth Stages: what each lot's crop is doing, read off its own day count.
     Route::get('/app/sm-growth', [App\Http\Controllers\Manager\GrowthStageController::class, 'page'])->name('sm.growth');
     // Media Box: every picture and video this schedule has, in one place.

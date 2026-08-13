@@ -1477,7 +1477,7 @@
 
         /* Quill wrapper with HTML-source toggle */
         .sm-quill-wrap .ql-toolbar { border-top-left-radius: .75rem; border-top-right-radius: .75rem; border-color: #d1d5db; }
-        .sm-quill-wrap .ql-container { border-bottom-left-radius: .75rem; border-bottom-right-radius: .75rem; border-color: #d1d5db; min-height: 130px; font-family: inherit; font-size: .875rem; }
+        /* Height and look come from the shared rules in app.css. */
         .sm-quill-wrap.is-html-mode .quill-host-wrap { display: none; }
         .sm-quill-wrap:not(.is-html-mode) .quill-source { display: none; }
 
@@ -2399,6 +2399,7 @@
         draw:          { label: 'Draw',          url: @json(route('sm.draw',         ['id' => $schedule->id])) },
         media:         { label: 'Media Box',     url: @json(route('sm.media',        ['id' => $schedule->id])) },
         growth:        { label: 'Growth Stages', url: @json(route('sm.growth',       ['id' => $schedule->id])) },
+        gallery:       { label: 'Gallery',       url: @json(route('sm.gallery',      ['id' => $schedule->id])) },
         weather:       { label: 'Weather',       url: @json(route('sm.weather.page', ['id' => $schedule->id])) },
         ai:            { label: 'AI Technician', url: @json(route('sm.ai',           ['id' => $schedule->id])) },
     };

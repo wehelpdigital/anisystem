@@ -45,7 +45,7 @@
     .qc-target { display: flex; align-items: flex-start; gap: .6rem; padding: .75rem; border: 1.5px solid var(--color-gray-200); border-radius: .7rem; cursor: pointer; }
     .qc-target.is-on { border-color: var(--color-brand-600, #4a7c2a); background: rgba(74,124,42,.12); }
     .qc-target input { margin-top: .2rem; }
-    .qc-editor-wrap .ql-container { min-height: 6rem; border-bottom-left-radius: .6rem; border-bottom-right-radius: .6rem; }
+    /* Height and look come from the shared rules in app.css. */
     .qc-editor-wrap .ql-toolbar { border-top-left-radius: .6rem; border-top-right-radius: .6rem; }
     /* Live camera */
     .qc-camera-wrap { background: #000; aspect-ratio: 3 / 4; max-height: 70vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
@@ -98,8 +98,17 @@
         {{-- STEP 2 — details --}}
         <div data-qc-step="details" class="hidden">
             <div class="qc-body space-y-4">
+                {{-- A capture deserves a name of its own. Without one every
+                     record read "Quick capture — Aug 13, 2026 4:02 PM", which
+                     tells you when you were there and nothing about what you
+                     saw. --}}
                 <div>
-                    <label class="form-label">Add a note <span class="text-gray-400 font-normal">(optional)</span></label>
+                    <label class="form-label" for="qcNoteTitle">Title</label>
+                    <input type="text" id="qcNoteTitle" class="form-input" maxlength="191"
+                           placeholder="e.g. Flooded corner, east lot" autocomplete="off">
+                </div>
+                <div>
+                    <label class="form-label">Description <span class="text-gray-400 font-normal">(optional)</span></label>
                     <div class="qc-editor-wrap"><div id="qcEditor"></div></div>
                 </div>
                 @if (!empty($fixedScheduleId))
@@ -126,6 +135,13 @@
                             </span>
                         </label>
                         <label class="qc-target" data-qc-target-row>
+                            <input type="radio" name="qcTarget" value="gallery">
+                            <span>
+                                <span class="block font-semibold text-gray-900">Save to gallery</span>
+                                <span class="block text-xs text-gray-500">Put them in an album you can name and rearrange.</span>
+                            </span>
+                        </label>
+                        <label class="qc-target" data-qc-target-row>
                             <input type="radio" name="qcTarget" value="ai">
                             <span>
                                 <span class="block font-semibold text-gray-900">Ask the AI Technician</span>
@@ -133,6 +149,15 @@
                             </span>
                         </label>
                     </div>
+                </div>
+                {{-- Only asked once the gallery is the destination. --}}
+                <div id="qcAlbumWrap" class="hidden">
+                    <label class="form-label" for="qcAlbum">Album</label>
+                    <select id="qcAlbum" class="form-input">
+                        <option value="">➕ New album…</option>
+                    </select>
+                    <input type="text" id="qcAlbumTitle" class="form-input mt-2" maxlength="191"
+                           placeholder="Name the new album" autocomplete="off">
                 </div>
             </div>
             <div class="qc-foot">
@@ -162,6 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const $ = (id) => document.getElementById(id);
     const CSRF = document.querySelector('meta[name=csrf-token]')?.content || '';
     const NOTES_URL = @json(route('quick-capture.notes'));
+    const ALBUMS_URL = @json(route('quick-capture.albums'));
+    const GALLERY_URL = @json(route('quick-capture.gallery'));
     const AI_PHOTO_URL = @json(route('ai.photo'));
     const AI_ASK_URL = @json(route('ai.ask'));
 
@@ -186,8 +213,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!quill) {
             quill = new Quill('#qcEditor', {
                 theme: 'snow', placeholder: 'What did you notice?',
-                modules: { toolbar: [['bold', 'italic', 'underline'], [{ list: 'ordered' }, { list: 'bullet' }], ['link', 'clean']] },
+                modules: { toolbar: window.SM_RICH_TOOLBAR },
             });
+            window.smQuillTouch?.(quill);
         }
         return quill;
     }
@@ -313,6 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
         row.addEventListener('click', () => {
             modal.querySelectorAll('[data-qc-target-row]').forEach((r) => r.classList.remove('is-on'));
             row.classList.add('is-on');
+            syncTarget();
         });
     });
 
@@ -328,6 +357,8 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             if (target === 'note') {
                 await saveNotes(scheduleId);
+            } else if (target === 'gallery') {
+                await saveGallery(scheduleId);
             } else {
                 await askAi(scheduleId);
             }
@@ -338,9 +369,78 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    /* ---- Gallery: the album picker, filled from the chosen schedule ---- */
+    function currentTarget() {
+        return modal.querySelector('input[name=qcTarget]:checked')?.value || 'note';
+    }
+
+    function syncTarget() {
+        const gallery = currentTarget() === 'gallery';
+        $('qcAlbumWrap').classList.toggle('hidden', !gallery);
+        if (gallery) { loadAlbums(); syncAlbumField(); }
+    }
+
+    // The name box only matters when there is no album to choose.
+    function syncAlbumField() {
+        $('qcAlbumTitle').classList.toggle('hidden', !!$('qcAlbum').value);
+    }
+
+    let albumsFor = null;   // schedule id the picker was last filled for
+    async function loadAlbums() {
+        const scheduleId = $('qcSchedule').value;
+        if (albumsFor === scheduleId) return;
+        albumsFor = scheduleId;
+        const sel = $('qcAlbum');
+        try {
+            const res = await fetch(ALBUMS_URL + '?scheduleId=' + encodeURIComponent(scheduleId), {
+                headers: { Accept: 'application/json' },
+            });
+            const data = await res.json().catch(() => ({}));
+            const albums = data?.data?.albums || [];
+            sel.innerHTML = '<option value="">➕ New album…</option>'
+                + albums.map((a) => `<option value="${a.id}">${escapeHtml(a.title)}</option>`).join('');
+            // An existing album is the likelier intent when there is one.
+            if (albums.length) sel.value = String(albums[0].id);
+        } catch (_) {
+            albumsFor = null;   // a failed load must not stick
+        }
+        syncAlbumField();
+    }
+
+    $('qcAlbum').addEventListener('change', syncAlbumField);
+    $('qcSchedule')?.addEventListener('change', () => { albumsFor = null; if (currentTarget() === 'gallery') loadAlbums(); });
+
+    async function saveGallery(scheduleId) {
+        const fd = new FormData();
+        fd.append('scheduleId', scheduleId);
+        const albumId = $('qcAlbum').value;
+        if (albumId) fd.append('albumId', albumId);
+        else if ($('qcAlbumTitle').value.trim()) fd.append('albumTitle', $('qcAlbumTitle').value.trim());
+        if ($('qcNoteTitle').value.trim()) fd.append('title', $('qcNoteTitle').value.trim());
+        const gHtml = noteHtml();
+        if (gHtml && gHtml !== '<p><br></p>') fd.append('note', gHtml);
+        files.forEach((f) => fd.append('images[]', f));
+        const res = await fetch(GALLERY_URL, {
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' },
+            body: fd,
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.success) throw new Error(data.message || 'Could not save.');
+        $('qcResult').innerHTML = `<div class="flex items-center gap-2 text-brand-700 font-semibold mb-1">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            ${escapeHtml(data.message)}</div><p class="text-gray-500 text-sm">You can move or rename them anytime in the Gallery.</p>`;
+        const link = $('qcResultLink');
+        link.href = data.galleryUrl; link.classList.remove('hidden'); link.textContent = 'Open gallery';
+        $('qcTitle').textContent = 'Saved';
+        showStep('result');
+        toast(data.message);
+    }
+
     async function saveNotes(scheduleId) {
         const fd = new FormData();
         fd.append('scheduleId', scheduleId);
+        if ($('qcNoteTitle').value.trim()) fd.append('title', $('qcNoteTitle').value.trim());
         const html = noteHtml();
         if (html && html !== '<p><br></p>') fd.append('note', html);
         files.forEach((f) => fd.append('images[]', f));
@@ -353,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!res.ok || !data.success) throw new Error(data.message || 'Could not save.');
         $('qcResult').innerHTML = `<div class="flex items-center gap-2 text-brand-700 font-semibold mb-1">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-            ${data.message}</div><p class="text-gray-500 text-sm">Find them anytime in this schedule's Notes module.</p>`;
+            ${escapeHtml(data.message)}</div><p class="text-gray-500 text-sm">Find it anytime in this schedule's Notes module.</p>`;
         const link = $('qcResultLink');
         link.href = data.notesUrl; link.classList.remove('hidden'); link.textContent = 'Open notes';
         $('qcTitle').textContent = 'Saved';

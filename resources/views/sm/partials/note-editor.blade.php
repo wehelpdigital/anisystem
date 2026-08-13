@@ -14,22 +14,41 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
-        <div class="ne-tools">
-            <button type="button" class="btn btn-white btn-sm" id="noteEditorEmoji">😊 Emoji</button>
-            <button type="button" class="btn btn-white btn-sm" id="noteEditorPhoto">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Photo
+        {{-- One row, five things, all the same size: take a photo, upload one,
+             attach a video, record one, add an emoji. They were wrapping onto
+             two and three lines because each carried a word of its own width,
+             and "Photo" was the only way in — a picker, with no way to just
+             take the picture in front of you. --}}
+        <div class="ne-tools" role="group" aria-label="Attach to this note">
+            <button type="button" class="ne-tool" id="noteEditorCamera" title="Take a photo now" aria-label="Take a photo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <span>Camera</span>
+            </button>
+            <button type="button" class="ne-tool" id="noteEditorPhoto" title="Choose a photo already on this device" aria-label="Upload a photo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/><circle cx="9" cy="8.5" r="1.3"/></svg>
+                <span>Upload</span>
             </button>
             <span class="ne-vid" data-video-host>
                 <input type="file" class="js-video-file hidden" accept="video/*">
-                <button type="button" class="btn btn-white btn-sm js-video-attach">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg>Video
+                <button type="button" class="ne-tool js-video-attach" title="Attach a video" aria-label="Attach a video">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg>
+                    <span>Video</span>
                 </button>
-                <button type="button" class="btn btn-white btn-sm js-video-record">
-                    <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/></svg>Record
+                <button type="button" class="ne-tool js-video-record" title="Record a video" aria-label="Record a video">
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="text-red-500"><circle cx="12" cy="12" r="7"/></svg>
+                    <span>Record</span>
                 </button>
                 <span class="js-video-chip"></span>
             </span>
+            <button type="button" class="ne-tool" id="noteEditorEmoji" title="Add an emoji" aria-label="Add an emoji">
+                <span class="ne-tool-emoji" aria-hidden="true">😊</span>
+                <span>Emoji</span>
+            </button>
             <input type="file" id="noteEditorPhotoInput" accept="image/*" class="hidden" multiple>
+            {{-- capture= asks the phone for its camera rather than its files.
+                 Desktop browsers ignore it and show a picker, which is the
+                 right fallback. --}}
+            <input type="file" id="noteEditorCameraInput" accept="image/*" capture="environment" class="hidden">
         </div>
         {{-- A name for the note. Optional to the editor — the day notes ask
              for it, the older callers do not — because a day with three notes
@@ -52,12 +71,24 @@
 </div>
 
 <style>
-    .ne-tools { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; margin-bottom: .6rem; }
-    .ne-vid { display: inline-flex; gap: .4rem; align-items: center; }
-    /* Roomy typing box (grows further as you write). */
-    .ne-quill .ql-container { min-height: 11rem; border-bottom-left-radius: .6rem; border-bottom-right-radius: .6rem; font-size: .92rem; }
-    .ne-quill .ql-editor { min-height: 11rem; }
-    .ne-quill .ql-toolbar { border-top-left-radius: .6rem; border-top-right-radius: .6rem; }
+    /* One row that stays one row: the buttons share the width instead of
+       each taking the width of its own word. */
+    .ne-tools { display: flex; align-items: center; gap: .35rem; margin-bottom: .6rem; }
+    .ne-vid { display: contents; }
+    .ne-tool { flex: 1 1 0; min-width: 0; display: inline-flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: .15rem; padding: .4rem .2rem;
+        border: 1px solid var(--color-gray-200); border-radius: .65rem; background: var(--color-white);
+        font-size: .66rem; font-weight: 700; color: var(--color-gray-600); cursor: pointer;
+        transition: background .2s ease, border-color .2s ease, color .2s ease; }
+    .ne-tool:hover { background: #f3f8ec; border-color: #a8cc7e; color: #3d6823; }
+    .ne-tool svg { width: 1.05rem; height: 1.05rem; }
+    .ne-tool-emoji { font-size: 1.05rem; line-height: 1; }
+    .ne-tool span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+    .js-video-chip:empty { display: none; }
+    html.dark .ne-tool { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
+    html.dark .ne-tool:hover { background: #24301a; border-color: #3d6823; }
+    @media (prefers-reduced-motion: reduce) { .ne-tool { transition: none; } }
+    /* Height and look come from the shared rules in app.css. */
     /* Upload progress: a phone video is tens of megabytes, and a quiet wait
        reads as a hang. Percent while the bytes travel, then a word for the
        compressing the server still has to do. */
@@ -112,8 +143,9 @@
             quill = new Quill('#noteEditorBody', {
                 theme: 'snow',
                 placeholder: 'Write your note…',
-                modules: { toolbar: [['bold', 'italic', 'underline'], [{ list: 'ordered' }, { list: 'bullet' }], ['link', 'clean']] },
+                modules: { toolbar: window.SM_RICH_TOOLBAR },
             });
+            window.smQuillTouch?.(quill);
         }
         return quill;
     }
@@ -175,15 +207,18 @@
         });
     }
 
-    // ---- Photos
+    // ---- Photos: taken here, or already on the device. Same road after that.
     $('noteEditorPhoto').addEventListener('click', () => $('noteEditorPhotoInput').click());
-    $('noteEditorPhotoInput').addEventListener('change', async (e) => {
+    $('noteEditorCamera').addEventListener('click', () => $('noteEditorCameraInput').click());
+    const onPicked = async (e) => {
         const files = Array.from(e.target.files || []); e.target.value = '';
         for (const file of files) {
             try { const d = await upload(cfg.imageUploadUrl, 'image', file); media.push({ type: 'image', path: d.path, url: d.url }); renderThumbs(); }
             catch (err) { window.toast?.(err.message, 'error'); }
         }
-    });
+    };
+    $('noteEditorPhotoInput').addEventListener('change', onPicked);
+    $('noteEditorCameraInput').addEventListener('change', onPicked);
 
     // ---- Video (shared partial writes the file into .js-video-file)
     const vInput = document.querySelector('#noteEditorSheet .js-video-file');

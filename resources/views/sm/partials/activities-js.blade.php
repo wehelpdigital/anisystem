@@ -2806,15 +2806,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ---- Quill description editor (+ HTML source mode) ----
-    const SM_QUILL_TOOLBAR = [
-        [{ header: [1, 2, 3, 4, false] }],
-        ['bold', 'italic', 'underline', 'strike'],
-        [{ list: 'ordered' }, { list: 'bullet' }],
-        [{ indent: '-1' }, { indent: '+1' }],
-        ['blockquote', 'code-block'],
-        ['link'],
-        ['clean'],
-    ];
     let descQuill = null;
     let descMode = 'visual';
     let pendingDescription;
@@ -2824,8 +2815,11 @@ document.addEventListener('DOMContentLoaded', () => {
         descQuill = new Quill('#activityDescription', {
             theme: 'snow',
             placeholder: 'Describe this activity…',
-            modules: { toolbar: SM_QUILL_TOOLBAR },
+            // The app's one toolbar (resources/js/app.js), read at build time
+            // because this script parses before the module bundle runs.
+            modules: { toolbar: window.SM_RICH_TOOLBAR },
         });
+        window.smQuillTouch?.(descQuill);
         if (pendingDescription !== undefined) {
             descQuill.clipboard.dangerouslyPasteHTML(pendingDescription || '');
             pendingDescription = undefined;
@@ -4765,7 +4759,10 @@ document.addEventListener('DOMContentLoaded', () => {
             block.setAttribute('data-media', JSON.stringify(mediaArr));
             // Update only the content wrapper so the edit/delete buttons survive.
             const inner = block.querySelector('.date-note-inner') || block;
-            inner.innerHTML = safe + (mediaArr.length ? '<div class="date-note-media">' + inlineMediaCells(mediaArr) + '</div>' : '');
+            // Tags, not tiles: a drawing attached to a day's note is a thing
+            // the note refers to, and a full-width picture of it buries the
+            // words that explain why it is there.
+            inner.innerHTML = safe + (mediaArr.length ? inlineAttachments(mediaArr) : '');
             block.style.display = has ? '' : 'none';
         }
     }
@@ -4777,8 +4774,13 @@ document.addEventListener('DOMContentLoaded', () => {
         dateNoteQuill = new Quill('#dateNoteEditor', {
             theme: 'snow',
             placeholder: 'What happens on this day?',
-            modules: { toolbar: SM_QUILL_TOOLBAR },
+            // The app's one toolbar (resources/js/app.js), read at build time
+            // because this script parses before the module bundle runs.
+            modules: { toolbar: window.SM_RICH_TOOLBAR },
         });
+        // This editor opens read-only on touch so the keyboard does not cover
+        // the note; without this a toolbar tap would format nothing.
+        window.smQuillTouch?.(dateNoteQuill);
     }
     function setDateNoteContent(html) {
         ensureDateNoteEditor();

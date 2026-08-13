@@ -13,11 +13,8 @@
         .note-body ol { list-style: decimal; padding-left: 1.35rem; }
         .note-body img { max-width: 100%; border-radius: .5rem; margin: .35rem 0; }
         .note-photo { max-height: 240px; border-radius: .6rem; }
-        /* Room to write. Three lines of box for a field asking for a
-           paragraph is a box that asks you not to bother. */
-        .note-quill .ql-container { min-height: 9rem; border-bottom-left-radius: .75rem; border-bottom-right-radius: .75rem; }
-        .note-quill .ql-editor { min-height: 9rem; font-size: .95rem; }
-        .note-quill .ql-toolbar { border-top-left-radius: .75rem; border-top-right-radius: .75rem; }
+        /* Height and look come from the shared rules in app.css, so every
+           rich-text box in the app is the same box. */
         /* The attachment buttons are one group, not four loose controls. */
         .note-attach-box { border: 1px dashed var(--color-gray-300, #d1d5db); border-radius: .75rem; padding: .65rem; }
         html.dark .note-attach-box { border-color: #2b3a1c; }
@@ -382,8 +379,9 @@ const __init = () => {
         if (!quill) {
             quill = new Quill('#noteEditor', {
                 theme: 'snow', placeholder: 'Write your note…',
-                modules: { toolbar: [['bold', 'italic', 'underline'], [{ list: 'ordered' }, { list: 'bullet' }], ['link', 'clean']] },
+                modules: { toolbar: window.SM_RICH_TOOLBAR },
             });
+            window.smQuillTouch?.(quill);
         }
         return quill;
     }
