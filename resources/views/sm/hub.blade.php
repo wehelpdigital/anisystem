@@ -191,6 +191,8 @@
         @media (prefers-reduced-motion: reduce) { .sched-pen { transition: none; } }
     </style>
 
+    @include('sm.partials.tip-of-day', ['tip' => $tip ?? null, 'aiHref' => route('sm.ai', ['id' => $schedule->id])])
+
     {{-- Featured: Activities (2/3) + Quick Capture (1/3) as matched CTA tiles --}}
     <style>
         .cta-tile { cursor: pointer; text-decoration: none; transition: background-color .15s ease, color .15s ease, transform .1s ease; }

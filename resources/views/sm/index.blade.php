@@ -68,6 +68,8 @@
 
 @section('content')
 
+    @include('sm.partials.tip-of-day', ['tip' => $tip ?? null, 'aiHref' => ($schedules->first() ? route('sm.ai', ['id' => $schedules->first()->id]) : null)])
+
     {{-- Top bar: search on its own row, the desktop CTAs on a second row below. --}}
     <div class="flex flex-col gap-3 mb-4 md:mb-6">
         {{-- Search runs as you type (see the script below); the button-less form

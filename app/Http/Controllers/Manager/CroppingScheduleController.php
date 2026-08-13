@@ -53,7 +53,12 @@ class CroppingScheduleController extends Controller
             ->orderBy('title')
             ->get(['id', 'title']);
 
-        return view('sm.index', compact('schedules', 'allSchedules'));
+        // One thing worth knowing, chosen for whatever the grower's own crops
+        // are doing today. The newest schedule stands in for "my farm right
+        // now" — it is the one they are most likely working on.
+        $tip = \App\Support\FarmTips::forToday((int) \Illuminate\Support\Facades\Auth::id(), $schedules->first());
+
+        return view('sm.index', compact('schedules', 'allSchedules', 'tip'));
     }
 
     public function create()
@@ -375,7 +380,9 @@ class CroppingScheduleController extends Controller
         $mediaCount += \App\Models\ScheduleAiMessage::active()->where('scheduleId', $schedule->id)
             ->whereNotNull('imagePath')->count();
 
-        return view('sm.hub', compact('schedule', 'documentationCount', 'postHarvestCount', 'notesCount', 'mediaCount'));
+        $tip = \App\Support\FarmTips::forToday((int) \Illuminate\Support\Facades\Auth::id(), $schedule);
+
+        return view('sm.hub', compact('schedule', 'documentationCount', 'postHarvestCount', 'notesCount', 'mediaCount', 'tip'));
     }
 
     /** Reports landing for a schedule — labor and post-harvest figures. */
