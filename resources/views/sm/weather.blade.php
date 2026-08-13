@@ -33,7 +33,7 @@
     @include('sm.partials.weather-panels')
 
     <div id="wxModuleHost" class="wx-bleed">
-        <div class="card"><div class="card-body text-center text-sm text-gray-500">Loading the forecast…</div></div>
+        <div class="card"><div class="card-body text-center text-sm text-gray-500">Loading…</div></div>
     </div>
 
     <script>

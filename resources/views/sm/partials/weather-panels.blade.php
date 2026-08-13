@@ -1,4 +1,5 @@
-{{-- Weather panels — a 6-day tab and an hour-by-hour tab — built into
+{{-- Weather panels — six days, and the hours inside whichever day you open —
+     built into
      whatever host element is handed to window.wxRenderPanels(host, data).
 
      Shared on purpose: the Weather module and the activities weather sheet are
@@ -8,19 +9,15 @@
 <style>
     /* Tabs: the underline slides between them, and each panel fades up as it
        takes over — the house easing, with the reduced-motion guard. */
-    .wx-tabs { position: relative; display: flex; gap: .25rem; padding: .25rem;
         background: var(--color-gray-100); border-radius: .9rem; margin-bottom: .75rem; }
-    .wx-tab { flex: 1 1 0; position: relative; z-index: 1; padding: .55rem .5rem;
         border-radius: .7rem; font-size: .85rem; font-weight: 800;
         color: var(--color-gray-500); display: inline-flex; align-items: center;
         justify-content: center; gap: .4rem;
         transition: color .28s cubic-bezier(.22,1,.36,1); }
-    .wx-tab.is-on { color: var(--color-brand-800); }
     /* left:0, not left:.25rem. The offset used to be applied twice — once by
        this rule and again by the transform, which measured from the track's
        padding edge — so the second tab's pill hung past the right end of the
        track it is supposed to sit inside. */
-    .wx-tab-pill { position: absolute; top: .25rem; bottom: .25rem; left: 0;
         border-radius: .7rem; background: var(--color-white);
         box-shadow: 0 1px 3px rgb(0 0 0 / .12);
         transition: transform .28s cubic-bezier(.22,1,.36,1), width .28s cubic-bezier(.22,1,.36,1); }
@@ -28,14 +25,29 @@
     .wx-panel.is-on { display: block; animation: wxIn .28s cubic-bezier(.22,1,.36,1) both; }
     @keyframes wxIn { from { opacity: 0; transform: translateY(.5rem); } }
     @media (prefers-reduced-motion: reduce) {
-        .wx-tab, .wx-tab-pill { transition: none; }
         .wx-panel.is-on { animation: none; }
     }
 
-    html.dark .wx-tabs { background: #1c2136; }
-    html.dark .wx-tab { color: #94a3b8; }
-    html.dark .wx-tab.is-on { color: #fff; }
-    html.dark .wx-tab-pill { background: #4a7c2a; box-shadow: 0 2px 10px -4px rgb(0 0 0 / .8); }
+
+    /* A day you can open. The hours used to be a tab of their own, which
+       could only ever answer "what about today" — the question is nearly
+       always about a particular day, so the day is the way in. */
+    .wx-day { cursor: pointer; }
+    .wx-day.is-open { border-color: #4a7c2a; box-shadow: 0 0 0 2px rgb(74 124 42 / .25); }
+    .wx-day-caret { display: block; margin: .1rem auto 0; width: .7rem; height: .7rem; color: var(--color-gray-400);
+        transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .wx-day.is-open .wx-day-caret { transform: rotate(180deg); color: #4a7c2a; }
+    .wx-open { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+    .wx-open.is-on { grid-template-rows: 1fr; }
+    .wx-open-in { overflow: hidden; min-height: 0; }
+    .wx-open-hd { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem;
+        margin: .75rem 0 .35rem; }
+    .wx-open-day { font-size: .82rem; font-weight: 800; color: var(--color-gray-900); }
+    .wx-open-hint { font-size: .7rem; color: var(--color-gray-400); }
+    html.dark .wx-open-day { color: #e8efe1; }
+    @media (prefers-reduced-motion: reduce) {
+        .wx-open, .wx-day-caret { transition: none; }
+    }
 
     /* One day in the 6-day strip. */
     .wx-day { flex: 1 1 0; min-width: 0; text-align: center; padding: .5rem .15rem; border-radius: .7rem;
@@ -96,12 +108,44 @@
 
     function dayStrip(days) {
         return '<div class="flex gap-1">' + days.map((d) => `
-            <div class="wx-day ${d.isToday ? 'is-today' : ''}" title="${esc(d.text)}">
+            <button type="button" class="wx-day ${d.isToday ? 'is-today' : ''}" data-wx-day="${esc(d.date || '')}"
+                    aria-expanded="false" title="${esc(d.text)} — tap for this day's hours">
                 <div class="wx-day-dow">${esc(d.isToday ? 'Today' : d.dow)}</div>
                 <div class="wx-day-emoji">${d.emoji}</div>
                 <div class="wx-day-temp">${d.max != null ? d.max + '&deg;' : '&ndash;'}<small>${d.min != null ? '/' + d.min + '&deg;' : ''}</small></div>
                 <div class="wx-day-pop">${d.pop != null ? '&#128167;' + d.pop + '%' : '&nbsp;'}</div>
-            </div>`).join('') + '</div>';
+                <svg class="wx-day-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>`).join('') + '</div>';
+    }
+
+    /* The hours of one day, with the sentence a grower actually wants: when
+       is it going to rain, and how hard. */
+    function hoursPanel(day, hours) {
+        if (!hours || !hours.length) {
+            return `<p class="text-sm text-gray-500 mt-2">No hour-by-hour reading for ${esc(day.isToday ? 'today' : day.dow)}.</p>`;
+        }
+        const wet = hours.filter((h) => (h.pop || 0) >= 50);
+        const peak = hours.reduce((a, b) => ((b.pop || 0) > (a.pop || 0) ? b : a), hours[0]);
+        const verdict = wet.length
+            ? `Rain looks likely from <b>${esc(wet[0].hour)}</b> (${wet[0].pop}%). `
+              + `Wettest hour is <b>${esc(peak.hour)}</b> at <b>${peak.pop}%</b>, and ${wet.length} `
+              + `${wet.length === 1 ? 'hour is' : 'hours are'} at or above 50%.`
+            : `No hour reaches a 50% chance of rain — the wettest is <b>${esc(peak.hour)}</b> at `
+              + `<b>${peak.pop != null ? peak.pop + '%' : '&mdash;'}</b>. A good window for field work.`;
+        return `
+            <div class="wx-open-hd">
+                <span class="wx-open-day">${esc(day.isToday ? 'Today' : day.dow)}${day.text ? ' &middot; ' + esc(day.text) : ''}</span>
+                <span class="wx-open-hint">${hours.length} ${hours.length === 1 ? 'hour' : 'hours'}</span>
+            </div>
+            <div class="wx-verdict"><span class="wx-verdict-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 2"/></svg></span><span class="wx-verdict-text">${verdict}</span></div>
+            <div class="wx-hours mt-2">${hours.map((h) => `
+                <div class="wx-hour ${h.isNow ? 'is-now' : ''}" title="${esc(h.text)}${h.mm != null ? ' &middot; ' + h.mm + ' mm' : ''}">
+                    <div class="wx-hour-time">${esc(h.isNow ? 'Now' : h.hour)}</div>
+                    <div class="wx-hour-emoji">${h.emoji}</div>
+                    <div class="wx-hour-temp">${h.temp != null ? h.temp + '&deg;' : '&ndash;'}</div>
+                    <div class="wx-hour-pop ${(h.pop || 0) < 20 ? 'is-dry' : ''}">&#128167;${h.pop != null ? h.pop + '%' : '&mdash;'}</div>
+                </div>`).join('')}</div>
+            <p class="wx-legend mt-1">Swipe the hours sideways. &#128167; is the chance of rain in that hour.</p>`;
     }
 
     const lotPills = (lots) => lots.map((l) => `<span class="wx-lotpill">${esc(l.name)}</span>`).join('');
@@ -123,50 +167,9 @@
                 <span class="text-3xl leading-none">${today ? today.emoji : '&#9925;'}</span>
             </div>
             <div class="wx-verdict mt-3"><span class="wx-verdict-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg></span><span class="wx-verdict-text">${verdict}</span></div>
-            <div class="mt-3">${dayStrip(loc.days || [])}</div>
-            <p class="wx-legend mt-2">&#128167; is the chance of rain that day. Two figures are the day's high and low.</p>
-        </div></div>`;
-    }
-
-    function hourlyCard(loc, lots) {
-        const hours = loc.hours || [];
-        if (!hours.length) {
-            return `<div class="card mb-3"><div class="card-body">
-                <p class="font-bold text-gray-900 text-sm">${esc(loc.place || 'Location')}</p>
-                <p class="text-sm text-gray-500 mt-1">No hour-by-hour reading for this location right now.</p>
-            </div></div>`;
-        }
-        const wet = hours.filter((h) => (h.pop || 0) >= 50);
-        const nextWet = wet[0];
-        const peak = hours.reduce((a, b) => ((b.pop || 0) > (a.pop || 0) ? b : a), hours[0]);
-        const now = hours[0];
-        const verdict = nextWet
-            ? `Rain looks likely from <b>${esc(nextWet.hour)}</b> (${nextWet.pop}% chance). `
-              + `Wettest hour is <b>${esc(peak.hour)}</b> at <b>${peak.pop}%</b>. `
-              + `${wet.length} of the next ${hours.length} hours are at or above 50%.`
-            : `No hour in the next ${hours.length} reaches a 50% chance of rain &mdash; `
-              + `the wettest is <b>${esc(peak.hour)}</b> at <b>${peak.pop != null ? peak.pop + '%' : '&mdash;'}</b>. A good window for field work.`;
-        return `<div class="card mb-3"><div class="card-body">
-            <div class="flex items-start justify-between gap-2">
-                <div class="min-w-0">
-                    <p class="font-bold text-gray-900 text-sm">${esc(loc.place || 'Location')}</p>
-                    <div class="wx-lotpills">${lotPills(lots)}</div>
-                </div>
-                <div class="text-right shrink-0">
-                    <div class="text-2xl leading-none">${now.emoji}</div>
-                    <div class="text-sm font-extrabold text-gray-900 mt-0.5">${now.temp != null ? now.temp + '&deg;' : '&ndash;'}</div>
-                    <div class="text-[11px] text-gray-500">now</div>
-                </div>
-            </div>
-            <div class="wx-verdict mt-3"><span class="wx-verdict-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 2"/></svg></span><span class="wx-verdict-text">${verdict}</span></div>
-            <div class="wx-hours mt-3">${hours.map((h) => `
-                <div class="wx-hour ${h.isNow ? 'is-now' : ''}" title="${esc(h.text)}${h.mm != null ? ' &middot; ' + h.mm + ' mm' : ''}">
-                    <div class="wx-hour-time">${esc(h.isNow ? 'Now' : h.hour)}</div>
-                    <div class="wx-hour-emoji">${h.emoji}</div>
-                    <div class="wx-hour-temp">${h.temp != null ? h.temp + '&deg;' : '&ndash;'}</div>
-                    <div class="wx-hour-pop ${(h.pop || 0) < 20 ? 'is-dry' : ''}">&#128167;${h.pop != null ? h.pop + '%' : '&mdash;'}</div>
-                </div>`).join('')}</div>
-            <p class="wx-legend mt-1">Swipe the hours sideways. &#128167; is the chance of rain in that hour; humidity ${now.humidity != null ? '<b>' + now.humidity + '%</b>' : '&mdash;'}, wind ${now.wind != null ? '<b>' + now.wind + ' km/h</b>' : '&mdash;'} right now.</p>
+            <div class="mt-3" data-wx-strip>${dayStrip(loc.days || [])}</div>
+            <div class="wx-open" data-wx-open><div class="wx-open-in" data-wx-open-in></div></div>
+            <p class="wx-legend mt-2">&#128167; is the chance of rain that day. Two figures are the day's high and low. Tap a day for its hours.</p>
         </div></div>`;
     }
 
@@ -182,70 +185,42 @@
      */
     window.wxRenderPanels = function (host, data) {
         if (!host) return;
-        host.innerHTML = `
-            <div class="wx-tabs" role="tablist">
-                <span class="wx-tab-pill" aria-hidden="true"></span>
-                <button type="button" class="wx-tab is-on" data-wx-tab="general" role="tab" aria-selected="true">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg>
-                    6-day
-                </button>
-                <button type="button" class="wx-tab" data-wx-tab="hourly" role="tab" aria-selected="false">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 2"/></svg>
-                    Hourly
-                </button>
-            </div>
-            <div class="wx-panel is-on" data-wx-panel="general"></div>
-            <div class="wx-panel" data-wx-panel="hourly"></div>`;
-
-        const tabs = [...host.querySelectorAll('.wx-tab')];
-        const pill = host.querySelector('.wx-tab-pill');
-        const movePill = (btn) => {
-            // Measured against the track itself rather than through
-            // offsetParent, which is whatever happens to be positioned above
-            // this partial — and differs between the module page and the
-            // sheet the same panels are shown in.
-            const track = btn.parentElement.getBoundingClientRect();
-            const r = btn.getBoundingClientRect();
-            pill.style.width = r.width + 'px';
-            pill.style.transform = 'translateX(' + Math.round(r.left - track.left) + 'px)';
-        };
-        // The first paint happens while the panel is still being laid out, so
-        // the pill is placed again once the browser has finished, and again on
-        // resize — a rotated phone is a different track.
-        const settle = () => {
-            const on = tabs.find((t) => t.classList.contains('is-on'));
-            if (on) movePill(on);
-        };
-        requestAnimationFrame(() => requestAnimationFrame(settle));
-        // Belt and braces: if the first frame measured a track that was not
-        // laid out yet, the pill would be a zero-width sliver until the first
-        // tap. Cheap to check again a moment later than to leave it invisible.
-        setTimeout(settle, 60);
-        setTimeout(settle, 300);
-        window.addEventListener('resize', settle);
-
-        const show = (key) => {
-            tabs.forEach((t) => {
-                const on = t.dataset.wxTab === key;
-                t.classList.toggle('is-on', on);
-                t.setAttribute('aria-selected', on ? 'true' : 'false');
-                if (on) movePill(t);
-            });
-            host.querySelectorAll('.wx-panel').forEach((p) => p.classList.toggle('is-on', p.dataset.wxPanel === key));
-        };
-        tabs.forEach((t) => t.addEventListener('click', () => show(t.dataset.wxTab)));
-        // The pill can only be placed once the tabs have a width; inside a
-        // sheet that is after it has opened, hence the second frame.
-        requestAnimationFrame(() => requestAnimationFrame(() => movePill(tabs[0])));
+        host.innerHTML = '<div class="wx-panel is-on" data-wx-panel="general"></div>';
 
         const locs = (data && data.locations) || {};
         const keys = Object.keys(locs).filter((k) => locs[k] && locs[k].ok);
         const gen = host.querySelector('[data-wx-panel="general"]');
-        const hrs = host.querySelector('[data-wx-panel="hourly"]');
-        if (!keys.length) { gen.innerHTML = EMPTY; hrs.innerHTML = EMPTY; return; }
+        if (!keys.length) { gen.innerHTML = EMPTY; return; }
         const lotsFor = (key) => ((data && data.lots) || []).filter((l) => l.locationKey === key);
         gen.innerHTML = keys.map((k) => generalCard(locs[k], lotsFor(k))).join('');
-        hrs.innerHTML = keys.map((k) => hourlyCard(locs[k], lotsFor(k))).join('');
+
+        // Tapping a day opens that day's hours under its own card, and tapping
+        // it again closes them. One open day per location, because two rails
+        // of 24 hours in one card is not a comparison anyone can read.
+        gen.querySelectorAll('.card').forEach((card, i) => {
+            const loc = locs[keys[i]];
+            const strip = card.querySelector('[data-wx-strip]');
+            const fold = card.querySelector('[data-wx-open]');
+            const inner = card.querySelector('[data-wx-open-in]');
+            if (!strip || !fold) return;
+            strip.addEventListener('click', (e) => {
+                const btn = e.target.closest('.wx-day');
+                if (!btn) return;
+                const date = btn.getAttribute('data-wx-day');
+                const already = btn.classList.contains('is-open');
+                strip.querySelectorAll('.wx-day').forEach((b) => {
+                    b.classList.remove('is-open');
+                    b.setAttribute('aria-expanded', 'false');
+                });
+                if (already) { fold.classList.remove('is-on'); return; }
+                btn.classList.add('is-open');
+                btn.setAttribute('aria-expanded', 'true');
+                const day = (loc.days || []).find((d) => d.date === date) || {};
+                const hours = ((loc.hoursByDay || {})[date]) || [];
+                inner.innerHTML = hoursPanel(day, hours);
+                fold.classList.add('is-on');
+            });
+        });
     };
 })();
 </script>

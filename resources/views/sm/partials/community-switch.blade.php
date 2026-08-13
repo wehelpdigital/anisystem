@@ -20,7 +20,8 @@
 <style>
     .cs-toggle { position: relative; width: 2.5rem; height: 1.4rem; border-radius: 999px; background: #d1d5db; transition: background .18s ease; flex-shrink: 0; }
     .cs-toggle .cs-knob { position: absolute; top: 0.15rem; left: 0.15rem; width: 1.1rem; height: 1.1rem; border-radius: 999px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.25); transition: transform .18s ease; }
-    .cs-toggle.is-on { background: #4a7c2a; }
+    .cs-toggle.is-on,
+    html.dark .cs-toggle.is-on { background: #4a7c2a; }
     .cs-toggle.is-on .cs-knob { transform: translateX(1.1rem); }
     .cs-toggle.is-busy { opacity: .6; pointer-events: none; }
     html.dark .cs-toggle { background: #3a4152; }

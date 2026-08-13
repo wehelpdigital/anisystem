@@ -68,7 +68,8 @@
         font-size: .82rem; font-weight: 700; color: #374151; cursor: pointer;
         transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
     .ga-tab:hover { border-color: #a8cc7e; background: #f3f8ec; }
-    .ga-tab.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+    .ga-tab.is-on,
+    html.dark .ga-tab.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
     .ga-tab .ga-n { font-size: .7rem; opacity: .8; font-weight: 800; }
     .ga-pane[hidden] { display: none; }
     .ga-tools { display: flex; gap: .5rem; align-items: center; margin-bottom: .7rem; flex-wrap: wrap; }

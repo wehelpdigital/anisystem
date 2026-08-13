@@ -199,7 +199,8 @@
     .draw-tool:disabled { opacity:.35; cursor:default; }
     .draw-tool:disabled:hover { background:var(--color-gray-50); }
     .draw-tool:disabled:active { transform:none; }
-    .draw-tool.is-active { background:var(--color-brand-100); color:var(--color-brand-800); }
+    .draw-tool.is-active,
+    html.dark .draw-tool.is-active { background:var(--color-brand-100); color:var(--color-brand-800); }
     .draw-stage { flex:1; min-height:0; background:#eef1f4; overflow:hidden; touch-action:none;
         display:flex; align-items:center; justify-content:center; padding:.75rem; }
     /* Phones: the sheet goes edge to edge — the margin was dead space. */
@@ -584,6 +585,8 @@
         window.unregisterOverlay?.('drawPad');
         modal.classList.remove('show'); modal.setAttribute('aria-hidden', 'true');
         onSave = null; document.body.style.overflow = '';
+        // Whoever opened this may have somewhere to send you afterwards.
+        document.dispatchEvent(new CustomEvent('sm:draw-pad-closed'));
     }
     document.getElementById('drawCancel').addEventListener('click', close);
     document.getElementById('drawBack').addEventListener('click', close);

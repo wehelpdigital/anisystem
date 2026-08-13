@@ -206,7 +206,7 @@
                                  Filled by JS from the deduped /app/weather feed. --}}
                             @if ($scheduleHasLocation[$schedule->id] ?? false)
                                 <div data-weather-for="{{ $schedule->id }}" class="dash-wx">
-                                    <div class="wx-loading" role="status" aria-label="Loading weather forecast">
+                                    <div class="wx-loading" role="status" aria-label="Loading">
                                         <div class="wx-skel wx-skel-line"></div>
                                         <div class="wx-skel-row">
                                             <div class="wx-skel wx-skel-cell"></div>

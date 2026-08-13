@@ -239,6 +239,80 @@ class WeatherService
     }
 
     /** Hour-by-hour for a free-text place, or null if it cannot resolve. */
+    /**
+     * The next few days of hours, grouped by the day they belong to.
+     *
+     * The hourly rail used to be its own tab showing the next 24 hours, which
+     * answered "what is this afternoon like" and nothing else. A grower
+     * planning a spray for Thursday wants Thursday's hours, so the days are
+     * the way in and this is what they open.
+     *
+     * @return array<string, list<array<string, mixed>>>|null  date => hours
+     */
+    public function hourlyByDay(float $lat, float $lon, int $days = 6): ?array
+    {
+        $days = max(1, min(7, $days));
+        $key = sprintf('weather:hrday:%.2f,%.2f:%d', $lat, $lon, $days);
+        $cached = Cache::get($key);
+        if (is_array($cached)) {
+            return $cached;
+        }
+
+        try {
+            $res = Http::timeout(8)->retry(1, 200)->get(self::FORECAST_URL, [
+                'latitude' => $lat,
+                'longitude' => $lon,
+                'hourly' => 'weather_code,temperature_2m,precipitation_probability,precipitation,relative_humidity_2m,wind_speed_10m',
+                'timezone' => 'auto',
+                'forecast_days' => $days,
+            ]);
+        } catch (\Throwable $e) {
+            return null;
+        }
+
+        if (! $res->ok()) {
+            return null;
+        }
+
+        $h = $res->json('hourly');
+        if (! is_array($h) || empty($h['time'])) {
+            return null;
+        }
+
+        $tz = $res->json('timezone') ?: 'UTC';
+        $now = Carbon::now($tz);
+        $out = [];
+        foreach ($h['time'] as $i => $iso) {
+            $when = Carbon::parse($iso, $tz);
+            $date = $when->toDateString();
+            // Today starts at the hour we are in; every other day is whole.
+            if ($when->isSameDay($now) && $when->lt($now->copy()->startOfHour())) {
+                continue;
+            }
+            $meta = $this->codeMeta((int) ($h['weather_code'][$i] ?? 0));
+            $out[$date][] = [
+                'time' => $iso,
+                'hour' => $when->isoFormat('h A'),
+                'isNow' => $when->isSameDay($now) && $when->hour === $now->hour,
+                'text' => $meta['text'],
+                'emoji' => $meta['emoji'],
+                'temp' => isset($h['temperature_2m'][$i]) ? (int) round($h['temperature_2m'][$i]) : null,
+                'pop' => isset($h['precipitation_probability'][$i]) ? (int) $h['precipitation_probability'][$i] : null,
+                'mm' => isset($h['precipitation'][$i]) ? round((float) $h['precipitation'][$i], 1) : null,
+                'humidity' => isset($h['relative_humidity_2m'][$i]) ? (int) $h['relative_humidity_2m'][$i] : null,
+                'wind' => isset($h['wind_speed_10m'][$i]) ? (int) round($h['wind_speed_10m'][$i]) : null,
+            ];
+        }
+
+        if (empty($out)) {
+            return null;
+        }
+
+        Cache::put($key, $out, now()->addMinutes(30));
+
+        return $out;
+    }
+
     public function hourlyForPlace(?string $place, int $hours = 24): ?array
     {
         $geo = $this->geocode(trim((string) $place));

@@ -246,15 +246,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Camera-app style: tapping Quick Capture opens the live camera straight
-    // away. On desktop that needs a secure origin (HTTPS or localhost); when
-    // getUserMedia isn't available we fall back to the file picker (which on
-    // phones still opens the camera via the `capture` attribute).
+    /**
+     * A phone has a better camera app than this one.
+     *
+     * The in-page camera is a video stream, and a still pulled off a preview
+     * stream is soft — no autofocus lock, no HDR, no scene processing, and
+     * often a fraction of the sensor's resolution. Every one of those belongs
+     * to the phone's own camera software, and `capture` hands the job to it:
+     * the picture that comes back is the full-quality one it would have saved
+     * to the gallery. Desktops have no camera app, so they keep the live
+     * preview.
+     */
+    const hasCameraApp = () => window.matchMedia
+        ? (window.matchMedia('(pointer: coarse)').matches && navigator.maxTouchPoints > 0)
+        : /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
     async function startCapture() {
         files = [];
         renderPreviews();
         if (quill) quill.setText('');
         showStep('capture');
+        if (hasCameraApp()) { $('qcFile').click(); return; }
         const camOk = await openCamera();
         if (!camOk) $('qcFile').click();
     }
@@ -262,7 +274,17 @@ document.addEventListener('DOMContentLoaded', () => {
     async function openCamera() {
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return false;
         try {
-            stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false });
+            // Ask for the best the device will give: the default is a
+            // 640x480 preview on plenty of hardware, which is where "the
+            // photos look blurry" came from.
+            stream = await navigator.mediaDevices.getUserMedia({
+                video: {
+                    facingMode: { ideal: 'environment' },
+                    width: { ideal: 3840 },
+                    height: { ideal: 2160 },
+                },
+                audio: false,
+            });
             $('qcVideo').srcObject = stream;
             showStep('camera');
             openModal();
@@ -292,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
             stopCamera();
             renderPreviews();
             showStep('capture');
-        }, 'image/jpeg', 0.9);
+        }, 'image/jpeg', 0.95);
     }
 
     function openModal() {
@@ -337,8 +359,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ---- capture step ---- */
     $('qcAddPhoto').addEventListener('click', async () => {
-        const camOk = await openCamera();   // prefer the live camera again
-        if (!camOk) $('qcFile').click();     // otherwise the file picker
+        if (hasCameraApp()) { $('qcFile').click(); return; }   // the phone's own camera
+        const camOk = await openCamera();   // a desktop webcam, previewed here
+        if (!camOk) $('qcFile').click();
     });
     $('qcPickPhoto')?.addEventListener('click', () => { stopCamera(); $('qcPick').click(); });
     const tookPhotos = (e) => {

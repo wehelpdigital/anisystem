@@ -98,6 +98,7 @@
                 .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'));
             let drawings = @json($drawings);
             let pending = null;   // what the pad handed back, waiting for a name
+            let askedForOne = false;   // arrived here to see one drawing, from elsewhere
 
             const grid = document.getElementById('drGrid');
             const empty = document.getElementById('drEmpty');
@@ -155,6 +156,15 @@
             function pad(seed) {
                 if (typeof window.openDrawCanvas !== 'function') { toast('Drawing pad unavailable.', 'error'); return; }
                 seed = seed || {};
+                // Closing the drawing a note sent us to returns to that note.
+                if (askedForOne) {
+                    askedForOne = false;
+                    const goBack = () => {
+                        document.removeEventListener('sm:draw-pad-closed', goBack);
+                        window.smReturnToOrigin?.();
+                    };
+                    document.addEventListener('sm:draw-pad-closed', goBack);
+                }
                 window.openDrawCanvas((dataUrl, objects, mode) => {
                     // The pad's exits decide what this becomes: a flat picture,
                     // a new drawing that carries its strokes back, or the same
@@ -278,7 +288,12 @@
                 const [noteId, index] = String(want).split(':');
                 const d = drawings.find((x) => String(x.noteId) === String(noteId)
                     && String(x.index) === String(index || 0));
-                if (d) setTimeout(() => edit(d), 150);
+                if (!d) return;
+                // Opened because a note asked for it: closing the pad is done
+                // with the drawing, so it hands you back to the note rather
+                // than leaving you in a module you never chose to open.
+                askedForOne = true;
+                setTimeout(() => edit(d), 150);
             })();
         })();
     </script>

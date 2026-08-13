@@ -361,6 +361,9 @@ window.openSheet = function openSheet(id) {
 window.closeSheet = function closeSheet(id) {
     const el = document.getElementById(id);
     if (!el) return;
+    // Something may have opened this on someone else's behalf and owe them a
+    // way back — a saved map a note asked to see, for instance.
+    document.dispatchEvent(new CustomEvent('sm:sheet-closed', { detail: { id } }));
     window.unregisterOverlay('sheet:' + id);
     el.classList.remove('is-open');
     const idx = openSheets.indexOf(el);

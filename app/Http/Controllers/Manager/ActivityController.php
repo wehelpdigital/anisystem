@@ -153,6 +153,99 @@ class ActivityController extends BaseScheduleController
         return $this->jsonOk('Activity loaded.', ['data' => $payload]);
     }
 
+    /**
+     * What went on this ground before, and how long ago.
+     *
+     * Standing in front of a task, the question is rarely "what is this" —
+     * it is "when did this lot last get a herbicide", because the answer
+     * decides whether today's spray is safe, wasted, or the second one in a
+     * week. The board holds the answer and made a person scroll for it.
+     *
+     * Counted per category, per lot, against everything before this task's
+     * own date, drafts excluded — a draft has not happened.
+     */
+    public function advanced(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        $id = $this->queryId($request);
+
+        $activity = AsScheduleActivity::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->where('id', $id)
+            ->with('lots')
+            ->first();
+        if (! $activity) {
+            return $this->jsonFail('Activity not found.', 404);
+        }
+
+        // The categories a grower actually asks about, in the order they ask.
+        $groups = [
+            'herbicide' => ['label' => 'Herbicide', 'types' => ['herbicide']],
+            'foliar_spray' => ['label' => 'Foliar spray', 'types' => ['foliar_spray']],
+            'fertilizer' => ['label' => 'Granular fertiliser', 'types' => ['fertilizer']],
+            'pesticide' => ['label' => 'Pesticide / insecticide', 'types' => ['pesticide']],
+            'fungicide' => ['label' => 'Fungicide', 'types' => ['fungicide']],
+            'copper_fungicide' => ['label' => 'Copper-based fungicide', 'types' => ['copper_fungicide']],
+            'microbial' => ['label' => 'Microbial / bio', 'types' => ['microbial']],
+        ];
+
+        $on = $activity->targetDate ? $activity->targetDate->copy()->startOfDay() : now()->startOfDay();
+        $lotIds = $activity->lots->pluck('id')->all();
+
+        // Everything on this schedule that happened before this task, on the
+        // lots this task covers (or anywhere, when it covers none).
+        $earlier = AsScheduleActivity::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->where('isDraft', 0)
+            ->where('id', '!=', $activity->id)
+            ->whereDate('targetDate', '<=', $on->toDateString())
+            ->with('lots')
+            ->orderByDesc('targetDate')
+            ->get()
+            ->filter(function ($a) use ($lotIds, $activity, $on) {
+                if ($a->targetDate && $a->targetDate->isSameDay($on) && $a->id > $activity->id) {
+                    return false;   // same day, entered after: not "before"
+                }
+                if (! $lotIds) {
+                    return true;
+                }
+                $its = $a->lots->pluck('id')->all();
+
+                return ! $its || array_intersect($its, $lotIds);
+            });
+
+        $rows = [];
+        foreach ($groups as $key => $g) {
+            $hit = $earlier->first(fn ($a) => (bool) array_intersect($a->typeSlugs(), $g['types']));
+            $rows[] = [
+                'key' => $key,
+                'label' => $g['label'],
+                'title' => $hit?->activityTitle,
+                'date' => $hit?->targetDate?->toDateString(),
+                'when' => $hit?->targetDate?->format('M j, Y'),
+                // Days between that one and this one. 0 means the same day,
+                // which is worth seeing rather than rounding away.
+                'daysBefore' => $hit && $hit->targetDate
+                    ? (int) $hit->targetDate->copy()->startOfDay()->diffInDays($on)
+                    : null,
+                'lots' => $hit ? $hit->lots->pluck('lotName')->all() : [],
+            ];
+        }
+
+        return $this->jsonOk('Advanced info.', [
+            'data' => [
+                'activity' => [
+                    'id' => $activity->id,
+                    'title' => $activity->activityTitle,
+                    'date' => $activity->targetDate?->format('M j, Y'),
+                    'types' => $activity->typeLabels(),
+                ],
+                'lots' => $activity->lots->pluck('lotName')->all(),
+                'rows' => $rows,
+            ],
+        ]);
+    }
+
     public function destroy(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request);
@@ -975,6 +1068,10 @@ class ActivityController extends BaseScheduleController
             'targetEndDate'   => 'nullable|date|after_or_equal:targetDate',
             'priority'        => 'required|in:critical,high,medium,low',
             'activityType'    => ['nullable', 'string', Rule::in(array_keys(AsScheduleActivity::ACTIVITY_TYPES))],
+            // The rest of what is in the tank. Same catalogue, and the primary
+            // is filtered out of it on the way in so nothing counts twice.
+            'extraTypes'      => ['nullable', 'array', 'max:8'],
+            'extraTypes.*'    => ['string', Rule::in(array_keys(AsScheduleActivity::ACTIVITY_TYPES))],
             'waterTask'       => ['nullable', 'string', Rule::in(array_keys(AsScheduleActivity::WATER_TASKS))],
             'servicePrice'    => 'nullable|numeric|min:0|max:99999999',
             'isDayZero'       => 'nullable|boolean',
@@ -1077,6 +1174,12 @@ class ActivityController extends BaseScheduleController
         $submittedImagePath = $submittedImagePaths[0] ?? null;
 
         $activityType = $request->filled('activityType') ? $request->activityType : null;
+        // Everything else in the same tank, minus the primary and the kinds
+        // that are a mode of their own rather than a chemical.
+        $extraTypes = collect((array) $request->input('extraTypes', []))
+            ->filter(fn ($t) => is_string($t) && $t !== '' && $t !== $activityType)
+            ->reject(fn ($t) => in_array($t, ['irrigation', 'service', 'worker_payroll', 'reminder_checklist'], true))
+            ->unique()->values()->all();
 
         $payload = [
             'croppingScheduleId' => $schedule->id,
@@ -1085,6 +1188,7 @@ class ActivityController extends BaseScheduleController
             'targetEndDate'      => $request->filled('targetEndDate') ? $request->targetEndDate : null,
             'priority'           => $request->priority,
             'activityType'       => $activityType,
+            'extraTypes'         => $extraTypes ?: null,
             // Water task only applies to irrigation activities.
             'waterTask'          => $activityType === 'irrigation'
                 ? ($request->filled('waterTask') ? $request->waterTask : 'irrigate')

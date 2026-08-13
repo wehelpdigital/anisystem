@@ -206,7 +206,7 @@
         'locTown' => $l->locTown,
         'locProvince' => $l->locProvince,
         'fullAddress' => $l->full_address,
-        'dayType' => $l->dayType ?: 'DAS',
+        'dayType' => $l->dayType ?: 'DAT',
         'notes' => $l->notes,
     ])->values();
 @endphp
@@ -310,9 +310,13 @@ const __init = () => {
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 21c0-7 4-13 14-16-1 10-6 15-13 15m-1 1c2-5 5-8 9-10"/></svg>
                 ${escapeHtml(lot.variety)}
             </span>` : '';
-        const dayTypeBadge = (lot.dayType === 'DAP')
-            ? '<span class="badge badge-gray">DAP</span>'
-            : '<span class="badge badge-gray">DAS → DAT</span>';
+        // Three answers, the same three the sheet offers. Saying "DAS → DAT"
+        // for anything that was not DAP is how a lot the grower had just
+        // changed to direct seeding went on claiming it transplants.
+        const DAY_TYPE_BADGE = { DAP: 'DAP', DAS: 'DSR · DAS only', DAT: 'DAS → DAT' };
+        const dayTypeBadge = '<span class="badge badge-gray">'
+            + (DAY_TYPE_BADGE[String(lot.dayType || 'DAT').toUpperCase()] || DAY_TYPE_BADGE.DAT)
+            + '</span>';
 
         return `
             <div class="card-body h-full flex flex-col py-4! gap-3">
@@ -489,7 +493,7 @@ const __init = () => {
             locZone: document.getElementById('lotZone').value.trim() || null,
             locTown: document.getElementById('lotTown').value.trim() || null,
             locProvince: document.getElementById('lotProvince').value.trim() || null,
-            dayType: document.getElementById('lotDayType').value || 'DAS',
+            dayType: document.getElementById('lotDayType').value || 'DAT',
             notes: document.getElementById('lotNotes').value || null,
         };
 
@@ -521,7 +525,7 @@ const __init = () => {
                 locTown: res.data.locTown,
                 locProvince: res.data.locProvince,
                 fullAddress: composeAddress(res.data),
-                dayType: res.data.dayType || 'DAS',
+                dayType: res.data.dayType || 'DAT',
                 notes: res.data.notes,
             };
             const idx = LOTS.findIndex((l) => String(l.id) === String(saved.id));

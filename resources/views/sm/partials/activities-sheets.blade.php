@@ -144,15 +144,31 @@
             </div>
 
             <div id="activityTypeWrap">
-                <label class="form-label" for="activityType">Activity type</label>
-                <select id="activityType" class="form-select">
-                    <option value="">— select a type —</option>
+                <label class="form-label">Task type</label>
+                {{-- Tags, not a dropdown, because one tank is often two
+                     chemicals: a fungicide and an insecticide go out together
+                     in the same knapsack all the time, and a single-choice
+                     list forced that into two tasks or a half-truth. The first
+                     one picked leads — it is what colours the card and what
+                     the filters read — and the rest ride with it. --}}
+                <div class="tt-tags" id="activityTypeTags" role="group" aria-label="Task type">
                     @foreach ($activityTypes as $slug => $label)
-                        {{-- The three kinds with a tab of their own are picked
-                             up there, not buried in this list. --}}
-                        @if (!in_array($slug, ['irrigation', 'service', 'worker_payroll'], true))
-                            <option value="{{ $slug }}">{{ $label }}</option>
+                        {{-- The kinds with a tab of their own are chosen there,
+                             and the reminder checklist is not a task type at
+                             all. --}}
+                        @if (!in_array($slug, ['irrigation', 'service', 'worker_payroll', 'reminder_checklist'], true))
+                            <button type="button" class="tt-tag" data-type="{{ $slug }}" aria-pressed="false">{{ $label }}</button>
                         @endif
+                    @endforeach
+                </div>
+                <p class="form-hint" id="activityTypeHint">Pick one, or several if they go in the same tank.</p>
+                <p class="tt-warn" id="activityTypeWarn" hidden></p>
+                {{-- Kept, hidden, as the single source of the primary type:
+                     everything from card colour to the DAS filters reads it. --}}
+                <select id="activityType" class="hidden" tabindex="-1" aria-hidden="true">
+                    <option value=""></option>
+                    @foreach ($activityTypes as $slug => $label)
+                        <option value="{{ $slug }}">{{ $label }}</option>
                     @endforeach
                 </select>
             </div>
@@ -621,7 +637,7 @@
         </button>
     </div>
     <div class="sheet-body" id="savedWeatherBody">
-        <p class="text-sm text-gray-500 text-center py-6">Loading the saved reading…</p>
+        <p class="text-sm text-gray-500 text-center py-6">Loading…</p>
     </div>
 </div>
 
@@ -658,10 +674,24 @@
             <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="move">Move to date…</button>
             <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="duplicate">Duplicate</button>
             <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="hide"><span id="cardMenuHideLabel">Hide from presentations</span></button>
+            <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="advanced">Advanced info</button>
             <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="tag">Tag a drawing, map or note</button>
             <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="draft">Move to drafts</button>
             <button type="button" class="btn btn-ghost justify-start! text-red-600!" data-card-menu-action="delete">Delete</button>
         </div>
+    </div>
+</div>
+
+{{-- ============== WHAT WENT ON THIS GROUND BEFORE, AND WHEN ============== --}}
+<div class="sheet hidden" id="advInfoSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title truncate" id="advInfoTitle">Advanced info</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body" style="padding-bottom:1rem">
+        <p class="text-xs text-gray-500 mb-2" id="advInfoSub"></p>
+        <div id="advInfoBody"><p class="text-sm text-gray-500 text-center py-6">Loading…</p></div>
     </div>
 </div>
 

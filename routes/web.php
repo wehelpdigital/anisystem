@@ -242,6 +242,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // "How to use" — one page per module per device, written in the mother app.
     Route::get('/app/help/{module}', [App\Http\Controllers\HelpController::class, 'show'])->name('help.show');
     // Gallery: albums a grower makes and names, and the pictures in them.
+    Route::get('/app/sm-activity-advanced', [App\Http\Controllers\Manager\ActivityController::class, 'advanced'])->name('sm.activity.advanced');
     Route::get('/app/sm-gallery', [App\Http\Controllers\Manager\GalleryController::class, 'page'])->name('sm.gallery');
     Route::post('/app/sm-gallery-album', [App\Http\Controllers\Manager\GalleryController::class, 'albumSave'])->name('sm.gallery.album.save');
     Route::delete('/app/sm-gallery-album', [App\Http\Controllers\Manager\GalleryController::class, 'albumDestroy'])->name('sm.gallery.album.destroy');

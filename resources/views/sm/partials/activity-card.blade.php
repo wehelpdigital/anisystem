@@ -36,6 +36,10 @@
      data-is-day-zero="{{ $a->isDayZero ? 1 : 0 }}"
      data-is-transplant="{{ $a->isTransplant ? 1 : 0 }}"
      data-activity-type="{{ $a->activityType ?: '' }}"
+     {{-- Everything in the tank, primary first: the day's warnings read this
+          rather than the single type, or a fungicide riding along with an
+          insecticide would be invisible to them. --}}
+     data-activity-types="{{ implode(',', $a->typeSlugs()) }}"
      data-is-hidden="{{ $a->isHidden ? 1 : 0 }}"
      data-search="{{ $searchText }}"
      @if($cardLots->count()) style="--lot-accent: hsl({{ ($cardLots->first()->id * 137) % 360 }}, 55%, 40%)" @endif>

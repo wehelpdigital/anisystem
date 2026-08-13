@@ -130,7 +130,10 @@ class WeatherController extends Controller
                 ? ['ok' => true, 'place' => $fc['place'], 'days' => $fc['days']]
                 : ['ok' => false, 'place' => $info['label']];
             if ($wantHourly && $fc) {
-                $resolved[$key]['hours'] = $this->weather->hourly($fc['lat'], $fc['lon'], 24) ?: [];
+                // Hours belong to the day you tapped, so they arrive grouped
+                // that way. The flat 24-hour list the old tab used is gone
+                // with the tab.
+                $resolved[$key]['hoursByDay'] = $this->weather->hourlyByDay($fc['lat'], $fc['lon'], 6) ?: [];
             }
         }
 

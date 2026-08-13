@@ -259,6 +259,41 @@
 
         /* The sheet: one card per lot, its stage, and the whole run of stages
            with where today falls in it. */
+        /* Task types: many can be on at once, so they are toggles rather
+           than a list you choose from. */
+        /* Advanced info: one line per chemical family, the number first
+           because the number is the question. */
+        .adv-list { display: grid; gap: .4rem; }
+        .adv-row { display: flex; align-items: center; gap: .6rem; padding: .55rem .7rem;
+            border: 1px solid var(--color-gray-200); border-radius: .7rem; background: var(--color-white); }
+        .adv-lbl { font-size: .8rem; font-weight: 700; color: var(--color-gray-800); flex: 1 1 auto; min-width: 0; }
+        .adv-n { font-size: 1.15rem; font-weight: 800; color: #3d6823; flex: none; }
+        .adv-when { font-size: .72rem; color: var(--color-gray-500); text-align: right; flex: none; }
+        .adv-when small { display: block; font-size: .66rem; color: var(--color-gray-400); }
+        .adv-none { font-size: .72rem; color: var(--color-gray-400); font-style: italic; }
+        .adv-row.is-none { background: var(--color-gray-50); }
+        .adv-foot { margin-top: .7rem; font-size: .72rem; line-height: 1.5; color: var(--color-gray-400); }
+        html.dark .adv-row { background: #151b12; border-color: #2b3a1c; }
+        html.dark .adv-lbl { color: #e8efe1; }
+        html.dark .adv-row.is-none { background: #1c2416; }
+
+        .tt-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .1rem; }
+        .tt-tag { padding: .35rem .7rem; border-radius: 999px; font-size: .78rem; font-weight: 700;
+            border: 2px solid var(--color-gray-200); background: var(--color-white); color: #374151;
+            cursor: pointer; transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+        .tt-tag:hover { border-color: #a8cc7e; background: #f3f8ec; }
+        html.dark .tt-tag { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
+        .tt-tags .tt-tag.is-on,
+        html.dark .tt-tags .tt-tag.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+        /* The one that leads — the card takes its colour from this one. */
+        .tt-tags .tt-tag.is-lead::before,
+        html.dark .tt-tags .tt-tag.is-lead::before { content: '\2605\00a0'; font-size: .7rem; }
+        .tt-warn { margin-top: .4rem; padding: .5rem .6rem; border-radius: .6rem; font-size: .74rem; line-height: 1.45;
+            background: #fef3c7; border: 1px solid #fcd34d; color: #92400e; }
+        html.dark .tt-warn { background: rgb(180 83 9 / .18); border-color: rgb(180 83 9 / .5); color: #fcd34d; }
+        .tt-warn[hidden] { display: none; }
+        @media (prefers-reduced-motion: reduce) { .tt-tag { transition: none; } }
+
         .gs-quiet { margin-top: .9rem; padding: .7rem .8rem; border-radius: .7rem;
             background: var(--color-gray-50); border: 1px solid var(--color-gray-200); font-size: .78rem; color: var(--color-gray-600); }
         .gs-quiet b { display: block; font-size: .68rem; text-transform: uppercase; letter-spacing: .05em; color: var(--color-gray-500); margin-bottom: .3rem; }
@@ -1346,7 +1381,8 @@
             transition: background .25s ease, color .25s ease, border-color .25s ease, transform .15s ease;
         }
         .activity-mode-tab:hover { border-color: #a8cc7e; background: #f3f8ec; }
-        .activity-mode-tab.is-active { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+        .activity-mode-tab.is-active,
+        html.dark .activity-mode-tab.is-active { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
         .activity-mode-tab.is-active:hover { background: #3d6823; border-color: #3d6823; }
         .activity-mode-tab:active { transform: scale(.97); }
         .activity-mode-tab .act-pane-count { background: rgb(255 255 255 / .25); }
@@ -1358,7 +1394,8 @@
         /* Date ↔ DAS chooser inside the activity sheet (smaller sibling of the mode tabs) */
         .when-tabs { display: inline-flex; gap: .25rem; padding: .2rem; background: #f1f3f7; border-radius: .65rem; width: 100%; margin-bottom: .5rem; }
         .when-tab { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: .35rem; padding: .45rem .6rem; border: none; background: transparent; border-radius: .5rem; font-size: .8rem; font-weight: 600; color: #5b6472; cursor: pointer; transition: background .25s ease, color .25s ease, box-shadow .25s ease; }
-        .when-tab.is-active { background: #fff; color: #1f2937; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+        .when-tab.is-active,
+        html.dark .when-tab.is-active { background: #fff; color: #1f2937; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
         .when-tab:active { transform: scale(.97); }
         .when-tab:disabled { opacity: .45; cursor: not-allowed; }
         html.dark .when-tabs { background: #1c2136; }
@@ -1541,7 +1578,8 @@
         html.dark .das-daytype span { color: #9ab7e0; }
         .das-dt-opt { font-size: .72rem; font-weight: 800; padding: .22rem .55rem; border-radius: 999px; background: #dbeafe; color: #1e40af; }
         .das-dt-opt:hover { background: #c7dbfd; }
-        .das-dt-opt.is-current { background: #2563eb; color: #fff; }
+        .das-dt-opt.is-current,
+        html.dark .das-dt-opt.is-current { background: #2563eb; color: #fff; }
         html.dark .das-dt-opt { background: #22314b; color: #bcd3f5; }
         html.dark .das-dt-opt.is-current { background: #3b82f6; color: #fff; }
         html.dark .day-zero-panel .text-amber-900 { color: #f5d896; }
@@ -2342,7 +2380,7 @@
     <div class="sheet-body" id="weatherBody">
         <div class="flex items-center gap-2 rounded-lg border border-gray-100 bg-gray-50/60 px-3 py-4">
             <span class="wx-cloud text-2xl leading-none" aria-hidden="true">☁️</span>
-            <span class="text-xs font-semibold text-gray-500">Loading weather forecast…</span>
+            <span class="text-xs font-semibold text-gray-500">Loading…</span>
         </div>
     </div>
 </div>
@@ -2478,8 +2516,25 @@
      *                        cached from an earlier visit knows nothing about
      *                        the thing you just tapped.
      */
+    /* Where a deep link came from.
+     *
+     * Tapping a drawing in a note is not "go to the Drawings module" — it is
+     * "show me this drawing", and when you are done with it the place you
+     * want back is the note. The module you were in when you asked is
+     * remembered here so the thing you opened knows where to return you. */
+    let cameFrom = null;
+    window.smCameFrom = () => cameFrom;
+    window.smReturnToOrigin = () => {
+        const back = cameFrom;
+        cameFrom = null;
+        if (back && MODULES[back]) { showModule(back, true); return true; }
+        return false;
+    };
+
     async function showModule(key, push = true, extra = '') {
         if (!MODULES[key]) { closeModulesSheetForNav(); return; }
+        // Only a deep link sets this, and only from somewhere else.
+        cameFrom = extra && current && current !== key ? current : (extra ? cameFrom : null);
         if (extra) {
             const had = loaded.get(key);
             if (had) { had.remove(); loaded.delete(key); }
@@ -2520,7 +2575,11 @@
                 return showModule(key, push);
             }
         } else {
-            loaderLabel.textContent = 'Loading ' + MODULES[key].label + '…';
+            // Just "Loading…". Naming the module in the loader read as a
+            // claim about what you were waiting for — and when a module
+            // carried a panel of its own that said something else, the two
+            // disagreed on screen.
+            loaderLabel.textContent = 'Loading…';
             loader.classList.remove('hidden');
             host.classList.add('hidden');
             try {

@@ -790,6 +790,7 @@ document.addEventListener('DOMContentLoaded', () => {
      data-is-day-zero="${isDayZeroFlag}"
      data-is-transplant="${isTransplantFlag}"
      data-activity-type="${esc(a.activityType || '')}"
+     data-activity-types="${esc([a.activityType, ...(Array.isArray(a.extraTypes) ? a.extraTypes : [])].filter(Boolean).join(','))}"
      data-is-hidden="${isHiddenFlag}"
      data-search="${esc(searchText)}"${lotAccentStyle}>
     <div class="flex items-start justify-between gap-2">
@@ -1070,6 +1071,42 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="min-w-0 font-semibold text-gray-800 text-sm truncate">${esc(r.label || 'Untitled')}</span>
                 </button>`).join('')
             : `<p class="text-sm text-gray-400 py-2">Nothing to tag yet — make a ${TAG_TAB} first and it will be listed here.</p>`;
+    }
+
+    /* ---- Advanced info: what went on this ground before ---------------
+     * The question in front of a task is nearly always "when did this lot
+     * last get a herbicide" — and the board held the answer while making a
+     * person scroll weeks of it to find out. */
+    const ADV_URL = @json(route('sm.activity.advanced')) + '?scheduleId=' + SCHEDULE_ID;
+
+    function advRow(r) {
+        const none = r.daysBefore === null || r.daysBefore === undefined;
+        const days = none ? '' : (r.daysBefore === 0 ? 'today' : r.daysBefore + ' day' + (r.daysBefore === 1 ? '' : 's') + ' before');
+        return `<div class="adv-row${none ? ' is-none' : ''}">
+            <span class="adv-lbl">${esc(r.label)}</span>
+            ${none
+                ? '<span class="adv-none">never on this ground</span>'
+                : `<span class="adv-n">${r.daysBefore}</span>
+                   <span class="adv-when">${esc(days)}<small>${esc(r.when || '')}${r.title ? ' · ' + esc(r.title) : ''}</small></span>`}
+        </div>`;
+    }
+
+    async function openAdvancedInfo(id, name) {
+        $id('advInfoTitle').textContent = name || 'Advanced info';
+        $id('advInfoBody').innerHTML = '<p class="text-sm text-gray-500 text-center py-6">Loading…</p>';
+        $id('advInfoSub').textContent = '';
+        openSheet('advInfoSheet');
+        try {
+            const res = await api(ADV_URL + '&id=' + id);
+            const d = res.data || {};
+            const lots = (d.lots || []).length ? d.lots.join(', ') : 'every lot';
+            $id('advInfoSub').textContent = `${d.activity?.date || ''} · ${lots}`
+                + (d.activity?.types?.length ? ' · ' + d.activity.types.join(' + ') : '');
+            $id('advInfoBody').innerHTML = '<div class="adv-list">' + (d.rows || []).map(advRow).join('') + '</div>'
+                + '<p class="adv-foot">Counted from this task’s own date, against the lots it covers. Drafts are not counted — a draft has not happened.</p>';
+        } catch (err) {
+            $id('advInfoBody').innerHTML = `<p class="text-sm text-red-600 text-center py-6">${esc(err.message || 'Could not read that.')}</p>`;
+        }
     }
 
     async function openActivityTagSheet(id, name) {
@@ -1706,6 +1743,71 @@ document.addEventListener('DOMContentLoaded', () => {
         refreshDayWarnings();   // date groups changed → recompute per-day reminders
     }
 
+    /* ---- Task types: several at once ---------------------------------
+     * The order is the record: the first one picked leads, and leading means
+     * colouring the card, answering the filters and deciding which tab the
+     * task belongs to. The rest are what else went in the tank.
+     *
+     * Some things must not share one: copper burns leaves when it meets an
+     * oil or an acidic partner, and a herbicide in a knapsack that later
+     * sprays a crop is a mistake you only make once. Saying so here is
+     * cheaper than saying it after the field turns. */
+    const TT_SOLO = { copper_fungicide: 'Copper-based products', herbicide: 'Herbicide' };
+    const TT_SOLO_WHY = {
+        copper_fungicide: 'Copper burns leaves when it meets oils or acidic partners, and it puts most biologicals down. Spray it on its own.',
+        herbicide: 'A herbicide should not share a tank with anything meant to help the crop — and the knapsack wants rinsing before it is used for anything else.',
+    };
+
+    let TASK_TYPES = [];   // slugs, in the order they were picked
+
+    const taskTypes = () => TASK_TYPES.slice();
+
+    function paintTaskTypes() {
+        const tags = $qsa('#activityTypeTags .tt-tag');
+        tags.forEach((t) => {
+            const slug = t.getAttribute('data-type');
+            const at = TASK_TYPES.indexOf(slug);
+            t.classList.toggle('is-on', at >= 0);
+            t.classList.toggle('is-lead', at === 0);
+            t.setAttribute('aria-pressed', at >= 0 ? 'true' : 'false');
+        });
+        // The hidden select stays the primary type for everything downstream.
+        const sel = $id('activityType');
+        if (sel) sel.value = TASK_TYPES[0] || '';
+
+        const warn = $id('activityTypeWarn');
+        if (warn) {
+            const clash = TASK_TYPES.length > 1 ? TASK_TYPES.find((t) => TT_SOLO[t]) : null;
+            warn.hidden = !clash;
+            if (clash) {
+                warn.innerHTML = '<b>' + esc(TT_SOLO[clash]) + ' should go out alone.</b> ' + esc(TT_SOLO_WHY[clash]);
+            }
+        }
+        const hint = $id('activityTypeHint');
+        if (hint) {
+            hint.textContent = TASK_TYPES.length > 1
+                ? 'The first one leads: ' + (ACTIVITY_TYPE_LABELS[TASK_TYPES[0]] || TASK_TYPES[0]) + '. Tap it again to drop it.'
+                : 'Pick one, or several if they go in the same tank.';
+        }
+    }
+
+    function setTaskTypes(list) {
+        const known = new Set($qsa('#activityTypeTags .tt-tag').map((t) => t.getAttribute('data-type')));
+        TASK_TYPES = (list || []).filter((t) => t && known.has(t))
+            .filter((t, i, a) => a.indexOf(t) === i);
+        paintTaskTypes();
+    }
+
+    $id('activityTypeTags')?.addEventListener('click', (e) => {
+        const tag = e.target.closest('.tt-tag');
+        if (!tag) return;
+        const slug = tag.getAttribute('data-type');
+        const at = TASK_TYPES.indexOf(slug);
+        if (at >= 0) TASK_TYPES.splice(at, 1);
+        else TASK_TYPES.push(slug);
+        paintTaskTypes();
+    });
+
     /* ================================================================
      * DAY REMINDERS — advisory "double-check this" flags per date group.
      * Pure client-side: reads each card's date / type / lots (+ the weather
@@ -1756,14 +1858,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const date = (card.getAttribute('data-target-date') || '').trim();
             if (!date) return;
             const type = card.getAttribute('data-activity-type') || '';
+            // A task can be several things at once; the rules ask about all of
+            // them, not just the one that colours the card.
+            const types = (card.getAttribute('data-activity-types') || type)
+                .split(',').map((t) => t.trim()).filter(Boolean);
             const id = card.getAttribute('data-id');
             const title = ($qs('.activity-card-title', card)?.textContent || 'Activity').trim();
             const lots = $qsa('.activity-card-lothead .lot-tag[data-lot-id]', card)
                 .map((t) => parseInt(t.getAttribute('data-lot-id'), 10)).filter(Boolean);
-            (byDate[date] = byDate[date] || []).push({ type, id, title, lots });
+            (byDate[date] = byDate[date] || []).push({ type, types, id, title, lots });
             (byDateLot[date] = byDateLot[date] || {});
-            lots.forEach((lid) => { (byDateLot[date][lid] = byDateLot[date][lid] || []).push({ type, id, title }); });
+            lots.forEach((lid) => { (byDateLot[date][lid] = byDateLot[date][lid] || []).push({ type, types, id, title }); });
         });
+
+        // "Is this task any of these?" — a task carrying a fungicide and an
+        // insecticide answers yes to both.
+        const actIs = (a, set) => (a.types || [a.type]).some((t) => set.has(t));
+        const actTypes = (a) => (a.types && a.types.length ? a.types : [a.type]).filter(Boolean);
 
         const seen = new Set();
         const push = (date, w) => {
@@ -1783,6 +1894,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 const todays = lotsToday[lid];
                 const prevs = lotsPrev[lid] || [];
 
+                // Rule 0 — what is in one tank. Copper burns leaves in the
+                // wrong company and a herbicide has no business sharing a
+                // knapsack with anything meant to help the crop.
+                todays.forEach((a) => {
+                    const mine = actTypes(a);
+                    if (mine.length < 2) return;
+                    const solo = mine.find((t) => t === 'copper_fungicide' || t === 'herbicide');
+                    if (!solo) return;
+                    const others = mine.filter((t) => t !== solo).map((t) => warnChem(t)).join(', ');
+                    push(date, {
+                        sig: `tank|${date}|${a.id}`,
+                        ico: '🧪',
+                        title: warnChem(solo) + ' is mixed with something else',
+                        lots: [lid],
+                        detail: `"${a.title}" on ${warnLotName(lid)} puts ${warnChem(solo)} in the same tank as ${others}. `
+                            + (solo === 'copper_fungicide'
+                                ? 'Copper burns leaves when it meets oils or acidic partners and knocks most biologicals out. Spray it on its own.'
+                                : 'A herbicide should not share a tank with anything meant to help the crop, and the knapsack wants rinsing before its next job.'),
+                    });
+                });
+
                 // Rule 2 — two+ activities on the same lot, same day.
                 if (todays.length >= 2) {
                     const ids = todays.map((a) => a.id).sort().join(',');
@@ -1798,8 +1930,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Rules that need yesterday on the same lot.
                 if (prevs.length) {
                     // Rule 1 — herbicide/bactericide today after any spray yesterday.
-                    const strongToday = todays.find((a) => WARN_TODAY_STRONG.has(a.type));
-                    const sprayPrev = prevs.find((a) => WARN_PREV_SPRAY.has(a.type));
+                    const strongToday = todays.find((a) => actIs(a, WARN_TODAY_STRONG));
+                    const sprayPrev = prevs.find((a) => actIs(a, WARN_PREV_SPRAY));
                     if (strongToday && sprayPrev) {
                         push(date, {
                             sig: `overload|${date}|${lid}|${strongToday.type}>${sprayPrev.type}`,
@@ -1810,8 +1942,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                     }
                     // Rule 3 — granular fertilizer two days running.
-                    const granToday = todays.find((a) => WARN_GRANULAR.has(a.type));
-                    const granPrev = prevs.find((a) => WARN_GRANULAR.has(a.type));
+                    const granToday = todays.find((a) => actIs(a, WARN_GRANULAR));
+                    const granPrev = prevs.find((a) => actIs(a, WARN_GRANULAR));
                     if (granToday && granPrev) {
                         push(date, {
                             sig: `granular2|${date}|${lid}`,
@@ -1827,7 +1959,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Rule 4 — spraying before forecast rain (today + future only).
             if (date >= today) {
                 byDate[date].forEach((a) => {
-                    if (!WARN_SPRAYS_ALL.has(a.type)) return;
+                    if (!actIs(a, WARN_SPRAYS_ALL)) return;
                     a.lots.forEach((lid) => {
                         const d = (WX_BY_LOT_DATE[lid] || {})[date];
                         if (!warnIsRainy(d)) return;
@@ -3178,6 +3310,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('activityTargetEndDate').value = '';
         $id('activityPriority').value = 'medium';
         $id('activityType').value = '';
+        setTaskTypes([]);
         if ($id('activityWaterTask')) $id('activityWaterTask').value = 'irrigate';
         if ($id('activityServicePrice')) $id('activityServicePrice').value = '';
         setActivityMode('task');
@@ -3259,6 +3392,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 setActivityMode('task');
                 $id('activityType').value = a.activityType || '';
+                setTaskTypes([a.activityType, ...(Array.isArray(a.extraTypes) ? a.extraTypes : [])]);
             }
             $id('activityTimeRequired').value = a.timeRequired || 'half';
             $id('activityIsDayZero').checked = !!boolFlag(a.isDayZero);
@@ -3310,6 +3444,7 @@ document.addEventListener('DOMContentLoaded', () => {
             targetEndDate: a.targetEndDate ? a.targetEndDate.slice(0, 10) : null,
             priority: a.priority,
             activityType: a.activityType || '',
+            extraTypes: Array.isArray(a.extraTypes) ? a.extraTypes.slice() : [],
             waterTask: a.waterTask || '',
             servicePrice: a.servicePrice != null ? a.servicePrice : '',
             description: a.description || '',
@@ -3344,13 +3479,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const isReminders = activityMode === 'reminders';
         const activityType = isReminders ? 'reminder_checklist'
             : (isPayroll ? 'worker_payroll'
-            : (isIrrigation ? 'irrigation' : (isService ? 'service' : ($id('activityType').value || ''))));
+            : (isIrrigation ? 'irrigation' : (isService ? 'service' : (taskTypes()[0] || ''))));
         const payload = {
             activityTitle: $id('activityTitle').value,
             targetDate: startDateVal,
             targetEndDate: endDateVal || null,
             priority: $id('activityPriority').value,
             activityType,
+            // Everything else in the same tank (empty unless this is a task).
+            extraTypes: (isIrrigation || isService || isPayroll || isReminders)
+                ? [] : taskTypes().slice(1),
             waterTask: isIrrigation ? ($id('activityWaterTask').value || 'irrigate') : '',
             servicePrice: isService ? ($id('activityServicePrice').value || '') : '',
             description: getDescriptionContent(),
@@ -3895,7 +4033,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const title = $id('savedWeatherTitle');
         if (!body) return;
         if (title) title.textContent = 'Saved weather — ' + prettyDateFull(date);
-        body.innerHTML = '<p class="text-sm text-gray-500 text-center py-6">Loading the saved reading…</p>';
+        body.innerHTML = '<p class="text-sm text-gray-500 text-center py-6">Loading…</p>';
         openSheet('savedWeatherSheet');
         try {
             const res = await fetch(`{{ route('sm.weather.saved') }}?scheduleId=${SCHEDULE_ID}&date=${encodeURIComponent(date)}`,
@@ -4302,6 +4440,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (cardIsDone && (action === 'edit' || action === 'move')) { openDoneNoteSheet(id, name); return; }
             if (action === 'edit') { const done = spinBtn(kebab); openEditActivitySheet(id).finally(() => done && done()); }
             else if (action === 'duplicate') { const done = spinBtn(kebab); duplicateActivity(id, name).finally(() => done && done()); }
+            else if (action === 'advanced') openAdvancedInfo(id, name);
             else if (action === 'tag') openActivityTagSheet(id, name);
             else if (action === 'draft') moveActivityToDrafts(id, name);
             else if (action === 'delete') deleteActivity(id, name);

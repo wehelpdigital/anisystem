@@ -87,7 +87,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary { @apply bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800; }
-.btn-accent { @apply bg-accent-500 text-ink hover:bg-accent-600; }
+/* Yellow needs dark text in both themes. `text-ink` flips to near-white in
+   dark mode, and the rule meant to pin it back keys off a `bg-accent-500`
+   class this button does not carry — so "Create Schedule" was white on
+   yellow and effectively unreadable. Pinned here, where the button is. */
+.btn-accent { @apply bg-accent-500 hover:bg-accent-600; color: #1a1a1a; }
+html.dark .btn-accent { color: #1a1a1a; }
+.btn-accent:disabled, .btn-accent[disabled] { color: rgb(26 26 26 / .55); }
 .btn-outline { @apply border-2 border-brand-600 text-brand-700 bg-white hover:bg-brand-50; }
 .btn-ghost { @apply text-gray-600 bg-transparent hover:bg-gray-100; }
 .btn-danger { @apply bg-red-600 text-white hover:bg-red-700; }

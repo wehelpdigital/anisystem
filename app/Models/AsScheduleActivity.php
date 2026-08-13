@@ -71,6 +71,7 @@ class AsScheduleActivity extends BaseModel
         'targetEndDate',
         'priority',
         'activityType',
+        'extraTypes',
         'waterTask',
         'servicePrice',
         'isDayZero',
@@ -92,6 +93,7 @@ class AsScheduleActivity extends BaseModel
         'targetDate' => 'date:Y-m-d',
         'targetEndDate' => 'date:Y-m-d',
         'servicePrice' => 'decimal:2',
+        'extraTypes' => 'array',
         'imagePaths' => 'array',
         'tags' => 'array',
         'reminders' => 'array',
@@ -103,6 +105,31 @@ class AsScheduleActivity extends BaseModel
         'sequenceOrder' => 'integer',
         'deleteStatus' => 'integer',
     ];
+
+    /**
+     * Every type this task is, primary first.
+     *
+     * A knapsack can hold a fungicide and an insecticide at once, and a task
+     * that could only be one thing forced that into two records or a lie.
+     * The primary still decides colour, tab and filter; the rest ride along.
+     *
+     * @return list<string>
+     */
+    public function typeSlugs(): array
+    {
+        $all = array_merge(
+            [$this->activityType],
+            is_array($this->extraTypes) ? $this->extraTypes : []
+        );
+
+        return array_values(array_unique(array_filter($all, fn ($t) => filled($t))));
+    }
+
+    /** The labels for typeSlugs(), for anywhere a person reads them. */
+    public function typeLabels(): array
+    {
+        return array_map(fn ($t) => self::ACTIVITY_TYPES[$t] ?? $t, $this->typeSlugs());
+    }
 
     public function schedule()
     {

@@ -277,7 +277,8 @@
         border-radius: 999px; font-size: .78rem; font-weight: 700; color: #374151; cursor: pointer;
         transition: background .25s ease, border-color .25s ease, color .25s ease; }
     .ph-catopt:hover { border-color: #a8cc7e; background: #f3f8ec; }
-    .ph-catopt.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+    .ph-catopt.is-on,
+    html.dark .ph-catopt.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
     .ph-detail { display: flex; gap: .4rem; font-size: .78rem; }
     .ph-detail dt { color: var(--color-gray-400); }
     .ph-detail dd { color: var(--color-gray-800); font-weight: 600; }

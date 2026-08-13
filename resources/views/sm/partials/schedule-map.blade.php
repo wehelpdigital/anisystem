@@ -221,7 +221,8 @@
     .cmap-tool svg { width: 1.15rem; height: 1.15rem; }
     .cmap-tool:hover { background: var(--color-gray-200); color: var(--color-gray-800); }
     .cmap-tool:active { transform: scale(.92); }
-    .cmap-tool.is-active { background: var(--color-brand-100); color: var(--color-brand-800); }
+    .cmap-tool.is-active,
+    html.dark .cmap-tool.is-active { background: var(--color-brand-100); color: var(--color-brand-800); }
     .cmap-tool:disabled { opacity: .35; pointer-events: none; }
     /* Cooperative mode keeps two-finger pinch alive while drawing, but its
        "use two fingers to move the map" scrim would flash over every stroke —
@@ -259,7 +260,8 @@
         padding: .5rem .6rem; border-radius: .55rem; font-size: .82rem; font-weight: 700; color: var(--color-gray-700); }
     .cmap-mrow svg { width: 1.05rem; height: 1.05rem; flex-shrink: 0; }
     .cmap-mrow:hover { background: var(--color-gray-50); }
-    .cmap-mrow.is-active { background: var(--color-brand-50); color: var(--color-brand-800); }
+    .cmap-mrow.is-active,
+    html.dark .cmap-mrow.is-active { background: var(--color-brand-50); color: var(--color-brand-800); }
     .cmap-search { flex: 1 1 8rem; min-width: 6rem; height: 2.15rem; border: 1px solid var(--color-gray-200);
         border-radius: .6rem; padding: 0 .6rem; font-size: .8rem; background: var(--color-white); color: inherit; }
     html.dark .cmap-menu { background: #151b12; border-color: #2b3a1c; }
@@ -1443,7 +1445,18 @@
         // ?save=<id> — a note about a saved map sent us here. Open the list on
         // that entry rather than loading it silently: loading replaces the
         // live map for the whole team, which is nobody's idea of a link.
-        if (WANT_SAVE) setTimeout(openSaves, 500);
+        if (WANT_SAVE) {
+            setTimeout(openSaves, 500);
+            // Closing that list is done with the errand the note sent you on,
+            // so it takes you back to the note instead of stranding you in a
+            // module you did not choose to open.
+            const back = (e) => {
+                if (e.detail && e.detail.id !== 'cmapSavesSheet') return;
+                document.removeEventListener('sm:sheet-closed', back);
+                window.smReturnToOrigin?.();
+            };
+            document.addEventListener('sm:sheet-closed', back);
+        }
 
         // On by default: seeing each other on the land is why the map exists.
         // The browser still asks permission; declining just leaves it off.
