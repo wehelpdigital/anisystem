@@ -601,7 +601,7 @@ window.Quill = class SmRichEditor {
             formats: ['p', 'h2', 'h3'],
             placeholder: this._placeholder,
             height: 'auto',
-            minHeight: '110px',
+            minHeight: '130px',
             defaultStyle: 'font-family: inherit; font-size: .95rem;',
             resizingBar: false,
             showPathLabel: false,

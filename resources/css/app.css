@@ -798,27 +798,58 @@ html.dark .ql-snow.ql-toolbar button:hover .ql-fill, html.dark .ql-snow.ql-toolb
 /* ------------------------------------------------------------------ */
 /* SunEditor — the engine behind window.Quill now (see app.js). The    */
 /* .ql-* rules above STAY: saved notes still carry Quill's classes.    */
+/* Every selector here is `html`-prefixed on purpose: the engine's own */
+/* stylesheet arrives AFTER this one (injected at first use), so these */
+/* need the extra rank or the editor ships in its factory colours.     */
 /* ------------------------------------------------------------------ */
-.sun-editor { border: 1px solid var(--color-gray-200); border-radius: .6rem; overflow: hidden;
-    font-family: inherit; }
-.sun-editor .se-toolbar { background: var(--color-gray-50); outline: none;
+html .sun-editor { width: 100% !important; border: 1px solid var(--color-gray-200); border-radius: .6rem;
+    overflow: hidden; font-family: inherit; background: var(--color-white); }
+html .sun-editor .se-container { border-radius: .6rem; }
+html .sun-editor .se-toolbar { background: var(--color-gray-50); outline: none;
     border-bottom: 1px solid var(--color-gray-200); }
-.sun-editor .se-btn { color: var(--color-gray-600); border-radius: .45rem; }
-.sun-editor .se-btn:enabled:hover, .sun-editor .se-btn:enabled:focus { background: rgb(107 159 61 / .12); color: #3d6823; }
-.sun-editor .se-btn.active { background: rgb(107 159 61 / .18); color: #3d6823; }
-.sun-editor .se-wrapper .se-placeholder { font-style: normal; color: var(--color-gray-400); }
-.sun-editor-editable { font-family: inherit; font-size: .95rem; color: var(--color-gray-900);
-    background: var(--color-white); }
-.sun-editor-editable blockquote { border-left: 3px solid var(--color-gray-300); padding-left: .7rem;
+html .sun-editor .se-btn-tray { background: var(--color-gray-50); padding: .3rem .35rem; }
+html .sun-editor .se-btn-module { border: none; }
+html .sun-editor .se-btn-module-border { border: none; }
+html .sun-editor .se-toolbar-separator-vertical { background: var(--color-gray-200); }
+html .sun-editor .se-btn { color: var(--color-gray-600); border-radius: .45rem; }
+html .sun-editor .se-btn:enabled:hover, html .sun-editor .se-btn:enabled:focus {
+    background: rgb(107 159 61 / .12); color: #3d6823; border-color: transparent; }
+html .sun-editor .se-btn:enabled:active { background: rgb(107 159 61 / .2); box-shadow: none; }
+html .sun-editor .se-btn.active { background: rgb(107 159 61 / .18); color: #3d6823; }
+html .sun-editor .se-wrapper .se-placeholder { font-style: normal; color: var(--color-gray-400);
+    padding: .65rem .75rem; }
+/* Room to write: the factory box was a cramped strip. */
+html .sun-editor .se-wrapper .sun-editor-editable { min-height: 8rem; padding: .65rem .75rem;
+    font-family: inherit; font-size: .95rem; color: var(--color-gray-900); background: var(--color-white); }
+html .sun-editor-editable blockquote { border-left: 3px solid var(--color-gray-300); padding-left: .7rem;
     color: var(--color-gray-600); }
-html.dark .sun-editor { border-color: #2b3a1c; }
-html.dark .sun-editor .se-toolbar { background: rgb(255 255 255 / .04); border-color: #2b3a1c; }
+/* The dropdowns (headings, lists) and the link dialog wear the theme too. */
+html .sun-editor .se-list-layer, html .sun-editor .se-dialog .se-dialog-inner .se-dialog-content {
+    background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: .6rem;
+    box-shadow: 0 14px 34px -20px rgb(0 0 0 / .45); }
+html .sun-editor .se-list-layer button { color: var(--color-gray-700); }
+html .sun-editor .se-list-layer button:hover { background: rgb(107 159 61 / .12); }
+
+html.dark .sun-editor { border-color: #2b3a1c; background: #151b12; }
+html.dark .sun-editor .se-toolbar, html.dark .sun-editor .se-btn-tray { background: #1c2416; border-color: #2b3a1c; }
+html.dark .sun-editor .se-toolbar-separator-vertical { background: #2b3a1c; }
 html.dark .sun-editor .se-btn { color: #cdd8c0; }
-html.dark .sun-editor .se-btn:enabled:hover, html.dark .sun-editor .se-btn.active { background: rgb(107 159 61 / .25); color: #8fd45a; }
-html.dark .sun-editor-editable { background: #151b12; color: #e8efe1; }
+html.dark .sun-editor .se-btn:enabled:hover, html.dark .sun-editor .se-btn:enabled:focus,
+html.dark .sun-editor .se-btn.active { background: rgb(107 159 61 / .25); color: #8fd45a; }
+html.dark .sun-editor .se-btn:disabled { color: #56624c; }
+html.dark .sun-editor .se-wrapper .sun-editor-editable { background: #10160c; color: #e8efe1; }
 html.dark .sun-editor .se-wrapper .se-placeholder { color: #7d8f6e; }
+html.dark .sun-editor-editable blockquote { border-color: #3f5626; color: #a8bd93; }
+html.dark .sun-editor .se-list-layer, html.dark .sun-editor .se-dialog .se-dialog-inner .se-dialog-content {
+    background: #151b12; border-color: #2b3a1c; color: #e8efe1; }
+html.dark .sun-editor .se-list-layer button { color: #cdd8c0; }
+html.dark .sun-editor .se-list-layer button:hover { background: rgb(107 159 61 / .25); }
+html.dark .sun-editor .se-dialog .se-dialog-content label,
+html.dark .sun-editor .se-dialog .se-dialog-content .se-dialog-header .se-modal-title { color: #e8efe1; }
+html.dark .sun-editor .se-dialog .se-dialog-content input { background: #10160c; color: #e8efe1;
+    border: 1px solid #2b3a1c; }
 /* The CDN-failed fallback: still a writable box, visibly a field. */
-.sm-editor-fallback { min-height: 110px; border: 1px solid var(--color-gray-200); border-radius: .6rem;
+.sm-editor-fallback { min-height: 8rem; border: 1px solid var(--color-gray-200); border-radius: .6rem;
     padding: .6rem .7rem; font-size: .95rem; background: var(--color-white); color: var(--color-gray-900); }
 html.dark .sm-editor-fallback { background: #151b12; border-color: #2b3a1c; color: #e8efe1; }
 
