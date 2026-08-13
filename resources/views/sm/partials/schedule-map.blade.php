@@ -1292,15 +1292,11 @@
 
     document.getElementById('cmapSaveSearch')?.addEventListener('input', (e) => paintSaves(e.target.value));
     window.__openSavesForTest = openSaves;
-    async function loadSavedMap(sv, opts) {
-        // From the Maps module's grid the choice was already made by tapping
-        // the card, and an empty canvas has nothing to lose — only a canvas
-        // that still holds shapes is worth interrupting for.
-        const skipAsk = !!(opts && opts.quiet) && objIndex.size === 0;
-        const ok = skipAsk || (window.confirmAction
-            ? await confirmAction({ title: 'Load “' + sv.title + '”?', message: 'Replaces the current shapes for the whole team.', confirmText: 'Load map' })
-            : confirm('Load this map for everyone? It replaces the current shapes.'));
-        if (!ok) return;
+    async function loadSavedMap(sv) {
+        // No confirmation: tapping a map IS the answer. Opening a saved map
+        // is opening a file, and a question in front of every open taught
+        // people to stop reading it. The canvas it replaces can always be
+        // re-loaded from its own save.
         try {
             await api(`${URLS.load}?scheduleId=${SID}`, { method: 'POST', body: { id: sv.id } });
             setLoadedSave(sv);
@@ -1351,7 +1347,7 @@
                 try {
                     const r = await api(`${URLS.saves}?scheduleId=${SID}`);
                     const sv = (r.data.saves || []).find((s) => s.id === ask.id);
-                    if (sv) await loadSavedMap(sv, { quiet: true });
+                    if (sv) await loadSavedMap(sv);
                     else if (window.toast) toast('That saved map no longer exists.', 'error');
                 } catch (e) { if (window.toast) toast(e.message, 'error'); }
             }
