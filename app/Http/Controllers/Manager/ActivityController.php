@@ -1315,6 +1315,9 @@ class ActivityController extends BaseScheduleController
             'id'       => 'nullable|integer',
             'noteDate' => 'required|date',
             'sortKey'  => 'nullable|integer',
+            // Each note on a day has its own name, so a day with three of them
+            // reads as three things rather than one long block.
+            'title'    => 'nullable|string|max:191',
             'content'  => 'nullable|string|max:20000',
             'media'          => 'nullable|array|max:20',
             'media.*.type'   => 'required_with:media|in:image,video,drawing,map',
@@ -1354,6 +1357,7 @@ class ActivityController extends BaseScheduleController
         $payload = [
             'noteDate' => $request->input('noteDate'),
             'sortKey'  => (int) $request->input('sortKey', 0),
+            'title'    => trim((string) $request->input('title')) ?: null,
             'content'  => $content,
             'media'    => $media,
         ];
@@ -1375,6 +1379,7 @@ class ActivityController extends BaseScheduleController
                 'id'       => $note->id,
                 'noteDate' => $note->noteDate->format('Y-m-d'),
                 'sortKey'  => $note->sortKey,
+                'title'    => $note->title,
                 'content'  => $note->content,
                 'media'    => $this->mediaWithUrls($note->media),
             ],

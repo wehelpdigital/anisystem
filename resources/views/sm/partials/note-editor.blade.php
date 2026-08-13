@@ -3,7 +3,8 @@
        window.openNoteEditor({
          title, bodyHtml, media:[{type,path,url,poster,posterUrl}],
          imageUploadUrl, videoUploadUrl, drawUploadUrl,
-         onSave({body, media}), onDelete?(), deleteLabel?, saveLabel?
+         askTitle?, noteTitle?,
+         onSave({body, media, noteTitle}), onDelete?(), deleteLabel?, saveLabel?
        })
      Body carries text + drawings + emoji; photos & videos go in the gallery. --}}
 <div class="sheet sheet-full hidden" id="noteEditorSheet" style="--sheet-width:36rem">
@@ -29,6 +30,14 @@
                 <span class="js-video-chip"></span>
             </span>
             <input type="file" id="noteEditorPhotoInput" accept="image/*" class="hidden" multiple>
+        </div>
+        {{-- A name for the note. Optional to the editor — the day notes ask
+             for it, the older callers do not — because a day with three notes
+             needs to say which is which, and "the one with the photo" is not
+             a name. --}}
+        <div id="noteEditorTitleWrap" class="mb-3" hidden>
+            <label class="form-label" for="noteEditorTitleInput">Title <span class="text-red-500">*</span></label>
+            <input type="text" id="noteEditorTitleInput" class="form-input" maxlength="191" placeholder="e.g. Pump repair — west line">
         </div>
         <div class="ne-quill"><div id="noteEditorBody"></div></div>
         <div id="noteEditorUploads" class="ne-ups mt-3"></div>
@@ -255,7 +264,14 @@
         const raw = quill ? quill.root.innerHTML : '';
         const body = (raw === '<p><br></p>' || raw.trim() === '') ? '' : raw;
         const payloadMedia = media.map((m) => ({ type: m.type, path: m.path, poster: m.poster || null }));
-        cfg.onSave && cfg.onSave({ body, media: payloadMedia });
+        const wantTitle = !$('noteEditorTitleWrap').hidden;
+        const noteTitle = ($('noteEditorTitleInput').value || '').trim();
+        if (wantTitle && !noteTitle) {
+            window.toast?.('Give this note a title.', 'error');
+            $('noteEditorTitleInput').focus();
+            return;
+        }
+        cfg.onSave && cfg.onSave({ body, media: payloadMedia, noteTitle });
         close();
     });
     $('noteEditorDelete').addEventListener('click', () => { cfg.onDelete && cfg.onDelete(); close(); });
@@ -276,6 +292,9 @@
             quill.setContents([]);
             if (bodyHtml.trim() !== '') quill.clipboard.dangerouslyPasteHTML(bodyHtml);
         }
+        const wantTitle = !!opts.askTitle;
+        $('noteEditorTitleWrap').hidden = !wantTitle;
+        $('noteEditorTitleInput').value = opts.noteTitle || '';
         media = Array.isArray(opts.media) ? opts.media.map((m) => ({ ...m })) : [];
         $('noteEditorUploads').innerHTML = '';
         renderThumbs();

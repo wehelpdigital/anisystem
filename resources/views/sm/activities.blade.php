@@ -370,6 +370,13 @@
         .date-activities { display: flex; flex-direction: column; gap: .55rem; padding: .7rem; }
         .date-activities.drag-over { outline: 2px dashed #86b556; outline-offset: -4px; border-radius: .8rem; background: color-mix(in srgb, #86b556 12%, var(--tl-surface)); }
 
+        /* A note pinned to a day says what it is before it says anything
+           else. */
+        .inline-note-title { font-size: .82rem; font-weight: 800; color: var(--color-gray-900);
+            line-height: 1.3; margin-bottom: .15rem; }
+        html.dark .inline-note-title { color: #e8efe1; }
+        .inline-note .note-atts { margin-top: .4rem; }
+
         .date-note-block {
             margin: .55rem .7rem 0; background: var(--tl-note-bg); border: 1px solid var(--tl-note-border); border-radius: .6rem;
             padding: .5rem .7rem; font-size: .8rem; color: var(--tl-note-text); white-space: pre-wrap;

@@ -16,6 +16,7 @@ class AsInlineNote extends BaseModel
         'versionId',
         'noteDate',
         'sortKey',
+        'title',
         'content',
         'media',
         'deleteStatus',

@@ -3684,7 +3684,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const entry = objects
                     ? { type: 'drawing', path, url: res.data.url, strokes: objects }
                     : { type: 'image', path, url: res.data.url };
-                await saveDateNoteMedia(dateKey, _dateNoteContentFor(dateKey), _dateNoteMediaFor(dateKey).concat([entry]));
+                // Its own note, with its own name and words — piling every
+                // drawing of a day into one note left a single block nobody
+                // could tell apart, and a wall of pictures under it.
+                newInlineNoteWith(dateKey, [entry], objects ? 'Drawing' : 'Sketch');
             } catch (err) { toast(err.message || 'Could not add the drawing.', 'error'); }
         }, null, { editable: true });
     }
@@ -5617,22 +5620,38 @@ document.addEventListener('DOMContentLoaded', () => {
     function inlineNoteMedia(el) {
         try { return JSON.parse(el.getAttribute('data-media') || '[]'); } catch (_) { return []; }
     }
-    function setInlineNoteData(el, bodyHtml, mediaArr) {
-        el.querySelector('.inline-note-body').innerHTML = bodyHtml || '';
-        el.querySelector('.inline-note-media').innerHTML = inlineMediaCells(mediaArr);
-        el.setAttribute('data-media', JSON.stringify(mediaArr || []));
+    /** Attachments as chips. Twin of note-attachments.blade.php. */
+    function inlineAttachments(mediaArr) {
+        return window.noteAttachmentChips
+            ? window.noteAttachmentChips(mediaArr || [])
+            : inlineMediaCells(mediaArr);
     }
-    function buildInlineNote(id, bodyHtml, mediaArr, date) {
+    function inlineTitleHtml(title) {
+        return title ? '<div class="inline-note-title">' + esc(title) + '</div>' : '';
+    }
+    function setInlineNoteData(el, bodyHtml, mediaArr, title) {
+        const old = el.querySelector('.inline-note-title');
+        if (old) old.remove();
+        const body = el.querySelector('.inline-note-body');
+        body.innerHTML = bodyHtml || '';
+        if (title) body.insertAdjacentHTML('beforebegin', inlineTitleHtml(title));
+        el.querySelector('.inline-note-media').innerHTML = inlineAttachments(mediaArr);
+        el.setAttribute('data-media', JSON.stringify(mediaArr || []));
+        el.setAttribute('data-title', title || '');
+    }
+    function buildInlineNote(id, bodyHtml, mediaArr, date, title) {
         const el = document.createElement('div');
         el.className = 'inline-note';
         if (id) el.setAttribute('data-inline-note', id);
         el.setAttribute('data-date', date);
         el.setAttribute('data-sort-key', '0');
         el.setAttribute('data-media', JSON.stringify(mediaArr || []));
+        el.setAttribute('data-title', title || '');
         el.setAttribute('title', 'Drag the grip to move · tap the pencil to edit');
         el.innerHTML = INLINE_GRIP + INLINE_TAG
+            + inlineTitleHtml(title)
             + '<div class="inline-note-body">' + (bodyHtml || '') + '</div>'
-            + '<div class="inline-note-media">' + inlineMediaCells(mediaArr) + '</div>'
+            + '<div class="inline-note-media">' + inlineAttachments(mediaArr) + '</div>'
             + INLINE_EDIT + INLINE_DEL;
         return el;
     }
@@ -5668,12 +5687,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const mediaSend = inlineNoteMedia(el).map((m) => ({ type: m.type, path: m.path, poster: m.poster || null }));
         _setMoving(el, true);
         try {
-            const res = await api(U.inlineNoteSave(), { method: 'POST', body: { id: id ? parseInt(id, 10) : null, noteDate: date, sortKey: key, content, media: mediaSend } });
+            const res = await api(U.inlineNoteSave(), { method: 'POST', body: {
+                id: id ? parseInt(id, 10) : null, noteDate: date, sortKey: key,
+                title: el.getAttribute('data-title') || '', content, media: mediaSend,
+            } });
             _setMoving(el, false);
             if (res && res.data && res.data.id) {
                 el.setAttribute('data-inline-note', res.data.id);
                 el.setAttribute('data-sort-key', res.data.sortKey);
-                if (res.data.media) setInlineNoteData(el, res.data.content != null ? res.data.content : content, res.data.media);
+                if (res.data.media) setInlineNoteData(el, res.data.content != null ? res.data.content : content, res.data.media, res.data.title || el.getAttribute('data-title') || '');
                 _land(el);
             } else if (res && res.removed) {
                 el.remove();
@@ -5696,15 +5718,19 @@ document.addEventListener('DOMContentLoaded', () => {
         date = (date || (el && el.getAttribute('data-date')) || '').trim();
         window.openNoteEditor({
             title: el ? 'Edit note' : 'Add a note',
+            // Every note on a day carries its own name and its own words, so
+            // three notes on one day stay three notes.
+            askTitle: true,
+            noteTitle: el ? (el.getAttribute('data-title') || '') : '',
             bodyHtml: el ? (el.querySelector('.inline-note-body')?.innerHTML || '') : '',
             media: el ? inlineNoteMedia(el) : [],
             imageUploadUrl: U.noteImageUpload(),
             videoUploadUrl: U.noteVideoUpload(),
             drawUploadUrl: NOTES_DRAW_URL,
             onDelete: el ? () => deleteInlineNote(el, false) : null,
-            onSave: ({ body, media }) => {
+            onSave: ({ body, media, noteTitle }) => {
                 if (el) {
-                    setInlineNoteData(el, body, media);
+                    setInlineNoteData(el, body, media, noteTitle);
                     saveInlineNote(el, (el.getAttribute('data-date') || date).trim(), parseInt(el.getAttribute('data-sort-key') || '0', 10));
                     return;
                 }
@@ -5714,12 +5740,45 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (group && group.classList.contains('is-folded')) { group.classList.remove('is-folded'); OPEN_DAYS.add(d); saveOpenDays(); }
                 const container = group ? $qs('.date-activities', group) : null;
                 if (!container) return;
-                const newEl = buildInlineNote('', body, media, d);
+                const newEl = buildInlineNote('', body, media, d, noteTitle);
                 container.appendChild(newEl);
                 newEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
                 const key = inlineNoteKey(newEl);
                 newEl.setAttribute('data-sort-key', key);
                 saveInlineNote(newEl, d, key);
+            },
+        });
+    }
+
+    /**
+     * Start a new note on a day already carrying an attachment — a drawing
+     * just made, a map just picked. The editor opens with the attachment in
+     * place and asks what to call it, so the thing lands as a note of its own
+     * rather than being appended to whatever was there before.
+     */
+    function newInlineNoteWith(dateKey, mediaArr, suggested) {
+        window.openNoteEditor({
+            title: 'Add a note',
+            askTitle: true,
+            noteTitle: suggested ? (suggested + ' — ' + prettyDate(dateKey)) : '',
+            bodyHtml: '',
+            media: mediaArr || [],
+            imageUploadUrl: U.noteImageUpload(),
+            videoUploadUrl: U.noteVideoUpload(),
+            drawUploadUrl: NOTES_DRAW_URL,
+            onSave: ({ body, media, noteTitle }) => {
+                const group = $qs(`#activitiesList .date-group[data-date="${dateKey}"]`);
+                if (group && group.classList.contains('is-folded')) {
+                    group.classList.remove('is-folded'); OPEN_DAYS.add(dateKey); saveOpenDays();
+                }
+                const container = group ? $qs('.date-activities', group) : null;
+                if (!container) { toast('Could not find that day on the board.', 'error'); return; }
+                const el = buildInlineNote('', body, media, dateKey, noteTitle);
+                container.appendChild(el);
+                el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                const key = inlineNoteKey(el);
+                el.setAttribute('data-sort-key', key);
+                saveInlineNote(el, dateKey, key);
             },
         });
     }
