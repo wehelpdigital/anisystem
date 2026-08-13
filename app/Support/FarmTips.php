@@ -122,9 +122,10 @@ class FarmTips
                 continue;
             }
 
-            $anchor = CropStages::counter($crop) === 'DAT' && $lot->transplantDate
-                ? $lot->transplantDate
-                : $lot->dayZeroDate;
+            // Transplanted only when the lot actually was; otherwise the
+            // count runs from sowing and the crop is read as direct seeded.
+            $transplanted = CropStages::counter($crop) === 'DAT' && $lot->transplantDate;
+            $anchor = $transplanted ? $lot->transplantDate : $lot->dayZeroDate;
             if (! $anchor) {
                 continue;
             }
@@ -134,12 +135,13 @@ class FarmTips
                 continue;
             }
 
-            $stage = CropStages::stageFor($crop, (int) $day);
+            $counter = $transplanted ? 'DAT' : ($lot->dayType ?: 'DAS');
+            $stage = CropStages::stageFor($crop, (int) $day, $counter);
             if (! $stage) {
                 continue;
             }
 
-            $tips = CropStageTips::for($crop, $stage['index']);
+            $tips = CropStageTips::for($crop, $stage['index'], $counter);
             foreach (array_merge($tips['do'], $tips['watch']) as $t) {
                 $row = [
                     'text' => $t,

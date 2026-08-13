@@ -12,10 +12,14 @@ namespace App\Support;
  * their heads while reading a board that only counted days.
  *
  * Each crop is a list of stages with the day it starts on, in the counter that
- * crop is actually managed by. Rice is counted from transplanting where a lot
- * transplants (DAT) and from sowing otherwise (DAS); everything else counts
- * from planting (DAP). The ranges are the common Philippine field guidance —
- * they are a guide, not a law, which is what the note on the sheet says.
+ * crop is actually managed by. Everything counts from planting (DAP) except
+ * rice, which has two calendars and needs both: transplanted rice counts from
+ * transplanting (DAT), and direct-seeded rice — DSR, which is what DAS means
+ * — counts from sowing and passes the same stages on different days, because
+ * DAT starts about three weeks into the plant's life.
+ *
+ * The ranges are the common Philippine field guidance — a guide, not a law,
+ * which is what the note on the sheet says.
  */
 class CropStages
 {
@@ -24,14 +28,42 @@ class CropStages
      * A stage is [from-day, label, what is happening, what it usually needs].
      */
     public const CROPS = [
+        /*
+         * Rice is two crops as far as a calendar is concerned.
+         *
+         * Transplanted rice is counted from the day the seedlings went into
+         * the paddy (DAT) and starts with a week of recovery. Direct-seeded
+         * rice — DSR, counted in DAS from sowing — never had a transplant to
+         * recover from: it germinates in the field, and every stage after
+         * that falls later in its own count than the same stage does in DAT,
+         * because DAT starts about three weeks into the plant's life.
+         *
+         * Reading one against the other is how a field at DAS 42 gets told it
+         * is at panicle initiation when it is still tillering, and told to
+         * spend the season's biggest fertiliser a fortnight early.
+         */
         'rice' => [
             'label' => 'Rice (Palay)',
             'icon' => '🌾',
             'counter' => 'DAT',
+            // Transplanted, from the day of transplanting (~18–21 DAS).
             'stages' => [
                 [0, 'Recovery', 'The seedling settles into the paddy and puts out new roots.', 'Shallow water, 2–3 cm. Do not let it dry out.'],
                 [7, 'Early tillering', 'Side shoots begin — every one of them is a future panicle.', 'First nitrogen. Keep weeds down now, not later.'],
                 [21, 'Active tillering', 'The plant is deciding how many stems it will carry.', 'Second nitrogen. Water 3–5 cm.'],
+                [35, 'Panicle initiation', 'The grain head forms inside the stem, out of sight.', 'The important fertiliser. Never let the field dry here.'],
+                [50, 'Booting & heading', 'The head swells, then pushes out.', 'Watch for stem borer and blast. Keep water steady.'],
+                [60, 'Flowering', 'Pollination — the days that decide how much is filled.', 'No stress of any kind. Water at 3–5 cm.'],
+                [73, 'Grain filling', 'Milk, then dough, then hard grain.', 'Drain gradually near the end. Watch for rats and birds.'],
+                [90, 'Ripening & harvest', 'Straw yellows, grain hardens.', 'Harvest at 80–85% golden grains.'],
+            ],
+            // Direct seeded (DSR), from sowing. Same eight stages so the
+            // guidance lines up, but at the days a direct-seeded field
+            // actually reaches them.
+            'stagesDirect' => [
+                [0, 'Germination & emergence', 'The seed swells, splits and pushes a shoot through — no transplant, no shock.', 'Keep the field saturated but not flooded until the shoots are through.'],
+                [8, 'Seedling establishment', 'Roots take hold and the first true leaves open.', 'Shallow water once the shoots stand. Weeds start here and never get easier.'],
+                [21, 'Active tillering', 'The plant is deciding how many stems it will carry.', 'First and second nitrogen. Water 3–5 cm.'],
                 [40, 'Panicle initiation', 'The grain head forms inside the stem, out of sight.', 'The important fertiliser. Never let the field dry here.'],
                 [55, 'Booting & heading', 'The head swells, then pushes out.', 'Watch for stem borer and blast. Keep water steady.'],
                 [70, 'Flowering', 'Pollination — the days that decide how much is filled.', 'No stress of any kind. Water at 3–5 cm.'],
@@ -158,20 +190,46 @@ class CropStages
     }
 
     /**
+     * The stage table to read a lot against.
+     *
+     * A crop can be grown more than one way, and the way decides the
+     * calendar: rice counted in DAS was direct seeded and has never been
+     * transplanted, so it wants its own timeline rather than the transplanted
+     * one shifted by three weeks.
+     */
+    public static function stagesFor(?string $crop, ?string $counter = null): array
+    {
+        $key = self::normalize($crop);
+        if (! $key) {
+            return [];
+        }
+
+        $crop = self::CROPS[$key];
+        $direct = $counter !== null
+            && strtoupper($counter) !== 'DAT'
+            && isset($crop['stagesDirect']);
+
+        return $direct ? $crop['stagesDirect'] : $crop['stages'];
+    }
+
+    /**
      * Where this crop is on day $day of its count.
+     *
+     * @param  string|null  $counter  which count the day is in — 'DAT', 'DAS'
+     *                                or 'DAP'. Rice reads differently in each.
      *
      * @return array{index:int,label:string,what:string,needs:string,from:int,
      *     until:?int,dayInStage:int,lengthDays:?int,progress:?float,
      *     next:?array{label:string,inDays:int}}|null
      */
-    public static function stageFor(?string $crop, ?int $day): ?array
+    public static function stageFor(?string $crop, ?int $day, ?string $counter = null): ?array
     {
         $key = self::normalize($crop);
         if (! $key || $day === null) {
             return null;
         }
 
-        $stages = self::CROPS[$key]['stages'];
+        $stages = self::stagesFor($key, $counter);
         $at = null;
         foreach ($stages as $i => $s) {
             if ($day >= $s[0]) {
@@ -206,15 +264,15 @@ class CropStages
     }
 
     /** Every stage of a crop, flagged with which one a day falls in. */
-    public static function timeline(?string $crop, ?int $day = null): array
+    public static function timeline(?string $crop, ?int $day = null, ?string $counter = null): array
     {
         $key = self::normalize($crop);
         if (! $key) {
             return [];
         }
-        $current = self::stageFor($key, $day);
+        $current = self::stageFor($key, $day, $counter);
 
-        return collect(self::CROPS[$key]['stages'])->map(fn ($s, $i) => [
+        return collect(self::stagesFor($key, $counter))->map(fn ($s, $i) => [
             'from' => $s[0],
             'label' => $s[1],
             'what' => $s[2],

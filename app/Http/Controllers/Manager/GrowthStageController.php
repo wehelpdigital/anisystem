@@ -54,7 +54,9 @@ class GrowthStageController extends BaseScheduleController
         foreach ($schedule->lots as $lot) {
             $crop = CropStages::normalize($lot->crop);
             $age = $this->ageOf($lot, $crop, $on);
-            $stage = $crop && $age ? CropStages::stageFor($crop, $age['day']) : null;
+            // The counter is not decoration: rice read in DAS was direct
+            // seeded and has a different calendar from transplanted rice.
+            $stage = $crop && $age ? CropStages::stageFor($crop, $age['day'], $age['counter']) : null;
 
             $rows[] = [
                 'lot' => $lot,
@@ -63,8 +65,8 @@ class GrowthStageController extends BaseScheduleController
                 'icon' => CropStages::icon($lot->crop),
                 'age' => $age,
                 'stage' => $stage,
-                'tips' => $stage ? CropStageTips::for($crop, $stage['index']) : ['do' => [], 'watch' => []],
-                'timeline' => $crop ? CropStages::timeline($crop, $age['day'] ?? null) : [],
+                'tips' => $stage ? CropStageTips::for($crop, $stage['index'], $age['counter'] ?? null) : ['do' => [], 'watch' => []],
+                'timeline' => $crop ? CropStages::timeline($crop, $age['day'] ?? null, $age['counter'] ?? null) : [],
                 // Why a lot cannot be read, said plainly, because "no stage"
                 // on its own is not a useful answer.
                 'blocked' => $this->whyBlocked($lot, $crop, $age),

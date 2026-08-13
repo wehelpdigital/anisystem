@@ -311,13 +311,58 @@ class CropStageTips
         ],
     ];
 
-    /** @return array{do: array<int, string>, watch: array<int, string>} */
-    public static function for(?string $crop, ?int $stageIndex): array
+    /**
+     * Direct-seeded rice differs from transplanted rice in its first two
+     * stages and nowhere else: there is no transplant to recover from, and
+     * the weeks the transplanted crop spends in a seedbed are spent in the
+     * field instead — which is why weeds decide a DSR crop more than almost
+     * anything else. From tillering onwards the work is the same, so the rest
+     * of the table is shared.
+     */
+    private const DIRECT_OVERRIDES = [
+        'rice' => [
+            0 => [
+                'do' => [
+                    'Keep the field saturated but not flooded until the shoots are through — seed under standing water rots.',
+                    'Sow onto a level bed. Every dip becomes a puddle that drowns its seed, every hump a dry patch that does not germinate.',
+                    'Plan the first weed pass now: a direct-seeded field and its weeds start on the same day.',
+                ],
+                'watch' => [
+                    'Birds and rats take broadcast seed before it is even up. Watch the first three days.',
+                    'A crust after heavy rain traps the shoots underneath it — break it gently.',
+                ],
+            ],
+            1 => [
+                'do' => [
+                    'Bring water up to 2–3 cm once the seedlings stand, and hold it there to hold the weeds down.',
+                    'First nitrogen at 10–15 days, on a field with only a film of water.',
+                    'Thin or fill in the worst patches while the plants are still small enough to move.',
+                ],
+                'watch' => [
+                    'Weeds are the single biggest cause of a poor direct-seeded crop, and they are cheapest to beat in this fortnight.',
+                    'Golden apple snails clear whole patches of young seedlings overnight.',
+                ],
+            ],
+        ],
+    ];
+
+    /**
+     * @param  string|null  $counter  the count the stage was read in. Rice in
+     *                                DAS was direct seeded and wants its own
+     *                                first-fortnight guidance.
+     *
+     * @return array{do: array<int, string>, watch: array<int, string>}
+     */
+    public static function for(?string $crop, ?int $stageIndex, ?string $counter = null): array
     {
         $key = CropStages::normalize($crop);
-        $rows = ($key !== null && $stageIndex !== null)
-            ? (self::TIPS[$key][$stageIndex] ?? [])
-            : [];
+        if ($key === null || $stageIndex === null) {
+            return ['do' => [], 'watch' => []];
+        }
+
+        $direct = $counter !== null && strtoupper($counter) !== 'DAT';
+        $rows = ($direct ? (self::DIRECT_OVERRIDES[$key][$stageIndex] ?? null) : null)
+            ?? (self::TIPS[$key][$stageIndex] ?? []);
 
         return [
             'do' => $rows['do'] ?? [],

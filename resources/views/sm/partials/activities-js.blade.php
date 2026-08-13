@@ -74,13 +74,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // Built here rather than inside @json: the directive takes one
         // expression on one line, and a nested map over the catalogue is
         // neither.
+        $shapeStages = fn ($rows) => collect($rows)->map(fn ($st) => [
+            'from' => $st[0], 'label' => $st[1], 'what' => $st[2], 'needs' => $st[3],
+        ])->all();
         $cropTables = collect(\App\Support\CropStages::CROPS)->map(fn ($c) => [
             'label' => $c['label'],
             'icon' => $c['icon'],
             'counter' => $c['counter'],
-            'stages' => collect($c['stages'])->map(fn ($st) => [
-                'from' => $st[0], 'label' => $st[1], 'what' => $st[2], 'needs' => $st[3],
-            ])->all(),
+            'stages' => $shapeStages($c['stages']),
+            // Rice grown from seed in the field keeps its own calendar; every
+            // other crop has one, and falls back to it.
+            'stagesDirect' => isset($c['stagesDirect']) ? $shapeStages($c['stagesDirect']) : null,
         ])->all();
     @endphp
     const CROP_STAGES = @json($cropTables);
@@ -312,14 +316,22 @@ document.addEventListener('DOMContentLoaded', () => {
         return { day: delta, counter: lotDayType(lotId) };
     }
 
-    function stageOf(crop, day) {
+    /**
+     * @param {string} counter which count `day` is in. Rice in DAS was direct
+     *   seeded — no transplant, and every stage lands on a different day of
+     *   its own count than it does for a transplanted crop.
+     */
+    function stageOf(crop, day, counter) {
         const table = CROP_STAGES[crop];
         if (!table || day === null || day === undefined) return null;
+        const stages = (counter && String(counter).toUpperCase() !== 'DAT' && table.stagesDirect)
+            ? table.stagesDirect
+            : table.stages;
         let at = -1;
-        table.stages.forEach((st, i) => { if (day >= st.from) at = i; });
+        stages.forEach((st, i) => { if (day >= st.from) at = i; });
         if (at < 0) return null;
-        const cur = table.stages[at];
-        const next = table.stages[at + 1] || null;
+        const cur = stages[at];
+        const next = stages[at + 1] || null;
         const length = next ? next.from - cur.from : null;
         const inStage = day - cur.from;
         return {
@@ -328,6 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
             progress: length ? Math.min(1, Math.max(0, inStage / length)) : null,
             next: next ? { label: next.label, inDays: next.from - day } : null,
             counter: table.counter, icon: table.icon, cropLabel: table.label,
+            stages,
         };
     }
 
@@ -372,7 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!crop) return null;
             const age = lotDayNumberOn(id, dateKey);
             if (!age) return null;
-            const stage = stageOf(crop, age.day);
+            const stage = stageOf(crop, age.day, age.counter);
             if (!stage) return null;
             return {
                 lotId: id, lotName: LOT_NAMES[id] || ('Lot #' + id),
@@ -389,8 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         box.innerHTML = rows.length ? rows.map((r) => {
             const st = r.stage;
-            const table = CROP_STAGES[r.crop];
-            const steps = table.stages.map((step, i) => `
+            const steps = (st.stages || CROP_STAGES[r.crop].stages).map((step, i) => `
                 <div class="gs-step${i === st.index ? ' is-now' : (i < st.index ? ' is-past' : '')}">
                     <span class="gs-dot"></span>
                     <span class="grow">${esc(step.label)}</span>
