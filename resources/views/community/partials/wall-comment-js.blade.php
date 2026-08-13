@@ -196,7 +196,7 @@
             wrap.dataset.page = '1';
             wrap.querySelectorAll('.wall-comment').forEach((c) => c.remove());
             btn.remove();
-            wrap.insertAdjacentHTML('beforeend', '<div class="js-comments-loading text-xs text-gray-400 py-1.5">Loading comments…</div>');
+            wrap.insertAdjacentHTML('beforeend', '<div class="js-comments-loading text-xs text-gray-400 py-1.5">Loading…</div>');
         } else {
             btn.textContent = 'Loading…';
         }

@@ -32,7 +32,7 @@
     </div>
 
     <div id="wallPosts">
-        <div class="text-center text-sm text-gray-400 py-4" id="wallLoading">Loading wall…</div>
+        <div class="text-center text-sm text-gray-400 py-4" id="wallLoading">Loading…</div>
     </div>
     <div class="text-center mt-1">
         <button type="button" id="wallLoadMore" class="btn btn-white btn-sm hidden" data-next="2" data-infinite>Load more</button>

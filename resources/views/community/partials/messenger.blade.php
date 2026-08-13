@@ -29,7 +29,7 @@
         <p class="text-sm text-gray-500 mb-2" id="msgrForwardPreview"></p>
         <label class="form-label">Send to a co-farmer</label>
         <div id="msgrForwardList" class="space-y-1 max-h-72 overflow-y-auto rounded-xl border border-gray-100 p-1">
-            <p class="text-sm text-gray-400 px-2 py-3 text-center">Loading your co-farmers…</p>
+            <p class="text-sm text-gray-400 px-2 py-3 text-center">Loading…</p>
         </div>
     </div>
 </div>

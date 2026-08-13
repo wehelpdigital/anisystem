@@ -3869,7 +3869,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const list = $id('dayMapList');
         const link = $id('dayMapNew');
         if (link) link.setAttribute('href', MAPS_URL);
-        if (list) list.innerHTML = '<p class="text-sm text-gray-400 py-2">Loading saved maps…</p>';
+        if (list) list.innerHTML = '<p class="text-sm text-gray-400 py-2">Loading…</p>';
         openSheet('dayMapPickSheet');
         try {
             const res = await api(MAP_SAVES_URL);
@@ -6787,7 +6787,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $id('openDraftsBtn')?.addEventListener('click', async () => {
         const container = $id('draftsListContainer');
         container.classList.remove('hidden');
-        container.innerHTML = '<div class="text-center text-gray-400 py-6 text-sm">Loading drafts…</div>';
+        container.innerHTML = '<div class="text-center text-gray-400 py-6 text-sm">Loading…</div>';
         $id('draftsEmpty').classList.add('hidden');
         openSheet('draftsSheet');
         try {

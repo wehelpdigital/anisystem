@@ -147,10 +147,10 @@
                     </button>
                 </div>
                 <div id="chatMembersPanel" class="hidden lg:hidden border-b border-gray-100 max-h-48 overflow-y-auto p-1" style="background:var(--color-gray-50)">
-                    <p class="text-xs text-gray-400 text-center py-3">Loading members…</p>
+                    <p class="text-xs text-gray-400 text-center py-3">Loading…</p>
                 </div>
                 <div id="chatScroll" class="grow overflow-y-auto p-3" style="display:flex;flex-direction:column;gap:.5rem;background:var(--color-gray-50)">
-                    <p class="text-xs text-gray-400 text-center py-4" id="chatLoading">Loading chat…</p>
+                    <p class="text-xs text-gray-400 text-center py-4" id="chatLoading">Loading…</p>
                 </div>
                 <div class="border-t border-gray-100 p-2" data-video-host>
                     <div class="flex items-center gap-0.5 mb-1.5">
@@ -188,7 +188,7 @@
                     <span id="chatOnlineCountSide" class="text-xs font-semibold text-gray-400 ms-auto"></span>
                 </div>
                 <div id="chatMembersSidebar" class="grow overflow-y-auto p-1.5 space-y-0.5" style="background:var(--color-gray-50)">
-                    <p class="text-xs text-gray-400 text-center py-3">Loading members…</p>
+                    <p class="text-xs text-gray-400 text-center py-3">Loading…</p>
                 </div>
             </aside>
             </div>{{-- /.chat-shell --}}

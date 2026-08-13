@@ -760,7 +760,7 @@
         <div>
             <label class="form-label">Send to a co-farmer</label>
             <div class="js-share-cofarmers space-y-1 max-h-52 overflow-y-auto rounded-xl border border-gray-100 p-1" data-link-input="dayShareLink">
-                <p class="text-sm text-gray-400 px-2 py-3 text-center">Loading your co-farmers…</p>
+                <p class="text-sm text-gray-400 px-2 py-3 text-center">Loading…</p>
             </div>
             <p class="form-hint">Only your accepted connections show here. They open the public link — no login needed.</p>
         </div>
@@ -804,7 +804,7 @@
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Send to a co-farmer</p>
             <p class="text-sm text-gray-600 mb-2">Send the public plan link to one of your community connections as a message.</p>
             <div class="js-share-cofarmers space-y-1 max-h-52 overflow-y-auto rounded-xl border border-gray-100 p-1" data-link-input="quickShareLink">
-                <p class="text-sm text-gray-400 px-2 py-3 text-center">Loading your co-farmers…</p>
+                <p class="text-sm text-gray-400 px-2 py-3 text-center">Loading…</p>
             </div>
         </div>
 

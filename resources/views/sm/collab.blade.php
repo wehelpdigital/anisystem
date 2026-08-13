@@ -202,7 +202,7 @@
     }
 
     /* ---------- per-tab loading overlay ---------- */
-    const LABELS = { chat: 'Loading chat…', drawing: 'Loading board…', map: 'Loading map…', activities: 'Loading activities…', ai: 'Loading AI…' };
+    const LABELS = { chat: 'Loading…', drawing: 'Loading…', map: 'Loading…', activities: 'Loading…', ai: 'Loading…' };
     const loader = document.getElementById('collabLoader');
     const loaderText = document.getElementById('collabLoaderText');
     const frame = document.getElementById('collabActivitiesFrame');

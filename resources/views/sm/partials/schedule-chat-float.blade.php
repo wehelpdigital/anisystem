@@ -43,7 +43,7 @@
         <div class="team-members" id="teamMembers"></div>
 
         <div class="team-thread" id="teamThread">
-            <div class="team-loading" id="teamLoading">Loading messages…</div>
+            <div class="team-loading" id="teamLoading">Loading…</div>
         </div>
 
         <div class="team-composer">

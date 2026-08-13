@@ -47,7 +47,7 @@
         <div>
             <label class="form-label">Send to a co-farmer</label>
             <div id="shareCofarmers" class="space-y-1 max-h-56 overflow-y-auto rounded-xl border border-gray-100 p-1">
-                <p class="text-sm text-gray-400 px-2 py-3 text-center" id="shareCofarmersHint">Loading your co-farmers…</p>
+                <p class="text-sm text-gray-400 px-2 py-3 text-center" id="shareCofarmersHint">Loading…</p>
             </div>
         </div>
     </div>
