@@ -5,16 +5,6 @@
 @section('page-subtitle', 'Plan and manage your seasons')
 @section('help-key', 'schedules')
 
-@php
-    $statusBadges = [
-        'draft' => 'bg-gray-100 text-gray-600',
-        'setup' => 'bg-blue-100 text-blue-700',
-        'generated' => 'bg-indigo-100 text-indigo-700',
-        'completed' => 'bg-brand-100 text-brand-800',
-        'archived' => 'bg-gray-800 text-white',
-    ];
-@endphp
-
 @push('head')
     <style>
         /* Deleting a season asks for the word, so the dialog is a page of its
@@ -42,44 +32,105 @@
         html.dark .del-label { color: #d7e3cb; }
         @media (prefers-reduced-motion: reduce) { .del-modal, .del-card { animation: none; } }
 
-        /* ---- the page's own head ---- */
+        /* ---- the page's own head — quiet, not a second green field. The
+           page's colour now lives in the season covers below; everything
+           around them is calm neutrals so the seasons are the picture. ---- */
         .sch-hero { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
-            gap: .75rem 1rem; padding: 1.1rem 1.25rem; margin-bottom: 1rem; border-radius: 1.1rem;
-            background: linear-gradient(135deg, #f3f8ec, #e6f1d8); border: 1px solid #d9e8c4; }
-        .sch-hero-h { font-size: 1.15rem; font-weight: 800; color: #2c4d18; line-height: 1.25; }
-        .sch-hero-p { font-size: .84rem; color: #4a6b34; margin-top: .2rem; }
+            gap: .75rem 1rem; padding: 1.05rem 1.25rem; margin-bottom: 1rem; border-radius: 1.1rem;
+            background: var(--color-white); border: 1px solid var(--color-gray-200); position: relative; overflow: hidden; }
+        /* One restrained accent: a hairline of field-green along the top. */
+        .sch-hero::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
+            background: linear-gradient(90deg, #6b9f3d, #b8d38e 55%, transparent); }
+        .sch-hero-h { font-size: 1.15rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.25; }
+        .sch-hero-p { font-size: .84rem; color: var(--color-gray-500); margin-top: .2rem; }
         .sch-hero-stats { display: flex; gap: .45rem; flex-wrap: wrap; }
-        .sch-stat { display: inline-flex; align-items: baseline; gap: .3rem; padding: .35rem .7rem;
-            border-radius: 999px; background: rgb(255 255 255 / .75); border: 1px solid #d9e8c4;
-            font-size: .72rem; font-weight: 600; color: #3d6823; }
-        .sch-stat b { font-size: .95rem; font-weight: 800; }
-        html.dark .sch-hero { background: linear-gradient(135deg, #1c2416, #24301a); border-color: #2b3a1c; }
+        .sch-stat { display: inline-flex; align-items: baseline; gap: .35rem; padding: .35rem .7rem;
+            border-radius: 999px; background: var(--color-gray-50); border: 1px solid var(--color-gray-200);
+            font-size: .72rem; font-weight: 600; color: var(--color-gray-600); }
+        .sch-stat b { font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
+        html.dark .sch-hero { background: #151b12; border-color: #2b3a1c; }
         html.dark .sch-hero-h { color: #e8efe1; }
         html.dark .sch-hero-p { color: #a8bd93; }
-        html.dark .sch-stat { background: rgb(255 255 255 / .06); border-color: #2b3a1c; color: #cdd8c0; }
+        html.dark .sch-stat { background: rgb(255 255 255 / .05); border-color: #2b3a1c; color: #cdd8c0; }
+        html.dark .sch-stat b { color: #e8efe1; }
 
-        /* ---- the cards ---- */
-        .sch-card { position: relative; overflow: hidden; }
-        .sch-spine { position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--color-gray-200); }
-        .sch-spine-active { background: linear-gradient(180deg, #6b9f3d, #3d6823); }
-        .sch-spine-setup { background: linear-gradient(180deg, #fbbf24, #d97706); }
-        .sch-spine-completed { background: linear-gradient(180deg, #93c5fd, #2563eb); }
-        .sch-card .card-body { padding-left: 1.15rem; }
+        /* ---- season cards: each schedule is a shelfful of ground, so the
+           card leads with a field-toned cover, the crops growing on it, and
+           where the season stands — before any chrome. ---- */
+        .se-card { overflow: hidden; }
+        .se-cover { position: relative; height: 4.6rem; display: flex; align-items: flex-end;
+            padding: .55rem .8rem; }
+        /* Soft, desaturated tints — the status is the weather over the field. */
+        .se-cover-active    { background: linear-gradient(120deg, #eef6e6, #d9e9c8); }
+        .se-cover-setup     { background: linear-gradient(120deg, #fdf6e6, #f5e6c4); }
+        .se-cover-generated { background: linear-gradient(120deg, #eef0fb, #dde2f5); }
+        .se-cover-completed { background: linear-gradient(120deg, #edf3f9, #d9e6f2); }
+        .se-cover-draft     { background: linear-gradient(120deg, #f4f5f4, #e7eae6); }
+        .se-cover-archived  { background: linear-gradient(120deg, #e5e7eb, #d2d6dc); }
+        /* A faint horizon line so the tint reads as ground, not just paint. */
+        .se-cover::after { content: ''; position: absolute; inset: auto 0 0 0; height: 1.4rem;
+            background: linear-gradient(180deg, transparent, rgb(0 0 0 / .05)); pointer-events: none; }
+        .se-crops { font-size: 1.7rem; line-height: 1; letter-spacing: .1em; position: relative; z-index: 1;
+            filter: drop-shadow(0 2px 3px rgb(0 0 0 / .12)); }
+        .se-status { position: absolute; top: .55rem; right: .65rem; display: inline-flex; align-items: center;
+            gap: .35rem; padding: .28rem .6rem; border-radius: 999px; background: rgb(255 255 255 / .85);
+            font-size: .68rem; font-weight: 700; color: var(--color-gray-700); text-transform: capitalize;
+            backdrop-filter: blur(2px); }
+        .se-dot { width: .5rem; height: .5rem; border-radius: 999px; background: #9ca3af; }
+        .se-dot-active { background: #4a7c2a; box-shadow: 0 0 0 3px rgb(74 124 42 / .18); }
+        .se-dot-setup { background: #d97706; }
+        .se-dot-generated { background: #6366f1; }
+        .se-dot-completed { background: #2563eb; }
+        .se-dot-archived { background: #374151; }
+        html.dark .se-cover-active    { background: linear-gradient(120deg, #1e2817, #26331b); }
+        html.dark .se-cover-setup     { background: linear-gradient(120deg, #2a2414, #332b16); }
+        html.dark .se-cover-generated { background: linear-gradient(120deg, #1d2030, #232741); }
+        html.dark .se-cover-completed { background: linear-gradient(120deg, #17222d, #1b2a3a); }
+        html.dark .se-cover-draft, html.dark .se-cover-archived { background: linear-gradient(120deg, #1a1e18, #232823); }
+        html.dark .se-status { background: rgb(0 0 0 / .45); color: #d5dfc9; }
 
-        /* The created date is part of the counts line on a card that is tight
-           for height, and keeps its own line where there is room. */
-        .sch-created { flex-basis: 100%; }
+        .se-title { font-weight: 800; color: var(--color-gray-900); line-height: 1.3; }
+        .se-desc { font-size: .8rem; color: var(--color-gray-500); margin-top: .15rem;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        /* Where the crop stands today — the one line a farmer opens this
+           page for, so it reads before the counts do. */
+        .se-read { display: flex; align-items: baseline; gap: .4rem; margin-top: .6rem;
+            font-size: .8rem; font-weight: 700; color: #3d6823; }
+        .se-read-day { font-size: .95rem; font-weight: 800; white-space: nowrap; }
+        .se-read-stage { font-weight: 700; color: var(--color-gray-700); min-width: 0; }
+        .se-read-lot { font-weight: 600; color: var(--color-gray-400); font-size: .72rem; }
+        .se-read.is-quiet { color: var(--color-gray-400); font-weight: 600; }
+        html.dark .se-read { color: #a5c97e; }
+        html.dark .se-read-stage { color: #cdd8c0; }
+
+        .se-prog { height: .35rem; border-radius: 999px; background: var(--color-gray-100);
+            overflow: hidden; margin-top: .55rem; }
+        .se-prog span { display: block; height: 100%; border-radius: 999px;
+            background: linear-gradient(90deg, #8fbf5e, #4a7c2a);
+            transition: width .28s cubic-bezier(.22,1,.36,1); }
+        .se-cover-completed ~ .card-body .se-prog span { background: linear-gradient(90deg, #93c5fd, #2563eb); }
+        .se-progline { display: flex; justify-content: space-between; align-items: baseline;
+            margin-top: .3rem; font-size: .68rem; color: var(--color-gray-400); }
+        .se-progline b { color: var(--color-gray-600); font-weight: 700; }
+        html.dark .se-prog { background: rgb(255 255 255 / .08); }
+        html.dark .se-progline b { color: #cdd8c0; }
+        @media (prefers-reduced-motion: reduce) { .se-prog span { transition: none; } }
+
+        .se-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .9rem;
+            margin-top: auto; padding-top: .7rem; font-size: .72rem; font-weight: 500;
+            color: var(--color-gray-500); }
+        .se-meta svg { width: .95rem; height: .95rem; }
+        .se-created { flex-basis: 100%; color: var(--color-gray-400); }
+
         @media (max-width: 767px) {
-            .sch-created { flex-basis: auto; margin-left: auto; }
+            .se-created { flex-basis: auto; margin-left: auto; }
             /* A phone shows one card at a time; every row of chrome inside it
                is a row of the next card pushed off screen. */
-            .sch-card .card-body { padding: .8rem .9rem; }
-            .sch-card h2 { font-size: .95rem; }
-            .sch-desc {
-                margin-bottom: .55rem; font-size: .78rem;
-                display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-            }
-            .sch-stats { gap: .85rem; margin-bottom: .6rem; }
+            .se-card .card-body { padding: .8rem .9rem; }
+            .se-cover { height: 3.6rem; }
+            .se-title { font-size: .95rem; }
+            .se-desc { font-size: .78rem; }
+            .se-meta { gap: .3rem .8rem; }
             /* Open is what you came for: it takes the width, and the two
                destructive-ish actions shrink to icons beside it rather than
                competing for the same emphasis. */
@@ -197,37 +248,58 @@
     @else
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-children" id="schedulesGrid">
             @foreach ($schedules as $s)
-                <div class="card card-hover flex flex-col sch-card" data-schedule-card="{{ $s->id }}">
-                    {{-- A coloured spine so a status is readable from across
-                         the grid without reading the badge. --}}
-                    <span class="sch-spine sch-spine-{{ $s->status }}" aria-hidden="true"></span>
+                @php $card = $cards[$s->id] ?? ['icons' => [], 'reading' => null, 'progress' => null, 'window' => null]; @endphp
+                <div class="card card-hover flex flex-col se-card" data-schedule-card="{{ $s->id }}">
+                    {{-- The cover IS the status: a field-toned wash, the crops
+                         growing on it, and the season's state as weather over
+                         it — readable from across the grid. --}}
+                    <div class="se-cover se-cover-{{ $s->status }}">
+                        <span class="se-crops" aria-hidden="true">{{ count($card['icons']) ? implode('', $card['icons']) : '🌱' }}</span>
+                        <span class="se-status"><i class="se-dot se-dot-{{ $s->status }}"></i>{{ $s->status }}</span>
+                    </div>
                     <div class="card-body flex flex-col grow">
-                        <div class="flex items-start justify-between gap-2 mb-1.5">
-                            <h2 class="font-bold text-gray-900 leading-snug min-w-0">{{ $s->title }}</h2>
-                            <span class="badge shrink-0 capitalize {{ $statusBadges[$s->status] ?? 'bg-gray-100 text-gray-600' }}">{{ $s->status }}</span>
-                        </div>
+                        <h2 class="se-title min-w-0">{{ $s->title }}</h2>
 
                         @if ($s->description)
-                            <p class="text-sm text-gray-500 mb-3 sch-desc">{{ \Illuminate\Support\Str::limit($s->description, 100) }}</p>
+                            <p class="se-desc">{{ \Illuminate\Support\Str::limit($s->description, 100) }}</p>
                         @endif
 
-                        <div class="flex flex-wrap items-center gap-4 text-xs text-gray-500 font-medium mt-auto mb-3 sch-stats">
+                        {{-- Where the crop stands today — same arithmetic as
+                             Growth Stages, so the two pages never disagree. --}}
+                        @if ($card['reading'])
+                            <div class="se-read">
+                                <span class="se-read-day">{{ $card['reading']['counter'] }} {{ $card['reading']['day'] }}</span>
+                                @if ($card['reading']['stage'])
+                                    <span class="se-read-stage truncate">· {{ $card['reading']['stage'] }}</span>
+                                @endif
+                                <span class="se-read-lot truncate">{{ $card['reading']['lot'] }}</span>
+                            </div>
+                        @else
+                            <div class="se-read is-quiet">Not counting yet — the season starts at day zero.</div>
+                        @endif
+
+                        @if ($card['progress'] !== null)
+                            <div class="se-prog"><span style="width: {{ $card['progress'] }}%"></span></div>
+                            <div class="se-progline"><span>{{ $card['window'] }}</span><b>{{ $card['progress'] }}%</b></div>
+                        @endif
+
+                        <div class="se-meta">
                             <span class="inline-flex items-center gap-1" title="Lots">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
                                 {{ $s->lots_count }} {{ \Illuminate\Support\Str::plural('lot', $s->lots_count) }}
                             </span>
                             <span class="inline-flex items-center gap-1" title="Workers">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
                                 {{ $s->workers_count }} {{ \Illuminate\Support\Str::plural('worker', $s->workers_count) }}
                             </span>
                             <span class="inline-flex items-center gap-1" title="Activities">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5h11M9 12h11M9 19h11M4 5h.01M4 12h.01M4 19h.01"/></svg>
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5h11M9 12h11M9 19h11M4 5h.01M4 12h.01M4 19h.01"/></svg>
                                 {{ $s->activities_count }}
                             </span>
-                            <span class="text-gray-400 sch-created">Created {{ $s->created_at->format('M j, Y') }}</span>
+                            <span class="se-created">Created {{ $s->created_at->format('M j, Y') }}</span>
                         </div>
 
-                        <div class="flex items-center gap-2 sch-acts">
+                        <div class="flex items-center gap-2 mt-3 sch-acts">
                             <a href="{{ route('sm.hub', ['id' => $s->id]) }}" class="btn btn-primary flex-1">Open</a>
                             <button type="button"
                                 class="btn btn-ghost px-3! text-gray-500 hover:bg-gray-100!"

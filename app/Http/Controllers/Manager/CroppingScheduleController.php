@@ -35,7 +35,20 @@ class CroppingScheduleController extends Controller
                 'lots as lots_count' => fn ($q) => $q->where('as_schedule_lots.deleteStatus', 1),
                 'workers as workers_count' => fn ($q) => $q->where('as_schedule_workers.deleteStatus', 1),
                 'activities as activities_count' => fn ($q) => $q->where('as_schedule_activities.deleteStatus', 1),
-            ]);
+            ])
+            // What the season cards read: the lots for their crops and day
+            // counters, only the ANCHOR activities (day zero / transplant)
+            // for LotCalendar, and the season's first and last planned dates
+            // for the progress bar.
+            ->with([
+                'lots' => fn ($q) => $q->where('as_schedule_lots.deleteStatus', 1),
+                'activities' => fn ($q) => $q->where('as_schedule_activities.deleteStatus', 1)
+                    ->where(fn ($w) => $w->where('isDayZero', 1)->orWhere('isTransplant', 1))
+                    ->with('lots:as_schedule_lots.id'),
+            ])
+            ->withMin(['activities as season_start' => fn ($q) => $q->where('as_schedule_activities.deleteStatus', 1)], 'targetDate')
+            ->withMax(['activities as season_last' => fn ($q) => $q->where('as_schedule_activities.deleteStatus', 1)], 'targetDate')
+            ->withMax(['activities as season_last_end' => fn ($q) => $q->where('as_schedule_activities.deleteStatus', 1)], 'targetEndDate');
 
         if ($request->filled('search')) {
             $q = $request->search;
@@ -46,6 +59,55 @@ class CroppingScheduleController extends Controller
         }
 
         $schedules = $query->orderBy('created_at', 'desc')->paginate(12)->withQueryString();
+
+        // What each season card says at a glance: the crops growing on it,
+        // the leading lot's reading today (same arithmetic as Growth Stages,
+        // via LotCalendar), and how far through its planned span it is.
+        $today = \Illuminate\Support\Carbon::today();
+        $cards = [];
+        foreach ($schedules as $s) {
+            [$dayZeroEff, $transplantEff] = \App\Support\LotCalendar::effectiveAnchors($s);
+            $icons = [];
+            $reading = null;
+            foreach ($s->lots as $lot) {
+                $crop = \App\Support\CropStages::normalize($lot->crop);
+                if ($crop && ! isset($icons[$crop])) {
+                    $icons[$crop] = \App\Support\CropStages::icon($lot->crop);
+                }
+                $age = \App\Support\LotCalendar::ageOf($lot, $today, $dayZeroEff[$lot->id] ?? null, $transplantEff[$lot->id] ?? null);
+                if (! $age || ! $crop) {
+                    continue;
+                }
+                if (! $reading || $age['day'] > $reading['day']) {
+                    $stage = \App\Support\CropStages::stageFor($crop, $age['day'], $age['counter']);
+                    $reading = [
+                        'day' => $age['day'],
+                        'counter' => $age['counter'],
+                        'stage' => $stage['label'] ?? null,
+                        'lot' => $lot->lotName,
+                    ];
+                }
+            }
+
+            $start = $s->season_start ? \Illuminate\Support\Carbon::parse($s->season_start) : null;
+            $last = collect([$s->season_last, $s->season_last_end])->filter()
+                ->map(fn ($d) => \Illuminate\Support\Carbon::parse($d))->max();
+            $progress = null;
+            if ($start && $last && $last->gt($start)) {
+                $progress = (int) round(100 * max(0, min(1,
+                    $start->diffInDays($today, false) / max(1, $start->diffInDays($last))
+                )));
+            }
+
+            $cards[$s->id] = [
+                'icons' => array_slice(array_values($icons), 0, 3),
+                'reading' => $reading,
+                'progress' => $progress,
+                'window' => $start && $last
+                    ? $start->format('M j') . ' – ' . $last->format('M j, Y')
+                    : null,
+            ];
+        }
 
         // Full list (not just this page) for the Quick Capture schedule picker.
         $allSchedules = AsCroppingSchedule::active()
@@ -72,7 +134,7 @@ class CroppingScheduleController extends Controller
                 ->count(),
         ];
 
-        return view('sm.index', compact('schedules', 'allSchedules', 'tip', 'summary'));
+        return view('sm.index', compact('schedules', 'allSchedules', 'tip', 'summary', 'cards'));
     }
 
     public function create()

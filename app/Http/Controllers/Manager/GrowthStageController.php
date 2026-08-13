@@ -50,12 +50,12 @@ class GrowthStageController extends BaseScheduleController
      */
     private function rowsFor($schedule, \Carbon\Carbon $on): array
     {
-        [$dayZeroEff, $transplantEff] = $this->effectiveAnchors($schedule);
+        [$dayZeroEff, $transplantEff] = \App\Support\LotCalendar::effectiveAnchors($schedule);
 
         $rows = [];
         foreach ($schedule->lots as $lot) {
             $crop = CropStages::normalize($lot->crop);
-            $age = $this->ageOf($lot, $crop, $on, $dayZeroEff[$lot->id] ?? null, $transplantEff[$lot->id] ?? null);
+            $age = \App\Support\LotCalendar::ageOf($lot, $on, $dayZeroEff[$lot->id] ?? null, $transplantEff[$lot->id] ?? null);
             // The counter is not decoration: rice read in DAS was direct
             // seeded and has a different calendar from transplanted rice.
             $stage = $crop && $age ? CropStages::stageFor($crop, $age['day'], $age['counter']) : null;
@@ -78,84 +78,9 @@ class GrowthStageController extends BaseScheduleController
         return $rows;
     }
 
-    /**
-     * The anchors as the activities board reads them: the lot's own dates,
-     * overridden by the EARLIEST day-zero / transplant activity covering it.
-     * Reading only the lot's columns here meant a count started by ticking
-     * "this is day zero" on an activity existed everywhere but on this page.
-     *
-     * @return array{0: array<int, \Carbon\Carbon>, 1: array<int, \Carbon\Carbon>}
-     */
-    private function effectiveAnchors($schedule): array
-    {
-        $dayZero = [];
-        $transplant = [];
-        foreach ($schedule->lots as $lot) {
-            if ($lot->dayZeroDate) {
-                $dayZero[$lot->id] = \Carbon\Carbon::parse($lot->dayZeroDate);
-            }
-            if ($lot->transplantDate) {
-                $transplant[$lot->id] = \Carbon\Carbon::parse($lot->transplantDate);
-            }
-        }
-        foreach ($schedule->activities as $a) {
-            if (! $a->targetDate || (! $a->isDayZero && ! $a->isTransplant)) {
-                continue;
-            }
-            $aDate = \Carbon\Carbon::parse($a->targetDate);
-            foreach ($a->lots as $lot) {
-                if ($a->isDayZero && (! isset($dayZero[$lot->id]) || $aDate->lt($dayZero[$lot->id]))) {
-                    $dayZero[$lot->id] = $aDate->copy();
-                }
-                if ($a->isTransplant && (! isset($transplant[$lot->id]) || $aDate->lt($transplant[$lot->id]))) {
-                    $transplant[$lot->id] = $aDate->copy();
-                }
-            }
-        }
-
-        return [$dayZero, $transplant];
-    }
-
-    /**
-     * How old the crop in this lot is on a date, in the count the lot keeps.
-     *
-     * The lot says how it was established, and that is the whole answer: a
-     * DAT lot flips to a fresh count on its transplant date and reads against
-     * the transplanted calendar from then on; a DAS lot was direct seeded and
-     * never flips, whatever dates it carries; a DAP lot counts from planting.
-     * Reading a direct-seeded field against a transplanted calendar is how a
-     * stage ends up a fortnight out.
-     *
-     * The anchors arrive resolved (lot date or day-zero/transplant activity,
-     * whichever is earlier) so this page counts from the same day the
-     * activities board does.
-     *
-     * @return array{day:int, counter:string}|null
-     */
-    private function ageOf($lot, ?string $crop, \Carbon\Carbon $on, ?\Carbon\Carbon $dayZero, ?\Carbon\Carbon $transplant): ?array
-    {
-        $mode = strtoupper((string) ($lot->dayType ?: 'DAT'));
-
-        if ($mode === 'DAT' && $transplant) {
-            $t = $transplant->copy()->startOfDay();
-            if ($on->copy()->startOfDay()->gte($t)) {
-                return ['day' => $t->diffInDays($on->copy()->startOfDay()), 'counter' => 'DAT'];
-            }
-        }
-
-        if (! $dayZero) {
-            return null;
-        }
-
-        $z = $dayZero->copy()->startOfDay();
-        $day = $z->diffInDays($on->copy()->startOfDay(), false);
-        // Before the transplant a two-phase lot is still counting from sowing,
-        // so it is DAS — calling that number DAT would read it against the
-        // wrong table.
-        $counter = $mode === 'DAP' ? 'DAP' : 'DAS';
-
-        return $day < 0 ? null : ['day' => (int) $day, 'counter' => $counter];
-    }
+    // The anchor + counter arithmetic lives in App\Support\LotCalendar — the
+    // schedules shelf reads the same numbers, and two copies of this logic is
+    // how a lot once read "no day zero" here while counting fine elsewhere.
 
     /** How this lot's counter works, said in a phrase. */
     public static function counterSays(?string $mode): string
