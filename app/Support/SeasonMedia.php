@@ -95,8 +95,16 @@ class SeasonMedia
             }
         }
 
-        // Reference photos attached to activities.
-        foreach (AsScheduleActivity::active()->where('croppingScheduleId', $schedule->id)->where('isDraft', 0)->orderByDesc('id')->get() as $a) {
+        // Reference photos attached to activities. Only the ones that carry a
+        // picture: a season is mostly tasks with none, and hydrating all of
+        // them to ask was the slowest part of opening this page.
+        $withPhotos = AsScheduleActivity::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->where('isDraft', 0)
+            ->where(fn ($q) => $q->whereNotNull('imagePath')->orWhereNotNull('imagePaths'))
+            ->orderByDesc('id')
+            ->get(['id', 'activityTitle', 'imagePath', 'imagePaths', 'updated_at']);
+        foreach ($withPhotos as $a) {
             foreach ($a->imageList() as $img) {
                 $push(['type' => 'image', 'path' => $img['path'] ?? null], 'Activity',
                     (string) $a->activityTitle, $a->updated_at, $boardUrl);
