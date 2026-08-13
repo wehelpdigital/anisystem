@@ -203,6 +203,17 @@
                             </div>
                             <a href="{{ route('account.index') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">My Account</a>
                             <a href="{{ route('account.subscription') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">My Subscription</a>
+                            {{-- The way to reach a person. It existed as a page
+                                 and had no door: nothing in the app linked to
+                                 it, so a grower with a problem had nowhere to
+                                 go but the phone. --}}
+                            <a href="{{ route('support.index') }}" class="flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                <span>Help &amp; Support</span>
+                                @php $openTickets = \App\Models\SupportTicket::where('userId', auth()->id())->where('deleteStatus', 1)->whereIn('status', ['open', 'answered'])->count(); @endphp
+                                @if ($openTickets)
+                                    <span class="badge badge-green">{{ $openTickets }}</span>
+                                @endif
+                            </a>
                             <button type="button" id="themeToggle"
                                 class="w-full flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
                                 role="switch" aria-checked="false">
@@ -421,6 +432,10 @@
             paint();
         })();
     </script>
+
+    {{-- Asked at most once, of someone who has used the app long enough to
+         have a view, and never again once they answer. --}}
+    @include('partials.review-prompt', ['askForReview' => \App\Http\Controllers\ReviewController::shouldAsk()])
 
     @stack('scripts')
     <script>

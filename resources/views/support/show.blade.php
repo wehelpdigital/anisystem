@@ -10,7 +10,12 @@
     <div class="flex items-start justify-between gap-3">
         <div class="min-w-0">
             <h2 class="text-lg font-bold text-gray-900 leading-snug">{{ $ticket->subject }}</h2>
-            <p class="text-xs text-gray-500 mt-1">{{ \App\Models\SupportTicket::CATEGORIES[$ticket->category] ?? 'General' }} · opened {{ $ticket->created_at?->diffForHumans() }}</p>
+            <p class="text-xs text-gray-500 mt-1">
+                @if ($ticket->ticketNumber)
+                    <span class="font-mono font-bold text-brand-700">{{ $ticket->ticketNumber }}</span> ·
+                @endif
+                {{ \App\Models\SupportTicket::CATEGORIES[$ticket->category] ?? 'General' }} · opened {{ $ticket->created_at?->diffForHumans() }}
+            </p>
         </div>
         @php $statusStyle = ['open' => 'badge-gray', 'answered' => 'badge-green', 'closed' => 'badge-gray'][$ticket->status] ?? 'badge-gray'; @endphp
         <span class="badge {{ $statusStyle }} shrink-0">{{ ucfirst($ticket->status) }}</span>

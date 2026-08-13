@@ -125,6 +125,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/app/notes-draw', [App\Http\Controllers\NotesHubController::class, 'drawUpload'])->name('notes.hub.draw');
     Route::post('/app/notes-image-upload', [App\Http\Controllers\NotesHubController::class, 'imageUpload'])->name('notes.hub.image-upload');
     Route::post('/app/notes-video-upload', [App\Http\Controllers\NotesHubController::class, 'videoUpload'])->name('notes.hub.video-upload');
+    // "How are we doing?" — answered once, or waved away twice.
+    Route::post('/app/review', [App\Http\Controllers\ReviewController::class, 'store'])->name('review.store');
+    Route::post('/app/review-dismiss', [App\Http\Controllers\ReviewController::class, 'dismiss'])->name('review.dismiss');
     Route::get('/app/support', [App\Http\Controllers\SupportController::class, 'index'])->name('support.index');
     Route::post('/app/support', [App\Http\Controllers\SupportController::class, 'store'])->name('support.store');
     Route::get('/app/support/{id}', [App\Http\Controllers\SupportController::class, 'show'])->whereNumber('id')->name('support.show');

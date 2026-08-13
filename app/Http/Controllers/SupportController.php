@@ -37,6 +37,7 @@ class SupportController extends Controller
 
         $user = Auth::user();
         $ticket = SupportTicket::create([
+            'ticketNumber' => SupportTicket::nextNumber(),
             'userId' => (int) $user->id,
             'subject' => $data['subject'],
             'category' => $category,

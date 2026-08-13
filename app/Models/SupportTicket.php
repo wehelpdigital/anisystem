@@ -6,7 +6,7 @@ class SupportTicket extends BaseModel
 {
     protected $table = 'as_support_tickets';
 
-    protected $fillable = ['userId', 'subject', 'category', 'status', 'lastReplyAt', 'deleteStatus'];
+    protected $fillable = ['ticketNumber', 'userId', 'subject', 'category', 'status', 'lastReplyAt', 'deleteStatus'];
 
     protected $casts = ['lastReplyAt' => 'datetime'];
 
@@ -26,5 +26,18 @@ class SupportTicket extends BaseModel
     public function user()
     {
         return $this->belongsTo(User::class, 'userId');
+    }
+
+    /**
+     * The next number, in the form a person can read down a phone: the year
+     * and a running count within it. Not the row id — that leaks how many
+     * tickets everyone else has raised.
+     */
+    public static function nextNumber(): string
+    {
+        $year = now()->format('Y');
+        $n = static::where('ticketNumber', 'like', "AS-$year-%")->count() + 1;
+
+        return sprintf('AS-%s-%04d', $year, $n);
     }
 }

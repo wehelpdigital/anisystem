@@ -41,10 +41,13 @@
 </div>
 
 @forelse ($tickets as $ticket)
-    <a href="{{ route('support.show', ['id' => $ticket->id]) }}" class="card card-hover p-4 mb-2 flex items-center gap-3">
+    <a href="{{ route('support.show', ['id' => $ticket->id]) }}" class="card card-hover p-4 mb-2 flex items-center gap-3" data-ticket="{{ $ticket->ticketNumber }}">
         <div class="min-w-0 grow">
             <p class="font-semibold text-gray-900 truncate">{{ $ticket->subject }}</p>
             <p class="text-xs text-gray-500 mt-0.5">
+                @if ($ticket->ticketNumber)
+                    <span class="font-mono font-bold text-brand-700">{{ $ticket->ticketNumber }}</span> ·
+                @endif
                 {{ \App\Models\SupportTicket::CATEGORIES[$ticket->category] ?? 'General' }}
                 · {{ $ticket->messages_count }} {{ \Illuminate\Support\Str::plural('message', $ticket->messages_count) }}
                 · updated {{ $ticket->updated_at?->diffForHumans() }}
