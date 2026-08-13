@@ -100,12 +100,13 @@
             background: linear-gradient(180deg, transparent, rgb(0 0 0 / .05)); pointer-events: none; }
         .se-crops { font-size: 1.7rem; line-height: 1; letter-spacing: .1em; position: relative; z-index: 1;
             filter: drop-shadow(0 2px 3px rgb(0 0 0 / .12)); }
-        /* When the season was planted in the app — on the cover with the
-           crops, where a date about the season belongs. */
-        .se-cover-when { margin-left: auto; position: relative; z-index: 1; padding: .28rem .6rem;
-            border-radius: 999px; background: rgb(255 255 255 / .7); font-size: .64rem; font-weight: 600;
-            color: var(--color-gray-500); white-space: nowrap; backdrop-filter: blur(2px); }
-        html.dark .se-cover-when { background: rgb(0 0 0 / .4); color: #a8bd93; }
+        /* The schedule's name IS the banner: it stands on the cover beside
+           the crops, and the body below is all season-reading. */
+        .se-title { position: relative; z-index: 1; min-width: 0; flex: 1 1 auto;
+            font-weight: 800; font-size: 1rem; line-height: 1.25; color: var(--color-gray-900);
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+            text-shadow: 0 1px 0 rgb(255 255 255 / .5); }
+        html.dark .se-title { color: #e8efe1; text-shadow: none; }
         .se-status { position: absolute; top: .55rem; right: .65rem; display: inline-flex; align-items: center;
             gap: .35rem; padding: .28rem .6rem; border-radius: 999px; background: rgb(255 255 255 / .85);
             font-size: .68rem; font-weight: 700; color: var(--color-gray-700); text-transform: capitalize;
@@ -123,8 +124,7 @@
         html.dark .se-cover-draft, html.dark .se-cover-archived { background: linear-gradient(120deg, #1a1e18, #232823); }
         html.dark .se-status { background: rgb(0 0 0 / .45); color: #d5dfc9; }
 
-        .se-title { font-weight: 800; color: var(--color-gray-900); line-height: 1.3; }
-        .se-desc { font-size: .8rem; color: var(--color-gray-500); margin-top: .15rem;
+        .se-desc { font-size: .8rem; color: var(--color-gray-500);
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         /* Where the crop stands today — the one line a farmer opens this
            page for, so it reads before the counts do. */
@@ -154,17 +154,21 @@
             margin-top: auto; padding-top: .7rem; font-size: .72rem; font-weight: 500;
             color: var(--color-gray-500); }
         .se-meta svg { width: .95rem; height: .95rem; }
+        /* When the season was planted in the app — a quiet tag on its own
+           line under the counts. */
+        .se-when-tag { flex-basis: 100%; align-self: flex-start; }
+        .se-when-tag span { display: inline-flex; align-items: center; gap: .3rem; padding: .22rem .55rem;
+            border-radius: 999px; background: var(--color-gray-50); border: 1px solid var(--color-gray-200);
+            font-size: .66rem; font-weight: 600; color: var(--color-gray-500); }
+        html.dark .se-when-tag span { background: rgb(255 255 255 / .05); border-color: #2b3a1c; color: #a8bd93; }
 
         @media (max-width: 767px) {
             /* A phone shows one card at a time; every row of chrome inside it
                is a row of the next card pushed off screen. */
             .se-card .card-body { padding: .8rem .9rem; }
             .se-cover { height: 3.6rem; }
-            /* A short cover: the date chip slims down so it and the status
-               pill are not shoulder to shoulder. */
-            .se-cover-when { font-size: .6rem; padding: .22rem .5rem; }
             .se-crops { font-size: 1.45rem; }
-            .se-title { font-size: .95rem; }
+            .se-title { font-size: .9rem; }
             .se-desc { font-size: .78rem; }
             .se-meta { gap: .3rem .8rem; }
             /* Open is what you came for: it takes the width, and the two
@@ -291,12 +295,10 @@
                          it — readable from across the grid. --}}
                     <div class="se-cover se-cover-{{ $s->status }}">
                         <span class="se-crops" aria-hidden="true">{{ count($card['icons']) ? implode('', $card['icons']) : '🌱' }}</span>
-                        <span class="se-cover-when">Created {{ $s->created_at->format('M j, Y') }}</span>
+                        <h2 class="se-title" title="{{ $s->title }}">{{ $s->title }}</h2>
                         <span class="se-status"><i class="se-dot se-dot-{{ $s->status }}"></i>{{ $s->status }}</span>
                     </div>
                     <div class="card-body flex flex-col grow">
-                        <h2 class="se-title min-w-0">{{ $s->title }}</h2>
-
                         @if ($s->description)
                             <p class="se-desc">{{ \Illuminate\Support\Str::limit($s->description, 100) }}</p>
                         @endif
@@ -333,6 +335,10 @@
                                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5h11M9 12h11M9 19h11M4 5h.01M4 12h.01M4 19h.01"/></svg>
                                 {{ $s->activities_count }} {{ \Illuminate\Support\Str::plural('activity', $s->activities_count) }}
                             </span>
+                            <span class="se-when-tag"><span>
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                Created {{ $s->created_at->format('M j, Y') }}
+                            </span></span>
                         </div>
 
                         <div class="flex items-center gap-2 mt-3 sch-acts">
