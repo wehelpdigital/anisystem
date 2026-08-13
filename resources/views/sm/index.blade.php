@@ -86,8 +86,11 @@
            card leads with a field-toned cover, the crops growing on it, and
            where the season stands — before any chrome. ---- */
         .se-card { overflow: hidden; }
-        .se-cover { position: relative; height: 4.6rem; display: flex; align-items: flex-end;
-            padding: .55rem .8rem; }
+        /* One level row — crops, name and status share a line, vertically
+           centred, instead of the pill floating a corner higher than the
+           name it describes. */
+        .se-cover { position: relative; height: 4.6rem; display: flex; align-items: center;
+            gap: .6rem; padding: .55rem .8rem; }
         /* Soft, desaturated tints — the status is the weather over the field. */
         .se-cover-active    { background: linear-gradient(120deg, #eef6e6, #d9e9c8); }
         .se-cover-setup     { background: linear-gradient(120deg, #fdf6e6, #f5e6c4); }
@@ -99,7 +102,7 @@
         .se-cover::after { content: ''; position: absolute; inset: auto 0 0 0; height: 1.4rem;
             background: linear-gradient(180deg, transparent, rgb(0 0 0 / .05)); pointer-events: none; }
         .se-crops { font-size: 1.7rem; line-height: 1; letter-spacing: .1em; position: relative; z-index: 1;
-            filter: drop-shadow(0 2px 3px rgb(0 0 0 / .12)); }
+            flex-shrink: 0; filter: drop-shadow(0 2px 3px rgb(0 0 0 / .12)); }
         /* The schedule's name IS the banner: it stands on the cover beside
            the crops, and the body below is all season-reading. */
         .se-title { position: relative; z-index: 1; min-width: 0; flex: 1 1 auto;
@@ -107,7 +110,8 @@
             overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
             text-shadow: 0 1px 0 rgb(255 255 255 / .5); }
         html.dark .se-title { color: #e8efe1; text-shadow: none; }
-        .se-status { position: absolute; top: .55rem; right: .65rem; display: inline-flex; align-items: center;
+        .se-status { position: relative; z-index: 1; margin-left: auto; flex-shrink: 0;
+            display: inline-flex; align-items: center;
             gap: .35rem; padding: .28rem .6rem; border-radius: 999px; background: rgb(255 255 255 / .85);
             font-size: .68rem; font-weight: 700; color: var(--color-gray-700); text-transform: capitalize;
             backdrop-filter: blur(2px); }
