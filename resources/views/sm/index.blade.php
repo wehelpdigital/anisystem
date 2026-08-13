@@ -54,6 +54,34 @@
         html.dark .sch-stat { background: rgb(255 255 255 / .05); border-color: #2b3a1c; color: #cdd8c0; }
         html.dark .sch-stat b { color: #e8efe1; }
 
+        /* ---- the two quick doors: notes and the camera. Feature buttons
+           with a face, not two more grey pills — each carries its own tinted
+           icon and, where there is room, a word on what it is for. ---- */
+        .qa-btn { display: inline-flex; align-items: center; gap: .6rem; padding: .4rem 1rem .4rem .45rem;
+            border-radius: 999px; background: var(--color-white); border: 1px solid var(--color-gray-200);
+            font-size: .84rem; font-weight: 700; color: var(--color-gray-800); cursor: pointer; text-align: left;
+            transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1),
+                border-color .28s cubic-bezier(.22,1,.36,1); }
+        .qa-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px -14px rgb(0 0 0 / .45); }
+        .qa-btn:active { transform: translateY(0); }
+        .qa-ico { width: 2.1rem; height: 2.1rem; border-radius: 999px; flex-shrink: 0;
+            display: inline-flex; align-items: center; justify-content: center; }
+        .qa-ico svg { width: 1.15rem; height: 1.15rem; }
+        .qa-notes .qa-ico { background: #fdf6e6; color: #b45309; }
+        .qa-notes:hover { border-color: #f0dcae; }
+        .qa-cap .qa-ico { background: #eef6e6; color: #3d6823; }
+        .qa-cap:hover { border-color: #cfe3b8; }
+        .qa-txt { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+        .qa-sub { display: none; font-size: .68rem; font-weight: 500; color: var(--color-gray-400); }
+        @media (min-width: 768px) { .qa-sub { display: block; } }
+        html.dark .qa-btn { background: #151b12; border-color: #2b3a1c; color: #e8efe1; }
+        html.dark .qa-notes .qa-ico { background: rgb(180 83 9 / .18); color: #e0b457; }
+        html.dark .qa-cap .qa-ico { background: rgb(61 104 35 / .25); color: #a5c97e; }
+        html.dark .qa-sub { color: #7d8f6e; }
+        @media (prefers-reduced-motion: reduce) { .qa-btn { transition: none; } }
+        /* Phones: the pair shares the row under the search, evenly. */
+        .sch-quick .qa-btn { flex: 1 1 0; justify-content: flex-start; }
+
         /* ---- season cards: each schedule is a shelfful of ground, so the
            card leads with a field-toned cover, the crops growing on it, and
            where the season stands — before any chrome. ---- */
@@ -72,6 +100,12 @@
             background: linear-gradient(180deg, transparent, rgb(0 0 0 / .05)); pointer-events: none; }
         .se-crops { font-size: 1.7rem; line-height: 1; letter-spacing: .1em; position: relative; z-index: 1;
             filter: drop-shadow(0 2px 3px rgb(0 0 0 / .12)); }
+        /* When the season was planted in the app — on the cover with the
+           crops, where a date about the season belongs. */
+        .se-cover-when { margin-left: auto; position: relative; z-index: 1; padding: .28rem .6rem;
+            border-radius: 999px; background: rgb(255 255 255 / .7); font-size: .64rem; font-weight: 600;
+            color: var(--color-gray-500); white-space: nowrap; backdrop-filter: blur(2px); }
+        html.dark .se-cover-when { background: rgb(0 0 0 / .4); color: #a8bd93; }
         .se-status { position: absolute; top: .55rem; right: .65rem; display: inline-flex; align-items: center;
             gap: .35rem; padding: .28rem .6rem; border-radius: 999px; background: rgb(255 255 255 / .85);
             font-size: .68rem; font-weight: 700; color: var(--color-gray-700); text-transform: capitalize;
@@ -120,14 +154,16 @@
             margin-top: auto; padding-top: .7rem; font-size: .72rem; font-weight: 500;
             color: var(--color-gray-500); }
         .se-meta svg { width: .95rem; height: .95rem; }
-        .se-created { flex-basis: 100%; color: var(--color-gray-400); }
 
         @media (max-width: 767px) {
-            .se-created { flex-basis: auto; margin-left: auto; }
             /* A phone shows one card at a time; every row of chrome inside it
                is a row of the next card pushed off screen. */
             .se-card .card-body { padding: .8rem .9rem; }
             .se-cover { height: 3.6rem; }
+            /* A short cover: the date chip slims down so it and the status
+               pill are not shoulder to shoulder. */
+            .se-cover-when { font-size: .6rem; padding: .22rem .5rem; }
+            .se-crops { font-size: 1.45rem; }
             .se-title { font-size: .95rem; }
             .se-desc { font-size: .78rem; }
             .se-meta { gap: .3rem .8rem; }
@@ -189,14 +225,14 @@
              right edge — three FABs covered the list they were meant to act
              on, and only one of them was the thing you came here to do. --}}
         <div class="flex md:hidden gap-2 sch-quick">
-            <a href="{{ route('notes.hub') }}" class="btn btn-white btn-sm grow">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                Global notes
+            <a href="{{ route('notes.hub') }}" class="qa-btn qa-notes">
+                <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span>
+                <span class="qa-txt">Global notes</span>
             </a>
             @if ($allSchedules->isNotEmpty())
-                <button type="button" id="quickCaptureFab" class="btn btn-white btn-sm grow">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    Quick capture
+                <button type="button" id="quickCaptureFab" class="qa-btn qa-cap">
+                    <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
+                    <span class="qa-txt">Quick capture</span>
                 </button>
             @endif
         </div>
@@ -204,15 +240,15 @@
         {{-- Desktop CTA. Wrapped so `hidden` reliably hides it on phones (a
              bare `.btn` is unlayered CSS and would otherwise beat `hidden`);
              the floating + button is the phone equivalent. --}}
-        <div class="hidden md:flex md:justify-end gap-2">
-            <a href="{{ route('notes.hub') }}" class="btn btn-white" title="Every note from every schedule, in one place">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                Global notes
+        <div class="hidden md:flex md:justify-end md:items-center gap-2">
+            <a href="{{ route('notes.hub') }}" class="qa-btn qa-notes" title="Every note from every schedule, in one place">
+                <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span>
+                <span class="qa-txt">Global notes<span class="qa-sub">every schedule's notebook</span></span>
             </a>
             @if ($allSchedules->isNotEmpty())
-                <button type="button" id="quickCaptureBtn" class="btn btn-white">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    Quick Capture
+                <button type="button" id="quickCaptureBtn" class="qa-btn qa-cap">
+                    <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
+                    <span class="qa-txt">Quick Capture<span class="qa-sub">snap it, file it now</span></span>
                 </button>
             @endif
             <a href="{{ route('sm.create') }}" class="btn btn-primary">
@@ -255,6 +291,7 @@
                          it — readable from across the grid. --}}
                     <div class="se-cover se-cover-{{ $s->status }}">
                         <span class="se-crops" aria-hidden="true">{{ count($card['icons']) ? implode('', $card['icons']) : '🌱' }}</span>
+                        <span class="se-cover-when">Created {{ $s->created_at->format('M j, Y') }}</span>
                         <span class="se-status"><i class="se-dot se-dot-{{ $s->status }}"></i>{{ $s->status }}</span>
                     </div>
                     <div class="card-body flex flex-col grow">
@@ -294,9 +331,8 @@
                             </span>
                             <span class="inline-flex items-center gap-1" title="Activities">
                                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5h11M9 12h11M9 19h11M4 5h.01M4 12h.01M4 19h.01"/></svg>
-                                {{ $s->activities_count }}
+                                {{ $s->activities_count }} {{ \Illuminate\Support\Str::plural('activity', $s->activities_count) }}
                             </span>
-                            <span class="se-created">Created {{ $s->created_at->format('M j, Y') }}</span>
                         </div>
 
                         <div class="flex items-center gap-2 mt-3 sch-acts">
