@@ -5543,9 +5543,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        /* The sheet shows the SAME panels as the Weather module — tabs and
-           all — through the shared renderer, so there is one implementation
-           of the forecast rather than two that drift. */
+        /* The sheet shows the SAME panels as the Weather module — the six
+           days, and the hours inside whichever one you open — through the
+           shared renderer, so there is one implementation of the forecast
+           rather than two that drift. */
         function renderModal() {
             const body = $id('weatherBody');
             if (!body || typeof window.wxRenderPanels !== 'function') return;
