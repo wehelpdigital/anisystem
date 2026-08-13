@@ -424,6 +424,7 @@
             <h3 class="sheet-title">Growth stage</h3>
             <p class="text-xs text-gray-500" id="growthStageDate"></p>
         </div>
+        <button type="button" id="gsFoldAll" class="btn btn-white btn-sm shrink-0 mr-1">Collapse all</button>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full -mr-1" aria-label="Close">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
         </button>

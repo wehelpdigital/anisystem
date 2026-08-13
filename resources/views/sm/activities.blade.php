@@ -317,8 +317,19 @@
         html.dark .gs-quiet { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
         .gs-lot { border: 1px solid var(--color-gray-200); border-radius: .9rem; overflow: hidden; margin-bottom: .75rem; }
         .gs-head { display: flex; align-items: center; gap: .6rem; padding: .7rem .8rem;
-            background: linear-gradient(135deg, #f3f8ec, #e4efd4); }
+            background: linear-gradient(135deg, #f3f8ec, #e4efd4); cursor: pointer; user-select: none; }
         html.dark .gs-head { background: linear-gradient(135deg, #1c2416, #24301a); }
+        /* The same accordion the Growth Stages module wears: a lot folds to
+           its header, and the folded header borrows the stage's name. */
+        .gs-chev { width: .9rem; height: .9rem; flex-shrink: 0; color: #6b9f3d; transition: transform .18s ease; }
+        .gs-lot:not(.is-folded) .gs-chev { transform: rotate(90deg); }
+        .gs-fold { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+        .gs-fold-inner { overflow: hidden; min-height: 0; }
+        .gs-lot.is-folded .gs-fold { grid-template-rows: 0fr; }
+        .gs-fold-stage { display: none; }
+        .gs-lot.is-folded .gs-fold-stage { display: inline; }
+        #growthStageList.no-fold-anim .gs-fold, #growthStageList.no-fold-anim .gs-chev { transition: none; }
+        @media (prefers-reduced-motion: reduce) { .gs-fold, .gs-chev { transition: none; } }
         .gs-emoji { font-size: 1.5rem; line-height: 1; }
         .gs-lotname { font-weight: 800; font-size: .92rem; color: var(--color-gray-900); }
         html.dark .gs-lotname { color: #e5e9f5; }

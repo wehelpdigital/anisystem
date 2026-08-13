@@ -428,14 +428,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="grow">${esc(step.label)}</span>
                     <span class="gs-when">${r.counter} ${step.from}+</span>
                 </div>`).join('');
-            return `<div class="gs-lot">
-                <div class="gs-head">
+            return `<div class="gs-lot" data-lot="${r.lotId}">
+                <div class="gs-head" title="Tap to fold or open this lot">
+                    <svg class="gs-chev" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                     <span class="gs-emoji">${st.icon || '🌱'}</span>
                     <span class="grow min-w-0">
                         <span class="gs-lotname">${esc(r.lotName)}</span>
-                        <span class="gs-day block">${esc(st.cropLabel)} · ${r.counter} ${r.day}</span>
+                        <span class="gs-day block">${esc(st.cropLabel)} · ${r.counter} ${r.day}<span class="gs-fold-stage"> · ${esc(st.label)}</span></span>
                     </span>
                 </div>
+                <div class="gs-fold"><div class="gs-fold-inner">
                 <div class="gs-body">
                     <div class="gs-now">${esc(st.label)}</div>
                     <div class="gs-what">${esc(st.what)}</div>
@@ -446,6 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         : 'The last stage — harvest window.'}</div>
                     <div class="gs-steps">${steps}</div>
                 </div>
+                </div></div>
             </div>`;
         }).join('') + (quiet.length ? `<div class="gs-quiet"><b>Not readable yet</b>${quiet.map((q) => `
             <span>${esc(q.name)} — ${q.crop ? 'no day zero yet' : 'no crop set'}</span>`).join('')}</div>` : '')
@@ -453,8 +456,61 @@ document.addEventListener('DOMContentLoaded', () => {
         : `<p class="gs-none">No lot here has a crop set, or the count has not started yet.
             Set the crop on a lot in the Lots module and give it a day zero.</p>`;
 
+        gsApplyFolds();
+        $id('gsFoldAll')?.classList.toggle('hidden', !rows.length);
         openSheet('growthStageSheet');
     }
+
+    /* The lots fold here exactly as they do in the Growth Stages module —
+       same accordion, same remembered set per schedule, so a lot folded in
+       one place arrives folded in the other. */
+    const GS_FOLD_KEY = 'growthFolded:' + SCHEDULE_ID;
+    const gsFolded = () => {
+        try { return new Set(JSON.parse(localStorage.getItem(GS_FOLD_KEY) || '[]')); } catch (_) { return new Set(); }
+    };
+    const gsSaveFolded = (set) => { try { localStorage.setItem(GS_FOLD_KEY, JSON.stringify([...set])); } catch (_) { /* private mode */ } };
+    const gsLots = () => Array.from(document.querySelectorAll('#growthStageList .gs-lot[data-lot]'));
+    function gsSayBtn() {
+        const b = $id('gsFoldAll');
+        if (b) b.textContent = gsLots().some((c) => !c.classList.contains('is-folded')) ? 'Collapse all' : 'Expand all';
+    }
+    function gsApplyFolds() {
+        const box = $id('growthStageList');
+        if (!box) return;
+        const folded = gsFolded();
+        // Restoring is not a change — no wave of closing animations.
+        box.classList.add('no-fold-anim');
+        gsLots().forEach((c) => c.classList.toggle('is-folded', folded.has(c.getAttribute('data-lot'))));
+        void box.offsetWidth;
+        requestAnimationFrame(() => box.classList.remove('no-fold-anim'));
+        gsSayBtn();
+    }
+    document.addEventListener('click', (e) => {
+        const head = e.target.closest('#growthStageList .gs-head');
+        if (head) {
+            const lot = head.closest('.gs-lot[data-lot]');
+            if (!lot) return;
+            const set = gsFolded();
+            const id = lot.getAttribute('data-lot');
+            if (lot.classList.toggle('is-folded')) set.add(id);
+            else set.delete(id);
+            gsSaveFolded(set);
+            gsSayBtn();
+            return;
+        }
+        if (e.target.closest('#gsFoldAll')) {
+            const fold = gsLots().some((c) => !c.classList.contains('is-folded'));
+            const set = gsFolded();
+            gsLots().forEach((c) => {
+                c.classList.toggle('is-folded', fold);
+                const id = c.getAttribute('data-lot');
+                if (fold) set.add(id);
+                else set.delete(id);
+            });
+            gsSaveFolded(set);
+            gsSayBtn();
+        }
+    });
 
     // Tools → Growth stage: every lot, read today.
     //
