@@ -578,15 +578,45 @@ window.smQuillTouch = function smQuillTouch(quill) {
         e.preventDefault();
     });
 
+    const savedRange = () => {
+        const r = quill.selection && quill.selection.savedRange;
+        return r && r.index !== undefined ? r : null;
+    };
+
+    /**
+     * Put the toolbar's on/off marks back after the editor loses its caret.
+     *
+     * Quill decides what a button does from its own ql-active class: marked
+     * active it removes the format, unmarked it applies it. Those marks are
+     * derived from the current selection, and a tap on a phone takes the
+     * selection away before the click lands — so every button came back
+     * unmarked and bold could be switched on all day and never off. The
+     * selection is still remembered; the marks are simply re-derived from it.
+     */
+    const remark = () => {
+        const saved = savedRange();
+        if (saved && typeof toolbar.update === 'function') toolbar.update(saved);
+    };
+
+    quill.on('selection-change', (range) => {
+        // Only on the way out. Losing the caret should not lose the state of
+        // the buttons — visually either, or the toolbar flickers off at the
+        // exact moment you reach for it.
+        if (range) return;
+        setTimeout(() => { if (!quill.hasFocus()) remark(); }, 0);
+    });
+
     // Whatever the input device, a toolbar press should act on the words the
     // caret was last in — even if the editor has never been focused at all.
+    // Capture phase: this has to be settled before Quill's own handler reads
+    // the marks.
     bar.addEventListener('click', (e) => {
         if (!e.target.closest('button, .ql-picker-label, .ql-picker-item')) return;
         arm();
-        const saved = quill.selection && quill.selection.savedRange;
-        if (!saved || saved.index === undefined) {
+        if (!savedRange()) {
             quill.setSelection(Math.max(0, quill.getLength() - 1), 0, 'silent');
         }
+        if (!quill.hasFocus()) remark();
     }, true);
 
     if (toolbar && typeof toolbar.addHandler === 'function') {
