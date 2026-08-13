@@ -3912,14 +3912,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     </button>`).join('')
                 : '<p class="text-sm text-gray-400 py-2">No saved maps yet. Draw one in the Maps module and save it, then it can be attached here.</p>';
             list.querySelectorAll('[data-map]').forEach((btn) => {
-                btn.addEventListener('click', async () => {
+                btn.addEventListener('click', () => {
                     const save = saves.find((s) => String(s.id) === btn.getAttribute('data-map'));
                     if (!save) return;
                     closeSheet('dayMapPickSheet');
-                    try {
-                        const entry = { type: 'map', path: save.imagePath, url: save.imageUrl };
-                        await saveDateNoteMedia(mapPickDate, _dateNoteContentFor(mapPickDate), _dateNoteMediaFor(mapPickDate).concat([entry]));
-                    } catch (err) { toast(err.message || 'Could not attach that map.', 'error'); }
+                    // The same road a fresh drawing takes: the editor opens
+                    // with the map already attached and asks for the note's
+                    // name and words — instead of the map landing silently in
+                    // the day note to be explained in a later edit.
+                    const entry = {
+                        type: 'map', path: save.imagePath, url: save.imageUrl,
+                        mapUrl: MAPS_URL + '&save=' + save.id,
+                    };
+                    setTimeout(() => newInlineNoteWith(mapPickDate, [entry], save.title || 'Map'), 260);
                 });
             });
         } catch (err) {
