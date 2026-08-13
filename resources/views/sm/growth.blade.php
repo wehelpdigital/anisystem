@@ -32,7 +32,25 @@
     .gr-card { border: 1px solid var(--color-gray-200); border-radius: 1rem; overflow: hidden;
         background: var(--color-white); margin-bottom: .9rem; }
     .gr-top { display: flex; align-items: center; gap: .7rem; padding: .8rem .9rem;
-        background: linear-gradient(135deg, #f3f8ec, #e4efd4); }
+        background: linear-gradient(135deg, #f3f8ec, #e4efd4); cursor: pointer; user-select: none; }
+    /* Accordion, the same one the activities board uses: a lot folds down to
+       its header, the chevron flags state, and the body is a 1fr→0fr grid
+       row so height animates without knowing the content size. */
+    .gr-chev { width: 1rem; height: 1rem; flex-shrink: 0; color: #6b9f3d; transition: transform .18s ease; }
+    .gr-card:not(.is-folded) .gr-chev { transform: rotate(90deg); }
+    .gr-fold { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+    .gr-fold-inner { overflow: hidden; min-height: 0; }
+    .gr-card.is-folded .gr-fold { grid-template-rows: 0fr; }
+    /* Folded, the header answers for the body: the stage takes the counter
+       explainer's line, so a folded page reads lot | stage | day. */
+    .gr-fold-stage { display: none; font-size: .72rem; font-weight: 700; color: var(--color-gray-500); margin-top: .1rem; }
+    .gr-card.is-folded .gr-mode { display: none; }
+    .gr-card.is-folded .gr-fold-stage { display: block; }
+    /* Restoring the remembered folds on load applies instantly. */
+    #grCards.no-fold-anim .gr-fold, #grCards.no-fold-anim .gr-chev { transition: none; }
+    @media (prefers-reduced-motion: reduce) { .gr-fold, .gr-chev { transition: none; } }
+    .gr-foldall { margin-left: auto; }
+    html.dark .gr-chev { color: #86b556; }
     .gr-emoji { font-size: 1.7rem; line-height: 1; }
     .gr-lot { font-size: .98rem; font-weight: 800; color: var(--color-gray-900); }
     .gr-mode { display: block; font-size: .68rem; color: var(--color-gray-400); margin-top: .1rem; }
@@ -107,11 +125,16 @@
     @if (! $on->isToday())
         <a class="btn btn-white btn-sm" href="{{ route('sm.growth', ['id' => $schedule->id]) }}">Back to today</a>
     @endif
+    @if (count($rows))
+        <button type="button" id="grFoldAll" class="btn btn-white btn-sm gr-foldall">Collapse all</button>
+    @endif
 </form>
 
+<div id="grCards">
 @forelse ($rows as $r)
-    <div class="gr-card">
-        <div class="gr-top">
+    <div class="gr-card" data-lot="{{ $r['lot']->id }}">
+        <div class="gr-top" title="Tap to fold or open this lot">
+            <svg class="gr-chev" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             <span class="gr-emoji">{{ $r['icon'] }}</span>
             <span class="min-w-0">
                 <span class="gr-lot block">{{ $r['lot']->lotName }}</span>
@@ -119,6 +142,8 @@
                 {{-- Which ruler this lot is read against, because the same crop
                      on the next block may be read against another one. --}}
                 <span class="gr-mode">{{ \App\Http\Controllers\Manager\GrowthStageController::counterSays($r['lot']->dayType) }}</span>
+                {{-- Folded, the stage stands in for the explainer above. --}}
+                <span class="gr-fold-stage">{{ $r['blocked'] ? 'Not readable yet' : ($r['stage']['label'] ?? '') }}</span>
             </span>
             @if ($r['age'])
                 <span class="gr-age">
@@ -128,6 +153,7 @@
             @endif
         </div>
 
+        <div class="gr-fold"><div class="gr-fold-inner">
         <div class="gr-body">
             @if ($r['blocked'])
                 <p class="gr-blocked">{{ $r['blocked'] }}</p>
@@ -181,6 +207,7 @@
                 @endif
             @endif
         </div>
+        </div></div>
     </div>
 @empty
     <div class="card card-body text-center text-gray-500 py-10">
@@ -189,6 +216,7 @@
         <a class="btn btn-primary mt-4 inline-flex" href="{{ route('sm.lots', ['id' => $schedule->id]) }}">Open Lots</a>
     </div>
 @endforelse
+</div>
 
 @if (count($rows))
     {{-- Said properly, and where it cannot be missed: a stage read off a
@@ -201,4 +229,58 @@
         <p>These stages are counted from the calendar, not from the plant. A crop runs late or early with the weather it gets — a cold spell, a drought, flooding, a typhoon, pest damage or a hungry field all shift it, and so do the variety and how it was established. Walk the field and believe what you see there over what this page says.</p>
     </div>
 @endif
+
+<script>
+    /* The lots fold like the board's days do, and the set of folded lots is
+       remembered per schedule — this module re-fetches on every open (the
+       shell marks it fresh), so the memory has to live in the browser. */
+    (() => {
+        const KEY = 'growthFolded:' + @json($schedule->id);
+        const cards = document.getElementById('grCards');
+        const btn = document.getElementById('grFoldAll');
+        if (!cards) return;
+        const all = () => Array.from(cards.querySelectorAll('.gr-card[data-lot]'));
+        const folded = new Set((() => {
+            try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (_) { return []; }
+        })());
+        const save = () => { try { localStorage.setItem(KEY, JSON.stringify([...folded])); } catch (_) { /* private mode */ } };
+        const sayBtn = () => {
+            if (!btn) return;
+            btn.textContent = all().some((c) => !c.classList.contains('is-folded')) ? 'Collapse all' : 'Expand all';
+        };
+
+        // Apply the remembered folds instantly — restoring is not a change,
+        // and a wave of closing animations on load reads as one.
+        cards.classList.add('no-fold-anim');
+        all().forEach((c) => c.classList.toggle('is-folded', folded.has(c.getAttribute('data-lot'))));
+        void cards.offsetWidth;
+        requestAnimationFrame(() => cards.classList.remove('no-fold-anim'));
+        sayBtn();
+
+        cards.addEventListener('click', (e) => {
+            const top = e.target.closest('.gr-top');
+            const card = top && top.closest('.gr-card[data-lot]');
+            if (!card) return;
+            const id = card.getAttribute('data-lot');
+            if (card.classList.toggle('is-folded')) folded.add(id);
+            else folded.delete(id);
+            save();
+            sayBtn();
+        });
+
+        btn?.addEventListener('click', () => {
+            // If anything is open, the button means "close everything";
+            // only a fully folded page flips it to mean the opposite.
+            const fold = all().some((c) => !c.classList.contains('is-folded'));
+            all().forEach((c) => {
+                c.classList.toggle('is-folded', fold);
+                const id = c.getAttribute('data-lot');
+                if (fold) folded.add(id);
+                else folded.delete(id);
+            });
+            save();
+            sayBtn();
+        });
+    })();
+</script>
 @endsection
