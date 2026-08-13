@@ -11,9 +11,13 @@
         'cancelUrl' => route('sm.index'),
         // The crop moved to the lot, where it belongs, so the wizard has no
         // list of crops to offer and no lots to offer them for.
+        // The same three a lot can be set to later. A field is established
+        // in one of three ways and each is counted differently; asking for two
+        // meant direct-seeded fields were read against a transplanted calendar.
         'dayTypes' => [
-            ['value' => 'DAP', 'label' => 'DAP — Days After Planting (one count)'],
-            ['value' => 'DAS', 'label' => 'DAS / DAT — Seeded, then Transplanted'],
+            ['value' => 'DAT', 'label' => 'DAS → DAT — sown, then transplanted'],
+            ['value' => 'DAS', 'label' => 'DAS only — direct seeded (DSR)'],
+            ['value' => 'DAP', 'label' => 'DAP — days after planting'],
         ],
     ];
 @endphp
@@ -156,7 +160,7 @@
             steps: [{ label: 'Details' }],
             form: {
                 title: '', description: '',
-                dayType: 'DAS',
+                dayType: 'DAT',
             },
 
             get canNext() {

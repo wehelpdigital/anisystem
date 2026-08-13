@@ -485,6 +485,66 @@ window.SM_RICH_TOOLBAR = [
     ['clean'],
 ];
 
+/**
+ * A small link dialog of our own.
+ *
+ * Quill's link button opens a tooltip positioned inside the editor's own
+ * container. Inside a bottom sheet that container scrolls, so the tooltip
+ * lands off-screen or under an edge and the button looks dead. This one is
+ * fixed to the viewport, so there is nothing to clip it.
+ */
+window.smLinkPrompt = function smLinkPrompt(current) {
+    return new Promise((resolve) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'sm-linkbox';
+        wrap.innerHTML = `
+            <div class="sm-linkbox-card" role="dialog" aria-modal="true" aria-label="Link address">
+                <label class="sm-linkbox-lbl" for="smLinkUrl">Link address</label>
+                <input id="smLinkUrl" type="url" inputmode="url" autocomplete="off"
+                       spellcheck="false" placeholder="https://example.com">
+                <div class="sm-linkbox-foot">
+                    ${current ? '<button type="button" data-lk="remove">Remove link</button>' : ''}
+                    <button type="button" data-lk="cancel">Cancel</button>
+                    <button type="button" data-lk="ok" class="is-go">Add link</button>
+                </div>
+            </div>`;
+        document.body.appendChild(wrap);
+        const input = wrap.querySelector('#smLinkUrl');
+        input.value = current || '';
+        const done = (val) => { wrap.remove(); resolve(val); };
+        wrap.addEventListener('click', (e) => {
+            if (e.target === wrap) return done(undefined);
+            const b = e.target.closest('[data-lk]');
+            if (!b) return;
+            const act = b.getAttribute('data-lk');
+            if (act === 'ok') return done(input.value.trim());
+            if (act === 'remove') return done(null);
+            done(undefined);
+        });
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { e.preventDefault(); done(input.value.trim()); }
+            if (e.key === 'Escape') { e.preventDefault(); done(undefined); }
+        });
+        setTimeout(() => { input.focus(); input.select(); }, 30);
+    });
+};
+
+/**
+ * Make a Quill toolbar survive a touchscreen.
+ *
+ * The first attempt called preventDefault on touchstart to stop the editor
+ * losing focus. On a phone that also cancels the click the browser would have
+ * sent afterwards — so the format never applied and the only thing that
+ * happened was the keyboard sliding up. Hence: hold focus for a mouse, where
+ * cancelling mousedown is safe and click still fires, and for a touch let the
+ * tap through untouched. Quill remembers the last selection and restores it
+ * itself when a toolbar button asks to format, so nothing is lost by letting
+ * the editor blur for the length of a tap.
+ *
+ * Two handlers are replaced outright: link, which needs a dialog that a
+ * scrolling sheet cannot clip, and clean, which did nothing visible when
+ * nothing was selected.
+ */
 window.smQuillTouch = function smQuillTouch(quill) {
     if (!quill) return quill;
     const toolbar = quill.getModule && quill.getModule('toolbar');
@@ -493,32 +553,81 @@ window.smQuillTouch = function smQuillTouch(quill) {
     bar.dataset.smTouchFixed = '1';
 
     const root = quill.root;
+    let lastTouch = 0;
 
-    const keepFocus = (e) => {
-        const hit = e.target.closest('button, .ql-picker-label');
-        if (!hit) return;
-        // A picker label must keep its default so the menu opens; everything
-        // else only needs its click, not the focus change that comes with it.
-        if (hit.classList.contains('ql-picker-label')) return;
-        e.preventDefault();
-
-        // Read-only until first touch (see the callers): a toolbar tap is just
-        // as clear an intention to write as a tap on the text.
+    // Read-only until first touch (see the callers): a toolbar tap is just as
+    // clear an intention to write as a tap on the text itself.
+    const arm = () => {
         if (root.getAttribute('contenteditable') === 'false') {
             root.setAttribute('contenteditable', 'true');
         }
-        // Put the caret back where it was — at the end if it was never placed,
-        // so a first tap on Bold starts bold text rather than doing nothing.
-        if (!quill.hasFocus()) {
-            const saved = quill.selection && quill.selection.savedRange;
-            quill.focus();
-            if (saved && saved.length !== undefined) quill.setSelection(saved.index, saved.length, 'silent');
-            else quill.setSelection(quill.getLength(), 0, 'silent');
-        }
     };
 
-    bar.addEventListener('mousedown', keepFocus);
-    bar.addEventListener('touchstart', keepFocus, { passive: false });
+    bar.addEventListener('touchstart', () => { lastTouch = Date.now(); arm(); }, { passive: true });
+
+    bar.addEventListener('mousedown', (e) => {
+        // The compatibility mousedown a tap fires afterwards must be left
+        // alone; cancelling it takes the click with it on some browsers.
+        if (Date.now() - lastTouch < 800) return;
+        const hit = e.target.closest('button, .ql-picker-label');
+        if (!hit) return;
+        arm();
+        // A picker label keeps its default so its menu opens; a button only
+        // needs its click, not the focus change that comes with it.
+        if (hit.classList.contains('ql-picker-label')) return;
+        e.preventDefault();
+    });
+
+    // Whatever the input device, a toolbar press should act on the words the
+    // caret was last in — even if the editor has never been focused at all.
+    bar.addEventListener('click', (e) => {
+        if (!e.target.closest('button, .ql-picker-label, .ql-picker-item')) return;
+        arm();
+        const saved = quill.selection && quill.selection.savedRange;
+        if (!saved || saved.index === undefined) {
+            quill.setSelection(Math.max(0, quill.getLength() - 1), 0, 'silent');
+        }
+    }, true);
+
+    if (toolbar && typeof toolbar.addHandler === 'function') {
+        toolbar.addHandler('link', async () => {
+            const range = quill.getSelection(true) || { index: quill.getLength() - 1, length: 0 };
+            const current = quill.getFormat(range).link || '';
+            const answer = await window.smLinkPrompt(current);
+            if (answer === undefined) return;              // cancelled
+            if (answer === null || answer === '') {        // remove
+                quill.format('link', false, 'user');
+                return;
+            }
+            // A bare domain is still a link; the browser needs the scheme.
+            const url = /^(https?:|mailto:|tel:)/i.test(answer) ? answer : 'https://' + answer;
+            if (range.length === 0) {
+                // Nothing selected: write the address and link that, rather
+                // than silently doing nothing.
+                quill.insertText(range.index, answer, { link: url }, 'user');
+                quill.setSelection(range.index + answer.length, 0, 'silent');
+            } else {
+                quill.formatText(range.index, range.length, 'link', url, 'user');
+            }
+        });
+
+        toolbar.addHandler('clean', () => {
+            const range = quill.getSelection(true);
+            if (!range) return;
+            if (range.length > 0) {
+                quill.removeFormat(range.index, range.length, 'user');
+                return;
+            }
+            // Nothing selected — clear the line the caret is in. Clearing
+            // "from here on", which is what Quill does by default, looks
+            // exactly like a button that does not work.
+            const [line, offset] = quill.getLine(range.index);
+            if (!line) return;
+            const start = range.index - offset;
+            quill.removeFormat(start, line.length(), 'user');
+            quill.setSelection(range.index, 0, 'silent');
+        });
+    }
 
     return quill;
 };

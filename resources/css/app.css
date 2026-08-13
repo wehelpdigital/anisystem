@@ -739,7 +739,23 @@ html.dark .rich-editor .ql-toolbar.ql-snow { background: var(--color-gray-100); 
 html .ql-toolbar.ql-snow {
     border-top-left-radius: .7rem; border-top-right-radius: .7rem;
     border-color: var(--color-gray-200); background: var(--color-gray-50);
-    padding: .4rem .5rem;
+    padding: .35rem .4rem;
+    /* Quill spaces its groups with a 15px margin and lets them wrap as blocks,
+       which pushed the list buttons onto a second line with a third of the row
+       still empty. Flex with a small gap packs them until the row is genuinely
+       full. */
+    display: flex; flex-wrap: wrap; align-items: center; gap: .1rem;
+}
+html .ql-toolbar.ql-snow .ql-formats {
+    display: inline-flex; align-items: center; margin: 0 .3rem 0 0;
+}
+html .ql-toolbar.ql-snow .ql-formats:last-child { margin-right: 0; }
+@media (max-width: 480px) {
+    /* Phone: tighter still, and a narrower heading menu, so every tool fits
+       on one row. */
+    html .ql-toolbar.ql-snow .ql-formats { margin-right: .12rem; }
+    html .ql-snow.ql-toolbar button, html .ql-snow .ql-toolbar button { width: 1.9rem; height: 1.9rem; }
+    html .ql-snow .ql-picker.ql-header { width: 4.9rem; font-size: .78rem; }
 }
 html .ql-container.ql-snow {
     border-bottom-left-radius: .7rem; border-bottom-right-radius: .7rem;
@@ -772,6 +788,48 @@ html.dark .ql-snow.ql-toolbar button:hover, html.dark .ql-snow.ql-toolbar button
 }
 html.dark .ql-snow.ql-toolbar button:hover .ql-stroke, html.dark .ql-snow.ql-toolbar button.ql-active .ql-stroke { stroke: #8fd45a; }
 html.dark .ql-snow.ql-toolbar button:hover .ql-fill, html.dark .ql-snow.ql-toolbar button.ql-active .ql-fill { fill: #8fd45a; }
+
+/* ------------------------------------------------------------------ */
+/* The link dialog a Quill toolbar opens (see smLinkPrompt)              */
+/* ------------------------------------------------------------------ */
+.sm-linkbox { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center;
+    justify-content: center; padding: 1rem; background: rgb(17 24 39 / .55); }
+.sm-linkbox-card { width: min(24rem, 100%); background: var(--color-white); border-radius: 1rem;
+    padding: 1rem; box-shadow: 0 20px 50px rgb(0 0 0 / .3); }
+.sm-linkbox-lbl { display: block; font-size: .8rem; font-weight: 700; color: var(--color-gray-700); margin-bottom: .35rem; }
+.sm-linkbox input { width: 100%; border: 1px solid var(--color-gray-300); border-radius: .6rem;
+    padding: .55rem .7rem; font-size: .95rem; color: var(--color-gray-900); background: var(--color-white); }
+.sm-linkbox input:focus { outline: 2px solid #6b9f3d; outline-offset: 1px; }
+.sm-linkbox-foot { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .4rem; margin-top: .8rem; }
+.sm-linkbox-foot button { border-radius: .6rem; padding: .45rem .8rem; font-size: .82rem; font-weight: 700;
+    border: 1px solid var(--color-gray-200); background: var(--color-white); color: var(--color-gray-700); cursor: pointer; }
+.sm-linkbox-foot button.is-go { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+.sm-linkbox-foot button[data-lk="remove"] { margin-right: auto; color: #b91c1c; border-color: #fecaca; }
+html.dark .sm-linkbox-card { background: #151b12; }
+html.dark .sm-linkbox-lbl { color: #cdd8c0; }
+html.dark .sm-linkbox input { background: #1c2416; border-color: #2b3a1c; color: #e8efe1; }
+html.dark .sm-linkbox-foot button { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
+
+/* ------------------------------------------------------------------ */
+/* Floating buttons get out of the way of anything modal                 */
+/* ------------------------------------------------------------------ */
+/* The AI bubble (z 60) and the team bubble (61) sit in the same corner a
+   sheet rises into. Raising the sheet above them still left a button
+   glowing through a dimmed backdrop, over the text being read. They leave
+   instead, and come back when the sheet closes. */
+html.overlay-open .ai-float,
+html.overlay-open .team-float,
+html.overlay-open .ga-bar {
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity .28s cubic-bezier(.22,1,.36,1), visibility 0s linear .28s;
+}
+.ai-float, .team-float, .ga-bar {
+    transition: opacity .28s cubic-bezier(.22,1,.36,1), visibility 0s;
+}
+@media (prefers-reduced-motion: reduce) {
+    html.overlay-open .ai-float, html.overlay-open .team-float, html.overlay-open .ga-bar,
+    .ai-float, .team-float, .ga-bar { transition: none; }
+}
 
 /* Rendered rich text (rules, previews) — sensible prose defaults.    */
 .rich-text > :first-child { margin-top: 0; }

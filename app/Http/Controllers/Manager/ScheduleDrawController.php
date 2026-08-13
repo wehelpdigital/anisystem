@@ -56,6 +56,9 @@ class ScheduleDrawController extends BaseScheduleController
                     'team' => $team,
                     'url' => \App\Support\MediaStore::url($path),
                     'when' => $note->updated_at?->timezone('Asia/Manila')->format('M j, Y'),
+                    // Every drawing lives in a note; this is the way back to
+                    // the words that say why it was drawn.
+                    'noteHref' => route('sm.notes', ['id' => $schedule->id, 'open' => $note->id]),
                 ];
             }
         }

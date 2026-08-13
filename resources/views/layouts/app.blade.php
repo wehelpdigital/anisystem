@@ -124,7 +124,13 @@
                     </button>
 
                     {{-- Notification bell --}}
-                    <div class="relative" x-data="notificationBell()" x-init="init()" @click.outside="open = false">
+                    {{-- While this is open the page's floating buttons step
+                         aside: the AI bubble and the team bubble both live in
+                         the bottom-right corner, which is exactly where the
+                         sheet arrives, and a button floating over a message
+                         you are trying to read is not a button anyone wants. --}}
+                    <div class="relative" x-data="notificationBell()" x-init="init()" @click.outside="open = false"
+                        x-effect="document.documentElement.classList.toggle('overlay-open', open)">
                         <button type="button" @click="toggle()"
                             class="relative flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full text-gray-500 hover:bg-gray-100 transition"
                             aria-label="Notifications">
@@ -201,6 +207,14 @@
                                 <p class="font-bold text-gray-900 text-sm truncate">{{ auth()->user()->full_name ?? '' }}</p>
                                 <p class="text-xs text-gray-500 truncate">{{ auth()->user()->email ?? '' }}</p>
                             </div>
+                            @if (\App\Support\UserHats::needsChoice(auth()->user()))
+                                {{-- The same question login asks, for when the
+                                     answer changes halfway through a day. --}}
+                                <a href="{{ route('account.choose') }}" class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
+                                    Switch account
+                                </a>
+                            @endif
                             <a href="{{ route('account.index') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">My Account</a>
                             <a href="{{ route('account.subscription') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">My Subscription</a>
                             {{-- The way to reach a person. It existed as a page

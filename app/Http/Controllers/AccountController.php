@@ -20,6 +20,53 @@ class AccountController extends Controller
     }
 
     /**
+     * Which hat, before the app opens.
+     *
+     * A person who farms their own land and also works two days a week on a
+     * neighbour's saw one of those two farms — whichever the app guessed —
+     * and had to find a switcher in the header to correct it. Asking once, on
+     * the way in, costs a tap and removes the guess.
+     */
+    public function choose(Request $request)
+    {
+        $hats = \App\Support\UserHats::for($request->user());
+
+        // Nothing to choose between: go where they were going.
+        if (count(array_filter($hats, fn ($h) => $h['kind'] !== 'admin')) < 2) {
+            return redirect()->intended(route('app.dashboard'));
+        }
+
+        return view('auth.choose', [
+            'hats' => $hats,
+            'user' => $request->user(),
+        ]);
+    }
+
+    /** Apply the chosen hat and open the app in it. */
+    public function chooseApply(Request $request)
+    {
+        $key = (string) $request->input('hat');
+        $hats = \App\Support\UserHats::for($request->user());
+        $hat = collect($hats)->firstWhere('key', $key);
+
+        if (! $hat) {
+            return redirect()->route('account.choose');
+        }
+
+        if ($hat['kind'] === 'worker') {
+            $request->session()->put('activeBossId', $hat['bossId']);
+        } else {
+            $request->session()->forget('activeBossId');
+        }
+
+        // Asked and answered — the chooser does not appear again this session
+        // unless it is asked for by name.
+        $request->session()->put('hatChosen', $key);
+
+        return redirect()->route('app.dashboard');
+    }
+
+    /**
      * Switch which farm a worker is viewing (#25). bossId 0 = their own account.
      */
     public function switchFarm(Request $request)

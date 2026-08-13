@@ -21,7 +21,6 @@ class AsTutorialPage extends BaseModel
         'notes' => 'Notes',
         'maps' => 'Maps',
         'draw' => 'Draw',
-        'media' => 'Media Box',
         'growth' => 'Growth Stages',
         'gallery' => 'Gallery',
         'weather' => 'Weather',

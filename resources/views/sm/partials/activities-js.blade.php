@@ -41,9 +41,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let activityMode = 'task';   // 'task' | 'irrigation' — the add-activity sheet mode
     const LOT_NAMES = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->lotName]));
     const LOT_VARIETIES = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->variety]));
-    // Per-lot day-counter mode: 'DAP' (single count) or 'DAS' (DAS→DAT after transplant).
-    const LOT_DAY_TYPE = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => ($l->dayType ?: 'DAS')]));
-    const lotDayType = (lotId) => (LOT_DAY_TYPE[lotId] === 'DAP' ? 'DAP' : 'DAS');
+    // How each lot counts: 'DAT' sown-then-transplanted (DAS, then a fresh
+    // DAT count from the transplant date), 'DAS' direct seeded and never
+    // flipping, 'DAP' planted. The lot answers this, not the crop — the same
+    // rice is a different calendar depending on how the field was established.
+    const LOT_DAY_TYPE = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => ($l->dayType ?: 'DAT')]));
+    const lotDayType = (lotId) => {
+        const v = String(LOT_DAY_TYPE[lotId] || 'DAT').toUpperCase();
+        return (v === 'DAP' || v === 'DAS') ? v : 'DAT';
+    };
+    // What a lot's count is called while it is still before any transplant.
+    const lotBaseCounter = (lotId) => (lotDayType(lotId) === 'DAP' ? 'DAP' : 'DAS');
     const WORKER_NAMES = @json($schedule->workers->mapWithKeys(fn ($w) => [$w->id => $w->workerName]));
     // The half-day rate each worker is normally paid; a whole day is two of
     // them, and a custom amount on the activity overrides both.
@@ -258,10 +266,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!targetDate) return '';
         const b = parseLocalDate(targetDate);
         if (!b) return '';
-        const mode = lotDayType(lotId);   // 'DAP' or 'DAS'
-        // DAS/DAT lots flip to a fresh DAT counter on/after the transplant date.
-        // DAP lots stay a single count and ignore any transplant anchor.
-        if (mode === 'DAS') {
+        const mode = lotDayType(lotId);   // 'DAT' | 'DAS' | 'DAP'
+        // Only a sown-then-transplanted lot flips to a fresh DAT count. A
+        // direct-seeded lot keeps one count even if a transplant activity
+        // exists on the board, and a planted lot never had one to flip.
+        if (mode === 'DAT') {
             const tp = LOT_TRANSPLANT_DATES[lotId];
             if (tp) {
                 const t = parseLocalDate(tp);
@@ -282,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = parseLocalDate(anchor);
         if (!a) return '';
         const delta = Math.round((b - a) / 86400000);
-        return ' · ' + mode + (delta > 0 ? '+' : '') + delta;
+        return ' · ' + lotBaseCounter(lotId) + (delta > 0 ? '+' : '') + delta;
     }
 
     /* ---- Growth stages ----------------------------------------------------
@@ -297,13 +306,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function lotDayNumberOn(lotId, dateStr) {
         const b = parseLocalDate(dateStr);
         if (!b) return null;
-        const crop = LOT_CROP[lotId];
-        const table = crop && CROP_STAGES[crop];
-        // A crop read from transplanting only counts that way once a lot has
-        // actually been transplanted; before that (or where it never is) the
-        // count runs from day zero, and the label has to say so — calling a
-        // DAS number "DAT" is how a stage gets read against the wrong ruler.
-        if (table && table.counter === 'DAT') {
+        // The lot says how it was established; the crop only says what the
+        // calendars are. A lot that was direct seeded is read against the
+        // direct-seeded table for the whole season even though the same crop
+        // transplants elsewhere on the farm.
+        if (lotDayType(lotId) === 'DAT') {
             const tp = LOT_TRANSPLANT_DATES[lotId];
             const t = tp ? parseLocalDate(tp) : null;
             if (t && b >= t) return { day: Math.round((b - t) / 86400000), counter: 'DAT' };
@@ -313,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!a) return null;
         const delta = Math.round((b - a) / 86400000);
         if (delta < 0) return null;   // before day zero there is no plant yet
-        return { day: delta, counter: lotDayType(lotId) };
+        return { day: delta, counter: lotBaseCounter(lotId) };
     }
 
     /**
@@ -404,7 +411,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const rows = dayStageRows(dateKey, group);
         const box = $id('growthStageList');
         if (!box) return;
-        $id('growthStageDate').textContent = prettyDateFull(dateKey);
+        const scope = group ? '' : ' · every lot';
+        $id('growthStageDate').textContent = prettyDateFull(dateKey) + scope;
+
+        // Lots with no crop or no day zero are named rather than dropped —
+        // "nothing here" is confusing when you know you own three lots.
+        const quiet = group ? [] : Object.keys(LOT_CROP).map(Number)
+            .filter((id) => !rows.some((r) => r.lotId === id))
+            .map((id) => ({ id, name: LOT_NAMES[id] || ('Lot #' + id), crop: LOT_CROP[id] }));
 
         box.innerHTML = rows.length ? rows.map((r) => {
             const st = r.stage;
@@ -433,22 +447,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="gs-steps">${steps}</div>
                 </div>
             </div>`;
-        }).join('') + '<p class="gs-foot">These stages are counted from the calendar, not from the plant. A crop runs late or early with the weather it gets — a cold spell, a drought, flooding, a typhoon, pest damage or a hungry field all shift it, and so do the variety and how it was established. Walk the field and believe what you see there over what this page says.</p>'
+        }).join('') + (quiet.length ? `<div class="gs-quiet"><b>Not readable yet</b>${quiet.map((q) => `
+            <span>${esc(q.name)} — ${q.crop ? 'no day zero yet' : 'no crop set'}</span>`).join('')}</div>` : '')
+        + '<p class="gs-foot">These stages are counted from the calendar, not from the plant. A crop runs late or early with the weather it gets — a cold spell, a drought, flooding, a typhoon, pest damage or a hungry field all shift it, and so do the variety and how it was established. Walk the field and believe what you see there over what this page says.</p>'
         : `<p class="gs-none">No lot here has a crop set, or the count has not started yet.
             Set the crop on a lot in the Lots module and give it a day zero.</p>`;
 
         openSheet('growthStageSheet');
     }
 
-    // Tools → Growth stage: today if the board has today, else its first day.
+    // Tools → Growth stage: every lot, read today.
+    //
+    // It used to hand over today's date-group, which scopes the answer to the
+    // lots that happen to have an activity on that day — a farm with three
+    // lots and one job today saw one lot and thought the other two had gone
+    // missing. Asking the tool is asking about the farm, so it answers for the
+    // whole farm, the way the Growth Stages module does. (A day header's own
+    // pill still answers for that day, which is the question it was asked.)
     $id('growthStageBtn')?.addEventListener('click', () => {
         const today = new Date();
         const key = today.getFullYear() + '-'
             + String(today.getMonth() + 1).padStart(2, '0') + '-'
             + String(today.getDate()).padStart(2, '0');
-        const group = $qs(`#activitiesList .date-group[data-date="${key}"]`)
-            || $qs('#activitiesList .date-group');
-        openDayStage(group ? (group.getAttribute('data-date') || key) : key, group);
+        openDayStage(key, null);
     });
 
     document.addEventListener('click', (e) => {

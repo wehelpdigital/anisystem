@@ -70,6 +70,10 @@
         /* Unlayered on purpose: `.hidden` from a utility layer loses to the
            card's own display, so a filtered-out note would stay on screen. */
         .note-card.is-filtered { display: none !important; }
+        /* The note something else sent you to. */
+        .note-card.is-asked { box-shadow: 0 0 0 3px #a8cc7e, 0 14px 30px -20px rgb(0 0 0 / .5); }
+        .note-card { transition: box-shadow .28s cubic-bezier(.22,1,.36,1); }
+        @media (prefers-reduced-motion: reduce) { .note-card { transition: none; } }
         @media (prefers-reduced-motion: reduce) { #noteFoldAll .nfa-ico { transition: none; } }
 
         /* Upload progress — a big video takes real seconds, and silence reads
@@ -471,6 +475,21 @@ const __init = () => {
         } catch (_) { /* private mode: the page still works, it just forgets */ }
     }
     function cards() { return [...list.querySelectorAll('.note-card')]; }
+
+    /* A note asked for by name — ?open=<id> — from a drawing or a saved map
+       that wants to show the words explaining why it exists. Unfold it, put
+       it on screen and mark it for a second, so it is obvious which of forty
+       cards was meant. */
+    function openAsked() {
+        const want = new URLSearchParams(location.search).get('open');
+        if (!want) return;
+        const card = list.querySelector(`.note-card[data-id="${CSS.escape(want)}"]`);
+        if (!card) return;
+        card.classList.remove('is-collapsed');
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card.classList.add('is-asked');
+        setTimeout(() => card.classList.remove('is-asked'), 2600);
+    }
     function applyFold() {
         cards().forEach((c) => {
             const id = String(c.dataset.id);
@@ -745,6 +764,10 @@ const __init = () => {
             } catch (err) { toast(err.message, 'error'); }
         }
     });
+
+    // Last, once the list is real: a drawing or a map may have sent us here
+    // to look at one particular note.
+    openAsked();
 };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', __init, { once: true });
     else __init();

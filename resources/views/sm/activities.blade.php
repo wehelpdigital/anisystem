@@ -259,6 +259,11 @@
 
         /* The sheet: one card per lot, its stage, and the whole run of stages
            with where today falls in it. */
+        .gs-quiet { margin-top: .9rem; padding: .7rem .8rem; border-radius: .7rem;
+            background: var(--color-gray-50); border: 1px solid var(--color-gray-200); font-size: .78rem; color: var(--color-gray-600); }
+        .gs-quiet b { display: block; font-size: .68rem; text-transform: uppercase; letter-spacing: .05em; color: var(--color-gray-500); margin-bottom: .3rem; }
+        .gs-quiet span { display: block; padding: .1rem 0; }
+        html.dark .gs-quiet { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
         .gs-lot { border: 1px solid var(--color-gray-200); border-radius: .9rem; overflow: hidden; margin-bottom: .75rem; }
         .gs-head { display: flex; align-items: center; gap: .6rem; padding: .7rem .8rem;
             background: linear-gradient(135deg, #f3f8ec, #e4efd4); }
@@ -2397,7 +2402,9 @@
         notes:         { label: 'Notes',         url: @json(route('sm.notes',        ['id' => $schedule->id])) },
         maps:          { label: 'Maps',          url: @json(route('sm.maps',         ['id' => $schedule->id])) },
         draw:          { label: 'Draw',          url: @json(route('sm.draw',         ['id' => $schedule->id])) },
-        media:         { label: 'Media Box',     url: @json(route('sm.media',        ['id' => $schedule->id])) },
+        // Kept as an alias: 'media' was the Media Box, which is now the
+        // Gallery's first tab. Old links and bookmarks still land right.
+        media:         { label: 'Gallery',       url: @json(route('sm.gallery',      ['id' => $schedule->id])) },
         growth:        { label: 'Growth Stages', url: @json(route('sm.growth',       ['id' => $schedule->id])) },
         gallery:       { label: 'Gallery',       url: @json(route('sm.gallery',      ['id' => $schedule->id])) },
         weather:       { label: 'Weather',       url: @json(route('sm.weather.page', ['id' => $schedule->id])) },

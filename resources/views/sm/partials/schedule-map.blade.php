@@ -326,6 +326,8 @@
     html.dark .cmap-savesearch { background: #141a10; border-color: #2b3a1c; }
     html.dark .cmap-savesearch input { color: #e6eddd; }
     html.dark .cmap-tag { background: #1c2416; color: #a9b89b; }
+    .cmap-tag.is-note { background: #e4efd4; color: #3d6823; text-decoration: none; }
+    .cmap-tag.is-note:hover { background: #d3e7bb; }
     .cmap-saves-empty { font-size: .8rem; color: var(--color-gray-500); text-align: center; padding: 1.2rem 0; }
     /* Select-tool action bar: floats over the map while a shape is held. */
     .cmap-editbar { position: absolute; left: 50%; bottom: .85rem; transform: translateX(-50%) translateY(0);
@@ -1271,7 +1273,7 @@
                     <span class="cmap-tags">
                         <span class="cmap-tag ${sv.source === 'team' ? 'is-team' : 'is-solo'}">${sv.source === 'team' ? 'Team map' : 'My map'}</span>
                         <span class="cmap-tag">${esc(shapes)}</span>
-
+                        ${sv.noteHref ? `<a class="cmap-tag is-note" href="${esc(sv.noteHref)}" title="Open the note this map is in">In a note</a>` : ''}
                     </span>
                     <span class="cmap-saverow-s">${esc(sv.by)} · ${esc(sv.when)}</span>
                 </span>`;

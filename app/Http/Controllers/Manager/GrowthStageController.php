@@ -76,12 +76,23 @@ class GrowthStageController extends BaseScheduleController
         return $rows;
     }
 
-    /** @return array{day:int, counter:string}|null */
+    /**
+     * How old the crop in this lot is on a date, in the count the lot keeps.
+     *
+     * The lot says how it was established, and that is the whole answer: a
+     * DAT lot flips to a fresh count on its transplant date and reads against
+     * the transplanted calendar from then on; a DAS lot was direct seeded and
+     * never flips, whatever dates it carries; a DAP lot counts from planting.
+     * Reading a direct-seeded field against a transplanted calendar is how a
+     * stage ends up a fortnight out.
+     *
+     * @return array{day:int, counter:string}|null
+     */
     private function ageOf($lot, ?string $crop, \Carbon\Carbon $on): ?array
     {
-        // A crop read from transplanting only counts that way once the lot has
-        // actually been transplanted; before that the count runs from day zero.
-        if ($crop && CropStages::counter($crop) === 'DAT' && $lot->transplantDate) {
+        $mode = strtoupper((string) ($lot->dayType ?: 'DAT'));
+
+        if ($mode === 'DAT' && $lot->transplantDate) {
             $t = $lot->transplantDate->copy()->startOfDay();
             if ($on->copy()->startOfDay()->gte($t)) {
                 return ['day' => $t->diffInDays($on->copy()->startOfDay()), 'counter' => 'DAT'];
@@ -94,8 +105,22 @@ class GrowthStageController extends BaseScheduleController
 
         $z = $lot->dayZeroDate->copy()->startOfDay();
         $day = $z->diffInDays($on->copy()->startOfDay(), false);
+        // Before the transplant a two-phase lot is still counting from sowing,
+        // so it is DAS — calling that number DAT would read it against the
+        // wrong table.
+        $counter = $mode === 'DAP' ? 'DAP' : 'DAS';
 
-        return $day < 0 ? null : ['day' => (int) $day, 'counter' => $lot->dayType ?: 'DAS'];
+        return $day < 0 ? null : ['day' => (int) $day, 'counter' => $counter];
+    }
+
+    /** How this lot's counter works, said in a phrase. */
+    public static function counterSays(?string $mode): string
+    {
+        return match (strtoupper((string) ($mode ?: 'DAT'))) {
+            'DAS' => 'Direct seeded — one count from sowing',
+            'DAP' => 'Counted from planting',
+            default => 'Sown, then transplanted — DAS until the transplant, DAT after',
+        };
     }
 
     private function whyBlocked($lot, ?string $crop, ?array $age): ?string

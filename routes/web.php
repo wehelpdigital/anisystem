@@ -110,6 +110,9 @@ Route::middleware('auth')->group(function () {
     | Account (profile, password, subscription) — reachable even when locked
     |----------------------------------------------------------------------
     */
+    // Which hat: shown after login when an account is more than one thing.
+    Route::get('/account/choose', [App\Http\Controllers\AccountController::class, 'choose'])->name('account.choose');
+    Route::post('/account/choose', [App\Http\Controllers\AccountController::class, 'chooseApply'])->name('account.choose.apply');
     Route::get('/account', [App\Http\Controllers\AccountController::class, 'index'])->name('account.index');
     Route::post('/app/worker-switch-farm', [App\Http\Controllers\AccountController::class, 'switchFarm'])->name('worker.switch');
     Route::put('/account/profile', [App\Http\Controllers\AccountController::class, 'updateProfile'])->name('account.profile.update');

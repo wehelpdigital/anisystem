@@ -24,6 +24,8 @@
         .dr-meta { padding: .5rem .6rem .6rem; display: flex; flex-direction: column; gap: .3rem; }
         .dr-name { font-size: .8rem; font-weight: 700; color: var(--color-gray-900); line-height: 1.25;
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .dr-innote { display: inline-flex; align-items: center; gap: .2rem; text-decoration: none; }
+        .dr-innote:hover { background: #e4efd4; color: #3d6823; }
         .dr-note { font-size: .7rem; line-height: 1.35; color: var(--color-gray-500);
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .dr-when { font-size: .66rem; color: var(--color-gray-400); }
@@ -110,6 +112,14 @@
                 tags.push(d.editable
                     ? '<span class="badge badge-green">Editable</span>'
                     : '<span class="badge badge-gray">Picture</span>');
+                // Which note this belongs to. A drawing is never loose — it is
+                // an attachment on a note, and the note is where the reason
+                // for it is written down.
+                if (d.noteHref) {
+                    tags.push(`<a class="badge badge-gray dr-innote" href="${esc(d.noteHref)}" title="Open the note this drawing is in">`
+                        + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:.7rem;height:.7rem"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.6L19 9.4V19a2 2 0 01-2 2z"/></svg>'
+                        + 'In a note</a>');
+                }
                 const thumb = d.url
                     ? `<img src="${esc(d.url)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')"`
                         + ` onerror="this.closest('.dr-thumb')?.classList.add('is-gone'); this.remove();">`

@@ -31,9 +31,19 @@
     @media (max-width: 639px) { .qc-modal { height: 100dvh; max-height: 100dvh; border-radius: 0; } }
     @media (min-width: 640px) { .qc-modal { border-radius: 1rem; } }
     @keyframes qc-rise { from { transform: translateY(24px); opacity: .6; } to { transform: none; opacity: 1; } }
-    .qc-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: 1rem 1.25rem; border-bottom: 1px solid var(--color-gray-200); }
-    .qc-body { padding: 1.25rem; overflow-y: auto; }
-    .qc-foot { display: flex; gap: .5rem; padding: 1rem 1.25rem; border-top: 1px solid var(--color-gray-200); }
+    .qc-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: 1rem 1.25rem; border-bottom: 1px solid var(--color-gray-200); flex: none; }
+    /* A step is head + body + foot inside a column that is exactly as tall as
+       the screen. Without min-height:0 the body refuses to shrink below its
+       content, which pushed Confirm off the bottom with nothing to scroll —
+       the details step had grown a title and an album picker and no longer
+       fitted. */
+    .qc-modal > [data-qc-step] { display: flex; flex-direction: column; min-height: 0; flex: 1 1 auto; }
+    .qc-modal > [data-qc-step].hidden { display: none; }
+    .qc-body { padding: 1.25rem; overflow-y: auto; overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch; flex: 1 1 auto; min-height: 0; }
+    .qc-foot { display: flex; gap: .5rem; padding: 1rem 1.25rem; border-top: 1px solid var(--color-gray-200);
+        flex: none; background: var(--color-white); padding-bottom: calc(1rem + env(safe-area-inset-bottom)); }
+    html.dark .qc-foot { background: var(--color-white); }
     .qc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
     .qc-thumb { position: relative; aspect-ratio: 1; border-radius: .6rem; overflow: hidden; background: var(--color-gray-100); }
     .qc-thumb img { width: 100%; height: 100%; object-fit: cover; }
@@ -73,7 +83,7 @@
             <div class="qc-foot">
                 <button type="button" class="btn btn-ghost" data-qc-cancel>Cancel</button>
                 <button type="button" id="qcShutter" class="qc-shutter mx-auto" aria-label="Take photo"><span></span></button>
-                <button type="button" id="qcUseFile" class="btn btn-ghost ml-auto" title="Choose a file instead">Upload</button>
+                <button type="button" id="qcUseFile" class="btn btn-ghost ml-auto" title="Choose photos already on this device">Upload</button>
             </div>
         </div>
 
@@ -83,11 +93,21 @@
                 <p class="text-sm text-gray-600 mb-3">Snap your crop, a pest, the soil — anything worth remembering. Add as many as you like.</p>
                 <div class="qc-grid" id="qcPreviews">
                     <button type="button" class="qc-add" id="qcAddPhoto">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
-                        Add photo
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        Take photo
+                    </button>
+                    {{-- Photos worth keeping are often already on the phone. --}}
+                    <button type="button" class="qc-add" id="qcPickPhoto">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/><circle cx="9" cy="8.5" r="1.3"/></svg>
+                        Upload
                     </button>
                 </div>
+                {{-- Two inputs, because one attribute decides everything: with
+                     `capture` a phone opens its camera and nothing else, which
+                     is right for "take another photo" and exactly wrong for
+                     "Upload". --}}
                 <input type="file" id="qcFile" accept="image/*" capture="environment" class="hidden">
+                <input type="file" id="qcPick" accept="image/*" multiple class="hidden">
             </div>
             <div class="qc-foot">
                 <button type="button" class="btn btn-ghost" data-qc-cancel>Cancel</button>
@@ -313,23 +333,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ---- camera step ---- */
     $('qcShutter')?.addEventListener('click', snapPhoto);
-    $('qcUseFile')?.addEventListener('click', () => { stopCamera(); $('qcFile').click(); });
+    $('qcUseFile')?.addEventListener('click', () => { stopCamera(); $('qcPick').click(); });
 
     /* ---- capture step ---- */
     $('qcAddPhoto').addEventListener('click', async () => {
         const camOk = await openCamera();   // prefer the live camera again
         if (!camOk) $('qcFile').click();     // otherwise the file picker
     });
-    $('qcFile').addEventListener('change', (e) => {
-        const f = e.target.files && e.target.files[0];
-        if (f) {
-            files.push(f);
+    $('qcPickPhoto')?.addEventListener('click', () => { stopCamera(); $('qcPick').click(); });
+    const tookPhotos = (e) => {
+        const picked = Array.from(e.target.files || []);
+        if (picked.length) {
+            files.push(...picked);
             renderPreviews();
             showStep('capture');   // land on the review sheet
             openModal();           // first shot brings up the modal
         }
         e.target.value = '';   // let the same shot be re-taken
-    });
+    };
+    $('qcFile').addEventListener('change', tookPhotos);
+    $('qcPick').addEventListener('change', tookPhotos);
     $('qcContinue').addEventListener('click', async () => {
         showStep('details');
         try { await ensureQuill(); } catch (_) { /* editor optional */ }

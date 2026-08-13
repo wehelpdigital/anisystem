@@ -58,7 +58,21 @@ class CroppingScheduleController extends Controller
         // now" — it is the one they are most likely working on.
         $tip = \App\Support\FarmTips::forToday((int) \Illuminate\Support\Facades\Auth::id(), $schedules->first());
 
-        return view('sm.index', compact('schedules', 'allSchedules', 'tip'));
+        // The one line worth reading before the list: how much there is, and
+        // how much of it is live. Counted across every schedule, not just the
+        // page being shown.
+        $summary = [
+            'schedules' => AsCroppingSchedule::active()->forClient($ownerId)->count(),
+            'active' => AsCroppingSchedule::active()->forClient($ownerId)->where('status', 'active')->count(),
+            'lots' => \App\Models\AsScheduleLot::where('deleteStatus', 1)
+                ->whereIn('croppingScheduleId', AsCroppingSchedule::active()->forClient($ownerId)->select('id'))
+                ->count(),
+            'workers' => \App\Models\AsScheduleWorker::where('deleteStatus', 1)
+                ->whereIn('croppingScheduleId', AsCroppingSchedule::active()->forClient($ownerId)->select('id'))
+                ->count(),
+        ];
+
+        return view('sm.index', compact('schedules', 'allSchedules', 'tip', 'summary'));
     }
 
     public function create()
@@ -180,10 +194,12 @@ class CroppingScheduleController extends Controller
         $materialTypes = ['granular', 'foliar', 'pesticide', 'herbicide', 'molluscicide', 'fungicide', 'fertilizer', 'seed', 'other'];
         $materialUnits = ['kg', 'g', 'ml', 'l', 'bottle', 'sachet', 'piece', 'pack'];
 
-        // Day counter is per-lot now (DAP, or DAS→DAT). The wizard's pick is the
-        // default applied to every lot; lots can be changed later in the Lots
-        // module. DAT collapses into the DAS/DAT mode.
-        $scheduleDayType = $request->input('dayType') === 'DAP' ? 'DAP' : 'DAS';
+        // Day counter is per-lot. The wizard's pick is the default applied to
+        // every lot; lots can be changed later in the Lots module. Three modes:
+        // DAT (sown then transplanted), DAS (direct seeded, never flips), DAP.
+        $scheduleDayType = in_array(strtoupper((string) $request->input('dayType')), ['DAP', 'DAS', 'DAT'], true)
+            ? strtoupper((string) $request->input('dayType'))
+            : 'DAT';
 
         try {
             $schedule = DB::transaction(function () use ($request, $lotUnits, $skillKeys, $materialTypes, $materialUnits, $scheduleDayType) {
@@ -194,7 +210,7 @@ class CroppingScheduleController extends Controller
                     'description' => $request->input('description'),
                     'cropType' => $request->filled('cropType') ? trim($request->input('cropType')) : null,
                     'cropVariety' => $request->filled('cropVariety') ? trim($request->input('cropVariety')) : null,
-                    'dayType' => $request->input('dayType') ?: 'DAS',
+                    'dayType' => $scheduleDayType,
                     'status' => 'setup',
                     'isActive' => 1,
                     'deleteStatus' => 1,
@@ -223,7 +239,9 @@ class CroppingScheduleController extends Controller
                         'lotSizeUnit' => in_array($unit, $lotUnits, true) ? $unit : 'hectare',
                         'variety' => ! empty($row['variety']) ? mb_substr(trim($row['variety']), 0, 255) : null,
                         'dayZeroDate' => $this->sanitizeDate($row['dayZeroDate'] ?? null),
-                        'dayType' => ($row['dayType'] ?? null) === 'DAP' ? 'DAP' : $scheduleDayType,
+                        'dayType' => in_array(strtoupper((string) ($row['dayType'] ?? '')), ['DAP', 'DAS', 'DAT'], true)
+                            ? strtoupper((string) $row['dayType'])
+                            : $scheduleDayType,
                         'notes' => ! empty($row['notes']) ? mb_substr(trim($row['notes']), 0, 2000) : null,
                         'deleteStatus' => 1,
                     ]);

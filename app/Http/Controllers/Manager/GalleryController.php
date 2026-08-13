@@ -24,9 +24,20 @@ class GalleryController extends BaseScheduleController
     {
         $schedule = $this->scheduleFromRequest($request, 'id');
 
+        // Two questions, two tabs. "Everything this season has a picture of"
+        // is answered by reading the modules; "the ones I put together" is
+        // answered by the albums. They were two modules, and a grower had to
+        // know which one a picture had gone into to find it again.
+        $everything = \App\Support\SeasonMedia::all($schedule);
+
         return view('sm.gallery', [
             'schedule' => $schedule,
             'albums' => $this->albumsFor($schedule),
+            'everything' => $everything,
+            'counts' => [
+                'all' => count(array_filter($everything, fn ($m) => $m['kind'] !== 'video')),
+                'videos' => count(array_filter($everything, fn ($m) => $m['kind'] === 'video')),
+            ],
         ]);
     }
 

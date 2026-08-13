@@ -21,6 +21,7 @@
         background: linear-gradient(135deg, #f3f8ec, #e4efd4); }
     .gr-emoji { font-size: 1.7rem; line-height: 1; }
     .gr-lot { font-size: .98rem; font-weight: 800; color: var(--color-gray-900); }
+    .gr-mode { display: block; font-size: .68rem; color: var(--color-gray-400); margin-top: .1rem; }
     .gr-crop { font-size: .72rem; font-weight: 700; color: #3d6823; }
     .gr-age { margin-left: auto; text-align: right; flex: 0 0 auto; }
     .gr-age-n { font-size: 1.35rem; font-weight: 800; line-height: 1; color: #3d6823; }
@@ -95,6 +96,9 @@
             <span class="min-w-0">
                 <span class="gr-lot block">{{ $r['lot']->lotName }}</span>
                 <span class="gr-crop">{{ $r['cropLabel'] ?: 'No crop set' }}</span>
+                {{-- Which ruler this lot is read against, because the same crop
+                     on the next block may be read against another one. --}}
+                <span class="gr-mode">{{ \App\Http\Controllers\Manager\GrowthStageController::counterSays($r['lot']->dayType) }}</span>
             </span>
             @if ($r['age'])
                 <span class="gr-age">

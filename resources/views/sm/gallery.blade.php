@@ -61,6 +61,57 @@
     .ga-bar .ga-bar-del:hover { background: #b91c1c; color: #fff; }
     @media (prefers-reduced-motion: reduce) { .ga-bar { animation: none; } .ga-cell img { transition: none; } }
 
+    /* ---- tabs, and the "everything" shelf ---- */
+    .ga-tabs { display: flex; gap: .4rem; margin-bottom: .8rem; overflow-x: auto; padding-bottom: .15rem; }
+    .ga-tab { display: inline-flex; align-items: center; gap: .35rem; padding: .45rem .85rem; flex: none;
+        border: 2px solid var(--color-gray-200); background: var(--color-white); border-radius: 999px;
+        font-size: .82rem; font-weight: 700; color: #374151; cursor: pointer;
+        transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .ga-tab:hover { border-color: #a8cc7e; background: #f3f8ec; }
+    .ga-tab.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+    .ga-tab .ga-n { font-size: .7rem; opacity: .8; font-weight: 800; }
+    .ga-pane[hidden] { display: none; }
+    .ga-tools { display: flex; gap: .5rem; align-items: center; margin-bottom: .7rem; flex-wrap: wrap; }
+    .ga-search { position: relative; flex: 1 1 12rem; }
+    .ga-search input { width: 100%; padding: .5rem .7rem .5rem 2.1rem; border-radius: .7rem;
+        border: 1px solid var(--color-gray-200); background: var(--color-white); font-size: .85rem; }
+    .ga-search svg { position: absolute; left: .65rem; top: 50%; transform: translateY(-50%);
+        width: 1rem; height: 1rem; color: var(--color-gray-400); }
+    .ga-filters { display: flex; gap: .3rem; flex-wrap: wrap; }
+    .ga-filter { padding: .3rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 700;
+        border: 1px solid var(--color-gray-200); background: var(--color-white); color: var(--color-gray-600); cursor: pointer; }
+    .ga-filter.is-on { background: #eaf4dd; border-color: #a8cc7e; color: #3d6823; }
+
+    .ga-all { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: .6rem; }
+    .ga-item { position: relative; border-radius: .75rem; overflow: hidden; background: var(--color-white);
+        border: 1px solid var(--color-gray-200); text-align: left; display: block;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .ga-item:hover { transform: translateY(-2px); box-shadow: 0 12px 26px -18px rgb(0 0 0 / .5); }
+    .ga-shot { position: relative; aspect-ratio: 1; background: #0b1220; }
+    .ga-shot img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .28s ease; }
+    .ga-shot img.is-loaded { opacity: 1; }
+    .ga-shot.is-gone::after { content: 'File missing'; position: absolute; inset: 0; display: flex;
+        align-items: center; justify-content: center; font-size: .66rem; font-weight: 700; color: #94a3b8; }
+    .ga-kind { position: absolute; left: .35rem; top: .35rem; padding: .1rem .4rem; border-radius: 999px;
+        font-size: .6rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
+        background: rgb(17 24 39 / .65); color: #fff; }
+    .ga-kind.is-drawing { background: rgb(217 119 6 / .9); }
+    .ga-kind.is-map { background: rgb(37 99 235 / .9); }
+    .ga-kind.is-video { background: rgb(190 24 93 / .9); }
+    .ga-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+        color: #fff; pointer-events: none; text-shadow: 0 1px 8px rgb(0 0 0 / .7); }
+    .ga-play svg { width: 2rem; height: 2rem; }
+    .ga-info { padding: .4rem .5rem .5rem; }
+    .ga-it { font-size: .74rem; font-weight: 700; color: var(--color-gray-900); line-height: 1.25;
+        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .ga-is { font-size: .63rem; color: var(--color-gray-400); margin-top: .1rem; }
+    .ga-none { text-align: center; padding: 2.5rem 1rem; color: var(--color-gray-400); font-size: .85rem; }
+    html.dark .ga-tab { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
+    html.dark .ga-tab.is-on { background: #4a7c2a; border-color: #6b9f3d; color: #fff; }
+    html.dark .ga-item { background: #151b12; border-color: #2b3a1c; }
+    html.dark .ga-it { color: #e8efe1; }
+    html.dark .ga-search input, html.dark .ga-filter { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
+
     html.dark .ga-album { background: #151b12; border-color: #2b3a1c; }
     html.dark .ga-title { color: #e8efe1; }
     html.dark .ga-count { background: rgb(61 104 35 / .35); color: #a8cc7e; }
@@ -71,20 +122,65 @@
 @section('content')
 @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'gallery'])
 
-<div class="ga-top">
-    <button type="button" class="ga-new" id="gaNewAlbum">
-        <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-        <span>New album</span>
+{{-- Two questions, two tabs: everything the season has a picture of, and
+     the ones you put together on purpose. --}}
+<div class="ga-tabs" role="tablist">
+    <button type="button" class="ga-tab is-on" data-tab="all" role="tab" aria-selected="true">
+        All pictures <span class="ga-n">{{ $counts['all'] }}</span>
     </button>
-    <p class="text-xs text-gray-500">Group pictures by what they are about. The Media Box keeps everything; an album is what you chose.</p>
+    <button type="button" class="ga-tab" data-tab="albums" role="tab" aria-selected="false">
+        Albums <span class="ga-n">{{ count($albums) }}</span>
+    </button>
+    @if ($counts['videos'])
+        <button type="button" class="ga-tab" data-tab="videos" role="tab" aria-selected="false">
+            Videos <span class="ga-n">{{ $counts['videos'] }}</span>
+        </button>
+    @endif
 </div>
 
-<div id="gaAlbums"></div>
+{{-- ============================ everything ============================ --}}
+<div class="ga-pane" data-pane="all">
+    <div class="ga-tools">
+        <label class="ga-search">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+            <input type="search" id="gaFind" placeholder="Search by what it was about…" autocomplete="off">
+        </label>
+        <div class="ga-filters" id="gaFilters">
+            <button type="button" class="ga-filter is-on" data-src="">Everything</button>
+            <button type="button" class="ga-filter" data-src="Note">Notes</button>
+            <button type="button" class="ga-filter" data-src="Day note">Day notes</button>
+            <button type="button" class="ga-filter" data-src="Drawing">Drawings</button>
+            <button type="button" class="ga-filter" data-src="Map">Maps</button>
+            <button type="button" class="ga-filter" data-src="Album">Albums</button>
+            <button type="button" class="ga-filter" data-src="Activity">Activities</button>
+        </div>
+    </div>
+    <div class="ga-all" id="gaAll"></div>
+    <p class="ga-none hidden" id="gaAllNone">Nothing here yet. Photos taken anywhere in this schedule — a note, a day, a drawing, a map — arrive here on their own.</p>
+</div>
 
-<div class="card p-8 text-center hidden" id="gaEmpty">
-    <div class="text-4xl mb-2">🖼️</div>
-    <p class="font-bold text-gray-900">No albums yet</p>
-    <p class="text-sm text-gray-500 mt-1">Make one for a corner of the field, a problem you are following, or anything worth keeping together.</p>
+{{-- ============================== albums ============================== --}}
+<div class="ga-pane" data-pane="albums" hidden>
+    <div class="ga-top">
+        <button type="button" class="ga-new" id="gaNewAlbum">
+            <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+            <span>New album</span>
+        </button>
+        <p class="text-xs text-gray-500">An album is what you chose to keep together — a corner of the field, a problem you are following, the pictures a buyer asked for.</p>
+    </div>
+
+    <div id="gaAlbums"></div>
+
+    <div class="card p-8 text-center hidden" id="gaEmpty">
+        <div class="text-4xl mb-2">🖼️</div>
+        <p class="font-bold text-gray-900">No albums yet</p>
+        <p class="text-sm text-gray-500 mt-1">Make one for a corner of the field, a problem you are following, or anything worth keeping together.</p>
+    </div>
+</div>
+
+{{-- ============================== videos ============================== --}}
+<div class="ga-pane" data-pane="videos" hidden>
+    <div class="ga-all" id="gaVideos"></div>
 </div>
 
 {{-- The picking bar, shown once a picture is chosen. --}}
@@ -135,6 +231,7 @@
 (() => {
     const init = () => {
         const SCHEDULE_ID = @json($schedule->id);
+        const EVERYTHING = @json($everything);
         const U = {
             album: @json(route('sm.gallery.album.save')) + '?scheduleId=' + SCHEDULE_ID,
             albumDel: @json(route('sm.gallery.album.destroy')) + '?scheduleId=' + SCHEDULE_ID,
@@ -360,6 +457,77 @@
             } catch (err) { toast(err.message || 'Could not move those.', 'error'); }
         });
 
+        /* ================================================================
+         * The "all pictures" shelf: read-only, and every tile knows the way
+         * back to the record it came from. A drawing opens in the pad that
+         * can change it; a map opens in Maps; a photo opens where it was
+         * explained. Videos get their own tab because you pick a video and
+         * scan photos, and mixing them makes both harder.
+         * ============================================================= */
+        const KIND_LABEL = { drawing: 'Drawing', map: 'Map', video: 'Video', image: '' };
+        let findText = '';
+        let findSource = '';
+
+        function itemHtml(m) {
+            const kind = m.kind || 'image';
+            const badge = KIND_LABEL[kind]
+                ? `<span class="ga-kind is-${kind}">${KIND_LABEL[kind]}</span>` : '';
+            const shot = kind === 'video'
+                ? `<div class="ga-shot">${m.posterUrl ? `<img src="${esc(m.posterUrl)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')">` : ''}
+                     <span class="ga-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>${badge}</div>`
+                : `<div class="ga-shot"><img src="${esc(m.url)}" alt="" loading="lazy"
+                        onload="this.classList.add('is-loaded')"
+                        onerror="this.closest('.ga-shot')?.classList.add('is-gone'); this.remove();">${badge}</div>`;
+            const inner = `${shot}<div class="ga-info">
+                    <span class="ga-it">${esc(m.title)}</span>
+                    <span class="ga-is">${esc(m.source)}${m.when ? ' · ' + esc(m.when) : ''}</span>
+                </div>`;
+            // Photos and videos open in the lightbox; drawings and maps open
+            // where they can be worked on.
+            return (kind === 'drawing' || kind === 'map') && m.href
+                ? `<a class="ga-item" href="${esc(m.href)}">${inner}</a>`
+                : `<button type="button" class="ga-item" data-lb-type="${kind === 'video' ? 'video' : 'image'}"
+                        data-lb-url="${esc(m.url)}" data-lb-poster="${esc(m.posterUrl || '')}">${inner}</button>`;
+        }
+
+        function paintAll() {
+            const q = findText.trim().toLowerCase();
+            const shown = EVERYTHING.filter((m) => m.kind !== 'video')
+                .filter((m) => !findSource || m.source === findSource)
+                .filter((m) => !q || (m.title + ' ' + m.source).toLowerCase().includes(q));
+            $('gaAll').innerHTML = shown.map(itemHtml).join('');
+            $('gaAllNone').classList.toggle('hidden', shown.length > 0);
+            if (shown.length === 0 && (q || findSource)) {
+                $('gaAllNone').textContent = 'Nothing matches that.';
+            }
+            const vids = EVERYTHING.filter((m) => m.kind === 'video');
+            if ($('gaVideos')) $('gaVideos').innerHTML = vids.length
+                ? vids.map(itemHtml).join('')
+                : '<p class="ga-none">No videos in this schedule yet.</p>';
+        }
+
+        document.querySelectorAll('.ga-tab').forEach((t) => t.addEventListener('click', () => {
+            const want = t.getAttribute('data-tab');
+            document.querySelectorAll('.ga-tab').forEach((x) => {
+                const on = x === t;
+                x.classList.toggle('is-on', on);
+                x.setAttribute('aria-selected', on ? 'true' : 'false');
+            });
+            document.querySelectorAll('.ga-pane').forEach((p) => {
+                p.hidden = p.getAttribute('data-pane') !== want;
+            });
+        }));
+
+        $('gaFind')?.addEventListener('input', (e) => { findText = e.target.value; paintAll(); });
+        $('gaFilters')?.addEventListener('click', (e) => {
+            const b = e.target.closest('.ga-filter');
+            if (!b) return;
+            findSource = b.getAttribute('data-src') || '';
+            document.querySelectorAll('.ga-filter').forEach((x) => x.classList.toggle('is-on', x === b));
+            paintAll();
+        });
+
+        paintAll();
         paint();
     };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });

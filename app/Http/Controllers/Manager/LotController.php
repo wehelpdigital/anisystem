@@ -12,6 +12,22 @@ use Illuminate\Support\Facades\Validator;
  */
 class LotController extends BaseScheduleController
 {
+    /**
+     * How this lot counts its days.
+     *
+     * 'DAT' is the two-phase one — DAS from day zero, then a fresh DAT count
+     * from the transplant date. 'DAS' is direct seeding (DSR), a single count
+     * that never flips. 'DAP' is everything planted rather than sown. Anything
+     * unrecognised falls back to the two-phase count, which is what the single
+     * old "DAS / DAT" option meant.
+     */
+    private static function dayType($value): string
+    {
+        $v = strtoupper(trim((string) $value));
+
+        return in_array($v, ['DAP', 'DAS', 'DAT'], true) ? $v : 'DAT';
+    }
+
     /** A lot as the module reads it, crop spelled out for the card badge. */
     private function lotPayload($lot): array
     {
@@ -50,7 +66,7 @@ class LotController extends BaseScheduleController
                 'lotSizeUnit'        => $request->lotSizeUnit,
                 'variety'            => $request->filled('variety') ? trim($request->variety) : null,
                 'crop'        => \App\Support\CropStages::normalize($request->input('crop')),
-                'dayType'            => $request->input('dayType') === 'DAP' ? 'DAP' : 'DAS',
+                'dayType'            => self::dayType($request->input('dayType')),
                 'notes'              => $request->notes,
                 'deleteStatus'       => 1,
             ],
@@ -80,7 +96,7 @@ class LotController extends BaseScheduleController
                 'lotSizeUnit' => $request->lotSizeUnit,
                 'variety'     => $request->filled('variety') ? trim($request->variety) : null,
                 'crop'        => \App\Support\CropStages::normalize($request->input('crop')),
-                'dayType'     => $request->input('dayType') === 'DAP' ? 'DAP' : 'DAS',
+                'dayType'     => self::dayType($request->input('dayType')),
                 'notes'       => $request->notes,
             ],
             $this->addressFields($request)
@@ -116,7 +132,7 @@ class LotController extends BaseScheduleController
             'locZone'     => 'nullable|string|max:60',
             'locTown'     => 'nullable|string|max:120',
             'locProvince' => 'nullable|string|max:120',
-            'dayType'     => 'nullable|in:DAP,DAS',
+            'dayType'     => 'nullable|in:DAP,DAS,DAT',
             'notes'       => 'nullable|string|max:2000',
         ];
     }

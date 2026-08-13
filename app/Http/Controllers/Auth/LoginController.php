@@ -65,6 +65,12 @@ class LoginController extends Controller
         // EnforceSingleSession) — any other open session is superseded.
         $user->forceFill(['currentSessionId' => $request->session()->getId()])->saveQuietly();
 
+        // More than one way to use this account — ask which, rather than
+        // guessing and making them undo it.
+        if (\App\Support\UserHats::needsChoice($user)) {
+            return redirect()->route('account.choose');
+        }
+
         return redirect()->intended(route('app.dashboard'));
     }
 

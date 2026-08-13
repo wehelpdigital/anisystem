@@ -42,6 +42,30 @@
         html.dark .del-label { color: #d7e3cb; }
         @media (prefers-reduced-motion: reduce) { .del-modal, .del-card { animation: none; } }
 
+        /* ---- the page's own head ---- */
+        .sch-hero { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+            gap: .75rem 1rem; padding: 1.1rem 1.25rem; margin-bottom: 1rem; border-radius: 1.1rem;
+            background: linear-gradient(135deg, #f3f8ec, #e6f1d8); border: 1px solid #d9e8c4; }
+        .sch-hero-h { font-size: 1.15rem; font-weight: 800; color: #2c4d18; line-height: 1.25; }
+        .sch-hero-p { font-size: .84rem; color: #4a6b34; margin-top: .2rem; }
+        .sch-hero-stats { display: flex; gap: .45rem; flex-wrap: wrap; }
+        .sch-stat { display: inline-flex; align-items: baseline; gap: .3rem; padding: .35rem .7rem;
+            border-radius: 999px; background: rgb(255 255 255 / .75); border: 1px solid #d9e8c4;
+            font-size: .72rem; font-weight: 600; color: #3d6823; }
+        .sch-stat b { font-size: .95rem; font-weight: 800; }
+        html.dark .sch-hero { background: linear-gradient(135deg, #1c2416, #24301a); border-color: #2b3a1c; }
+        html.dark .sch-hero-h { color: #e8efe1; }
+        html.dark .sch-hero-p { color: #a8bd93; }
+        html.dark .sch-stat { background: rgb(255 255 255 / .06); border-color: #2b3a1c; color: #cdd8c0; }
+
+        /* ---- the cards ---- */
+        .sch-card { position: relative; overflow: hidden; }
+        .sch-spine { position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--color-gray-200); }
+        .sch-spine-active { background: linear-gradient(180deg, #6b9f3d, #3d6823); }
+        .sch-spine-setup { background: linear-gradient(180deg, #fbbf24, #d97706); }
+        .sch-spine-completed { background: linear-gradient(180deg, #93c5fd, #2563eb); }
+        .sch-card .card-body { padding-left: 1.15rem; }
+
         /* The created date is part of the counts line on a card that is tight
            for height, and keeps its own line where there is room. */
         .sch-created { flex-basis: 100%; }
@@ -68,7 +92,30 @@
 
 @section('content')
 
-    @include('sm.partials.tip-of-day', ['tip' => $tip ?? null, 'aiHref' => ($schedules->first() ? route('sm.ai', ['id' => $schedules->first()->id]) : null)])
+    {{-- A summary worth a glance before the list itself. --}}
+    <div class="sch-hero">
+        <div class="sch-hero-text">
+            <h1 class="sch-hero-h">
+                @php $__h = (int) now()->format('G'); @endphp
+                {{ $__h < 12 ? 'Good morning' : ($__h < 18 ? 'Good afternoon' : 'Good evening') }}, {{ auth()->user()->firstName ?: 'farmer' }}.
+            </h1>
+            @php
+                // Built here rather than inline: a trailing full stop after an
+                // @endif is not a directive Blade recognises, and the if never
+                // closes.
+                $__say = $summary['schedules'] === 0
+                    ? 'Nothing planned yet — a schedule is where a season starts.'
+                    : $summary['schedules'] . ' ' . \Illuminate\Support\Str::plural('schedule', $summary['schedules'])
+                        . ($summary['active'] ? ', ' . $summary['active'] . ' running now' : '') . '.';
+            @endphp
+            <p class="sch-hero-p">{{ $__say }}</p>
+        </div>
+        <div class="sch-hero-stats">
+            <span class="sch-stat"><b>{{ $summary['lots'] }}</b>{{ \Illuminate\Support\Str::plural('lot', $summary['lots']) }}</span>
+            <span class="sch-stat"><b>{{ $summary['workers'] }}</b>{{ \Illuminate\Support\Str::plural('worker', $summary['workers']) }}</span>
+            <span class="sch-stat"><b>{{ $summary['active'] }}</b>active</span>
+        </div>
+    </div>
 
     {{-- Top bar: search on its own row, the desktop CTAs on a second row below. --}}
     <div class="flex flex-col gap-3 mb-4 md:mb-6">
@@ -151,6 +198,9 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-children" id="schedulesGrid">
             @foreach ($schedules as $s)
                 <div class="card card-hover flex flex-col sch-card" data-schedule-card="{{ $s->id }}">
+                    {{-- A coloured spine so a status is readable from across
+                         the grid without reading the badge. --}}
+                    <span class="sch-spine sch-spine-{{ $s->status }}" aria-hidden="true"></span>
                     <div class="card-body flex flex-col grow">
                         <div class="flex items-start justify-between gap-2 mb-1.5">
                             <h2 class="font-bold text-gray-900 leading-snug min-w-0">{{ $s->title }}</h2>
@@ -202,6 +252,11 @@
         </div>
     @endif
     </div>{{-- /#scheduleResults --}}
+
+    {{-- The tip reads last on purpose: it is worth knowing, but it is not
+         what anyone opened this page for, and at the top it pushed the
+         schedules themselves below the fold on a phone. --}}
+    @include('sm.partials.tip-of-day', ['tip' => $tip ?? null, 'aiHref' => ($schedules->first() ? route('sm.ai', ['id' => $schedules->first()->id]) : null)])
 
     {{-- One floating button, for the one thing this page exists to start. --}}
     <a href="{{ route('sm.create') }}"

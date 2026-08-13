@@ -293,6 +293,11 @@ class ScheduleMapController extends BaseScheduleController
                     'source' => $r->source === 'team' ? 'team' : 'solo',
                     'imagePath' => $path,
                     'imageUrl' => \App\Support\MediaStore::url($path),
+                    // A saved map files a picture in the notebook; this is the
+                    // way back to the note that says what the plan was for.
+                    'noteHref' => $r->noteId
+                        ? route('sm.notes', ['id' => $r->scheduleId, 'open' => $r->noteId])
+                        : null,
                 ];
             })->all()],
         ]);

@@ -97,10 +97,16 @@
 
         <div>
             <label for="lotDayType" class="form-label">Day counter</label>
+            {{-- Three answers, because a field is established in one of three
+                 ways and each is counted differently. Direct-seeded rice never
+                 gets a DAT number at all, and reading it against a transplanted
+                 calendar puts every stage in the wrong week. --}}
             <select id="lotDayType" class="form-select">
-                <option value="DAP">DAP — Days After Planting</option>
-                <option value="DAS">DAS / DAT — Seeded, then Transplanted</option>
+                <option value="DAT">DAS → DAT — sown, then transplanted</option>
+                <option value="DAS">DAS only — direct seeded (DSR)</option>
+                <option value="DAP">DAP — days after planting</option>
             </select>
+            <p class="form-hint" id="lotDayTypeHint"></p>
             <p class="form-hint">How this lot's day numbers are counted. <strong>DAP</strong> is a single count from planting. <strong>DAS/DAT</strong> counts DAS from sowing, then flips to DAT once you flag the transplant activity.</p>
         </div>
 
@@ -155,12 +161,28 @@
         font-size: .8rem; font-weight: 600; color: #374151; cursor: pointer;
         transition: background .25s ease, border-color .25s ease, color .25s ease; }
     .crop-opt:hover { border-color: #a8cc7e; background: #f3f8ec; }
-    .crop-opt.is-selected { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
     .crop-emoji { font-size: 1rem; line-height: 1; }
     .lot-crop-badge { display: inline-flex; align-items: center; gap: .25rem; }
     #lotCropNow { color: #3d6823; }
     #lotCropNow.is-none { color: var(--color-gray-400); font-weight: 500; }
     html.dark .crop-opt { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
+    /* Last, and one class heavier than the dark-mode rule above it. Tapping a
+       crop did select it — the chip just kept the unselected colours, because
+       `html.dark .crop-opt` tied with `.crop-opt.is-selected` and won on
+       source order. A tick makes the state readable without relying on colour
+       alone. */
+    .crop-pick .crop-opt.is-selected,
+    .crop-pick .crop-opt.is-selected:hover,
+    html.dark .crop-pick .crop-opt.is-selected {
+        background: #4a7c2a; border-color: #4a7c2a; color: #fff;
+        box-shadow: 0 2px 10px rgb(74 124 42 / .32);
+    }
+    .crop-pick .crop-opt.is-selected::after {
+        content: ''; width: .95rem; height: .95rem; margin-left: .1rem; flex: none;
+        background: currentColor; border-radius: 999px;
+        -webkit-mask: var(--tick) center / .7rem no-repeat; mask: var(--tick) center / .7rem no-repeat;
+    }
+    .crop-pick { --tick: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E"); }
     @media (prefers-reduced-motion: reduce) { .crop-opt { transition: none; } }
 </style>
 @endpush
@@ -343,7 +365,8 @@ const __init = () => {
         document.getElementById('lotSizeUnit').value = lot ? (lot.lotSizeUnit || 'hectare') : 'hectare';
         document.getElementById('lotVariety').value = lot ? (lot.variety || '') : '';
         setLotCrop(lot ? (lot.crop || '') : '');
-        document.getElementById('lotDayType').value = lot ? (lot.dayType || 'DAS') : 'DAS';
+        document.getElementById('lotDayType').value = lot ? (lot.dayType || 'DAT') : 'DAT';
+        sayDayType();
         document.getElementById('lotBarangay').value = lot ? (lot.locBarangay || '') : '';
         document.getElementById('lotZone').value = lot ? (lot.locZone || '') : '';
         document.getElementById('lotNotes').value = lot ? (lot.notes || '') : '';
@@ -393,6 +416,19 @@ const __init = () => {
         }
     });
 
+    /** Say in words what the chosen counter will do, so it is not a guess. */
+    const DAY_TYPE_SAYS = {
+        DAT: 'Counts DAS from day zero, then restarts as DAT on the transplant date. Stages read against the transplanted calendar once it does.',
+        DAS: 'One count from sowing, all season. Stages read against the direct-seeded calendar — a transplant date is ignored.',
+        DAP: 'One count from planting, all season.',
+    };
+    function sayDayType() {
+        const sel = document.getElementById('lotDayType');
+        const hint = document.getElementById('lotDayTypeHint');
+        if (sel && hint) hint.textContent = DAY_TYPE_SAYS[sel.value] || '';
+    }
+    document.getElementById('lotDayType')?.addEventListener('change', sayDayType);
+
     /* ---------------- Save ---------------- */
 
     /* One crop per lot, and tapping the chosen one again clears it — a lot
@@ -405,6 +441,7 @@ const __init = () => {
         document.querySelectorAll('#lotCropPick .crop-opt').forEach((b) => {
             const on = b.getAttribute('data-crop') === want;
             b.classList.toggle('is-selected', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
             if (on) lit = b;
         });
         const say = document.getElementById('lotCropNow');
