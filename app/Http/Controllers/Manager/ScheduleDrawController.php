@@ -28,14 +28,8 @@ class ScheduleDrawController extends BaseScheduleController
         $schedule = $this->scheduleFromRequest($request, 'id');
 
         $drawings = [];
-        $notes = AsScheduleNote::active()
-            ->where('croppingScheduleId', $schedule->id)
-            ->orderByDesc('id')
-            ->limit(200)
-            ->get();
-
-        foreach ($notes as $note) {
-            foreach ($this->mediaOf($note) as $i => $m) {
+        $collect = function ($holder, string $source, string $title, string $words, ?string $noteHref) use (&$drawings) {
+            foreach ($this->mediaOf($holder) as $i => $m) {
                 $type = (string) ($m['type'] ?? '');
                 $path = (string) ($m['path'] ?? '');
                 $team = (bool) preg_match(self::TEAM_FILE, $path);
@@ -43,25 +37,46 @@ class ScheduleDrawController extends BaseScheduleController
                     continue;
                 }
                 $drawings[] = [
-                    'noteId' => (int) $note->id,
+                    'noteId' => (int) $holder->id,
                     'index' => (int) $i,
-                    'title' => (string) $note->title,
+                    // Which shelf the note lives on — the board's sticky and
+                    // day notes hold drawings too, and "every drawing in this
+                    // schedule" has to mean all of them.
+                    'source' => $source,
+                    'title' => $title,
                     // What the drawing is about, so the grid can say more than
                     // a filename and a date.
-                    'note' => trim(strip_tags((string) $note->body)),
+                    'note' => $words,
                     // Strokes are not sent with the list — a season of drawings
                     // would be megabytes of them. They come one at a time, when
                     // a drawing is actually opened for editing.
                     'editable' => $type === 'drawing' && ! empty($m['strokes']),
                     'team' => $team,
                     'url' => \App\Support\MediaStore::url($path),
-                    'when' => $note->updated_at?->timezone('Asia/Manila')->format('M j, Y'),
+                    'when' => $holder->updated_at?->timezone('Asia/Manila')->format('M j, Y'),
+                    'sortKey' => $holder->updated_at?->timestamp ?? 0,
                     // Every drawing lives in a note; this is the way back to
                     // the words that say why it was drawn.
-                    'noteHref' => route('sm.notes', ['id' => $schedule->id, 'open' => $note->id]),
+                    'noteHref' => $noteHref,
                 ];
             }
+        };
+
+        foreach (AsScheduleNote::active()->where('croppingScheduleId', $schedule->id)->orderByDesc('id')->limit(200)->get() as $note) {
+            $collect($note, 'note', (string) $note->title, trim(strip_tags((string) $note->body)),
+                route('sm.notes', ['id' => $schedule->id, 'open' => $note->id]));
         }
+        foreach (\App\Models\AsInlineNote::active()->where('croppingScheduleId', $schedule->id)->orderByDesc('id')->limit(200)->get() as $note) {
+            $collect($note, 'inline', (string) ($note->title ?: 'Note on the board'), trim(strip_tags((string) $note->content)),
+                route('sm.activities', ['id' => $schedule->id]));
+        }
+        foreach (\App\Models\AsScheduleDateNote::active()->where('croppingScheduleId', $schedule->id)->orderByDesc('id')->limit(200)->get() as $note) {
+            $collect($note, 'date', 'Note for ' . $note->noteDate->format('M j, Y'), trim(strip_tags((string) $note->noteContent)),
+                route('sm.activities', ['id' => $schedule->id]));
+        }
+
+        // One shelf, newest first, wherever each drawing lives.
+        usort($drawings, fn ($a, $b) => $b['sortKey'] <=> $a['sortKey']);
 
         return view('sm.draw', [
             'schedule' => $schedule,
@@ -73,7 +88,7 @@ class ScheduleDrawController extends BaseScheduleController
     public function one(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request);
-        $note = $this->note($schedule->id, (int) $request->query('noteId'));
+        $note = $this->holder($schedule->id, (string) $request->query('source'), (int) $request->query('noteId'));
         if (! $note) {
             return $this->jsonFail('That drawing is no longer here.', 404);
         }
@@ -85,8 +100,8 @@ class ScheduleDrawController extends BaseScheduleController
         }
 
         return response()->json(['success' => true, 'data' => [
-            'title' => (string) $note->title,
-            'note' => trim(strip_tags((string) $note->body)),
+            'title' => (string) ($note->title ?? ''),
+            'note' => trim(strip_tags((string) ($note->body ?? $note->content ?? $note->noteContent ?? ''))),
             'strokes' => $media[$i]['strokes'] ?? null,
             'url' => \App\Support\MediaStore::url($media[$i]['path'] ?? null),
         ]]);
@@ -136,7 +151,8 @@ class ScheduleDrawController extends BaseScheduleController
         ], fn ($v) => $v !== null);
 
         $noteId = (int) $request->input('noteId');
-        $note = $noteId ? $this->note($schedule->id, $noteId) : null;
+        $source = (string) $request->input('source');
+        $note = $noteId ? $this->holder($schedule->id, $source, $noteId) : null;
 
         if ($note) {
             $media = $this->mediaOf($note);
@@ -145,9 +161,14 @@ class ScheduleDrawController extends BaseScheduleController
             // it, and a season of superseded drawings is dead weight on disk.
             $old = $media[$i]['path'] ?? null;
             $media[$i] = $entry;
-            $note->title = (string) $request->input('title');
-            if ($request->has('note')) {
-                $note->body = $this->drawingBody((string) $request->input('note'));
+            // Only a notebook note takes its words from the pad's save sheet.
+            // A board note's words belong to the board's own editor, and a day
+            // note has no title at all — for those, only the picture moves.
+            if ($note instanceof AsScheduleNote) {
+                $note->title = (string) $request->input('title');
+                if ($request->has('note')) {
+                    $note->body = $this->drawingBody((string) $request->input('note'));
+                }
             }
             $note->media = array_values($media);
             $note->save();
@@ -187,7 +208,7 @@ class ScheduleDrawController extends BaseScheduleController
     public function remove(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request);
-        $note = $this->note($schedule->id, (int) $request->input('noteId'));
+        $note = $this->holder($schedule->id, (string) $request->input('source'), (int) $request->input('noteId'));
         if (! $note) {
             return $this->jsonOk('Already gone.');
         }
@@ -199,7 +220,8 @@ class ScheduleDrawController extends BaseScheduleController
         $media = array_values($media);
 
         // A note that was only ever this drawing has nothing left to say.
-        if (empty($media) && blank(trim(strip_tags((string) $note->body)))) {
+        $words = trim(strip_tags((string) ($note->body ?? $note->content ?? $note->noteContent ?? '')));
+        if (empty($media) && blank($words)) {
             $note->update(['deleteStatus' => 0]);
         } else {
             $note->media = $media ?: null;
@@ -222,8 +244,28 @@ class ScheduleDrawController extends BaseScheduleController
             ->first() : null;
     }
 
+    /**
+     * The record holding a drawing, whichever shelf it lives on: the notebook
+     * ('note', the default), a sticky note on the board ('inline'), or a
+     * day's own note ('date').
+     */
+    private function holder(int $scheduleId, string $source, int $id)
+    {
+        if (! $id) {
+            return null;
+        }
+
+        return match ($source) {
+            'inline' => \App\Models\AsInlineNote::active()
+                ->where('croppingScheduleId', $scheduleId)->where('id', $id)->first(),
+            'date' => \App\Models\AsScheduleDateNote::active()
+                ->where('croppingScheduleId', $scheduleId)->where('id', $id)->first(),
+            default => $this->note($scheduleId, $id),
+        };
+    }
+
     /** @return array<int, array<string, mixed>> */
-    private function mediaOf(AsScheduleNote $note): array
+    private function mediaOf($note): array
     {
         $media = $note->media;
         if (is_string($media)) {

@@ -177,6 +177,9 @@
                         editable: !!objects,
                         noteId: over ? seed.noteId : null,
                         index: over ? (seed.index || 0) : 0,
+                        // Which shelf the note lives on — board and day notes
+                        // hold drawings too, and a save-over must land there.
+                        source: over ? (seed.source || 'note') : 'note',
                     };
                     document.getElementById('drTitle').value = over ? (seed.title || '') : (seed.newTitle || seed.title || '');
                     document.getElementById('drNote').value = over ? (seed.note || '') : '';
@@ -200,11 +203,11 @@
                 // A team drawing is the team's record: drawing over it starts a
                 // new one rather than rewriting what the room agreed on.
                 if (d.team) { pad({ url: d.url, title: d.title + ' (copy)' }); return; }
-                if (!d.editable) { pad({ url: d.url, title: d.title, noteId: d.noteId, index: d.index, note: d.note || '' }); return; }
+                if (!d.editable) { pad({ url: d.url, title: d.title, noteId: d.noteId, index: d.index, source: d.source, note: d.note || '' }); return; }
                 try {
-                    const r = await api(`${U.one}&noteId=${d.noteId}&index=${d.index}`);
+                    const r = await api(`${U.one}&noteId=${d.noteId}&index=${d.index}&source=${encodeURIComponent(d.source || '')}`);
                     pad({
-                        url: d.url, title: d.title, noteId: d.noteId, index: d.index,
+                        url: d.url, title: d.title, noteId: d.noteId, index: d.index, source: d.source,
                         note: (r.data && r.data.note) || d.note || '',
                         newTitle: (d.title || 'Drawing') + ' (copy)',
                         objects: (r.data && r.data.strokes) || null,
@@ -228,7 +231,7 @@
                         : confirm('Delete this drawing?');
                     if (!ok) return;
                     try {
-                        await api(`${U.destroy}&noteId=${d.noteId}&index=${d.index}`, { method: 'DELETE' });
+                        await api(`${U.destroy}&noteId=${d.noteId}&index=${d.index}&source=${encodeURIComponent(d.source || '')}`, { method: 'DELETE' });
                         drawings = drawings.filter((x) => x !== d);
                         paint();
                         toast('Drawing deleted.');
@@ -257,12 +260,14 @@
                     const d = r.data || {};
                     const row = {
                         noteId: d.noteId, index: d.index, title: d.title || title,
+                        source: (pending && pending.noteId) ? (pending.source || 'note') : 'note',
                         note: d.note != null ? d.note : note,
                         editable: !!d.editable, team: false, url: d.url, when: 'Just now',
                     };
                     // Cache-bust: a re-saved drawing keeps its slot in the grid
                     // and the browser would otherwise show the old picture.
-                    const at = drawings.findIndex((x) => x.noteId === row.noteId && x.index === row.index);
+                    const at = drawings.findIndex((x) => x.noteId === row.noteId && x.index === row.index
+                        && (x.source || 'note') === row.source);
                     if (at >= 0) drawings[at] = row; else drawings.unshift(row);
                     pending = null;
                     paint();
@@ -286,7 +291,10 @@
                     || @json(request()->query('open'));
                 if (!want) return;
                 const [noteId, index] = String(want).split(':');
-                const d = drawings.find((x) => String(x.noteId) === String(noteId)
+                // Deep links come from the notebook, so a notebook row wins
+                // when a board note happens to share the same id.
+                const d = drawings.find((x) => (x.source || 'note') === 'note'
+                    && String(x.noteId) === String(noteId)
                     && String(x.index) === String(index || 0));
                 if (!d) return;
                 // Opened because a note asked for it: closing the pad is done
