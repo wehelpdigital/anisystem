@@ -1410,7 +1410,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <p class="text-sm">Tap <strong>Add Activity</strong> to define your first step.</p>
     </div>`;
 
-    function buildDateGroupShell(dateKey, colorIdx, cards, noteContent, hasMarker, allHidden) {
+    function buildDateGroupShell(dateKey, colorIdx, cards, noteContent, hasMarker, allHidden, noteMediaJson) {
         const isNoDate = dateKey === '__no-date__';
         const dateObj = isNoDate ? null : parseLocalDate(dateKey);
         const count = cards.length;
@@ -1454,7 +1454,14 @@ document.addEventListener('DOMContentLoaded', () => {
             ? `<span class="date-header-day">${DAY_SHORT[dateObj.getDay()]}</span><span class="date-header-date${rangeShort ? ' has-range' : ''}"><span class="dh-long">${esc(prettyDate(dateKey))}</span><span class="dh-short">${esc(dateShort)}</span>${rangeShort ? `<span class="dh-rangeshort">${esc(rangeShort)}</span>` : ''}</span>${rangeBadge}`
             : '<span class="date-header-date">No date</span>';
 
-        const hasNote = !isNoDate && (noteContent || '') !== '';
+        // A day note can be attachments alone — chips with no words are
+        // still a note, and hiding the block would hide them with it. The
+        // chips are built first so "has a note" can mean "has something to
+        // SHOW": media that renders no chip must not leave a blank block.
+        let noteMediaArr = [];
+        try { noteMediaArr = JSON.parse(noteMediaJson || '[]') || []; } catch (_) { noteMediaArr = []; }
+        const noteChipsHtml = noteMediaArr.length ? inlineAttachments(noteMediaArr) : '';
+        const hasNote = !isNoDate && ((noteContent || '') !== '' || noteChipsHtml !== '');
         const buttons = isNoDate ? '' : `
             <button type="button" class="date-header-btn group-add-activity-btn" data-date="${esc(dateKey)}" title="Add a new activity to this date">${SVG.plus}</button>
             <span class="hidden md:flex items-center gap-0.5">
@@ -1468,8 +1475,12 @@ document.addEventListener('DOMContentLoaded', () => {
             </span>
             <button type="button" class="date-header-btn day-menu-btn md:hidden" data-date="${esc(dateKey)}" title="More actions for this day">${SVG.kebab}</button>`;
 
+        // Chips sit BESIDE the inner, not in it — the phone clamps the inner
+        // to one line and chips inside it were trimmed away with the words.
+        // Twin of the date-note-block markup in activities.blade.php.
+        const noteChips = noteChipsHtml ? `<div class="date-note-media">${noteChipsHtml}</div>` : '';
         const noteBlock = isNoDate ? ''
-            : `<div class="date-note-block" data-date="${esc(dateKey)}" data-content="${esc(noteContent || '')}" data-media="[]" title="Drag to place it between activities · click to edit"${hasNote ? '' : ' style="display:none;"'}><div class="date-note-inner rich-text">${noteContent || ''}</div>${DATE_NOTE_EDIT}${DATE_NOTE_DEL}</div>`;
+            : `<div class="date-note-block" data-date="${esc(dateKey)}" data-content="${esc(noteContent || '')}" data-media="${esc(JSON.stringify(noteMediaArr))}" title="Drag to place it between activities · click to edit"${hasNote ? '' : ' style="display:none;"'}><div class="date-note-inner rich-text">${noteContent || ''}</div>${noteChips}${DATE_NOTE_EDIT}${DATE_NOTE_DEL}</div>`;
         const expenseBlock = isNoDate ? ''
             : `<div class="day-expense-block" data-date="${esc(dateKey)}"></div>`
               + `<div class="day-income-block" data-date="${esc(dateKey)}" hidden></div>`;
@@ -1607,8 +1618,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // edit and delete buttons, and feeding them back in nested a copy
             // of the note inside itself and doubled its buttons every reorder.
             const content = (el.querySelector('.date-note-inner')?.innerHTML || '').trim();
-            if (key && el.style.display !== 'none' && content !== '') {
-                notesByDate[key] = { html: content, media: el.getAttribute('data-media') || '[]' };
+            // Attachments count as content: a chips-only note that was kept
+            // out of the snapshot vanished from the board on every reorder.
+            const media = el.getAttribute('data-media') || '[]';
+            let hasMedia = false;
+            try { hasMedia = (JSON.parse(media) || []).length > 0; } catch (_) { hasMedia = false; }
+            if (key && el.style.display !== 'none' && (content !== '' || hasMedia)) {
+                notesByDate[key] = { html: content, media };
             }
         });
         // Inline notes sit BETWEEN the cards, so the wipe below takes them with
@@ -1644,9 +1660,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const markerInfo = key !== '__no-date__' ? (markersByDate[key] || null) : null;
             const noteInfo = notesByDate[key] || null;
-            const groupEl = buildDateGroupShell(key, item.color, groupCards, noteInfo ? noteInfo.html : '', !!markerInfo, allHidden);
-            const noteEl = $qs('.date-note-block', groupEl);
-            if (noteEl && noteInfo) noteEl.setAttribute('data-media', noteInfo.media);
+            const groupEl = buildDateGroupShell(key, item.color, groupCards, noteInfo ? noteInfo.html : '', !!markerInfo, allHidden, noteInfo ? noteInfo.media : '[]');
             const holder = $qs('.date-activities', groupEl);
             groupCards.forEach((el) => holder.appendChild(el));
             // The day's inline notes go back between the cards they belonged
@@ -3752,8 +3766,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const clone = el.cloneNode(true);
         clone.removeAttribute('draggable');
         // Strip the controls: this is somewhere to read, and its own footer
-        // carries the one action that makes sense from here.
-        clone.querySelectorAll('button, [data-sheet-open], .inline-note-grip').forEach((n) => n.remove());
+        // carries the one action that makes sense from here. Attachment chips
+        // (.na) stay — opening a photo or a map is reading, not editing.
+        clone.querySelectorAll('button:not(.na), [data-sheet-open], .inline-note-grip').forEach((n) => n.remove());
         clone.classList.remove('is-editing');
         body.innerHTML = '';
         body.appendChild(clone);
@@ -5031,7 +5046,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function _dateNoteContentFor(dateKey) {
         const block = $qs(`#activitiesList .date-note-block[data-date="${dateKey}"]`);
         if (!block || block.style.display === 'none') return '';
-        return (block.getAttribute('data-content') || block.innerHTML || '').trim();
+        // data-content is authoritative WHEN PRESENT, empty included: an
+        // attachments-only note has "" there, and falling through || to
+        // block.innerHTML fed the note's own chrome — chips, edit and delete
+        // buttons — back into the editor as if it were the note's words.
+        if (block.hasAttribute('data-content')) return (block.getAttribute('data-content') || '').trim();
+        return (block.innerHTML || '').trim();
     }
     function _dateNoteMediaFor(dateKey) {
         const block = $qs(`#activitiesList .date-note-block[data-date="${dateKey}"]`);
@@ -5053,8 +5073,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const inner = block.querySelector('.date-note-inner') || block;
             // Tags, not tiles: a drawing attached to a day's note is a thing
             // the note refers to, and a full-width picture of it buries the
-            // words that explain why it is there.
-            inner.innerHTML = safe + (mediaArr.length ? inlineAttachments(mediaArr) : '');
+            // words that explain why it is there. The chips live NEXT TO the
+            // inner, not in it — the phone clamps the inner to one line, and
+            // chips inside it were trimmed away with the words.
+            inner.innerHTML = safe;
+            let mediaBox = block.querySelector('.date-note-media');
+            if (mediaArr.length) {
+                if (!mediaBox) {
+                    mediaBox = document.createElement('div');
+                    mediaBox.className = 'date-note-media';
+                    inner.after(mediaBox);
+                }
+                mediaBox.innerHTML = inlineAttachments(mediaArr);
+            } else if (mediaBox) {
+                mediaBox.remove();
+            }
             block.style.display = has ? '' : 'none';
         }
     }
@@ -5188,7 +5221,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dnDel) { e.preventDefault(); e.stopPropagation(); const b = dnDel.closest('.date-note-block'); if (b) confirmDeleteDateNote(b.getAttribute('data-date') || ''); return; }
         // Click the note body to edit it in the modal editor.
         const block = e.target.closest('.date-note-block[data-date]');
-        if (block && block.style.display !== 'none' && !e.target.closest('a, .nm, .date-note-edit, .date-note-del')) {
+        if (block && block.style.display !== 'none' && !e.target.closest('a, .na, .nm, .date-note-edit, .date-note-del')) {
             e.preventDefault();
             const dk = block.getAttribute('data-date') || '';
             // Same rule as the inline note: on a phone the body is clamped to
@@ -5276,9 +5309,11 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.disabled = true;
         try {
             const res = await api(U.dateNoteSave(), { method: 'POST', body: { noteDate: dateKey, noteContent: content } });
-            const saved = (res && res.data && res.data.noteContent != null) ? res.data.noteContent : content;
-            _refreshDateNoteUI(dateKey, saved);
-            toast((saved || '').trim() === '' ? 'Note cleared.' : 'Note saved.');
+            // This sheet edits only the words; the server keeps the note's
+            // attachments and its answer says what the note now holds.
+            const d = res && res.data;
+            _refreshDateNoteUI(dateKey, d ? (d.noteContent || '') : '', d ? (d.media || []) : []);
+            toast(d ? 'Note saved.' : 'Note cleared.');
             closeSheet('dateNoteSheet');
         } catch (err) {
             toast(err.message, 'error');
@@ -5887,16 +5922,21 @@ document.addEventListener('DOMContentLoaded', () => {
     async function moveNoteToDate(sourceDate, targetDate) {
         if (!sourceDate || !targetDate || sourceDate === targetDate) return;
         const content = _dateNoteContentFor(sourceDate);
-        if (!content) return;
-        if (_dateNoteContentFor(targetDate)) { toast('That day already has a note.', 'error'); return; }
+        // The attachments move WITH the note — posting only the words was
+        // silently deleting every chip the note carried, and a chips-only
+        // note could not be moved at all.
+        const media = _dateNoteMediaFor(sourceDate);
+        if (!content && !media.length) return;
+        if (_dateNoteContentFor(targetDate) || _dateNoteMediaFor(targetDate).length) { toast('That day already has a note.', 'error'); return; }
         const srcBlk = $qs(`#activitiesList .date-note-block[data-date="${sourceDate}"]`);
         _setMoving(srcBlk, true);
         try {
-            await api(U.dateNoteSave(), { method: 'POST', body: { noteDate: targetDate, noteContent: content } });
+            const mediaSend = media.map((m) => ({ type: m.type, path: m.path, poster: m.poster || null, strokes: m.strokes || null }));
+            await api(U.dateNoteSave(), { method: 'POST', body: { noteDate: targetDate, noteContent: content, media: mediaSend } });
             await api(U.dateNoteDelete(), { method: 'DELETE', body: { noteDate: sourceDate } });
             _setMoving(srcBlk, false);
-            _refreshDateNoteUI(sourceDate, '');
-            _refreshDateNoteUI(targetDate, content);
+            _refreshDateNoteUI(sourceDate, '', []);
+            _refreshDateNoteUI(targetDate, content, media);
             _land($qs(`#activitiesList .date-note-block[data-date="${targetDate}"]`));
             toast('Note moved to ' + prettyDate(targetDate) + '.');
         } catch (err) { _setMoving(srcBlk, false); toast(err.message || 'Could not move the note.', 'error'); }
@@ -6116,7 +6156,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const edit = e.target.closest && e.target.closest('.inline-note-edit');
         if (edit) { e.preventDefault(); const note = edit.closest('.inline-note'); if (note) openInlineNoteEditor(note); return; }
         const note = e.target.closest && e.target.closest('.inline-note');
-        if (note && !e.target.closest('.inline-note-grip, .nm, a')) {
+        if (note && !e.target.closest('.inline-note-grip, .na, .nm, a')) {
             // Clamped to one line on a phone, so a tap means "let me read it".
             // Editing is a button away, here and in the sheet's footer.
             if (window.matchMedia('(pointer: coarse)').matches && !note.classList.contains('is-editing')) {
@@ -6155,7 +6195,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         document.addEventListener('pointerdown', (e) => {
             if (e.button != null && e.button !== 0) return;
-            if (e.target.closest && e.target.closest('.inline-note-del, .inline-note-edit, .date-note-edit, .date-note-del, .nm, a')) return;
+            if (e.target.closest && e.target.closest('.inline-note-del, .inline-note-edit, .date-note-edit, .date-note-del, .na, .nm, a')) return;
             const inlineNote = e.target.closest && e.target.closest('.inline-note[data-inline-note]');
             const dateNote = inlineNote ? null : (e.target.closest && e.target.closest('.date-note-block[data-date]'));
             const note = inlineNote || dateNote;

@@ -8,6 +8,12 @@
             'url' => \App\Support\MediaStore::url($m['path']),
             'poster' => $m['poster'] ?? null,
             'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
+            // The saved map this picture came from, when the page knows it —
+            // the chip then opens the map itself rather than just its picture.
+            'mapUrl' => ($mapUrlByPath ?? [])[$m['path']] ?? null,
+            // Strokes ride along in data-media (the JS twin keeps them too),
+            // or editing the note would save the drawing back flattened.
+            'strokes' => ($m['type'] ?? '') === 'drawing' ? ($m['strokes'] ?? null) : null,
         ])
         ->filter()->values();
 @endphp

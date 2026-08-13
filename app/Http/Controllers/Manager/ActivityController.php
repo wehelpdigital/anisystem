@@ -92,6 +92,8 @@ class ActivityController extends BaseScheduleController
             'schedule'          => $schedule,
             'draftsCount'       => $draftsCount,
             'dateNotesByDate'   => $dateNotesByDate,
+            // Where a note's map attachment leads: its saved map in Maps.
+            'mapUrlByPath'      => $this->mapUrlByPath($schedule->id),
             'inlineNotesByDate' => $inlineNotesByDate,
             'expensesByDate'    => $expensesByDate,
             'markersByDate'     => $markersByDate,
@@ -1342,13 +1344,20 @@ class ActivityController extends BaseScheduleController
         // Notes are rich text from the WYSIWYG editor — sanitize like activity
         // descriptions. No text, no drawing and no media clears the note.
         $content = \App\Support\HtmlSanitizer::rich($request->input('noteContent'));
-        $media = $this->normalizeNoteMedia($request->input('media'));
 
         $existing = AsScheduleDateNote::active()
             ->forSchedule($schedule->id)
             ->forVersion($versionId)
             ->whereDate('noteDate', $noteDate)
             ->first();
+
+        // A request that says nothing about media is editing the words only —
+        // the plain note sheet and "move note to date" both did, and writing
+        // null over the media deleted every attachment the note carried.
+        // Clearing attachments is said explicitly with media: [].
+        $media = $request->has('media')
+            ? $this->normalizeNoteMedia($request->input('media'))
+            : (is_array($existing?->media) && $existing->media !== [] ? $existing->media : null);
 
         if (! $this->noteHasBody($content) && empty($media)) {
             if ($existing) {
@@ -1378,7 +1387,7 @@ class ActivityController extends BaseScheduleController
                 'id'          => $note->id,
                 'noteDate'    => $note->noteDate->format('Y-m-d'),
                 'noteContent' => $note->noteContent,
-                'media'       => $this->mediaWithUrls($note->media),
+                'media'       => $this->mediaWithUrls($note->media, $schedule->id),
             ],
         ]);
     }
@@ -1489,7 +1498,7 @@ class ActivityController extends BaseScheduleController
                 'sortKey'  => $note->sortKey,
                 'title'    => $note->title,
                 'content'  => $note->content,
-                'media'    => $this->mediaWithUrls($note->media),
+                'media'    => $this->mediaWithUrls($note->media, $schedule->id),
             ],
         ]);
     }
@@ -1518,8 +1527,10 @@ class ActivityController extends BaseScheduleController
     }
 
     /** Resolve each stored media item's path/poster to a public URL. */
-    private function mediaWithUrls($media): array
+    private function mediaWithUrls($media, ?int $scheduleId = null): array
     {
+        $mapUrls = $scheduleId ? $this->mapUrlByPath($scheduleId) : [];
+
         return collect(is_array($media) ? $media : [])
             ->map(fn ($m) => [
                 'type' => $m['type'] ?? 'image',
@@ -1528,9 +1539,50 @@ class ActivityController extends BaseScheduleController
                 'strokes' => $m['strokes'] ?? null,
                 'url' => ! empty($m['path']) ? \App\Support\MediaStore::url($m['path']) : null,
                 'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
+                // A map chip should open THE map, not the module's front door
+                // — the saved map whose filed picture this attachment is.
+                'mapUrl' => $mapUrls[$m['path'] ?? ''] ?? null,
             ])
             ->filter(fn ($m) => $m['url'])
             ->values()->all();
+    }
+
+    /** @var array<int, array<string, string>> per-request cache, keyed by schedule */
+    private array $mapUrlsCache = [];
+
+    /**
+     * Picture path → "open this saved map" URL. A map attachment stores only
+     * the picture a save filed in the notebook; the save it came from is what
+     * the Maps module can actually reopen, so the link is recovered by
+     * matching that picture back to its save.
+     */
+    private function mapUrlByPath(int $scheduleId): array
+    {
+        if (isset($this->mapUrlsCache[$scheduleId])) {
+            return $this->mapUrlsCache[$scheduleId];
+        }
+
+        $saves = \App\Models\ScheduleMapSave::active()
+            ->where('scheduleId', $scheduleId)
+            ->orderByDesc('id')
+            ->get(['id', 'noteId']);
+        $notes = \App\Models\AsScheduleNote::active()
+            ->whereIn('id', $saves->pluck('noteId')->filter()->all())
+            ->get()->keyBy('id');
+
+        $byPath = [];
+        foreach ($saves as $save) {
+            $note = $save->noteId ? $notes->get($save->noteId) : null;
+            foreach ((is_array($note?->media) ? $note->media : []) as $m) {
+                $path = (string) ($m['path'] ?? '');
+                $isMap = ($m['type'] ?? '') === 'map' || preg_match('~/map-[A-Za-z0-9]+\.png$~', $path);
+                if ($path !== '' && $isMap && ! isset($byPath[$path])) {
+                    $byPath[$path] = route('sm.maps', ['id' => $scheduleId, 'save' => $save->id]);
+                }
+            }
+        }
+
+        return $this->mapUrlsCache[$scheduleId] = $byPath;
     }
 
     /** Soft-delete a positioned inline note. */

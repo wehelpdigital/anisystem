@@ -15,17 +15,42 @@
 @if ($atts->count())
     <div class="note-atts">
         @foreach ($atts as $m)
-            @php $type = $m['type'] ?? 'image'; @endphp
-            @if ($type === 'map' && ! empty($m['mapUrl']))
-                <a class="na na-map" href="{{ $m['mapUrl'] }}" title="Open this map in the Maps module">
+            @php
+                $type = $m['type'] ?? 'image';
+                // A map saved before the type existed is known by the filename
+                // the map save writes, so old attachments read as maps too.
+                if ($type !== 'map' && preg_match('~/map-[A-Za-z0-9]+\.png$~', (string) ($m['path'] ?? $m['url'] ?? ''))) {
+                    $type = 'map';
+                }
+            @endphp
+            @if ($type === 'map' && (! empty($m['mapUrl']) || ! empty($m['url'])))
+                {{-- With no saved map to reopen, the picture of it still
+                     opens — a dead chip reads as a broken note. --}}
+                @if (! empty($m['mapUrl']))
+                    <a class="na na-map" href="{{ $m['mapUrl'] }}" title="Open this map in the Maps module">
+                @else
+                    <button type="button" class="na na-map" data-lb-type="image" data-lb-url="{{ $m['url'] }}" title="Open this map picture">
+                @endif
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
                     <span>Map</span>
-                </a>
+                @if (! empty($m['mapUrl']))
+                    </a>
+                @else
+                    </button>
+                @endif
             @elseif ($type === 'drawing')
-                <a class="na na-draw" href="{{ $m['drawUrl'] ?? '#' }}" title="Open this drawing in the Draw module">
+                @if (! empty($m['drawUrl']))
+                    <a class="na na-draw" href="{{ $m['drawUrl'] }}" title="Open this drawing in the Draw module">
+                @else
+                    <button type="button" class="na na-draw" data-lb-type="image" data-lb-url="{{ $m['url'] }}" title="Open this drawing">
+                @endif
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L20 7a2 2 0 00-3-3L5 16l-1 4zM14 6l4 4"/></svg>
                     <span>Drawing</span>
-                </a>
+                @if (! empty($m['drawUrl']))
+                    </a>
+                @else
+                    </button>
+                @endif
             @elseif ($type === 'video')
                 <button type="button" class="na na-video" data-lb-type="video" data-lb-url="{{ $m['url'] }}" data-lb-poster="{{ $m['posterUrl'] ?? '' }}" title="Play this video">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg>

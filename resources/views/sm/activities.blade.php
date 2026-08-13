@@ -848,13 +848,23 @@
         .inline-note-body p { margin: .15rem 0; }
         .inline-note-body ul { list-style: disc; padding-left: 1.15rem; }
         .inline-note-body ol { list-style: decimal; padding-left: 1.3rem; }
-        .inline-note-media:not(:has(.nm)) { display: none; }
-        .inline-note-media { display: grid; grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr)); gap: .35rem; margin-top: .4rem; }
+        /* Attachments are chips (.na) by default; the grid-of-tiles rules
+           apply only when thumbnails (.nm) are actually inside. The old
+           :has(.nm) visibility test silently hid a wrapper full of chips —
+           which is why note attachments seemed to vanish from the board. */
+        .inline-note-media:not(:has(.nm, .na)) { display: none; }
+        .inline-note-media { margin-top: .4rem; }
+        .inline-note-media:has(.nm) { display: grid; grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr)); gap: .35rem; }
         .inline-note-media .nm { position: relative; border-radius: .45rem; overflow: hidden; background: #000; aspect-ratio: 1; }
         .inline-note-media .nm img, .inline-note-media .nm video { width: 100%; height: 100%; object-fit: cover; display: block; }
-        /* Per-day (amber) note media gallery — same look. */
-        .date-note-block .date-note-media:empty { display: none; }
-        .date-note-block .date-note-media { display: grid; grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr)); gap: .35rem; margin-top: .4rem; white-space: normal; }
+        /* Per-day (amber) note attachments — same look. */
+        .date-note-block .date-note-media:not(:has(.nm, .na)) { display: none; }
+        /* Same right-hand gutter the inner reserves: the edit/delete buttons
+           are absolutely positioned over that corner, and on a chips-only
+           note the collapsed inner puts the chip row exactly under them. */
+        .date-note-block .date-note-media { margin-top: .4rem; white-space: normal; padding-right: 4.9rem; }
+        .date-note-block .date-note-media .note-atts { margin-top: 0; }
+        .date-note-block .date-note-media:has(.nm) { display: grid; grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr)); gap: .35rem; }
         .date-note-block .date-note-media .nm { position: relative; border-radius: .45rem; overflow: hidden; background: #000; aspect-ratio: 1; }
         .date-note-block .date-note-media .nm img, .date-note-block .date-note-media .nm video { width: 100%; height: 100%; object-fit: cover; display: block; }
         .date-note-block img { max-width: 100%; max-height: 10rem; border-radius: .4rem; }
@@ -2334,6 +2344,11 @@
                     <div class="date-body"><div class="date-body-inner">
                     @if ($dateKey !== '__no-date__')
                         @php
+                            // Chips, not tiles — mirrored by _refreshDateNoteUI
+                            // and buildDateGroupShell in the JS renderer. The
+                            // wrapper sits OUTSIDE .date-note-inner so the
+                            // phone's one-line clamp trims the words, not the
+                            // way into the attachments.
                             $dnMedia = collect(is_array($noteRow?->media) ? $noteRow->media : [])
                                 ->map(fn ($m) => empty($m['path']) ? null : [
                                     'type' => $m['type'] ?? 'image',
@@ -2341,9 +2356,14 @@
                                     'url' => \App\Support\MediaStore::url($m['path']),
                                     'poster' => $m['poster'] ?? null,
                                     'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
+                                    'mapUrl' => ($mapUrlByPath ?? [])[$m['path']] ?? null,
+                                    // The strokes ride along in data-media (as the JS
+                                    // twin's does) or re-editing the note would save
+                                    // the drawing back flattened.
+                                    'strokes' => ($m['type'] ?? '') === 'drawing' ? ($m['strokes'] ?? null) : null,
                                 ])->filter()->values();
                         @endphp
-                        <div class="date-note-block" data-date="{{ $dateKey }}" data-content="{{ $noteRow?->noteContent }}" data-media="{{ $dnMedia->toJson() }}" title="Drag to place it between activities · click to edit" @if(!$noteRow) style="display:none;" @endif><div class="date-note-inner rich-text">{!! $noteRow?->noteContent !!}@if ($dnMedia->count())<div class="date-note-media">@include('sm.partials.note-media', ['media' => $dnMedia])</div>@endif</div><button type="button" class="date-note-edit" title="Edit note" aria-label="Edit note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button type="button" class="date-note-del" title="Delete note" aria-label="Delete note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg></button></div>
+                        <div class="date-note-block" data-date="{{ $dateKey }}" data-content="{{ $noteRow?->noteContent }}" data-media="{{ $dnMedia->toJson() }}" title="Drag to place it between activities · click to edit" @if(!$noteRow) style="display:none;" @endif><div class="date-note-inner rich-text">{!! $noteRow?->noteContent !!}</div>@if ($dnMedia->count())<div class="date-note-media">@include('sm.partials.note-attachments', ['media' => $dnMedia])</div>@endif<button type="button" class="date-note-edit" title="Edit note" aria-label="Edit note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button type="button" class="date-note-del" title="Delete note" aria-label="Delete note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg></button></div>
                         <div class="day-expense-block" data-date="{{ $dateKey }}"></div>
                         <div class="day-income-block" data-date="{{ $dateKey }}" hidden></div>
                     @endif
@@ -2453,12 +2473,20 @@
         documentation: { label: 'Documentation', url: @json(route('sm.documentation', ['id' => $schedule->id])) },
         'post-harvest': { label: 'Post-harvest', url: @json(route('sm.post-harvest',  ['id' => $schedule->id])) },
         notes:         { label: 'Notes',         url: @json(route('sm.notes',        ['id' => $schedule->id])) },
-        maps:          { label: 'Maps',          url: @json(route('sm.maps',         ['id' => $schedule->id])) },
+        // sticky: the pane holds a booted Google map that cannot survive
+        // re-injection (its script guards itself against running twice), so a
+        // deep link is HANDED to the kept pane via window.smModuleDeepLink
+        // instead of re-fetching it.
+        maps:          { label: 'Maps',          url: @json(route('sm.maps',         ['id' => $schedule->id])), sticky: true },
         draw:          { label: 'Draw',          url: @json(route('sm.draw',         ['id' => $schedule->id])) },
         // Kept as an alias: 'media' was the Media Box, which is now the
         // Gallery's first tab. Old links and bookmarks still land right.
         media:         { label: 'Gallery',       url: @json(route('sm.gallery',      ['id' => $schedule->id])) },
-        growth:        { label: 'Growth Stages', url: @json(route('sm.growth',       ['id' => $schedule->id])) },
+        // fresh: the page is a computed reading of the other modules' data
+        // (lot day types, day-zero activities). A pane kept from before a lot
+        // changed goes on reporting the old counter, so it re-fetches on
+        // every open instead of being served from the cache.
+        growth:        { label: 'Growth Stages', url: @json(route('sm.growth',       ['id' => $schedule->id])), fresh: true },
         gallery:       { label: 'Gallery',       url: @json(route('sm.gallery',      ['id' => $schedule->id])) },
         weather:       { label: 'Weather',       url: @json(route('sm.weather.page', ['id' => $schedule->id])) },
         ai:            { label: 'AI Technician', url: @json(route('sm.ai',           ['id' => $schedule->id])) },
@@ -2550,16 +2578,39 @@
         if (!MODULES[key]) { closeModulesSheetForNav(); return; }
         // Only a deep link sets this, and only from somewhere else.
         cameFrom = extra && current && current !== key ? current : (extra ? cameFrom : null);
+        // What to do with the pane once the module is on screen — a sticky
+        // module takes its deep link by hand instead of by re-fetch.
+        let handOffExtra = null;
         if (extra) {
-            const had = loaded.get(key);
-            if (had) { had.remove(); loaded.delete(key); }
+            const handler = MODULES[key].sticky && loaded.has(key)
+                && window.smModuleDeepLink && window.smModuleDeepLink[key];
+            if (handler) {
+                // The kept pane cannot be rebuilt (it owns a booted map), so
+                // the query is delivered to it after it is shown again.
+                handOffExtra = () => handler(extra);
+            } else {
+                const had = loaded.get(key);
+                if (had) { had.remove(); loaded.delete(key); }
+                if (key === current) current = null;
+            }
+        }
+        // A fresh module is fetched every time it is opened — its page is a
+        // reading of data the other modules change, and the kept pane keeps
+        // saying whatever was true when it was first loaded. (fresh and
+        // sticky must never meet on one module: dropping the pane here would
+        // leave handOffExtra above holding a handler from the dead copy.)
+        if (MODULES[key].fresh && loaded.has(key)) {
+            loaded.get(key).remove();
+            loaded.delete(key);
             if (key === current) current = null;
         }
         // Only refuse to re-open a module that is genuinely showing. The flag
         // and the screen can come apart — a popstate that names a module, a
         // load that ended badly — and when they do, refusing on the flag alone
         // leaves a button that does nothing for the rest of the session.
-        if (key === current && isShowing(key)) { closeModulesSheetForNav(); return; }
+        // A deep link still gets delivered: "already open" is not "already
+        // showing the thing the link names".
+        if (key === current && isShowing(key)) { closeModulesSheetForNav(); if (handOffExtra) handOffExtra(); return; }
         if (busy) { closeModulesSheetForNav(); return; }
         busy = true;
         closeModulesSheetForNav();
@@ -2587,7 +2638,9 @@
                 loaded.delete(key);
                 el.remove();
                 busy = false;
-                return showModule(key, push);
+                // The deep link rides along, or the re-fetch lands on the
+                // module's front door instead of the thing that was tapped.
+                return showModule(key, push, extra);
             }
         } else {
             // Just "Loading…". Naming the module in the loader read as a
@@ -2635,8 +2688,12 @@
             loaded.delete(key);
             current = null;
             busy = false;
-            return showModule(key, push);
+            return showModule(key, push, extra);
         }
+
+        // The kept pane has the screen again — hand it the deep link it was
+        // asked for, now that the thing that answers it is visible.
+        if (handOffExtra) handOffExtra();
 
         // Keep the prefix in its own span so CSS can drop it on phones; using
         // textContent here would flatten it away on the first module switch.
@@ -2662,6 +2719,9 @@
         document.querySelectorAll('#modulesSheet .module-nav-row').forEach((row) => {
             row.querySelector('.module-nav-check')?.classList.toggle('hidden', row.dataset.module !== key);
         });
+        // Tell the module it is on screen — a kept pane may want to refresh
+        // what it shows (the Maps shelf re-reads its saved maps, for one).
+        document.dispatchEvent(new CustomEvent('sm:module-shown', { detail: { key } }));
         if (push) { history.pushState({ module: key }, '', shellUrl(key)); pushDepth++; }
         // Returning to Activities restores your prior scroll; other modules start at the top.
         if (key === 'activities') {
@@ -2683,8 +2743,13 @@
     document.addEventListener('click', (e) => {
         const row = e.target.closest('#modulesSheet .module-nav-row');
         if (row) { showModule(row.dataset.module); return; }
-        // Module chip-nav links inside an injected partial stay in the shell.
-        const link = e.target.closest('#moduleHost a[href]');
+        // ANY module link on the page stays in the shell — a note chip on the
+        // activities board or in a read sheet is as much a module link as one
+        // inside an injected partial, and letting it navigate tore the shell
+        // down. The MODULES lookup below keeps every other link ordinary, and
+        // so does a modified click that asks for a new tab.
+        if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+        const link = e.target.closest('a[href]');
         if (link) {
             const hit = Object.keys(MODULES).find((k) => link.href.split('?')[0] === MODULES[k].url.split('?')[0]);
             if (hit) {

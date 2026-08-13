@@ -134,14 +134,25 @@
             map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>',
         };
         const cells = items.map((m) => {
+            // Only the item's OWN links are honoured — a page-level fallback
+            // here made the chips diverge from the Blade twin the moment
+            // another module's script had set the globals. A page that wants
+            // a module link supplies it per item (see attachmentsOf in the
+            // Notes module).
             const looksLikeMap = m.type === 'map' || /\/map-[A-Za-z0-9]+\.png$/.test(m.path || m.url || '');
             if (looksLikeMap) {
-                const href = m.mapUrl || window.NOTE_MAP_URL || '#';
-                return `<a class="na na-map" href="${esc(href)}" title="Open this map in the Maps module">${ICON.map}<span>Map</span></a>`;
+                // No saved map to reopen (a day note's attachment, an orphaned
+                // save): the picture of it still opens rather than a dead '#'.
+                if (!m.mapUrl && m.url) {
+                    return `<button type="button" class="na na-map" data-lb-type="image" data-lb-url="${esc(m.url)}" title="Open this map picture">${ICON.map}<span>Map</span></button>`;
+                }
+                return `<a class="na na-map" href="${esc(m.mapUrl || '#')}" title="Open this map in the Maps module">${ICON.map}<span>Map</span></a>`;
             }
             if (m.type === 'drawing') {
-                const href = m.drawUrl || window.NOTE_DRAW_URL || '#';
-                return `<a class="na na-draw" href="${esc(href)}" title="Open this drawing in the Draw module">${ICON.draw}<span>Drawing</span></a>`;
+                if (!m.drawUrl && m.url) {
+                    return `<button type="button" class="na na-draw" data-lb-type="image" data-lb-url="${esc(m.url)}" title="Open this drawing">${ICON.draw}<span>Drawing</span></button>`;
+                }
+                return `<a class="na na-draw" href="${esc(m.drawUrl || '#')}" title="Open this drawing in the Draw module">${ICON.draw}<span>Drawing</span></a>`;
             }
             if (m.type === 'video') {
                 return `<button type="button" class="na na-video" data-lb-type="video" data-lb-url="${esc(m.url || '')}" data-lb-poster="${esc(m.posterUrl || '')}" title="Play this video">${ICON.video}<span>Video</span></button>`;

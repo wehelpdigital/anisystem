@@ -298,7 +298,11 @@
     $('noteEditorSave').addEventListener('click', () => {
         const raw = quill ? quill.root.innerHTML : '';
         const body = (raw === '<p><br></p>' || raw.trim() === '') ? '' : raw;
-        const payloadMedia = media.map((m) => ({ type: m.type, path: m.path, poster: m.poster || null }));
+        // The whole item goes back, urls and strokes included: the server
+        // keeps only what it stores, but the caller repaints its chips from
+        // this array and a stripped one rendered none until the next reload —
+        // and dropping strokes here was flattening every edited drawing.
+        const payloadMedia = media.map((m) => Object.assign({}, m, { poster: m.poster || null, strokes: m.strokes || null }));
         const wantTitle = !$('noteEditorTitleWrap').hidden;
         const noteTitle = ($('noteEditorTitleInput').value || '').trim();
         if (wantTitle && !noteTitle) {

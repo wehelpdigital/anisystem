@@ -671,12 +671,15 @@ const __init = () => {
         if (host && window.plazaClearVideo) window.plazaClearVideo(host);
     });
 
-    /** Everything this note carries, with a drawing knowing where it lives. */
+    /** Everything this note carries, with a drawing knowing where it lives.
+        Map chips get this page's front-door link when the item brings none —
+        the chip builder itself no longer falls back to page globals. */
     function attachmentsOf(n) {
         const items = [];
         if (n.imageUrl) items.push({ type: 'image', url: n.imageUrl });
         (n.media || []).forEach((m, i) => items.push(Object.assign({}, m, {
             drawUrl: m.type === 'drawing' ? DRAW_URL + '&open=' + n.id + ':' + i : null,
+            mapUrl: m.mapUrl || ((m.type === 'map' || /\/map-[A-Za-z0-9]+\.png$/.test(m.path || m.url || '')) ? window.NOTE_MAP_URL : null),
         })));
         return items;
     }
