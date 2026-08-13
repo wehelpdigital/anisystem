@@ -28,7 +28,7 @@
 
 @section('content')
 <div class="flex items-center justify-between gap-2 mb-4">
-    <p class="text-sm text-gray-500">All your notes — global, per-schedule and per-day — in one place.</p>
+    <p class="text-sm text-gray-500">All your notes — global, per-schedule and per-day — in one place, tags and all.</p>
     <button type="button" id="addNoteBtn" class="btn btn-primary btn-sm shrink-0">＋ New note</button>
 </div>
 

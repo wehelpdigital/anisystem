@@ -117,6 +117,10 @@
 
 @section('content')
 @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'notes'])
+@include('sm.partials.module-note', [
+    'say' => 'A note is words first. A drawing or a map attached here shows as a tag — the picture itself lives in Drawings or Maps, and opens there.',
+    'sayLink' => ['label' => 'See every note, from every schedule', 'href' => route('notes.hub')],
+])
 
 {{-- One bar: find a note, fold the lot, write a new one. Three separate
      blocks of chrome — a full-width slab, a bare input and a loose button —

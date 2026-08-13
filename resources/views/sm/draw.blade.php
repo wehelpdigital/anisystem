@@ -52,6 +52,9 @@
 @endpush
 
 @section('content')
+    @include('sm.partials.module-note', [
+        'say' => 'Every drawing in this schedule — your own and the team’s. Each one is kept as an attachment on a note, so the tag on a card opens the words that explain it.',
+    ])
     <div class="dr-grid" id="drGrid"></div>
     <p class="dr-empty hidden" id="drEmpty">Nothing drawn yet. Start one above — save it as a picture, or as a drawing you can come back and change.</p>
 

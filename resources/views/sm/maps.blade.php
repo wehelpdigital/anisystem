@@ -69,6 +69,9 @@
 @endpush
 
 @section('content')
+    @include('sm.partials.module-note', [
+        'say' => 'The team’s map, and every plan saved from it. A saved map files its picture in the notebook, so a save can carry a note explaining what it was for.',
+    ])
     <div class="smap-stage">
         @include('sm.partials.schedule-map', ['schedule' => $schedule])
     </div>

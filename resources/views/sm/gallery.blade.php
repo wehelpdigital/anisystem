@@ -121,6 +121,9 @@
 
 @section('content')
 @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'gallery'])
+@include('sm.partials.module-note', [
+    'say' => 'Every picture the season produced, wherever it was taken — notes, days, drawings, maps, the AI — plus the albums you put together yourself. Nothing here is a copy: delete a photo where it lives and it leaves here too.',
+])
 
 {{-- Two questions, two tabs: everything the season has a picture of, and
      the ones you put together on purpose. --}}
