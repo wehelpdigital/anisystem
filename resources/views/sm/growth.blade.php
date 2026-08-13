@@ -58,7 +58,14 @@
 
     .gr-blocked { padding: .9rem; font-size: .83rem; line-height: 1.5; color: var(--color-gray-500);
         background: var(--color-gray-50); border-radius: .7rem; }
-    .gr-foot { font-size: .72rem; color: var(--color-gray-400); text-align: center; margin: .6rem 0 0; }
+    .gr-note { display: flex; gap: .6rem; align-items: flex-start; margin: .2rem 0 .6rem;
+        padding: .7rem .8rem; border-radius: .8rem; background: #fffbeb; border: 1px solid #fde68a; }
+    .gr-note p { font-size: .78rem; line-height: 1.5; color: #92400e; margin: 0; }
+    .gr-note-ico { flex: 0 0 auto; color: #b45309; }
+    .gr-note-ico svg { width: 1.1rem; height: 1.1rem; }
+    html.dark .gr-note { background: rgb(180 83 9 / .16); border-color: rgb(180 83 9 / .45); }
+    html.dark .gr-note p { color: #fcd34d; }
+    html.dark .gr-note-ico { color: #fcd34d; }
 
     html.dark .gr-card { background: #151b12; border-color: #2b3a1c; }
     html.dark .gr-top { background: linear-gradient(135deg, #1c2416, #24301a); }
@@ -160,6 +167,14 @@
 @endforelse
 
 @if (count($rows))
-    <p class="gr-foot">Stages and guidance are the usual field practice for each crop — a guide, not a rule. Your own records win.</p>
+    {{-- Said properly, and where it cannot be missed: a stage read off a
+         calendar is a guess about a plant, and a season that ran through a
+         typhoon is not the season this table describes. --}}
+    <div class="gr-note">
+        <span class="gr-note-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 11v5m0-8h.01"/></svg>
+        </span>
+        <p>These stages are counted from the calendar, not from the plant. A crop runs late or early with the weather it gets — a cold spell, a drought, flooding, a typhoon, pest damage or a hungry field all shift it, and so do the variety and how it was established. Walk the field and believe what you see there over what this page says.</p>
+    </div>
 @endif
 @endsection

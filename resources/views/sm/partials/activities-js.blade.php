@@ -366,14 +366,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const rows = dayStageRows(dateKey, group);
         if (!rows.length) { pill.hidden = true; pill.textContent = ''; return; }
 
-        // One lot: name the stage. Several: name the crop count, because a
-        // header is not the place to list four different answers.
+        // The plant, and nothing else. "Booting & heading" is eleven
+        // characters of a header that also has to carry a date, a count, a
+        // forecast and a cost — and with three lots it was three of those
+        // phrases. The icon says a crop is being tracked; tapping it says
+        // everything the words used to, for every lot at once.
         const first = rows[0];
-        const label = rows.length === 1
-            ? first.stage.label
-            : rows.length + ' lots';
+        const detail = rows.length === 1
+            ? rows[0].stage.label
+            : rows.map((r) => r.lotName + ': ' + r.stage.label).join(' · ');
         pill.hidden = false;
-        pill.innerHTML = `<span class="dhs-emoji">${first.stage.icon || '🌱'}</span><span>${esc(label)}</span>`;
+        pill.innerHTML = `<span class="dhs-emoji">${first.stage.icon || '🌱'}</span>`
+            + (rows.length > 1 ? `<span class="dhs-n">${rows.length}</span>` : '');
+        pill.title = detail;
+        pill.setAttribute('aria-label', 'Growth stage — ' + detail);
         pill.setAttribute('data-date', dateKey);
     }
 
@@ -427,7 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="gs-steps">${steps}</div>
                 </div>
             </div>`;
-        }).join('') + '<p class="gs-foot">Stages are the usual field guidance for each crop — a guide, not a rule. Your own records win.</p>'
+        }).join('') + '<p class="gs-foot">These stages are counted from the calendar, not from the plant. A crop runs late or early with the weather it gets — a cold spell, a drought, flooding, a typhoon, pest damage or a hungry field all shift it, and so do the variety and how it was established. Walk the field and believe what you see there over what this page says.</p>'
         : `<p class="gs-none">No lot here has a crop set, or the count has not started yet.
             Set the crop on a lot in the Lots module and give it a day zero.</p>`;
 
@@ -5226,11 +5232,20 @@ document.addEventListener('DOMContentLoaded', () => {
             if (typeof refreshDayWarnings === 'function') refreshDayWarnings();
         }
 
+        /* The sky, as one glyph.
+         *
+         * The chip used to carry the place, the temperature and sometimes the
+         * chance of rain — three lots' worth of that pushed the cost pill onto
+         * a third line and left nothing readable at a glance. What a header is
+         * for is "is it going to rain on this day": the icon answers that, and
+         * everything else is a tap away in the day's own forecast. */
         function wxChip(place, d) {
             const bits = [esc(place), esc(d.text)];
             if (d.max != null) bits.push(d.max + '°' + (d.min != null ? '/' + d.min + '°' : ''));
             if (d.pop != null) bits.push('💧' + d.pop + '%');
-            return `<span class="wx-chip js-wx-chip" title="${bits.join(' · ')}"><span class="wx-emoji">${d.emoji}</span><span class="wx-loc">${esc(place)}</span>${d.max != null ? `<span class="wx-temp">${d.max}°</span>` : ''}</span>`;
+            const label = bits.join(' · ');
+            return `<span class="wx-chip js-wx-chip" title="${label}" aria-label="${label}">`
+                + `<span class="wx-emoji">${d.emoji}</span></span>`;
         }
 
         /**
@@ -5307,10 +5322,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.className = 'wx-mini-btn';
                 btn.title = 'Weather for each lot';
                 btn.setAttribute('aria-label', 'Weather for each lot');
-                // "3 lots", not "Weather 3": the icon already says weather,
-                // and the number means places, which the word never did.
+                // Icons only now, so a fold is rarer — but when many lots
+                // still overflow, one sky and a count of places.
                 btn.innerHTML = '<span class="wx-emoji">' + (first ? first.textContent : '⛅') + '</span>'
-                    + '<span>' + n + ' lots</span>';
+                    + '<span>' + n + '</span>';
                 btn.dataset.wxFor = strip.dataset.wxFor || '';
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();          // not a fold of the day
