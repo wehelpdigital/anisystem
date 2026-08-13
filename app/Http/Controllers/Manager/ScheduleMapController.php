@@ -272,6 +272,99 @@ class ScheduleMapController extends BaseScheduleController
         ]);
     }
 
+    /**
+     * A picture for the shelf, for EVERY saved map: the filed one when its
+     * file still answers, else one redrawn from the save's own shapes — they
+     * live in the row, so they survive the wiped disks that ate the files.
+     */
+    public function thumb(Request $request)
+    {
+        $schedule = $this->schedule($request->query('scheduleId'));
+        if (! ScheduleTeam::canAccess($schedule, (int) Auth::id())) {
+            return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+        $save = \App\Models\ScheduleMapSave::active()
+            ->where('scheduleId', $schedule->id)
+            ->find($request->query('id'));
+        if (! $save) {
+            return $this->jsonFail('That saved map no longer exists.', 404);
+        }
+
+        // The filed picture first. A remote file is durable; a local one is
+        // only trusted while the disk actually still has it.
+        $path = $this->savedPicturePath($save);
+        if ($path !== null) {
+            if (\App\Support\MediaStore::isRemote($path)) {
+                return redirect()->away(\App\Support\MediaStore::url($path));
+            }
+            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
+                return redirect(\App\Support\MediaStore::url($path));
+            }
+        }
+
+        $objects = collect(json_decode((string) $save->objects, true) ?: [])
+            ->filter(fn ($o) => is_array($o['points'] ?? null) && $o['points'])
+            ->map(fn ($o) => [
+                'kind' => $o['kind'] ?? 'pen',
+                'color' => $o['color'] ?? null,
+                'width' => (int) ($o['width'] ?? 3),
+                'points' => $o['points'],
+                'label' => $o['label'] ?? null,
+            ])->values()->all();
+
+        // Best-effort cache: the key carries updated_at, so a re-saved map
+        // draws itself afresh, and a cache that cannot answer never blocks.
+        $cacheKey = 'mapthumb:' . $save->id . ':' . ($save->updated_at?->timestamp ?? 0);
+        $binary = null;
+        try {
+            $binary = \Illuminate\Support\Facades\Cache::get($cacheKey);
+        } catch (\Throwable $e) {
+            // cache misconfigured — draw it every time
+        }
+
+        if (! is_string($binary) || $binary === '') {
+            // A card-sized render, not the full save picture — a shelf of
+            // megabyte thumbnails is what made the module feel slow.
+            $url = $this->staticMapUrl($objects, null, null, null, 'hybrid', 400, 1);
+            if ($url === null) {
+                return $this->jsonFail('No picture can be made for this map.', 404);
+            }
+            try {
+                $res = \Illuminate\Support\Facades\Http::timeout(20)->get($url);
+                if (! $res->ok() || ! str_starts_with((string) $res->header('Content-Type'), 'image/')) {
+                    return $this->jsonFail('Could not draw the map picture.', 502);
+                }
+                $binary = $res->body();
+            } catch (\Throwable $e) {
+                return $this->jsonFail('Could not draw the map picture.', 502);
+            }
+            try {
+                \Illuminate\Support\Facades\Cache::put($cacheKey, $binary, now()->addDays(7));
+            } catch (\Throwable $e) {
+                // fine — the browser's own cache still helps
+            }
+        }
+
+        return response($binary, 200, [
+            'Content-Type' => 'image/png',
+            'Cache-Control' => 'private, max-age=3600',
+        ]);
+    }
+
+    /** The map picture a save filed in the notebook, if any. */
+    private function savedPicturePath(\App\Models\ScheduleMapSave $save): ?string
+    {
+        $note = $save->noteId ? AsScheduleNote::active()->find($save->noteId) : null;
+        foreach ((is_array($note?->media) ? $note->media : []) as $m) {
+            $path = (string) ($m['path'] ?? '');
+            if ($path !== '' && (($m['type'] ?? '') === 'map' || preg_match('~/map-[A-Za-z0-9]+\.png$~', $path))) {
+                return $path;
+            }
+        }
+
+        return null;
+    }
+
     /** The saved maps as the module lists them — one shape for the endpoint and the page. */
     private function saveRows($schedule): array
     {
@@ -314,6 +407,9 @@ class ScheduleMapController extends BaseScheduleController
                 'source' => $r->source === 'team' ? 'team' : 'solo',
                 'imagePath' => $path,
                 'imageUrl' => \App\Support\MediaStore::url($path),
+                // Always answerable: serves the filed picture while its file
+                // lives, and redraws one from the shapes when it does not.
+                'thumbUrl' => route('sm.map.thumb', ['scheduleId' => $r->scheduleId, 'id' => $r->id]),
                 // A saved map files a picture in the notebook; this is the
                 // way back to the note that says what the plan was for.
                 'noteHref' => $r->noteId
@@ -555,14 +651,14 @@ class ScheduleMapController extends BaseScheduleController
      * shapes when any are drawable; stops adding paths near the URL length
      * cap rather than producing a request Google will reject.
      */
-    private function staticMapUrl(array $objects, $lat, $lng, $zoom, ?string $maptype): ?string
+    private function staticMapUrl(array $objects, $lat, $lng, $zoom, ?string $maptype, int $size = 640, int $scale = 2): ?string
     {
         $key = (string) config('services.google_maps.key');
         if ($key === '') {
             return null;
         }
 
-        $base = 'https://maps.googleapis.com/maps/api/staticmap?size=640x640&scale=2'
+        $base = 'https://maps.googleapis.com/maps/api/staticmap?size=' . $size . 'x' . $size . '&scale=' . $scale
             . '&maptype=' . ($maptype === 'roadmap' ? 'roadmap' : 'hybrid')
             . '&key=' . rawurlencode($key);
         $url = $base;

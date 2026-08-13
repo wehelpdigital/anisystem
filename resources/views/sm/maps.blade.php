@@ -16,15 +16,15 @@
             border: 1px solid var(--color-gray-200); border-radius: .85rem; text-align: left; cursor: pointer;
             transition: box-shadow .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
         .mp-card:hover { box-shadow: 0 10px 26px -18px rgb(0 0 0 / .45); transform: translateY(-1px); }
-        .mp-thumb { position: relative; aspect-ratio: 4 / 3; background: var(--color-gray-50); overflow: hidden; }
-        .mp-thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0;
+        /* The mark sits under the picture: while the thumb loads (or if it
+           cannot be drawn at all) the card shows the map mark, never a
+           "missing" apology. */
+        .mp-thumb { position: relative; aspect-ratio: 4 / 3; background: var(--color-gray-50); overflow: hidden;
+            display: flex; align-items: center; justify-content: center; color: #6b9f3d; }
+        .mp-thumb > svg { width: 2.2rem; height: 2.2rem; }
+        .mp-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0;
             transition: opacity .28s cubic-bezier(.22,1,.36,1); }
         .mp-thumb img.is-loaded { opacity: 1; }
-        .mp-thumb.is-gone::after { content: 'Picture missing'; position: absolute; inset: 0; display: flex;
-            align-items: center; justify-content: center; font-size: .68rem; font-weight: 700; color: #94a3b8; }
-        /* A save without a picture, and the live canvas, show the mark instead. */
-        .mp-thumb.is-icon { display: flex; align-items: center; justify-content: center; color: #6b9f3d; }
-        .mp-thumb.is-icon svg { width: 2.2rem; height: 2.2rem; }
         .mp-meta { padding: .5rem .6rem .6rem; display: flex; flex-direction: column; gap: .3rem; }
         .mp-name { font-size: .8rem; font-weight: 700; color: var(--color-gray-900); line-height: 1.25;
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -167,7 +167,7 @@
             function currentCard() {
                 if (!liveCount) return '';
                 return `<div class="mp-card" data-current>
-                    <div class="mp-thumb is-icon">${MAP_ICON}</div>
+                    <div class="mp-thumb">${MAP_ICON}</div>
                     <div class="mp-meta">
                         <span class="mp-name">The canvas</span>
                         <div class="mp-tags"><span class="badge badge-green">${liveCount} shape${liveCount === 1 ? '' : 's'}</span></div>
@@ -177,12 +177,14 @@
             }
 
             function card(sv) {
-                const thumb = sv.imageUrl
-                    ? `<img src="${esc(sv.imageUrl)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')"`
-                        + ` onerror="this.closest('.mp-thumb')?.classList.add('is-gone'); this.remove();">`
-                    : MAP_ICON;
+                // The thumb endpoint always tries: filed picture, else one
+                // redrawn from the shapes. A failure just leaves the mark.
+                const src = sv.thumbUrl || sv.imageUrl;
+                const thumb = MAP_ICON + (src
+                    ? `<img src="${esc(src)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')" onerror="this.remove()">`
+                    : '');
                 return `<div class="mp-card" data-save="${sv.id}">
-                    <div class="mp-thumb${sv.imageUrl ? '' : ' is-icon'}">${thumb}</div>
+                    <div class="mp-thumb">${thumb}</div>
                     <div class="mp-meta">
                         <span class="mp-name">${esc(sv.title || 'Map')}</span>
                         <div class="mp-tags">
