@@ -20,7 +20,11 @@ class StorageFallbackController extends Controller
 {
     public function __invoke(string $path)
     {
-        $base = realpath(storage_path('app/public'));
+        // Wherever the public disk actually is — storage/app/public in
+        // development, the mounted volume in production. Reading it from the
+        // disk config rather than assuming keeps this working after a volume
+        // is attached, which is exactly when it matters most.
+        $base = realpath(config('filesystems.disks.public.root', storage_path('app/public')));
 
         // realpath resolves any ../ tricks; anything that escapes the public
         // disk — or points at nothing — is a plain 404, same as a bad URL.

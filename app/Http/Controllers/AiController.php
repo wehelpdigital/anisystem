@@ -191,16 +191,19 @@ class AiController extends Controller
         $dir = 'ai-photos/' . Auth::id();
 
         try {
-            Storage::disk('public')->putFileAs($dir, $file, $stem . '.' . $ext);
+            // Through MediaStore so a photo the AI was asked about is still
+            // there tomorrow — and visible in the mother app with the rest.
+            $stored = \App\Support\MediaStore::putFile($file, 'ai-photos', Auth::id());
+            if ($stored === null) {
+                throw new \RuntimeException('Upload failed.');
+            }
         } catch (\Throwable $e) {
             return $this->json(false, 'Photo upload failed: ' . $e->getMessage(), [], 500);
         }
 
-        $path = $dir . '/' . $stem . '.' . $ext;
-
         return $this->json(true, 'Photo attached.', [
-            'path' => $path,
-            'url' => \App\Support\MediaStore::url($path),
+            'path' => $stored,
+            'url' => \App\Support\MediaStore::url($stored),
         ]);
     }
 
@@ -446,9 +449,32 @@ class AiController extends Controller
      */
     private function loadImage(int $userId, string $path): ?array
     {
+        // A photo kept by the mother app is fetched over HTTP; one kept here
+        // is read off the disk. Either way the folder rule holds: the path
+        // must be inside this client's own folder, remote marker and all.
+        $bare = \App\Support\MediaStore::isRemote($path)
+            ? substr($path, strlen(\App\Support\MediaStore::REMOTE_PREFIX))
+            : $path;
         $expectedPrefix = 'ai-photos/' . $userId . '/';
-        if (! str_starts_with($path, $expectedPrefix) || str_contains($path, '..')) {
+        if (! str_starts_with($bare, $expectedPrefix) || str_contains($bare, '..')) {
             return null;
+        }
+
+        if (\App\Support\MediaStore::isRemote($path)) {
+            $url = \App\Support\MediaStore::url($path);
+            try {
+                $res = \Illuminate\Support\Facades\Http::timeout(15)->get($url);
+                if (! $res->successful()) {
+                    return null;
+                }
+
+                return [
+                    'data' => base64_encode($res->body()),
+                    'mime' => $res->header('Content-Type') ?: 'image/jpeg',
+                ];
+            } catch (\Throwable $e) {
+                return null;
+            }
         }
 
         $disk = Storage::disk('public');

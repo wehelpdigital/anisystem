@@ -220,12 +220,15 @@ class DocEntryController extends BaseScheduleController
             $ext = UploadHelper::safeExtension($file, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'pdf', 'doc', 'docx', 'txt', 'xls', 'xlsx']);
             $stem = Str::uuid()->toString();
             try {
-                Storage::disk('public')->putFileAs($dir, $file, $stem . '.' . $ext);
+                $stored = \App\Support\MediaStore::putFile($file, 'schedule-doc-entries', $scheduleId);
+                if ($stored === null) {
+                    continue;
+                }
             } catch (\Throwable $e) {
                 continue;
             }
             $out[] = [
-                'path' => $dir . '/' . $stem . '.' . $ext,
+                'path' => $stored,
                 'name' => $file->getClientOriginalName(),
                 'size' => (int) $file->getSize(),
                 'mime' => $file->getMimeType(),

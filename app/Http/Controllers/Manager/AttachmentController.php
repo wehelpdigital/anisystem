@@ -45,9 +45,11 @@ class AttachmentController extends BaseScheduleController
         $relativePath = $relativeDir . '/' . $stem . '.' . $ext;
 
         try {
-            // putFileAs takes (dir, file, filename) — Laravel writes to
-            // storage/app/public/<dir>/<filename> on the `public` disk.
-            Storage::disk('public')->putFileAs($relativeDir, $file, $stem . '.' . $ext);
+            $stored = \App\Support\MediaStore::putFile($file, 'schedule-attachments', $schedule->id);
+            if ($stored === null) {
+                return $this->jsonFail('File upload failed.', 500);
+            }
+            $relativePath = $stored;
         } catch (\Throwable $e) {
             return $this->jsonFail('File upload failed: ' . $e->getMessage(), 500);
         }

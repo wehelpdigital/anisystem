@@ -125,7 +125,11 @@ class PostHarvestController extends BaseScheduleController
         $relativeDir = 'schedule-post-harvest/' . $schedule->id;
 
         try {
-            Storage::disk('public')->putFileAs($relativeDir, $file, $stem . '.' . $ext);
+            $stored = \App\Support\MediaStore::putFile($file, 'schedule-post-harvest', $schedule->id);
+            if ($stored === null) {
+                return $this->jsonFail('Photo upload failed.', 500);
+            }
+            $relativePath = $stored;
         } catch (\Throwable $e) {
             return $this->jsonFail('Photo upload failed: ' . $e->getMessage(), 500);
         }

@@ -43,10 +43,12 @@ class QuickCaptureController extends BaseScheduleController
 
         $created = [];
         foreach ($request->file('images') as $file) {
-            $ext = UploadHelper::safeExtension($file, ['jpg', 'jpeg', 'png', 'webp']);
-            $stem = Str::uuid()->toString();
-            Storage::disk('public')->putFileAs($dir, $file, $stem . '.' . $ext);
-            $path = $dir . '/' . $stem . '.' . $ext;
+            // The photo most likely to matter later was the one going straight
+            // onto a disk that gets wiped on every deploy.
+            $path = \App\Support\MediaStore::putFile($file, 'schedule-notes', $schedule->id);
+            if ($path === null) {
+                continue;
+            }
 
             $created[] = AsScheduleNote::create([
                 'croppingScheduleId' => $schedule->id,

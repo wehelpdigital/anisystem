@@ -295,7 +295,11 @@ class ActivityController extends BaseScheduleController
         $relativePath = $relativeDir . '/' . $stem . '.' . $ext;
 
         try {
-            Storage::disk('public')->putFileAs($relativeDir, $file, $stem . '.' . $ext);
+            $stored = \App\Support\MediaStore::putFile($file, 'schedule-activities', $schedule->id);
+            if ($stored === null) {
+                return $this->jsonFail('Image upload failed.', 500);
+            }
+            $relativePath = $stored;
         } catch (\Throwable $e) {
             return $this->jsonFail('Image upload failed: ' . $e->getMessage(), 500);
         }
