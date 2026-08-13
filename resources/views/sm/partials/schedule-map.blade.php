@@ -296,7 +296,6 @@
         padding: .6rem .75rem; background: var(--color-white);
         transition: border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
     .cmap-saverow:hover { border-color: var(--color-brand-400); transform: translateY(-1px); }
-    .cmap-saverow.is-wanted { border-color: var(--color-brand-500); background: var(--color-brand-50); }
     .cmap-saverow-t { display: block; font-size: .85rem; font-weight: 800; color: var(--color-gray-900);
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .cmap-saverow-s { display: block; font-size: .7rem; color: var(--color-gray-500); margin-top: .1rem; }
@@ -1165,10 +1164,6 @@
         return cv.toDataURL('image/png');
     }
 
-    const WANT_SAVE = (() => {
-        const v = parseInt(new URLSearchParams(location.search).get('save') || '', 10);
-        return Number.isFinite(v) ? v : 0;
-    })();
     let saveMode = 'map';
     /* Which saved map the shapes on screen came from, if any. It is what makes
        "save over this one" possible — and what the header notice reports. */
@@ -1261,7 +1256,7 @@
         rows.forEach((sv) => {
             const b = document.createElement('button');
             b.type = 'button';
-            b.className = 'cmap-saverow' + (WANT_SAVE && sv.id === WANT_SAVE ? ' is-wanted' : '');
+            b.className = 'cmap-saverow';
             const shapes = sv.count + ' shape' + (sv.count === 1 ? '' : 's');
             // An icon, not a picture: the thumbnails were a download each,
             // told you nothing a title does not, and turned into a column of
@@ -1280,11 +1275,6 @@
                     <span class="cmap-saverow-s">${esc(sv.by)} · ${esc(sv.when)}</span>
                 </span>`;
             b.addEventListener('click', () => loadSavedMap(sv));
-            // Arrived from a note about this map: point straight at it, but
-            // still let the team confirm before it replaces the live map.
-            if (WANT_SAVE && sv.id === WANT_SAVE) {
-                setTimeout(() => b.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 320);
-            }
             list.appendChild(b);
         });
     }
@@ -1302,10 +1292,14 @@
 
     document.getElementById('cmapSaveSearch')?.addEventListener('input', (e) => paintSaves(e.target.value));
     window.__openSavesForTest = openSaves;
-    async function loadSavedMap(sv) {
-        const ok = window.confirmAction
+    async function loadSavedMap(sv, opts) {
+        // From the Maps module's grid the choice was already made by tapping
+        // the card, and an empty canvas has nothing to lose — only a canvas
+        // that still holds shapes is worth interrupting for.
+        const skipAsk = !!(opts && opts.quiet) && objIndex.size === 0;
+        const ok = skipAsk || (window.confirmAction
             ? await confirmAction({ title: 'Load “' + sv.title + '”?', message: 'Replaces the current shapes for the whole team.', confirmText: 'Load map' })
-            : confirm('Load this map for everyone? It replaces the current shapes.');
+            : confirm('Load this map for everyone? It replaces the current shapes.'));
         if (!ok) return;
         try {
             await api(`${URLS.load}?scheduleId=${SID}`, { method: 'POST', body: { id: sv.id } });
@@ -1317,6 +1311,62 @@
             if (window.toast) toast('Map loaded for the team.');
         } catch (e) { if (window.toast) toast(e.message, 'error'); }
     }
+
+    /* ---------- the Maps module's grid drives the stage from outside ----------
+       The grid lives in maps.blade.php, outside this IIFE, and may ask before
+       the map has booted — Google's script loads on demand. The ask is parked
+       here and drained right after the first loadObjects, so it always lands
+       on a map that exists. */
+    let pendingGridAsk = null;   // { kind: 'save', id } | { kind: 'blank' }
+    async function wipeCanvas() {
+        const snapshot = [...objIndex.values()];
+        await api(`${URLS.clear}?scheduleId=${SID}`, { method: 'POST' });
+        dropAll();
+        if (snapshot.length) pushHist({ type: 'clear', objects: snapshot });
+    }
+    async function startBlankCanvas() {
+        if (objIndex.size === 0) { setLoadedSave(null); return; }
+        const n = objIndex.size;
+        const ok = window.confirmAction
+            ? await confirmAction({ title: 'Start a blank map?', message: 'Removes the ' + n + ' shape' + (n === 1 ? '' : 's') + ' on the canvas for the whole team. Save the current map first if it is worth keeping.', confirmText: 'Start blank' })
+            : confirm('Start a blank map? This clears the current shapes for everyone.');
+        if (!ok) return;
+        try {
+            await wipeCanvas();
+            setLoadedSave(null);
+        } catch (err) { if (window.toast) toast(err.message, 'error'); }
+    }
+    // One drain at a time: two quick taps otherwise raced two loadSave POSTs,
+    // and the server's wipe-then-insert can interleave into a doubled canvas.
+    let drainingAsk = false;
+    async function drainGridAsk() {
+        if (drainingAsk) return;
+        drainingAsk = true;
+        try {
+            while (pendingGridAsk) {
+                const ask = pendingGridAsk;
+                pendingGridAsk = null;
+                if (ask.kind === 'blank') { await startBlankCanvas(); continue; }
+                if (LOADED_SAVE && LOADED_SAVE.id === ask.id) continue;   // already on screen
+                try {
+                    const r = await api(`${URLS.saves}?scheduleId=${SID}`);
+                    const sv = (r.data.saves || []).find((s) => s.id === ask.id);
+                    if (sv) await loadSavedMap(sv, { quiet: true });
+                    else if (window.toast) toast('That saved map no longer exists.', 'error');
+                } catch (e) { if (window.toast) toast(e.message, 'error'); }
+            }
+        } finally { drainingAsk = false; }
+    }
+    window.cmapOpenSaveById = (id) => {
+        pendingGridAsk = { kind: 'save', id: parseInt(id, 10) || 0 };
+        if (booted && map) drainGridAsk();
+    };
+    window.cmapStartBlank = () => {
+        pendingGridAsk = { kind: 'blank' };
+        if (booted && map) drainGridAsk();
+    };
+    // What the grid needs to know when the user walks back out of the stage.
+    window.cmapShapeCount = () => objIndex.size;
 
     /* ---------- boot ---------- */
     let booted = false, loading = false, veilDone = false;
@@ -1431,32 +1481,16 @@
                 ? await confirmAction({ title: 'Clear the map?', message: 'Removes every shape for the whole team.', confirmText: 'Clear map' })
                 : confirm('Clear the map for everyone?');
             if (!ok) return;
-            const snapshot = [...objIndex.values()];
             try {
-                await api(`${URLS.clear}?scheduleId=${SID}`, { method: 'POST' });
-                dropAll();
-                if (snapshot.length) pushHist({ type: 'clear', objects: snapshot });
+                await wipeCanvas();
             } catch (err) { if (window.toast) toast(err.message, 'error'); }
         });
 
-        // Existing shapes, then follow the room live.
-        loadObjects(true).catch(() => {});
-
-        // ?save=<id> — a note about a saved map sent us here. Open the list on
-        // that entry rather than loading it silently: loading replaces the
-        // live map for the whole team, which is nobody's idea of a link.
-        if (WANT_SAVE) {
-            setTimeout(openSaves, 500);
-            // Closing that list is done with the errand the note sent you on,
-            // so it takes you back to the note instead of stranding you in a
-            // module you did not choose to open.
-            const back = (e) => {
-                if (e.detail && e.detail.id !== 'cmapSavesSheet') return;
-                document.removeEventListener('sm:sheet-closed', back);
-                window.smReturnToOrigin?.();
-            };
-            document.addEventListener('sm:sheet-closed', back);
-        }
+        // Existing shapes, then follow the room live — and only then whatever
+        // the Maps grid asked for while the map was still booting, so a tapped
+        // card lands on a map that exists. (?save= deep links land there too:
+        // the grid reads them server-side and asks through the same door.)
+        loadObjects(true).catch(() => {}).then(() => drainGridAsk());
 
         // On by default: seeing each other on the land is why the map exists.
         // The browser still asks permission; declining just leaves it off.

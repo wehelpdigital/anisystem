@@ -25,7 +25,16 @@ class ScheduleMapController extends BaseScheduleController
      */
     public function page(Request $request)
     {
-        return view('sm.maps', ['schedule' => $this->scheduleFromRequest($request, 'id')]);
+        $schedule = $this->scheduleFromRequest($request, 'id');
+
+        return view('sm.maps', [
+            'schedule' => $schedule,
+            // The module opens on the shelf of saved maps, so it needs them
+            // at first paint — same rows the saves endpoint serves.
+            'saves' => $this->saveRows($schedule),
+            // Whether the live canvas holds anything worth going back to.
+            'liveCount' => ScheduleMapObject::active()->where('scheduleId', $schedule->id)->count(),
+        ]);
     }
 
     public function objects(Request $request)
@@ -252,6 +261,20 @@ class ScheduleMapController extends BaseScheduleController
             return $this->jsonFail('You are not part of this schedule team.', 403);
         }
 
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'saves' => $this->saveRows($schedule),
+                // How many shapes the live canvas holds right now, so the
+                // Maps shelf can tell whether "The canvas" is worth a card.
+                'liveCount' => ScheduleMapObject::active()->where('scheduleId', $schedule->id)->count(),
+            ],
+        ]);
+    }
+
+    /** The saved maps as the module lists them — one shape for the endpoint and the page. */
+    private function saveRows($schedule): array
+    {
         $rows = \App\Models\ScheduleMapSave::active()
             ->where('scheduleId', $schedule->id)
             ->orderByDesc('id')
@@ -275,32 +298,29 @@ class ScheduleMapController extends BaseScheduleController
             return null;
         };
 
-        return response()->json([
-            'success' => true,
-            'data' => ['saves' => $rows->map(function ($r) use ($users, $picture) {
-                $path = $picture($r->noteId ? (int) $r->noteId : null);
+        return $rows->map(function ($r) use ($users, $picture) {
+            $path = $picture($r->noteId ? (int) $r->noteId : null);
 
-                return [
-                    'id' => (int) $r->id,
-                    'title' => $r->title,
-                    'by' => (string) \Illuminate\Support\Str::of(optional($users->get($r->userId))->full_name ?? 'Someone')->explode(' ')->first(),
-                    'when' => $r->created_at?->timezone('Asia/Manila')->format('M j, Y g:ia'),
-                    'count' => count(json_decode((string) $r->objects, true) ?: []),
-                    // Where it was drawn. A map made in the Collab Room is the
-                    // team's; one made in the Maps module is your own working
-                    // copy, and telling them apart matters when you are about
-                    // to replace what is on screen.
-                    'source' => $r->source === 'team' ? 'team' : 'solo',
-                    'imagePath' => $path,
-                    'imageUrl' => \App\Support\MediaStore::url($path),
-                    // A saved map files a picture in the notebook; this is the
-                    // way back to the note that says what the plan was for.
-                    'noteHref' => $r->noteId
-                        ? route('sm.notes', ['id' => $r->scheduleId, 'open' => $r->noteId])
-                        : null,
-                ];
-            })->all()],
-        ]);
+            return [
+                'id' => (int) $r->id,
+                'title' => $r->title,
+                'by' => (string) \Illuminate\Support\Str::of(optional($users->get($r->userId))->full_name ?? 'Someone')->explode(' ')->first(),
+                'when' => $r->created_at?->timezone('Asia/Manila')->format('M j, Y g:ia'),
+                'count' => count(json_decode((string) $r->objects, true) ?: []),
+                // Where it was drawn. A map made in the Collab Room is the
+                // team's; one made in the Maps module is your own working
+                // copy, and telling them apart matters when you are about
+                // to replace what is on screen.
+                'source' => $r->source === 'team' ? 'team' : 'solo',
+                'imagePath' => $path,
+                'imageUrl' => \App\Support\MediaStore::url($path),
+                // A saved map files a picture in the notebook; this is the
+                // way back to the note that says what the plan was for.
+                'noteHref' => $r->noteId
+                    ? route('sm.notes', ['id' => $r->scheduleId, 'open' => $r->noteId])
+                    : null,
+            ];
+        })->all();
     }
 
     /**

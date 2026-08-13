@@ -8,6 +8,52 @@
 
 @push('head')
     <style>
+        /* ---- The shelf: every saved map as a card, the way Draw shows its
+           drawings — recognised by picture and name before the stage opens.
+           The stage is only entered by choosing a map or starting one. ---- */
+        .mp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: .75rem; }
+        .mp-card { display: flex; flex-direction: column; overflow: hidden; background: var(--color-white);
+            border: 1px solid var(--color-gray-200); border-radius: .85rem; text-align: left; cursor: pointer;
+            transition: box-shadow .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+        .mp-card:hover { box-shadow: 0 10px 26px -18px rgb(0 0 0 / .45); transform: translateY(-1px); }
+        .mp-thumb { position: relative; aspect-ratio: 4 / 3; background: var(--color-gray-50); overflow: hidden; }
+        .mp-thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0;
+            transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+        .mp-thumb img.is-loaded { opacity: 1; }
+        .mp-thumb.is-gone::after { content: 'Picture missing'; position: absolute; inset: 0; display: flex;
+            align-items: center; justify-content: center; font-size: .68rem; font-weight: 700; color: #94a3b8; }
+        /* A save without a picture, and the live canvas, show the mark instead. */
+        .mp-thumb.is-icon { display: flex; align-items: center; justify-content: center; color: #6b9f3d; }
+        .mp-thumb.is-icon svg { width: 2.2rem; height: 2.2rem; }
+        .mp-meta { padding: .5rem .6rem .6rem; display: flex; flex-direction: column; gap: .3rem; }
+        .mp-name { font-size: .8rem; font-weight: 700; color: var(--color-gray-900); line-height: 1.25;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .mp-tags { display: flex; flex-wrap: wrap; gap: .25rem; }
+        .mp-innote { display: inline-flex; align-items: center; gap: .2rem; text-decoration: none; }
+        .mp-innote:hover { background: #e4efd4; color: #3d6823; }
+        .mp-when { font-size: .66rem; color: var(--color-gray-400); }
+        /* The way in is a tile of the same size as the maps, so the grid reads
+           as one row of things rather than a button and then a list. */
+        .mp-new { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .4rem;
+            min-height: 9.5rem; border: 2px dashed var(--color-gray-300); border-radius: .85rem;
+            color: var(--color-brand-700); font-weight: 700; font-size: .8rem; background: var(--color-white); cursor: pointer;
+            transition: border-color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+        .mp-new:hover { border-color: var(--color-brand-500); background: var(--color-brand-50); }
+        .mp-new svg { width: 1.6rem; height: 1.6rem; }
+        .mp-empty { text-align: center; color: var(--color-gray-400); font-size: .8rem; padding: 1.25rem .5rem 0; }
+        /* Grid and stage swap with the house ease rather than snapping. */
+        @keyframes mpViewIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+        .mp-view-in { animation: mpViewIn .28s cubic-bezier(.22,1,.36,1); }
+        .mp-stagebar { display: flex; align-items: center; gap: .6rem; margin-bottom: .5rem; }
+        .mp-stagehint { font-size: .72rem; color: var(--color-gray-400); min-width: 0;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        @media (prefers-reduced-motion: reduce) {
+            .mp-card, .mp-new, .mp-thumb img { transition: none; }
+            .mp-view-in { animation: none; }
+        }
+        html.dark .mp-card, html.dark .mp-new { background: #151b12; border-color: #2b3a1c; }
+        html.dark .mp-name { color: #e8efe1; }
+
         /* The map wants height, and inside the Activities shell it has no
            parent that gives it any — so the stage claims the viewport below
            the header rather than collapsing to nothing. The height is set in
@@ -69,25 +115,180 @@
 @endpush
 
 @section('content')
+    @php
+        // A note's "View map" tag names the save it means; arriving with one
+        // skips the shelf and opens the stage on that map.
+        $openSaveQ = (int) request()->query('save');
+    @endphp
     @include('sm.partials.module-note', [
-        'say' => 'The team’s map, and every plan saved from it. A saved map files its picture in the notebook, so a save can carry a note explaining what it was for.',
+        'say' => 'Every map this schedule has saved — the team’s and your own. Open one to keep working on it, or start a new map. A saved map files its picture in the notebook, so a save can carry a note explaining what it was for.',
     ])
-    <div class="smap-stage">
-        @include('sm.partials.schedule-map', ['schedule' => $schedule])
+
+    <div id="smapHome" @if ($openSaveQ) class="hidden" @endif>
+        <div class="mp-grid" id="mpGrid"></div>
+        <p class="mp-empty hidden" id="mpEmpty">No maps yet. Start one above — draw over the real ground, measure it, and save the plan with a name.</p>
+    </div>
+
+    <div id="smapStageWrap" @unless ($openSaveQ) class="hidden" @endunless>
+        <div class="mp-stagebar">
+            <button type="button" class="btn btn-white btn-sm" id="mpBackHome">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                All maps
+            </button>
+            <span class="mp-stagehint" id="mpStageHint"></span>
+        </div>
+        <div class="smap-stage">
+            @include('sm.partials.schedule-map', ['schedule' => $schedule])
+        </div>
     </div>
 
     <script>
-        /* Same partial the Collab Room uses, so every tool, the saved maps and
-           the live team drawing come with it. It boots on demand there (when
-           its tab opens); here the module IS the map, so boot it now — and on
-           the next frame, since the shell injects this markup and re-runs the
-           script before the stage has been laid out. */
         (() => {
+            const SAVES_URL = @json(route('sm.map.saves')) + '?scheduleId=' + @json($schedule->id);
+            const OPEN_SAVE = @json($openSaveQ);
+            let saves = @json($saves ?? []);
+            let liveCount = @json((int) ($liveCount ?? 0));
+            const esc = window.escapeHtml || ((s) => String(s ?? '')
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'));
+
+            const home = document.getElementById('smapHome');
+            const stageWrap = document.getElementById('smapStageWrap');
+            const grid = document.getElementById('mpGrid');
+            const empty = document.getElementById('mpEmpty');
+            const hint = document.getElementById('mpStageHint');
+
+            const MAP_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>';
+            const NEW_TILE = '<button type="button" class="mp-new" data-new>'
+                + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>'
+                + '<span>New map</span></button>';
+
+            /* The live canvas is not a file, but it is where unsaved work
+               lives — so when it holds shapes it gets a card of its own. */
+            function currentCard() {
+                if (!liveCount) return '';
+                return `<div class="mp-card" data-current>
+                    <div class="mp-thumb is-icon">${MAP_ICON}</div>
+                    <div class="mp-meta">
+                        <span class="mp-name">The canvas</span>
+                        <div class="mp-tags"><span class="badge badge-green">${liveCount} shape${liveCount === 1 ? '' : 's'}</span></div>
+                        <span class="mp-when">Continue where the map was left</span>
+                    </div>
+                </div>`;
+            }
+
+            function card(sv) {
+                const thumb = sv.imageUrl
+                    ? `<img src="${esc(sv.imageUrl)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')"`
+                        + ` onerror="this.closest('.mp-thumb')?.classList.add('is-gone'); this.remove();">`
+                    : MAP_ICON;
+                return `<div class="mp-card" data-save="${sv.id}">
+                    <div class="mp-thumb${sv.imageUrl ? '' : ' is-icon'}">${thumb}</div>
+                    <div class="mp-meta">
+                        <span class="mp-name">${esc(sv.title || 'Map')}</span>
+                        <div class="mp-tags">
+                            <span class="badge ${sv.source === 'team' ? 'badge-blue' : 'badge-green'}">${sv.source === 'team' ? 'Team map' : 'My map'}</span>
+                            <span class="badge badge-gray">${sv.count} shape${sv.count === 1 ? '' : 's'}</span>
+                            ${sv.noteHref ? `<a class="badge badge-gray mp-innote" href="${esc(sv.noteHref)}" title="Open the note this map filed its picture in">`
+                                + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:.7rem;height:.7rem"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.6L19 9.4V19a2 2 0 01-2 2z"/></svg>'
+                                + 'In a note</a>' : ''}
+                        </div>
+                        <span class="mp-when">${esc(sv.by || '')}${sv.by && sv.when ? ' · ' : ''}${esc(sv.when || '')}</span>
+                    </div>
+                </div>`;
+            }
+
+            function paint() {
+                grid.innerHTML = NEW_TILE + currentCard() + saves.map(card).join('');
+                empty.classList.toggle('hidden', saves.length > 0 || liveCount > 0);
+            }
+
+            async function refresh() {
+                try {
+                    const r = await api(SAVES_URL);
+                    saves = (r.data && r.data.saves) || [];
+                    // The endpoint says how many shapes the live canvas holds
+                    // NOW — a teammate may have drawn or cleared it meanwhile.
+                    if (r.data && typeof r.data.liveCount === 'number') liveCount = r.data.liveCount;
+                    paint();
+                } catch (_) { /* the shelf keeps what it had */ }
+            }
+
+            /* ---------- entering and leaving the stage ---------- */
             const boot = () => {
                 if (typeof window.initCollabMap === 'function') window.initCollabMap();
                 else setTimeout(boot, 120);
             };
-            requestAnimationFrame(boot);
+            const easeIn = (el) => {
+                el.classList.remove('mp-view-in');
+                void el.offsetWidth;
+                el.classList.add('mp-view-in');
+            };
+
+            /* Whether the current stage visit came from a note's "View map"
+               link — leaving it then returns to the note, not the shelf. */
+            let arrivedByLink = false;
+            function enterStage(ask) {
+                home.classList.add('hidden');
+                stageWrap.classList.remove('hidden');
+                easeIn(stageWrap);
+                // No claim about what the stage will show — the ask may still
+                // be cancelled at its confirm, and the canvas stays as it was.
+                hint.textContent = '';
+                requestAnimationFrame(boot);
+                if (ask === 'blank') window.cmapStartBlank?.();
+                else if (typeof ask === 'number' && ask > 0) window.cmapOpenSaveById?.(ask);
+                window.scrollTo({ top: 0, behavior: 'auto' });
+            }
+
+            function goHome() {
+                stageWrap.classList.add('hidden');
+                home.classList.remove('hidden');
+                easeIn(home);
+                // The visit may have drawn, cleared or saved — believe the map.
+                if (typeof window.cmapShapeCount === 'function') liveCount = window.cmapShapeCount();
+                paint();
+                refresh();
+            }
+
+            document.getElementById('mpBackHome').addEventListener('click', () => {
+                // Sent here by a note's "View map" tag: leaving the map is
+                // being done with the errand, so it hands you back to the
+                // note rather than parking you on the shelf.
+                if (arrivedByLink) {
+                    arrivedByLink = false;
+                    if (window.smReturnToOrigin?.()) return;
+                }
+                goHome();
+            });
+            grid.addEventListener('click', (e) => {
+                if (e.target.closest('a[href]')) return;   // "In a note" goes where it says
+                if (e.target.closest('[data-new]')) { enterStage('blank'); return; }
+                if (e.target.closest('[data-current]')) { enterStage(null); return; }
+                const c = e.target.closest('.mp-card[data-save]');
+                if (c) enterStage(parseInt(c.getAttribute('data-save'), 10));
+            });
+
+            paint();
+            if (OPEN_SAVE) { arrivedByLink = true; enterStage(OPEN_SAVE); }
+
+            /* The shell keeps this pane alive between visits; when it shows
+               again the shelf re-reads the saves so nothing new is missing.
+               The very first show arrives right after the server rendered
+               these exact rows — skip that one, it would only repeat them. */
+            let firstShow = true;
+            document.addEventListener('sm:module-shown', (e) => {
+                if (!e.detail || e.detail.key !== 'maps') return;
+                if (firstShow) { firstShow = false; return; }
+                if (!home.classList.contains('hidden')) refresh();
+            });
+
+            /* Deep links while the pane is kept alive: the shell hands the
+               query here instead of re-fetching the pane — a re-injection
+               would orphan the already-booted Google map. */
+            (window.smModuleDeepLink = window.smModuleDeepLink || {}).maps = (q) => {
+                const id = parseInt(new URLSearchParams(q).get('save') || '', 10);
+                if (Number.isFinite(id) && id > 0) { arrivedByLink = true; enterStage(id); }
+            };
 
             /* Fill whatever is left of the screen, measured rather than
                guessed: the header, the tab bar and the browser's own chrome
@@ -97,6 +298,7 @@
             const GAP = 8;   // the same thin frame the sides get
             function fit() {
                 if (!stage || !window.matchMedia('(max-width: 767px)').matches) return;
+                if (stage.getBoundingClientRect().height === 0) return;   // stage is off — nothing to size
                 // A tab bar that is not rendered still answers with a rect —
                 // top 0 — which collapsed the map to its minimum height. The
                 // activities shell hides the bar, so its presence has to be
@@ -119,8 +321,15 @@
                only hides this one rather than removing it. A ResizeObserver
                catches that: a hidden stage measures zero. */
             const phone = () => window.matchMedia('(max-width: 767px)').matches;
+            let stageWasShown = false;
             function chrome() {
                 const shown = !!stage && stage.getBoundingClientRect().height > 0;
+                // Coming back from display:none at an unchanged height, fit()'s
+                // no-change guard would skip the kick Google needs to repaint.
+                if (shown && !stageWasShown && window.google?.maps?.event) {
+                    window.google.maps.event.trigger(window, 'resize');
+                }
+                stageWasShown = shown;
                 // Its own class rather than the shell's ai-float-off: the shell
                 // drives that one for the AI module, and two owners toggling
                 // one class fight each other when you switch between them.
