@@ -1284,6 +1284,12 @@
             transition: opacity .28s cubic-bezier(.22,1,.36,1); }
         #boardVeil.is-done { opacity: 0; pointer-events: none; }
         #boardVeil[hidden] { display: none; }
+        /* The veil answers for the BOARD. While another module has the screen
+           — a deep-link boot, or a switch made before the forecast landed —
+           it must not sit over that module talking about forecasts nobody
+           asked it about. */
+        body.module-booting #boardVeil,
+        body:has(#activitiesRoot.module-hidden) #boardVeil { display: none !important; }
         .bv-card { display: flex; flex-direction: column; align-items: center; gap: .5rem;
             padding: 1.4rem 1.8rem; border-radius: 1rem; background: var(--color-white, #fff);
             border: 1px solid var(--color-gray-200, #e5e7eb);
@@ -2643,11 +2649,9 @@
                 return showModule(key, push, extra);
             }
         } else {
-            // Just "Loading…". Naming the module in the loader read as a
-            // claim about what you were waiting for — and when a module
-            // carried a panel of its own that said something else, the two
-            // disagreed on screen.
-            loaderLabel.textContent = 'Loading…';
+            // Named, because an anonymous spinner under a stale headline read
+            // as the wrong wait: "Loading Maps…" says what is actually coming.
+            loaderLabel.textContent = 'Loading ' + (MODULES[key].label || '') + '…';
             loader.classList.remove('hidden');
             host.classList.add('hidden');
             try {
