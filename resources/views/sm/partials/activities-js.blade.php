@@ -6066,6 +6066,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function deleteInlineNote(el, silent) {
+        // The ✕ sits a thumb's width from the drag grip, and a note is words
+        // somebody chose to keep — it asks, the same way the per-day note
+        // does. `silent` marks a programmatic cleanup, which never asks.
+        if (!silent) {
+            const ok = (typeof confirmAction === 'function')
+                ? await confirmAction({ title: 'Delete this note?', message: 'The note and everything attached to it will be permanently removed.', confirmText: 'Delete', danger: true })
+                : confirm('Delete this note?');
+            if (!ok) return;
+        }
         const id = el.getAttribute('data-inline-note');
         const finish = () => el.remove();
         if (window.animateOut) window.animateOut(el, finish); else finish();
