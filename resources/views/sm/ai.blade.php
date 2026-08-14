@@ -39,7 +39,7 @@
 
         .aichat { display: flex; flex-direction: column; height: calc(100dvh - 11rem); min-height: min(26rem, 60dvh); width: 100%; }
         /* Mobile: clear the fixed bottom tab bar so the composer + hint stay visible. */
-        @media (max-width: 767px) { .aichat { height: calc(100dvh - 13.5rem); min-height: 22rem; } }
+        @media (max-width: 767px) { .aichat { height: calc(100dvh - 13.5rem); min-height: min(22rem, 55dvh); } }
         .aichat-thread { flex: 1 1 auto; overflow-y: auto; padding: .5rem .25rem 1.25rem; scroll-behavior: smooth; display: flex; flex-direction: column; scrollbar-width: thin; scrollbar-color: var(--color-gray-300) transparent; }
         .aichat-thread::-webkit-scrollbar { width: 6px; }
         .aichat-thread::-webkit-scrollbar-track { background: transparent; }

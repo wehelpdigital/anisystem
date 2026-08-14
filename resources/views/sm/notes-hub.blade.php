@@ -119,7 +119,8 @@
 <div id="nhList" class="nh-list">
     @include('sm.partials.notes-hub-rows', ['notes' => $notes])
 </div>
-@include('partials.list-pager', ['paginator' => $notes, 'rowsUrl' => route('notes.hub') . '?rows=1'])
+@include('partials.list-pager', [
+    'noun' => 'note','paginator' => $notes, 'rowsUrl' => route('notes.hub') . '?rows=1'])
 
 @include('sm.partials.draw-canvas')
 @include('sm.partials.note-editor')

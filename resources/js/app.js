@@ -1119,12 +1119,17 @@ window.smQuillTouch = function smQuillTouch(quill) {
         if (!target || !text) return;
         const el = target;
         if (el.isContentEditable) {
+            // Whether the editor already had the caret decides which selection
+            // to trust: focusing an unfocused editor parks a caret at its very
+            // start, and that range IS inside the editor — trusting it would
+            // put every dictated phrase at the top of the note.
+            const wasFocused = document.activeElement === el;
             el.focus();
             const sel = window.getSelection();
             // Only a range genuinely inside this editor may be written to;
             // otherwise fall back to where the caret last was in it.
             let range = null;
-            if (sel && sel.rangeCount) {
+            if (wasFocused && sel && sel.rangeCount) {
                 const live = sel.getRangeAt(0);
                 if (el.contains(live.commonAncestorContainer)) range = live;
             }
@@ -1144,8 +1149,11 @@ window.smQuillTouch = function smQuillTouch(quill) {
             el.dispatchEvent(new Event('input', { bubbles: true }));
             return;
         }
+        // email/url/tel report null here rather than a number, and `?? 0`
+        // put every phrase at the very front of the field while polish()
+        // thought the field was empty.
         const start = el.selectionStart ?? el.value.length;
-        const end = el.selectionEnd ?? el.value.length;
+        const end = el.selectionEnd ?? start;
         el.value = el.value.slice(0, start) + text + el.value.slice(end);
         const at = start + text.length;
         try { el.setSelectionRange(at, at); } catch (_) { /* not all inputs allow it */ }
@@ -1159,7 +1167,8 @@ window.smQuillTouch = function smQuillTouch(quill) {
     function textBeforeCaret() {
         if (!target) return '';
         if (!target.isContentEditable) {
-            return String(target.value || '').slice(0, target.selectionStart ?? 0);
+            const v = String(target.value || '');
+            return v.slice(0, target.selectionStart ?? v.length);
         }
         const sel = window.getSelection();
         let at = sel && sel.rangeCount ? sel.getRangeAt(0) : null;
@@ -1189,7 +1198,15 @@ window.smQuillTouch = function smQuillTouch(quill) {
         mic.classList.remove('is-live');
         pill.hidden = true;
         said.textContent = 'Listening…';
-        try { recog && recog.stop(); } catch (_) { /* already stopped */ }
+        // Deaf before it is told to stop: the engine delivers one last final
+        // result after stop(), and that handler would resurrect a target the
+        // caller has just put down — writing into a hidden or covered field.
+        if (recog) {
+            recog.onresult = null;
+            recog.onend = null;
+            recog.onerror = null;
+            try { recog.stop(); } catch (_) { /* already stopped */ }
+        }
         recog = null;
     }
 
@@ -1254,8 +1271,14 @@ window.smQuillTouch = function smQuillTouch(quill) {
         if (listening) stop(); else start();
     });
     // Anywhere else ends the dictation, so a forgotten mic never listens on.
+    // "Elsewhere" means outside the field entirely — a tap inside a rich note
+    // lands on one of its paragraphs, and that is moving the caret, not
+    // walking away.
     document.addEventListener('click', (e) => {
-        if (listening && !mic.contains(e.target) && e.target !== target) stop();
+        if (!listening) return;
+        if (mic.contains(e.target)) return;
+        if (target && (e.target === target || target.contains(e.target))) return;
+        stop();
     });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && listening) stop(); });
 

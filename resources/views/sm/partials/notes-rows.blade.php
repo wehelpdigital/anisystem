@@ -4,6 +4,7 @@
 @foreach ($notes as $n)
     @php
         $mediaItems = [];
+        $editorMedia = [];
         if (filled($n->imagePath)) {
             $mediaItems[] = ['type' => 'image', 'url' => \App\Support\MediaStore::url($n->imagePath)];
         }
@@ -40,9 +41,35 @@
                     ? route('sm.draw', ['id' => $schedule->id, 'open' => $n->id . ':' . $mIndex])
                     : null,
             ];
+            // What the EDITOR needs, which is not what a thumbnail needs:
+            // the stored path and a drawing's strokes.
+            $editorMedia[] = [
+                'type' => $isMap ? 'map' : ($m['type'] ?? 'image'),
+                'path' => $m['path'],
+                'strokes' => $m['strokes'] ?? null,
+                'url' => \App\Support\MediaStore::url($m['path']),
+                'poster' => $m['poster'] ?? null,
+                'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
+                'mapUrl' => $isMap ? $mapUrl : null,
+            ];
         }
+        // Every card carries its own note. The page used to hand the editor a
+        // map of the notes it had rendered, which stopped being the notes on
+        // screen the moment a second page arrived — and editing one of those
+        // opened a blank sheet and saved a duplicate.
+        $cardNote = [
+            'fromMap' => (bool) $saveIdForNote,
+            'fromDraw' => $fromBoard,
+            'id' => $n->id,
+            'title' => $n->title,
+            'body' => $n->body,
+            'imagePath' => $n->imagePath,
+            'imageUrl' => $n->imagePath ? \App\Support\MediaStore::url($n->imagePath) : null,
+            'media' => $editorMedia ?? [],
+        ];
+        $editorMedia = [];
     @endphp
-    <div class="card p-4 note-card" data-id="{{ $n->id }}">
+    <div class="card p-4 note-card" data-id="{{ $n->id }}" data-note="{{ json_encode($cardNote) }}">
         <div class="note-head flex items-start justify-between gap-3">
             <div class="flex items-start gap-2 min-w-0 grow">
                 <svg class="note-chevron w-4 h-4 mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>

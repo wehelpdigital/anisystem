@@ -394,6 +394,9 @@
             document.getElementById('sbTextInput')?.remove();
             const inp = document.createElement('input');
             inp.id = 'sbTextInput'; inp.type = 'text'; inp.className = 'sb-text-input';
+        // A box this small has no room for the dictation mic, and its own
+        // blur commits and removes it — a tap on the mic would lose the text.
+        inp.setAttribute('data-no-dictate', '');
             inp.style.left = clientX + 'px'; inp.style.top = clientY + 'px';
             inp.style.color = color;
             // Match the on-canvas text height in CSS px.

@@ -1010,6 +1010,9 @@ html.sm-contrast.dark {
     --tl-text-faint: #cbd5e1;
     --tl-text-soft: #f1f5f9;
     --tl-text: #fff;
+    /* Without this the light value from the block above survives into night
+       mode, and a chip painted on it ends up white text on pale grey. */
+    --tl-surface-2: #1f2937;
     --tl-border: #64748b;
     --tl-border-soft: #475569;
     --tl-note-text: #fde68a;

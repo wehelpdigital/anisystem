@@ -148,6 +148,7 @@
     @include('sm.partials.notes-rows', ['notes' => $notes, 'schedule' => $schedule, 'mapSaves' => $mapSaves])
 </div>
 @include('partials.list-pager', [
+    'noun' => 'note',
     'paginator' => $notes,
     'rowsUrl' => route('sm.notes', ['id' => $schedule->id]) . '&rows=1',
 ])
@@ -626,6 +627,9 @@ const __init = () => {
         const el = document.createElement('div');
         el.className = 'card p-4 note-card';
         el.dataset.id = n.id;
+        // The card carries its own note, exactly as the server-rendered ones
+        // do — see noteOf().
+        el.setAttribute('data-note', JSON.stringify(n));
         el.innerHTML = `
             <div class="note-head flex items-start justify-between gap-3">
                 <div class="flex items-start gap-2 min-w-0 grow">
@@ -665,7 +669,7 @@ const __init = () => {
             title,
             body: (body === '<p><br></p>' ? null : body),
             imagePath: null,
-            media: media.map((m) => ({ type: m.type, path: m.path, poster: m.poster || null })),
+            media: media.map((m) => ({ type: m.type, path: m.path, poster: m.poster || null, strokes: m.strokes || null })),
         };
 
         const btn = fld('noteSaveBtn'); btn.disabled = true;
@@ -683,10 +687,26 @@ const __init = () => {
         } catch (err) { toast(err.message, 'error'); } finally { btn.disabled = false; }
     });
 
+    /* The note a card is about, read from the card itself.
+     *
+     * NOTES only ever held the page the server rendered first; once a second
+     * page arrived — scrolled in, or paged to — its cards were strangers to
+     * it, and editing one opened an empty sheet that saved a duplicate. Every
+     * card now carries its own note, and NOTES is only the fallback for a
+     * card an older render left without one. */
+    function noteOf(card) {
+        if (!card) return null;
+        const raw = card.getAttribute('data-note');
+        if (raw) {
+            try { return JSON.parse(raw); } catch (_) { /* fall through */ }
+        }
+        return NOTES[card.dataset.id] || null;
+    }
+
     list.addEventListener('click', async (e) => {
         const card = e.target.closest('.note-card'); if (!card) return;
         const id = card.dataset.id;
-        if (e.target.closest('.js-edit')) { openNoteSheet(NOTES[id] || null); return; }
+        if (e.target.closest('.js-edit')) { openNoteSheet(noteOf(card)); return; }
         // A tap on the header (but not the action buttons) folds/unfolds the note.
         if (e.target.closest('.note-head') && !e.target.closest('.js-delete')) {
             card.classList.toggle('is-collapsed');
@@ -696,7 +716,7 @@ const __init = () => {
             return;
         }
         if (e.target.closest('.js-delete')) {
-            const name = NOTES[id] ? NOTES[id].title : 'this note';
+            const name = noteOf(card)?.title || 'this note';
             const ok = await confirmAction({ title: 'Delete note?', message: '"' + name + '" will be removed.', confirmText: 'Delete' });
             if (!ok) return;
             try {

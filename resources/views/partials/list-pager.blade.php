@@ -23,5 +23,6 @@
         <div class="lp-links">{{ $paginator->onEachSide(1)->links('vendor.pagination.sm') }}</div>
     </div>
 @elseif ($paginator->total() > 0)
-    <p class="lp-end">That is everything — {{ $paginator->total() }} {{ \Illuminate\Support\Str::plural('note', $paginator->total()) }}.</p>
+    {{-- $noun lets any list say what it holds; notes were only the first. --}}
+    <p class="lp-end">That is everything — {{ $paginator->total() }} {{ \Illuminate\Support\Str::plural($noun ?? 'item', $paginator->total()) }}.</p>
 @endif
