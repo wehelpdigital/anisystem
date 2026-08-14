@@ -376,7 +376,8 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
         const finish = () => { modal.classList.add('hidden'); hideTimer = null; };
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { finish(); return; }
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            || document.documentElement.classList.contains('sm-still')) { finish(); return; }
         if (hideTimer) clearTimeout(hideTimer);
         hideTimer = setTimeout(finish, 300);
     }

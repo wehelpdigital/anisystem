@@ -17,7 +17,8 @@ Alpine.start();
         const els = document.querySelectorAll('.reveal');
         if (!els.length) return;
 
-        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            || document.documentElement.classList.contains('sm-still');
         if (reduced || !('IntersectionObserver' in window)) {
             els.forEach((el) => el.classList.add('is-visible'));
             return;
@@ -52,7 +53,10 @@ Alpine.start();
 /* Respects prefers-reduced-motion.                                     */
 /* ------------------------------------------------------------------ */
 (function appMotion() {
-    const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // The device's own setting, or the one asked for in Settings — a phone
+    // that offers no such switch is exactly where the app's own matters.
+    const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        || document.documentElement.classList.contains('sm-still');
 
     // Animate a single element in (used for AJAX-added cards/rows).
     window.animateIn = function animateIn(el) {
@@ -1188,7 +1192,8 @@ window.screenLoader = function screenLoader(label = 'Working…') {
 window.animToggleHidden = function animToggleHidden(el, hide, cls = 'hidden') {
     if (!el) return;
     if (!!hide === el.classList.contains(cls) && !el.__animHideTimer) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        || document.documentElement.classList.contains('sm-still')) {
         el.classList.toggle(cls, !!hide);
         return;
     }
