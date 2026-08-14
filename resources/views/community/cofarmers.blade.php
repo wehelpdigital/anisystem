@@ -56,7 +56,7 @@
                             @elseif (!$latest->body)
                                 <p class="text-sm text-gray-400">📷 Shared a photo.</p>
                             @endif
-                            <p class="text-[11px] text-gray-400 mt-1">{{ $latest->created_at?->diffForHumans() }}</p>
+                            <p class="text-[0.688rem] text-gray-400 mt-1">{{ $latest->created_at?->diffForHumans() }}</p>
                             @include('community.partials.react-bar', ['type' => 'wallpost', 'id' => $latest->id, 'summary' => $latest->reactionSummary ?? null])
                             @php $tops = $latest->comments->whereNull('parentId')->sortBy('id')->values(); @endphp
                             <div class="mt-2 space-y-1.5 wall-comments">

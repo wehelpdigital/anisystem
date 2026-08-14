@@ -107,7 +107,7 @@
 
 @push('head')
 <style>
-    .collab-wrap { display: flex; flex-direction: column; gap: .5rem; height: calc(100dvh - 8.5rem); min-height: 26rem; }
+    .collab-wrap { display: flex; flex-direction: column; gap: .5rem; height: calc(100dvh - 8.5rem); min-height: min(26rem, 60dvh); }
     /* 7rem allowed for the header plus the tab bar; with the bar gone (see the
        hide-tabbar body class above) 5rem lands the panel exactly on the bottom
        edge — measured at 390x780, the surface gains 32px and stops being

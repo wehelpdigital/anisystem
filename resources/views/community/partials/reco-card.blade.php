@@ -4,7 +4,7 @@
         <span class="flex justify-center">@include('community.partials.avatar', ['user' => $u, 'size' => 'avatar-lg', 'link' => false, 'showOnline' => true])</span>
         <span class="block font-semibold text-gray-900 truncate mt-2">{{ $u->full_name }}</span>
     </a>
-    <span class="block text-[11px] text-brand-700 font-semibold truncate mt-0.5" title="{{ $u->recoReason }}">{{ $u->recoReason }}</span>
+    <span class="block text-[0.688rem] text-brand-700 font-semibold truncate mt-0.5" title="{{ $u->recoReason }}">{{ $u->recoReason }}</span>
     <div class="mt-2 flex justify-center">
         @include('community.connect.partials.action', ['status' => $u->connStatus, 'memberId' => $u->id])
     </div>

@@ -898,6 +898,53 @@ html.dark .pg-btn.is-now { background: #4a7c2a; border-color: #4a7c2a; color: #f
 @media (prefers-reduced-motion: reduce) { .lp-spin { animation-duration: 2.4s; } }
 
 /* ------------------------------------------------------------------ */
+/* Timeline surfaces.                                                  */
+/*                                                                     */
+/* The activities board paints from these rather than from Tailwind    */
+/* utilities, and it used to declare them in its own page head — so a  */
+/* module opened standalone (/app/sm-notes rather than inside the      */
+/* shell) fell back to hard-coded literals and read differently from   */
+/* the same screen a moment earlier. They live here so every page has  */
+/* them, and so the contrast setting below has something to override.  */
+/* ------------------------------------------------------------------ */
+:root {
+    --tl-surface: #fff;
+    --tl-surface-2: #f3f4f6;
+    --tl-border: #f3f4f6;
+    --tl-border-soft: #eef0f3;
+    --tl-text: #111827;
+    --tl-text-soft: #374151;
+    --tl-text-muted: #4b5563;
+    --tl-text-faint: #6b7280;
+    --tl-header-tint: 13%;
+    --tl-pill: rgba(255, 255, 255, .8);
+    --tl-hover: rgba(255, 255, 255, .75);
+    --tl-note-bg: #fffbeb;
+    --tl-note-border: #fde68a;
+    --tl-note-text: #78350f;
+    --tl-rest-bg: #fafafa;
+    --tl-rest-border: #f3f4f6;
+}
+html.dark {
+    --tl-surface: #191d23;
+    --tl-surface-2: #262c34;
+    --tl-border: #2c323b;
+    --tl-border-soft: #2c323b;
+    --tl-text: #f2f5f8;
+    --tl-text-soft: #ccd4dd;
+    --tl-text-muted: #b4bdc8;
+    --tl-text-faint: #98a2ae;
+    --tl-header-tint: 18%;
+    --tl-pill: rgba(0, 0, 0, .3);
+    --tl-hover: rgba(255, 255, 255, .1);
+    --tl-note-bg: #2c2410;
+    --tl-note-border: #4a3d16;
+    --tl-note-text: #f2cd76;
+    --tl-rest-bg: #14171c;
+    --tl-rest-border: #23282f;
+}
+
+/* ------------------------------------------------------------------ */
 /* Accessibility — set in Settings, applied before first paint.        */
 /*                                                                     */
 /* Text size works by scaling the root, which every rem in the app —   */
@@ -922,9 +969,27 @@ html.sm-contrast {
     --color-gray-400: #4b5563;
     --color-gray-500: #374151;
     --color-gray-600: #1f2937;
+    --color-gray-700: #111827;
+    --color-gray-800: #0b1220;
+    --color-gray-900: #000;
     --color-gray-200: #9ca3af;
+    /* 300 moves with 200, or a border sitting on a 200 surface ends up
+       paler than the fill it is meant to edge. */
+    --color-gray-300: #6b7280;
     --color-gray-100: #d1d5db;
+    /* The activities timeline paints from its own tokens rather than
+       Tailwind's — it is the screen a grower spends the day on, and without
+       these the one page that matters most would barely change. */
     --tl-text-muted: #1f2937;
+    --tl-text-faint: #374151;
+    --tl-text-soft: #111827;
+    --tl-text: #000;
+    --tl-border: #6b7280;
+    --tl-border-soft: #9ca3af;
+    --tl-surface-2: #e5e7eb;
+    --tl-note-text: #4a2600;
+    --tl-note-border: #b45309;
+    --tl-rest-border: #9ca3af;
 }
 html.sm-contrast .card, html.sm-contrast .sheet, html.sm-contrast .form-input,
 html.sm-contrast .form-select, html.sm-contrast .form-textarea { border-width: 2px; }
@@ -935,9 +1000,21 @@ html.sm-contrast.dark {
     --color-gray-400: #cbd5e1;
     --color-gray-500: #e2e8f0;
     --color-gray-600: #f1f5f9;
+    --color-gray-700: #f8fafc;
+    --color-gray-800: #fff;
+    --color-gray-900: #fff;
     --color-gray-200: #64748b;
+    --color-gray-300: #94a3b8;
     --color-gray-100: #475569;
     --tl-text-muted: #e2e8f0;
+    --tl-text-faint: #cbd5e1;
+    --tl-text-soft: #f1f5f9;
+    --tl-text: #fff;
+    --tl-border: #64748b;
+    --tl-border-soft: #475569;
+    --tl-note-text: #fde68a;
+    --tl-note-border: #b45309;
+    --tl-rest-border: #475569;
 }
 html.sm-contrast.dark :focus-visible { outline-color: #93c5fd; }
 
@@ -1121,7 +1198,7 @@ html.dark .doc-file-x { background: var(--color-gray-200); color: var(--color-gr
 /* ------------------------------------------------------------------ */
 .item-tag {
     display: inline-flex; align-items: center; gap: .25rem; background: #eef0fb; color: #3a4699;
-    border-radius: .5rem; padding: .18rem .5rem; font-size: 11.5px; font-weight: 600;
+    border-radius: .5rem; padding: .18rem .5rem; font-size: .72rem; font-weight: 600;
 }
 .worker-tag { background: #fef3e8; color: #a66200; }
 .lot-tag { background: #eef7e8; color: #3d6a1c; }

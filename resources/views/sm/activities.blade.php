@@ -61,44 +61,11 @@
          it fetches its own assets on first use. --}}
     <style>
         /* ---- Timeline surfaces ----------------------------------------------
-           The timeline paints with literal colours rather than Tailwind
-           utilities, so night mode needs its own set of tokens here. */
-        :root {
-            --tl-surface: #fff;
-            --tl-surface-2: #f3f4f6;
-            --tl-border: #f3f4f6;
-            --tl-border-soft: #eef0f3;
-            --tl-text: #111827;
-            --tl-text-soft: #374151;
-            --tl-text-muted: #4b5563;
-            --tl-text-faint: #6b7280;
-            --tl-header-tint: 13%;
-            --tl-pill: rgba(255, 255, 255, .8);
-            --tl-hover: rgba(255, 255, 255, .75);
-            --tl-note-bg: #fffbeb;
-            --tl-note-border: #fde68a;
-            --tl-note-text: #78350f;
-            --tl-rest-bg: #fafafa;
-            --tl-rest-border: #f3f4f6;
-        }
-        html.dark {
-            --tl-surface: #191d23;
-            --tl-surface-2: #262c34;
-            --tl-border: #2c323b;
-            --tl-border-soft: #2c323b;
-            --tl-text: #f2f5f8;
-            --tl-text-soft: #ccd4dd;
-            --tl-text-muted: #b4bdc8;
-            --tl-text-faint: #98a2ae;
-            --tl-header-tint: 18%;
-            --tl-pill: rgba(0, 0, 0, .3);
-            --tl-hover: rgba(255, 255, 255, .1);
-            --tl-note-bg: #2c2410;
-            --tl-note-border: #4a3d16;
-            --tl-note-text: #f2cd76;
-            --tl-rest-bg: #14171c;
-            --tl-rest-border: #23282f;
-        }
+           The --tl-* tokens this timeline paints from now live in app.css, so
+           every page has them (a module opened standalone had none) and so the
+           high-contrast setting has something to override. Declaring them
+           again here would out-rank that setting: this page's head is injected
+           after the stylesheet. ---- */
 
         /* ---- Timeline date-group color cycle (8 flat colors, mother parity) ---- */
         .date-color-0 { --date-color: #4A90E2; }
@@ -131,7 +98,7 @@
         }
         .date-header-day { font-weight: 800; font-size: .8rem; color: var(--date-color); text-transform: uppercase; }
         .date-header-date { font-weight: 800; font-size: 1rem; color: var(--tl-text); }
-        .date-header-range { display: inline-flex; align-items: center; gap: .2rem; font-size: 11px; font-weight: 600; color: var(--tl-text-soft); background: var(--tl-hover); border-radius: 999px; padding: .1rem .5rem; }
+        .date-header-range { display: inline-flex; align-items: center; gap: .2rem; font-size: .69rem; font-weight: 600; color: var(--tl-text-soft); background: var(--tl-hover); border-radius: 999px; padding: .1rem .5rem; }
         /* What the day costs, next to what the sky is doing: two facts about
            the day, on one line. Placement is done in paintDayCash(), which
            knows where the forecast ended up. */
@@ -142,7 +109,7 @@
         .dh-rowbreak { order: 90; flex-basis: 100%; height: 0; margin: 0; }
         .date-header-weather, .wx-mini-btn { order: 91; }
         .date-header-cash { order: 92; display: inline-flex; align-items: center; gap: .28rem;
-            font-size: 11px; font-weight: 800; color: var(--color-amber-800, #92400e);
+            font-size: .69rem; font-weight: 800; color: var(--color-amber-800, #92400e);
             background: var(--color-amber-50, #fffbeb); border: 1px solid var(--color-amber-200, #fde68a);
             border-radius: 999px; padding: .14rem .5rem .14rem .42rem; flex-shrink: 0; }
         .date-header-cash svg { width: .85rem; height: .85rem; }
@@ -359,7 +326,7 @@
             padding: .65rem .75rem; border-radius: .7rem; background: #fffbeb; border: 1px solid #fde68a; }
         html.dark .gs-foot { background: rgb(180 83 9 / .16); border-color: rgb(180 83 9 / .45); color: #fcd34d; }
         html.dark .date-header-cash { color: #fcd34d; background: rgb(120 53 15 / .35); border-color: rgb(180 83 9 / .5); }
-        .date-header-count { font-size: 11px; font-weight: 700; color: var(--date-color); background: var(--tl-pill); border-radius: 999px; padding: .12rem .55rem; margin-left: auto; flex-shrink: 0; }
+        .date-header-count { font-size: .69rem; font-weight: 700; color: var(--date-color); background: var(--tl-pill); border-radius: 999px; padding: .12rem .55rem; margin-left: auto; flex-shrink: 0; }
         /* Per-day weather chips in the date header — scroll/drag if they overflow. */
         /* Shares the second line with the cost rather than filling it: the
            strip scrolls its chips internally, so giving up the space it does
@@ -369,9 +336,9 @@
         .date-header-weather { min-width: 0; flex: 1 1 auto; }
         .date-header-cash { flex: 0 0 auto; }
         .date-header-weather.scroll-chips { gap: .25rem; padding: 0; margin: 0; }
-        .wx-chip { display: inline-flex; align-items: center; gap: .22rem; flex-shrink: 0; font-size: 10.5px; font-weight: 700; padding: .1rem .42rem; border-radius: 999px; background: var(--tl-pill); color: var(--tl-text-muted); white-space: nowrap; cursor: pointer; border: 1px solid transparent; transition: border-color .15s ease; }
+        .wx-chip { display: inline-flex; align-items: center; gap: .22rem; flex-shrink: 0; font-size: .66rem; font-weight: 700; padding: .1rem .42rem; border-radius: 999px; background: var(--tl-pill); color: var(--tl-text-muted); white-space: nowrap; cursor: pointer; border: 1px solid transparent; transition: border-color .15s ease; }
         .wx-chip:hover { border-color: var(--date-color, #4A90E2); }
-        .wx-chip .wx-emoji { font-size: 12px; line-height: 1; }
+        .wx-chip .wx-emoji { font-size: .75rem; line-height: 1; }
         .wx-chip .wx-loc { color: var(--tl-text-soft); max-width: 6rem; overflow: hidden; text-overflow: ellipsis; }
         .wx-chip .wx-temp { color: var(--tl-text); font-variant-numeric: tabular-nums; }
         .rest-day-weather { margin-top: .35rem; max-width: 100%; }
@@ -380,7 +347,7 @@
         @media (prefers-reduced-motion: reduce) { .wx-cloud { animation: none; } }
         /* Per-day agronomic reminder pill in the date header. Quiet/grey once
            every reminder is acknowledged; amber + pulsing while any is unread. */
-        .day-warn-btn { display: inline-flex; align-items: center; gap: .2rem; flex-shrink: 0; height: 1.5rem; padding: 0 .5rem; border-radius: 999px; background: var(--tl-pill); color: var(--tl-text-muted); border: 1px solid transparent; font-size: 11px; font-weight: 800; cursor: pointer; transition: transform .15s ease, background .15s ease; }
+        .day-warn-btn { display: inline-flex; align-items: center; gap: .2rem; flex-shrink: 0; height: 1.5rem; padding: 0 .5rem; border-radius: 999px; background: var(--tl-pill); color: var(--tl-text-muted); border: 1px solid transparent; font-size: .69rem; font-weight: 800; cursor: pointer; transition: transform .15s ease, background .15s ease; }
         .day-warn-btn:hover { transform: translateY(-1px); }
         .day-warn-btn svg { width: .95rem; height: .95rem; }
         .day-warn-btn .cnt { font-variant-numeric: tabular-nums; }
@@ -399,10 +366,10 @@
         .warn-item-title { font-weight: 800; color: #92400e; font-size: .9rem; }
         html.dark .warn-item-title { color: #fcd34d; }
         .warn-item-lots { display: flex; flex-wrap: wrap; gap: .3rem; margin: .35rem 0; }
-        .warn-item-lots .lot { font-size: 10.5px; font-weight: 700; color: #fff; padding: .06rem .5rem; border-radius: 999px; }
+        .warn-item-lots .lot { font-size: .66rem; font-weight: 700; color: #fff; padding: .06rem .5rem; border-radius: 999px; }
         .warn-item-detail { font-size: .8rem; color: #7c6f57; line-height: 1.5; }
         html.dark .warn-item-detail { color: #c3b79f; }
-        .warn-read-check { margin-top: .6rem; display: inline-flex; align-items: center; gap: .45rem; font-size: 11.5px; font-weight: 800; color: #a16207; cursor: pointer; user-select: none; }
+        .warn-read-check { margin-top: .6rem; display: inline-flex; align-items: center; gap: .45rem; font-size: .72rem; font-weight: 800; color: #a16207; cursor: pointer; user-select: none; }
         .warn-read-check input { width: 1rem; height: 1rem; border-radius: .25rem; accent-color: #d97706; }
         html.dark .warn-read-check { color: #fcd34d; }
         .date-header-btn {
@@ -591,11 +558,11 @@
                screen can carry (see collapseIfCramped). */
             .wx-mini-btn {
                 order: 91; flex: 0 0 auto; display: inline-flex; align-items: center; gap: .3rem;
-                font-size: 11px; font-weight: 700; color: var(--tl-text-soft);
+                font-size: .69rem; font-weight: 700; color: var(--tl-text-soft);
                 background: var(--tl-hover); border-radius: 999px; padding: .15rem .55rem;
             }
             .wx-mini-btn .wx-mini-n {
-                font-size: 10px; font-weight: 800; color: var(--tl-text-faint);
+                font-size: .62rem; font-weight: 800; color: var(--tl-text-faint);
                 border-left: 1px solid var(--tl-border-soft); padding-left: .3rem;
             }
             .date-header-range { flex: 0 1 auto; min-width: 0; overflow: hidden; }
@@ -1041,7 +1008,7 @@
            know which lot each activity belongs to at a glance. */
         .activity-card-lothead { margin-top: 0; margin-bottom: .35rem; gap: .35rem; }
         .activity-card-lothead .lot-tag {
-            background: #3f4bb5; color: #fff; font-size: 12px; font-weight: 800;
+            background: #3f4bb5; color: #fff; font-size: .75rem; font-weight: 800;
             padding: .22rem .55rem .22rem .42rem; border-radius: .5rem; box-shadow: 0 1px 2px rgb(0 0 0 / .15);
         }
         .activity-card-lothead .lot-tag::before {
@@ -1131,7 +1098,7 @@
         @media (prefers-reduced-motion: reduce) { .act-tag { transition: none; } }
         .meta-time {
             display: inline-flex; align-items: center; gap: .25rem; background: var(--tl-surface-2); color: var(--tl-text-muted);
-            border-radius: .5rem; padding: .2rem .45rem; font-size: 11.5px; font-weight: 600;
+            border-radius: .5rem; padding: .2rem .45rem; font-size: .72rem; font-weight: 600;
         }
         /* The date header drags the whole day's activities to another date. */
         .date-header[draggable="true"] { cursor: grab; }
@@ -1487,7 +1454,7 @@
 
         .item-tag {
             display: inline-flex; align-items: center; gap: .25rem; background: #eef0fb; color: #3a4699;
-            border-radius: .5rem; padding: .18rem .5rem; font-size: 11.5px; font-weight: 600;
+            border-radius: .5rem; padding: .18rem .5rem; font-size: .72rem; font-weight: 600;
         }
         .worker-tag { background: #fef3e8; color: #a66200; }
         .service-tag { background: #e6f7f1; color: #0f6f4d; }
@@ -1693,7 +1660,7 @@
             margin-bottom: 2px;
         }
         .cal-grid-head span {
-            text-align: center; font-size: 10.5px; font-weight: 800; letter-spacing: .04em;
+            text-align: center; font-size: .66rem; font-weight: 800; letter-spacing: .04em;
             text-transform: uppercase; color: var(--tl-text-faint); padding: .3rem 0;
         }
         .cal-grid {
@@ -1711,7 +1678,7 @@
         .cal-day.is-outside { background: var(--tl-rest-bg); }
         .cal-day.is-outside .cal-daynum { opacity: .35; }
         .cal-daynum {
-            font-size: 11.5px; font-weight: 700; color: var(--tl-text-muted);
+            font-size: .72rem; font-weight: 700; color: var(--tl-text-muted);
             line-height: 1.5rem; min-width: 1.5rem; text-align: center; border-radius: 999px;
         }
         .cal-day.is-today .cal-daynum { background: var(--color-brand-600); color: #fff; }
@@ -1719,7 +1686,7 @@
         html.dark .cal-day.is-dayzero .cal-daynum { box-shadow: inset 0 0 0 2px #d98b1f; }
 
         .cal-chip {
-            display: block; width: 100%; font-size: 12px; font-weight: 700; line-height: 1.3;
+            display: block; width: 100%; font-size: .75rem; font-weight: 700; line-height: 1.3;
             border-radius: .3rem; padding: .1rem .25rem;
             border-left: 3px solid var(--prio-color, #d1d5db);
             background: var(--tl-surface-2); color: var(--tl-text);
@@ -1737,7 +1704,7 @@
         html.dark .cal-chip.type-irrigation svg { color: #6db5e8; }
         .cal-chip.type-service svg { color: #c26d13; }
         html.dark .cal-chip.type-service svg { color: #f3a257; }
-        .cal-more { font-size: 10px; font-weight: 700; color: var(--tl-text-faint); padding-left: .2rem; }
+        .cal-more { font-size: .62rem; font-weight: 700; color: var(--tl-text-faint); padding-left: .2rem; }
 
         /* Rows in the day sheet — full-width, unlike the chips in the grid. */
         .cal-day-row {
@@ -1769,7 +1736,7 @@
             /* Dots have no room for icons (text-indent doesn't move SVGs). */
             .cal-chip svg { display: none; }
             .cal-dots { display: flex; flex-wrap: wrap; gap: 2px; justify-content: center; }
-            .cal-more { font-size: 9px; }
+            .cal-more { font-size: .56rem; }
         }
 
         .readiness-row { display: flex; gap: .75rem; padding: .7rem .25rem; border-bottom: 1px solid var(--tl-border); }
@@ -1923,18 +1890,18 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0a3 3 0 11-6 0m6 0H9"/></svg>
             <span class="hidden sm:inline">Notice</span>
             <span id="readinessCount"
-                  class="absolute -top-0.5 -right-0.5 {{ $readiness['count'] > 0 ? 'inline-flex' : 'hidden' }} min-w-5 h-5 px-1 rounded-full {{ $readiness['blocking'] > 0 ? 'bg-red-500 text-white' : 'bg-accent-500 text-ink' }} text-[10px] font-bold items-center justify-center">{{ $readiness['count'] }}</span>
+                  class="absolute -top-0.5 -right-0.5 {{ $readiness['count'] > 0 ? 'inline-flex' : 'hidden' }} min-w-5 h-5 px-1 rounded-full {{ $readiness['blocking'] > 0 ? 'bg-red-500 text-white' : 'bg-accent-500 text-ink' }} text-[0.625rem] font-bold items-center justify-center">{{ $readiness['count'] }}</span>
         </button>
 
         <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative" data-activities-only disabled title="Nothing to undo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
             <span class="hidden sm:inline">Undo</span>
-            <span id="activityUndoCount" class="absolute -top-0.5 -right-0.5 hidden min-w-5 h-5 px-1 rounded-full bg-accent-500 text-ink text-[10px] font-bold items-center justify-center">0</span>
+            <span id="activityUndoCount" class="absolute -top-0.5 -right-0.5 hidden min-w-5 h-5 px-1 rounded-full bg-accent-500 text-ink text-[0.625rem] font-bold items-center justify-center">0</span>
         </button>
         <button type="button" id="activityRedoBtn" class="btn btn-white btn-sm relative" data-activities-only disabled title="Nothing to redo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg>
             <span class="hidden sm:inline">Redo</span>
-            <span id="activityRedoCount" class="absolute -top-0.5 -right-0.5 hidden min-w-5 h-5 px-1 rounded-full bg-accent-500 text-ink text-[10px] font-bold items-center justify-center">0</span>
+            <span id="activityRedoCount" class="absolute -top-0.5 -right-0.5 hidden min-w-5 h-5 px-1 rounded-full bg-accent-500 text-ink text-[0.625rem] font-bold items-center justify-center">0</span>
         </button>
         {{-- Calendar view + Add note: quick actions kept in the toolbar, right
              after Redo. Calendar collapses into the Tools menu on phones. --}}
@@ -1988,7 +1955,7 @@
         <button type="button" id="openSearchBtn" data-sheet-open="filtersSheet" class="btn btn-white btn-sm relative toolbar-in-menu" data-activities-only>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
             Search
-            <span id="activeFilterCount" class="absolute -top-0.5 -right-0.5 hidden min-w-5 h-5 px-1 rounded-full bg-brand-600 text-white text-[10px] font-bold items-center justify-center">0</span>
+            <span id="activeFilterCount" class="absolute -top-0.5 -right-0.5 hidden min-w-5 h-5 px-1 rounded-full bg-brand-600 text-white text-[0.625rem] font-bold items-center justify-center">0</span>
         </button>
         <button type="button" id="weatherBtn" class="btn btn-white btn-sm relative toolbar-in-menu" data-activities-only title="Weather forecast for each lot" aria-label="Weather forecast">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg>

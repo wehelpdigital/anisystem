@@ -47,7 +47,7 @@
                                 </template>
                                 <template x-if="i + 1 >= step"><span x-text="i + 1"></span></template>
                             </span>
-                            <span class="hidden sm:block text-[11px] font-medium transition-colors"
+                            <span class="hidden sm:block text-[0.688rem] font-medium transition-colors"
                                   :class="i + 1 <= step ? 'text-brand-700' : 'text-gray-400'" x-text="s.label"></span>
                         </button>
                     </template>

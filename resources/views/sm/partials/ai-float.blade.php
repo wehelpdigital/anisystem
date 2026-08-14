@@ -164,7 +164,7 @@
     .ai-float-msg .b ul { list-style: disc; padding-left: 1.1rem; margin: .25rem 0; }
     .ai-float-msg .b ol { list-style: decimal; padding-left: 1.25rem; margin: .25rem 0; }
     .ai-float-msg .b img { max-width: 100%; max-height: 180px; border-radius: .5rem; margin-top: .3rem; }
-    .ai-float-msg .b .cost { display: inline-flex; align-items: center; gap: .25rem; margin-top: .35rem; padding: .1rem .45rem; border-radius: 999px; font-size: 10px; font-weight: 800; font-variant-numeric: tabular-nums; color: #8a6100; background: rgb(245 197 24 / .15); }
+    .ai-float-msg .b .cost { display: inline-flex; align-items: center; gap: .25rem; margin-top: .35rem; padding: .1rem .45rem; border-radius: 999px; font-size: .62rem; font-weight: 800; font-variant-numeric: tabular-nums; color: #8a6100; background: rgb(245 197 24 / .15); }
     .ai-float-msg .b .cost::before { content: ""; width: .32rem; height: .32rem; border-radius: 999px; background: var(--color-accent-500); }
     .ai-float-msg.me .b .cost { background: rgb(255 255 255 / .2); color: #fff; }
     .ai-float-msg.me .b .cost::before { background: #fff; }

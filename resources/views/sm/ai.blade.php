@@ -19,7 +19,7 @@
         @media (min-width: 1024px) { .ai-shell { grid-template-columns: 17rem minmax(0, 1fr); } }
         .ai-sessions { display: none; }
         @media (min-width: 1024px) {
-            .ai-sessions { display: flex; flex-direction: column; gap: .3rem; height: calc(100dvh - 11rem); min-height: 26rem;
+            .ai-sessions { display: flex; flex-direction: column; gap: .3rem; height: calc(100dvh - 11rem); min-height: min(26rem, 60dvh);
                 overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--color-gray-300) transparent;
                 border: 1px solid var(--color-gray-100); border-radius: 1rem; background: var(--color-white);
                 padding: .6rem; box-shadow: var(--shadow-card); }
@@ -37,7 +37,7 @@
         .ai-session-rename { width: 100%; font-size: .85rem; padding: .2rem .4rem; border-radius: .45rem;
             border: 1px solid var(--color-brand-400); background: var(--color-white); color: var(--color-gray-900); outline: none; }
 
-        .aichat { display: flex; flex-direction: column; height: calc(100dvh - 11rem); min-height: 26rem; width: 100%; }
+        .aichat { display: flex; flex-direction: column; height: calc(100dvh - 11rem); min-height: min(26rem, 60dvh); width: 100%; }
         /* Mobile: clear the fixed bottom tab bar so the composer + hint stay visible. */
         @media (max-width: 767px) { .aichat { height: calc(100dvh - 13.5rem); min-height: 22rem; } }
         .aichat-thread { flex: 1 1 auto; overflow-y: auto; padding: .5rem .25rem 1.25rem; scroll-behavior: smooth; display: flex; flex-direction: column; scrollbar-width: thin; scrollbar-color: var(--color-gray-300) transparent; }
@@ -50,7 +50,7 @@
 
         .aichat-day { display: flex; align-items: center; gap: .75rem; margin: .75rem 0; text-align: center; }
         .aichat-day::before, .aichat-day::after { content: ""; flex: 1; height: 1px; background: var(--color-gray-200); }
-        .aichat-day span { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-gray-400); }
+        .aichat-day span { font-size: .69rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-gray-400); }
 
         /* ===== Masthead ===== */
         .ai-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .7rem .9rem; margin-bottom: .75rem; border-radius: 1.25rem; border: 1px solid var(--color-brand-100); background: linear-gradient(115deg, var(--color-brand-50) 0%, var(--color-white) 70%); }
@@ -116,7 +116,7 @@
         .aibubble li { margin: .2rem 0; }
         .aibubble strong { font-weight: 700; }
         .aibubble img { max-width: 100%; max-height: 260px; border-radius: .6rem; margin-top: .4rem; }
-        .aibubble-cost { display: inline-flex; align-items: center; gap: .3rem; margin-top: .55rem; padding: .12rem .55rem; border-radius: 999px; font-size: 11px; font-weight: 800; font-variant-numeric: tabular-nums; color: #8a6100; background: rgb(245 197 24 / .15); }
+        .aibubble-cost { display: inline-flex; align-items: center; gap: .3rem; margin-top: .55rem; padding: .12rem .55rem; border-radius: 999px; font-size: .69rem; font-weight: 800; font-variant-numeric: tabular-nums; color: #8a6100; background: rgb(245 197 24 / .15); }
         .aibubble-cost::before { content: ""; width: .4rem; height: .4rem; border-radius: 999px; background: var(--color-accent-500); }
         .aimsg.me .aibubble-cost { background: rgb(255 255 255 / .2); color: #fff; }
         .aimsg.me .aibubble-cost::before { background: #fff; }

@@ -2,7 +2,7 @@
      feed guards on $sponsors->isNotEmpty()). Each sponsor: title, optional
      body, url, imagePath. --}}
 <div class="card p-3">
-    <p class="text-[11px] font-bold uppercase tracking-wide text-gray-400 mb-2">Sponsored</p>
+    <p class="text-[0.688rem] font-bold uppercase tracking-wide text-gray-400 mb-2">Sponsored</p>
     <div class="space-y-3">
         @foreach ($sponsors as $sponsor)
             <a @if (!empty($sponsor['url'])) href="{{ $sponsor['url'] }}" target="_blank" rel="nofollow noopener" @endif

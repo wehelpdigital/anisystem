@@ -11,7 +11,7 @@
             <span class="avatar avatar-sm avatar-sq overflow-hidden {{ CommunityAvatar::hue($g->name) }}">@if ($g->coverImagePath)<img src="{{ \App\Support\MediaStore::url($g->coverImagePath) }}" alt="" class="w-full h-full object-cover">@else{{ CommunityAvatar::monogram($g->name) }}@endif</span>
             <span class="min-w-0 grow">
                 <span class="block text-sm font-semibold text-gray-900 truncate">{{ $g->name }}</span>
-                <span class="block text-[11px] text-gray-500">🧑‍🌾 {{ $g->member_count }} {{ \Illuminate\Support\Str::plural('member', $g->member_count) }}</span>
+                <span class="block text-[0.688rem] text-gray-500">🧑‍🌾 {{ $g->member_count }} {{ \Illuminate\Support\Str::plural('member', $g->member_count) }}</span>
             </span>
         </a>
     @empty

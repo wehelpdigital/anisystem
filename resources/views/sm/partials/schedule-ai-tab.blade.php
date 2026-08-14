@@ -103,7 +103,7 @@
     .sai-b p { margin: .25rem 0; } .sai-b p:first-child { margin-top: 0; } .sai-b p:last-child { margin-bottom: 0; }
     .sai-b ul { list-style: disc; padding-left: 1.1rem; margin: .25rem 0; } .sai-b ol { list-style: decimal; padding-left: 1.25rem; margin: .25rem 0; }
     .sai-b img { max-width: 100%; max-height: 180px; border-radius: .5rem; margin-top: .3rem; }
-    .sai-cost { display: inline-flex; align-items: center; gap: .25rem; margin-top: .35rem; padding: .1rem .45rem; border-radius: 999px; font-size: 10px; font-weight: 800; color: #8a6100; background: rgb(245 197 24 / .15); }
+    .sai-cost { display: inline-flex; align-items: center; gap: .25rem; margin-top: .35rem; padding: .1rem .45rem; border-radius: 999px; font-size: .62rem; font-weight: 800; color: #8a6100; background: rgb(245 197 24 / .15); }
     .sai-dots { display: inline-flex; gap: .2rem; align-items: center; height: 1rem; }
     .sai-dots i { width: .35rem; height: .35rem; border-radius: 999px; background: var(--color-brand-500); opacity: .35; animation: saidot .9s cubic-bezier(.4,0,.2,1) infinite; }
     .sai-dots i:nth-child(2) { animation-delay: .15s; } .sai-dots i:nth-child(3) { animation-delay: .3s; }

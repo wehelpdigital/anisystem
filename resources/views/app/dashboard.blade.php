@@ -243,7 +243,7 @@
                                             {{ $next['isToday'] ? '📅 Due today' : '📅 ' . $next['date']->format('D, M j') }}
                                         </span>
                                         @unless ($next['isToday'])
-                                            <span class="text-[11px] font-semibold text-gray-400">· in {{ $next['daysAway'] }} {{ \Illuminate\Support\Str::plural('day', $next['daysAway']) }}</span>
+                                            <span class="text-[0.688rem] font-semibold text-gray-400">· in {{ $next['daysAway'] }} {{ \Illuminate\Support\Str::plural('day', $next['daysAway']) }}</span>
                                         @endunless
                                     </div>
                                     <ul class="space-y-1">
@@ -255,7 +255,7 @@
                                         @endforeach
                                     </ul>
                                     @if ($next['moreCount'] > 0)
-                                        <p class="text-[11px] font-semibold text-gray-400 mt-1 pl-3.5">+{{ $next['moreCount'] }} more that day</p>
+                                        <p class="text-[0.688rem] font-semibold text-gray-400 mt-1 pl-3.5">+{{ $next['moreCount'] }} more that day</p>
                                     @endif
                                 </a>
                             @else
@@ -278,7 +278,7 @@
                                     </div>
                                 </div>
                             @else
-                                <a href="{{ route('sm.lots', ['id' => $schedule->id]) }}" class="inline-flex items-center gap-1 text-[11px] font-semibold text-brand-600 hover:text-brand-700">
+                                <a href="{{ route('sm.lots', ['id' => $schedule->id]) }}" class="inline-flex items-center gap-1 text-[0.688rem] font-semibold text-brand-600 hover:text-brand-700">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                                     Add a lot address for local weather
                                 </a>
@@ -586,19 +586,19 @@
         const today = isToday || d.isToday;
         // No box — today is simply shown in green (theme-aware via .wx-today-label).
         return `<div class="flex-1 min-w-0 text-center rounded-lg px-1 py-1.5">
-            <p class="text-[10px] font-bold ${today ? 'wx-today-label' : 'text-gray-500'} truncate">${esc(today ? 'Today' : d.dow)}</p>
+            <p class="text-[0.625rem] font-bold ${today ? 'wx-today-label' : 'text-gray-500'} truncate">${esc(today ? 'Today' : d.dow)}</p>
             <div class="text-xl leading-none my-0.5" title="${esc(d.text)}">${d.emoji}</div>
-            <p class="text-[11px] font-bold ${today ? 'wx-today-label' : 'text-gray-800'}">${d.max != null ? d.max + '°' : '–'}<span class="text-gray-400 font-medium">${d.min != null ? '/' + d.min + '°' : ''}</span></p>
-            ${d.pop != null ? `<p class="text-[9px] font-semibold text-blue-500">💧${d.pop}%</p>` : ''}
+            <p class="text-[0.688rem] font-bold ${today ? 'wx-today-label' : 'text-gray-800'}">${d.max != null ? d.max + '°' : '–'}<span class="text-gray-400 font-medium">${d.min != null ? '/' + d.min + '°' : ''}</span></p>
+            ${d.pop != null ? `<p class="text-[0.562rem] font-semibold text-blue-500">💧${d.pop}%</p>` : ''}
         </div>`;
     }
     function locBlock(loc) {
         if (!loc) return '';
         if (loc.ok === false) {
-            return `<p class="text-[11px] text-gray-400 mt-2 pt-2 border-t border-gray-100">🌦️ Weather unavailable for ${esc(loc.place || 'this location')}</p>`;
+            return `<p class="text-[0.688rem] text-gray-400 mt-2 pt-2 border-t border-gray-100">🌦️ Weather unavailable for ${esc(loc.place || 'this location')}</p>`;
         }
         return `<div class="mt-2 pt-2 border-t border-gray-100">
-            <p class="text-[11px] font-semibold text-gray-500 mb-1.5 truncate">📍 ${esc(loc.place)}</p>
+            <p class="text-[0.688rem] font-semibold text-gray-500 mb-1.5 truncate">📍 ${esc(loc.place)}</p>
             <div class="flex gap-1">${loc.days.map((d, i) => dayCell(d, i === 0)).join('')}</div>
         </div>`;
     }

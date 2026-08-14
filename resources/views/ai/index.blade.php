@@ -45,7 +45,7 @@
         .ai-bubble li { margin: .15rem 0; }
         .ai-bubble strong { font-weight: 700; }
         .ai-bubble img { max-width: 100%; max-height: 240px; border-radius: .6rem; margin-top: .4rem; }
-        .ai-cost { font-size: 10.5px; font-weight: 700; opacity: .6; margin-top: .4rem; }
+        .ai-cost { font-size: .66rem; font-weight: 700; opacity: .6; margin-top: .4rem; }
 
         /* Composer pinned above the mobile tab bar */
         .ai-composer {

@@ -197,7 +197,7 @@
             ${inner}
             <span class="min-w-0">
                 <span class="block truncate text-xs font-semibold text-gray-800">${escapeHtml(f.name)}</span>
-                <span class="block text-[10px] text-gray-400">${escapeHtml(fmtSize(f.size))}</span>
+                <span class="block text-[0.625rem] text-gray-400">${escapeHtml(fmtSize(f.size))}</span>
             </span>
         </a>`;
     }
@@ -306,13 +306,13 @@
         const existing = keepFiles.map((f, i) => `
             <span class="doc-file-chip" data-keep="${i}">
                 ${f.isImage && f.url ? `<img src="${escapeHtml(f.url)}" class="w-7 h-7 rounded object-cover shrink-0">` : `<span class="doc-file-ext">${escapeHtml(ext(f.name))}</span>`}
-                <span class="min-w-0"><span class="block truncate text-xs font-semibold text-gray-800">${escapeHtml(f.name)}</span><span class="block text-[10px] text-gray-400">${escapeHtml(fmtSize(f.size))}</span></span>
+                <span class="min-w-0"><span class="block truncate text-xs font-semibold text-gray-800">${escapeHtml(f.name)}</span><span class="block text-[0.625rem] text-gray-400">${escapeHtml(fmtSize(f.size))}</span></span>
                 <button type="button" class="doc-file-x" data-remove-keep="${i}" aria-label="Remove">✕</button>
             </span>`).join('');
         const picked = newFiles.map((f, i) => `
             <span class="doc-file-chip doc-file-new" data-new="${i}">
                 <span class="doc-file-ext">${escapeHtml(ext(f.name))}</span>
-                <span class="min-w-0"><span class="block truncate text-xs font-semibold text-gray-800">${escapeHtml(f.name)}</span><span class="block text-[10px] text-gray-400">${escapeHtml(fmtSize(f.size))}</span></span>
+                <span class="min-w-0"><span class="block truncate text-xs font-semibold text-gray-800">${escapeHtml(f.name)}</span><span class="block text-[0.625rem] text-gray-400">${escapeHtml(fmtSize(f.size))}</span></span>
                 <button type="button" class="doc-file-x" data-remove-new="${i}" aria-label="Remove">✕</button>
             </span>`).join('');
         wrap.innerHTML = existing + picked;

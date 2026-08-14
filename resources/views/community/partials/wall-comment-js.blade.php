@@ -29,7 +29,7 @@
     // A "replying to @Name" chip — clean, visible proof the reply will tag them.
     // The actual @[Name](id) token is prepended on send (see submit handler).
     function replyMentionPill(name) {
-        return `<span class="reply-mention-pill inline-flex items-center gap-1 text-[11px] font-semibold text-brand-700 bg-brand-50 border border-brand-100 rounded-full pl-2 pr-1 py-0.5 shrink-0" title="This reply notifies @${escHtml(name)}">@${escHtml(name)}<button type="button" class="js-reply-mention-x w-4 h-4 flex items-center justify-center rounded-full text-brand-400 hover:text-red-500 hover:bg-white leading-none" aria-label="Remove mention">×</button></span>`;
+        return `<span class="reply-mention-pill inline-flex items-center gap-1 text-[0.688rem] font-semibold text-brand-700 bg-brand-50 border border-brand-100 rounded-full pl-2 pr-1 py-0.5 shrink-0" title="This reply notifies @${escHtml(name)}">@${escHtml(name)}<button type="button" class="js-reply-mention-x w-4 h-4 flex items-center justify-center rounded-full text-brand-400 hover:text-red-500 hover:bg-white leading-none" aria-label="Remove mention">×</button></span>`;
     }
     function replyFormHtml(postId, parentId, mentionId, mentionName) {
         const hasMention = mentionId && mentionName;

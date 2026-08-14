@@ -111,7 +111,7 @@
         .note-mthumb { position: relative; aspect-ratio: 1; border-radius: .55rem; overflow: hidden; border: 1px solid var(--color-gray-200); background: #000; }
         .note-mthumb img, .note-mthumb video { width: 100%; height: 100%; object-fit: cover; }
         .note-mthumb .rm { position: absolute; top: .2rem; right: .2rem; width: 1.7rem; height: 1.7rem; border-radius: 999px; background: rgb(17 24 39 / .72); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: .9rem; line-height: 1; }
-        .note-mthumb .vtag { position: absolute; left: .2rem; bottom: .2rem; font-size: 10px; font-weight: 700; color: #fff; background: rgb(0 0 0 / .5); border-radius: .3rem; padding: 0 .3rem; }
+        .note-mthumb .vtag { position: absolute; left: .2rem; bottom: .2rem; font-size: .62rem; font-weight: 700; color: #fff; background: rgb(0 0 0 / .5); border-radius: .3rem; padding: 0 .3rem; }
     </style>
 @endpush
 

@@ -12,7 +12,7 @@
 @if (! empty($farmChips))
     <div class="flex flex-wrap gap-1.5 {{ $chipsClass ?? 'mt-2' }}">
         @foreach ($farmChips as $chip)
-            <span class="inline-flex items-center max-w-full truncate text-[11px] font-semibold text-brand-800 bg-brand-50 border border-brand-100 rounded-full px-2 py-0.5">{{ $chip }}</span>
+            <span class="inline-flex items-center max-w-full truncate text-[0.688rem] font-semibold text-brand-800 bg-brand-50 border border-brand-100 rounded-full px-2 py-0.5">{{ $chip }}</span>
         @endforeach
     </div>
 @endif

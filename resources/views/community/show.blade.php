@@ -35,7 +35,7 @@
         .cp-step {
             display: inline-flex; align-items: center; justify-content: center; min-width: 1.6rem; height: 1.6rem;
             border-radius: 999px; background: var(--color-brand-50); color: var(--color-brand-700);
-            font-size: 11px; font-weight: 800; padding: 0 .4rem;
+            font-size: .69rem; font-weight: 800; padding: 0 .4rem;
         }
 
         .cp-comment { display: flex; gap: .7rem; }
@@ -203,7 +203,7 @@
                             @if (! empty($dasLabels))
                                 <div class="flex flex-wrap gap-1 mt-1">
                                     @foreach ($dasLabels as $lbl)
-                                        <span class="text-[11px] font-medium text-brand-700 bg-brand-50 rounded px-1.5 py-0.5">{{ $lbl }}</span>
+                                        <span class="text-[0.688rem] font-medium text-brand-700 bg-brand-50 rounded px-1.5 py-0.5">{{ $lbl }}</span>
                                     @endforeach
                                 </div>
                             @endif

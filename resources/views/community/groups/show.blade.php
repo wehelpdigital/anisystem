@@ -76,7 +76,7 @@
                 <img src="" alt="" id="attachThumb">
                 <span class="min-w-0">
                     <span class="block text-xs font-semibold text-gray-700 truncate" id="attachName"></span>
-                    <span class="text-[10px] font-bold text-gray-400" id="postImageLabel">Photo</span>
+                    <span class="text-[0.625rem] font-bold text-gray-400" id="postImageLabel">Photo</span>
                 </span>
                 <button type="button" id="attachRemove" class="btn-ghost rounded-full w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-500 shrink-0" aria-label="Remove attachment">✕</button>
             </span>
@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const SVG_R_X = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>';
     const gEsc = (s) => (window.escapeHtml ? window.escapeHtml(s) : String(s == null ? '' : s));
     function groupMentionPill(name) {
-        return `<span class="reply-mention-pill inline-flex items-center gap-1 text-[11px] font-semibold text-brand-700 bg-brand-50 border border-brand-100 rounded-full pl-2 pr-1 py-0.5 shrink-0" title="This reply notifies @${gEsc(name)}">@${gEsc(name)}<button type="button" class="js-reply-mention-x w-4 h-4 flex items-center justify-center rounded-full text-brand-400 hover:text-red-500 hover:bg-white leading-none" aria-label="Remove mention">×</button></span>`;
+        return `<span class="reply-mention-pill inline-flex items-center gap-1 text-[0.688rem] font-semibold text-brand-700 bg-brand-50 border border-brand-100 rounded-full pl-2 pr-1 py-0.5 shrink-0" title="This reply notifies @${gEsc(name)}">@${gEsc(name)}<button type="button" class="js-reply-mention-x w-4 h-4 flex items-center justify-center rounded-full text-brand-400 hover:text-red-500 hover:bg-white leading-none" aria-label="Remove mention">×</button></span>`;
     }
     function nestedReplyFormHtml(postId, parentId, mentionId, mentionName) {
         const hasMention = mentionId && mentionName;
@@ -699,7 +699,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const dot = `<span title="${m.online ? 'Online' : 'Offline'}" style="width:.5rem;height:.5rem;border-radius:999px;flex-shrink:0;background:${m.online ? '#22c55e' : '#cbd5e1'};"></span>`;
                 const pm = (!m.isMe && m.allowMessages)
                     ? `<button type="button" class="js-dm-member inline-flex items-center justify-center w-7 h-7 rounded-full text-gray-400 hover:text-brand-700 hover:bg-white shrink-0" title="Message ${esc(m.name)}" data-pm="${m.id}" data-name="${esc(m.name)}"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.9 9.9 0 01-4.29-.94L3 20l1.05-3.15A7.6 7.6 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></button>`
-                    : (m.isMe ? '<span class="text-[10px] font-bold text-gray-400 shrink-0">You</span>' : '');
+                    : (m.isMe ? '<span class="text-[0.625rem] font-bold text-gray-400 shrink-0">You</span>' : '');
                 return `<div class="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white">${dot}${av}<span class="grow min-w-0 truncate text-sm font-semibold text-gray-800">${esc(m.name)}</span>${pm}</div>`;
             }).join('');
             const html = rows(d.data.members.slice());

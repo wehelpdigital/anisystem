@@ -70,9 +70,9 @@
     .qc-thumb { position: relative; aspect-ratio: 1; border-radius: .6rem; overflow: hidden; background: var(--color-gray-100); }
     .qc-thumb img { width: 100%; height: 100%; object-fit: cover; }
     .qc-thumb button { position: absolute; top: .25rem; right: .25rem; width: 1.5rem; height: 1.5rem; border-radius: 999px;
-        background: rgba(17,24,39,.7); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 1; }
+        background: rgba(17,24,39,.7); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .875rem; line-height: 1; }
     .qc-add { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .35rem; aspect-ratio: 1;
-        border: 1.5px dashed var(--color-gray-300); border-radius: .6rem; color: var(--color-gray-500); font-size: 12px; font-weight: 600; cursor: pointer; background: var(--color-gray-50); }
+        border: 1.5px dashed var(--color-gray-300); border-radius: .6rem; color: var(--color-gray-500); font-size: .75rem; font-weight: 600; cursor: pointer; background: var(--color-gray-50); }
     .qc-add:hover { border-color: var(--color-gray-400); color: var(--color-gray-600); }
     .qc-target { display: flex; align-items: flex-start; gap: .6rem; padding: .75rem; border: 1.5px solid var(--color-gray-200); border-radius: .7rem; cursor: pointer; }
     .qc-target.is-on { border-color: var(--color-brand-600, #4a7c2a); background: rgba(74,124,42,.12); }

@@ -352,7 +352,7 @@
     .cmap-dot { position: relative; width: 16px; height: 16px; border-radius: 999px; background: var(--dot, #16a34a); border: 2.5px solid #fff; box-shadow: 0 1px 4px rgb(0 0 0 / .45); }
     .cmap-dot::after { content: ''; position: absolute; inset: -3px; border-radius: 999px; border: 2px solid var(--dot, #16a34a); animation: cmapRipple 1.6s ease-out infinite; }
     @keyframes cmapRipple { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(2.6); opacity: 0; } }
-    .cmap-dot-name { background: rgb(17 24 39 / .82); color: #fff; border-radius: .45rem; padding: .05rem .4rem; font-size: 10px; font-weight: 800; white-space: nowrap; }
+    .cmap-dot-name { background: rgb(17 24 39 / .82); color: #fff; border-radius: .45rem; padding: .05rem .4rem; font-size: .62rem; font-weight: 800; white-space: nowrap; }
     @media (prefers-reduced-motion: reduce) {
         .cmap-dot::after { animation: cmapBreathe 2.2s ease-in-out infinite; }
         @keyframes cmapBreathe { 0%, 100% { opacity: .2; transform: scale(1.5); } 50% { opacity: .7; transform: scale(1.5); } }

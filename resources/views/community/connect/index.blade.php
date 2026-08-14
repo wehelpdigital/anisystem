@@ -20,7 +20,7 @@
     <a href="{{ route('community.connect.requests') }}" class="btn btn-white btn-sm shrink-0 relative">
         Requests
         @if ($pendingCount > 0)
-            <span class="absolute -top-1.5 -right-1.5 min-w-5 h-5 px-1 rounded-full bg-red-500 text-white text-[10px] font-bold inline-flex items-center justify-center">{{ $pendingCount }}</span>
+            <span class="absolute -top-1.5 -right-1.5 min-w-5 h-5 px-1 rounded-full bg-red-500 text-white text-[0.625rem] font-bold inline-flex items-center justify-center">{{ $pendingCount }}</span>
         @endif
     </a>
 </div>

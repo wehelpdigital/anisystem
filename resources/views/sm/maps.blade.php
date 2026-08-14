@@ -94,7 +94,7 @@
            JS from what is actually on screen (see below); this is the fallback
            before that runs, and the desktop framing. */
         .smap-stage {
-            height: calc(100dvh - 11rem); min-height: 22rem;
+            height: calc(100dvh - 11rem); min-height: min(22rem, 55dvh);
             border: 1px solid var(--color-gray-200); border-radius: 1rem; overflow: hidden;
             background: var(--color-white);
         }

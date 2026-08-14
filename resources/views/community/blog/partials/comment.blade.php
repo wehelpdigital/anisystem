@@ -5,7 +5,7 @@
         <div class="bg-gray-50 rounded-lg px-3 py-2">
             <p class="text-sm">
                 <span class="font-semibold text-gray-900">{{ optional($comment->author)->full_name ?: 'Member' }}</span>
-                <span class="text-[11px] text-gray-400 ms-1">· {{ $comment->created_at?->diffForHumans() }}</span>
+                <span class="text-[0.688rem] text-gray-400 ms-1">· {{ $comment->created_at?->diffForHumans() }}</span>
             </p>
             @if (filled($comment->body))
                 <p class="text-sm text-gray-700 whitespace-pre-line break-words mt-0.5">{!! \App\Support\CommunityText::render($comment->body) !!}</p>

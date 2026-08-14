@@ -146,7 +146,7 @@
                             aria-label="Notifications">
                             <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0a3 3 0 11-6 0m6 0H9"/></svg>
                             <span x-show="unread > 0" x-cloak
-                                class="absolute -top-0.5 -right-0.5 min-w-[1.15rem] h-[1.15rem] px-1 rounded-full bg-red-500 text-white text-[10px] font-bold inline-flex items-center justify-center"
+                                class="absolute -top-0.5 -right-0.5 min-w-[1.15rem] h-[1.15rem] px-1 rounded-full bg-red-500 text-white text-[0.625rem] font-bold inline-flex items-center justify-center"
                                 x-text="unread > 99 ? '99+' : unread"></span>
                         </button>
                         {{-- A sheet from the bottom, not a dropdown pinned to a
@@ -195,7 +195,7 @@
                                             <div class="min-w-0">
                                                 <p class="text-sm font-semibold text-gray-900 leading-snug" x-text="n.title"></p>
                                                 <p x-show="n.body" class="text-xs text-gray-500 mt-0.5 leading-snug" x-text="n.body"></p>
-                                                <p class="text-[11px] text-gray-400 mt-1" x-text="n.ago"></p>
+                                                <p class="text-[0.688rem] text-gray-400 mt-1" x-text="n.ago"></p>
                                             </div>
                                         </div>
                                     </a>

@@ -47,7 +47,7 @@
     .lr-grid { position: absolute; inset: 0 0 1.6rem 3.2rem; }
     .lr-grid i { position: absolute; left: 0; right: 0; height: 1px; background: var(--color-gray-100); }
     .lr-yticks { position: absolute; left: 0; top: 0; bottom: 1.6rem; width: 3rem; }
-    .lr-yticks span { position: absolute; right: .2rem; transform: translateY(-50%); font-size: 10.5px; color: var(--color-gray-400); font-variant-numeric: tabular-nums; }
+    .lr-yticks span { position: absolute; right: .2rem; transform: translateY(-50%); font-size: .66rem; color: var(--color-gray-400); font-variant-numeric: tabular-nums; }
     .lr-cols { position: relative; margin-left: 3.2rem; display: flex; gap: 6px; height: 13rem; overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; scrollbar-color: var(--color-gray-300) transparent; }
     .lr-colband { flex: 1 1 0; min-width: 30px; max-width: 64px; display: flex; flex-direction: column; cursor: default; }
     .lr-colarea { flex: 1 1 auto; display: flex; align-items: flex-end; justify-content: center; }
@@ -55,8 +55,8 @@
     .lr-col { width: 100%; height: 100%; border-radius: 4px 4px 0 0; background: var(--color-brand-500); min-height: 2px; }
     .lr-colband:hover .lr-col { filter: brightness(1.08); }
     .lr-colband.is-max .lr-col { background: var(--color-brand-800); }
-    .lr-collabel { height: 1.6rem; display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--color-gray-500); white-space: nowrap; }
-    .lr-colcap { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); font-size: 10.5px; font-weight: 700; color: var(--color-gray-800); white-space: nowrap; padding-bottom: 2px; }
+    .lr-collabel { height: 1.6rem; display: flex; align-items: center; justify-content: center; font-size: .66rem; color: var(--color-gray-500); white-space: nowrap; }
+    .lr-colcap { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); font-size: .66rem; font-weight: 700; color: var(--color-gray-800); white-space: nowrap; padding-bottom: 2px; }
     .lr-colcap .tag { display: inline-block; margin-left: .25rem; padding: 0 .35rem; border-radius: 999px; background: var(--color-brand-100); color: var(--color-brand-800); font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
     .lr-metric { display: inline-flex; border: 1px solid var(--color-gray-200); border-radius: .6rem; overflow: hidden; }
     .lr-metric button { padding: .3rem .7rem; font-size: .78rem; font-weight: 700; color: var(--color-gray-500); background: var(--color-white); cursor: pointer; }

@@ -11,7 +11,7 @@
                 @include('community.partials.avatar', ['user' => $u, 'size' => 'avatar-sm'])
                 <div class="min-w-0 grow">
                     <a href="{{ route('community.connect.profile', ['userId' => $u->id]) }}" class="block text-sm font-semibold text-gray-900 truncate hover:text-brand-700">{{ $u->full_name }}</a>
-                    @if (filled($u->location))<span class="block text-[11px] text-gray-500 truncate">{{ $u->location }}</span>@endif
+                    @if (filled($u->location))<span class="block text-[0.688rem] text-gray-500 truncate">{{ $u->location }}</span>@endif
                 </div>
             </div>
             <div class="mt-1.5">

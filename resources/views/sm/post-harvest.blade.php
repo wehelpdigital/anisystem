@@ -11,7 +11,7 @@
         .ph-card { position: relative; }
         .ph-cat {
             display: inline-flex; align-items: center; gap: .3rem; border-radius: 999px;
-            padding: .15rem .55rem; font-size: 11px; font-weight: 700;
+            padding: .15rem .55rem; font-size: .69rem; font-weight: 700;
             background: var(--ph-cat-bg, #eef0fb); color: var(--ph-cat-fg, #3a4699);
         }
         .ph-cat-yield   { --ph-cat-bg: #e8f5e9; --ph-cat-fg: #1f6b32; }
@@ -33,7 +33,7 @@
         html.dark .ph-cat-other   { --ph-cat-bg: #262c34; --ph-cat-fg: #b4bdc8; }
 
         .ph-figure { display: flex; flex-direction: column; gap: .1rem; }
-        .ph-figure dt { font-size: 10.5px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; }
+        .ph-figure dt { font-size: .66rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; }
         .ph-figure dd { font-size: .95rem; font-weight: 800; }
         .ph-notes { font-size: .875rem; line-height: 1.5; }
         .ph-notes p { margin: .25rem 0; }
@@ -45,7 +45,7 @@
         .ph-video { width: 100%; max-height: 60vh; border-radius: .6rem; background: #000; object-fit: cover; }
         .ph-thumb { position: relative; aspect-ratio: 1; border-radius: .5rem; overflow: hidden; background: #f3f4f6; }
         .ph-thumb img { width: 100%; height: 100%; object-fit: cover; }
-        .ph-thumb button { position: absolute; top: .2rem; right: .2rem; width: 1.4rem; height: 1.4rem; border-radius: 999px; background: rgba(17,24,39,.7); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; line-height: 1; }
+        .ph-thumb button { position: absolute; top: .2rem; right: .2rem; width: 1.4rem; height: 1.4rem; border-radius: 999px; background: rgba(17,24,39,.7); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .81rem; line-height: 1; }
         .ph-gallery-thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem; }
     </style>
 @endpush

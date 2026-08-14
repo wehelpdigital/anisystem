@@ -23,7 +23,7 @@
                     @else
                         <span class="text-xs font-semibold text-gray-900">Member</span>
                     @endif
-                    <span class="text-[11px] text-gray-400">· {{ $comment->created_at?->diffForHumans() }}</span>
+                    <span class="text-[0.688rem] text-gray-400">· {{ $comment->created_at?->diffForHumans() }}</span>
                     @if ($comment->isRestricted ?? false)
                         @include('community.partials.restricted', ['reason' => $comment->restrictedReason ?? null])
                     @else
@@ -41,11 +41,11 @@
                 </div>
                 <div class="flex items-center gap-2 mt-0.5 ml-1">
                     @include('community.partials.react-bar', ['type' => 'wallcomment', 'id' => $comment->id, 'summary' => $comment->reactionSummary ?? null, 'mini' => true])
-                    <button type="button" class="js-wall-reply text-[11px] font-semibold text-gray-400 hover:text-brand-700"
+                    <button type="button" class="js-wall-reply text-[0.688rem] font-semibold text-gray-400 hover:text-brand-700"
                             data-parent-id="{{ $threadId }}"
                             @if ($comment->author && ! $isMine) data-author-id="{{ $comment->author->id }}" data-author-name="{{ $comment->author->full_name }}" @endif>Reply</button>
                     @if ($isMine)
-                        <button type="button" class="js-comment-delete text-[11px] font-semibold text-gray-400 hover:text-red-500"
+                        <button type="button" class="js-comment-delete text-[0.688rem] font-semibold text-gray-400 hover:text-red-500"
                                 data-comment-id="{{ $comment->id }}">Delete</button>
                     @endif
                     @include('community.partials.dm-btn', ['user' => $comment->author])
