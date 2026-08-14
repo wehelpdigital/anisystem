@@ -62,6 +62,27 @@ class NotesHubController extends Controller
             ));
         }
 
+        // The notes people actually write on a day.
+        //
+        // The board's +note has made these since the day a day could hold more
+        // than one, so a farm's whole working record — every photo taken in a
+        // field, every clip of a broken pump — lived in a table this hub had
+        // never heard of. "All my notes" listed everything except the notes.
+        foreach (\App\Models\AsInlineNote::active()->whereIn('croppingScheduleId', $scheduleIds->keys())->orderByDesc('id')->get() as $n) {
+            $date = $n->noteDate?->format('M j, Y');
+            $items->push($this->row(
+                $n->id,
+                'day',
+                $n->title ?: (($titles[$n->croppingScheduleId] ?? 'Schedule') . ' — ' . $date),
+                $n->content,
+                null,
+                ($titles[$n->croppingScheduleId] ?? 'Schedule') . ' · ' . $date,
+                route('sm.activities', ['id' => $n->croppingScheduleId]),
+                $n->updated_at,
+                $n->media
+            ));
+        }
+
         $all = $items->sortByDesc(fn ($i) => $i['ts'])->values();
 
         // One shelf out of three tables, so the page is cut here rather than

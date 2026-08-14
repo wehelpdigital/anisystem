@@ -3906,6 +3906,16 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => openDayIncome(date), 260);
             return;
         }
+        if (cls === 'capture-photo') {
+            const date = dayMenuDate;
+            setTimeout(() => captureDayPhoto(date), 260);
+            return;
+        }
+        if (cls === 'record-video') {
+            const date = dayMenuDate;
+            setTimeout(() => recordDayVideo(date), 260);
+            return;
+        }
         if (cls === 'add-drawing') {
             const date = dayMenuDate;
             setTimeout(() => addDayDrawing(date), 260);
@@ -3926,6 +3936,93 @@ document.addEventListener('DOMContentLoaded', () => {
      * them feel like formatting rather than like things the day has. They hang
      * off the day now and land in that day's note, so nothing new has to be
      * invented to store or show them. */
+    /* ---- The camera, kept with the day ----------------------------------
+     * A photo and a clip are the fastest notes anyone writes: you are already
+     * standing in front of the thing. Both land the same way a drawing does —
+     * as a note of their own, with a name and words, so the Gallery, the
+     * global notes and the day all show it without anything new being
+     * invented to hold it.
+     *
+     * One host serves both. The recorder partial writes whatever it captures
+     * into a `.js-video-file` inside a host element, so borrowing that here
+     * means the record button, the size limit and the preview are the ones
+     * already used everywhere else. */
+    let captureHost = null;
+    function ensureCaptureHost() {
+        if (captureHost) return captureHost;
+        captureHost = document.createElement('span');
+        captureHost.setAttribute('data-video-host', '');
+        captureHost.style.display = 'none';
+        captureHost.innerHTML = '<input type="file" class="js-video-file" accept="video/*">'
+            + '<button type="button" class="js-video-record"></button>'
+            + '<input type="file" class="js-photo-file" accept="image/*" capture="environment">';
+        document.body.appendChild(captureHost);
+        return captureHost;
+    }
+
+    /** Upload one file with a visible wait, then start a note carrying it. */
+    async function noteFromCapture(dateKey, file, url, field, kind, suggested) {
+        const done = toast(kind === 'video' ? 'Compressing the video…' : 'Saving the photo…', 'info', 0);
+        try {
+            const form = new FormData();
+            form.append(field, file);
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, Accept: 'application/json' },
+                body: form,
+                credentials: 'same-origin',
+            });
+            const json = await res.json().catch(() => ({}));
+            if (!json.success || !json.data?.path) throw new Error(json.message || 'Upload failed.');
+            done?.close?.();
+            const entry = kind === 'video'
+                ? { type: 'video', path: json.data.path, poster: json.data.poster, url: json.data.url, posterUrl: json.data.posterUrl }
+                : { type: 'image', path: json.data.path, url: json.data.url };
+            newInlineNoteWith(dateKey, [entry], suggested);
+        } catch (err) {
+            done?.close?.();
+            toast(err.message || 'Could not save that.', 'error');
+        }
+    }
+
+    function captureDayPhoto(dateKey) {
+        dateKey = (dateKey || '').trim() || isoFromDate(new Date());
+        const host = ensureCaptureHost();
+        const input = host.querySelector('.js-photo-file');
+        input.value = '';
+        // Bound fresh each time: the date it belongs to changes per call, and
+        // a stale listener would file the photo on the wrong day.
+        input.onchange = () => {
+            const f = input.files && input.files[0];
+            input.value = '';
+            if (!f) return;
+            noteFromCapture(dateKey, f, U.noteImageUpload(), 'image', 'image', 'Photo');
+        };
+        input.click();
+    }
+
+    function recordDayVideo(dateKey) {
+        dateKey = (dateKey || '').trim() || isoFromDate(new Date());
+        const host = ensureCaptureHost();
+        const input = host.querySelector('.js-video-file');
+        input.value = '';
+        // The shared recorder writes its result into this input. Listening for
+        // that write is how a recording becomes a note without the recorder
+        // needing to know anything about notes.
+        input.onchange = () => {
+            const f = input.files && input.files[0];
+            input.value = '';
+            if (!f) return;
+            noteFromCapture(dateKey, f, U.noteVideoUpload(), 'video', 'video', 'Video');
+        };
+        host.querySelector('.js-video-record').click();
+    }
+
+    // Tools offers both for today, so the camera does not require first
+    // finding today on a board that may be scrolled somewhere else.
+    $id('captureTodayPhotoBtn')?.addEventListener('click', () => captureDayPhoto(isoFromDate(new Date())));
+    $id('recordTodayVideoBtn')?.addEventListener('click', () => recordDayVideo(isoFromDate(new Date())));
+
     async function addDayDrawing(dateKey) {
         if (typeof window.openDrawCanvas !== 'function') { toast('Drawing pad unavailable.', 'error'); return; }
         window.openDrawCanvas(async (dataUrl, objects) => {

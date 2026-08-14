@@ -223,16 +223,31 @@ function toastStack() {
     return el;
 }
 
+/**
+ * A short message in the corner.
+ *
+ * timeout: 0 keeps it up until the caller says otherwise, for work whose
+ * length nobody can predict — compressing a phone video takes as long as it
+ * takes, and a notice that vanishes after three seconds reads as "finished"
+ * when it means nothing of the sort. Every call returns a handle, so the
+ * waiting case is `const t = toast(msg, 'info', 0); ...; t.close()`.
+ */
 window.toast = function toast(message, type = 'success', timeout = 3200) {
     const el = document.createElement('div');
     el.className = `toast toast-${type}`;
     el.innerHTML = `<span class="grow">${escapeHtml(message)}</span>`;
     toastStack().appendChild(el);
     requestAnimationFrame(() => el.classList.add('is-shown'));
-    setTimeout(() => {
+
+    let timer = null;
+    const close = () => {
+        if (timer) { clearTimeout(timer); timer = null; }
         el.classList.remove('is-shown');
         setTimeout(() => el.remove(), 250);
-    }, timeout);
+    };
+    if (timeout > 0) timer = setTimeout(close, timeout);
+
+    return { close, el, say: (m) => { el.querySelector('.grow').textContent = m; } };
 };
 
 /* ------------------------------------------------------------------ */

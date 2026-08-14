@@ -1943,6 +1943,10 @@
         {{-- Peers of Notes, and reachable the same way. They live only in the
              Tools menu — the toolbar has no room for two more — and the menu
              rows forward their clicks here. --}}
+        {{-- The camera lives only in the menu: it is a phone action, and the
+             toolbar is already full on the screens that have one. --}}
+        <button type="button" id="captureTodayPhotoBtn" class="btn btn-white btn-sm toolbar-in-menu hidden" data-activities-only aria-hidden="true" tabindex="-1">Capture a photo</button>
+        <button type="button" id="recordTodayVideoBtn" class="btn btn-white btn-sm toolbar-in-menu hidden" data-activities-only aria-hidden="true" tabindex="-1">Record a video</button>
         <button type="button" id="openDrawBtn" class="btn btn-white btn-sm toolbar-in-menu" data-activities-only>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L20 7a2 2 0 00-3-3L5 16l-1 4zM14 6l4 4"/></svg>
             Draw
