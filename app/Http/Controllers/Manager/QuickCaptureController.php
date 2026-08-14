@@ -86,6 +86,127 @@ class QuickCaptureController extends BaseScheduleController
         );
     }
 
+    /**
+     * Quick Record — one clip, named, filed.
+     *
+     * The photo path's sibling, and deliberately shorter: a video is one
+     * thing, so there is no group to assemble and no AI question to ask (a
+     * still is what the technician reads). Everything else is the same
+     * shape — a note with the clip attached, or an album — because a
+     * recording of a broken pump belongs beside the photo of it, not in a
+     * place of its own.
+     */
+    public function storeClip(Request $request)
+    {
+        $request->validate([
+            'scheduleId' => 'required|integer',
+            'title' => 'nullable|string|max:191',
+            'note' => 'nullable|string|max:50000',
+            'target' => 'nullable|in:note,gallery',
+            'albumId' => 'nullable|integer',
+            'albumTitle' => 'nullable|string|max:191',
+            // 300MB, the same ceiling the shared recorder enforces before it
+            // will hand a clip over.
+            'clip' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-m4v|max:307200',
+        ], [
+            'clip.required' => 'Record something first.',
+            'clip.max' => 'That clip is larger than 300 MB — record a shorter one.',
+        ]);
+
+        $schedule = $this->schedule($request->input('scheduleId'));
+
+        $title = filled($request->input('title'))
+            ? trim((string) $request->input('title'))
+            : 'Quick record — ' . Carbon::now()->format('M j, Y g:i A');
+
+        $body = filled($request->input('note'))
+            ? HtmlSanitizer::rich($request->input('note'))
+            : null;
+
+        // Transcoded before it is stored, so a phone's 90MB minute becomes
+        // something a farm connection can play back. Its complaints are
+        // specific ("ffmpeg is missing", "that is not a video") and worth
+        // more to the person than a generic failure would be.
+        try {
+            $stored = \App\Support\VideoOptimizer::storeCompressed($request->file('clip'), 'schedule-notes');
+        } catch (\Throwable $e) {
+            return $this->jsonFail($e->getMessage() ?: 'The clip could not be saved.', 422);
+        }
+
+        $media = [array_filter([
+            'type' => 'video',
+            'path' => $stored['video'],
+            'poster' => $stored['poster'] ?? null,
+        ], fn ($v) => $v !== null)];
+
+        if ($request->input('target') === 'gallery') {
+            $album = $this->albumFor($schedule, $request);
+            \App\Models\AsGalleryImage::create([
+                'albumId' => $album->id,
+                'croppingScheduleId' => $schedule->id,
+                'userId' => Auth::id(),
+                'path' => $stored['video'],
+                'caption' => $title,
+                'deleteStatus' => 1,
+            ]);
+
+            return $this->jsonOk('Clip saved to "' . $album->title . '".', [
+                'albumId' => $album->id,
+                'galleryUrl' => route('sm.gallery', ['id' => $schedule->id]),
+            ]);
+        }
+
+        $note = AsScheduleNote::create([
+            'croppingScheduleId' => $schedule->id,
+            'userId' => Auth::id(),
+            'title' => $title,
+            'body' => $body,
+            'imagePath' => null,
+            'media' => $media,
+            'deleteStatus' => 1,
+        ]);
+
+        return $this->jsonOk('Clip saved as a note.', [
+            'noteId' => $note->id,
+            'notesUrl' => route('sm.notes', ['id' => $schedule->id]),
+        ]);
+    }
+
+    /**
+     * The album a capture is going into: the one chosen, or a new one.
+     *
+     * Never refuses the pictures for want of a name — the typed name wins,
+     * then the capture's own title, then today's date. Losing a photo
+     * because a field was blank is the worst outcome available here.
+     */
+    private function albumFor($schedule, Request $request): \App\Models\AsGalleryAlbum
+    {
+        if ($request->filled('albumId')) {
+            $album = \App\Models\AsGalleryAlbum::where('croppingScheduleId', $schedule->id)
+                ->where('deleteStatus', 1)->find((int) $request->input('albumId'));
+            if ($album) {
+                return $album;
+            }
+        }
+
+        $name = filled($request->input('albumTitle'))
+            ? trim((string) $request->input('albumTitle'))
+            : (filled($request->input('title'))
+                ? trim((string) $request->input('title'))
+                : 'Quick capture — ' . Carbon::now()->format('M j, Y'));
+
+        return \App\Models\AsGalleryAlbum::create([
+            'croppingScheduleId' => $schedule->id,
+            'userId' => Auth::id(),
+            'title' => $name,
+            'description' => filled($request->input('note'))
+                ? Str::limit(trim(strip_tags((string) $request->input('note'))), 480)
+                : null,
+            'sortOrder' => 0,
+            'deleteStatus' => 1,
+        ]);
+    }
+
     /** The albums a capture could go into, for the gallery picker. */
     public function albums(Request $request)
     {
@@ -119,32 +240,7 @@ class QuickCaptureController extends BaseScheduleController
 
         $schedule = $this->schedule($request->input('scheduleId'));
 
-        $album = null;
-        if ($request->filled('albumId')) {
-            $album = \App\Models\AsGalleryAlbum::where('croppingScheduleId', $schedule->id)
-                ->where('deleteStatus', 1)->find((int) $request->input('albumId'));
-        }
-        if (! $album) {
-            // No album chosen — make one rather than refuse the pictures. The
-            // typed name wins; failing that the capture's own title; failing
-            // that, today.
-            $name = filled($request->input('albumTitle'))
-                ? trim((string) $request->input('albumTitle'))
-                : (filled($request->input('title'))
-                    ? trim((string) $request->input('title'))
-                    : 'Quick capture — ' . Carbon::now()->format('M j, Y'));
-
-            $album = \App\Models\AsGalleryAlbum::create([
-                'croppingScheduleId' => $schedule->id,
-                'userId' => Auth::id(),
-                'title' => $name,
-                'description' => filled($request->input('note'))
-                    ? Str::limit(trim(strip_tags((string) $request->input('note'))), 480)
-                    : null,
-                'sortOrder' => 0,
-                'deleteStatus' => 1,
-            ]);
-        }
+        $album = $this->albumFor($schedule, $request);
 
         $caption = filled($request->input('title'))
             ? Str::limit(trim((string) $request->input('title')), 250)

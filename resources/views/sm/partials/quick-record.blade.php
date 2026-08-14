@@ -1,0 +1,275 @@
+{{-- Quick Record — one clip, named, filed.
+
+     Quick Capture's shorter sibling. A video is one thing rather than a group,
+     and a still is what the AI technician reads, so there is no assembling
+     step and no AI door: record, say what it is, choose where it lands.
+
+     Expects $allSchedules (and optionally $fixedScheduleId, when opened from
+     inside a schedule). Recording itself is the shared recorder every other
+     composer uses, borrowed through a hidden host. --}}
+<div class="qr-modal hidden" id="quickRecordModal" role="dialog" aria-modal="true" aria-label="Quick Record">
+    <div class="qr-backdrop" data-qr-cancel></div>
+    <div class="qr-card">
+        <div class="qr-head">
+            <h3 class="font-bold text-gray-900">Quick Record</h3>
+            <button type="button" class="btn-ghost p-2 rounded-full" data-qr-cancel aria-label="Close">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+        </div>
+
+        <div class="qr-body space-y-4">
+            <div class="qr-clip" id="qrClip">
+                <video id="qrPreview" playsinline controls></video>
+                <span class="qr-size" id="qrSize"></span>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+                <button type="button" class="btn btn-white btn-sm" id="qrRerecord">
+                    <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/></svg>
+                    Record again
+                </button>
+                <button type="button" class="btn btn-white btn-sm" id="qrUpload">Choose a video instead</button>
+            </div>
+
+            <div>
+                <label class="form-label" for="qrTitle">Title <span class="text-red-500">*</span></label>
+                <input type="text" id="qrTitle" class="form-input" maxlength="191"
+                       placeholder="e.g. Pump noise, west line" autocomplete="off">
+            </div>
+
+            <div>
+                <label class="form-label" for="qrNote">Description <span class="text-gray-400 font-normal">(optional)</span></label>
+                <textarea id="qrNote" class="form-textarea" rows="3" maxlength="5000"
+                          placeholder="What is happening in the clip?"></textarea>
+            </div>
+
+            @if (!empty($fixedScheduleId))
+                <input type="hidden" id="qrSchedule" value="{{ $fixedScheduleId }}">
+            @else
+                <div>
+                    <label class="form-label" for="qrSchedule">Connect to schedule</label>
+                    <select id="qrSchedule" class="form-input">
+                        @foreach ($allSchedules as $s)
+                            <option value="{{ $s->id }}">{{ $s->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
+
+            <div>
+                <span class="form-label">Where should it go?</span>
+                <div class="grid gap-2 mt-1.5">
+                    <label class="qr-target is-on">
+                        <input type="radio" name="qrTarget" value="note" checked>
+                        <span>
+                            <span class="block font-semibold text-gray-900">Save to notes</span>
+                            <span class="block text-xs text-gray-500">Keep it in this schedule's notebook.</span>
+                        </span>
+                    </label>
+                    <label class="qr-target">
+                        <input type="radio" name="qrTarget" value="gallery">
+                        <span>
+                            <span class="block font-semibold text-gray-900">Save to an album</span>
+                            <span class="block text-xs text-gray-500">Put it in the Gallery, beside the photos.</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <div id="qrAlbumWrap" class="hidden">
+                <label class="form-label" for="qrAlbum">Album</label>
+                <select id="qrAlbum" class="form-input">
+                    <option value="">➕ New album…</option>
+                </select>
+                <input type="text" id="qrAlbumTitle" class="form-input mt-2" maxlength="191"
+                       placeholder="Name the new album" autocomplete="off">
+            </div>
+        </div>
+
+        <div class="qr-foot">
+            <button type="button" class="btn btn-ghost" data-qr-cancel>Cancel</button>
+            <button type="button" class="btn btn-primary ml-auto" id="qrSave">Save clip</button>
+        </div>
+    </div>
+</div>
+
+{{-- The shared recorder writes whatever it captures into this input. --}}
+<span id="qrHost" data-video-host class="hidden">
+    <input type="file" class="js-video-file" accept="video/*">
+    <button type="button" class="js-video-record"></button>
+</span>
+
+@push('head')
+<style>
+    .qr-modal { position: fixed; inset: 0; z-index: 90; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+    .qr-modal.hidden { display: none; }
+    .qr-backdrop { position: absolute; inset: 0; background: rgb(0 0 0 / .6);
+        opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .qr-modal.is-open .qr-backdrop { opacity: 1; }
+    .qr-card { position: relative; width: 100%; max-width: 30rem; max-height: 92vh; display: flex; flex-direction: column;
+        background: var(--color-white); border-radius: 1rem; overflow: hidden; box-shadow: var(--shadow-card-lg);
+        transform: translateY(1.25rem) scale(.98); opacity: 0;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+    .qr-modal.is-open .qr-card { transform: none; opacity: 1; }
+    .qr-head { display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+        padding: .75rem 1rem; border-bottom: 1px solid var(--color-gray-100); }
+    .qr-body { padding: 1rem; overflow-y: auto; }
+    .qr-foot { display: flex; align-items: center; gap: .5rem; padding: .75rem 1rem;
+        border-top: 1px solid var(--color-gray-100); }
+    .qr-clip { position: relative; border-radius: .75rem; overflow: hidden; background: #000; }
+    .qr-clip video { width: 100%; max-height: 40vh; display: block; background: #000; }
+    .qr-size { position: absolute; top: .4rem; left: .4rem; padding: .1rem .45rem; border-radius: 999px;
+        background: rgb(0 0 0 / .55); color: #fff; font-size: .62rem; font-weight: 700; }
+    .qr-target { display: flex; align-items: flex-start; gap: .6rem; padding: .6rem .7rem; cursor: pointer;
+        border: 1px solid var(--color-gray-200); border-radius: .7rem; background: var(--color-white);
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+    .qr-target.is-on { border-color: #4a7c2a; background: #f4f9ee; }
+    .qr-target input { margin-top: .2rem; }
+    html.dark .qr-card { background: #151b12; }
+    html.dark .qr-head, html.dark .qr-foot { border-color: #2b3a1c; }
+    html.dark .qr-target { background: #1c2416; border-color: #2b3a1c; }
+    html.dark .qr-target.is-on { background: #24301a; border-color: #6ba33c; }
+    @media (prefers-reduced-motion: reduce) { .qr-backdrop, .qr-card { transition: none; } }
+</style>
+@endpush
+
+@push('scripts')
+<script>
+(function quickRecord() {
+    const modal = document.getElementById('quickRecordModal');
+    if (!modal || window.openQuickRecord) return;
+    const $ = (id) => document.getElementById(id);
+    const CSRF = document.querySelector('meta[name=csrf-token]')?.content || '';
+    const CLIP_URL = @json(route('quick-record.clip'));
+    const ALBUMS_URL = @json(route('quick-capture.albums'));
+
+    const host = $('qrHost');
+    const fileInput = host.querySelector('.js-video-file');
+    let clip = null;
+
+    const fmtMB = (b) => (b / 1048576).toFixed(b > 10485760 ? 0 : 1) + ' MB';
+
+    function showClip(file) {
+        clip = file;
+        const url = URL.createObjectURL(file);
+        const v = $('qrPreview');
+        v.src = url;
+        v.load?.();
+        $('qrSize').textContent = fmtMB(file.size);
+    }
+
+    /* The recorder hands its result to the host's file input. Watching that
+       one place covers both ways in — recorded here, or chosen off the
+       device — so nothing downstream needs to know which it was. */
+    fileInput.addEventListener('change', () => {
+        const f = fileInput.files && fileInput.files[0];
+        if (!f) return;
+        showClip(f);
+        if (modal.classList.contains('hidden')) open();
+    });
+
+    function open() {
+        modal.classList.remove('hidden');
+        void modal.offsetWidth;
+        modal.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        window.registerOverlay?.('quickRecord', close);
+    }
+    function close() {
+        modal.classList.remove('is-open');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            const v = $('qrPreview');
+            v.pause?.(); v.removeAttribute('src'); v.load?.();
+        }, 260);
+        clip = null;
+        fileInput.value = '';
+    }
+
+    /* Recording starts before the form is asked for: nobody can title a clip
+       that does not exist yet, and standing in front of the thing is the
+       moment that matters. The sheet opens once there is something to name. */
+    window.openQuickRecord = function () {
+        clip = null;
+        $('qrTitle').value = '';
+        $('qrNote').value = '';
+        host.querySelector('.js-video-record').click();
+    };
+
+    $('qrRerecord').addEventListener('click', () => host.querySelector('.js-video-record').click());
+    $('qrUpload').addEventListener('click', () => fileInput.click());
+    modal.addEventListener('click', (e) => { if (e.target.closest('[data-qr-cancel]')) close(); });
+
+    // Destination: paint the choice, and only ask about albums when relevant.
+    modal.addEventListener('change', async (e) => {
+        if (e.target.name !== 'qrTarget') return;
+        modal.querySelectorAll('.qr-target').forEach((l) => l.classList.toggle('is-on', l.contains(e.target)));
+        const gallery = e.target.value === 'gallery';
+        $('qrAlbumWrap').classList.toggle('hidden', !gallery);
+        if (gallery) await loadAlbums();
+    });
+
+    async function loadAlbums() {
+        const id = $('qrSchedule')?.value;
+        if (!id) return;
+        try {
+            const res = await fetch(ALBUMS_URL + '?scheduleId=' + encodeURIComponent(id), {
+                headers: { Accept: 'application/json' }, credentials: 'same-origin',
+            });
+            const json = await res.json();
+            const sel = $('qrAlbum');
+            sel.innerHTML = '<option value="">➕ New album…</option>'
+                + (json.data?.albums || []).map((a) =>
+                    '<option value="' + a.id + '">' + (window.escapeHtml ? window.escapeHtml(a.title) : a.title) + '</option>').join('');
+        } catch (_) { /* the new-album path still works */ }
+    }
+
+    $('qrSave').addEventListener('click', async () => {
+        const title = $('qrTitle').value.trim();
+        if (!clip) { window.toast?.('Record or choose a clip first.', 'error'); return; }
+        if (!title) { window.toast?.('Give the clip a title.', 'error'); $('qrTitle').focus(); return; }
+
+        const btn = $('qrSave');
+        btn.disabled = true;
+        // Compressing a phone video takes as long as it takes; the notice
+        // stays up until the server has actually finished.
+        const waiting = window.toast?.('Compressing and saving the clip…', 'info', 0);
+
+        const form = new FormData();
+        form.append('clip', clip, clip.name || 'recording.webm');
+        form.append('scheduleId', $('qrSchedule').value);
+        form.append('title', title);
+        form.append('note', $('qrNote').value.trim());
+        const target = modal.querySelector('input[name=qrTarget]:checked')?.value || 'note';
+        form.append('target', target);
+        if (target === 'gallery') {
+            form.append('albumId', $('qrAlbum').value || '');
+            form.append('albumTitle', $('qrAlbumTitle').value.trim());
+        }
+
+        try {
+            const res = await fetch(CLIP_URL, {
+                method: 'POST',
+                headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' },
+                body: form,
+                credentials: 'same-origin',
+            });
+            const json = await res.json().catch(() => ({}));
+            if (!json.success) throw new Error(json.message || 'Could not save the clip.');
+            waiting?.close();
+            window.toast?.(json.message);
+            close();
+        } catch (err) {
+            waiting?.close();
+            window.toast?.(err.message, 'error');
+        } finally {
+            btn.disabled = false;
+        }
+    });
+
+    document.getElementById('quickRecordBtn')?.addEventListener('click', window.openQuickRecord);
+    document.getElementById('quickRecordFab')?.addEventListener('click', window.openQuickRecord);
+})();
+</script>
+@endpush

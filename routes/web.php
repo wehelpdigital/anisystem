@@ -196,6 +196,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
 
     // Quick Capture — save a captured photo group as notes on a schedule.
     Route::post('/app/quick-capture-notes', [App\Http\Controllers\Manager\QuickCaptureController::class, 'storeNotes'])->name('quick-capture.notes');
+    Route::post('/app/quick-record-clip', [App\Http\Controllers\Manager\QuickCaptureController::class, 'storeClip'])->name('quick-record.clip');
     Route::get('/app/quick-capture-albums', [App\Http\Controllers\Manager\QuickCaptureController::class, 'albums'])->name('quick-capture.albums');
     Route::post('/app/quick-capture-gallery', [App\Http\Controllers\Manager\QuickCaptureController::class, 'storeGallery'])->name('quick-capture.gallery');
 

@@ -107,16 +107,26 @@
         .qa-notes:hover { border-color: #f0dcae; }
         .qa-cap .qa-ico { background: #eef6e6; color: #3d6823; }
         .qa-cap:hover { border-color: #cfe3b8; }
+        .qa-rec .qa-ico { background: #fdecec; color: #b91c1c; }
+        .qa-rec:hover { border-color: #f3c4c4; }
         .qa-txt { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
         .qa-sub { display: none; font-size: .68rem; font-weight: 500; color: var(--color-gray-400); }
         @media (min-width: 768px) { .qa-sub { display: block; } }
         html.dark .qa-btn { background: #151b12; border-color: #2b3a1c; color: #e8efe1; }
         html.dark .qa-notes .qa-ico { background: rgb(180 83 9 / .18); color: #e0b457; }
         html.dark .qa-cap .qa-ico { background: rgb(61 104 35 / .25); color: #a5c97e; }
+        html.dark .qa-rec .qa-ico { background: rgb(185 28 28 / .2); color: #f0a3a3; }
         html.dark .qa-sub { color: #7d8f6e; }
         @media (prefers-reduced-motion: reduce) { .qa-btn { transition: none; } }
-        /* Phones: the pair shares the row under the search, evenly. */
-        .sch-quick .qa-btn { flex: 1 1 0; justify-content: flex-start; }
+        /* Phones: three doors now, so they share the row by content rather
+           than by thirds — "Global notes" needs more width than "Record", and
+           equal thirds squeezed all three into ellipses. The icons stay full
+           size; only the words give. */
+        .sch-quick { flex-wrap: wrap; }
+        .sch-quick .qa-btn { flex: 1 1 auto; min-width: 0; justify-content: flex-start;
+            padding-right: .7rem; gap: .45rem; }
+        .sch-quick .qa-txt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
+        @media (max-width: 380px) { .sch-quick .qa-ico { width: 1.9rem; height: 1.9rem; } }
 
         /* ---- season cards: each schedule is a shelfful of ground, so the
            card leads with a field-toned cover, the crops growing on it, and
@@ -339,7 +349,11 @@
             @if ($allSchedules->isNotEmpty())
                 <button type="button" id="quickCaptureFab" class="qa-btn qa-cap">
                     <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
-                    <span class="qa-txt">Quick capture</span>
+                    <span class="qa-txt">Capture</span>
+                </button>
+                <button type="button" id="quickRecordFab" class="qa-btn qa-rec">
+                    <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg></span>
+                    <span class="qa-txt">Record</span>
                 </button>
             @endif
         </div>
@@ -356,6 +370,10 @@
                 <button type="button" id="quickCaptureBtn" class="qa-btn qa-cap">
                     <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
                     <span class="qa-txt">Quick Capture<span class="qa-sub">snap it, file it now</span></span>
+                </button>
+                <button type="button" id="quickRecordBtn" class="qa-btn qa-rec">
+                    <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg></span>
+                    <span class="qa-txt">Quick Record<span class="qa-sub">film it, file it now</span></span>
                 </button>
             @endif
             <a href="{{ route('sm.create') }}" class="btn btn-primary">
@@ -521,6 +539,9 @@
     </a>
 
     @include('sm.partials.quick-capture', ['allSchedules' => $allSchedules])
+    @include('sm.partials.quick-record', ['allSchedules' => $allSchedules])
+    {{-- Quick Record borrows the shared recorder, so the page needs it. --}}
+    @include('community.partials.video-js')
 @endsection
 
 @push('scripts')
