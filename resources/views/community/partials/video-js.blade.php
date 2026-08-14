@@ -31,7 +31,13 @@
     function assignFile(host, file) {
         const input = host && host.querySelector('.js-video-file');
         if (!input) return false;
-        if (file.size > MAX) { say('Video is larger than 300 MB.', 'error'); return false; }
+        if (file.size > MAX) {
+            // Much likelier now the camera app does the filming: a phone
+            // shooting 4K makes a minute look like a third of a gigabyte. Say
+            // what to do about it rather than just refusing.
+            say('That video is larger than 300 MB — film a shorter clip, or lower the video quality in your camera app.', 'error');
+            return false;
+        }
         try { const dt = new DataTransfer(); dt.items.add(file); input.files = dt.files; }
         catch (_) { return false; }
         setChip(host, file);
@@ -59,7 +65,7 @@
         const clear = e.target.closest('.js-video-clear');
         if (clear) { e.preventDefault(); window.plazaClearVideo(hostOf(clear)); return; }
         const rec = e.target.closest('.js-video-record');
-        if (rec) { e.preventDefault(); openRecorder(hostOf(rec)); return; }
+        if (rec) { e.preventDefault(); record(hostOf(rec)); return; }
     });
 
     document.addEventListener('change', (e) => {
@@ -74,7 +80,58 @@
         setChip(host, file);
     });
 
-    /* ---------------- Recorder modal ---------------- */
+    /* ---------------- Which recorder ----------------------------------
+     * A phone already has a recorder, and it is a better one than anything a
+     * web page can build: real autofocus, stabilisation, the proper sensor
+     * mode, the microphone the manufacturer chose. getUserMedia gives a web
+     * page a soft, downscaled preview stream — fine for a video call, poor
+     * for a record of what a leaf or a leak actually looks like.
+     *
+     * So on a phone we hand the job over and take back the file. Everywhere
+     * else — a desktop, a browser without capture — the built-in recorder
+     * stands in, full screen, because the thing being filmed deserves the
+     * whole screen while you frame it.
+     *
+     * The pointer test matters: desktop browsers accept the capture attribute
+     * and then ignore it, opening a file picker. A picker is not recording. */
+    function hasCameraApp() {
+        try {
+            return ('capture' in document.createElement('input'))
+                && window.matchMedia('(pointer: coarse)').matches;
+        } catch (_) { return false; }
+    }
+
+    function record(host) {
+        if (!host) return;
+        if (hasCameraApp()) { nativeRecord(host); return; }
+        openRecorder(host);
+    }
+
+    /** Hand off to the phone's camera app; take back whatever it filmed. */
+    function nativeRecord(host) {
+        let inp = host.querySelector('.js-video-native');
+        if (!inp) {
+            inp = document.createElement('input');
+            inp.type = 'file';
+            inp.accept = 'video/*';
+            // environment: the back camera, which is the one pointed at the
+            // field. The user can still flip it inside the camera app.
+            inp.setAttribute('capture', 'environment');
+            inp.className = 'js-video-native';
+            inp.style.display = 'none';
+            host.appendChild(inp);
+            inp.addEventListener('change', () => {
+                const file = inp.files && inp.files[0];
+                inp.value = '';
+                if (!file) return;                 // they backed out
+                if (!assignFile(host, file)) return;
+                say('Recording added.', 'success');
+            });
+        }
+        inp.click();
+    }
+
+    /* ---------------- Recorder modal (the fallback) ---------------- */
     let modal, stream, recorder, chunks, timerId, startedAt, targetHost, recordedBlob;
 
     function pickMime() {
@@ -179,15 +236,37 @@
 })();
 </script>
 <style>
-    .plaza-vid-modal { position: fixed; inset: 0; z-index: 80; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+    /* Full screen while filming. A viewfinder in a small card in the middle
+       of a page is a viewfinder you cannot frame anything with — the picture
+       is the whole point, so it gets the whole screen. */
+    .plaza-vid-modal { position: fixed; inset: 0; z-index: 80; display: flex; align-items: center; justify-content: center; }
     .plaza-vid-modal.hidden { display: none; }
-    .pvm-backdrop { position: absolute; inset: 0; background: rgb(0 0 0 / .6); }
-    .pvm-card { position: relative; width: 100%; max-width: 32rem; background: var(--color-white); border-radius: 1rem; overflow: hidden; box-shadow: var(--shadow-card-lg); }
-    .pvm-head { display: flex; align-items: center; justify-content: space-between; padding: .75rem 1rem; border-bottom: 1px solid var(--color-gray-100); }
-    .pvm-x { border: 0; background: transparent; color: var(--color-gray-400); cursor: pointer; font-size: 1rem; }
-    .pvm-stage { position: relative; background: #000; }
-    .pvm-preview { width: 100%; max-height: 60vh; display: block; background: #000; }
-    .pvm-timer { position: absolute; top: .5rem; left: .5rem; background: rgb(0 0 0 / .55); color: #fff; font-size: .75rem; font-weight: 700; padding: .1rem .5rem; border-radius: 999px; }
-    .pvm-foot { display: flex; align-items: center; justify-content: flex-end; gap: .5rem; padding: .75rem 1rem; }
-    .pvm-rec { min-width: 6.5rem; }
+    .pvm-backdrop { position: absolute; inset: 0; background: #000; }
+    .pvm-card { position: relative; width: 100%; height: 100%; display: flex; flex-direction: column;
+        background: #0b1220; color: #fff; overflow: hidden; }
+    .pvm-head { display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+        padding: .75rem 1rem; flex: none; }
+    .pvm-head .font-bold { color: #fff; }
+    .pvm-x { border: 0; background: transparent; color: #cbd5e1; cursor: pointer; font-size: 1.1rem;
+        width: 2.2rem; height: 2.2rem; border-radius: 999px; }
+    .pvm-x:hover { background: rgb(255 255 255 / .12); }
+    .pvm-stage { position: relative; flex: 1 1 auto; min-height: 0; background: #000;
+        display: flex; align-items: center; justify-content: center; }
+    /* contain, not cover: framing a shot against a cropped preview is
+       filming something other than what you can see. */
+    .pvm-preview { width: 100%; height: 100%; object-fit: contain; display: block; background: #000; }
+    .pvm-timer { position: absolute; top: .75rem; left: .75rem; background: rgb(0 0 0 / .55); color: #fff;
+        font-size: .8rem; font-weight: 800; padding: .15rem .6rem; border-radius: 999px;
+        font-variant-numeric: tabular-nums; }
+    .pvm-foot { display: flex; align-items: center; justify-content: center; gap: .6rem;
+        padding: 1rem 1rem calc(1rem + env(safe-area-inset-bottom, 0px)); flex: none; }
+    .pvm-rec { min-width: 8rem; }
+    @media (min-width: 768px) {
+        /* A desktop has room to keep the page behind it, so the viewfinder
+           is a large panel rather than the entire window. */
+        .plaza-vid-modal { padding: 1.5rem; }
+        .pvm-backdrop { background: rgb(0 0 0 / .75); }
+        .pvm-card { width: min(56rem, 100%); height: min(82vh, 46rem); border-radius: 1rem;
+            box-shadow: var(--shadow-card-lg); }
+    }
 </style>

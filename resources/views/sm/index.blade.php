@@ -207,10 +207,14 @@
            thumb's worth of padding, so tapping one is not a test of aim. */
         .se-rdots { display: inline-flex; align-items: center; gap: .1rem; }
         .se-rdots i { width: .3rem; height: .3rem; border-radius: 999px; background: var(--color-gray-300);
-            box-sizing: content-box; padding: .38rem .12rem; background-clip: content-box; cursor: pointer;
-            transition: background .28s cubic-bezier(.22,1,.36,1), width .28s cubic-bezier(.22,1,.36,1); }
+            box-sizing: content-box; padding: .38rem .14rem; background-clip: content-box; cursor: pointer;
+            transition: background .28s cubic-bezier(.22,1,.36,1),
+                width .28s cubic-bezier(.22,1,.36,1), height .28s cubic-bezier(.22,1,.36,1); }
         .se-rdots i:hover { background: var(--color-gray-400); background-clip: content-box; }
-        .se-rdots i.is-on { background: #4a7c2a; background-clip: content-box; width: .8rem; }
+        /* The chosen one grows, it does not stretch. Widening alone turned it
+           into a lozenge sitting in a line of circles. */
+        .se-rdots i.is-on { background: #4a7c2a; background-clip: content-box;
+            width: .46rem; height: .46rem; padding: .3rem .14rem; }
         .se-rcount { margin-left: auto; font-size: .62rem; font-weight: 700; color: var(--color-gray-400); }
         html.dark .se-rdots i { background: #3f4a37; background-clip: content-box; }
         html.dark .se-rdots i.is-on { background: #86b556; background-clip: content-box; }
