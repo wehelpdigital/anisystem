@@ -1663,13 +1663,13 @@
         #readinessBtn.has-blocking { --ripple-color: #ef4444; }
         #readinessBtn.has-alerts svg { animation: readiness-nudge 2.4s ease-in-out infinite; transform-origin: 50% 15%; }
 
-        /* 1.24, sized to the room actually above the button now that the bar
-           has a quarter-rem of top padding. A ripple clipped flat by the bar
-           edge on every beat is worse than a smaller one that completes. */
+        /* Back to 1.35. The bar sets no overflow, so the ring is free to
+           bleed past its padding — it was never being clipped, and shrinking
+           it to fit a gap that does not constrain it was solving nothing. */
         @keyframes readiness-ripple {
             0%   { transform: scale(1);    opacity: .42; }
-            70%  { transform: scale(1.24); opacity: 0; }
-            100% { transform: scale(1.24); opacity: 0; }
+            70%  { transform: scale(1.35); opacity: 0; }
+            100% { transform: scale(1.35); opacity: 0; }
         }
         @keyframes readiness-nudge {
             0%, 62%, 100% { transform: rotate(0); }
@@ -1893,12 +1893,12 @@
 {{-- ===================== TOOLBAR (sticky, persistent) =====================
      The modules hamburger lives here, inline with the activity actions. When
      another module is showing, the activities-only buttons hide. --}}
-{{-- pt-1/pb-3, which sums to the same 1rem py-2 did — the bar keeps its
-     height, so the Gallery shelf bar that sticks below it stays where it was
-     told to. The buttons sit a quarter-rem higher inside it, which is what
-     the row wanted: a bar with a border under it reads as having more room
-     below than a measurement says it does. --}}
-<div class="sticky top-14 md:top-16 z-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 pt-1 pb-3 mb-3 border-b border-gray-100">
+{{-- pt-0.5/pb-3.5. The two still sum to the 1rem py-2 did, so the bar keeps
+     its height and the Gallery shelf bar that sticks below it stays where it
+     was told to sit — but the buttons are now three-eighths of a rem above
+     centre. That is close to the floor: the bar butts against the app header,
+     and any less headroom and the buttons touch it. --}}
+<div class="sticky top-14 md:top-16 z-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 pt-0.5 pb-3.5 mb-3 border-b border-gray-100">
     <div class="flex items-center gap-2 flex-wrap">
         <button type="button" id="modulesBtn" class="btn btn-white btn-sm" title="Switch module">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
