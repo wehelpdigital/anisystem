@@ -81,8 +81,15 @@
     @media (min-width: 768px) { .ga-shelfbar { top: 4rem; } }
     /* Inside the Activities shell the toolbar is already sticky below the app
        bar, so the picker sits under both. */
-    body:has(#activitiesRoot) .ga-shelfbar { top: 6.6rem; }
-    @media (min-width: 768px) { body:has(#activitiesRoot) .ga-shelfbar { top: 7.4rem; } }
+    /* App header + the shell's toolbar. Half a rem shorter than it was, so
+       these come down by the same half rem — measured from the toolbar, not
+       guessed. */
+    /* App header + the shell's toolbar. The toolbar lost .375rem of bottom
+       padding, so these lose exactly that — the margin below it does not
+       count, because when the page is scrolled the shelf bar sticks against
+       the toolbar's edge, not against the gap after it. */
+    body:has(#activitiesRoot) .ga-shelfbar { top: 6.25rem; }
+    @media (min-width: 768px) { body:has(#activitiesRoot) .ga-shelfbar { top: 7.05rem; } }
     /* In the Collab Room the app bar is hidden entirely. */
     html.collab-embed .ga-shelfbar { top: 0; }
     html.dark .ga-shelfbar { background: #10160e; }
@@ -276,7 +283,7 @@
          go — so there is no reason for it to be its own invention. --}}
     <button type="button" id="gaTabBtn" class="btn btn-white btn-sm" aria-haspopup="dialog" title="Which shelf?">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        <span id="gaTabNow">All media</span>
+        <span id="gaTabNow">Photos</span>
         <span class="ga-n" id="gaTabNowN">{{ $counts['all'] }}</span>
         <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
     </button>
@@ -293,7 +300,7 @@
         <div class="ga-modal-body" role="tablist">
             @php
                 $shelves = [
-                    ['all', 'All media', $counts['all'], 'Everything the season produced, wherever it was taken.'],
+                    ['all', 'Photos', $counts['all'], 'Every still picture the season produced — photos, drawings and maps.'],
                     ['albums', 'Albums', count($albums), 'The ones you put together on purpose.'],
                     ['videos', 'Videos', $counts['videos'], 'Clips on their own, because you pick a video and scan photos.'],
                     ['team', 'Team box', $counts['team'], 'What the Collab Room made: recordings, whiteboards, saved maps.'],

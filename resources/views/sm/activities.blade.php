@@ -1893,12 +1893,16 @@
 {{-- ===================== TOOLBAR (sticky, persistent) =====================
      The modules hamburger lives here, inline with the activity actions. When
      another module is showing, the activities-only buttons hide. --}}
-{{-- pt-0.5/pb-3.5. The two still sum to the 1rem py-2 did, so the bar keeps
-     its height and the Gallery shelf bar that sticks below it stays where it
-     was told to sit — but the buttons are now three-eighths of a rem above
-     centre. That is close to the floor: the bar butts against the app header,
-     and any less headroom and the buttons touch it. --}}
-<div class="sticky top-14 md:top-16 z-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 pt-0.5 pb-3.5 mb-3 border-b border-gray-100">
+{{-- pt-0.5/pb-2. There was no headroom left to take — the buttons already
+     sit an eighth of a rem below the app header — so the last of the lift
+     comes from the bar itself being shorter: half a rem less below the
+     buttons, which brings the rule under them, and everything after it, up
+     with them.
+
+     The bar's height is what the Gallery's shelf bar measures its own sticky
+     offset from, so that offset moves by the same half rem. Those two numbers
+     have to be changed together or the shelf bar floats. --}}
+<div class="sticky top-14 md:top-16 z-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 pt-0.5 pb-2 mb-2.5 border-b border-gray-100">
     <div class="flex items-center gap-2 flex-wrap">
         <button type="button" id="modulesBtn" class="btn btn-white btn-sm" title="Switch module">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>

@@ -23,7 +23,11 @@
             .mod-say { display: flex; align-items: flex-start; gap: .5rem;
                 padding: .6rem .75rem; border-radius: .8rem; font-size: .78rem; line-height: 1.5;
                 color: #4a6b34; background: #f3f8ec; border: 1px solid #d9e8c4; }
-            .mod-say > svg { width: .95rem; height: .95rem; flex: none; margin-top: .1rem; }
+            /* The mark gets its own green rather than inheriting the body
+               colour of the note, which is deliberately muted so the sentence
+               reads quietly. An icon that quiet stops looking like an icon. */
+            .mod-say > svg { width: .95rem; height: .95rem; flex: none; margin-top: .1rem; color: #4a7c2a; }
+            html.dark .mod-say > svg { color: #86b556; }
             .mod-say a { font-weight: 700; text-decoration: underline; }
             .mod-say-x { flex: none; width: 1.35rem; height: 1.35rem; margin: -.1rem -.2rem 0 auto;
                 border-radius: 999px; display: inline-flex; align-items: center; justify-content: center;

@@ -17,7 +17,12 @@
     ];
 @endphp
 
-<div class="mb-4 md:mb-6 module-chip-nav">
+{{-- The same tightening the shell's toolbar got. This is the row every
+     module wears when it is opened on its own rather than inside the
+     Activities shell, so the two should leave the same amount of air under
+     them — a module should not feel differently spaced depending on how you
+     arrived at it. --}}
+<div class="mb-3 md:mb-4 module-chip-nav">
     <div class="scroll-chips">
         <a href="{{ route('sm.hub', ['id' => $schedule->id]) }}"
             class="chip chip-dashed shrink-0" data-chip-manual>
