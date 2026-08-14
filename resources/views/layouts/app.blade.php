@@ -132,6 +132,14 @@
                         aria-label="What you are editing">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 11v5m0-8h.01"/></svg>
                     </button>
+                    {{-- Where a module's own explanation goes when it is put
+                         away: the line folds up into this, and this brings it
+                         back. Driven by sm/partials/module-note. --}}
+                    <button type="button" id="modSayBtn" hidden
+                        class="relative flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full text-brand-700 bg-brand-50 hover:bg-brand-100 transition"
+                        title="What this module is for" aria-label="What this module is for">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-5m0-3h.01"/></svg>
+                    </button>
 
                     {{-- Notification bell --}}
                     {{-- While this is open the page's floating buttons step
