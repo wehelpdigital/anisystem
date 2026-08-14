@@ -28,7 +28,7 @@ class NotesHubController extends Controller
 {
     private const GLOBAL_SCHEDULE_ID = 0;
 
-    public function index()
+    public function index(Request $request)
     {
         $userId = (int) Auth::id();
         $scheduleIds = AsCroppingSchedule::active()->forClient($userId)->pluck('id', 'id');
@@ -62,7 +62,26 @@ class NotesHubController extends Controller
             ));
         }
 
-        $notes = $items->sortByDesc(fn ($i) => $i['ts'])->values();
+        $all = $items->sortByDesc(fn ($i) => $i['ts'])->values();
+
+        // One shelf out of three tables, so the page is cut here rather than
+        // in SQL. A season's notes are a page at a time either way — the
+        // whole list arriving at once is what made this screen a scroll.
+        $perPage = 15;
+        $page = max(1, (int) $request->query('page', 1));
+        $notes = new \Illuminate\Pagination\LengthAwarePaginator(
+            $all->forPage($page, $perPage)->values(),
+            $all->count(),
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+        // The infinite scroller asks for one page's worth of cards and
+        // nothing else — no layout, no scripts, just the next stretch.
+        if ($request->boolean('rows')) {
+            return response()->view('sm.partials.notes-hub-rows', ['notes' => $notes]);
+        }
 
         return view('sm.notes-hub', ['notes' => $notes]);
     }

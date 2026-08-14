@@ -798,6 +798,106 @@ window.smQuillTouch = function smQuillTouch(quill) {
 };
 
 /* ======================================================================
+ * Long lists, read the way each screen is read.
+ *
+ * A desktop gets pages — you can see how much there is and jump. A phone
+ * gets more of the list as it scrolls, because a row of numbered links
+ * under a thumb is a poor target and "page 3 of 9" is not how anyone
+ * reads a notebook on a phone.
+ *
+ * Any listing opts in by rendering partials/list-pager.blade.php after a
+ * container: the pager carries the URL that returns cards alone, and this
+ * appends them into whatever element sits above it.
+ * ==================================================================== */
+(function infiniteLists() {
+    const PHONE = () => window.matchMedia('(max-width: 767px)').matches;
+
+    function wire(pager) {
+        if (pager.dataset.lpWired === '1') return;
+        pager.dataset.lpWired = '1';
+
+        const list = pager.previousElementSibling;
+        const more = pager.querySelector('[data-lp-more]');
+        const msg = pager.querySelector('[data-lp-msg]');
+        const manual = pager.querySelector('[data-lp-manual]');
+        if (!list) return;
+
+        let next = parseInt(pager.getAttribute('data-next'), 10) || 2;
+        const last = parseInt(pager.getAttribute('data-last'), 10) || 1;
+        const base = pager.getAttribute('data-rows-url') || '';
+        let busy = false;
+        let failed = false;
+
+        const done = () => {
+            more.hidden = true;
+            manual.classList.add('hidden');
+            pager.classList.add('is-done');
+        };
+
+        async function load() {
+            if (busy || next > last) return;
+            busy = true;
+            more.hidden = false;
+            manual.classList.add('hidden');
+            msg.textContent = 'Loading more…';
+            pager.classList.remove('is-error');
+            try {
+                const url = base + (base.includes('?') ? '&' : '?') + 'page=' + next;
+                const res = await fetch(url, {
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    credentials: 'same-origin',
+                });
+                if (!res.ok) throw new Error('Could not load more.');
+                const html = await res.text();
+                const box = document.createElement('div');
+                box.innerHTML = html;
+                // Whatever came back joins the list it belongs to.
+                while (box.firstElementChild) list.appendChild(box.firstElementChild);
+                next += 1;
+                failed = false;
+                if (next > last) done();
+                else more.hidden = true;
+            } catch (_) {
+                // A failed reach is not the end of the list — offer the
+                // retry rather than silently stopping.
+                failed = true;
+                pager.classList.add('is-error');
+                msg.textContent = 'Could not load more.';
+                manual.classList.remove('hidden');
+                manual.textContent = 'Try again';
+            } finally {
+                busy = false;
+            }
+        }
+
+        manual.addEventListener('click', load);
+
+        // Only a phone loads by itself; a desktop keeps its page links.
+        const watcher = new IntersectionObserver((entries) => {
+            if (!PHONE() || failed) return;
+            if (entries.some((en) => en.isIntersecting)) load();
+        }, { rootMargin: '600px 0px' });
+        watcher.observe(pager);
+
+        const modeSwitch = () => {
+            const phone = PHONE();
+            pager.classList.toggle('is-phone', phone);
+            if (!phone) { more.hidden = true; manual.classList.add('hidden'); }
+            else if (next <= last && !failed) more.hidden = false;
+        };
+        modeSwitch();
+        window.addEventListener('resize', modeSwitch);
+    }
+
+    const scan = () => document.querySelectorAll('[data-infinite-list]').forEach(wire);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scan);
+    else scan();
+    // Modules are injected into the schedule shell after load.
+    document.addEventListener('sm:module-shown', scan);
+    window.smScanLists = scan;
+})();
+
+/* ======================================================================
  * Speak instead of type.
  *
  * Every text field in the app can be dictated into, without any field

@@ -854,6 +854,30 @@ html.dark .sun-editor .se-dialog .se-dialog-content input { background: #10160c;
 html.dark .sm-editor-fallback { background: #151b12; border-color: #2b3a1c; color: #e8efe1; }
 
 /* ------------------------------------------------------------------ */
+/* How a long list ends: pages on a desktop, more-as-you-scroll on a   */
+/* phone. Both come from the same paginator (partials/list-pager).     */
+/* ------------------------------------------------------------------ */
+.lp-wrap { margin-top: 1rem; }
+.lp-links { display: flex; justify-content: center; }
+.lp-more { display: none; align-items: center; justify-content: center; gap: .5rem;
+    padding: .9rem; font-size: .8rem; font-weight: 600; color: var(--color-gray-400); }
+.lp-manual { display: block; margin: .25rem auto 0; }
+.lp-spin { width: 1rem; height: 1rem; border-radius: 999px; flex-shrink: 0;
+    border: 2px solid var(--color-gray-200); border-top-color: #6b9f3d;
+    animation: lpSpin .8s linear infinite; }
+@keyframes lpSpin { to { transform: rotate(360deg); } }
+.lp-wrap.is-error .lp-spin { display: none; }
+.lp-end { text-align: center; font-size: .75rem; color: var(--color-gray-400); padding: 1rem 0 .25rem; }
+@media (max-width: 767px) {
+    /* The links stay in the markup as the no-script fallback, but a phone
+       is served by scrolling, so they step aside for the loader. */
+    .lp-wrap.is-phone .lp-links { display: none; }
+    .lp-wrap.is-phone .lp-more { display: flex; }
+    .lp-wrap.is-phone.is-done .lp-more { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .lp-spin { animation-duration: 2.4s; } }
+
+/* ------------------------------------------------------------------ */
 /* Accessibility — set in Settings, applied before first paint.        */
 /*                                                                     */
 /* Text size works by scaling the root, which every rem in the app —   */
