@@ -221,6 +221,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-chat', [App\Http\Controllers\Manager\ScheduleChatController::class, 'messages'])->name('sm.chat');
     Route::get('/app/sm-chat-members', [App\Http\Controllers\Manager\ScheduleChatController::class, 'members'])->name('sm.chat.members');
     Route::post('/app/sm-chat-send', [App\Http\Controllers\Manager\ScheduleChatController::class, 'send'])->name('sm.chat.send');
+    // Who has seen what: posted when the thread is actually on screen.
+    Route::post('/app/sm-chat-seen', [App\Http\Controllers\Manager\ScheduleChatController::class, 'seen'])->name('sm.chat.seen');
 
     // --- Schedule team collaborative whiteboard ---
     Route::get('/app/sm-board', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'events'])->name('sm.board');

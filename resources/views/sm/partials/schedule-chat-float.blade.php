@@ -51,10 +51,34 @@
                 <img src="" alt="" id="teamPhotoThumb"><span class="grow">Photo attached</span>
                 <button type="button" id="teamPhotoRemove" class="text-red-600 font-bold">Remove</button>
             </div>
+            {{-- What is attached, before it is sent. --}}
+            <div id="teamClipChip" class="team-photochip hidden">
+                <span class="team-clipico" id="teamClipIco"></span>
+                <span class="grow min-w-0" id="teamClipName">Attachment</span>
+                <button type="button" id="teamClipRemove" class="text-red-600 font-bold">Remove</button>
+            </div>
+            <div id="teamRecBar" class="team-recbar hidden">
+                <span class="team-recdot"></span>
+                <span id="teamRecWhat">Recording…</span>
+                <span class="grow"></span>
+                <button type="button" id="teamRecStop" class="team-recstop">Stop</button>
+            </div>
             <div class="team-box">
                 <label class="team-cam shrink-0" title="Attach a photo">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     <input type="file" id="teamPhoto" accept="image/*" class="hidden">
+                </label>
+                {{-- Say it instead of typing it: on a farm, hands are busy
+                     and a voice note is faster than a keyboard. --}}
+                <button type="button" id="teamMic" class="team-cam shrink-0" title="Record a voice note" aria-label="Record a voice note">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15a3 3 0 003-3V6a3 3 0 00-6 0v6a3 3 0 003 3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-14 0M12 18v3"/></svg>
+                </button>
+                <button type="button" id="teamVid" class="team-cam shrink-0" title="Record a video" aria-label="Record a video">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg>
+                </button>
+                <label class="team-cam shrink-0" title="Attach a file (up to 50 MB)">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.4 11.05l-8.7 8.7a5 5 0 01-7.1-7.1l8.7-8.7a3.3 3.3 0 114.7 4.7l-8.7 8.7a1.7 1.7 0 11-2.4-2.4l8-8"/></svg>
+                    <input type="file" id="teamFile" class="hidden">
                 </label>
                 <textarea id="teamText" rows="1" maxlength="4000" placeholder="Message the team…"></textarea>
                 <button type="button" id="teamSend" class="team-send" aria-label="Send">
@@ -135,6 +159,35 @@
     /* Click a member to open their PM (with a call button inside). Ring on hover. */
     .team-mem.pmable:hover .team-mem-face { box-shadow: 0 0 0 2px var(--color-brand-500); }
 
+    /* What is attached, and what is being recorded right now. */
+    .team-clipico { width: 1.6rem; height: 1.6rem; border-radius: .4rem; flex: none;
+        display: inline-flex; align-items: center; justify-content: center;
+        background: var(--color-brand-50); color: var(--color-brand-700); font-size: .8rem; }
+    .team-recbar { display: flex; align-items: center; gap: .5rem; padding: .4rem .6rem; margin-bottom: .35rem;
+        border-radius: .6rem; background: #fef2f2; border: 1px solid #fecaca; font-size: .78rem;
+        font-weight: 700; color: #b91c1c; }
+    .team-recbar.hidden { display: none; }
+    .team-recdot { width: .55rem; height: .55rem; border-radius: 999px; background: #dc2626;
+        animation: teamRecPulse 1.1s ease-in-out infinite; }
+    @keyframes teamRecPulse { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+    .team-recstop { padding: .15rem .6rem; border-radius: 999px; background: #dc2626; color: #fff;
+        font-size: .72rem; font-weight: 800; }
+    html.dark .team-recbar { background: rgb(153 27 27 / .2); border-color: rgb(153 27 27 / .5); color: #fca5a5; }
+    @media (prefers-reduced-motion: reduce) { .team-recdot { animation: none; } }
+    /* An attachment inside a message. */
+    .team-att { display: flex; align-items: center; gap: .45rem; margin-top: .35rem; padding: .35rem .5rem;
+        border-radius: .5rem; background: rgb(255 255 255 / .15); font-size: .75rem; font-weight: 700;
+        text-decoration: none; color: inherit; }
+    .team-att:hover { background: rgb(255 255 255 / .28); }
+    .team-msg:not(.me) .team-att { background: var(--color-gray-100); color: var(--color-gray-700); }
+    .team-att svg { width: .95rem; height: .95rem; flex: none; }
+    .team-att span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .team-msg video, .team-msg audio { max-width: 100%; border-radius: .5rem; margin-top: .35rem; display: block; }
+    /* Who has seen it — under your own last message only. */
+    .team-seen { font-size: .62rem; color: var(--color-gray-400); align-self: flex-end;
+        padding: 0 .2rem .25rem; }
+    html.dark .team-seen { color: #7d8f6e; }
+
     .team-thread { flex: 1 1 auto; overflow-y: auto; padding: .75rem; display: flex; flex-direction: column; gap: .1rem; scrollbar-width: thin; }
     .team-loading { margin: auto; color: var(--color-gray-400); font-size: .85rem; }
     .team-msg { display: flex; gap: .45rem; margin-bottom: .5rem; align-items: flex-end; animation: teamRise .24s cubic-bezier(.22,1,.36,1) both; }
@@ -179,6 +232,7 @@
             messages: @json(route('sm.chat')),
             send: @json(route('sm.chat.send')),
             members: @json(route('sm.chat.members')),
+            seen: @json(route('sm.chat.seen')),
             dmBase: @json(url('/app/community/messages')),
         };
         const CSRF = document.querySelector('meta[name=csrf-token]')?.content || '';
@@ -189,6 +243,8 @@
         let photoFile = null;
         let msgTimer = null, memTimer = null;
         let canSend = true;
+        // One attachment in flight at a time — see showClip().
+        let clipFile = null, clipKind = 'file';
 
         const scrollDown = () => { thread.scrollTop = thread.scrollHeight; };
         const faceHtml = (avatar, initials) => avatar
@@ -205,7 +261,20 @@
             const who = showWho ? `<span class="who">${escapeHtml(m.name || 'Member')}</span>` : '';
             const img = m.image ? `<img src="${escapeHtml(m.image)}" alt="">` : '';
             const body = m.body ? escapeHtml(m.body) : '';
-            el.innerHTML = `${face}<div class="col">${who}<div class="b"${m.image ? ' data-lightbox' : ''}>${body}${img}</div><span class="at">${escapeHtml(m.at || '')}</span></div>`;
+            // A clip plays where it sits; a file is a line you can tap.
+            const files = (m.files || []).map((f) => {
+                if (f.type === 'video') {
+                    return `<video src="${escapeHtml(f.url)}"${f.posterUrl ? ` poster="${escapeHtml(f.posterUrl)}"` : ''} controls playsinline preload="metadata"></video>`;
+                }
+                if (f.type === 'audio') {
+                    return `<audio src="${escapeHtml(f.url)}" controls preload="metadata"></audio>`;
+                }
+                return `<a class="team-att" href="${escapeHtml(f.url)}" target="_blank" rel="noopener" download>
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.4 11.05l-8.7 8.7a5 5 0 01-7.1-7.1l8.7-8.7a3.3 3.3 0 114.7 4.7l-8.7 8.7a1.7 1.7 0 11-2.4-2.4l8-8"/></svg>
+                    <span>${escapeHtml(f.name || 'Attachment')}</span></a>`;
+            }).join('');
+            el.innerHTML = `${face}<div class="col">${who}<div class="b"${m.image ? ' data-lightbox' : ''}>${body}${img}${files}</div><span class="at">${escapeHtml(m.at || '')}</span></div>`;
+            el.dataset.mid = m.id;
             thread.appendChild(el);
             return el;
         }
@@ -248,11 +317,15 @@
 
         async function sendGroup() {
             const text = ($('teamText').value || '').trim();
-            if (!text && !photoFile) return;
+            if (!text && !photoFile && !clipFile) return;
             const fd = new FormData();
             if (text) fd.append('body', text);
             if (photoFile) fd.append('image', photoFile);
+            if (clipFile) { fd.append('clip', clipFile, clipFile.name || 'clip'); fd.append('kind', clipKind); }
             $('teamSend').disabled = true;
+            // A minute of video is a real wait on a farm's signal; say so
+            // rather than leaving a dead button.
+            if (clipFile) sayRec('Sending…', true);
             try {
                 const res = await api(`${U.send}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: fd });
                 const m = res.data.message;
@@ -260,7 +333,7 @@
                 lastGroupId = Math.max(lastGroupId, m.id);
                 resetComposer(); scrollDown();
             } catch (err) { toast(err.message || 'Could not send.', 'error'); }
-            finally { $('teamSend').disabled = false; }
+            finally { $('teamSend').disabled = false; sayRec(null); }
         }
 
         /* ---------- PM mode (reuses community DM → shared history) ---------- */
@@ -336,6 +409,7 @@
         function resetComposer() {
             $('teamText').value = ''; $('teamText').style.height = 'auto';
             photoFile = null; $('teamPhotoChip').classList.add('hidden');
+            clearClip();
         }
         function currentSend() { return mode === 'pm' ? sendPm() : sendGroup(); }
 
@@ -346,6 +420,8 @@
             if (open) {
                 $('teamChatDot').classList.add('hidden');
                 if (mode === 'group') { toGroup(); } else { startTimers(); }
+                // Opening the thread IS seeing it.
+                setTimeout(markSeen, 400);
                 // On a phone the keyboard would swallow half the room before a
                 // word of chat has been read; a tap on the box still opens it.
                 if (!window.matchMedia('(pointer: coarse)').matches) {
@@ -391,6 +467,141 @@
             e.target.value = '';
         });
         $('teamPhotoRemove').addEventListener('click', () => { photoFile = null; $('teamPhotoChip').classList.add('hidden'); });
+
+        /* ---------- clips: recorded here, or picked off the device -------
+         * One attachment at a time on purpose: a message with four things
+         * hanging off it is a message nobody reads. 50 MB is the ceiling the
+         * server enforces; it is checked here too so a doomed upload is not
+         * started over a phone signal. */
+        const MAX_BYTES = 50 * 1024 * 1024;
+        const ICON = { video: '🎬', audio: '🎙️', file: '📎' };
+
+        function showClip(file, kind) {
+            if (!file) return;
+            if (file.size > MAX_BYTES) {
+                toast('That is over 50 MB — too big to send from a field.', 'error');
+                return;
+            }
+            clipFile = file; clipKind = kind;
+            $('teamClipIco').textContent = ICON[kind] || ICON.file;
+            $('teamClipName').textContent = file.name || (kind === 'audio' ? 'Voice note' : 'Clip');
+            $('teamClipChip').classList.remove('hidden');
+        }
+        function clearClip() {
+            clipFile = null; clipKind = 'file';
+            $('teamClipChip').classList.add('hidden');
+        }
+        function sayRec(text, busy) {
+            const bar = $('teamRecBar');
+            if (!text) { bar.classList.add('hidden'); return; }
+            $('teamRecWhat').textContent = text;
+            $('teamRecStop').hidden = !!busy;
+            bar.classList.remove('hidden');
+        }
+        $('teamClipRemove').addEventListener('click', clearClip);
+        $('teamFile').addEventListener('change', (e) => {
+            const f = e.target.files && e.target.files[0];
+            e.target.value = '';
+            if (f) showClip(f, 'file');
+        });
+
+        /* Recording, of sound or of sound and picture. The same machinery
+           either way; only the tracks asked for differ. */
+        let recorder = null, recChunks = [], recStream = null, recKind = 'audio';
+        const bestMime = (want) => {
+            const list = want === 'video'
+                ? ['video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm', 'video/mp4']
+                : ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4'];
+            return list.find((t) => window.MediaRecorder && MediaRecorder.isTypeSupported(t)) || '';
+        };
+
+        async function startRec(kind) {
+            if (recorder) return;
+            if (!navigator.mediaDevices || !window.MediaRecorder) {
+                toast('This browser cannot record here.', 'error');
+                return;
+            }
+            try {
+                recStream = await navigator.mediaDevices.getUserMedia(kind === 'video'
+                    ? { audio: true, video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } } }
+                    : { audio: true });
+            } catch (_) {
+                toast('Microphone or camera blocked. Allow it for this site.', 'error');
+                return;
+            }
+            recKind = kind;
+            recChunks = [];
+            const mime = bestMime(kind);
+            try { recorder = new MediaRecorder(recStream, mime ? { mimeType: mime } : undefined); }
+            catch (_) { recorder = new MediaRecorder(recStream); }
+            recorder.ondataavailable = (e) => { if (e.data && e.data.size) recChunks.push(e.data); };
+            recorder.onstop = () => {
+                const type = recorder.mimeType || (kind === 'video' ? 'video/webm' : 'audio/webm');
+                const ext = type.includes('mp4') ? (kind === 'video' ? 'mp4' : 'm4a') : 'webm';
+                const blob = new Blob(recChunks, { type });
+                recStream.getTracks().forEach((t) => t.stop());
+                recStream = null; recorder = null; recChunks = [];
+                sayRec(null);
+                if (blob.size) {
+                    showClip(new File([blob], (kind === 'video' ? 'clip.' : 'voice-note.') + ext, { type }), kind);
+                }
+            };
+            recorder.start();
+            sayRec(kind === 'video' ? 'Recording video…' : 'Recording…');
+            // Never leave a recorder running: five minutes is longer than
+            // anything worth sending to a team chat.
+            setTimeout(() => { if (recorder) stopRec(); }, 5 * 60 * 1000);
+        }
+        function stopRec() { try { recorder && recorder.stop(); } catch (_) { /* already stopped */ } }
+
+        $('teamMic').addEventListener('click', () => (recorder ? stopRec() : startRec('audio')));
+        $('teamVid').addEventListener('click', () => (recorder ? stopRec() : startRec('video')));
+        $('teamRecStop').addEventListener('click', stopRec);
+
+        /* ---------- who has seen what -------------------------------------
+         * Marks are only posted while the thread is genuinely on screen: a
+         * message that arrived behind a shut panel has been seen by nobody. */
+        let seenTimer = null;
+        async function markSeen() {
+            if (mode !== 'group' || panel.classList.contains('hidden')) return;
+            if (document.visibilityState !== 'visible') return;
+            try {
+                const res = await api(`${U.seen}?scheduleId=${SCHEDULE_ID}`, {
+                    method: 'POST', body: { upto: lastGroupId },
+                });
+                paintSeen((res.data && res.data.seen) || {});
+            } catch (_) { /* not worth a toast */ }
+        }
+        /** The mark goes under the newest of my messages that anyone has seen. */
+        function paintSeen(map) {
+            thread.querySelectorAll('.team-seen').forEach((n) => n.remove());
+            const ids = Object.keys(map).map(Number).filter((n) => map[n] && map[n].length);
+            if (!ids.length) return;
+            const newest = Math.max(...ids);
+            const el = thread.querySelector(`.team-msg[data-mid="${newest}"]`);
+            if (!el) return;
+            const names = [...new Set(map[newest])];
+            const said = names.length > 2
+                ? `Seen by ${names.slice(0, 2).join(', ')} +${names.length - 2}`
+                : `Seen by ${names.join(' and ')}`;
+            const tag = document.createElement('span');
+            tag.className = 'team-seen';
+            tag.textContent = said;
+            el.after(tag);
+        }
+        document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') markSeen(); });
+
+        /* ---------- realtime ----------------------------------------------
+         * The poll stays as the floor; this only makes the common case
+         * instant. A nudge carries an id, never a body — the thread asks for
+         * the message itself through the endpoint that authorises it. */
+        try {
+            window.Echo?.private('schedule-board.' + SCHEDULE_ID).listen('.chat.message', (p) => {
+                if (p && p.userId === ME) return;   // my own echo
+                if (mode === 'group') pollGroup().then(() => markSeen());
+                else $('teamChatDot').classList.remove('hidden');
+            });
+        } catch (_) { /* no realtime here — the poll covers it */ }
 
         // Public hook so worker cards / other UI can open a worker PM in this panel.
         window.scheduleTeamPm = (userId, name) => { openPanel(true); toPm(parseInt(userId, 10), name); };

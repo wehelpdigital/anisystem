@@ -16,14 +16,22 @@ class ScheduleChatMessage extends BaseModel
         'userId',
         'body',
         'imagePath',
+        'attachments',
         'deleteStatus',
     ];
 
     protected $casts = [
         'scheduleId' => 'integer',
         'userId' => 'integer',
+        'attachments' => 'array',
         'deleteStatus' => 'integer',
     ];
+
+    /** Who has seen this message. */
+    public function reads()
+    {
+        return $this->hasMany(ScheduleChatRead::class, 'messageId');
+    }
 
     public function author()
     {

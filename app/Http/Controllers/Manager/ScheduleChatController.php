@@ -90,6 +90,10 @@ class ScheduleChatController extends BaseScheduleController
         $validator = Validator::make($request->all(), [
             'body' => 'nullable|string|max:4000',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            // One clip, recording or file per message, and 50 MB is the
+            // ceiling — these travel over a farm's phone signal.
+            'clip' => 'nullable|file|max:51200',
+            'kind' => 'nullable|in:video,audio,file',
         ]);
         if ($validator->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
@@ -100,8 +104,18 @@ class ScheduleChatController extends BaseScheduleController
         if ($request->hasFile('image')) {
             $imagePath = MediaOptimizer::storeImageAsWebp($request->file('image'), 'schedule-chat/' . $schedule->id);
         }
-        if ($body === '' && ! $imagePath) {
-            return $this->jsonFail('Write a message or attach a photo.', 422);
+
+        $attachments = [];
+        if ($request->hasFile('clip')) {
+            try {
+                $attachments[] = $this->keepAttachment($request->file('clip'), (string) $request->input('kind'), (int) $schedule->id);
+            } catch (\Throwable $e) {
+                return $this->jsonFail($e->getMessage() ?: 'Could not keep that attachment.', 422);
+            }
+        }
+
+        if ($body === '' && ! $imagePath && ! $attachments) {
+            return $this->jsonFail('Write a message, or attach something.', 422);
         }
 
         $message = ScheduleChatMessage::create([
@@ -109,14 +123,187 @@ class ScheduleChatController extends BaseScheduleController
             'userId' => $meId,
             'body' => $body !== '' ? $body : null,
             'imagePath' => $imagePath,
+            'attachments' => $attachments ?: null,
             'deleteStatus' => 1,
         ]);
         $message->setRelation('author', Auth::user());
+
+        $this->announce($schedule, $message, $meId);
 
         return response()->json([
             'success' => true,
             'data' => ['message' => $this->present($message, $meId)],
         ]);
+    }
+
+    /**
+     * Keep a clip, a recording or a file — compressed where compressing it
+     * means anything.
+     *
+     * A phone's own video is enormous and a farm's signal is not, so video
+     * goes through the same ffmpeg pass the notes use. Audio and ordinary
+     * files are stored as they are: re-encoding a voice note gains nothing
+     * worth the wait.
+     */
+    private function keepAttachment(\Illuminate\Http\UploadedFile $file, string $kind, int $scheduleId): array
+    {
+        $mime = (string) $file->getMimeType();
+        $kind = $kind ?: (str_starts_with($mime, 'video/') ? 'video'
+            : (str_starts_with($mime, 'audio/') ? 'audio' : 'file'));
+
+        if ($kind === 'video') {
+            $made = \App\Support\VideoOptimizer::compress($file, 'schedule-chat/' . $scheduleId);
+            $disk = \Illuminate\Support\Facades\Storage::disk('public');
+            $path = \App\Support\MediaStore::putBinary($disk->get($made['video']), 'schedule-chat', 'mp4', $scheduleId);
+            $poster = null;
+            if (! empty($made['poster'])) {
+                $poster = \App\Support\MediaStore::putBinary($disk->get($made['poster']), 'schedule-chat', 'webp', $scheduleId);
+                $disk->delete($made['poster']);
+            }
+            $disk->delete($made['video']);
+
+            return array_filter([
+                'type' => 'video',
+                'path' => $path,
+                'poster' => $poster,
+                'name' => $file->getClientOriginalName(),
+                'mime' => 'video/mp4',
+            ], fn ($v) => $v !== null);
+        }
+
+        $path = \App\Support\MediaStore::putFile($file, 'schedule-chat', $scheduleId);
+        if ($path === null) {
+            throw new \RuntimeException('Could not keep that file.');
+        }
+
+        return [
+            'type' => $kind === 'audio' ? 'audio' : 'file',
+            'path' => $path,
+            'name' => $file->getClientOriginalName() ?: 'attachment',
+            'size' => (int) $file->getSize(),
+            'mime' => $mime,
+        ];
+    }
+
+    /**
+     * Put the message on the team's channel, and in everyone else's bell.
+     *
+     * The thread still polls, so a lost broadcast costs seconds. The bell is
+     * what reaches somebody who is not looking at the chat at all — deduped
+     * to one an hour per schedule, because a busy morning should not leave
+     * forty identical rows in the notification list.
+     */
+    private function announce($schedule, ScheduleChatMessage $message, int $meId): void
+    {
+        $driver = config('broadcasting.default');
+        $ready = in_array($driver, ['pusher', 'reverb', 'ably'], true)
+            && filled(config("broadcasting.connections.$driver.key"));
+        if ($ready) {
+            try {
+                broadcast(new \App\Events\ScheduleChatPushed((int) $schedule->id, [
+                    'id' => (int) $message->id,
+                    'userId' => $meId,
+                ]));
+            } catch (\Throwable $e) {
+                // The poll will pick it up.
+            }
+        }
+
+        $who = Auth::user()?->firstName ?: 'A teammate';
+        $said = trim((string) $message->body);
+        if ($said === '') {
+            $said = $message->imagePath ? 'sent a photo' : 'sent an attachment';
+        }
+        $notes = app(\App\Services\NotificationService::class);
+        foreach (ScheduleTeam::memberIds($schedule) as $memberId) {
+            if ((int) $memberId === $meId) {
+                continue;
+            }
+            $notes->notify(
+                (int) $memberId,
+                'team-chat',
+                $who . ' messaged the team',
+                \Illuminate\Support\Str::limit($said, 120),
+                route('sm.collab', ['id' => $schedule->id]),
+                $meId,
+                (int) $schedule->id,
+                1,
+            );
+        }
+    }
+
+    /**
+     * Mark messages as seen by me, and say who has seen mine.
+     *
+     * Called by the thread only while it is actually on screen: a message
+     * that arrived behind a shut panel has not been seen by anybody.
+     */
+    public function seen(Request $request)
+    {
+        $schedule = $this->schedule($request->query('scheduleId'));
+        $meId = (int) Auth::id();
+        if (! ScheduleTeam::canAccess($schedule, $meId)) {
+            return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+
+        $upto = (int) $request->input('upto');
+        if ($upto > 0) {
+            $ids = ScheduleChatMessage::active()
+                ->where('scheduleId', $schedule->id)
+                ->where('id', '<=', $upto)
+                ->where('userId', '!=', $meId)
+                ->orderByDesc('id')
+                ->limit(200)
+                ->pluck('id');
+            $now = now();
+            foreach ($ids as $id) {
+                \App\Models\ScheduleChatRead::firstOrCreate(
+                    ['messageId' => (int) $id, 'userId' => $meId],
+                    ['seenAt' => $now]
+                );
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => ['seen' => $this->seenMap((int) $schedule->id, $meId)],
+        ]);
+    }
+
+    /**
+     * For my own recent messages: who has seen each one.
+     *
+     * Only mine — "has it been seen" is a question about what you sent, and
+     * answering it for the whole thread would be a query per message.
+     *
+     * @return array<int, list<string>> messageId => first names
+     */
+    private function seenMap(int $scheduleId, int $meId): array
+    {
+        $mine = ScheduleChatMessage::active()
+            ->where('scheduleId', $scheduleId)
+            ->where('userId', $meId)
+            ->orderByDesc('id')
+            ->limit(30)
+            ->pluck('id');
+        if ($mine->isEmpty()) {
+            return [];
+        }
+
+        $reads = \App\Models\ScheduleChatRead::whereIn('messageId', $mine)->get();
+        if ($reads->isEmpty()) {
+            return [];
+        }
+        $names = \App\Models\User::whereIn('id', $reads->pluck('userId')->unique())->get()->keyBy('id');
+
+        $out = [];
+        foreach ($reads as $r) {
+            $who = $names->get($r->userId);
+            $out[(int) $r->messageId][] = (string) \Illuminate\Support\Str::of($who?->full_name ?: 'Someone')
+                ->explode(' ')->first();
+        }
+
+        return $out;
     }
 
     /** Shape a message for the client. */
@@ -128,6 +315,14 @@ class ScheduleChatController extends BaseScheduleController
             'id' => $m->id,
             'body' => $m->body,
             'image' => $m->imagePath ? \App\Support\MediaStore::url($m->imagePath) : null,
+            'files' => collect(is_array($m->attachments) ? $m->attachments : [])
+                ->map(fn ($a) => [
+                    'type' => $a['type'] ?? 'file',
+                    'name' => $a['name'] ?? 'Attachment',
+                    'size' => $a['size'] ?? null,
+                    'url' => \App\Support\MediaStore::url($a['path'] ?? null),
+                    'posterUrl' => \App\Support\MediaStore::url($a['poster'] ?? null),
+                ])->filter(fn ($a) => $a['url'])->values()->all(),
             'mine' => (int) $m->userId === $meId,
             'userId' => (int) $m->userId,
             'name' => $author?->full_name ?: 'Member',
