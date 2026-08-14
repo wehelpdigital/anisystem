@@ -1918,6 +1918,12 @@
                   class="absolute -top-0.5 -right-0.5 {{ $readiness['count'] > 0 ? 'inline-flex' : 'hidden' }} min-w-5 h-5 px-1 rounded-full {{ $readiness['blocking'] > 0 ? 'bg-red-500 text-white' : 'bg-accent-500 text-ink' }} text-[0.625rem] font-bold items-center justify-center">{{ $readiness['count'] }}</span>
         </button>
 
+        {{-- Where the put-away module note comes back from. It belongs beside
+             the Notice bell, with the rest of this module's own controls,
+             rather than up in the app bar among the things that are true of
+             every page. Empty until the note is folded away. --}}
+        <span data-mod-say-slot></span>
+
         <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative" data-activities-only disabled title="Nothing to undo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
             <span class="hidden sm:inline">Undo</span>

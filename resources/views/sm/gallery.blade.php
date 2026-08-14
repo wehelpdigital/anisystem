@@ -96,6 +96,19 @@
     .ga-shot { position: relative; aspect-ratio: 1; background: #0b1220; }
     .ga-shot img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .28s ease; }
     .ga-shot img.is-loaded { opacity: 1; }
+    /* The bin rides on the tile rather than inside it: the tile is already a
+       button, and a button inside a button is not a thing. */
+    .ga-wrap { position: relative; }
+    .ga-del { position: absolute; right: .35rem; top: .35rem; z-index: 2; width: 1.7rem; height: 1.7rem;
+        display: flex; align-items: center; justify-content: center; border-radius: .5rem; cursor: pointer;
+        background: rgb(0 0 0 / .5); color: #fff; opacity: 0;
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+    .ga-del svg { width: .85rem; height: .85rem; }
+    .ga-wrap:hover .ga-del, .ga-del:focus-visible { opacity: 1; }
+    .ga-del:hover { background: #dc2626; }
+    /* No hover on a touch screen, so there it simply shows. */
+    @media (hover: none) { .ga-del { opacity: .85; } }
+    @media (prefers-reduced-motion: reduce) { .ga-del { transition: none; } }
     .ga-shot.is-gone::after { content: 'File missing'; position: absolute; inset: 0; display: flex;
         align-items: center; justify-content: center; font-size: .66rem; font-weight: 700; color: #94a3b8; }
     .ga-kind { position: absolute; left: .35rem; top: .35rem; padding: .1rem .4rem; border-radius: 999px;
@@ -552,12 +565,26 @@
                     <span class="ga-it">${esc(m.title)}</span>
                     <span class="ga-is">${esc(m.source)}${m.when ? ' · ' + esc(m.when) : ''}</span>
                 </div>`;
+            /* Only an album picture can be deleted from here, and only
+               because the Gallery is where it lives. Everything else on this
+               shelf is a view of something kept in a note, a drawing or a
+               map — offering to delete one of those here would either lie
+               about what it did or tear a hole in the record it belongs to.
+               Those still say "delete it where it lives", which is what the
+               note at the top of the page has always promised. */
+            const bin = m.albumImageId
+                ? `<button type="button" class="ga-del" data-del-image="${m.albumImageId}"
+                        title="Delete this from the album" aria-label="Delete">
+                        <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg>
+                   </button>`
+                : '';
             // Photos and videos open in the lightbox; drawings and maps open
             // where they can be worked on.
-            return (kind === 'drawing' || kind === 'map') && m.href
+            const tile = (kind === 'drawing' || kind === 'map') && m.href
                 ? `<a class="ga-item" href="${esc(m.href)}">${inner}</a>`
                 : `<button type="button" class="ga-item" data-lb-type="${kind === 'video' ? 'video' : 'image'}"
                         data-lb-url="${esc(m.url)}" data-lb-poster="${esc(m.posterUrl || '')}">${inner}</button>`;
+            return bin ? `<div class="ga-wrap">${tile}${bin}</div>` : tile;
         }
 
         function paintAll() {
@@ -636,6 +663,44 @@
         if (new URLSearchParams(location.search).get('tab') === 'team') {
             document.querySelector('.ga-tab[data-tab="team"]')?.click();
         }
+
+        /* Deleting from the shelf. It asks first, and it says what it is
+           about to do — a picture is somebody's record of a day, and the file
+           goes with the row. */
+        document.addEventListener('click', async (e) => {
+            const bin = e.target.closest('[data-del-image]');
+            if (!bin) return;
+            e.preventDefault();
+            e.stopPropagation();
+            const id = parseInt(bin.getAttribute('data-del-image'), 10);
+            if (!id) return;
+
+            const ok = window.confirmAction
+                ? await window.confirmAction({
+                    title: 'Delete this from the album?',
+                    message: 'It will be removed from the Gallery and the file deleted. This cannot be undone.',
+                    confirmText: 'Delete', danger: true,
+                })
+                : confirm('Delete this from the album?');
+            if (!ok) return;
+
+            const wrap = bin.closest('.ga-wrap');
+            try {
+                const res = await api(U.del, { method: 'DELETE', body: { ids: [id] } });
+                // Gone from the page, and gone from the list the page redraws
+                // from — otherwise a search would bring it back.
+                const at = EVERYTHING.findIndex((m) => m.albumImageId === id);
+                if (at >= 0) EVERYTHING.splice(at, 1);
+                // The albums tab draws from its own list, which would still
+                // be holding the picture when you switched to it.
+                ALBUMS.forEach((a) => { a.images = a.images.filter((im) => Number(im.id) !== id); });
+                if (wrap && window.animateOut) window.animateOut(wrap, () => wrap.remove());
+                else wrap?.remove();
+                toast(res.message || 'Deleted.');
+            } catch (err) {
+                toast(err.message || 'Could not delete that.', 'error');
+            }
+        });
 
         $('gaFind')?.addEventListener('input', (e) => { findText = e.target.value; paintAll(); });
         $('gaFilters')?.addEventListener('click', (e) => {

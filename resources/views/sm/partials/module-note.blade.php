@@ -70,9 +70,41 @@
                 try { return localStorage.getItem(key(el)) === '1'; } catch (_) { return false; }
             };
 
+            /* Where the button should stand.
+             *
+             * A page with a toolbar of its own offers a slot in it, and the
+             * button goes there — beside that module's other controls, which
+             * is what it is about. A page with no toolbar keeps it in the app
+             * bar, which is where it used to always be. It is one element
+             * either way: two of them would be two states to keep agreeing. */
+            const homeSlot = btn && btn.parentElement;
+
+            function place() {
+                if (!btn) return;
+                /* Only a slot that is actually on screen. In the shell the
+                   toolbar belongs to Activities, and moving the button into a
+                   toolbar that is currently put away would be moving it
+                   nowhere — the app bar is the fallback precisely because it
+                   is always there. */
+                const seen = (el) => el && el.offsetParent !== null;
+                const slot = Array.from(document.querySelectorAll('[data-mod-say-slot]')).find(seen);
+                const want = slot || homeSlot;
+                if (want && btn.parentElement !== want) {
+                    want.appendChild(btn);
+                    // In a toolbar it is a toolbar button; in the app bar it
+                    // is a round icon. The classes say which.
+                    btn.classList.toggle('btn', want !== homeSlot);
+                    btn.classList.toggle('btn-white', want !== homeSlot);
+                    btn.classList.toggle('btn-sm', want !== homeSlot);
+                    ['w-9', 'h-9', 'md:w-10', 'md:h-10', 'rounded-full', 'bg-brand-50', 'hover:bg-brand-100']
+                        .forEach((c) => btn.classList.toggle(c, want === homeSlot));
+                }
+            }
+
             function sync() {
                 const el = live();
                 if (!btn) return;
+                place();
                 btn.hidden = !el || !el.classList.contains('is-away');
             }
 

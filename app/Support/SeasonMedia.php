@@ -35,7 +35,7 @@ class SeasonMedia
     {
         $out = [];
 
-        $push = function (?array $m, string $source, string $title, $when, ?string $href, bool $editable = false) use (&$out) {
+        $push = function (?array $m, string $source, string $title, $when, ?string $href, bool $editable = false, ?int $albumImageId = null) use (&$out) {
             $path = $m['path'] ?? null;
             if (! filled($path)) {
                 return;
@@ -58,6 +58,11 @@ class SeasonMedia
                 'when' => $when?->timezone('Asia/Manila')->format('M j, Y'),
                 'sortKey' => (int) ($when?->timestamp ?? 0),
                 'editable' => $editable,
+                // Only an album picture belongs to the Gallery itself. Every
+                // other item here is a view of something that lives in a note,
+                // a drawing or a map, and is deleted where it lives — which is
+                // why only this one carries a row to delete.
+                'albumImageId' => $albumImageId,
             ];
         };
 
@@ -125,9 +130,20 @@ class SeasonMedia
         if ($includeAlbums) {
             foreach (AsGalleryImage::where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)
                 ->orderByDesc('id')->get() as $img) {
-                $push(['type' => 'image', 'path' => $img->path], 'Album',
-                    (string) ($img->caption ?: 'In an album'), $img->updated_at,
-                    route('sm.gallery', ['id' => $schedule->id]));
+                $push(
+                    // Quick Record can file a clip in an album, so the album
+                    // does not only hold pictures.
+                    [
+                        'type' => preg_match('~\.(mp4|mov|webm|mkv|m4v|3gp)$~i', (string) $img->path) ? 'video' : 'image',
+                        'path' => $img->path,
+                    ],
+                    'Album',
+                    (string) ($img->caption ?: 'In an album'),
+                    $img->updated_at,
+                    route('sm.gallery', ['id' => $schedule->id]),
+                    false,
+                    (int) $img->id,
+                );
             }
         }
 
