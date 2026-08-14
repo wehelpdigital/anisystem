@@ -1663,12 +1663,13 @@
         #readinessBtn.has-blocking { --ripple-color: #ef4444; }
         #readinessBtn.has-alerts svg { animation: readiness-nudge 2.4s ease-in-out infinite; transform-origin: 50% 15%; }
 
-        /* Reaches 1.32, not 1.55: the wider ring overhung the toolbar's own
-           padding, so the pulse was clipped by the bar's edge every cycle. */
+        /* 1.24, sized to the room actually above the button now that the bar
+           has a quarter-rem of top padding. A ripple clipped flat by the bar
+           edge on every beat is worse than a smaller one that completes. */
         @keyframes readiness-ripple {
             0%   { transform: scale(1);    opacity: .42; }
-            70%  { transform: scale(1.32); opacity: 0; }
-            100% { transform: scale(1.32); opacity: 0; }
+            70%  { transform: scale(1.24); opacity: 0; }
+            100% { transform: scale(1.24); opacity: 0; }
         }
         @keyframes readiness-nudge {
             0%, 62%, 100% { transform: rotate(0); }
@@ -1892,11 +1893,12 @@
 {{-- ===================== TOOLBAR (sticky, persistent) =====================
      The modules hamburger lives here, inline with the activity actions. When
      another module is showing, the activities-only buttons hide. --}}
-{{-- Symmetric padding, and it is right now. All three buttons are .btn-sm
-     with the same min-height, so items-center already centres them; the row
-     only looked low because the bell wore a ring that read as extra height.
-     That was the thing to fix, not this. --}}
-<div class="sticky top-14 md:top-16 z-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 py-2 mb-3 border-b border-gray-100">
+{{-- pt-1/pb-3, which sums to the same 1rem py-2 did — the bar keeps its
+     height, so the Gallery shelf bar that sticks below it stays where it was
+     told to. The buttons sit a quarter-rem higher inside it, which is what
+     the row wanted: a bar with a border under it reads as having more room
+     below than a measurement says it does. --}}
+<div class="sticky top-14 md:top-16 z-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 pt-1 pb-3 mb-3 border-b border-gray-100">
     <div class="flex items-center gap-2 flex-wrap">
         <button type="button" id="modulesBtn" class="btn btn-white btn-sm" title="Switch module">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
