@@ -38,6 +38,67 @@
        the green ramp, so both modes are set explicitly here). */
     .wx-today-label { color: #15803d; }
     html.dark .wx-today-label { color: #86efac; }
+
+    /* ---- the greeting and the account's numbers, in the same calm
+       language as the schedules shelf: a white card, one green hairline,
+       the hour drawn rather than shouted. ---- */
+    .dash-hero { display: flex; align-items: center; gap: .85rem; flex-wrap: wrap;
+        padding: 1.05rem 1.25rem; border-radius: 1.1rem; position: relative; overflow: hidden;
+        background: var(--color-white); border: 1px solid var(--color-gray-200); }
+    .dash-hero::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
+        background: linear-gradient(90deg, #6b9f3d, #b8d38e 55%, transparent); }
+    .dash-hero-mark { width: 3rem; height: 3rem; border-radius: 999px; flex-shrink: 0;
+        display: inline-flex; align-items: center; justify-content: center; }
+    .dash-hero-mark svg { width: 1.55rem; height: 1.55rem; }
+    .tod-morning { background: linear-gradient(135deg, #fff7e0, #fbe6ae); color: #d97706; }
+    .tod-afternoon { background: linear-gradient(135deg, #e8f4fd, #cde7fa); color: #0284c7; }
+    .tod-evening { background: linear-gradient(135deg, #e9e7fb, #d5d2f2); color: #6d28d9; }
+    html.dark .tod-morning { color: #fbbf24; }
+    html.dark .tod-afternoon { color: #7dd3fc; }
+    html.dark .tod-evening { color: #c4b5fd; }
+    html.dark .tod-morning, html.dark .tod-afternoon, html.dark .tod-evening { background: rgb(255 255 255 / .07); }
+    .dash-hero-h { font-size: 1.15rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.25; }
+    .dash-hero-p { font-size: .82rem; color: var(--color-gray-500); margin-top: .15rem; }
+    .dash-hero-warn { display: inline-flex; align-items: center; gap: .3rem; margin-top: .35rem;
+        font-size: .78rem; font-weight: 700; color: #b45309; }
+    .dash-hero-warn svg { width: .85rem; height: .85rem; }
+    .dash-hero-state { flex-shrink: 0; margin-left: auto; }
+    .dash-chip { display: inline-flex; align-items: center; gap: .35rem; padding: .35rem .75rem;
+        border-radius: 999px; font-size: .74rem; font-weight: 700;
+        background: var(--color-gray-50); border: 1px solid var(--color-gray-200); color: var(--color-gray-600); }
+    .dash-chip.is-ok { background: #f0f7e8; border-color: #cfe3b8; color: #3d6823; }
+    .dash-chip.is-warn { background: #fff7ed; border-color: #fed7aa; color: #9a3412; }
+    html.dark .dash-hero { background: #151b12; border-color: #2b3a1c; }
+    html.dark .dash-hero-h { color: #e8efe1; }
+    html.dark .dash-hero-p { color: #a8bd93; }
+    html.dark .dash-chip { background: rgb(255 255 255 / .05); border-color: #2b3a1c; color: #cdd8c0; }
+    html.dark .dash-chip.is-ok { background: rgb(61 104 35 / .22); border-color: #3f5626; color: #bfe19a; }
+    html.dark .dash-chip.is-warn { background: rgb(154 52 18 / .2); border-color: rgb(154 52 18 / .5); color: #fdba74; }
+
+    .dash-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+    .dash-stat { display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: .1rem; padding: .8rem .6rem; border-radius: .9rem; text-align: center; text-decoration: none;
+        background: var(--color-white); border: 1px solid var(--color-gray-200);
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    a.dash-stat:hover { border-color: #cfe3b8; transform: translateY(-1px); }
+    .dash-stat b { font-size: 1.35rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.1; }
+    .dash-stat .dash-stat-word { font-size: .95rem; }
+    .dash-stat i { font-style: normal; font-size: .62rem; font-weight: 700; letter-spacing: .06em;
+        text-transform: uppercase; color: var(--color-gray-400); }
+    .dash-stat.is-lead { background: #f0f7e8; border-color: #cfe3b8; }
+    .dash-stat.is-lead b { color: #3d6823; }
+    .dash-stat.is-lead i { color: #6b9f3d; }
+    .dash-stat.is-warn b { color: #c2410c; }
+    html.dark .dash-stat { background: #151b12; border-color: #2b3a1c; }
+    html.dark .dash-stat b { color: #e8efe1; }
+    html.dark .dash-stat.is-lead { background: rgb(61 104 35 / .22); border-color: #3f5626; }
+    html.dark .dash-stat.is-lead b { color: #bfe19a; }
+    @media (max-width: 480px) {
+        .dash-hero { padding: .9rem 1rem; gap: .7rem; }
+        .dash-hero-state { margin-left: 0; flex-basis: 100%; }
+        .dash-stat b { font-size: 1.15rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { .dash-stat { transition: none; } }
     {{-- .wall-act composer buttons live in plaza-css (shared). --}}
 </style>
 @endpush
@@ -64,64 +125,63 @@
 
 <div class="space-y-5 md:space-y-6">
 
-    {{-- Greeting card --}}
-    <div class="card overflow-hidden">
-        <div class="card-body bg-gradient-to-br from-brand-600 to-brand-800 !rounded-2xl text-white">
-            <div class="flex items-start justify-between gap-3">
-                <div class="min-w-0">
-                    <h2 class="text-xl md:text-2xl font-bold">Magandang araw, {{ $user->firstName }}!</h2>
-                    <p class="text-sm text-brand-100 mt-1">Ready to plan a productive cropping season?</p>
-                </div>
-                <div class="shrink-0 text-right">
-                    @if ($isSuperAdmin)
-                        <span class="inline-flex items-center gap-1.5 rounded-full bg-white/15 text-white px-3 py-1.5 text-xs font-bold">🛡️ Admin access</span>
-                    @elseif ($isActive)
-                        <span class="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold {{ $expiringSoon ? 'bg-accent-500 text-ink' : 'bg-white/15 text-white' }}">
-                            @if ($expiringSoon)
-                                ⚠️ {{ $daysRemaining }} {{ \Illuminate\Support\Str::plural('day', (int) $daysRemaining) }} left
-                            @else
-                                {{ $daysRemaining }} {{ \Illuminate\Support\Str::plural('day', (int) $daysRemaining) }} left
-                            @endif
-                        </span>
-                    @elseif ($status === 'pending')
-                        <span class="inline-flex items-center rounded-full bg-accent-500 text-ink px-3 py-1.5 text-xs font-bold">Verification pending</span>
-                    @else
-                        <a href="{{ route('purchase.plans') }}" class="inline-flex items-center rounded-full bg-accent-500 text-ink px-3 py-1.5 text-xs font-bold hover:bg-accent-600 transition">Subscribe now</a>
-                    @endif
-                </div>
-            </div>
+    {{-- The greeting, in the same language as every other page: a calm card
+         with the hour drawn on it, not a slab of green. --}}
+    @php
+        $__h = (int) now('Asia/Manila')->format('G');
+        [$__greet, $__tod] = $__h < 12
+            ? ['Magandang umaga', 'tod-morning']
+            : ($__h < 18 ? ['Magandang hapon', 'tod-afternoon'] : ['Magandang gabi', 'tod-evening']);
+    @endphp
+    <div class="dash-hero">
+        <span class="dash-hero-mark {{ $__tod }}" aria-hidden="true">
+            @if ($__tod === 'tod-morning')
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v2M5.3 6.7l1.4 1.4M18.7 6.7l-1.4 1.4M8 15a4 4 0 118 0M2 15h2m16 0h2M3 19h18"/></svg>
+            @elseif ($__tod === 'tod-afternoon')
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4l1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4m11.4-11.4l1.4-1.4"/></svg>
+            @else
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+            @endif
+        </span>
+        <div class="min-w-0 grow">
+            <h2 class="dash-hero-h">{{ $__greet }}, {{ $user->firstName }}</h2>
+            <p class="dash-hero-p">{{ now('Asia/Manila')->format('l, F j') }} — {{ $scheduleCount === 0 ? 'no seasons planned yet.' : $scheduleCount . ' ' . \Illuminate\Support\Str::plural('season', $scheduleCount) . ' on the shelf.' }}</p>
             @if ($expiringSoon)
-                <a href="{{ route('purchase.plans') }}" class="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-accent-300 hover:text-accent-400">
-                    Renew your subscription before it expires
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                <a href="{{ route('purchase.plans') }}" class="dash-hero-warn">
+                    Renew before your subscription expires
+                    <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </a>
+            @endif
+        </div>
+        <div class="dash-hero-state">
+            @if ($isSuperAdmin)
+                <span class="dash-chip is-ok">🛡️ Admin access</span>
+            @elseif ($isActive)
+                <span class="dash-chip {{ $expiringSoon ? 'is-warn' : 'is-ok' }}">
+                    {{ $daysRemaining }} {{ \Illuminate\Support\Str::plural('day', (int) $daysRemaining) }} left
+                </span>
+            @elseif ($status === 'pending')
+                <span class="dash-chip is-warn">Verification pending</span>
+            @else
+                <a href="{{ route('purchase.plans') }}" class="btn btn-primary btn-sm">Subscribe now</a>
             @endif
         </div>
     </div>
 
-    {{-- Stat tiles --}}
-    <div class="grid grid-cols-3 gap-3 md:gap-4">
-        <div class="card">
-            <div class="card-body !p-3.5 md:!p-5 text-center">
-                <p class="text-2xl md:text-3xl font-extrabold text-brand-700">{{ number_format($scheduleCount) }}</p>
-                <p class="text-[11px] md:text-sm font-semibold text-gray-500 mt-0.5">My Schedules</p>
-            </div>
+    {{-- What the account holds, as labelled tiles rather than three cards
+         each shouting a different size of number. --}}
+    <div class="dash-stats">
+        <a href="{{ route('sm.index') }}" class="dash-stat is-lead">
+            <b>{{ number_format($scheduleCount) }}</b>
+            <i>{{ \Illuminate\Support\Str::plural('Schedule', $scheduleCount) }}</i>
+        </a>
+        <div class="dash-stat">
+            <b class="dash-stat-word">{{ $isSuperAdmin ? 'Admin' : ($isActive ? $subscription->planName : '—') }}</b>
+            <i>Active plan</i>
         </div>
-        <div class="card">
-            <div class="card-body !p-3.5 md:!p-5 text-center">
-                <p class="text-sm md:text-lg font-extrabold text-gray-900 leading-tight pt-1.5 md:pt-2 truncate">
-                    {{ $isSuperAdmin ? 'Admin' : ($isActive ? $subscription->planName : '—') }}
-                </p>
-                <p class="text-[11px] md:text-sm font-semibold text-gray-500 mt-1">Active Plan</p>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body !p-3.5 md:!p-5 text-center">
-                <p class="text-2xl md:text-3xl font-extrabold {{ $expiringSoon ? 'text-orange-600' : 'text-brand-700' }}">
-                    {{ $isSuperAdmin ? '∞' : ($isActive && $daysRemaining !== null ? number_format($daysRemaining) : '—') }}
-                </p>
-                <p class="text-[11px] md:text-sm font-semibold text-gray-500 mt-0.5">Days Remaining</p>
-            </div>
+        <div class="dash-stat {{ $expiringSoon ? 'is-warn' : '' }}">
+            <b>{{ $isSuperAdmin ? '∞' : ($isActive && $daysRemaining !== null ? number_format($daysRemaining) : '—') }}</b>
+            <i>Days left</i>
         </div>
     </div>
 
