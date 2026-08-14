@@ -30,7 +30,7 @@
                         </div>
                         <div>
                             <label class="form-label" for="grantAccess">Schedule access</label>
-                            <select id="grantAccess" class="form-input">
+                            <select id="grantAccess" class="form-select">
                                 <option value="view">View only</option>
                                 <option value="edit">Can edit</option>
                                 <option value="none">No schedule access</option>

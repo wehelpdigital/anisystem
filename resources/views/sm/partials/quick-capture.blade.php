@@ -163,7 +163,7 @@
                 @else
                     <div>
                         <label class="form-label" for="qcSchedule">Connect to schedule</label>
-                        <select id="qcSchedule" class="form-input">
+                        <select id="qcSchedule" class="form-select">
                             @foreach ($allSchedules as $s)
                                 <option value="{{ $s->id }}">{{ $s->title }}</option>
                             @endforeach
@@ -199,7 +199,7 @@
                 {{-- Only asked once the gallery is the destination. --}}
                 <div id="qcAlbumWrap" class="hidden">
                     <label class="form-label" for="qcAlbum">Album</label>
-                    <select id="qcAlbum" class="form-input">
+                    <select id="qcAlbum" class="form-select">
                         <option value="">➕ New album…</option>
                     </select>
                     <input type="text" id="qcAlbumTitle" class="form-input mt-2" maxlength="191"

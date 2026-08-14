@@ -48,7 +48,7 @@
             @else
                 <div>
                     <label class="form-label" for="qrSchedule">Connect to schedule</label>
-                    <select id="qrSchedule" class="form-input">
+                    <select id="qrSchedule" class="form-select">
                         @foreach ($allSchedules as $s)
                             <option value="{{ $s->id }}">{{ $s->title }}</option>
                         @endforeach
@@ -78,7 +78,7 @@
 
             <div id="qrAlbumWrap" class="hidden">
                 <label class="form-label" for="qrAlbum">Album</label>
-                <select id="qrAlbum" class="form-input">
+                <select id="qrAlbum" class="form-select">
                     <option value="">➕ New album…</option>
                 </select>
                 <input type="text" id="qrAlbumTitle" class="form-input mt-2" maxlength="191"

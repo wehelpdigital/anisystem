@@ -394,7 +394,7 @@
         <div>
             <label class="form-label" for="aiLinkDate">A day</label>
             <div class="flex gap-2">
-                <select id="aiLinkDate" class="form-input grow">
+                <select id="aiLinkDate" class="form-select grow">
                     <option value="">Choose a day…</option>
                     @foreach ($aiDays as $d)
                         <option value="{{ $d }}">{{ AiCarbon::parse($d)->format('D, M j, Y') }}</option>
@@ -406,7 +406,7 @@
         <div>
             <label class="form-label" for="aiLinkActivity">An activity</label>
             <div class="flex gap-2">
-                <select id="aiLinkActivity" class="form-input grow">
+                <select id="aiLinkActivity" class="form-select grow">
                     <option value="">Choose an activity…</option>
                     @foreach ($aiActs as $a)
                         <option value="{{ $a['id'] }}">{{ $a['date'] }} — {{ \Illuminate\Support\Str::limit($a['title'], 44) }}</option>
