@@ -147,7 +147,11 @@
         .sched-head-top { display: flex; align-items: flex-start; gap: .75rem; padding: 1.05rem 1.1rem .35rem; }
         .sched-title { font-size: 1.3rem; font-weight: 800; line-height: 1.2;
             color: var(--color-gray-900, #111827); word-break: break-word; }
-        .sched-pen { flex: 0 0 auto; width: 2rem; height: 2rem; border-radius: 999px; margin-top: .1rem;
+        /* Centred on the title's FIRST LINE, not hung below it: the line box
+           is 1.56rem and the button is 2rem, so it lifts by half the
+           difference. A long title wrapping to two lines keeps the pencil
+           beside the first, which is where the name starts. */
+        .sched-pen { flex: 0 0 auto; width: 2rem; height: 2rem; border-radius: 999px; margin-top: -.22rem;
             display: inline-flex; align-items: center; justify-content: center;
             background: #f3f8ec; color: #3d6823; cursor: pointer;
             transition: background .25s ease, color .25s ease; }
@@ -196,25 +200,39 @@
 
     {{-- Featured: Activities (2/3) + Quick Capture (1/3) as matched CTA tiles --}}
     <style>
-        .cta-tile { cursor: pointer; text-decoration: none; transition: background-color .15s ease, color .15s ease, transform .1s ease; }
-        .cta-tile:active { transform: scale(.99); }
-        .cta-tile .cta-chip { color: #fff; transition: background-color .15s ease; }
-        .cta-tile .cta-arrow { opacity: .5; }
+        /* The two doors off the hub, in the page's own language: a white card
+           with a tinted icon badge and a colour that belongs to it, rather
+           than two slabs of flat paint that fought the cards around them. */
+        .cta-tile { position: relative; overflow: hidden; cursor: pointer; text-decoration: none;
+            background: var(--color-white); border: 1px solid var(--color-gray-200); color: var(--color-gray-900);
+            transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1),
+                border-color .28s cubic-bezier(.22,1,.36,1); }
+        .cta-tile::before { content: ''; position: absolute; inset: 0 auto 0 0; width: .3rem;
+            background: var(--cta-accent, #6b9f3d); }
+        .cta-tile:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -20px rgb(0 0 0 / .5); }
+        .cta-tile:active { transform: translateY(0); }
+        .cta-tile .cta-chip { color: #fff; background: var(--cta-accent, #6b9f3d);
+            transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        .cta-tile:hover .cta-chip { transform: scale(1.06); }
+        .cta-tile .cta-sub { color: var(--color-gray-500); }
+        .cta-tile .cta-arrow { color: var(--cta-accent, #6b9f3d); opacity: .75; flex-shrink: 0;
+            transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        .cta-tile:hover .cta-arrow { transform: translateX(4px); }
 
-        /* Activities — green */
-        .act-cta { background-color: #dcecd2; color: #234a19; }
-        .act-cta:hover { background-color: #c6e0b5; color: #1c3d14; }
-        .act-cta .cta-chip { background-color: #4c8a39; }
-        .act-cta:hover .cta-chip { background-color: #3d7129; }
-        .act-cta .cta-sub { color: #3f6b2c; }
+        /* Activities — the season's own green. */
+        .act-cta { --cta-accent: #4a7c2a; }
+        .act-cta:hover { border-color: #cfe3b8; }
+        /* Quick Capture — amber, the colour it wears everywhere else. */
+        .qc-cta { --cta-accent: #d97706; }
+        .qc-cta:hover { border-color: #f0dcae; }
 
-        /* Quick Capture — orange, darkens on hover */
-        .qc-cta { background-color: #fbe6c8; color: #6f3806; }
-        .qc-cta:hover { background-color: #f0b263; color: #5a2c02; }
-        .qc-cta .cta-chip { background-color: #e0912e; }
-        .qc-cta:hover .cta-chip { background-color: #b5680b; }
-        .qc-cta .cta-sub { color: #834710; }
-        .qc-cta:hover .cta-sub { color: #5a2c02; }
+        html.dark .cta-tile { background: #151b12; border-color: #2b3a1c; color: #e8efe1; }
+        html.dark .cta-tile .cta-sub { color: #9fb08e; }
+        html.dark .act-cta { --cta-accent: #6b9f3d; }
+        html.dark .qc-cta { --cta-accent: #e0912e; }
+        @media (prefers-reduced-motion: reduce) {
+            .cta-tile, .cta-tile .cta-chip, .cta-tile .cta-arrow { transition: none; }
+        }
 
         @media (max-width: 767px) {
             /* Phones read the hub as a list of places to go, and a column
@@ -245,20 +263,11 @@
             .hub-grid .w-11 { width: 2.3rem; height: 2.3rem; border-radius: .65rem; }
             .hub-grid .w-11 svg { width: 1.2rem; height: 1.2rem; }
 
-            /* Quick Capture matches the Activities tile above it instead of
-               standing as a tall block of its own. */
-            .qc-cta { flex-direction: row; flex-wrap: wrap; align-items: center;
-                gap: 0 .8rem; padding: .85rem .95rem; }
-            .qc-cta .cta-chip { width: 2.6rem; height: 2.6rem; }
-            .qc-cta .cta-chip svg { width: 1.5rem; height: 1.5rem; }
-            .qc-cta > span:not(.cta-chip):not(.cta-sub) { flex: 1 1 auto; font-size: 1rem; }
-            /* The subtitle takes a whole row, so anything ordered after it
-               lands on a third line. The arrow is ordered before it and sits
-               where its twin on the Activities tile sits: end of the first
-               row, beside the name. */
-            .qc-cta .cta-arrow { order: 1; flex: 0 0 auto; margin-left: auto; }
-            .qc-cta .cta-sub { order: 2; flex: 1 1 100%; padding-left: 3.4rem; }
-            .act-cta { padding: .95rem 1rem; }
+            /* Both doors are the same row on a phone — icon, name, arrow. */
+            .cta-tile { padding: .85rem .95rem; gap: .75rem; }
+            .cta-tile .cta-chip { width: 2.6rem; height: 2.6rem; }
+            .cta-tile .cta-chip svg { width: 1.5rem; height: 1.5rem; }
+            .cta-tile .cta-title { font-size: 1rem; }
         }
     </style>
 
@@ -271,25 +280,26 @@
             </span>
             <span class="min-w-0 grow">
                 <span class="flex items-center gap-2 flex-wrap">
-                    <span class="text-lg font-bold leading-tight">Activities</span>
+                    <span class="cta-title text-lg font-bold leading-tight">Activities</span>
                     <span class="badge badge-yellow">{{ $schedule->activities_count }}</span>
                 </span>
                 <span class="cta-sub block text-sm leading-snug mt-0.5">The heart of your schedule — the day-by-day timeline.</span>
             </span>
-            <svg class="cta-arrow w-6 h-6 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
 
-        {{-- Quick Capture (1/3) --}}
+        {{-- Quick Capture (1/3) — the same shape as its neighbour, so the pair
+             reads as two doors rather than two different kinds of thing. --}}
         <button type="button" id="quickCaptureBtn"
-            class="cta-tile qc-cta rounded-2xl p-5 flex flex-col items-start justify-center gap-2 text-left">
+            class="cta-tile qc-cta rounded-2xl p-5 flex items-center gap-4 text-left">
             <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
             </span>
-            <span class="text-lg font-bold leading-tight">Quick Capture</span>
-            <span class="cta-sub text-sm leading-snug">Snap a photo → notes or AI</span>
-            {{-- Its neighbour has one and this did not, so the pair read as
-                 two different kinds of thing. Both go somewhere. --}}
-            <svg class="cta-arrow w-6 h-6 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            <span class="min-w-0 grow">
+                <span class="cta-title block text-lg font-bold leading-tight">Quick Capture</span>
+                <span class="cta-sub block text-sm leading-snug mt-0.5">Snap a photo, file it in seconds.</span>
+            </span>
+            <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
     </div>
 
