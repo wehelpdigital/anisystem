@@ -23,10 +23,12 @@ class NoteController extends BaseScheduleController
     {
         $schedule = $this->scheduleFromRequest($request, 'id');
 
+        // A season's notebook runs to hundreds; it arrives a page at a time.
         $notes = AsScheduleNote::active()
             ->where('croppingScheduleId', $schedule->id)
             ->orderByDesc('id')
-            ->get();
+            ->paginate(15)
+            ->withQueryString();
 
         // Saved team maps belong here too: a map the team named and kept is a
         // record of the season like any note, and hunting for it inside the
@@ -45,6 +47,15 @@ class NoteController extends BaseScheduleController
             'by' => (string) \Illuminate\Support\Str::of(optional($savers->get($m->userId))->full_name ?? 'Someone')->explode(' ')->first(),
             'when' => $m->created_at?->timezone('Asia/Manila')->format('M j, Y'),
         ]);
+
+        // The scroller asks for cards alone — no layout, no scripts.
+        if ($request->boolean('rows')) {
+            return response()->view('sm.partials.notes-rows', [
+                'notes' => $notes,
+                'schedule' => $schedule,
+                'mapSaves' => $mapSaves,
+            ]);
+        }
 
         return view('sm.notes', [
             'schedule' => $schedule,
