@@ -507,7 +507,7 @@
     }
 
     /** The badge that opens a shape's numbers, dropped at its middle. */
-    function measureBadge(parts, id, at, colorStr) {
+    function measureBadge(parts, id, at, colorStr, labels) {
         const badge = new (G().Marker)({
             map, position: LL(at), clickable: true, zIndex: 60,
             icon: { path: G().SymbolPath.CIRCLE, scale: 10, fillColor: colorStr || '#4a7c2a',
@@ -523,6 +523,11 @@
             saveMeasure();
         });
         parts.push(badge);
+        // Registered here rather than by position in `parts`: the caller
+        // pushing one more thing afterwards would otherwise hand the toggle
+        // a polyline, which has no label to change.
+        measures.set(id, { labels: labels || [], badge });
+        showMeasure(id, measureOpen.has(String(id)));
         return badge;
     }
 
@@ -683,7 +688,7 @@
                     const tot = textMark(pts[pts.length - 1], 'Σ ' + fmtM(total), 'cmap-lbl-g');
                     parts.push(tot); mlabels.push(tot);
                 }
-                measureBadge(parts, o.id, mid(pts[0], pts[pts.length - 1]), style.strokeColor);
+                measureBadge(parts, o.id, mid(pts[0], pts[pts.length - 1]), style.strokeColor, mlabels);
             }
         } else if (o.kind === 'rect') {
             const b = new (G().LatLngBounds)(LL(pts[0]), LL(pts[1]));
@@ -694,14 +699,14 @@
             segLabels(parts, c, true, mlabels);
             const ar = textMark(centerOf(c), fmtA(areaOf(c)), 'cmap-lbl-g');
             parts.push(ar); mlabels.push(ar);
-            measureBadge(parts, o.id, centerOf(c), style.strokeColor);
+            measureBadge(parts, o.id, centerOf(c), style.strokeColor, mlabels);
         } else if (o.kind === 'area') {
             parts.push(new (G().Polygon)({ ...style, paths: pts.map(LL), fillColor: style.strokeColor, fillOpacity: .1 }));
             vertexPins(parts, o, pts, style.strokeColor);
             segLabels(parts, pts, true, mlabels);
             const ar2 = textMark(centerOf(pts), fmtA(areaOf(pts)), 'cmap-lbl-g');
             parts.push(ar2); mlabels.push(ar2);
-            measureBadge(parts, o.id, centerOf(pts), style.strokeColor);
+            measureBadge(parts, o.id, centerOf(pts), style.strokeColor, mlabels);
         } else if (o.kind === 'text') {
             const tm = textMark(pts[0], o.label || '', 'cmap-txt-g', '#111827');
             // Labels are decoration, but a text OBJECT must catch taps or it
@@ -720,11 +725,6 @@
                 beginEdit(o, parts);
             }
         }));
-        if (mlabels.length) {
-            measures.set(o.id, { labels: mlabels, badge: parts[parts.length - 1] });
-            // Closed by default — the badge is the invitation.
-            showMeasure(o.id, measureOpen.has(String(o.id)));
-        }
         if (pendingEdit === o.id) { pendingEdit = null; beginEdit(o, parts); }
         layers.set(o.id, parts);
     }
