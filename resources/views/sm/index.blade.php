@@ -645,7 +645,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 else if (ev.target.closest('[data-del-yes]') && !go.disabled) done(true);
             });
             document.addEventListener('keydown', onKey);
-            setTimeout(() => field.focus(), 60);
+            window.smFocus(field, { delay: 60 });
         });
     }
 

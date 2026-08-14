@@ -330,7 +330,7 @@
                 // On a phone, focusing on open throws the keyboard over the
                 // chat before a word has been read. A tap still opens it.
                 if (!window.matchMedia('(pointer: coarse)').matches) {
-                    setTimeout(() => $('aiFloatText')?.focus(), 60);
+                    window.smFocus($('aiFloatText'), { delay: 60 });
                 }
                 return;
             }

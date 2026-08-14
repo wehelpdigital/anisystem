@@ -521,7 +521,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { threshold: 0 }).observe(composerCard);
         fab.addEventListener('click', () => {
             composerCard.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
-            setTimeout(() => body?.focus(), reduceMotion ? 0 : 350);
+            window.smFocus(body, { delay: reduceMotion ? 0 : 350 });
         });
     }
 });

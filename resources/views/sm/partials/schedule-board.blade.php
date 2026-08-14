@@ -538,7 +538,7 @@
             const n = pages.length;
             document.getElementById('sbSavePageCount').textContent = n <= 1 ? 'this page' : ('all ' + n + ' pages');
             saveModal.classList.remove('hidden');
-            setTimeout(() => document.getElementById('sbSaveTitle').focus(), 30);
+            window.smFocus('sbSaveTitle', { delay: 30 });
         }
         function closeSaveModal() { saveModal.classList.add('hidden'); }
         document.getElementById('sbSaveNotes').addEventListener('click', openSaveModal);

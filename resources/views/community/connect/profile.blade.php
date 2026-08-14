@@ -275,7 +275,7 @@ document.getElementById('profileTabs')?.addEventListener('click', (e) => {
         void modal.offsetWidth;
         modal.classList.add('is-open');
         document.body.style.overflow = 'hidden';
-        setTimeout(() => input.focus(), 60);
+        window.smFocus(input, { delay: 60 });
     };
     const close = () => {
         modal.classList.remove('is-open');

@@ -1326,6 +1326,25 @@ window.smQuillTouch = function smQuillTouch(quill) {
     window.smVoice = { stop, isListening: () => listening };
 })();
 
+/**
+ * Focus a field, unless a keyboard would jump up and cover the thing the
+ * user just opened.
+ *
+ * On a desktop, landing in the first field is a courtesy. On a phone it is
+ * an ambush: the sheet opens, the keyboard slides over two thirds of it,
+ * and whatever was being read is gone before it was read. Every modal in
+ * the app asks for focus through here, so the rule is one rule.
+ *
+ * Pass { always: true } for the rare field that IS the screen — a search
+ * box opened by tapping a magnifier, say.
+ */
+window.smFocus = function smFocus(el, { delay = 60, always = false } = {}) {
+    const target = typeof el === 'string' ? document.getElementById(el) : el;
+    if (!target) return;
+    if (!always && window.matchMedia('(pointer: coarse)').matches) return;
+    setTimeout(() => { try { target.focus(); } catch (_) { /* gone already */ } }, delay);
+};
+
 window.escapeHtml = function escapeHtml(value) {
     return String(value ?? '')
         .replaceAll('&', '&amp;')

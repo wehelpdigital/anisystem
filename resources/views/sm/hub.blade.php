@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* Rename and describe, from the pencil on the header card. */
     document.getElementById('schedRenameBtn')?.addEventListener('click', () => {
         openSheet('schedRenameSheet');
-        setTimeout(() => document.getElementById('schedTitleInput')?.focus(), 150);
+        window.smFocus('schedTitleInput', { delay: 150 });
     });
     document.getElementById('schedRenameSave')?.addEventListener('click', async (e) => {
         const btn = e.currentTarget;

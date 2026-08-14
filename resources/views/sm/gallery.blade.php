@@ -305,7 +305,7 @@
             $('gaAlbumTitle').value = album ? album.title : '';
             $('gaAlbumDesc').value = album ? (album.description || '') : '';
             openSheet('gaAlbumSheet');
-            setTimeout(() => $('gaAlbumTitle').focus(), 150);
+            window.smFocus($('gaAlbumTitle'), { delay: 150 });
         }
         $('gaNewAlbum').addEventListener('click', () => openAlbumSheet(null));
 

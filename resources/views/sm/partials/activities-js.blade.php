@@ -3274,7 +3274,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const form = $id(formId);
             const open = !form.classList.contains('hidden');
             form.classList.toggle('hidden', open);
-            if (!open) { animateField(form); setTimeout(() => $id(focusId)?.focus(), 60); }
+            if (!open) { animateField(form); window.smFocus($id(focusId), { delay: 60 }); }
         });
     }
     toggleQuickForm('quickAddLotBtn', 'quickAddLotForm', 'qalName');
@@ -3356,7 +3356,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const open = panel.classList.toggle('hidden');
         $id('itemsToggleBtn').setAttribute('aria-expanded', open ? 'false' : 'true');
         $id('itemsToggleLabel').textContent = open ? '+ Item' : 'Cancel';
-        if (!open) { refreshNameDatalist(); setTimeout(() => $id('itemNameInput')?.focus(), 50); }
+        if (!open) { refreshNameDatalist(); window.smFocus($id('itemNameInput'), { delay: 50 }); }
     });
 
     $id('addItemBtn')?.addEventListener('click', () => {
@@ -4392,7 +4392,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('doneNoteText').value = '';
         renderDoneNoteThumbs();
         openSheet('doneNoteSheet');
-        if (!window.matchMedia("(pointer: coarse)").matches) setTimeout(() => $id('doneNoteText').focus(), 250);
+        window.smFocus($id('doneNoteText'), { delay: 250 });
     }
 
     function renderDoneNoteThumbs() {
@@ -5491,7 +5491,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('dayExpenseSheetTitle').textContent = existing ? 'Edit expense' : 'Add extra expense';
         $id('dayExpenseDeleteBtn').classList.toggle('hidden', !existing);
         openSheet('dayExpenseSheet');
-        if (!window.matchMedia("(pointer: coarse)").matches) setTimeout(() => $id('dayExpenseAmount')?.focus(), 250);
+        window.smFocus($id('dayExpenseAmount'), { delay: 250 });
     }
 
     async function deleteExpense(dateKey, expenseId) {
@@ -5877,7 +5877,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('markerSheetTitle').textContent = info ? 'Edit resume-here marker' : 'Drop resume-here marker';
         $id('progressMarkerClearBtn').classList.toggle('hidden', !info);
         openSheet('markerSheet');
-        if (!window.matchMedia("(pointer: coarse)").matches) setTimeout(() => $id('progressMarkerNote').focus(), 250);
+        window.smFocus($id('progressMarkerNote'), { delay: 250 });
     }
 
     document.addEventListener('click', async (e) => {
@@ -7169,7 +7169,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (active) $id('newVersionSource').value = active.getAttribute('data-version-id');
             $id('newVersionSetActive').checked = true;
             openSheet('versionSheet');
-            if (!window.matchMedia("(pointer: coarse)").matches) setTimeout(() => $id('newVersionName').focus(), 250);
+            window.smFocus($id('newVersionName'), { delay: 250 });
             return;
         }
         const chip = e.target.closest('.version-chip');

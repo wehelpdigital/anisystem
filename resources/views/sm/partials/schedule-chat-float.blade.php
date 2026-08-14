@@ -116,7 +116,9 @@
     .team-members { display: flex; gap: .5rem; overflow-x: auto; padding: .5rem .75rem; border-bottom: 1px solid var(--color-gray-100); scrollbar-width: none; }
     .team-members::-webkit-scrollbar { display: none; }
     .team-members.hidden { display: none; }
-    .team-mem { position: relative; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: .15rem; width: 3rem; cursor: default; }
+    .team-mem { position: relative; flex-shrink: 0; display: flex; align-items: center; gap: .4rem;
+        padding: .2rem .55rem .2rem .2rem; border-radius: 999px; cursor: default;
+        background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
     .team-mem.pmable { cursor: pointer; }
     .team-mem-face { width: 2.1rem; height: 2.1rem; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: var(--color-brand-50); color: var(--color-brand-700); font-size: .7rem; font-weight: 800; position: relative; }
     /* Clip the photo via its own radius (not the parent's overflow) so the
@@ -124,7 +126,12 @@
     .team-mem-face img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
     .team-mem-dot { position: absolute; right: -1px; bottom: -1px; width: .62rem; height: .62rem; border-radius: 999px; border: 2px solid var(--color-white); background: var(--color-gray-300); box-shadow: 0 0 0 1px rgb(0 0 0 / .04); }
     .team-mem-dot.on { background: #22c55e; }
-    .team-mem-name { font-size: .6rem; color: var(--color-gray-600); max-width: 3rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    /* The whole name, not four letters of it: the strip scrolls sideways,
+       so there is room for as many names as the team has. */
+    .team-mem-name { font-size: .68rem; font-weight: 700; color: var(--color-gray-700); white-space: nowrap; }
+    .team-mem-name b { font-weight: 800; }
+    html.dark .team-mem { background: rgb(255 255 255 / .05); border-color: #2b3a1c; }
+    html.dark .team-mem-name { color: #cdd8c0; }
     /* Click a member to open their PM (with a call button inside). Ring on hover. */
     .team-mem.pmable:hover .team-mem-face { box-shadow: 0 0 0 2px var(--color-brand-500); }
 
@@ -214,7 +221,7 @@
                     const pmable = !m.isMe;
                     return `<div class="team-mem ${pmable ? 'pmable' : ''}" ${pmable ? `data-pm="${m.id}" data-name="${escapeHtml(m.name)}"` : ''} title="${escapeHtml(m.name)}${m.isOwner ? ' (owner)' : ''}">
                         <span class="team-mem-face">${faceHtml(m.avatar, m.initials)}<span class="team-mem-dot ${m.online ? 'on' : ''}"></span></span>
-                        <span class="team-mem-name">${m.isMe ? 'You' : escapeHtml(m.name.split(' ')[0])}</span>
+                        <span class="team-mem-name">${m.isMe ? 'You' : escapeHtml(m.name)}${m.isOwner ? ' <b>·</b> owner' : ''}</span>
                     </div>`;
                 }).join('');
             } catch (_) { /* keep last roster */ }
@@ -342,7 +349,7 @@
                 // On a phone the keyboard would swallow half the room before a
                 // word of chat has been read; a tap on the box still opens it.
                 if (!window.matchMedia('(pointer: coarse)').matches) {
-                    setTimeout(() => $('teamText')?.focus(), 60);
+                    window.smFocus($('teamText'), { delay: 60 });
                 }
             } else { stopTimers(); }
         }

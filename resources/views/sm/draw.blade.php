@@ -189,7 +189,7 @@
                             ? 'Kept as a drawing — you can reopen and change it later.'
                             : 'Kept as a picture — it can be drawn over, but not edited stroke by stroke.');
                     window.openSheet('drSaveSheet');
-                    setTimeout(() => document.getElementById('drTitle').focus(), 120);
+                    window.smFocus('drTitle', { delay: 120 });
                 }, seed.url || null, {
                     editable: true,
                     objects: seed.objects || null,

@@ -1588,7 +1588,7 @@
         document.getElementById('cmapSearchBtn').addEventListener('click', () => {
             window.openSheet?.('cmapSearchSheet');
             // Search means typing — focusing here is the point, not a nuisance.
-            setTimeout(() => document.getElementById('cmapSearch')?.focus(), 320);
+            window.smFocus('cmapSearch', { delay: 320 });
         });
         // Search jumps the map anywhere by name; without Places on the key the
         // box goes away rather than sitting dead.
