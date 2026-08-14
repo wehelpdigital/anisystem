@@ -44,6 +44,8 @@
         align-items: center; justify-content: center; font-size: .66rem; font-weight: 700; color: #94a3b8; }
     /* Picking is a mode: the tick is always there to start it, and once one
        picture is chosen the whole grid becomes a checklist. */
+    /* The tick on an album picture. Owns this name — anything else wanting
+       to be called "pick" gets absolutely positioned into this corner. */
     .ga-pick { position: absolute; top: .3rem; left: .3rem; width: 1.5rem; height: 1.5rem; border-radius: 999px;
         background: rgb(17 24 39 / .55); border: 2px solid rgb(255 255 255 / .8); display: inline-flex;
         align-items: center; justify-content: center; color: transparent; }
@@ -74,16 +76,16 @@
      * is a control you have to remember. `top` matches the toolbar's height
      * on each breakpoint; the shell's sticky bar sits at z-20, so this rides
      * just under it and over the shelf. */
-    .ga-pick { position: sticky; top: 3.5rem; z-index: 15; margin: 0 -0.25rem .8rem;
-        padding: .45rem .25rem .5rem; background: var(--color-gray-50); }
-    @media (min-width: 768px) { .ga-pick { top: 4rem; } }
+    .ga-shelfbar { position: sticky; top: 3.5rem; z-index: 15; margin-bottom: .8rem;
+        padding: .45rem 0 .5rem; background: var(--color-gray-50); }
+    @media (min-width: 768px) { .ga-shelfbar { top: 4rem; } }
     /* Inside the Activities shell the toolbar is already sticky below the app
        bar, so the picker sits under both. */
-    body:has(#activitiesRoot) .ga-pick { top: 6.6rem; }
-    @media (min-width: 768px) { body:has(#activitiesRoot) .ga-pick { top: 7.4rem; } }
+    body:has(#activitiesRoot) .ga-shelfbar { top: 6.6rem; }
+    @media (min-width: 768px) { body:has(#activitiesRoot) .ga-shelfbar { top: 7.4rem; } }
     /* In the Collab Room the app bar is hidden entirely. */
-    html.collab-embed .ga-pick { top: 0; }
-    html.dark .ga-pick { background: #10160e; }
+    html.collab-embed .ga-shelfbar { top: 0; }
+    html.dark .ga-shelfbar { background: #10160e; }
     /* Nothing of its own: it wears .btn.btn-white.btn-sm, the same as the
        Modules and Tools buttons it sits beside. Only the count needs a word,
        and only to keep it from reading as part of the name. */
@@ -268,7 +270,7 @@
      tab you have to discover by dragging is a tab most people never learn
      is there. This says which shelf you are on and opens the rest, the same
      way the schedule list asks about its order. --}}
-<div class="ga-pick">
+<div class="ga-shelfbar">
     {{-- The same button as Modules and Tools in the shell's toolbar. It does
          the same job they do — a hamburger that opens a list of places to
          go — so there is no reason for it to be its own invention. --}}
