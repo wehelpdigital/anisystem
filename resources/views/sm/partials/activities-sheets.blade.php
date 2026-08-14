@@ -266,6 +266,25 @@
                     </div>
                     <div id="workerPayRows" class="p-2 space-y-1.5"></div>
                 </div>
+                {{-- Two questions about the roster, asked where the roster is.
+                     They only appear once somebody is on the task, because
+                     neither means anything about an empty list. --}}
+                <div id="workerChecklistPane" class="hidden mt-2 space-y-2">
+                    <label for="actWorkerChecklist" class="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 cursor-pointer select-none">
+                        <input type="checkbox" id="actWorkerChecklist" class="w-5 h-5 rounded border-gray-300 mt-0.5 shrink-0">
+                        <span class="min-w-0">
+                            <span class="block text-sm font-semibold text-gray-900">Keep a worker checklist</span>
+                            <span class="block text-xs text-gray-500">The card carries the roster. Ticking a name records that they worked, and their pay for the day counts.</span>
+                        </span>
+                    </label>
+                    <label for="actWorkerSelfCheck" class="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 cursor-pointer select-none">
+                        <input type="checkbox" id="actWorkerSelfCheck" class="w-5 h-5 rounded border-gray-300 mt-0.5 shrink-0">
+                        <span class="min-w-0">
+                            <span class="block text-sm font-semibold text-gray-900">Let workers tick their own name</span>
+                            <span class="block text-xs text-gray-500">Workers with a login can sign themselves in on this task — their own row only.</span>
+                        </span>
+                    </label>
+                </div>
                 <div id="quickAddWorkerForm" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-bold text-gray-500 uppercase">New worker</span>

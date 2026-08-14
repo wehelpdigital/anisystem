@@ -145,6 +145,13 @@
         .act-check-pay { font-size: .74rem; font-weight: 800; color: var(--tl-text-soft, var(--color-gray-600)); white-space: nowrap; }
         .act-check-row.is-out .act-check-name,
         .act-check-row.is-out .act-check-pay { opacity: .45; text-decoration: line-through; }
+        /* Your own row on a task you may sign yourself into, and the rows
+           you may only read. A locked row still shows the answer — a worker
+           should see who else is down for the day, just not change it. */
+        .act-check-row.is-me .act-check-name { font-weight: 800; }
+        .act-check-row.is-me .act-check-name::after { content: " (you)"; font-weight: 600; opacity: .55; }
+        .act-check-row.is-locked { cursor: default; }
+        .act-check-row.is-locked input { opacity: .4; cursor: not-allowed; }
 
         /* Attendance: a tick each, and what the day comes to once the people
            who did not turn up are taken out. */

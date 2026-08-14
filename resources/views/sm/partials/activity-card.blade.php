@@ -238,8 +238,8 @@
                 {{ $timeLabel }}
             </span>
         @endif
-        @if ($a->activityType !== 'worker_payroll')
-            {{-- A payroll card lists every name in its checklist already;
+        @if (! $a->hasWorkerChecklist())
+            {{-- A card with a checklist lists every name in it already;
                  repeating them here is the same roster twice. --}}
             @foreach($a->workers as $w)
                 {{-- Someone down as off this day, put on the work anyway. The
@@ -259,16 +259,29 @@
             <span class="item-tag material-tag">{{ $it->displayName() }}{{ $itQtyText }} <span class="item-tag-price">{{ $itPriceText }}</span></span>
         @endforeach
     </div>
-    {{-- A payroll day carries its roster on the card: tick who turned up
-         without opening anything. Mirrors payrollChecklist() in the JS
+    {{-- A task with a roster carries it on the card: tick who turned up
+         without opening anything. Always for a payroll day, and for any other
+         task whose author asked for one. Mirrors payrollChecklist() in the JS
          renderer — the two must produce the same markup. --}}
-    @if ($a->activityType === 'worker_payroll' && $a->workers->count())
+    @if ($a->hasWorkerChecklist() && $a->workers->count())
         @php $absent = \App\Models\AsScheduleAttendance::absentOn((int) $a->croppingScheduleId, (string) $a->targetDate?->toDateString()); @endphp
+        @php
+            // Who is allowed to move a tick on this card. Anyone who can edit
+            // the plan can; a worker can move only their own, and only if the
+            // task was set up to let them. `$meWorkerId` is the roster row
+            // this login belongs to — null for an owner, who needs no row.
+            $canTickAll = \App\Support\WorkerContext::canEdit();
+            $meWorkerId = optional(\App\Support\WorkerContext::activeGrant())->scheduleWorkerId;
+        @endphp
         <div class="act-check" data-att-date="{{ $a->targetDate?->toDateString() }}">
             @foreach ($a->workers as $w)
-                @php $here = ! in_array($w->id, $absent, true); @endphp
-                <label class="act-check-row{{ $here ? '' : ' is-out' }}" data-att-worker="{{ $w->id }}">
-                    <input type="checkbox" @checked($here)>
+                @php
+                    $here = ! in_array($w->id, $absent, true);
+                    $mine = $meWorkerId && (int) $meWorkerId === (int) $w->id;
+                    $mayTick = $canTickAll || ($mine && $a->workerSelfCheck);
+                @endphp
+                <label class="act-check-row{{ $here ? '' : ' is-out' }}{{ $mine ? ' is-me' : '' }}{{ $mayTick ? '' : ' is-locked' }}" data-att-worker="{{ $w->id }}">
+                    <input type="checkbox" @checked($here) @disabled(! $mayTick)>
                     <span class="act-check-name">{{ $w->workerName }}@if ($a->targetDate && ! $w->isAvailableOn($a->targetDate))<span class="w-forced" title="Marked off this day">forced</span>@endif</span>
                     <span class="act-check-pay">₱{{ number_format($a->workerPay($w), 2) }}</span>
                 </label>

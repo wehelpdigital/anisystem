@@ -1093,6 +1093,8 @@ class ActivityController extends BaseScheduleController
             'imagePaths'      => 'nullable|array|max:12',
             'imagePaths.*'    => 'string|max:500',
             'timeRequired'    => 'required|in:half,whole,n/a',
+            'workerChecklist' => 'nullable|boolean',
+            'workerSelfCheck' => 'nullable|boolean',
             // Empty lotIds = "N/A — not lot-specific".
             'lotIds'          => 'nullable|array',
             'lotIds.*'        => 'integer',
@@ -1213,6 +1215,11 @@ class ActivityController extends BaseScheduleController
             'imagePath'          => $submittedImagePath,
             'imagePaths'         => $submittedImagePaths ?: null,
             'timeRequired'       => $request->timeRequired,
+            // Does this task keep a list of who actually worked it, and may
+            // the workers tick their own names on it? A payroll day always
+            // keeps one, so the flag would only be noise there.
+            'workerChecklist'    => $activityType !== 'worker_payroll' && $request->boolean('workerChecklist'),
+            'workerSelfCheck'    => $request->boolean('workerSelfCheck'),
             'reminders'          => $activityType === 'reminder_checklist'
                 ? $this->cleanReminders($request->input('reminders'))
                 : null,
@@ -1673,7 +1680,12 @@ class ActivityController extends BaseScheduleController
     /** The day's roster: every worker with work that day, and what they earn. */
     public function attendance(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        // Reading a roster is a read, whatever the verb. Marking someone hands
+        // its own POST straight to this method for the new totals, and asking
+        // scheduleFromRequest() about a POST is asking "may you edit?" — which
+        // refused a worker who had just been allowed to sign themselves in.
+        // The write was already judged where the writing happened.
+        $schedule = $this->schedule($request->query('scheduleId'));
         // input(), not query(): marking someone hands the request straight to
         // this method with the date merged in, and a merged value never
         // reaches the query string.
@@ -1721,7 +1733,11 @@ class ActivityController extends BaseScheduleController
     /** Mark one worker present or absent for a day. */
     public function markAttendance(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        // Not scheduleFromRequest(): signing yourself in is a write a
+        // view-only worker may be allowed to make, and the check that decides
+        // it needs the date and the worker id — which are in the body, not
+        // yet read. So resolve the schedule first, then judge.
+        $schedule = $this->schedule($request->query('scheduleId'));
 
         $data = $request->validate([
             'date' => 'required|date',
@@ -1736,6 +1752,14 @@ class ActivityController extends BaseScheduleController
             ->first();
         if (! $worker) {
             return $this->jsonFail('That worker is not on this schedule.', 404);
+        }
+
+        if ($schedule->isLocked()) {
+            return $this->jsonFail('This schedule is marked completed and locked. Reopen it in the Hub to make changes.', 423);
+        }
+
+        if (! \App\Support\WorkerContext::canEdit() && ! $this->maySelfCheck($schedule, $worker, $data['date'])) {
+            return $this->jsonFail('You can only tick your own name, and only where the task allows it.', 403);
         }
 
         \App\Models\AsScheduleAttendance::updateOrCreate(
@@ -1754,6 +1778,31 @@ class ActivityController extends BaseScheduleController
         // Hand back the day's new total so the board never has to work out for
         // itself what a tick was worth.
         return $this->attendance($request->merge(['date' => $data['date']]));
+    }
+
+    /**
+     * May the current worker sign themselves in on this day?
+     *
+     * Three things have to line up: this login is that worker, and one of the
+     * day's tasks they are on says workers may tick themselves. Being on a
+     * roster is not enough — permission belongs to the task, so a farm can
+     * let people sign in for weeding and still want a foreman's word on the
+     * harvest.
+     */
+    private function maySelfCheck($schedule, AsScheduleWorker $worker, string $date): bool
+    {
+        $grant = \App\Support\WorkerContext::activeGrant();
+        if (! $grant || (int) $grant->scheduleWorkerId !== (int) $worker->id) {
+            return false;
+        }
+
+        return AsScheduleActivity::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->where('isDraft', 0)
+            ->where('workerSelfCheck', 1)
+            ->whereDate('targetDate', $date)
+            ->whereHas('workers', fn ($q) => $q->where('as_schedule_workers.id', $worker->id))
+            ->exists();
     }
 
     /** @return \Illuminate\Support\Collection<int, AsScheduleActivity> */

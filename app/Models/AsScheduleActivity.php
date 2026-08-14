@@ -85,11 +85,15 @@ class AsScheduleActivity extends BaseModel
         'tags',
         'reminders',
         'timeRequired',
+        'workerChecklist',
+        'workerSelfCheck',
         'sequenceOrder',
         'deleteStatus',
     ];
 
     protected $casts = [
+        'workerChecklist' => 'boolean',
+        'workerSelfCheck' => 'boolean',
         'targetDate' => 'date:Y-m-d',
         'targetEndDate' => 'date:Y-m-d',
         'servicePrice' => 'decimal:2',
@@ -255,6 +259,18 @@ class AsScheduleActivity extends BaseModel
             'activityId',
             'lotId'
         );
+    }
+
+    /**
+     * Does this task keep a tick-list of who actually worked it?
+     *
+     * A payroll day always has, because that is what it is for. Any other
+     * task can be asked to, and then the same list decides the same thing:
+     * who gets paid for the day.
+     */
+    public function hasWorkerChecklist(): bool
+    {
+        return $this->activityType === 'worker_payroll' || (bool) $this->workerChecklist;
     }
 
     public function workers()

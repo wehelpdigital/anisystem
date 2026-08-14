@@ -39,6 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const WATER_TASK_LABELS = @json(\App\Models\AsScheduleActivity::WATER_TASKS);
     const WATER_TASK_COLORS = @json(\App\Models\AsScheduleActivity::WATER_TASK_COLORS);
     let activityMode = 'task';   // 'task' | 'irrigation' — the add-activity sheet mode
+    // Who is looking, in the two terms a checklist cares about: may they
+    // change the plan at all, and which roster row is theirs. An owner has no
+    // roster row and needs none — CAN_EDIT already covers them.
+    const CAN_EDIT = @json(\App\Support\WorkerContext::canEdit());
+    const ME_WORKER_ID = @json(optional(\App\Support\WorkerContext::activeGrant())->scheduleWorkerId);
     const LOT_NAMES = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->lotName]));
     const LOT_VARIETIES = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->variety]));
     // How each lot counts: 'DAT' sown-then-transplanted (DAS, then a fresh
@@ -876,7 +881,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         </div>
         <div class="flex items-center shrink-0">
-            ${a.activityType === 'worker_payroll' ? '<span class="badge payroll-badge mr-1">Worker checklist</span>' : ''}
+            ${hasChecklist(a) ? '<span class="badge payroll-badge mr-1">Worker checklist</span>' : ''}
             <button type="button" class="icon-btn add-note-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Add a note (activity is locked)">${SVG.note}</button>
             <div class="hidden md:flex items-center gap-0.5 done-hide">
                 <button type="button" class="icon-btn hide-activity-toggle" data-id="${a.id}" title="Toggle visibility in presentations and exports" aria-pressed="${isHiddenFlag ? 'true' : 'false'}">${SVG.eye}</button>
@@ -892,14 +897,14 @@ document.addEventListener('DOMContentLoaded', () => {
     ${descHtml ? `<div class="activity-description-content text-sm text-gray-700 mt-2" data-lightbox>${descHtml}</div>` : ''}
     ${imagesHtml}
     <div class="activity-meta">
-        ${(a.activityType === 'worker_payroll' || isReminderCard) ? ''
+        ${(hasChecklist(a) || isReminderCard) ? ''
             : `<span class="meta-time">${SVG.clock} ${esc(timeRequiredLabel(a.timeRequired))}</span>`}
         ${workerTags}
         ${itemTags}
     </div>
     ${payrollChecklist(a)}
     ${reminderChecklist(a)}
-    ${a.activityType === 'worker_payroll' ? '' : labourLine(a.labourTotal, a.workerPay)}
+    ${hasChecklist(a) ? '' : labourLine(a.labourTotal, a.workerPay)}
     <div class="activity-tags">${activityTagChips(a.tags)}</div>
 </div>`;
     }
@@ -940,8 +945,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const money2 = (n) => money(n);
 
+    const hasChecklist = (a) => a.activityType === 'worker_payroll' || !!a.workerChecklist;
+
     function payrollChecklist(a) {
-        if (a.activityType !== 'worker_payroll') return '';
+        // A payroll day always keeps a roster; any other task keeps one if it
+        // was asked to. Mirrors hasWorkerChecklist() on the model.
+        if (a.activityType !== 'worker_payroll' && !a.workerChecklist) return '';
         const pay = a.workerPay || {};
         const ids = Object.keys(pay);
         if (!ids.length) return '';
@@ -952,8 +961,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const here = w.present !== false;
                 const forced = workerOffOn(Number(id), date)
                     ? '<span class="w-forced" title="Marked off this day">forced</span>' : '';
-                return `<label class="act-check-row${here ? '' : ' is-out'}" data-att-worker="${esc(id)}">
-                    <input type="checkbox"${here ? ' checked' : ''}>
+                // Anyone who can edit may move any tick; a worker may move
+                // only their own, and only where the task allows it.
+                const mine = ME_WORKER_ID && Number(ME_WORKER_ID) === Number(id);
+                const mayTick = CAN_EDIT || (mine && a.workerSelfCheck);
+                return `<label class="act-check-row${here ? '' : ' is-out'}${mine ? ' is-me' : ''}${mayTick ? '' : ' is-locked'}" data-att-worker="${esc(id)}">
+                    <input type="checkbox"${here ? ' checked' : ''}${mayTick ? '' : ' disabled'}>
                     <span class="act-check-name">${esc(w.name || 'Worker')}${forced}</span>
                     <span class="act-check-pay">${esc(money(w.total || 0))}</span>
                 </label>`;
@@ -2536,11 +2549,24 @@ document.addEventListener('DOMContentLoaded', () => {
      * For every other kind of activity the panel lists whoever is already on
      * it, because there the crew is picked with the chips above.
      */
+    /* The roster questions belong to a roster. An empty task has nobody to
+       tick, and a payroll day keeps its list whatever anyone says — so the
+       first question hides there and only the second is worth asking. */
+    function paintChecklistPane() {
+        const pane = $id('workerChecklistPane');
+        if (!pane) return;
+        const anyone = getActivityWorkerIds().length > 0;
+        const payroll = activityMode === 'payroll';
+        pane.classList.toggle('hidden', !anyone);
+        $id('actWorkerChecklist')?.closest('label')?.classList.toggle('hidden', payroll);
+    }
+
     function renderWorkerPay() {
         const panel = $id('workerPayPanel'), rows = $id('workerPayRows');
         if (!panel || !rows) return;
 
         const payroll = activityMode === 'payroll';
+        paintChecklistPane();
 
         // Only a payroll day is priced per worker. On a task, an irrigation or
         // a service the crew is already chosen with the chips, and each of
@@ -2556,6 +2582,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const on = new Set(getActivityWorkerIds().map(String));
         const listed = Object.keys(WORKER_NAMES);
+        paintChecklistPane();
 
         panel.classList.toggle('hidden', listed.length === 0);
         if (!listed.length) { $id('workerPayTotal').textContent = money(0); paintWorkerCount(); return; }
@@ -3397,6 +3424,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if ($id('activityServicePrice')) $id('activityServicePrice').value = '';
         setActivityMode('task');
         $id('activityTimeRequired').value = 'half';
+        if ($id('actWorkerChecklist')) $id('actWorkerChecklist').checked = false;
+        if ($id('actWorkerSelfCheck')) $id('actWorkerSelfCheck').checked = false;
         $id('activityIsDayZero').checked = false;
         if ($id('activityIsTransplant')) $id('activityIsTransplant').checked = false;
         setWhenTab('date', { instant: true });
@@ -3477,6 +3506,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTaskTypes([a.activityType, ...(Array.isArray(a.extraTypes) ? a.extraTypes : [])]);
             }
             $id('activityTimeRequired').value = a.timeRequired || 'half';
+            if ($id('actWorkerChecklist')) $id('actWorkerChecklist').checked = !!boolFlag(a.workerChecklist);
+            if ($id('actWorkerSelfCheck')) $id('actWorkerSelfCheck').checked = !!boolFlag(a.workerSelfCheck);
             $id('activityIsDayZero').checked = !!boolFlag(a.isDayZero);
             $id('activityIsTransplant').checked = !!boolFlag(a.isTransplant);
             setActivityLots(a.lotIds || (a.lots || []).map((l) => l.id));
@@ -3532,6 +3563,8 @@ document.addEventListener('DOMContentLoaded', () => {
             description: a.description || '',
             imagePaths: (a.images && a.images.length ? a.images.map((img) => img.path) : (a.imagePaths || (a.imagePath ? [a.imagePath] : []))).filter(Boolean),
             timeRequired: a.timeRequired,
+            workerChecklist: boolFlag(a.workerChecklist),
+            workerSelfCheck: boolFlag(a.workerSelfCheck),
             isDayZero: boolFlag(a.isDayZero),
             isTransplant: boolFlag(a.isTransplant),
             lotIds,
@@ -3576,6 +3609,10 @@ document.addEventListener('DOMContentLoaded', () => {
             description: getDescriptionContent(),
             imagePaths: ACTIVITY_IMAGES.map((img) => img.path),
             timeRequired: $id('activityTimeRequired').value,
+            // A payroll day always keeps a roster, so the flag is only asked
+            // of everything else.
+            workerChecklist: (!isPayroll && $id('actWorkerChecklist')?.checked) ? 1 : 0,
+            workerSelfCheck: $id('actWorkerSelfCheck')?.checked ? 1 : 0,
             isDayZero: $id('activityIsDayZero').checked ? 1 : 0,
             isTransplant: $id('activityIsTransplant').checked ? 1 : 0,
             isDraft: (!id && ADD_AS_DRAFT) ? 1 : 0,
