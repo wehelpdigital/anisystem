@@ -75,7 +75,7 @@
      * on each breakpoint; the shell's sticky bar sits at z-20, so this rides
      * just under it and over the shelf. */
     .ga-pick { position: sticky; top: 3.5rem; z-index: 15; margin: 0 -0.25rem .8rem;
-        padding: .4rem .25rem; background: var(--color-gray-50); }
+        padding: .45rem .25rem .5rem; background: var(--color-gray-50); }
     @media (min-width: 768px) { .ga-pick { top: 4rem; } }
     /* Inside the Activities shell the toolbar is already sticky below the app
        bar, so the picker sits under both. */
@@ -84,28 +84,33 @@
     /* In the Collab Room the app bar is hidden entirely. */
     html.collab-embed .ga-pick { top: 0; }
     html.dark .ga-pick { background: #10160e; }
-    /* Shaped like every other tag button in the app — the date pickers, the
-       lot tags — so "a thing you tap to choose something" looks the same
-       wherever it appears. It was a heavy white pill that read as a form
-       control rather than a choice. */
-    .ga-pickbtn { display: inline-flex; align-items: center; gap: .45rem; max-width: 100%;
-        padding: .45rem .85rem; border-radius: 999px; cursor: pointer; user-select: none;
-        background: #f0f7e8; border: 1px solid #cfe3b8; color: #3d6823;
-        font-size: .82rem; font-weight: 700; white-space: nowrap;
-        transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1),
+    /* A quiet tag: white ground, one hairline, the name in ordinary ink.
+     *
+     * The green fill was wrong here. On the date pickers a tinted tag marks
+     * one small thing inside a form; this sits alone above a whole shelf of
+     * pictures, where a block of colour competes with the very things it is
+     * introducing. Colour is left to the icon, which is all the recognition
+     * it needs, and to the border on hover so the tag still answers a
+     * pointer. */
+    .ga-pickbtn { display: inline-flex; align-items: center; gap: .5rem; max-width: 100%;
+        padding: .45rem .9rem .45rem .75rem; border-radius: 999px; cursor: pointer; user-select: none;
+        background: var(--color-white); border: 1px solid var(--color-gray-200);
+        color: var(--color-gray-800); font-size: .82rem; font-weight: 700; white-space: nowrap;
+        box-shadow: 0 1px 2px rgb(0 0 0 / .04);
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1),
             transform .28s cubic-bezier(.22,1,.36,1); }
-    .ga-pickbtn:hover { background: #e4efd4; border-color: #b7d597; }
-    .ga-pickbtn:active { transform: scale(.97); }
+    .ga-pickbtn:hover { border-color: #a8cc7e; box-shadow: 0 4px 12px -6px rgb(0 0 0 / .18); }
+    .ga-pickbtn:active { transform: scale(.98); }
     .ga-pickbtn:focus-visible { outline: 2px solid #6b9f3d; outline-offset: 2px; }
-    .ga-pickico { width: .95rem; height: .95rem; flex: none; }
-    .ga-pickchev { width: .75rem; height: .75rem; flex: none; opacity: .6; }
-    /* The count sits in the tag as its own small chip, so the name and the
-       number do not read as one run-on phrase. */
-    .ga-pickbtn .ga-n { padding: .05rem .35rem; border-radius: 999px; opacity: 1;
-        background: rgb(61 104 35 / .12); font-size: .66rem; }
-    html.dark .ga-pickbtn { background: #24301a; border-color: #4a7c2a; color: #d8f0be; }
-    html.dark .ga-pickbtn:hover { background: #2c4318; border-color: #6ba33c; }
-    html.dark .ga-pickbtn .ga-n { background: rgb(216 240 190 / .16); }
+    .ga-pickico { width: 1rem; height: 1rem; flex: none; color: #4a7c2a; }
+    .ga-pickchev { width: .75rem; height: .75rem; flex: none; color: var(--color-gray-400); }
+    /* The count is a number, not a badge — a coloured lozenge here was one
+       more thing shouting on a bar that should be almost silent. */
+    .ga-pickbtn .ga-n { font-size: .72rem; font-weight: 700; color: var(--color-gray-400); opacity: 1; }
+    html.dark .ga-pickbtn { background: #1c2416; border-color: #2b3a1c; color: #e8efe1; box-shadow: none; }
+    html.dark .ga-pickbtn:hover { border-color: #4a7c2a; }
+    html.dark .ga-pickico { color: #86b556; }
+    html.dark .ga-pickbtn .ga-n { color: #7d8f6e; }
     /* No overflow: hidden here. On a flex item that switches the automatic
        minimum size from `auto` to 0, which let the label shrink away to
        nothing and leave a button that was only an icon. The four names are
