@@ -1884,7 +1884,11 @@
 {{-- ===================== TOOLBAR (sticky, persistent) =====================
      The modules hamburger lives here, inline with the activity actions. When
      another module is showing, the activities-only buttons hide. --}}
-<div class="sticky top-14 md:top-16 z-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 py-2 mb-3 border-b border-gray-100">
+{{-- pt-1.5/pb-2.5 rather than py-2: the same overall height, so nothing
+     below it shifts, but the buttons sit a little higher in the bar. Dead
+     centre read low, because the bell'"'"'s count badge overhangs the top of its
+     button and the eye measures the row from the top of that. --}}
+<div class="sticky top-14 md:top-16 z-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 pt-1.5 pb-2.5 mb-3 border-b border-gray-100">
     <div class="flex items-center gap-2 flex-wrap">
         <button type="button" id="modulesBtn" class="btn btn-white btn-sm" title="Switch module">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
