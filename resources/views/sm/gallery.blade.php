@@ -94,8 +94,8 @@
         transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
     .ga-item:hover { transform: translateY(-2px); box-shadow: 0 12px 26px -18px rgb(0 0 0 / .5); }
     .ga-shot { position: relative; aspect-ratio: 1; background: #0b1220; }
-    .ga-shot img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .28s ease; }
-    .ga-shot img.is-loaded { opacity: 1; }
+    .ga-shot img, .ga-shot video { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .28s ease; }
+    .ga-shot img.is-loaded, .ga-shot video.is-loaded { opacity: 1; }
     /* The bin rides on the tile rather than inside it: the tile is already a
        button, and a button inside a button is not a thing. */
     .ga-wrap { position: relative; }
@@ -141,7 +141,7 @@
 @section('content')
 @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'gallery'])
 @include('sm.partials.module-note', [
-    'say' => 'Every picture the season produced, wherever it was taken — notes, days, drawings, maps, the AI — plus the albums you put together yourself. Nothing here is a copy: delete a photo where it lives and it leaves here too.',
+    'say' => 'Everything the season produced, wherever it was taken — photos and clips from notes, days, drawings, maps and the AI — plus the albums you put together yourself. Nothing here is a copy: delete a picture where it lives and it leaves here too, and an album picture can be deleted from here because here is where it lives.',
 ])
 
 @push('head')
@@ -178,7 +178,7 @@
      the ones you put together on purpose. --}}
 <div class="ga-tabs" role="tablist">
     <button type="button" class="ga-tab is-on" data-tab="all" role="tab" aria-selected="true">
-        All pictures <span class="ga-n">{{ $counts['all'] }}</span>
+        All media <span class="ga-n">{{ $counts['all'] }}</span>
     </button>
     <button type="button" class="ga-tab" data-tab="albums" role="tab" aria-selected="false">
         Albums <span class="ga-n">{{ count($albums) }}</span>
@@ -214,7 +214,7 @@
         </div>
     </div>
     <div class="ga-all" id="gaAll"></div>
-    <p class="ga-none hidden" id="gaAllNone">Nothing here yet. Photos taken anywhere in this schedule — a note, a day, a drawing, a map — arrive here on their own.</p>
+    <p class="ga-none hidden" id="gaAllNone">Nothing here yet. Anything taken anywhere in this schedule — a note, a day, a drawing, a map — arrives here on its own.</p>
 </div>
 
 {{-- ============================== albums ============================== --}}
@@ -551,12 +551,25 @@
         let findText = '';
         let findSource = '';
 
+        // What the file name says, when the payload and the file disagree.
+        // Belt and braces: an item typed 'image' whose path is an .mp4 is how
+        // a perfectly good clip came to report itself missing, and the file
+        // name is the one thing that cannot be wrong about that.
+        const VIDEO_RE = /\.(mp4|mov|webm|mkv|m4v|3gp)(\?|$)/i;
+
         function itemHtml(m) {
-            const kind = m.kind || 'image';
+            const kind = (m.kind === 'image' && VIDEO_RE.test(m.url || '')) ? 'video' : (m.kind || 'image');
             const badge = KIND_LABEL[kind]
                 ? `<span class="ga-kind is-${kind}">${KIND_LABEL[kind]}</span>` : '';
+            // No poster — which is what a clip stored on a server without
+            // ffmpeg looks like — so show the video's own first frame rather
+            // than an empty black box.
             const shot = kind === 'video'
-                ? `<div class="ga-shot">${m.posterUrl ? `<img src="${esc(m.posterUrl)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')">` : ''}
+                ? `<div class="ga-shot">${m.posterUrl
+                        ? `<img src="${esc(m.posterUrl)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')">`
+                        : `<video src="${esc(m.url)}" preload="metadata" playsinline muted
+                             onloadeddata="this.classList.add('is-loaded')"
+                             onerror="this.closest('.ga-shot')?.classList.add('is-gone'); this.remove();"></video>`}
                      <span class="ga-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>${badge}</div>`
                 : `<div class="ga-shot"><img src="${esc(m.url)}" alt="" loading="lazy"
                         onload="this.classList.add('is-loaded')"
