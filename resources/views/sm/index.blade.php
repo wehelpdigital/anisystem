@@ -158,10 +158,16 @@
            its state, which is most of what you scan a shelf for. Only the
            working detail underneath goes. ---- */
         .se-cover[data-se-fold] { cursor: pointer; user-select: none; }
-        .se-chev { position: absolute; right: .55rem; bottom: .5rem; width: 1.15rem; height: 1.15rem;
-            display: flex; align-items: center; justify-content: center; color: rgb(255 255 255 / .8);
-            transition: transform .28s cubic-bezier(.22,1,.36,1); }
-        .se-chev svg { width: 100%; height: 100%; }
+        /* After the status, not over it. Pinned to the corner it landed on
+           top of the pill, which is the one thing on the cover that already
+           had that corner. It is a flex item now, so the row makes room. */
+        .se-chev { position: relative; z-index: 1; flex: none; width: 1.5rem; height: 1.5rem;
+            display: flex; align-items: center; justify-content: center; border-radius: 999px;
+            color: var(--color-gray-500); background: rgb(255 255 255 / .7); backdrop-filter: blur(2px);
+            transition: transform .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+        .se-cover:hover .se-chev { background: rgb(255 255 255 / .95); color: #3d6823; }
+        .se-chev svg { width: .8rem; height: .8rem; }
+        html.dark .se-chev { background: rgb(0 0 0 / .45); color: #d5dfc9; }
         .se-card.is-folded .se-chev { transform: rotate(-90deg); }
         /* Height animates, so folding reads as the card closing rather than
            the card vanishing. grid-template-rows does it without anyone
@@ -206,6 +212,8 @@
             text-shadow: 0 1px 0 rgb(255 255 255 / .5); }
         html.dark .se-title { color: #e8efe1; text-shadow: none; }
         .se-status { position: relative; z-index: 1; margin-left: auto; flex-shrink: 0;
+            /* The chevron sits after this, so the gap between them is the
+               cover's own gap rather than a nudge. */
             display: inline-flex; align-items: center;
             gap: .35rem; padding: .28rem .6rem; border-radius: 999px; background: rgb(255 255 255 / .85);
             font-size: .68rem; font-weight: 700; color: var(--color-gray-700); text-transform: capitalize;
