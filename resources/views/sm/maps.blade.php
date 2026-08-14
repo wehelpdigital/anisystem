@@ -44,9 +44,43 @@
         /* Grid and stage swap with the house ease rather than snapping. */
         @keyframes mpViewIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
         .mp-view-in { animation: mpViewIn .28s cubic-bezier(.22,1,.36,1); }
-        .mp-stagebar { display: flex; align-items: center; gap: .6rem; margin-bottom: .5rem; }
-        .mp-stagehint { font-size: .72rem; color: var(--color-gray-400); min-width: 0;
+        .mp-stagebar { display: flex; align-items: center; gap: .5rem; margin-bottom: .5rem; }
+        .mp-stagehint { font-size: .72rem; color: var(--color-gray-400); min-width: 0; flex: 1 1 auto;
             overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        /* Everything that is not a drawing tool lives here, out of the map's
+           own toolbar — which on a phone had no room left for the tools. */
+        .mp-stageacts { display: flex; align-items: center; gap: .25rem; flex-shrink: 0; margin-left: auto; }
+        .mp-act { min-width: 2.15rem; height: 2.15rem; border-radius: .6rem; flex-shrink: 0;
+            display: inline-flex; align-items: center; justify-content: center; gap: .3rem;
+            background: var(--color-gray-100); color: var(--color-gray-600);
+            transition: background .15s ease, color .15s ease, transform .1s ease; }
+        .mp-act svg { width: 1.15rem; height: 1.15rem; }
+        .mp-act:hover { background: var(--color-gray-200); color: var(--color-gray-800); }
+        .mp-act:active { transform: scale(.92); }
+        .mp-act.is-off { opacity: .35; pointer-events: none; }
+        .mp-act.is-on, html.dark .mp-act.is-on { background: var(--color-brand-100); color: var(--color-brand-800); }
+        .mp-act.is-save { width: auto; padding: 0 .7rem; background: #4a7c2a; color: #fff; font-size: .78rem; font-weight: 800; }
+        .mp-act.is-save:hover { background: #3d6823; color: #fff; }
+        .mp-act.is-danger { color: #dc2626; }
+        .mp-act.is-danger:hover { background: #fee2e2; color: #b91c1c; }
+        .mp-actdiv { width: 1px; height: 1.4rem; background: var(--color-gray-200); flex-shrink: 0; margin: 0 .15rem; }
+        html.dark .mp-act { background: rgb(255 255 255 / .06); color: #cdd8c0; }
+        html.dark .mp-act:hover { background: rgb(255 255 255 / .12); color: #e8efe1; }
+        html.dark .mp-actdiv { background: #2b3a1c; }
+        /* Their originals stay in the map's toolbar for the Collab Room, but
+           inside this module they would be the same button twice. */
+        #smapStageWrap .cmap-bar #cmapUndo,
+        #smapStageWrap .cmap-bar #cmapRedo,
+        #smapStageWrap .cmap-bar #cmapGps,
+        #smapStageWrap .cmap-bar #cmapLayer,
+        #smapStageWrap .cmap-bar #cmapClear,
+        #smapStageWrap .cmap-bar .cmap-div { display: none; }
+        @media (max-width: 520px) {
+            /* The arrow alone says "back" once the row is tight. */
+            .mp-backword, .mp-actword { display: none; }
+            .mp-act.is-save { padding: 0; min-width: 2.15rem; }
+            .mp-stagehint { display: none; }
+        }
         @media (prefers-reduced-motion: reduce) {
             .mp-card, .mp-new, .mp-thumb img { transition: none; }
             .mp-view-in { animation: none; }
@@ -120,22 +154,49 @@
         // skips the shelf and opens the stage on that map.
         $openSaveQ = (int) request()->query('save');
     @endphp
-    @include('sm.partials.module-note', [
-        'say' => 'Every map this schedule has saved — the team’s and your own. Open one to keep working on it, or start a new map. A saved map files its picture in the notebook, so a save can carry a note explaining what it was for.',
-    ])
-
+    {{-- The shelf explains itself; the stage does not need explaining, and on
+         a phone this paragraph was eating the map. It lives with the grid. --}}
     <div id="smapHome" @if ($openSaveQ) class="hidden" @endif>
+        @include('sm.partials.module-note', [
+            'say' => 'Every map this schedule has saved — the team’s and your own. Open one to keep working on it, or start a new map. A saved map files its picture in the notebook, so a save can carry a note explaining what it was for.',
+        ])
         <div class="mp-grid" id="mpGrid"></div>
         <p class="mp-empty hidden" id="mpEmpty">No maps yet. Start one above — draw over the real ground, measure it, and save the plan with a name.</p>
     </div>
 
     <div id="smapStageWrap" @unless ($openSaveQ) class="hidden" @endunless>
+        {{-- One row for everything that is not a drawing tool: the way back,
+             then history, saving, and the map's own switches. They used to sit
+             in the map's toolbar, which on a phone pushed the drawing tools off
+             the screen. Each one drives the real control inside the map. --}}
         <div class="mp-stagebar">
             <button type="button" class="btn btn-white btn-sm" id="mpBackHome">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                All maps
+                <span class="mp-backword">All maps</span>
             </button>
             <span class="mp-stagehint" id="mpStageHint"></span>
+            <div class="mp-stageacts">
+                <button type="button" class="mp-act" data-proxy="cmapUndo" title="Undo" aria-label="Undo">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
+                </button>
+                <button type="button" class="mp-act" data-proxy="cmapRedo" title="Redo" aria-label="Redo">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg>
+                </button>
+                <button type="button" class="mp-act is-save" data-proxy="cmapSaveProxy" title="Save this map" aria-label="Save this map">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg>
+                    <span class="mp-actword">Save</span>
+                </button>
+                <span class="mp-actdiv"></span>
+                <button type="button" class="mp-act" data-proxy="cmapGps" title="Share my live GPS position" aria-label="Share my live GPS position">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/><path stroke-linecap="round" d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22M12 12h.01"/></svg>
+                </button>
+                <button type="button" class="mp-act" data-proxy="cmapLayer" title="Map or satellite" aria-label="Toggle map or satellite view">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg>
+                </button>
+                <button type="button" class="mp-act is-danger" data-proxy="cmapClear" title="Clear the whole map" aria-label="Clear the whole map">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>
+                </button>
+            </div>
         </div>
         <div class="smap-stage">
             @include('sm.partials.schedule-map', ['schedule' => $schedule])
@@ -251,6 +312,42 @@
                 paint();
                 refresh();
             }
+
+            /* ---- the stage bar drives the map's own controls -------------
+               The buttons live out here so the map's toolbar keeps its width
+               for drawing tools, but the controls themselves are still the
+               map's. Each proxy clicks its original and wears its state. */
+            (function wireStageActs() {
+                const acts = Array.from(document.querySelectorAll('.mp-act[data-proxy]'));
+                const realOf = (name) => name === 'cmapSaveProxy'
+                    ? document.querySelector('#smapStageWrap [data-maction="savemap"]')
+                    : document.getElementById(name);
+
+                acts.forEach((btn) => {
+                    btn.addEventListener('click', () => {
+                        const real = realOf(btn.getAttribute('data-proxy'));
+                        if (real) real.click();
+                    });
+                });
+
+                // Undo/redo go dim with their originals; GPS and satellite
+                // light up with theirs. Watched rather than guessed — the map
+                // owns those states and changes them from a dozen places.
+                const sync = () => acts.forEach((btn) => {
+                    const real = realOf(btn.getAttribute('data-proxy'));
+                    if (!real) return;
+                    btn.classList.toggle('is-off', !!real.disabled);
+                    if (!btn.classList.contains('is-save') && !btn.classList.contains('is-danger')) {
+                        btn.classList.toggle('is-on', real.classList.contains('is-active'));
+                    }
+                });
+                const watch = new MutationObserver(sync);
+                ['cmapUndo', 'cmapRedo', 'cmapGps', 'cmapLayer'].forEach((id) => {
+                    const real = document.getElementById(id);
+                    if (real) watch.observe(real, { attributes: true, attributeFilter: ['disabled', 'class'] });
+                });
+                sync();
+            })();
 
             document.getElementById('mpBackHome').addEventListener('click', () => {
                 // Sent here by a note's "View map" tag: leaving the map is

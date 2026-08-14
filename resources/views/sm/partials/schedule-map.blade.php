@@ -1304,7 +1304,8 @@
             endEdit(); dropAll();
             histUndo.length = 0; histRedo.length = 0; syncHistBtns();
             await loadObjects(true);
-            if (window.toast) toast('Map loaded for the team.');
+            // No toast: the map arriving on screen IS the confirmation, and a
+            // banner over it only covers the thing you asked to see.
         } catch (e) { if (window.toast) toast(e.message, 'error'); }
     }
 
