@@ -204,6 +204,15 @@
     .ga-is { font-size: .64rem; font-weight: 600; color: var(--color-gray-400); margin-top: auto; padding-top: .2rem;
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .ga-none { text-align: center; padding: 2.5rem 1rem; color: var(--color-gray-400); font-size: .85rem; }
+    /* Where the next screenful is asked for. It spans the grid so it sits
+       below the last row rather than pretending to be a tile. */
+    .ga-more, .tb-grid > .ga-more { grid-column: 1 / -1; display: flex; align-items: center;
+        justify-content: center; padding: 1.2rem 0; }
+    .ga-more-spin { width: 1.2rem; height: 1.2rem; border-radius: 999px;
+        border: 2.5px solid var(--color-gray-200); border-top-color: #4a7c2a;
+        animation: gaMoreSpin .7s linear infinite; }
+    @keyframes gaMoreSpin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .ga-more-spin { animation-duration: 1.6s; } }
 
     html.dark .ga-item { background: #151b12; border-color: #2b3a1c; }
     html.dark .ga-it { color: #e8efe1; }
@@ -708,20 +717,74 @@
             return bin ? `<div class="ga-wrap">${tile}${bin}</div>` : tile;
         }
 
+        /* ---- Filling a shelf a screenful at a time -----------------------
+         * A season can produce hundreds of pictures, and drawing them all at
+         * once means hundreds of <img> and <video> elements racing to load
+         * before anybody has scrolled past the first row. The list itself
+         * stays in memory — it is only titles and urls, and searching it has
+         * to see everything — but the tiles arrive a page at a time, and the
+         * next page is asked for when the end of the last one comes into
+         * view.
+         *
+         * An IntersectionObserver rather than a scroll handler: it fires
+         * when the sentinel is actually visible, which is the question being
+         * asked, and it does not run on every pixel of every scroll. */
+        const PAGE = 24;
+        const feeds = new Map();      // host id → { items, drawn, io }
+
+        function fill(host, items, emptyHtml, render) {
+            if (!host) return;
+            const state = feeds.get(host.id) || {};
+            state.io?.disconnect();
+
+            host.innerHTML = '';
+            state.items = items;
+            state.drawn = 0;
+            feeds.set(host.id, state);
+
+            if (!items.length) {
+                host.innerHTML = emptyHtml || '';
+                return;
+            }
+
+            const more = () => {
+                const next = state.items.slice(state.drawn, state.drawn + PAGE);
+                if (!next.length) return false;
+                state.drawn += next.length;
+                // insertAdjacentHTML, not innerHTML +=: rebuilding the whole
+                // shelf would drop every picture already decoded and start
+                // them loading again.
+                sentinel.insertAdjacentHTML('beforebegin', next.map(render || itemHtml).join(''));
+                return state.drawn < state.items.length;
+            };
+
+            const sentinel = document.createElement('div');
+            sentinel.className = 'ga-more';
+            sentinel.innerHTML = '<span class="ga-more-spin" aria-hidden="true"></span>';
+            host.appendChild(sentinel);
+
+            state.io = new IntersectionObserver((entries) => {
+                if (!entries.some((e) => e.isIntersecting)) return;
+                if (!more()) { state.io.disconnect(); sentinel.remove(); }
+            }, { root: null, rootMargin: '600px 0px' });   // ask early, so it never stalls
+
+            if (!more()) { sentinel.remove(); } else { state.io.observe(sentinel); }
+        }
+
         function paintAll() {
             const q = findText.trim().toLowerCase();
             const shown = EVERYTHING.filter((m) => m.kind !== 'video')
                 .filter((m) => !findSource || m.source === findSource)
                 .filter((m) => !q || (m.title + ' ' + m.source).toLowerCase().includes(q));
-            $('gaAll').innerHTML = shown.map(itemHtml).join('');
+
+            fill($('gaAll'), shown);
             $('gaAllNone').classList.toggle('hidden', shown.length > 0);
             if (shown.length === 0 && (q || findSource)) {
                 $('gaAllNone').textContent = 'Nothing matches that.';
             }
-            const vids = EVERYTHING.filter((m) => m.kind === 'video');
-            if ($('gaVideos')) $('gaVideos').innerHTML = vids.length
-                ? vids.map(itemHtml).join('')
-                : '<p class="ga-none">No videos in this schedule yet.</p>';
+
+            fill($('gaVideos'), EVERYTHING.filter((m) => m.kind === 'video'),
+                '<p class="ga-none">No videos in this schedule yet.</p>');
         }
 
         /* ---- Which shelf ------------------------------------------------
@@ -797,30 +860,36 @@
         const TEAM = @json($teamBox);
         let tbFilter = '';
 
+        function teamCardHtml(r) {
+            const shot = r.video
+                // #t=0.1 so a clip with no poster still shows a frame rather
+                // than a black rectangle.
+                ? '<video src="' + esc(r.url) + (r.posterUrl ? '' : '#t=0.1') + '"'
+                    + (r.posterUrl ? ' poster="' + esc(r.posterUrl) + '"' : '')
+                    + ' preload="metadata" playsinline controls></video>'
+                    + (r.posterUrl ? '' : '<span class="tb-play"><span>▶</span></span>')
+                : '<img src="' + esc(r.url) + '" alt="" loading="lazy">';
+            const inner = '<span class="tb-shot"><span class="tb-kind">' + esc(r.kind) + '</span>' + shot + '</span>'
+                + '<span class="tb-body">'
+                + '<span class="tb-title">' + esc(r.title) + '</span>'
+                + (r.note ? '<span class="tb-note">' + esc(r.note) + '</span>' : '')
+                + '<span class="tb-meta">' + esc([r.by, r.when].filter(Boolean).join(' · ')) + '</span>'
+                + '</span>';
+            // A recording is watched here; a drawing or a map is a way back to
+            // the thing itself, which is still editable there.
+            return r.href
+                ? '<a class="tb-card" href="' + esc(r.href) + '">' + inner + '</a>'
+                : '<div class="tb-card">' + inner + '</div>';
+        }
+
         function paintTeam() {
             const rows = TEAM.filter((r) => !tbFilter || r.kind === tbFilter);
             const grid = $('tbGrid');
-            const none = $('tbNone');
             if (!grid) return;
-            none?.classList.toggle('hidden', rows.length > 0);
-            grid.innerHTML = rows.map((r) => {
-                const shot = r.video
-                    ? '<video src="' + esc(r.url) + '"' + (r.posterUrl ? ' poster="' + esc(r.posterUrl) + '"' : '')
-                        + ' preload="metadata" playsinline controls></video>'
-                        + (r.posterUrl ? '' : '<span class="tb-play"><span>▶</span></span>')
-                    : '<img src="' + esc(r.url) + '" alt="" loading="lazy">';
-                const inner = '<span class="tb-shot"><span class="tb-kind">' + esc(r.kind) + '</span>' + shot + '</span>'
-                    + '<span class="tb-body">'
-                    + '<span class="tb-title">' + esc(r.title) + '</span>'
-                    + (r.note ? '<span class="tb-note">' + esc(r.note) + '</span>' : '')
-                    + '<span class="tb-meta">' + esc([r.by, r.when].filter(Boolean).join(' · ')) + '</span>'
-                    + '</span>';
-                // A recording is watched here; a drawing or a map is a way
-                // back to the thing itself, which is still editable there.
-                return r.href
-                    ? '<a class="tb-card" href="' + esc(r.href) + '">' + inner + '</a>'
-                    : '<div class="tb-card">' + inner + '</div>';
-            }).join('');
+            $('tbNone')?.classList.toggle('hidden', rows.length > 0);
+            // Recordings are the heaviest things the app stores, so this
+            // shelf wants filling by the screenful more than any other.
+            fill(grid, rows, '', teamCardHtml);
         }
 
         $('tbFilters')?.addEventListener('click', (e) => {
