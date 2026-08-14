@@ -574,8 +574,9 @@ class ScheduleMapController extends BaseScheduleController
             'message' => $mode === 'map'
                 ? (($saveId && $request->filled('saveId'))
                     ? 'Saved over “' . mb_substr($title, 0, 60) . '”.'
-                    : 'Map saved — reopen it any time from the tools' . (empty($media) ? ' (no picture: Static Maps API unavailable).' : ', picture filed in the notebook.'))
-                : 'Map picture filed in the schedule notebook.',
+                    : 'Map saved to Notes — reopen it any time from the map shelf'
+                    . (empty($media) ? ' (no picture: Static Maps API unavailable).' : ', and its picture is in Notes.'))
+                : 'Saved to Notes as an image note.',
         ]);
     }
 

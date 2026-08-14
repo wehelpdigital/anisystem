@@ -79,19 +79,10 @@
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l7-7 6 6-4 4H8l-4-3z"/><path stroke-linecap="round" d="M8 18h11"/></svg>
                     <span>Erase a shape</span>
                 </button>
-                <div class="cmap-msep"></div>
-                <button type="button" class="cmap-mrow" data-maction="open">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>
-                    <span>Open a saved map</span>
-                </button>
-                <button type="button" class="cmap-mrow" data-maction="savemap">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 3h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2z"/><path stroke-linecap="round" d="M9 8h6M9 12h6M9 16h4"/></svg>
-                    <span>Save map to notes</span>
-                </button>
-                <button type="button" class="cmap-mrow" data-maction="saveimage">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-4.5-4.5L9 18"/></svg>
-                    <span>Save as image note</span>
-                </button>
+                {{-- Opening and saving used to live at the bottom of this
+                     list, under ten drawing tools. They are not tools — they
+                     are what you do with the map — so they have their own
+                     button and their own sheet now. --}}
             </div>
         </div>
         <button type="button" class="cmap-tool" id="cmapSearchBtn" title="Search a place" aria-label="Search a place">
@@ -170,6 +161,66 @@
                 <button type="button" class="cmap-save-go" id="cmapSaveGo"><span id="cmapSaveGoTxt">Save as a new map</span></button>
             </div>
         </div>
+        {{-- How thick the line is drawn. The pen had no such control at all:
+             one weight for a field boundary and for a footpath. --}}
+        <button type="button" class="cmap-tool" id="cmapSizeBtn" title="Line thickness" aria-label="Line thickness">
+            <span class="cmap-size-dot" id="cmapSizeDot"></span>
+        </button>
+        <div class="sheet hidden" id="cmapSizeSheet" style="--sheet-width:22rem">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+                <h3 class="sheet-title">Line thickness</h3>
+                <button type="button" class="icon-btn" data-sheet-close aria-label="Close">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="sheet-body" style="padding-bottom:1.1rem">
+                <div class="cmap-sizes">
+                    <button type="button" class="cmap-sizeopt" data-msize="2"><span style="height:2px"></span><b>Thin</b></button>
+                    <button type="button" class="cmap-sizeopt is-active" data-msize="3"><span style="height:3px"></span><b>Normal</b></button>
+                    <button type="button" class="cmap-sizeopt" data-msize="5"><span style="height:5px"></span><b>Thick</b></button>
+                    <button type="button" class="cmap-sizeopt" data-msize="8"><span style="height:8px"></span><b>Heavy</b></button>
+                </div>
+            </div>
+        </div>
+        {{-- Where you are, and what the ground looks like — beside the pen's
+             own settings, because they are all "how the map reads". --}}
+        <button type="button" class="cmap-tool" id="cmapGps" title="Share my live GPS position with the team" aria-label="Share my live GPS position">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/><path stroke-linecap="round" d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22M12 12h.01"/></svg>
+        </button>
+        <button type="button" class="cmap-tool is-active" id="cmapLayer" title="Toggle map / satellite" aria-label="Toggle map or satellite view" aria-pressed="true">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg>
+        </button>
+        <button type="button" class="cmap-tool cmap-danger" id="cmapClear" title="Clear the whole map for the team" aria-label="Clear the map for the team">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>
+        </button>
+        {{-- Opening and saving, together, out of the tools list. --}}
+        <button type="button" class="cmap-tool cmap-savebtn" id="cmapSaveMenuBtn" title="Open or save a map" aria-label="Open or save a map">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg>
+        </button>
+        <div class="sheet hidden" id="cmapSaveMenuSheet" style="--sheet-width:24rem">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+                <h3 class="sheet-title">Maps</h3>
+                <button type="button" class="icon-btn" data-sheet-close aria-label="Close">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="sheet-body cmap-menu-body">
+                <button type="button" class="cmap-mrow" data-maction="open">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>
+                    <span>Open a saved map</span>
+                </button>
+                <button type="button" class="cmap-mrow" data-maction="savemap">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 3h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2z"/><path stroke-linecap="round" d="M9 8h6M9 12h6M9 16h4"/></svg>
+                    <span>Save map to notes<small>Reopenable later, picture filed in Notes</small></span>
+                </button>
+                <button type="button" class="cmap-mrow" data-maction="saveimage">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-4.5-4.5L9 18"/></svg>
+                    <span>Save as image note<small>A picture only, filed in Notes</small></span>
+                </button>
+            </div>
+        </div>
         <span class="cmap-div"></span>
         <button type="button" class="cmap-tool" id="cmapUndo" disabled title="Undo" aria-label="Undo">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
@@ -180,15 +231,6 @@
         <button type="button" class="cmap-tool cmap-finish" id="cmapFinish" hidden title="Finish and save this shape">
             <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             <span>Finish</span>
-        </button>
-        <button type="button" class="cmap-tool is-active" id="cmapLayer" title="Toggle map / satellite" aria-label="Toggle map or satellite view" aria-pressed="true">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg>
-        </button>
-        <button type="button" class="cmap-tool" id="cmapGps" title="Share my live GPS position with the team" aria-label="Share my live GPS position">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/><path stroke-linecap="round" d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22M12 12h.01"/></svg>
-        </button>
-        <button type="button" class="cmap-tool cmap-danger" id="cmapClear" title="Clear the whole map for the team" aria-label="Clear the map for the team">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>
         </button>
     </div>
     <div class="cmap-stage">
@@ -230,6 +272,28 @@
     .cmap-map .gm-style-moc { display: none !important; }
     .cmap-color-dot { width: 1.05rem; height: 1.05rem; border-radius: 999px; background: #f5c518;
         border: 2px solid rgb(255 255 255 / .9); box-shadow: 0 0 0 1px rgb(0 0 0 / .12); }
+    /* The pen's weight, shown as itself. */
+    .cmap-size-dot { width: 1.05rem; height: 1.05rem; border-radius: 999px; position: relative;
+        background: var(--color-gray-300); }
+    .cmap-size-dot::after { content: ''; position: absolute; left: 50%; top: 50%; width: .8rem;
+        transform: translate(-50%, -50%); border-radius: 999px; background: var(--color-gray-700);
+        height: var(--w, 3px); }
+    html.dark .cmap-size-dot { background: #3f4a37; }
+    html.dark .cmap-size-dot::after { background: #cdd8c0; }
+    .cmap-sizes { display: grid; gap: .5rem; }
+    .cmap-sizeopt { display: flex; align-items: center; gap: .75rem; padding: .6rem .75rem;
+        border-radius: .7rem; border: 2px solid var(--color-gray-200); background: var(--color-white);
+        cursor: pointer; text-align: left; }
+    .cmap-sizeopt span { flex: 1 1 auto; border-radius: 999px; background: var(--color-gray-700); }
+    .cmap-sizeopt b { flex: 0 0 auto; font-size: .78rem; font-weight: 700; color: var(--color-gray-600); }
+    .cmap-sizeopt.is-active { border-color: #4a7c2a; background: #f0f7e8; }
+    html.dark .cmap-sizeopt { background: #151b12; border-color: #2b3a1c; }
+    html.dark .cmap-sizeopt span { background: #cdd8c0; }
+    html.dark .cmap-sizeopt b { color: #cdd8c0; }
+    html.dark .cmap-sizeopt.is-active { border-color: #6b9f3d; background: rgb(107 159 61 / .22); }
+    .cmap-savebtn { background: #4a7c2a; color: #fff; }
+    .cmap-savebtn:hover { background: #3d6823; color: #fff; }
+    .cmap-mrow small { display: block; font-size: .68rem; font-weight: 500; color: var(--color-gray-400); margin-top: .1rem; }
     .cmap-swatches { display: flex; flex-wrap: wrap; gap: .55rem; }
     .cmap-swatch { width: 2.1rem; height: 2.1rem; border-radius: 999px; background: var(--c);
         border: 2px solid rgb(0 0 0 / .08); transition: transform .15s ease, box-shadow .15s ease; }
@@ -343,6 +407,8 @@
     @media (prefers-reduced-motion: reduce) { .cmap-editbar { transition: none; } }
     /* Measurement labels ride Google marker labels — these classes style them. */
     .cmap-lbl-g { background: rgb(17 24 39 / .82); border-radius: .45rem; padding: .1rem .4rem; white-space: nowrap; }
+    /* The ruler badge that reveals a shape's numbers. */
+    .cmap-mbadge { cursor: pointer; }
     .cmap-txt-g { background: #fff; border: 1.5px solid #111827; border-radius: .45rem; padding: .12rem .45rem; box-shadow: 0 2px 6px rgb(0 0 0 / .25); }
     .cmap-me-g { background: rgb(17 24 39 / .82); border-radius: .45rem; padding: .05rem .35rem; }
     /* Live-position dots are HTML overlays, not markers: markers cannot
@@ -413,11 +479,60 @@
             label: { text, className: cls, color: colorOverride || '#fff', fontSize: '11px', fontWeight: '800' },
         });
     }
-    function segLabels(parts, pts, closed) {
+    /* Measurements are asked for, not broadcast.
+     *
+     * Every side of every shape used to shout its length and every field its
+     * area, all at once — so a map with four lots on it was unreadable, and
+     * the numbers covered the ground they described. Each shape now wears one
+     * small ruler badge; tapping it shows that shape's numbers, tapping it
+     * again puts them away. What you opened is remembered per shape. */
+    const MEASURE_KEY = 'cmapMeasure:' + SID;
+    const measureOpen = (() => {
+        try { return new Set(JSON.parse(localStorage.getItem(MEASURE_KEY) || '[]')); } catch (_) { return new Set(); }
+    })();
+    const saveMeasure = () => {
+        try { localStorage.setItem(MEASURE_KEY, JSON.stringify([...measureOpen])); } catch (_) { /* private mode */ }
+    };
+    // Per shape: the label markers, and the badge that reveals them.
+    const measures = new Map();
+
+    function showMeasure(id, on) {
+        const m = measures.get(id);
+        if (!m) return;
+        m.labels.forEach((lbl) => lbl.setMap(on ? map : null));
+        if (m.badge) {
+            m.badge.setLabel({ text: on ? '×' : '📏', className: 'cmap-mbadge', color: '#fff', fontSize: '11px', fontWeight: '800' });
+        }
+        if (on) measureOpen.add(String(id)); else measureOpen.delete(String(id));
+    }
+
+    /** The badge that opens a shape's numbers, dropped at its middle. */
+    function measureBadge(parts, id, at, colorStr) {
+        const badge = new (G().Marker)({
+            map, position: LL(at), clickable: true, zIndex: 60,
+            icon: { path: G().SymbolPath.CIRCLE, scale: 10, fillColor: colorStr || '#4a7c2a',
+                fillOpacity: .95, strokeColor: '#fff', strokeWeight: 2 },
+            label: { text: '📏', className: 'cmap-mbadge', color: '#fff', fontSize: '11px', fontWeight: '800' },
+        });
+        badge.addListener('click', () => {
+            // While erasing, a tap on anything of this shape removes it —
+            // the badge must not become a hole in that.
+            if (tool === 'erase' || tool === 'edit') return;
+            const m = measures.get(id);
+            showMeasure(id, !(m && m.labels.length && m.labels[0].getMap()));
+            saveMeasure();
+        });
+        parts.push(badge);
+        return badge;
+    }
+
+    function segLabels(parts, pts, closed, bag) {
         const n = closed ? pts.length : pts.length - 1;
         for (let i = 0; i < n; i++) {
             const j = (i + 1) % pts.length;
-            parts.push(textMark(mid(pts[i], pts[j]), fmtM(dist(pts[i], pts[j])), 'cmap-lbl-g'));
+            const lbl = textMark(mid(pts[i], pts[j]), fmtM(dist(pts[i], pts[j])), 'cmap-lbl-g');
+            parts.push(lbl);
+            if (bag) bag.push(lbl);
         }
     }
     /* Finished shapes keep the same pins the drawing had — grab one and the
@@ -549,6 +664,9 @@
         if (layers.has(o.id)) return;
         objIndex.set(o.id, o);
         const parts = [];
+        // The numbers this shape can show, gathered so one badge can reveal
+        // or hide them all together.
+        const mlabels = [];
         const style = { map, strokeColor: o.color || '#f5c518', strokeWeight: o.width || 3, clickable: true };
         const pts = o.points;
         if (o.kind === 'pen' || o.kind === 'line' || o.kind === 'path' || o.kind === 'arrow') {
@@ -558,12 +676,14 @@
             // arrow with the Select tool.
             if (o.kind !== 'pen' && o.kind !== 'arrow') {
                 vertexPins(parts, o, pts, style.strokeColor);
-                segLabels(parts, pts, false);
+                segLabels(parts, pts, false, mlabels);
                 if (o.kind === 'path' && pts.length > 2) {
                     let total = 0;
                     for (let i = 0; i < pts.length - 1; i++) total += dist(pts[i], pts[i + 1]);
-                    parts.push(textMark(pts[pts.length - 1], 'Σ ' + fmtM(total), 'cmap-lbl-g'));
+                    const tot = textMark(pts[pts.length - 1], 'Σ ' + fmtM(total), 'cmap-lbl-g');
+                    parts.push(tot); mlabels.push(tot);
                 }
+                measureBadge(parts, o.id, mid(pts[0], pts[pts.length - 1]), style.strokeColor);
             }
         } else if (o.kind === 'rect') {
             const b = new (G().LatLngBounds)(LL(pts[0]), LL(pts[1]));
@@ -571,13 +691,17 @@
             const c = [[sw.lat(), sw.lng()], [sw.lat(), ne.lng()], [ne.lat(), ne.lng()], [ne.lat(), sw.lng()]];
             parts.push(new (G().Polygon)({ ...style, paths: c.map(LL), fillColor: style.strokeColor, fillOpacity: .08 }));
             vertexPins(parts, o, c, style.strokeColor);
-            segLabels(parts, c, true);
-            parts.push(textMark(centerOf(c), fmtA(areaOf(c)), 'cmap-lbl-g'));
+            segLabels(parts, c, true, mlabels);
+            const ar = textMark(centerOf(c), fmtA(areaOf(c)), 'cmap-lbl-g');
+            parts.push(ar); mlabels.push(ar);
+            measureBadge(parts, o.id, centerOf(c), style.strokeColor);
         } else if (o.kind === 'area') {
             parts.push(new (G().Polygon)({ ...style, paths: pts.map(LL), fillColor: style.strokeColor, fillOpacity: .1 }));
             vertexPins(parts, o, pts, style.strokeColor);
-            segLabels(parts, pts, true);
-            parts.push(textMark(centerOf(pts), fmtA(areaOf(pts)), 'cmap-lbl-g'));
+            segLabels(parts, pts, true, mlabels);
+            const ar2 = textMark(centerOf(pts), fmtA(areaOf(pts)), 'cmap-lbl-g');
+            parts.push(ar2); mlabels.push(ar2);
+            measureBadge(parts, o.id, centerOf(pts), style.strokeColor);
         } else if (o.kind === 'text') {
             const tm = textMark(pts[0], o.label || '', 'cmap-txt-g', '#111827');
             // Labels are decoration, but a text OBJECT must catch taps or it
@@ -596,6 +720,11 @@
                 beginEdit(o, parts);
             }
         }));
+        if (mlabels.length) {
+            measures.set(o.id, { labels: mlabels, badge: parts[parts.length - 1] });
+            // Closed by default — the badge is the invitation.
+            showMeasure(o.id, measureOpen.has(String(o.id)));
+        }
         if (pendingEdit === o.id) { pendingEdit = null; beginEdit(o, parts); }
         layers.set(o.id, parts);
     }
@@ -603,9 +732,9 @@
         if (extending && extending.id === id) cancelExtend();
         if (editing && editing.o.id === id) endEdit();
         (layers.get(id) || []).forEach((p) => p.setMap(null));
-        layers.delete(id); objIndex.delete(id);
+        layers.delete(id); objIndex.delete(id); measures.delete(id);
     }
-    function dropAll() { cancelExtend(); endEdit(); layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); }
+    function dropAll() { cancelExtend(); endEdit(); layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); measures.clear(); }
 
     /* Undo is a history of inverse calls against the same endpoints the
        actions used, so every step also lands live for the team. Re-adding a
@@ -1416,10 +1545,25 @@
         document.querySelectorAll('[data-mtool]').forEach((b) =>
             b.addEventListener('click', () => setTool(b.dataset.mtool)));
         document.getElementById('cmapToolsBtn').addEventListener('click', () => window.openSheet?.('cmapToolsSheet'));
+        document.getElementById('cmapSaveMenuBtn')?.addEventListener('click', () => window.openSheet?.('cmapSaveMenuSheet'));
         document.querySelectorAll('[data-maction]').forEach((b) => b.addEventListener('click', () => {
-            window.closeSheet?.('cmapToolsSheet');
+            window.closeSheet?.('cmapSaveMenuSheet');
             if (b.dataset.maction === 'open') openSaves();
             else openSaveSheet(b.dataset.maction === 'savemap' ? 'map' : 'image');
+        }));
+
+        /* ---- how thick the pen draws ---- */
+        const sizeDot = document.getElementById('cmapSizeDot');
+        const sayWidth = () => { if (sizeDot) sizeDot.style.setProperty('--w', Math.min(8, width) + 'px'); };
+        sayWidth();
+        document.getElementById('cmapSizeBtn')?.addEventListener('click', () => window.openSheet?.('cmapSizeSheet'));
+        document.querySelectorAll('#cmapSizeSheet .cmap-sizeopt').forEach((b) => b.addEventListener('click', () => {
+            width = parseInt(b.dataset.msize, 10) || 3;
+            document.querySelectorAll('#cmapSizeSheet .cmap-sizeopt').forEach((x) => x.classList.toggle('is-active', x === b));
+            sayWidth();
+            window.closeSheet?.('cmapSizeSheet');
+            // A half-drawn line takes the new weight immediately.
+            if (tempPts.length) previewTemp(tool === 'area');
         }));
         document.getElementById('cmapSaveGo').addEventListener('click', () => doSaveMap(false));
         document.getElementById('cmapSaveOver').addEventListener('click', () => doSaveMap(true));

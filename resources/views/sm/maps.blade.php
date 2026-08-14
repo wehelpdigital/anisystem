@@ -71,14 +71,11 @@
            inside this module they would be the same button twice. */
         #smapStageWrap .cmap-bar #cmapUndo,
         #smapStageWrap .cmap-bar #cmapRedo,
-        #smapStageWrap .cmap-bar #cmapGps,
-        #smapStageWrap .cmap-bar #cmapLayer,
-        #smapStageWrap .cmap-bar #cmapClear,
+        #smapStageWrap .cmap-bar #cmapSaveMenuBtn,
         #smapStageWrap .cmap-bar .cmap-div { display: none; }
         @media (max-width: 520px) {
-            /* The arrow alone says "back" once the row is tight. */
-            .mp-backword, .mp-actword { display: none; }
-            .mp-act.is-save { padding: 0; min-width: 2.15rem; }
+            /* The words stay: an arrow on its own said nothing about where
+               it went, and "Save" is the whole point of the green button. */
             .mp-stagehint { display: none; }
         }
         @media (prefers-reduced-motion: reduce) {
@@ -182,19 +179,9 @@
                 <button type="button" class="mp-act" data-proxy="cmapRedo" title="Redo" aria-label="Redo">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg>
                 </button>
-                <button type="button" class="mp-act is-save" data-proxy="cmapSaveProxy" title="Save this map" aria-label="Save this map">
+                <button type="button" class="mp-act is-save" data-proxy="cmapSaveMenuBtn" title="Open or save a map" aria-label="Open or save a map">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg>
                     <span class="mp-actword">Save</span>
-                </button>
-                <span class="mp-actdiv"></span>
-                <button type="button" class="mp-act" data-proxy="cmapGps" title="Share my live GPS position" aria-label="Share my live GPS position">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/><path stroke-linecap="round" d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22M12 12h.01"/></svg>
-                </button>
-                <button type="button" class="mp-act" data-proxy="cmapLayer" title="Map or satellite" aria-label="Toggle map or satellite view">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg>
-                </button>
-                <button type="button" class="mp-act is-danger" data-proxy="cmapClear" title="Clear the whole map" aria-label="Clear the whole map">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>
                 </button>
             </div>
         </div>
@@ -319,9 +306,7 @@
                map's. Each proxy clicks its original and wears its state. */
             (function wireStageActs() {
                 const acts = Array.from(document.querySelectorAll('.mp-act[data-proxy]'));
-                const realOf = (name) => name === 'cmapSaveProxy'
-                    ? document.querySelector('#smapStageWrap [data-maction="savemap"]')
-                    : document.getElementById(name);
+                const realOf = (name) => document.getElementById(name);
 
                 acts.forEach((btn) => {
                     btn.addEventListener('click', () => {
@@ -342,7 +327,7 @@
                     }
                 });
                 const watch = new MutationObserver(sync);
-                ['cmapUndo', 'cmapRedo', 'cmapGps', 'cmapLayer'].forEach((id) => {
+                ['cmapUndo', 'cmapRedo'].forEach((id) => {
                     const real = document.getElementById(id);
                     if (real) watch.observe(real, { attributes: true, attributeFilter: ['disabled', 'class'] });
                 });

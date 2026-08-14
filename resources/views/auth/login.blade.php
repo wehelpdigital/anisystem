@@ -74,6 +74,18 @@
                         </div>
                         <button type="button" @click="fill('admin@themesbrand.com', '12345678')" class="btn btn-outline btn-sm shrink-0">Fill</button>
                     </div>
+                    {{-- Kathleen wears more than one hat, which is what makes
+                         her the account worth testing the chooser with. The
+                         password is not written here because nobody told this
+                         file what it is — the row fills the address and puts
+                         the caret where the password goes. --}}
+                    <div class="flex items-center justify-between gap-3">
+                        <div class="min-w-0">
+                            <p class="text-sm font-semibold text-gray-800">Kathleen <span class="font-normal text-gray-400">· admin + farm owner</span></p>
+                            <p class="text-xs text-gray-500 truncate">kathleen.madriaga@gmail.com · type the password</p>
+                        </div>
+                        <button type="button" @click="fill('kathleen.madriaga@gmail.com', '')" class="btn btn-outline btn-sm shrink-0">Fill</button>
+                    </div>
                 </div>
             </div>
         @endif
