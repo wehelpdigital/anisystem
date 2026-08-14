@@ -52,7 +52,12 @@ class CroppingScheduleController extends Controller
             ])
             ->withMin(['activities as season_start' => fn ($q) => $q->where('as_schedule_activities.deleteStatus', 1)], 'targetDate')
             ->withMax(['activities as season_last' => fn ($q) => $q->where('as_schedule_activities.deleteStatus', 1)], 'targetDate')
-            ->withMax(['activities as season_last_end' => fn ($q) => $q->where('as_schedule_activities.deleteStatus', 1)], 'targetEndDate');
+            ->withMax(['activities as season_last_end' => fn ($q) => $q->where('as_schedule_activities.deleteStatus', 1)], 'targetEndDate')
+            // When anything on this season was last touched. The schedule's
+            // own updated_at only moves when its title or settings change,
+            // which is rarely — the season people are actually working is the
+            // one whose activities changed this morning.
+            ->withMax(['activities as last_touched_at' => fn ($q) => $q->where('as_schedule_activities.deleteStatus', 1)], 'updated_at');
 
         if ($request->filled('search')) {
             $q = $request->search;
@@ -62,7 +67,34 @@ class CroppingScheduleController extends Controller
             });
         }
 
-        $schedules = $query->orderBy('created_at', 'desc')->paginate(12)->withQueryString();
+        /* How the shelf is arranged.
+         *
+         * Newest-first was the only order, and it is the least useful one on
+         * a farm that has been running a while: the season you opened an hour
+         * ago sinks under seasons you have not thought about since planting.
+         * "Last updated" leads now, and "recently worked" reads the
+         * activities rather than the schedule row, because editing a task is
+         * what working a season looks like.
+         */
+        $sorts = [
+            'updated' => ['label' => 'Last updated', 'column' => 'updated_at'],
+            'active'  => ['label' => 'Recently worked', 'column' => 'last_touched_at'],
+            'created' => ['label' => 'Newest first', 'column' => 'created_at'],
+            'title'   => ['label' => 'Name (A–Z)', 'column' => 'title'],
+        ];
+        $sort = $request->query('sort');
+        $sort = isset($sorts[$sort]) ? $sort : 'updated';
+
+        if ($sort === 'title') {
+            $query->orderBy('title');
+        } else {
+            // A season with no activities has no last-touched date; it sorts
+            // to the end rather than to the top, which is where a NULL would
+            // otherwise land on some engines.
+            $query->orderByRaw('COALESCE(' . $sorts[$sort]['column'] . ', created_at) DESC');
+        }
+
+        $schedules = $query->paginate(12)->withQueryString();
 
         // What each season card says at a glance: the crops growing on it,
         // the leading lot's reading today (same arithmetic as Growth Stages,
@@ -172,7 +204,7 @@ class CroppingScheduleController extends Controller
             ?? $schedules->first();
         $todayHref = $todaySchedule ? route('sm.activities', ['id' => $todaySchedule->id]) : null;
 
-        return view('sm.index', compact('schedules', 'allSchedules', 'tip', 'summary', 'cards', 'todayHref'));
+        return view('sm.index', compact('schedules', 'allSchedules', 'tip', 'summary', 'cards', 'todayHref', 'sorts', 'sort'));
     }
 
     public function create()

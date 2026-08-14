@@ -132,6 +132,51 @@
         html.dark .qa-rec .qa-ico { background: rgb(185 28 28 / .2); color: #f0a3a3; }
 
 
+        /* ---- the shelf's own controls: how it is arranged, and shutting
+           all of it at once ---- */
+        .sch-bar { display: flex; align-items: center; gap: .5rem; margin-bottom: .75rem; flex-wrap: wrap; }
+        .sch-sorts { display: flex; align-items: center; gap: .25rem; overflow-x: auto; min-width: 0;
+            scrollbar-width: none; }
+        .sch-sorts::-webkit-scrollbar { display: none; }
+        .sch-sort { flex: none; padding: .3rem .7rem; border-radius: 999px; text-decoration: none;
+            font-size: .74rem; font-weight: 700; white-space: nowrap;
+            color: var(--color-gray-500); background: var(--color-gray-100);
+            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+        .sch-sort:hover { color: #3d6823; background: #eaf4dd; }
+        .sch-sort.is-on { background: #4a7c2a; color: #fff; }
+        .sch-foldall { margin-left: auto; flex: none; padding: .3rem .7rem; border-radius: 999px;
+            font-size: .74rem; font-weight: 700; cursor: pointer;
+            color: var(--color-gray-500); border: 1px solid var(--color-gray-200); background: var(--color-white);
+            transition: border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+        .sch-foldall:hover { border-color: #a8cc7e; color: #3d6823; }
+        html.dark .sch-sort { background: rgb(255 255 255 / .06); color: #9fb08e; }
+        html.dark .sch-sort.is-on { background: #4a7c2a; color: #fff; }
+        html.dark .sch-foldall { background: #151b12; border-color: #2b3a1c; color: #9fb08e; }
+
+        /* ---- folding a card away -------------------------------------
+           The cover stays: a folded season is still its name, its crops and
+           its state, which is most of what you scan a shelf for. Only the
+           working detail underneath goes. ---- */
+        .se-cover[data-se-fold] { cursor: pointer; user-select: none; }
+        .se-chev { position: absolute; right: .55rem; bottom: .5rem; width: 1.15rem; height: 1.15rem;
+            display: flex; align-items: center; justify-content: center; color: rgb(255 255 255 / .8);
+            transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        .se-chev svg { width: 100%; height: 100%; }
+        .se-card.is-folded .se-chev { transform: rotate(-90deg); }
+        /* Height animates, so folding reads as the card closing rather than
+           the card vanishing. grid-template-rows does it without anyone
+           having to measure the content first. */
+        .se-body { display: block; }
+        .se-card .se-fold-wrap { display: grid; grid-template-rows: 1fr;
+            transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+        .se-card.is-folded .se-fold-wrap { grid-template-rows: 0fr; }
+        .se-card .se-fold-wrap > * { min-height: 0; overflow: hidden; }
+        .se-card.is-folded .se-body { padding-top: 0; padding-bottom: 0; }
+        .se-card.is-folded { align-self: start; }
+        @media (prefers-reduced-motion: reduce) {
+            .se-chev, .se-card .se-fold-wrap { transition: none; }
+        }
+
         /* ---- season cards: each schedule is a shelfful of ground, so the
            card leads with a field-toned cover, the crops growing on it, and
            where the season stands — before any chrome. ---- */
@@ -388,6 +433,20 @@
         </div>
     </div>
 
+    {{-- How the shelf is arranged, and a way to shut every card at once.
+         Both live above the grid because both are about the whole shelf. --}}
+    @if ($schedules->total() > 0)
+        <div class="sch-bar">
+            <div class="sch-sorts" role="group" aria-label="Sort schedules">
+                @foreach ($sorts as $key => $meta)
+                    <a class="sch-sort{{ $sort === $key ? ' is-on' : '' }}"
+                       href="{{ route('sm.index', array_filter(['search' => request('search'), 'sort' => $key === 'updated' ? null : $key])) }}">{{ $meta['label'] }}</a>
+                @endforeach
+            </div>
+            <button type="button" id="schFoldAll" class="sch-foldall">Collapse all</button>
+        </div>
+    @endif
+
     {{-- Live-search swaps this block's contents (see script). --}}
     <div id="scheduleResults">
     @if ($schedules->isEmpty())
@@ -418,13 +477,23 @@
                 <div class="card card-hover flex flex-col se-card" data-schedule-card="{{ $s->id }}">
                     {{-- The cover IS the status: a field-toned wash, the crops
                          growing on it, and the season's state as weather over
-                         it — readable from across the grid. --}}
-                    <div class="se-cover se-cover-{{ $s->status }}">
+                         it — readable from across the grid. It is also the
+                         handle: tapping it folds the card away, so a farm with
+                         twenty seasons can be a list of twenty names again. --}}
+                    <div class="se-cover se-cover-{{ $s->status }}" data-se-fold role="button" tabindex="0"
+                         aria-expanded="true" aria-label="Fold or unfold {{ $s->title }}">
                         <span class="se-crops" aria-hidden="true">{{ count($card['icons']) ? implode('', $card['icons']) : '🌱' }}</span>
                         <h2 class="se-title" title="{{ $s->title }}">{{ $s->title }}</h2>
                         <span class="se-status"><i class="se-dot se-dot-{{ $s->status }}"></i>{{ $s->status }}</span>
+                        <span class="se-chev" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                        </span>
                     </div>
-                    <div class="card-body flex flex-col grow">
+                    {{-- Wrapped so the fold can animate: a grid row going
+                         1fr → 0fr closes to nothing without anyone having to
+                         measure the contents first. --}}
+                    <div class="se-fold-wrap">
+                    <div class="card-body flex flex-col grow se-body">
                         @if ($s->description)
                             <p class="se-desc">{{ \Illuminate\Support\Str::limit($s->description, 100) }}</p>
                         @endif
@@ -520,6 +589,7 @@
                             </button>
                         </div>
                     </div>
+                    </div>{{-- /.se-fold-wrap --}}
                 </div>
             @endforeach
         </div>
@@ -587,6 +657,87 @@ document.addEventListener('DOMContentLoaded', () => {
     wireReadRails();
     window.smWireReadRails = wireReadRails;
 
+    /* ---- Folding a season away ------------------------------------------
+     * A farm that has been running a while has a shelf of seasons, most of
+     * which are finished. Folding one keeps its cover — the name, the crops,
+     * the state — and puts away the working detail underneath, so the shelf
+     * can be scanned as a list of names again.
+     *
+     * Which ones are folded is remembered per farm, because the answer is
+     * about this farm's seasons and would be wrong on someone else's. */
+    const FOLD_KEY = 'smFolded:' + @json(\App\Support\WorkerContext::effectiveOwnerId());
+
+    function foldedSet() {
+        try { return new Set(JSON.parse(localStorage.getItem(FOLD_KEY) || '[]')); }
+        catch (_) { return new Set(); }
+    }
+    function saveFolded(set) {
+        try { localStorage.setItem(FOLD_KEY, JSON.stringify([...set])); } catch (_) {}
+    }
+
+    function paintFoldAll() {
+        const btn = document.getElementById('schFoldAll');
+        if (!btn) return;
+        const cards = [...document.querySelectorAll('[data-schedule-card]')];
+        const anyOpen = cards.some((c) => !c.classList.contains('is-folded'));
+        btn.textContent = anyOpen ? 'Collapse all' : 'Expand all';
+    }
+
+    function applyFolds(scope) {
+        const folded = foldedSet();
+        (scope || document).querySelectorAll('[data-schedule-card]').forEach((card) => {
+            const on = folded.has(String(card.dataset.scheduleCard));
+            card.classList.toggle('is-folded', on);
+            card.querySelector('[data-se-fold]')?.setAttribute('aria-expanded', on ? 'false' : 'true');
+        });
+        paintFoldAll();
+    }
+
+    function toggleCard(card) {
+        const id = String(card.dataset.scheduleCard);
+        const folded = foldedSet();
+        const nowFolded = !card.classList.contains('is-folded');
+        card.classList.toggle('is-folded', nowFolded);
+        card.querySelector('[data-se-fold]')?.setAttribute('aria-expanded', nowFolded ? 'false' : 'true');
+        nowFolded ? folded.add(id) : folded.delete(id);
+        saveFolded(folded);
+        paintFoldAll();
+    }
+
+    document.addEventListener('click', (e) => {
+        const head = e.target.closest('[data-se-fold]');
+        if (!head) return;
+        const card = head.closest('[data-schedule-card]');
+        if (card) toggleCard(card);
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        const head = e.target.closest?.('[data-se-fold]');
+        if (!head) return;
+        e.preventDefault();
+        const card = head.closest('[data-schedule-card]');
+        if (card) toggleCard(card);
+    });
+
+    document.getElementById('schFoldAll')?.addEventListener('click', () => {
+        const cards = [...document.querySelectorAll('[data-schedule-card]')];
+        // "Collapse all" while anything is open; once everything is shut the
+        // same button is the way back.
+        const shut = cards.some((c) => !c.classList.contains('is-folded'));
+        const folded = foldedSet();
+        cards.forEach((card) => {
+            card.classList.toggle('is-folded', shut);
+            card.querySelector('[data-se-fold]')?.setAttribute('aria-expanded', shut ? 'false' : 'true');
+            const id = String(card.dataset.scheduleCard);
+            shut ? folded.add(id) : folded.delete(id);
+        });
+        saveFolded(folded);
+        paintFoldAll();
+    });
+
+    applyFolds();
+    window.smApplyFolds = applyFolds;
+
     // ---- Live search: fetch as you type and swap the results in place.
     (() => {
         const form = document.getElementById('scheduleSearchForm');
@@ -603,7 +754,13 @@ document.addEventListener('DOMContentLoaded', () => {
         async function runSearch(push = true) {
             const q = input.value.trim();
             clearBtn.classList.toggle('hidden', q === '');
-            const url = BASE + (q ? ('?search=' + encodeURIComponent(q)) : '');
+            // The chosen order survives a search; losing it mid-typing
+            // reshuffles the shelf under the person reading it.
+            const qs = new URLSearchParams();
+            if (q) qs.set('search', q);
+            const sortNow = new URLSearchParams(location.search).get('sort');
+            if (sortNow) qs.set('sort', sortNow);
+            const url = BASE + (qs.toString() ? ('?' + qs.toString()) : '');
             const mine = ++token;
             spin.classList.remove('hidden');
             try {
@@ -613,8 +770,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const fresh = new DOMParser().parseFromString(html, 'text/html').getElementById('scheduleResults');
                 if (fresh) {
                     results.innerHTML = fresh.innerHTML;
-                    // The cards are new; their lot strips need driving.
+                    // The cards are new; their lot strips need driving, and
+                    // they arrive open regardless of what was folded before.
                     window.smWireReadRails?.(results);
+                    window.smApplyFolds?.(results);
                 }
                 if (push) history.replaceState(null, '', url);
             } catch (_) {
