@@ -134,24 +134,61 @@
 
         /* ---- the shelf's own controls: how it is arranged, and shutting
            all of it at once ---- */
-        .sch-bar { display: flex; align-items: center; gap: .5rem; margin-bottom: .75rem; flex-wrap: wrap; }
-        .sch-sorts { display: flex; align-items: center; gap: .25rem; overflow-x: auto; min-width: 0;
-            scrollbar-width: none; }
-        .sch-sorts::-webkit-scrollbar { display: none; }
-        .sch-sort { flex: none; padding: .3rem .7rem; border-radius: 999px; text-decoration: none;
-            font-size: .74rem; font-weight: 700; white-space: nowrap;
-            color: var(--color-gray-500); background: var(--color-gray-100);
-            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
-        .sch-sort:hover { color: #3d6823; background: #eaf4dd; }
-        .sch-sort.is-on { background: #4a7c2a; color: #fff; }
-        .sch-foldall { margin-left: auto; flex: none; padding: .3rem .7rem; border-radius: 999px;
-            font-size: .74rem; font-weight: 700; cursor: pointer;
-            color: var(--color-gray-500); border: 1px solid var(--color-gray-200); background: var(--color-white);
+        .sch-bar { display: flex; align-items: center; gap: .5rem; margin-bottom: .75rem; }
+        .sch-pill { display: inline-flex; align-items: center; gap: .35rem; flex: none;
+            padding: .35rem .75rem; border-radius: 999px; cursor: pointer;
+            font-size: .76rem; font-weight: 700; color: var(--color-gray-600);
+            border: 1px solid var(--color-gray-200); background: var(--color-white);
             transition: border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
-        .sch-foldall:hover { border-color: #a8cc7e; color: #3d6823; }
-        html.dark .sch-sort { background: rgb(255 255 255 / .06); color: #9fb08e; }
-        html.dark .sch-sort.is-on { background: #4a7c2a; color: #fff; }
-        html.dark .sch-foldall { background: #151b12; border-color: #2b3a1c; color: #9fb08e; }
+        .sch-pill svg { width: .85rem; height: .85rem; }
+        .sch-pill:hover { border-color: #a8cc7e; color: #3d6823; }
+        /* Says which order is on when it is not the default, so a shelf that
+           looks oddly arranged explains itself without opening anything. */
+        .sch-pill.is-set { border-color: #4a7c2a; color: #2f5a17; background: #f4f9ee; }
+        .sch-pill-now { padding-left: .4rem; margin-left: .1rem; border-left: 1px solid currentColor;
+            opacity: .75; font-weight: 600; }
+        .sch-foldall { margin-left: auto; }
+        html.dark .sch-pill { background: #151b12; border-color: #2b3a1c; color: #9fb08e; }
+        html.dark .sch-pill.is-set { background: #24301a; border-color: #6ba33c; color: #d8f0be; }
+
+        /* ---- the arrange sheet ---- */
+        .sch-modal { position: fixed; inset: 0; z-index: 120; display: flex;
+            align-items: flex-end; justify-content: center; }
+        @media (min-width: 640px) { .sch-modal { align-items: center; padding: 1.5rem; } }
+        .sch-modal.hidden { display: none; }
+        .sch-modal-back { position: absolute; inset: 0; background: rgb(10 14 20 / .55);
+            opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+        .sch-modal.is-open .sch-modal-back { opacity: 1; }
+        .sch-modal-card { position: relative; width: 100%; max-width: 24rem;
+            background: var(--color-white); border-radius: 1rem 1rem 0 0; overflow: hidden;
+            box-shadow: var(--shadow-card-lg); transform: translateY(1.5rem); opacity: 0;
+            transition: transform .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+        @media (min-width: 640px) { .sch-modal-card { border-radius: 1rem; } }
+        .sch-modal.is-open .sch-modal-card { transform: none; opacity: 1; }
+        .sch-modal-head { display: flex; align-items: center; justify-content: space-between;
+            padding: .8rem 1rem; border-bottom: 1px solid var(--color-gray-100); }
+        .sch-modal-body { padding: .5rem; display: grid; gap: .2rem;
+            padding-bottom: calc(.5rem + env(safe-area-inset-bottom, 0px)); }
+        .sch-opt { display: flex; align-items: center; gap: .6rem; padding: .6rem .7rem;
+            border-radius: .7rem; text-decoration: none;
+            transition: background .28s cubic-bezier(.22,1,.36,1); }
+        .sch-opt:hover { background: var(--color-gray-50); }
+        .sch-opt.is-on { background: #f4f9ee; }
+        .sch-opt-txt { display: flex; flex-direction: column; gap: .1rem; min-width: 0; flex: 1 1 auto; }
+        .sch-opt-txt b { font-size: .86rem; font-weight: 700; color: var(--color-gray-900); }
+        .sch-opt-txt i { font-style: normal; font-size: .72rem; line-height: 1.4; color: var(--color-gray-500); }
+        .sch-opt-tick { flex: none; width: 1.1rem; height: 1.1rem; color: #4a7c2a; opacity: 0;
+            transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+        .sch-opt-tick svg { width: 100%; height: 100%; }
+        .sch-opt.is-on .sch-opt-tick { opacity: 1; }
+        html.dark .sch-modal-card { background: #151b12; }
+        html.dark .sch-modal-head { border-color: #2b3a1c; }
+        html.dark .sch-opt:hover { background: rgb(255 255 255 / .05); }
+        html.dark .sch-opt.is-on { background: #24301a; }
+        html.dark .sch-opt-txt b { color: #e8efe1; }
+        @media (prefers-reduced-motion: reduce) {
+            .sch-pill, .sch-modal-back, .sch-modal-card, .sch-opt, .sch-opt-tick { transition: none; }
+        }
 
         /* ---- folding a card away -------------------------------------
            The cover stays: a folded season is still its name, its crops and
@@ -392,20 +429,6 @@
 
     {{-- Top bar: search on its own row, the desktop CTAs on a second row below. --}}
     <div class="flex flex-col gap-3 mb-4 md:mb-6">
-        {{-- Search runs as you type (see the script below); the button-less form
-             still submits on Enter as a no-JS fallback. --}}
-        <form method="GET" action="{{ route('sm.index') }}" role="search" id="scheduleSearchForm" class="flex-1">
-            <div class="relative">
-                <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-                <input type="text" name="search" id="scheduleSearch" value="{{ request('search') }}" class="form-input pl-11! pr-16! w-full"
-                    placeholder="Search schedules…" aria-label="Search schedules" autocomplete="off" enterkeyhint="search">
-                <svg id="scheduleSearchSpin" class="hidden absolute right-9 top-1/2 -translate-y-1/2 w-4 h-4 animate-spin text-brand-600" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
-                <button type="button" id="scheduleSearchClear" class="{{ request('search') ? '' : 'hidden' }} absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-gray-400 hover:bg-gray-100" aria-label="Clear search">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
-            </div>
-        </form>
-
         {{-- Three doors, one to a row. They were a squeezed strip of three
              across a phone, where every word fell to an ellipsis and none of
              them said what the thing was for. Given a row each they can be
@@ -440,6 +463,20 @@
             @endif
         </div>
 
+        {{-- Search runs as you type (see the script below); the button-less form
+             still submits on Enter as a no-JS fallback. --}}
+        <form method="GET" action="{{ route('sm.index') }}" role="search" id="scheduleSearchForm" class="flex-1">
+            <div class="relative">
+                <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+                <input type="text" name="search" id="scheduleSearch" value="{{ request('search') }}" class="form-input pl-11! pr-16! w-full"
+                    placeholder="Search schedules…" aria-label="Search schedules" autocomplete="off" enterkeyhint="search">
+                <svg id="scheduleSearchSpin" class="hidden absolute right-9 top-1/2 -translate-y-1/2 w-4 h-4 animate-spin text-brand-600" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
+                <button type="button" id="scheduleSearchClear" class="{{ request('search') ? '' : 'hidden' }} absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-gray-400 hover:bg-gray-100" aria-label="Clear search">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+        </form>
+
         {{-- Desktop CTA. Wrapped so `hidden` reliably hides it on phones (a
              bare `.btn` is unlayered CSS and would otherwise beat `hidden`);
              the floating + button is the phone equivalent. --}}
@@ -451,17 +488,45 @@
         </div>
     </div>
 
-    {{-- How the shelf is arranged, and a way to shut every card at once.
-         Both live above the grid because both are about the whole shelf. --}}
+    {{-- Two controls for the whole shelf. The orders live behind Filter
+         rather than across the top: four pills that are mostly one answer
+         cost a row of the screen every time you open the page, and the row
+         they cost is the one the seasons wanted. --}}
     @if ($schedules->total() > 0)
         <div class="sch-bar">
-            <div class="sch-sorts" role="group" aria-label="Sort schedules">
-                @foreach ($sorts as $key => $meta)
-                    <a class="sch-sort{{ $sort === $key ? ' is-on' : '' }}"
-                       href="{{ route('sm.index', array_filter(['search' => request('search'), 'sort' => $key === 'updated' ? null : $key])) }}">{{ $meta['label'] }}</a>
-                @endforeach
+            <button type="button" id="schFilterBtn" class="sch-pill{{ $sort !== 'updated' ? ' is-set' : '' }}">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4h18M6 12h12M10 20h4"/></svg>
+                Filter
+                @if ($sort !== 'updated')
+                    <span class="sch-pill-now">{{ $sorts[$sort]['label'] }}</span>
+                @endif
+            </button>
+            <button type="button" id="schFoldAll" class="sch-pill sch-foldall">Collapse all</button>
+        </div>
+
+        {{-- The orders, asked for once. --}}
+        <div class="sch-modal hidden" id="schFilterModal" role="dialog" aria-modal="true" aria-label="Arrange schedules">
+            <div class="sch-modal-back" data-sch-close></div>
+            <div class="sch-modal-card">
+                <div class="sch-modal-head">
+                    <p class="font-bold text-gray-900">Arrange schedules</p>
+                    <button type="button" class="btn-ghost rounded-full w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-700" data-sch-close aria-label="Close">✕</button>
+                </div>
+                <div class="sch-modal-body">
+                    @foreach ($sorts as $key => $meta)
+                        <a class="sch-opt{{ $sort === $key ? ' is-on' : '' }}"
+                           href="{{ route('sm.index', array_filter(['search' => request('search'), 'sort' => $key === 'updated' ? null : $key])) }}">
+                            <span class="sch-opt-txt">
+                                <b>{{ $meta['label'] }}</b>
+                                <i>{{ $meta['why'] }}</i>
+                            </span>
+                            <span class="sch-opt-tick" aria-hidden="true">
+                                <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                            </span>
+                        </a>
+                    @endforeach
+                </div>
             </div>
-            <button type="button" id="schFoldAll" class="sch-foldall">Collapse all</button>
         </div>
     @endif
 
@@ -755,6 +820,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     applyFolds();
     window.smApplyFolds = applyFolds;
+
+    /* ---- The arrange sheet ---------------------------------------------
+     * Each option is a plain link, so choosing one is a normal page load
+     * that carries the search along with it. Nothing to keep in sync. */
+    (function arrangeSheet() {
+        const modal = document.getElementById('schFilterModal');
+        const btn = document.getElementById('schFilterBtn');
+        if (!modal || !btn) return;
+
+        const open = () => {
+            modal.classList.remove('hidden');
+            void modal.offsetWidth;
+            modal.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+            window.registerOverlay?.('schFilter', close);
+        };
+        const close = () => {
+            modal.classList.remove('is-open');
+            document.body.style.overflow = '';
+            setTimeout(() => modal.classList.add('hidden'), 260);
+        };
+
+        btn.addEventListener('click', open);
+        modal.addEventListener('click', (e) => { if (e.target.closest('[data-sch-close]')) close(); });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) close();
+        });
+    })();
 
     // ---- Live search: fetch as you type and swap the results in place.
     (() => {

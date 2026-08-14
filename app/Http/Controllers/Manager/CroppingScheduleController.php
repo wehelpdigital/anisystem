@@ -77,10 +77,14 @@ class CroppingScheduleController extends Controller
          * what working a season looks like.
          */
         $sorts = [
-            'updated' => ['label' => 'Last updated', 'column' => 'updated_at'],
-            'active'  => ['label' => 'Recently worked', 'column' => 'last_touched_at'],
-            'created' => ['label' => 'Newest first', 'column' => 'created_at'],
-            'title'   => ['label' => 'Name (A–Z)', 'column' => 'title'],
+            'updated' => ['label' => 'Last updated', 'column' => 'updated_at',
+                'why' => 'What you changed most recently comes first.'],
+            'active'  => ['label' => 'Recently worked', 'column' => 'last_touched_at',
+                'why' => 'By the last task edited on the season, not the season itself.'],
+            'created' => ['label' => 'Newest first', 'column' => 'created_at',
+                'why' => 'The order they were made in.'],
+            'title'   => ['label' => 'Name (A–Z)', 'column' => 'title',
+                'why' => 'Alphabetical, for finding one you already know the name of.'],
         ];
         $sort = $request->query('sort');
         $sort = isset($sorts[$sort]) ? $sort : 'updated';
