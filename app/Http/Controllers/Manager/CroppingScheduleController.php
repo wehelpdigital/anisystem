@@ -68,7 +68,9 @@ class CroppingScheduleController extends Controller
         foreach ($schedules as $s) {
             [$dayZeroEff, $transplantEff] = \App\Support\LotCalendar::effectiveAnchors($s);
             $icons = [];
-            $reading = null;
+            // Every lot that can be read, not just the furthest on: a farm
+            // with four lots was being told about one of them.
+            $readings = [];
             foreach ($s->lots as $lot) {
                 $crop = \App\Support\CropStages::normalize($lot->crop);
                 if ($crop && ! isset($icons[$crop])) {
@@ -78,16 +80,19 @@ class CroppingScheduleController extends Controller
                 if (! $age || ! $crop) {
                     continue;
                 }
-                if (! $reading || $age['day'] > $reading['day']) {
-                    $stage = \App\Support\CropStages::stageFor($crop, $age['day'], $age['counter']);
-                    $reading = [
-                        'day' => $age['day'],
-                        'counter' => $age['counter'],
-                        'stage' => $stage['label'] ?? null,
-                        'lot' => $lot->lotName,
-                    ];
-                }
+                $stage = \App\Support\CropStages::stageFor($crop, $age['day'], $age['counter']);
+                $readings[] = [
+                    'day' => $age['day'],
+                    'counter' => $age['counter'],
+                    'stage' => $stage['label'] ?? null,
+                    'lot' => $lot->lotName,
+                    'icon' => \App\Support\CropStages::icon($lot->crop),
+                ];
             }
+            // The one furthest through its season leads, because that is the
+            // lot with the most happening to it.
+            usort($readings, fn ($a, $b) => $b['day'] <=> $a['day']);
+            $reading = $readings[0] ?? null;
 
             $start = $s->season_start ? \Illuminate\Support\Carbon::parse($s->season_start) : null;
             $last = collect([$s->season_last, $s->season_last_end])->filter()
@@ -102,6 +107,7 @@ class CroppingScheduleController extends Controller
             $cards[$s->id] = [
                 'icons' => array_slice(array_values($icons), 0, 3),
                 'reading' => $reading,
+                'readings' => $readings,
                 'progress' => $progress,
                 'window' => $start && $last
                     ? $start->format('M j') . ' – ' . $last->format('M j, Y')

@@ -168,6 +168,30 @@
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         /* Where the crop stands today — the one line a farmer opens this
            page for, so it reads before the counts do. */
+        /* One lot at a time, slid rather than stacked: a season with five
+           lots would otherwise push the card's own buttons off the screen.
+           A native scroller, so a thumb swipes it and a keyboard can too. */
+        .se-reads { margin-top: .6rem; }
+        .se-reads-rail { display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+            scrollbar-width: none; -ms-overflow-style: none; }
+        .se-reads-rail::-webkit-scrollbar { display: none; }
+        .se-reads-rail > .se-read { flex: 0 0 100%; scroll-snap-align: start; margin-top: 0; }
+        .se-reads-foot { display: flex; align-items: center; gap: .3rem; margin-top: .35rem; }
+        .se-rnav { width: 1.3rem; height: 1.3rem; border-radius: 999px; flex: none;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: var(--color-gray-400); background: var(--color-gray-50); cursor: pointer; }
+        .se-rnav svg { width: .7rem; height: .7rem; }
+        .se-rnav:hover { background: #e4efd4; color: #3d6823; }
+        .se-rdots { display: inline-flex; align-items: center; gap: .22rem; }
+        .se-rdots i { width: .3rem; height: .3rem; border-radius: 999px; background: var(--color-gray-300);
+            transition: background .28s cubic-bezier(.22,1,.36,1), width .28s cubic-bezier(.22,1,.36,1); }
+        .se-rdots i.is-on { background: #4a7c2a; width: .8rem; }
+        .se-rcount { margin-left: auto; font-size: .62rem; font-weight: 700; color: var(--color-gray-400); }
+        html.dark .se-rnav { background: rgb(255 255 255 / .06); color: #9fb08e; }
+        html.dark .se-rdots i { background: #3f4a37; }
+        html.dark .se-rdots i.is-on { background: #86b556; }
+        @media (prefers-reduced-motion: reduce) { .se-rdots i { transition: none; } }
+
         .se-read { display: flex; align-items: baseline; gap: .4rem; margin-top: .6rem;
             font-size: .8rem; font-weight: 700; color: #3d6823; }
         .se-read-day { font-size: .95rem; font-weight: 800; white-space: nowrap; }
@@ -370,15 +394,40 @@
                             <p class="se-desc">{{ \Illuminate\Support\Str::limit($s->description, 100) }}</p>
                         @endif
 
-                        {{-- Where the crop stands today — same arithmetic as
-                             Growth Stages, so the two pages never disagree. --}}
-                        @if ($card['reading'])
-                            <div class="se-read">
-                                <span class="se-read-day">{{ $card['reading']['counter'] }} {{ $card['reading']['day'] }}</span>
-                                @if ($card['reading']['stage'])
-                                    <span class="se-read-stage truncate">· {{ $card['reading']['stage'] }}</span>
+                        {{-- Where each lot stands today — same arithmetic as
+                             Growth Stages, so the two pages never disagree.
+                             A season has more than one lot, so the strip
+                             slides: swipe it, or use the arrows. --}}
+                        @php $reads = $card['readings'] ?? []; @endphp
+                        @if (count($reads))
+                            <div class="se-reads{{ count($reads) > 1 ? ' has-many' : '' }}">
+                                <div class="se-reads-rail" data-reads>
+                                    @foreach ($reads as $r)
+                                        <div class="se-read">
+                                            <span class="se-read-day">{{ $r['counter'] }} {{ $r['day'] }}</span>
+                                            @if ($r['stage'])
+                                                <span class="se-read-stage truncate">· {{ $r['stage'] }}</span>
+                                            @endif
+                                            <span class="se-read-lot truncate">{{ $r['icon'] }} {{ $r['lot'] }}</span>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @if (count($reads) > 1)
+                                    <div class="se-reads-foot">
+                                        <button type="button" class="se-rnav" data-rprev aria-label="Previous lot">
+                                            <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                                        </button>
+                                        <span class="se-rdots">
+                                            @foreach ($reads as $i => $r)
+                                                <i class="{{ $i === 0 ? 'is-on' : '' }}"></i>
+                                            @endforeach
+                                        </span>
+                                        <button type="button" class="se-rnav" data-rnext aria-label="Next lot">
+                                            <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                                        </button>
+                                        <span class="se-rcount">{{ count($reads) }} lots</span>
+                                    </div>
                                 @endif
-                                <span class="se-read-lot truncate">{{ $card['reading']['lot'] }}</span>
                             </div>
                         @else
                             <div class="se-read is-quiet">Not counting yet — the season starts at day zero.</div>
@@ -452,6 +501,35 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    /* ---- the lot strip on a season card -----------------------------
+     * The rail scrolls by itself; this only keeps the dots honest and
+     * lets the arrows drive it. Re-run after a live search swaps cards. */
+    function wireReadRails(scope) {
+        (scope || document).querySelectorAll('.se-reads.has-many').forEach((box) => {
+            if (box.dataset.wired === '1') return;
+            box.dataset.wired = '1';
+            const rail = box.querySelector('[data-reads]');
+            const dots = [...box.querySelectorAll('.se-rdots i')];
+            const at = () => Math.round(rail.scrollLeft / Math.max(1, rail.clientWidth));
+            const paint = () => {
+                const i = at();
+                dots.forEach((d, n) => d.classList.toggle('is-on', n === i));
+            };
+            const go = (step) => {
+                const next = Math.max(0, Math.min(dots.length - 1, at() + step));
+                rail.scrollTo({ left: next * rail.clientWidth, behavior: 'smooth' });
+            };
+            rail.addEventListener('scroll', () => window.requestAnimationFrame(paint), { passive: true });
+            box.querySelector('[data-rprev]')?.addEventListener('click', (e) => { e.preventDefault(); go(-1); });
+            box.querySelector('[data-rnext]')?.addEventListener('click', (e) => { e.preventDefault(); go(1); });
+            // A card is a link; a swipe on the strip is not a tap on it.
+            rail.addEventListener('click', (e) => e.stopPropagation());
+            paint();
+        });
+    }
+    wireReadRails();
+    window.smWireReadRails = wireReadRails;
+
     // ---- Live search: fetch as you type and swap the results in place.
     (() => {
         const form = document.getElementById('scheduleSearchForm');
@@ -476,7 +554,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const html = await res.text();
                 if (mine !== token) return;                 // a newer keystroke won
                 const fresh = new DOMParser().parseFromString(html, 'text/html').getElementById('scheduleResults');
-                if (fresh) results.innerHTML = fresh.innerHTML;
+                if (fresh) {
+                    results.innerHTML = fresh.innerHTML;
+                    // The cards are new; their lot strips need driving.
+                    window.smWireReadRails?.(results);
+                }
                 if (push) history.replaceState(null, '', url);
             } catch (_) {
                 /* keep the current results on a transient failure */
