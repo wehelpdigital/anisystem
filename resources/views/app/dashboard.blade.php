@@ -80,41 +80,65 @@
     html.dark .dash-chip.is-ok { background: rgb(61 104 35 / .22); border-color: #3f5626; color: #bfe19a; }
     html.dark .dash-chip.is-warn { background: rgb(154 52 18 / .2); border-color: rgb(154 52 18 / .5); color: #fdba74; }
 
-    /* ---- what a season has next: a date block, then the work. It used to
-       be a bordered panel inside a bordered card, with a calendar emoji and
-       bullet dots doing the job the layout should do. ---- */
-    .dn-next { display: flex; align-items: stretch; gap: .7rem; padding: .6rem .7rem;
-        border-radius: .8rem; text-decoration: none; background: var(--color-gray-50);
-        transition: background .28s cubic-bezier(.22,1,.36,1); }
-    .dn-next:hover { background: var(--color-gray-100); }
-    .dn-next.is-today { background: #f0f7e8; }
-    .dn-next.is-today:hover { background: #e4efd4; }
-    .dn-when { flex: 0 0 3.1rem; display: flex; flex-direction: column; align-items: center;
-        justify-content: center; border-radius: .6rem; padding: .3rem 0;
+    /* ---- what a season has next ------------------------------------
+       A heading that says when and how much, then the tasks themselves on
+       a rail. A day with five jobs used to be five inches of card; it is
+       now one card you push sideways. ---- */
+    .dn-block { border-radius: .9rem; padding: .6rem .65rem .65rem; background: var(--color-gray-50); }
+    .dn-block.is-today { background: #f0f7e8; }
+    .dn-head { display: flex; align-items: center; gap: .6rem; margin-bottom: .5rem; }
+    .dn-when { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        min-width: 3rem; padding: .25rem .4rem; border-radius: .55rem;
         background: var(--color-white); border: 1px solid var(--color-gray-200); }
-    .dn-when b { font-size: .82rem; font-weight: 800; line-height: 1.1; color: var(--color-gray-700); }
-    .dn-when i { font-style: normal; font-size: .6rem; font-weight: 700; color: var(--color-gray-400); }
-    .dn-next.is-today .dn-when { background: #4a7c2a; border-color: #4a7c2a; }
-    .dn-next.is-today .dn-when b, .dn-next.is-today .dn-when i { color: #fff; }
-    .dn-next.is-today .dn-when i { opacity: .85; }
-    .dn-what { min-width: 0; flex: 1 1 auto; display: flex; flex-direction: column; gap: .1rem; justify-content: center; }
-    .dn-lead { font-size: .68rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
-        color: #3d6823; }
-    .dn-lead em { font-style: normal; font-weight: 600; color: var(--color-gray-400); text-transform: none; letter-spacing: 0; }
-    .dn-next:not(.is-today) .dn-lead { color: var(--color-gray-500); }
-    .dn-task { font-size: .82rem; font-weight: 600; color: var(--color-gray-800); line-height: 1.35;
-        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .dn-more { font-size: .68rem; font-weight: 700; color: var(--color-gray-400); }
-    .dn-go { width: 1.1rem; height: 1.1rem; flex: none; align-self: center; color: var(--color-gray-300); }
-    .dn-next:hover .dn-go { color: #6b9f3d; }
+    .dn-when b { font-size: .8rem; font-weight: 800; line-height: 1.1; color: var(--color-gray-700); }
+    .dn-when i { font-style: normal; font-size: .58rem; font-weight: 700; color: var(--color-gray-400); }
+    .dn-block.is-today .dn-when { background: #4a7c2a; border-color: #4a7c2a; }
+    .dn-block.is-today .dn-when b { color: #fff; }
+    .dn-block.is-today .dn-when i { color: rgb(255 255 255 / .85); }
+    .dn-headtxt { min-width: 0; flex: 1 1 auto; display: flex; flex-direction: column; line-height: 1.2; }
+    .dn-headtxt b { font-size: .8rem; font-weight: 800; color: var(--color-gray-800); }
+    .dn-headtxt i { font-style: normal; font-size: .68rem; color: var(--color-gray-500); }
+    .dn-all { flex: 0 0 auto; display: inline-flex; align-items: center; gap: .2rem; font-size: .7rem;
+        font-weight: 800; color: #3d6823; text-decoration: none; }
+    .dn-all svg { width: .8rem; height: .8rem; }
+
+    /* The rail: one task per card, swiped on a phone, scrolled on a mouse. */
+    .dn-rail { display: flex; gap: .5rem; overflow-x: auto; scroll-snap-type: x mandatory;
+        padding-bottom: .15rem; scrollbar-width: none; -ms-overflow-style: none; }
+    .dn-rail::-webkit-scrollbar { display: none; }
+    .dn-card { flex: 0 0 min(15rem, 82%); scroll-snap-align: start; display: flex; flex-direction: column;
+        gap: .25rem; padding: .6rem .7rem .65rem; border-radius: .7rem; text-decoration: none;
+        background: var(--color-white); border: 1px solid var(--color-gray-200);
+        border-left: 3px solid var(--dn-prio, #d1d5db);
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .dn-card:hover { transform: translateY(-1px); }
+    .dn-card.prio-critical { --dn-prio: #9c1c1c; }
+    .dn-card.prio-high { --dn-prio: #f46a6a; }
+    .dn-card.prio-medium { --dn-prio: #f1b44c; }
+    .dn-card.prio-low { --dn-prio: #cbd5e1; }
+    .dn-card-top { display: flex; align-items: center; gap: .35rem; }
+    .dn-type { font-size: .6rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
+        color: var(--color-gray-400); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .dn-prio { margin-left: auto; flex: none; font-size: .58rem; font-weight: 800; text-transform: uppercase;
+        letter-spacing: .04em; padding: .1rem .4rem; border-radius: 999px;
+        background: color-mix(in srgb, var(--dn-prio) 18%, transparent); color: var(--dn-prio); }
+    .dn-title { font-size: .84rem; font-weight: 700; line-height: 1.35; color: var(--color-gray-900);
+        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .dn-facts { display: flex; flex-wrap: wrap; gap: .1rem .6rem; margin-top: .1rem; }
+    .dn-fact { display: inline-flex; align-items: center; gap: .22rem; min-width: 0;
+        font-size: .66rem; font-weight: 600; color: var(--color-gray-500); }
+    .dn-fact svg { width: .7rem; height: .7rem; flex: none; }
+    .dn-fact { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .dn-quiet { font-size: .78rem; color: var(--color-gray-400); }
-    html.dark .dn-next { background: rgb(255 255 255 / .04); }
-    html.dark .dn-next:hover { background: rgb(255 255 255 / .08); }
-    html.dark .dn-next.is-today { background: rgb(61 104 35 / .22); }
+    html.dark .dn-block { background: rgb(255 255 255 / .04); }
+    html.dark .dn-block.is-today { background: rgb(61 104 35 / .22); }
     html.dark .dn-when { background: #151b12; border-color: #2b3a1c; }
     html.dark .dn-when b { color: #e8efe1; }
-    html.dark .dn-task { color: #cdd8c0; }
-    @media (prefers-reduced-motion: reduce) { .dn-next { transition: none; } }
+    html.dark .dn-headtxt b { color: #e8efe1; }
+    html.dark .dn-all { color: #a5c97e; }
+    html.dark .dn-card { background: #151b12; border-color: #2b3a1c; border-left-color: var(--dn-prio, #3f4a37); }
+    html.dark .dn-title { color: #e8efe1; }
+    @media (prefers-reduced-motion: reduce) { .dn-card { transition: none; } }
 
     /* The composer: a field you can see yourself writing in. */
     .dash-comp { padding: .85rem !important; }
@@ -280,32 +304,72 @@
                             <h3 class="font-bold text-gray-900 leading-snug">{{ $schedule->title }}</h3>
 
                             {{-- What is next on THIS season: today's work, or
-                                 the nearest day that has any. It reads as a
-                                 strip — when, then what — rather than a
-                                 bordered box repeating the card it sits in. --}}
+                                 the nearest day that has any. The day is a
+                                 heading; the tasks themselves slide, so four
+                                 jobs do not become four inches of card. --}}
                             @if ($next)
-                                <a href="{{ route('sm.activities', ['id' => $schedule->id]) }}"
-                                   class="dn-next {{ $next['isToday'] ? 'is-today' : '' }}">
-                                    <span class="dn-when">
-                                        <b>{{ $next['isToday'] ? 'Today' : $next['date']->format('D') }}</b>
-                                        <i>{{ $next['isToday'] ? $next['date']->format('M j') : $next['date']->format('M j') }}</i>
-                                    </span>
-                                    <span class="dn-what">
-                                        <span class="dn-lead">
-                                            {{ $next['activities']->count() }} {{ \Illuminate\Support\Str::plural('task', $next['activities']->count()) }}
-                                            @unless ($next['isToday'])
-                                                <em>· in {{ $next['daysAway'] }} {{ \Illuminate\Support\Str::plural('day', $next['daysAway']) }}</em>
-                                            @endunless
+                                <div class="dn-block {{ $next['isToday'] ? 'is-today' : '' }}">
+                                    <div class="dn-head">
+                                        <span class="dn-when">
+                                            <b>{{ $next['isToday'] ? 'Today' : $next['date']->format('D') }}</b>
+                                            <i>{{ $next['date']->format('M j') }}</i>
                                         </span>
-                                        @foreach ($next['activities']->take(2) as $act)
-                                            <span class="dn-task">{{ $act->activityTitle }}</span>
+                                        <span class="dn-headtxt">
+                                            <b>{{ $next['activities']->count() }} {{ \Illuminate\Support\Str::plural('task', $next['activities']->count()) }}</b>
+                                            <i>@if ($next['isToday']) due today @else in {{ $next['daysAway'] }} {{ \Illuminate\Support\Str::plural('day', $next['daysAway']) }} @endif</i>
+                                        </span>
+                                        <a class="dn-all" href="{{ route('sm.activities', ['id' => $schedule->id]) }}">
+                                            Open board
+                                            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                                        </a>
+                                    </div>
+
+                                    <div class="dn-rail" data-dn-rail>
+                                        @foreach ($next['activities'] as $act)
+                                            @php
+                                                $prio = $act->priority ?: 'medium';
+                                                $typeLabel = \App\Models\AsScheduleActivity::ACTIVITY_TYPES[$act->activityType] ?? null;
+                                                $hours = match ($act->timeRequired) {
+                                                    'whole' => 'Whole day',
+                                                    'half' => 'Half day',
+                                                    default => null,
+                                                };
+                                                $lotNames = $act->lots->pluck('lotName')->take(2)->implode(', ');
+                                                $moreLots = max(0, $act->lots->count() - 2);
+                                            @endphp
+                                            <a class="dn-card prio-{{ $prio }}"
+                                               href="{{ route('sm.activities', ['id' => $schedule->id]) }}">
+                                                <span class="dn-card-top">
+                                                    @if ($typeLabel)
+                                                        <span class="dn-type">{{ $typeLabel }}</span>
+                                                    @endif
+                                                    <span class="dn-prio">{{ ucfirst($prio) }}</span>
+                                                </span>
+                                                <span class="dn-title">{{ $act->activityTitle }}</span>
+                                                <span class="dn-facts">
+                                                    @if ($lotNames)
+                                                        <span class="dn-fact">
+                                                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
+                                                            {{ $lotNames }}@if ($moreLots) +{{ $moreLots }}@endif
+                                                        </span>
+                                                    @endif
+                                                    @if ($act->workers_count)
+                                                        <span class="dn-fact">
+                                                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
+                                                            {{ $act->workers_count }}
+                                                        </span>
+                                                    @endif
+                                                    @if ($hours)
+                                                        <span class="dn-fact">
+                                                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                                            {{ $hours }}
+                                                        </span>
+                                                    @endif
+                                                </span>
+                                            </a>
                                         @endforeach
-                                        @if ($next['moreCount'] > 0)
-                                            <span class="dn-more">+{{ $next['moreCount'] }} more</span>
-                                        @endif
-                                    </span>
-                                    <svg class="dn-go" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                                </a>
+                                    </div>
+                                </div>
                             @else
                                 <p class="dn-quiet">Nothing planned on this season yet.</p>
                             @endif

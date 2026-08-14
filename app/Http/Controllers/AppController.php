@@ -74,7 +74,12 @@ class AppController extends Controller
             ->orderBy('targetDate')
             ->orderBy('sequenceOrder')
             ->limit(60)
-            ->get(['id', 'croppingScheduleId', 'activityTitle', 'targetDate', 'targetEndDate', 'timeRequired']);
+            // Enough to make a task card worth looking at: what kind of work
+            // it is, how urgent, how long, and which ground it is on.
+            ->with(['lots:as_schedule_lots.id,lotName'])
+            ->withCount('workers')
+            ->get(['id', 'croppingScheduleId', 'activityTitle', 'targetDate', 'targetEndDate',
+                'timeRequired', 'activityType', 'priority']);
         // Per-schedule quick view: for each schedule, the activities due today,
         // or — if none today — the ones on its nearest upcoming day. Keyed by
         // schedule id so each card can show its own "what's next" strip.
@@ -90,7 +95,7 @@ class AppController extends Controller
                 'isToday' => $nearest->isSameDay($today),
                 'daysAway' => (int) $today->diffInDays($nearest),
                 'activities' => $sameDay,
-                'moreCount' => max(0, $sameDay->count() - 2),
+                'moreCount' => max(0, $sameDay->count() - 3),
             ];
         }
 
