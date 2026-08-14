@@ -868,6 +868,22 @@ html.dark .sm-editor-fallback { background: #151b12; border-color: #2b3a1c; colo
 @keyframes lpSpin { to { transform: rotate(360deg); } }
 .lp-wrap.is-error .lp-spin { display: none; }
 .lp-end { text-align: center; font-size: .75rem; color: var(--color-gray-400); padding: 1rem 0 .25rem; }
+/* The page links themselves (resources/views/vendor/pagination/sm.blade.php). */
+.pg { display: flex; align-items: center; justify-content: center; gap: .25rem; flex-wrap: wrap; }
+.pg-btn { min-width: 2.1rem; height: 2.1rem; padding: 0 .5rem; border-radius: .55rem;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: .8rem; font-weight: 700; color: var(--color-gray-600); text-decoration: none;
+    background: var(--color-white); border: 1px solid var(--color-gray-200);
+    transition: background .2s ease, border-color .2s ease, color .2s ease; }
+.pg-btn svg { width: .95rem; height: .95rem; }
+.pg-btn:hover { border-color: #a8cc7e; color: #3d6823; }
+.pg-btn.is-now { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+.pg-btn.is-off { opacity: .4; pointer-events: none; }
+.pg-gap { padding: 0 .15rem; color: var(--color-gray-400); font-size: .8rem; }
+.pg-count { margin-left: .5rem; font-size: .72rem; color: var(--color-gray-400); }
+html.dark .pg-btn { background: #151b12; border-color: #2b3a1c; color: #cdd8c0; }
+html.dark .pg-btn.is-now { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+@media (prefers-reduced-motion: reduce) { .pg-btn { transition: none; } }
 @media (max-width: 767px) {
     /* The links stay in the markup as the no-script fallback, but a phone
        is served by scrolling, so they step aside for the loader. */

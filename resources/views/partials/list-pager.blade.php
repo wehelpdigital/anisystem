@@ -20,7 +20,7 @@
             <span data-lp-msg>Loading more…</span>
         </div>
         <button type="button" class="btn btn-white btn-sm lp-manual hidden" data-lp-manual>Load more</button>
-        <div class="lp-links">{{ $paginator->onEachSide(1)->links() }}</div>
+        <div class="lp-links">{{ $paginator->onEachSide(1)->links('vendor.pagination.sm') }}</div>
     </div>
 @elseif ($paginator->total() > 0)
     <p class="lp-end">That is everything — {{ $paginator->total() }} {{ \Illuminate\Support\Str::plural('note', $paginator->total()) }}.</p>
