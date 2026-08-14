@@ -27,6 +27,12 @@ class QuickCaptureController extends BaseScheduleController
     /** Save a captured photo group as one note on the chosen schedule. */
     public function storeNotes(Request $request)
     {
+        // Asked before the upload is validated: someone who may not
+        // write should hear that, not "capture a photo first".
+        $schedule = $this->schedule($request->input('scheduleId'));
+        $this->assertCanEdit();
+        $this->assertUnlocked($schedule);
+
         $request->validate([
             'scheduleId' => 'required|integer',
             'title' => 'nullable|string|max:191',
@@ -38,7 +44,6 @@ class QuickCaptureController extends BaseScheduleController
             'images.*.max' => 'Each photo must be 8 MB or smaller.',
         ]);
 
-        $schedule = $this->schedule($request->input('scheduleId'));
 
         $body = filled($request->input('note'))
             ? HtmlSanitizer::rich($request->input('note'))
@@ -98,6 +103,12 @@ class QuickCaptureController extends BaseScheduleController
      */
     public function storeClip(Request $request)
     {
+        // Asked before the upload is validated: someone who may not
+        // write should hear that, not "capture a photo first".
+        $schedule = $this->schedule($request->input('scheduleId'));
+        $this->assertCanEdit();
+        $this->assertUnlocked($schedule);
+
         $request->validate([
             'scheduleId' => 'required|integer',
             'title' => 'nullable|string|max:191',
@@ -113,7 +124,6 @@ class QuickCaptureController extends BaseScheduleController
             'clip.max' => 'That clip is larger than 300 MB — record a shorter one.',
         ]);
 
-        $schedule = $this->schedule($request->input('scheduleId'));
 
         $title = filled($request->input('title'))
             ? trim((string) $request->input('title'))
@@ -225,6 +235,12 @@ class QuickCaptureController extends BaseScheduleController
     /** Save a captured photo group into a gallery album, new or existing. */
     public function storeGallery(Request $request)
     {
+        // Asked before the upload is validated: someone who may not
+        // write should hear that, not "capture a photo first".
+        $schedule = $this->schedule($request->input('scheduleId'));
+        $this->assertCanEdit();
+        $this->assertUnlocked($schedule);
+
         $request->validate([
             'scheduleId' => 'required|integer',
             'albumId' => 'nullable|integer',
@@ -238,7 +254,6 @@ class QuickCaptureController extends BaseScheduleController
             'images.*.max' => 'Each photo must be 8 MB or smaller.',
         ]);
 
-        $schedule = $this->schedule($request->input('scheduleId'));
 
         $album = $this->albumFor($schedule, $request);
 

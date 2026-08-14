@@ -284,11 +284,18 @@
         });
     }
 
-    window.smCall?.watch((evt) => {
-        const room = window.smCall.room();
-        if (room) listen(room);
-        if (evt === 'gone') { people.clear(); if (sharing) stopSharing(); paint(); }
-    });
+    // Registered when the room API turns up, whichever of us loads first.
+    function watchRoom() {
+        if (!window.smCall || watchRoom.done) return;
+        watchRoom.done = true;
+        window.smCall.watch((evt) => {
+            const room = window.smCall.room();
+            if (room) listen(room);
+            if (evt === 'gone') { people.clear(); if (sharing) stopSharing(); paint(); }
+        });
+    }
+    document.addEventListener('smcall:ready', watchRoom);
+    watchRoom();
 
     // "live" becomes "last seen" without anything arriving, so the labels
     // have to age on their own.

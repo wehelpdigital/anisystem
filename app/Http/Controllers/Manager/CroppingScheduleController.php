@@ -25,6 +25,10 @@ use Illuminate\Support\Facades\Validator;
  */
 class CroppingScheduleController extends Controller
 {
+    // The Hub predates BaseScheduleController and keeps its own resolver, so
+    // it takes the write guards directly rather than by inheritance.
+    use \App\Support\Concerns\GuardsScheduleWrites;
+
     public function index(Request $request)
     {
         // Workers list their active boss's schedules; owners list their own.
@@ -543,6 +547,8 @@ class CroppingScheduleController extends Controller
     public function update(Request $request)
     {
         $schedule = $this->findOwnedOrFail($request->query('id'), true);
+        $this->assertCanEdit();
+        $this->assertUnlocked($schedule);
 
         $validator = Validator::make($request->all(), [
             'title'              => 'required|string|max:255',
@@ -586,6 +592,9 @@ class CroppingScheduleController extends Controller
     public function sendTestDigest(Request $request, \App\Services\DailyDigestService $digests)
     {
         $schedule = $this->findOwnedOrFail($request->query('id'));
+        // Sends real mail; not deliberately locked, because a completed
+        // season's digest is still a reasonable thing for an owner to check.
+        $this->assertCanEdit();
         $result = $digests->sendFor($schedule, null, true);
 
         if ($result['sent'] < 1) {
@@ -608,6 +617,9 @@ class CroppingScheduleController extends Controller
     public function setDayType(Request $request)
     {
         $schedule = $this->findOwnedOrFail($request->query('id'), true);
+        // Changing this relabels every day counter on the board, for everyone.
+        $this->assertCanEdit();
+        $this->assertUnlocked($schedule);
 
         $validator = Validator::make($request->all(), [
             'dayType' => 'required|in:DAP,DAS,DAT',
@@ -648,6 +660,9 @@ class CroppingScheduleController extends Controller
     public function duplicate(Request $request)
     {
         $old = $this->findOwnedOrFail($request->query('id'), true);
+        // Copying a season creates a whole farm's worth of rows against the
+        // owner's plan limit. Not a thing a view-only worker does.
+        $this->assertCanEdit();
 
         try {
             $new = DB::transaction(function () use ($old) {
@@ -783,6 +798,16 @@ class CroppingScheduleController extends Controller
                 abort(response()->json(['success' => false, 'message' => 'Cropping schedule not found.'], 404));
             }
             abort(404, 'Cropping schedule not found.');
+        }
+
+        // This controller has its own door, so it needs its own version of
+        // the check the shared one makes: a grant that permits no schedule
+        // access should not resolve a schedule.
+        if (! \App\Support\WorkerContext::canView()) {
+            if ($json) {
+                abort(response()->json(['success' => false, 'message' => 'You do not have access to this farm\'s schedules.'], 403));
+            }
+            abort(403);
         }
 
         return $schedule;

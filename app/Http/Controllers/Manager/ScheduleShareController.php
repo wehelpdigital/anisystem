@@ -24,6 +24,10 @@ class ScheduleShareController extends BaseScheduleController
             'scope' => 'required|in:today,tomorrow',
         ]);
 
+        // Sends real mail to the whole crew, so it is the owner's to send.
+        $this->schedule($data['scheduleId']);
+        $this->assertCanEdit();
+
         $schedule = $this->schedule($data['scheduleId']);
         $schedule->load(['lots', 'workers', 'activities.lots']);
 

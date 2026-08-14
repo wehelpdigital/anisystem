@@ -27,6 +27,20 @@ class WorkerAccessController extends Controller
     public function grant(Request $request)
     {
         $boss = $request->user();
+        // Handing out logins is the farm owner's act, not a worker's.
+        //
+        // These three read $request->user() rather than the effective owner,
+        // so a worker standing on the boss's Workers page was writing grants
+        // — and, through setPassword, whole new accounts with a password of
+        // their choosing — under their own name. Not an escalation into the
+        // boss's farm, but an account-creation primitive nobody meant to
+        // leave open.
+        if (\App\Support\WorkerContext::inWorkerContext()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Only the farm owner can manage worker logins.',
+            ], 403);
+        }
         if (! $boss->canWorkerAccounts()) {
             return response()->json(['success' => false, 'message' => 'Worker logins are a Boss/Lifetime feature. Upgrade to enable them.'], 403);
         }
@@ -103,6 +117,20 @@ class WorkerAccessController extends Controller
     public function setPassword(Request $request)
     {
         $boss = $request->user();
+        // Handing out logins is the farm owner's act, not a worker's.
+        //
+        // These three read $request->user() rather than the effective owner,
+        // so a worker standing on the boss's Workers page was writing grants
+        // — and, through setPassword, whole new accounts with a password of
+        // their choosing — under their own name. Not an escalation into the
+        // boss's farm, but an account-creation primitive nobody meant to
+        // leave open.
+        if (\App\Support\WorkerContext::inWorkerContext()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Only the farm owner can manage worker logins.',
+            ], 403);
+        }
         if (! $boss->canWorkerAccounts()) {
             return response()->json(['success' => false, 'message' => 'Worker logins are a Boss/Lifetime feature. Upgrade to enable them.'], 403);
         }
@@ -209,6 +237,20 @@ class WorkerAccessController extends Controller
     public function revoke(Request $request)
     {
         $boss = $request->user();
+        // Handing out logins is the farm owner's act, not a worker's.
+        //
+        // These three read $request->user() rather than the effective owner,
+        // so a worker standing on the boss's Workers page was writing grants
+        // — and, through setPassword, whole new accounts with a password of
+        // their choosing — under their own name. Not an escalation into the
+        // boss's farm, but an account-creation primitive nobody meant to
+        // leave open.
+        if (\App\Support\WorkerContext::inWorkerContext()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Only the farm owner can manage worker logins.',
+            ], 403);
+        }
         $grant = WorkerGrant::active()
             ->where('bossUserId', $boss->id)
             ->where('id', (int) $request->input('id'))

@@ -248,10 +248,17 @@
     });
 
     // The room tells us when anything changes; redraw from it.
-    window.smCall?.watch((evt) => {
-        if (evt === 'gone') { sharing = false; paintShare(); }
-        paint();
-    });
+    // Registered when the room API turns up, whichever of us loads first.
+    function watchRoom() {
+        if (!window.smCall || watchRoom.done) return;
+        watchRoom.done = true;
+        window.smCall.watch((evt) => {
+            if (evt === 'gone') { sharing = false; paintShare(); }
+            paint();
+        });
+    }
+    document.addEventListener('smcall:ready', watchRoom);
+    watchRoom();
 
     @if ($isOwner)
     /* ---- Recording (owner only) ----------------------------------------

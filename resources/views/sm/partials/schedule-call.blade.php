@@ -358,6 +358,13 @@
             },
         };
 
+        // The tabs' scripts run before this one does — they are pushed
+        // earlier and this is built inside init(). Without the announcement
+        // their watchers would register against an undefined smCall and
+        // silently never fire, which looks exactly like a room where nobody
+        // ever joins.
+        document.dispatchEvent(new Event('smcall:ready'));
+
         /* ---------- public triggers ---------- */
         window.startTeamCall = async () => {
             if (await joinRoom('group', null, 'Team call')) { try { await api(URLS.ring, { method: 'POST', body: { scheduleId: SCHEDULE_ID, kind: 'group' } }); } catch (_) {} }

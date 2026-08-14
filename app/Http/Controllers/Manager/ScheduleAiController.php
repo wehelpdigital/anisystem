@@ -175,6 +175,10 @@ class ScheduleAiController extends BaseScheduleController
             return $this->jsonFail('You are not part of this schedule team.', 403);
         }
 
+        // Every question here is charged to the owner's AI credits. Spending
+        // somebody else's balance is not covered by being in their room.
+        $this->assertCanEdit();
+
         $ownerId = (int) $schedule->anisystemUserId;
         $owner = User::find($ownerId);
         if (! $owner || ! $owner->canUseAi()) {

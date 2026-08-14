@@ -56,6 +56,10 @@ class RevenueReportController extends BaseScheduleController
     public function store(Request $request)
     {
         $schedule = $this->schedule($request->query('id'));
+        // The resolver is skipped on purpose so a completed season can still
+        // be reported on — but skipping it dropped the permission check too,
+        // because the two used to be fused. This is the half we wanted.
+        $this->assertCanEdit();
 
         $validator = Validator::make($request->all(), [
             'title'        => 'required|string|max:191',
@@ -100,6 +104,7 @@ class RevenueReportController extends BaseScheduleController
     {
         // Schedule via ?scheduleId, report row via ?id (distinct params).
         $schedule = $this->schedule($request->query('scheduleId'));
+        $this->assertCanEdit();
 
         $report = AsScheduleRevenueReport::active()
             ->forSchedule($schedule->id)

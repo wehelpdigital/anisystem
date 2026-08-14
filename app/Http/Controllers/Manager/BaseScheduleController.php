@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 abstract class BaseScheduleController extends Controller
 {
+    use \App\Support\Concerns\GuardsScheduleWrites;
+
     /**
      * Resolve the owning schedule for the current client or abort 404.
      * Clients only ever see their own schedules (anisystemUserId scoping).
@@ -27,6 +29,18 @@ abstract class BaseScheduleController extends Controller
             abort(response()->json(['success' => false, 'message' => 'Cropping schedule not found.'], 404));
         }
 
+        // A grant can say 'none' — community access without the farm. Until
+        // now nothing asked: effectiveOwnerId() is derived from the grant
+        // whatever it permits, so a worker who had been given no schedule
+        // access at all still resolved every one of the boss's schedules.
+        // Every module reached through this method inherited that.
+        if (! \App\Support\WorkerContext::canView()) {
+            abort(response()->json([
+                'success' => false,
+                'message' => 'You do not have access to this farm\'s schedules.',
+            ], 403));
+        }
+
         return $schedule;
     }
 
@@ -38,21 +52,8 @@ abstract class BaseScheduleController extends Controller
         $schedule = $this->schedule($request->query($key));
 
         if (! $request->isMethodSafe()) {
-            // View-only workers can read but never write.
-            if (! \App\Support\WorkerContext::canEdit()) {
-                abort(response()->json([
-                    'success' => false,
-                    'message' => 'You have view-only access to this schedule.',
-                ], 403));
-            }
-
-            // A completed schedule is locked: block every write in one place.
-            if ($schedule->isLocked()) {
-                abort(response()->json([
-                    'success' => false,
-                    'message' => 'This schedule is marked completed and locked. Reopen it in the Hub to make changes.',
-                ], 423));
-            }
+            $this->assertCanEdit();
+            $this->assertUnlocked($schedule);
         }
 
         return $schedule;
@@ -78,12 +79,7 @@ abstract class BaseScheduleController extends Controller
                 ], 403));
             }
 
-            if ($schedule->isLocked()) {
-                abort(response()->json([
-                    'success' => false,
-                    'message' => 'This schedule is marked completed and locked. Reopen it in the Hub to make changes.',
-                ], 423));
-            }
+            $this->assertUnlocked($schedule);
         }
 
         return $schedule;

@@ -589,6 +589,11 @@ class ScheduleMapController extends BaseScheduleController
             return $this->jsonFail('You are not part of this schedule team.', 403);
         }
 
+        // Restoring a save clears every shape on the live map first. That is
+        // a destructive edit to the farm's own map, not a thing that happens
+        // only inside the room, so it asks the editing question.
+        $this->assertCanEdit();
+
         $save = \App\Models\ScheduleMapSave::active()
             ->where('scheduleId', $schedule->id)
             ->find($request->input('id'));

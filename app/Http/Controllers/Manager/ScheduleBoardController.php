@@ -399,6 +399,13 @@ class ScheduleBoardController extends BaseScheduleController
             return $this->jsonFail('You are not part of this schedule team.', 403);
         }
 
+        // This one leaves the room: it writes a real note into the schedule's
+        // notebook, which is the thing the note endpoints gate. Membership
+        // says you may draw on the board, not that you may file the drawing.
+        if (! \App\Support\WorkerContext::canAddNotes()) {
+            return $this->jsonFail('You are not allowed to write notes on this schedule.', 403);
+        }
+
         $validator = Validator::make($request->all(), [
             'images' => 'required|array|min:1|max:20',
             'images.*' => 'required|string',
