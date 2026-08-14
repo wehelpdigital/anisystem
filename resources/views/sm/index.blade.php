@@ -196,7 +196,7 @@
             font-size: .8rem; font-weight: 700; color: #3d6823; }
         .se-read-day { font-size: .95rem; font-weight: 800; white-space: nowrap; }
         .se-read-stage { font-weight: 700; color: var(--color-gray-700); min-width: 0; }
-        .se-read-lot { font-weight: 600; color: var(--color-gray-400); font-size: .72rem; }
+        .se-read-lot { font-weight: 600; color: var(--color-gray-400); font-size: .72rem; min-width: 0; }
         .se-read.is-quiet { color: var(--color-gray-400); font-weight: 600; }
         html.dark .se-read { color: #a5c97e; }
         html.dark .se-read-stage { color: #cdd8c0; }

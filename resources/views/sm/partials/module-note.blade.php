@@ -48,9 +48,20 @@
             const btn = document.getElementById('modSayBtn');
             const key = (el) => 'modSay:' + (el.getAttribute('data-say-key') || 'x');
             const wraps = () => Array.from(document.querySelectorAll('.mod-say-wrap'));
-            // Only the one on screen matters: in the schedule shell several
-            // modules can be in the DOM at once, all but one hidden.
-            const live = () => wraps().find((w) => w.offsetParent !== null) || wraps()[0];
+            /* The one belonging to the module that has the screen.
+             *
+             * Not "the one that is visible": a module can hide its own line
+             * for reasons of its own — Maps tucks it away while the map stage
+             * is open — and the header button must still speak for THAT
+             * module, not for whichever pane happened to load first. */
+            const live = () => {
+                const all = wraps();
+                const onPane = all.find((w) => {
+                    const pane = w.closest('[data-module]');
+                    return pane ? !pane.classList.contains('module-hidden') : true;
+                });
+                return onPane || all.find((w) => w.offsetParent !== null) || all[0];
+            };
 
             const remember = (el, away) => {
                 try { localStorage.setItem(key(el), away ? '1' : '0'); } catch (_) { /* private mode */ }

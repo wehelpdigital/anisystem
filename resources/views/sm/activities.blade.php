@@ -18,6 +18,11 @@
        chrome (header/tabbar/footer), module switching, quick share, the Collab
        button and the floating widgets — keep add/move, versions, notes, markers. */
     html.collab-embed header.sticky, html.collab-embed .tabbar, html.collab-embed footer { display: none !important; }
+    /* The button that brings a module's info line back lives in that header,
+       so inside the embed the line must not be dismissible — otherwise it
+       goes away with no way back. */
+    html.collab-embed .mod-say-x { display: none; }
+    html.collab-embed .mod-say-wrap.is-away { grid-template-rows: 1fr; opacity: 1; margin-bottom: .85rem; }
     html.collab-embed main { padding: .6rem .75rem 1rem !important; max-width: none !important; }
     /* The sticky toolbar bleeds full-width via -mx-4/-mx-6 in the normal app; that
        bleed (up to 24px each side) exceeds the embed's smaller padding and causes a

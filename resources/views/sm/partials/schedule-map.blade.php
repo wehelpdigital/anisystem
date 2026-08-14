@@ -508,6 +508,9 @@
 
     /** The badge that opens a shape's numbers, dropped at its middle. */
     function measureBadge(parts, id, at, colorStr, labels) {
+        // Nothing to reveal, nothing to offer: a badge with no numbers behind
+        // it is a pin that does nothing when tapped.
+        if (!labels || !labels.length) return null;
         const badge = new (G().Marker)({
             map, position: LL(at), clickable: true, zIndex: 60,
             icon: { path: G().SymbolPath.CIRCLE, scale: 10, fillColor: colorStr || '#4a7c2a',
@@ -733,8 +736,11 @@
         if (editing && editing.o.id === id) endEdit();
         (layers.get(id) || []).forEach((p) => p.setMap(null));
         layers.delete(id); objIndex.delete(id); measures.delete(id);
+        // A shape that no longer exists should not keep a place in the
+        // remembered set — a season of edits would fill it with ghosts.
+        if (measureOpen.delete(String(id))) saveMeasure();
     }
-    function dropAll() { cancelExtend(); endEdit(); layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); measures.clear(); }
+    function dropAll() { cancelExtend(); endEdit(); layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); measures.clear(); measureOpen.clear(); saveMeasure(); }
 
     /* Undo is a history of inverse calls against the same endpoints the
        actions used, so every step also lands live for the team. Re-adding a
