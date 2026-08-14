@@ -1042,6 +1042,24 @@ window.smQuillTouch = function smQuillTouch(quill) {
     document.body.appendChild(pill);
     const said = pill.querySelector('.sm-mic-said');
 
+    /* Is the field still really there to be written into?
+     *
+     * A closed sheet is the case a zero rectangle misses: closeSheet leaves
+     * the node in the document and merely slides it away behind
+     * `visibility: hidden`, which still measures a full-size box. So ask the
+     * browser whether the element is actually visible, and fall back to the
+     * sheet's own open flag where checkVisibility is not available. */
+    function gone() {
+        if (!target || !target.isConnected) return true;
+        if (typeof target.checkVisibility === 'function') {
+            if (!target.checkVisibility({ visibilityProperty: true, contentVisibilityAuto: true })) return true;
+        }
+        const sheet = target.closest('.sheet');
+        if (sheet && !sheet.classList.contains('is-open')) return true;
+        const r = target.getBoundingClientRect();
+        return r.width === 0 && r.height === 0;
+    }
+
     /* ---- where it sits ---- */
     function place() {
         if (!target || mic.hidden) return;
@@ -1049,9 +1067,8 @@ window.smQuillTouch = function smQuillTouch(quill) {
         // a module is re-fetched. Listening on into a node nobody can see is
         // worse than losing the sentence, so that ends the dictation rather
         // than being refused by hide()'s own guard.
-        if (!target.isConnected) { stop(); mic.hidden = true; target = null; return; }
+        if (gone()) { stop(); mic.hidden = true; target = null; return; }
         const r = target.getBoundingClientRect();
-        if (r.width === 0 && r.height === 0) { stop(); mic.hidden = true; target = null; return; }
         const size = 32, gap = 6;
         // Inside the field's right edge: on a tall box (a textarea, an
         // editor) it sits at the bottom, out of the way of the words.
@@ -1097,6 +1114,18 @@ window.smQuillTouch = function smQuillTouch(quill) {
     });
     window.addEventListener('scroll', place, true);
     window.addEventListener('resize', place);
+    /* A sheet closing is the common way a dictated field leaves without any
+       scroll, resize or focus change to notice it by — closeSheet says so,
+       and that is the moment to check. The delay lets the close settle. */
+    document.addEventListener('sm:sheet-closed', () => setTimeout(place, 60));
+    // Modules are swapped in the schedule shell without a sheet in sight.
+    document.addEventListener('sm:module-shown', () => setTimeout(place, 60));
+    // Anything else that pulls the ground out — a re-render, a removal —
+    // is caught the next time the page draws.
+    if (window.ResizeObserver) {
+        const watch = new ResizeObserver(() => place());
+        watch.observe(document.body);
+    }
 
     /* Where the caret was in a rich editor, remembered.
      *
