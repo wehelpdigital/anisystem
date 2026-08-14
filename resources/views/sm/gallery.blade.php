@@ -130,42 +130,60 @@
         border: 1px solid var(--color-gray-200); background: var(--color-white); color: var(--color-gray-600); cursor: pointer; }
     .ga-filter.is-on { background: #eaf4dd; border-color: #a8cc7e; color: #3d6823; }
 
-    .ga-all { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: .6rem; }
-    .ga-item { position: relative; border-radius: .75rem; overflow: hidden; background: var(--color-white);
-        border: 1px solid var(--color-gray-200); text-align: left; display: block;
-        transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
-    .ga-item:hover { transform: translateY(-2px); box-shadow: 0 12px 26px -18px rgb(0 0 0 / .5); }
-    .ga-shot { position: relative; aspect-ratio: 1; background: #0b1220; }
-    .ga-shot img, .ga-shot video { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .28s ease; }
+    .ga-all { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: .7rem; }
+    /* Every tile is the same height whatever its caption does, so the shelf
+       reads as a shelf. The picture is a fixed square; only the words below
+       it vary, and they are given room for two lines either way. */
+    .ga-wrap { position: relative; height: 100%; }
+    .ga-item { position: relative; height: 100%; display: flex; flex-direction: column;
+        border-radius: .8rem; overflow: hidden; background: var(--color-white);
+        border: 1px solid var(--color-gray-200); text-align: left; width: 100%;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1),
+            border-color .28s cubic-bezier(.22,1,.36,1); }
+    .ga-item:hover { transform: translateY(-2px); border-color: #a8cc7e;
+        box-shadow: 0 12px 26px -18px rgb(0 0 0 / .5); }
+    .ga-shot { position: relative; aspect-ratio: 1; flex: none; background: #0b1220; }
+    .ga-shot img, .ga-shot video { width: 100%; height: 100%; object-fit: cover; display: block;
+        opacity: 0; transition: opacity .28s ease; }
     .ga-shot img.is-loaded, .ga-shot video.is-loaded { opacity: 1; }
     /* The bin rides on the tile rather than inside it: the tile is already a
-       button, and a button inside a button is not a thing. */
-    .ga-wrap { position: relative; }
-    .ga-del { position: absolute; right: .35rem; top: .35rem; z-index: 2; width: 1.7rem; height: 1.7rem;
-        display: flex; align-items: center; justify-content: center; border-radius: .5rem; cursor: pointer;
-        background: rgb(0 0 0 / .5); color: #fff; opacity: 0;
+       button, and a button inside a button is not a thing. Both are the full
+       height of the cell, so "on the tile" is where it lands. */
+    .ga-del { position: absolute; right: .4rem; top: .4rem; z-index: 2; width: 1.8rem; height: 1.8rem;
+        display: flex; align-items: center; justify-content: center; border-radius: .55rem; cursor: pointer;
+        background: rgb(17 24 39 / .62); color: #fff; opacity: 0;
+        backdrop-filter: blur(2px);
         transition: opacity .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
-    .ga-del svg { width: .85rem; height: .85rem; }
+    .ga-del svg { width: .9rem; height: .9rem; }
     .ga-wrap:hover .ga-del, .ga-del:focus-visible { opacity: 1; }
     .ga-del:hover { background: #dc2626; }
     /* No hover on a touch screen, so there it simply shows. */
-    @media (hover: none) { .ga-del { opacity: .85; } }
+    @media (hover: none) { .ga-del { opacity: .9; } }
     @media (prefers-reduced-motion: reduce) { .ga-del { transition: none; } }
-    .ga-shot.is-gone::after { content: 'File missing'; position: absolute; inset: 0; display: flex;
-        align-items: center; justify-content: center; font-size: .66rem; font-weight: 700; color: #94a3b8; }
+    /* A shot with nothing in it says so, whether the file 404'd or the tile
+       was drawn with no picture to put in it. */
+    .ga-shot.is-gone::after, .ga-shot:empty::after { content: 'File missing'; position: absolute; inset: 0;
+        display: flex; align-items: center; justify-content: center;
+        font-size: .66rem; font-weight: 700; color: #94a3b8; }
     .ga-kind { position: absolute; left: .35rem; top: .35rem; padding: .1rem .4rem; border-radius: 999px;
         font-size: .6rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
         background: rgb(17 24 39 / .65); color: #fff; }
     .ga-kind.is-drawing { background: rgb(217 119 6 / .9); }
     .ga-kind.is-map { background: rgb(37 99 235 / .9); }
     .ga-kind.is-video { background: rgb(190 24 93 / .9); }
+    /* A disc, not a bare glyph: over a bright frame a white triangle with a
+       shadow is a smudge, and this has to read as "this one moves". */
     .ga-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-        color: #fff; pointer-events: none; text-shadow: 0 1px 8px rgb(0 0 0 / .7); }
-    .ga-play svg { width: 2rem; height: 2rem; }
-    .ga-info { padding: .4rem .5rem .5rem; }
-    .ga-it { font-size: .74rem; font-weight: 700; color: var(--color-gray-900); line-height: 1.25;
+        pointer-events: none; }
+    .ga-play svg { width: 1.15rem; height: 1.15rem; color: #fff; margin-left: .1rem; }
+    .ga-play::before { content: ''; position: absolute; width: 2.5rem; height: 2.5rem; border-radius: 999px;
+        background: rgb(17 24 39 / .55); backdrop-filter: blur(2px); }
+    .ga-play svg { position: relative; }
+    .ga-info { padding: .45rem .55rem .55rem; display: flex; flex-direction: column; flex: 1 1 auto; }
+    .ga-it { font-size: .76rem; font-weight: 700; color: var(--color-gray-900); line-height: 1.3;
         display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .ga-is { font-size: .63rem; color: var(--color-gray-400); margin-top: .1rem; }
+    .ga-is { font-size: .64rem; font-weight: 600; color: var(--color-gray-400); margin-top: auto; padding-top: .2rem;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .ga-none { text-align: center; padding: 2.5rem 1rem; color: var(--color-gray-400); font-size: .85rem; }
 
     html.dark .ga-item { background: #151b12; border-color: #2b3a1c; }
@@ -291,6 +309,9 @@
 
 {{-- ============================== videos ============================== --}}
 <div class="ga-pane" data-pane="videos" hidden>
+    {{-- The same line the other shelves get. A bare grid with no word above
+         it reads as a page that has not finished loading. --}}
+    <p class="tb-say">Every clip this season produced, wherever it was taken — a note, a day, the Collab Room, or Quick Record. Tap one to watch it.</p>
     <div class="ga-all" id="gaVideos"></div>
 </div>
 
@@ -377,7 +398,7 @@
                 // A clip in an album is a clip. Putting one in an <img> is how
                 // a perfectly good recording came to report itself missing.
                 const shot = im.kind === 'video'
-                    ? `<video src="${esc(im.url)}" preload="metadata" playsinline muted
+                    ? `<video src="${esc(im.url)}#t=0.1" preload="metadata" playsinline muted
                         onloadeddata="this.classList.add('is-loaded')"
                         onerror="this.closest('.ga-cell')?.classList.add('is-gone'); this.remove();"></video>
                        <span class="ga-vid" aria-hidden="true">▶</span>`
@@ -620,7 +641,7 @@
             const shot = kind === 'video'
                 ? `<div class="ga-shot">${m.posterUrl
                         ? `<img src="${esc(m.posterUrl)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')">`
-                        : `<video src="${esc(m.url)}" preload="metadata" playsinline muted
+                        : `<video src="${esc(m.url)}#t=0.1" preload="metadata" playsinline muted
                              onloadeddata="this.classList.add('is-loaded')"
                              onerror="this.closest('.ga-shot')?.classList.add('is-gone'); this.remove();"></video>`}
                      <span class="ga-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>${badge}</div>`
