@@ -283,7 +283,7 @@
          go — so there is no reason for it to be its own invention. --}}
     <button type="button" id="gaTabBtn" class="btn btn-white btn-sm" aria-haspopup="dialog" title="Which shelf?">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        <span id="gaTabNow">Photos</span>
+        <span id="gaTabNow">All Media</span>
         <span class="ga-n" id="gaTabNowN">{{ $counts['all'] }}</span>
         <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
     </button>
@@ -300,7 +300,7 @@
         <div class="ga-modal-body" role="tablist">
             @php
                 $shelves = [
-                    ['all', 'Photos', $counts['all'], 'Every still picture the season produced — photos, drawings and maps.'],
+                    ['all', 'All Media', $counts['all'], 'Everything the season produced, wherever it was taken.'],
                     ['albums', 'Albums', count($albums), 'The ones you put together on purpose.'],
                     ['videos', 'Videos', $counts['videos'], 'Clips on their own, because you pick a video and scan photos.'],
                     ['team', 'Team box', $counts['team'], 'What the Collab Room made: recordings, whiteboards, saved maps.'],
