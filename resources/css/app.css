@@ -945,6 +945,37 @@ html.dark {
 }
 
 /* ------------------------------------------------------------------ */
+/* A date is a tag you tap, not a dropdown.                            */
+/*                                                                     */
+/* The native date control renders as a cramped field with a tiny      */
+/* calendar glyph that half the growers never found. Wrapping the real */
+/* input in a pill and letting the pill be the target keeps the        */
+/* browser's own picker — which is the good part — while making the    */
+/* thing look like what it does. The input stays in the DOM (and in    */
+/* the form) at full size but invisible, so clicks, keyboards and      */
+/* screen readers all still reach it.                                  */
+/* ------------------------------------------------------------------ */
+.date-tag { position: relative; display: inline-flex; align-items: center; gap: .45rem;
+    padding: .45rem .85rem; border-radius: 999px; cursor: pointer; user-select: none;
+    background: #f0f7e8; border: 1px solid #cfe3b8; color: #3d6823;
+    font-size: .82rem; font-weight: 700; white-space: nowrap;
+    transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1),
+        transform .28s cubic-bezier(.22,1,.36,1); }
+.date-tag:hover { background: #e4efd4; border-color: #b7d597; }
+.date-tag:active { transform: scale(.97); }
+.date-tag:focus-within { outline: 2px solid #6b9f3d; outline-offset: 2px; }
+.date-tag svg { width: .95rem; height: .95rem; flex: none; }
+.date-tag .dt-text { min-width: 0; }
+.date-tag .dt-empty { opacity: .7; font-weight: 600; }
+/* Full-size but invisible: the pill is only a costume over the real input. */
+.date-tag input[type="date"] { position: absolute; inset: 0; width: 100%; height: 100%;
+    opacity: 0; border: 0; padding: 0; margin: 0; background: transparent; cursor: pointer; }
+.date-tag.is-block { display: flex; width: 100%; justify-content: center; }
+html.dark .date-tag { background: rgb(61 104 35 / .25); border-color: #3f5626; color: #bfe19a; }
+html.dark .date-tag:hover { background: rgb(61 104 35 / .4); }
+@media (prefers-reduced-motion: reduce) { .date-tag { transition: none; } }
+
+/* ------------------------------------------------------------------ */
 /* Accessibility — set in Settings, applied before first paint.        */
 /*                                                                     */
 /* Text size works by scaling the root, which every rem in the app —   */

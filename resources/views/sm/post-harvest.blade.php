@@ -207,7 +207,7 @@
         </div>
         <div class="mb-4">
             <label class="form-label" for="phDate">Date <span class="text-gray-400 font-normal">(optional)</span></label>
-            <input type="date" id="phDate" class="form-input">
+            @include('partials.date-tag', ['id' => 'phDate', 'empty' => 'Pick a date'])
         </div>
         <div class="mb-4">
             <label class="form-label" for="phLot">Lot</label>

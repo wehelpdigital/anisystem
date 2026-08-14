@@ -81,12 +81,23 @@ class CroppingScheduleController extends Controller
                     continue;
                 }
                 $stage = \App\Support\CropStages::stageFor($crop, $age['day'], $age['counter']);
+                // How far this lot is through its crop's whole calendar —
+                // the stages it has finished, plus its way through this one.
+                $through = null;
+                if ($stage && ! empty($stage['count'])) {
+                    $through = (int) round(100 * min(1, max(0,
+                        ($stage['index'] + ($stage['progress'] ?? 0)) / $stage['count']
+                    )));
+                }
                 $readings[] = [
                     'day' => $age['day'],
                     'counter' => $age['counter'],
                     'stage' => $stage['label'] ?? null,
                     'lot' => $lot->lotName,
                     'icon' => \App\Support\CropStages::icon($lot->crop),
+                    'through' => $through,
+                    'next' => $stage['next']['label'] ?? null,
+                    'nextIn' => $stage['next']['inDays'] ?? null,
                 ];
             }
             // The one furthest through its season leads, because that is the

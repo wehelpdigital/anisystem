@@ -210,7 +210,7 @@
         <div>
             <span class="form-label">Specific off dates</span>
             <div class="flex gap-2 mb-3">
-                <input type="date" id="rulesDateInput" class="form-input">
+                @include('partials.date-tag', ['id' => 'rulesDateInput', 'empty' => 'Pick a date'])
                 <button type="button" id="rulesAddDateBtn" class="btn btn-white shrink-0">Add</button>
             </div>
             <div id="offDatesList" class="flex flex-wrap gap-2"></div>

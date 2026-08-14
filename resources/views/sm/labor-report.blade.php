@@ -131,11 +131,11 @@
             </div>
             <div>
                 <label class="form-label text-xs!" for="laborStartDate">From date</label>
-                <input type="date" id="laborStartDate" class="form-input">
+                @include('partials.date-tag', ['id' => 'laborStartDate', 'empty' => 'From'])
             </div>
             <div>
                 <label class="form-label text-xs!" for="laborEndDate">To date</label>
-                <input type="date" id="laborEndDate" class="form-input">
+                @include('partials.date-tag', ['id' => 'laborEndDate', 'empty' => 'To'])
             </div>
         </div>
         <div class="flex items-center gap-2 flex-wrap mt-3">

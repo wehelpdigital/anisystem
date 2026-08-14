@@ -904,7 +904,7 @@
             Move all <strong id="changeGroupDateCount" class="text-gray-900">0</strong> activities on
             <strong id="changeGroupDateCurrent" class="text-gray-900"></strong> to:
         </p>
-        <input type="date" id="changeGroupDateNew" class="form-input">
+        @include('partials.date-tag', ['id' => 'changeGroupDateNew', 'empty' => 'Pick a date'])
         <p class="form-hint">Multi-day activities keep their duration — end dates shift by the same number of days.</p>
     </div>
     <div class="sheet-footer">

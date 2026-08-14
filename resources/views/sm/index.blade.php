@@ -175,7 +175,19 @@
         .se-reads-rail { display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
             scrollbar-width: none; -ms-overflow-style: none; }
         .se-reads-rail::-webkit-scrollbar { display: none; }
-        .se-reads-rail > .se-read { flex: 0 0 100%; scroll-snap-align: start; margin-top: 0; }
+        .se-reads-rail > .se-slide { flex: 0 0 100%; scroll-snap-align: start; min-width: 0; }
+        .se-reads-rail .se-read { margin-top: 0; }
+        /* One bar per lot: they are at different points in different crops. */
+        .se-lotbar { height: .3rem; border-radius: 999px; background: var(--color-gray-100);
+            overflow: hidden; margin-top: .35rem; }
+        .se-lotbar span { display: block; height: 100%; border-radius: 999px;
+            background: linear-gradient(90deg, #8fbf5e, #4a7c2a); }
+        .se-lotfoot { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem;
+            margin-top: .2rem; font-size: .66rem; color: var(--color-gray-400); }
+        .se-lotfoot span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .se-lotfoot b { color: var(--color-gray-600); font-weight: 700; flex: none; }
+        html.dark .se-lotbar { background: rgb(255 255 255 / .08); }
+        html.dark .se-lotfoot b { color: #cdd8c0; }
         .se-reads-foot { display: flex; align-items: center; gap: .3rem; margin-top: .35rem; }
         .se-rnav { width: 1.3rem; height: 1.3rem; border-radius: 999px; flex: none;
             display: inline-flex; align-items: center; justify-content: center;
@@ -403,12 +415,21 @@
                             <div class="se-reads{{ count($reads) > 1 ? ' has-many' : '' }}">
                                 <div class="se-reads-rail" data-reads>
                                     @foreach ($reads as $r)
-                                        <div class="se-read">
-                                            <span class="se-read-day">{{ $r['counter'] }} {{ $r['day'] }}</span>
-                                            @if ($r['stage'])
-                                                <span class="se-read-stage truncate">· {{ $r['stage'] }}</span>
+                                        <div class="se-slide">
+                                            <div class="se-read">
+                                                <span class="se-read-day">{{ $r['counter'] }} {{ $r['day'] }}</span>
+                                                @if ($r['stage'])
+                                                    <span class="se-read-stage truncate">· {{ $r['stage'] }}</span>
+                                                @endif
+                                                <span class="se-read-lot truncate">{{ $r['icon'] }} {{ $r['lot'] }}</span>
+                                            </div>
+                                            @if ($r['through'] !== null)
+                                                <div class="se-lotbar"><span style="width: {{ $r['through'] }}%"></span></div>
+                                                <div class="se-lotfoot">
+                                                    <span>@if ($r['next']) {{ $r['next'] }} in {{ $r['nextIn'] }} {{ \Illuminate\Support\Str::plural('day', (int) $r['nextIn']) }} @else The harvest window @endif</span>
+                                                    <b>{{ $r['through'] }}%</b>
+                                                </div>
                                             @endif
-                                            <span class="se-read-lot truncate">{{ $r['icon'] }} {{ $r['lot'] }}</span>
                                         </div>
                                     @endforeach
                                 </div>
@@ -433,9 +454,13 @@
                             <div class="se-read is-quiet">Not counting yet — the season starts at day zero.</div>
                         @endif
 
-                        @if ($card['progress'] !== null)
+                        {{-- The season's own span, shown only when no lot has a
+                             reading of its own to show instead. --}}
+                        @if ($card['progress'] !== null && ! count($reads))
                             <div class="se-prog"><span style="width: {{ $card['progress'] }}%"></span></div>
                             <div class="se-progline"><span>{{ $card['window'] }}</span><b>{{ $card['progress'] }}%</b></div>
+                        @elseif ($card['window'])
+                            <div class="se-progline"><span>{{ $card['window'] }}</span></div>
                         @endif
 
                         <div class="se-meta">
