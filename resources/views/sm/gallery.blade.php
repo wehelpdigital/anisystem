@@ -92,8 +92,8 @@
      * introducing. Colour is left to the icon, which is all the recognition
      * it needs, and to the border on hover so the tag still answers a
      * pointer. */
-    .ga-pickbtn { display: inline-flex; align-items: center; gap: .5rem; max-width: 100%;
-        padding: .45rem .9rem .45rem .75rem; border-radius: 999px; cursor: pointer; user-select: none;
+    .ga-pickbtn { display: inline-flex; align-items: center; gap: .45rem; max-width: 100%;
+        padding: .45rem .8rem; border-radius: 999px; cursor: pointer; user-select: none;
         background: var(--color-white); border: 1px solid var(--color-gray-200);
         color: var(--color-gray-800); font-size: .82rem; font-weight: 700; white-space: nowrap;
         box-shadow: 0 1px 2px rgb(0 0 0 / .04);
@@ -102,14 +102,12 @@
     .ga-pickbtn:hover { border-color: #a8cc7e; box-shadow: 0 4px 12px -6px rgb(0 0 0 / .18); }
     .ga-pickbtn:active { transform: scale(.98); }
     .ga-pickbtn:focus-visible { outline: 2px solid #6b9f3d; outline-offset: 2px; }
-    .ga-pickico { width: 1rem; height: 1rem; flex: none; color: #4a7c2a; }
     .ga-pickchev { width: .75rem; height: .75rem; flex: none; color: var(--color-gray-400); }
     /* The count is a number, not a badge — a coloured lozenge here was one
        more thing shouting on a bar that should be almost silent. */
     .ga-pickbtn .ga-n { font-size: .72rem; font-weight: 700; color: var(--color-gray-400); opacity: 1; }
     html.dark .ga-pickbtn { background: #1c2416; border-color: #2b3a1c; color: #e8efe1; box-shadow: none; }
     html.dark .ga-pickbtn:hover { border-color: #4a7c2a; }
-    html.dark .ga-pickico { color: #86b556; }
     html.dark .ga-pickbtn .ga-n { color: #7d8f6e; }
     /* No overflow: hidden here. On a flex item that switches the automatic
        minimum size from `auto` to 0, which let the label shrink away to
@@ -291,8 +289,10 @@
      is there. This says which shelf you are on and opens the rest, the same
      way the schedule list asks about its order. --}}
 <div class="ga-pick">
+    {{-- No icon. A folder in front of the shelf name said nothing the name
+         did not already say, and whatever tint it wore competed with the
+         pictures underneath it. The name, how many, and the way down. --}}
     <button type="button" id="gaTabBtn" class="ga-pickbtn" aria-haspopup="dialog">
-        <svg class="ga-pickico" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/></svg>
         <span id="gaTabNow">All media</span>
         <span class="ga-n" id="gaTabNowN">{{ $counts['all'] }}</span>
         <svg class="ga-pickchev" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
