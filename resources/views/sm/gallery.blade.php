@@ -67,15 +67,57 @@
     @media (prefers-reduced-motion: reduce) { .ga-bar { animation: none; } .ga-cell img { transition: none; } }
 
     /* ---- tabs, and the "everything" shelf ---- */
-    .ga-tabs { display: flex; gap: .4rem; margin-bottom: .8rem; overflow-x: auto; padding-bottom: .15rem; }
-    .ga-tab { display: inline-flex; align-items: center; gap: .35rem; padding: .45rem .85rem; flex: none;
-        border: 2px solid var(--color-gray-200); background: var(--color-white); border-radius: 999px;
-        font-size: .82rem; font-weight: 700; color: #374151; cursor: pointer;
-        transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
-    .ga-tab:hover { border-color: #a8cc7e; background: #f3f8ec; }
-    .ga-tab.is-on,
-    html.dark .ga-tab.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
-    .ga-tab .ga-n { font-size: .7rem; opacity: .8; font-weight: 800; }
+    /* The shelf picker: one button that says where you are. */
+    .ga-pick { margin-bottom: .8rem; }
+    .ga-pickbtn { display: inline-flex; align-items: center; gap: .4rem; max-width: 100%;
+        padding: .45rem .8rem; border-radius: 999px; cursor: pointer;
+        border: 1px solid var(--color-gray-200); background: var(--color-white);
+        font-size: .84rem; font-weight: 800; color: var(--color-gray-800);
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .ga-pickbtn:hover { border-color: #a8cc7e; color: #3d6823; }
+    .ga-pickico { width: 1rem; height: 1rem; flex: none; color: #4a7c2a; }
+    .ga-pickchev { width: .8rem; height: .8rem; flex: none; color: var(--color-gray-400); }
+    #gaTabNow { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    html.dark .ga-pickbtn { background: #1c2416; border-color: #2b3a1c; color: #e8efe1; }
+
+    .ga-modal { position: fixed; inset: 0; z-index: 120; display: flex; align-items: flex-end; justify-content: center; }
+    @media (min-width: 640px) { .ga-modal { align-items: center; padding: 1.5rem; } }
+    .ga-modal.hidden { display: none; }
+    .ga-modal-back { position: absolute; inset: 0; background: rgb(10 14 20 / .55); opacity: 0;
+        transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .ga-modal.is-open .ga-modal-back { opacity: 1; }
+    .ga-modal-card { position: relative; width: 100%; max-width: 24rem; background: var(--color-white);
+        border-radius: 1rem 1rem 0 0; overflow: hidden; box-shadow: var(--shadow-card-lg);
+        transform: translateY(1.5rem); opacity: 0;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+    @media (min-width: 640px) { .ga-modal-card { border-radius: 1rem; } }
+    .ga-modal.is-open .ga-modal-card { transform: none; opacity: 1; }
+    .ga-modal-head { display: flex; align-items: center; justify-content: space-between;
+        padding: .8rem 1rem; border-bottom: 1px solid var(--color-gray-100); }
+    .ga-modal-body { padding: .5rem; display: grid; gap: .2rem;
+        padding-bottom: calc(.5rem + env(safe-area-inset-bottom, 0px)); }
+    .ga-opt { display: flex; align-items: center; gap: .6rem; width: 100%; text-align: left;
+        padding: .6rem .7rem; border-radius: .7rem; cursor: pointer;
+        transition: background .28s cubic-bezier(.22,1,.36,1); }
+    .ga-opt:hover { background: var(--color-gray-50); }
+    .ga-opt.is-on { background: #f4f9ee; }
+    .ga-opt-txt { display: flex; flex-direction: column; gap: .1rem; min-width: 0; flex: 1 1 auto; }
+    .ga-opt-txt b { font-size: .86rem; font-weight: 700; color: var(--color-gray-900); }
+    .ga-opt-txt i { font-style: normal; font-size: .72rem; line-height: 1.4; color: var(--color-gray-500); }
+    .ga-opt-tick { flex: none; width: 1.1rem; height: 1.1rem; color: #4a7c2a; opacity: 0;
+        transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .ga-opt-tick svg { width: 100%; height: 100%; }
+    .ga-opt.is-on .ga-opt-tick { opacity: 1; }
+    html.dark .ga-modal-card { background: #151b12; }
+    html.dark .ga-modal-head { border-color: #2b3a1c; }
+    html.dark .ga-opt:hover { background: rgb(255 255 255 / .05); }
+    html.dark .ga-opt.is-on { background: #24301a; }
+    html.dark .ga-opt-txt b { color: #e8efe1; }
+    @media (prefers-reduced-motion: reduce) {
+        .ga-pickbtn, .ga-modal-back, .ga-modal-card, .ga-opt, .ga-opt-tick { transition: none; }
+    }
+    /* The count that rides on the picker and on each shelf in the sheet. */
+    .ga-n { font-size: .7rem; opacity: .75; font-weight: 800; }
     .ga-pane[hidden] { display: none; }
     .ga-tools { display: flex; gap: .5rem; align-items: center; margin-bottom: .7rem; flex-wrap: wrap; }
     .ga-search { position: relative; flex: 1 1 12rem; }
@@ -125,8 +167,7 @@
         display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .ga-is { font-size: .63rem; color: var(--color-gray-400); margin-top: .1rem; }
     .ga-none { text-align: center; padding: 2.5rem 1rem; color: var(--color-gray-400); font-size: .85rem; }
-    html.dark .ga-tab { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
-    html.dark .ga-tab.is-on { background: #4a7c2a; border-color: #6b9f3d; color: #fff; }
+
     html.dark .ga-item { background: #151b12; border-color: #2b3a1c; }
     html.dark .ga-it { color: #e8efe1; }
     html.dark .ga-search input, html.dark .ga-filter { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
@@ -176,42 +217,54 @@
 
 {{-- Two questions, two tabs: everything the season has a picture of, and
      the ones you put together on purpose. --}}
-<div class="ga-tabs" role="tablist">
-    <button type="button" class="ga-tab is-on" data-tab="all" role="tab" aria-selected="true">
-        All media <span class="ga-n">{{ $counts['all'] }}</span>
-    </button>
-    <button type="button" class="ga-tab" data-tab="albums" role="tab" aria-selected="false">
-        Albums <span class="ga-n">{{ count($albums) }}</span>
-    </button>
-    @if ($counts['videos'])
-        <button type="button" class="ga-tab" data-tab="videos" role="tab" aria-selected="false">
-            Videos <span class="ga-n">{{ $counts['videos'] }}</span>
-        </button>
-    @endif
-    {{-- What the team made together, rather than what the season produced.
-         People look for these by who was there and what was being shown, so
-         they get a shelf instead of being scattered through "everything". --}}
-    <button type="button" class="ga-tab" data-tab="team" role="tab" aria-selected="false">
-        Team box <span class="ga-n">{{ $counts['team'] }}</span>
+{{-- One button, not a strip that scrolls.
+
+     Four shelves never fitted across a phone, so the strip scrolled — and a
+     tab you have to discover by dragging is a tab most people never learn
+     is there. This says which shelf you are on and opens the rest, the same
+     way the schedule list asks about its order. --}}
+<div class="ga-pick">
+    <button type="button" id="gaTabBtn" class="ga-pickbtn" aria-haspopup="dialog">
+        <svg class="ga-pickico" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/></svg>
+        <span id="gaTabNow">All media</span>
+        <span class="ga-n" id="gaTabNowN">{{ $counts['all'] }}</span>
+        <svg class="ga-pickchev" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
     </button>
 </div>
 
-{{-- ============================ everything ============================ --}}
-<div class="ga-pane" data-pane="all">
-    <div class="ga-tools">
-        <label class="ga-search">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-            <input type="search" id="gaFind" placeholder="Search by what it was about…" autocomplete="off">
-        </label>
-        <div class="ga-filters" id="gaFilters">
-            <button type="button" class="ga-filter is-on" data-src="">Everything</button>
-            <button type="button" class="ga-filter" data-src="Note">Notes</button>
-            <button type="button" class="ga-filter" data-src="Day note">Day notes</button>
-            <button type="button" class="ga-filter" data-src="Drawing">Drawings</button>
-            <button type="button" class="ga-filter" data-src="Map">Maps</button>
-            <button type="button" class="ga-filter" data-src="Album">Albums</button>
-            <button type="button" class="ga-filter" data-src="Activity">Activities</button>
+{{-- The shelves, asked for once. --}}
+<div class="ga-modal hidden" id="gaTabModal" role="dialog" aria-modal="true" aria-label="Which shelf?">
+    <div class="ga-modal-back" data-ga-close></div>
+    <div class="ga-modal-card">
+        <div class="ga-modal-head">
+            <p class="font-bold text-gray-900">Which shelf?</p>
+            <button type="button" class="btn-ghost rounded-full w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-700" data-ga-close aria-label="Close">✕</button>
         </div>
+        <div class="ga-modal-body" role="tablist">
+            @php
+                $shelves = [
+                    ['all', 'All media', $counts['all'], 'Everything the season produced, wherever it was taken.'],
+                    ['albums', 'Albums', count($albums), 'The ones you put together on purpose.'],
+                    ['videos', 'Videos', $counts['videos'], 'Clips on their own, because you pick a video and scan photos.'],
+                    ['team', 'Team box', $counts['team'], 'What the Collab Room made: recordings, whiteboards, saved maps.'],
+                ];
+            @endphp
+            @foreach ($shelves as [$key, $label, $n, $why])
+                @if ($key !== 'videos' || $counts['videos'])
+                    <button type="button" class="ga-opt{{ $key === 'all' ? ' is-on' : '' }}" data-tab="{{ $key }}" role="tab" aria-selected="{{ $key === 'all' ? 'true' : 'false' }}">
+                        <span class="ga-opt-txt">
+                            <b>{{ $label }} <span class="ga-n">{{ $n }}</span></b>
+                            <i>{{ $why }}</i>
+                        </span>
+                        <span class="ga-opt-tick" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        </span>
+                    </button>
+                @endif
+            @endforeach
+        </div>
+    </div>
+</div>
     </div>
     <div class="ga-all" id="gaAll"></div>
     <p class="ga-none hidden" id="gaAllNone">Nothing here yet. Anything taken anywhere in this schedule — a note, a day, a drawing, a map — arrives here on its own.</p>
@@ -616,17 +669,60 @@
                 : '<p class="ga-none">No videos in this schedule yet.</p>';
         }
 
-        document.querySelectorAll('.ga-tab').forEach((t) => t.addEventListener('click', () => {
-            const want = t.getAttribute('data-tab');
-            document.querySelectorAll('.ga-tab').forEach((x) => {
-                const on = x === t;
-                x.classList.toggle('is-on', on);
-                x.setAttribute('aria-selected', on ? 'true' : 'false');
+        /* ---- Which shelf ------------------------------------------------
+         * One button says where you are; the sheet is the whole list. The
+         * strip that used to sit here scrolled, and a tab you only find by
+         * dragging is a tab most people never learn is there. */
+        (function shelfPicker() {
+            const modal = $('gaTabModal');
+            const btn = $('gaTabBtn');
+            if (!modal || !btn) return;
+
+            const open = () => {
+                modal.classList.remove('hidden');
+                void modal.offsetWidth;
+                modal.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+                window.registerOverlay?.('gaTabs', close);
+            };
+            const close = () => {
+                modal.classList.remove('is-open');
+                document.body.style.overflow = '';
+                setTimeout(() => modal.classList.add('hidden'), 260);
+            };
+
+            function show(want) {
+                modal.querySelectorAll('.ga-opt').forEach((o) => {
+                    const on = o.dataset.tab === want;
+                    o.classList.toggle('is-on', on);
+                    o.setAttribute('aria-selected', on ? 'true' : 'false');
+                    if (on) {
+                        // The button wears the shelf's own name and count, so
+                        // it says where you are without being opened.
+                        $('gaTabNow').textContent = o.querySelector('b')?.childNodes[0]?.textContent.trim() || '';
+                        $('gaTabNowN').textContent = o.querySelector('b .ga-n')?.textContent || '';
+                    }
+                });
+                document.querySelectorAll('.ga-pane').forEach((p) => {
+                    p.hidden = p.getAttribute('data-pane') !== want;
+                });
+            }
+
+            btn.addEventListener('click', open);
+            modal.addEventListener('click', (e) => {
+                if (e.target.closest('[data-ga-close]')) { close(); return; }
+                const opt = e.target.closest('.ga-opt');
+                if (!opt) return;
+                show(opt.dataset.tab);
+                close();
             });
-            document.querySelectorAll('.ga-pane').forEach((p) => {
-                p.hidden = p.getAttribute('data-pane') !== want;
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) close();
             });
-        }));
+
+            // Anything that used to click a tab can still ask for one.
+            window.gaShowShelf = show;
+        })();
 
         /* ---- Team box ---------------------------------------------------
          * Three different things — a recording, a whiteboard page, a saved
@@ -674,7 +770,7 @@
 
         // A notification that says "saved to the Team box" should land on it.
         if (new URLSearchParams(location.search).get('tab') === 'team') {
-            document.querySelector('.ga-tab[data-tab="team"]')?.click();
+            window.gaShowShelf?.('team');
         }
 
         /* Deleting from the shelf. It asks first, and it says what it is
