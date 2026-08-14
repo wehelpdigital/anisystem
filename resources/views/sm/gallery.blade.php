@@ -67,8 +67,23 @@
     @media (prefers-reduced-motion: reduce) { .ga-bar { animation: none; } .ga-cell img { transition: none; } }
 
     /* ---- tabs, and the "everything" shelf ---- */
-    /* The shelf picker: one button that says where you are. */
-    .ga-pick { margin-bottom: .8rem; }
+    /* The shelf picker: one button that says where you are.
+     *
+     * It sticks under the module's own toolbar rather than scrolling away
+     * beneath it — which is what it was doing, and a control you cannot see
+     * is a control you have to remember. `top` matches the toolbar's height
+     * on each breakpoint; the shell's sticky bar sits at z-20, so this rides
+     * just under it and over the shelf. */
+    .ga-pick { position: sticky; top: 3.5rem; z-index: 15; margin: 0 -0.25rem .8rem;
+        padding: .4rem .25rem; background: var(--color-gray-50); }
+    @media (min-width: 768px) { .ga-pick { top: 4rem; } }
+    /* Inside the Activities shell the toolbar is already sticky below the app
+       bar, so the picker sits under both. */
+    body:has(#activitiesRoot) .ga-pick { top: 6.6rem; }
+    @media (min-width: 768px) { body:has(#activitiesRoot) .ga-pick { top: 7.4rem; } }
+    /* In the Collab Room the app bar is hidden entirely. */
+    html.collab-embed .ga-pick { top: 0; }
+    html.dark .ga-pick { background: #10160e; }
     .ga-pickbtn { display: inline-flex; align-items: center; gap: .4rem; max-width: 100%;
         padding: .45rem .8rem; border-radius: 999px; cursor: pointer;
         border: 1px solid var(--color-gray-200); background: var(--color-white);
@@ -233,8 +248,6 @@
 </style>
 @endpush
 
-{{-- Two questions, two tabs: everything the season has a picture of, and
-     the ones you put together on purpose. --}}
 {{-- One button, not a strip that scrolls.
 
      Four shelves never fitted across a phone, so the strip scrolled — and a
@@ -698,6 +711,15 @@
             const modal = $('gaTabModal');
             const btn = $('gaTabBtn');
             if (!modal || !btn) return;
+
+            /* The sheet is moved to the body once, on the way up.
+             *
+             * It is position: fixed, and a fixed element is only fixed to the
+             * window while no ancestor has a transform — the shell animates
+             * its panes with one, and for those 300ms the sheet would be
+             * fixed to a pane instead, landing under the header and clipped
+             * by it. Parked on the body it cannot be caught by anything. */
+            if (modal.parentElement !== document.body) document.body.appendChild(modal);
 
             const open = () => {
                 modal.classList.remove('hidden');
