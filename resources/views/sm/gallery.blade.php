@@ -84,35 +84,15 @@
     /* In the Collab Room the app bar is hidden entirely. */
     html.collab-embed .ga-pick { top: 0; }
     html.dark .ga-pick { background: #10160e; }
-    /* A quiet tag: white ground, one hairline, the name in ordinary ink.
-     *
-     * The green fill was wrong here. On the date pickers a tinted tag marks
-     * one small thing inside a form; this sits alone above a whole shelf of
-     * pictures, where a block of colour competes with the very things it is
-     * introducing. Colour is left to the icon, which is all the recognition
-     * it needs, and to the border on hover so the tag still answers a
-     * pointer. */
-    .ga-pickbtn { display: inline-flex; align-items: center; gap: .45rem; max-width: 100%;
-        padding: .45rem .8rem; border-radius: 999px; cursor: pointer; user-select: none;
-        background: var(--color-white); border: 1px solid var(--color-gray-200);
-        color: var(--color-gray-800); font-size: .82rem; font-weight: 700; white-space: nowrap;
-        box-shadow: 0 1px 2px rgb(0 0 0 / .04);
-        transition: border-color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1),
-            transform .28s cubic-bezier(.22,1,.36,1); }
-    .ga-pickbtn:hover { border-color: #a8cc7e; box-shadow: 0 4px 12px -6px rgb(0 0 0 / .18); }
-    .ga-pickbtn:active { transform: scale(.98); }
-    .ga-pickbtn:focus-visible { outline: 2px solid #6b9f3d; outline-offset: 2px; }
-    .ga-pickchev { width: .75rem; height: .75rem; flex: none; color: var(--color-gray-400); }
-    /* The count is a number, not a badge — a coloured lozenge here was one
-       more thing shouting on a bar that should be almost silent. */
-    .ga-pickbtn .ga-n { font-size: .72rem; font-weight: 700; color: var(--color-gray-400); opacity: 1; }
-    html.dark .ga-pickbtn { background: #1c2416; border-color: #2b3a1c; color: #e8efe1; box-shadow: none; }
-    html.dark .ga-pickbtn:hover { border-color: #4a7c2a; }
-    html.dark .ga-pickbtn .ga-n { color: #7d8f6e; }
+    /* Nothing of its own: it wears .btn.btn-white.btn-sm, the same as the
+       Modules and Tools buttons it sits beside. Only the count needs a word,
+       and only to keep it from reading as part of the name. */
+    #gaTabBtn .ga-n { font-weight: 700; color: var(--color-gray-400); opacity: 1; }
+    html.dark #gaTabBtn .ga-n { color: #7d8f6e; }
+    #gaTabBtn svg:last-child { color: var(--color-gray-400); }
     /* No overflow: hidden here. On a flex item that switches the automatic
-       minimum size from `auto` to 0, which let the label shrink away to
-       nothing and leave a button that was only an icon. The four names are
-       short; none of them needs truncating. */
+       minimum size from `auto` to 0, which once let the label shrink away to
+       nothing and leave a button that was only an icon. */
     #gaTabNow { white-space: nowrap; }
 
     .ga-modal { position: fixed; inset: 0; z-index: 120; display: flex; align-items: flex-end; justify-content: center; }
@@ -149,7 +129,7 @@
     html.dark .ga-opt.is-on { background: #24301a; }
     html.dark .ga-opt-txt b { color: #e8efe1; }
     @media (prefers-reduced-motion: reduce) {
-        .ga-pickbtn, .ga-modal-back, .ga-modal-card, .ga-opt, .ga-opt-tick { transition: none; }
+        .ga-modal-back, .ga-modal-card, .ga-opt, .ga-opt-tick { transition: none; }
     }
     /* The count that rides on the picker and on each shelf in the sheet. */
     .ga-n { font-size: .7rem; opacity: .75; font-weight: 800; }
@@ -289,13 +269,14 @@
      is there. This says which shelf you are on and opens the rest, the same
      way the schedule list asks about its order. --}}
 <div class="ga-pick">
-    {{-- No icon. A folder in front of the shelf name said nothing the name
-         did not already say, and whatever tint it wore competed with the
-         pictures underneath it. The name, how many, and the way down. --}}
-    <button type="button" id="gaTabBtn" class="ga-pickbtn" aria-haspopup="dialog">
+    {{-- The same button as Modules and Tools in the shell's toolbar. It does
+         the same job they do — a hamburger that opens a list of places to
+         go — so there is no reason for it to be its own invention. --}}
+    <button type="button" id="gaTabBtn" class="btn btn-white btn-sm" aria-haspopup="dialog" title="Which shelf?">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
         <span id="gaTabNow">All media</span>
         <span class="ga-n" id="gaTabNowN">{{ $counts['all'] }}</span>
-        <svg class="ga-pickchev" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
     </button>
 </div>
 
