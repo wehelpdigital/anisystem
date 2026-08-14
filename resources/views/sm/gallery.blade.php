@@ -88,8 +88,8 @@
        padding, so these lose exactly that — the margin below it does not
        count, because when the page is scrolled the shelf bar sticks against
        the toolbar's edge, not against the gap after it. */
-    body:has(#activitiesRoot) .ga-shelfbar { top: 6.25rem; }
-    @media (min-width: 768px) { body:has(#activitiesRoot) .ga-shelfbar { top: 7.05rem; } }
+    body:has(#activitiesRoot) .ga-shelfbar { top: 6.15rem; }
+    @media (min-width: 768px) { body:has(#activitiesRoot) .ga-shelfbar { top: 6.95rem; } }
     /* In the Collab Room the app bar is hidden entirely. */
     html.collab-embed .ga-shelfbar { top: 0; }
     html.dark .ga-shelfbar { background: #10160e; }
