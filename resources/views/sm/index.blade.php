@@ -239,10 +239,20 @@
            lots would otherwise push the card's own buttons off the screen.
            A native scroller, so a thumb swipes it and a keyboard can too. */
         .se-reads { margin-top: .6rem; }
+        /* overscroll-behavior-x: none is the whole fix for the bounce. A
+           scroll container drags elastically past its own ends by default,
+           and inside a card that reads as the card stretching and springing
+           back rather than as a strip reaching its last lot. `contain` is not
+           enough — that only stops the pull reaching the page behind it. */
         .se-reads-rail { display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
-            scrollbar-width: none; -ms-overflow-style: none; }
+            overscroll-behavior-x: none; scroll-behavior: smooth;
+            align-items: stretch; scrollbar-width: none; -ms-overflow-style: none; }
         .se-reads-rail::-webkit-scrollbar { display: none; }
-        .se-reads-rail > .se-slide { flex: 0 0 100%; scroll-snap-align: start; min-width: 0; }
+        /* scroll-snap-stop: always so a hard flick moves one lot, not four —
+           skipping past the lot you were reaching for is its own kind of
+           bounce. */
+        .se-reads-rail > .se-slide { flex: 0 0 100%; scroll-snap-align: start;
+            scroll-snap-stop: always; min-width: 0; }
         .se-reads-rail .se-read { margin-top: 0; }
         /* One bar per lot: they are at different points in different crops. */
         .se-lotbar { height: .3rem; border-radius: 999px; background: var(--color-gray-100);

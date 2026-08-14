@@ -115,7 +115,11 @@
     .dn-slider { position: relative; min-width: 0; }
     .dn-rail { display: flex; gap: .5rem; overflow-x: auto; scroll-snap-type: x mandatory;
         min-width: 0; padding-bottom: .15rem; scrollbar-width: none; -ms-overflow-style: none;
-        scroll-behavior: smooth; overscroll-behavior-x: contain; }
+        scroll-behavior: smooth;
+        /* none, not contain: contain only stops the pull reaching the page,
+           while the rail still drags elastically past its own ends — which
+           inside a card reads as the card stretching. */
+        overscroll-behavior-x: none; }
     .dn-rail::-webkit-scrollbar { display: none; }
     /* A whole card, every time. Half a card at the edge looks like a bug. */
     .dn-card { flex: 0 0 100%; min-width: 0; scroll-snap-align: center; scroll-snap-stop: always;
