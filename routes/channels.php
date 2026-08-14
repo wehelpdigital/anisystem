@@ -14,3 +14,12 @@ Broadcast::channel('schedule-board.{scheduleId}', function (User $user, int $sch
 
     return $schedule !== null && ScheduleTeam::canAccess($schedule, (int) $user->id);
 });
+
+/**
+ * One person's own line. Everything addressed to them personally — the bell,
+ * a message from the team, a call starting — arrives here, and nobody else
+ * can listen to it.
+ */
+Broadcast::channel('user.{userId}', function (User $user, int $userId) {
+    return (int) $user->id === $userId;
+});

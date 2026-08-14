@@ -945,6 +945,26 @@ html.dark {
 }
 
 /* ------------------------------------------------------------------ */
+/* The bell, when something has just arrived.                          */
+/*                                                                     */
+/* A number quietly changing in a corner is not news. A short shake is */
+/* — once, then it settles, because a bell that keeps ringing is one   */
+/* people learn to ignore.                                             */
+/* ------------------------------------------------------------------ */
+@keyframes bellBuzz {
+    0%, 100% { transform: rotate(0); }
+    12% { transform: rotate(-14deg); }
+    24% { transform: rotate(11deg); }
+    36% { transform: rotate(-8deg); }
+    48% { transform: rotate(6deg); }
+    60% { transform: rotate(-3deg); }
+    72% { transform: rotate(2deg); }
+}
+.bell-buzz { animation: bellBuzz .85s cubic-bezier(.36,.07,.19,.97); transform-origin: top center; }
+@media (prefers-reduced-motion: reduce) { .bell-buzz { animation: none; } }
+html.sm-still .bell-buzz { animation: none; }
+
+/* ------------------------------------------------------------------ */
 /* A date is a tag you tap, not a dropdown.                            */
 /*                                                                     */
 /* The native date control renders as a cramped field with a tiny      */

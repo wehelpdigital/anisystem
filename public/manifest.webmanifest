@@ -1,0 +1,38 @@
+{
+    "name": "AniSystem — Cropping Schedules",
+    "short_name": "AniSystem",
+    "description": "Plan a season, run the day, and keep the record — for farms and the people who work them.",
+    "start_url": "/app",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#f9fafb",
+    "theme_color": "#4a7c2a",
+    "lang": "en",
+    "icons": [
+        {
+            "src": "/images/pwa/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/images/pwa/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Today's board",
+            "short_name": "Today",
+            "url": "/app/sm"
+        },
+        {
+            "name": "Global notes",
+            "short_name": "Notes",
+            "url": "/app/notes"
+        }
+    ]
+}

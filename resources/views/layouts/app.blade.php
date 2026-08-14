@@ -16,6 +16,15 @@
     @endif
     <title>@yield('title', 'Dashboard') | AniSystem</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+    {{-- Installable: the app can live on the home screen, run without the
+         browser's chrome, and raise notifications like anything else on the
+         phone. --}}
+    <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
+    <meta name="theme-color" content="#4a7c2a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="AniSystem">
+    <link rel="apple-touch-icon" href="{{ asset('images/pwa/icon-192.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -238,10 +247,15 @@
                             {{-- How the app behaves for this person: text size,
                                  contrast, movement. Account is who you are;
                                  this is how you read. --}}
-                            <a href="{{ route('account.settings') }}" class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">
-                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.3 4.3a1 1 0 011-.8h1.4a1 1 0 011 .8l.2 1.2a6.6 6.6 0 011.6.9l1.1-.4a1 1 0 011.2.4l.7 1.2a1 1 0 01-.2 1.3l-.9.8a6.6 6.6 0 010 1.8l.9.8a1 1 0 01.2 1.3l-.7 1.2a1 1 0 01-1.2.4l-1.1-.4a6.6 6.6 0 01-1.6.9l-.2 1.2a1 1 0 01-1 .8h-1.4a1 1 0 01-1-.8l-.2-1.2a6.6 6.6 0 01-1.6-.9l-1.1.4a1 1 0 01-1.2-.4l-.7-1.2a1 1 0 01.2-1.3l.9-.8a6.6 6.6 0 010-1.8l-.9-.8a1 1 0 01-.2-1.3l.7-1.2a1 1 0 011.2-.4l1.1.4a6.6 6.6 0 011.6-.9l.2-1.2z"/><circle cx="12" cy="12" r="2.5"/></svg>
-                                Settings
-                            </a>
+                            <a href="{{ route('account.settings') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">Settings</a>
+                            {{-- Only where the device will actually take it:
+                                 hidden once installed, and hidden entirely on
+                                 a browser that cannot install. --}}
+                            <button type="button" id="pwaInstallBtn" hidden
+                                class="w-full flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-brand-700 hover:bg-brand-50">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+                                Install to device
+                            </button>
                             {{-- The way to reach a person. It existed as a page
                                  and had no door: nothing in the app linked to
                                  it, so a grower with a problem had nowhere to
@@ -344,7 +358,41 @@
                 open: false, loading: false, items: [], unread: 0,
                 init() {
                     this.refreshCount();
+                    // The poll stays as the floor — a dropped broadcast costs
+                    // a minute, not the message.
                     setInterval(() => { if (!this.open) this.refreshCount(); }, 60000);
+
+                    /* The bell's own line. Anything addressed to this person
+                       arrives the moment it happens: the count moves, the
+                       bell shakes, and if the app is not what they are
+                       looking at, the device says so too. */
+                    const ME = {{ (int) auth()->id() }};
+                    try {
+                        window.Echo?.private('user.' + ME).listen('.notify', (p) => {
+                            this.unread = (this.unread || 0) + 1;
+                            if (this.open) this.load();
+                            this.buzz();
+                            window.smNotify?.({
+                                title: p.title || 'AniSystem',
+                                body: p.body || '',
+                                url: p.url || '/app',
+                                tag: 'n' + (p.type || 'x'),
+                            });
+                        });
+                    } catch (_) { /* no realtime here — the poll covers it */ }
+
+                    // Asked for once the person is plainly using the app, not
+                    // on the doorstep: a permission prompt on arrival is the
+                    // fastest way to be told no forever.
+                    setTimeout(() => { window.smAskToNotify?.(); }, 12000);
+                },
+                buzz() {
+                    const el = this.$el?.querySelector('button');
+                    if (!el) return;
+                    el.classList.remove('bell-buzz');
+                    void el.offsetWidth;
+                    el.classList.add('bell-buzz');
+                    setTimeout(() => el.classList.remove('bell-buzz'), 900);
                 },
                 async toggle() {
                     this.open = !this.open;

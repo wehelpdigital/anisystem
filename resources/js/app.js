@@ -1326,6 +1326,114 @@ window.smQuillTouch = function smQuillTouch(quill) {
     window.smVoice = { stop, isListening: () => listening };
 })();
 
+/* ======================================================================
+ * Living on the device.
+ *
+ * Installed, the app runs without the browser's chrome and can raise a
+ * notification the way anything else on the phone does — which for a farm
+ * is the difference between "someone messaged the team" and "someone
+ * messaged the team four hours ago".
+ *
+ * The install button is offered only where the device will actually take
+ * it, and disappears the moment it has been taken.
+ * ==================================================================== */
+(function installable() {
+    const installed = () => window.matchMedia('(display-mode: standalone)').matches
+        || window.navigator.standalone === true;
+    window.smInstalled = installed;
+
+    // The worker is what makes both install and background notifications
+    // possible. It caches nothing but the offline notice — see public/sw.js.
+    if ('serviceWorker' in navigator && window.isSecureContext) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').catch(() => { /* not fatal */ });
+        });
+    }
+
+    let prompt = null;
+    const btn = () => document.getElementById('pwaInstallBtn');
+    const show = (on) => { const b = btn(); if (b) b.hidden = !on; };
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Chrome's own mini-bar is refused so the offer lives in one place:
+        // the account menu, where the rest of "this device" settings are.
+        e.preventDefault();
+        prompt = e;
+        if (!installed()) show(true);
+    });
+
+    document.addEventListener('click', async (e) => {
+        if (!e.target.closest('#pwaInstallBtn')) return;
+        if (!prompt) {
+            // iOS has no prompt to fire — it installs from the share sheet,
+            // so say how rather than doing nothing.
+            window.toast?.('On iPhone: tap Share, then "Add to Home Screen".');
+            return;
+        }
+        prompt.prompt();
+        const { outcome } = await prompt.userChoice;
+        prompt = null;
+        if (outcome === 'accepted') show(false);
+    });
+
+    window.addEventListener('appinstalled', () => { prompt = null; show(false); });
+
+    // iOS gets the hint row too, but only where it could actually be used.
+    document.addEventListener('DOMContentLoaded', () => {
+        const iOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+        if (iOS && !installed()) show(true);
+    });
+})();
+
+/* ======================================================================
+ * Notifications that reach the phone.
+ *
+ * Realtime events land in the page; this is what turns one into something
+ * you can see when the app is not the thing you are looking at. Asked for
+ * once, gently, and only after the person has actually used the app.
+ * ==================================================================== */
+(function deviceNotices() {
+    const canNotify = () => 'Notification' in window && window.isSecureContext;
+
+    /** Ask once, and never again in this browser if the answer was no. */
+    window.smAskToNotify = async function smAskToNotify() {
+        if (!canNotify() || Notification.permission !== 'default') return Notification?.permission === 'granted';
+        try {
+            const answer = await Notification.requestPermission();
+            return answer === 'granted';
+        } catch (_) { return false; }
+    };
+
+    /**
+     * Raise a notification for something that just happened.
+     *
+     * Skipped while the app is the thing on screen — the page has already
+     * shown it, and a second copy in the corner is noise.
+     */
+    window.smNotify = async function smNotify({ title, body, url, tag }) {
+        if (!canNotify() || Notification.permission !== 'granted') return false;
+        if (document.visibilityState === 'visible') return false;
+        const opts = {
+            body: body || '',
+            icon: '/images/pwa/icon-192.png',
+            badge: '/images/pwa/icon-192.png',
+            tag: tag || 'anisystem',
+            renotify: true,
+            data: { url: url || '/app' },
+            vibrate: [90, 40, 90],
+        };
+        try {
+            const reg = await navigator.serviceWorker?.getRegistration();
+            // Through the worker where there is one: those survive the page
+            // being backgrounded, and they are the ones a phone shows.
+            if (reg) { await reg.showNotification(title, opts); return true; }
+            const n = new Notification(title, opts);
+            n.onclick = () => { window.focus(); location.href = opts.data.url; };
+            return true;
+        } catch (_) { return false; }
+    };
+})();
+
 /**
  * Focus a field, unless a keyboard would jump up and cover the thing the
  * user just opened.

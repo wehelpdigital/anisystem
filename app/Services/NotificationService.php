@@ -45,7 +45,7 @@ class NotificationService
             }
         }
 
-        return AnisystemNotification::create([
+        $note = AnisystemNotification::create([
             'userId' => $userId,
             'type' => $type,
             'title' => $title,
@@ -55,6 +55,39 @@ class NotificationService
             'croppingScheduleId' => $croppingScheduleId,
             'deleteStatus' => 1,
         ]);
+
+        $this->push($note);
+
+        return $note;
+    }
+
+    /**
+     * Ring the bell now, rather than at the next sixty-second poll.
+     *
+     * Best-effort by design: the bell still polls, so a dropped broadcast
+     * costs a minute of lateness and nothing else. Never let a realtime
+     * hiccup fail the thing that caused the notification.
+     */
+    private function push(AnisystemNotification $note): void
+    {
+        $driver = config('broadcasting.default');
+        $ready = in_array($driver, ['pusher', 'reverb', 'ably'], true)
+            && filled(config("broadcasting.connections.$driver.key"));
+        if (! $ready) {
+            return;
+        }
+
+        try {
+            broadcast(new \App\Events\UserNotified((int) $note->userId, [
+                'id' => (int) $note->id,
+                'type' => (string) $note->type,
+                'title' => (string) $note->title,
+                'body' => (string) ($note->body ?? ''),
+                'url' => $note->url,
+            ]));
+        } catch (\Throwable $e) {
+            // The poll will find it.
+        }
     }
 
     /**
