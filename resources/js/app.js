@@ -797,6 +797,231 @@ window.smQuillTouch = function smQuillTouch(quill) {
     return quill;
 };
 
+/* ======================================================================
+ * Speak instead of type.
+ *
+ * Every text field in the app can be dictated into, without any field
+ * having to know about it: one floating microphone follows whatever is
+ * focused. Wrapping thousands of inputs would have meant touching every
+ * layout in the system and breaking some of them; anchoring one button to
+ * the focused field's corner touches none.
+ *
+ * Browsers that have no speech recognition simply never see the button.
+ * ==================================================================== */
+(function voiceToText() {
+    const Recog = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!Recog) return;
+
+    // Fields worth talking into. Passwords and the typed ones a keyboard
+    // does better (numbers, dates) are left alone.
+    const SKIP_TYPES = ['password', 'number', 'date', 'datetime-local', 'time', 'month', 'week',
+        'file', 'checkbox', 'radio', 'range', 'color', 'hidden', 'submit', 'button', 'image', 'reset'];
+    const LANGS = [
+        { code: 'en-PH', label: 'EN' },
+        { code: 'fil-PH', label: 'FIL' },
+    ];
+    const LANG_KEY = 'smVoiceLang';
+
+    let target = null;          // the field being dictated into
+    let recog = null;
+    let listening = false;
+    let langIndex = 0;
+    try {
+        const saved = localStorage.getItem(LANG_KEY);
+        const at = LANGS.findIndex((l) => l.code === saved);
+        if (at >= 0) langIndex = at;
+    } catch (_) { /* private mode */ }
+
+    function dictatable(el) {
+        if (!el || el.disabled || el.readOnly) return false;
+        if (el.tagName === 'TEXTAREA') return true;
+        if (el.tagName === 'INPUT') {
+            const t = (el.getAttribute('type') || 'text').toLowerCase();
+            return !SKIP_TYPES.includes(t);
+        }
+        // Rich editors — the note body, an activity description, a topic.
+        return el.isContentEditable;
+    }
+
+    /* ---- the button ---- */
+    const mic = document.createElement('button');
+    mic.type = 'button';
+    mic.className = 'sm-mic';
+    mic.setAttribute('aria-label', 'Dictate into this field');
+    mic.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">'
+        + '<path stroke-linecap="round" stroke-linejoin="round" d="M12 15a3 3 0 003-3V6a3 3 0 00-6 0v6a3 3 0 003 3z"/>'
+        + '<path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-14 0M12 18v3"/></svg>'
+        + '<span class="sm-mic-lang"></span>';
+    mic.hidden = true;
+    document.body.appendChild(mic);
+    const langChip = mic.querySelector('.sm-mic-lang');
+    const sayLang = () => { langChip.textContent = LANGS[langIndex].label; };
+    sayLang();
+
+    // A word about what is happening, while it happens.
+    const pill = document.createElement('div');
+    pill.className = 'sm-mic-pill';
+    pill.hidden = true;
+    pill.innerHTML = '<span class="sm-mic-wave"><i></i><i></i><i></i></span><span class="sm-mic-said">Listening…</span>';
+    document.body.appendChild(pill);
+    const said = pill.querySelector('.sm-mic-said');
+
+    /* ---- where it sits ---- */
+    function place() {
+        if (!target || mic.hidden) return;
+        const r = target.getBoundingClientRect();
+        if (r.width === 0 && r.height === 0) { hide(); return; }
+        const size = 32, gap = 6;
+        // Inside the field's right edge: on a tall box (a textarea, an
+        // editor) it sits at the bottom, out of the way of the words.
+        const tall = r.height > 60;
+        let top = tall ? r.bottom - size - gap : r.top + (r.height - size) / 2;
+        let left = r.right - size - gap;
+        // Never off-screen, and never under the keyboard's own bar.
+        top = Math.max(gap, Math.min(top, window.innerHeight - size - gap));
+        left = Math.max(gap, Math.min(left, window.innerWidth - size - gap));
+        mic.style.top = top + 'px';
+        mic.style.left = left + 'px';
+    }
+
+    function show(el) {
+        target = el;
+        mic.hidden = false;
+        place();
+    }
+    function hide() {
+        if (listening) return;              // never vanish mid-sentence
+        mic.hidden = true;
+        target = null;
+    }
+
+    document.addEventListener('focusin', (e) => {
+        if (dictatable(e.target)) show(e.target);
+        else if (!mic.contains(e.target)) hide();
+    });
+    document.addEventListener('focusout', (e) => {
+        // The mic takes focus for an instant when tapped; let that settle
+        // before deciding the field is really gone.
+        setTimeout(() => {
+            if (listening) return;
+            if (document.activeElement && dictatable(document.activeElement)) return;
+            hide();
+        }, 120);
+    });
+    window.addEventListener('scroll', place, true);
+    window.addEventListener('resize', place);
+
+    /* ---- putting words in ---- */
+    function insert(text) {
+        if (!target || !text) return;
+        const el = target;
+        if (el.isContentEditable) {
+            el.focus();
+            const sel = window.getSelection();
+            if (sel && sel.rangeCount) {
+                const range = sel.getRangeAt(0);
+                range.deleteContents();
+                const node = document.createTextNode(text);
+                range.insertNode(node);
+                range.setStartAfter(node);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            } else {
+                el.appendChild(document.createTextNode(text));
+            }
+            el.dispatchEvent(new Event('input', { bubbles: true }));
+            return;
+        }
+        const start = el.selectionStart ?? el.value.length;
+        const end = el.selectionEnd ?? el.value.length;
+        el.value = el.value.slice(0, start) + text + el.value.slice(end);
+        const at = start + text.length;
+        try { el.setSelectionRange(at, at); } catch (_) { /* not all inputs allow it */ }
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    /* A dictated sentence should read like one: speech comes back bare, so
+       it is spaced against what is already there and given a capital when it
+       starts something. */
+    function polish(text) {
+        let out = String(text || '').trim();
+        if (!out) return '';
+        const before = target && !target.isContentEditable
+            ? String(target.value || '').slice(0, target.selectionStart ?? 0)
+            : (target ? target.textContent || '' : '');
+        const tail = before.replace(/\s+$/, '').slice(-1);
+        if (tail === '' || '.!?'.includes(tail)) out = out.charAt(0).toUpperCase() + out.slice(1);
+        const needsSpace = before !== '' && !/\s$/.test(before);
+        return (needsSpace ? ' ' : '') + out;
+    }
+
+    function stop() {
+        listening = false;
+        mic.classList.remove('is-live');
+        pill.hidden = true;
+        said.textContent = 'Listening…';
+        try { recog && recog.stop(); } catch (_) { /* already stopped */ }
+        recog = null;
+    }
+
+    function start() {
+        if (!target) return;
+        const el = target;
+        recog = new Recog();
+        recog.lang = LANGS[langIndex].code;
+        recog.interimResults = true;
+        recog.continuous = true;
+        recog.onresult = (e) => {
+            let interim = '';
+            for (let i = e.resultIndex; i < e.results.length; i++) {
+                const res = e.results[i];
+                if (res.isFinal) { target = el; insert(polish(res[0].transcript)); }
+                else interim += res[0].transcript;
+            }
+            said.textContent = interim.trim() || 'Listening…';
+        };
+        recog.onerror = (e) => {
+            stop();
+            if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+                window.toast?.('Microphone blocked. Allow it for this site to dictate.', 'error');
+            } else if (e.error !== 'aborted' && e.error !== 'no-speech') {
+                window.toast?.('Could not hear that. Try again.', 'error');
+            }
+        };
+        recog.onend = () => { if (listening) stop(); };
+        try {
+            recog.start();
+            listening = true;
+            mic.classList.add('is-live');
+            pill.hidden = false;
+        } catch (_) { stop(); }
+    }
+
+    // Keep the field's caret: the button must never steal focus off it.
+    mic.addEventListener('mousedown', (e) => e.preventDefault());
+    mic.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
+    mic.addEventListener('click', (e) => {
+        // The language chip cycles instead of starting; a farm dictates in
+        // two languages and switching should not be a settings trip.
+        if (e.target.closest('.sm-mic-lang')) {
+            langIndex = (langIndex + 1) % LANGS.length;
+            sayLang();
+            try { localStorage.setItem(LANG_KEY, LANGS[langIndex].code); } catch (_) { /* fine */ }
+            if (listening) { stop(); start(); }
+            return;
+        }
+        if (listening) stop(); else start();
+    });
+    // Anywhere else ends the dictation, so a forgotten mic never listens on.
+    document.addEventListener('click', (e) => {
+        if (listening && !mic.contains(e.target) && e.target !== target) stop();
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && listening) stop(); });
+
+    window.smVoice = { stop, isListening: () => listening };
+})();
+
 window.escapeHtml = function escapeHtml(value) {
     return String(value ?? '')
         .replaceAll('&', '&amp;')

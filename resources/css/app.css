@@ -854,6 +854,52 @@ html.dark .sun-editor .se-dialog .se-dialog-content input { background: #10160c;
 html.dark .sm-editor-fallback { background: #151b12; border-color: #2b3a1c; color: #e8efe1; }
 
 /* ------------------------------------------------------------------ */
+/* Speak instead of type — one mic that follows the focused field.      */
+/* Above every sheet, lightbox and pad, because it belongs to whatever  */
+/* field is on top of them.                                             */
+/* ------------------------------------------------------------------ */
+.sm-mic { position: fixed; z-index: 500; width: 2rem; height: 2rem; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--color-white); color: #4a7c2a;
+    border: 1px solid var(--color-gray-200); box-shadow: 0 4px 12px -6px rgb(0 0 0 / .45);
+    cursor: pointer; transition: background .2s ease, color .2s ease, transform .2s ease; }
+.sm-mic svg { width: 1.05rem; height: 1.05rem; }
+.sm-mic:hover { background: #f0f7e8; transform: scale(1.06); }
+.sm-mic[hidden] { display: none; }
+.sm-mic.is-live { background: #dc2626; color: #fff; border-color: #dc2626;
+    animation: smMicPulse 1.4s ease-in-out infinite; }
+@keyframes smMicPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgb(220 38 38 / .5); }
+    50% { box-shadow: 0 0 0 .5rem rgb(220 38 38 / 0); }
+}
+/* The language it is listening in, switchable without leaving the field. */
+.sm-mic-lang { position: absolute; bottom: -.35rem; right: -.35rem; min-width: 1.35rem;
+    padding: 0 .2rem; border-radius: 999px; background: #4a7c2a; color: #fff;
+    font-size: .5rem; font-weight: 800; line-height: 1.15rem; text-align: center;
+    border: 1.5px solid var(--color-white); }
+.sm-mic.is-live .sm-mic-lang { background: #7f1d1d; }
+/* What it is hearing, while it hears it. */
+.sm-mic-pill { position: fixed; z-index: 500; left: 50%; bottom: 1.15rem; transform: translateX(-50%);
+    display: flex; align-items: center; gap: .5rem; max-width: min(24rem, calc(100vw - 2rem));
+    padding: .5rem .85rem; border-radius: 999px; background: rgb(17 24 39 / .92); color: #fff;
+    font-size: .8rem; font-weight: 600; box-shadow: 0 12px 30px -14px rgb(0 0 0 / .8); }
+.sm-mic-pill[hidden] { display: none; }
+.sm-mic-said { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sm-mic-wave { display: inline-flex; align-items: flex-end; gap: 2px; height: .85rem; flex-shrink: 0; }
+.sm-mic-wave i { width: 3px; border-radius: 2px; background: #86efac; animation: smMicWave .9s ease-in-out infinite; }
+.sm-mic-wave i:nth-child(1) { height: .4rem; animation-delay: 0s; }
+.sm-mic-wave i:nth-child(2) { height: .85rem; animation-delay: .15s; }
+.sm-mic-wave i:nth-child(3) { height: .55rem; animation-delay: .3s; }
+@keyframes smMicWave { 0%, 100% { transform: scaleY(.5); } 50% { transform: scaleY(1); } }
+html.dark .sm-mic { background: #1c2416; border-color: #2b3a1c; color: #a5c97e; }
+html.dark .sm-mic:hover { background: #24301a; }
+html.dark .sm-mic-lang { border-color: #1c2416; }
+@media (prefers-reduced-motion: reduce) {
+    .sm-mic, .sm-mic.is-live { transition: none; animation: none; }
+    .sm-mic-wave i { animation: none; }
+}
+
+/* ------------------------------------------------------------------ */
 /* The link dialog a Quill toolbar opens (see smLinkPrompt)              */
 /* ------------------------------------------------------------------ */
 .sm-linkbox { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center;
