@@ -31,13 +31,15 @@ class AccountController extends Controller
     {
         $hats = \App\Support\UserHats::for($request->user());
 
-        // Nothing to choose between: go where they were going.
-        if (count(array_filter($hats, fn ($h) => $h['kind'] !== 'admin')) < 2) {
+        // Nothing to choose between: go where they were going. The admin
+        // site is not one of the options — see UserHats::adminUrl.
+        if (count($hats) < 2) {
             return redirect()->intended(route('app.dashboard'));
         }
 
         return view('auth.choose', [
             'hats' => $hats,
+            'adminUrl' => \App\Support\UserHats::adminUrl($request->user()),
             'user' => $request->user(),
         ]);
     }

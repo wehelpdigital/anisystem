@@ -56,6 +56,7 @@ class UserHats
                 'detail' => $ownSchedules > 0
                     ? $ownSchedules . ' ' . str('schedule')->plural($ownSchedules) . ' of your own'
                     : 'Start your first cropping schedule',
+                'count' => $ownSchedules,
                 'bossId' => null,
                 'url' => null,
             ];
@@ -64,41 +65,49 @@ class UserHats
         foreach ($grants as $g) {
             $boss = $g->boss;
             $name = $boss ? trim(($boss->firstName ?? '') . ' ' . ($boss->lastName ?? '')) : '';
+            // The farm's own count, not this account's: choosing this hat
+            // shows that farm's schedules, so that is the number to promise.
+            $theirs = AsCroppingSchedule::active()
+                ->forClient((int) $g->bossUserId)
+                ->count();
             $hats[] = [
                 'key' => 'worker:' . $g->bossUserId,
                 'kind' => 'worker',
                 'title' => 'Worker at ' . ($name !== '' ? $name : 'a farm'),
-                'detail' => $g->scheduleAccess === 'edit'
-                    ? 'You can add and change work on this farm'
-                    : 'You can see this farm\'s plan, without changing it',
+                'detail' => $theirs . ' ' . str('schedule')->plural($theirs) . ' on this farm · '
+                    . ($g->scheduleAccess === 'edit' ? 'you can add and change work' : 'you can look, not change'),
+                'count' => $theirs,
                 'bossId' => (int) $g->bossUserId,
                 'url' => null,
             ];
         }
 
         // The mother site is where administration actually happens; this app
-        // has no admin area of its own, so the hat is a door rather than a
-        // mode. Shown only when the account is genuinely linked to an admin.
-        $motherUrl = (string) config('mother.url');
-        if ($user->adminUserId && $motherUrl !== '') {
-            $hats[] = [
-                'key' => 'admin',
-                'kind' => 'admin',
-                'title' => 'Administrator',
-                'detail' => 'Open the admin site in a new tab',
-                'bossId' => null,
-                'url' => $motherUrl,
-            ];
-        }
-
+        // has no admin area of its own. It is a door, not a way of using this
+        // app — an administrator is still their own farm's owner in here —
+        // so it is kept out of the list of hats and offered separately.
         return $hats;
+    }
+
+    /**
+     * The admin site, for accounts linked to one.
+     *
+     * Deliberately not a hat: presenting it beside "My own farm" asked people
+     * to choose between being an administrator and being a farmer, which is
+     * not a choice anybody has to make. They are both, always.
+     */
+    public static function adminUrl(?User $user): ?string
+    {
+        $motherUrl = (string) config('mother.url');
+
+        return ($user && $user->adminUserId && $motherUrl !== '') ? $motherUrl : null;
     }
 
     /** Does this account have more than one way in? */
     public static function needsChoice(?User $user): bool
     {
-        // The admin door does not change what this app shows, so it alone is
-        // not a reason to stop someone on the way in.
-        return count(array_filter(self::for($user), fn ($h) => $h['kind'] !== 'admin')) > 1;
+        // Only the farms count. The admin door does not change what this app
+        // shows, so it is never a reason to stop someone on the way in.
+        return count(self::for($user)) > 1;
     }
 }
