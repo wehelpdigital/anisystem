@@ -35,6 +35,11 @@
         try { const dt = new DataTransfer(); dt.items.add(file); input.files = dt.files; }
         catch (_) { return false; }
         setChip(host, file);
+        // Assigning .files in script does not fire change — the browser only
+        // does that for a human choosing a file. Everything downstream waits
+        // on change, so a recording used to land in the input and then sit
+        // there: Use video, and nothing happened.
+        input.dispatchEvent(new Event('change', { bubbles: true }));
         return true;
     }
     // Public helper for form submit handlers.

@@ -165,7 +165,10 @@
         const f = fileInput.files && fileInput.files[0];
         if (!f) return;
         showClip(f);
-        if (modal.classList.contains('hidden')) open();
+        // A tick later: the recorder closes itself right after handing the
+        // clip over, and its close resets the page scroll lock. Opening
+        // first would have that reset land on top of ours.
+        if (modal.classList.contains('hidden')) setTimeout(open, 0);
     });
 
     function open() {

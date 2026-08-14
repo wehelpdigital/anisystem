@@ -90,43 +90,47 @@
             .sch-hero-stats .sch-stat { flex: 1 1 0; min-width: 0; }
         }
 
-        /* ---- the two quick doors: notes and the camera. Feature buttons
-           with a face, not two more grey pills — each carries its own tinted
-           icon and, where there is room, a word on what it is for. ---- */
-        .qa-btn { display: inline-flex; align-items: center; gap: .6rem; padding: .4rem 1rem .4rem .45rem;
-            border-radius: 999px; background: var(--color-white); border: 1px solid var(--color-gray-200);
-            font-size: .84rem; font-weight: 700; color: var(--color-gray-800); cursor: pointer; text-align: left;
+        /* ---- the three quick doors, one to a row ------------------------
+           Shaped like the Hub's module tiles, because they do the same job:
+           a tinted icon you recognise before you read, a name, and a line
+           saying why you would tap it. Across a phone in a single strip
+           there was room for none of that. ---- */
+        .qa-stack { display: grid; gap: .5rem; }
+        .qa-tile { display: flex; align-items: center; gap: .7rem; width: 100%; text-align: left;
+            padding: .7rem .8rem; border-radius: .9rem; cursor: pointer; text-decoration: none;
+            background: var(--color-white); border: 1px solid var(--color-gray-200);
             transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1),
                 border-color .28s cubic-bezier(.22,1,.36,1); }
-        .qa-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px -14px rgb(0 0 0 / .45); }
-        .qa-btn:active { transform: translateY(0); }
-        .qa-ico { width: 2.1rem; height: 2.1rem; border-radius: 999px; flex-shrink: 0;
+        .qa-tile:hover { transform: translateY(-1px); box-shadow: 0 10px 24px -16px rgb(0 0 0 / .5); }
+        .qa-tile .qa-ico { width: 2.6rem; height: 2.6rem; border-radius: .75rem; flex: none;
             display: inline-flex; align-items: center; justify-content: center; }
-        .qa-ico svg { width: 1.15rem; height: 1.15rem; }
+        .qa-tile .qa-ico svg { width: 1.3rem; height: 1.3rem; }
+        .qa-tile .qa-txt { display: flex; flex-direction: column; gap: .1rem; min-width: 0; flex: 1 1 auto; }
+        .qa-tile .qa-txt b { font-size: .88rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.25; }
+        .qa-tile .qa-txt i { font-style: normal; font-size: .72rem; font-weight: 500; line-height: 1.4;
+            color: var(--color-gray-500); }
+        .qa-go { width: .95rem; height: .95rem; flex: none; color: var(--color-gray-300);
+            transition: transform .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+        .qa-tile:hover .qa-go { transform: translateX(2px); }
+        .qa-notes:hover { border-color: #f0dcae; } .qa-notes:hover .qa-go { color: #b45309; }
+        .qa-cap:hover { border-color: #cfe3b8; } .qa-cap:hover .qa-go { color: #3d6823; }
+        .qa-rec:hover { border-color: #f3c4c4; } .qa-rec:hover .qa-go { color: #b91c1c; }
+        html.dark .qa-tile { background: #151b12; border-color: #2b3a1c; }
+        html.dark .qa-tile .qa-txt b { color: #e8efe1; }
+        html.dark .qa-tile .qa-txt i { color: #93a684; }
+        @media (prefers-reduced-motion: reduce) { .qa-tile, .qa-go { transition: none; } }
+
+        /* The hues the three doors are told apart by, and the icon plate
+           they sit on. Kept out of .qa-tile so the colour of a door and the
+           shape of one stay separate things. */
+        .qa-ico { border-radius: .75rem; }
         .qa-notes .qa-ico { background: #fdf6e6; color: #b45309; }
-        .qa-notes:hover { border-color: #f0dcae; }
         .qa-cap .qa-ico { background: #eef6e6; color: #3d6823; }
-        .qa-cap:hover { border-color: #cfe3b8; }
         .qa-rec .qa-ico { background: #fdecec; color: #b91c1c; }
-        .qa-rec:hover { border-color: #f3c4c4; }
-        .qa-txt { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
-        .qa-sub { display: none; font-size: .68rem; font-weight: 500; color: var(--color-gray-400); }
-        @media (min-width: 768px) { .qa-sub { display: block; } }
-        html.dark .qa-btn { background: #151b12; border-color: #2b3a1c; color: #e8efe1; }
         html.dark .qa-notes .qa-ico { background: rgb(180 83 9 / .18); color: #e0b457; }
         html.dark .qa-cap .qa-ico { background: rgb(61 104 35 / .25); color: #a5c97e; }
         html.dark .qa-rec .qa-ico { background: rgb(185 28 28 / .2); color: #f0a3a3; }
-        html.dark .qa-sub { color: #7d8f6e; }
-        @media (prefers-reduced-motion: reduce) { .qa-btn { transition: none; } }
-        /* Phones: three doors now, so they share the row by content rather
-           than by thirds — "Global notes" needs more width than "Record", and
-           equal thirds squeezed all three into ellipses. The icons stay full
-           size; only the words give. */
-        .sch-quick { flex-wrap: wrap; }
-        .sch-quick .qa-btn { flex: 1 1 auto; min-width: 0; justify-content: flex-start;
-            padding-right: .7rem; gap: .45rem; }
-        .sch-quick .qa-txt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
-        @media (max-width: 380px) { .sch-quick .qa-ico { width: 1.9rem; height: 1.9rem; } }
+
 
         /* ---- season cards: each schedule is a shelfful of ground, so the
            card leads with a field-toned cover, the crops growing on it, and
@@ -199,19 +203,17 @@
         html.dark .se-lotbar { background: rgb(255 255 255 / .08); }
         html.dark .se-lotfoot b { color: #cdd8c0; }
         .se-reads-foot { display: flex; align-items: center; gap: .3rem; margin-top: .35rem; }
-        .se-rnav { width: 1.3rem; height: 1.3rem; border-radius: 999px; flex: none;
-            display: inline-flex; align-items: center; justify-content: center;
-            color: var(--color-gray-400); background: var(--color-gray-50); cursor: pointer; }
-        .se-rnav svg { width: .7rem; height: .7rem; }
-        .se-rnav:hover { background: #e4efd4; color: #3d6823; }
-        .se-rdots { display: inline-flex; align-items: center; gap: .22rem; }
+        /* Bigger hit area than they look: a dot is .3rem of paint inside a
+           thumb's worth of padding, so tapping one is not a test of aim. */
+        .se-rdots { display: inline-flex; align-items: center; gap: .1rem; }
         .se-rdots i { width: .3rem; height: .3rem; border-radius: 999px; background: var(--color-gray-300);
+            box-sizing: content-box; padding: .38rem .12rem; background-clip: content-box; cursor: pointer;
             transition: background .28s cubic-bezier(.22,1,.36,1), width .28s cubic-bezier(.22,1,.36,1); }
-        .se-rdots i.is-on { background: #4a7c2a; width: .8rem; }
+        .se-rdots i:hover { background: var(--color-gray-400); background-clip: content-box; }
+        .se-rdots i.is-on { background: #4a7c2a; background-clip: content-box; width: .8rem; }
         .se-rcount { margin-left: auto; font-size: .62rem; font-weight: 700; color: var(--color-gray-400); }
-        html.dark .se-rnav { background: rgb(255 255 255 / .06); color: #9fb08e; }
-        html.dark .se-rdots i { background: #3f4a37; }
-        html.dark .se-rdots i.is-on { background: #86b556; }
+        html.dark .se-rdots i { background: #3f4a37; background-clip: content-box; }
+        html.dark .se-rdots i.is-on { background: #86b556; background-clip: content-box; }
         @media (prefers-reduced-motion: reduce) { .se-rdots i { transition: none; } }
 
         .se-read { display: flex; align-items: baseline; gap: .4rem; margin-top: .6rem;
@@ -337,23 +339,36 @@
             </div>
         </form>
 
-        {{-- Phones: the same two secondary actions as a compact row under the
-             search, rather than a tower of floating buttons stacked up the
-             right edge — three FABs covered the list they were meant to act
-             on, and only one of them was the thing you came here to do. --}}
-        <div class="flex md:hidden gap-2 sch-quick">
-            <a href="{{ route('notes.hub') }}" class="qa-btn qa-notes">
-                <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span>
-                <span class="qa-txt">Global notes</span>
+        {{-- Three doors, one to a row. They were a squeezed strip of three
+             across a phone, where every word fell to an ellipsis and none of
+             them said what the thing was for. Given a row each they can be
+             what the Hub's tiles are: an icon you recognise, a name, and a
+             line saying why you would tap it. --}}
+        <div class="qa-stack">
+            <a href="{{ route('notes.hub') }}" class="qa-tile qa-notes">
+                <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span>
+                <span class="qa-txt">
+                    <b>Global Notes</b>
+                    <i>Every note from every schedule, gathered in one place.</i>
+                </span>
+                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
             @if ($allSchedules->isNotEmpty())
-                <button type="button" id="quickCaptureFab" class="qa-btn qa-cap">
-                    <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
-                    <span class="qa-txt">Capture</span>
+                <button type="button" id="quickCaptureBtn" class="qa-tile qa-cap">
+                    <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
+                    <span class="qa-txt">
+                        <b>Quick Capture</b>
+                        <i>Photograph what you are standing in front of and file it now.</i>
+                    </span>
+                    <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>
-                <button type="button" id="quickRecordFab" class="qa-btn qa-rec">
-                    <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg></span>
-                    <span class="qa-txt">Record</span>
+                <button type="button" id="quickRecordBtn" class="qa-tile qa-rec">
+                    <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg></span>
+                    <span class="qa-txt">
+                        <b>Quick Record</b>
+                        <i>Film it when a picture will not do — a sound, a leak, a machine.</i>
+                    </span>
+                    <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>
             @endif
         </div>
@@ -362,20 +377,6 @@
              bare `.btn` is unlayered CSS and would otherwise beat `hidden`);
              the floating + button is the phone equivalent. --}}
         <div class="hidden md:flex md:justify-end md:items-center gap-2">
-            <a href="{{ route('notes.hub') }}" class="qa-btn qa-notes" title="Every note from every schedule, in one place">
-                <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span>
-                <span class="qa-txt">Global notes<span class="qa-sub">every schedule's notebook</span></span>
-            </a>
-            @if ($allSchedules->isNotEmpty())
-                <button type="button" id="quickCaptureBtn" class="qa-btn qa-cap">
-                    <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
-                    <span class="qa-txt">Quick Capture<span class="qa-sub">snap it, file it now</span></span>
-                </button>
-                <button type="button" id="quickRecordBtn" class="qa-btn qa-rec">
-                    <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg></span>
-                    <span class="qa-txt">Quick Record<span class="qa-sub">film it, file it now</span></span>
-                </button>
-            @endif
             <a href="{{ route('sm.create') }}" class="btn btn-primary">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
                 New Cropping Schedule
@@ -452,18 +453,17 @@
                                     @endforeach
                                 </div>
                                 @if (count($reads) > 1)
+                                    {{-- Dots only. The strip is swiped, and a
+                                         pair of arrows beside the dots was two
+                                         controls for one gesture — the dots
+                                         already say where you are and how many
+                                         there are, and they take a tap too. --}}
                                     <div class="se-reads-foot">
-                                        <button type="button" class="se-rnav" data-rprev aria-label="Previous lot">
-                                            <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                                        </button>
                                         <span class="se-rdots">
                                             @foreach ($reads as $i => $r)
-                                                <i class="{{ $i === 0 ? 'is-on' : '' }}"></i>
+                                                <i class="{{ $i === 0 ? 'is-on' : '' }}" data-rdot="{{ $i }}" role="button" tabindex="0" aria-label="Lot {{ $i + 1 }}"></i>
                                             @endforeach
                                         </span>
-                                        <button type="button" class="se-rnav" data-rnext aria-label="Next lot">
-                                            <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                                        </button>
                                         <span class="se-rcount">{{ count($reads) }} lots</span>
                                     </div>
                                 @endif
@@ -561,13 +561,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 const i = at();
                 dots.forEach((d, n) => d.classList.toggle('is-on', n === i));
             };
-            const go = (step) => {
-                const next = Math.max(0, Math.min(dots.length - 1, at() + step));
-                rail.scrollTo({ left: next * rail.clientWidth, behavior: 'smooth' });
-            };
+            const goTo = (i) => rail.scrollTo({
+                left: Math.max(0, Math.min(dots.length - 1, i)) * rail.clientWidth,
+                behavior: 'smooth',
+            });
             rail.addEventListener('scroll', () => window.requestAnimationFrame(paint), { passive: true });
-            box.querySelector('[data-rprev]')?.addEventListener('click', (e) => { e.preventDefault(); go(-1); });
-            box.querySelector('[data-rnext]')?.addEventListener('click', (e) => { e.preventDefault(); go(1); });
+            // The dots are the whole control now: they say where you are, and
+            // they take you there.
+            dots.forEach((dot, i) => {
+                dot.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); goTo(i); });
+                dot.addEventListener('keydown', (e) => {
+                    if (e.key !== 'Enter' && e.key !== ' ') return;
+                    e.preventDefault(); e.stopPropagation(); goTo(i);
+                });
+            });
             // A card is a link; a swipe on the strip is not a tap on it.
             rail.addEventListener('click', (e) => e.stopPropagation());
             paint();
