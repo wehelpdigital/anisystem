@@ -12,16 +12,19 @@
             <button type="button" class="btn-ghost rounded-full w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-700" data-close-status aria-label="Close">✕</button>
         </div>
         <div class="plaza-modal-body">
-            <div class="flex items-center gap-2">
-                <input type="text" id="statusInput" class="form-input grow" maxlength="60" placeholder="e.g. Aani na! 🌾 · Waiting for rain · Nagtatanim ng palay">
-                <button type="button" class="emoji-btn js-emoji-btn shrink-0" data-target="statusInput" aria-label="Add an emoji" title="Emoji">
+            {{-- A box with room in it. On one line the example of what to
+                 write was cut off before it finished being an example, which
+                 is the one job a placeholder has. --}}
+            <textarea id="statusInput" class="form-textarea w-full" rows="2" maxlength="60"
+                      placeholder="e.g. Aani na! 🌾 · Waiting for rain · Nagtatanim ng palay"></textarea>
+            <div class="st-row">
+                <button type="button" class="emoji-btn js-emoji-btn" data-target="statusInput" aria-label="Add an emoji" title="Emoji">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span>Emoji</span>
                 </button>
+                <span id="statusCount" class="st-count tabular-nums">0/60</span>
             </div>
-            <div class="flex items-center justify-between mt-1.5">
-                <p class="text-xs text-gray-400">Floats as a thought bubble over your photo. Leave blank and Clear to remove it.</p>
-                <span id="statusCount" class="text-xs text-gray-400 font-medium shrink-0 ml-2 tabular-nums">0/60</span>
-            </div>
+            <p class="text-xs text-gray-400 mt-1.5">Floats as a thought bubble over your photo. Leave blank and Clear to remove it.</p>
         </div>
         <div class="plaza-modal-foot flex items-center justify-between">
             <button type="button" id="statusClear" class="btn btn-ghost btn-sm text-red-500 hover:bg-red-50">Clear status</button>
@@ -32,6 +35,24 @@
         </div>
     </div>
 </div>
+
+@push('head')
+<style>
+    /* The emoji button sits under the box rather than beside it: beside, it
+       stole the width the placeholder needed. */
+    .st-row { display: flex; align-items: center; gap: .5rem; margin-top: .5rem; }
+    .st-row .emoji-btn { display: inline-flex; align-items: center; gap: .3rem;
+        padding: .3rem .6rem; border-radius: 999px; border: 1px solid var(--color-gray-200);
+        background: var(--color-white); color: var(--color-gray-500);
+        font-size: .74rem; font-weight: 700; cursor: pointer;
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .st-row .emoji-btn:hover { border-color: #a8cc7e; color: #3d6823; }
+    .st-count { margin-left: auto; font-size: .72rem; font-weight: 600; color: var(--color-gray-400); }
+    #statusInput { resize: none; line-height: 1.5; }
+    html.dark .st-row .emoji-btn { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
+    @media (prefers-reduced-motion: reduce) { .st-row .emoji-btn { transition: none; } }
+</style>
+@endpush
 
 @push('scripts')
 <script>
@@ -100,6 +121,11 @@
     });
     modal.addEventListener('click', (e) => { if (e.target.closest('[data-close-status]')) close(); });
 
+    /* A bubble is one line wherever it is shown, so a return key in the box
+       would be kept and then quietly ignored by every place that draws it.
+       Enter saves instead, and any newline pasted in becomes a space. */
+    const oneLine = (v) => v.replace(/\s*[\r\n]+\s*/g, ' ').trim().slice(0, MAXLEN);
+
     async function save(val) {
         try {
             const res = await fetch(@json(route('community.status.update')), {
@@ -122,9 +148,11 @@
         }
     }
 
-    document.getElementById('statusSave')?.addEventListener('click', () => save(input.value.trim().slice(0, MAXLEN)));
+    document.getElementById('statusSave')?.addEventListener('click', () => save(oneLine(input.value)));
     document.getElementById('statusClear')?.addEventListener('click', () => save(''));
-    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); save(input.value.trim().slice(0, MAXLEN)); } });
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); save(oneLine(input.value)); }
+    });
 })();
 </script>
 @endpush

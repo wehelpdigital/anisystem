@@ -137,7 +137,9 @@
         opacity: 0; pointer-events: none; transform: translateY(-50%) scale(.8);
         transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
     .dn-arrow svg { width: .9rem; height: .9rem; }
-    .dn-arrow.is-on { opacity: 1; pointer-events: auto; transform: translateY(-50%) scale(1); }
+    /* Two conditions, both required: the list is being moved, and there is
+       something in that direction to move to. */
+    .dn-slider.is-live .dn-arrow.can-go { opacity: 1; pointer-events: auto; transform: translateY(-50%) scale(1); }
     .dn-arrow:hover { color: #3d6823; border-color: #a8cc7e; }
     .dn-prev { left: -.35rem; }
     .dn-next { right: -.35rem; }
@@ -712,22 +714,40 @@
 @push('scripts')
 <script>
 (function dashToday() {
-    /* Each day's tasks slide one whole card at a time. The arrows are the
-       desktop way through — a mouse has no swipe — and they arrive and leave
-       rather than switching, because a control that blinks in and out at the
-       ends of a list reads as a glitch. */
+    /* Each day's tasks slide one whole card at a time.
+     *
+     * The arrows belong to the gesture, not to the card. They appear as you
+     * start moving the list and fade out once you stop, so a card sitting
+     * still is just the task — no furniture over it. Which of the two shows
+     * still depends on there being somewhere to go, so the last card never
+     * offers a way forward that does nothing.
+     *
+     * They stay awake while the pointer is on one of them, because an arrow
+     * that vanishes from under the cursor cannot be clicked. */
+    const REST = 1100;      // how long they linger after the last movement
+
     document.querySelectorAll('[data-dn-slider]').forEach((slider) => {
         const rail = slider.querySelector('[data-dn-rail]');
         const prev = slider.querySelector('[data-dn-prev]');
         const next = slider.querySelector('[data-dn-next]');
         if (!rail || slider.classList.contains('is-single')) return;
 
-        const paint = () => {
+        let sleep = null;
+        let held = false;   // the pointer is resting on an arrow
+
+        const reach = () => {
             // A pixel of slack: sub-pixel scroll positions never land exactly
             // on the end, and without it the last arrow never turns off.
             const max = rail.scrollWidth - rail.clientWidth;
-            prev.classList.toggle('is-on', rail.scrollLeft > 2);
-            next.classList.toggle('is-on', rail.scrollLeft < max - 2);
+            prev.classList.toggle('can-go', rail.scrollLeft > 2);
+            next.classList.toggle('can-go', rail.scrollLeft < max - 2);
+        };
+
+        const wake = () => {
+            reach();
+            slider.classList.add('is-live');
+            clearTimeout(sleep);
+            sleep = setTimeout(() => { if (!held) slider.classList.remove('is-live'); }, REST);
         };
 
         const step = (dir) => {
@@ -736,11 +756,20 @@
             rail.scrollBy({ left: dir * by, behavior: 'smooth' });
         };
 
-        prev.addEventListener('click', () => step(-1));
-        next.addEventListener('click', () => step(1));
-        rail.addEventListener('scroll', paint, { passive: true });
-        window.addEventListener('resize', paint);
-        paint();
+        // Anything that moves the list, or is about to.
+        rail.addEventListener('scroll', wake, { passive: true });
+        rail.addEventListener('pointerdown', wake, { passive: true });
+        rail.addEventListener('touchstart', wake, { passive: true });
+        rail.addEventListener('wheel', wake, { passive: true });
+
+        [prev, next].forEach((btn) => {
+            btn.addEventListener('click', () => step(btn === prev ? -1 : 1));
+            btn.addEventListener('pointerenter', () => { held = true; wake(); });
+            btn.addEventListener('pointerleave', () => { held = false; wake(); });
+        });
+
+        window.addEventListener('resize', reach);
+        reach();
     });
 
     /* The blog's covers are written by the mother site, onto its disk. When
