@@ -384,7 +384,7 @@
         window.smAskRecording?.({
             sizeMB: blob.size / 1048576,
             onSave: async ({ title, description }) => {
-                const waiting = window.smBusy('Compressing and saving the recording…');
+                const waiting = window.smBusy('Uploading the recording…');
                 const form = new FormData();
                 form.append('clip', blob, 'team-recording.webm');
                 form.append('scheduleId', SCHEDULE_ID);

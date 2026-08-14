@@ -235,9 +235,10 @@
 
         const btn = $('qrSave');
         btn.disabled = true;
-        // Compressing a phone video takes as long as it takes; the notice
-        // stays up until the server has actually finished.
-        const waiting = window.smBusy('Compressing and saving the clip…');
+        // Says uploading, because that is the part the person is waiting
+        // through and the part their connection decides. What the server does
+        // with it afterwards is the server's business.
+        const waiting = window.smBusy('Uploading the video…');
 
         const form = new FormData();
         form.append('clip', clip, clip.name || 'recording.webm');

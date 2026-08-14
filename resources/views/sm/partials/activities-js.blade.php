@@ -3999,7 +3999,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /** Upload one file with a visible wait, then start a note carrying it. */
     async function noteFromCapture(dateKey, file, url, field, kind, suggested) {
-        const done = window.smBusy(kind === 'video' ? 'Compressing the video…' : 'Saving the photo…');
+        const done = window.smBusy(kind === 'video' ? 'Uploading the video…' : 'Uploading the photo…');
         try {
             const form = new FormData();
             form.append(field, file);
