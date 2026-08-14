@@ -33,8 +33,13 @@
         padding: 0 .9rem .9rem; }
     .ga-cell { position: relative; aspect-ratio: 1; border-radius: .7rem; overflow: hidden; background: #0b1220;
         cursor: pointer; }
-    .ga-cell img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .28s ease; }
-    .ga-cell img.is-loaded { opacity: 1; }
+    .ga-cell img, .ga-cell video { width: 100%; height: 100%; object-fit: cover; display: block;
+        opacity: 0; transition: opacity .28s ease; }
+    .ga-cell img.is-loaded, .ga-cell video.is-loaded { opacity: 1; }
+    /* So a still frame is not mistaken for a photo. */
+    .ga-vid { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+        width: 2rem; height: 2rem; border-radius: 999px; background: rgb(0 0 0 / .55); color: #fff;
+        display: flex; align-items: center; justify-content: center; font-size: .8rem; pointer-events: none; }
     .ga-cell.is-gone::after { content: 'File missing'; position: absolute; inset: 0; display: flex;
         align-items: center; justify-content: center; font-size: .66rem; font-weight: 700; color: #94a3b8; }
     /* Picking is a mode: the tick is always there to start it, and once one
@@ -302,13 +307,23 @@
         const esc = window.escapeHtml || ((s) => String(s ?? ''));
 
         function albumHtml(a) {
-            const cells = a.images.map((im) => `
-                <div class="ga-cell" data-image="${im.id}" data-lb-type="image" data-lb-url="${esc(im.url)}">
-                    <img src="${esc(im.url)}" alt="${esc(im.caption || '')}" loading="lazy"
+            const cells = a.images.map((im) => {
+                // A clip in an album is a clip. Putting one in an <img> is how
+                // a perfectly good recording came to report itself missing.
+                const shot = im.kind === 'video'
+                    ? `<video src="${esc(im.url)}" preload="metadata" playsinline muted
+                        onloadeddata="this.classList.add('is-loaded')"
+                        onerror="this.closest('.ga-cell')?.classList.add('is-gone'); this.remove();"></video>
+                       <span class="ga-vid" aria-hidden="true">▶</span>`
+                    : `<img src="${esc(im.url)}" alt="${esc(im.caption || '')}" loading="lazy"
                         onload="this.classList.add('is-loaded')"
-                        onerror="this.closest('.ga-cell')?.classList.add('is-gone'); this.remove();">
+                        onerror="this.closest('.ga-cell')?.classList.add('is-gone'); this.remove();">`;
+                return `
+                <div class="ga-cell" data-image="${im.id}" data-lb-type="${im.kind === 'video' ? 'video' : 'image'}" data-lb-url="${esc(im.url)}">
+                    ${shot}
                     <span class="ga-pick" data-pick><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
-                </div>`).join('');
+                </div>`;
+            }).join('');
             return `<div class="ga-album" data-album="${a.id}">
                 <div class="ga-head">
                     <span class="min-w-0 grow">

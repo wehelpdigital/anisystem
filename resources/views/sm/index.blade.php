@@ -181,6 +181,21 @@
             transition: opacity .28s cubic-bezier(.22,1,.36,1); }
         .sch-opt-tick svg { width: 100%; height: 100%; }
         .sch-opt.is-on .sch-opt-tick { opacity: 1; }
+        /* The grid dims a touch while the next order is fetched — enough to
+           say something is happening, not enough to flash. */
+        #scheduleResults { transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+        #scheduleResults.is-swapping { opacity: .45; pointer-events: none; }
+        @media (prefers-reduced-motion: reduce) { #scheduleResults { transition: none; } }
+
+        .sch-modal-foot { display: flex; align-items: center; gap: .5rem; padding: .6rem .8rem;
+            border-top: 1px solid var(--color-gray-100);
+            padding-bottom: calc(.6rem + env(safe-area-inset-bottom, 0px)); }
+        .sch-clear { padding: .35rem .7rem; border-radius: 999px; cursor: pointer;
+            font-size: .76rem; font-weight: 700; color: var(--color-gray-500);
+            transition: color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+        .sch-clear:hover { color: #b91c1c; background: #fef2f2; }
+        .sch-clear[disabled] { opacity: .4; pointer-events: none; }
+        html.dark .sch-modal-foot { border-color: #2b3a1c; }
         html.dark .sch-modal-card { background: #151b12; }
         html.dark .sch-modal-head { border-color: #2b3a1c; }
         html.dark .sch-opt:hover { background: rgb(255 255 255 / .05); }
@@ -514,7 +529,7 @@
                 </div>
                 <div class="sch-modal-body">
                     @foreach ($sorts as $key => $meta)
-                        <a class="sch-opt{{ $sort === $key ? ' is-on' : '' }}"
+                        <a class="sch-opt{{ $sort === $key ? ' is-on' : '' }}" data-sort="{{ $key }}"
                            href="{{ route('sm.index', array_filter(['search' => request('search'), 'sort' => $key === 'updated' ? null : $key])) }}">
                             <span class="sch-opt-txt">
                                 <b>{{ $meta['label'] }}</b>
@@ -525,6 +540,14 @@
                             </span>
                         </a>
                     @endforeach
+                </div>
+                <div class="sch-modal-foot">
+                    {{-- A way back, always offered. Working out that "last
+                         updated" was the one you started with is not
+                         something anybody should have to do. --}}
+                    <button type="button" class="sch-clear" data-sort="updated"
+                            data-href="{{ route('sm.index', array_filter(['search' => request('search')])) }}">Clear filter</button>
+                    <button type="button" class="btn btn-white btn-sm ml-auto" data-sch-close>Done</button>
                 </div>
             </div>
         </div>
@@ -847,6 +870,67 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && !modal.classList.contains('hidden')) close();
         });
+
+        /* Choosing an order swaps the grid in place. A full navigation
+           reloaded the header, the doors and the tip of the day to change
+           the sequence of three cards, and the whole screen blinked to do
+           it — the same fetch-and-swap the search already uses says the same
+           thing without the flash. */
+        function paintChoice(key) {
+            modal.querySelectorAll('.sch-opt').forEach((o) => {
+                o.classList.toggle('is-on', o.dataset.sort === key);
+            });
+            const clear = modal.querySelector('.sch-clear');
+            if (clear) clear.disabled = key === 'updated';
+            // The pill says which order is on, unless it is the default.
+            btn.classList.toggle('is-set', key !== 'updated');
+            let now = btn.querySelector('.sch-pill-now');
+            const label = modal.querySelector('.sch-opt[data-sort="' + key + '"] b')?.textContent || '';
+            if (key === 'updated') { now?.remove(); return; }
+            if (!now) {
+                now = document.createElement('span');
+                now.className = 'sch-pill-now';
+                btn.appendChild(now);
+            }
+            now.textContent = label;
+        }
+
+        async function choose(href, key) {
+            if (!results) return;
+            close();
+            results.classList.add('is-swapping');
+            try {
+                const res = await fetch(href, {
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    credentials: 'same-origin',
+                });
+                const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
+                const fresh = doc.getElementById('scheduleResults');
+                if (fresh) {
+                    results.innerHTML = fresh.innerHTML;
+                    window.smWireReadRails?.(results);
+                    window.smApplyFolds?.(results);
+                }
+                // The address bar keeps up so a reload lands on the same
+                // shelf, without the reload having happened.
+                history.replaceState(null, '', href);
+                paintChoice(key);
+            } catch (_) {
+                // Nothing swapped; the order on screen is still the true one.
+            } finally {
+                results.classList.remove('is-swapping');
+            }
+        }
+
+        const results = document.getElementById('scheduleResults');
+        modal.addEventListener('click', (e) => {
+            const opt = e.target.closest('.sch-opt, .sch-clear');
+            if (!opt) return;
+            e.preventDefault();
+            choose(opt.getAttribute('href') || opt.dataset.href, opt.dataset.sort);
+        });
+
+        paintChoice(@json($sort));
     })();
 
     // ---- Live search: fetch as you type and swap the results in place.

@@ -149,10 +149,16 @@ class GalleryController extends BaseScheduleController
                 'id' => $a->id,
                 'title' => $a->title,
                 'description' => $a->description,
+                // An album holds whatever was put in it, and Quick Record can
+                // put a video there. The row does not say which, so the file
+                // name has to — and without asking, every clip was rendered
+                // into an <img>, failed to load, and reported itself missing
+                // while sitting perfectly safe on disk.
                 'images' => $a->images->map(fn ($i) => [
                     'id' => $i->id,
                     'url' => MediaStore::url($i->path),
                     'caption' => $i->caption,
+                    'kind' => preg_match('~\.(mp4|mov|webm|mkv|m4v|3gp)$~i', (string) $i->path) ? 'video' : 'image',
                 ])->values()->all(),
             ])
             ->values()->all();
