@@ -92,7 +92,11 @@
     .ga-pickbtn:hover { border-color: #a8cc7e; color: #3d6823; }
     .ga-pickico { width: 1rem; height: 1rem; flex: none; color: #4a7c2a; }
     .ga-pickchev { width: .8rem; height: .8rem; flex: none; color: var(--color-gray-400); }
-    #gaTabNow { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    /* No overflow: hidden here. On a flex item that switches the automatic
+       minimum size from `auto` to 0, which let the label shrink away to
+       nothing and leave a button that was only an icon. The four names are
+       short; none of them needs truncating. */
+    #gaTabNow { white-space: nowrap; }
     html.dark .ga-pickbtn { background: #1c2416; border-color: #2b3a1c; color: #e8efe1; }
 
     .ga-modal { position: fixed; inset: 0; z-index: 120; display: flex; align-items: flex-end; justify-content: center; }
@@ -296,6 +300,23 @@
         </div>
     </div>
 </div>
+
+{{-- ============================ everything ============================ --}}
+<div class="ga-pane" data-pane="all">
+    <div class="ga-tools">
+        <label class="ga-search">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+            <input type="search" id="gaFind" placeholder="Search by what it was about…" autocomplete="off">
+        </label>
+        <div class="ga-filters" id="gaFilters">
+            <button type="button" class="ga-filter is-on" data-src="">Everything</button>
+            <button type="button" class="ga-filter" data-src="Note">Notes</button>
+            <button type="button" class="ga-filter" data-src="Day note">Day notes</button>
+            <button type="button" class="ga-filter" data-src="Drawing">Drawings</button>
+            <button type="button" class="ga-filter" data-src="Map">Maps</button>
+            <button type="button" class="ga-filter" data-src="Album">Albums</button>
+            <button type="button" class="ga-filter" data-src="Activity">Activities</button>
+        </div>
     </div>
     <div class="ga-all" id="gaAll"></div>
     <p class="ga-none hidden" id="gaAllNone">Nothing here yet. Anything taken anywhere in this schedule — a note, a day, a drawing, a map — arrives here on its own.</p>
