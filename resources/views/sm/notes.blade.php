@@ -288,6 +288,9 @@ const __init = () => {
     const NOTES = @json($seed->isEmpty() ? new stdClass() : $seed);
 
     const list = document.getElementById('notesList');
+    // How many notes the schedule actually holds, as opposed to how many
+    // have been fetched so far — the search says which it is counting.
+    const NOTE_TOTAL = {{ (int) $notes->total() }};
     const emptyEl = document.getElementById('notesEmpty');
     const fld = (id) => document.getElementById(id);
     let quill = null;
@@ -476,12 +479,24 @@ const __init = () => {
             else c.classList.toggle('is-collapsed', collapsedIds.has(String(c.dataset.id)));
         });
         const count = fld('noteCount');
-        count.textContent = query ? (shown + ' of ' + all.length + ' notes') : '';
+        count.textContent = query
+            ? (shown + ' of ' + all.length + (all.length < NOTE_TOTAL ? ' notes loaded so far' : ' notes'))
+            : '';
         count.classList.toggle('hidden', !query);
         fld('notesNoMatch').classList.toggle('hidden', !(query && shown === 0));
         fld('noteSearchClear').classList.toggle('hidden', !query);
         syncFoldButton();
     }
+    // The notebook arrives a page at a time now, so rows can land after a
+    // search has already been typed. Without this they appear unfiltered
+    // below the matches, and the count goes stale.
+    list?.addEventListener('lists:appended', () => {
+        cards().forEach((c) => {
+            if (!c.dataset.animated) c.dataset.animated = '1';
+        });
+        runSearch();
+    });
+
     fld('noteSearch')?.addEventListener('input', (e) => {
         query = e.target.value.trim().toLowerCase();
         runSearch();

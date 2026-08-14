@@ -859,6 +859,9 @@ window.smQuillTouch = function smQuillTouch(quill) {
                 while (box.firstElementChild) list.appendChild(box.firstElementChild);
                 next += 1;
                 failed = false;
+                // The page these rows joined may filter or fold them; it is
+                // told, so a search or a filter covers the new arrivals too.
+                list.dispatchEvent(new CustomEvent('lists:appended', { bubbles: true }));
                 if (next > last) done();
                 else more.hidden = true;
             } catch (_) {
@@ -872,7 +875,19 @@ window.smQuillTouch = function smQuillTouch(quill) {
             } finally {
                 busy = false;
             }
+            // A page whose rows all land hidden — arrived under a filter —
+            // grows the list by nothing, so the sentinel never moves and no
+            // second callback ever comes. Keep going while it is still in
+            // view, or the shelf stops with most of itself unread.
+            if (!failed && next <= last && PHONE() && stillWanted()) {
+                requestAnimationFrame(load);
+            }
         }
+
+        const stillWanted = () => {
+            const r = pager.getBoundingClientRect();
+            return r.top < window.innerHeight + 600;
+        };
 
         manual.addEventListener('click', load);
 
@@ -892,6 +907,49 @@ window.smQuillTouch = function smQuillTouch(quill) {
         modeSwitch();
         window.addEventListener('resize', modeSwitch);
     }
+
+    /* A page link swaps the list in place instead of navigating.
+     *
+     * Inside the schedule shell these links point at a module's own URL, and
+     * the shell answers any such link by tearing the module down and
+     * re-fetching it — losing the search box, the folds and the scroll, and
+     * leaving a history entry per page. Fetching the page ourselves keeps all
+     * of that, and behaves the same on a standalone page.
+     *
+     * Capture phase: this has to be settled before the shell's own handler
+     * further down the tree ever sees the click.
+     */
+    document.addEventListener('click', async (e) => {
+        const link = e.target.closest && e.target.closest('.lp-links a.pg-btn[href]');
+        if (!link) return;
+        const pager = link.closest('[data-infinite-list]');
+        const list = pager && pager.previousElementSibling;
+        if (!pager || !list) return;
+        e.preventDefault();
+        e.stopPropagation();
+        pager.classList.add('is-busy');
+        try {
+            const res = await fetch(link.href, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                credentials: 'same-origin',
+            });
+            if (!res.ok) throw new Error('Could not open that page.');
+            const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
+            // The same list and the same pager, one page further on.
+            const freshList = list.id ? doc.getElementById(list.id) : null;
+            const freshPager = doc.querySelector('[data-infinite-list]');
+            if (!freshList) throw new Error('Could not open that page.');
+            list.innerHTML = freshList.innerHTML;
+            if (freshPager) pager.replaceWith(freshPager);
+            list.dispatchEvent(new CustomEvent('lists:appended', { bubbles: true }));
+            scan();
+            list.scrollIntoView({ block: 'start', behavior: 'smooth' });
+        } catch (err) {
+            window.toast?.(err.message || 'Could not open that page.', 'error');
+        } finally {
+            pager.classList.remove('is-busy');
+        }
+    }, true);
 
     const scan = () => document.querySelectorAll('[data-infinite-list]').forEach(wire);
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scan);
@@ -914,7 +972,10 @@ window.smQuillTouch = function smQuillTouch(quill) {
  * ==================================================================== */
 (function voiceToText() {
     const Recog = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!Recog) return;
+    // Chrome hands out the constructor on plain http too, where start() can
+    // only ever fail — and this app is reached over the farm's own LAN as
+    // often as over https. A button that cannot work should not appear.
+    if (!Recog || !window.isSecureContext) return;
 
     // Fields worth talking into. Passwords and the typed ones a keyboard
     // does better (numbers, dates) are left alone.
@@ -936,12 +997,23 @@ window.smQuillTouch = function smQuillTouch(quill) {
         if (at >= 0) langIndex = at;
     } catch (_) { /* private mode */ }
 
+    // A search box already keeps something in its right-hand corner — a
+    // clear ✕, a match count — and the mic would sit on top of it. Dictating
+    // a filter is not worth hiding the control that undoes it.
+    const isSearchish = (el) => {
+        const t = (el.getAttribute('type') || '').toLowerCase();
+        if (t === 'search' || el.getAttribute('role') === 'searchbox') return true;
+        return /search|filter/i.test(`${el.id} ${el.name || ''} ${el.className || ''}`);
+    };
+
     function dictatable(el) {
         if (!el || el.disabled || el.readOnly) return false;
+        // Any field, or anything around it, can opt out by name.
+        if (el.closest('[data-no-dictate]')) return false;
         if (el.tagName === 'TEXTAREA') return true;
         if (el.tagName === 'INPUT') {
             const t = (el.getAttribute('type') || 'text').toLowerCase();
-            return !SKIP_TYPES.includes(t);
+            return !SKIP_TYPES.includes(t) && !isSearchish(el);
         }
         // Rich editors — the note body, an activity description, a topic.
         return el.isContentEditable;
@@ -973,8 +1045,13 @@ window.smQuillTouch = function smQuillTouch(quill) {
     /* ---- where it sits ---- */
     function place() {
         if (!target || mic.hidden) return;
+        // The field can go while it is being dictated into — a sheet closes,
+        // a module is re-fetched. Listening on into a node nobody can see is
+        // worse than losing the sentence, so that ends the dictation rather
+        // than being refused by hide()'s own guard.
+        if (!target.isConnected) { stop(); mic.hidden = true; target = null; return; }
         const r = target.getBoundingClientRect();
-        if (r.width === 0 && r.height === 0) { hide(); return; }
+        if (r.width === 0 && r.height === 0) { stop(); mic.hidden = true; target = null; return; }
         const size = 32, gap = 6;
         // Inside the field's right edge: on a tall box (a textarea, an
         // editor) it sits at the bottom, out of the way of the words.
@@ -992,6 +1069,10 @@ window.smQuillTouch = function smQuillTouch(quill) {
         target = el;
         mic.hidden = false;
         place();
+        // A sheet is still sliding when the field inside it takes focus, so
+        // the first measurement is of a rectangle on its way somewhere. A few
+        // more passes catch where it settles; place() is cheap and idempotent.
+        [60, 180, 340].forEach((ms) => setTimeout(place, ms));
     }
     function hide() {
         if (listening) return;              // never vanish mid-sentence
@@ -1008,6 +1089,8 @@ window.smQuillTouch = function smQuillTouch(quill) {
         // before deciding the field is really gone.
         setTimeout(() => {
             if (listening) return;
+            // The tap that reached the mic counts as staying with the field.
+            if (mic.contains(document.activeElement)) return;
             if (document.activeElement && dictatable(document.activeElement)) return;
             hide();
         }, 120);
@@ -1048,12 +1131,29 @@ window.smQuillTouch = function smQuillTouch(quill) {
     /* A dictated sentence should read like one: speech comes back bare, so
        it is spaced against what is already there and given a capital when it
        starts something. */
+    /** The words already written BEFORE the caret — not the whole field. */
+    function textBeforeCaret() {
+        if (!target) return '';
+        if (!target.isContentEditable) {
+            return String(target.value || '').slice(0, target.selectionStart ?? 0);
+        }
+        const sel = window.getSelection();
+        if (!sel || !sel.rangeCount) return target.textContent || '';
+        const caret = sel.getRangeAt(0);
+        if (!target.contains(caret.startContainer)) return target.textContent || '';
+        // Measuring to the caret rather than reading the whole note: a
+        // sentence dictated into the middle of one was being capitalised
+        // from the note's last character, wherever that happened to be.
+        const upto = document.createRange();
+        upto.selectNodeContents(target);
+        try { upto.setEnd(caret.startContainer, caret.startOffset); } catch (_) { return target.textContent || ''; }
+        return upto.toString();
+    }
+
     function polish(text) {
         let out = String(text || '').trim();
         if (!out) return '';
-        const before = target && !target.isContentEditable
-            ? String(target.value || '').slice(0, target.selectionStart ?? 0)
-            : (target ? target.textContent || '' : '');
+        const before = textBeforeCaret();
         const tail = before.replace(/\s+$/, '').slice(-1);
         if (tail === '' || '.!?'.includes(tail)) out = out.charAt(0).toUpperCase() + out.slice(1);
         const needsSpace = before !== '' && !/\s$/.test(before);
@@ -1076,12 +1176,20 @@ window.smQuillTouch = function smQuillTouch(quill) {
         recog.lang = LANGS[langIndex].code;
         recog.interimResults = true;
         recog.continuous = true;
+        // Which finalised phrases have already been written. The results list
+        // is cumulative and a revised result can arrive with an index that
+        // was final once already — without this the sentence lands twice.
+        let writtenTo = -1;
         recog.onresult = (e) => {
             let interim = '';
             for (let i = e.resultIndex; i < e.results.length; i++) {
                 const res = e.results[i];
-                if (res.isFinal) { target = el; insert(polish(res[0].transcript)); }
-                else interim += res[0].transcript;
+                if (res.isFinal) {
+                    if (i <= writtenTo) continue;
+                    writtenTo = i;
+                    target = el;
+                    insert(polish(res[0].transcript));
+                } else interim += res[0].transcript;
             }
             said.textContent = interim.trim() || 'Listening…';
         };
@@ -1102,9 +1210,13 @@ window.smQuillTouch = function smQuillTouch(quill) {
         } catch (_) { stop(); }
     }
 
-    // Keep the field's caret: the button must never steal focus off it.
+    // Keep the field's caret on a mouse, where cancelling mousedown is safe.
+    // NOT on touch: preventing touchstart cancels the whole compatibility
+    // sequence the browser sends afterwards — mousedown, mouseup AND click —
+    // which left the button doing nothing at all on every phone. A tap may
+    // take focus off the field for an instant; the caret survives it, and
+    // insert() re-focuses a rich editor before writing.
     mic.addEventListener('mousedown', (e) => e.preventDefault());
-    mic.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
     mic.addEventListener('click', (e) => {
         // The language chip cycles instead of starting; a farm dictates in
         // two languages and switching should not be a settings trip.
@@ -1122,6 +1234,18 @@ window.smQuillTouch = function smQuillTouch(quill) {
         if (listening && !mic.contains(e.target) && e.target !== target) stop();
     });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && listening) stop(); });
+
+    /* A lightbox or the drawing pad opens over the field without ever taking
+       focus off it — an image is not focusable — so nothing told the mic its
+       field had been covered, and it painted at z-500 in the middle of them.
+       Every full-screen overlay in the app announces itself here. */
+    const realRegister = window.registerOverlay;
+    window.registerOverlay = function (...args) {
+        stop();
+        mic.hidden = true;
+        target = null;
+        return typeof realRegister === 'function' ? realRegister.apply(this, args) : undefined;
+    };
 
     window.smVoice = { stop, isListening: () => listening };
 })();

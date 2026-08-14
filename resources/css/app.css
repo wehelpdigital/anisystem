@@ -891,6 +891,10 @@ html.dark .pg-btn.is-now { background: #4a7c2a; border-color: #4a7c2a; color: #f
     .lp-wrap.is-phone .lp-more { display: flex; }
     .lp-wrap.is-phone.is-done .lp-more { display: none; }
 }
+/* `hidden` has to beat the display above, or the spinner sits there saying
+   "Loading more…" forever between fetches. Same trap the .btn and .sheet
+   rules above were written for. */
+.lp-wrap .lp-more[hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) { .lp-spin { animation-duration: 2.4s; } }
 
 /* ------------------------------------------------------------------ */
