@@ -282,7 +282,7 @@
                 @endif
             </span>
             <div class="min-w-0">
-                <h1 class="sch-hero-h">{{ $__greet }}, {{ auth()->user()->firstName ?: 'farmer' }}</h1>
+                <h1 class="sch-hero-h">{{ $__greet }}, {{ \Illuminate\Support\Str::title(auth()->user()->firstName ?: 'farmer') }}</h1>
                 <p class="sch-hero-p">{!! $__say !!}</p>
                 @if (($todayHref ?? null) && $summary['today'] > 0)
                     <a href="{{ $todayHref }}" class="sch-hero-cta">

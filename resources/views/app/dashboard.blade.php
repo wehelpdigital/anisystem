@@ -57,8 +57,13 @@
     html.dark .tod-afternoon { color: #7dd3fc; }
     html.dark .tod-evening { color: #c4b5fd; }
     html.dark .tod-morning, html.dark .tod-afternoon, html.dark .tod-evening { background: rgb(255 255 255 / .07); }
-    .dash-hero-h { font-size: 1.15rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.25; }
-    .dash-hero-p { font-size: .82rem; color: var(--color-gray-500); margin-top: .15rem; }
+    .dash-hero-h { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800;
+        color: var(--color-gray-900); line-height: 1.2; letter-spacing: -.01em; }
+    .dash-hero-p { font-size: .82rem; color: var(--color-gray-500); margin-top: .2rem; }
+    /* Enough air that the greeting reads as a welcome rather than a header. */
+    .dash-hero { padding: 1.25rem 1.35rem; }
+    .dash-hero-mark { width: 3.35rem; height: 3.35rem; }
+    .dash-hero-mark svg { width: 1.7rem; height: 1.7rem; }
     .dash-hero-warn { display: inline-flex; align-items: center; gap: .3rem; margin-top: .35rem;
         font-size: .78rem; font-weight: 700; color: #b45309; }
     .dash-hero-warn svg { width: .85rem; height: .85rem; }
@@ -74,6 +79,47 @@
     html.dark .dash-chip { background: rgb(255 255 255 / .05); border-color: #2b3a1c; color: #cdd8c0; }
     html.dark .dash-chip.is-ok { background: rgb(61 104 35 / .22); border-color: #3f5626; color: #bfe19a; }
     html.dark .dash-chip.is-warn { background: rgb(154 52 18 / .2); border-color: rgb(154 52 18 / .5); color: #fdba74; }
+
+    /* ---- what a season has next: a date block, then the work. It used to
+       be a bordered panel inside a bordered card, with a calendar emoji and
+       bullet dots doing the job the layout should do. ---- */
+    .dn-next { display: flex; align-items: stretch; gap: .7rem; padding: .6rem .7rem;
+        border-radius: .8rem; text-decoration: none; background: var(--color-gray-50);
+        transition: background .28s cubic-bezier(.22,1,.36,1); }
+    .dn-next:hover { background: var(--color-gray-100); }
+    .dn-next.is-today { background: #f0f7e8; }
+    .dn-next.is-today:hover { background: #e4efd4; }
+    .dn-when { flex: 0 0 3.1rem; display: flex; flex-direction: column; align-items: center;
+        justify-content: center; border-radius: .6rem; padding: .3rem 0;
+        background: var(--color-white); border: 1px solid var(--color-gray-200); }
+    .dn-when b { font-size: .82rem; font-weight: 800; line-height: 1.1; color: var(--color-gray-700); }
+    .dn-when i { font-style: normal; font-size: .6rem; font-weight: 700; color: var(--color-gray-400); }
+    .dn-next.is-today .dn-when { background: #4a7c2a; border-color: #4a7c2a; }
+    .dn-next.is-today .dn-when b, .dn-next.is-today .dn-when i { color: #fff; }
+    .dn-next.is-today .dn-when i { opacity: .85; }
+    .dn-what { min-width: 0; flex: 1 1 auto; display: flex; flex-direction: column; gap: .1rem; justify-content: center; }
+    .dn-lead { font-size: .68rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
+        color: #3d6823; }
+    .dn-lead em { font-style: normal; font-weight: 600; color: var(--color-gray-400); text-transform: none; letter-spacing: 0; }
+    .dn-next:not(.is-today) .dn-lead { color: var(--color-gray-500); }
+    .dn-task { font-size: .82rem; font-weight: 600; color: var(--color-gray-800); line-height: 1.35;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .dn-more { font-size: .68rem; font-weight: 700; color: var(--color-gray-400); }
+    .dn-go { width: 1.1rem; height: 1.1rem; flex: none; align-self: center; color: var(--color-gray-300); }
+    .dn-next:hover .dn-go { color: #6b9f3d; }
+    .dn-quiet { font-size: .78rem; color: var(--color-gray-400); }
+    html.dark .dn-next { background: rgb(255 255 255 / .04); }
+    html.dark .dn-next:hover { background: rgb(255 255 255 / .08); }
+    html.dark .dn-next.is-today { background: rgb(61 104 35 / .22); }
+    html.dark .dn-when { background: #151b12; border-color: #2b3a1c; }
+    html.dark .dn-when b { color: #e8efe1; }
+    html.dark .dn-task { color: #cdd8c0; }
+    @media (prefers-reduced-motion: reduce) { .dn-next { transition: none; } }
+
+    /* The composer: a field you can see yourself writing in. */
+    .dash-comp { padding: .85rem !important; }
+    .dash-comp-box { min-height: 6.5rem; font-size: .85rem; line-height: 1.55; resize: vertical; }
+    .dash-comp-box::placeholder { font-size: .82rem; }
 
     .dash-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
     .dash-stat { display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -144,7 +190,7 @@
             @endif
         </span>
         <div class="min-w-0 grow">
-            <h2 class="dash-hero-h">{{ $__greet }}, {{ $user->firstName }}</h2>
+            <h2 class="dash-hero-h">{{ $__greet }}, {{ \Illuminate\Support\Str::title($user->firstName ?: 'kaibigan') }}</h2>
             <p class="dash-hero-p">{{ now('Asia/Manila')->format('l, F j') }} — {{ $scheduleCount === 0 ? 'no seasons planned yet.' : $scheduleCount . ' ' . \Illuminate\Support\Str::plural('season', $scheduleCount) . ' on the shelf.' }}</p>
             @if ($expiringSoon)
                 <a href="{{ route('purchase.plans') }}" class="dash-hero-warn">
@@ -233,33 +279,35 @@
                         <div class="card-body !p-4 flex flex-col gap-3 h-full">
                             <h3 class="font-bold text-gray-900 leading-snug">{{ $schedule->title }}</h3>
 
-                            {{-- What's next for THIS schedule: today's activities, or
-                                 the nearest upcoming day's. --}}
+                            {{-- What is next on THIS season: today's work, or
+                                 the nearest day that has any. It reads as a
+                                 strip — when, then what — rather than a
+                                 bordered box repeating the card it sits in. --}}
                             @if ($next)
                                 <a href="{{ route('sm.activities', ['id' => $schedule->id]) }}"
-                                   class="block rounded-xl border px-3 py-2.5 transition hover:shadow-sm {{ $next['isToday'] ? 'border-brand-200 bg-brand-50/70 hover:bg-brand-50' : 'border-gray-100 bg-gray-50/70 hover:bg-gray-50' }}">
-                                    <div class="flex items-center gap-1.5 mb-1">
-                                        <span class="text-xs font-bold {{ $next['isToday'] ? 'text-brand-700' : 'text-gray-600' }}">
-                                            {{ $next['isToday'] ? '📅 Due today' : '📅 ' . $next['date']->format('D, M j') }}
+                                   class="dn-next {{ $next['isToday'] ? 'is-today' : '' }}">
+                                    <span class="dn-when">
+                                        <b>{{ $next['isToday'] ? 'Today' : $next['date']->format('D') }}</b>
+                                        <i>{{ $next['isToday'] ? $next['date']->format('M j') : $next['date']->format('M j') }}</i>
+                                    </span>
+                                    <span class="dn-what">
+                                        <span class="dn-lead">
+                                            {{ $next['activities']->count() }} {{ \Illuminate\Support\Str::plural('task', $next['activities']->count()) }}
+                                            @unless ($next['isToday'])
+                                                <em>· in {{ $next['daysAway'] }} {{ \Illuminate\Support\Str::plural('day', $next['daysAway']) }}</em>
+                                            @endunless
                                         </span>
-                                        @unless ($next['isToday'])
-                                            <span class="text-[0.688rem] font-semibold text-gray-400">· in {{ $next['daysAway'] }} {{ \Illuminate\Support\Str::plural('day', $next['daysAway']) }}</span>
-                                        @endunless
-                                    </div>
-                                    <ul class="space-y-1">
                                         @foreach ($next['activities']->take(2) as $act)
-                                            <li class="flex items-start gap-2 text-sm text-gray-800 leading-snug">
-                                                <span class="w-1.5 h-1.5 rounded-full {{ $next['isToday'] ? 'bg-brand-500' : 'bg-gray-400' }} mt-1.5 shrink-0"></span>
-                                                <span class="min-w-0 line-clamp-1 font-medium">{{ $act->activityTitle }}</span>
-                                            </li>
+                                            <span class="dn-task">{{ $act->activityTitle }}</span>
                                         @endforeach
-                                    </ul>
-                                    @if ($next['moreCount'] > 0)
-                                        <p class="text-[0.688rem] font-semibold text-gray-400 mt-1 pl-3.5">+{{ $next['moreCount'] }} more that day</p>
-                                    @endif
+                                        @if ($next['moreCount'] > 0)
+                                            <span class="dn-more">+{{ $next['moreCount'] }} more</span>
+                                        @endif
+                                    </span>
+                                    <svg class="dn-go" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                                 </a>
                             @else
-                                <p class="text-xs text-gray-400 italic">No upcoming activities</p>
+                                <p class="dn-quiet">Nothing planned on this season yet.</p>
                             @endif
 
                             {{-- Local weather for this schedule's lot location(s).
@@ -340,11 +388,14 @@
                 {{-- Post to your wall — appears here, in /app/community and on your
                      profile wall (they're one wall). Supports photo + video. --}}
                 <div id="dashComposer" data-video-host class="card mb-5">
-                    <div class="card-body !p-3">
+                    <div class="card-body dash-comp">
                         <div class="flex items-start gap-2.5">
                             <span class="avatar avatar-md {{ \App\Support\CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} shrink-0">{{ auth()->user()->initials ?? '?' }}</span>
                             <div class="min-w-0 grow">
-                                <textarea id="dashPostBody" data-mentionable data-preview="#dashPreview" rows="2" maxlength="5000" class="form-textarea w-full" placeholder="Share something with your co-farmers…"></textarea>
+                                {{-- Room to actually write in, in a size that
+                                     fits more words on a phone: the old box
+                                     was two lines of large type. --}}
+                                <textarea id="dashPostBody" data-mentionable data-preview="#dashPreview" rows="4" maxlength="5000" class="form-textarea w-full dash-comp-box" placeholder="Share something with your co-farmers — a question, a photo of the field, what the weather did…"></textarea>
                                 <div id="dashPreview" class="cp-preview" style="display:none"><span class="cp-label">Preview</span><div class="cp-body"></div></div>
 
                                 <div id="dashImageChip" class="hidden mt-2 items-center gap-2 text-xs font-semibold text-gray-600">
