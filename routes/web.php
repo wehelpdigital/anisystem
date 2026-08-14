@@ -117,6 +117,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/app/worker-switch-farm', [App\Http\Controllers\AccountController::class, 'switchFarm'])->name('worker.switch');
     Route::put('/account/profile', [App\Http\Controllers\AccountController::class, 'updateProfile'])->name('account.profile.update');
     Route::put('/account/password', [App\Http\Controllers\AccountController::class, 'updatePassword'])->name('account.password.update');
+    // How the app behaves for this person — accessibility lives here.
+    Route::get('/account/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('account.settings');
     Route::get('/account/subscription', [App\Http\Controllers\AccountController::class, 'subscription'])->name('account.subscription');
     Route::post('/account/subscription/refresh', [App\Http\Controllers\AccountController::class, 'refreshSubscription'])->name('account.subscription.refresh');
 

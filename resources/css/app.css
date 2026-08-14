@@ -854,6 +854,65 @@ html.dark .sun-editor .se-dialog .se-dialog-content input { background: #10160c;
 html.dark .sm-editor-fallback { background: #151b12; border-color: #2b3a1c; color: #e8efe1; }
 
 /* ------------------------------------------------------------------ */
+/* Accessibility — set in Settings, applied before first paint.        */
+/*                                                                     */
+/* Text size works by scaling the root, which every rem in the app —   */
+/* and every Tailwind size — is measured against, so the whole system   */
+/* grows together instead of one screen at a time. The range is        */
+/* deliberately modest: past these bounds fixed-height chrome (the      */
+/* header, the tab bar) starts to crowd the page it frames.            */
+/* ------------------------------------------------------------------ */
+html[data-font-scale="sm"] { font-size: 93.75%; }   /* 15px */
+html[data-font-scale="md"] { font-size: 100%; }     /* 16px — the default */
+html[data-font-scale="lg"] { font-size: 112.5%; }   /* 18px */
+html[data-font-scale="xl"] { font-size: 125%; }     /* 20px */
+/* The two bars are fixed furniture: they get a little more room so a
+   bigger label is not clipped by the frame it sits in. */
+html[data-font-scale="lg"] .tabbar-item, html[data-font-scale="xl"] .tabbar-item { font-size: .62rem; }
+html[data-font-scale="xl"] .tabbar-item svg { width: 1.25rem; height: 1.25rem; }
+
+/* High contrast: darker text, borders that are actually visible, and no
+   washed-out greys. Kept as overrides on the tokens so every component
+   inherits it without knowing. */
+html.sm-contrast {
+    --color-gray-400: #4b5563;
+    --color-gray-500: #374151;
+    --color-gray-600: #1f2937;
+    --color-gray-200: #9ca3af;
+    --color-gray-100: #d1d5db;
+    --tl-text-muted: #1f2937;
+}
+html.sm-contrast .card, html.sm-contrast .sheet, html.sm-contrast .form-input,
+html.sm-contrast .form-select, html.sm-contrast .form-textarea { border-width: 2px; }
+html.sm-contrast .badge, html.sm-contrast .btn { border-width: 2px; }
+html.sm-contrast .btn-white, html.sm-contrast .btn-ghost { border-color: currentColor; }
+html.sm-contrast :focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+html.sm-contrast.dark {
+    --color-gray-400: #cbd5e1;
+    --color-gray-500: #e2e8f0;
+    --color-gray-600: #f1f5f9;
+    --color-gray-200: #64748b;
+    --color-gray-100: #475569;
+    --tl-text-muted: #e2e8f0;
+}
+html.sm-contrast.dark :focus-visible { outline-color: #93c5fd; }
+
+/* Stillness, asked for rather than detected — the same blanket the OS
+   setting throws, for a device that has no such setting. */
+html.sm-still *, html.sm-still *::before, html.sm-still *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+}
+
+/* Links that look like links, for anyone who cannot rely on colour. */
+html.sm-underline main a:not(.btn):not(.badge):not([class*="tile"]):not([class*="card"]):not(.tabbar-item) {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------ */
 /* Speak instead of type — one mic that follows the focused field.      */
 /* Above every sheet, lightbox and pad, because it belongs to whatever  */
 /* field is on top of them.                                             */
