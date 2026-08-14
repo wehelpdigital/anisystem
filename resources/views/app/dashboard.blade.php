@@ -175,21 +175,25 @@
         .dn-rail { scroll-behavior: auto; }
     }
 
-    /* Your face on the composer, with what's on your mind hanging off it.
-       Tapping either opens the same small ask — the bubble is the affordance,
-       the photo is what people aim at. */
-    .dash-me { position: relative; border: none; background: none; padding: 0; cursor: pointer; }
-    .dash-me { max-width: 3.5rem; }
-    .dash-me-bubble { position: absolute; left: 52%; bottom: -.35rem; max-width: 7.5rem;
-        padding: .1rem .4rem; border-radius: 999px; background: var(--color-white);
-        border: 1px solid var(--color-gray-200); box-shadow: 0 2px 6px -2px rgb(0 0 0 / .18);
-        font-size: .58rem; font-weight: 700; line-height: 1.4; color: var(--color-gray-600);
-        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        transition: border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
-    .dash-me-bubble[data-empty="1"] { font-size: .7rem; padding: .05rem .3rem; }
-    .dash-me:hover .dash-me-bubble { border-color: #a8cc7e; color: #3d6823; }
-    html.dark .dash-me-bubble { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
-    @media (prefers-reduced-motion: reduce) { .dash-me-bubble { transition: none; } }
+    /* Your face on the composer, with what's on your mind above it — the
+       same cloud, in the same place, as everywhere else in the community.
+       The shared .status-cloud does the shape; this only makes it yours:
+       clickable, and inviting while it is empty. */
+    .dash-me { position: relative; border: none; background: none; padding: 0; cursor: pointer;
+        max-width: 3.5rem; }
+    /* The cloud is decoration everywhere else, so the shared rule turns
+       pointer events off. Here it is half the button. */
+    .dash-me .status-cloud { pointer-events: auto; max-width: 9rem;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .dash-me:hover .status-cloud { transform: translateY(-1px); box-shadow: 0 6px 16px rgb(0 0 0 / .18); }
+    /* Nothing said yet: a dashed invitation rather than a statement. */
+    .dash-me .status-cloud.is-empty { background: var(--color-brand-50);
+        border-color: var(--color-brand-300); border-style: dashed; }
+    .dash-me .status-cloud.is-empty .status-cloud-text { color: var(--color-brand-700); font-weight: 700; }
+    .dash-me .status-cloud.is-empty::after { border-top-color: var(--color-brand-50); }
+    /* Room for the cloud to sit above the avatar without meeting the card. */
+    .dash-comp-row { padding-top: 1.35rem; }
+    @media (prefers-reduced-motion: reduce) { .dash-me .status-cloud { transition: none; } }
 
     /* The composer: a field you can see yourself writing in. */
     .dash-comp { padding: .85rem !important; }
@@ -518,13 +522,20 @@
                      profile wall (they're one wall). Supports photo + video. --}}
                 <div id="dashComposer" data-video-host class="card mb-5">
                     <div class="card-body dash-comp">
-                        <div class="flex items-start gap-2.5">
+                        <div class="flex items-start gap-2.5 dash-comp-row">
                             {{-- Your photo, and the one thing people expect to
                                  be able to change by tapping it: what is on
                                  your mind. The bubble is already shown beside
                                  your name across the community — this is the
                                  place people actually look for it. --}}
-                            <button type="button" id="dashMe" class="dash-me shrink-0" title="Set what's on your mind" data-status-bubble>
+                            <button type="button" id="dashMe" class="dash-me status-cloud-wrap shrink-0" title="Set what's on your mind" data-status-bubble>
+                                {{-- The same cloud the community draws over a
+                                     member's photo: above the avatar, tail
+                                     pointing down at it. One shape for one
+                                     idea, wherever it appears. --}}
+                                <span class="status-cloud dash-me-cloud{{ filled(auth()->user()?->statusBubble) ? '' : ' is-empty' }}" id="dashMeBubble">
+                                    <span class="status-cloud-text" data-status-text data-empty-label="💭 What's on your mind?">{{ auth()->user()?->statusBubble ?: "💭 What's on your mind?" }}</span>
+                                </span>
                                 <span class="avatar avatar-md {{ \App\Support\CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} overflow-hidden"
                                       data-me-avatar data-initials="{{ auth()->user()->initials ?? '?' }}">
                                     @if (auth()->user()?->avatarPath)
@@ -533,7 +544,6 @@
                                         {{ auth()->user()->initials ?? '?' }}
                                     @endif
                                 </span>
-                                <span class="dash-me-bubble" id="dashMeBubble" data-status-text data-empty-label="💭" data-empty="{{ filled(auth()->user()?->statusBubble) ? '0' : '1' }}">{{ auth()->user()?->statusBubble ?: '💭' }}</span>
                             </button>
                             <div class="min-w-0 grow">
                                 {{-- Room to actually write in, in a size that

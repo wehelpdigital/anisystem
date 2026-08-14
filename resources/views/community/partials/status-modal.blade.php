@@ -81,7 +81,10 @@
             const empty = el.getAttribute('data-empty-label') ?? EMPTY_LABEL;
             el.textContent = current || empty;
             el.setAttribute('data-empty', current ? '0' : '1');
-            const host = el.closest('.status-bubble') || el;
+            // The profile draws it as .status-bubble, the composer as the
+            // shared .status-cloud. Either is the thing that goes dashed
+            // when there is nothing to say.
+            const host = el.closest('.status-bubble, .status-cloud') || el;
             host.classList.toggle('is-empty', !current);
         });
     }
