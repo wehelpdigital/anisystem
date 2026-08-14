@@ -33,6 +33,7 @@ class User extends Authenticatable
         'allowMessages',
         'avatarPath',
         'coverPath',
+        'coverPos',
         'adminUserId',
         'lastSeenAt',
         'deleteStatus',

@@ -224,9 +224,14 @@
                     {{-- Account dropdown --}}
                     <div class="relative" x-data="{ open: false }" @click.outside="open = false">
                         <button type="button" @click="open = !open"
-                            class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-brand-600 text-white text-sm font-bold hover:bg-brand-700 transition"
-                            aria-label="Account menu">
-                            {{ auth()->user()->initials ?? '?' }}
+                            class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-brand-600 text-white text-sm font-bold hover:bg-brand-700 transition overflow-hidden"
+                            aria-label="Account menu"
+                            data-me-avatar data-initials="{{ auth()->user()->initials ?? '?' }}">
+                            @if (auth()->user()?->avatarPath)
+                                <img src="{{ \App\Support\MediaStore::url(auth()->user()->avatarPath) }}" alt="" class="w-full h-full object-cover">
+                            @else
+                                {{ auth()->user()->initials ?? '?' }}
+                            @endif
                         </button>
                         <div x-show="open" x-cloak x-transition
                             class="absolute right-0 mt-2 w-60 card p-2 z-50">

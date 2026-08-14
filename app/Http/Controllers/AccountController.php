@@ -111,6 +111,7 @@ class AccountController extends Controller
             'farmingMethod' => ['nullable', 'string', 'max:60'],
             'allowMessages' => ['nullable', 'boolean'],
             'cover' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
+            'coverPos' => ['nullable', 'integer', 'min:0', 'max:100'],
         ], [
             'phone.regex' => 'Enter a valid PH mobile number in the format 09XXXXXXXXX (11 digits).',
             'cover.max' => 'The cover photo must be 8 MB or smaller.',
@@ -125,9 +126,62 @@ class AccountController extends Controller
             $data['coverPath'] = \App\Support\MediaOptimizer::storeImageAsWebp($request->file('cover'), 'community/covers');
         }
 
+        // Which band of the banner shows. Only meaningful alongside a photo,
+        // but harmless to keep either way — a later upload resets it to 50
+        // from the page, because a new photo has a new middle.
+        if ($request->filled('coverPos')) {
+            $data['coverPos'] = max(0, min(100, (int) $request->input('coverPos')));
+        }
+
         $request->user()->update($data);
 
         return redirect()->route('account.index')->with('success', 'Profile updated.');
+    }
+
+    /**
+     * Set or clear the profile photo.
+     *
+     * Its own endpoint rather than a field on the profile form: a picture is
+     * the one thing people change on its own, and making them scroll to a
+     * Save button to see their own face is the sort of friction that stops
+     * them bothering. The browser has already shrunk it; this compresses
+     * again, because what a browser sends is a courtesy, not a promise.
+     */
+    public function updateAvatar(Request $request)
+    {
+        $request->validate([
+            'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
+            'clear' => ['nullable', 'boolean'],
+        ], [
+            'avatar.max' => 'The photo must be 8 MB or smaller.',
+        ]);
+
+        $user = $request->user();
+
+        if ($request->boolean('clear')) {
+            $user->update(['avatarPath' => null]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Photo removed — your initials will show instead.',
+                'data' => ['url' => null],
+            ]);
+        }
+
+        if (! $request->hasFile('avatar')) {
+            return response()->json(['success' => false, 'message' => 'No photo was sent.'], 422);
+        }
+
+        // 512 is twice the biggest circle the app draws, which keeps it sharp
+        // on a retina screen without storing a wall poster.
+        $path = \App\Support\MediaOptimizer::storeImageAsWebp($request->file('avatar'), 'community/avatars', 512, 86);
+        $user->update(['avatarPath' => $path]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Photo updated.',
+            'data' => ['url' => \App\Support\MediaStore::url($path)],
+        ]);
     }
 
     public function updatePassword(Request $request)

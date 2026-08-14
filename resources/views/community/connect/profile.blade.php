@@ -16,15 +16,17 @@
     {{-- Profile header --}}
     <div class="card p-5 mb-4">
         @if (filled($member->coverPath))
-            <div class="-mx-5 -mt-5 mb-4 h-32 sm:h-44 rounded-t-xl bg-gray-100 bg-center bg-cover"
-                 style="background-image:url('{{ \App\Support\MediaStore::url($member->coverPath) }}')"></div>
+            {{-- The band the owner dragged into place, not the middle the
+                 browser would have guessed. --}}
+            <div class="-mx-5 -mt-5 mb-4 h-32 sm:h-44 rounded-t-xl bg-gray-100 bg-cover bg-no-repeat"
+                 style="background-image:url('{{ \App\Support\MediaStore::url($member->coverPath) }}'); background-position: 50% {{ (int) ($member->coverPos ?? 50) }}%"></div>
         @endif
         <div class="flex items-start gap-4">
             <span class="status-avatar inline-block shrink-0 relative" style="width:4rem;height:4rem;" data-self="{{ $isSelf ? 1 : 0 }}">
                 @include('community.partials.avatar', ['user' => $member, 'size' => 'avatar-lg', 'link' => false, 'showOnline' => true])
                 {{-- Thought bubble floating over the profile pic. --}}
                 <span class="status-bubble {{ filled($member->statusBubble) ? '' : 'is-empty' }}" id="statusBubble"
-                      @if ($isSelf) role="button" tabindex="0" title="Set your status" @endif><span class="status-bubble-text">{{ $member->statusBubble ?: ($isSelf ? "💭 What's on your mind?" : '') }}</span></span>
+                      @if ($isSelf) role="button" tabindex="0" title="Set your status" data-status-bubble @endif><span class="status-bubble-text" @if ($isSelf) data-status-text @endif>{{ $member->statusBubble ?: ($isSelf ? "💭 What's on your mind?" : '') }}</span></span>
             </span>
             <div class="min-w-0 grow">
                 <h2 class="text-xl font-bold text-gray-900 leading-tight">{{ $member->full_name }}</h2>
@@ -167,35 +169,7 @@
 </div>
 
 @if ($isSelf)
-{{-- Status composer modal (replaces the old prompt()). --}}
-<div id="statusModal" class="plaza-modal hidden" role="dialog" aria-modal="true" aria-label="Set your status">
-    <div class="plaza-modal-backdrop" data-close-status></div>
-    <div class="plaza-modal-card" style="max-width:24rem">
-        <div class="plaza-modal-head">
-            <p class="font-bold text-gray-900">What are you thinking now?</p>
-            <button type="button" class="btn-ghost rounded-full w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-700" data-close-status aria-label="Close">✕</button>
-        </div>
-        <div class="plaza-modal-body">
-            <div class="flex items-center gap-2">
-                <input type="text" id="statusInput" class="form-input grow" maxlength="60" placeholder="e.g. Aani na! 🌾 · Waiting for rain · Nagtatanim ng palay">
-                <button type="button" class="emoji-btn js-emoji-btn shrink-0" data-target="statusInput" aria-label="Add an emoji" title="Emoji">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                </button>
-            </div>
-            <div class="flex items-center justify-between mt-1.5">
-                <p class="text-xs text-gray-400">Floats as a thought bubble over your photo. Leave blank and Clear to remove it.</p>
-                <span id="statusCount" class="text-xs text-gray-400 font-medium shrink-0 ml-2 tabular-nums">0/60</span>
-            </div>
-        </div>
-        <div class="plaza-modal-foot flex items-center justify-between">
-            <button type="button" id="statusClear" class="btn btn-ghost btn-sm text-red-500 hover:bg-red-50">Clear status</button>
-            <div class="flex gap-2">
-                <button type="button" class="btn btn-white btn-sm" data-close-status>Cancel</button>
-                <button type="button" id="statusSave" class="btn btn-primary btn-sm">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
+    @include('community.partials.status-modal')
 @endif
 @endsection
 
@@ -254,180 +228,6 @@ document.getElementById('profileTabs')?.addEventListener('click', (e) => {
     });
 });
 
-@if ($isSelf)
-{{-- Status composer modal — open from the thought bubble, save/clear to the API. --}}
-(function () {
-    const bubble = document.getElementById('statusBubble');
-    const modal = document.getElementById('statusModal');
-    const input = document.getElementById('statusInput');
-    if (!bubble || !modal || !input) return;
-    const bubbleText = bubble.querySelector('.status-bubble-text') || bubble;
-    const EMPTY_LABEL = "💭 What's on your mind?";
-    const MAXLEN = 60; // keep the bubble to one tidy line; server enforces the same.
-    const countEl = document.getElementById('statusCount');
-    const updateCount = () => { if (countEl) countEl.textContent = input.value.length + '/' + MAXLEN; };
-    input.addEventListener('input', updateCount);
 
-    const open = () => {
-        input.value = bubble.classList.contains('is-empty') ? '' : bubbleText.textContent.trim();
-        updateCount();
-        modal.classList.remove('hidden');
-        void modal.offsetWidth;
-        modal.classList.add('is-open');
-        document.body.style.overflow = 'hidden';
-        window.smFocus(input, { delay: 60 });
-    };
-    const close = () => {
-        modal.classList.remove('is-open');
-        document.body.style.overflow = '';
-        setTimeout(() => modal.classList.add('hidden'), 250);
-    };
-
-    bubble.addEventListener('click', open);
-    bubble.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
-    modal.addEventListener('click', (e) => { if (e.target.closest('[data-close-status]')) close(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) close(); });
-
-    async function save(val) {
-        try {
-            const res = await fetch(@json(route('community.status.update')), {
-                method: 'POST',
-                headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, 'Content-Type': 'application/json', Accept: 'application/json' },
-                body: JSON.stringify({ statusBubble: val }),
-            });
-            const data = await res.json();
-            if (data.success) {
-                if (val) { bubbleText.textContent = val; bubble.classList.remove('is-empty'); }
-                else { bubbleText.textContent = EMPTY_LABEL; bubble.classList.add('is-empty'); }
-                close();
-                if (window.toast) toast(data.message);
-            } else if (window.toast) toast(data.message || 'Could not update.', 'error');
-        } catch (_) { if (window.toast) toast('Network error — try again.', 'error'); }
-    }
-
-    document.getElementById('statusSave')?.addEventListener('click', () => save(input.value.trim().slice(0, MAXLEN)));
-    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); save(input.value.trim().slice(0, MAXLEN)); } });
-    document.getElementById('statusClear')?.addEventListener('click', () => save(''));
-})();
-
-// Profile photo album — upload + delete (self only).
-(function () {
-    const input = document.getElementById('profilePhotoInput');
-    const grid = document.getElementById('profilePhotosGrid');
-    const empty = document.getElementById('profilePhotosEmpty');
-    const tabBtn = document.querySelector('#profileTabs .profile-tab[data-tab="photos"]');
-    const csrf = () => document.querySelector('meta[name=csrf-token]').content;
-    function bumpCount(delta) {
-        const s = tabBtn && tabBtn.querySelector('span');
-        if (!s) return;
-        const n = Math.max(0, (parseInt(s.textContent.replace(/\D/g, ''), 10) || 0) + delta);
-        s.textContent = '(' + n + ')';
-    }
-    input && input.addEventListener('change', async () => {
-        if (!input.files.length) return;
-        const fd = new FormData();
-        [...input.files].forEach((f) => fd.append('photos[]', f));
-        input.value = '';
-        try {
-            const res = await fetch(@json(route('community.profile.photos.store')), { method: 'POST', headers: { 'X-CSRF-TOKEN': csrf(), Accept: 'application/json' }, body: fd });
-            const data = await res.json();
-            if (data.success) {
-                grid.insertAdjacentHTML('afterbegin', data.data.html);
-                grid.classList.remove('hidden');
-                empty && empty.classList.add('hidden');
-                bumpCount((data.data.html.match(/profile-photo-tile/g) || []).length);
-                if (window.toast) toast(data.message);
-            } else if (window.toast) toast(data.message || 'Could not upload.', 'error');
-        } catch (_) { if (window.toast) toast('Network error — try again.', 'error'); }
-    });
-    document.addEventListener('click', async (e) => {
-        const btn = e.target.closest('.js-photo-delete');
-        if (!btn) return;
-        const ok = (typeof confirmAction === 'function')
-            ? await confirmAction({ title: 'Delete photo?', message: 'This removes it from your album.', confirmText: 'Delete' })
-            : confirm('Delete this photo?');
-        if (!ok) return;
-        try {
-            const res = await fetch('/app/community/profile/photos/' + btn.getAttribute('data-photo-id'), { method: 'DELETE', headers: { 'X-CSRF-TOKEN': csrf(), Accept: 'application/json' } });
-            const data = await res.json();
-            if (data.success) {
-                btn.closest('.profile-photo-tile')?.remove();
-                bumpCount(-1);
-                if (!grid.querySelector('.profile-photo-tile')) { grid.classList.add('hidden'); empty && empty.classList.remove('hidden'); }
-                if (window.toast) toast(data.message);
-            } else if (window.toast) toast(data.message, 'error');
-        } catch (_) { if (window.toast) toast('Network error — try again.', 'error'); }
-    });
-})();
-
-// Profile video album — upload (compressed server-side) + delete (self only).
-(function () {
-    const input = document.getElementById('profileVideoInput');
-    const grid = document.getElementById('profileVideosGrid');
-    const empty = document.getElementById('profileVideosEmpty');
-    const uploading = document.getElementById('profileVideoUploading');
-    const addBtn = document.getElementById('profileVideoAddBtn');
-    const tabBtn = document.querySelector('#profileTabs .profile-tab[data-tab="videos"]');
-    const csrf = () => document.querySelector('meta[name=csrf-token]').content;
-    const MAX = 300 * 1024 * 1024; // 300 MB, matches the server cap.
-
-    function bumpCount(delta) {
-        const s = tabBtn && tabBtn.querySelector('span');
-        if (!s) return;
-        const n = Math.max(0, (parseInt(s.textContent.replace(/\D/g, ''), 10) || 0) + delta);
-        s.textContent = '(' + n + ')';
-    }
-    function setBusy(on) {
-        uploading && uploading.classList.toggle('hidden', !on);
-        if (addBtn) { addBtn.classList.toggle('opacity-50', on); addBtn.classList.toggle('pointer-events-none', on); }
-    }
-
-    input && input.addEventListener('change', async () => {
-        const file = input.files && input.files[0];
-        if (!file) return;
-        if (!/^video\//.test(file.type) && !/\.(mp4|mov|webm|mkv|avi|3gp|m4v)$/i.test(file.name)) {
-            if (window.toast) toast('Please choose a video file.', 'error'); input.value = ''; return;
-        }
-        if (file.size > MAX) {
-            if (window.toast) toast('Video is larger than 300 MB.', 'error'); input.value = ''; return;
-        }
-        const fd = new FormData();
-        fd.append('video', file);
-        input.value = '';
-        setBusy(true);
-        try {
-            const res = await fetch(@json(route('community.profile.videos.store')), { method: 'POST', headers: { 'X-CSRF-TOKEN': csrf(), Accept: 'application/json' }, body: fd });
-            const data = await res.json();
-            if (data.success) {
-                grid.insertAdjacentHTML('afterbegin', data.data.html);
-                grid.classList.remove('hidden');
-                empty && empty.classList.add('hidden');
-                bumpCount(1);
-                if (window.toast) toast(data.message);
-            } else if (window.toast) toast(data.message || 'Could not upload.', 'error');
-        } catch (_) { if (window.toast) toast('Network error — try again.', 'error'); }
-        finally { setBusy(false); }
-    });
-
-    document.addEventListener('click', async (e) => {
-        const btn = e.target.closest('.js-video-delete');
-        if (!btn) return;
-        const ok = (typeof confirmAction === 'function')
-            ? await confirmAction({ title: 'Delete video?', message: 'This removes it from your album.', confirmText: 'Delete' })
-            : confirm('Delete this video?');
-        if (!ok) return;
-        try {
-            const res = await fetch('/app/community/profile/videos/' + btn.getAttribute('data-video-id'), { method: 'DELETE', headers: { 'X-CSRF-TOKEN': csrf(), Accept: 'application/json' } });
-            const data = await res.json();
-            if (data.success) {
-                btn.closest('.profile-video-tile')?.remove();
-                bumpCount(-1);
-                if (!grid.querySelector('.profile-video-tile')) { grid.classList.add('hidden'); empty && empty.classList.remove('hidden'); }
-                if (window.toast) toast(data.message);
-            } else if (window.toast) toast(data.message, 'error');
-        } catch (_) { if (window.toast) toast('Network error — try again.', 'error'); }
-    });
-})();
-@endif
 </script>
 @endpush

@@ -140,6 +140,21 @@
     html.dark .dn-title { color: #e8efe1; }
     @media (prefers-reduced-motion: reduce) { .dn-card { transition: none; } }
 
+    /* Your face on the composer, with what's on your mind hanging off it.
+       Tapping either opens the same small ask — the bubble is the affordance,
+       the photo is what people aim at. */
+    .dash-me { position: relative; border: none; background: none; padding: 0; cursor: pointer; }
+    .dash-me-bubble { position: absolute; left: 52%; bottom: -.35rem; max-width: 7.5rem;
+        padding: .1rem .4rem; border-radius: 999px; background: var(--color-white);
+        border: 1px solid var(--color-gray-200); box-shadow: 0 2px 6px -2px rgb(0 0 0 / .18);
+        font-size: .58rem; font-weight: 700; line-height: 1.4; color: var(--color-gray-600);
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .dash-me-bubble[data-empty="1"] { font-size: .7rem; padding: .05rem .3rem; }
+    .dash-me:hover .dash-me-bubble { border-color: #a8cc7e; color: #3d6823; }
+    html.dark .dash-me-bubble { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
+    @media (prefers-reduced-motion: reduce) { .dash-me-bubble { transition: none; } }
+
     /* The composer: a field you can see yourself writing in. */
     .dash-comp { padding: .85rem !important; }
     .dash-comp-box { min-height: 6.5rem; font-size: .85rem; line-height: 1.55; resize: vertical; }
@@ -454,7 +469,22 @@
                 <div id="dashComposer" data-video-host class="card mb-5">
                     <div class="card-body dash-comp">
                         <div class="flex items-start gap-2.5">
-                            <span class="avatar avatar-md {{ \App\Support\CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} shrink-0">{{ auth()->user()->initials ?? '?' }}</span>
+                            {{-- Your photo, and the one thing people expect to
+                                 be able to change by tapping it: what is on
+                                 your mind. The bubble is already shown beside
+                                 your name across the community — this is the
+                                 place people actually look for it. --}}
+                            <button type="button" id="dashMe" class="dash-me shrink-0" title="Set what's on your mind" data-status-bubble>
+                                <span class="avatar avatar-md {{ \App\Support\CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} overflow-hidden"
+                                      data-me-avatar data-initials="{{ auth()->user()->initials ?? '?' }}">
+                                    @if (auth()->user()?->avatarPath)
+                                        <img src="{{ \App\Support\MediaStore::url(auth()->user()->avatarPath) }}" alt="" class="w-full h-full object-cover">
+                                    @else
+                                        {{ auth()->user()->initials ?? '?' }}
+                                    @endif
+                                </span>
+                                <span class="dash-me-bubble" id="dashMeBubble" data-status-text data-empty-label="💭" data-empty="{{ filled(auth()->user()?->statusBubble) ? '0' : '1' }}">{{ auth()->user()?->statusBubble ?: '💭' }}</span>
+                            </button>
                             <div class="min-w-0 grow">
                                 {{-- Room to actually write in, in a size that
                                      fits more words on a phone: the old box
@@ -626,6 +656,7 @@
 @include('community.partials.wall-comment-js')
 @include('community.partials.video-js')
 @include('community.partials.composer-preview-js')
+@include('community.partials.status-modal')
 
 {{-- Dashboard wall composer — posts to your own wall (the same wall shown in
      /app/community and on your profile). Photo + video (upload or record). --}}

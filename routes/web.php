@@ -351,6 +351,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/community/blog/{id}/comment', [App\Http\Controllers\CommunityBlogController::class, 'comment'])->whereNumber('id')->name('community.blog.comment');
     Route::get('/app/community/mention-search', [App\Http\Controllers\CommunityConnectController::class, 'mentionSearch'])->name('community.mention-search');
     Route::post('/app/community/status', [App\Http\Controllers\CommunityConnectController::class, 'updateStatus'])->name('community.status.update');
+    Route::post('/app/account/avatar', [App\Http\Controllers\AccountController::class, 'updateAvatar'])->name('account.avatar');
 
     // Direct messages (Messenger-style dock)
     Route::get('/app/community/messages', [App\Http\Controllers\CommunityMessageController::class, 'threads'])->name('community.messages.threads');
