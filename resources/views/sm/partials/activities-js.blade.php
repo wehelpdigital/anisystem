@@ -3999,7 +3999,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /** Upload one file with a visible wait, then start a note carrying it. */
     async function noteFromCapture(dateKey, file, url, field, kind, suggested) {
-        const done = toast(kind === 'video' ? 'Compressing the video…' : 'Saving the photo…', 'info', 0);
+        const done = window.smBusy(kind === 'video' ? 'Compressing the video…' : 'Saving the photo…');
         try {
             const form = new FormData();
             form.append(field, file);
@@ -4011,13 +4011,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const json = await res.json().catch(() => ({}));
             if (!json.success || !json.data?.path) throw new Error(json.message || 'Upload failed.');
-            done?.close?.();
+            done.close();
             const entry = kind === 'video'
                 ? { type: 'video', path: json.data.path, poster: json.data.poster, url: json.data.url, posterUrl: json.data.posterUrl }
                 : { type: 'image', path: json.data.path, url: json.data.url };
             newInlineNoteWith(dateKey, [entry], suggested);
         } catch (err) {
-            done?.close?.();
+            done.close();
             toast(err.message || 'Could not save that.', 'error');
         }
     }

@@ -33,6 +33,20 @@ class VideoOptimizer
         }
 
         $ffmpeg = self::binary();
+
+        // No ffmpeg on this server? Keep the video anyway.
+        //
+        // A recording is somebody standing in a field holding a phone at a
+        // broken pump. Losing that because a server tool is missing is the
+        // worst trade available here — the compression is a courtesy to the
+        // connection, not the reason the clip exists. It goes in at its
+        // original size, with no poster frame, and the log says why.
+        if (! self::usable($ffmpeg)) {
+            Log::warning('VideoOptimizer: ffmpeg unavailable, storing the video as uploaded', ['bin' => $ffmpeg]);
+
+            return ['video' => self::storeVerbatim($file, $dir), 'poster' => null];
+        }
+
         $input = $file->getRealPath();
         $outVideo = tempnam(sys_get_temp_dir(), 'vid') . '.mp4';
         $outPoster = tempnam(sys_get_temp_dir(), 'pos') . '.webp';
@@ -103,6 +117,45 @@ class VideoOptimizer
      * common install locations, then falls back to a bare "ffmpeg" (PATH lookup).
      * The web server's PATH often differs from a shell's, so a full path is safest.
      */
+    /** Is this ffmpeg actually there and runnable? Asked once per request. */
+    private static function usable(string $bin): bool
+    {
+        static $seen = [];
+        if (isset($seen[$bin])) {
+            return $seen[$bin];
+        }
+
+        // An absolute path we already resolved is present by definition.
+        if (@is_file($bin)) {
+            return $seen[$bin] = true;
+        }
+
+        // A bare name has to be found on PATH, which only running it proves.
+        try {
+            $probe = new Process([$bin, '-version']);
+            $probe->setTimeout(10);
+            $probe->run();
+
+            return $seen[$bin] = $probe->isSuccessful();
+        } catch (\Throwable $e) {
+            return $seen[$bin] = false;
+        }
+    }
+
+    /** Store the upload untouched, when there is no tool to process it with. */
+    private static function storeVerbatim(UploadedFile $file, string $dir): string
+    {
+        $ext = strtolower($file->getClientOriginalExtension() ?: 'mp4');
+        if (! in_array($ext, ['mp4', 'mov', 'webm', 'mkv', 'm4v', '3gp'], true)) {
+            $ext = 'mp4';
+        }
+
+        $rel = trim($dir, '/') . '/' . Str::uuid()->toString() . '.' . $ext;
+        Storage::disk('public')->putFileAs(dirname($rel), $file, basename($rel));
+
+        return $rel;
+    }
+
     private static function binary(): string
     {
         $configured = (string) config('services.ffmpeg.bin', 'ffmpeg');

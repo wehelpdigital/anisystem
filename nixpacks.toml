@@ -1,0 +1,9 @@
+# Railway builds this app with Nixpacks, which gives it PHP and Node and
+# nothing else. Video is the exception: every recorded clip is transcoded on
+# the way in — a phone's minute of 4K becomes something a farm connection can
+# play back — and that needs ffmpeg, which is not part of any PHP image.
+#
+# Without this the server refuses every recording with "the video tool
+# (ffmpeg) was not found", which is exactly what it was doing.
+[phases.setup]
+nixPkgs = ["...", "ffmpeg"]

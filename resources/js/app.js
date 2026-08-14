@@ -250,6 +250,43 @@ window.toast = function toast(message, type = 'success', timeout = 3200) {
     return { close, el, say: (m) => { el.querySelector('.grow').textContent = m; } };
 };
 
+/**
+ * A blocking wait, for work whose length nobody can predict.
+ *
+ * A toast is the wrong shape for compressing a phone video: it sits in a
+ * corner, it can be missed, and it says nothing about whether the page is
+ * still yours to touch. This dims the page, names what is happening, and
+ * turns itself off — smBusy('Saving…') returns a handle with say() and
+ * close().
+ */
+window.smBusy = function smBusy(text) {
+    let el = document.getElementById('sm-busy');
+    if (!el) {
+        el = document.createElement('div');
+        el.id = 'sm-busy';
+        el.className = 'sm-busy';
+        el.setAttribute('role', 'status');
+        el.setAttribute('aria-live', 'polite');
+        el.innerHTML = '<div class="sm-busy-card"><span class="sm-busy-spin"></span>'
+            + '<span class="sm-busy-text"></span></div>';
+        document.body.appendChild(el);
+    }
+    const label = el.querySelector('.sm-busy-text');
+    label.textContent = text || 'Working…';
+    el.classList.remove('hidden');
+    requestAnimationFrame(() => el.classList.add('is-on'));
+    document.body.style.overflow = 'hidden';
+
+    return {
+        say: (t) => { label.textContent = t; },
+        close: () => {
+            el.classList.remove('is-on');
+            document.body.style.overflow = '';
+            setTimeout(() => el.classList.add('hidden'), 260);
+        },
+    };
+};
+
 /* ------------------------------------------------------------------ */
 /* Sheet (bottom-sheet on mobile / dialog on desktop)                   */
 /* Markup: <div class="sheet hidden" id="mySheet">…</div>               */

@@ -237,7 +237,7 @@
         btn.disabled = true;
         // Compressing a phone video takes as long as it takes; the notice
         // stays up until the server has actually finished.
-        const waiting = window.toast?.('Compressing and saving the clip…', 'info', 0);
+        const waiting = window.smBusy('Compressing and saving the clip…');
 
         const form = new FormData();
         form.append('clip', clip, clip.name || 'recording.webm');
@@ -260,11 +260,11 @@
             });
             const json = await res.json().catch(() => ({}));
             if (!json.success) throw new Error(json.message || 'Could not save the clip.');
-            waiting?.close();
+            waiting.close();
             window.toast?.(json.message);
             close();
         } catch (err) {
-            waiting?.close();
+            waiting.close();
             window.toast?.(err.message, 'error');
         } finally {
             btn.disabled = false;

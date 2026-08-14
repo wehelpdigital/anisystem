@@ -384,7 +384,7 @@
         window.smAskRecording?.({
             sizeMB: blob.size / 1048576,
             onSave: async ({ title, description }) => {
-                const waiting = window.toast?.('Compressing and saving the recording…', 'info', 0);
+                const waiting = window.smBusy('Compressing and saving the recording…');
                 const form = new FormData();
                 form.append('clip', blob, 'team-recording.webm');
                 form.append('scheduleId', SCHEDULE_ID);
@@ -403,10 +403,10 @@
                     });
                     const json = await res.json().catch(() => ({}));
                     if (!json.success) throw new Error(json.message || 'Could not save the recording.');
-                    waiting?.close();
+                    waiting.close();
                     window.toast?.(json.message);
                 } catch (err) {
-                    waiting?.close();
+                    waiting.close();
                     window.toast?.(err.message, 'error');
                 }
             },
