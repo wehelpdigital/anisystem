@@ -84,20 +84,33 @@
     /* In the Collab Room the app bar is hidden entirely. */
     html.collab-embed .ga-pick { top: 0; }
     html.dark .ga-pick { background: #10160e; }
-    .ga-pickbtn { display: inline-flex; align-items: center; gap: .4rem; max-width: 100%;
-        padding: .45rem .8rem; border-radius: 999px; cursor: pointer;
-        border: 1px solid var(--color-gray-200); background: var(--color-white);
-        font-size: .84rem; font-weight: 800; color: var(--color-gray-800);
-        transition: border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
-    .ga-pickbtn:hover { border-color: #a8cc7e; color: #3d6823; }
-    .ga-pickico { width: 1rem; height: 1rem; flex: none; color: #4a7c2a; }
-    .ga-pickchev { width: .8rem; height: .8rem; flex: none; color: var(--color-gray-400); }
+    /* Shaped like every other tag button in the app — the date pickers, the
+       lot tags — so "a thing you tap to choose something" looks the same
+       wherever it appears. It was a heavy white pill that read as a form
+       control rather than a choice. */
+    .ga-pickbtn { display: inline-flex; align-items: center; gap: .45rem; max-width: 100%;
+        padding: .45rem .85rem; border-radius: 999px; cursor: pointer; user-select: none;
+        background: #f0f7e8; border: 1px solid #cfe3b8; color: #3d6823;
+        font-size: .82rem; font-weight: 700; white-space: nowrap;
+        transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1),
+            transform .28s cubic-bezier(.22,1,.36,1); }
+    .ga-pickbtn:hover { background: #e4efd4; border-color: #b7d597; }
+    .ga-pickbtn:active { transform: scale(.97); }
+    .ga-pickbtn:focus-visible { outline: 2px solid #6b9f3d; outline-offset: 2px; }
+    .ga-pickico { width: .95rem; height: .95rem; flex: none; }
+    .ga-pickchev { width: .75rem; height: .75rem; flex: none; opacity: .6; }
+    /* The count sits in the tag as its own small chip, so the name and the
+       number do not read as one run-on phrase. */
+    .ga-pickbtn .ga-n { padding: .05rem .35rem; border-radius: 999px; opacity: 1;
+        background: rgb(61 104 35 / .12); font-size: .66rem; }
+    html.dark .ga-pickbtn { background: #24301a; border-color: #4a7c2a; color: #d8f0be; }
+    html.dark .ga-pickbtn:hover { background: #2c4318; border-color: #6ba33c; }
+    html.dark .ga-pickbtn .ga-n { background: rgb(216 240 190 / .16); }
     /* No overflow: hidden here. On a flex item that switches the automatic
        minimum size from `auto` to 0, which let the label shrink away to
        nothing and leave a button that was only an icon. The four names are
        short; none of them needs truncating. */
     #gaTabNow { white-space: nowrap; }
-    html.dark .ga-pickbtn { background: #1c2416; border-color: #2b3a1c; color: #e8efe1; }
 
     .ga-modal { position: fixed; inset: 0; z-index: 120; display: flex; align-items: flex-end; justify-content: center; }
     @media (min-width: 640px) { .ga-modal { align-items: center; padding: 1.5rem; } }
@@ -138,6 +151,11 @@
     /* The count that rides on the picker and on each shelf in the sheet. */
     .ga-n { font-size: .7rem; opacity: .75; font-weight: 800; }
     .ga-pane[hidden] { display: none; }
+    /* A shelf arrives rather than appearing. Short and slight — the point is
+       to say "this is a different shelf now", not to make anyone wait. */
+    .ga-pane.is-in { animation: gaPaneIn .3s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes gaPaneIn { from { opacity: 0; transform: translateY(.5rem); } }
+    @media (prefers-reduced-motion: reduce) { .ga-pane.is-in { animation: none; } }
     .ga-tools { display: flex; gap: .5rem; align-items: center; margin-bottom: .7rem; flex-wrap: wrap; }
     .ga-search { position: relative; flex: 1 1 12rem; }
     .ga-search input { width: 100%; padding: .5rem .7rem .5rem 2.1rem; border-radius: .7rem;
@@ -831,7 +849,15 @@
                     }
                 });
                 document.querySelectorAll('.ga-pane').forEach((p) => {
-                    p.hidden = p.getAttribute('data-pane') !== want;
+                    const mine = p.getAttribute('data-pane') === want;
+                    p.hidden = !mine;
+                    p.classList.remove('is-in');
+                    if (!mine) return;
+                    // Restart the animation on every switch: without the
+                    // reflow the class goes on an element that already has
+                    // it and the browser skips the whole thing.
+                    void p.offsetWidth;
+                    p.classList.add('is-in');
                 });
             }
 
