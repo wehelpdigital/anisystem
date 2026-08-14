@@ -81,9 +81,16 @@
     };
     window.openStatusBubble = open;
 
-    // Delegated, so a bubble drawn after this script still opens it.
+    /* Bound two ways on purpose. The delegated listener catches a bubble
+       drawn later; the direct ones catch the case the delegated one cannot —
+       anything between the button and the document that swallows the click.
+       A trigger that silently does nothing is the worst failure available
+       here, because it looks exactly like a feature that was never built. */
     document.addEventListener('click', (e) => {
         if (e.target.closest('[data-status-bubble]')) { e.preventDefault(); open(); }
+    }, true);
+    document.querySelectorAll('[data-status-bubble]').forEach((el) => {
+        el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); open(); });
     });
     document.addEventListener('keydown', (e) => {
         if ((e.key === 'Enter' || e.key === ' ') && e.target.closest?.('[data-status-bubble]')) {

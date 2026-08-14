@@ -84,7 +84,12 @@
        A heading that says when and how much, then the tasks themselves on
        a rail. A day with five jobs used to be five inches of card; it is
        now one card you push sideways. ---- */
-    .dn-block { border-radius: .9rem; padding: .6rem .65rem .65rem; background: var(--color-gray-50); }
+    /* min-width: 0 at every link in the chain. A grid item and a flex item
+       both default to min-width: auto, which means "never narrower than your
+       content" — so one long task name, one unbroken lot list, or a rail of
+       cards propagates all the way up and the whole page scrolls sideways.
+       The rail scrolls; nothing above it should. */
+    .dn-block { border-radius: .9rem; padding: .6rem .65rem .65rem; background: var(--color-gray-50); min-width: 0; }
     .dn-block.is-today { background: #f0f7e8; }
     .dn-head { display: flex; align-items: center; gap: .6rem; margin-bottom: .5rem; }
     .dn-when { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -102,28 +107,53 @@
         font-weight: 800; color: #3d6823; text-decoration: none; }
     .dn-all svg { width: .8rem; height: .8rem; }
 
-    /* The rail: one task per card, swiped on a phone, scrolled on a mouse. */
+    /* The rail: one whole task per view, swiped on a phone, arrowed on a
+       mouse. `min-width: 0` is load-bearing — a flex child that scrolls its
+       own overflow still reports its content width to the parent unless it
+       is told it may be narrower, and this one was quietly widening the page
+       until the whole dashboard scrolled sideways. */
+    .dn-slider { position: relative; min-width: 0; }
     .dn-rail { display: flex; gap: .5rem; overflow-x: auto; scroll-snap-type: x mandatory;
-        padding-bottom: .15rem; scrollbar-width: none; -ms-overflow-style: none; }
+        min-width: 0; padding-bottom: .15rem; scrollbar-width: none; -ms-overflow-style: none;
+        scroll-behavior: smooth; overscroll-behavior-x: contain; }
     .dn-rail::-webkit-scrollbar { display: none; }
-    .dn-card { flex: 0 0 min(15rem, 82%); scroll-snap-align: start; display: flex; flex-direction: column;
+    /* A whole card, every time. Half a card at the edge looks like a bug. */
+    .dn-card { flex: 0 0 100%; min-width: 0; scroll-snap-align: center; scroll-snap-stop: always;
+        display: flex; flex-direction: column;
         gap: .25rem; padding: .6rem .7rem .65rem; border-radius: .7rem; text-decoration: none;
         background: var(--color-white); border: 1px solid var(--color-gray-200);
         border-left: 3px solid var(--dn-prio, #d1d5db);
         transition: border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
     .dn-card:hover { transform: translateY(-1px); }
+    .dn-slider.is-single .dn-rail { overflow-x: visible; scroll-snap-type: none; }
+    .dn-slider.is-single .dn-arrow { display: none; }
+
+    /* The arrows only exist while there is somewhere to go, and they say so
+       by arriving rather than by appearing. */
+    .dn-arrow { position: absolute; top: 50%; z-index: 2; width: 1.9rem; height: 1.9rem;
+        display: flex; align-items: center; justify-content: center; border-radius: 999px;
+        background: var(--color-white); border: 1px solid var(--color-gray-200);
+        box-shadow: 0 4px 14px -6px rgb(0 0 0 / .45); color: var(--color-gray-600);
+        opacity: 0; pointer-events: none; transform: translateY(-50%) scale(.8);
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .dn-arrow svg { width: .9rem; height: .9rem; }
+    .dn-arrow.is-on { opacity: 1; pointer-events: auto; transform: translateY(-50%) scale(1); }
+    .dn-arrow:hover { color: #3d6823; border-color: #a8cc7e; }
+    .dn-prev { left: -.35rem; }
+    .dn-next { right: -.35rem; }
+    html.dark .dn-arrow { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
     .dn-card.prio-critical { --dn-prio: #9c1c1c; }
     .dn-card.prio-high { --dn-prio: #f46a6a; }
     .dn-card.prio-medium { --dn-prio: #f1b44c; }
     .dn-card.prio-low { --dn-prio: #cbd5e1; }
-    .dn-card-top { display: flex; align-items: center; gap: .35rem; }
+    .dn-card-top { display: flex; align-items: center; gap: .35rem; min-width: 0; }
     .dn-type { font-size: .6rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
         color: var(--color-gray-400); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .dn-prio { margin-left: auto; flex: none; font-size: .58rem; font-weight: 800; text-transform: uppercase;
         letter-spacing: .04em; padding: .1rem .4rem; border-radius: 999px;
         background: color-mix(in srgb, var(--dn-prio) 18%, transparent); color: var(--dn-prio); }
     .dn-title { font-size: .84rem; font-weight: 700; line-height: 1.35; color: var(--color-gray-900);
-        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .dn-facts { display: flex; flex-wrap: wrap; gap: .1rem .6rem; margin-top: .1rem; }
     .dn-fact { display: inline-flex; align-items: center; gap: .22rem; min-width: 0;
         font-size: .66rem; font-weight: 600; color: var(--color-gray-500); }
@@ -138,12 +168,16 @@
     html.dark .dn-all { color: #a5c97e; }
     html.dark .dn-card { background: #151b12; border-color: #2b3a1c; border-left-color: var(--dn-prio, #3f4a37); }
     html.dark .dn-title { color: #e8efe1; }
-    @media (prefers-reduced-motion: reduce) { .dn-card { transition: none; } }
+    @media (prefers-reduced-motion: reduce) {
+        .dn-card, .dn-arrow { transition: none; }
+        .dn-rail { scroll-behavior: auto; }
+    }
 
     /* Your face on the composer, with what's on your mind hanging off it.
        Tapping either opens the same small ask — the bubble is the affordance,
        the photo is what people aim at. */
     .dash-me { position: relative; border: none; background: none; padding: 0; cursor: pointer; }
+    .dash-me { max-width: 3.5rem; }
     .dash-me-bubble { position: absolute; left: 52%; bottom: -.35rem; max-width: 7.5rem;
         padding: .1rem .4rem; border-radius: 999px; background: var(--color-white);
         border: 1px solid var(--color-gray-200); box-shadow: 0 2px 6px -2px rgb(0 0 0 / .18);
@@ -314,8 +348,8 @@
                         [$sBadge, $sLabel] = $scheduleBadge($schedule->status);
                         $next = $scheduleNext[$schedule->id] ?? null;
                     @endphp
-                    <div class="card card-hover">
-                        <div class="card-body !p-4 flex flex-col gap-3 h-full">
+                    <div class="card card-hover min-w-0">
+                        <div class="card-body !p-4 flex flex-col gap-3 h-full min-w-0">
                             <h3 class="font-bold text-gray-900 leading-snug">{{ $schedule->title }}</h3>
 
                             {{-- What is next on THIS season: today's work, or
@@ -339,6 +373,18 @@
                                         </a>
                                     </div>
 
+                                    {{-- One task is not a slider. More than one
+                                         slides a whole card at a time, so the
+                                         next is never half-shown — a card cut
+                                         off at the edge reads as a rendering
+                                         fault, not as an invitation. --}}
+                                    <div class="dn-slider{{ $next['activities']->count() > 1 ? '' : ' is-single' }}" data-dn-slider>
+                                        <button type="button" class="dn-arrow dn-prev" data-dn-prev aria-label="Previous task">
+                                            <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                                        </button>
+                                        <button type="button" class="dn-arrow dn-next" data-dn-next aria-label="Next task">
+                                            <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                                        </button>
                                     <div class="dn-rail" data-dn-rail>
                                         @foreach ($next['activities'] as $act)
                                             @php
@@ -360,7 +406,8 @@
                                                     @endif
                                                     <span class="dn-prio">{{ ucfirst($prio) }}</span>
                                                 </span>
-                                                <span class="dn-title">{{ $act->activityTitle }}</span>
+                                                {{-- Cut to one line; the whole name is still there to hover or read aloud. --}}
+                                                <span class="dn-title" title="{{ $act->activityTitle }}">{{ $act->activityTitle }}</span>
                                                 <span class="dn-facts">
                                                     @if ($lotNames)
                                                         <span class="dn-fact">
@@ -383,6 +430,7 @@
                                                 </span>
                                             </a>
                                         @endforeach
+                                    </div>
                                     </div>
                                 </div>
                             @else
@@ -625,7 +673,8 @@
                     <a href="{{ route('community.blog.show', ['id' => $article->id]) }}" class="card card-hover overflow-hidden block">
                         <div style="aspect-ratio:16/9;background:linear-gradient(120deg,var(--color-brand-100),var(--color-brand-50));overflow:hidden;">
                             @if ($article->coverUrl())
-                                <img src="{{ $article->coverUrl() }}" alt="" loading="lazy" class="w-full h-full object-cover">
+                                <img src="{{ $article->coverUrl() }}" alt="" loading="lazy" class="w-full h-full object-cover"
+                                     data-cover data-cover-alt="{{ $article->coverUrlOnMother() }}">
                             @else
                                 <div class="w-full h-full flex items-center justify-center text-3xl">🌾</div>
                             @endif
@@ -643,6 +692,9 @@
 </div>
 
 @include('community.partials.wall-comments-modal')
+{{-- Tapping your own photo on the composer asks what is on your mind, the
+     same composer the community profile uses. --}}
+@include('community.partials.status-modal')
 @endsection
 
 @push('scripts')
@@ -656,7 +708,58 @@
 @include('community.partials.wall-comment-js')
 @include('community.partials.video-js')
 @include('community.partials.composer-preview-js')
-@include('community.partials.status-modal')
+
+@push('scripts')
+<script>
+(function dashToday() {
+    /* Each day's tasks slide one whole card at a time. The arrows are the
+       desktop way through — a mouse has no swipe — and they arrive and leave
+       rather than switching, because a control that blinks in and out at the
+       ends of a list reads as a glitch. */
+    document.querySelectorAll('[data-dn-slider]').forEach((slider) => {
+        const rail = slider.querySelector('[data-dn-rail]');
+        const prev = slider.querySelector('[data-dn-prev]');
+        const next = slider.querySelector('[data-dn-next]');
+        if (!rail || slider.classList.contains('is-single')) return;
+
+        const paint = () => {
+            // A pixel of slack: sub-pixel scroll positions never land exactly
+            // on the end, and without it the last arrow never turns off.
+            const max = rail.scrollWidth - rail.clientWidth;
+            prev.classList.toggle('is-on', rail.scrollLeft > 2);
+            next.classList.toggle('is-on', rail.scrollLeft < max - 2);
+        };
+
+        const step = (dir) => {
+            const card = rail.querySelector('.dn-card');
+            const by = card ? card.getBoundingClientRect().width + 8 : rail.clientWidth;
+            rail.scrollBy({ left: dir * by, behavior: 'smooth' });
+        };
+
+        prev.addEventListener('click', () => step(-1));
+        next.addEventListener('click', () => step(1));
+        rail.addEventListener('scroll', paint, { passive: true });
+        window.addEventListener('resize', paint);
+        paint();
+    });
+
+    /* The blog's covers are written by the mother site, onto its disk. When
+       this app cannot serve one — a fresh deploy on an ephemeral disk is the
+       usual reason — fall back to the mother's copy, and to the placeholder
+       if that is gone too. A broken-image icon is the one outcome nobody
+       should ever see. */
+    document.querySelectorAll('[data-cover]').forEach((img) => {
+        img.addEventListener('error', function onErr() {
+            const alt = img.getAttribute('data-cover-alt');
+            if (alt && img.src !== alt) { img.src = alt; return; }
+            img.removeEventListener('error', onErr);
+            const holder = img.parentElement;
+            if (holder) holder.innerHTML = '<div class="w-full h-full flex items-center justify-center text-3xl">🌾</div>';
+        });
+    });
+})();
+</script>
+@endpush
 
 {{-- Dashboard wall composer — posts to your own wall (the same wall shown in
      /app/community and on your profile). Photo + video (upload or record). --}}
