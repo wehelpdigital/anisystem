@@ -1646,10 +1646,16 @@
             position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
             opacity: 0;
         }
+        /* 1.5px, and it starts faint. At 2px and .75 opacity the ring sat on
+           the button's own edge looking like a thick yellow border, which made
+           the bell read as a larger control than the two beside it — the row
+           looked unbalanced although all three are the same height. A pulse
+           should look like something leaving the button, not like its
+           outline. */
         #readinessBtn.has-alerts .readiness-ripple::before,
         #readinessBtn.has-alerts .readiness-ripple::after {
             content: ''; position: absolute; inset: 0; border-radius: inherit;
-            border: 2px solid var(--ripple-color, #f5c518);
+            border: 1.5px solid var(--ripple-color, #f5c518);
             animation: readiness-ripple 2.4s cubic-bezier(.22, 1, .36, 1) infinite;
         }
         #readinessBtn.has-alerts .readiness-ripple::after { animation-delay: 1.2s; }
@@ -1657,10 +1663,12 @@
         #readinessBtn.has-blocking { --ripple-color: #ef4444; }
         #readinessBtn.has-alerts svg { animation: readiness-nudge 2.4s ease-in-out infinite; transform-origin: 50% 15%; }
 
+        /* Reaches 1.32, not 1.55: the wider ring overhung the toolbar's own
+           padding, so the pulse was clipped by the bar's edge every cycle. */
         @keyframes readiness-ripple {
-            0%   { transform: scale(1);    opacity: .75; }
-            70%  { transform: scale(1.55); opacity: 0; }
-            100% { transform: scale(1.55); opacity: 0; }
+            0%   { transform: scale(1);    opacity: .42; }
+            70%  { transform: scale(1.32); opacity: 0; }
+            100% { transform: scale(1.32); opacity: 0; }
         }
         @keyframes readiness-nudge {
             0%, 62%, 100% { transform: rotate(0); }
@@ -1884,11 +1892,11 @@
 {{-- ===================== TOOLBAR (sticky, persistent) =====================
      The modules hamburger lives here, inline with the activity actions. When
      another module is showing, the activities-only buttons hide. --}}
-{{-- pt-1.5/pb-2.5 rather than py-2: the same overall height, so nothing
-     below it shifts, but the buttons sit a little higher in the bar. Dead
-     centre read low, because the bell'"'"'s count badge overhangs the top of its
-     button and the eye measures the row from the top of that. --}}
-<div class="sticky top-14 md:top-16 z-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 pt-1.5 pb-2.5 mb-3 border-b border-gray-100">
+{{-- Symmetric padding, and it is right now. All three buttons are .btn-sm
+     with the same min-height, so items-center already centres them; the row
+     only looked low because the bell wore a ring that read as extra height.
+     That was the thing to fix, not this. --}}
+<div class="sticky top-14 md:top-16 z-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 py-2 mb-3 border-b border-gray-100">
     <div class="flex items-center gap-2 flex-wrap">
         <button type="button" id="modulesBtn" class="btn btn-white btn-sm" title="Switch module">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -1918,8 +1926,11 @@
             <span class="readiness-ripple" aria-hidden="true"></span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0a3 3 0 11-6 0m6 0H9"/></svg>
             <span class="hidden sm:inline">Notice</span>
+            {{-- Tucked onto the corner rather than hung above it: at -top-0.5
+                 the count stood proud of every other control in the row, and
+                 that is the edge the eye measures the row's top from. --}}
             <span id="readinessCount"
-                  class="absolute -top-0.5 -right-0.5 {{ $readiness['count'] > 0 ? 'inline-flex' : 'hidden' }} min-w-5 h-5 px-1 rounded-full {{ $readiness['blocking'] > 0 ? 'bg-red-500 text-white' : 'bg-accent-500 text-ink' }} text-[0.625rem] font-bold items-center justify-center">{{ $readiness['count'] }}</span>
+                  class="absolute top-0 right-0 -translate-y-1/3 translate-x-1/3 {{ $readiness['count'] > 0 ? 'inline-flex' : 'hidden' }} min-w-5 h-5 px-1 rounded-full {{ $readiness['blocking'] > 0 ? 'bg-red-500 text-white' : 'bg-accent-500 text-ink' }} text-[0.625rem] font-bold items-center justify-center">{{ $readiness['count'] }}</span>
         </button>
 
         {{-- Where the put-away module note comes back from. It belongs beside
