@@ -1098,6 +1098,22 @@ window.smQuillTouch = function smQuillTouch(quill) {
     window.addEventListener('scroll', place, true);
     window.addEventListener('resize', place);
 
+    /* Where the caret was in a rich editor, remembered.
+     *
+     * A tap on the mic takes focus off the field for an instant, and a
+     * browser does not always hand the selection back on the way in. Without
+     * this the dictated sentence could be inserted wherever the selection
+     * had drifted to — including outside the editor entirely. Inputs need no
+     * such care: selectionStart survives a blur by itself. */
+    let caret = null;
+    document.addEventListener('selectionchange', () => {
+        if (!target || !target.isContentEditable) return;
+        const sel = window.getSelection();
+        if (!sel || !sel.rangeCount) return;
+        const r = sel.getRangeAt(0);
+        if (target.contains(r.commonAncestorContainer)) caret = r.cloneRange();
+    });
+
     /* ---- putting words in ---- */
     function insert(text) {
         if (!target || !text) return;
@@ -1105,15 +1121,23 @@ window.smQuillTouch = function smQuillTouch(quill) {
         if (el.isContentEditable) {
             el.focus();
             const sel = window.getSelection();
+            // Only a range genuinely inside this editor may be written to;
+            // otherwise fall back to where the caret last was in it.
+            let range = null;
             if (sel && sel.rangeCount) {
-                const range = sel.getRangeAt(0);
+                const live = sel.getRangeAt(0);
+                if (el.contains(live.commonAncestorContainer)) range = live;
+            }
+            if (!range && caret && el.contains(caret.commonAncestorContainer)) range = caret;
+            if (range) {
                 range.deleteContents();
                 const node = document.createTextNode(text);
                 range.insertNode(node);
                 range.setStartAfter(node);
                 range.collapse(true);
-                sel.removeAllRanges();
-                sel.addRange(range);
+                if (sel) { sel.removeAllRanges(); sel.addRange(range); }
+                // Where the next phrase continues from.
+                caret = range.cloneRange();
             } else {
                 el.appendChild(document.createTextNode(text));
             }
@@ -1138,15 +1162,15 @@ window.smQuillTouch = function smQuillTouch(quill) {
             return String(target.value || '').slice(0, target.selectionStart ?? 0);
         }
         const sel = window.getSelection();
-        if (!sel || !sel.rangeCount) return target.textContent || '';
-        const caret = sel.getRangeAt(0);
-        if (!target.contains(caret.startContainer)) return target.textContent || '';
+        let at = sel && sel.rangeCount ? sel.getRangeAt(0) : null;
+        if (!at || !target.contains(at.startContainer)) at = caret;
+        if (!at || !target.contains(at.startContainer)) return target.textContent || '';
         // Measuring to the caret rather than reading the whole note: a
         // sentence dictated into the middle of one was being capitalised
         // from the note's last character, wherever that happened to be.
         const upto = document.createRange();
         upto.selectNodeContents(target);
-        try { upto.setEnd(caret.startContainer, caret.startOffset); } catch (_) { return target.textContent || ''; }
+        try { upto.setEnd(at.startContainer, at.startOffset); } catch (_) { return target.textContent || ''; }
         return upto.toString();
     }
 
