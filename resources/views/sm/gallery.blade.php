@@ -126,6 +126,36 @@
     'say' => 'Every picture the season produced, wherever it was taken — notes, days, drawings, maps, the AI — plus the albums you put together yourself. Nothing here is a copy: delete a photo where it lives and it leaves here too.',
 ])
 
+@push('head')
+<style>
+    .tb-say { font-size: .8rem; line-height: 1.6; color: var(--color-gray-500); margin-bottom: .6rem; }
+    .tb-filters { margin-bottom: .7rem; }
+    .tb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: .7rem; }
+    .tb-card { display: flex; flex-direction: column; border-radius: .8rem; overflow: hidden;
+        background: var(--color-white); border: 1px solid var(--color-gray-200); text-decoration: none;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .tb-card:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -18px rgb(0 0 0 / .5); }
+    .tb-shot { position: relative; aspect-ratio: 16/10; background: #0b1220; }
+    .tb-shot img, .tb-shot video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .tb-kind { position: absolute; left: .4rem; top: .4rem; padding: .1rem .45rem; border-radius: 999px;
+        font-size: .6rem; font-weight: 800; letter-spacing: .02em; text-transform: uppercase;
+        background: rgb(0 0 0 / .6); color: #fff; }
+    .tb-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+        pointer-events: none; }
+    .tb-play span { width: 2.6rem; height: 2.6rem; border-radius: 999px; background: rgb(0 0 0 / .55);
+        display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1rem; }
+    .tb-body { padding: .55rem .65rem .65rem; display: flex; flex-direction: column; gap: .15rem; min-width: 0; }
+    .tb-title { font-size: .84rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.35;
+        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .tb-note { font-size: .72rem; color: var(--color-gray-500); line-height: 1.45;
+        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .tb-meta { margin-top: .15rem; font-size: .66rem; font-weight: 600; color: var(--color-gray-400); }
+    html.dark .tb-card { background: #151b12; border-color: #2b3a1c; }
+    html.dark .tb-title { color: #e8efe1; }
+    @media (prefers-reduced-motion: reduce) { .tb-card { transition: none; } }
+</style>
+@endpush
+
 {{-- Two questions, two tabs: everything the season has a picture of, and
      the ones you put together on purpose. --}}
 <div class="ga-tabs" role="tablist">
@@ -140,6 +170,12 @@
             Videos <span class="ga-n">{{ $counts['videos'] }}</span>
         </button>
     @endif
+    {{-- What the team made together, rather than what the season produced.
+         People look for these by who was there and what was being shown, so
+         they get a shelf instead of being scattered through "everything". --}}
+    <button type="button" class="ga-tab" data-tab="team" role="tab" aria-selected="false">
+        Team box <span class="ga-n">{{ $counts['team'] }}</span>
+    </button>
 </div>
 
 {{-- ============================ everything ============================ --}}
@@ -185,6 +221,21 @@
 {{-- ============================== videos ============================== --}}
 <div class="ga-pane" data-pane="videos" hidden>
     <div class="ga-all" id="gaVideos"></div>
+</div>
+
+{{-- ============================= team box ============================= --}}
+<div class="ga-pane" data-pane="team" hidden>
+    <p class="tb-say">Everything the Collab Room made: recordings from a shared camera or a call, the whiteboard drawings, and the maps the team saved. Kept for the schedule, so anyone on it can find them again.</p>
+
+    <div class="ga-filters tb-filters" id="tbFilters">
+        <button type="button" class="ga-filter is-on" data-tb="">Everything</button>
+        <button type="button" class="ga-filter" data-tb="Recording">Recordings</button>
+        <button type="button" class="ga-filter" data-tb="Drawing">Drawings</button>
+        <button type="button" class="ga-filter" data-tb="Map">Maps</button>
+    </div>
+
+    <div class="tb-grid" id="tbGrid"></div>
+    <p class="ga-none hidden" id="tbNone">The Collab Room has not made anything yet. Recordings, whiteboard drawings and saved maps all land here.</p>
 </div>
 
 {{-- The picking bar, shown once a picture is chosen. --}}
@@ -521,6 +572,55 @@
                 p.hidden = p.getAttribute('data-pane') !== want;
             });
         }));
+
+        /* ---- Team box ---------------------------------------------------
+         * Three different things — a recording, a whiteboard page, a saved
+         * map — drawn the same way because people are looking for them with
+         * the same question. A recording plays where it sits; the other two
+         * open the thing they came from, because a picture of a map is not
+         * a map. */
+        const TEAM = @json($teamBox);
+        let tbFilter = '';
+
+        function paintTeam() {
+            const rows = TEAM.filter((r) => !tbFilter || r.kind === tbFilter);
+            const grid = $('tbGrid');
+            const none = $('tbNone');
+            if (!grid) return;
+            none?.classList.toggle('hidden', rows.length > 0);
+            grid.innerHTML = rows.map((r) => {
+                const shot = r.video
+                    ? '<video src="' + esc(r.url) + '"' + (r.posterUrl ? ' poster="' + esc(r.posterUrl) + '"' : '')
+                        + ' preload="metadata" playsinline controls></video>'
+                        + (r.posterUrl ? '' : '<span class="tb-play"><span>▶</span></span>')
+                    : '<img src="' + esc(r.url) + '" alt="" loading="lazy">';
+                const inner = '<span class="tb-shot"><span class="tb-kind">' + esc(r.kind) + '</span>' + shot + '</span>'
+                    + '<span class="tb-body">'
+                    + '<span class="tb-title">' + esc(r.title) + '</span>'
+                    + (r.note ? '<span class="tb-note">' + esc(r.note) + '</span>' : '')
+                    + '<span class="tb-meta">' + esc([r.by, r.when].filter(Boolean).join(' · ')) + '</span>'
+                    + '</span>';
+                // A recording is watched here; a drawing or a map is a way
+                // back to the thing itself, which is still editable there.
+                return r.href
+                    ? '<a class="tb-card" href="' + esc(r.href) + '">' + inner + '</a>'
+                    : '<div class="tb-card">' + inner + '</div>';
+            }).join('');
+        }
+
+        $('tbFilters')?.addEventListener('click', (e) => {
+            const b = e.target.closest('.ga-filter');
+            if (!b) return;
+            tbFilter = b.getAttribute('data-tb') || '';
+            $('tbFilters').querySelectorAll('.ga-filter').forEach((x) => x.classList.toggle('is-on', x === b));
+            paintTeam();
+        });
+        paintTeam();
+
+        // A notification that says "saved to the Team box" should land on it.
+        if (new URLSearchParams(location.search).get('tab') === 'team') {
+            document.querySelector('.ga-tab[data-tab="team"]')?.click();
+        }
 
         $('gaFind')?.addEventListener('input', (e) => { findText = e.target.value; paintAll(); });
         $('gaFilters')?.addEventListener('click', (e) => {

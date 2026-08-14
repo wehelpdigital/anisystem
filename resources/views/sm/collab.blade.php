@@ -62,6 +62,17 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536M9 11l6-6 3 3-6 6H9v-3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h16"/></svg>
             <span>Drawing</span>
         </button>
+        {{-- Cameras and positions are their own tabs rather than corners of
+             the call, because they are used while other things are happening:
+             somebody points a phone at a bund while the chat argues about it. --}}
+        <button type="button" class="collab-tab" data-tab="camera" role="tab" aria-selected="false">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            <span>Cameras</span>
+        </button>
+        <button type="button" class="collab-tab" data-tab="location" role="tab" aria-selected="false">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <span>Where we are</span>
+        </button>
         <button type="button" class="collab-tab" data-tab="map" role="tab" aria-selected="false">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
             <span>Map</span>
@@ -80,6 +91,8 @@
     <div class="collab-panels">
         <div class="collab-panel is-active" data-panel="chat" id="collabChat"></div>
         <div class="collab-panel" data-panel="drawing" id="collabDrawing"></div>
+        <div class="collab-panel" data-panel="camera" id="collabCamera">@include('sm.partials.collab-camera', ['schedule' => $schedule, 'isOwner' => $isOwner])</div>
+        <div class="collab-panel" data-panel="location" id="collabLocation">@include('sm.partials.collab-location', ['schedule' => $schedule])</div>
         <div class="collab-panel" data-panel="map" id="collabMap">@include("sm.partials.schedule-map", ["schedule" => $schedule])</div>
         <div class="collab-panel" data-panel="activities" id="collabActivities">
             {{-- Eager (no lazy) so it preloads in the background the moment the
@@ -103,6 +116,8 @@
 @include('sm.partials.schedule-board', ['schedule' => $schedule])
 {{-- Persistent call widget: lives at the room root so a call survives tab switches. --}}
 @include('sm.partials.schedule-call', ['schedule' => $schedule])
+{{-- What to call a recording, asked the moment it stops. --}}
+@include('sm.partials.recording-save')
 @endsection
 
 @push('head')

@@ -182,13 +182,21 @@
             room.on(LK.RoomEvent.TrackSubscribed, (track, pub, participant) => {
                 if (track.kind === 'video') setTileVideo(ensureTile(participant), track);
                 else if (track.kind === 'audio') { const a = track.attach(); a.autoplay = true; $('ccallAudioSink').appendChild(a); }
+                announce('track', participant);
             });
-            room.on(LK.RoomEvent.TrackUnsubscribed, (track) => { try { track.detach().forEach((el) => el.remove()); } catch (_) {} });
-            room.on(LK.RoomEvent.ParticipantConnected, (p) => { ensureTile(p); updateCount(); });
-            room.on(LK.RoomEvent.ParticipantDisconnected, (p) => { removeTile(p.sid); updateCount(); });
+            room.on(LK.RoomEvent.TrackUnsubscribed, (track, pub, participant) => {
+                try { track.detach().forEach((el) => el.remove()); } catch (_) {}
+                announce('track', participant);
+            });
+            room.on(LK.RoomEvent.ParticipantConnected, (p) => { ensureTile(p); updateCount(); announce('joined', p); });
+            room.on(LK.RoomEvent.ParticipantDisconnected, (p) => { removeTile(p.sid); updateCount(); announce('left', p); });
             room.on(LK.RoomEvent.TrackMuted, refreshMuteBadges);
             room.on(LK.RoomEvent.TrackUnmuted, refreshMuteBadges);
-            room.on(LK.RoomEvent.LocalTrackPublished, (pub) => { if (pub.track && pub.track.kind === 'video') setTileVideo(ensureTile(room.localParticipant, true), pub.track); });
+            room.on(LK.RoomEvent.LocalTrackPublished, (pub) => {
+                if (pub.track && pub.track.kind === 'video') setTileVideo(ensureTile(room.localParticipant, true), pub.track);
+                announce('track', room.localParticipant);
+            });
+            room.on(LK.RoomEvent.LocalTrackUnpublished, () => announce('track', room.localParticipant));
             room.on(LK.RoomEvent.Disconnected, () => cleanup());
         }
 
@@ -253,6 +261,7 @@
             $('ccallAudioSink').innerHTML = '';
             room = null; active = false; roomName = null;
             panel.classList.add('hidden');
+            announce('gone');
         }
         /* Leaving takes you out; it does not shut the call. Only the last one
            out announces the end — that signal pulls the ringing prompt from
@@ -267,7 +276,12 @@
         }
 
         /* ---------- controls ---------- */
-        const showPanel = () => { panel.classList.remove('hidden', 'min'); };
+        // Opened from the Camera tab, the floating widget would cover the
+        // very grid it duplicates — so it stays, minimized, as the way out.
+        const showPanel = () => {
+            panel.classList.remove('hidden');
+            panel.classList.toggle('min', !!window.__smCameraJoin);
+        };
         function paintMic() { $('ccallMic').classList.toggle('is-off', !micOn); const t = tiles.get('local'); if (t) t.classList.toggle('is-muted', !micOn); }
         function paintCam() { $('ccallCam').classList.toggle('is-off', !camOn); }
         async function toggleMic() { if (!room) return; micOn = !micOn; await room.localParticipant.setMicrophoneEnabled(micOn); paintMic(); }
@@ -310,6 +324,39 @@
         $('ccallLeave').addEventListener('click', leave);
         $('ccallClose').addEventListener('click', leave);
         $('ccallMin').addEventListener('click', () => panel.classList.toggle('min'));
+
+        /* ---------- the room, shared ----------------------------------
+         * The Camera tab is a second view of the same room, not a second
+         * room: LiveKit gives one identity one connection, so a member who
+         * opened both would knock themselves out of the first. Everything
+         * that wants the live connection asks here, and joins through here.
+         *
+         * The listener list exists because the tab can be opened before or
+         * after a call starts, and either way it needs to know who is
+         * publishing what without polling the room object. */
+        const roomWatchers = new Set();
+        function announce(evt, arg) { roomWatchers.forEach((fn) => { try { fn(evt, arg); } catch (_) {} }); }
+
+        window.smCall = {
+            /** The live Room, or null when nobody is connected. */
+            room: () => room,
+            isActive: () => active,
+            /** Join (or reuse) the team room. Resolves true once connected. */
+            ensure: (title) => active ? Promise.resolve(true) : joinRoom('group', null, title || 'Team room'),
+            /** Called with ('joined'|'left'|'track'|'gone', participant?). */
+            watch: (fn) => { roomWatchers.add(fn); return () => roomWatchers.delete(fn); },
+            /** Every audio track in the room, for anything that records. */
+            audioTracks: () => {
+                const out = [];
+                room?.localParticipant?.trackPublications?.forEach((pub) => {
+                    if (pub.track && pub.track.kind === 'audio') out.push(pub.track);
+                });
+                room?.remoteParticipants?.forEach((p) => p.trackPublications.forEach((pub) => {
+                    if (pub.track && pub.track.kind === 'audio') out.push(pub.track);
+                }));
+                return out;
+            },
+        };
 
         /* ---------- public triggers ---------- */
         window.startTeamCall = async () => {

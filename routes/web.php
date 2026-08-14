@@ -274,6 +274,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
 
     // --- Collab Room (shared team workspace: chat + drawing + activities + AI) ---
     Route::get('/app/sm-collab', [App\Http\Controllers\Manager\CollabRoomController::class, 'page'])->name('sm.collab');
+    Route::post('/app/sm-collab-recording', [App\Http\Controllers\Manager\CollabRoomController::class, 'storeRecording'])->name('sm.collab.recording');
     Route::get('/app/sm-ai-group', [App\Http\Controllers\Manager\ScheduleAiController::class, 'messages'])->name('sm.ai.group.messages');
     Route::post('/app/sm-ai-group-ask', [App\Http\Controllers\Manager\ScheduleAiController::class, 'ask'])->name('sm.ai.group.ask');
     Route::get('/app/sm-ai-group-sessions', [App\Http\Controllers\Manager\ScheduleAiController::class, 'sessions'])->name('sm.ai.group.sessions');
