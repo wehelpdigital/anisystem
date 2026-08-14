@@ -18,9 +18,10 @@
             <textarea id="statusInput" class="form-textarea w-full" rows="2" maxlength="60"
                       placeholder="e.g. Aani na! 🌾 · Waiting for rain · Nagtatanim ng palay"></textarea>
             <div class="st-row">
-                <button type="button" class="emoji-btn js-emoji-btn" data-target="statusInput" aria-label="Add an emoji" title="Emoji">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <span>Emoji</span>
+                {{-- The same yellow smiley the wall composer uses. A button
+                     whose whole job is emoji should not have to say so. --}}
+                <button type="button" class="emoji-btn js-emoji-btn" data-target="statusInput" aria-label="Add an emoji" title="Add an emoji">
+                    <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </button>
                 <span id="statusCount" class="st-count tabular-nums">0/60</span>
             </div>
@@ -41,15 +42,15 @@
     /* The emoji button sits under the box rather than beside it: beside, it
        stole the width the placeholder needed. */
     .st-row { display: flex; align-items: center; gap: .5rem; margin-top: .5rem; }
-    .st-row .emoji-btn { display: inline-flex; align-items: center; gap: .3rem;
-        padding: .3rem .6rem; border-radius: 999px; border: 1px solid var(--color-gray-200);
-        background: var(--color-white); color: var(--color-gray-500);
-        font-size: .74rem; font-weight: 700; cursor: pointer;
-        transition: border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
-    .st-row .emoji-btn:hover { border-color: #a8cc7e; color: #3d6823; }
+    .st-row .emoji-btn { display: inline-flex; align-items: center; justify-content: center;
+        width: 2.1rem; height: 2.1rem; border-radius: 999px; cursor: pointer;
+        border: 1px solid var(--color-gray-200); background: var(--color-white);
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+    .st-row .emoji-btn:hover { border-color: #f0c877; background: #fffaf0; }
     .st-count { margin-left: auto; font-size: .72rem; font-weight: 600; color: var(--color-gray-400); }
     #statusInput { resize: none; line-height: 1.5; }
-    html.dark .st-row .emoji-btn { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
+    html.dark .st-row .emoji-btn { background: #1c2416; border-color: #2b3a1c; }
+    html.dark .st-row .emoji-btn:hover { background: #2a2416; border-color: #6b5a2a; }
     @media (prefers-reduced-motion: reduce) { .st-row .emoji-btn { transition: none; } }
 </style>
 @endpush
