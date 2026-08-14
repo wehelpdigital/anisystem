@@ -94,6 +94,13 @@ class ActivityController extends BaseScheduleController
             'dateNotesByDate'   => $dateNotesByDate,
             // Where a note's map attachment leads: its saved map in Maps.
             'mapUrlByPath'      => $this->mapUrlByPath($schedule->id),
+            // A note points at a lot and a task by id; these turn the ids
+            // back into the words a person recognises.
+            'lotNames'          => $schedule->lots->pluck('lotName', 'id')->all(),
+            'activityNames'     => AsScheduleActivity::active()
+                ->where('croppingScheduleId', $schedule->id)
+                ->where('versionId', $activeVersion?->id)
+                ->pluck('activityTitle', 'id')->all(),
             'inlineNotesByDate' => $inlineNotesByDate,
             'expensesByDate'    => $expensesByDate,
             'markersByDate'     => $markersByDate,
@@ -1320,11 +1327,13 @@ class ActivityController extends BaseScheduleController
      */
     public function saveDateNote(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForNote($request);
 
         $validator = Validator::make($request->all(), [
             'noteDate'    => 'required|date',
             'noteContent' => 'nullable|string|max:20000',
+            'lotId'      => 'nullable|integer',
+            'activityId' => 'nullable|integer',
             'media'          => 'nullable|array|max:20',
             'media.*.type'   => 'required_with:media|in:image,video,drawing,map',
             'media.*.path'   => 'required_with:media|string|max:500',
@@ -1366,8 +1375,10 @@ class ActivityController extends BaseScheduleController
             return $this->jsonOk('Note cleared.', ['data' => null]);
         }
 
+        $tags = $this->noteTags($request, (int) $schedule->id, $versionId, $noteDate);
+
         if ($existing) {
-            $existing->update(['noteContent' => $content, 'media' => $media]);
+            $existing->update(['noteContent' => $content, 'media' => $media] + $tags);
             $note = $existing;
         } else {
             $note = AsScheduleDateNote::create([
@@ -1377,7 +1388,7 @@ class ActivityController extends BaseScheduleController
                 'noteContent'        => $content,
                 'media'              => $media,
                 'deleteStatus'       => 1,
-            ]);
+            ] + $tags);
         }
 
         $this->broadcastBoard($schedule, 'reload', ['noteDate' => $note->noteDate->format('Y-m-d')], $versionId);
@@ -1387,6 +1398,8 @@ class ActivityController extends BaseScheduleController
                 'id'          => $note->id,
                 'noteDate'    => $note->noteDate->format('Y-m-d'),
                 'noteContent' => $note->noteContent,
+                'lotId'       => $note->lotId ? (int) $note->lotId : null,
+                'activityId'  => $note->activityId ? (int) $note->activityId : null,
                 'media'       => $this->mediaWithUrls($note->media, $schedule->id),
             ],
         ]);
@@ -1397,7 +1410,7 @@ class ActivityController extends BaseScheduleController
      */
     public function deleteDateNote(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForNote($request);
 
         $validator = Validator::make($request->all(), [
             'noteDate' => 'required|date',
@@ -1426,7 +1439,7 @@ class ActivityController extends BaseScheduleController
      */
     public function inlineNoteSave(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForNote($request);
 
         $validator = Validator::make($request->all(), [
             'id'       => 'nullable|integer',
@@ -1436,6 +1449,8 @@ class ActivityController extends BaseScheduleController
             // reads as three things rather than one long block.
             'title'    => 'nullable|string|max:191',
             'content'  => 'nullable|string|max:20000',
+            'lotId'      => 'nullable|integer',
+            'activityId' => 'nullable|integer',
             'media'          => 'nullable|array|max:20',
             'media.*.type'   => 'required_with:media|in:image,video,drawing,map',
             'media.*.path'   => 'required_with:media|string|max:500',
@@ -1477,7 +1492,7 @@ class ActivityController extends BaseScheduleController
             'title'    => trim((string) $request->input('title')) ?: null,
             'content'  => $content,
             'media'    => $media,
-        ];
+        ] + $this->noteTags($request, (int) $schedule->id, $versionId, (string) $request->input('noteDate'));
 
         if ($note) {
             $note->update($payload);
@@ -1498,9 +1513,47 @@ class ActivityController extends BaseScheduleController
                 'sortKey'  => $note->sortKey,
                 'title'    => $note->title,
                 'content'  => $note->content,
+                'lotId'    => $note->lotId ? (int) $note->lotId : null,
+                'activityId' => $note->activityId ? (int) $note->activityId : null,
                 'media'    => $this->mediaWithUrls($note->media, $schedule->id),
             ],
         ]);
+    }
+
+    /**
+     * What a note is about: a lot on this schedule, and a task on that day.
+     *
+     * Both are pointers, so both are checked against what actually exists —
+     * a tag naming someone else's lot, or a task from a different day, is
+     * dropped rather than stored. An unchecked pointer is worse than none:
+     * it survives into filters and reports as a fact.
+     */
+    private function noteTags(Request $request, int $scheduleId, ?int $versionId, ?string $noteDate): array
+    {
+        $lotId = (int) $request->input('lotId') ?: null;
+        if ($lotId) {
+            $ok = \App\Models\AsScheduleLot::active()
+                ->where('croppingScheduleId', $scheduleId)
+                ->where('id', $lotId)
+                ->exists();
+            $lotId = $ok ? $lotId : null;
+        }
+
+        $activityId = (int) $request->input('activityId') ?: null;
+        if ($activityId) {
+            $q = \App\Models\AsScheduleActivity::active()
+                ->where('croppingScheduleId', $scheduleId)
+                ->where('id', $activityId);
+            if ($versionId) {
+                $q->where('versionId', $versionId);
+            }
+            if ($noteDate) {
+                $q->whereDate('targetDate', $noteDate);
+            }
+            $activityId = $q->exists() ? $activityId : null;
+        }
+
+        return ['lotId' => $lotId, 'activityId' => $activityId];
     }
 
     /** A note has real content if it has visible text, an image, or media. */
@@ -1588,7 +1641,7 @@ class ActivityController extends BaseScheduleController
     /** Soft-delete a positioned inline note. */
     public function inlineNoteDelete(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForNote($request);
         $versionId = $this->activeVersionIdFor($schedule->id);
 
         \App\Models\AsInlineNote::active()

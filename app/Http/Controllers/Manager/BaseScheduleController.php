@@ -59,6 +59,37 @@ abstract class BaseScheduleController extends Controller
     }
 
     /**
+     * Same as scheduleFromRequest(), but for writes that only record what
+     * happened — day notes and their attachments.
+     *
+     * A worker can be given this without being given the run of the plan, so
+     * these endpoints ask the looser question. Everything else about a write
+     * still holds: a completed schedule is still locked.
+     */
+    protected function scheduleForNote(Request $request, string $key = 'scheduleId'): AsCroppingSchedule
+    {
+        $schedule = $this->schedule($request->query($key));
+
+        if (! $request->isMethodSafe()) {
+            if (! \App\Support\WorkerContext::canAddNotes()) {
+                abort(response()->json([
+                    'success' => false,
+                    'message' => 'You are not allowed to write notes on this schedule.',
+                ], 403));
+            }
+
+            if ($schedule->isLocked()) {
+                abort(response()->json([
+                    'success' => false,
+                    'message' => 'This schedule is marked completed and locked. Reopen it in the Hub to make changes.',
+                ], 423));
+            }
+        }
+
+        return $schedule;
+    }
+
+    /**
      * Pull a query-string integer or abort with 400.
      */
     protected function queryId(Request $request, string $key = 'id'): int

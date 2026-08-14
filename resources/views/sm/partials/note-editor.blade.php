@@ -58,6 +58,20 @@
             <label class="form-label" for="noteEditorTitleInput">Title <span class="text-red-500">*</span></label>
             <input type="text" id="noteEditorTitleInput" class="form-input" maxlength="191" placeholder="e.g. Pump repair — west line">
         </div>
+        {{-- What the note is about, chosen by tapping. Typing "Apartado 1"
+             into the words makes a sentence; tapping the lot makes a fact the
+             Gallery and the reports can filter on. Hidden unless the caller
+             passes something to tag. --}}
+        <div id="noteEditorTags" class="ne-tags" hidden>
+            <div class="ne-tagrow" id="noteEditorLotRow" hidden>
+                <span class="ne-taglabel">Which lot?</span>
+                <div class="ne-tagpills" id="noteEditorLots"></div>
+            </div>
+            <div class="ne-tagrow" id="noteEditorActRow" hidden>
+                <span class="ne-taglabel">About which task?</span>
+                <div class="ne-tagpills" id="noteEditorActs"></div>
+            </div>
+        </div>
         <div class="ne-quill"><div id="noteEditorBody"></div></div>
         <div id="noteEditorUploads" class="ne-ups mt-3"></div>
         <div id="noteEditorMedia" class="ne-thumbs mt-3"></div>
@@ -104,6 +118,26 @@
     .ne-up.is-error .ne-up-top { color: #b91c1c; }
     .ne-up.is-error .ne-up-fill { background: #ef4444; }
     @media (prefers-reduced-motion: reduce) { .ne-up-fill { transition: none; } }
+    /* Tag pills: one tap on, one tap off. Wide enough for a thumb, quiet
+       enough to sit above the words without competing with them. */
+    .ne-tags { display: grid; gap: .45rem; margin-bottom: .6rem; }
+    .ne-tags[hidden] { display: none; }
+    .ne-tagrow[hidden] { display: none; }
+    .ne-taglabel { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .03em;
+        text-transform: uppercase; color: var(--tl-text-faint, #9ca3af); margin-bottom: .25rem; }
+    .ne-tagpills { display: flex; flex-wrap: wrap; gap: .3rem; }
+    .ne-tagpill { display: inline-flex; align-items: center; gap: .25rem; max-width: 100%;
+        padding: .3rem .6rem; border-radius: 999px; cursor: pointer;
+        border: 1px solid var(--tl-border, #e5e7eb); background: var(--tl-surface, #fff);
+        font-size: .72rem; font-weight: 700; color: var(--tl-text-muted, #4b5563);
+        transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .ne-tagpill span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ne-tagpill:hover { border-color: #a8cc7e; color: #3d6823; }
+    .ne-tagpill.is-on { background: #eaf4dd; border-color: #4a7c2a; color: #2f5a17; }
+    .ne-tagpill.is-on::before { content: '✓'; font-size: .68rem; }
+    html.dark .ne-tagpill { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
+    html.dark .ne-tagpill.is-on { background: #2c4318; border-color: #6ba33c; color: #d8f0be; }
+    @media (prefers-reduced-motion: reduce) { .ne-tagpill { transition: none; } }
     .ne-thumbs:empty { display: none; }
     .ne-thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr)); gap: .5rem; }
     /* Emoji popover */
@@ -137,6 +171,9 @@
     const EMOJIS = ['🌱','🌾','🌽','🍚','🍅','🍆','🥒','🥬','🌶️','🥭','🍌','🥥','☀️','🌤️','🌧️','⛈️','🌈','💧','🌡️','🐛','🐌','🐜','🐔','🐖','🐃','🚜','🧺','🧑‍🌾','😀','😄','😅','🤔','😮','😢','😍','🙏','👍','👏','💪','🤝','❤️','🔥','✅','⚠️','📌','⭐'];
 
     let quill = null, media = [], cfg = {};
+    // What this note is about. Null means "not said", which is different from
+    // "no lot" — a note can simply be about the day.
+    let tagLot = null, tagAct = null;
 
     function ensureQuill() {
         if (!quill && window.Quill) {
@@ -155,6 +192,36 @@
             ? window.noteMediaThumb(m, `<button type="button" class="rm" data-rm="${i}" aria-label="Remove">✕</button>`, i)
             : '').join('');
     }
+
+    /* ---- What the note is about --------------------------------------
+     * Both rows are the same idea: a list of things, one of which may be
+     * chosen, chosen by tapping. Tapping the chosen one again unsays it,
+     * because "I picked the wrong lot" is more common than "I meant to pick
+     * none" and both need the same escape. */
+    function paintTags() {
+        const lots = Array.isArray(cfg.tags?.lots) ? cfg.tags.lots : [];
+        const acts = Array.isArray(cfg.tags?.activities) ? cfg.tags.activities : [];
+        const pill = (id, label, on) => '<button type="button" class="ne-tagpill' + (on ? ' is-on' : '')
+            + '" data-tag-id="' + id + '"><span>' + esc(label) + '</span></button>';
+
+        $('noteEditorLots').innerHTML = lots.map((l) => pill(l.id, l.name, Number(l.id) === Number(tagLot))).join('');
+        $('noteEditorActs').innerHTML = acts.map((a) => pill(a.id, a.title, Number(a.id) === Number(tagAct))).join('');
+        $('noteEditorLotRow').hidden = lots.length === 0;
+        $('noteEditorActRow').hidden = acts.length === 0;
+        $('noteEditorTags').hidden = lots.length === 0 && acts.length === 0;
+    }
+
+    function wireTagRow(hostId, get, set) {
+        $(hostId).addEventListener('click', (e) => {
+            const b = e.target.closest('[data-tag-id]');
+            if (!b) return;
+            const id = parseInt(b.getAttribute('data-tag-id'), 10);
+            set(get() === id ? null : id);
+            paintTags();
+        });
+    }
+    wireTagRow('noteEditorLots', () => tagLot, (v) => { tagLot = v; });
+    wireTagRow('noteEditorActs', () => tagAct, (v) => { tagAct = v; });
 
     function fmtSize(bytes) {
         if (!bytes) return '';
@@ -313,7 +380,7 @@
             $('noteEditorTitleInput').focus();
             return;
         }
-        cfg.onSave && cfg.onSave({ body, media: payloadMedia, noteTitle });
+        cfg.onSave && cfg.onSave({ body, media: payloadMedia, noteTitle, lotId: tagLot, activityId: tagAct });
         close();
     });
     $('noteEditorDelete').addEventListener('click', () => { cfg.onDelete && cfg.onDelete(); close(); });
@@ -337,6 +404,9 @@
         const wantTitle = !!opts.askTitle;
         $('noteEditorTitleWrap').hidden = !wantTitle;
         $('noteEditorTitleInput').value = opts.noteTitle || '';
+        tagLot = opts.tags?.lotId ? Number(opts.tags.lotId) : null;
+        tagAct = opts.tags?.activityId ? Number(opts.tags.activityId) : null;
+        paintTags();
         media = Array.isArray(opts.media) ? opts.media.map((m) => ({ ...m })) : [];
         $('noteEditorUploads').innerHTML = '';
         renderThumbs();

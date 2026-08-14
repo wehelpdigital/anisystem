@@ -12,6 +12,8 @@ class AsScheduleDateNote extends BaseModel
         'noteDate',
         'noteContent',
         'media',
+        'lotId',
+        'activityId',
         'deleteStatus',
     ];
 

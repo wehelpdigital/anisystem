@@ -35,6 +35,7 @@ class WorkerAccessController extends Controller
             'scheduleWorkerId' => 'nullable|integer',
             'email'            => 'required|email|max:191',
             'scheduleAccess'   => 'required|in:none,view,edit',
+            'canAddNotes'      => 'nullable|boolean',
             'communityAccess'  => 'nullable|boolean',
         ]);
         if ($validator->fails()) {
@@ -58,6 +59,7 @@ class WorkerAccessController extends Controller
             'invitedEmail'     => $email,
             'scheduleWorkerId' => $request->input('scheduleWorkerId'),
             'scheduleAccess'   => $request->input('scheduleAccess'),
+            'canAddNotes'      => $request->boolean('canAddNotes'),
             'communityAccess'  => $request->boolean('communityAccess'),
             'deleteStatus'     => 1,
         ]);
@@ -111,6 +113,7 @@ class WorkerAccessController extends Controller
             'email'            => 'required|email|max:191',
             'password'         => 'required|string|min:8|max:191',
             'scheduleAccess'   => 'required|in:none,view,edit',
+            'canAddNotes'      => 'nullable|boolean',
             'communityAccess'  => 'nullable|boolean',
         ]);
         if ($validator->fails()) {
@@ -129,6 +132,7 @@ class WorkerAccessController extends Controller
             'invitedEmail'     => $email,
             'scheduleWorkerId' => $request->input('scheduleWorkerId'),
             'scheduleAccess'   => $request->input('scheduleAccess'),
+            'canAddNotes'      => $request->boolean('canAddNotes'),
             'communityAccess'  => $request->boolean('communityAccess'),
             'deleteStatus'     => 1,
         ]);

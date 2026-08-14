@@ -5256,12 +5256,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show a Delete button only when there's an existing note; it asks
             // for confirmation before removing.
             onDelete: hasExisting ? () => confirmDeleteDateNote(dateKey) : null,
-            onSave: ({ body, media }) => saveDateNoteMedia(dateKey, body, media),
+            tags: noteTagChoices(dateKey),
+            onSave: ({ body, media, lotId, activityId }) => saveDateNoteMedia(dateKey, body, media, lotId, activityId),
         });
     }
-    async function saveDateNoteMedia(dateKey, body, media) {
+    async function saveDateNoteMedia(dateKey, body, media, lotId, activityId) {
         try {
-            const res = await api(U.dateNoteSave(), { method: 'POST', body: { noteDate: dateKey, noteContent: body, media } });
+            const res = await api(U.dateNoteSave(), { method: 'POST', body: { noteDate: dateKey, noteContent: body, media, lotId: lotId || null, activityId: activityId || null } });
             const data = res && res.data;
             _refreshDateNoteUI(dateKey, data ? (data.noteContent || '') : '', data ? data.media : []);
             toast(data ? 'Note saved.' : 'Note cleared.');
@@ -6059,7 +6060,35 @@ document.addEventListener('DOMContentLoaded', () => {
         el.querySelector('.inline-note-media').innerHTML = inlineAttachments(mediaArr);
         el.setAttribute('data-media', JSON.stringify(mediaArr || []));
         el.setAttribute('data-title', title || '');
+        paintInlineNoteTags(el);
     }
+
+    /** Remember what a note points at, and show it. */
+    function setInlineNoteTags(el, lotId, activityId) {
+        if (!el) return;
+        if (lotId) el.setAttribute('data-lot-id', lotId); else el.removeAttribute('data-lot-id');
+        if (activityId) el.setAttribute('data-activity-id', activityId); else el.removeAttribute('data-activity-id');
+        paintInlineNoteTags(el);
+    }
+
+    /** Draw (or clear) the chips that say what a note is about. */
+    function paintInlineNoteTags(el) {
+        if (!el) return;
+        const html = noteTagChips(
+            parseInt(el.getAttribute('data-lot-id') || '', 10) || null,
+            parseInt(el.getAttribute('data-activity-id') || '', 10) || null,
+        );
+        let host = el.querySelector('.inline-note-tags');
+        if (!html) { host?.remove(); return; }
+        if (!host) {
+            host = document.createElement('div');
+            host.className = 'inline-note-tags';
+            const body = el.querySelector('.inline-note-body');
+            body ? body.before(host) : el.appendChild(host);
+        }
+        host.innerHTML = html;
+    }
+
     function buildInlineNote(id, bodyHtml, mediaArr, date, title) {
         const el = document.createElement('div');
         el.className = 'inline-note';
@@ -6113,6 +6142,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const res = await api(U.inlineNoteSave(), { method: 'POST', body: {
                 id: id ? parseInt(id, 10) : null, noteDate: date, sortKey: key,
                 title: el.getAttribute('data-title') || '', content, media: mediaSend,
+                lotId: parseInt(el.getAttribute('data-lot-id') || '', 10) || null,
+                activityId: parseInt(el.getAttribute('data-activity-id') || '', 10) || null,
             } });
             _setMoving(el, false);
             if (res && res.data && res.data.id) {
@@ -6145,6 +6176,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    /* ---- What a note on this day can point at -------------------------
+     * The lots belong to the schedule; the tasks belong to the day, read
+     * off the board so the list is whatever is actually there. Both are
+     * offered as things to tap, never as things to type. */
+    function noteTagChoices(dateKey) {
+        const lots = Object.keys(LOT_NAMES).map((id) => ({ id: parseInt(id, 10), name: LOT_NAMES[id] }));
+        const group = dateKey ? $qs(`#activitiesList .date-group[data-date="${dateKey}"]`) : null;
+        const activities = group
+            ? $qsa('.activity-card[data-id]', group).map((c) => ({
+                id: parseInt(c.getAttribute('data-id'), 10),
+                title: (c.querySelector('.activity-card-title')?.textContent || '').trim() || 'Untitled task',
+            })).filter((a) => a.id)
+            : [];
+        return { lots, activities };
+    }
+
+    /** The pointers a note is already carrying, read back off its element. */
+    function noteTagsOf(el) {
+        return {
+            lotId: el ? (parseInt(el.getAttribute('data-lot-id') || '', 10) || null) : null,
+            activityId: el ? (parseInt(el.getAttribute('data-activity-id') || '', 10) || null) : null,
+        };
+    }
+
+    /** Paint the chips that say what a note is about. */
+    function noteTagChips(lotId, activityId, dateKey) {
+        let html = '';
+        if (lotId && LOT_NAMES[lotId]) {
+            html += '<span class="note-tag note-tag-lot">' + escapeHtml(LOT_NAMES[lotId]) + '</span>';
+        }
+        if (activityId) {
+            const card = $qs(`#activitiesList .activity-card[data-id="${activityId}"]`);
+            const title = (card?.querySelector('.activity-card-title')?.textContent || '').trim();
+            if (title) html += '<span class="note-tag note-tag-act">' + escapeHtml(title) + '</span>';
+        }
+        return html;
+    }
+
     // Open the shared modal editor for an existing note (el) or a new one.
     function openInlineNoteEditor(el, date) {
         date = (date || (el && el.getAttribute('data-date')) || '').trim();
@@ -6160,8 +6229,10 @@ document.addEventListener('DOMContentLoaded', () => {
             videoUploadUrl: U.noteVideoUpload(),
             drawUploadUrl: NOTES_DRAW_URL,
             onDelete: el ? () => deleteInlineNote(el, false) : null,
-            onSave: ({ body, media, noteTitle }) => {
+            tags: Object.assign(noteTagChoices(date || (el && el.getAttribute('data-date')) || ''), noteTagsOf(el)),
+            onSave: ({ body, media, noteTitle, lotId, activityId }) => {
                 if (el) {
+                    setInlineNoteTags(el, lotId, activityId);
                     setInlineNoteData(el, body, media, noteTitle);
                     saveInlineNote(el, (el.getAttribute('data-date') || date).trim(), parseInt(el.getAttribute('data-sort-key') || '0', 10));
                     return;
@@ -6173,6 +6244,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const container = group ? $qs('.date-activities', group) : null;
                 if (!container) return;
                 const newEl = buildInlineNote('', body, media, d, noteTitle);
+                setInlineNoteTags(newEl, lotId, activityId);
                 container.appendChild(newEl);
                 newEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
                 const key = inlineNoteKey(newEl);
@@ -6198,7 +6270,8 @@ document.addEventListener('DOMContentLoaded', () => {
             imageUploadUrl: U.noteImageUpload(),
             videoUploadUrl: U.noteVideoUpload(),
             drawUploadUrl: NOTES_DRAW_URL,
-            onSave: ({ body, media, noteTitle }) => {
+            tags: noteTagChoices(dateKey),
+            onSave: ({ body, media, noteTitle, lotId, activityId }) => {
                 const group = $qs(`#activitiesList .date-group[data-date="${dateKey}"]`);
                 if (group && group.classList.contains('is-folded')) {
                     group.classList.remove('is-folded'); OPEN_DAYS.add(dateKey); saveOpenDays();
@@ -6206,6 +6279,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const container = group ? $qs('.date-activities', group) : null;
                 if (!container) { toast('Could not find that day on the board.', 'error'); return; }
                 const el = buildInlineNote('', body, media, dateKey, noteTitle);
+                setInlineNoteTags(el, lotId, activityId);
                 container.appendChild(el);
                 el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
                 const key = inlineNoteKey(el);

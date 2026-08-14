@@ -113,6 +113,20 @@ class WorkerContext
         return $grant ? $grant->canEditSchedules() : true;
     }
 
+    /**
+     * Whether the current worker context may write the day's notes.
+     *
+     * Deliberately looser than canEdit(): an owner can hand a view-only
+     * worker the right to record what happened in the field without handing
+     * them the right to change what is planned. Owners always may.
+     */
+    public static function canAddNotes(): bool
+    {
+        $grant = self::activeGrant();
+
+        return $grant ? $grant->canAddNotes() : true;
+    }
+
     /** Whether the current worker context may at least view schedules. */
     public static function canView(): bool
     {

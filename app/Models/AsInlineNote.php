@@ -19,6 +19,8 @@ class AsInlineNote extends BaseModel
         'title',
         'content',
         'media',
+        'lotId',
+        'activityId',
         'deleteStatus',
     ];
 

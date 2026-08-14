@@ -836,6 +836,19 @@
            apply only when thumbnails (.nm) are actually inside. The old
            :has(.nm) visibility test silently hid a wrapper full of chips —
            which is why note attachments seemed to vanish from the board. */
+        /* What a note is about: the lot, and the task on that day. Chosen by
+           tapping in the editor, shown here so the note says its subject
+           without the subject having to be written into the words. */
+        .inline-note-tags { display: flex; flex-wrap: wrap; gap: .25rem; margin-bottom: .3rem; }
+        .note-tag { display: inline-flex; align-items: center; gap: .2rem; max-width: 100%;
+            padding: .1rem .42rem; border-radius: 999px; font-size: .62rem; font-weight: 800;
+            letter-spacing: .01em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .note-tag-lot { background: #eaf4dd; color: #3d6823; }
+        .note-tag-lot::before { content: "🌾"; }
+        .note-tag-act { background: #e8eefb; color: #2f4d8f; }
+        .note-tag-act::before { content: "✓"; }
+        html.dark .note-tag-lot { background: #2c4318; color: #cfe8b0; }
+        html.dark .note-tag-act { background: #1e2c4a; color: #b9cbf0; }
         .inline-note-media:not(:has(.nm, .na)) { display: none; }
         .inline-note-media { margin-top: .4rem; }
         .inline-note-media:has(.nm) { display: grid; grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr)); gap: .35rem; }

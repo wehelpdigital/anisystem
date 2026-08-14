@@ -91,6 +91,31 @@ class ScheduleCallController extends BaseScheduleController
             'title' => $kind === 'group' ? 'Team call' : (($me->full_name ?: 'A teammate') . ' is calling'),
         ]);
 
+        // The ring only reaches whoever has the app open. The bell reaches
+        // the rest — and on a phone that has the app installed, the phone
+        // itself. A call is the one thing worth interrupting someone for,
+        // so it is not deduped.
+        $notes = app(\App\Services\NotificationService::class);
+        $who = $me->firstName ?: 'A teammate';
+        $url = route('sm.collab', ['id' => $schedule->id]);
+        $targets = $kind === 'worker' && $with
+            ? [(int) $with]
+            : ScheduleTeam::memberIds($schedule);
+        foreach ($targets as $memberId) {
+            if ((int) $memberId === $meId) {
+                continue;
+            }
+            $notes->notify(
+                (int) $memberId,
+                'team-call',
+                $kind === 'group' ? $who . ' started a team call' : $who . ' is calling you',
+                'Tap to join.',
+                $url,
+                $meId,
+                (int) $schedule->id,
+            );
+        }
+
         return $this->jsonOk('Ringing.');
     }
 

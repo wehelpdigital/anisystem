@@ -40,6 +40,9 @@
                     <label class="flex items-center gap-2 text-sm text-gray-700">
                         <input type="checkbox" id="grantCommunity" checked class="rounded"> Allow community access (own profile &amp; posting)
                     </label>
+                    <label class="flex items-center gap-2 text-xs text-gray-600 cursor-pointer select-none">
+                        <input type="checkbox" id="grantNotes" class="rounded"> Can write day notes on the schedules they work
+                    </label>
                     <div class="flex justify-end gap-2">
                         <button type="button" id="grantCancel" class="btn btn-ghost btn-sm">Cancel</button>
                         <button type="button" id="grantSubmit" class="btn btn-primary btn-sm">Send invite</button>
@@ -152,6 +155,18 @@
                         <option value="none">No schedule access</option>
                     </select>
                 </div>
+
+                {{-- Writing down what happened is not the same act as changing
+                     what is supposed to happen. A worker who can only look at
+                     the plan can still be the right person to record the day,
+                     so that permission stands on its own. --}}
+                <label for="wlNotes" class="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 cursor-pointer select-none">
+                    <input type="checkbox" id="wlNotes" class="w-5 h-5 rounded border-gray-300 mt-0.5 shrink-0">
+                    <span class="min-w-0">
+                        <span class="block text-sm font-semibold text-gray-900">Can write day notes</span>
+                        <span class="block text-xs text-gray-500">Let them add notes, photos and videos to the days they work — without letting them change the plan.</span>
+                    </span>
+                </label>
 
                 <label for="wlCommunity" class="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 cursor-pointer select-none">
                     <input type="checkbox" id="wlCommunity" checked class="w-5 h-5 rounded border-gray-300 mt-0.5 shrink-0">
@@ -379,6 +394,7 @@ const __init = () => {
         else statusEl.textContent = 'No login yet.';
         document.getElementById('wlAccess').value = (login && login.scheduleAccess) || 'view';
         document.getElementById('wlCommunity').checked = login ? !!login.communityAccess : true;
+        document.getElementById('wlNotes').checked = login ? !!login.canAddNotes : false;
         document.getElementById('wlRevoke').classList.toggle('hidden', !login);
         document.getElementById('wlPwRow').classList.add('hidden');
         document.getElementById('wlPassword').value = '';
@@ -402,6 +418,7 @@ const __init = () => {
                 email,
                 scheduleAccess: document.getElementById('wlAccess').value,
                 communityAccess: document.getElementById('wlCommunity').checked ? 1 : 0,
+                canAddNotes: document.getElementById('wlNotes').checked ? 1 : 0,
             } });
             toast(res.message);
             applyGrant(res.data && res.data.grant);
@@ -427,6 +444,7 @@ const __init = () => {
                 email, password: pw,
                 scheduleAccess: document.getElementById('wlAccess').value,
                 communityAccess: document.getElementById('wlCommunity').checked ? 1 : 0,
+                canAddNotes: document.getElementById('wlNotes').checked ? 1 : 0,
             } });
             toast(res.message);
             applyGrant(res.data && res.data.grant);
@@ -671,6 +689,7 @@ const __init = () => {
                     email,
                     scheduleAccess: $('grantAccess').value,
                     communityAccess: $('grantCommunity').checked ? 1 : 0,
+                    canAddNotes: $('grantNotes').checked ? 1 : 0,
                 },
             });
             window.toast && toast(res.message || 'Invite sent.');
