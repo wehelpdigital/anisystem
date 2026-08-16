@@ -1539,23 +1539,11 @@
         return Math.max(12, Math.min(19, Math.round(z)));
     }
 
-    /* The circle the fix is actually promising. Ephemeral and stand-alone: it
-     * is not in `layers`, so nothing saves it, draws it into the picture or
-     * sweeps it up with a clear — it just fades out on its own. */
-    let accRing = null, accTimer = null;
-    function showAccuracy(lat, lng, acc) {
-        if (accRing) { accRing.setMap(null); accRing = null; }
-        clearTimeout(accTimer);
-        const metres = Math.max(8, Number(acc) || 0);
-        try {
-            accRing = new (G().Circle)({
-                map, center: { lat, lng }, radius: metres, clickable: false, zIndex: 5,
-                strokeColor: '#2f6fed', strokeOpacity: .9, strokeWeight: 2,
-                fillColor: '#2f6fed', fillOpacity: .12,
-            });
-        } catch (_) { accRing = null; return; }
-        accTimer = setTimeout(() => { if (accRing) { accRing.setMap(null); accRing = null; } }, 9000);
-    }
+    /* No accuracy ring is drawn. It was put here to make the fix's margin of
+     * error visible while that was the thing under suspicion, and it read as
+     * another shape on a map whose whole business is shapes you drew on
+     * purpose. The accuracy still decides how far in to go, and still gets said
+     * in words below, which is the part that was worth keeping. */
 
     /* Say how sure it is, because "it moved somewhere" and "it moved somewhere
      * right" look identical, and the difference is usually the device rather
@@ -1609,7 +1597,6 @@
             // Local only — sharing is the button next door, and stays its own
             // decision.
             renderLoc({ userId: ME, name: 'Me', lat, lng, acc });
-            showAccuracy(lat, lng, acc);
             centeredOnMe = true;
             dropVeil();
             flyTo(lat, lng, zoomForAccuracy(lat, acc));
