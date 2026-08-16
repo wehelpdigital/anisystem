@@ -259,6 +259,13 @@
         pointer-events: none; }
     .tb-play span { width: 2.6rem; height: 2.6rem; border-radius: 999px; background: rgb(0 0 0 / .55);
         display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1rem; }
+    .tb-save { position: absolute; right: .4rem; top: .4rem; z-index: 2; width: 1.8rem; height: 1.8rem;
+        display: flex; align-items: center; justify-content: center; border-radius: .55rem;
+        background: rgb(17 24 39 / .62); color: #fff; backdrop-filter: blur(2px);
+        transition: background .28s cubic-bezier(.22,1,.36,1); }
+    .tb-save svg { width: .9rem; height: .9rem; }
+    .tb-save:hover { background: #4a7c2a; }
+    @media (prefers-reduced-motion: reduce) { .tb-save { transition: none; } }
     .tb-body { padding: .55rem .65rem .65rem; display: flex; flex-direction: column; gap: .15rem; min-width: 0; }
     .tb-title { font-size: .84rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.35;
         display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -879,6 +886,7 @@
          * open the thing they came from, because a picture of a map is not
          * a map. */
         const TEAM = @json($teamBox);
+        const SAVE_URL = @json(route('media.save'));
         let tbFilter = '';
 
         function teamCardHtml(r) {
@@ -890,7 +898,14 @@
                     + ' preload="metadata" playsinline controls></video>'
                     + (r.posterUrl ? '' : '<span class="tb-play"><span>▶</span></span>')
                 : '<img src="' + esc(r.url) + '" alt="" loading="lazy">';
-            const inner = '<span class="tb-shot"><span class="tb-kind">' + esc(r.kind) + '</span>' + shot + '</span>'
+            // A recording is a thing people want off the app and onto a
+            // phone — to send to a supplier, to keep. The button re-serves it
+            // through our own origin so the browser saves rather than opens.
+            const save = '<a class="tb-save" title="Save to this device" aria-label="Save"'
+                + ' href="' + esc(SAVE_URL + '?u=' + encodeURIComponent(r.url) + '&n=' + encodeURIComponent(r.title || 'recording'))
+                + '" download onclick="event.stopPropagation()">'
+                + '<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v10m0 0l-3.5-3.5M12 14l3.5-3.5M5 19h14"/></svg></a>';
+            const inner = '<span class="tb-shot"><span class="tb-kind">' + esc(r.kind) + '</span>' + shot + save + '</span>'
                 + '<span class="tb-body">'
                 + '<span class="tb-title">' + esc(r.title) + '</span>'
                 + (r.note ? '<span class="tb-note">' + esc(r.note) + '</span>' : '')

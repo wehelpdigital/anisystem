@@ -8,7 +8,12 @@
          The link carries `download`, so the browser saves rather than
          navigates, and it is here rather than on every thumbnail in the app
          because everything opens through this one lightbox. --}}
-    <a class="note-lb-dl" id="noteLbDownload" href="#" download target="_blank" rel="noopener" title="Save to this device" aria-label="Download">
+    {{-- No target="_blank": that is a navigation, and a navigation is what
+         this button was doing instead of saving. The href points at our own
+         save route, which re-serves the bytes with an attachment header — the
+         download attribute alone is ignored for a cross-origin file, and half
+         this app's media is served from the mother site. --}}
+    <a class="note-lb-dl" id="noteLbDownload" href="#" download rel="noopener" title="Save to this device" aria-label="Download">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v10m0 0l-3.5-3.5M12 14l3.5-3.5M5 19h14"/></svg>
     </a>
     <button type="button" class="note-lb-close" aria-label="Close">✕</button>
@@ -164,17 +169,21 @@
 
     const lb = document.getElementById('noteLightbox');
     const stage = lb.querySelector('.note-lb-stage');
+    const SAVE_URL = @json(route('media.save'));
     function open(type, url, poster, fromRect) {
         stage.innerHTML = type === 'video'
             ? `<video src="${esc(url)}"${poster ? ` poster="${esc(poster)}"` : ''} controls autoplay playsinline></video>`
             : `<img src="${esc(url)}" alt="">`;
         const dl = document.getElementById('noteLbDownload');
         if (dl) {
-            dl.href = url || '#';
             // A sensible filename rather than the storage hash, where the
             // browser will take one.
-            const name = (url || '').split('/').pop().split('?')[0];
+            const name = decodeURIComponent((url || '').split('/').pop().split('?')[0] || '');
+            dl.href = url
+                ? SAVE_URL + '?u=' + encodeURIComponent(url) + '&n=' + encodeURIComponent(name)
+                : '#';
             if (name) dl.setAttribute('download', name);
+            dl.title = type === 'video' ? 'Save this video to your device' : 'Save this photo to your device';
         }
         lb.classList.add('is-open'); lb.setAttribute('aria-hidden', 'false');
         window.registerOverlay?.('noteLightbox', close);

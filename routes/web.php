@@ -144,6 +144,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/notifications/read', [App\Http\Controllers\NotificationController::class, 'markRead'])->name('notifications.read');
     Route::post('/notifications/read-all', [App\Http\Controllers\NotificationController::class, 'markAllRead'])->name('notifications.read-all');
     Route::post('/notifications/seen', [App\Http\Controllers\NotificationController::class, 'markSeen'])->name('notifications.seen');
+
+    // Save a picture or a clip to the device. Re-serves it from this origin
+    // so the browser's download attribute is actually honoured.
+    Route::get('/app/media/save', App\Http\Controllers\MediaSaveController::class)->name('media.save');
 });
 
 /*
