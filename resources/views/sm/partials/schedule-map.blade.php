@@ -1880,7 +1880,14 @@
         if (snapshot.length) pushHist({ type: 'clear', objects: snapshot });
     }
     async function startBlankCanvas() {
-        if (objIndex.size === 0) { setLoadedSave(null); return; }
+        // Nothing on screen, so nothing to confirm — but a write can still be
+        // armed: deleting the last shape marks the map dirty, and the timer
+        // that fires two seconds later bails on the empty canvas without
+        // clearing the flag. Letting go of the file while that flag is still
+        // up leaves it pointing at nothing, and the next map adopted from a
+        // teammate's save inherits it — which is how a "your last edits were
+        // not saved" warning reaches somebody who edited nothing.
+        if (objIndex.size === 0) { cancelAutosave(); setLoadedSave(null); return; }
         const n = objIndex.size;
         const ok = window.confirmAction
             ? await confirmAction({ title: 'Start a blank map?', message: 'Removes the ' + n + ' shape' + (n === 1 ? '' : 's') + ' on the canvas for the whole team. Save the current map first if it is worth keeping.', confirmText: 'Start blank' })

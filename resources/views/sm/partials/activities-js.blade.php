@@ -4622,13 +4622,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // On a phone a tap folds the card open or shut — the accordion IS the
         // read view, so this applies to done cards too. Editing and the done
         // note stay a deliberate action away (kebab / desktop click).
-        // Someone who may not edit gets the phone's behaviour on any pointer:
-        // the click still does something useful (fold the card open) instead of
-        // firing a refusal toast at every stray click on the board.
-        if (!CAN_EDIT || window.matchMedia('(pointer: coarse)').matches) {
+        if (window.matchMedia('(pointer: coarse)').matches) {
             toggleCardExpand(card);
             return;
         }
+        // A viewer on a mouse gets nothing here, deliberately. Folding was the
+        // obvious thing to give them, but the fold only exists on coarse
+        // pointers: .act-collapsed is styled inside the phone media query and
+        // applyCardCollapse returns early on a mouse, so the click would have
+        // looked broken — and it would still have written the phone's fold
+        // state for this schedule from a screen that never shows a fold. The
+        // desktop card is already showing what the accordion would reveal, so
+        // there is nothing to open and the body is simply not a control.
+        if (!CAN_EDIT) return;
         if (card.getAttribute('data-is-done') === '1') {
             openDoneNoteSheet(card.getAttribute('data-id'), $qs('.activity-card-title', card)?.textContent || 'Activity');
             return;
@@ -5681,8 +5687,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         async function applyDayType(dt) {
             // Relabelling every counter on the plan is a change to the plan.
-            // Its two buttons are not in the markup any more, so this is the
-            // only thing standing between a console and the endpoint.
+            // Not the last line of defence — CroppingScheduleController::
+            // setDayType asserts edit rights and an unlocked schedule of its
+            // own. This is here so the refusal arrives as a sentence instead of
+            // a 403, which is the same reason every other write on this board
+            // asks first.
             if (!mayEditBoard()) return;
             if (!dt || dt === currentDayType()) return;
             try {
@@ -5763,6 +5772,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Draw → upload the sketch → embed it straight into this day's note.
     $id('dateNoteDrawBtn')?.addEventListener('click', () => {
+        // Its two neighbours in this sheet ask; so does this. Unreachable today
+        // — nothing in any view opens #dateNoteSheet any more — but an upload
+        // that files itself against the day is a write whichever button starts
+        // it, and the next person to wire this back up should not have to
+        // notice that one of the three was different.
+        if (!mayWriteNotes()) return;
         if (typeof window.openDrawCanvas !== 'function') { toast('Drawing tool unavailable.', 'error'); return; }
         window.openDrawCanvas(async (dataUrl) => {
             try {
@@ -7653,10 +7668,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     $id('versionStrip')?.addEventListener('click', async (e) => {
         // The strip lives in the header bar, not the board, so the sweep that
-        // greys the day's buttons never saw it. Every branch below writes:
+        // greys the day's buttons never saw it. Both branches below write:
         // switching the active version re-points the whole schedule.
-        if (!mayEditBoard()) return;
+        //
+        // Asked per branch rather than at the top. The strip is a horizontal
+        // scroller, so a viewer's clicks land in its padding and on the chip
+        // that is already active far more often than on anything that writes —
+        // and a refusal toast for scrolling past your own versions is noise,
+        // not an explanation.
         if (e.target.closest('#addVersionBtn')) {
+            if (!mayEditBoard()) return;
             if ($qsa('#versionStrip .version-chip').length >= MAX_VERSIONS) {
                 toast(`You can have at most ${MAX_VERSIONS} versions. Delete one to make room.`, 'error');
                 return;
@@ -7673,6 +7694,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const chip = e.target.closest('.version-chip');
         if (!chip) return;
         if (chip.getAttribute('data-is-active') === '1') return;
+        if (!mayEditBoard()) return;   // now it is a real switch, so say why not
         const id = chip.getAttribute('data-version-id');
         const name = chip.getAttribute('data-version-name') || 'version';
         const ok = await confirmAction({

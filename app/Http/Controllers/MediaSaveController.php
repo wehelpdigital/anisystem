@@ -71,10 +71,18 @@ class MediaSaveController extends Controller
             return false;
         }
 
+        // Configured hosts only. request()->getHost() used to be on this list,
+        // and it is not a fact about us — it comes off the Host header, and
+        // bootstrap/app.php trusts every proxy without ever calling
+        // trustHosts(), so X-Forwarded-Host is the caller's to write. The
+        // allowlist was therefore satisfied by whoever was asking. That matters
+        // more here than anywhere else in the app: what this method guards is a
+        // fetch whose body is streamed straight back to the caller with the
+        // upstream's own Content-Type, so anything this says yes to is
+        // something the server will go and read on the caller's behalf.
         $ours = array_filter([
             strtolower((string) parse_url((string) config('app.url'), PHP_URL_HOST)),
             strtolower((string) parse_url((string) config('mother.url'), PHP_URL_HOST)),
-            strtolower(request()->getHost()),
         ]);
 
         return in_array($host, $ours, true);
@@ -87,9 +95,12 @@ class MediaSaveController extends Controller
         if (! str_contains($path, '/storage/')) {
             return null;
         }
+        // Configured host only, for the same reason as allowed() above. This is
+        // reached only for URLs allowed() already passed, so dropping the
+        // request host here changes no outcome — it just stops the pattern
+        // sitting in the file waiting to be copied into somewhere it matters.
         $host = strtolower((string) parse_url($url, PHP_URL_HOST));
-        if ($host !== strtolower(request()->getHost())
-            && $host !== strtolower((string) parse_url((string) config('app.url'), PHP_URL_HOST))) {
+        if ($host !== strtolower((string) parse_url((string) config('app.url'), PHP_URL_HOST))) {
             return null;
         }
 

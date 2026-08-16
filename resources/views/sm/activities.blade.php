@@ -771,9 +771,15 @@
                             0 10px 0 var(--tl-text-faint, #9ca3af),
                             4px 10px 0 var(--tl-text-faint, #9ca3af);
             }
-            /* A done card is locked (draggable="false") — no grip to promise
-               otherwise. Same for one mid-drag: the ghost carries its own. */
-            .activity-card.is-done::after,
+            /* No grip on a card that cannot be dragged — and the card itself
+               already says which those are. Naming .is-done was the narrow
+               version of this rule: a view-only worker's cards are draggable
+               ="false" too, and were still being shown six dots promising a
+               drag the touch handler refuses. Asking the attribute covers both
+               and cannot drift from whatever the renderers decide next.
+               .dragging is separate: that card can be dragged, is being
+               dragged, and its ghost carries the grip. */
+            .activity-card:not([draggable="true"])::after,
             .activity-card.dragging::after { display: none; }
 
             /* Title and tags each claim their own full-width row. */
