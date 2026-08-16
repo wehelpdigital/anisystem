@@ -265,6 +265,10 @@
 @push('scripts')
     @include('community.partials.publish-js')
 @include('community.partials.emoji-js')
+{{-- Brought in for one thing only: the long-thread fold, which knows about
+     .cp-replies as well as the wall's own containers. The wall handlers it
+     also carries find nothing to bind to on this page. --}}
+@include('community.partials.wall-comment-js')
 <script>
 (() => {
 const __init = () => {
@@ -392,6 +396,8 @@ const __init = () => {
 
         if (e.target.closest('.js-reply')) {
             const replies = root.querySelector('.cp-replies');
+            // Answering a thread is asking to read it — unfold it first.
+            window.plazaThreadFold?.open(replies, true);
             if (replies.querySelector('.js-reply-box')) { replies.querySelector('textarea').focus(); return; }
             const box = document.createElement('div');
             box.className = 'js-reply-box';
@@ -424,6 +430,9 @@ const __init = () => {
                 });
                 const wrap = document.createElement('div');
                 wrap.innerHTML = renderComment(res.data.comment, true);
+                // Unfold before inserting, or the new reply lands inside the
+                // collapsed tail and the author never sees it arrive.
+                window.plazaThreadFold?.open(box.parentNode, false);
                 box.parentNode.insertBefore(wrap.firstElementChild, box);
                 box.remove();
                 bumpCount(1);

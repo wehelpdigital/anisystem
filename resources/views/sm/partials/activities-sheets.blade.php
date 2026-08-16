@@ -10,11 +10,27 @@
     // one tap further in. Same treatment: shown, disabled, greyed.
     $mayEdit = \App\Support\WorkerContext::canEdit();
     $mayNote = $mayEdit || \App\Support\WorkerContext::canAddNotes();
-    $sheetLock = $mayEdit ? '' : ' is-locked opacity-40 cursor-not-allowed';
-    $sheetNoteLock = $mayNote ? '' : ' is-locked opacity-40 cursor-not-allowed';
+    $sheetLock = $mayEdit ? '' : ' is-locked';
+    $sheetNoteLock = $mayNote ? '' : ' is-locked';
     $whyNoEdit = 'Only someone who can edit the plan may do this';
     $whyNoNote = 'You are not allowed to write notes on this schedule';
 @endphp
+
+{{-- How a control this viewer may not use looks. It lives here, beside the
+     first thing that needs it, because the board is drawn by three partials
+     and none of them owns the page's stylesheet. The component classes below
+     set their own cursor and hover in an unlayered block, so Tailwind's
+     utilities lose to them — this has to say it in the same voice. --}}
+<style>
+    .icon-btn.is-locked, .done-check.is-locked, .date-header-btn.is-locked,
+    .btn.is-locked, .day-menu-action.is-locked,
+    .date-note-edit.is-locked, .date-note-del.is-locked { opacity: .4; cursor: not-allowed; }
+    /* No hover lift and no press bounce: nothing is going to happen. */
+    .icon-btn.is-locked:hover, .done-check.is-locked:hover, .date-header-btn.is-locked:hover,
+    .btn.is-locked:hover, .day-menu-action.is-locked:hover { background: transparent; }
+    .done-check.is-locked:hover { border-color: var(--color-gray-300); }
+    .icon-btn.is-locked:active, .done-check.is-locked:active { transform: none; background: transparent; }
+</style>
 
 {{-- ============================ ADD / EDIT ACTIVITY ============================ --}}
 <div class="sheet hidden" id="activitySheet" style="--sheet-width:44rem">

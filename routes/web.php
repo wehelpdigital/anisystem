@@ -343,6 +343,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/ai', [App\Http\Controllers\AiController::class, 'index'])->name('ai.index');
     Route::post('/app/ai-ask', [App\Http\Controllers\AiController::class, 'ask'])->name('ai.ask');
     Route::post('/app/ai-photo', [App\Http\Controllers\AiController::class, 'uploadImage'])->name('ai.photo');
+    // "Ask the AI about this" from a picture the app is already showing.
+    Route::post('/app/ai-photo-existing', [App\Http\Controllers\AiController::class, 'attachExisting'])->name('ai.photo.existing');
     Route::post('/app/ai-conversation-new', [App\Http\Controllers\AiController::class, 'newConversation'])->name('ai.conversation.new');
     Route::delete('/app/ai-conversation-delete', [App\Http\Controllers\AiController::class, 'deleteConversation'])->name('ai.conversation.delete');
     Route::post('/app/ai-conversation-rename', [App\Http\Controllers\AiController::class, 'renameConversation'])->name('ai.conversation.rename');

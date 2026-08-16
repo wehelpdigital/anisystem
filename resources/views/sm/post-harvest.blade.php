@@ -382,6 +382,11 @@ const __init = () => {
         return out;
     }
 
+    /** One square per attachment, whichever kind it is. Mirrors the Blade card. */
+    const tile = (im) => im.type === 'video'
+        ? `<video src="${escapeHtml(im.url)}" class="ph-tile" controls preload="metadata" playsinline></video>`
+        : `<img src="${escapeHtml(im.url)}" alt="" class="ph-tile" loading="lazy">`;
+
     /** Mirrors the Blade card above — keep the two in step. */
     function renderCard(o) {
         const el = document.createElement('div');
@@ -414,7 +419,7 @@ const __init = () => {
             ${o.buyer ? `<p class="text-sm text-gray-500 mt-2">Sold to <span class="font-semibold text-gray-700">${escapeHtml(o.buyer)}</span></p>` : ''}
             ${o.notes ? `<div class="ph-notes text-gray-600 mt-2">${o.notes}</div>` : ''}
             ${(o.images && o.images.length)
-                ? `<div class="ph-gallery-thumbs mt-3">${o.images.map((im) => `<img src="${escapeHtml(im.url)}" alt="" class="rounded-lg" style="aspect-ratio:1;object-fit:cover;width:100%" loading="lazy">`).join('')}</div>`
+                ? `<div class="ph-gallery-thumbs mt-3">${o.images.map(tile).join('')}</div>`
                 : (o.imageUrl ? `<img src="${escapeHtml(o.imageUrl)}" alt="" class="ph-photo mt-3" loading="lazy">` : '')}`;
         return el;
     }
@@ -523,23 +528,34 @@ const __init = () => {
     });
     document.getElementById('phFields')?.addEventListener('input', refreshValueHint);
 
-    // Multiple photos per observation, held as {path, url} while the sheet is open.
+    // Everything hanging off this observation, held as {type, path, url} while
+    // the sheet is open. Only the paths are ever saved.
     let phImages = [];
     function renderGallery() {
         const g = document.getElementById('phGallery');
-        g.innerHTML = phImages.map((im, i) =>
-            `<div class="ph-thumb"><img src="${escapeHtml(im.url)}" alt="Photo ${i + 1}">` +
-            `<button type="button" data-rm="${i}" aria-label="Remove photo">&times;</button></div>`).join('');
+        g.innerHTML = phImages.map((im, i) => {
+            // Muted and preload-metadata: a thumbnail should show its first
+            // frame, not start playing at whoever opened the sheet.
+            const shot = im.type === 'video'
+                ? `<video src="${escapeHtml(im.url)}" muted playsinline preload="metadata"></video>`
+                : `<img src="${escapeHtml(im.url)}" alt="Attachment ${i + 1}">`;
+            return `<div class="ph-thumb">${shot}` +
+                `<button type="button" data-rm="${i}" aria-label="Remove attachment">&times;</button></div>`;
+        }).join('');
         g.querySelectorAll('[data-rm]').forEach((b) => b.addEventListener('click', () => {
             phImages.splice(parseInt(b.getAttribute('data-rm'), 10), 1);
             renderGallery();
         }));
     }
     function setImages(list) {
-        phImages = (list || []).filter((im) => im && im.path).map((im) => ({ path: im.path, url: im.url }));
+        phImages = (list || []).filter((im) => im && im.path)
+            .map((im) => ({ type: im.type || 'image', path: im.path, url: im.url }));
         renderGallery();
     }
-    function addImage(im) { phImages.push({ path: im.path, url: im.url }); renderGallery(); }
+    function addImage(im) {
+        phImages.push({ type: im.type || 'image', path: im.path, url: im.url });
+        renderGallery();
+    }
 
     /* ---- Quill (WYSIWYG) for the observation notes, lazy-loaded from CDN ---- */
     let quill = null;
@@ -570,7 +586,23 @@ const __init = () => {
         return quill.getText().trim() ? quill.root.innerHTML : null;
     }
 
-    /* ---- Photo upload + live-camera capture (getUserMedia on secure origins) ---- */
+    /* ---- The four ways in -------------------------------------------------
+     * The shared bar does the choosing, the uploading and the recording; this
+     * page only says what to do with whatever comes back. */
+    const attachBar = document.getElementById('phAttach');
+    attachBar.addEventListener('attach:add', (e) => {
+        const im = e.detail;
+        if (!im || !im.path) return;
+        addImage(im);
+        toast(im.type === 'video' ? 'Clip attached.' : 'Photo added.');
+    });
+
+    /* ---- Live-camera capture (getUserMedia on secure origins) --------------
+     * The bar's own camera hands the job to the phone's camera app, which is
+     * the better photographer by a mile. A desktop has no camera app to hand
+     * it to — capture= there just opens a file picker — so the webcam preview
+     * this page has always had stands in, and takes several shots in a row
+     * without reopening anything. */
     let phStream = null;
     async function uploadImageFile(file) {
         const form = new FormData();
@@ -582,22 +614,25 @@ const __init = () => {
         });
         const json = await res.json();
         if (!json.success) throw new Error(json.message || 'Upload failed.');
-        addImage({ path: json.data.path, url: json.data.url });
+        addImage({ type: 'image', path: json.data.path, url: json.data.url });
     }
     function stopCamera() {
         if (phStream) { phStream.getTracks().forEach((t) => t.stop()); phStream = null; }
         const v = document.getElementById('phVideo'); if (v) v.srcObject = null;
         document.getElementById('phCameraWrap').classList.add('hidden');
     }
-    document.getElementById('phCameraBtn').addEventListener('click', async () => {
-        // Live camera needs a secure origin (HTTPS or localhost). Otherwise fall
-        // back to the file input, which still opens the camera on phones.
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { fld('phPhoto').click(); return; }
+    attachBar.addEventListener('attach:camera', async (e) => {
+        const cameraApp = window.matchMedia('(pointer: coarse)').matches;
+        if (cameraApp || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return;
+        e.preventDefault();
         try {
             phStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false });
             document.getElementById('phVideo').srcObject = phStream;
             document.getElementById('phCameraWrap').classList.remove('hidden');
-        } catch (_) { fld('phPhoto').click(); }
+        } catch (_) {
+            // Denied, or no camera at all: hand it back to the bar's input.
+            attachBar.querySelector('[data-ab-camera]')?.click();
+        }
     });
     document.getElementById('phCameraCancel').addEventListener('click', stopCamera);
     document.getElementById('phShutter').addEventListener('click', () => {
@@ -632,7 +667,9 @@ const __init = () => {
         }) : {});
         fld('phDate').value = o ? (o.observationDate || '') : new Date().toISOString().slice(0, 10);
         fld('phLot').value = o && o.lotId ? String(o.lotId) : '';
-        fld('phPhoto').value = '';
+        // A failed upload leaves its red row behind on purpose; it should not
+        // still be there next time the sheet opens.
+        window.smAttachBar?.(attachBar).reset();
         stopCamera();
         setImages(o ? (o.images || []) : []);
         refreshValueHint();
@@ -642,14 +679,6 @@ const __init = () => {
     }
 
     document.querySelectorAll('[data-ph-add]').forEach((btn) => btn.addEventListener('click', () => openPhSheet(null)));
-    fld('phPhoto').addEventListener('change', async (e) => {
-        const files = [...(e.target.files || [])];
-        for (const file of files) {
-            try { await uploadImageFile(file); }
-            catch (err) { toast(err.message, 'error'); }
-        }
-        e.target.value = '';   // allow re-selecting the same files
-    });
 
     document.getElementById('phSaveBtn').addEventListener('click', async () => {
         const id = fld('phId').value;

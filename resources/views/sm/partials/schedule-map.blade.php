@@ -542,7 +542,11 @@
        in latitude could never be. labelOrigin follows the disc down so the
        ruler/× rides inside it. */
     const BADGE_DROP = 26;
-    const BADGE_DISC = 'M0 ' + BADGE_DROP + ' m-11 0 a11 11 0 1 0 22 0 a11 11 0 1 0 -22 0';
+    // An 11-radius disc centred BADGE_DROP below the origin — written in the
+    // same cubic notation as the pin above, which is the notation Google's
+    // symbol parser is known here to take.
+    const BADGE_DISC = 'M0 15C6.08 15 11 19.92 11 26C11 32.08 6.08 37 0 37'
+        + 'C-6.08 37 -11 32.08 -11 26C-11 19.92 -6.08 15 0 15Z';
 
     /** The badge that opens a shape's numbers, hung under its middle. */
     function measureBadge(parts, id, at, colorStr, labels) {

@@ -36,7 +36,10 @@
             </div>
             <div class="sai-thread" id="saiThread"><div class="sai-loading" id="saiLoading">Loading…</div></div>
             <div class="sai-composer">
-                <div id="saiPhotoChip" class="sai-photochip hidden"><img src="" alt="" id="saiPhotoThumb"><span class="grow">Photo attached</span><button type="button" id="saiPhotoRemove" class="text-red-600 font-bold">Remove</button></div>
+                {{-- A question can be about several photos: four pictures of
+                     one leaf are one question, not four. Each carries its own
+                     remove, because the usual correction is "not that one". --}}
+                <div id="saiPhotoChips" class="sai-photochips"></div>
                 <div class="sai-box">
                     <label class="sai-cam" title="Attach a photo">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -109,9 +112,12 @@
     .sai-dots i:nth-child(2) { animation-delay: .15s; } .sai-dots i:nth-child(3) { animation-delay: .3s; }
     @keyframes saidot { 0%,60%,100% { opacity: .3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
     .sai-composer { flex-shrink: 0; padding: .55rem .7rem .7rem; border-top: 1px solid var(--color-gray-100); }
-    .sai-photochip { display: flex; align-items: center; gap: .4rem; font-size: .72rem; font-weight: 600; color: var(--color-gray-500); margin-bottom: .4rem; background: var(--color-gray-100); border-radius: .6rem; padding: .3rem .5rem; }
-    .sai-photochip.hidden { display: none; }
+    .sai-photochips { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .4rem; }
+    .sai-photochips:empty { display: none; }
+    .sai-photochip { display: inline-flex; align-items: center; gap: .35rem; font-size: .72rem; font-weight: 600;
+        color: var(--color-gray-500); background: var(--color-gray-100); border-radius: .6rem; padding: .25rem .45rem; }
     .sai-photochip img { width: 1.9rem; height: 1.9rem; border-radius: .4rem; object-fit: cover; }
+    .sai-photochip button { color: #b91c1c; font-weight: 800; line-height: 1; }
     .sai-box { display: flex; align-items: flex-end; gap: .25rem; border: 1.5px solid var(--color-gray-200); border-radius: 1.1rem; padding: .2rem .2rem .2rem .4rem; background: var(--color-white); }
     .sai-box:focus-within { border-color: var(--color-brand-500); box-shadow: 0 0 0 3px rgb(107 159 61 / .18); }
     .sai-cam { width: 2.15rem; height: 2.15rem; border-radius: .7rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--color-brand-50); color: var(--color-brand-700); cursor: pointer; }
@@ -153,7 +159,7 @@
         };
 
         const rendered = new Set();
-        let lastId = 0, photoPath = null, busy = false, started = false, pollTimer = null, sessTimer = null, channel = null, thinkingEl = null;
+        let lastId = 0, photos = [], busy = false, started = false, pollTimer = null, sessTimer = null, channel = null, thinkingEl = null;
         let currentSession = null, sessions = [], sessReq = 0;
 
         const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -298,18 +304,22 @@
         async function send() {
             if (busy) return;
             const text = ($('saiText').value || '').trim();
-            if (!text && !photoPath) return;
+            if (!text && !photos.length) return;
             if (!currentSession) { await loadSessions(); }
             busy = true; $('saiSend').disabled = true; clearIntro();
-            addMsg({ id: null, role: 'user', mine: true, content: text, image: photoPath ? $('saiPhotoThumb').src : null });
+            addMsg({ id: null, role: 'user', mine: true, content: text, image: photos[0]?.url || null });
             $('saiText').value = ''; $('saiText').style.height = 'auto';
             showThinking();
             try {
-                const res = await api(U.ask + `?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { message: text, imagePath: photoPath, sessionId: currentSession } });
+                const res = await api(U.ask + `?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: {
+                    message: text,
+                    imagePaths: photos.map((p) => p.path),
+                    sessionId: currentSession,
+                } });
                 if (res.data.question && res.data.question.id) { rendered.add(res.data.question.id); lastId = Math.max(lastId, res.data.question.id); }
                 clearThinking();
                 addMsg(res.data.answer); setBalance(res.data.balance);
-                photoPath = null; $('saiPhotoChip').classList.add('hidden');
+                photos = []; paintPhotos();
                 refreshSessionsSoon();
             } catch (err) {
                 clearThinking();
@@ -383,13 +393,48 @@
             const collapsed = $('saiSessions').classList.contains('collapsed');
             if (collapsed) openSidebarMobile(); else closeSidebarMobile();
         });
+        /* The chips, and the one door every "ask about this" comes through.
+         *
+         * The lightbox hands over a photo it has already copied into this
+         * user's AI folder; the file input uploads a new one. Both end up as
+         * the same {path, url} in the same list, so nothing downstream needs
+         * to know which way a picture arrived. */
+        function paintPhotos() {
+            const host = $('saiPhotoChips');
+            if (!host) return;
+            host.innerHTML = photos.map((p, i) =>
+                `<span class="sai-photochip"><img src="${esc(p.url)}" alt="">`
+                + `<button type="button" data-drop="${i}" aria-label="Remove">✕</button></span>`).join('');
+        }
+        $('saiPhotoChips')?.addEventListener('click', (e) => {
+            const b = e.target.closest('[data-drop]');
+            if (!b) return;
+            photos.splice(parseInt(b.dataset.drop, 10), 1);
+            paintPhotos();
+        });
+
+        const MAX_PHOTOS = 4;
+        window.smAskAiAbout = function (item) {
+            if (!item || !item.path) return;
+            if (photos.length >= MAX_PHOTOS) {
+                window.toast?.('Four photos is as many as one question can carry.', 'error');
+                return;
+            }
+            if (!photos.some((p) => p.path === item.path)) photos.push(item);
+            paintPhotos();
+            // Bring the composer into view and let them type the question.
+            window.smShowAiTab?.();
+            window.smFocus?.($('saiText'), { delay: 120 });
+            window.toast?.('Photo attached — what would you like to ask about it?');
+        };
+
         $('saiPhoto').addEventListener('change', async (e) => {
             const f = e.target.files && e.target.files[0]; if (!f) return;
             const form = new FormData(); form.append('image', f);
-            try { const r = await api(U.photo, { method: 'POST', body: form }); photoPath = r.data.path; $('saiPhotoThumb').src = r.data.url; $('saiPhotoChip').classList.remove('hidden'); }
+            try { const r = await api(U.photo, { method: 'POST', body: form }); photos.push({ path: r.data.path, url: r.data.url }); paintPhotos(); }
             catch (err) { if (window.toast) toast(err.message, 'error'); } finally { e.target.value = ''; }
         });
-        $('saiPhotoRemove').addEventListener('click', () => { photoPath = null; $('saiPhotoChip').classList.add('hidden'); });
+
 
         // Start when the AI tab is first shown.
         document.addEventListener('collab:show', (e) => { if (e.detail && e.detail.tab === 'ai') start(); });

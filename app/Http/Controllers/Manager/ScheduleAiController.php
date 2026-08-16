@@ -193,6 +193,11 @@ class ScheduleAiController extends BaseScheduleController
         $validator = Validator::make($request->all(), [
             'message' => 'required|string|max:4000',
             'imagePath' => 'nullable|string|max:500',
+            // Several pictures of the same problem is one question, not four.
+            // Capped, because each one is a whole image sent to the model and
+            // charged to the owner's pool.
+            'imagePaths' => 'nullable|array|max:4',
+            'imagePaths.*' => 'string|max:500',
             'sessionId' => 'nullable|integer',
         ]);
         if ($validator->fails()) {
@@ -201,12 +206,28 @@ class ScheduleAiController extends BaseScheduleController
 
         $session = $this->resolveSession($schedule, $request->input('sessionId'));
         $prompt = trim((string) $request->input('message'));
-        $imagePath = $request->input('imagePath');
-        $image = $imagePath ? $this->loadImage($askerId, $imagePath) : null;
+        /* One picture or several.
+         *
+         * imagePath is what every existing caller sends; imagePaths is the
+         * newer list. Both are read so nothing that already worked has to
+         * change, and anything the reader is not allowed to attach is simply
+         * dropped by loadImage rather than failing the whole question. */
+        $wanted = array_values(array_unique(array_filter(array_merge(
+            [(string) $request->input('imagePath')],
+            array_map('strval', (array) $request->input('imagePaths', []))
+        ))));
+        $images = array_values(array_filter(array_map(
+            fn ($path) => $this->loadImage($askerId, $path),
+            $wanted
+        )));
+        // The transcript keeps one picture per turn, so the first stands for
+        // the set in the history; all of them go to the model.
+        $imagePath = $wanted[0] ?? null;
+        $image = $images ?: null;
 
         // Refuse before spending the owner's pool on something it can't cover.
         $balance = $this->credits->balance($ownerId);
-        $estimate = $this->credits->estimate($settings, $prompt, $image ? 1 : 0);
+        $estimate = $this->credits->estimate($settings, $prompt, count($images));
         if ($balance < $estimate) {
             return response()->json([
                 'success' => false,
@@ -250,7 +271,7 @@ class ScheduleAiController extends BaseScheduleController
             return $this->jsonFail($result['error'] ?: 'The AI could not answer.', 502, ['question' => $qShaped]);
         }
 
-        $charged = $this->credits->priceFor($settings, $result['tokensIn'], $result['tokensOut'], $image ? 1 : 0);
+        $charged = $this->credits->priceFor($settings, $result['tokensIn'], $result['tokensOut'], count($images));
         $a = ScheduleAiMessage::create([
             'scheduleId' => $schedule->id, 'sessionId' => $session->id, 'userId' => $ownerId,
             'role' => 'assistant', 'content' => $result['text'], 'creditsCharged' => $charged, 'deleteStatus' => 1,

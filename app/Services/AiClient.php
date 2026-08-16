@@ -17,7 +17,12 @@ class AiClient
 {
     private const TIMEOUT = 90;
 
-    public function ask(AiSetting $settings, array $history, string $prompt, ?array $image = null): array
+    /**
+     * @param  array<int, array{mime:string,data:string}>|array{mime:string,data:string}|null  $image
+     *   One picture or several. A single one is still accepted as it always
+     *   was, because every existing caller passes exactly that.
+     */
+    public function ask(AiSetting $settings, array $history, string $prompt, array|null $image = null): array
     {
         $key = $settings->plainApiKey();
         if (! $key) {
@@ -26,9 +31,9 @@ class AiClient
 
         try {
             return match ($settings->provider) {
-                'openai' => $this->askOpenAi($settings, $key, $history, $prompt, $image),
-                'gemini' => $this->askGemini($settings, $key, $history, $prompt, $image),
-                default => $this->askClaude($settings, $key, $history, $prompt, $image),
+                'openai' => $this->askOpenAi($settings, $key, $history, $prompt, self::pictures($image)),
+                'gemini' => $this->askGemini($settings, $key, $history, $prompt, self::pictures($image)),
+                default => $this->askClaude($settings, $key, $history, $prompt, self::pictures($image)),
             };
         } catch (\Throwable $e) {
             report($e);
@@ -39,7 +44,31 @@ class AiClient
 
     // ------------------------------------------------------------------
 
-    private function askClaude(AiSetting $s, string $key, array $history, string $prompt, ?array $image): array
+    /** @param  array<int, array{mime:string,data:string}>  $images */
+    /**
+     * One picture, several, or none — always returned as a list.
+     *
+     * Callers have always passed a single ['mime'=>…, 'data'=>…]; a question
+     * about four photos of the same leaf is a different question from four
+     * questions about one photo each, so the shape had to widen. Telling the
+     * two apart by looking for the keys is safe: a list of pictures never has
+     * a 'mime' key of its own.
+     *
+     * @return array<int, array{mime:string,data:string}>
+     */
+    private static function pictures(array|null $image): array
+    {
+        if (! $image) {
+            return [];
+        }
+
+        return isset($image['mime']) ? [$image] : array_values(array_filter(
+            $image,
+            fn ($p) => is_array($p) && isset($p['mime'], $p['data'])
+        ));
+    }
+
+    private function askClaude(AiSetting $s, string $key, array $history, string $prompt, array $images): array
     {
         $messages = [];
         foreach ($history as $turn) {
@@ -47,7 +76,7 @@ class AiClient
         }
 
         $content = [];
-        if ($image) {
+        foreach ($images as $image) {
             $content[] = [
                 'type' => 'image',
                 'source' => ['type' => 'base64', 'media_type' => $image['mime'], 'data' => $image['data']],
@@ -85,7 +114,8 @@ class AiClient
         ];
     }
 
-    private function askOpenAi(AiSetting $s, string $key, array $history, string $prompt, ?array $image): array
+    /** @param  array<int, array{mime:string,data:string}>  $images */
+    private function askOpenAi(AiSetting $s, string $key, array $history, string $prompt, array $images): array
     {
         $messages = [['role' => 'system', 'content' => $s->systemPrompt]];
         foreach ($history as $turn) {
@@ -93,7 +123,7 @@ class AiClient
         }
 
         $content = [['type' => 'text', 'text' => $prompt]];
-        if ($image) {
+        foreach ($images as $image) {
             $content[] = [
                 'type' => 'image_url',
                 'image_url' => ['url' => 'data:' . $image['mime'] . ';base64,' . $image['data']],
@@ -125,7 +155,8 @@ class AiClient
         ];
     }
 
-    private function askGemini(AiSetting $s, string $key, array $history, string $prompt, ?array $image): array
+    /** @param  array<int, array{mime:string,data:string}>  $images */
+    private function askGemini(AiSetting $s, string $key, array $history, string $prompt, array $images): array
     {
         $contents = [];
         foreach ($history as $turn) {
@@ -137,7 +168,7 @@ class AiClient
         }
 
         $parts = [];
-        if ($image) {
+        foreach ($images as $image) {
             $parts[] = ['inline_data' => ['mime_type' => $image['mime'], 'data' => $image['data']]];
         }
         $parts[] = ['text' => $prompt];

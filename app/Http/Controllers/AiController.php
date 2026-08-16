@@ -207,6 +207,74 @@ class AiController extends Controller
         ]);
     }
 
+    /**
+     * Attach a picture the app is already showing.
+     *
+     * "Ask the AI about this" needs the photo in the asker's own ai-photos
+     * folder, because that prefix is the only thing stopping one account
+     * reading another's attachments back through imagePath. A gallery photo
+     * lives under the schedule instead, so it is copied rather than pointed
+     * at — the copy is what makes the permission check meaningful.
+     *
+     * Only from the two hosts this app publishes from, for the same reason
+     * the save route is fussy: an open fetcher is a way to make the server
+     * read things on somebody else's behalf.
+     */
+    public function attachExisting(Request $request)
+    {
+        $url = (string) $request->input('url');
+        if ($url === '' || ! filter_var($url, FILTER_VALIDATE_URL)) {
+            return $this->json(false, 'Nothing to attach.', [], 422);
+        }
+
+        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
+        $ours = array_filter([
+            strtolower((string) parse_url((string) config('app.url'), PHP_URL_HOST)),
+            strtolower((string) parse_url((string) config('mother.url'), PHP_URL_HOST)),
+            strtolower($request->getHost()),
+        ]);
+        if (! in_array($host, $ours, true)) {
+            return $this->json(false, 'That file is not ours to attach.', [], 403);
+        }
+
+        // The models take stills. A clip has to be asked about in words.
+        if (preg_match('~\.(mp4|mov|webm|mkv|m4v|3gp)(\?|$)~i', $url)) {
+            return $this->json(false, 'The technician reads photos, not video — take a still from it and ask about that.', [], 422);
+        }
+
+        try {
+            $res = \Illuminate\Support\Facades\Http::timeout(30)->get($url);
+            if (! $res->successful()) {
+                throw new \RuntimeException('Could not read that file.');
+            }
+            $tmp = tempnam(sys_get_temp_dir(), 'aiimg');
+            file_put_contents($tmp, $res->body());
+
+            $mime = mime_content_type($tmp) ?: '';
+            if (! in_array($mime, ['image/jpeg', 'image/png', 'image/webp'], true)) {
+                @unlink($tmp);
+
+                return $this->json(false, 'That is not a photo the technician can read.', [], 422);
+            }
+
+            $ext = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'][$mime];
+            $file = new \Illuminate\Http\UploadedFile($tmp, 'attached.' . $ext, $mime, null, true);
+            $stored = \App\Support\MediaStore::putFile($file, 'ai-photos', Auth::id());
+            @unlink($tmp);
+
+            if ($stored === null) {
+                throw new \RuntimeException('Could not keep a copy.');
+            }
+        } catch (\Throwable $e) {
+            return $this->json(false, $e->getMessage() ?: 'Could not attach that photo.', [], 500);
+        }
+
+        return $this->json(true, 'Photo attached.', [
+            'path' => $stored,
+            'url' => \App\Support\MediaStore::url($stored),
+        ]);
+    }
+
     public function newConversation(Request $request)
     {
         $conversation = AiConversation::create([

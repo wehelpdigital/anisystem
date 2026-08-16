@@ -552,12 +552,27 @@ class ScheduleMapController extends BaseScheduleController
             ? AsScheduleNote::active()->find($existing->noteId)
             : null;
         if ($note) {
+            $was = is_array($note->media) ? $note->media : [];
+            // Only the map's own picture is replaced. Anything a person hung on
+            // that note afterwards is theirs and stays where they put it.
+            $stale = array_filter($was, fn ($m) => ($m['type'] ?? '') === 'map');
+            $theirs = array_values(array_filter($was, fn ($m) => ($m['type'] ?? '') !== 'map'));
             $note->update([
                 'title' => mb_substr($title, 0, 180),
-                // Keep whatever picture is already filed when this round could
-                // not take a fresh one — a note with no media renders empty.
-                'media' => $media ?: (is_array($note->media) ? $note->media : []),
+                // Keep the picture already filed when this round could not take
+                // a fresh one — a note with no media renders as an empty card.
+                'media' => $media ? array_merge($media, $theirs) : $was,
             ]);
+            // And take the replaced one off the disk. A map saving itself every
+            // fifteen seconds for an afternoon is otherwise a few hundred PNGs
+            // of the same field that nothing will ever look at again.
+            if ($media) {
+                foreach ($stale as $old) {
+                    if (is_string($old['path'] ?? null)) {
+                        \App\Support\MediaStore::delete($old['path']);
+                    }
+                }
+            }
         } else {
             $note = AsScheduleNote::create([
                 'croppingScheduleId' => $schedule->id,
@@ -666,7 +681,14 @@ class ScheduleMapController extends BaseScheduleController
         }
 
         // One event; every client refetches rather than replaying a giant diff.
-        $this->emit($schedule->id, ['action' => 'reload', 'actorUserId' => $meId]);
+        // It names the save, too: a client that does not know which file is on
+        // screen cannot write its own edits back into it.
+        $this->emit($schedule->id, [
+            'action' => 'reload',
+            'saveId' => (int) $save->id,
+            'title' => (string) $save->title,
+            'actorUserId' => $meId,
+        ]);
 
         return response()->json(['success' => true, 'message' => 'Map loaded for the team.']);
     }

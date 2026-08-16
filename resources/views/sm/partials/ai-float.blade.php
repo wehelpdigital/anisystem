@@ -372,6 +372,23 @@
         });
         $('aiFloatPhotoRemove')?.addEventListener('click', () => { photoPath = null; $('aiFloatPhotoChip').classList.add('hidden'); });
 
+        /* "Ask the AI about this", from a picture the app is already showing.
+         *
+         * The lightbox has copied it into this user's own AI folder by the
+         * time it gets here, so all that is left is to hang it on the
+         * composer and open it. This bubble follows the reader around the
+         * schedule pages, which is why the hook lives here as well as in the
+         * Collab Room's tab — whichever is on the page answers. */
+        window.smAskAiAbout = function (item) {
+            if (!item || !item.path) return;
+            photoPath = item.path;
+            $('aiFloatPhotoThumb').src = item.url;
+            $('aiFloatPhotoChip').classList.remove('hidden');
+            openPanel(true);
+            window.smFocus?.($('aiFloatText'), { delay: 160 });
+            window.toast?.('Photo attached — what would you like to ask about it?');
+        };
+
         async function send() {
             if (busy) return;
             const message = (input.value || '').trim();

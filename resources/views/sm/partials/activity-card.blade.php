@@ -32,7 +32,7 @@
     // Note: appending a note to an activity goes through the write gate too,
     // so it follows canEdit; "notes only" buys the DAY's note, not this one.
     $mayEdit = \App\Support\WorkerContext::canEdit();
-    $lockCls = $mayEdit ? '' : ' is-locked opacity-40 cursor-not-allowed';
+    $lockCls = $mayEdit ? '' : ' is-locked';
     $editTitle = fn ($plain) => $mayEdit ? $plain : 'Only someone who can edit the plan may do this';
 @endphp
 <div class="activity-card prio-{{ $a->priority }}{{ $a->isHidden ? ' is-hidden' : '' }}{{ $a->isDone ? ' is-done' : '' }}" draggable="{{ $a->isDone ? 'false' : 'true' }}"

@@ -276,9 +276,15 @@
     .thread-fold { display:grid; grid-template-rows:0fr;
         transition: grid-template-rows var(--dur) var(--ease-house); }
     .thread-fold > * { overflow:hidden; min-height:0; display:flex; flex-direction:column; gap:.375rem; }
+    /* Folded entries stop being direct children, so the zone's own spacing no
+       longer reaches them — the wrapper has to reproduce it. */
+    .cp-replies > .thread-fold > * { gap:.75rem; }
     .thread-fold.is-open { grid-template-rows:1fr; }
-    .thread-toggle { display:inline-flex; align-items:center; gap:.25rem; border:0; background:transparent;
-        padding:.1rem 0; font-size:.75rem; font-weight:700; color:var(--color-brand-700); cursor:pointer; }
+    /* align-self keeps the hit area (and the hover underline) to the words, in
+       a reply zone that is itself a stretching column. */
+    .thread-toggle { display:inline-flex; align-self:flex-start; align-items:center; gap:.25rem; border:0;
+        background:transparent; padding:.1rem 0; font-size:.75rem; font-weight:700;
+        color:var(--color-brand-700); cursor:pointer; }
     .thread-toggle:hover { color:var(--color-brand-800); text-decoration:underline; }
     .thread-toggle .th-chev { width:.75rem; height:.75rem; transition: transform var(--dur) var(--ease-house); }
     .thread-toggle[aria-expanded="true"] .th-chev { transform: rotate(180deg); }

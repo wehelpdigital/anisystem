@@ -58,9 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const WHY_NO_EDIT = 'Only someone who can edit the plan may do this';
     const WHY_NO_NOTE = 'You are not allowed to write notes on this schedule';
     const LOCK_EDIT = CAN_EDIT ? '' : ' disabled';
-    const LOCK_EDIT_CLS = CAN_EDIT ? '' : ' is-locked opacity-40 cursor-not-allowed';
+    const LOCK_EDIT_CLS = CAN_EDIT ? '' : ' is-locked';
     const LOCK_NOTE = MAY_NOTE ? '' : ' disabled';
-    const LOCK_NOTE_CLS = MAY_NOTE ? '' : ' is-locked opacity-40 cursor-not-allowed';
+    const LOCK_NOTE_CLS = MAY_NOTE ? '' : ' is-locked';
     const editTitle = (plain) => (CAN_EDIT ? plain : WHY_NO_EDIT);
     const noteTitle = (plain) => (MAY_NOTE ? plain : WHY_NO_NOTE);
     const LOT_NAMES = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->lotName]));
@@ -1635,8 +1635,8 @@ document.addEventListener('DOMContentLoaded', () => {
         '.group-add-activity-btn', '.rest-day-add-btn', '.day-expense-btn', '.date-marker-btn',
         '.change-group-date-btn', '.move-group-das-btn', '.delete-group-date-btn',
     ].join(', ');
-    // Writing on the day itself, which "notes only" is exactly the right to do.
-    const NOTE_CONTROLS = '.date-note-btn';
+    // Writing on the day itself — which is exactly what "notes only" buys.
+    const NOTE_CONTROLS = '.date-note-btn, .date-note-edit, .date-note-del';
     function lockBoardControls() {
         if (CAN_EDIT && MAY_NOTE) return;
         const list = $id('activitiesList');
@@ -1645,7 +1645,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (el.disabled) return;   // a renderer already said this
             el.disabled = true;
             el.title = why;
-            el.classList.add('is-locked', 'opacity-40', 'cursor-not-allowed');
+            el.classList.add('is-locked');
         });
         if (!CAN_EDIT) lock(WRITE_CONTROLS, WHY_NO_EDIT);
         if (!MAY_NOTE) lock(NOTE_CONTROLS, WHY_NO_NOTE);

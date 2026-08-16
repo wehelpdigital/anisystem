@@ -16,6 +16,11 @@
     <a class="note-lb-dl" id="noteLbDownload" href="#" download rel="noopener" title="Save to this device" aria-label="Download">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v10m0 0l-3.5-3.5M12 14l3.5-3.5M5 19h14"/></svg>
     </a>
+    {{-- Looking at a leaf and wondering what is wrong with it are the same
+         moment. Hidden for video: the technician reads stills. --}}
+    <button type="button" class="note-lb-ai" id="noteLbAsk" title="Ask the AI Technician about this" aria-label="Ask the AI">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
+    </button>
     <button type="button" class="note-lb-close" aria-label="Close">✕</button>
     <div class="note-lb-stage"></div>
 </div>
@@ -86,6 +91,14 @@
         justify-content: center; cursor: pointer; text-decoration: none; }
     .note-lb-dl:hover { background: rgb(255 255 255 / .28); }
     .note-lb-dl svg { width: 1.25rem; height: 1.25rem; }
+    .note-lb-ai { position: fixed; top: 1rem; right: 7.5rem; width: 2.75rem; height: 2.75rem;
+        border-radius: 999px; display: flex; align-items: center; justify-content: center;
+        background: rgb(255 255 255 / .16); color: #fff; cursor: pointer; z-index: 2;
+        transition: background .28s cubic-bezier(.22,1,.36,1); }
+    .note-lb-ai:hover { background: #4a7c2a; }
+    .note-lb-ai svg { width: 1.3rem; height: 1.3rem; }
+    .note-lb-ai.is-gone { display: none; }
+    @media (prefers-reduced-motion: reduce) { .note-lb-ai { transition: none; } }
 </style>
 
 <script>
@@ -170,6 +183,41 @@
     const lb = document.getElementById('noteLightbox');
     const stage = lb.querySelector('.note-lb-stage');
     const SAVE_URL = @json(route('media.save'));
+
+    /* "Ask the AI about this."
+     *
+     * The picture has to be copied into the asker's own AI folder first —
+     * that prefix is the only thing stopping one account reading another's
+     * attachments back — and then handed to whichever AI composer this page
+     * has. window.smAskAiAbout is provided by the AI tab or the float; where
+     * neither is present the button does not appear at all. */
+    document.getElementById('noteLbAsk')?.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const url = e.currentTarget.dataset.url;
+        if (!url || !window.smAskAiAbout) return;
+        const waiting = window.smBusy?.('Attaching the photo…');
+        try {
+            const res = await fetch(@json(route('ai.photo.existing')), {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || '',
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                },
+                body: JSON.stringify({ url }),
+                credentials: 'same-origin',
+            });
+            const json = await res.json().catch(() => ({}));
+            if (!json.success) throw new Error(json.message || 'Could not attach that photo.');
+            waiting?.close();
+            close();
+            window.smAskAiAbout({ path: json.data.path, url: json.data.url });
+        } catch (err) {
+            waiting?.close();
+            window.toast?.(err.message, 'error');
+        }
+    });
     function open(type, url, poster, fromRect) {
         stage.innerHTML = type === 'video'
             ? `<video src="${esc(url)}"${poster ? ` poster="${esc(poster)}"` : ''} controls autoplay playsinline></video>`
@@ -184,6 +232,12 @@
                 : '#';
             if (name) dl.setAttribute('download', name);
             dl.title = type === 'video' ? 'Save this video to your device' : 'Save this photo to your device';
+        }
+        const ask = document.getElementById('noteLbAsk');
+        if (ask) {
+            // The technician reads stills, so a clip has no button to press.
+            ask.classList.toggle('is-gone', type === 'video' || !window.smAskAiAbout);
+            ask.dataset.url = url || '';
         }
         lb.classList.add('is-open'); lb.setAttribute('aria-hidden', 'false');
         window.registerOverlay?.('noteLightbox', close);
@@ -283,6 +337,7 @@
         const cell = e.target.closest('[data-lb-url]');
         if (cell) { e.preventDefault(); open(cell.getAttribute('data-lb-type'), cell.getAttribute('data-lb-url'), cell.getAttribute('data-lb-poster'), cell.getBoundingClientRect()); return; }
         if (e.target.closest('.note-lb-dl')) return;   // saving is not closing
+        if (e.target.closest('.note-lb-ai')) return;   // nor is asking about it
         if (e.target.closest('.note-lb-close') || e.target === lb) close();
     });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lb.classList.contains('is-open')) close(); });

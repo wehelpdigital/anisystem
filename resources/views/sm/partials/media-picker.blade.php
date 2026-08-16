@@ -115,10 +115,15 @@
             : 'Nothing matches that.';
     }
 
-    $('smMediaPickerSearch').addEventListener('input', paint);
+    // Bound to the document, not to the elements: this script runs once, but
+    // an SPA navigation injects the sheet's markup again, and a listener held
+    // on the first copy would be listening to a sheet nobody can see.
+    document.addEventListener('input', (e) => {
+        if (e.target.id === 'smMediaPickerSearch') paint();
+    });
 
-    $('smMediaPickerGrid').addEventListener('click', (e) => {
-        const tile = e.target.closest('[data-pick]');
+    document.addEventListener('click', (e) => {
+        const tile = e.target.closest('#smMediaPickerGrid [data-pick]');
         if (!tile) return;
         const shown = $('smMediaPickerGrid').__shown || [];
         const item = shown[parseInt(tile.getAttribute('data-pick'), 10)];
