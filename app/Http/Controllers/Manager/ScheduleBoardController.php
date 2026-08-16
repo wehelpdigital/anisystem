@@ -219,8 +219,32 @@ class ScheduleBoardController extends BaseScheduleController
             'data' => [
                 'events' => $rows->map(fn ($e) => $this->shape($e))->all(),
                 'maxId' => $rows->max('id') ?: $after,
+                'board' => $this->boardToken($schedule->id),
             ],
         ]);
+    }
+
+    /**
+     * Which drawing the board is currently holding, in one string.
+     *
+     * The client needs this to answer a question it cannot answer alone: is the
+     * board I started exporting still the board I am about to write into? Note
+     * that this is not "has the canvas been repainted" — a resize repaints every
+     * stroke and changes nothing. What changes the answer is the binding (which
+     * note or draft the next save updates) and the session (a clear or a reset
+     * retires everything standing and starts over), so those two are what this
+     * says. It also travels on the events poll, which is the only channel a
+     * client without a realtime key has — otherwise a reset reaches nobody.
+     */
+    private function boardToken(int $scheduleId): string
+    {
+        $state = ScheduleBoardState::forSchedule($scheduleId);
+        // The oldest stroke still standing. A clear retires everything before
+        // its marker and a reset retires the lot, so this moves for either and
+        // for nothing else.
+        $oldest = (int) ScheduleBoardEvent::active()->where('scheduleId', $scheduleId)->min('id');
+
+        return ((int) $state->currentNoteId) . ':' . ((int) $state->currentDraftId) . ':' . $oldest;
     }
 
     /** The board's page list (orientations), ensuring page 1 always exists. */
@@ -338,8 +362,13 @@ class ScheduleBoardController extends BaseScheduleController
      * different drawing — and the autosave two seconds later would hand it the
      * old note: same row, new images, the kept ones deleted to make room, and
      * nobody ever asked for that. Letting go here costs a second note in the
-     * notebook; holding on costs the first one. The strokes behind the old note
-     * were archived beside it when it was saved, so it stays reopenable.
+     * notebook; holding on costs the first one.
+     *
+     * What the old note keeps is its picture, in the notebook where it was
+     * filed. The strokes are archived beside it, but nothing offers them back:
+     * Past drawings lists only drawings that were never saved. So this is a
+     * one-way door for the drawing and a kept picture for the note — say it
+     * plainly rather than implying an undo that no screen can do.
      *
      * Clearing one page of a multi-page drawing is an edit of that drawing, not
      * the start of a new one, so the note survives it.
@@ -355,15 +384,21 @@ class ScheduleBoardController extends BaseScheduleController
             return;
         }
 
-        $state = ScheduleBoardState::forSchedule($scheduleId);
-        if (! $state->currentNoteId && ! $state->currentDraftId) {
-            return;
-        }
+        // Nothing is standing but the markers that took it all down. Say they
+        // are accounted for: zeroing this would tell the archive there is
+        // unsaved work here, and the next empty room would mint a past drawing
+        // whose entire content is "someone cleared the board" — a blank card in
+        // the list, offering nothing to reopen. This runs whether or not the
+        // canvas was bound to anything, because the blank card is minted just
+        // as happily for a drawing that was never saved.
+        $accounted = (int) ScheduleBoardEvent::active()
+            ->where('scheduleId', $scheduleId)
+            ->max('id');
 
-        $state->update([
+        ScheduleBoardState::forSchedule($scheduleId)->update([
             'currentNoteId' => null,
             'currentDraftId' => null,
-            'savedUpToEventId' => 0,
+            'savedUpToEventId' => $accounted,
         ]);
     }
 
@@ -567,6 +602,16 @@ class ScheduleBoardController extends BaseScheduleController
      * old ones used — an autosave every fifteen seconds would otherwise leave a
      * landfill of superseded PNGs behind it.
      *
+     * Page for page, and only as far as the request reached. A sender's page
+     * list is only as fresh as the last broadcast it got, and without a realtime
+     * key there is no broadcast — so a client can quite honestly send four pages
+     * for a board that now has five. Deleting the fifth because this save did
+     * not mention it would take a teammate's page off the note and its PNG off
+     * the disk, on the word of a client that never heard about it. A stale
+     * picture of page five is a nuisance; no picture of page five is somebody's
+     * afternoon. So a short list replaces a short prefix and leaves the rest
+     * standing for whoever does know about them.
+     *
      * Anything on the note that this endpoint did not put there (a photo added
      * in the notebook) is kept and never deleted: an unrecognised path costs an
      * orphan file, while guessing wrong costs somebody's picture.
@@ -580,14 +625,14 @@ class ScheduleBoardController extends BaseScheduleController
         $isBoardShot = fn ($m) => is_array($m)
             && str_starts_with(basename((string) ($m['path'] ?? '')), 'board-');
 
-        foreach (array_filter($existing, $isBoardShot) as $old) {
+        $shots = array_values(array_filter($existing, $isBoardShot));
+        $others = array_values(array_filter($existing, fn ($m) => ! $isBoardShot($m)));
+
+        foreach (array_slice($shots, 0, count($fresh)) as $old) {
             \App\Support\MediaStore::delete($old['path'] ?? null);
         }
 
-        return array_values(array_merge($fresh, array_values(array_filter(
-            $existing,
-            fn ($m) => ! $isBoardShot($m)
-        ))));
+        return array_values(array_merge($fresh, array_slice($shots, count($fresh)), $others));
     }
 
     /** Decode a `data:image/png;base64,...` URL into raw bytes (or null). */

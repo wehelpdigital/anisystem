@@ -473,7 +473,17 @@
         const picked = new Set();
         const $ = (id) => document.getElementById(id);
 
-        const esc = window.escapeHtml || ((s) => String(s ?? ''));
+        // Resolved per call, not captured once: window.escapeHtml arrives with
+        // app.js as a deferred module, so on a direct load this runs first and
+        // a snapshot would be the fallback for the life of the page. And the
+        // fallback escapes for real — captions and album titles are typed by
+        // workers, and these go inside quoted attributes, where a stray " is
+        // not a broken caption but a way out of the attribute.
+        const esc = (s) => (typeof window.escapeHtml === 'function'
+            ? window.escapeHtml(s)
+            : String(s ?? '')
+                .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;').replaceAll("'", '&#039;'));
 
         function albumHtml(a) {
             const cells = a.images.map((im) => {
@@ -624,7 +634,12 @@
                 const json = await res.json();
                 if (!json.success) throw new Error(json.message || 'Upload failed.');
                 const album = ALBUMS.find((a) => String(a.id) === String(json.data.albumId));
-                if (album) album.images.unshift(...json.data.images);
+                // Onto the end, in the order they were picked — which is where
+                // the server just put them and where a reload will show them.
+                // unshift() put them at the front and reversed a multi-file
+                // upload among itself, so the page disagreed with itself the
+                // moment it was refreshed.
+                if (album) album.images.push(...json.data.images);
                 paint();
                 toast(json.message);
             } catch (err) { toast(err.message || 'Could not add those.', 'error'); }
@@ -724,7 +739,9 @@
         // Belt and braces: an item typed 'image' whose path is an .mp4 is how
         // a perfectly good clip came to report itself missing, and the file
         // name is the one thing that cannot be wrong about that.
-        const VIDEO_RE = /\.(mp4|mov|webm|mkv|m4v|3gp)(\?|$)/i;
+        // Keep in step with SeasonMedia::kindOf() — including AVI, which every
+        // copy of this list used to leave out.
+        const VIDEO_RE = /\.(mp4|mov|webm|mkv|m4v|3gp|avi)(\?|$)/i;
 
         function itemHtml(m) {
             const kind = (m.kind === 'image' && VIDEO_RE.test(m.url || '')) ? 'video' : (m.kind || 'image');
@@ -764,8 +781,14 @@
             // where they can be worked on.
             const tile = (kind === 'drawing' || kind === 'map') && m.href
                 ? `<a class="ga-item" href="${esc(m.href)}">${inner}</a>`
+                // The same strip the Albums tab hangs on the lightbox reads
+                // these. Without them one album picture said its name when
+                // opened from Albums and nothing when opened from All — the
+                // same picture, two answers.
                 : `<button type="button" class="ga-item" data-lb-type="${kind === 'video' ? 'video' : 'image'}"
-                        data-lb-url="${esc(m.url)}" data-lb-poster="${esc(m.posterUrl || '')}">${inner}</button>`;
+                        data-lb-url="${esc(m.url)}" data-lb-poster="${esc(m.posterUrl || '')}"
+                        data-lb-caption="${esc(m.title || '')}"
+                        data-lb-desc="${esc([m.source, m.when].filter(Boolean).join(' · '))}">${inner}</button>`;
             return bin ? `<div class="ga-wrap">${tile}${bin}</div>` : tile;
         }
 

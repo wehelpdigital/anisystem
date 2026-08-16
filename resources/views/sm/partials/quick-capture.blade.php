@@ -287,7 +287,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // controller will accept, so the refusal happens before the upload.
     const MAX_PHOTOS = 10;
     const MAX_CLIPS = 4;
-    const VIDEO_NAME = /\.(mp4|mov|webm|mkv|m4v|3gp)$/i;
+    // Keep in step with SeasonMedia::kindOf(). AVI was the extension every
+    // copy of this list forgot, so a .avi picked here went up as a photo.
+    const VIDEO_NAME = /\.(mp4|mov|webm|mkv|m4v|3gp|avi)$/i;
 
     const countKind = (kind) => items.filter((it) => it.kind === kind).length;
 

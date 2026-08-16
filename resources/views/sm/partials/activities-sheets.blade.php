@@ -24,12 +24,31 @@
 <style>
     .icon-btn.is-locked, .done-check.is-locked, .date-header-btn.is-locked,
     .btn.is-locked, .day-menu-action.is-locked,
-    .date-note-edit.is-locked, .date-note-del.is-locked { opacity: .4; cursor: not-allowed; }
+    .date-note-edit.is-locked, .date-note-del.is-locked,
+    .inline-note-edit.is-locked, .inline-note-del.is-locked { opacity: .4; cursor: not-allowed; }
     /* No hover lift and no press bounce: nothing is going to happen. */
     .icon-btn.is-locked:hover, .done-check.is-locked:hover, .date-header-btn.is-locked:hover,
     .btn.is-locked:hover, .day-menu-action.is-locked:hover { background: transparent; }
     .done-check.is-locked:hover { border-color: var(--color-gray-300); }
     .icon-btn.is-locked:active, .done-check.is-locked:active { transform: none; background: transparent; }
+    /* The inline note's pencil and ✕ are the one pair that pays for its own
+       colours — a white chip, a red trash, a green pencil — so `disabled` alone
+       changes nothing about them and a locked one looked exactly like a live
+       one. Dim it, and take the hover tint away so it stops answering. Its
+       transform is left alone: on a phone that transform is what centres the
+       button on the note, and :active never fires on a disabled button. */
+    .inline-note-edit.is-locked:hover { background: #fff; }
+    .inline-note-del.is-locked:hover { background: #fff; }
+    html.dark .inline-note-edit.is-locked:hover,
+    html.dark .inline-note-del.is-locked:hover { background: #232b1a; }
+    /* A reminder tick is locked in two shapes: the renderers put the class on
+       the row, the sweep puts it on the checkbox it matched. Both mean the same
+       thing, and neither meant anything at all until now — the row kept its
+       finger cursor and the greying was whatever the browser felt like doing to
+       a disabled checkbox. Twin of .act-check-row.is-locked. */
+    .act-rem-row.is-locked { cursor: default; }
+    .act-rem-row.is-locked input, .act-rem-row input.is-locked { opacity: .4; cursor: not-allowed; }
+    .act-rem-row.is-locked .act-rem-name { opacity: .6; }
 </style>
 
 {{-- ============================ ADD / EDIT ACTIVITY ============================ --}}

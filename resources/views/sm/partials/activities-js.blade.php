@@ -1694,6 +1694,10 @@ document.addEventListener('DOMContentLoaded', () => {
         '.delete-activity-btn', '.tag-activity-btn', '.hide-activity-toggle', '.add-note-activity-btn',
         '.group-add-activity-btn', '.rest-day-add-btn', '.day-expense-btn', '.date-marker-btn',
         '.change-group-date-btn', '.move-group-das-btn', '.delete-group-date-btn',
+        // The resume-here marker's own pencil and bin. They carry .icon-btn so
+        // they LOOKED locked already — but nothing disabled them, and the
+        // handlers below reached markerSave/markerDelete with no check.
+        '.progress-marker-edit-btn', '.progress-marker-delete-btn',
         // A reminder tick is a write like any other: it books the errand's
         // money. Not a button, but `disabled` greys a checkbox just as well.
         '.act-rem-row input[type=checkbox]',
@@ -1727,6 +1731,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function mayWriteNotes() {
         if (MAY_NOTE) return true;
         toast(WHY_NO_NOTE, 'error');
+        return false;
+    }
+
+    /* The same door for the plan itself. A drag is the one write with no button
+       to grey out, so it has to be turned away where it lands. */
+    function mayEditBoard() {
+        if (CAN_EDIT) return true;
+        toast(WHY_NO_EDIT, 'error');
         return false;
     }
 
@@ -5567,8 +5579,10 @@ document.addEventListener('DOMContentLoaded', () => {
     async function confirmDeleteDateNote(dateKey) {
         dateKey = (dateKey || '').trim();
         if (!dateKey) return;
-        // The touch long-press gets here with no button to grey out, so the
-        // one gate that catches every way in is the one on the way out.
+        // The touch long-press gets here with no button to grey out, so the ✕
+        // being greyed is not enough on its own. This gate covers this route
+        // and no other — dateNoteDelete is also reached from moveNoteToDate and
+        // from the drag that converts a per-day note, each gated where it sits.
         if (!mayWriteNotes()) return;
         const ok = (typeof confirmAction === 'function')
             ? await confirmAction({ title: 'Delete this note?', message: 'The note for this day will be permanently removed.', confirmText: 'Delete', danger: true })
@@ -6155,6 +6169,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const openBtn = e.target.closest('.date-marker-btn, .progress-marker-edit-btn');
         if (openBtn) {
             e.preventDefault();
+            // Ask before the sheet opens, not after they have written in it.
+            if (!mayEditBoard()) return;
             const dateKey = (openBtn.getAttribute('data-date') || '').trim();
             if (dateKey && dateKey !== '__no-date__') openMarkerSheet(dateKey);
             return;
@@ -6162,6 +6178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const delBtn = e.target.closest('.progress-marker-delete-btn');
         if (delBtn) {
             e.preventDefault();
+            if (!mayEditBoard()) return;
             const markerId = delBtn.getAttribute('data-marker-id') || '';
             const dateKey = (delBtn.getAttribute('data-date') || '').trim();
             if (!markerId) return;
@@ -6253,6 +6270,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Move a date note to another day: write it on the target, clear the source.
     async function moveNoteToDate(sourceDate, targetDate) {
         if (!sourceDate || !targetDate || sourceDate === targetDate) return;
+        // Two writes wearing a drag — a save on the target day and a delete on
+        // the source — and neither goes anywhere near the pencil and ✕ the gate
+        // greys out. This drop is something the person just did, so say why.
+        if (!mayWriteNotes()) return;
         const content = _dateNoteContentFor(sourceDate);
         // The attachments move WITH the note — posting only the words was
         // silently deleting every chip the note carried, and a chips-only
@@ -6276,6 +6297,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Move a resume-here marker to another day (carries its note along).
     async function moveMarkerToDate(sourceDate, targetDate) {
+        // Dragging a marker is two writes wearing one gesture — a save on the
+        // new day and a delete on the old — and neither asked whether this
+        // account may write. A drop is deliberate, so say why nothing moved.
+        if (!mayEditBoard()) return;
         if (!sourceDate || !targetDate || sourceDate === targetDate) return;
         const info = _markerInfoFor(sourceDate);
         if (!info) return;
@@ -6401,7 +6426,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return null;
     }
 
+    /* The writer is the gate, not the button. Every route into an inline note
+       ends here — the editor, the pointer drag, the HTML5 drag, the touch drag,
+       the re-key after a reorder — so a route added later inherits the rule
+       instead of forgetting it. Silent, and answering false: the gestures a
+       person actually started say their own piece, the reflow at render time is
+       nobody's doing, and callers that move something on the board first need a
+       yes/no so they can put it back. */
     async function saveInlineNote(el, date, key) {
+        if (!MAY_NOTE) return false;
         const id = el.getAttribute('data-inline-note');
         const content = el.querySelector('.inline-note-body')?.innerHTML || '';
         // Strokes travel too: dragging a note was re-saving its media without
@@ -6421,13 +6454,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 el.setAttribute('data-sort-key', res.data.sortKey);
                 if (res.data.media) setInlineNoteData(el, res.data.content != null ? res.data.content : content, res.data.media, res.data.title || el.getAttribute('data-title') || '');
                 _land(el);
-            } else if (res && res.removed) {
-                el.remove();
+                return true;
             }
-        } catch (err) { _setMoving(el, false); toast(err.message || 'Could not save the note.', 'error'); }
+            if (res && res.removed) el.remove();
+            return false;
+        } catch (err) { _setMoving(el, false); toast(err.message || 'Could not save the note.', 'error'); return false; }
     }
 
     async function deleteInlineNote(el, silent) {
+        // Same gate, same reason as saveInlineNote — and asked before the
+        // confirmation, because there is no point putting a question to
+        // somebody whose answer the server is going to refuse either way.
+        if (!MAY_NOTE) return;
         // The ✕ sits a thumb's width from the drag grip, and a note is words
         // somebody chose to keep — it asks, the same way the per-day note
         // does. `silent` marks a programmatic cleanup, which never asks.
@@ -6618,6 +6656,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const dateNote = inlineNote ? null : (e.target.closest && e.target.closest('.date-note-block[data-date]'));
             const note = inlineNote || dateNote;
             if (!note || note.classList.contains('is-editing')) return;
+            // Every way this drag can end is a write: reposition a note, convert
+            // a per-day note into an inline one, or long-press to delete. So it
+            // never arms for someone who may not write. Nothing is said here —
+            // a press is not a request; the click that follows explains.
+            if (!MAY_NOTE) return;
             if (dateNote) {
                 if (dateNote.style.display === 'none' || !(dateNote.textContent || '').trim()) return;
                 if (e.target.closest('a')) return;   // let links inside the note work
@@ -6686,12 +6729,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 cur.note.replaceWith(el);
                 const key = inlineNoteKey(el);
                 el.setAttribute('data-sort-key', key);
-                saveInlineNote(el, newDate, key).then(() => {
-                    // Only retire the old per-day note once the inline copy saved.
-                    if (el.getAttribute('data-inline-note')) {
-                        _refreshDateNoteUI(cur.origDate, '');
-                        api(U.dateNoteDelete(), { method: 'DELETE', body: { noteDate: cur.origDate } }).catch(() => {});
+                saveInlineNote(el, newDate, key).then((saved) => {
+                    if (!saved) {
+                        // The board moved before the server agreed, and it did
+                        // not agree. Put the day's note back rather than leave a
+                        // note sitting there that a reload will not show — a
+                        // board that lies is worse than a drag that failed.
+                        if (el.isConnected) el.replaceWith(cur.note);
+                        restoreDateNoteToTop(cur.note);
+                        return;
                     }
+                    // Only retire the old per-day note once the inline copy saved.
+                    // Unreachable without MAY_NOTE: saveInlineNote answers false.
+                    _refreshDateNoteUI(cur.origDate, '');
+                    api(U.dateNoteDelete(), { method: 'DELETE', body: { noteDate: cur.origDate } }).catch(() => {});
                 });
                 return;
             }
@@ -6735,6 +6786,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const noteBlk = e.target.closest && e.target.closest('.date-note-block[data-date]');
         if (noteBlk && noteBlk.style.display !== 'none' && (noteBlk.innerHTML || '').trim()) {
             if (e.target.closest('a')) return;   // let links inside the note behave
+            // Dropping this rewrites two days' notes. Refuse the gesture rather
+            // than the drop, the same way the pointer drag does.
+            if (!MAY_NOTE) { e.preventDefault(); return; }
             dragNoteDate = (noteBlk.getAttribute('data-date') || '').trim();
             noteBlk.classList.add('dragging');
             if (e.dataTransfer) { e.dataTransfer.effectAllowed = 'move'; try { e.dataTransfer.setData('text/plain', 'note:' + dragNoteDate); } catch (_) { /* noop */ } }
@@ -6755,6 +6809,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const inl = e.target.closest && e.target.closest('.inline-note[data-inline-note]');
         if (inl) {
             if (inl.classList.contains('is-editing') || (e.target.closest && e.target.closest('.inline-note-del'))) { e.preventDefault(); return; }
+            if (!MAY_NOTE) { e.preventDefault(); return; }   // its slot is a saved field like any other
             dragInlineEl = inl;
             setTimeout(() => inl.classList.add('dragging'), 0);
             if (e.dataTransfer) { e.dataTransfer.effectAllowed = 'move'; try { e.dataTransfer.setData('text/plain', 'inline:' + inl.getAttribute('data-inline-note')); } catch (_) { /* noop */ } }

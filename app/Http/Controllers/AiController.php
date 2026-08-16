@@ -238,7 +238,10 @@ class AiController extends Controller
         }
 
         // The models take stills. A clip has to be asked about in words.
-        if (preg_match('~\.(mp4|mov|webm|mkv|m4v|3gp)(\?|$)~i', $url)) {
+        // Asked of the shared list, off the path alone so a `?v=2` on the end
+        // does not hide the extension — a private copy of this regex is how
+        // .avi got treated as a photo everywhere it was written out.
+        if (\App\Support\SeasonMedia::kindOf((string) parse_url($url, PHP_URL_PATH)) === 'video') {
             return $this->json(false, 'The technician reads photos, not video — take a still from it and ask about that.', [], 422);
         }
 

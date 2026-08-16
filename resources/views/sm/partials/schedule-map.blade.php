@@ -658,6 +658,10 @@
     let extending = null, pendingExtend = null;
     function beginExtend(o, i, marker, quiet) {
         if (o.kind === 'rect' || o.kind === 'area') return;       // already closed shapes
+        // The long-press that gets here started half a second ago, and the map
+        // can have been cleared or replaced since — this pin is off the canvas
+        // and the shape behind it is not there to draw on from.
+        if (!objIndex.has(o.id)) return;
         cancelExtend();
         extending = { id: o.id, index: i, marker, color: o.color || '#f5c518', at: Date.now() };
         marker.setIcon(pinIcon(extending.color, 1.6));
@@ -783,7 +787,11 @@
         // remembered set — a season of edits would fill it with ghosts.
         if (measureOpen.delete(String(id))) saveMeasure();
     }
-    function dropAll() { cancelExtend(); endEdit(); layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); measures.clear(); measureOpen.clear(); saveMeasure(); }
+    // Bumped every time the canvas is replaced wholesale, so a gesture that
+    // began against the old shapes can tell that they are gone rather than
+    // finishing itself against whatever took their place.
+    let canvasGen = 0;
+    function dropAll() { canvasGen++; cancelExtend(); endEdit(); layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); measures.clear(); measureOpen.clear(); saveMeasure(); }
 
     /* Undo is a history of inverse calls against the same endpoints the
        actions used, so every step also lands live for the team. Re-adding a
@@ -1119,6 +1127,12 @@
             const pts = geometryOf(o, parts);
             try {
                 const res = await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: o.id, points: pts } });
+                // The gesture is over but the network is not, and the room can
+                // clear the map or open another one inside that wait. The shape
+                // this was holding is off the canvas by then — re-rendering it
+                // would strand one shape of the old map in the middle of the
+                // new one, and mark that new map dirty so it saved that way.
+                if (!objIndex.has(o.id)) return;
                 pushHist({ type: 'update', id: o.id, before: o.points, after: res.data.object.points });
                 endEdit();
                 dropObject(o.id);
@@ -1269,9 +1283,15 @@
             const panes = proj.getPanes && proj.getPanes();
             if (panes && panes.overlayMouseTarget && panes.overlayMouseTarget.contains(e.target)) return;
             from = ptOf(el, e); pid = e.pointerId;
+            const gen = canvasGen;
             timer = setTimeout(() => {
                 const at = from;
                 stop();
+                // Half a second is long enough for the room to clear the map or
+                // open another one. The shapes under this finger are not the
+                // ones it came down on, and dropping a point into a stranger's
+                // fence line is not what the hold asked for.
+                if (canvasGen !== gen) return;
                 const hit = nearestEdge(at);
                 if (!hit) return;
                 // A gesture that starts with no sign of itself reads as broken.
@@ -1323,7 +1343,7 @@
                 const d = document.createElement('div');
                 d.className = 'cmap-dot-wrap';
                 d.innerHTML = '<span class="cmap-dot" style="--dot:' + hue(this.p.userId) + '"></span>'
-                    + '<span class="cmap-dot-name">' + escapeHtml((this.p.name || '') + (this.p.userId === ME ? ' (you)' : '')) + '</span>';
+                    + '<span class="cmap-dot-name">' + esc((this.p.name || '') + (this.p.userId === ME ? ' (you)' : '')) + '</span>';
                 this.div = d;
                 this.getPanes().overlayMouseTarget.appendChild(d);
             }
@@ -1515,6 +1535,10 @@
      * themselves were already live for everyone. */
     const AUTO_QUIET = 2000, AUTO_EVERY = 15000;
     let autoTimer = null, autoLast = 0, autoBusy = false, autoAgain = false, autoSayTimer = null;
+    // Bumped whenever what a write was composed against stops being true. A
+    // write that is already fetching its imagery cannot be called back, only
+    // told not to land — this is what it checks before it posts.
+    let autoEpoch = 0;
     function sayAutosave(state) {
         const el = document.getElementById('cmapSaved');
         if (!el) return;
@@ -1538,6 +1562,10 @@
         clearTimeout(autoTimer);
         autoTimer = null;
         autoAgain = false;
+        // A write already halfway through composing its picture is every bit
+        // as stale as the queued one — it just has to be turned away at the
+        // door instead of stopped at the gate.
+        autoEpoch++;
     }
     async function runAutosave() {
         if (!LOADED_SAVE) return;
@@ -1549,15 +1577,17 @@
         autoBusy = true;
         sayAutosave('saving');
         const target = LOADED_SAVE;
+        const epoch = autoEpoch;
         // The picture is what the notebook shows; composing it here is what
         // makes it carry the measurements. A failure only costs the picture.
         let image = null;
         try { image = await composeMapPng(); } catch (_) { image = null; }
         // Composing fetches the imagery, which takes as long as it takes — and
-        // in that gap the room can clear this map or open a different one. The
-        // shapes on screen now belong to whatever arrived; writing them into
-        // the file we set out to save would put one map inside another.
-        if (!LOADED_SAVE || LOADED_SAVE.id !== target.id) {
+        // in that gap the room can clear this map, open a different one, or the
+        // user can press Save themselves. The shapes on screen now belong to
+        // whatever arrived; writing them into the file we set out to save would
+        // put one map inside another, or an older picture over a deliberate one.
+        if (autoEpoch !== epoch || !LOADED_SAVE || LOADED_SAVE.id !== target.id) {
             autoBusy = false;
             // A change made to whatever is open now still deserves its write.
             if (autoAgain) { autoAgain = false; markMapDirty(); }
@@ -1605,10 +1635,27 @@
         const label = document.getElementById(replace ? 'cmapSaveOverLabel' : 'cmapSaveGoTxt');
         const was = label.textContent;
         label.textContent = 'Saving…';
+        // Before composing, not after: an autosave that is queued or already
+        // holding a picture of a moment ago must not land behind the file this
+        // button is about to write on purpose. Everything it was going to save
+        // is in this save too — the server reads the shapes live.
+        cancelAutosave();
+        // Which file "Save over" means was settled when the button was drawn.
+        const target = replace ? LOADED_SAVE : null;
         // Compose the picture here so it carries the points and measurements;
         // if that fails the server still draws a plain one from Static Maps.
         let image = null;
         try { image = await composeMapPng(); } catch (e) { image = null; }
+        // Composing takes a second, and in it the room can open a different
+        // map. By then neither answer is right — writing into the file named
+        // on the button would put another map's shapes inside it, and writing
+        // into the new one is not what was asked — so write nothing and say so.
+        if (replace && (!target || !LOADED_SAVE || LOADED_SAVE.id !== target.id)) {
+            btn.disabled = false;
+            label.textContent = was;
+            if (window.toast) toast('The map on screen changed while that was saving — nothing was written over.', 'error');
+            return;
+        }
         try {
             const r = await api(`${URLS.save}?scheduleId=${SID}`, { method: 'POST', body: {
                 mode: saveMode,
@@ -1632,8 +1679,10 @@
                 setLoadedSave({ id: r.data.saveId, title: r.data.title || 'Map' });
             }
             // The file is current as of now, so the autosave's clock starts
-            // again from here rather than firing straight after this one.
-            clearTimeout(autoTimer);
+            // again from here rather than firing straight after this one. A
+            // timer armed WHILE this was composing belongs to an edit made
+            // since, and is deliberately left to fire: cancelling it here is
+            // how an afternoon's last nudge goes missing.
             autoLast = Date.now();
             if (window.toast) toast((r && r.message) || 'Saved.');
         } catch (e) { if (window.toast) toast(e.message, 'error'); }
@@ -1930,13 +1979,25 @@
             try {
                 const ch = window.Echo.private('schedule-board.' + SID);
                 ch.listen('.map.object', (p) => {
-                    if (!p || p.actorUserId === ME) return;
-                    if (p.action === 'add' && p.object) renderObject(p.object);
-                    else if (p.action === 'update' && p.object) {
+                    if (!p) return;
+                    /* "Mine" is this ACCOUNT, not this screen. The same person
+                       has the room open on a laptop and a phone, and every one
+                       of those clients hears itself.
+                       Shapes are still skipped for them — the screen that drew
+                       one already has it, and re-applying it is how a dragged
+                       shape jumps back. But the two actions that change what a
+                       screen BELIEVES it is editing are not: skipping those
+                       left the other tab still holding a saved map that had
+                       been swept out from under it, and its next autosave
+                       wrote that emptied canvas over the file. */
+                    const mine = p.actorUserId === ME;
+                    if (p.action === 'add') { if (!mine && p.object) renderObject(p.object); }
+                    else if (p.action === 'update') {
+                        if (mine || !p.object) return;
                         if (editing && editing.o.id === p.object.id) endEdit();
                         dropObject(p.object.id); renderObject(p.object);
                     }
-                    else if (p.action === 'remove') dropObject(p.id);
+                    else if (p.action === 'remove') { if (!mine) dropObject(p.id); }
                     else if (p.action === 'clear') {
                         dropAll();
                         // Someone started a blank map. This screen was writing
@@ -1957,6 +2018,10 @@
                     else if (p.action === 'reload') {
                         // Someone loaded a saved map — take the fresh set whole,
                         // and drop a write queued for the map it replaced.
+                        // Even the client that asked for it refetches, and even
+                        // when the file named is the one already open: loading
+                        // re-inserts every shape server-side, so every id on
+                        // screen is stale whoever pressed the button.
                         cancelAutosave();
                         endEdit(); dropAll();
                         histUndo.length = 0; histRedo.length = 0; syncHistBtns();
@@ -1966,6 +2031,12 @@
                         loadObjects(true).catch(() => {});
                     }
                 });
+                // These two stay skipped for the whole account, deliberately.
+                // They key on userId, so a phone and a laptop reporting the
+                // same person would fight over one dot and one ghost — and the
+                // local watchPosition and the half-drawn shape already draw
+                // them here. Nothing about either changes what this screen
+                // thinks it is editing, so nothing is lost by not hearing it.
                 ch.listen('.map.loc', (p) => { if (p && p.userId !== ME) renderLoc(p); });
                 ch.listen('.map.trace', (p) => { if (p && p.userId !== ME) renderGhost(p); });
             } catch (_) { /* map still works solo */ }

@@ -296,10 +296,18 @@ class QuickCaptureController extends BaseScheduleController
         // back into the order they were captured in.
         $stored = [];
         $clipTrouble = null;
+        $lostPhotos = 0;
 
         foreach ((array) $request->file('images', []) as $i => $file) {
             $path = \App\Support\MediaStore::putFile($file, 'gallery', $schedule->id);
+            // A photo that will not store is exactly as lost as a clip that
+            // will not convert, and this loop used to swallow it: five taken,
+            // two written, a green tick and "2 photos saved". Counted, so the
+            // reply below can say what did not arrive. Disks fill and disks go
+            // read-only, and this app runs on one that is thrown away nightly.
             if ($path === null) {
+                $lostPhotos++;
+
                 continue;
             }
             $stored[$i] = ['path' => $path, 'kind' => 'image'];
@@ -322,8 +330,18 @@ class QuickCaptureController extends BaseScheduleController
 
         ksort($stored);
 
+        // One account of everything that did not make it, whichever bucket it
+        // was in. Photos first because they are counted and clips speak for
+        // themselves.
+        $trouble = implode(' ', array_filter([
+            $lostPhotos
+                ? $lostPhotos . ' ' . str('photo')->plural($lostPhotos) . ' could not be saved.'
+                : null,
+            $clipTrouble,
+        ])) ?: null;
+
         if (! $stored) {
-            return $this->jsonFail($clipTrouble ?: 'Nothing could be saved. Please try again.', 500);
+            return $this->jsonFail($trouble ?: 'Nothing could be saved. Please try again.', 500);
         }
 
         // Only once there is something to put in it: a capture that lost
@@ -385,8 +403,8 @@ class QuickCaptureController extends BaseScheduleController
         }
 
         $message = implode(' and ', $parts) . ' saved to \'' . $album->title . '\'.';
-        if ($clipTrouble) {
-            $message .= ' ' . $clipTrouble;
+        if ($trouble) {
+            $message .= ' ' . $trouble;
         }
 
         return $this->jsonOk($message, [
@@ -396,8 +414,8 @@ class QuickCaptureController extends BaseScheduleController
             // success nor a failure. Said out loud, because a green tick over
             // "Could not process the video" is how a lost clip goes unnoticed
             // until the day somebody goes looking for it.
-            'partial' => $clipTrouble !== null,
-            'trouble' => $clipTrouble,
+            'partial' => $trouble !== null,
+            'trouble' => $trouble,
             'galleryUrl' => route('sm.gallery', ['id' => $schedule->id]),
         ]);
     }

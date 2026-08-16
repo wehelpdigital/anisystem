@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Manager;
 use App\Models\AsGalleryAlbum;
 use App\Models\AsGalleryImage;
 use App\Support\MediaStore;
+use App\Support\SeasonMedia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -163,7 +164,12 @@ class GalleryController extends BaseScheduleController
                     // alt>, and the description did not leave the database.
                     'caption' => $i->caption,
                     'description' => $i->description,
-                    'kind' => preg_match('~\.(mp4|mov|webm|mkv|m4v|3gp)$~i', (string) $i->path) ? 'video' : 'image',
+                    // Asked of the one shared list rather than a private copy
+                    // of the regex: the copies drifted, and the extension they
+                    // drifted over was AVI — accepted by the uploader, filed
+                    // here as a picture, rendered into an <img> that could only
+                    // fail. One list, one answer.
+                    'kind' => SeasonMedia::kindOf($i->path),
                 ])->values()->all(),
             ])
             ->values()->all();
@@ -264,6 +270,15 @@ class GalleryController extends BaseScheduleController
             return $this->jsonFail('Album not found.', 404);
         }
 
+        // Where these land on the shelf. Left to the column default they all
+        // took 0, and images() reads `sortOrder asc, id desc` — so every
+        // picture added with + jumped ahead of a whole capture run, and a
+        // multi-file + upload came out backwards among itself. Same counting
+        // as Quick Capture: an upload is one act and reads as one run.
+        $max = AsGalleryImage::where('albumId', $album->id)
+            ->where('deleteStatus', 1)->max('sortOrder');
+        $order = $max === null ? 0 : (int) $max + 1;
+
         $added = [];
         foreach ($request->file('images') as $file) {
             $path = MediaStore::putFile($file, 'gallery', $schedule->id);
@@ -276,6 +291,7 @@ class GalleryController extends BaseScheduleController
                 'userId' => Auth::id(),
                 'path' => $path,
                 'caption' => filled($request->input('caption')) ? trim($request->input('caption')) : null,
+                'sortOrder' => $order + count($added),
                 'deleteStatus' => 1,
             ]);
             $added[] = ['id' => $image->id, 'url' => MediaStore::url($path), 'caption' => $image->caption];

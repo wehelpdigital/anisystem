@@ -245,10 +245,20 @@
         let drawing = false, uid = null, prevLocal = null, pending = [], lastSent = null, lastFlush = 0;
         let shapeStart = null, shapeEnd = null, snapshot = null;   // in-progress shape preview
         let lastId = 0, pollTimer = null, channel = null;
-        // Which drawing the canvas is holding. A clear or a fresh session makes
-        // it a different one, and an autosave exports the pages over a fetch
-        // each — long enough for that to happen halfway through.
-        let drawingEpoch = 0;
+        // Which drawing the canvas is holding — not how many times it has been
+        // repainted. Those are different questions, and counting repaints
+        // answers the wrong one: a resize redraws every stroke and changes
+        // nothing about what the board is. What does change it is the binding
+        // (which note the next save updates) and the session (a clear or a
+        // reset), and the server hands both back as one token on every events
+        // fetch. `localGen` covers the moment between doing one of those things
+        // myself and the server saying so. An autosave exports the pages over a
+        // fetch each — long enough for either to move halfway through.
+        let boardToken = null, localGen = 0;
+        const drawingId = () => localGen + '|' + boardToken;
+        const boardOf = (r) => (r && r.data && r.data.board != null) ? r.data.board : null;
+        const boardMoved = (r) => { const t = boardOf(r); return t !== null && boardToken !== null && t !== boardToken; };
+        const adoptBoard = (r) => { const t = boardOf(r); if (t !== null) boardToken = t; };
         const rendered = new Set();
         const isFreehand = () => tool === 'pen' || tool === 'eraser';
 
@@ -357,15 +367,27 @@
         }
         // Render every page to a uniform 1280x800 PNG (normalized points scale in).
         // `ink` says whether anything was actually drawn — autosave uses it to
-        // avoid filing a stack of blank white pages in the notebook.
+        // avoid filing a stack of blank white pages in the notebook. `moved`
+        // says the board stopped being this drawing while we were exporting it.
         async function exportAllPages() {
+            // Ask what the pages are rather than trusting the strip. It is only
+            // as fresh as the last broadcast, and without a realtime key there
+            // is no broadcast — a teammate's new page would be missing from
+            // every export this client ever sends, and a save is a statement
+            // about the whole board.
+            await loadPages();
             const EW = 1280, EH = 800, images = [];
-            let ink = 0;
+            let ink = 0, moved = false;
             for (const p of pages) {
                 const off = document.createElement('canvas'); off.width = EW; off.height = EH;
                 const g = off.getContext('2d');
                 try {
                     const r = await api(`${U.events}?scheduleId=${SCHEDULE_ID}&page=${p.page}&after=0`);
+                    // Noticed, not adopted. Repainting the canvas onto the new
+                    // drawing is the reconcile poll's job; quietly accepting the
+                    // new token here would leave it looking at a board it never
+                    // rebuilt.
+                    if (boardMoved(r)) moved = true;
                     (r.data.events || []).forEach((ev) => {
                         if (ev.type === 'clear') return;
                         if (ev.type === 'draw') ink++;
@@ -374,7 +396,7 @@
                 } catch (_) { /* export a blank page */ }
                 images.push(whiteComposite(off, EW, EH));
             }
-            return { images, ink: ink > 0 };
+            return { images, ink: ink > 0, moved };
         }
 
         /* ---------- apply a remote/loaded event (race-safe while I shape) ---------- */
@@ -387,10 +409,13 @@
             if (ev.type === 'undo') { if (!isRebuild && ev.userId !== ME) scheduleRebuild(); return; }
             const shaping = drawing && !isFreehand() && snapshot;
             if (shaping) ctx.putImageData(snapshot, 0, 0);   // strip my live preview first
-            // A clear — a teammate's, or mine arriving back — is the end of one
-            // drawing and the start of another, so an autosave that is already
-            // halfway through exporting the old one must not file what it has.
-            if (ev.type === 'clear') { clearCanvas(); drawingEpoch++; }
+            // No bump here, deliberately. This runs on replay too — rebuildPage
+            // re-feeds every standing event, and the clear marker keeps standing
+            // — so bumping would call the drawing new on every resize and page
+            // turn. A clear that really happened moves the server's token (it
+            // retires everything before it), and the fetch that delivered this
+            // event carried that token with it.
+            if (ev.type === 'clear') clearCanvas();
             else if (isRebuild || ev.userId !== ME) paintEvent(ctx, ev.mode, ev.points, ev.color, ev.width, ev.text);
             if (shaping) { snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height); drawShape(ctx, tool, shapeStart, shapeEnd, color, width); }
         }
@@ -536,8 +561,10 @@
             // releaseEmptiedBoard), so the next autosave files what gets drawn
             // next as its own note instead of replacing the pictures in the one
             // that was already kept — and this bump stops an export that is
-            // already in flight from landing on top of it either.
-            drawingEpoch++;
+            // already in flight from landing on top of it either. Local,
+            // because the server does not know yet; its token catches up on
+            // the next poll and says the same thing.
+            localGen++;
             armAutosave();
             clearCanvas();
             api(`${U.push}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { type: 'clear', page: currentPage } })
@@ -660,23 +687,31 @@
             if (drawing || savingNow || !saveModal.classList.contains('hidden')) { queueAutosave(); return; }
             autoBusy = true;
             sayAuto('saving');
-            const epoch = drawingEpoch;
+            // Claim the work up front. Exporting takes a fetch per page, and a
+            // stroke drawn inside that window arms the flag again and queues
+            // its own timer — so this run finishing cannot swallow it. Clearing
+            // the flag at the END instead is how the first stroke after a clear
+            // used to vanish: the run it was drawn into filed nothing (an empty
+            // board has no ink) and wiped the flag on its way out.
+            autoDirty = false;
+            const was = drawingId();
             try {
-                const { images, ink } = await exportAllPages();
-                if (!ink) { autoDirty = false; sayAuto(''); return; }
-                // A clear or a fresh session landed while these pages were
-                // being exported: they are a picture of a drawing that is no
-                // longer on the board, and sending them would file it over
-                // whatever the board has become. The next run exports what is
-                // actually there.
-                if (epoch !== drawingEpoch) { queueAutosave(); return; }
+                const { images, ink, moved } = await exportAllPages();
+                // A clear, a reopened past drawing or a fresh session landed
+                // while these pages were being exported: they are a picture of
+                // a drawing that is no longer on the board, and sending them
+                // would file it over whatever the board has become.
+                if (moved || drawingId() !== was) { autoDirty = true; queueAutosave(); return; }
+                if (!ink) { sayAuto(''); return; }
                 const r = await api(`${U.saveNotes}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { images, auto: 1 } });
-                autoDirty = false; autoAt = Date.now();
+                autoAt = Date.now();
                 sayAuto(r && r.data && r.data.skipped ? '' : 'saved');
             } catch (_) {
                 // Quiet about it: the strokes are on the server either way, and
-                // a toast every fifteen seconds is worse than the problem.
+                // a toast every fifteen seconds is worse than the problem. The
+                // flag goes back on, or the retry below would decline the work.
                 sayAuto('failed');
+                autoDirty = true;
                 autoAt = Date.now();
                 queueAutosave();
             } finally { autoBusy = false; }
@@ -688,6 +723,14 @@
         async function reconcile() {
             try {
                 const r = await api(`${U.events}?scheduleId=${SCHEDULE_ID}&page=${currentPage}&after=${lastId}`);
+                // Where a client without a realtime key learns that the board
+                // became a different drawing. The events list cannot tell it —
+                // it only ever grows, and a reset or a reopened drawing shows up
+                // as nothing arriving. The token does move, and it rides along
+                // on the same fetch this poll was making anyway.
+                const jumped = boardMoved(r);
+                adoptBoard(r);
+                if (jumped) { rendered.clear(); lastId = 0; await rebuildPage(); return; }
                 (r.data.events || []).forEach((ev) => applyEvent(ev, false));
             } catch (_) { /* transient */ }
         }
@@ -724,7 +767,7 @@
                         // drawing: the canvas underneath us is a different one
                         // now, so repaint rather than drawing onto a ghost —
                         // and an export of the old one, half done, is scrap.
-                        if (ev.action === 'reset') { drawingEpoch++; currentPage = 1; renderPageBar(); rebuildPage(); }
+                        if (ev.action === 'reset') { localGen++; currentPage = 1; renderPageBar(); rebuildPage(); }
                     });
                 } catch (_) { channel = null; }
             }
@@ -755,6 +798,10 @@
             rendered.clear(); lastId = 0; clearCanvas();
             try {
                 const r = await api(`${U.events}?scheduleId=${SCHEDULE_ID}&page=${currentPage}&after=0`);
+                // Adopted here as well as in the poll, so the first token is in
+                // hand before anything can arm an autosave — otherwise the very
+                // first run would bail on a token that merely arrived.
+                adoptBoard(r);
                 (r.data.events || []).forEach((ev) => applyEvent(ev, true));
                 if (r.data.maxId > lastId) lastId = r.data.maxId;
             } catch (_) { /* start blank */ }
@@ -849,14 +896,15 @@
         }
 
         async function openDraft(id) {
+            // Bumped BEFORE the request, not after. The server rebinds the board
+            // the moment this lands; an autosave that checked a moment earlier
+            // and is still exporting would otherwise sail through and write the
+            // canvas it started with into the note just reopened.
+            localGen++;
             try {
                 const r = await api(`${U.draftOpen}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { id } });
                 $('sbDraftsModal').classList.add('hidden');
                 if (window.toast) toast(r.message || 'Drawing opened.', 'success');
-                // The board is that past drawing from here on, and the note it
-                // belongs to with it — so whatever my own autosave was still
-                // exporting belongs to nothing now.
-                drawingEpoch++;
                 currentPage = 1;
                 await loadPages();
                 await rebuildPage();
