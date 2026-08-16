@@ -25,7 +25,11 @@
     .icon-btn.is-locked, .done-check.is-locked, .date-header-btn.is-locked,
     .btn.is-locked, .day-menu-action.is-locked,
     .date-note-edit.is-locked, .date-note-del.is-locked,
-    .inline-note-edit.is-locked, .inline-note-del.is-locked { opacity: .4; cursor: not-allowed; }
+    .inline-note-edit.is-locked, .inline-note-del.is-locked,
+    /* The families the gate reached last: the day's expense strip, the phone's
+       floating +, the Versions sheet rows and the strip's own "+ Version". */
+    .dx-btn.is-locked, .act-fab-add.is-locked,
+    .version-sheet-row.is-locked, .chip.is-locked { opacity: .4; cursor: not-allowed; }
     /* No hover lift and no press bounce: nothing is going to happen. */
     .icon-btn.is-locked:hover, .done-check.is-locked:hover, .date-header-btn.is-locked:hover,
     .btn.is-locked:hover, .day-menu-action.is-locked:hover { background: transparent; }
@@ -423,7 +427,10 @@
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
-        <button type="button" id="saveActivityBtn" class="btn btn-primary">Save Activity</button>
+        {{-- The sheet itself refuses to open for a viewer; if it is ever reached
+             another way, the Save is the last door and it is shut too. --}}
+        <button type="button" id="saveActivityBtn" class="btn btn-primary{{ $sheetLock }}"
+                @disabled(! $mayEdit) @if (! $mayEdit) title="{{ $whyNoEdit }}" @endif>Save Activity</button>
     </div>
 </div>
 
@@ -901,11 +908,16 @@
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Email the plan to workers</p>
             <p class="text-sm text-gray-600 mb-2">Sends the day's activities to workers who have a registered email (add emails in the Workers module).</p>
             <div class="grid gap-2">
-                <button type="button" class="btn btn-white justify-start! quick-email-btn" data-scope="today">
+                {{-- Copying the link is reading; posting the day to every worker
+                     on the roster is not, so these two follow $mayEdit while the
+                     rest of the sheet stays open to anyone. --}}
+                <button type="button" class="btn btn-white justify-start! quick-email-btn{{ $sheetLock }}" data-scope="today"
+                        @disabled(! $mayEdit) @if (! $mayEdit) title="{{ $whyNoEdit }}" @endif>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     Email <strong class="mx-1">today's</strong> plan
                 </button>
-                <button type="button" class="btn btn-white justify-start! quick-email-btn" data-scope="tomorrow">
+                <button type="button" class="btn btn-white justify-start! quick-email-btn{{ $sheetLock }}" data-scope="tomorrow"
+                        @disabled(! $mayEdit) @if (! $mayEdit) title="{{ $whyNoEdit }}" @endif>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     Email <strong class="mx-1">tomorrow's</strong> plan
                 </button>

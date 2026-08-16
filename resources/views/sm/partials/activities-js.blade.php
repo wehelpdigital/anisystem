@@ -859,7 +859,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const nameAttr = esc(a.activityTitle || '');
 
         const isDoneFlag = boolFlag(a.isDone) ? 1 : 0;
-        return `<div class="activity-card prio-${esc(priority)}${isHiddenFlag ? ' is-hidden' : ''}${isDoneFlag ? ' is-done' : ''}" draggable="${isDoneFlag ? 'false' : 'true'}"
+        return `<div class="activity-card prio-${esc(priority)}${isHiddenFlag ? ' is-hidden' : ''}${isDoneFlag ? ' is-done' : ''}" draggable="${(isDoneFlag || !CAN_EDIT) ? 'false' : 'true'}"
      data-id="${a.id}"
      data-is-done="${isDoneFlag}"
      data-tags="${esc(JSON.stringify(Array.isArray(a.tags) ? a.tags : []))}"
@@ -1297,6 +1297,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const pick = e.target.closest('[data-pick]');
         if (pick && TAG_FOR) {
+            if (!mayEditBoard()) return;   // the sheet's own door is greyed; this is the second lock
             const ref = pick.getAttribute('data-pick');
             const rows = (TAGGABLES && TAGGABLES[TAG_TAB === 'drawing' ? 'drawings' : (TAG_TAB === 'map' ? 'maps' : 'notes')]) || [];
             const row = rows.find((r) => String(r.ref) === ref);
@@ -1310,6 +1311,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const untag = e.target.closest('[data-untag]');
         if (untag && TAG_FOR) {
+            if (!mayEditBoard()) return;
             try {
                 const res = await api(U.untag(), { method: 'DELETE', body: { activityId: TAG_FOR, index: parseInt(untag.getAttribute('data-untag'), 10) } });
                 rememberTags(TAG_FOR, res.data.tags);
@@ -1541,7 +1543,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function buildMarkerHtml(dateKey, info) {
         const noteRaw = info.note || '';
-        return `<div class="progress-marker" data-marker-id="${esc(String(info.id || ''))}" data-date="${esc(dateKey)}" draggable="true" title="Drag to move this marker to another day">
+        return `<div class="progress-marker" data-marker-id="${esc(String(info.id || ''))}" data-date="${esc(dateKey)}"${CAN_EDIT ? ' draggable="true"' : ''} title="${esc(editTitle('Drag to move this marker to another day'))}">
             <div class="progress-marker-line">
                 <span class="progress-marker-bookmark">${SVG.bookmarkSolid} Resume here — ${esc(prettyDate(dateKey))}</span>
                 <span class="flex items-center gap-0.5">
@@ -1631,14 +1633,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Twin of the date-note-block markup in activities.blade.php.
         const noteChips = noteChipsHtml ? `<div class="date-note-media">${noteChipsHtml}</div>` : '';
         const noteBlock = isNoDate ? ''
-            : `<div class="date-note-block" data-date="${esc(dateKey)}" data-content="${esc(noteContent || '')}" data-media="${esc(JSON.stringify(noteMediaArr))}" title="Drag to place it between activities · click to edit"${hasNote ? '' : ' style="display:none;"'}><div class="date-note-inner rich-text">${noteContent || ''}</div>${noteChips}${DATE_NOTE_EDIT}${DATE_NOTE_DEL}</div>`;
+            : `<div class="date-note-block" data-date="${esc(dateKey)}" data-content="${esc(noteContent || '')}" data-media="${esc(JSON.stringify(noteMediaArr))}" title="${esc(noteTitle('Drag to place it between activities · click to edit'))}"${hasNote ? '' : ' style="display:none;"'}><div class="date-note-inner rich-text">${noteContent || ''}</div>${noteChips}${DATE_NOTE_EDIT}${DATE_NOTE_DEL}</div>`;
         const expenseBlock = isNoDate ? ''
             : `<div class="day-expense-block" data-date="${esc(dateKey)}"></div>`
               + `<div class="day-income-block" data-date="${esc(dateKey)}" hidden></div>`;
 
         const wrap = document.createElement('div');
         wrap.innerHTML = `<div class="date-group date-color-${colorIdx}${allHidden ? ' all-hidden' : ''}${OPEN_DAYS.has(dateKey) ? '' : ' is-folded'}" data-date="${esc(dateKey)}">
-            <div class="date-header"${dateObj ? ' draggable="true" title="Drag this header to move the whole day to another date"' : ''}>
+            <div class="date-header"${(dateObj && CAN_EDIT) ? ' draggable="true" title="Drag this header to move the whole day to another date"' : ''}>
                 <svg class="date-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 ${headerDate}
                 <span class="date-header-count">${count}<span class="dh-word"> ${count === 1 ? 'activity' : 'activities'}</span></span>
@@ -1701,23 +1703,40 @@ document.addEventListener('DOMContentLoaded', () => {
         // A reminder tick is a write like any other: it books the errand's
         // money. Not a button, but `disabled` greys a checkbox just as well.
         '.act-rem-row input[type=checkbox]',
+        // The per-day expense strip's pencil and ✕. renderExpenseBlock draws
+        // them locked itself now; this catches a strip painted before the
+        // sweep ran, the same way it catches the server-rendered day header.
+        '.dx-edit', '.dx-del',
     ].join(', ');
     // Writing on the day itself — which is exactly what "notes only" buys.
     // The inline notes belong here too: their ✕ and pencil write the same
     // rows the per-day note's do.
     const NOTE_CONTROLS = '.date-note-btn, .date-note-edit, .date-note-del, .inline-note-edit, .inline-note-del';
+    /* Not every write lives on the board. The version strip sits in
+       #actHeaderBar and the drafts rows are injected into a sheet, so a sweep
+       that starts at #activitiesList walks straight past both — which is
+       exactly how they shipped unlocked. These get swept from the document. */
+    const OUTSIDE_WRITE_CONTROLS = [
+        '#addVersionBtn', '#manageVersionBtn',
+        '.restore-draft-btn', '.delete-draft-btn',
+        // Mailing the whole worker roster is not a view-only act, whatever the
+        // rest of the Quick Share sheet (copy link, Facebook, WhatsApp) is.
+        '.quick-email-btn',
+    ].join(', ');
     function lockBoardControls() {
         if (CAN_EDIT && MAY_NOTE) return;
         const list = $id('activitiesList');
-        if (!list) return;
-        const lock = (sel, why) => $qsa(sel, list).forEach((el) => {
+        const lock = (sel, why, root) => $qsa(sel, root).forEach((el) => {
             if (el.disabled) return;   // a renderer already said this
             el.disabled = true;
             el.title = why;
             el.classList.add('is-locked');
         });
-        if (!CAN_EDIT) lock(WRITE_CONTROLS, WHY_NO_EDIT);
-        if (!MAY_NOTE) lock(NOTE_CONTROLS, WHY_NO_NOTE);
+        if (!CAN_EDIT) {
+            if (list) lock(WRITE_CONTROLS, WHY_NO_EDIT, list);
+            lock(OUTSIDE_WRITE_CONTROLS, WHY_NO_EDIT, document);
+        }
+        if (!MAY_NOTE && list) lock(NOTE_CONTROLS, WHY_NO_NOTE, list);
     }
     document.addEventListener('activities:rendered', lockBoardControls);
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', lockBoardControls, { once: true });
@@ -3605,6 +3624,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let ADD_AS_DRAFT = false;   // set by the "Add to drafts" menu option
     function openAddActivitySheet(prefillDate, asDraft) {
+        // The sheet has three front doors — the toolbar button, the FAB and the
+        // calendar's own +. Greying the buttons only shuts the ones that are
+        // buttons, so the refusal lives here, where all three arrive.
+        if (!mayEditBoard()) return;
         ADD_AS_DRAFT = !!asDraft;
         $id('activitySheetTitle').textContent = ADD_AS_DRAFT ? 'Add to Drafts' : 'Add Activity';
         resetActivitySheet();
@@ -3618,6 +3641,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function openEditActivitySheet(id) {
+        // Same again: a desktop click on the card BODY, the info sheet's pencil
+        // and the calendar all land here without passing a greyed button.
+        if (!mayEditBoard()) return;
         try {
             const res = await api(U.show(id));
             const a = res.data;
@@ -3716,6 +3742,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     $id('saveActivityBtn')?.addEventListener('click', async (e) => {
+        if (!mayEditBoard()) return;   // the sheet is shut to viewers; the Save says so too
         const btn = e.currentTarget;
         const id = $id('activityId').value;
         const startDateVal = ($id('activityTargetDate').value || '').trim();
@@ -3975,8 +4002,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!body || !card) return;
 
         INFO_ID = card.getAttribute('data-id');
+        INFO_EDIT = null;   // an activity edits by id, not by callback
         $id('activityInfoTitle').textContent = 'Activity details';
-        $id('activityInfoEdit').classList.remove('hidden');
+        // openNoteInfo already hides its pencil from someone who may not write;
+        // this one left a live Edit button on a read view. Same rule here.
+        $id('activityInfoEdit').classList.toggle('hidden', !CAN_EDIT);
         showInfoClone(body, card);
     }
 
@@ -4019,6 +4049,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function moveSingleActivity(id, newDate) {
+        // The move sheet's Confirm and the calendar's drag both come through
+        // here; neither passes a button this viewer had to be handed.
+        if (!mayEditBoard()) return;
         const card = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
         if (!card || !newDate) return;
         const oldDate = (card.getAttribute('data-target-date') || '').trim();
@@ -4165,6 +4198,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function captureDayPhoto(dateKey) {
+        // The day-menu row that opens this is greyed, but the Tools menu's
+        // "Capture a photo" forwards to a hidden button that is not — and the
+        // upload fires long before the note editor's own gate would.
+        if (!mayWriteNotes()) return;
         dateKey = (dateKey || '').trim() || isoFromDate(new Date());
         const host = ensureCaptureHost();
         const input = host.querySelector('.js-photo-file');
@@ -4181,6 +4218,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function recordDayVideo(dateKey) {
+        if (!mayWriteNotes()) return;   // twin of captureDayPhoto above
         dateKey = (dateKey || '').trim() || isoFromDate(new Date());
         const host = ensureCaptureHost();
         const input = host.querySelector('.js-video-file');
@@ -4203,6 +4241,9 @@ document.addEventListener('DOMContentLoaded', () => {
     $id('recordTodayVideoBtn')?.addEventListener('click', () => recordDayVideo(isoFromDate(new Date())));
 
     async function addDayDrawing(dateKey) {
+        // Ask before the pad opens: the drawing is uploaded the moment it is
+        // saved, and only the note it lands in was ever gated.
+        if (!mayWriteNotes()) return;
         if (typeof window.openDrawCanvas !== 'function') { toast('Drawing pad unavailable.', 'error'); return; }
         window.openDrawCanvas(async (dataUrl, objects) => {
             try {
@@ -4224,6 +4265,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let mapPickDate = null;
     async function openDayMapPick(dateKey) {
+        if (!mayWriteNotes()) return;   // picking a map writes it into the day's note
         mapPickDate = dateKey;
         const list = $id('dayMapList');
         const link = $id('dayMapNew');
@@ -4333,6 +4375,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $id('dayIncomeSaveBtn')?.addEventListener('click', async (e) => {
+        if (!mayEditBoard()) return;
         const btn = e.currentTarget;
         const amount = parseFloat($id('dayIncomeAmount').value);
         if (!(amount >= 0)) { toast('Enter the amount first.', 'error'); return; }
@@ -4355,6 +4398,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $id('dayIncomeDeleteBtn')?.addEventListener('click', async () => {
+        if (!mayEditBoard()) return;
         const id = $id('dayIncomeId').value;
         if (!id) return;
         const ok = window.confirmAction
@@ -4530,7 +4574,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const add = document.createElement('button');
             add.type = 'button';
-            add.className = 'version-sheet-row vsr-add';
+            // It forwards to #addVersionBtn, which the lock sweep disables — a
+            // disabled button's .click() does nothing at all, so the row would
+            // just swallow the tap. Grey it here and let it say why.
+            add.className = 'version-sheet-row vsr-add' + LOCK_EDIT_CLS;
+            add.disabled = !CAN_EDIT;
+            add.title = editTitle('Add a new version');
             add.textContent = '+ Add a new version';
             add.addEventListener('click', () => { closeSheet('versionsSheet'); setTimeout(() => $id('addVersionBtn')?.click(), 240); });
             list.appendChild(add);
@@ -4573,7 +4622,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // On a phone a tap folds the card open or shut — the accordion IS the
         // read view, so this applies to done cards too. Editing and the done
         // note stay a deliberate action away (kebab / desktop click).
-        if (window.matchMedia('(pointer: coarse)').matches) {
+        // Someone who may not edit gets the phone's behaviour on any pointer:
+        // the click still does something useful (fold the card open) instead of
+        // firing a refusal toast at every stray click on the board.
+        if (!CAN_EDIT || window.matchMedia('(pointer: coarse)').matches) {
             toggleCardExpand(card);
             return;
         }
@@ -4600,12 +4652,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setDoneMeta(card, done) {
         card.setAttribute('data-is-done', done ? 1 : 0);
-        card.setAttribute('draggable', done ? 'false' : 'true');
+        card.setAttribute('draggable', (done || !CAN_EDIT) ? 'false' : 'true');
         const check = $qs('.done-check', card);
         if (check) {
             check.classList.toggle('is-checked', done);
             check.setAttribute('aria-pressed', done ? 'true' : 'false');
-            check.title = done ? 'Mark as not done (unlocks editing)' : 'Mark this activity as done';
+            // editTitle, not the plain label: the tick is still locked for a
+            // viewer, and overwriting the title left it locked without saying
+            // why — which is the one thing the title was there to do.
+            check.title = editTitle(done ? 'Mark as not done (unlocks editing)' : 'Mark this activity as done');
         }
     }
 
@@ -4662,6 +4717,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function openDoneNoteSheet(id, name) {
+        // A note on an activity goes through the write gate (appendNote), so it
+        // is an edit — and this sheet is reached by clicking a done card, which
+        // is not a button anyone could grey out.
+        if (!mayEditBoard()) return;
         DONE_NOTE.id = id;
         DONE_NOTE.images = [];
         $id('doneNoteTitle').textContent = name || 'This activity';
@@ -4707,6 +4766,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $id('saveDoneNoteBtn')?.addEventListener('click', async (e) => {
+        if (!mayEditBoard()) return;
         const btn = e.currentTarget;
         const note = ($id('doneNoteText').value || '').trim();
         if (!note && !(DONE_NOTE.images || []).length) { toast('Write a note or add a photo first.', 'error'); return; }
@@ -4932,6 +4992,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $id('confirmMoveDateBtn')?.addEventListener('click', () => {
+        if (!mayEditBoard()) return;
         let newDate = $id('moveDateInput').value;
         if (MOVE_MODE === 'das') {
             const lotId = parseInt($id('moveDasLot').value, 10);
@@ -5018,6 +5079,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     $qsa('.quick-email-btn').forEach((btn) => {
         btn.addEventListener('click', async () => {
+            // A raw fetch, so nothing that audits api() calls would ever have
+            // caught this one. Mailing the roster is not a view-only act.
+            if (!mayEditBoard()) return;
             const S = window.SM_SHARE || {};
             const scope = btn.getAttribute('data-scope');
             const orig = btn.innerHTML;
@@ -5225,6 +5289,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $id('moveGroupDasValue')?.addEventListener('input', refreshMoveGroupDasPreview);
 
     $id('confirmMoveGroupDasBtn')?.addEventListener('click', async (e) => {
+        if (!mayEditBoard()) return;
         const btn = e.currentTarget;   // null once the await resumes — capture it now
         const oldDate = ($id('moveGroupDasOld').value || '').trim();
         const anchor = moveGroupDasAnchor();
@@ -5250,6 +5315,9 @@ document.addEventListener('DOMContentLoaded', () => {
      * dragging a date header onto another day.
      */
     async function moveGroupToDate(oldDate, newDate) {
+        // Three ways in: the header drag, the touch drag and two sheets. This
+        // is the one place all four meet.
+        if (!mayEditBoard()) return false;
         if (!oldDate || !newDate) return false;
         if (newDate === oldDate) {
             toast('That is already the current date.', 'info');
@@ -5301,6 +5369,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     $id('confirmChangeGroupDateBtn')?.addEventListener('click', async (e) => {
+        if (!mayEditBoard()) return;
         const btn = e.currentTarget;
         const oldDate = ($id('changeGroupDateOld').value || '').trim();
         const newDate = ($id('changeGroupDateNew').value || '').trim();
@@ -5537,6 +5606,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     async function saveDateNoteMedia(dateKey, body, media, lotId, activityId) {
+        if (!mayWriteNotes()) return;   // the editor's own Save, behind every door that opens it
         try {
             const res = await api(U.dateNoteSave(), { method: 'POST', body: { noteDate: dateKey, noteContent: body, media, lotId: lotId || null, activityId: activityId || null } });
             const data = res && res.data;
@@ -5610,6 +5680,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 .forEach((o) => o.classList.toggle('is-current', o.getAttribute('data-day-type') === dt));
         }
         async function applyDayType(dt) {
+            // Relabelling every counter on the plan is a change to the plan.
+            // Its two buttons are not in the markup any more, so this is the
+            // only thing standing between a console and the endpoint.
+            if (!mayEditBoard()) return;
             if (!dt || dt === currentDayType()) return;
             try {
                 const res = await api(DAY_TYPE_URL, { method: 'POST', body: { dayType: dt } });
@@ -5648,6 +5722,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $id('dateNoteSaveBtn')?.addEventListener('click', async (e) => {
+        if (!mayWriteNotes()) return;
         const btn = e.currentTarget;
         const dateKey = $id('dateNoteDate').value;
         const content = getDateNoteContent();
@@ -5669,6 +5744,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $id('dateNoteClearBtn')?.addEventListener('click', async (e) => {
+        if (!mayWriteNotes()) return;
         const btn = e.currentTarget;
         const dateKey = $id('dateNoteDate').value;
         if (!dateKey) return;
@@ -5734,10 +5810,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="dx-amt">₱${esc(fmtMoney(r.amount))}</span>
             <span class="dx-note">${r.note ? esc(r.note) : '<span style="opacity:.55">No note</span>'}</span>
             <span class="dx-actions">
-                <button type="button" class="dx-btn dx-edit" data-expense-edit="${r.id}" data-date="${esc(dateKey)}" title="Edit expense">
+                <button type="button" class="dx-btn dx-edit${LOCK_EDIT_CLS}" data-expense-edit="${r.id}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Edit expense'))}">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 </button>
-                <button type="button" class="dx-btn dx-del" data-expense-del="${r.id}" data-date="${esc(dateKey)}" title="Delete expense">
+                <button type="button" class="dx-btn dx-del${LOCK_EDIT_CLS}" data-expense-del="${r.id}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Delete expense'))}">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </span>
@@ -5764,6 +5840,7 @@ document.addEventListener('DOMContentLoaded', () => {
     else hydrateAllExpenseBlocks();
 
     function openExpenseSheet(dateKey, expenseId) {
+        if (!mayEditBoard()) return;   // the day's money is the plan's money
         if (!dateKey || dateKey === '__no-date__') return;
         const existing = expenseId
             ? _expenseRowsFor(dateKey).find((r) => String(r.id) === String(expenseId))
@@ -5780,6 +5857,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function deleteExpense(dateKey, expenseId) {
+        if (!mayEditBoard()) return;
         if (!expenseId) return;
         const ok = await confirmAction({
             title: 'Delete expense?',
@@ -5811,6 +5889,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $id('dayExpenseSaveBtn')?.addEventListener('click', async (e) => {
+        if (!mayEditBoard()) return;
         const btn = e.currentTarget;
         const dateKey = $id('dayExpenseDate').value;
         const expenseId = $id('dayExpenseId').value;
@@ -6200,6 +6279,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $id('progressMarkerSaveBtn')?.addEventListener('click', async (e) => {
+        if (!mayEditBoard()) return;
         const btn = e.currentTarget;
         const dateKey = $id('progressMarkerDate').value;
         const content = $id('progressMarkerNote').value;
@@ -6219,6 +6299,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $id('progressMarkerClearBtn')?.addEventListener('click', async (e) => {
+        if (!mayEditBoard()) return;
         const btn = e.currentTarget;
         const dateKey = $id('progressMarkerDate').value;
         const markerId = $id('progressMarkerId').value;
@@ -6773,6 +6854,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (header) {
             const groupDate = (header.closest('.date-group')?.getAttribute('data-date') || '').trim();
             if (!groupDate || groupDate === '__no-date__') return;
+            // Moving a whole day is an edit. Refuse the gesture, the way the
+            // note and inline-note branches below do.
+            if (!CAN_EDIT) { e.preventDefault(); return; }
             dragGroupDate = groupDate;
             header.classList.add('dragging');
             if (e.dataTransfer) {
@@ -6819,6 +6903,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const card = e.target.closest && e.target.closest('.activity-card[data-id]');
         if (!card) return;
         if (card.getAttribute('data-is-done') === '1') { e.preventDefault(); return; }   // done = locked in place
+        if (!CAN_EDIT) { e.preventDefault(); return; }   // dropping rewrites dates and order
         dragSourceCard = card;
         dragOrigin = {
             date: (card.getAttribute('data-target-date') || '').trim(),
@@ -7012,6 +7097,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function handleDropIntoContainer(container) {
+        if (!mayEditBoard()) return;   // both drag systems land here; say no once, here
         const card = dragSourceCard;
         const group = container.closest('.date-group');
         const newDate = (group?.getAttribute('data-date') || '').trim();
@@ -7069,6 +7155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleDropOntoRestDay(rest) {
+        if (!mayEditBoard()) return;
         const card = dragSourceCard;
         const newDate = (rest.getAttribute('data-date') || '').trim();
         if (!newDate) return;
@@ -7273,6 +7360,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function beginTouchDrag(td) {
         if (td.card && td.card.getAttribute('data-is-done') === '1') return;   // done = locked in place
+        // Long-pressing a card or a header is the phone's version of the
+        // desktop drag, and buys the same writes. Don't even lift the ghost.
+        // A sticky note asks the note question instead, as its drag does.
+        if (td.note ? !MAY_NOTE : !CAN_EDIT) return;
         td.active = true;
         document.body.classList.add('is-touch-dragging');
         navigator.vibrate?.(15);
@@ -7410,8 +7501,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="flex items-center gap-2 shrink-0">
                     <span class="pill pill-${esc(priority)}">${esc(priorityCap)}</span>
-                    <button type="button" class="btn btn-primary btn-sm restore-draft-btn" data-id="${d.id}" data-name="${esc(d.activityTitle)}">Restore</button>
-                    <button type="button" class="icon-btn icon-btn-danger delete-draft-btn" data-id="${d.id}" data-name="${esc(d.activityTitle)}" title="Delete draft">${SVG.trash}</button>
+                    <button type="button" class="btn btn-primary btn-sm restore-draft-btn${LOCK_EDIT_CLS}" data-id="${d.id}" data-name="${esc(d.activityTitle)}"${LOCK_EDIT} title="${esc(editTitle('Put this draft back on the board'))}">Restore</button>
+                    <button type="button" class="icon-btn icon-btn-danger delete-draft-btn${LOCK_EDIT_CLS}" data-id="${d.id}" data-name="${esc(d.activityTitle)}"${LOCK_EDIT} title="${esc(editTitle('Delete draft'))}">${SVG.trash}</button>
                 </div>
             </div>
         </div>`;
@@ -7451,6 +7542,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', async (e) => {
         const restoreBtn = e.target.closest('.restore-draft-btn');
         if (restoreBtn) {
+            if (!mayEditBoard()) return;
             const id = restoreBtn.getAttribute('data-id');
             const name = restoreBtn.getAttribute('data-name') || 'activity';
             restoreBtn.disabled = true;
@@ -7482,6 +7574,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const deleteBtn = e.target.closest('.delete-draft-btn');
         if (deleteBtn) {
+            if (!mayEditBoard()) return;
             const id = deleteBtn.getAttribute('data-id');
             const name = deleteBtn.getAttribute('data-name') || 'draft';
             const ok = await confirmAction({
@@ -7559,6 +7652,10 @@ document.addEventListener('DOMContentLoaded', () => {
     enforceVersionLimit();
 
     $id('versionStrip')?.addEventListener('click', async (e) => {
+        // The strip lives in the header bar, not the board, so the sweep that
+        // greys the day's buttons never saw it. Every branch below writes:
+        // switching the active version re-points the whole schedule.
+        if (!mayEditBoard()) return;
         if (e.target.closest('#addVersionBtn')) {
             if ($qsa('#versionStrip .version-chip').length >= MAX_VERSIONS) {
                 toast(`You can have at most ${MAX_VERSIONS} versions. Delete one to make room.`, 'error');
@@ -7596,6 +7693,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $id('saveNewVersionBtn')?.addEventListener('click', async (e) => {
+        if (!mayEditBoard()) return;
         const btn = e.currentTarget;
         const versionName = ($id('newVersionName').value || '').trim();
         if (!versionName) {
@@ -7624,6 +7722,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $id('manageVersionBtn')?.addEventListener('click', () => {
+        if (!mayEditBoard()) return;
         const active = activeVersionChip();
         if (!active) {
             toast('No active version to manage.', 'error');
@@ -7643,6 +7742,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Duplicate the version currently open in the manage sheet — a full fork
     // (activities + items + lots/workers + date notes), left inactive.
     $id('duplicateVersionBtn')?.addEventListener('click', async (e) => {
+        if (!mayEditBoard()) return;
         const btn = e.currentTarget;
         const id = $id('renameVersionId').value;
         const name = ($id('renameVersionName').value || 'Version').trim();
@@ -7673,6 +7773,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $id('saveRenameVersionBtn')?.addEventListener('click', async (e) => {
+        if (!mayEditBoard()) return;
         const btn = e.currentTarget;
         const id = $id('renameVersionId').value;
         const versionName = ($id('renameVersionName').value || '').trim();
@@ -7697,6 +7798,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $id('deleteVersionBtn')?.addEventListener('click', async () => {
+        if (!mayEditBoard()) return;
         const active = activeVersionChip();
         if (!active) return;
         if (active.getAttribute('data-is-original') === '1') {

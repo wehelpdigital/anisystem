@@ -716,7 +716,11 @@
                     });
                 });
                 const target = ALBUMS.find((a) => String(a.id) === String(albumId));
-                if (target) target.images.unshift(...moving);
+                // At the tail, not the head. The server re-seeds them onto the
+                // end of the target album; putting them at the front here meant
+                // the page and the next refresh told two different stories
+                // about where a picture had gone.
+                if (target) target.images.push(...moving);
                 picked.clear();
                 paint();
                 closeSheet('gaMoveSheet');

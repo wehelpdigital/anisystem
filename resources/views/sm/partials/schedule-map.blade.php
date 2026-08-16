@@ -1539,6 +1539,14 @@
     // write that is already fetching its imagery cannot be called back, only
     // told not to land — this is what it checks before it posts.
     let autoEpoch = 0;
+    // Whether the file is owed anything. `autoTimer` cannot answer that — it
+    // keeps a spent handle after each one fires — and the flush below has to
+    // know whether it is rescuing an afternoon or paying for a picture nobody
+    // asked for.
+    let autoDirty = false;
+    // The write on the wire, if any. It cannot be recalled, so anything that
+    // is about to change the shapes waits for it rather than racing it.
+    let autoInFlight = null;
     function sayAutosave(state) {
         const el = document.getElementById('cmapSaved');
         if (!el) return;
@@ -1554,18 +1562,80 @@
     }
     function markMapDirty() {
         if (!LOADED_SAVE) return;         // a scratch canvas has no file to write into
+        autoDirty = true;
         clearTimeout(autoTimer);
         autoTimer = setTimeout(runAutosave, Math.max(AUTO_QUIET, AUTO_EVERY - (Date.now() - autoLast)));
     }
-    /** Drop a queued write: the map it was queued against is no longer here. */
+    /**
+     * Drop a queued write AND the edits it was carrying.
+     *
+     * For the deliberate wipes only — clearing the map, or a blank canvas
+     * started here or in the room — where there is no longer a file those
+     * edits belong in and nothing is lost by letting them go. Anything that
+     * merely swaps which map is on screen wants flushAutosave() instead: the
+     * write can be up to fifteen seconds old, which is an afternoon's last
+     * few shapes.
+     */
     function cancelAutosave() {
         clearTimeout(autoTimer);
         autoTimer = null;
         autoAgain = false;
+        autoDirty = false;
         // A write already halfway through composing its picture is every bit
         // as stale as the queued one — it just has to be turned away at the
         // door instead of stopped at the gate.
         autoEpoch++;
+    }
+    /** The write itself. Identical whether the timer asks for it or a flush does. */
+    function postMapWrite(target, image) {
+        const c = map.getCenter();
+        return api(`${URLS.save}?scheduleId=${SID}`, { method: 'POST', body: {
+            mode: 'map', quiet: 1, saveId: target.id, title: target.title, image,
+            lat: c ? c.lat() : null, lng: c ? c.lng() : null,
+            zoom: Math.round(map.getZoom() || 15), maptype: satOn ? 'hybrid' : 'roadmap',
+        } });
+    }
+    /**
+     * Give the map you are leaving the edits you made to it, before it stops
+     * being the map on screen.
+     *
+     * Must be AWAITED BY THE CALLER BEFORE it replaces the shapes. The server
+     * takes no shapes from the body — it reads the live ones — so this only
+     * writes what it says while the shapes it was composed against are still
+     * the ones there. Flushed afterwards it would pour the arriving map into
+     * the departing map's file, which is precisely the overwrite the plain
+     * cancel was added to stop.
+     */
+    async function flushAutosave() {
+        // A write already posted cannot be recalled, so wait for it to land
+        // rather than let the caller's own POST overtake and undo it.
+        if (autoInFlight) { try { await autoInFlight; } catch (_) { /* it said so itself */ } }
+        const owed = autoDirty;
+        const target = LOADED_SAVE;
+        // Whatever this writes now is everything the queued one and the one
+        // still composing were between them going to write.
+        cancelAutosave();
+        const epoch = autoEpoch;
+        if (!owed || !target || !objIndex.size) return;
+        sayAutosave('saving');
+        let image = null;
+        try { image = await composeMapPng(); } catch (_) { image = null; }
+        // The caller is waiting on us, so it cannot have moved the map — but
+        // the room can, and a clear or a load arriving mid-compose leaves the
+        // same nothing-is-right position every other write here checks for.
+        if (autoEpoch !== epoch) { sayAutosave('failed'); return; }
+        try {
+            autoInFlight = postMapWrite(target, image);
+            await autoInFlight;
+            sayAutosave('saved');
+        } catch (e) {
+            // No retry: the map is about to be replaced, so there is nothing
+            // left to retry into. Said out loud, because leaving quietly is
+            // how this looked exactly like saving.
+            sayAutosave('failed');
+            if (window.toast) toast('Could not save “' + target.title + '” before opening the other map.', 'error');
+        } finally { autoInFlight = null; }
+        autoLast = Date.now();
     }
     async function runAutosave() {
         if (!LOADED_SAVE) return;
@@ -1593,19 +1663,22 @@
             if (autoAgain) { autoAgain = false; markMapDirty(); }
             return;
         }
+        // Settled here rather than at the top: everything drawn up to this
+        // line goes in the write below, and anything drawn after it arms a
+        // fresh timer of its own.
+        autoDirty = false;
         try {
-            const c = map.getCenter();
-            await api(`${URLS.save}?scheduleId=${SID}`, { method: 'POST', body: {
-                mode: 'map', quiet: 1, saveId: target.id, title: target.title, image,
-                lat: c ? c.lat() : null, lng: c ? c.lng() : null,
-                zoom: Math.round(map.getZoom() || 15), maptype: satOn ? 'hybrid' : 'roadmap',
-            } });
+            autoInFlight = postMapWrite(target, image);
+            await autoInFlight;
             sayAutosave('saved');
         } catch (e) {
             // No retry of its own: the next edit asks again. A server saying
-            // no every two seconds would say it a thousand times an hour.
+            // no every two seconds would say it a thousand times an hour. But
+            // the file is still owed this, so a flush on the way out tries it
+            // one last time.
+            autoDirty = true;
             sayAutosave('failed');
-        }
+        } finally { autoInFlight = null; }
         autoLast = Date.now();
         autoBusy = false;
         if (autoAgain) { autoAgain = false; markMapDirty(); }
@@ -1639,21 +1712,33 @@
         // holding a picture of a moment ago must not land behind the file this
         // button is about to write on purpose. Everything it was going to save
         // is in this save too — the server reads the shapes live.
-        cancelAutosave();
+        //
+        // Only when this button writes a map file at all. "Save as image note"
+        // files a picture and nothing else: no ScheduleMapSave, no saveId, and
+        // the map you are standing on is not touched. Dropping the queued
+        // write there threw away its last few minutes and put nothing in their
+        // place — exporting a picture is not a reason to lose the map.
+        if (saveMode === 'map') cancelAutosave();
         // Which file "Save over" means was settled when the button was drawn.
         const target = replace ? LOADED_SAVE : null;
+        // And what the room was looking at when it was pressed. Read after the
+        // cancel above, which bumps the epoch itself.
+        const epoch = autoEpoch;
         // Compose the picture here so it carries the points and measurements;
         // if that fails the server still draws a plain one from Static Maps.
         let image = null;
         try { image = await composeMapPng(); } catch (e) { image = null; }
-        // Composing takes a second, and in it the room can open a different
-        // map. By then neither answer is right — writing into the file named
-        // on the button would put another map's shapes inside it, and writing
-        // into the new one is not what was asked — so write nothing and say so.
-        if (replace && (!target || !LOADED_SAVE || LOADED_SAVE.id !== target.id)) {
+        // Composing takes a second, and in it the room can clear the map or
+        // open a different one. By then no answer is right, and this is as
+        // true of a new map as of an overwrite: the server reads the shapes
+        // live and takes none of them from us, so "Save as a new map" — the
+        // default, and the only offer on a scratch canvas — would mint a file
+        // out of somebody else's shapes under this title, while "Save over"
+        // would pour them into the file named on the button. Write nothing.
+        if (autoEpoch !== epoch || (replace && (!target || !LOADED_SAVE || LOADED_SAVE.id !== target.id))) {
             btn.disabled = false;
             label.textContent = was;
-            if (window.toast) toast('The map on screen changed while that was saving — nothing was written over.', 'error');
+            if (window.toast) toast('The map on screen changed while that was saving — nothing was written. Try again now that you can see what you are saving.', 'error');
             return;
         }
         try {
@@ -1757,10 +1842,16 @@
         // is opening a file, and a question in front of every open taught
         // people to stop reading it. The canvas it replaces can always be
         // re-loaded from its own save.
+        //
+        // The map being left gets its edits first. Before the load, not after:
+        // loading wipes and re-inserts every shape server-side, and the save
+        // endpoint reads the shapes live — a write sent afterwards would file
+        // the arriving map under the departing one's name. Up to fifteen
+        // seconds of work can be sitting in that queued write, and dropping it
+        // is how the shapes you drew never reached the map you drew them on.
+        await flushAutosave();
         try {
             await api(`${URLS.load}?scheduleId=${SID}`, { method: 'POST', body: { id: sv.id } });
-            // Anything still queued was queued for the map being replaced.
-            cancelAutosave();
             setLoadedSave(sv);
             window.closeSheet?.('cmapSavesSheet');
             endEdit(); dropAll();
@@ -2009,20 +2100,43 @@
                         setLoadedSave(null);
                     }
                     else if (p.action === 'saved') {
-                        // Someone's map wrote itself back. Follow the file, so
+                        // Someone's map wrote itself back. Follow the file so
                         // an edit made from this screen lands in the same one
-                        // instead of quietly forking a second copy of it.
-                        if (p.saveId) setLoadedSave({ id: p.saveId, title: p.title || 'Map' });
-                        sayAutosave('saved');
+                        // instead of quietly forking a second copy — but only
+                        // from a screen that is not on a file already. The
+                        // shapes are the room's; WHICH file they are saved as
+                        // is the saver's choice, and a teammate keeping a copy
+                        // must not drag everyone else's next edit into it, nor
+                        // move the target out from under a save mid-compose.
+                        if (p.saveId && !LOADED_SAVE) setLoadedSave({ id: p.saveId, title: p.title || 'Map' });
+                        // And only the person who saved is told so. This fires
+                        // on every client in the room, which meant a green
+                        // "Saved" over the work of people who had saved
+                        // nothing — the one word this pill must never lie about.
+                        if (mine) sayAutosave('saved');
                     }
                     else if (p.action === 'reload') {
-                        // Someone loaded a saved map — take the fresh set whole,
-                        // and drop a write queued for the map it replaced.
+                        // Someone loaded a saved map — take the fresh set whole.
                         // Even the client that asked for it refetches, and even
                         // when the file named is the one already open: loading
                         // re-inserts every shape server-side, so every id on
                         // screen is stale whoever pressed the button.
+                        //
+                        // The one place a queued write cannot be rescued. By
+                        // the time this arrives the server has already swapped
+                        // the shapes, and the save endpoint reads them live —
+                        // so a flush here would file the arriving map under the
+                        // departing one's name, which is worse than losing the
+                        // edits. Whoever pressed the button flushed before
+                        // asking (loadSavedMap); everyone else is told what
+                        // went, because silence here reads as "it saved".
+                        const owed = autoDirty && !!LOADED_SAVE;
+                        const leaving = LOADED_SAVE ? LOADED_SAVE.title : '';
                         cancelAutosave();
+                        if (owed) {
+                            sayAutosave('failed');
+                            if (window.toast) toast('Someone opened another map — the last edits to “' + leaving + '” were not saved.', 'error');
+                        }
                         endEdit(); dropAll();
                         histUndo.length = 0; histRedo.length = 0; syncHistBtns();
                         // And take which file it is: without this the room ends

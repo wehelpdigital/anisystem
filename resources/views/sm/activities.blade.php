@@ -2080,12 +2080,26 @@
      Activities stays in the DOM (hidden) so its listeners survive. --}}
 <div id="moduleHost" class="hidden"></div>
 
+@php
+    // What this viewer may do to the plan, for the bits of the board this file
+    // draws itself. Twin of $mayEdit in partials/activity-card.blade.php and of
+    // CAN_EDIT / MAY_NOTE in partials/activities-js.blade.php. A drag has no
+    // button to grey out, so the affordance itself has to come and go.
+    $boardMayEdit = \App\Support\WorkerContext::canEdit();
+    $boardMayNote = $boardMayEdit || \App\Support\WorkerContext::canAddNotes();
+    $whyNoEdit = 'Only someone who can edit the plan may do this';
+    $whyNoNote = 'You are not allowed to write notes on this schedule';
+@endphp
+
 {{-- Long-board jump buttons (phones): the toolbar and the version bar sit at
      opposite ends of a list that can be thousands of pixels tall. --}}
 <div class="act-jumps md:hidden" data-activities-only>
     {{-- Once the header has scrolled away: add an activity, then the
-         jump-to-end pair. Add forwards to the real toolbar button. --}}
-    <button type="button" id="actFabAdd" class="act-fab-add" aria-label="Add an activity" title="Add an activity">
+         jump-to-end pair. Add forwards to the real toolbar button — which is
+         itself greyed for a viewer, and a disabled button's .click() does
+         nothing at all, so this one has to say no in its own right. --}}
+    <button type="button" id="actFabAdd" class="act-fab-add{{ $boardMayEdit ? '' : ' is-locked' }}" aria-label="Add an activity"
+            @disabled(! $boardMayEdit) title="{{ $boardMayEdit ? 'Add an activity' : $whyNoEdit }}">
         <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
     </button>
     <button type="button" id="actJumpTop" aria-label="Jump to the top">
@@ -2190,7 +2204,10 @@
         <span class="hidden sm:inline">Quick Share</span>
     </button>
     <div class="shrink-0" id="addActivityWrap" data-activities-only>
-        <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm">
+        {{-- The board's most prominent write: drawn where everyone else has it,
+             greyed and inert, saying why. openAddActivitySheet refuses too. --}}
+        <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm{{ $boardMayEdit ? '' : ' is-locked' }}"
+                @disabled(! $boardMayEdit) @if (! $boardMayEdit) title="{{ $whyNoEdit }}" @endif>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
             <span class="hidden sm:inline">Add Activity</span>
         </button>
@@ -2313,7 +2330,7 @@
                 </div>
             @elseif ($item['type'] === 'marker')
                 @php $marker = $item['marker']; @endphp
-                <div class="progress-marker" data-marker-id="{{ $marker->id }}" data-date="{{ $item['date'] }}" draggable="true" title="Drag to move this marker to another day">
+                <div class="progress-marker" data-marker-id="{{ $marker->id }}" data-date="{{ $item['date'] }}" @if ($boardMayEdit) draggable="true" @endif title="{{ $boardMayEdit ? 'Drag to move this marker to another day' : $whyNoEdit }}">
                     <div class="progress-marker-line">
                         <span class="progress-marker-bookmark">
                             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
@@ -2364,7 +2381,7 @@
                     </div>
                 @endif
                 <div class="date-group date-color-{{ $item['color'] }} {{ $allHidden ? 'all-hidden' : '' }} is-folded" data-date="{{ $dateKey }}">
-                    <div class="date-header"@if ($dateCarbon) draggable="true" title="Drag this header to move the whole day to another date"@endif>
+                    <div class="date-header"@if ($dateCarbon && $boardMayEdit) draggable="true" title="Drag this header to move the whole day to another date"@endif>
                         <svg class="date-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                         @if ($dateCarbon)
                             <span class="date-header-day">{{ $dateCarbon->format('D') }}</span>
@@ -2455,7 +2472,7 @@
                                     'strokes' => ($m['type'] ?? '') === 'drawing' ? ($m['strokes'] ?? null) : null,
                                 ])->filter()->values();
                         @endphp
-                        <div class="date-note-block" data-date="{{ $dateKey }}" data-content="{{ $noteRow?->noteContent }}" data-media="{{ $dnMedia->toJson() }}" title="Drag to place it between activities · click to edit" @if(!$noteRow) style="display:none;" @endif><div class="date-note-inner rich-text">{!! $noteRow?->noteContent !!}</div>@if ($dnMedia->count())<div class="date-note-media">@include('sm.partials.note-attachments', ['media' => $dnMedia])</div>@endif<button type="button" class="date-note-edit" title="Edit note" aria-label="Edit note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button type="button" class="date-note-del" title="Delete note" aria-label="Delete note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg></button></div>
+                        <div class="date-note-block" data-date="{{ $dateKey }}" data-content="{{ $noteRow?->noteContent }}" data-media="{{ $dnMedia->toJson() }}" title="{{ $boardMayNote ? 'Drag to place it between activities · click to edit' : $whyNoNote }}" @if(!$noteRow) style="display:none;" @endif><div class="date-note-inner rich-text">{!! $noteRow?->noteContent !!}</div>@if ($dnMedia->count())<div class="date-note-media">@include('sm.partials.note-attachments', ['media' => $dnMedia])</div>@endif<button type="button" class="date-note-edit" title="Edit note" aria-label="Edit note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button type="button" class="date-note-del" title="Delete note" aria-label="Delete note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg></button></div>
                         <div class="day-expense-block" data-date="{{ $dateKey }}"></div>
                         <div class="day-income-block" data-date="{{ $dateKey }}" hidden></div>
                     @endif

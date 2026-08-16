@@ -326,10 +326,32 @@ class GalleryController extends BaseScheduleController
             return $this->jsonFail('That album is no longer here.', 404);
         }
 
-        $moved = AsGalleryImage::where('croppingScheduleId', $schedule->id)
+        // In the order they read in now, so a set that was a run in the old
+        // album is still a run in the new one. Pictures already in the target
+        // are not "moved" and are left exactly where they sit.
+        $rows = AsGalleryImage::where('croppingScheduleId', $schedule->id)
             ->whereIn('id', $request->input('ids'))
             ->where('deleteStatus', 1)
-            ->update(['albumId' => $album->id]);
+            ->where('albumId', '!=', $album->id)
+            ->orderBy('sortOrder')
+            ->orderByDesc('id')
+            ->get();
+
+        // Changing only albumId carried each picture's OLD ordinal into the
+        // new album: a 0 from the front of one shelf is a 0 at the front of
+        // this one, and images() reads `sortOrder asc, id desc` — so moved
+        // pictures cut into the middle of somebody's capture run. Re-seeded at
+        // the tail, which is where every other writer here puts a batch, and
+        // where the page shows them the moment you press Move.
+        $max = AsGalleryImage::where('albumId', $album->id)
+            ->where('deleteStatus', 1)->max('sortOrder');
+        $order = $max === null ? 0 : (int) $max + 1;
+
+        $moved = 0;
+        foreach ($rows as $row) {
+            $row->update(['albumId' => $album->id, 'sortOrder' => $order + $moved]);
+            $moved++;
+        }
 
         return $this->jsonOk($moved . ' ' . \Illuminate\Support\Str::plural('picture', $moved) . ' moved to “' . $album->title . '”.', [
             'data' => ['albumId' => $album->id, 'moved' => $moved],

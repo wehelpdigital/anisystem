@@ -57,11 +57,18 @@ class QuickCaptureController extends BaseScheduleController
         // the same shape the notes module writes when you attach several by
         // hand, so they open, zoom and download exactly the same way.
         $media = [];
+        $lostPhotos = 0;
         foreach ($request->file('images') as $file) {
             // The photo most likely to matter later was the one going straight
             // onto a disk that gets wiped on every deploy.
             $path = \App\Support\MediaStore::putFile($file, 'schedule-notes', $schedule->id);
+            // Counted, not swallowed. The gallery destination learned this the
+            // hard way — five taken, two written, a green tick and "2 photos
+            // saved" — and the notebook is the same sheet losing the same
+            // photos to the same full or read-only disk.
             if ($path === null) {
+                $lostPhotos++;
+
                 continue;
             }
             $media[] = ['type' => 'image', 'path' => $path];
@@ -70,6 +77,10 @@ class QuickCaptureController extends BaseScheduleController
         if (! $media) {
             return $this->jsonFail('Nothing could be saved. Please try again.', 500);
         }
+
+        $trouble = $lostPhotos
+            ? $lostPhotos . ' ' . str('photo')->plural($lostPhotos) . ' could not be saved.'
+            : null;
 
         $note = AsScheduleNote::create([
             'croppingScheduleId' => $schedule->id,
@@ -85,10 +96,23 @@ class QuickCaptureController extends BaseScheduleController
 
         $count = count($media);
 
-        return $this->jsonOk(
-            $count . ' ' . str('photo')->plural($count) . ' saved in one note.',
-            ['count' => $count, 'noteId' => $note->id, 'notesUrl' => route('sm.notes', ['id' => $schedule->id])]
-        );
+        $message = $count . ' ' . str('photo')->plural($count) . ' saved in one note.';
+        // Said in the message itself, not only in a flag: this reply's reader
+        // renders the tick from `success` and the words from `message`, so a
+        // photo that did not arrive has to be in the sentence to be seen at all.
+        if ($trouble) {
+            $message .= ' ' . $trouble;
+        }
+
+        return $this->jsonOk($message, [
+            'count' => $count,
+            'noteId' => $note->id,
+            'notesUrl' => route('sm.notes', ['id' => $schedule->id]),
+            // The same two keys the gallery destination returns, so both sheets
+            // can be told apart by whoever reads them next.
+            'partial' => $trouble !== null,
+            'trouble' => $trouble,
+        ]);
     }
 
     /**
@@ -151,12 +175,20 @@ class QuickCaptureController extends BaseScheduleController
 
         if ($request->input('target') === 'gallery') {
             $album = $this->albumFor($schedule, $request);
+            // Same counting as the photo capture and the gallery's own +
+            // button. Left to the column default this clip took 0, and
+            // albums read `sortOrder asc, id desc` — so one recording made at
+            // the end of a walk sat at the head of the album, above the
+            // photos it belongs behind.
+            $max = \App\Models\AsGalleryImage::where('albumId', $album->id)
+                ->where('deleteStatus', 1)->max('sortOrder');
             \App\Models\AsGalleryImage::create([
                 'albumId' => $album->id,
                 'croppingScheduleId' => $schedule->id,
                 'userId' => Auth::id(),
                 'path' => $stored['video'],
                 'caption' => $title,
+                'sortOrder' => $max === null ? 0 : (int) $max + 1,
                 'deleteStatus' => 1,
             ]);
 

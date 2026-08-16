@@ -227,13 +227,20 @@ class AiController extends Controller
             return $this->json(false, 'Nothing to attach.', [], 422);
         }
 
+        // Both from configuration, and deliberately NOT from the request. We
+        // trust every proxy (the platform's address is not knowable in
+        // advance) and set no trusted-host list, so getHost() is whatever the
+        // caller put in Host or X-Forwarded-Host — an allowlist that asks the
+        // caller which hosts are allowed is a fetcher that will read any URL
+        // on the server's behalf. Every URL this app hands out is built from
+        // one of these two anyway: the public disk's is APP_URL + /storage,
+        // and the mother app's is MOTHER_APP_URL + /storage.
         $host = strtolower((string) parse_url($url, PHP_URL_HOST));
         $ours = array_filter([
             strtolower((string) parse_url((string) config('app.url'), PHP_URL_HOST)),
             strtolower((string) parse_url((string) config('mother.url'), PHP_URL_HOST)),
-            strtolower($request->getHost()),
         ]);
-        if (! in_array($host, $ours, true)) {
+        if (! $ours || ! in_array($host, $ours, true)) {
             return $this->json(false, 'That file is not ours to attach.', [], 403);
         }
 

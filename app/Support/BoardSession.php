@@ -82,6 +82,18 @@ class BoardSession
             return null; // untouched since the last save
         }
 
+        // Markers are not a drawing. A board undone or cleared down to nothing
+        // still has its undo/clear rows standing, and they are newer than the
+        // last save, so everything above says "there is unsaved work here".
+        // There isn't. Archiving them writes a payload whose entire content is
+        // "somebody took it all back" — and when the canvas is bound to a note,
+        // it writes that over the strokes behind it, in a row Past drawings
+        // does not list, so nobody ever sees the drawing go. Unbound, it mints
+        // a blank card instead. Either way: nothing drawable, nothing to keep.
+        if (! $events->contains(fn ($e) => $e->type === 'draw')) {
+            return null;
+        }
+
         $payload = json_encode([
             'pages' => ScheduleBoardPage::active()
                 ->where('scheduleId', $scheduleId)

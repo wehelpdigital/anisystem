@@ -369,6 +369,8 @@
         // `ink` says whether anything was actually drawn — autosave uses it to
         // avoid filing a stack of blank white pages in the notebook. `moved`
         // says the board stopped being this drawing while we were exporting it.
+        // `failed` says we never found out what one of the pages had on it, in
+        // which case NOTHING here is usable — see the catch.
         async function exportAllPages() {
             // Ask what the pages are rather than trusting the strip. It is only
             // as fresh as the last broadcast, and without a realtime key there
@@ -377,7 +379,7 @@
             // about the whole board.
             await loadPages();
             const EW = 1280, EH = 800, images = [];
-            let ink = 0, moved = false;
+            let ink = 0, moved = false, failed = false;
             for (const p of pages) {
                 const off = document.createElement('canvas'); off.width = EW; off.height = EH;
                 const g = off.getContext('2d');
@@ -393,10 +395,22 @@
                         if (ev.type === 'draw') ink++;
                         paintEvent(g, ev.mode, ev.points, ev.color, ev.width, ev.text);
                     });
-                } catch (_) { /* export a blank page */ }
+                } catch (_) {
+                    // A page we could not fetch is not a blank page — it is a
+                    // page we never asked successfully. Handing back white paper
+                    // reads as "nothing was drawn here", and on a board with
+                    // other pages that is enough ink to save, so the blank goes
+                    // in the note and the real PNG is deleted to make room. On a
+                    // one-page board it reads as an empty board instead, and the
+                    // save settles as if there were nothing to keep. Neither is
+                    // a thing to guess at: stop, say so, and let the caller ask
+                    // again in a moment.
+                    failed = true;
+                    break;
+                }
                 images.push(whiteComposite(off, EW, EH));
             }
-            return { images, ink: ink > 0, moved };
+            return { images, ink: ink > 0, moved, failed };
         }
 
         /* ---------- apply a remote/loaded event (race-safe while I shape) ---------- */
@@ -619,15 +633,48 @@
             btn.disabled = true; savingNow = true;
             document.getElementById('sbSaveSpin').classList.remove('hidden');
             document.getElementById('sbSaveLabel').textContent = 'Saving…';
+            // Claim the pending work the way the autosave does. A stroke drawn
+            // while these pages upload is not in them — the picture was taken
+            // before it existed — so calling the board saved afterwards would
+            // quietly throw it away, timer and all. Whatever arrives from here
+            // on re-arms the flag and gets its own save.
+            const claimed = autoDirty;
+            autoDirty = false;
             try {
-                const { images } = await exportAllPages();
                 const title = document.getElementById('sbSaveTitle').value.trim();
                 const description = document.getElementById('sbSaveDesc').value.trim();
-                const r = await api(`${U.saveNotes}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { images, title, description } });
+                let r = null;
+                // Someone is standing here watching a spinner, so a board that
+                // moved mid-upload gets one silent re-photograph before we
+                // trouble them with it.
+                for (let attempt = 0; attempt < 2 && !r; attempt++) {
+                    // Snapshot what is being photographed BEFORE the shutter
+                    // opens. Without a realtime key the poll runs every second
+                    // and adopts a new token mid-export, so reading boardToken
+                    // afterwards would hand the server a token fresh enough to
+                    // accept a picture that is page 1 of one drawing and page 2
+                    // of the next. The autosave has always taken this snapshot;
+                    // the button was relying on the server alone, which is the
+                    // one check this race walks straight past.
+                    const was = drawingId(), tok = boardToken;
+                    const { images, failed, moved } = await exportAllPages();
+                    if (failed) throw new Error('could not read every page of the board');
+                    if (moved || drawingId() !== was) continue;   // photograph it again
+                    try {
+                        r = await api(`${U.saveNotes}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { images, title, description, board: tok } });
+                    } catch (e) {
+                        if (!(e && e.status === 409 && attempt === 0)) throw e;
+                    }
+                }
+                // Both attempts caught the board mid-change. Saying "Saved" here
+                // would be the worst of the three possible answers.
+                if (!r) throw new Error('the board kept changing while it was being saved');
                 if (typeof toast === 'function') toast((r && r.message) || 'Saved to the schedule notebook.', 'success');
-                autoSettled();
+                autoAt = Date.now();
+                if (autoDirty) queueAutosave(); else autoSettled();
                 closeSaveModal();
             } catch (err) {
+                if (claimed) { autoDirty = true; queueAutosave(); }
                 if (typeof toast === 'function') toast('Could not save: ' + ((err && err.message) || 'error'), 'error');
             } finally {
                 btn.disabled = false; savingNow = false;
@@ -651,6 +698,15 @@
         const AUTO_QUIET = 2000;    // wait until the pen has actually stopped
         const AUTO_EVERY = 15000;   // ...and never send more often than this
         let autoDirty = false, autoTimer = null, autoBusy = false, autoAt = 0;
+        // Consecutive runs that got as far as "this is a picture of a drawing
+        // the board is no longer holding". Normally the reconcile poll repaints
+        // within a second or two and the next run sails through — but after
+        // close() the poll is stopped, so nothing will ever move the client on
+        // and the retry would sit there re-exporting every page for ever. Give
+        // it a few honest tries, then stop asking and say so. The flag stays up,
+        // so anything drawn later picks the work back up.
+        const AUTO_STALE_MAX = 5;
+        let autoStale = 0;
 
         function sayAuto(state) {
             const el = document.getElementById('sbAuto');
@@ -664,6 +720,7 @@
         /** The board is safe as of now — however it got there. */
         function autoSettled() {
             autoDirty = false;
+            autoStale = 0;
             clearTimeout(autoTimer); autoTimer = null;
             autoAt = Date.now();
             sayAuto('saved');
@@ -671,6 +728,7 @@
         function armAutosave() {
             if (!CAN_SAVE) return;
             autoDirty = true;
+            autoStale = 0;   // fresh work deserves a fresh set of tries
             if (!autoBusy) sayAuto('');   // a stale "Saved" would be a lie
             queueAutosave();
         }
@@ -680,8 +738,21 @@
             const wait = Math.max(AUTO_QUIET, AUTO_EVERY - (Date.now() - autoAt));
             autoTimer = setTimeout(runAutosave, wait);
         }
+        /** Ask again for a board that moved out from under this run — up to a point. */
+        function retryStale() {
+            if (++autoStale > AUTO_STALE_MAX) { sayAuto('failed'); return; }
+            sayAuto('');
+            queueAutosave();
+        }
         async function runAutosave() {
-            if (!CAN_SAVE || !autoDirty || autoBusy) return;
+            if (!CAN_SAVE || !autoDirty) return;
+            // A run already in flight claimed the flag before this stroke set it
+            // again, so this timer is holding work that run will not do. Hand it
+            // back to the queue. Returning bare — which is what used to happen —
+            // spends the timer, leaves the flag on and schedules nothing, and
+            // the stroke sits there unsaved until somebody happens to draw
+            // another one. Note the sibling guard below has always done this.
+            if (autoBusy) { queueAutosave(); return; }
             // Never talk over the explicit Save, and never export a half-drawn
             // stroke: both resolve themselves in a second or two.
             if (drawing || savingNow || !saveModal.classList.contains('hidden')) { queueAutosave(); return; }
@@ -696,24 +767,45 @@
             autoDirty = false;
             const was = drawingId();
             try {
-                const { images, ink, moved } = await exportAllPages();
+                const { images, ink, moved, failed } = await exportAllPages();
+                // We do not know what one of the pages had on it, so we do not
+                // know what the board looks like, so there is nothing honest to
+                // send. Not "nothing was drawn" — try again shortly.
+                if (failed) { autoDirty = true; sayAuto('failed'); queueAutosave(); return; }
                 // A clear, a reopened past drawing or a fresh session landed
                 // while these pages were being exported: they are a picture of
                 // a drawing that is no longer on the board, and sending them
                 // would file it over whatever the board has become.
-                if (moved || drawingId() !== was) { autoDirty = true; queueAutosave(); return; }
+                if (moved || drawingId() !== was) { autoDirty = true; retryStale(); return; }
                 if (!ink) { sayAuto(''); return; }
-                const r = await api(`${U.saveNotes}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { images, auto: 1 } });
+                // The board this is a picture of, named, so the server can
+                // refuse it if the canvas moved on while these megabytes were
+                // still going up the wire — the one stretch this client cannot
+                // watch. `boardToken` is the token the check above just passed
+                // on, since drawingId() is built out of it.
+                const r = await api(`${U.saveNotes}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { images, auto: 1, board: boardToken } });
                 autoAt = Date.now();
+                autoStale = 0;
                 sayAuto(r && r.data && r.data.skipped ? '' : 'saved');
-            } catch (_) {
+            } catch (e) {
+                // The board became a different drawing mid-upload and the server
+                // declined to file this picture into it. Nothing failed and
+                // nothing was lost — the strokes want a fresher photograph, so
+                // ask for one rather than putting "Not saved" in the corner.
+                if (e && e.status === 409) { autoDirty = true; retryStale(); return; }
                 // Quiet about it: the strokes are on the server either way, and
                 // a toast every fifteen seconds is worse than the problem. The
                 // flag goes back on, or the retry below would decline the work.
+                //
+                // Bounded by the same counter as the stale path. A failure that
+                // will never come right — the right to write notes taken away
+                // mid-session, a payload the server keeps refusing — was
+                // otherwise re-exporting every page of the board every fifteen
+                // seconds, on a phone, for as long as the tab stayed open.
                 sayAuto('failed');
                 autoDirty = true;
                 autoAt = Date.now();
-                queueAutosave();
+                if (++autoStale <= AUTO_STALE_MAX) queueAutosave();
             } finally { autoBusy = false; }
         }
         document.getElementById('sbClose').addEventListener('click', close);
@@ -792,7 +884,11 @@
         }
 
         /* ---------- shared: rebuild board state + go live ---------- */
-        let started = false;
+        // Whether this canvas is mounted and syncing RIGHT NOW — not whether it
+        // ever was. Both doors into the board go through startBoard(), and
+        // starting a board that is already running is destructive (see there);
+        // closing the overlay puts this back down so reopening it works.
+        let boardLive = false;
         // Repaint the current page from scratch (initial mount, page switch, resize).
         async function rebuildPage() {
             rendered.clear(); lastId = 0; clearCanvas();
@@ -918,6 +1014,16 @@
         $('sbDraftsModal')?.addEventListener('click', (e) => { if (e.target === $('sbDraftsModal')) $('sbDraftsModal').classList.add('hidden'); });
 
         async function startBoard() {
+            // Starting a board that is already going is not a no-op, it is
+            // vandalism: openSession() sees me alone in the room, calls the
+            // canvas I am drawing on a finished session, archives it and wipes
+            // it. It also lays a second heartbeat and a second poll chain over
+            // the same two timer handles — so stopRealtime can only ever cancel
+            // one of each — and subscribes to Echo twice, painting every
+            // teammate's stroke on top of itself. The flag goes up before the
+            // first await so two calls in the same tick cannot both get through.
+            if (boardLive) return;
+            boardLive = true;
             await openSession();   // decides fresh-vs-join before anything paints
             startHeartbeat();
             await loadPages();
@@ -929,6 +1035,17 @@
 
         /* ---------- overlay open / close (used from the team chat) ---------- */
         async function open() {
+            // In the Collab Room the board has a home already — the Drawing tab
+            // mounts this very node — and the floating chat's whiteboard button
+            // sits on that same page. There is one board, so "open the
+            // whiteboard" here means show me the tab it lives in. Hoisting it
+            // into a fullscreen overlay instead gave the room two live mounts of
+            // one canvas: a second heartbeat, a second poll chain, a second Echo
+            // subscription, and a session that opened on top of itself and wiped
+            // what was being drawn. The tab is checked, not just the inline
+            // class, so this holds before the tab has ever been visited too.
+            const drawingTab = document.querySelector('.collab-tab[data-tab="drawing"]');
+            if (drawingTab || overlay.classList.contains('sb-inline')) { drawingTab?.click(); return; }
             overlay.classList.remove('hidden');
             overlay.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
@@ -943,11 +1060,20 @@
             await startBoard();
         }
         function close() {
+            // Inline mode has no close. The Close button is hidden there, but
+            // Escape still lands here, and closing a tab's content means hiding
+            // the panel you are looking at and standing its session down —
+            // after which coming back to the tab starts the board again on a
+            // canvas that never stopped, which archives and wipes it.
+            if (overlay.classList.contains('sb-inline')) return;
             if (typeof window.teamChatUndock === 'function') window.teamChatUndock();
             // Walking out is the last moment the board can be kept; the pending
-            // debounce would never fire once the room is shut.
+            // debounce would never fire once the room is shut. Left running on
+            // purpose: the autosave's own timer survives the close, so a run
+            // that was busy just now still gets its retry in.
             if (autoDirty) runAutosave();
             stopRealtime();
+            boardLive = false;
             overlay.classList.add('hidden');
             overlay.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
@@ -966,7 +1092,9 @@
             document.getElementById('sbClose')?.classList.add('sb-hide');
             document.getElementById('sbChatToggle')?.classList.add('sb-hide');
             document.getElementById('sbSide')?.classList.add('sb-hide');
-            if (!started) { started = true; startBoard(); }
+            // Every re-entry to the Drawing tab lands here; startBoard() owns
+            // the "already going" question now, for both doors at once.
+            startBoard();
         };
     };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });

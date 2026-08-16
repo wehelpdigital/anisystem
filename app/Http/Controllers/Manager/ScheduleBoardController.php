@@ -354,15 +354,20 @@ class ScheduleBoardController extends BaseScheduleController
     }
 
     /**
-     * A board cleared down to nothing stops being the drawing it was saved as.
+     * A board emptied down to nothing stops being the drawing it was saved as.
+     *
+     * Two doors lead here and both had to be closed: the Clear button, and
+     * undoing your way back to a blank page one stroke at a time. The board
+     * does not know which one you used and it does not matter — what matters is
+     * that nothing is standing.
      *
      * The canvas stays bound to its note so that later strokes update that note
-     * instead of filing another copy of the same picture. But once a clear
-     * leaves nothing standing on any page, whatever gets drawn next is a
-     * different drawing — and the autosave two seconds later would hand it the
-     * old note: same row, new images, the kept ones deleted to make room, and
-     * nobody ever asked for that. Letting go here costs a second note in the
-     * notebook; holding on costs the first one.
+     * instead of filing another copy of the same picture. But once nothing is
+     * left standing on any page, whatever gets drawn next is a different
+     * drawing — and the autosave two seconds later would hand it the old note:
+     * same row, new images, the kept ones deleted to make room, and nobody ever
+     * asked for that. Letting go here costs a second note in the notebook;
+     * holding on costs the first one.
      *
      * What the old note keeps is its picture, in the notebook where it was
      * filed. The strokes are archived beside it, but nothing offers them back:
@@ -370,7 +375,7 @@ class ScheduleBoardController extends BaseScheduleController
      * one-way door for the drawing and a kept picture for the note — say it
      * plainly rather than implying an undo that no screen can do.
      *
-     * Clearing one page of a multi-page drawing is an edit of that drawing, not
+     * Emptying one page of a multi-page drawing is an edit of that drawing, not
      * the start of a new one, so the note survives it.
      */
     private function releaseEmptiedBoard(int $scheduleId): void
@@ -460,6 +465,17 @@ class ScheduleBoardController extends BaseScheduleController
             'scheduleId' => $schedule->id, 'page' => $page, 'userId' => $meId,
             'type' => 'undo', 'deleteStatus' => 1,
         ]);
+
+        // No releaseEmptiedBoard() here, deliberately. Undoing to nothing does
+        // look like an emptied board, and the harm it used to do — the archive
+        // writing "somebody took it all back" over the strokes behind a saved
+        // note — is real. But that harm is now stopped where it happens, in
+        // BoardSession::archive(), which refuses to keep a payload with no
+        // stroke in it. Releasing the binding here as well cost more than it
+        // saved: redo puts the stroke back but nothing puts the binding back,
+        // so an undo/redo — the most ordinary pair of keystrokes there is —
+        // left the canvas unbound and the next autosave filed a second note
+        // holding the same picture as the first.
         $this->broadcastEvent($schedule->id, $marker);
 
         return response()->json(['success' => true, 'data' => ['id' => (int) $event->id]]);
@@ -496,6 +512,7 @@ class ScheduleBoardController extends BaseScheduleController
             'images.*' => 'required|string',
             'title' => 'nullable|string|max:180',
             'description' => 'nullable|string|max:5000',
+            'board' => 'nullable|string|max:80',
         ]);
         if ($validator->fails()) {
             return $this->jsonFail('Nothing to save.', 422);
@@ -533,6 +550,28 @@ class ScheduleBoardController extends BaseScheduleController
         $body = $description !== ''
             ? \App\Support\HtmlSanitizer::rich('<p>' . nl2br(e($description)) . '</p>')
             : null;
+
+        // Which drawing this is a picture of. The client checked before it sent,
+        // but that check was seconds of wall-clock ago: a fetch per page to
+        // export, then several megabytes of base64 on the wire, and the board
+        // can become a different drawing at any point in that. So the caller
+        // names the board it drew and we answer for the board we have — because
+        // the alternative is this save rebinding the live canvas to a note it
+        // has nothing to do with, deleting that note's PNGs to make room, and
+        // filing the current strokes into its draft, all silently. The files
+        // just written go with the rejection rather than living on as orphans.
+        $board = (string) $request->input('board', '');
+        if ($board !== '' && $board !== $this->boardToken($schedule->id)) {
+            foreach ($media as $m) {
+                \App\Support\MediaStore::delete($m['path'] ?? null);
+            }
+
+            return $this->jsonFail(
+                'The board became a different drawing while that was saving — nothing was written.',
+                409,
+                ['data' => ['code' => 'board-moved']]
+            );
+        }
 
         $state = ScheduleBoardState::forSchedule($schedule->id);
         $note = $state->currentNoteId
