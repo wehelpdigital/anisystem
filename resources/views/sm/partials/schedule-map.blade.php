@@ -1400,7 +1400,9 @@
      *
      * Interrupted by touching the map, and by pressing the button again — a
      * flight you are trying to escape from is a hijack, not an animation. */
-    const FLY_MS = 620;
+    // Longer than a single motion would need, because it is two overlapping
+    // ones — the travel and the drop-in — sharing one clock.
+    const FLY_MS = 820;
     let flying = null;
     function cancelFly() {
         if (!flying) return;
@@ -1432,18 +1434,46 @@
         // cubic-bezier(.22,1,.36,1) is the house curve; this is its shape —
         // nearly all of the distance early, settling rather than braking.
         const ease = (t) => 1 - Math.pow(1 - t, 4);
+        const zooms = Math.abs(toZoom - fromZoom) > 0.01;
+
+        /* One camera write per frame, not two.
+         *
+         * setZoom() does not set the zoom, it starts Google's own zoom
+         * animation — which drives the camera from wherever it thinks it began.
+         * Called sixty times a second beside setCenter, it restarts that
+         * animation every frame and the centre we set on the line before is
+         * simply overruled. The map zoomed and never travelled, which is
+         * exactly what it looked like. moveCamera() writes the whole camera at
+         * once and animates nothing of its own, which is what a frame loop
+         * wants. Where it is missing, the pan runs alone and the zoom is left
+         * to the end rather than fighting it. */
+        const canCam = typeof map.moveCamera === 'function';
+        const cam = (c, z) => {
+            if (canCam) { map.moveCamera({ center: c, zoom: z }); return; }
+            map.setCenter(c);
+        };
+
+        /* Travel first, arrive second. Crossing a farm at zoom 19 is a blur
+         * nobody can read, so the pan owns the first stretch of the clock and
+         * the zoom drops in over the last, with a little overlap so it reads as
+         * one movement rather than two. */
+        const PAN_END = 0.72, ZOOM_FROM = 0.42;
         const t0 = performance.now();
         const step = (now) => {
             const t = Math.min(1, (now - t0) / FLY_MS);
-            const k = ease(t);
-            map.setCenter({ lat: fromLat + (lat - fromLat) * k, lng: fromLng + (lng - fromLng) * k });
-            if (Math.abs(toZoom - fromZoom) > 0.01) map.setZoom(fromZoom + (toZoom - fromZoom) * k);
+            const kPan = ease(Math.min(1, t / PAN_END));
+            const kZoom = ease(Math.max(0, (t - ZOOM_FROM) / (1 - ZOOM_FROM)));
+            cam(
+                { lat: fromLat + (lat - fromLat) * kPan, lng: fromLng + (lng - fromLng) * kPan },
+                zooms ? fromZoom + (toZoom - fromZoom) * kZoom : fromZoom
+            );
             if (t < 1) { flying.raf = requestAnimationFrame(step); return; }
             // Land on whole numbers: a raster basemap left at zoom 16.98 keeps
             // rendering scaled tiles, which reads as a map that is slightly out
-            // of focus and never comes back.
+            // of focus and never comes back. This is also where the zoom
+            // happens at all on a map with no moveCamera.
             map.setCenter({ lat, lng });
-            map.setZoom(Math.round(toZoom));
+            if (zooms) map.setZoom(Math.round(toZoom));
             cancelFly();
         };
         // Armed before the first frame, so a drag that starts inside the very
