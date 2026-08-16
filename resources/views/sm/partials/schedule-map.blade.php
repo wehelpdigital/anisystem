@@ -623,6 +623,12 @@
     let map = null, proj = null, satOn = true;
     let tool = 'pan', color = '#f5c518', width = 3;
     let tempPts = [], tempShape = null;
+    /* Corners taken back off a shape that is still being tapped out, waiting
+       for Redo. tempPts is the undo half of the same pair — the corners are
+       already stacked there in the order they were placed, and a second copy
+       of them is a second thing to keep in step. Declared up here with the
+       shape it belongs to so syncHistBtns can read it. */
+    let draftRedo = [];
     const layers = new Map();       // object id -> array of google overlays
     const locMarks = new Map();     // userId -> { parts, at }
     const G = () => window.google.maps;
@@ -744,11 +750,26 @@
     /** The badge that opens a shape's numbers, hung under its middle. */
     function measureBadge(parts, id, at, colorStr, labels, meta) {
         // Nothing to reveal, nothing to offer: a badge with no numbers behind
-        // it is a pin that does nothing when tapped. And nowhere to hang it
-        // from is the same answer — a shape with no anchor has no middle.
-        if (!labels || !labels.length || !at) return null;
+        // it is a pin that does nothing when tapped.
+        if (!labels || !labels.length) return null;
+        /* Nowhere obvious to hang it is NOT the same answer.
+         *
+         * This used to bail on a missing anchor too, which meant a shape whose
+         * centre could not be found came out as the one shape on the map
+         * showing numbers with no way to put them away — and a missing badge
+         * is indistinguishable from a feature that was never built, which is
+         * exactly why "the area tool has no toggle" took four rounds to pin
+         * down. So: bounding centre if the inside search comes back empty,
+         * first corner if even that cannot be had, and silence only if there
+         * are genuinely no points at all. */
+        const mpts = (meta && meta.pts) || null;
+        const spot = at
+            || (mpts && mpts.length ? centerOf(mpts) : null)
+            || (mpts && mpts[0])
+            || null;
+        if (!spot) return null;
         const badge = new (G().Marker)({
-            map, position: LL(at), clickable: true, zIndex: 60, title: 'Show or hide this shape’s measurements',
+            map, position: LL(spot), clickable: true, zIndex: 60, title: 'Show or hide this shape’s measurements',
             icon: { path: BADGE_DISC, scale: 1, fillColor: colorStr || '#4a7c2a',
                 fillOpacity: .95, strokeColor: '#fff', strokeWeight: 2,
                 labelOrigin: new (G().Point)(0, BADGE_DROP) },
@@ -909,8 +930,8 @@
                         });
                         carryMeasure(cur.id, res.data.object.id);
                         renderObject(res.data.object);
-                        pushHist({ type: 'add', object: res.data.object });
-                        pushHist({ type: 'remove', object: cur });
+                        // One action, one undo step — see applyStep's 'swap'.
+                        pushHist({ type: 'swap', added: res.data.object, removed: cur });
                         await api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: cur.id } }).catch(() => {});
                         dropObject(cur.id, true);
                     } catch (e) { if (window.toast) toast(e.message, 'error'); }
@@ -1001,11 +1022,14 @@
             const res = await api(`${URLS.push}?scheduleId=${SID}`, {
                 method: 'POST', body: { kind: 'area', points: cur.points, color: cur.color, width: cur.width, label: cur.label },
             });
+            // The one conversion of the three that never carried this, so a
+            // multi-line with its numbers open closed into an area with them
+            // all shut — the moment they matter most, since closing the ring
+            // is what gives the shape an area to report in the first place.
+            carryMeasure(cur.id, res.data.object.id);
             renderObject(res.data.object);
-            // Two history steps in this order: one undo re-opens the ring,
-            // a second removes the area again.
-            pushHist({ type: 'add', object: res.data.object });
-            pushHist({ type: 'remove', object: cur });
+            // One undo re-opens the ring, and that is the whole of it.
+            pushHist({ type: 'swap', added: res.data.object, removed: cur });
             await api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: cur.id } }).catch(() => {});
             dropObject(cur.id, true);
             if (window.toast) toast('Closed into an area.');
@@ -1156,7 +1180,7 @@
                     parts.push(tot); mlabels.push(tot);
                 }
                 measureBadge(parts, o.id, anchorOf(o.kind, pts), style.strokeColor, mlabels,
-                    { kind: o.kind, closed: false, segs, total: tot });
+                    { kind: o.kind, closed: false, segs, total: tot, pts });
             }
         } else if (o.kind === 'rect') {
             const b = new (G().LatLngBounds)(LL(pts[0]), LL(pts[1]));
@@ -1172,7 +1196,7 @@
             const ar = textMark(at, fmtA(areaOf(c)), 'cmap-lbl-g');
             parts.push(ar); mlabels.push(ar);
             measureBadge(parts, o.id, at, style.strokeColor, mlabels,
-                { kind: 'rect', closed: true, segs, area: ar });
+                { kind: 'rect', closed: true, segs, area: ar, pts: c });
         } else if (o.kind === 'area') {
             parts.push(new (G().Polygon)({ ...style, paths: pts.map(LL), fillColor: style.strokeColor, fillOpacity: .1 }));
             vertexPins(parts, o, pts, style.strokeColor);
@@ -1181,7 +1205,7 @@
             const ar2 = textMark(at2, fmtA(areaOf(pts)), 'cmap-lbl-g');
             parts.push(ar2); mlabels.push(ar2);
             measureBadge(parts, o.id, at2, style.strokeColor, mlabels,
-                { kind: 'area', closed: true, segs: segs2, area: ar2 });
+                { kind: 'area', closed: true, segs: segs2, area: ar2, pts });
         } else if (o.kind === 'text') {
             const tm = textMark(pts[0], o.label || '', 'cmap-txt-g', '#111827');
             // Its own face and its own size, for whoever is looking: the
@@ -1209,7 +1233,7 @@
         // picks it up for dragging and reshaping.
         parts.forEach((p) => p.addListener && p.addListener('click', () => {
             if (tool === 'erase') {
-                pushHist({ type: 'remove', object: objIndex.get(o.id) || o });
+                pushHist({ type: 'remove', object: objIndex.get(o.id) || o, measured: wasMeasured(o.id) });
                 api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: o.id } }).catch(() => {});
                 dropObject(o.id, true);
             } else if (tool === 'edit') {
@@ -1270,7 +1294,7 @@
      * with them all put away, every single time. Stale ids cost a few bytes in
      * localStorage and are pruned by the removal paths; a map that forgets what
      * you asked to see costs the point of the feature. */
-    function dropAll() { canvasGen++; cancelExtend(); endEdit(); pendingPoint = null; layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); measures.clear(); }
+    function dropAll() { canvasGen++; clearTemp(); cancelExtend(); endEdit(); pendingPoint = null; layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); measures.clear(); }
 
     /* Undo is a history of inverse calls against the same endpoints the
        actions used, so every step also lands live for the team. Re-adding a
@@ -1280,10 +1304,22 @@
     const histUndo = [], histRedo = [];
     function syncHistBtns() {
         const u = document.getElementById('cmapUndo'), r = document.getElementById('cmapRedo');
-        if (u) u.disabled = !histUndo.length;
-        if (r) r.disabled = !histRedo.length;
+        // Corners pending on a half-drawn shape are the first thing either
+        // button answers to, so they arm it just as a committed step does.
+        // Otherwise Undo would go grey with four corners down and Redo would
+        // refuse to put back the one you had just taken off.
+        const drafting = (tool === 'path' || tool === 'area');
+        if (u) u.disabled = !histUndo.length && !(drafting && tempPts.length);
+        if (r) r.disabled = !histRedo.length && !(drafting && draftRedo.length);
     }
+    /* One clock for both stacks. A half-drawn corner and a committed change are
+     * different kinds of thing, but Undo means "the last thing I did" and the
+     * user does not sort them into kinds. Serving corners first regardless of
+     * when they were placed made a saved, team-broadcast change unreachable
+     * behind a corner tapped before it. */
+    let actSeq = 0;
     function pushHist(entry) {
+        entry.seq = ++actSeq;
         histUndo.push(entry);
         if (histUndo.length > 30) histUndo.shift();
         histRedo.length = 0;
@@ -1302,14 +1338,49 @@
         renderObject(res.data.object);
         return res.data.object;
     }
+    /* Was this shape showing its numbers when it went away, and put them back
+     * on whatever id replaces it.
+     *
+     * dropObject(id, true) forgets the flag on purpose — a season of edits
+     * would otherwise fill the remembered set with ghosts — so the answer has
+     * to be taken before the removal and carried on the history step itself.
+     * Without this an area you had open, undone and redone came back with its
+     * hectares hidden behind a badge the size of a thumbnail. */
+    const wasMeasured = (id) => measureOpen.has(String(id));
+    function restoreMeasured(id, on) {
+        if (!on || id == null) return;
+        measureOpen.add(String(id));
+        saveMeasure();
+    }
     async function applyStep(step, into) {
         if (step.type === 'add') {
+            const shown = wasMeasured(step.object.id);
             await api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: step.object.id } }).catch(() => {});
             dropObject(step.object.id, true);
-            into.push({ type: 'remove', object: step.object });
+            into.push({ type: 'remove', object: step.object, measured: shown });
         } else if (step.type === 'remove') {
             const fresh = await reAdd(step.object);
+            // Marked before nothing, since reAdd has already rendered — so the
+            // numbers are opened the way any other reveal opens them.
+            if (step.measured) { restoreMeasured(fresh.id, true); showMeasure(fresh.id, true); }
             into.push({ type: 'add', object: fresh });
+        } else if (step.type === 'swap') {
+            /* One conversion, one press.
+             *
+             * A box that becomes an area — a corner dragged free, a point held
+             * into an edge, a ring closed from a pin — used to file two steps,
+             * an add and a remove. One Undo popped only the remove, so the old
+             * box came back while its replacement was still lying on the same
+             * ground, and it took a second press to work out which of the two
+             * shapes you were looking at. It is one action, so it is one step:
+             * the new shape goes, the old one comes back, and the inverse is
+             * filed for Redo to walk straight back the other way. */
+            const shown = wasMeasured(step.added.id);
+            await api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: step.added.id } }).catch(() => {});
+            dropObject(step.added.id, true);
+            const back = await reAdd(step.removed);
+            if (shown) { restoreMeasured(back.id, true); showMeasure(back.id, true); }
+            into.push({ type: 'swap', added: back, removed: step.added });
         } else if (step.type === 'update') {
             await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: step.id, points: step.before } }).catch(() => {});
             const cur = objIndex.get(step.id);
@@ -1399,12 +1470,70 @@
     /* Segment distances paint WHILE the shape is being made, not only after
        Finish. Labels are reused (moved, retexted) instead of recreated, so
        drag frames don't flicker. Pen is exempt — hundreds of tiny segments. */
-    let tempLabels = [], tempArea = null;
+    let tempLabels = [], tempArea = null, tempBadge = null;
+    /* The half-drawn shape gets the same off-switch the finished one has.
+     *
+     * Every finished shape wears a ruler badge you tap to put its numbers
+     * away. The shape being tapped out wore nothing — and with the Area tool
+     * that is not a passing state, it is where you live: corner after corner,
+     * side lengths and a running hectare figure painted over the very ground
+     * you are pacing, with no way to clear them until you press Finish. A box
+     * never showed the problem because a box is one drag and it is over.
+     *
+     * Default open, because the running area is the reason anybody reaches for
+     * this tool. The choice sticks across shapes — put the numbers away once
+     * and the next ring you tap out starts quiet. */
+    let draftMeasureOn = true;
+    const draftBadgeLabel = () => ({
+        text: draftMeasureOn ? '×' : '📏', className: 'cmap-mbadge',
+        color: '#fff', fontSize: '11px', fontWeight: '800',
+    });
+    function paintDraftMeasure() {
+        tempLabels.forEach((m) => m.setMap(draftMeasureOn ? map : null));
+        if (tempArea) tempArea.setMap(draftMeasureOn ? map : null);
+        if (tempBadge) tempBadge.setLabel(draftBadgeLabel());
+    }
+    /* One disc under the shape being drawn, doing exactly what a finished
+     * shape's badge does — same drop below the anchor, same × and ruler — so
+     * the gesture is learned once and works everywhere. Moved on each preview
+     * frame rather than rebuilt, for the same reason the side labels are.
+     *
+     * Only the two tap-out tools get one. Line, box and freehand reach here
+     * mid-drag, where a badge would appear and vanish inside a second and be
+     * a clickable target under a finger that is already busy. */
+    function syncDraftBadge(ring) {
+        const nothingToHide = !tempLabels.length && !tempArea;
+        if (nothingToHide || (tool !== 'path' && tool !== 'area')) {
+            if (tempBadge) { tempBadge.setMap(null); tempBadge = null; }
+            return;
+        }
+        const at = anchorOf(ring ? 'area' : 'path', tempPts) || tempPts[0];
+        if (!at) return;
+        if (tempBadge) tempBadge.setPosition(LL(at));
+        else {
+            tempBadge = new (G().Marker)({
+                map, position: LL(at), clickable: true, zIndex: 60,
+                title: 'Show or hide this shape’s measurements',
+                icon: { path: BADGE_DISC, scale: 1, fillColor: color, fillOpacity: .95,
+                    strokeColor: '#fff', strokeWeight: 2,
+                    labelOrigin: new (G().Point)(0, BADGE_DROP) },
+                label: draftBadgeLabel(),
+            });
+            tempBadge.addListener('click', () => {
+                draftMeasureOn = !draftMeasureOn;
+                paintDraftMeasure();
+            });
+        }
+        // Labels born on this frame arrive on the map whatever the badge says,
+        // so the answer is applied after they exist rather than before.
+        paintDraftMeasure();
+    }
     // Cleared with the side labels, or a finished ring would leave its running
     // total floating over the next shape somebody starts.
     function dropTempLabels() {
         tempLabels.forEach((m) => m.setMap(null)); tempLabels = [];
         if (tempArea) { tempArea.setMap(null); tempArea = null; }
+        if (tempBadge) { tempBadge.setMap(null); tempBadge = null; }
     }
     function refreshTempLabels(closed) {
         const ring = closed && tempPts.length > 2;
@@ -1440,6 +1569,7 @@
             // Back under three corners: there is no ground enclosed to report.
             tempArea.setMap(null); tempArea = null;
         }
+        syncDraftBadge(ring);
     }
     let traceLast = 0, traceOn = false;
     function sendTrace(done) {
@@ -1451,11 +1581,17 @@
     }
     function clearTemp() {
         tempPts = [];
+        // Corners taken back belong to the shape they came off. Kept, they
+        // would let a Redo after a tool change push somebody's old corner into
+        // whatever is being drawn now. setTool calls through here, so that is
+        // the tool-change case covered too.
+        draftRedo = [];
         if (tempShape) { tempShape.setMap(null); tempShape = null; }
         document.getElementById('cmapFinish').hidden = true;
         dropTempDots();
         dropTempLabels();
         sendTrace(true);
+        syncHistBtns();
     }
     function previewTemp(closed) {
         if (tempShape) tempShape.setMap(null);
@@ -1551,6 +1687,77 @@
         clearTemp();
         saveObject('area', pts);
     }
+    /* One corner down, and everything that says so: the point, its dot, the
+       outline, the numbers, and whether Finish and the history buttons are
+       reachable yet. Redo places a corner through here too, so a put-back
+       corner is the same corner in every respect — draggable dot included. */
+    function placeCorner(p) {
+        tempPts.push(p); previewTemp(tool === 'area');
+        // Each tapped corner shows itself at once — and stays grabbable:
+        // drag a dot to move the point and the line re-shapes under it.
+        const idx = tempPts.length - 1;
+        // Stamped on the dot, which is already popped in step with tempPts, so
+        // the two cannot drift the way a parallel array would.
+        const dotSeq = ++actSeq;
+        const dot = new (G().Marker)({
+            map, position: LL(p), draggable: true, crossOnDrag: false,
+            icon: pinIcon(),
+        });
+        dot.__seq = dotSeq;
+        dot.addListener('drag', (ev) => {
+            tempPts[idx] = [ev.latLng.lat(), ev.latLng.lng()];
+            previewTemp(tool === 'area');
+        });
+        if (idx === 0) dot.addListener('click', () => {
+            if ((tool === 'path' || tool === 'area') && tempPts.length >= 3) closeTempAsArea();
+        });
+        tempDots.push(dot);
+        document.getElementById('cmapFinish').hidden = tempPts.length < 2;
+        syncHistBtns();
+    }
+    /* Undo, while the shape is still being tapped out.
+     *
+     * The history below this only ever held committed shapes, so pressing Undo
+     * with four corners down reached straight past them and popped the last
+     * finished step — deleting a shape the team had actually agreed on, over
+     * the network, because somebody mis-tapped a corner. A box never showed
+     * this: a box is one drag and there is nothing pending to reach past.
+     * Corners come off first now, and the committed stack is only reached once
+     * none are left. Gated to the two tap-out tools because they are the only
+     * ones where tempPts outlives the gesture — line, box and freehand fill it
+     * mid-drag and clear it on release. */
+    function takeBackCorner() {
+        if (tool !== 'path' && tool !== 'area') return false;
+        if (!tempPts.length) return false;
+        // Only if the corner really is the more recent act. Otherwise the
+        // committed step wins and this defers to it, which is the whole point
+        // of stamping them from one counter.
+        const top = histUndo[histUndo.length - 1];
+        const dotTop = tempDots[tempDots.length - 1];
+        if (top && dotTop && (top.seq || 0) > (dotTop.__seq || 0)) return false;
+        const gone = tempPts.pop();
+        const dot = tempDots.pop();
+        // The point remembers when it was placed, so putting it back can be
+        // ordered against the committed stack the same way taking it off was.
+        if (dot) { gone.__seq = dot.__seq; dot.setMap(null); }
+        draftRedo.push(gone);
+        // Everything the tap put on screen comes back off with it: the outline
+        // redraws, the side lengths recount, and the running area drops away by
+        // itself once the ring is back under three corners.
+        previewTemp(tool === 'area');
+        document.getElementById('cmapFinish').hidden = tempPts.length < 2;
+        syncHistBtns();
+        return true;
+    }
+    function putBackCorner() {
+        if (tool !== 'path' && tool !== 'area') return false;
+        if (!draftRedo.length) return false;
+        // Mirrors the take-back: redo the more recently undone of the two.
+        const top = histRedo[histRedo.length - 1];
+        if (top && (top.seq || 0) > (draftRedo[draftRedo.length - 1].__seq || 0)) return false;
+        placeCorner(draftRedo.pop());
+        return true;
+    }
     function onTap(latLng) {
         const p = [latLng.lat(), latLng.lng()];
         if (tool === 'path' || tool === 'area') {
@@ -1559,23 +1766,10 @@
                 const f = proj.getProjection().fromLatLngToContainerPixel(LL(tempPts[0]));
                 if (a && f && Math.hypot(a.x - f.x, a.y - f.y) < 18) { closeTempAsArea(); return; }
             }
-            tempPts.push(p); previewTemp(tool === 'area');
-            // Each tapped corner shows itself at once — and stays grabbable:
-            // drag a dot to move the point and the line re-shapes under it.
-            const idx = tempPts.length - 1;
-            const dot = new (G().Marker)({
-                map, position: LL(p), draggable: true, crossOnDrag: false,
-                icon: pinIcon(),
-            });
-            dot.addListener('drag', (ev) => {
-                tempPts[idx] = [ev.latLng.lat(), ev.latLng.lng()];
-                previewTemp(tool === 'area');
-            });
-            if (idx === 0) dot.addListener('click', () => {
-                if ((tool === 'path' || tool === 'area') && tempPts.length >= 3) closeTempAsArea();
-            });
-            tempDots.push(dot);
-            document.getElementById('cmapFinish').hidden = tempPts.length < 2;
+            // A fresh tap is a new branch: whatever was taken back is not
+            // coming home now, exactly as pushHist drops the committed redos.
+            draftRedo = [];
+            placeCorner(p);
         } else if (tool === 'text') {
             // Nothing is created here. The ground is remembered, the sheet
             // asks, and only pressing its button writes anything — so backing
@@ -2125,8 +2319,8 @@
                 }
                 carryMeasure(cur.id, res.data.object.id);
                 renderObject(res.data.object);
-                pushHist({ type: 'add', object: res.data.object });
-                pushHist({ type: 'remove', object: cur });
+                // One held edge, one undo step — see applyStep's 'swap'.
+                pushHist({ type: 'swap', added: res.data.object, removed: cur });
                 await api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: cur.id } }).catch(() => {});
                 dropObject(cur.id, true);
                 if (window.toast) toast('Point added — the box is now an area you can reshape.');
@@ -3220,8 +3414,17 @@
         document.getElementById('cmapDelPoint').addEventListener('click', deleteSelPoint);
         document.getElementById('cmapDelObj').addEventListener('click', deleteEditedObj);
         document.getElementById('cmapEditDone').addEventListener('click', endEdit);
-        document.getElementById('cmapUndo').addEventListener('click', () => stepHist(histUndo, histRedo));
-        document.getElementById('cmapRedo').addEventListener('click', () => stepHist(histRedo, histUndo));
+        // Pending corners first, the committed history only once there are
+        // none — so Undo never reaches over a half-drawn shape to delete a
+        // finished one for the whole team.
+        document.getElementById('cmapUndo').addEventListener('click', () => {
+            if (takeBackCorner()) return;
+            stepHist(histUndo, histRedo);
+        });
+        document.getElementById('cmapRedo').addEventListener('click', () => {
+            if (putBackCorner()) return;
+            stepHist(histRedo, histUndo);
+        });
         document.getElementById('cmapColorBtn').addEventListener('click', () => window.openSheet?.('cmapColorSheet'));
         document.querySelectorAll('#cmapColorSheet .cmap-swatch').forEach((b) => b.addEventListener('click', () => {
             color = b.dataset.mcolor;
@@ -3229,10 +3432,14 @@
             const dotEl = document.getElementById('cmapColorDot');
             if (dotEl) dotEl.style.background = color;
             window.closeSheet?.('cmapColorSheet');
-            // A half-drawn shape repaints on the spot, dots included.
+            // A half-drawn shape repaints on the spot, dots included — and the
+            // badge, which is coloured to match the shape it belongs to.
             if (tempPts.length) {
                 previewTemp(tool === 'area');
                 tempDots.forEach((m) => m.setIcon(pinIcon()));
+                if (tempBadge) tempBadge.setIcon({ path: BADGE_DISC, scale: 1, fillColor: color,
+                    fillOpacity: .95, strokeColor: '#fff', strokeWeight: 2,
+                    labelOrigin: new (G().Point)(0, BADGE_DROP) });
             }
         }));
         document.getElementById('cmapSearchBtn').addEventListener('click', () => {
