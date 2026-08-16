@@ -283,8 +283,6 @@ class QuickCaptureController extends BaseScheduleController
         ]);
 
 
-        $album = $this->albumFor($schedule, $request);
-
         $titles = (array) $request->input('titles', []);
         $descriptions = (array) $request->input('descriptions', []);
 
@@ -324,6 +322,15 @@ class QuickCaptureController extends BaseScheduleController
 
         ksort($stored);
 
+        if (! $stored) {
+            return $this->jsonFail($clipTrouble ?: 'Nothing could be saved. Please try again.', 500);
+        }
+
+        // Only once there is something to put in it: a capture that lost
+        // everything on the way in used to leave a brand new empty album
+        // behind, which then had to be found and deleted by hand.
+        $album = $this->albumFor($schedule, $request);
+
         // Asked once, not per picture: the description column arrives with a
         // migration, and a server that has the code but not yet the column
         // should drop the descriptions, not the whole capture.
@@ -359,10 +366,6 @@ class QuickCaptureController extends BaseScheduleController
 
             $counts[$item['kind']]++;
             $added++;
-        }
-
-        if (! $added) {
-            return $this->jsonFail($clipTrouble ?: 'Nothing could be saved. Please try again.', 500);
         }
 
         $parts = [];

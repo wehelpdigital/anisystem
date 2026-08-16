@@ -44,6 +44,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // roster row and needs none — CAN_EDIT already covers them.
     const CAN_EDIT = @json(\App\Support\WorkerContext::canEdit());
     const ME_WORKER_ID = @json(optional(\App\Support\WorkerContext::activeGrant())->scheduleWorkerId);
+    // The third answer the board needs: a worker can be trusted with the day's
+    // notes without being trusted with the plan. Anyone who may edit may write
+    // notes, so the two are folded into one question for the note controls.
+    const CAN_ADD_NOTES = @json(\App\Support\WorkerContext::canAddNotes());
+    const MAY_NOTE = CAN_EDIT || CAN_ADD_NOTES;
+    /* A control a viewer may not use is drawn where everyone else has it,
+       greyed and inert, rather than left out: a board whose buttons come and
+       go per person is one nobody can be told how to use, and a missing button
+       reads as a bug. Twin of $mayEdit/$editTitle in activity-card.blade.php.
+       An activity note is an edit (appendNote goes through the write gate) —
+       only the DAY's note is what "notes-only" buys. */
+    const WHY_NO_EDIT = 'Only someone who can edit the plan may do this';
+    const WHY_NO_NOTE = 'You are not allowed to write notes on this schedule';
+    const LOCK_EDIT = CAN_EDIT ? '' : ' disabled';
+    const LOCK_EDIT_CLS = CAN_EDIT ? '' : ' is-locked opacity-40 cursor-not-allowed';
+    const LOCK_NOTE = MAY_NOTE ? '' : ' disabled';
+    const LOCK_NOTE_CLS = MAY_NOTE ? '' : ' is-locked opacity-40 cursor-not-allowed';
+    const editTitle = (plain) => (CAN_EDIT ? plain : WHY_NO_EDIT);
+    const noteTitle = (plain) => (MAY_NOTE ? plain : WHY_NO_NOTE);
     const LOT_NAMES = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->lotName]));
     const LOT_VARIETIES = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->variety]));
     // How each lot counts: 'DAT' sown-then-transplanted (DAS, then a fresh
@@ -857,8 +876,8 @@ document.addEventListener('DOMContentLoaded', () => {
      data-search="${esc(searchText)}"${lotAccentStyle}>
     <div class="flex items-start justify-between gap-2">
         <div class="flex items-start gap-2.5 min-w-0 grow">
-            <button type="button" class="done-check${isDoneFlag ? ' is-checked' : ''}" data-id="${a.id}"
-                title="${isDoneFlag ? 'Mark as not done (unlocks editing)' : 'Mark this activity as done'}"
+            <button type="button" class="done-check${isDoneFlag ? ' is-checked' : ''}${LOCK_EDIT_CLS}" data-id="${a.id}"${LOCK_EDIT}
+                title="${esc(editTitle(isDoneFlag ? 'Mark as not done (unlocks editing)' : 'Mark this activity as done'))}"
                 aria-pressed="${isDoneFlag ? 'true' : 'false'}" aria-label="Mark activity as done">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>
@@ -882,14 +901,14 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="flex items-center shrink-0">
             ${hasChecklist(a) ? '<span class="badge payroll-badge mr-1">Worker checklist</span>' : ''}
-            <button type="button" class="icon-btn add-note-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Add a note (activity is locked)">${SVG.note}</button>
+            <button type="button" class="icon-btn add-note-activity-btn${LOCK_EDIT_CLS}" data-id="${a.id}" data-name="${nameAttr}"${LOCK_EDIT} title="${esc(editTitle('Add a note (activity is locked)'))}">${SVG.note}</button>
             <div class="hidden md:flex items-center gap-0.5 done-hide">
-                <button type="button" class="icon-btn hide-activity-toggle" data-id="${a.id}" title="Toggle visibility in presentations and exports" aria-pressed="${isHiddenFlag ? 'true' : 'false'}">${SVG.eye}</button>
-                <button type="button" class="icon-btn edit-activity-btn" data-id="${a.id}" title="Edit">${SVG.edit}</button>
-                <button type="button" class="icon-btn tag-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Tag a drawing, map or note">${SVG.tag}</button>
-                <button type="button" class="icon-btn duplicate-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Duplicate">${SVG.duplicate}</button>
-                <button type="button" class="icon-btn to-draft-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Move to drafts (hide without deleting)">${SVG.archive}</button>
-                <button type="button" class="icon-btn icon-btn-danger delete-activity-btn" data-id="${a.id}" data-name="${nameAttr}" title="Delete">${SVG.trash}</button>
+                <button type="button" class="icon-btn hide-activity-toggle${LOCK_EDIT_CLS}" data-id="${a.id}"${LOCK_EDIT} title="${esc(editTitle('Toggle visibility in presentations and exports'))}" aria-pressed="${isHiddenFlag ? 'true' : 'false'}">${SVG.eye}</button>
+                <button type="button" class="icon-btn edit-activity-btn${LOCK_EDIT_CLS}" data-id="${a.id}"${LOCK_EDIT} title="${esc(editTitle('Edit'))}">${SVG.edit}</button>
+                <button type="button" class="icon-btn tag-activity-btn${LOCK_EDIT_CLS}" data-id="${a.id}" data-name="${nameAttr}"${LOCK_EDIT} title="${esc(editTitle('Tag a drawing, map or note'))}">${SVG.tag}</button>
+                <button type="button" class="icon-btn duplicate-activity-btn${LOCK_EDIT_CLS}" data-id="${a.id}" data-name="${nameAttr}"${LOCK_EDIT} title="${esc(editTitle('Duplicate'))}">${SVG.duplicate}</button>
+                <button type="button" class="icon-btn to-draft-activity-btn${LOCK_EDIT_CLS}" data-id="${a.id}" data-name="${nameAttr}"${LOCK_EDIT} title="${esc(editTitle('Move to drafts (hide without deleting)'))}">${SVG.archive}</button>
+                <button type="button" class="icon-btn icon-btn-danger delete-activity-btn${LOCK_EDIT_CLS}" data-id="${a.id}" data-name="${nameAttr}"${LOCK_EDIT} title="${esc(editTitle('Delete'))}">${SVG.trash}</button>
             </div>
             <button type="button" class="icon-btn card-menu-btn md:hidden done-hide" data-id="${a.id}" data-name="${nameAttr}" title="Actions">${SVG.kebab}</button>
         </div>
@@ -1456,7 +1475,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="rest-day-date">${esc(prettyDateLong(dateKey))}</span>
                 <span class="rest-day-tag">No activities scheduled</span>
             </div>
-            <button type="button" class="btn btn-white btn-sm rest-day-add-btn shrink-0" data-date="${esc(dateKey)}">+ Add</button>
+            <button type="button" class="btn btn-white btn-sm rest-day-add-btn shrink-0${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Add an activity to this day'))}">+ Add</button>
         </div>`;
     }
 
@@ -1531,16 +1550,19 @@ document.addEventListener('DOMContentLoaded', () => {
         try { noteMediaArr = JSON.parse(noteMediaJson || '[]') || []; } catch (_) { noteMediaArr = []; }
         const noteChipsHtml = noteMediaArr.length ? inlineAttachments(noteMediaArr) : '';
         const hasNote = !isNoDate && ((noteContent || '') !== '' || noteChipsHtml !== '');
+        // Sharing a day is a read, so it stays live for everyone; the kebab
+        // stays live too because the sheet behind it holds read-only rows and
+        // gates its own actions. Everything else here writes.
         const buttons = isNoDate ? '' : `
-            <button type="button" class="date-header-btn group-add-activity-btn" data-date="${esc(dateKey)}" title="Add a new activity to this date">${SVG.plus}</button>
+            <button type="button" class="date-header-btn group-add-activity-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Add a new activity to this date'))}">${SVG.plus}</button>
             <span class="hidden md:flex items-center gap-0.5">
-                <button type="button" class="date-header-btn date-note-btn" data-date="${esc(dateKey)}" title="Add a note to this day">${SVG.notePlus}</button>
-                <button type="button" class="date-header-btn day-expense-btn" data-date="${esc(dateKey)}" title="Add an extra expense for this day">${SVG.coin}</button>
-                <button type="button" class="date-header-btn date-marker-btn${hasMarker ? ' has-marker' : ''}" data-date="${esc(dateKey)}" title="${hasMarker ? 'Edit the resume-here marker' : 'Drop a resume-here marker after this date'}">${SVG.bookmark}</button>
+                <button type="button" class="date-header-btn date-note-btn${LOCK_NOTE_CLS}" data-date="${esc(dateKey)}"${LOCK_NOTE} title="${esc(noteTitle('Add a note to this day'))}">${SVG.notePlus}</button>
+                <button type="button" class="date-header-btn day-expense-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Add an extra expense for this day'))}">${SVG.coin}</button>
+                <button type="button" class="date-header-btn date-marker-btn${hasMarker ? ' has-marker' : ''}${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle(hasMarker ? 'Edit the resume-here marker' : 'Drop a resume-here marker after this date'))}">${SVG.bookmark}</button>
                 ${dateObj ? `<button type="button" class="date-header-btn share-day-btn" data-date="${esc(dateKey)}" title="Share this day's schedule (public link)">${SVG.share}</button>` : ''}
-                <button type="button" class="date-header-btn change-group-date-btn" data-date="${esc(dateKey)}" title="Change date for all activities in this group">${SVG.calendarEdit}</button>
-                <button type="button" class="date-header-btn move-group-das-btn" data-date="${esc(dateKey)}" title="Move this whole day to a specific day number">${SVG.dayNumber}</button>
-                <button type="button" class="date-header-btn date-header-delete-btn delete-group-date-btn" data-date="${esc(dateKey)}" title="Delete every activity in this group">${SVG.trash}</button>
+                <button type="button" class="date-header-btn change-group-date-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Change date for all activities in this group'))}">${SVG.calendarEdit}</button>
+                <button type="button" class="date-header-btn move-group-das-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Move this whole day to a specific day number'))}">${SVG.dayNumber}</button>
+                <button type="button" class="date-header-btn date-header-delete-btn delete-group-date-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Delete every activity in this group'))}">${SVG.trash}</button>
             </span>
             <button type="button" class="date-header-btn day-menu-btn md:hidden" data-date="${esc(dateKey)}" title="More actions for this day">${SVG.kebab}</button>`;
 
@@ -1599,6 +1621,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', restoreOpenDays, { once: true });
     else restoreOpenDays();
+
+    /* ---- What this viewer may not touch ---------------------------------
+     * The two renderers above already draw their own controls locked, but the
+     * board arrives server-rendered first and its DAY HEADER is built in
+     * sm/activities.blade.php — a third place the rule would have to be
+     * repeated and would eventually drift out of. So sweep the live list
+     * instead: whatever a renderer already locked is skipped, and whatever
+     * the page shipped gets the same treatment. */
+    const WRITE_CONTROLS = [
+        '.done-check', '.edit-activity-btn', '.duplicate-activity-btn', '.to-draft-activity-btn',
+        '.delete-activity-btn', '.tag-activity-btn', '.hide-activity-toggle', '.add-note-activity-btn',
+        '.group-add-activity-btn', '.rest-day-add-btn', '.day-expense-btn', '.date-marker-btn',
+        '.change-group-date-btn', '.move-group-das-btn', '.delete-group-date-btn',
+    ].join(', ');
+    // Writing on the day itself, which "notes only" is exactly the right to do.
+    const NOTE_CONTROLS = '.date-note-btn';
+    function lockBoardControls() {
+        if (CAN_EDIT && MAY_NOTE) return;
+        const list = $id('activitiesList');
+        if (!list) return;
+        const lock = (sel, why) => $qsa(sel, list).forEach((el) => {
+            if (el.disabled) return;   // a renderer already said this
+            el.disabled = true;
+            el.title = why;
+            el.classList.add('is-locked', 'opacity-40', 'cursor-not-allowed');
+        });
+        if (!CAN_EDIT) lock(WRITE_CONTROLS, WHY_NO_EDIT);
+        if (!MAY_NOTE) lock(NOTE_CONTROLS, WHY_NO_NOTE);
+    }
+    document.addEventListener('activities:rendered', lockBoardControls);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', lockBoardControls, { once: true });
+    else lockBoardControls();
 
     document.addEventListener('click', (e) => {
         const header = e.target.closest && e.target.closest('#activitiesList .date-header');
@@ -7616,6 +7670,63 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             reorderAndRenumberActivities(true);
         }
+
+        /* A 'reload' says something changed and names what, so the page reload
+         * its name promises is the last resort rather than the first move —
+         * a teammate ticking a reminder should not cost everyone else their
+         * scroll position, their open sheets and a second of blank board.
+         * Each branch below is a thing the payload can be applied to directly. */
+        async function applyReload(d) {
+            if (d.attendanceDate) { applyAttendanceTick(d); return; }
+            // Tags travel whole, so the chip row is repainted from the event.
+            if (d.id && Array.isArray(d.tags) && cardOf(d.id)) {
+                const c = cardOf(d.id);
+                c.setAttribute('data-tags', JSON.stringify(d.tags));
+                // paintCardTags, not rememberTags: the tag sheet on THIS screen
+                // belongs to whatever activity this viewer opened, if any.
+                paintCardTags(d.id, d.tags);
+                return;
+            }
+            const moneyDate = d.expenseDate || d.incomeDate;
+            if (moneyDate) { refreshDayMoney(moneyDate); return; }
+            // Anything else about one card — an appended note, a ticked
+            // reminder, a changed roster — comes back complete from show().
+            if (d.id && cardOf(d.id)) {
+                try {
+                    const res = await api(U.show(d.id));
+                    if (res && res.data) { _renderCardOrReplace(res.data); return; }
+                } catch (_) { /* fall through to the blunt instrument */ }
+            }
+            softReload();   // day notes, inline notes, markers — page-level
+        }
+
+        /* One name, one day, ticked or unticked. Every card already carries
+         * what that person is worth, so the row, the block total and the day's
+         * cash pill all follow from the DOM — nothing to ask the server. */
+        function applyAttendanceTick(d) {
+            const rows = $qsa(`#activitiesList .act-check[data-att-date="${d.attendanceDate}"] .act-check-row[data-att-worker="${d.workerId}"]`);
+            if (!rows.length) return;
+            rows.forEach((row) => {
+                const box = row.querySelector('input[type=checkbox]');
+                if (box) box.checked = !!d.present;
+                row.classList.toggle('is-out', !d.present);
+                const block = row.closest('.act-check');
+                if (!block) return;
+                let sum = 0;
+                $qsa('.act-check-row', block).forEach((r) => {
+                    if (r.querySelector('input')?.checked) {
+                        sum += Number((r.querySelector('.act-check-pay')?.textContent || '').replace(/[^0-9.]/g, '')) || 0;
+                    }
+                });
+                const out = block.querySelector('[data-att-total]');
+                if (out) out.textContent = money(sum);
+                // A checklist card's labour IS its payable sum, which is what
+                // the day header adds up.
+                row.closest('.activity-card')?.setAttribute('data-labour', String(sum));
+            });
+            paintAllDayCash();
+        }
+
         let ch;
         try { ch = window.Echo.private('schedule-board.' + SCHEDULE_ID); } catch (_) { return; }
         ch.listen('.activity', (p) => {
@@ -7632,7 +7743,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     case 'toggle-hidden': { const c = cardOf(d.id); if (c) { c.classList.toggle('is-hidden', !!d.isHidden); refreshHiddenActivityCount(); } break; }
                     case 'set-date': { const c = cardOf(d.id); if (c) { c.setAttribute('data-target-date', d.targetDate); reorderAndRenumberActivities(true); } break; }
                     case 'reordered': applyReorder(d.items); break;
-                    default: softReload(); break;   // notes, markers, appended note, etc.
+                    // Async, so the switch's own try/catch cannot see it fail:
+                    // it carries its own fallback to the page reload.
+                    case 'reload': applyReload(d).catch(softReload); break;
+                    default: softReload(); break;   // markers, version bookkeeping, etc.
                 }
             } catch (e) { softReload(); }
         });

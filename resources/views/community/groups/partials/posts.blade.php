@@ -12,7 +12,10 @@
         $isGif = $post->imagePath && str_ends_with(mb_strtolower($post->imagePath), '.gif');
         $replyCount = $post->replies ? $post->replies->count() : 0;
     @endphp
-    <article class="card p-4 mb-5 group-post" data-post-id="{{ $post->id }}">
+    {{-- The id is what a notification's #post-N lands on. Without it the
+         reader is dropped at the top of the group to go and find the thing
+         they were told about. --}}
+    <article class="card p-4 mb-5 group-post" id="post-{{ $post->id }}" data-post-id="{{ $post->id }}">
         <header class="flex items-start gap-3">
             @include('community.partials.avatar-status', ['user' => $post->author, 'size' => 'avatar-md'])
             <div class="min-w-0 grow">

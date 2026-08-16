@@ -101,6 +101,12 @@ class ScheduleMapController extends BaseScheduleController
             return $this->jsonFail('You are not part of this schedule team.', 403);
         }
 
+        // Reshaping someone's lot boundary is an edit to the farm's own map.
+        // This door resolves with the raw resolver, which carries no write
+        // check of its own — so being on the team was the whole of the test,
+        // and a view-only member could drag a field to a different shape.
+        $this->assertCanEdit();
+
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
             'points' => 'required|array|min:1|max:2000',
@@ -437,6 +443,9 @@ class ScheduleMapController extends BaseScheduleController
             'mode' => 'required|in:map,image',
             // Which saved map to write into. Absent means a new one.
             'saveId' => 'nullable|integer',
+            // An autosave rather than someone pressing Save: it writes into
+            // the map it was given and never mints anything of its own.
+            'quiet' => 'nullable|boolean',
             // A PNG data URL the client composed: imagery, shapes, points and
             // every measurement label, exactly as the screen shows them.
             'image' => 'nullable|string',
@@ -463,9 +472,26 @@ class ScheduleMapController extends BaseScheduleController
         }
 
         $mode = $request->input('mode');
+        $quiet = $request->boolean('quiet');
         $title = trim((string) $request->input('title')) ?: 'Team map';
         $source = $request->input('source') === 'team' ? 'team' : 'solo';
         $description = trim((string) $request->input('description'));
+
+        // Which saved map is being written into. Resolved up here rather than
+        // at the end, because an autosave has to know whether it already owns
+        // a note before it goes and makes one.
+        $existing = ($mode === 'map' && $request->filled('saveId'))
+            ? \App\Models\ScheduleMapSave::where('scheduleId', $schedule->id)
+                ->where('id', (int) $request->input('saveId'))
+                ->where('deleteStatus', 1)
+                ->first()
+            : null;
+
+        // An autosave with nowhere to write is a bug on the client, not an
+        // invitation to file a new map behind the user's back.
+        if ($quiet && ! $existing) {
+            return $this->jsonFail('That saved map no longer exists.', 404);
+        }
 
         // Best-effort picture; the reopenable snapshot never depends on it.
         $media = [];
@@ -519,16 +545,31 @@ class ScheduleMapController extends BaseScheduleController
             $bodyText = trim(($description !== '' ? $description . "\n\n" : '')
                 . 'Saved team map — tap View map to open it.');
         }
-        $note = AsScheduleNote::create([
-            'croppingScheduleId' => $schedule->id,
-            'userId' => $meId,
-            'title' => mb_substr($title, 0, 180),
-            'body' => $bodyText !== null
-                ? \App\Support\HtmlSanitizer::rich('<p>' . nl2br(e($bodyText)) . '</p>')
-                : null,
-            'media' => $media,
-            'deleteStatus' => 1,
-        ]);
+        // A map that saves itself as it is edited writes back into the note it
+        // already has. Minting one per autosave would bury an afternoon's
+        // notebook under forty pictures of the same field.
+        $note = ($quiet && $existing?->noteId)
+            ? AsScheduleNote::active()->find($existing->noteId)
+            : null;
+        if ($note) {
+            $note->update([
+                'title' => mb_substr($title, 0, 180),
+                // Keep whatever picture is already filed when this round could
+                // not take a fresh one — a note with no media renders empty.
+                'media' => $media ?: (is_array($note->media) ? $note->media : []),
+            ]);
+        } else {
+            $note = AsScheduleNote::create([
+                'croppingScheduleId' => $schedule->id,
+                'userId' => $meId,
+                'title' => mb_substr($title, 0, 180),
+                'body' => $bodyText !== null
+                    ? \App\Support\HtmlSanitizer::rich('<p>' . nl2br(e($bodyText)) . '</p>')
+                    : null,
+                'media' => $media,
+                'deleteStatus' => 1,
+            ]);
+        }
 
         $saveId = null;
         if ($mode === 'map') {
@@ -541,13 +582,6 @@ class ScheduleMapController extends BaseScheduleController
             // record keeps its place in the list and its note keeps its
             // history, rather than the team ending up with three copies of one
             // plan and no way to tell which is current.
-            $existing = $request->filled('saveId')
-                ? \App\Models\ScheduleMapSave::where('scheduleId', $schedule->id)
-                    ->where('id', (int) $request->input('saveId'))
-                    ->where('deleteStatus', 1)
-                    ->first()
-                : null;
-
             if ($existing) {
                 $existing->update([
                     'title' => mb_substr($title, 0, 180),
@@ -566,17 +600,29 @@ class ScheduleMapController extends BaseScheduleController
                     'deleteStatus' => 1,
                 ])->id;
             }
+
+            // Everyone in the room is looking at these same shapes. Tell them
+            // WHICH file they now belong to, so the next person to nudge one
+            // writes back into it instead of forking a second copy.
+            $this->emit($schedule->id, [
+                'action' => 'saved',
+                'saveId' => (int) $saveId,
+                'title' => mb_substr($title, 0, 180),
+                'actorUserId' => $meId,
+            ]);
         }
 
         return response()->json([
             'success' => true,
             'data' => ['saveId' => $saveId, 'title' => mb_substr($title, 0, 180)],
-            'message' => $mode === 'map'
+            'message' => $quiet
+                ? 'Saved.'
+                : ($mode === 'map'
                 ? (($saveId && $request->filled('saveId'))
                     ? 'Saved over “' . mb_substr($title, 0, 60) . '”.'
                     : 'Map saved to Notes — reopen it any time from the map shelf'
                     . (empty($media) ? ' (no picture: Static Maps API unavailable).' : ', and its picture is in Notes.'))
-                : 'Saved to Notes as an image note.',
+                : 'Saved to Notes as an image note.'),
         ]);
     }
 

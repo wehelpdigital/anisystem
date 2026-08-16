@@ -245,6 +245,12 @@
             <button type="button" id="cmapDelObj">Delete shape</button>
             <button type="button" id="cmapEditDone">Done</button>
         </div>
+        {{-- An opened map writes itself back as you work. This is the whole of
+             what it says about it: a word, then gone. --}}
+        <div class="cmap-saved" id="cmapSaved" aria-live="polite">
+            <span class="cmap-saved-dot"></span>
+            <span id="cmapSavedTxt">Saved</span>
+        </div>
     </div>
 @endif
 </div>
@@ -405,10 +411,30 @@
     #cmapDelPoint, #cmapDelObj { background: #fee2e2; color: #b91c1c; }
     #cmapEditDone { background: var(--color-gray-100); color: var(--color-gray-700); }
     @media (prefers-reduced-motion: reduce) { .cmap-editbar { transition: none; } }
+    /* The autosave's only voice: it appears, says the word, and goes away. */
+    .cmap-saved { position: absolute; top: .6rem; right: .6rem; z-index: 6; pointer-events: none;
+        display: flex; align-items: center; gap: .35rem; padding: .25rem .6rem; border-radius: 999px;
+        font-size: .7rem; font-weight: 800; color: var(--color-gray-600);
+        background: rgb(255 255 255 / .93); box-shadow: 0 8px 22px -10px rgb(0 0 0 / .55);
+        opacity: 0; transform: translateY(-.4rem);
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .cmap-saved.is-on { opacity: 1; transform: translateY(0); }
+    .cmap-saved-dot { width: .45rem; height: .45rem; border-radius: 999px; background: #4a7c2a; flex-shrink: 0; }
+    .cmap-saved.is-working .cmap-saved-dot { background: #f5c518; animation: cmapSavePulse 1.1s ease-in-out infinite; }
+    .cmap-saved.is-failed { color: #b91c1c; }
+    .cmap-saved.is-failed .cmap-saved-dot { background: #dc2626; }
+    @keyframes cmapSavePulse { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+    html.dark .cmap-saved { background: rgb(21 27 18 / .93); color: #cdd8c0; }
+    @media (prefers-reduced-motion: reduce) {
+        .cmap-saved { transition: opacity .01s linear; }
+        .cmap-saved.is-working .cmap-saved-dot { animation: none; }
+    }
     /* Measurement labels ride Google marker labels — these classes style them. */
     .cmap-lbl-g { background: rgb(17 24 39 / .82); border-radius: .45rem; padding: .1rem .4rem; white-space: nowrap; }
-    /* The ruler badge that reveals a shape's numbers. */
-    .cmap-mbadge { cursor: pointer; }
+    /* The ruler badge that reveals a shape's numbers. It hangs below the point
+       it belongs to rather than on it — see BADGE_DISC for why the gap is
+       measured in screen pixels and not in metres. */
+    .cmap-mbadge { cursor: pointer; line-height: 1; }
     .cmap-txt-g { background: #fff; border: 1.5px solid #111827; border-radius: .45rem; padding: .12rem .45rem; box-shadow: 0 2px 6px rgb(0 0 0 / .25); }
     .cmap-me-g { background: rgb(17 24 39 / .82); border-radius: .45rem; padding: .05rem .35rem; }
     /* Live-position dots are HTML overlays, not markers: markers cannot
@@ -506,15 +532,28 @@
         if (on) measureOpen.add(String(id)); else measureOpen.delete(String(id));
     }
 
-    /** The badge that opens a shape's numbers, dropped at its middle. */
+    /* The badge sat on the very spot it was meant to reveal: a polygon's area
+       is written at its centre and a line's length at its midpoint, and the
+       badge was placed at exactly those two points — so the number it opened
+       appeared underneath it and could not be read.
+       It now hangs a fixed 26 screen pixels below that spot. The drop is
+       baked into the icon PATH, drawn at scale 1, so path units ARE screen
+       pixels: the gap is identical at every zoom, which an offset expressed
+       in latitude could never be. labelOrigin follows the disc down so the
+       ruler/× rides inside it. */
+    const BADGE_DROP = 26;
+    const BADGE_DISC = 'M0 ' + BADGE_DROP + ' m-11 0 a11 11 0 1 0 22 0 a11 11 0 1 0 -22 0';
+
+    /** The badge that opens a shape's numbers, hung under its middle. */
     function measureBadge(parts, id, at, colorStr, labels) {
         // Nothing to reveal, nothing to offer: a badge with no numbers behind
         // it is a pin that does nothing when tapped.
         if (!labels || !labels.length) return null;
         const badge = new (G().Marker)({
-            map, position: LL(at), clickable: true, zIndex: 60,
-            icon: { path: G().SymbolPath.CIRCLE, scale: 10, fillColor: colorStr || '#4a7c2a',
-                fillOpacity: .95, strokeColor: '#fff', strokeWeight: 2 },
+            map, position: LL(at), clickable: true, zIndex: 60, title: 'Show or hide this shape’s measurements',
+            icon: { path: BADGE_DISC, scale: 1, fillColor: colorStr || '#4a7c2a',
+                fillOpacity: .95, strokeColor: '#fff', strokeWeight: 2,
+                labelOrigin: new (G().Point)(0, BADGE_DROP) },
             label: { text: '📏', className: 'cmap-mbadge', color: '#fff', fontSize: '11px', fontWeight: '800' },
         });
         badge.addListener('click', () => {
@@ -758,6 +797,10 @@
         if (histUndo.length > 30) histUndo.shift();
         histRedo.length = 0;
         syncHistBtns();
+        // Every change this client makes to the map passes through here, which
+        // makes it the one place the autosave has to listen. Shapes arriving
+        // from the room do not — the person who moved it is the one who saves.
+        markMapDirty();
     }
     async function reAdd(object) {
         const res = await api(`${URLS.push}?scheduleId=${SID}`, {
@@ -801,6 +844,9 @@
         try { await applyStep(step, into); } catch (e) { if (window.toast) toast(e.message, 'error'); }
         histBusy = false;
         syncHistBtns();
+        // applyStep files its inverse straight onto the other stack rather than
+        // through pushHist, so undo and redo have to say so themselves.
+        markMapDirty();
     }
     async function saveObject(kind, pts, label) {
         try {
@@ -1113,6 +1159,136 @@
         if (bar) bar.classList.add('hidden');
     }
 
+    /* ---------- press and hold an edge to drop a point into it ----------
+     * Google hands this out only through an editable polygon's midpoint
+     * handles, which is two problems: a box is never editable (it is stored
+     * as two opposite corners, so it has no path to hand over), and those
+     * handles are smaller than a fingertip on the phones this is used on.
+     * So the gesture is ours — hold still on an edge for half a second and a
+     * point appears there, already grabbable.
+     *
+     * The hold has to be the ONLY thing happening: a pan, a pinch, a dragged
+     * shape or a pin's own long-press all cancel it before it fires. */
+    const HOLD_MS = 500, HOLD_SLOP = 8, EDGE_HIT = 18;
+    // A point is only worth dropping where a point can then be grabbed, which
+    // is exactly the kinds vertexPins draws handles for.
+    const INSERTABLE = ['line', 'path', 'rect', 'area'];
+    const ptOf = (el, e) => {
+        const r = el.getBoundingClientRect();
+        return { x: e.clientX - r.left, y: e.clientY - r.top };
+    };
+    /** A shape as the corners you can see — a box is two corners in the row. */
+    function ringOf(o) {
+        if (o.kind !== 'rect' || (o.points || []).length < 2) return o.points || [];
+        const b = new (G().LatLngBounds)(LL(o.points[0]), LL(o.points[1]));
+        const sw = b.getSouthWest(), ne = b.getNorthEast();
+        return [[sw.lat(), sw.lng()], [sw.lat(), ne.lng()], [ne.lat(), ne.lng()], [ne.lat(), sw.lng()]];
+    }
+    /* The edge nearest a press, measured in screen pixels: "nearest" has to
+       mean what it looks like from where the finger is, not what it is in
+       metres — the same shape read at two zooms would otherwise answer
+       differently to the same press. */
+    function nearestEdge(at) {
+        const pr = proj.getProjection();
+        if (!pr) return null;
+        let best = null;
+        objIndex.forEach((o) => {
+            if (!INSERTABLE.includes(o.kind)) return;
+            const ring = ringOf(o);
+            if (ring.length < 2) return;
+            const closed = (o.kind === 'rect' || o.kind === 'area');
+            const px = ring.map((p) => pr.fromLatLngToContainerPixel(LL(p)));
+            if (px.some((q) => !q)) return;
+            const n = closed ? px.length : px.length - 1;
+            for (let i = 0; i < n; i++) {
+                const a = px[i], b = px[(i + 1) % px.length];
+                const vx = b.x - a.x, vy = b.y - a.y, len2 = vx * vx + vy * vy;
+                if (len2 < 576) continue;      // under 24px on screen: no room for another point
+                // Clamped well clear of both ends, so a press near a corner is
+                // measured against the middle of the edge and misses the
+                // threshold — that press belongs to the corner's pin.
+                const t = Math.min(.85, Math.max(.15, ((at.x - a.x) * vx + (at.y - a.y) * vy) / len2));
+                const hx = a.x + vx * t, hy = a.y + vy * t;
+                const d = Math.hypot(at.x - hx, at.y - hy);
+                if (d <= EDGE_HIT && (!best || d < best.d)) best = { o, i, ring, d, at: new (G().Point)(hx, hy) };
+            }
+        });
+        return best;
+    }
+    /** Put the new corner in and persist it down the same road every reshape takes. */
+    async function insertOnEdge(hit) {
+        const pr = proj.getProjection();
+        const ll = pr && pr.fromContainerPixelToLatLng(hit.at);
+        if (!ll) return;
+        const cur = objIndex.get(hit.o.id) || hit.o;
+        const ring = hit.ring.slice();
+        ring.splice(hit.i + 1, 0, [ll.lat(), ll.lng()]);
+        try {
+            if (cur.kind === 'rect') {
+                // A box has no fifth corner — the row holds two. Same
+                // conversion a dragged corner does: it becomes an area, with
+                // the new point already in it.
+                const res = await api(`${URLS.push}?scheduleId=${SID}`, {
+                    method: 'POST', body: { kind: 'area', points: ring, color: cur.color, width: cur.width, label: cur.label },
+                });
+                if (tool === 'edit') pendingEdit = res.data.object.id;
+                renderObject(res.data.object);
+                pushHist({ type: 'add', object: res.data.object });
+                pushHist({ type: 'remove', object: cur });
+                await api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: cur.id } }).catch(() => {});
+                dropObject(cur.id);
+                if (window.toast) toast('Point added — the box is now an area you can reshape.');
+                return;
+            }
+            const res = await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: cur.id, points: ring } });
+            pushHist({ type: 'update', id: cur.id, before: cur.points, after: res.data.object.points });
+            if (tool === 'edit') pendingEdit = cur.id;      // stay holding the shape
+            dropObject(cur.id);
+            renderObject(res.data.object);
+            if (window.toast) toast('Point added — drag it to reshape.');
+        } catch (e) { if (window.toast) toast(e.message, 'error'); }
+    }
+    function bindEdgeInsert(el) {
+        let timer = null, from = null, pid = null;
+        const stop = () => { clearTimeout(timer); timer = null; from = null; pid = null; };
+        el.addEventListener('pointerdown', (e) => {
+            // A second finger means a pinch, so the first was never a hold.
+            if (timer) { stop(); return; }
+            // Only the two tools that are not already spending the finger:
+            // the drawing tools own it, and erase and text mean something
+            // else entirely by a press.
+            if (tool !== 'pan' && tool !== 'edit') return;
+            if (extending || !proj.getProjection()) return;
+            if (e.pointerType === 'mouse' && e.button !== 0) return;
+            // A press that starts on a pin belongs to that pin — it has its
+            // own long-press (draw on from here) and its own drag.
+            const panes = proj.getPanes && proj.getPanes();
+            if (panes && panes.overlayMouseTarget && panes.overlayMouseTarget.contains(e.target)) return;
+            from = ptOf(el, e); pid = e.pointerId;
+            timer = setTimeout(() => {
+                const at = from;
+                stop();
+                const hit = nearestEdge(at);
+                if (!hit) return;
+                // A gesture that starts with no sign of itself reads as broken.
+                try { if (navigator.vibrate) navigator.vibrate(12); } catch (_) {}
+                insertOnEdge(hit);
+            }, HOLD_MS);
+        });
+        el.addEventListener('pointermove', (e) => {
+            if (!timer || e.pointerId !== pid) return;
+            // Moved: the map is being panned, or a picked-up shape dragged.
+            // Either of those wins over a point nobody has asked for yet.
+            const p = ptOf(el, e);
+            if (Math.hypot(p.x - from.x, p.y - from.y) > HOLD_SLOP) stop();
+        });
+        ['pointerup', 'pointercancel', 'pointerleave'].forEach((n) => el.addEventListener(n, stop));
+        // Ground moving under a still finger invalidates the pixel we measured
+        // the press against — a keyboard zoom or a programmatic pan counts.
+        map.addListener('dragstart', stop);
+        map.addListener('zoom_changed', stop);
+    }
+
     /* ---------- teammates' drawing ghosts ---------- */
     const ghosts = new Map();   // userId -> { shape, label, at }
     function dropGhost(uid) {
@@ -1325,6 +1501,66 @@
             ? 'You are working on the saved map “' + LOADED_SAVE.title + '”. Saving can replace it or keep it and make a new one.'
             : '');
     }
+    /* ---------- an opened map keeps itself saved ----------
+     * A saved map is a file, and a file that only changes when you remember
+     * to press Save is a file that loses an afternoon. Every change made here
+     * writes back into the map it was opened from: quiet for two seconds
+     * after the last one, so a flurry of nudges is a single write, and never
+     * more often than once every fifteen, because each write composes a fresh
+     * picture of the whole map. Only the person editing writes — the shapes
+     * themselves were already live for everyone. */
+    const AUTO_QUIET = 2000, AUTO_EVERY = 15000;
+    let autoTimer = null, autoLast = 0, autoBusy = false, autoAgain = false, autoSayTimer = null;
+    function sayAutosave(state) {
+        const el = document.getElementById('cmapSaved');
+        if (!el) return;
+        const txt = document.getElementById('cmapSavedTxt');
+        clearTimeout(autoSayTimer);
+        el.classList.toggle('is-working', state === 'saving');
+        el.classList.toggle('is-failed', state === 'failed');
+        if (txt) txt.textContent = state === 'saving' ? 'Saving…' : (state === 'failed' ? 'Not saved' : 'Saved');
+        el.classList.add('is-on');
+        // "Saving…" stays until it resolves; the other two are a glance, not
+        // a banner sitting on the ground you are trying to read.
+        if (state !== 'saving') autoSayTimer = setTimeout(() => el.classList.remove('is-on'), state === 'failed' ? 4500 : 1800);
+    }
+    function markMapDirty() {
+        if (!LOADED_SAVE) return;         // a scratch canvas has no file to write into
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(runAutosave, Math.max(AUTO_QUIET, AUTO_EVERY - (Date.now() - autoLast)));
+    }
+    async function runAutosave() {
+        if (!LOADED_SAVE) return;
+        // An emptied canvas is far more often "about to draw" than "meant to
+        // empty the file", and the server refuses a save with no shapes
+        // anyway. The next shape drawn saves the lot.
+        if (!objIndex.size) return;
+        if (autoBusy) { autoAgain = true; return; }
+        autoBusy = true;
+        sayAutosave('saving');
+        const target = LOADED_SAVE;
+        // The picture is what the notebook shows; composing it here is what
+        // makes it carry the measurements. A failure only costs the picture.
+        let image = null;
+        try { image = await composeMapPng(); } catch (_) { image = null; }
+        try {
+            const c = map.getCenter();
+            await api(`${URLS.save}?scheduleId=${SID}`, { method: 'POST', body: {
+                mode: 'map', quiet: 1, saveId: target.id, title: target.title, image,
+                lat: c ? c.lat() : null, lng: c ? c.lng() : null,
+                zoom: Math.round(map.getZoom() || 15), maptype: satOn ? 'hybrid' : 'roadmap',
+            } });
+            sayAutosave('saved');
+        } catch (e) {
+            // No retry of its own: the next edit asks again. A server saying
+            // no every two seconds would say it a thousand times an hour.
+            sayAutosave('failed');
+        }
+        autoLast = Date.now();
+        autoBusy = false;
+        if (autoAgain) { autoAgain = false; markMapDirty(); }
+    }
+
     function openSaveSheet(mode) {
         saveMode = mode;
         document.getElementById('cmapSaveTitleH').textContent = mode === 'map' ? 'Save map to notes' : 'Save as image note';
@@ -1375,6 +1611,10 @@
             if (r && r.data && r.data.saveId) {
                 setLoadedSave({ id: r.data.saveId, title: r.data.title || 'Map' });
             }
+            // The file is current as of now, so the autosave's clock starts
+            // again from here rather than firing straight after this one.
+            clearTimeout(autoTimer);
+            autoLast = Date.now();
             if (window.toast) toast((r && r.message) || 'Saved.');
         } catch (e) { if (window.toast) toast(e.message, 'error'); }
         btn.disabled = false;
@@ -1563,6 +1803,7 @@
             if (tool !== 'pan' && tool !== 'pen' && tool !== 'erase') onTap(e.latLng);
         });
         bindPen(map.getDiv());
+        bindEdgeInsert(map.getDiv());
 
         document.querySelectorAll('[data-mtool]').forEach((b) =>
             b.addEventListener('click', () => setTool(b.dataset.mtool)));
@@ -1671,10 +1912,20 @@
                     }
                     else if (p.action === 'remove') dropObject(p.id);
                     else if (p.action === 'clear') dropAll();
+                    else if (p.action === 'saved') {
+                        // Someone's map wrote itself back. Follow the file, so
+                        // an edit made from this screen lands in the same one
+                        // instead of quietly forking a second copy of it.
+                        if (p.saveId) setLoadedSave({ id: p.saveId, title: p.title || 'Map' });
+                        sayAutosave('saved');
+                    }
                     else if (p.action === 'reload') {
                         // Someone loaded a saved map — take the fresh set whole.
                         endEdit(); dropAll();
                         histUndo.length = 0; histRedo.length = 0; syncHistBtns();
+                        // And take which file it is: without this the room ends
+                        // up editing a map only one person is saving.
+                        if (p.saveId) setLoadedSave({ id: p.saveId, title: p.title || 'Map' });
                         loadObjects(true).catch(() => {});
                     }
                 });

@@ -6,6 +6,16 @@
 @section('help-key', 'post-harvest')
 @section('back', route('sm.hub', ['id' => $schedule->id]))
 
+@php
+    // An observation now carries clips as well as photos, and they share the
+    // one column of paths — there is nowhere else to put them without a
+    // migration, and everything reading that column (the Gallery, by way of
+    // App\Support\SeasonMedia) expects a flat list. So which is which is read
+    // off the name, exactly as PostHarvestController::kindOf() does it.
+    $phKind = fn ($p) => \App\Http\Controllers\Manager\PostHarvestController::kindOf($p);
+    $phUrl = fn ($p) => \App\Support\MediaStore::url($p);
+@endphp
+
 @push('head')
     <style>
         .ph-card { position: relative; }
@@ -44,7 +54,10 @@
         .ph-quill .ql-toolbar { border-top-left-radius: .75rem; border-top-right-radius: .75rem; }
         .ph-video { width: 100%; max-height: 60vh; border-radius: .6rem; background: #000; object-fit: cover; }
         .ph-thumb { position: relative; aspect-ratio: 1; border-radius: .5rem; overflow: hidden; background: #f3f4f6; }
-        .ph-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .ph-thumb img, .ph-thumb video { width: 100%; height: 100%; object-fit: cover; }
+        /* One square per attachment, whichever kind it is — a card with a clip
+           and two photos should read as three things, not one odd one out. */
+        .ph-tile { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: .5rem; background: #000; }
         .ph-thumb button { position: absolute; top: .2rem; right: .2rem; width: 1.4rem; height: 1.4rem; border-radius: 999px; background: rgba(17,24,39,.7); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .81rem; line-height: 1; }
         .ph-gallery-thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem; }
     </style>
@@ -161,9 +174,24 @@
             @if (filled($o->notes))
                 <div class="ph-notes text-gray-600 mt-2">{!! $o->notes !!}</div>
             @endif
-            @if (filled($o->imagePath))
-                <img src="{{ \App\Support\MediaStore::url($o->imagePath) }}"
-                     alt="" class="ph-photo mt-3" loading="lazy">
+            {{-- Every attachment, not just the first photo — mirrors the JS
+                 renderer below, which has shown the whole set since the sheet
+                 learned to take more than one. --}}
+            @php
+                $attachments = collect(! empty($o->imagePaths) ? $o->imagePaths : [$o->imagePath])
+                    ->filter(fn ($p) => filled($p))
+                    ->values();
+            @endphp
+            @if ($attachments->count())
+                <div class="ph-gallery-thumbs mt-3">
+                    @foreach ($attachments as $p)
+                        @if ($phKind($p) === 'video')
+                            <video src="{{ $phUrl($p) }}" class="ph-tile" controls preload="metadata" playsinline></video>
+                        @else
+                            <img src="{{ $phUrl($p) }}" alt="" class="ph-tile" loading="lazy">
+                        @endif
+                    @endforeach
+                </div>
             @endif
         </div>
     @endforeach
@@ -176,6 +204,11 @@
     <p class="text-sm text-gray-500 mt-1">After harvest, note what you actually got — yield, moisture, price, what went wrong — so next season is planned from real numbers.</p>
     <button type="button" class="btn btn-primary mt-4" data-ph-add>Record an observation</button>
 </div>
+
+{{-- The attach bar in the sheet would pull this in on its own, but a sheet
+     inside another sheet is a strange place for it to live. Included here so
+     it starts out where it ends up. --}}
+@include('sm.partials.media-picker')
 
 @endsection
 
@@ -239,19 +272,19 @@
         </div>
 
         <div class="mb-2">
-            <label class="form-label">Photos <span class="text-gray-400 font-normal">(add as many as you like)</span></label>
-            <div class="flex gap-2 flex-wrap">
-                <label class="btn btn-white btn-sm cursor-pointer mb-0">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0-12l-4 4m4-4l4 4"/></svg>
-                    Upload
-                    <input type="file" id="phPhoto" accept="image/*" class="hidden" multiple>
-                </label>
-                <button type="button" class="btn btn-white btn-sm" id="phCameraBtn">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    Take photo
-                </button>
-            </div>
-            <p class="form-hint">Snap the harvest, the sacks, or a problem worth remembering.</p>
+            <label class="form-label">Photos &amp; clips <span class="text-gray-400 font-normal">(add as many as you like)</span></label>
+            @include('sm.partials.attach-bar', [
+                'barId' => 'phAttach',
+                'scheduleId' => $schedule->id,
+                // One endpoint for both: the route is named image-upload and
+                // routes/web.php is the integrator's, so the controller sorts
+                // the photo from the clip by what arrives.
+                'imageUrl' => route('sm.post-harvest.image-upload') . '?scheduleId=' . $schedule->id,
+                'videoUrl' => route('sm.post-harvest.image-upload') . '?scheduleId=' . $schedule->id,
+                'kinds' => 'image,video',
+                'label' => 'Attach to this observation',
+                'hint' => 'Snap the harvest, the sacks, or a problem worth remembering — or reuse something the season already has.',
+            ])
             <div id="phCameraWrap" class="hidden mt-2">
                 <video id="phVideo" autoplay playsinline muted class="ph-video"></video>
                 <div class="flex gap-2 mt-1">
@@ -316,7 +349,7 @@ const __init = () => {
             'buyer' => $o->buyer,
             'notes' => $o->notes,
             'images' => collect(! empty($o->imagePaths) ? $o->imagePaths : array_filter([$o->imagePath]))
-                ->map(fn ($p) => ['path' => $p, 'url' => \App\Support\MediaStore::url($p)])
+                ->map(fn ($p) => ['type' => $phKind($p), 'path' => $p, 'url' => $phUrl($p)])
                 ->values(),
             'imageUrl' => ! empty($o->imagePaths)
                 ? \App\Support\MediaStore::url($o->imagePaths[0])

@@ -390,7 +390,15 @@ class ScheduleBoardController extends BaseScheduleController
         return response()->json(['success' => true, 'data' => ['id' => (int) $event->id]]);
     }
 
-    /** Save an exported page image into the schedule's notebook as a note. */
+    /**
+     * Save an exported page image into the schedule's notebook as a note.
+     *
+     * Two callers, one road: the Save button, and the board's autosave (`auto`)
+     * every couple of seconds of quiet while someone draws. A board that has
+     * already become a note updates that note rather than filing another copy
+     * of the same drawing every time it changes — which is what makes an
+     * autosave bearable at all.
+     */
     public function saveToNotes(Request $request)
     {
         $schedule = $this->schedule($request->query('scheduleId'));
@@ -406,6 +414,8 @@ class ScheduleBoardController extends BaseScheduleController
             return $this->jsonFail('You are not allowed to write notes on this schedule.', 403);
         }
 
+        $auto = $request->boolean('auto');
+
         $validator = Validator::make($request->all(), [
             'images' => 'required|array|min:1|max:20',
             'images.*' => 'required|string',
@@ -414,6 +424,17 @@ class ScheduleBoardController extends BaseScheduleController
         ]);
         if ($validator->fails()) {
             return $this->jsonFail('Nothing to save.', 422);
+        }
+
+        // An untouched canvas exports as white paper. Autosaving that would put
+        // a blank note in the notebook for every room somebody opened and left,
+        // so the strokes themselves decide, not the pixels the browser sent.
+        if ($auto && ! ScheduleBoardEvent::active()->where('scheduleId', $schedule->id)->where('type', 'draw')->exists()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Nothing drawn yet.',
+                'data' => ['noteId' => null, 'count' => 0, 'skipped' => true],
+            ]);
         }
 
         $media = [];
@@ -432,33 +453,101 @@ class ScheduleBoardController extends BaseScheduleController
             return $this->jsonFail('Could not read the board image.', 422);
         }
 
-        $title = trim((string) $request->input('title')) ?: 'Team whiteboard';
+        $title = trim((string) $request->input('title'));
         $description = trim((string) $request->input('description'));
         $body = $description !== ''
             ? \App\Support\HtmlSanitizer::rich('<p>' . nl2br(e($description)) . '</p>')
             : null;
-        $note = AsScheduleNote::create([
-            'croppingScheduleId' => $schedule->id,
-            'userId' => $meId,
-            'title' => mb_substr($title, 0, 180),
-            'body' => $body,
-            'media' => $media,
-            'deleteStatus' => 1,
-        ]);
+
+        $state = ScheduleBoardState::forSchedule($schedule->id);
+        $note = $state->currentNoteId
+            ? AsScheduleNote::active()->where('croppingScheduleId', $schedule->id)->find($state->currentNoteId)
+            : null;
+
+        if ($note) {
+            // Same drawing, newer picture. The title and the words belong to
+            // whoever wrote them — an autosave has nothing to say about either,
+            // and an empty box in the Save dialog is not an instruction to
+            // forget what was there.
+            $fields = ['media' => $this->replaceBoardImages($note, $media)];
+            if ($title !== '') {
+                $fields['title'] = mb_substr($title, 0, 180);
+            }
+            if ($description !== '') {
+                $fields['body'] = $body;
+            }
+            $note->update($fields);
+        } else {
+            $note = AsScheduleNote::create([
+                'croppingScheduleId' => $schedule->id,
+                'userId' => $meId,
+                'title' => mb_substr($title ?: 'Team whiteboard', 0, 180),
+                'body' => $body,
+                'media' => $media,
+                'deleteStatus' => 1,
+            ]);
+        }
+
+        // A reopened past drawing becomes the note it was just saved as, rather
+        // than staying in Past drawings as a second copy of the same picture.
+        if ($state->currentDraftId) {
+            ScheduleBoardDraft::active()
+                ->where('scheduleId', $schedule->id)
+                ->where('id', $state->currentDraftId)
+                ->update(['savedNoteId' => $note->id]);
+        }
 
         // Bind the canvas to the note it just became. The images are a flat
         // picture; archiving alongside them keeps the strokes, so reopening the
         // note gives back a drawing you can still change rather than a JPEG of
         // one — and later edits update this note instead of piling up drafts.
-        $state = ScheduleBoardState::forSchedule($schedule->id);
         $state->update(['currentNoteId' => $note->id, 'currentDraftId' => null, 'savedUpToEventId' => 0]);
         BoardSession::archive($schedule->id, $meId);
+
+        // Everyone looking at this canvas gets the same "Saved" mark: the board
+        // is shared, so its being safe is shared news — and a teammate who sees
+        // it has nothing left of their own to send.
+        $this->emitPage($schedule->id, [
+            'action' => 'saved',
+            'auto' => $auto,
+            'by' => $meId,
+            'noteId' => (int) $note->id,
+            'pages' => $this->pageList($schedule->id),
+        ]);
 
         return response()->json([
             'success' => true,
             'message' => 'Saved ' . count($media) . ' page' . (count($media) === 1 ? '' : 's') . ' to the schedule notebook.',
-            'data' => ['noteId' => $note->id, 'count' => count($media)],
+            'data' => ['noteId' => $note->id, 'count' => count($media), 'auto' => $auto],
         ]);
+    }
+
+    /**
+     * Swap this note's board exports for the new ones, and forget the files the
+     * old ones used — an autosave every fifteen seconds would otherwise leave a
+     * landfill of superseded PNGs behind it.
+     *
+     * Anything on the note that this endpoint did not put there (a photo added
+     * in the notebook) is kept and never deleted: an unrecognised path costs an
+     * orphan file, while guessing wrong costs somebody's picture.
+     *
+     * @param  array<int, array<string, mixed>>  $fresh
+     * @return array<int, array<string, mixed>>
+     */
+    private function replaceBoardImages(AsScheduleNote $note, array $fresh): array
+    {
+        $existing = is_array($note->media) ? $note->media : [];
+        $isBoardShot = fn ($m) => is_array($m)
+            && str_starts_with(basename((string) ($m['path'] ?? '')), 'board-');
+
+        foreach (array_filter($existing, $isBoardShot) as $old) {
+            \App\Support\MediaStore::delete($old['path'] ?? null);
+        }
+
+        return array_values(array_merge($fresh, array_values(array_filter(
+            $existing,
+            fn ($m) => ! $isBoardShot($m)
+        ))));
     }
 
     /** Decode a `data:image/png;base64,...` URL into raw bytes (or null). */

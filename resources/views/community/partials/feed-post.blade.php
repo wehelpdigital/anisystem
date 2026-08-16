@@ -40,18 +40,22 @@
     @include('community.partials.react-bar', ['type' => 'wallpost', 'id' => $post->id, 'summary' => $post->reactionSummary ?? null])
 
     @php
-        $topComments = $post->relationLoaded('comments') ? $post->comments->whereNull('parentId')->sortBy('id')->values() : collect();
+        $hasComments = $post->relationLoaded('comments');
+        $topComments = $hasComments ? $post->comments->whereNull('parentId')->sortBy('id')->values() : collect();
         $totalComments = $post->comments_count ?? $topComments->count();
-        $previewCount = 2;
-        $previewComments = $topComments->count() > $previewCount ? $topComments->slice(-$previewCount) : $topComments;
     @endphp
+    {{-- The whole thread is printed; wall-comment-js folds everything past the
+         first two behind its own toggle. Trimming to a preview here as well
+         would mean two collapse rules disagreeing about what "all" means. --}}
     <div class="mt-3 space-y-1.5 wall-comments">
-        @if ($topComments->count() > $previewCount)
+        {{-- A listing that skipped the comments has nothing to fold, so it keeps
+             the button that fetches the thread from the server instead. --}}
+        @if (! $hasComments && $totalComments > 0)
             <button type="button" class="js-view-all-comments text-xs font-semibold text-brand-700 hover:text-brand-800" data-post-id="{{ $post->id }}">
                 View all {{ $totalComments }} comments
             </button>
         @endif
-        @foreach ($previewComments as $comment)
+        @foreach ($topComments as $comment)
             @include('community.connect.partials.wall-comment', [
                 'comment' => $comment,
                 'isReply' => false,

@@ -391,6 +391,7 @@
         /* ---------- sending ---------- */
         function pushEvent(body) {
             dropRedo();
+            armAutosave();
             body = Object.assign({ page: currentPage }, body);
             api(`${U.push}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body }).then((r) => {
                 const id = r && r.data && r.data.event && r.data.event.id;
@@ -506,6 +507,7 @@
                 else if (id) myUndone.push(id);
                 else { toast('Nothing of yours to undo on this page.'); return; }
                 await rebuildPage();
+                armAutosave();   // taking a stroke back is a change like any other
             } catch (err) {
                 // A redo the board can no longer honour (someone cleared the
                 // page) is dropped rather than left to fail again.
@@ -522,6 +524,7 @@
                 : confirm('Clear the page for everyone?');
             if (!ok) return;
             dropRedo();
+            armAutosave();
             clearCanvas();
             api(`${U.push}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { type: 'clear', page: currentPage } })
                 .then((r) => { const id = r && r.data && r.data.event && r.data.event.id; if (id) { rendered.add(id); if (id > lastId) lastId = id; } })
@@ -568,27 +571,95 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && !saveModal.classList.contains('hidden')) { e.stopPropagation(); closeSaveModal(); }
         }, true);
+        let savingNow = false;
         document.getElementById('sbSaveConfirm').addEventListener('click', async () => {
             const btn = document.getElementById('sbSaveConfirm');
             if (btn.disabled) return;
-            btn.disabled = true;
+            btn.disabled = true; savingNow = true;
             document.getElementById('sbSaveSpin').classList.remove('hidden');
             document.getElementById('sbSaveLabel').textContent = 'Saving…';
             try {
-                const images = await exportAllPages();
+                const { images } = await exportAllPages();
                 const title = document.getElementById('sbSaveTitle').value.trim();
                 const description = document.getElementById('sbSaveDesc').value.trim();
                 const r = await api(`${U.saveNotes}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { images, title, description } });
                 if (typeof toast === 'function') toast((r && r.message) || 'Saved to the schedule notebook.', 'success');
+                autoSettled();
                 closeSaveModal();
             } catch (err) {
                 if (typeof toast === 'function') toast('Could not save: ' + ((err && err.message) || 'error'), 'error');
             } finally {
-                btn.disabled = false;
+                btn.disabled = false; savingNow = false;
                 document.getElementById('sbSaveSpin').classList.add('hidden');
                 document.getElementById('sbSaveLabel').textContent = 'Save to notes';
             }
         });
+
+        /* ---------- autosave ------------------------------------------------
+         * A drawing that only survives if someone remembers to press Save is a
+         * drawing waiting to be lost — a phone dies, a room empties, and an
+         * afternoon of planning goes with it. Every change I make quietly saves
+         * the whole board into the note it belongs to; the Save button stays for
+         * naming the drawing and saying what it is.
+         *
+         * Only the person who drew the change saves it. Six people watching the
+         * same canvas would otherwise export and upload the same pages at the
+         * same instant, and the save is the same save whoever sends it — which
+         * is why a teammate's save settles my board too.
+         */
+        const AUTO_QUIET = 2000;    // wait until the pen has actually stopped
+        const AUTO_EVERY = 15000;   // ...and never send more often than this
+        let autoDirty = false, autoTimer = null, autoBusy = false, autoAt = 0;
+
+        function sayAuto(state) {
+            const el = document.getElementById('sbAuto');
+            if (!el) return;
+            const label = { saving: 'Saving…', saved: '✓ Saved', failed: 'Not saved' }[state] || '';
+            el.textContent = label;
+            el.classList.toggle('on', !!label);
+            el.classList.toggle('is-saved', state === 'saved');
+            el.classList.toggle('is-failed', state === 'failed');
+        }
+        /** The board is safe as of now — however it got there. */
+        function autoSettled() {
+            autoDirty = false;
+            clearTimeout(autoTimer); autoTimer = null;
+            autoAt = Date.now();
+            sayAuto('saved');
+        }
+        function armAutosave() {
+            if (!CAN_SAVE) return;
+            autoDirty = true;
+            if (!autoBusy) sayAuto('');   // a stale "Saved" would be a lie
+            queueAutosave();
+        }
+        function queueAutosave() {
+            clearTimeout(autoTimer);
+            // Quiet-time and the 15s floor are the same wait, whichever is longer.
+            const wait = Math.max(AUTO_QUIET, AUTO_EVERY - (Date.now() - autoAt));
+            autoTimer = setTimeout(runAutosave, wait);
+        }
+        async function runAutosave() {
+            if (!CAN_SAVE || !autoDirty || autoBusy) return;
+            // Never talk over the explicit Save, and never export a half-drawn
+            // stroke: both resolve themselves in a second or two.
+            if (drawing || savingNow || !saveModal.classList.contains('hidden')) { queueAutosave(); return; }
+            autoBusy = true;
+            sayAuto('saving');
+            try {
+                const { images, ink } = await exportAllPages();
+                if (!ink) { autoDirty = false; sayAuto(''); return; }
+                const r = await api(`${U.saveNotes}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { images, auto: 1 } });
+                autoDirty = false; autoAt = Date.now();
+                sayAuto(r && r.data && r.data.skipped ? '' : 'saved');
+            } catch (_) {
+                // Quiet about it: the strokes are on the server either way, and
+                // a toast every fifteen seconds is worse than the problem.
+                sayAuto('failed');
+                autoAt = Date.now();
+                queueAutosave();
+            } finally { autoBusy = false; }
+        }
         document.getElementById('sbClose').addEventListener('click', close);
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !overlay.classList.contains('hidden')) close(); });
 
@@ -617,7 +688,13 @@
                     channel.listen('.stroke', (ev) => { if ((ev.page || 1) === currentPage) applyEvent(ev, false); });
                     // Keep the page strip in sync when a teammate adds a page.
                     channel.listen('.board.page', (ev) => {
-                        if (!ev || !Array.isArray(ev.pages)) return;
+                        if (!ev) return;
+                        // A teammate saved the board — which is this board, all
+                        // of it, my strokes included. Nothing left to send.
+                        // My own save answers for itself; the echo arriving a
+                        // moment later must not settle a stroke drawn since.
+                        if (ev.action === 'saved') { if (ev.by !== ME && !autoBusy) autoSettled(); return; }
+                        if (!Array.isArray(ev.pages)) return;
                         pages = ev.pages;
                         renderPageBar();
                         // A new session started, or someone reopened a past
@@ -791,6 +868,9 @@
         }
         function close() {
             if (typeof window.teamChatUndock === 'function') window.teamChatUndock();
+            // Walking out is the last moment the board can be kept; the pending
+            // debounce would never fire once the room is shut.
+            if (autoDirty) runAutosave();
             stopRealtime();
             overlay.classList.add('hidden');
             overlay.setAttribute('aria-hidden', 'true');

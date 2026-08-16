@@ -204,7 +204,7 @@
                             <input type="radio" name="qcTarget" value="gallery">
                             <span>
                                 <span class="block font-semibold text-gray-900">Save to gallery</span>
-                                <span class="block text-xs text-gray-500">Put them in an album you can name and rearrange.</span>
+                                <span class="block text-xs text-gray-500">An album of their own — photos, clips, or both, each one named.</span>
                             </span>
                         </label>
                         <label class="qc-target" data-qc-target-row>
@@ -215,15 +215,29 @@
                             </span>
                         </label>
                     </div>
+                    <p id="qcClipHint" class="hidden text-xs text-gray-500 mt-1.5">A clip can only go to an album — notes and the AI Technician read photos.</p>
                 </div>
                 {{-- Only asked once the gallery is the destination. --}}
                 <div id="qcAlbumWrap" class="hidden">
                     <label class="form-label" for="qcAlbum">Album</label>
+                    {{-- A capture is a moment and deserves an album of its own,
+                         so a new one is what is offered first; the existing
+                         albums are still one tap down the list. --}}
                     <select id="qcAlbum" class="form-select">
                         <option value="">➕ New album…</option>
                     </select>
-                    <input type="text" id="qcAlbumTitle" class="form-input mt-2" maxlength="191"
-                           placeholder="Name the new album" autocomplete="off">
+                    <div id="qcNewAlbum" class="mt-2 space-y-2">
+                        <input type="text" id="qcAlbumTitle" class="form-input" maxlength="191"
+                               placeholder="Name the new album" autocomplete="off">
+                        <textarea id="qcAlbumDesc" class="form-textarea" rows="2" maxlength="2000"
+                                  placeholder="What is this album about? (optional)"></textarea>
+                    </div>
+                </div>
+                {{-- A note tells one story about its photos, but an album is a
+                     shelf: every picture and clip on it wants its own label. --}}
+                <div id="qcItemsWrap" class="hidden">
+                    <span class="form-label">Name each item <span class="text-gray-400 font-normal">(optional)</span></span>
+                    <div id="qcItems"></div>
                 </div>
             </div>
             <div class="qc-foot">
@@ -258,9 +272,54 @@ document.addEventListener('DOMContentLoaded', () => {
     const AI_PHOTO_URL = @json(route('ai.photo'));
     const AI_ASK_URL = @json(route('ai.ask'));
 
-    let files = [];          // captured File objects, in order
+    // One entry per captured thing, in the order it was captured:
+    // { file, kind: 'image'|'video', url, title, desc }. The names live here
+    // rather than on the inputs so they survive a trip back to the camera.
+    let items = [];
     let quill = null;
     let stream = null;       // live camera MediaStream, when open
+    let albumNamed = false;  // the album name was typed, not inherited
+    // Photos are cheap and clips are not; both ceilings match what the
+    // controller will accept, so the refusal happens before the upload.
+    const MAX_PHOTOS = 10;
+    const MAX_CLIPS = 4;
+    const VIDEO_NAME = /\.(mp4|mov|webm|mkv|m4v|3gp)$/i;
+
+    const countKind = (kind) => items.filter((it) => it.kind === kind).length;
+
+    /* A picked file, turned into an entry. Videos are recognised by their
+       type where the browser reports one and by name where it does not —
+       some Android pickers hand over an empty type for a .mkv. */
+    function addFiles(picked) {
+        picked.forEach((file) => {
+            const kind = /^video\//.test(file.type) || (!file.type && VIDEO_NAME.test(file.name))
+                ? 'video' : 'image';
+            if (kind === 'video' && countKind('video') >= MAX_CLIPS) {
+                toast('Up to ' + MAX_CLIPS + ' clips in one capture.', 'error');
+                return;
+            }
+            if (kind === 'image' && countKind('image') >= MAX_PHOTOS) {
+                toast('Up to ' + MAX_PHOTOS + ' photos in one capture.', 'error');
+                return;
+            }
+            items.push({ file, kind, url: URL.createObjectURL(file), title: '', desc: '' });
+        });
+    }
+
+    /* The tile for an entry — the same element the preview grid and the
+       naming row both need. A video has no poster of its own, so it is asked
+       for a frame a tenth of a second in; without that the tile is black. */
+    function shotFor(item) {
+        if (item.kind === 'video') {
+            const v = document.createElement('video');
+            v.src = item.url + '#t=0.1';
+            v.muted = true; v.playsInline = true; v.preload = 'metadata';
+            return v;
+        }
+        const img = document.createElement('img');
+        img.src = item.url; img.alt = 'Captured photo';
+        return img;
+    }
 
     /* ---- Quill, lazy-loaded from CDN (open-source, no paid tier) ---- */
     function loadQuill() {
@@ -317,7 +376,9 @@ document.addEventListener('DOMContentLoaded', () => {
         : /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
     async function startCapture() {
-        files = [];
+        items.forEach((it) => URL.revokeObjectURL(it.url));
+        items = [];
+        albumNamed = false;
         renderPreviews();
         if (quill) quill.setText('');
         showStep('capture');
@@ -369,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas.getContext('2d').drawImage(v, 0, 0);
         canvas.toBlob((blob) => {
             if (!blob) return;
-            files.push(new File([blob], 'capture-' + files.length + '.jpg', { type: 'image/jpeg' }));
+            addFiles([new File([blob], 'capture-' + items.length + '.jpg', { type: 'image/jpeg' })]);
             stopCamera();
             renderPreviews();
             showStep('capture');
@@ -409,20 +470,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const grid = $('qcPreviews');
         grid.querySelectorAll('[data-qc-thumb]').forEach((n) => n.remove());
         const addBtn = $('qcAddPhoto');
-        files.forEach((file, i) => {
+        items.forEach((item, i) => {
             const div = document.createElement('div');
             div.className = 'qc-thumb' + (i >= seenThumbs ? ' qc-thumb-in' : '');
             div.setAttribute('data-qc-thumb', i);
-            const img = document.createElement('img');
-            img.src = URL.createObjectURL(file); img.alt = 'Captured photo';
+            div.appendChild(shotFor(item));
+            if (item.kind === 'video') {
+                const kind = document.createElement('span');
+                kind.className = 'qc-kind'; kind.textContent = 'CLIP';
+                div.appendChild(kind);
+            }
             const rm = document.createElement('button');
-            rm.type = 'button'; rm.innerHTML = '&times;'; rm.setAttribute('aria-label', 'Remove photo');
-            rm.addEventListener('click', () => { files.splice(i, 1); renderPreviews(); });
-            div.appendChild(img); div.appendChild(rm);
+            rm.type = 'button'; rm.innerHTML = '&times;';
+            rm.setAttribute('aria-label', item.kind === 'video' ? 'Remove clip' : 'Remove photo');
+            rm.addEventListener('click', () => {
+                URL.revokeObjectURL(item.url);
+                items.splice(i, 1);
+                renderPreviews();
+            });
+            div.appendChild(rm);
             grid.insertBefore(div, addBtn);
         });
-        seenThumbs = files.length;
-        $('qcContinue').disabled = files.length === 0;
+        seenThumbs = items.length;
+        $('qcContinue').disabled = items.length === 0;
     }
 
     /* ---- entry points ---- */
@@ -450,7 +520,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tookPhotos = (e) => {
         const picked = Array.from(e.target.files || []);
         if (picked.length) {
-            files.push(...picked);
+            addFiles(picked);
             renderPreviews();
             showStep('capture');   // land on the review sheet
             openModal();           // first shot brings up the modal
@@ -460,6 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $('qcFile').addEventListener('change', tookPhotos);
     $('qcPick').addEventListener('change', tookPhotos);
     $('qcContinue').addEventListener('click', async () => {
+        syncDestinations();
         showStep('details');
         try { await ensureQuill(); } catch (_) { /* editor optional */ }
     });
@@ -468,17 +539,46 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.querySelectorAll('[data-qc-back]').forEach((b) => b.addEventListener('click', () => showStep('capture')));
     modal.querySelectorAll('[data-qc-target-row]').forEach((row) => {
         row.addEventListener('click', () => {
+            if (row.classList.contains('is-off')) return;   // the radio is disabled; the paint must agree
             modal.querySelectorAll('[data-qc-target-row]').forEach((r) => r.classList.remove('is-on'));
             row.classList.add('is-on');
             syncTarget();
         });
     });
 
+    /**
+     * Which destinations this capture can actually reach.
+     *
+     * A note keeps photos and the AI Technician reads one, so a set with a
+     * clip in it has exactly one home. Rather than let someone pick a
+     * destination that will refuse them at the end, the album is chosen for
+     * them here and the others are greyed with the reason underneath.
+     */
+    function syncDestinations() {
+        const hasClip = countKind('video') > 0;
+        modal.querySelectorAll('[data-qc-target-row]').forEach((row) => {
+            const input = row.querySelector('input[name=qcTarget]');
+            const off = hasClip && input.value !== 'gallery';
+            row.classList.toggle('is-off', off);
+            input.disabled = off;
+            if (off && input.checked) input.checked = false;
+        });
+        $('qcClipHint').classList.toggle('hidden', !hasClip);
+        if (hasClip && !modal.querySelector('input[name=qcTarget]:checked')) {
+            const gallery = modal.querySelector('input[name=qcTarget][value=gallery]');
+            gallery.checked = true;
+            modal.querySelectorAll('[data-qc-target-row]').forEach((r) => {
+                r.classList.toggle('is-on', r.contains(gallery));
+            });
+        }
+        syncTarget();
+    }
+
     function noteHtml() { return quill ? quill.root.innerHTML : ''; }
     function noteText() { return quill ? quill.getText().trim() : ''; }
 
     $('qcConfirm').addEventListener('click', async () => {
-        if (!files.length) { toast('Capture a photo first.', 'error'); showStep('capture'); return; }
+        if (!items.length) { toast('Capture a photo first.', 'error'); showStep('capture'); return; }
         const scheduleId = $('qcSchedule').value;
         const target = modal.querySelector('input[name=qcTarget]:checked')?.value || 'note';
         const btn = $('qcConfirm');
@@ -506,12 +606,71 @@ document.addEventListener('DOMContentLoaded', () => {
     function syncTarget() {
         const gallery = currentTarget() === 'gallery';
         $('qcAlbumWrap').classList.toggle('hidden', !gallery);
-        if (gallery) { loadAlbums(); syncAlbumField(); }
+        $('qcItemsWrap').classList.toggle('hidden', !gallery);
+        if (gallery) { loadAlbums(); syncAlbumField(); renderItemRows(); }
     }
 
-    // The name box only matters when there is no album to choose.
+    // The new-album fields only matter when no existing album is chosen.
     function syncAlbumField() {
-        $('qcAlbumTitle').classList.toggle('hidden', !!$('qcAlbum').value);
+        const fresh = !$('qcAlbum').value;
+        $('qcNewAlbum').classList.toggle('hidden', !fresh);
+        // A capture that has been given a title has already named its album;
+        // typing in the album box takes that over for good.
+        if (fresh && !albumNamed) $('qcAlbumTitle').value = $('qcNoteTitle').value.trim();
+    }
+
+    $('qcAlbumTitle').addEventListener('input', () => { albumNamed = true; });
+    $('qcNoteTitle').addEventListener('input', () => {
+        if (!albumNamed) $('qcAlbumTitle').value = $('qcNoteTitle').value.trim();
+    });
+
+    /**
+     * A row per captured item: what it looks like, what it is called, what it
+     * is about. Rebuilt whenever the album becomes the destination — the
+     * typed names live on the items themselves, so nothing is lost by it.
+     */
+    function renderItemRows() {
+        const wrap = $('qcItems');
+        wrap.innerHTML = '';
+        items.forEach((item, i) => {
+            const row = document.createElement('div');
+            row.className = 'qc-item';
+
+            const shot = document.createElement('div');
+            shot.className = 'qc-item-shot';
+            shot.appendChild(shotFor(item));
+            if (item.kind === 'video') {
+                const kind = document.createElement('span');
+                kind.className = 'qc-kind'; kind.textContent = 'CLIP';
+                shot.appendChild(kind);
+            }
+
+            const fields = document.createElement('div');
+            fields.className = 'qc-item-fields';
+            const noun = item.kind === 'video' ? 'Clip' : 'Photo';
+
+            const title = document.createElement('input');
+            title.type = 'text'; title.className = 'form-input'; title.maxLength = 191;
+            title.autocomplete = 'off';
+            title.placeholder = noun + ' ' + (i + 1) + ' — name it';
+            title.setAttribute('aria-label', noun + ' ' + (i + 1) + ' title');
+            title.value = item.title;
+            title.addEventListener('input', () => { item.title = title.value; });
+
+            // One line, not a textarea: ten stacked boxes turned the details
+            // step into a page nobody scrolled to the bottom of.
+            const desc = document.createElement('input');
+            desc.type = 'text'; desc.className = 'form-input'; desc.maxLength = 2000;
+            desc.autocomplete = 'off';
+            desc.placeholder = 'Description (optional)';
+            desc.setAttribute('aria-label', noun + ' ' + (i + 1) + ' description');
+            desc.value = item.desc;
+            desc.addEventListener('input', () => { item.desc = desc.value; });
+
+            fields.appendChild(title); fields.appendChild(desc);
+            row.appendChild(shot); row.appendChild(fields);
+            wrap.appendChild(row);
+        });
     }
 
     let albumsFor = null;   // schedule id the picker was last filled for
@@ -528,8 +687,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const albums = data?.data?.albums || [];
             sel.innerHTML = '<option value="">➕ New album…</option>'
                 + albums.map((a) => `<option value="${a.id}">${escapeHtml(a.title)}</option>`).join('');
-            // An existing album is the likelier intent when there is one.
-            if (albums.length) sel.value = String(albums[0].id);
+            // Left on "New album" on purpose: a capture is its own occasion,
+            // and dropping it into whichever album happened to be newest is
+            // how photos of three different problems ended up in one pile.
+            sel.value = '';
         } catch (_) {
             albumsFor = null;   // a failed load must not stick
         }
@@ -543,12 +704,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const fd = new FormData();
         fd.append('scheduleId', scheduleId);
         const albumId = $('qcAlbum').value;
-        if (albumId) fd.append('albumId', albumId);
-        else if ($('qcAlbumTitle').value.trim()) fd.append('albumTitle', $('qcAlbumTitle').value.trim());
+        if (albumId) {
+            fd.append('albumId', albumId);
+        } else {
+            if ($('qcAlbumTitle').value.trim()) fd.append('albumTitle', $('qcAlbumTitle').value.trim());
+            if ($('qcAlbumDesc').value.trim()) fd.append('albumDescription', $('qcAlbumDesc').value.trim());
+        }
         if ($('qcNoteTitle').value.trim()) fd.append('title', $('qcNoteTitle').value.trim());
         const gHtml = noteHtml();
         if (gHtml && gHtml !== '<p><br></p>') fd.append('note', gHtml);
-        files.forEach((f) => fd.append('images[]', f));
+        // The index in the field name is the pairing. Photos and clips go in
+        // separate buckets because the server checks and stores them
+        // differently, but the names are one list, so images[2] and titles[2]
+        // are the same thing.
+        items.forEach((item, i) => {
+            fd.append((item.kind === 'video' ? 'clips[' : 'images[') + i + ']', item.file);
+            if (item.title.trim()) fd.append('titles[' + i + ']', item.title.trim());
+            if (item.desc.trim()) fd.append('descriptions[' + i + ']', item.desc.trim());
+        });
         const res = await fetch(GALLERY_URL, {
             method: 'POST',
             headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' },
@@ -572,7 +745,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if ($('qcNoteTitle').value.trim()) fd.append('title', $('qcNoteTitle').value.trim());
         const html = noteHtml();
         if (html && html !== '<p><br></p>') fd.append('note', html);
-        files.forEach((f) => fd.append('images[]', f));
+        // Photos only — a note takes pictures, which is why a set with a clip
+        // in it never gets offered this destination.
+        items.filter((it) => it.kind === 'image').forEach((it) => fd.append('images[]', it.file));
         const res = await fetch(NOTES_URL, {
             method: 'POST',
             headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' },
@@ -592,8 +767,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function askAi(scheduleId) {
         // Upload the first photo, then ask the AI about it.
+        const photos = items.filter((it) => it.kind === 'image');
+        if (!photos.length) throw new Error('The AI Technician reads photos — capture one first.');
         const fd = new FormData();
-        fd.append('image', files[0]);
+        fd.append('image', photos[0].file);
         fd.append('scheduleId', scheduleId);
         const up = await fetch(AI_PHOTO_URL, {
             method: 'POST',
@@ -616,7 +793,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const reply = askData.data?.answer?.content || 'Answer received.';
         $('qcResult').innerHTML = `<div class="font-semibold text-gray-900 mb-2">AI Technician says:</div>
             <div class="text-sm text-gray-700 whitespace-pre-line">${escapeHtml(reply)}</div>
-            ${files.length > 1 ? '<p class="text-xs text-gray-400 mt-2">Only the first photo was sent to the AI.</p>' : ''}`;
+            ${photos.length > 1 ? '<p class="text-xs text-gray-400 mt-2">Only the first photo was sent to the AI.</p>' : ''}`;
         const link = $('qcResultLink');
         link.href = @json(url('/app/sm-activities')) + '?id=' + scheduleId + '&module=ai';
         link.classList.remove('hidden'); link.textContent = 'Open AI Technician';

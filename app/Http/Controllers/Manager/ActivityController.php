@@ -1935,6 +1935,9 @@ class ActivityController extends BaseScheduleController
         }
         $tags[] = $tag;
         $activity->update(['tags' => $tags]);
+        // The whole new set travels with the hint, so the other boards repaint
+        // the chip row from it instead of fetching the card back.
+        $this->broadcastBoard($schedule, 'reload', ['id' => $activity->id, 'tags' => $tags], $activity->versionId);
 
         return $this->jsonOk('Tagged.', ['data' => ['tags' => $tags]]);
     }
@@ -1953,6 +1956,7 @@ class ActivityController extends BaseScheduleController
             unset($tags[$i]);
             $tags = array_values($tags);
             $activity->update(['tags' => $tags ?: null]);
+            $this->broadcastBoard($schedule, 'reload', ['id' => $activity->id, 'tags' => $tags], $activity->versionId);
         }
 
         return $this->jsonOk('Tag removed.', ['data' => ['tags' => $tags]]);
@@ -2370,6 +2374,9 @@ class ActivityController extends BaseScheduleController
             ->orderBy('sortOrder', 'asc')
             ->orderBy('id', 'asc')
             ->get();
+        // Money on a day moves the day's header pill, so it has to travel like
+        // the income twin below already does.
+        $this->broadcastBoard($schedule, 'reload', ['expenseDate' => $expenseDate], $versionId);
 
         return $this->jsonOk($expenseId ? 'Expense updated.' : 'Expense added.', [
             'data'  => $this->serializeExpenses($rows),
@@ -2404,6 +2411,7 @@ class ActivityController extends BaseScheduleController
             ->orderBy('sortOrder', 'asc')
             ->orderBy('id', 'asc')
             ->get();
+        $this->broadcastBoard($schedule, 'reload', ['expenseDate' => $expenseDate], $versionId);
 
         return $this->jsonOk('Expense deleted.', [
             'data'  => $this->serializeExpenses($rows),

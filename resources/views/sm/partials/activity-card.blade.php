@@ -23,6 +23,17 @@
         $searchBits[] = mb_strtolower($it->itemType === 'material' ? ($it->material->materialName ?? '') : ($it->service->serviceName ?? ''));
     }
     $searchText = trim(implode(' ', array_filter($searchBits)));
+
+    // What this viewer may do to the plan. A control they may not use is still
+    // drawn, in its usual place, disabled and dimmed — a board whose buttons
+    // come and go per person is one nobody can be told how to use, and the
+    // greying says "not yours" where a gap would just look broken.
+    // Twin of LOCK_EDIT / editTitle in activities-js.blade.php.
+    // Note: appending a note to an activity goes through the write gate too,
+    // so it follows canEdit; "notes only" buys the DAY's note, not this one.
+    $mayEdit = \App\Support\WorkerContext::canEdit();
+    $lockCls = $mayEdit ? '' : ' is-locked opacity-40 cursor-not-allowed';
+    $editTitle = fn ($plain) => $mayEdit ? $plain : 'Only someone who can edit the plan may do this';
 @endphp
 <div class="activity-card prio-{{ $a->priority }}{{ $a->isHidden ? ' is-hidden' : '' }}{{ $a->isDone ? ' is-done' : '' }}" draggable="{{ $a->isDone ? 'false' : 'true' }}"
      data-id="{{ $a->id }}"
@@ -45,8 +56,8 @@
      @if($cardLots->count()) style="--lot-accent: hsl({{ ($cardLots->first()->id * 137) % 360 }}, 55%, 40%)" @endif>
     <div class="flex items-start justify-between gap-2">
         <div class="flex items-start gap-2.5 min-w-0 grow">
-            <button type="button" class="done-check{{ $a->isDone ? ' is-checked' : '' }}" data-id="{{ $a->id }}"
-                title="{{ $a->isDone ? 'Mark as not done (unlocks editing)' : 'Mark this activity as done' }}"
+            <button type="button" class="done-check{{ $a->isDone ? ' is-checked' : '' }}{{ $lockCls }}" data-id="{{ $a->id }}" @disabled(! $mayEdit)
+                title="{{ $editTitle($a->isDone ? 'Mark as not done (unlocks editing)' : 'Mark this activity as done') }}"
                 aria-pressed="{{ $a->isDone ? 'true' : 'false' }}" aria-label="Mark activity as done">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>
@@ -193,23 +204,29 @@
             @if($a->activityType === 'worker_payroll')
                 <span class="badge payroll-badge mr-1">Worker checklist</span>
             @endif
-            <button type="button" class="icon-btn add-note-activity-btn" data-id="{{ $a->id }}" data-name="{{ $a->activityTitle }}" title="Add a note (activity is locked)">
+            <button type="button" class="icon-btn add-note-activity-btn{{ $lockCls }}" data-id="{{ $a->id }}" data-name="{{ $a->activityTitle }}" @disabled(! $mayEdit) title="{{ $editTitle('Add a note (activity is locked)') }}">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             </button>
             <div class="hidden md:flex items-center gap-0.5 done-hide">
-                <button type="button" class="icon-btn hide-activity-toggle" data-id="{{ $a->id }}" title="Toggle visibility in presentations and exports" aria-pressed="{{ $a->isHidden ? 'true' : 'false' }}">
+                <button type="button" class="icon-btn hide-activity-toggle{{ $lockCls }}" data-id="{{ $a->id }}" @disabled(! $mayEdit) title="{{ $editTitle('Toggle visibility in presentations and exports') }}" aria-pressed="{{ $a->isHidden ? 'true' : 'false' }}">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                 </button>
-                <button type="button" class="icon-btn edit-activity-btn" data-id="{{ $a->id }}" title="Edit">
+                <button type="button" class="icon-btn edit-activity-btn{{ $lockCls }}" data-id="{{ $a->id }}" @disabled(! $mayEdit) title="{{ $editTitle('Edit') }}">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 </button>
-                <button type="button" class="icon-btn duplicate-activity-btn" data-id="{{ $a->id }}" data-name="{{ $a->activityTitle }}" title="Duplicate">
+                {{-- The JS twin has always drawn this one; the server render did
+                     not, so a freshly-loaded board was missing a button that
+                     appeared the moment anything re-rendered. --}}
+                <button type="button" class="icon-btn tag-activity-btn{{ $lockCls }}" data-id="{{ $a->id }}" data-name="{{ $a->activityTitle }}" @disabled(! $mayEdit) title="{{ $editTitle('Tag a drawing, map or note') }}">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M3 11V4a1 1 0 011-1h7l9 9-8 8-9-9z"/></svg>
+                </button>
+                <button type="button" class="icon-btn duplicate-activity-btn{{ $lockCls }}" data-id="{{ $a->id }}" data-name="{{ $a->activityTitle }}" @disabled(! $mayEdit) title="{{ $editTitle('Duplicate') }}">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                 </button>
-                <button type="button" class="icon-btn to-draft-activity-btn" data-id="{{ $a->id }}" data-name="{{ $a->activityTitle }}" title="Move to drafts (hide without deleting)">
+                <button type="button" class="icon-btn to-draft-activity-btn{{ $lockCls }}" data-id="{{ $a->id }}" data-name="{{ $a->activityTitle }}" @disabled(! $mayEdit) title="{{ $editTitle('Move to drafts (hide without deleting)') }}">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
                 </button>
-                <button type="button" class="icon-btn icon-btn-danger delete-activity-btn" data-id="{{ $a->id }}" data-name="{{ $a->activityTitle }}" title="Delete">
+                <button type="button" class="icon-btn icon-btn-danger delete-activity-btn{{ $lockCls }}" data-id="{{ $a->id }}" data-name="{{ $a->activityTitle }}" @disabled(! $mayEdit) title="{{ $editTitle('Delete') }}">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                 </button>
             </div>

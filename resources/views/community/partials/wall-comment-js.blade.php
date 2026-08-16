@@ -34,6 +34,11 @@
     function replyFormHtml(postId, parentId, mentionId, mentionName) {
         const hasMention = mentionId && mentionName;
         const attrs = hasMention ? ` data-mention-id="${escHtml(mentionId)}" data-mention-name="${escHtml(mentionName)}"` : '';
+        // The field takes the whole first line of the shell and the tools sit
+        // under it (see .reply-shell) — on a phone they used to squeeze the
+        // typing room down to a few characters. Cancel moved in beside Send so
+        // it joins that tool row instead of stranding a ✕ on a line of its own;
+        // it is still inside the form, which is all its handler looks for.
         return `<form class="wall-comment-form wall-reply-form flex flex-wrap items-center gap-2 mt-2 mb-3" data-post-id="${postId}" data-parent-id="${parentId}"${attrs}>
             ${hasMention ? replyMentionPill(mentionName) : ''}
             <span class="reply-shell">
@@ -44,9 +49,9 @@
                 <button type="button" class="emoji-btn js-video-record" aria-label="Record a video" title="Record">${SVG_REC}</button>
                 <input type="file" class="js-video-file hidden" accept="video/*">
                 <button type="button" class="emoji-btn js-emoji-btn" aria-label="Add an emoji" title="Emoji">${SVG_SMILE}</button>
+                <button type="button" class="js-reply-cancel btn-ghost rounded-full w-7 h-7 flex items-center justify-center text-gray-400 hover:text-red-500 shrink-0" aria-label="Cancel reply" title="Cancel">${SVG_X}</button>
                 <button type="submit" class="reply-send" aria-label="Send">${SVG_SEND}</button>
             </span>
-            <button type="button" class="js-reply-cancel btn-ghost rounded-full w-7 h-7 flex items-center justify-center text-gray-400 hover:text-red-500 shrink-0" aria-label="Cancel reply" title="Cancel">${SVG_X}</button>
             <span class="attach-chip hidden js-comment-chip"><span class="js-chip-name"></span><button type="button" class="js-chip-clear" aria-label="Remove photo">✕</button></span>
             <span class="js-video-chip attach-chip items-center gap-1 text-xs font-semibold text-gray-600" style="display:none"><span class="js-video-name"></span><button type="button" class="js-video-clear text-red-600 font-bold" aria-label="Remove video">✕</button></span>
         </form>`;

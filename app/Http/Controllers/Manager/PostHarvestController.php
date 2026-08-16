@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Manager;
 
 use App\Models\AsSchedulePostHarvest;
 use App\Support\HtmlSanitizer;
-use App\Support\UploadHelper;
+use App\Support\MediaStore;
+use App\Support\VideoOptimizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 /**
@@ -101,10 +101,29 @@ class PostHarvestController extends BaseScheduleController
         return $this->jsonOk('Observation restored.', ['data' => $this->present($observation->fresh())]);
     }
 
+    /**
+     * Somewhere to put whatever the attach bar produced.
+     *
+     * The route in front of this is still called image-upload, and
+     * routes/web.php is not ours to rename, so the method asks what actually
+     * arrived rather than trusting what it was called. A photo and a clip take
+     * different roads: a photo is handed straight to the store, a clip has to
+     * be squeezed to 720p first or a minute of phone video costs the field
+     * connection its afternoon.
+     */
     public function uploadImage(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request);
 
+        return $request->hasFile('video')
+            ? $this->storeVideo($request, $schedule)
+            : $this->storePhoto($request, $schedule);
+    }
+
+    // ------------------------------------------------------------------
+
+    private function storePhoto(Request $request, $schedule)
+    {
         $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpg,jpeg,png,webp,gif|max:8192',
         ], [
@@ -118,30 +137,84 @@ class PostHarvestController extends BaseScheduleController
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
         }
 
-        $file = $request->file('image');
-        // Extension derived from content, never the client filename (RCE/XSS guard).
-        $ext = UploadHelper::safeExtension($file, ['jpg', 'jpeg', 'png', 'webp', 'gif']);
-        $stem = Str::uuid()->toString();
-        $relativeDir = 'schedule-post-harvest/' . $schedule->id;
-
         try {
-            $stored = \App\Support\MediaStore::putFile($file, 'schedule-post-harvest', $schedule->id);
-            if ($stored === null) {
-                return $this->jsonFail('Photo upload failed.', 500);
-            }
-            $relativePath = $stored;
+            // The path the store gives back is the only one that means
+            // anything. This used to answer with a path assembled here out of
+            // a fresh uuid and a folder the store does not use, so every
+            // observation photo since was filed correctly and then pointed at
+            // from an address that has never held a file.
+            $path = MediaStore::putFile($request->file('image'), 'schedule-post-harvest', $schedule->id);
         } catch (\Throwable $e) {
             return $this->jsonFail('Photo upload failed: ' . $e->getMessage(), 500);
         }
 
-        $path = $relativeDir . '/' . $stem . '.' . $ext;
+        if ($path === null) {
+            return $this->jsonFail('Photo upload failed.', 500);
+        }
 
         return $this->jsonOk('Photo uploaded.', [
-            'data' => ['path' => $path, 'url' => \App\Support\MediaStore::url($path)],
+            'data' => ['type' => 'image', 'path' => $path, 'url' => MediaStore::url($path)],
         ]);
     }
 
-    // ------------------------------------------------------------------
+    private function storeVideo(Request $request, $schedule)
+    {
+        $validator = Validator::make($request->all(), [
+            'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-msvideo|max:307200',
+        ], [
+            'video.required' => 'Pick a video first.',
+            'video.max' => 'Video is too large — max 300 MB.',
+            'video.mimetypes' => 'That file is not a supported video.',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
+
+        try {
+            $out = VideoOptimizer::storeCompressed($request->file('video'), 'schedule-post-harvest/' . $schedule->id . '/videos');
+        } catch (\Throwable $e) {
+            return $this->jsonFail('Video processing failed: ' . $e->getMessage(), 500);
+        }
+
+        // Compress here, keep there — same trade the notes make: the clip
+        // crosses to the mother app once it is small, and survives a deploy.
+        foreach (['video', 'poster'] as $part) {
+            $local = $out[$part] ?? null;
+            if (! $local || ! MediaStore::enabled()) {
+                continue;
+            }
+            $kept = MediaStore::putBinary(
+                Storage::disk('public')->get($local),
+                'schedule-post-harvest',
+                pathinfo($local, PATHINFO_EXTENSION) ?: ($part === 'poster' ? 'jpg' : 'mp4'),
+                $schedule->id
+            );
+            if ($kept && $kept !== $local) {
+                Storage::disk('public')->delete($local);
+                $out[$part] = $kept;
+            }
+        }
+
+        // The poster travels back so the sheet can show a frame instead of a
+        // black box, but it is not stored with the observation: there is one
+        // column of paths and it holds one path per attachment. What the card
+        // shows later is the clip itself, told apart by its name.
+        return $this->jsonOk('Video attached.', [
+            'data' => [
+                'type' => 'video',
+                'path' => $out['video'],
+                'url' => MediaStore::url($out['video']),
+                'posterUrl' => ! empty($out['poster']) ? MediaStore::url($out['poster']) : null,
+            ],
+        ]);
+    }
+
+    /** Photo or clip? The name is all there is to go on — see validated(). */
+    public static function kindOf(?string $path): string
+    {
+        return preg_match('~\.(mp4|mov|webm|mkv|m4v|3gp)$~i', (string) $path) ? 'video' : 'image';
+    }
 
     private function find(int $scheduleId, int $id): ?AsSchedulePostHarvest
     {
@@ -198,13 +271,20 @@ class PostHarvestController extends BaseScheduleController
             ->all();
         $data['details'] = $details ?: null;
 
-        // Normalise the photo list: accept an array of paths, keep the legacy
-        // single `imagePath` in sync with the first one for backward compat.
+        // Normalise the attachment list. It holds clips as well as photos now,
+        // and it holds them as a flat list of paths, because that is what
+        // everything else reading this column expects — App\Support\SeasonMedia
+        // merges it straight into the season's media. So which is which is read
+        // off the file name, the same way the Gallery tells an album's clips
+        // from its pictures.
         $paths = collect($data['imagePaths'] ?? [])
             ->filter(fn ($p) => filled($p))
             ->values()->all();
         $data['imagePaths'] = $paths ?: null;
-        $data['imagePath'] = $paths[0] ?? ($data['imagePath'] ?? null);
+        // The legacy single field stays a photo: it is what the old card shows
+        // as an <img>, and an mp4 in there renders as a broken picture.
+        $firstPhoto = collect($paths)->first(fn ($p) => self::kindOf($p) === 'image');
+        $data['imagePath'] = $firstPhoto ?? ($data['imagePath'] ?? null);
 
         return $data;
     }
@@ -222,9 +302,10 @@ class PostHarvestController extends BaseScheduleController
                 'value' => \App\Support\PostHarvestFields::labelFor((string) $o->category, $k, $v),
             ])
             ->values()->all();
-        // Prefer the multi-image list; fall back to the legacy single path.
+        // Prefer the multi-attachment list; fall back to the legacy single path.
         $paths = ! empty($o->imagePaths) ? $o->imagePaths : array_filter([$o->imagePath]);
         $images = array_values(array_map(fn ($p) => [
+            'type' => self::kindOf($p),
             'path' => $p,
             'url' => \App\Support\MediaStore::url($p),
         ], $paths));

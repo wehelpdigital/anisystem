@@ -178,16 +178,27 @@
         background:rgb(26 26 26 / .72); color:#fff; font:800 .6rem/1 var(--font-heading); letter-spacing:.08em; }
     html.dark .gif-badge { border:1px solid rgb(255 255 255 / .15); }
 
-    /* --- Composer + reply pill --- */
-    .reply-shell { display:flex; align-items:center; gap:.375rem; flex-grow:1; min-width:0;
-        border:1.5px solid var(--color-gray-200); border-radius:9999px; background:var(--color-gray-50);
-        padding:.25rem .25rem .25rem .625rem;
+    /* --- Composer + reply pill ---
+       The field gets a line to itself and the tools sit under it. They used to
+       ride inside the pill beside the text, which on a phone left maybe four
+       characters of typing room once photo / video / record / emoji / send had
+       taken their share. Nothing moved out of the form — the delegated
+       handlers all still find their buttons where they expect them. */
+    .reply-shell { display:flex; flex-wrap:wrap; align-items:center; gap:.25rem; flex:1 1 100%; min-width:0;
+        border:1.5px solid var(--color-gray-200); border-radius:1.15rem; background:var(--color-gray-50);
+        padding:.3rem .35rem;
         transition: border-color var(--dur) var(--ease-house), background-color var(--dur) var(--ease-house),
             box-shadow var(--dur) var(--ease-house); }
     .reply-shell:focus-within { border-color:var(--color-brand-500); background:#fff; box-shadow:0 0 0 3px rgb(107 159 61 / .18); }
     html.dark .reply-shell:focus-within { background:var(--color-gray-100); box-shadow:0 0 0 3px rgb(107 159 61 / .28); }
-    .reply-shell input { flex:1; min-width:0; background:transparent; border:0; outline:none; box-shadow:none;
-        font-size:.875rem; color:var(--color-gray-900); }
+    /* Only the visible field: the photo/video pickers are inputs in here too. */
+    .reply-shell input[type="text"] { flex:1 1 100%; min-width:0; background:transparent; border:0; outline:none;
+        box-shadow:none; font-size:.875rem; line-height:1.45; padding:.35rem .45rem; color:var(--color-gray-900); }
+    /* Send closes the tool row on the right, where the thumb already is —
+       unless a reply's ✕ is riding along, and then it leads the pair. */
+    .reply-shell .reply-send { margin-left:auto; }
+    .reply-shell .js-reply-cancel { margin-left:auto; }
+    .reply-shell .js-reply-cancel ~ .reply-send { margin-left:0; }
     .reply-send { width:2.25rem; height:2.25rem; flex-shrink:0; border:0; border-radius:9999px;
         display:inline-flex; align-items:center; justify-content:center; background:var(--color-brand-600); color:#fff;
         cursor:pointer; transition: background-color var(--dur) var(--ease-house), transform .15s var(--ease-house); }
@@ -257,6 +268,41 @@
         color:var(--color-gray-400); cursor:pointer; padding:.2rem .4rem; border-radius:.5rem; }
     .reply-link:hover { color:var(--color-brand-700); }
     .reply-media img { max-height:12rem; }
+
+    /* --- Long threads fold: the first two entries stay, the rest slide behind
+       a toggle. grid-template-rows 0fr → 1fr animates to the content's real
+       height; a max-height would have to be guessed, and a comment carrying a
+       photo makes that guess either a clip or a crawl. --- */
+    .thread-fold { display:grid; grid-template-rows:0fr;
+        transition: grid-template-rows var(--dur) var(--ease-house); }
+    .thread-fold > * { overflow:hidden; min-height:0; display:flex; flex-direction:column; gap:.375rem; }
+    .thread-fold.is-open { grid-template-rows:1fr; }
+    .thread-toggle { display:inline-flex; align-items:center; gap:.25rem; border:0; background:transparent;
+        padding:.1rem 0; font-size:.75rem; font-weight:700; color:var(--color-brand-700); cursor:pointer; }
+    .thread-toggle:hover { color:var(--color-brand-800); text-decoration:underline; }
+    .thread-toggle .th-chev { width:.75rem; height:.75rem; transition: transform var(--dur) var(--ease-house); }
+    .thread-toggle[aria-expanded="true"] .th-chev { transform: rotate(180deg); }
+
+    /* --- Comment action row: reactions stay, the rest hide behind one ⋯ ---
+       Four reaction pills already fill the row, so adding Reply and Delete
+       pushed the reactions onto a line of their own on a phone. Reacting is
+       the frequent tap, so it keeps the row; the two rare actions move into a
+       sheet opened from the corner. --- */
+    .wc-more { display:none; width:1.75rem; height:1.75rem; border:0; border-radius:9999px; background:transparent;
+        align-items:center; justify-content:center; color:var(--color-gray-400); cursor:pointer; flex-shrink:0;
+        transition: background-color .15s var(--ease-house), color .15s var(--ease-house); }
+    .wc-more:hover { background:var(--color-gray-100); color:var(--color-gray-700); }
+    @media (max-width: 640px) {
+        .wc-actions { width:100%; align-items:flex-start; }
+        .wc-actions > .js-wall-reply, .wc-actions > .js-comment-delete { display:none; }
+        .wc-more { display:inline-flex; margin-left:auto; }
+    }
+    .wc-menu-item { display:flex; align-items:center; gap:.7rem; width:100%; padding:.8rem .5rem; border:0;
+        background:transparent; border-radius:.6rem; font-size:.95rem; font-weight:700; text-align:left;
+        color:var(--color-gray-800); cursor:pointer; transition: background-color .15s var(--ease-house); }
+    .wc-menu-item:hover { background:var(--color-gray-50); }
+    .wc-menu-item.is-danger { color:#dc2626; }
+    .wc-menu-item.is-quiet { color:var(--color-gray-500); font-weight:600; justify-content:center; }
 
     /* --- Generic centered modal (comments "view all", etc.) --- */
     .plaza-modal { position:fixed; inset:0; z-index:120; display:flex; align-items:flex-end; justify-content:center;
@@ -388,6 +434,7 @@
         .post-enter, .post-enter::after, .attach-chip, .group-joined-tag:not(.hidden), .wall-reply-form,
         .react-btn.just-reacted .e, .react-count.tick, #composerCard.is-entering, #loadMoreBtn .dot { animation:none !important; }
         .react-btn, .group-join-btn, .btn-open, .reply-shell, .reply-send, .emoji-btn, .emoji-pop, .plaza-clamp-body,
-        #postsWrap, .write-fab, .post-reply-form, #joinPrompt, .group-post.is-removing { transition:none !important; }
+        #postsWrap, .write-fab, .post-reply-form, #joinPrompt, .group-post.is-removing,
+        .thread-fold, .thread-toggle .th-chev, .wc-more, .wc-menu-item { transition:none !important; }
     }
 </style>

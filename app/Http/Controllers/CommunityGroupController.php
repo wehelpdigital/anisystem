@@ -467,6 +467,15 @@ class CommunityGroupController extends Controller
             $mine = $data['reaction'];
         }
 
+        // Somebody reacting to your post is worth hearing about the moment it
+        // happens — it is the commonest thing anyone does on a wall, and it
+        // was the only one that happened silently. Only on the way ON: taking
+        // a reaction back, or swapping one for another, is not news, and
+        // notifying every hesitation would make the bell useless.
+        if ($mine !== null && ! $existing) {
+            $this->tellAboutReaction($data['targetType'], $target, $userId, $mine);
+        }
+
         $summary = \App\Models\CommunityReaction::summaryFor($data['targetType'], [$data['targetId']], $userId);
 
         return response()->json([
@@ -476,6 +485,64 @@ class CommunityGroupController extends Controller
                 'mine' => $mine,
             ],
         ]);
+    }
+
+    /**
+     * Tell the author, and give the bell somewhere to land.
+     *
+     * Five different things can be reacted to and they are linked five
+     * different ways, so the URL is worked out per kind rather than guessed —
+     * a notification that opens the wrong page is worse than none, because
+     * the reader has to go and find the thing themselves anyway.
+     */
+    private function tellAboutReaction(string $type, $target, int $actorId, string $reaction): void
+    {
+        $authorId = (int) ($type === 'wallpost' ? $target->authorUserId : $target->userId);
+        if ($authorId === 0 || $authorId === $actorId) {
+            return;                          // reacting to your own says nothing
+        }
+
+        $url = match ($type) {
+            'post' => route('community.groups.show', ['groupId' => $target->groupId]) . '#post-' . $target->id,
+            'reply' => (function () use ($target) {
+                $post = CommunityGroupPost::active()->find($target->postId);
+                return $post
+                    ? route('community.groups.show', ['groupId' => $post->groupId]) . '#post-' . $post->id
+                    : route('community.index');
+            })(),
+            // `wallpost-<id>` is the id feed-post.blade.php actually renders;
+            // an anchor that matches nothing quietly drops the reader at the
+            // top of a long wall to go hunting.
+            'wallpost' => route('community.connect.profile', ['userId' => $target->wallUserId]) . '#wallpost-' . $target->id,
+            'wallcomment' => (function () use ($target) {
+                $post = \App\Models\CommunityWallPost::where('deleteStatus', 1)->find($target->wallPostId);
+                return $post
+                    ? route('community.connect.profile', ['userId' => $post->wallUserId]) . '#wallpost-' . $post->id
+                    : route('community.index');
+            })(),
+            'blogcomment' => route('community.blog.show', ['id' => $target->blogPostId]),
+            default => route('community.index'),
+        };
+
+        $actor = \App\Models\User::find($actorId);
+        $what = match ($type) {
+            'post', 'wallpost' => 'your post',
+            'reply' => 'your reply',
+            default => 'your comment',
+        };
+
+        app(\App\Services\NotificationService::class)->notify(
+            $authorId,
+            'reaction',
+            ($actor?->full_name ?: 'Someone') . ' reacted to ' . $what,
+            \App\Support\CommunityText::plain($target->body ?? '', 90),
+            $url,
+            $actorId,
+            null,
+            // One line per person per hour: a wall post can collect a dozen
+            // reactions in a minute and each is not its own errand.
+            1,
+        );
     }
 
     /** Attach reactionSummary to posts and their replies before rendering. */
