@@ -1399,8 +1399,13 @@
     /* Segment distances paint WHILE the shape is being made, not only after
        Finish. Labels are reused (moved, retexted) instead of recreated, so
        drag frames don't flicker. Pen is exempt — hundreds of tiny segments. */
-    let tempLabels = [];
-    function dropTempLabels() { tempLabels.forEach((m) => m.setMap(null)); tempLabels = []; }
+    let tempLabels = [], tempArea = null;
+    // Cleared with the side labels, or a finished ring would leave its running
+    // total floating over the next shape somebody starts.
+    function dropTempLabels() {
+        tempLabels.forEach((m) => m.setMap(null)); tempLabels = [];
+        if (tempArea) { tempArea.setMap(null); tempArea = null; }
+    }
     function refreshTempLabels(closed) {
         const ring = closed && tempPts.length > 2;
         const n = tempPts.length < 2 ? 0 : (ring ? tempPts.length : tempPts.length - 1);
@@ -1416,6 +1421,25 @@
             }
         }
         while (tempLabels.length > n) tempLabels.pop().setMap(null);
+
+        /* The number the shape is being drawn FOR.
+         *
+         * Only the sides were ever drawn while tapping out a ring, so an area
+         * told you the length of each fence and never how much ground it held
+         * until you had finished and gone looking for its badge. The box tool
+         * had no such gap — you drag it and watch the hectares change — which
+         * is exactly the comparison that was made. Three corners is the first
+         * moment there is an area to speak of, and it is recomputed on every
+         * tap and every dragged corner, so it counts up with the ring. */
+        if (ring) {
+            const txt = fmtA(areaOf(tempPts));
+            const at = anchorOf('area', tempPts);
+            if (tempArea) { tempArea.setPosition(LL(at)); tempArea.setLabel({ text: txt, className: 'cmap-lbl-g', color: '#fff', fontSize: '11px', fontWeight: '800' }); }
+            else tempArea = textMark(at, txt, 'cmap-lbl-g');
+        } else if (tempArea) {
+            // Back under three corners: there is no ground enclosed to report.
+            tempArea.setMap(null); tempArea = null;
+        }
     }
     let traceLast = 0, traceOn = false;
     function sendTrace(done) {
