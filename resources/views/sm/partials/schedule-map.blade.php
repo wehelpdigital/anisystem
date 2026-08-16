@@ -907,6 +907,7 @@
                         const res = await api(`${URLS.push}?scheduleId=${SID}`, {
                             method: 'POST', body: { kind: 'area', points: corners, color: cur.color, width: cur.width, label: cur.label },
                         });
+                        carryMeasure(cur.id, res.data.object.id);
                         renderObject(res.data.object);
                         pushHist({ type: 'add', object: res.data.object });
                         pushHist({ type: 'remove', object: cur });
@@ -1190,6 +1191,18 @@
             // Labels are decoration, but a text OBJECT must catch taps or it
             // could never be erased, moved or rewritten.
             tm.setClickable(true);
+            // Press the words and they come with you. Every other shape is
+            // moved by picking it up with Select & edit first; a label is the
+            // one thing on this map small enough that finding it, tapping it
+            // and then dragging it is three gestures to do one thing.
+            tm.setDraggable(textDraggable());
+            tm.addListener('dragend', (ev) => {
+                // A picked-up label is already owed this save by beginEdit's
+                // own dragend, which goes through scheduleSave. Both firing
+                // posts the move twice and stacks two undo steps for one drag.
+                if (editing && editing.o.id === o.id) return;
+                commitTextMove(o, ev.latLng);
+            });
             parts.push(tm);
         }
         // Taps on a shape route by tool: erase removes it for everyone, edit
@@ -1418,6 +1431,62 @@
         else refreshTempLabels(closed);
         if (Date.now() - traceLast > 250) { traceLast = Date.now(); sendTrace(false); }
     }
+    /* ---------- moving a label by hand ----------
+     *
+     * Which tools leave a label free to be picked up. Direct manipulation was
+     * the ask, so there is no tool to choose first — but a label sitting under
+     * the finger must not eat a gesture that already means something else.
+     * Text means "write a new one here", erase means "delete what I touch",
+     * and the drawing tools own the finger outright. Pan and Select & edit are
+     * the two that are not already spending it, which is the same pair the
+     * long-press-for-a-point handler carves out for the same reason. */
+    function textDraggable() { return tool === 'pan' || tool === 'edit'; }
+    /* A marker's draggable flag is set once, when it is rendered, and the tool
+     * changes long after that — so every label ALREADY on the map has to be
+     * told, not just the next one drawn. */
+    function syncTextDrag() {
+        objIndex.forEach((o, id) => {
+            if (o.kind !== 'text') return;
+            const m = (layers.get(id) || [])[0];
+            if (m && m.setDraggable) m.setDraggable(textDraggable());
+        });
+    }
+    /* Where a dragged label landed, made to stick.
+     *
+     * The same road every reshape takes — the update endpoint with the id and
+     * the new points, a history step so undo walks it back, and a re-render off
+     * what the server returned rather than what the finger left behind. pushHist
+     * is also what marks the map dirty, so the autosave hears about this move
+     * exactly like any other.
+     *
+     * Only where it landed goes to the room, never the journey. A half-drawn
+     * shape streams itself because a teammate watching a fence being paced out
+     * learns something from the line so far; a label in flight is one word
+     * hovering over the wrong field, and it would cost a write per frame to
+     * show it. The update broadcast on release moves it for everyone at once. */
+    async function commitTextMove(o, latLng) {
+        const cur = objIndex.get(o.id) || o;
+        const np = [[latLng.lat(), latLng.lng()]];
+        try {
+            const res = await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: cur.id, points: np } });
+            // The finger is off it but the network is not, and the room can
+            // clear the map or open another one inside that wait. Re-rendering
+            // then would strand one label of the old map in the middle of the
+            // new one — and mark that new map dirty so it saved that way.
+            if (!objIndex.has(cur.id)) return;
+            pushHist({ type: 'update', id: cur.id, before: cur.points, after: res.data.object.points });
+            dropObject(cur.id);
+            renderObject(res.data.object);
+        } catch (e) {
+            // The words are sitting where the finger dropped them and the
+            // server never agreed to it. Put them back on the last spot the
+            // map still believes in, rather than leaving a label that looks
+            // moved and is not.
+            const m = (layers.get(cur.id) || [])[0];
+            if (m && m.setPosition && cur.points && cur.points[0]) m.setPosition(LL(cur.points[0]));
+            if (window.toast) toast(e.message, 'error');
+        }
+    }
     function setTool(t) {
         tool = t;
         clearTemp();
@@ -1429,6 +1498,10 @@
         window.closeSheet?.('cmapToolsSheet');
         // Pan keeps native gestures; every drawing tool takes the finger.
         if (t !== 'edit') endEdit();
+        // Labels that are already out there follow the tool too — otherwise a
+        // map drawn before the tool changed keeps whatever it was rendered
+        // with, and half the labels answer to a gesture the other half ignore.
+        syncTextDrag();
         const free = (t === 'pan' || t === 'edit' || t === 'erase');
         // Drawing tools take ONE finger; two fingers stay the map's — pinch
         // zoom and rotate keep working mid-drawing. 'none' killed them all.
@@ -1706,6 +1779,11 @@
         const first = editing.parts[0];
         if (first.setOptions) first.setOptions({ draggable: false, editable: false });
         else if (first.setDraggable) first.setDraggable(false);
+        // A label is draggable whether or not it is selected, so putting the
+        // selection down must not quietly take that away — and this runs on
+        // every tool change, which is exactly when it would have. `tool` is
+        // already the new one by the time setTool gets here.
+        if (editing.o.kind === 'text' && first.setDraggable) first.setDraggable(textDraggable());
         editing = null;
         clearSelVertex();
         dropSizeHandle();
@@ -1814,9 +1892,15 @@
         try {
             const res = await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: cur.id, width: px, font } });
             const fresh = res.data.object;
-            // Re-rendering would take the label out from under the handle that
-            // is still resting on it; the shape on screen is already right, so
-            // only what this client BELIEVES about it needs correcting.
+            // The room can clear the map or open a different one while this
+            // write is on the wire, and dropAll has then emptied both indexes.
+            // Writing the label back in at that point is worse than losing it:
+            // objIndex would hold a shape `layers` knows nothing about, so
+            // nothing could ever drop it, composeMapPng walks objIndex and
+            // would paint the departed map's label into the arriving map's
+            // autosaved picture, and the shelf would count a shape that is not
+            // there. Same guard scheduleSave uses two functions up.
+            if (!objIndex.has(cur.id)) return;
             objIndex.set(fresh.id, fresh);
             if (sizeHandleFor && sizeHandleFor.o.id === fresh.id) sizeHandleFor.o = fresh;
             if (editing && editing.o.id === fresh.id) editing.o = fresh;
@@ -1882,6 +1966,12 @@
                 const res = await api(`${URLS.update}?scheduleId=${SID}`, {
                     method: 'POST', body: { id: draft.id, label: words, font: textFont, width: textSize },
                 });
+                // The canvas we set out to edit may not be the canvas any more:
+                // a clear or a saved map opening during this write empties both
+                // indexes, and re-rendering here would plant this label in
+                // whatever arrived. Losing an edit to a map that is gone is the
+                // right outcome; putting it on somebody else's map is not.
+                if (!objIndex.has(draft.id)) { window.closeSheet?.('cmapTextSheet'); return; }
                 // Held before the swap and held after it: the same trick the
                 // Delete-point button uses, so the handle comes back too.
                 if (editing && editing.o.id === draft.id) pendingEdit = draft.id;
@@ -1990,6 +2080,7 @@
                     pendingEdit = res.data.object.id;
                     pendingPoint = { id: res.data.object.id, index: hit.i + 1 };
                 }
+                carryMeasure(cur.id, res.data.object.id);
                 renderObject(res.data.object);
                 pushHist({ type: 'add', object: res.data.object });
                 pushHist({ type: 'remove', object: cur });
