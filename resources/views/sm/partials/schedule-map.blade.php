@@ -248,6 +248,17 @@
             <span class="cmap-veil-spin"></span>
             <span class="cmap-veil-txt">Finding your ground…</span>
         </div>
+        {{-- Three seconds of holding still is a long time to wonder whether
+             anything is happening. This is the answer: a ring that closes on
+             the exact spot the new point would land, and is gone the instant
+             the finger lifts or wanders. --}}
+        <div class="cmap-hold" id="cmapHold" hidden aria-hidden="true">
+            <svg viewBox="0 0 44 44">
+                <circle class="cmap-hold-trk" cx="22" cy="22" r="19"></circle>
+                <circle class="cmap-hold-arc" cx="22" cy="22" r="19"></circle>
+            </svg>
+            <span class="cmap-hold-dot"></span>
+        </div>
         <div class="cmap-editbar hidden" id="cmapEditBar">
             <span class="cmap-editbar-lbl" id="cmapEditLbl">Editing</span>
             <button type="button" id="cmapDelPoint" hidden>Delete point</button>
@@ -450,6 +461,33 @@
     @media (prefers-reduced-motion: reduce) {
         .cmap-saved { transition: opacity .01s linear; }
         .cmap-saved.is-working .cmap-saved-dot { animation: none; }
+    }
+    /* The press-and-hold ring for dropping a point into an edge. It sits on the
+       edge, not under the finger, so it answers the only question the hold
+       raises: not "is it counting" but "where is this point going". The sweep
+       is linear on purpose — it is a clock, and a clock that eases lies about
+       how much of the wait is left. */
+    .cmap-hold { position: absolute; z-index: 6; width: 44px; height: 44px; margin: -22px 0 0 -22px;
+        pointer-events: none; opacity: 0; transform: scale(.72);
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .cmap-hold.is-on { opacity: 1; transform: scale(1); }
+    .cmap-hold svg { width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; }
+    .cmap-hold circle { fill: none; stroke-width: 4; stroke-linecap: round; }
+    .cmap-hold-trk { stroke: rgb(17 24 39 / .3); }
+    /* 2πr for r=19 — the whole ring as one dash, hidden, then wound on. */
+    .cmap-hold-arc { stroke: #f5c518; stroke-dasharray: 119.4; stroke-dashoffset: 119.4;
+        filter: drop-shadow(0 1px 2px rgb(0 0 0 / .5)); }
+    .cmap-hold.is-on .cmap-hold-arc { animation: cmapHoldFill var(--hold-ms, 3000ms) linear forwards; }
+    @keyframes cmapHoldFill { to { stroke-dashoffset: 0; } }
+    .cmap-hold-dot { position: absolute; left: 50%; top: 50%; width: .5rem; height: .5rem;
+        margin: -.25rem 0 0 -.25rem; border-radius: 999px; background: #fff;
+        box-shadow: 0 0 0 2px rgb(17 24 39 / .55); }
+    @media (prefers-reduced-motion: reduce) {
+        /* No pop and no sweep — but the press still has to show, or the three
+           seconds read as a dead map. The ring simply stands there instead. */
+        .cmap-hold { transition: opacity .01s linear; transform: none; }
+        .cmap-hold.is-on { transform: none; }
+        .cmap-hold.is-on .cmap-hold-arc { animation: none; stroke-dashoffset: 0; opacity: .6; }
     }
     /* Measurement labels ride Google marker labels — these classes style them. */
     .cmap-lbl-g { background: rgb(17 24 39 / .82); border-radius: .45rem; padding: .1rem .4rem; white-space: nowrap; }
@@ -674,6 +712,12 @@
                 pendingExtend = null;
                 beginExtend(o, i, m, true);
             }
+            // The point a three-second hold just asked for, handed straight
+            // back: picked up, fattened, and draggable without another tap.
+            if (pendingPoint && pendingPoint.id === o.id && pendingPoint.index === i) {
+                pendingPoint = null;
+                selectVertex(o, i, m, parts);
+            }
             parts.push(m);
         });
     }
@@ -813,7 +857,7 @@
     // began against the old shapes can tell that they are gone rather than
     // finishing itself against whatever took their place.
     let canvasGen = 0;
-    function dropAll() { canvasGen++; cancelExtend(); endEdit(); layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); measures.clear(); measureOpen.clear(); saveMeasure(); }
+    function dropAll() { canvasGen++; cancelExtend(); endEdit(); pendingPoint = null; layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); measures.clear(); measureOpen.clear(); saveMeasure(); }
 
     /* Undo is a history of inverse calls against the same endpoints the
        actions used, so every step also lands live for the team. Re-adding a
@@ -1076,7 +1120,10 @@
      * of vertex handles help nobody — and a rect stays a rect: its corners are
      * re-derived from bounds on save. Saves debounce behind the gesture and
      * re-render, so the measurement labels land on the new geometry. */
-    let editing = null, saveTimer = null, pendingEdit = null, selVertex = null;
+    // pendingPoint: a point that has just been inserted on purpose and should
+    // come back from the re-render already held, so the finger that asked for
+    // it can drag it without hunting for it first.
+    let editing = null, saveTimer = null, pendingEdit = null, selVertex = null, pendingPoint = null;
     function showEditBar(o) {
         const KINDS = { pen: 'drawing', line: 'line', path: 'multi-line', rect: 'box', area: 'area', text: 'label', arrow: 'arrow' };
         document.getElementById('cmapEditLbl').textContent = 'Editing ' + (KINDS[o.kind] || 'shape');
@@ -1164,6 +1211,34 @@
             } catch (e) { if (window.toast) toast(e.message, 'error'); }
         }, 700);
     }
+    /* Google's `editable` sells two things in one box: the handles on the
+       corners, which resize a shape, and the ghost handles halfway along every
+       side, which ADD a corner the moment they are nudged. There is no flag for
+       one without the other, and the ghosts sit exactly where a thumb lands
+       when it means to drag the shape — so shapes were quietly growing points
+       nobody asked for. Since the option does not exist, the insertion is
+       undone instead: the point goes back out on the same tick it came in, and
+       the shape is what it was.
+       The deliberate insertion never reaches here. That one goes out to the
+       server and comes back as a fresh render, so there is no live path for it
+       to fire insert_at on — the only thing that can fire it is a ghost. */
+    let pathSurgery = false;      // our own removal, which is not news to save
+    function refuseMidpoint(shape, path, i) {
+        if (pathSurgery) return;                       // removeAt, bouncing back at us
+        pathSurgery = true;
+        try { path.removeAt(i); } catch (_) {}
+        pathSurgery = false;
+        // Google is mid-drag on a handle it still believes in, and its next
+        // move would land on whatever vertex now answers to that index —
+        // silently dragging the wrong corner. Turning editing off and on makes
+        // it rebuild its handles from the path as it actually is, which leaves
+        // that drag holding nothing. Next tick, so it is not done underneath
+        // the event it is still dispatching.
+        setTimeout(() => {
+            if (!editing || editing.parts[0] !== shape) return;
+            try { shape.setOptions({ editable: false }); shape.setOptions({ editable: true }); } catch (_) {}
+        }, 0);
+    }
     function beginEdit(o, parts) {
         if (editing && editing.o.id === o.id) return;
         endEdit();
@@ -1180,8 +1255,11 @@
         if (first.getPath) {
             const path = first.getPath();
             editing.listeners.push(path.addListener('set_at', scheduleSave));
-            editing.listeners.push(path.addListener('insert_at', scheduleSave));
-            editing.listeners.push(path.addListener('remove_at', scheduleSave));
+            editing.listeners.push(path.addListener('insert_at', (i) => refuseMidpoint(first, path, i)));
+            // A vertex can still leave by the front door — the Delete point
+            // button, or Google's own right-click on a handle. Only our own
+            // undoing of a midpoint is silent.
+            editing.listeners.push(path.addListener('remove_at', () => { if (!pathSurgery) scheduleSave(); }));
         }
         editing.listeners.push(first.addListener('dragend', scheduleSave));
         showEditBar(o);
@@ -1204,12 +1282,16 @@
      * handles, which is two problems: a box is never editable (it is stored
      * as two opposite corners, so it has no path to hand over), and those
      * handles are smaller than a fingertip on the phones this is used on.
-     * So the gesture is ours — hold still on an edge for half a second and a
-     * point appears there, already grabbable.
+     * So the gesture is ours — hold still on an edge and a point appears
+     * there, already grabbable.
      *
      * The hold has to be the ONLY thing happening: a pan, a pinch, a dragged
      * shape or a pin's own long-press all cancel it before it fires. */
-    const HOLD_MS = 500, HOLD_SLOP = 8, EDGE_HIT = 18;
+    // Three seconds, and this gesture's alone: nothing else times off it (the
+    // pin's "draw on from here" keeps its own half-second). Adding a point is
+    // now the only way a shape grows one, so the press has to be long enough
+    // that nobody arrives at it by resting a thumb on a fence line.
+    const EDGE_HOLD_MS = 3000, HOLD_SLOP = 8, EDGE_HIT = 18;
     // A point is only worth dropping where a point can then be grabbed, which
     // is exactly the kinds vertexPins draws handles for.
     const INSERTABLE = ['line', 'path', 'rect', 'area'];
@@ -1271,7 +1353,10 @@
                 const res = await api(`${URLS.push}?scheduleId=${SID}`, {
                     method: 'POST', body: { kind: 'area', points: ring, color: cur.color, width: cur.width, label: cur.label },
                 });
-                if (tool === 'edit') pendingEdit = res.data.object.id;
+                if (tool === 'edit') {
+                    pendingEdit = res.data.object.id;
+                    pendingPoint = { id: res.data.object.id, index: hit.i + 1 };
+                }
                 renderObject(res.data.object);
                 pushHist({ type: 'add', object: res.data.object });
                 pushHist({ type: 'remove', object: cur });
@@ -1282,15 +1367,47 @@
             }
             const res = await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: cur.id, points: ring } });
             pushHist({ type: 'update', id: cur.id, before: cur.points, after: res.data.object.points });
-            if (tool === 'edit') pendingEdit = cur.id;      // stay holding the shape
+            if (tool === 'edit') {
+                pendingEdit = cur.id;                      // stay holding the shape
+                pendingPoint = { id: cur.id, index: hit.i + 1 };
+            }
             dropObject(cur.id);
             renderObject(res.data.object);
             if (window.toast) toast('Point added — drag it to reshape.');
         } catch (e) { if (window.toast) toast(e.message, 'error'); }
     }
+    /* Where the point would land, drawn on the ground it would land on. The
+       ring lives in the stage next to the map rather than inside Google's
+       container, so it is measured across from one to the other rather than
+       assumed to share a corner. */
+    function showHold(el, at) {
+        const ring = document.getElementById('cmapHold');
+        if (!ring) return;
+        // Shown before it is measured: a hidden element has no offsetParent to
+        // measure across to, and would land in the stage's top-left corner.
+        ring.hidden = false;
+        const par = ring.offsetParent || el;
+        const a = el.getBoundingClientRect(), b = par.getBoundingClientRect();
+        ring.style.left = (at.x + a.left - b.left) + 'px';
+        ring.style.top = (at.y + a.top - b.top) + 'px';
+        ring.style.setProperty('--hold-ms', EDGE_HOLD_MS + 'ms');
+        // A class the element already carries is not a new animation — the
+        // second hold in a row would show a ring that is already full.
+        ring.classList.remove('is-on');
+        void ring.offsetWidth;
+        ring.classList.add('is-on');
+    }
+    function hideHold() {
+        const ring = document.getElementById('cmapHold');
+        if (!ring) return;
+        // Gone, not faded: the promise the ring makes is that letting go
+        // cancels, and a ring still sitting there argues with that.
+        ring.classList.remove('is-on');
+        ring.hidden = true;
+    }
     function bindEdgeInsert(el) {
         let timer = null, from = null, pid = null;
-        const stop = () => { clearTimeout(timer); timer = null; from = null; pid = null; };
+        const stop = () => { clearTimeout(timer); timer = null; from = null; pid = null; hideHold(); };
         el.addEventListener('pointerdown', (e) => {
             // A second finger means a pinch, so the first was never a hold.
             if (timer) { stop(); return; }
@@ -1304,22 +1421,30 @@
             // own long-press (draw on from here) and its own drag.
             const panes = proj.getPanes && proj.getPanes();
             if (panes && panes.overlayMouseTarget && panes.overlayMouseTarget.contains(e.target)) return;
-            from = ptOf(el, e); pid = e.pointerId;
+            const at0 = ptOf(el, e);
+            // Nothing to grow a point out of here, so nothing to promise: no
+            // ring, no timer, and the press stays the map's own.
+            const seen = nearestEdge(at0);
+            if (!seen) return;
+            from = at0; pid = e.pointerId;
             const gen = canvasGen;
+            showHold(el, seen.at);
             timer = setTimeout(() => {
                 const at = from;
                 stop();
-                // Half a second is long enough for the room to clear the map or
-                // open another one. The shapes under this finger are not the
+                // Three seconds is plenty of time for the room to clear the map
+                // or open another one. The shapes under this finger are not the
                 // ones it came down on, and dropping a point into a stranger's
                 // fence line is not what the hold asked for.
                 if (canvasGen !== gen) return;
+                // Measured again rather than trusted from the press: the map
+                // is pinned for the duration, but a teammate's shape is not.
                 const hit = nearestEdge(at);
                 if (!hit) return;
-                // A gesture that starts with no sign of itself reads as broken.
+                // A gesture that ends with no sign of itself reads as broken.
                 try { if (navigator.vibrate) navigator.vibrate(12); } catch (_) {}
                 insertOnEdge(hit);
-            }, HOLD_MS);
+            }, EDGE_HOLD_MS);
         });
         el.addEventListener('pointermove', (e) => {
             if (!timer || e.pointerId !== pid) return;
