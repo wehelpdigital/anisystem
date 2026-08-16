@@ -1316,6 +1316,19 @@
             dropObject(step.id);
             if (cur) renderObject({ ...cur, points: step.before });
             into.push({ type: 'update', id: step.id, before: step.after, after: step.before });
+        } else if (step.type === 'label') {
+            /* A label's words, face and size — everything about it that is not
+             * where it sits. These used to file no step at all, on the reasoning
+             * that undo is a stack of geometry. But the Undo button does not go
+             * grey while that is true: it still held whatever geometry step came
+             * before, so renaming a label and pressing Undo reverted somebody's
+             * fence line instead, and posted that to the whole team. A stack you
+             * can add to silently is worse than one that carries an extra kind
+             * of step. */
+            await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: step.id, ...step.before } }).catch(() => {});
+            const cur = objIndex.get(step.id);
+            if (cur) { dropObject(step.id); renderObject({ ...cur, ...step.before }); }
+            into.push({ type: 'label', id: step.id, before: step.after, after: step.before });
         } else if (step.type === 'clear') {
             const restored = [];
             for (const o of step.objects) restored.push(await reAdd(o));
@@ -1901,6 +1914,9 @@
             // autosaved picture, and the shelf would count a shape that is not
             // there. Same guard scheduleSave uses two functions up.
             if (!objIndex.has(cur.id)) return;
+            pushHist({ type: 'label', id: cur.id,
+                before: { label: cur.label, font: cur.font, width: cur.width },
+                after: { label: fresh.label, font: fresh.font, width: fresh.width } });
             objIndex.set(fresh.id, fresh);
             if (sizeHandleFor && sizeHandleFor.o.id === fresh.id) sizeHandleFor.o = fresh;
             if (editing && editing.o.id === fresh.id) editing.o = fresh;
@@ -1974,6 +1990,9 @@
                 if (!objIndex.has(draft.id)) { window.closeSheet?.('cmapTextSheet'); return; }
                 // Held before the swap and held after it: the same trick the
                 // Delete-point button uses, so the handle comes back too.
+                pushHist({ type: 'label', id: draft.id,
+                    before: { label: draft.label, font: draft.font, width: draft.width },
+                    after: { label: words, font: textFont, width: textSize } });
                 if (editing && editing.o.id === draft.id) pendingEdit = draft.id;
                 dropObject(draft.id);
                 renderObject(res.data.object);
