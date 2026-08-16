@@ -85,8 +85,20 @@
         return mapLoading ??= new Promise((resolve, reject) => {
             window.__locMapBoot = resolve;
             const sc = document.createElement('script');
+            // The libraries list MUST match the one the map partial asks for.
+            // Whichever partial loads Maps first wins the whole page: the other
+            // sees window.google.maps already there and uses it as-is. This one
+            // needs no geometry of its own and used to ask for none — and it
+            // runs at page load, before anybody opens the Map tab. So on the
+            // Collab Room the map got a Maps with no geometry library, and
+            // google.maps.geometry.spherical is what every length and every
+            // area on that map is computed with. They threw, renderObject died
+            // half-drawn, and the shapes came out with no numbers, no ruler
+            // badge, no click handlers and no entry in `layers` — which is also
+            // why undo appeared to do nothing: it removed a shape the map had
+            // no record of, so nothing left the screen.
             sc.src = 'https://maps.googleapis.com/maps/api/js?key=' + encodeURIComponent(MAPS_KEY)
-                + '&v=weekly&loading=async&callback=__locMapBoot';
+                + '&libraries=geometry,places&v=weekly&loading=async&callback=__locMapBoot';
             sc.async = true;
             sc.onerror = () => reject(new Error('load failed'));
             document.head.appendChild(sc);
