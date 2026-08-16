@@ -100,6 +100,44 @@ class SeasonMedia
             }
         }
 
+        /* The day's own note — the single one attached to the date itself,
+         * as distinct from the several that sit between its cards.
+         *
+         * Two different tables, and only one of them was being read. A photo
+         * taken into a day's note therefore existed, opened from the board,
+         * and was nowhere in the Gallery — which is exactly the report that
+         * pictures saved in a day note never show up. */
+        foreach (\App\Models\AsScheduleDateNote::active()
+            ->where('croppingScheduleId', $schedule->id)->orderByDesc('id')->get() as $n) {
+            $label = $n->noteDate ? 'Note for ' . $n->noteDate->format('M j, Y') : 'Day note';
+            foreach ((array) ($n->media ?? []) as $m) {
+                $push($m, 'Day note', $label, $n->updated_at, $boardUrl);
+            }
+        }
+
+        /* What the harvest looked like.
+         *
+         * A post-harvest observation is the one record a grower is most
+         * likely to want a picture of a year later — what the grain looked
+         * like, what the buyer rejected — and its photos were not on this
+         * shelf either. Same narrowing as the activities below: only rows
+         * that actually carry one. */
+        foreach (\App\Models\AsSchedulePostHarvest::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->where(fn ($q) => $q->whereNotNull('imagePath')->orWhereNotNull('imagePaths'))
+            ->orderByDesc('id')
+            ->get(['id', 'title', 'observationDate', 'imagePath', 'imagePaths', 'updated_at']) as $ph) {
+            $label = $ph->title ?: 'Post-harvest observation';
+            $paths = array_filter(array_merge(
+                [$ph->imagePath],
+                is_array($ph->imagePaths) ? $ph->imagePaths : []
+            ));
+            foreach (array_unique($paths) as $path) {
+                $push(['type' => 'image', 'path' => $path], 'Post-harvest', $label, $ph->updated_at,
+                    route('sm.post-harvest', ['id' => $schedule->id]));
+            }
+        }
+
         // Reference photos attached to activities. Only the ones that carry a
         // picture: a season is mostly tasks with none, and hydrating all of
         // them to ask was the slowest part of opening this page.

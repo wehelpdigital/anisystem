@@ -68,7 +68,11 @@
     html.dark .qc-foot { background: var(--color-white); }
     .qc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
     .qc-thumb { position: relative; aspect-ratio: 1; border-radius: .6rem; overflow: hidden; background: var(--color-gray-100); }
-    .qc-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .qc-thumb img, .qc-thumb video { width: 100%; height: 100%; object-fit: cover; }
+    /* A clip and a photo are the same grey square until one of them moves, so
+       the tile says which it is. */
+    .qc-kind { position: absolute; left: .25rem; bottom: .25rem; padding: 0 .3rem; border-radius: .3rem;
+        background: rgba(17,24,39,.72); color: #fff; font-size: .625rem; font-weight: 700; letter-spacing: .03em; }
     .qc-thumb button { position: absolute; top: .25rem; right: .25rem; width: 1.5rem; height: 1.5rem; border-radius: 999px;
         background: rgba(17,24,39,.7); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .875rem; line-height: 1; }
     .qc-add { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .35rem; aspect-ratio: 1;
@@ -76,7 +80,20 @@
     .qc-add:hover { border-color: var(--color-gray-400); color: var(--color-gray-600); }
     .qc-target { display: flex; align-items: flex-start; gap: .6rem; padding: .75rem; border: 1.5px solid var(--color-gray-200); border-radius: .7rem; cursor: pointer; }
     .qc-target.is-on { border-color: var(--color-brand-600, #4a7c2a); background: rgba(74,124,42,.12); }
+    /* A destination that cannot take what was captured stays on screen, greyed:
+       "where did Save to notes go?" is a worse question than a row you can see
+       is unavailable and a line saying why. */
+    .qc-target.is-off { opacity: .5; cursor: not-allowed; }
     .qc-target input { margin-top: .2rem; }
+    /* One row per captured thing: a thumbnail to recognise it by, a name, a
+       description. Deliberately cramped — ten of these sit under everything
+       else the details step already asks for. */
+    .qc-item { display: flex; gap: .6rem; align-items: flex-start; padding: .55rem 0; border-top: 1px solid var(--color-gray-100); }
+    .qc-item:first-child { border-top: 0; padding-top: 0; }
+    .qc-item-shot { position: relative; width: 3rem; height: 3rem; flex: none; border-radius: .5rem; overflow: hidden; background: var(--color-gray-100); }
+    .qc-item-shot img, .qc-item-shot video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .qc-item-fields { flex: 1 1 auto; min-width: 0; display: grid; gap: .3rem; }
+    .qc-item-fields .form-input { padding-top: .4rem; padding-bottom: .4rem; font-size: .8125rem; }
     /* Height and look come from the shared rules in app.css. */
     .qc-editor-wrap .ql-toolbar { border-top-left-radius: .6rem; border-top-right-radius: .6rem; }
     /* Live camera */
@@ -109,20 +126,23 @@
             <div class="qc-foot">
                 <button type="button" class="btn btn-ghost" data-qc-cancel>Cancel</button>
                 <button type="button" id="qcShutter" class="qc-shutter mx-auto" aria-label="Take photo"><span></span></button>
-                <button type="button" id="qcUseFile" class="btn btn-ghost ml-auto" title="Choose photos already on this device">Upload</button>
+                <button type="button" id="qcUseFile" class="btn btn-ghost ml-auto" title="Choose photos or clips already on this device">Upload</button>
             </div>
         </div>
 
         {{-- STEP 1 — capture --}}
         <div data-qc-step="capture">
             <div class="qc-body">
-                <p class="text-sm text-gray-600 mb-3">Snap your crop, a pest, the soil — anything worth remembering. Add as many as you like.</p>
+                <p class="text-sm text-gray-600 mb-3">Snap your crop, a pest, the soil — anything worth remembering. Add as many as you like; Upload takes video clips too.</p>
                 <div class="qc-grid" id="qcPreviews">
                     <button type="button" class="qc-add" id="qcAddPhoto">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         Take photo
                     </button>
-                    {{-- Photos worth keeping are often already on the phone. --}}
+                    {{-- Photos worth keeping are often already on the phone — and
+                         so is the clip taken beside them, which belongs in the
+                         same album rather than a second trip through Quick
+                         Record. --}}
                     <button type="button" class="qc-add" id="qcPickPhoto">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/><circle cx="9" cy="8.5" r="1.3"/></svg>
                         Upload
@@ -133,7 +153,7 @@
                      is right for "take another photo" and exactly wrong for
                      "Upload". --}}
                 <input type="file" id="qcFile" accept="image/*" capture="environment" class="hidden">
-                <input type="file" id="qcPick" accept="image/*" multiple class="hidden">
+                <input type="file" id="qcPick" accept="image/*,video/*" multiple class="hidden">
             </div>
             <div class="qc-foot">
                 <button type="button" class="btn btn-ghost" data-qc-cancel>Cancel</button>

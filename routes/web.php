@@ -148,6 +148,12 @@ Route::middleware('auth')->group(function () {
     // Save a picture or a clip to the device. Re-serves it from this origin
     // so the browser's download attribute is actually honoured.
     Route::get('/app/media/save', App\Http\Controllers\MediaSaveController::class)->name('media.save');
+
+    // Enter a schedule from anywhere: puts the session in the right farm
+    // before going there, so a notification about somebody else's schedule
+    // does not land on a 404 for a worker who also owns land of their own.
+    Route::get('/app/enter/{schedule}', App\Http\Controllers\EnterScheduleController::class)
+        ->whereNumber('schedule')->name('sm.enter');
 });
 
 /*

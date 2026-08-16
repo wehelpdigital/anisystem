@@ -63,7 +63,14 @@
                 <span class="grow"></span>
                 <button type="button" id="teamRecStop" class="team-recstop">Stop</button>
             </div>
+            {{-- The field gets the whole width; the buttons get their own row
+                 under it. Crammed beside the text they left about eight
+                 characters visible on a phone, which is no way to write a
+                 sentence to your team. --}}
             <div class="team-box">
+                <textarea id="teamText" rows="1" maxlength="4000" placeholder="Message the team…"></textarea>
+            </div>
+            <div class="team-tools">
                 <label class="team-cam shrink-0" title="Attach a photo">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     <input type="file" id="teamPhoto" accept="image/*" class="hidden">
@@ -80,7 +87,9 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.4 11.05l-8.7 8.7a5 5 0 01-7.1-7.1l8.7-8.7a3.3 3.3 0 114.7 4.7l-8.7 8.7a1.7 1.7 0 11-2.4-2.4l8-8"/></svg>
                     <input type="file" id="teamFile" class="hidden">
                 </label>
-                <textarea id="teamText" rows="1" maxlength="4000" placeholder="Message the team…"></textarea>
+                <button type="button" id="teamEmoji" class="team-cam shrink-0" title="Add an emoji" aria-label="Add an emoji">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.83 14.83a4 4 0 01-5.66 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </button>
                 <button type="button" id="teamSend" class="team-send" aria-label="Send">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
                 </button>
@@ -208,14 +217,33 @@
     .team-photochip { display: flex; align-items: center; gap: .4rem; font-size: .72rem; font-weight: 600; color: var(--color-gray-500); margin-bottom: .4rem; background: var(--color-gray-100); border-radius: .6rem; padding: .3rem .5rem; }
     .team-photochip.hidden { display: none; }
     .team-photochip img { width: 1.9rem; height: 1.9rem; border-radius: .4rem; object-fit: cover; }
-    .team-box { display: flex; align-items: flex-end; gap: .25rem; border: 1.5px solid var(--color-gray-200); border-radius: 1.1rem; padding: .2rem .2rem .2rem .4rem; background: var(--color-white); }
+    .team-box { display: flex; align-items: flex-end; border: 1.5px solid var(--color-gray-200); border-radius: 1.1rem; padding: .1rem .7rem; background: var(--color-white); }
     .team-box:focus-within { border-color: #3f7fb0; box-shadow: 0 0 0 3px rgb(63 127 176 / .16); }
-    .team-cam { width: 2.15rem; height: 2.15rem; border-radius: .7rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--color-brand-50); color: var(--color-brand-700); cursor: pointer; }
-    #teamText { resize: none; border: 0; outline: none; background: transparent; flex: 1 1 auto; max-height: 5.5rem; padding: .4rem .25rem; font-size: .92rem; color: inherit; }
+    /* Attach / mic / video / emoji live under the field, not in it. Send sits
+       at the far end of the same row so the thumb has one place to go. */
+    .team-tools { display: flex; align-items: center; gap: .15rem; margin-top: .4rem; }
+    .team-tools .team-send { margin-left: auto; }
+    .team-cam { width: 2.15rem; height: 2.15rem; border-radius: .7rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--color-brand-700); cursor: pointer;
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .team-cam:hover { background: var(--color-brand-50); }
+    html.dark .team-cam { color: #a7c98a; }
+    html.dark .team-cam:hover { background: rgb(255 255 255 / .07); }
+    #teamText { resize: none; border: 0; outline: none; background: transparent; width: 100%; max-height: 5.5rem; padding: .5rem 0; font-size: .92rem; color: inherit; }
     .team-send { width: 2.15rem; height: 2.15rem; border-radius: 999px; background: linear-gradient(140deg, #3f7fb0, #2b567c); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .team-send:disabled { opacity: .4; }
+    /* Emoji popover — above the docked panel and the board overlay it can sit in. */
+    .team-emoji-pop { position: fixed; z-index: 250; display: none; grid-template-columns: repeat(8, 1fr); gap: .1rem;
+        background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: .75rem; padding: .4rem;
+        box-shadow: 0 12px 32px -8px rgb(0 0 0 / .35); max-width: 17rem; }
+    .team-emoji-pop.is-open { display: grid; animation: teamIn .18s cubic-bezier(.22,1,.36,1) both; }
+    .team-emoji-pop button { width: 2rem; height: 2rem; font-size: 1.15rem; border-radius: .4rem; cursor: pointer; background: transparent; }
+    .team-emoji-pop button:hover { background: var(--color-gray-100); }
+    html.dark .team-emoji-pop { background: #1c2416; border-color: #2b3a1c; }
 
-    @media (prefers-reduced-motion: reduce) { .team-panel, .team-msg { animation: none; } }
+    @media (prefers-reduced-motion: reduce) {
+        .team-panel, .team-msg, .team-emoji-pop.is-open { animation: none; }
+        .team-cam { transition: none; }
+    }
 </style>
 
 <script>
@@ -467,6 +495,37 @@
             e.target.value = '';
         });
         $('teamPhotoRemove').addEventListener('click', () => { photoFile = null; $('teamPhotoChip').classList.add('hidden'); });
+
+        /* ---------- emoji ------------------------------------------------
+         * Its own popover rather than the community one: this panel can be
+         * docked inside the whiteboard overlay, which the shared popover sits
+         * underneath, and the farm emoji set is the same either way. */
+        const EMOJIS = ['🌱','🌾','🌽','🍚','🍅','🍆','🥒','🥬','🌶️','🥭','🍌','🥥','☀️','🌤️','🌧️','⛈️','🌈','💧','🌡️','🐛','🐌','🐜','🐔','🐖','🐃','🚜','🧺','🧑‍🌾','😀','😄','😅','🤔','😮','😢','😍','🙏','👍','👏','💪','🤝','❤️','🔥','✅','⚠️'];
+        const pop = document.createElement('div');
+        pop.className = 'team-emoji-pop';
+        pop.innerHTML = EMOJIS.map((em) => `<button type="button">${em}</button>`).join('');
+        document.body.appendChild(pop);
+        const closePop = () => pop.classList.remove('is-open');
+        $('teamEmoji').addEventListener('click', (e) => {
+            if (pop.classList.contains('is-open')) { closePop(); return; }
+            pop.classList.add('is-open');
+            const r = e.currentTarget.getBoundingClientRect();
+            pop.style.left = Math.max(8, Math.min(r.left, window.innerWidth - pop.offsetWidth - 8)) + 'px';
+            // Above the button unless there is no room up there.
+            pop.style.top = (r.top > pop.offsetHeight + 16 ? r.top - pop.offsetHeight - 8 : r.bottom + 8) + 'px';
+        });
+        pop.addEventListener('click', (e) => {
+            const b = e.target.closest('button');
+            if (!b) return;
+            const at = input.selectionStart ?? input.value.length;
+            input.setRangeText(b.textContent, at, input.selectionEnd ?? at, 'end');
+            input.dispatchEvent(new Event('input'));   // keep the auto-grow honest
+            input.focus();
+        });
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.team-emoji-pop') && !e.target.closest('#teamEmoji')) closePop();
+        });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePop(); });
 
         /* ---------- clips: recorded here, or picked off the device -------
          * One attachment at a time on purpose: a message with four things

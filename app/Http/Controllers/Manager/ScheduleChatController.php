@@ -223,8 +223,13 @@ class ScheduleChatController extends BaseScheduleController
                 (int) $memberId,
                 'team-chat',
                 $who . ' messaged the team',
-                \Illuminate\Support\Str::limit($said, 120),
-                route('sm.collab', ['id' => $schedule->id]),
+                // Plain words: a chat body can carry mention tokens, and a
+                // notification line has no way to render them as links.
+                \App\Support\CommunityText::plain($said, 120),
+                // Through the entry route so a member who also farms their
+                // own land does not land on a 404 — their session is pointed
+                // at their farm, not at the one that messaged them.
+                route('sm.enter', ['schedule' => $schedule->id, 'to' => 'sm.collab']),
                 $meId,
                 (int) $schedule->id,
                 1,

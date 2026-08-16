@@ -20,6 +20,8 @@
         </button>
         <span class="sb-title">🎨 Team whiteboard</span>
         <span class="sb-live" id="sbLive"></span>
+        {{-- Autosave's only voice: a word, in the corner, that the drawing is kept. --}}
+        <span class="sb-auto" id="sbAuto" role="status" aria-live="polite"></span>
         <div class="sb-pages" id="sbPages">
             <button type="button" id="sbPagePrev" class="sb-pg" title="Previous page" aria-label="Previous page"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 6l-6 6 6 6"/></svg></button>
             <span class="sb-pg-label" id="sbPageLabel">1 / 1</span>
@@ -133,6 +135,12 @@
     .sb-title { font-family: var(--font-heading); font-weight: 800; font-size: .95rem; color: var(--color-gray-900); }
     .sb-live { font-size: .68rem; font-weight: 800; color: var(--color-gray-400); }
     .sb-live.on { color: #16a34a; }
+    /* Fades in rather than appearing: the point is reassurance, not a notice. */
+    .sb-auto { font-size: .68rem; font-weight: 800; color: var(--color-gray-400); opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .sb-auto.on { opacity: 1; }
+    .sb-auto.is-saved { color: #16a34a; }
+    .sb-auto.is-failed { color: #b45309; }
+    @media (prefers-reduced-motion: reduce) { .sb-auto { transition: none; } }
     .sb-spacer { flex: 1 1 auto; }
     .sb-btn { display: inline-flex; align-items: center; justify-content: center; width: 2.15rem; height: 2.15rem; border-radius: .6rem; color: var(--color-gray-600); background: var(--color-gray-100); flex-shrink: 0; }
     .sb-btn:hover { background: var(--color-gray-200); color: var(--color-gray-800); }
@@ -221,6 +229,10 @@
 
         const SCHEDULE_ID = @json($schedule->id);
         const ME = @json((int) auth()->id());
+        // Drawing is a team membership thing; filing the drawing in the
+        // notebook is not. Someone who may not write notes still draws — their
+        // board just never autosaves, instead of retrying a 403 every 15s.
+        const CAN_SAVE = @json(\App\Support\WorkerContext::canAddNotes());
         const U = {
             events: @json(route('sm.board')), push: @json(route('sm.board.push')),
             pages: @json(route('sm.board.pages')), pageCreate: @json(route('sm.board.page-create')),
@@ -340,18 +352,25 @@
             return out.toDataURL('image/png');
         }
         // Render every page to a uniform 1280x800 PNG (normalized points scale in).
+        // `ink` says whether anything was actually drawn — autosave uses it to
+        // avoid filing a stack of blank white pages in the notebook.
         async function exportAllPages() {
-            const EW = 1280, EH = 800, imgs = [];
+            const EW = 1280, EH = 800, images = [];
+            let ink = 0;
             for (const p of pages) {
                 const off = document.createElement('canvas'); off.width = EW; off.height = EH;
                 const g = off.getContext('2d');
                 try {
                     const r = await api(`${U.events}?scheduleId=${SCHEDULE_ID}&page=${p.page}&after=0`);
-                    (r.data.events || []).forEach((ev) => { if (ev.type !== 'clear') paintEvent(g, ev.mode, ev.points, ev.color, ev.width, ev.text); });
+                    (r.data.events || []).forEach((ev) => {
+                        if (ev.type === 'clear') return;
+                        if (ev.type === 'draw') ink++;
+                        paintEvent(g, ev.mode, ev.points, ev.color, ev.width, ev.text);
+                    });
                 } catch (_) { /* export a blank page */ }
-                imgs.push(whiteComposite(off, EW, EH));
+                images.push(whiteComposite(off, EW, EH));
             }
-            return imgs;
+            return { images, ink: ink > 0 };
         }
 
         /* ---------- apply a remote/loaded event (race-safe while I shape) ---------- */

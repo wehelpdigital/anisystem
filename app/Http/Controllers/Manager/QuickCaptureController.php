@@ -205,13 +205,20 @@ class QuickCaptureController extends BaseScheduleController
                 ? trim((string) $request->input('title'))
                 : 'Quick capture — ' . Carbon::now()->format('M j, Y'));
 
+        // An album asked about on its own beats one inferred from the note.
+        // Quick Record never asks, so the note stays the fallback there and
+        // its albums keep the description they have always had.
+        $about = filled($request->input('albumDescription'))
+            ? trim((string) $request->input('albumDescription'))
+            : (filled($request->input('note'))
+                ? trim(strip_tags((string) $request->input('note')))
+                : null);
+
         return \App\Models\AsGalleryAlbum::create([
             'croppingScheduleId' => $schedule->id,
             'userId' => Auth::id(),
             'title' => $name,
-            'description' => filled($request->input('note'))
-                ? Str::limit(trim(strip_tags((string) $request->input('note'))), 480)
-                : null,
+            'description' => $about !== null ? Str::limit($about, 480) : null,
             'sortOrder' => 0,
             'deleteStatus' => 1,
         ]);
@@ -232,7 +239,16 @@ class QuickCaptureController extends BaseScheduleController
         return $this->jsonOk('', ['data' => ['albums' => $albums]]);
     }
 
-    /** Save a captured photo group into a gallery album, new or existing. */
+    /**
+     * Save a captured group into a gallery album, new or existing.
+     *
+     * An album is a shelf, not a story: the group shares a name and a
+     * description, and every item on it may carry its own as well. Photos and
+     * clips arrive in separate buckets because they are checked and stored by
+     * different rules, but they are one list to the person who captured them —
+     * `images[3]` and `clips[3]` cannot both exist, and `titles[3]` names
+     * whichever one did.
+     */
     public function storeGallery(Request $request)
     {
         // Asked before the upload is validated: someone who may not
@@ -245,50 +261,127 @@ class QuickCaptureController extends BaseScheduleController
             'scheduleId' => 'required|integer',
             'albumId' => 'nullable|integer',
             'albumTitle' => 'nullable|string|max:191',
+            'albumDescription' => 'nullable|string|max:2000',
             'title' => 'nullable|string|max:191',
             'note' => 'nullable|string|max:50000',
-            'images' => 'required|array|min:1|max:10',
+            // Neither kind is required on its own — an album may be all
+            // photos, all clips, or a mix — only that something arrived.
+            'images' => 'array|max:10|required_without:clips',
             'images.*' => 'image|mimes:jpg,jpeg,png,webp|max:8192',
+            // The same 300MB ceiling and mime list the recorder enforces.
+            'clips' => 'array|max:4|required_without:images',
+            'clips.*' => 'file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-m4v|max:307200',
+            'titles' => 'nullable|array',
+            'titles.*' => 'nullable|string|max:191',
+            'descriptions' => 'nullable|array',
+            'descriptions.*' => 'nullable|string|max:2000',
         ], [
-            'images.required' => 'Capture at least one photo.',
+            'images.required_without' => 'Capture at least one photo or clip.',
+            'clips.required_without' => 'Capture at least one photo or clip.',
             'images.*.max' => 'Each photo must be 8 MB or smaller.',
+            'clips.*.max' => 'Each clip must be 300 MB or smaller.',
         ]);
 
 
         $album = $this->albumFor($schedule, $request);
 
-        $caption = filled($request->input('title'))
+        $titles = (array) $request->input('titles', []);
+        $descriptions = (array) $request->input('descriptions', []);
+
+        // What an unnamed item falls back to: the capture's own title, which
+        // is what every picture in a group used to be captioned with.
+        $groupCaption = filled($request->input('title'))
             ? Str::limit(trim((string) $request->input('title')), 250)
             : null;
 
-        $added = 0;
-        foreach ($request->file('images') as $file) {
+        // Keyed by the index the browser sent, so the two buckets can be put
+        // back into the order they were captured in.
+        $stored = [];
+        $clipTrouble = null;
+
+        foreach ((array) $request->file('images', []) as $i => $file) {
             $path = \App\Support\MediaStore::putFile($file, 'gallery', $schedule->id);
             if ($path === null) {
                 continue;
             }
-            \App\Models\AsGalleryImage::create([
+            $stored[$i] = ['path' => $path, 'kind' => 'image'];
+        }
+
+        foreach ((array) $request->file('clips', []) as $i => $file) {
+            // Transcoded on the way in like every other clip in the app, so a
+            // phone's 90MB minute is something a farm connection can play. A
+            // clip that will not convert must not take the photos down with
+            // it — its complaint is carried to the end and reported there.
+            try {
+                $clip = \App\Support\VideoOptimizer::storeCompressed($file, 'gallery');
+            } catch (\Throwable $e) {
+                $clipTrouble = $clipTrouble ?: ($e->getMessage() ?: 'A clip could not be saved.');
+
+                continue;
+            }
+            $stored[$i] = ['path' => $clip['video'], 'kind' => 'video'];
+        }
+
+        ksort($stored);
+
+        // Asked once, not per picture: the description column arrives with a
+        // migration, and a server that has the code but not yet the column
+        // should drop the descriptions, not the whole capture.
+        $canDescribe = \Illuminate\Support\Facades\Schema::hasColumn('as_gallery_images', 'description');
+
+        $added = 0;
+        $counts = ['image' => 0, 'video' => 0];
+        foreach ($stored as $i => $item) {
+            $caption = filled($titles[$i] ?? null)
+                ? Str::limit(trim((string) $titles[$i]), 250)
+                : $groupCaption;
+
+            $image = new \App\Models\AsGalleryImage([
                 'albumId' => $album->id,
                 'croppingScheduleId' => $schedule->id,
                 'userId' => Auth::id(),
-                'path' => $path,
+                'path' => $item['path'],
                 'caption' => $caption,
+                // The album reads back in the order the walk happened, rather
+                // than newest-first inside a single capture.
+                'sortOrder' => $added,
                 'deleteStatus' => 1,
             ]);
+            // Assigned rather than mass-filled: `description` is newer than
+            // the model's $fillable list, and fill() drops what it does not
+            // recognise without saying so.
+            if ($canDescribe) {
+                $image->description = filled($descriptions[$i] ?? null)
+                    ? trim((string) $descriptions[$i])
+                    : null;
+            }
+            $image->save();
+
+            $counts[$item['kind']]++;
             $added++;
         }
 
         if (! $added) {
-            return $this->jsonFail('Nothing could be saved. Please try again.', 500);
+            return $this->jsonFail($clipTrouble ?: 'Nothing could be saved. Please try again.', 500);
         }
 
-        return $this->jsonOk(
-            $added . ' ' . str('photo')->plural($added) . ' saved to \'' . $album->title . '\'.',
-            [
-                'count' => $added,
-                'albumId' => $album->id,
-                'galleryUrl' => route('sm.gallery', ['id' => $schedule->id]),
-            ]
-        );
+        $parts = [];
+        if ($counts['image']) {
+            $parts[] = $counts['image'] . ' ' . str('photo')->plural($counts['image']);
+        }
+        if ($counts['video']) {
+            $parts[] = $counts['video'] . ' ' . str('clip')->plural($counts['video']);
+        }
+
+        $message = implode(' and ', $parts) . ' saved to \'' . $album->title . '\'.';
+        if ($clipTrouble) {
+            $message .= ' ' . $clipTrouble;
+        }
+
+        return $this->jsonOk($message, [
+            'count' => $added,
+            'albumId' => $album->id,
+            'galleryUrl' => route('sm.gallery', ['id' => $schedule->id]),
+        ]);
     }
 }

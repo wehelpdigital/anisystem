@@ -707,6 +707,11 @@ class ActivityController extends BaseScheduleController
         }
 
         $activity->update(['isDraft' => 1]);
+        // A draft sits off the timeline, so to every other viewer this is the
+        // card leaving the board — the same thing a delete is, and the client
+        // already knows how to animate that out.
+        $this->broadcastBoard($schedule, 'deleted', ['id' => $activity->id], $activity->versionId);
+
         return $this->jsonOk('Moved to drafts.');
     }
 
@@ -735,6 +740,10 @@ class ActivityController extends BaseScheduleController
         $data['lotIds'] = $fresh->lots->pluck('id');
         $data['workerIds'] = $fresh->workers->pluck('id');
         $data = array_merge($data, $this->serializeWorkerPay($fresh));
+
+        // Coming back off the drafts bin is the card arriving, which is what
+        // 'saved' already means to the board.
+        $this->broadcastBoard($schedule, 'saved', $data, $fresh->versionId);
 
         return $this->jsonOk('Restored from drafts.', ['data' => $data]);
     }
@@ -793,6 +802,10 @@ class ActivityController extends BaseScheduleController
         $data['lotIds'] = $fresh->lots->pluck('id');
         $data['workerIds'] = $fresh->workers->pluck('id');
         $data = array_merge($data, $this->serializeWorkerPay($fresh));
+
+        // Undoing a delete puts the card back for everyone, not just for the
+        // person who pressed undo.
+        $this->broadcastBoard($schedule, 'saved', $data, $fresh->versionId);
 
         return $this->jsonOk('Activity restored.', ['data' => $data]);
     }
@@ -1378,6 +1391,10 @@ class ActivityController extends BaseScheduleController
         if (! $this->noteHasBody($content) && empty($media)) {
             if ($existing) {
                 $existing->update(['deleteStatus' => 0]);
+                // Emptying a note is still an edit — the day loses its note
+                // block, and a board that only hears about notes being written
+                // keeps showing words nobody can find any more.
+                $this->broadcastBoard($schedule, 'reload', ['noteDate' => $noteDate], $versionId);
             }
             return $this->jsonOk('Note cleared.', ['data' => null]);
         }
@@ -1436,6 +1453,7 @@ class ActivityController extends BaseScheduleController
             ->forVersion($versionId)
             ->whereDate('noteDate', $request->input('noteDate'))
             ->update(['deleteStatus' => 0]);
+        $this->broadcastBoard($schedule, 'reload', ['noteDate' => $request->input('noteDate')], $versionId);
 
         return $this->jsonOk('Note deleted.');
     }
@@ -1774,6 +1792,16 @@ class ActivityController extends BaseScheduleController
                 'markedByUserId' => \Illuminate\Support\Facades\Auth::id(),
             ]
         );
+
+        // Who turned up is written on the cards themselves, so a tick has to
+        // travel. The tick alone is sent rather than the whole day: every card
+        // already carries what each name is worth, so the other boards can move
+        // the same row and the same total without asking anything back.
+        $this->broadcastBoard($schedule, 'reload', [
+            'attendanceDate' => $data['date'],
+            'workerId'       => (int) $worker->id,
+            'present'        => (bool) $data['present'],
+        ]);
 
         // Hand back the day's new total so the board never has to work out for
         // itself what a tick was worth.

@@ -97,7 +97,11 @@ class ScheduleCallController extends BaseScheduleController
         // so it is not deduped.
         $notes = app(\App\Services\NotificationService::class);
         $who = $me->firstName ?: 'A teammate';
-        $url = route('sm.collab', ['id' => $schedule->id]);
+        // Through the entry route, not straight at the room: a member who
+        // also farms land of their own has their session pointed at THEIR
+        // farm, so the direct link 404s for exactly the people most likely
+        // to be called. The entry route puts them in the right farm first.
+        $url = route('sm.enter', ['schedule' => $schedule->id, 'to' => 'sm.collab']);
         $targets = $kind === 'worker' && $with
             ? [(int) $with]
             : ScheduleTeam::memberIds($schedule);
