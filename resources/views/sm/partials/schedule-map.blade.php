@@ -1176,9 +1176,25 @@
         }
         if (!navigator.geolocation) { if (window.toast) toast('No GPS on this device.', 'error'); return; }
         btn.classList.add('is-active');
+        /* Pressing the button is a request to be taken there.
+         *
+         * The only pan used to be the passive one below, and it required
+         * BOTH that nothing had centred the map yet AND that the schedule
+         * had no shapes on it. A farm with a single lot drawn failed the
+         * second test, and any return visit failed the first — so the dot
+         * appeared and the map stayed where it was. That reads as "GPS finds
+         * me but the map does not move", which is what it was. */
+        let goToMe = true;
         gpsWatch = navigator.geolocation.watchPosition((pos) => {
             const { latitude: lat, longitude: lng, accuracy: acc } = pos.coords;
             renderLoc({ userId: ME, name: 'Me', lat, lng, acc });
+            if (goToMe) {
+                goToMe = false;
+                centeredOnMe = true;
+                map.panTo({ lat, lng });
+                if (map.getZoom() < 17) map.setZoom(17);
+                dropVeil();
+            }
             if (!centeredOnMe && !layers.size) { centeredOnMe = true; map.setCenter({ lat, lng }); map.setZoom(17); dropVeil(); }
             if (Date.now() - lastSent > 5000) {
                 lastSent = Date.now();
@@ -1668,8 +1684,24 @@
         }
     }
 
+    /* Look at the box again.
+     *
+     * Google measures the container once, when the map is constructed. In
+     * the Collab Room the map lives in a tab, and the construction can land
+     * while that tab is off screen — the Maps script is fetched on first
+     * show and boots whenever it arrives, by which time the reader may have
+     * moved on. A map built against a box of nothing stays that size, which
+     * is the grey rectangle people report as "the map tab does not work".
+     * Every return to the tab now asks it to measure again. */
+    window.cmapRefresh = function () {
+        if (!booted || !map || !window.google?.maps) return;
+        const at = map.getCenter();
+        G().event.trigger(map, 'resize');
+        if (at) map.setCenter(at);
+    };
+
     window.initCollabMap = function () {
-        if (booted) return;
+        if (booted) { window.cmapRefresh(); return; }
         if (window.google && window.google.maps) { booted = true; buildMap(); return; }
         if (loading) return;
         loading = true;

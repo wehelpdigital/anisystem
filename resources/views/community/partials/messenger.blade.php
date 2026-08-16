@@ -137,7 +137,21 @@
     html.dark .msgr-thread-name { color:#e5e9df; }
     html.dark .msgr-bubble.them { background:#232a1c; color:#dbe6cf; }
     html.dark .msgr-window-foot input { background:#10160c; border-color:#2b3a1c; color:#e5e9df; }
-    @media (max-width:480px) { .msgr-windows { display:none; } .msgr-window { position:fixed; inset:auto 0 0 0; width:100%; height:70vh; border-radius:1rem 1rem 0 0; } }
+    /* On a phone one conversation owns the bottom of the screen.
+       The row that holds the windows must NOT be display:none here: the
+       windows are appended INTO it, and a display:none parent takes its
+       whole subtree out of the box tree — a position:fixed child of a hidden
+       parent renders nothing at all. That is the entire "messaging does not
+       work on my phone": the window was being built and then never drawn.
+       `display:contents` gets the row out of the way without taking its
+       children with it. */
+    @media (max-width:480px) {
+        .msgr-windows { display:contents; }
+        .msgr-window { position:fixed; inset:auto 0 0 0; width:100%; height:70vh;
+            border-radius:1rem 1rem 0 0; z-index:96; }
+        /* Two open at once would stack on the same spot; the newest wins. */
+        .msgr-window:not(:last-child) { display:none; }
+    }
 </style>
 
 <script>
@@ -518,6 +532,23 @@
     // Deep-link: /app/community?dm=<userId> opens that thread (from the bell).
     const dm = new URLSearchParams(location.search).get('dm');
     if (dm && /^\d+$/.test(dm)) openWindow(parseInt(dm, 10), 'Member');
+
+    /* The dock's own line.
+     *
+     * Sending a DM already broadcasts UserNotified on the recipient's
+     * private user.{id} channel — that is how their bell rings the instant a
+     * message lands. The dock never subscribed to it, so the bell announced
+     * a message the chat window would not show for up to eight more seconds.
+     * It listens now and pulls immediately; the poll stays as the floor,
+     * because a dropped broadcast should cost a few seconds, not the
+     * message. */
+    const ME = {{ (int) auth()->id() }};
+    try {
+        window.Echo?.private('user.' + ME).listen('.notify', (p) => {
+            if (!p || (p.type && p.type !== 'message')) return;
+            livePoll();
+        });
+    } catch (_) { /* no realtime here — the poll covers it */ }
 
     livePoll();
     setInterval(livePoll, 8000);

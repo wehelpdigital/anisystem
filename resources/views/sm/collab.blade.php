@@ -217,7 +217,16 @@
     }
 
     /* ---------- per-tab loading overlay ---------- */
-    const LABELS = { chat: 'Loading…', drawing: 'Loading…', map: 'Loading…', activities: 'Loading…', ai: 'Loading…' };
+    /* Every tab must appear here AND get a branch in the collab:show handler
+       below that calls markReady(). The loader is raised for whatever tab is
+       opened, and only markReady() lowers it — so a tab with no branch shows
+       a spinner over its own working content, for ever. That is exactly what
+       Cameras and Where-we-are did when they were added. */
+    const LABELS = {
+        chat: 'Loading…', drawing: 'Loading…', map: 'Loading the map…',
+        activities: 'Loading…', ai: 'Loading…',
+        camera: 'Starting the cameras…', location: 'Loading the map…',
+    };
     const loader = document.getElementById('collabLoader');
     const loaderText = document.getElementById('collabLoaderText');
     const frame = document.getElementById('collabActivitiesFrame');
@@ -267,6 +276,15 @@
         } else if (tab === 'map') {
             if (typeof window.initCollabMap === 'function') window.initCollabMap();
             rafReady('map');
+        } else if (tab === 'camera') {
+            // The grid draws from the live room; it has nothing to fetch, so
+            // it is ready as soon as it has been painted once.
+            rafReady('camera');
+        } else if (tab === 'location') {
+            // The map boots on first show and sizes itself against a panel
+            // that is now actually on screen; the partial handles that on the
+            // same event. Ready once it has had a frame to do it in.
+            rafReady('location');
         } else if (tab === 'ai') {
             rafReady('ai');
         } else if (tab === 'activities') {
