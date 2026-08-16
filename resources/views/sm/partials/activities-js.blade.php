@@ -7377,7 +7377,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (td.card && td.card.getAttribute('data-is-done') === '1') return;   // done = locked in place
         // Long-pressing a card or a header is the phone's version of the
         // desktop drag, and buys the same writes. Don't even lift the ghost.
-        // A sticky note asks the note question instead, as its drag does.
+        //
+        // The note arm never fires today: touchDrag is only ever built as
+        // {card, header, groupDate}, so td.note is always undefined and this is
+        // always the CAN_EDIT question. It is written the long way anyway
+        // because the drop handler below still knows how to move a sticky note,
+        // and whoever reconnects that should get the notes question with it
+        // rather than the plan's.
         if (td.note ? !MAY_NOTE : !CAN_EDIT) return;
         td.active = true;
         document.body.classList.add('is-touch-dragging');
