@@ -1412,12 +1412,18 @@
     }
     function flyTo(lat, lng, wantZoom) {
         if (!map) return;
+        // NaN is a number, which is why `typeof wantZoom === 'number'` was not
+        // the check it looked like, and why an undefined destination flew
+        // silently: every arithmetic below produced NaN, the map declined it
+        // without complaint, and the caller went on to announce it had arrived.
+        // Refusing here would have named the bug on the first press.
+        if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
         cancelFly();
         const from = map.getCenter();
         if (!from) return;
         const fromLat = from.lat(), fromLng = from.lng();
         const fromZoom = map.getZoom() || 17;
-        const toZoom = typeof wantZoom === 'number' ? wantZoom : fromZoom;
+        const toZoom = Number.isFinite(wantZoom) ? wantZoom : fromZoom;
         const still = Math.abs(fromLat - lat) < 1e-7 && Math.abs(fromLng - lng) < 1e-7
             && Math.abs(fromZoom - toZoom) < 0.01;
         if (still) return;
@@ -1505,7 +1511,10 @@
      * second time should not make somebody stand still waiting for a satellite
      * to tell them what they were told ten seconds ago. */
     let myFix = null;
-    const FIX_FRESH = 20000;
+    // Long enough that a double-tap is instant, short enough that it cannot
+    // answer for somewhere you have walked away from. Twenty seconds is fifty
+    // paces, and the whole point of the button is where you are standing NOW.
+    const FIX_FRESH = 10000;
 
     /* How close to go in, decided by how well the browser actually knows.
      *
@@ -1526,6 +1535,7 @@
         const metres = Math.max(8, Number(acc) || 0);      // 8 m is as sure as anything gets
         const perPixel = (2 * metres) / (side * 0.5);
         const z = Math.log2((156543.03392 * Math.cos(lat * Math.PI / 180)) / perPixel);
+        if (!Number.isFinite(z)) return 17;   // a sane close-in default, never NaN
         return Math.max(12, Math.min(19, Math.round(z)));
     }
 
@@ -1573,8 +1583,27 @@
             if (window.toast) toast('This device has no GPS.', 'error');
             return;
         }
-        const land = ({ latitude: lat, longitude: lng, accuracy: acc }) => {
-            myFix = { lat, lng, acc, at: Date.now() };
+        /* One shape, {lat, lng, acc}, and it is the cache's shape.
+         *
+         * This took the browser's shape — latitude/longitude/accuracy — and was
+         * handed the cache, which speaks lat/lng/acc. Every field came out
+         * undefined. Nothing threw: the centre became NaN and the map ignored
+         * it, the zoom became NaN and the map ignored that too, and the toast
+         * rounded a missing accuracy to 0 and cheerfully said "Centred on you".
+         * Then it wrote the undefined fix back over the good one with a fresh
+         * timestamp, so every press inside the next twenty seconds took the
+         * same poisoned path and re-poisoned it on the way through. The first
+         * press of a session worked; the second onwards said it had worked and
+         * did nothing, which is what was being reported. */
+        const land = (fix) => {
+            const { lat, lng, acc } = fix || {};
+            if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+                // Loud, not silent. A fix with no numbers in it is a bug, and
+                // the last one hid behind a cheerful message for three rounds.
+                myFix = null;
+                if (window.toast) toast('That position came back empty — try once more.', 'error');
+                return;
+            }
             // Draw the dot as well as move: a map that jumps somewhere with
             // nothing on it has not actually answered "where am I".
             // Local only — sharing is the button next door, and stays its own
@@ -1587,13 +1616,23 @@
             sayWhere(acc);
         };
 
+        // Stamped when the reading was TAKEN, never when it is re-used, so the
+        // cache cannot renew itself. Reusing kept pushing the expiry forward,
+        // which is how a fix from where you were standing several minutes ago
+        // stayed "fresh" for as long as you kept pressing the button.
         if (myFix && Date.now() - myFix.at < FIX_FRESH) { land(myFix); return; }
+        myFix = null;
 
         btn.classList.add('is-busy');
         btn.disabled = true;
         const done = () => { btn.classList.remove('is-busy'); btn.disabled = false; };
         navigator.geolocation.getCurrentPosition(
-            (pos) => { done(); land(pos.coords); },
+            (pos) => {
+                done();
+                const c = pos && pos.coords;
+                myFix = c ? { lat: c.latitude, lng: c.longitude, acc: c.accuracy, at: Date.now() } : null;
+                land(myFix);
+            },
             (err) => {
                 done();
                 if (!window.toast) return;
