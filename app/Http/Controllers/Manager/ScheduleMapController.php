@@ -19,6 +19,17 @@ use Illuminate\Support\Facades\Validator;
 class ScheduleMapController extends BaseScheduleController
 {
     /**
+     * The lettering a label may be written in — keys, not font stacks.
+     *
+     * The client owns the stacks, because which families a phone actually has
+     * is a client question and the answer keeps changing. Four of them, all
+     * already installed everywhere: a sans, a serif, a condensed and a
+     * monospace. Nothing here downloads a font — the map is read in a field,
+     * on whatever signal the field has.
+     */
+    private const FONTS = 'sans,serif,cond,mono';
+
+    /**
      * The map as a schedule module of its own, for planning outside a call.
      * Same partial the Collab Room embeds, so the tools, the saved maps and
      * the live team drawing are the same map — not a copy of one.
@@ -67,10 +78,13 @@ class ScheduleMapController extends BaseScheduleController
         $validator = Validator::make($request->all(), [
             'kind' => 'required|in:pen,line,path,rect,area,text,arrow',
             'color' => 'nullable|string|max:16',
-            'width' => 'nullable|integer|min:1|max:20',
+            // 20 was the pen's ceiling. A label's type size lives in the same
+            // column and wants to go bigger than any line ever would.
+            'width' => 'nullable|integer|min:1|max:64',
             'points' => 'required|array|min:1|max:2000',
             'points.*' => 'array|size:2',
             'label' => 'nullable|string|max:500',
+            'font' => 'nullable|in:' . self::FONTS,
         ]);
         if ($validator->fails()) {
             return $this->jsonFail($validator->errors()->first(), 422);
@@ -82,6 +96,7 @@ class ScheduleMapController extends BaseScheduleController
             'kind' => $request->input('kind'),
             'color' => $request->input('color'),
             'width' => (int) $request->input('width', 3),
+            'font' => $request->input('font'),
             'points' => json_encode($request->input('points')),
             'label' => $request->input('label'),
             'deleteStatus' => 1,
@@ -107,10 +122,18 @@ class ScheduleMapController extends BaseScheduleController
         // and a view-only member could drag a field to a different shape.
         $this->assertCanEdit();
 
+        // Everything but the id is optional, and only what was sent is
+        // written. This door used to move geometry and nothing else, so a
+        // label's words, its lettering and its size each needed a door of
+        // their own — three more endpoints saying the same thing about the
+        // same row. They come through here instead.
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
-            'points' => 'required|array|min:1|max:2000',
+            'points' => 'sometimes|array|min:1|max:2000',
             'points.*' => 'array|size:2',
+            'label' => 'sometimes|nullable|string|max:500',
+            'font' => 'sometimes|nullable|in:' . self::FONTS,
+            'width' => 'sometimes|integer|min:1|max:64',
         ]);
         if ($validator->fails()) {
             return $this->jsonFail($validator->errors()->first(), 422);
@@ -123,7 +146,24 @@ class ScheduleMapController extends BaseScheduleController
             return $this->jsonFail('That shape no longer exists.', 404);
         }
 
-        $object->update(['points' => json_encode($request->input('points'))]);
+        $patch = [];
+        if ($request->has('points')) {
+            $patch['points'] = json_encode($request->input('points'));
+        }
+        if ($request->has('label')) {
+            $patch['label'] = $request->input('label');
+        }
+        if ($request->has('font')) {
+            $patch['font'] = $request->input('font');
+        }
+        if ($request->has('width')) {
+            $patch['width'] = (int) $request->input('width');
+        }
+        if (empty($patch)) {
+            return $this->jsonFail('Nothing to change on that shape.', 422);
+        }
+
+        $object->update($patch);
         $this->emit($schedule->id, ['action' => 'update', 'object' => $object->fresh()->shaped(), 'actorUserId' => $meId]);
 
         return response()->json(['success' => true, 'data' => ['object' => $object->fresh()->shaped()]]);
@@ -314,6 +354,7 @@ class ScheduleMapController extends BaseScheduleController
                 'kind' => $o['kind'] ?? 'pen',
                 'color' => $o['color'] ?? null,
                 'width' => (int) ($o['width'] ?? 3),
+                'font' => $o['font'] ?? null,
                 'points' => $o['points'],
                 'label' => $o['label'] ?? null,
             ])->values()->all();
@@ -588,8 +629,12 @@ class ScheduleMapController extends BaseScheduleController
 
         $saveId = null;
         if ($mode === 'map') {
+            // Whatever is not written here is not in the file, and so is gone
+            // the next time the map is opened — which is how a saved map came
+            // back with every label reset to the default face.
             $shapes = json_encode(array_map(fn ($o) => [
                 'kind' => $o['kind'], 'color' => $o['color'], 'width' => $o['width'],
+                'font' => $o['font'] ?? null,
                 'points' => $o['points'], 'label' => $o['label'],
             ], $objects));
 
@@ -674,6 +719,10 @@ class ScheduleMapController extends BaseScheduleController
                 'kind' => $o['kind'] ?? 'pen',
                 'color' => $o['color'] ?? null,
                 'width' => (int) ($o['width'] ?? 3),
+                // Saves written before lettering existed have no font, and
+                // null is exactly right for them: the client reads that as
+                // "an old label" and draws it the way it always drew.
+                'font' => $o['font'] ?? null,
                 'points' => json_encode($o['points']),
                 'label' => $o['label'] ?? null,
                 'deleteStatus' => 1,

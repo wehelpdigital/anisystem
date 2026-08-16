@@ -183,6 +183,56 @@
                 </div>
             </div>
         </div>
+        {{-- Writing on the map. It has no button of its own in the bar: the
+             way in is the Text tool (tap the ground) or tapping a label that
+             is already there — so there is nothing here for the Maps module
+             to proxy, only a sheet that opens over whichever screen asked.
+
+             prompt() used to do this, which meant one line of plain text, no
+             say in how it looked, and a browser dialog over the field you
+             were pointing at. --}}
+        <div class="sheet hidden" id="cmapTextSheet" style="--sheet-width:26rem">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+                <h3 class="sheet-title" id="cmapTextTitleH">Add a label</h3>
+                <button type="button" class="icon-btn" data-sheet-close aria-label="Close">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="sheet-body" style="padding-bottom:1.1rem">
+                <label class="cmap-save-label" for="cmapTextInput">What should it say?</label>
+                {{-- Rows, not a single line: a gate label is often two words
+                     over two lines, and the column takes 500 characters. --}}
+                <textarea id="cmapTextInput" class="form-textarea" rows="3" maxlength="500"
+                    placeholder="North gate&#10;keep clear"></textarea>
+                <p class="cmap-text-left" id="cmapTextLeft"></p>
+                <label class="cmap-save-label">Lettering</label>
+                {{-- Each one is written in itself — the name of a typeface
+                     tells a farmer nothing, the shape of it tells them
+                     everything. The stacks are set from JS so there is one
+                     list of families, not two. --}}
+                <div class="cmap-fonts" id="cmapFontRow">
+                    <button type="button" class="cmap-fontopt is-active" data-mfont="sans">
+                        <span class="cmap-fontsample">Aa</span><b>Plain</b>
+                    </button>
+                    <button type="button" class="cmap-fontopt" data-mfont="serif">
+                        <span class="cmap-fontsample">Aa</span><b>Book</b>
+                    </button>
+                    <button type="button" class="cmap-fontopt" data-mfont="cond">
+                        <span class="cmap-fontsample">Aa</span><b>Narrow</b>
+                    </button>
+                    <button type="button" class="cmap-fontopt" data-mfont="mono">
+                        <span class="cmap-fontsample">Aa</span><b>Even</b>
+                    </button>
+                </div>
+                <p class="cmap-text-hint">
+                    Size is set on the map: the label comes up held, with a round
+                    <b>A</b> beside it — drag that away to make it bigger, back in to
+                    make it smaller.
+                </p>
+                <button type="button" class="cmap-save-go" id="cmapTextGo"><span id="cmapTextGoTxt">Place label</span></button>
+            </div>
+        </div>
         {{-- Where you are, and what the ground looks like — beside the pen's
              own settings, because they are all "how the map reads".
 
@@ -261,6 +311,11 @@
         </div>
         <div class="cmap-editbar hidden" id="cmapEditBar">
             <span class="cmap-editbar-lbl" id="cmapEditLbl">Editing</span>
+            {{-- Only a label has words to change, so only a label offers it.
+                 Tapping the label itself opens the same sheet; this is the way
+                 back to it once the sheet has been closed and the label is
+                 still held. --}}
+            <button type="button" id="cmapEditText" hidden>Edit text</button>
             <button type="button" id="cmapDelPoint" hidden>Delete point</button>
             <button type="button" id="cmapDelObj">Delete shape</button>
             <button type="button" id="cmapEditDone">Done</button>
@@ -330,6 +385,26 @@
     html.dark .cmap-sizeopt span { background: #cdd8c0; }
     html.dark .cmap-sizeopt b { color: #cdd8c0; }
     html.dark .cmap-sizeopt.is-active { border-color: #6b9f3d; background: rgb(107 159 61 / .22); }
+    /* The lettering picker: a row of the four faces, each shown in itself.
+       Wraps rather than scrolls — four is few enough to see at once, and a
+       scroller hides the one you have not looked at yet. */
+    .cmap-fonts { display: grid; grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr)); gap: .5rem; }
+    .cmap-fontopt { display: flex; flex-direction: column; align-items: center; gap: .15rem;
+        padding: .55rem .4rem; border-radius: .7rem; border: 2px solid var(--color-gray-200);
+        background: var(--color-white); cursor: pointer;
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+    .cmap-fontsample { font-size: 1.45rem; line-height: 1.1; font-weight: 800; color: var(--color-gray-900); }
+    .cmap-fontopt b { font-size: .68rem; font-weight: 700; color: var(--color-gray-500); }
+    .cmap-fontopt.is-active { border-color: #4a7c2a; background: #f0f7e8; }
+    html.dark .cmap-fontopt { background: #151b12; border-color: #2b3a1c; }
+    html.dark .cmap-fontsample { color: #e8efe1; }
+    html.dark .cmap-fontopt b { color: #a9b89b; }
+    html.dark .cmap-fontopt.is-active { border-color: #6b9f3d; background: rgb(107 159 61 / .22); }
+    @media (prefers-reduced-motion: reduce) { .cmap-fontopt { transition: none; } }
+    .cmap-text-left { font-size: .68rem; color: var(--color-gray-400); text-align: right; margin-top: .25rem; }
+    .cmap-text-hint { font-size: .72rem; color: var(--color-gray-500); line-height: 1.5; margin-top: .7rem; }
+    .cmap-text-hint b { font-weight: 800; color: var(--color-gray-700); }
+    html.dark .cmap-text-hint b { color: #e8efe1; }
     .cmap-savebtn { background: #4a7c2a; color: #fff; }
     .cmap-savebtn:hover { background: #3d6823; color: #fff; }
     .cmap-mrow small { display: block; font-size: .68rem; font-weight: 500; color: var(--color-gray-400); margin-top: .1rem; }
@@ -443,6 +518,7 @@
     .cmap-editbar button { font-size: .75rem; font-weight: 800; padding: .34rem .7rem; border-radius: 999px; white-space: nowrap; }
     #cmapDelPoint, #cmapDelObj { background: #fee2e2; color: #b91c1c; }
     #cmapEditDone { background: var(--color-gray-100); color: var(--color-gray-700); }
+    #cmapEditText { background: var(--color-brand-100); color: var(--color-brand-800); }
     @media (prefers-reduced-motion: reduce) { .cmap-editbar { transition: none; } }
     /* The autosave's only voice: it appears, says the word, and goes away. */
     .cmap-saved { position: absolute; top: .6rem; right: .6rem; z-index: 6; pointer-events: none;
@@ -495,7 +571,12 @@
        it belongs to rather than on it — see BADGE_DISC for why the gap is
        measured in screen pixels and not in metres. */
     .cmap-mbadge { cursor: pointer; line-height: 1; }
-    .cmap-txt-g { background: #fff; border: 1.5px solid #111827; border-radius: .45rem; padding: .12rem .45rem; box-shadow: 0 2px 6px rgb(0 0 0 / .25); }
+    /* A written label. pre-line, not nowrap: the editor takes several lines
+       and every one of them has to survive the trip to the ground — the
+       measurement labels above are one number and stay on one line. */
+    .cmap-txt-g { background: #fff; border: 1.5px solid #111827; border-radius: .45rem;
+        padding: .12rem .45rem; box-shadow: 0 2px 6px rgb(0 0 0 / .25);
+        white-space: pre-line; text-align: center; line-height: 1.2; }
     .cmap-me-g { background: rgb(17 24 39 / .82); border-radius: .45rem; padding: .05rem .35rem; }
     /* Live-position dots are HTML overlays, not markers: markers cannot
        ripple, and two stacked markers is what buried the name UNDER the dot.
@@ -565,6 +646,58 @@
             label: { text, className: cls, color: colorOverride || '#fff', fontSize: '11px', fontWeight: '800' },
         });
     }
+
+    /* ---------- how a written label is lettered ----------
+     *
+     * Four faces, and no @font-face anywhere near them. This map is read
+     * standing in a field on whatever bar of signal the field has, and a
+     * webfont there is a label that is invisible until the download lands —
+     * or forever. So every stack below is families the device already has,
+     * ending in the generic that CSS guarantees.
+     *
+     * `cond` is the honest one: Windows has Arial Narrow, Android answers to
+     * sans-serif-condensed (its Roboto Condensed), most desktop Linux has
+     * Liberation Sans Narrow — and Apple has nothing condensed under a name
+     * worth trusting, so an iPhone quietly gets plain sans. Narrow where
+     * narrow exists, readable everywhere, downloaded never. */
+    const FONTS = {
+        sans: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+        serif: 'Georgia, "Times New Roman", Times, serif',
+        cond: '"Arial Narrow", "Roboto Condensed", "Liberation Sans Narrow", sans-serif-condensed, sans-serif',
+        mono: 'ui-monospace, SFMono-Regular, Menlo, Consolas, "Roboto Mono", "Courier New", monospace',
+    };
+    // Small enough to sit beside a fence without shouting, big enough to name
+    // a whole paddock from across it. 16 is where a new one starts.
+    const TXT_MIN = 10, TXT_MAX = 48, TXT_NEW = 16;
+    // What a label looked like before any of this existed, and still does.
+    const TXT_LEGACY = 11;
+    const clampTxt = (n) => Math.min(TXT_MAX, Math.max(TXT_MIN, Math.round(n)));
+
+    /* What face and what size to draw this label at.
+     *
+     * `width` is stroke thickness for every other kind, and text objects were
+     * saved with whatever the pen happened to be set to — so it cannot simply
+     * be read as a type size. `font` is the tell: a row that has one was
+     * written since labels could be lettered and means its width; a row
+     * without one predates that, and keeps the hardcoded 11px and Google's own
+     * face, which is exactly how it looks today. */
+    function textStyle(o) {
+        const family = FONTS[o && o.font] || null;
+        return { family, px: family ? clampTxt(parseInt(o.width, 10) || TXT_NEW) : TXT_LEGACY };
+    }
+    /** The marker label a text object wears — one shape, wherever it is set. */
+    function textLabelOpts(o, sizeOverride) {
+        const st = textStyle(o);
+        const label = {
+            text: String((o && o.label) || ''), className: 'cmap-txt-g', color: '#111827',
+            fontSize: (sizeOverride ? clampTxt(sizeOverride) : st.px) + 'px', fontWeight: '800',
+        };
+        // Left unset for the old rows on purpose: naming a family here, even
+        // the sans one, would change what every label drawn before today
+        // looks like.
+        if (st.family) label.fontFamily = st.family;
+        return label;
+    }
     /* Measurements are asked for, not broadcast.
      *
      * Every side of every shape used to shout its length and every field its
@@ -609,10 +742,11 @@
         + 'C-6.08 37 -11 32.08 -11 26C-11 19.92 -6.08 15 0 15Z';
 
     /** The badge that opens a shape's numbers, hung under its middle. */
-    function measureBadge(parts, id, at, colorStr, labels) {
+    function measureBadge(parts, id, at, colorStr, labels, meta) {
         // Nothing to reveal, nothing to offer: a badge with no numbers behind
-        // it is a pin that does nothing when tapped.
-        if (!labels || !labels.length) return null;
+        // it is a pin that does nothing when tapped. And nowhere to hang it
+        // from is the same answer — a shape with no anchor has no middle.
+        if (!labels || !labels.length || !at) return null;
         const badge = new (G().Marker)({
             map, position: LL(at), clickable: true, zIndex: 60, title: 'Show or hide this shape’s measurements',
             icon: { path: BADGE_DISC, scale: 1, fillColor: colorStr || '#4a7c2a',
@@ -632,19 +766,119 @@
         // Registered here rather than by position in `parts`: the caller
         // pushing one more thing afterwards would otherwise hand the toggle
         // a polyline, which has no label to change.
-        measures.set(id, { labels: labels || [], badge });
+        // The rest of the entry is what refreshMeasure needs to redo the sums
+        // in place when the shape moves — which marker is which side, which
+        // one holds the total, which one holds the area.
+        measures.set(id, {
+            labels: labels || [], badge,
+            kind: (meta && meta.kind) || null,
+            closed: !!(meta && meta.closed),
+            segs: (meta && meta.segs) || [],
+            total: (meta && meta.total) || null,
+            area: (meta && meta.area) || null,
+        });
         showMeasure(id, measureOpen.has(String(id)));
         return badge;
     }
 
     function segLabels(parts, pts, closed, bag) {
         const n = closed ? pts.length : pts.length - 1;
+        const out = [];
         for (let i = 0; i < n; i++) {
             const j = (i + 1) % pts.length;
             const lbl = textMark(mid(pts[i], pts[j]), fmtM(dist(pts[i], pts[j])), 'cmap-lbl-g');
             parts.push(lbl);
+            out.push(lbl);
             if (bag) bag.push(lbl);
         }
+        // Handed back in edge order so a later reshape can move side 3's
+        // number rather than mint a new one.
+        return out;
+    }
+
+    /* A measurement is recomputed in place, never rebuilt.
+     *
+     * The badge and the numbers stay the same markers for the life of the
+     * shape — moved and re-texted, the way the drawing preview's labels
+     * already are. Tearing them down instead would delete the badge under the
+     * finger and put a fresh one back, so an open measurement would blink
+     * shut every time a corner moved. */
+    function relabel(mk, at, text) {
+        mk.setPosition(LL(at));
+        mk.setLabel({ text, className: 'cmap-lbl-g', color: '#fff', fontSize: '11px', fontWeight: '800' });
+    }
+    function refreshMeasure(id, pts) {
+        const m = measures.get(id);
+        if (!m || !pts || pts.length < 2) return;
+        // Caught mid-surgery — a ring with two corners is a shape on its way
+        // somewhere. The render that lands afterwards will square it up.
+        if (m.closed && pts.length < 3) return;
+        const parts = layers.get(id) || [];
+        const on = measureOpen.has(String(id));
+        const n = m.closed ? pts.length : pts.length - 1;
+        for (let i = 0; i < n; i++) {
+            const j = (i + 1) % pts.length;
+            const at = mid(pts[i], pts[j]), txt = fmtM(dist(pts[i], pts[j]));
+            if (m.segs[i]) { relabel(m.segs[i], at, txt); continue; }
+            // A side that did not exist a moment ago: a point arrived. Born
+            // hidden or visible to match whatever the badge is currently
+            // saying, so one new side cannot show a number the others don't.
+            const lbl = textMark(at, txt, 'cmap-lbl-g');
+            lbl.setMap(on ? map : null);
+            m.segs[i] = lbl; m.labels.push(lbl); parts.push(lbl);
+        }
+        // A side that went away takes its number with it — out of `parts`
+        // too, or dropObject would later hide a marker already off the map.
+        while (m.segs.length > n) {
+            const lbl = m.segs.pop();
+            lbl.setMap(null);
+            const li = m.labels.indexOf(lbl); if (li >= 0) m.labels.splice(li, 1);
+            const pi = parts.indexOf(lbl); if (pi >= 0) parts.splice(pi, 1);
+        }
+        if (m.total) {
+            let sum = 0;
+            for (let i = 0; i < pts.length - 1; i++) sum += dist(pts[i], pts[i + 1]);
+            relabel(m.total, pts[pts.length - 1], 'Σ ' + fmtM(sum));
+        }
+        const at = anchorOf(m.kind, pts);
+        if (!at) return;
+        if (m.area) relabel(m.area, at, fmtA(areaOf(pts)));
+        if (m.badge) m.badge.setPosition(LL(at));
+    }
+    /* The badge follows the shape while the shape is still moving.
+     *
+     * The ask was that the anchor be rechecked and repositioned whenever the
+     * shape changed, and "changed" includes the half second a corner is under
+     * a thumb, not only the save that lands after it. The live outline is read
+     * off the shape itself rather than passed in, so it does not matter who
+     * moved it: a teardrop pin, one of Google's own handles, or a drag of the
+     * whole thing. Every OTHER way a shape changes — a teammate's edit over
+     * Echo, undo, redo, deleting a point, adding one, closing a ring — drops
+     * the shape and renders it again, which computes the anchor from the new
+     * points anyway. */
+    let trackFrame = null;
+    const trackIds = new Set();
+    function trackMeasure(id) {
+        if (!measures.has(id)) return;
+        trackIds.add(id);
+        // A drag fires far faster than a badge needs to move, and finding the
+        // inside centre is a search — once a frame is plenty.
+        if (trackFrame) return;
+        trackFrame = requestAnimationFrame(() => {
+            trackFrame = null;
+            const ids = [...trackIds];
+            trackIds.clear();
+            ids.forEach((k) => {
+                // The frame can land after the shape has gone: a teammate
+                // cleared the map, or the save came back and re-rendered.
+                const parts = layers.get(k);
+                const first = parts && parts[0];
+                if (!first || !first.getPath) return;
+                const pts = [];
+                first.getPath().forEach((v) => pts.push([v.lat(), v.lng()]));
+                refreshMeasure(k, pts);
+            });
+        });
     }
     /* Finished shapes keep the same pins the drawing had — grab one and the
        shape reshapes live under it, saving for the whole team on release.
@@ -658,6 +892,9 @@
             m.addListener('drag', (ev) => {
                 const path = parts[0].getPath ? parts[0].getPath() : null;
                 if (path) path.setAt(i, ev.latLng);
+                // The numbers describe where the shape is now, not where it
+                // was when the finger went down — badge included.
+                trackMeasure(o.id);
             });
             m.addListener('dragend', async (ev) => {
                 const q = [ev.latLng.lat(), ev.latLng.lng()];
@@ -674,7 +911,7 @@
                         pushHist({ type: 'add', object: res.data.object });
                         pushHist({ type: 'remove', object: cur });
                         await api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: cur.id } }).catch(() => {});
-                        dropObject(cur.id);
+                        dropObject(cur.id, true);
                     } catch (e) { if (window.toast) toast(e.message, 'error'); }
                     return;
                 }
@@ -769,7 +1006,7 @@
             pushHist({ type: 'add', object: res.data.object });
             pushHist({ type: 'remove', object: cur });
             await api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: cur.id } }).catch(() => {});
-            dropObject(cur.id);
+            dropObject(cur.id, true);
             if (window.toast) toast('Closed into an area.');
         } catch (e) { if (window.toast) toast(e.message, 'error'); }
     }
@@ -777,6 +1014,118 @@
         const b = new (G().LatLngBounds)();
         pts.forEach((p) => b.extend(LL(p)));
         return [b.getCenter().lat(), b.getCenter().lng()];
+    }
+    /* Where a field's number belongs.
+     *
+     * centerOf is the centre of the BOUNDING BOX, which is the middle only of
+     * shapes that fill their box. Bend a paddock around a creek, or walk an L
+     * around a barn, and that point lands in the creek or on the barn —
+     * outside the field whose area it claims to state. That was the
+     * complaint, and it is not a rounding error: on a bad L it is half a
+     * paddock out.
+     *
+     * So the anchor is the pole of inaccessibility instead: the interior
+     * point furthest from any edge. It is what a person means by "the middle
+     * of that field", it is still dead centre of a rectangle, and — the whole
+     * point — it is inside. There is no tidy formula for it, so it is found
+     * the way it always is: a coarse grid over the box, keep the best cell,
+     * look again around the winner, six passes. That settles to well under a
+     * fence post, which is finer than a badge can be placed anyway.
+     *
+     * The search runs in a flat local frame with longitude squeezed by
+     * cos(latitude), so "furthest from any edge" means what the eye means by
+     * it and not what it means in raw degrees. Nothing in the loop builds a
+     * google.maps object: the grid probes the outline several hundred times,
+     * and containsLocation would want a Polygon and a LatLng for every one of
+     * them. It is not needed either — the search proves containment itself,
+     * because the winning depth is positive or we fall back and say so. */
+    const DEG = Math.PI / 180;
+    function insideCenter(pts) {
+        // Two corners, or three in a row: there is no inside to be central
+        // in. It is a line wearing a polygon's name — anchor it like one.
+        if (!pts || pts.length < 3) return alongMid(pts || []);
+        const kx = Math.cos((pts.reduce((s, p) => s + p[0], 0) / pts.length) * DEG) || 1;
+        const P = pts.map((p) => [p[1] * kx, p[0]]);          // x east, y north, evenly scaled
+        let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+        P.forEach((q) => {
+            x0 = Math.min(x0, q[0]); y0 = Math.min(y0, q[1]);
+            x1 = Math.max(x1, q[0]); y1 = Math.max(y1, q[1]);
+        });
+        const w = x1 - x0, h = y1 - y0;
+        // Collinear, or every corner stacked on one spot: a box with no width
+        // to lay a grid across, and dividing by it would find only NaN.
+        if (!(w > 0) || !(h > 0)) return centerOf(pts);
+        /** How deep inside a point is: distance to the nearest edge, negative outside. */
+        const depth = (x, y) => {
+            let near = Infinity, inside = false;
+            for (let i = 0, j = P.length - 1; i < P.length; j = i++) {
+                const ax = P[j][0], ay = P[j][1], bx = P[i][0], by = P[i][1];
+                // Even-odd ray cast. An outline that crosses itself gets the
+                // reading even-odd gives it — lobes in, overlaps out — which
+                // is as good an answer as exists for a shape nobody meant to
+                // draw, and it cannot divide by zero: the test only runs on
+                // edges that straddle this latitude, so ay and by differ.
+                if ((ay > y) !== (by > y) && x < ax + (bx - ax) * (y - ay) / (by - ay)) inside = !inside;
+                const vx = bx - ax, vy = by - ay, l2 = vx * vx + vy * vy;
+                const t = l2 > 0 ? Math.max(0, Math.min(1, ((x - ax) * vx + (y - ay) * vy) / l2)) : 0;
+                const dx = x - (ax + vx * t), dy = y - (ay + vy * t);
+                near = Math.min(near, dx * dx + dy * dy);
+            }
+            return (inside ? 1 : -1) * Math.sqrt(near);
+        };
+        let best = null, gx = x0, gy = y0, gw = w, gh = h;
+        for (let pass = 0; pass < 6; pass++) {
+            for (let i = 0; i <= 10; i++) {
+                for (let j = 0; j <= 10; j++) {
+                    const x = gx + gw * i / 10, y = gy + gh * j / 10;
+                    const d = depth(x, y);
+                    if (!best || d > best.d) best = { x, y, d };
+                }
+            }
+            // The next pass looks only around the winner, at a quarter of the
+            // span. The winner itself is re-probed dead centre of that window,
+            // so a pass can sharpen the answer but never lose it.
+            gw /= 4; gh /= 4; gx = best.x - gw / 2; gy = best.y - gh / 2;
+        }
+        // A sliver thinner than the finest cell, or a figure-eight whose grid
+        // never landed in a lobe. The box centre is what this did for years
+        // and it beats no badge at all.
+        if (!best || !(best.d > 0)) return centerOf(pts);
+        return [best.y, best.x / kx];
+    }
+    /* An open path hung its badge at the midpoint of a straight line drawn
+       between its two ENDS — so a fence that zigzags, or one that doubles
+       back, wore its length in the middle of the next paddock. It now sits ON
+       the path, half the walk from either end. For a plain two-point line
+       that is exactly where it always was. */
+    function alongMid(pts) {
+        if (!pts || !pts.length) return null;
+        if (pts.length < 2) return pts[0];
+        const seg = [];
+        let total = 0;
+        for (let i = 0; i < pts.length - 1; i++) { const d = dist(pts[i], pts[i + 1]); seg.push(d); total += d; }
+        // A path that never left its first point has no halfway to find.
+        if (!(total > 0)) return pts[0];
+        let left = total / 2;
+        for (let i = 0; i < seg.length; i++) {
+            if (left > seg[i]) { left -= seg[i]; continue; }
+            const f = left / seg[i];
+            const sph = G().geometry.spherical;
+            // interpolate walks the great circle the segment is actually
+            // drawn along, so the badge sits on the line, not beside it.
+            if (sph && sph.interpolate) {
+                const q = sph.interpolate(LL(pts[i]), LL(pts[i + 1]), f);
+                return [q.lat(), q.lng()];
+            }
+            return [pts[i][0] + (pts[i + 1][0] - pts[i][0]) * f, pts[i][1] + (pts[i + 1][1] - pts[i][1]) * f];
+        }
+        return pts[pts.length - 1];
+    }
+    /** The one spot a shape's numbers belong: on the shape, and central to it. */
+    function anchorOf(kind, pts) {
+        if (!pts || !pts.length) return null;
+        if (pts.length === 1) return pts[0];
+        return (kind === 'rect' || kind === 'area') ? insideCenter(pts) : alongMid(pts);
     }
 
     /* One renderer for local, remote and loaded shapes — measurements are
@@ -797,14 +1146,16 @@
             // arrow with the Select tool.
             if (o.kind !== 'pen' && o.kind !== 'arrow') {
                 vertexPins(parts, o, pts, style.strokeColor);
-                segLabels(parts, pts, false, mlabels);
+                const segs = segLabels(parts, pts, false, mlabels);
+                let tot = null;
                 if (o.kind === 'path' && pts.length > 2) {
                     let total = 0;
                     for (let i = 0; i < pts.length - 1; i++) total += dist(pts[i], pts[i + 1]);
-                    const tot = textMark(pts[pts.length - 1], 'Σ ' + fmtM(total), 'cmap-lbl-g');
+                    tot = textMark(pts[pts.length - 1], 'Σ ' + fmtM(total), 'cmap-lbl-g');
                     parts.push(tot); mlabels.push(tot);
                 }
-                measureBadge(parts, o.id, mid(pts[0], pts[pts.length - 1]), style.strokeColor, mlabels);
+                measureBadge(parts, o.id, anchorOf(o.kind, pts), style.strokeColor, mlabels,
+                    { kind: o.kind, closed: false, segs, total: tot });
             }
         } else if (o.kind === 'rect') {
             const b = new (G().LatLngBounds)(LL(pts[0]), LL(pts[1]));
@@ -812,21 +1163,32 @@
             const c = [[sw.lat(), sw.lng()], [sw.lat(), ne.lng()], [ne.lat(), ne.lng()], [ne.lat(), sw.lng()]];
             parts.push(new (G().Polygon)({ ...style, paths: c.map(LL), fillColor: style.strokeColor, fillOpacity: .08 }));
             vertexPins(parts, o, c, style.strokeColor);
-            segLabels(parts, c, true, mlabels);
-            const ar = textMark(centerOf(c), fmtA(areaOf(c)), 'cmap-lbl-g');
+            const segs = segLabels(parts, c, true, mlabels);
+            // The area label and the badge share one anchor on purpose: the
+            // disc hangs BADGE_DROP below the number it opens, and that only
+            // works while they are measured from the same spot.
+            const at = anchorOf('rect', c);
+            const ar = textMark(at, fmtA(areaOf(c)), 'cmap-lbl-g');
             parts.push(ar); mlabels.push(ar);
-            measureBadge(parts, o.id, centerOf(c), style.strokeColor, mlabels);
+            measureBadge(parts, o.id, at, style.strokeColor, mlabels,
+                { kind: 'rect', closed: true, segs, area: ar });
         } else if (o.kind === 'area') {
             parts.push(new (G().Polygon)({ ...style, paths: pts.map(LL), fillColor: style.strokeColor, fillOpacity: .1 }));
             vertexPins(parts, o, pts, style.strokeColor);
-            segLabels(parts, pts, true, mlabels);
-            const ar2 = textMark(centerOf(pts), fmtA(areaOf(pts)), 'cmap-lbl-g');
+            const segs2 = segLabels(parts, pts, true, mlabels);
+            const at2 = anchorOf('area', pts);
+            const ar2 = textMark(at2, fmtA(areaOf(pts)), 'cmap-lbl-g');
             parts.push(ar2); mlabels.push(ar2);
-            measureBadge(parts, o.id, centerOf(pts), style.strokeColor, mlabels);
+            measureBadge(parts, o.id, at2, style.strokeColor, mlabels,
+                { kind: 'area', closed: true, segs: segs2, area: ar2 });
         } else if (o.kind === 'text') {
             const tm = textMark(pts[0], o.label || '', 'cmap-txt-g', '#111827');
+            // Its own face and its own size, for whoever is looking: the
+            // person who typed it, a teammate it arrived at over Echo, and
+            // this same screen after a reload — all three land here.
+            tm.setLabel(textLabelOpts(o));
             // Labels are decoration, but a text OBJECT must catch taps or it
-            // could never be erased or moved.
+            // could never be erased, moved or rewritten.
             tm.setClickable(true);
             parts.push(tm);
         }
@@ -836,28 +1198,66 @@
             if (tool === 'erase') {
                 pushHist({ type: 'remove', object: objIndex.get(o.id) || o });
                 api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: o.id } }).catch(() => {});
-                dropObject(o.id);
+                dropObject(o.id, true);
             } else if (tool === 'edit') {
                 beginEdit(o, parts);
+                // A label's whole content is words, so picking one up and
+                // opening what it says are the same intention. A drag never
+                // gets here — Google fires click only when nothing moved.
+                if (o.kind === 'text') openTextSheet(objIndex.get(o.id) || o);
+            } else if (tool === 'text' && o.kind === 'text') {
+                // With the Text tool out, a tap on ground writes a new label
+                // and a tap on a label rewrites that one — otherwise the only
+                // thing this gesture could do was stack a second label on top
+                // of the first.
+                openTextSheet(objIndex.get(o.id) || o);
             }
         }));
         if (pendingEdit === o.id) { pendingEdit = null; beginEdit(o, parts); }
         layers.set(o.id, parts);
     }
-    function dropObject(id) {
+    /* `forget` separates a shape being REMOVED from a shape being REDRAWN.
+     *
+     * Nearly every edit in this file is a dropObject immediately followed by a
+     * renderObject on the same id — a vertex nudged, a shape dragged, a point
+     * added, a teammate's update arriving. Evicting the remembered-open flag on
+     * the way through meant the numbers you had open closed themselves every
+     * time you touched the shape, which for an area lot is every few seconds.
+     * The eviction is still right when the shape is genuinely gone, so the
+     * callers that actually delete something say so. */
+    function dropObject(id, forget) {
         if (extending && extending.id === id) cancelExtend();
         if (editing && editing.o.id === id) endEdit();
         (layers.get(id) || []).forEach((p) => p.setMap(null));
         layers.delete(id); objIndex.delete(id); measures.delete(id);
         // A shape that no longer exists should not keep a place in the
         // remembered set — a season of edits would fill it with ghosts.
-        if (measureOpen.delete(String(id))) saveMeasure();
+        if (forget && measureOpen.delete(String(id))) saveMeasure();
+    }
+    /* Carry the open flag onto the id that replaces it. Several edits do not
+     * update a shape but mint a new one — a dragged box corner becomes an area,
+     * a closed multi-line becomes an area, undo re-adds with a fresh id — and
+     * the new id was never in the set, so the numbers vanished at exactly the
+     * moment the shape became the kind whose numbers matter most. */
+    function carryMeasure(oldId, newId) {
+        if (oldId == null || newId == null || String(oldId) === String(newId)) return;
+        if (!measureOpen.has(String(oldId))) return;
+        measureOpen.delete(String(oldId));
+        measureOpen.add(String(newId));
+        saveMeasure();
     }
     // Bumped every time the canvas is replaced wholesale, so a gesture that
     // began against the old shapes can tell that they are gone rather than
     // finishing itself against whatever took their place.
     let canvasGen = 0;
-    function dropAll() { canvasGen++; cancelExtend(); endEdit(); pendingPoint = null; layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); measures.clear(); measureOpen.clear(); saveMeasure(); }
+    /* measureOpen deliberately survives this. dropAll runs when a saved map is
+     * opened, when a blank canvas is started and when anyone clears — and
+     * opening a saved map is the ordinary way into the Maps module, so wiping
+     * the set there meant a map you saved with its numbers showing came back
+     * with them all put away, every single time. Stale ids cost a few bytes in
+     * localStorage and are pruned by the removal paths; a map that forgets what
+     * you asked to see costs the point of the feature. */
+    function dropAll() { canvasGen++; cancelExtend(); endEdit(); pendingPoint = null; layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); measures.clear(); }
 
     /* Undo is a history of inverse calls against the same endpoints the
        actions used, so every step also lands live for the team. Re-adding a
@@ -882,7 +1282,9 @@
     }
     async function reAdd(object) {
         const res = await api(`${URLS.push}?scheduleId=${SID}`, {
-            method: 'POST', body: { kind: object.kind, points: object.points, color: object.color, width: object.width, label: object.label },
+            // font travels with it, or undoing the deletion of a label would
+            // put the words back in a face nobody chose.
+            method: 'POST', body: { kind: object.kind, points: object.points, color: object.color, width: object.width, font: object.font || null, label: object.label },
         });
         renderObject(res.data.object);
         return res.data.object;
@@ -890,7 +1292,7 @@
     async function applyStep(step, into) {
         if (step.type === 'add') {
             await api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: step.object.id } }).catch(() => {});
-            dropObject(step.object.id);
+            dropObject(step.object.id, true);
             into.push({ type: 'remove', object: step.object });
         } else if (step.type === 'remove') {
             const fresh = await reAdd(step.object);
@@ -908,7 +1310,7 @@
         } else if (step.type === 'unclear') {
             for (const o of step.objects) {
                 await api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: o.id } }).catch(() => {});
-                dropObject(o.id);
+                dropObject(o.id, true);
             }
             into.push({ type: 'clear', objects: step.objects });
         }
@@ -926,15 +1328,33 @@
         // through pushHist, so undo and redo have to say so themselves.
         markMapDirty();
     }
-    async function saveObject(kind, pts, label) {
+    /** `extra` overrides the pen's own settings — a label's width is a type
+        size, not a stroke, and it brings a font with it. */
+    async function saveObject(kind, pts, label, extra) {
         try {
             const res = await api(`${URLS.push}?scheduleId=${SID}`, {
-                method: 'POST', body: { kind, points: pts, color, width, label: label || null },
+                method: 'POST', body: { kind, points: pts, color, width, label: label || null, ...(extra || {}) },
             });
+            /* A shape you just drew shows its numbers without being asked.
+             *
+             * Measurements are remembered per shape id, and a shape that has
+             * only just been created was never in that set — so an area drawn
+             * corner by corner arrived with its hectares hidden behind a badge
+             * the size of a thumbnail, which reads as "the area tool does not
+             * show the area". Measuring is the reason anybody draws one. Marked
+             * before the render so the paint below opens it in the same breath,
+             * with no flash of a closed shape. */
+            if (kind !== 'pen' && kind !== 'text') {
+                measureOpen.add(String(res.data.object.id));
+                saveMeasure();
+            }
             renderObject(res.data.object);
             pushHist({ type: 'add', object: res.data.object });
-            if (kind !== 'pen' && window.toast) toast('Saved to the team map.');
-        } catch (e) { if (window.toast) toast(e.message, 'error'); }
+            // A label says its own thing about what to do next, and pen
+            // strokes say nothing at all.
+            if (kind !== 'pen' && kind !== 'text' && window.toast) toast('Saved to the team map.');
+            return res.data.object;
+        } catch (e) { if (window.toast) toast(e.message, 'error'); return null; }
     }
 
     /* ---------- drawing ---------- */
@@ -1047,8 +1467,10 @@
             tempDots.push(dot);
             document.getElementById('cmapFinish').hidden = tempPts.length < 2;
         } else if (tool === 'text') {
-            const t = prompt('Label text:');
-            if (t && t.trim()) saveObject('text', [p], t.trim().slice(0, 500));
+            // Nothing is created here. The ground is remembered, the sheet
+            // asks, and only pressing its button writes anything — so backing
+            // out of a label leaves the map exactly as it was.
+            openTextSheet(null, p);
         }
     }
 
@@ -1128,6 +1550,8 @@
         const KINDS = { pen: 'drawing', line: 'line', path: 'multi-line', rect: 'box', area: 'area', text: 'label', arrow: 'arrow' };
         document.getElementById('cmapEditLbl').textContent = 'Editing ' + (KINDS[o.kind] || 'shape');
         document.getElementById('cmapDelPoint').hidden = true;
+        // Only a label has words behind it.
+        document.getElementById('cmapEditText').hidden = o.kind !== 'text';
         document.getElementById('cmapEditBar').classList.remove('hidden');
     }
     function clearSelVertex() {
@@ -1173,7 +1597,7 @@
         endEdit();
         pushHist({ type: 'remove', object: o });
         api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: o.id } }).catch(() => {});
-        dropObject(o.id);
+        dropObject(o.id, true);
         if (window.toast) toast('Removed from the map.');
     }
     function geometryOf(o, parts) {
@@ -1254,15 +1678,26 @@
         editing = { o, parts, listeners: [] };
         if (first.getPath) {
             const path = first.getPath();
-            editing.listeners.push(path.addListener('set_at', scheduleSave));
-            editing.listeners.push(path.addListener('insert_at', (i) => refuseMidpoint(first, path, i)));
+            // Every one of these moves the outline, so every one of them owes
+            // the measurement a recount. trackMeasure waits for the next
+            // frame, which also means it reads the path AFTER refuseMidpoint
+            // has taken the ghost's point back out.
+            editing.listeners.push(path.addListener('set_at', () => { trackMeasure(o.id); scheduleSave(); }));
+            editing.listeners.push(path.addListener('insert_at', (i) => { refuseMidpoint(first, path, i); trackMeasure(o.id); }));
             // A vertex can still leave by the front door — the Delete point
             // button, or Google's own right-click on a handle. Only our own
             // undoing of a midpoint is silent.
-            editing.listeners.push(path.addListener('remove_at', () => { if (!pathSurgery) scheduleSave(); }));
+            editing.listeners.push(path.addListener('remove_at', () => { trackMeasure(o.id); if (!pathSurgery) scheduleSave(); }));
         }
-        editing.listeners.push(first.addListener('dragend', scheduleSave));
+        // Dragging the whole shape moves every corner of it, so the badge has
+        // as far to travel as the field does.
+        editing.listeners.push(first.addListener('drag', () => trackMeasure(o.id)));
+        editing.listeners.push(first.addListener('dragend', () => { trackMeasure(o.id); scheduleSave(); }));
         showEditBar(o);
+        // A held label grows a handle for its type size. Same selection, same
+        // bar, same Done — it is one more thing this shape can be dragged by,
+        // not a second way of picking something up.
+        if (o.kind === 'text') showSizeHandle(o, parts);
     }
     function endEdit() {
         if (!editing) return;
@@ -1273,8 +1708,206 @@
         else if (first.setDraggable) first.setDraggable(false);
         editing = null;
         clearSelVertex();
+        dropSizeHandle();
         const bar = document.getElementById('cmapEditBar');
         if (bar) bar.classList.add('hidden');
+    }
+
+    /* ---------- sizing a label by dragging it ----------
+     *
+     * A list of sizes would have been three lines of code, and wrong: nobody
+     * knows whether 22px is the right size for THIS label over THIS field
+     * until they see it there. So the size is pulled out of the label like a
+     * corner out of a shape — the same gesture the rest of this map is made
+     * of, and the only one that works with a thumb.
+     *
+     * It is a draggable marker rather than an HTML handle for the same reason
+     * every vertex pin is: Google's markers already do touch, which is the
+     * primary input here, and they already live in the pane that the pen's
+     * pointer handlers know to keep their hands off.
+     *
+     * The distance from the words to the handle IS the size — measured in
+     * screen pixels, so it reads the same at every zoom, which is also why the
+     * handle has to be put back on its ring whenever the camera moves. */
+    const HANDLE_R0 = 38, HANDLE_K = 1.5;
+    let sizeHandle = null, sizeHandleFor = null, sizeLive = TXT_NEW, sizeDragging = false;
+    const handleFace = (text, px) => ({ text, className: 'cmap-mbadge', color: '#fff', fontSize: px + 'px', fontWeight: '800' });
+    /** Where the handle belongs on the ground for a given size. */
+    function handleLatLng(anchor, px) {
+        const pr = proj && proj.getProjection();
+        const at = anchor && pr && pr.fromLatLngToContainerPixel(anchor);
+        if (!at) return null;
+        return pr.fromContainerPixelToLatLng(new (G().Point)(at.x + HANDLE_R0 + (px - TXT_MIN) * HANDLE_K, at.y));
+    }
+    function placeSizeHandle() {
+        // Never while it is being pulled: the map settling under a drag would
+        // otherwise snatch the handle back onto its ring out of the finger.
+        if (!sizeHandle || !sizeHandleFor || sizeDragging) return;
+        const ll = handleLatLng(sizeHandleFor.mark.getPosition(), sizeLive);
+        if (ll) sizeHandle.setPosition(ll);
+    }
+    function dropSizeHandle() {
+        if (sizeHandle) { sizeHandle.setMap(null); sizeHandle = null; }
+        sizeHandleFor = null;
+        sizeDragging = false;
+    }
+    function showSizeHandle(o, parts) {
+        dropSizeHandle();
+        const mark = parts && parts[0];
+        // The projection is what turns "a thumb away" into a place on the
+        // ground. Without it there is nowhere to put the handle at all, and a
+        // label with no handle is still perfectly usable.
+        if (!mark || !mark.getPosition || !proj || !proj.getProjection()) return;
+        sizeLive = textStyle(o).px;
+        const ll = handleLatLng(mark.getPosition(), sizeLive);
+        if (!ll) return;
+        sizeHandleFor = { o, mark };
+        sizeHandle = new (G().Marker)({
+            map, position: ll, draggable: true, crossOnDrag: false, zIndex: 70,
+            title: 'Drag to size this label',
+            // Bigger than it looks it needs to be: this is dragged one-handed,
+            // outdoors, by somebody holding something else in the other hand.
+            icon: { path: G().SymbolPath.CIRCLE, scale: 14, fillColor: '#111827',
+                fillOpacity: .95, strokeColor: '#fff', strokeWeight: 2.5 },
+            label: handleFace('A', 13),
+        });
+        sizeHandle.addListener('dragstart', () => { sizeDragging = true; });
+        sizeHandle.addListener('drag', (ev) => {
+            if (!sizeHandleFor) return;
+            const pr = proj.getProjection();
+            const a = pr && pr.fromLatLngToContainerPixel(mark.getPosition());
+            const b = pr && pr.fromLatLngToContainerPixel(ev.latLng);
+            if (!a || !b) return;
+            const px = clampTxt(TXT_MIN + (Math.hypot(b.x - a.x, b.y - a.y) - HANDLE_R0) / HANDLE_K);
+            if (px === sizeLive) return;
+            sizeLive = px;
+            // The words change size under the finger, at the size they will
+            // keep — which is the whole reason this is a drag and not a menu.
+            mark.setLabel(textLabelOpts(sizeHandleFor.o, px));
+            // And the handle says the number, so a size can be repeated on the
+            // next label instead of guessed at twice.
+            sizeHandle.setLabel(handleFace(String(px), 12));
+        });
+        sizeHandle.addListener('dragend', () => {
+            sizeDragging = false;
+            if (!sizeHandleFor) return;
+            sizeHandle.setLabel(handleFace('A', 13));
+            // Pulled at any angle, parked on the ring: the distance was the
+            // question, the direction was never part of it.
+            placeSizeHandle();
+            commitTextSize(sizeHandleFor.o, sizeLive);
+        });
+        if (!editing) return;
+        // The handle follows the words — dragged by hand, and pushed about by
+        // every zoom, since its offset is only true in screen pixels.
+        editing.listeners.push(mark.addListener('drag', placeSizeHandle));
+        editing.listeners.push(map.addListener('idle', placeSizeHandle));
+    }
+    async function commitTextSize(o, px) {
+        const cur = objIndex.get(o.id) || o;
+        // A label from before lettering existed has no font, and a size stored
+        // without one would be read back as a stroke width — so sizing an old
+        // label is also the moment it gets the plain face. That is the only
+        // thing that makes its width mean anything.
+        const font = FONTS[cur.font] ? cur.font : 'sans';
+        if (textStyle(cur).px === px && cur.font === font) return;
+        try {
+            const res = await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: cur.id, width: px, font } });
+            const fresh = res.data.object;
+            // Re-rendering would take the label out from under the handle that
+            // is still resting on it; the shape on screen is already right, so
+            // only what this client BELIEVES about it needs correcting.
+            objIndex.set(fresh.id, fresh);
+            if (sizeHandleFor && sizeHandleFor.o.id === fresh.id) sizeHandleFor.o = fresh;
+            if (editing && editing.o.id === fresh.id) editing.o = fresh;
+            // No history step: undo is a stack of geometry, and a size is not
+            // geometry. The saved map is still owed it.
+            markMapDirty();
+        } catch (e) { if (window.toast) toast(e.message, 'error'); }
+    }
+
+    /* ---------- the label editor ----------
+     *
+     * One sheet for both jobs, because they are one job: a label is words and
+     * a face, whether it exists yet or not. A NEW one is nothing but a
+     * remembered patch of ground until the button is pressed — so cancelling
+     * cannot leave anything behind, there being nothing to leave. */
+    let textDraft = null;      // { at: [lat,lng] } for a new label | { id } for one being changed
+    let textFont = 'sans', textSize = TXT_NEW;
+    function paintFontRow() {
+        document.querySelectorAll('#cmapTextSheet .cmap-fontopt').forEach((b) =>
+            b.classList.toggle('is-active', b.dataset.mfont === textFont));
+    }
+    function sayTextLeft() {
+        const ta = document.getElementById('cmapTextInput');
+        const out = document.getElementById('cmapTextLeft');
+        if (!ta || !out) return;
+        const left = 500 - ta.value.length;
+        // Silent until it starts to matter — a counter on an empty box is
+        // just a number to ignore.
+        out.textContent = left > 80 ? '' : left + ' characters left';
+    }
+    function openTextSheet(o, at) {
+        textDraft = o ? { id: o.id } : { at };
+        textFont = (o && FONTS[o.font]) ? o.font : 'sans';
+        // Whatever it looks like now is where the editor starts from, old row
+        // or new — textStyle already answers that question for both.
+        textSize = o ? textStyle(o).px : TXT_NEW;
+        const ta = document.getElementById('cmapTextInput');
+        if (ta) ta.value = o ? String(o.label || '') : '';
+        document.getElementById('cmapTextTitleH').textContent = o ? 'Edit this label' : 'Add a label';
+        document.getElementById('cmapTextGoTxt').textContent = o ? 'Save label' : 'Place label';
+        paintFontRow();
+        sayTextLeft();
+        window.openSheet?.('cmapTextSheet');
+        // Desktop lands in the box; smFocus leaves a phone alone, where the
+        // keyboard would cover the lettering row before it was looked at.
+        window.smFocus?.('cmapTextInput', { delay: 320 });
+    }
+    async function commitTextSheet() {
+        const draft = textDraft;
+        if (!draft) return;
+        const ta = document.getElementById('cmapTextInput');
+        // Line breaks are the point of a textarea and survive all the way to
+        // the ground (see .cmap-txt-g); only the ends are tidied, and the
+        // column's 500 is the column's 500.
+        const words = String(ta ? ta.value : '').replace(/\r\n/g, '\n').trim().slice(0, 500);
+        if (!words) { if (window.toast) toast('A label needs some words.', 'error'); return; }
+        const btn = document.getElementById('cmapTextGo');
+        const cap = document.getElementById('cmapTextGoTxt');
+        const was = cap.textContent;
+        btn.disabled = true; cap.textContent = 'Saving…';
+        try {
+            if (draft.id) {
+                const res = await api(`${URLS.update}?scheduleId=${SID}`, {
+                    method: 'POST', body: { id: draft.id, label: words, font: textFont, width: textSize },
+                });
+                // Held before the swap and held after it: the same trick the
+                // Delete-point button uses, so the handle comes back too.
+                if (editing && editing.o.id === draft.id) pendingEdit = draft.id;
+                dropObject(draft.id);
+                renderObject(res.data.object);
+                markMapDirty();
+                window.closeSheet?.('cmapTextSheet');
+            } else {
+                const obj = await saveObject('text', [draft.at], words, { width: textSize, font: textFont });
+                // saveObject says its own piece when a write fails. The sheet
+                // stays open over it rather than closing on a label that was
+                // never placed and taking the typing with it.
+                if (!obj) { btn.disabled = false; cap.textContent = was; return; }
+                window.closeSheet?.('cmapTextSheet');
+                const parts = layers.get(obj.id);
+                if (parts && parts.length) {
+                    // Picked up the instant it lands, which is the only way
+                    // the size handle is ever found: it is standing beside the
+                    // words before anyone goes looking for it.
+                    beginEdit(obj, parts);
+                    if (window.toast) toast('Label placed — drag the A beside it to size it.');
+                }
+            }
+            textDraft = null;
+        } catch (e) { if (window.toast) toast(e.message, 'error'); }
+        btn.disabled = false; cap.textContent = was;
     }
 
     /* ---------- press and hold an edge to drop a point into it ----------
@@ -1361,7 +1994,7 @@
                 pushHist({ type: 'add', object: res.data.object });
                 pushHist({ type: 'remove', object: cur });
                 await api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: cur.id } }).catch(() => {});
-                dropObject(cur.id);
+                dropObject(cur.id, true);
                 if (window.toast) toast('Point added — the box is now an area you can reshape.');
                 return;
             }
@@ -1869,6 +2502,36 @@
             ctx.fillStyle = colour; ctx.fill();
             ctx.lineWidth = 3; ctx.strokeStyle = '#fff'; ctx.stroke();
         };
+        /* A written label, in its own face at its own size, on the same white
+           plate the screen draws it on — a picture that letters the map
+           differently is not a picture of the map. The canvas is drawn at
+           SCALE, which is exactly the ratio the measurement labels above
+           already use: 11 on screen, 22 here. Lines are kept apart rather
+           than run together, since the editor takes several of them. */
+        const plate = (p, o) => {
+            const st = textStyle(o);
+            const lines = String(o.label || '').split('\n');
+            const fs = st.px * SCALE;
+            // No family for the old rows, deliberately: they were drawn in
+            // whatever Google letters a marker with, and still are.
+            ctx.font = '800 ' + fs + 'px ' + (st.family || 'Roboto, Arial, sans-serif');
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            const lh = fs * 1.2;
+            const w = Math.max(...lines.map((t) => ctx.measureText(t).width)) + fs;
+            const h = lh * lines.length + fs * 0.4;
+            const [x, y] = px(p);
+            const x0 = x - w / 2, y0 = y - h / 2;
+            ctx.beginPath();
+            ctx.roundRect ? ctx.roundRect(x0, y0, w, h, fs * 0.35) : ctx.rect(x0, y0, w, h);
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+            ctx.lineWidth = 1.5 * SCALE;
+            ctx.strokeStyle = '#111827';
+            ctx.stroke();
+            ctx.fillStyle = '#111827';
+            lines.forEach((t, i) => ctx.fillText(t, x, y0 + fs * 0.2 + lh * (i + 0.5)));
+        };
 
         [...objIndex.values()].forEach((o) => {
             const colour = o.color || '#f5c518';
@@ -1881,7 +2544,7 @@
                 : o.points;
             const closed = (o.kind === 'rect' || o.kind === 'area');
 
-            if (o.kind === 'text') { label(pts[0], o.label || ''); return; }
+            if (o.kind === 'text') { plate(pts[0], o); return; }
 
             ctx.beginPath();
             pts.forEach((p, i) => { const [x, y] = px(p); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
@@ -1901,7 +2564,9 @@
                 const j = (i + 1) % pts.length;
                 label(mid(pts[i], pts[j]), fmtM(dist(pts[i], pts[j])));
             }
-            if (closed) label(centerOf(pts), fmtA(areaOf(pts)));
+            // The printed map has the same middle the live one does — a
+            // number outside the field it belongs to reads no better on paper.
+            if (closed && pts.length > 1) label(anchorOf(o.kind, pts), fmtA(areaOf(pts)));
             else if (o.kind === 'path' && pts.length > 2) {
                 let total = 0;
                 for (let i = 0; i < pts.length - 1; i++) total += dist(pts[i], pts[i + 1]);
@@ -2398,6 +3063,24 @@
             // A half-drawn line takes the new weight immediately.
             if (tempPts.length) previewTemp(tool === 'area');
         }));
+        /* ---- writing on the map ---- */
+        // Each face shown in itself, painted from the one list of stacks —
+        // duplicating them into the stylesheet is how the picker ends up
+        // showing a font the map does not draw with.
+        document.querySelectorAll('#cmapTextSheet .cmap-fontopt').forEach((b) => {
+            const sample = b.querySelector('.cmap-fontsample');
+            if (sample) sample.style.fontFamily = FONTS[b.dataset.mfont] || '';
+            b.addEventListener('click', () => { textFont = b.dataset.mfont; paintFontRow(); });
+        });
+        document.getElementById('cmapTextInput')?.addEventListener('input', sayTextLeft);
+        document.getElementById('cmapTextGo')?.addEventListener('click', commitTextSheet);
+        document.getElementById('cmapEditText')?.addEventListener('click', () => {
+            if (editing) openTextSheet(objIndex.get(editing.o.id) || editing.o);
+        });
+        // Every other way out of the sheet — the ×, the backdrop, the phone's
+        // Back button — is a cancel. Letting the draft stand would mean the
+        // next label typed landed on ground somebody walked away from.
+        document.getElementById('cmapTextSheet')?.addEventListener('sheet:close', () => { textDraft = null; });
         document.getElementById('cmapSaveGo').addEventListener('click', () => doSaveMap(false));
         document.getElementById('cmapSaveOver').addEventListener('click', () => doSaveMap(true));
         document.getElementById('cmapDelPoint').addEventListener('click', deleteSelPoint);
@@ -2493,7 +3176,7 @@
                         if (editing && editing.o.id === p.object.id) endEdit();
                         dropObject(p.object.id); renderObject(p.object);
                     }
-                    else if (p.action === 'remove') { if (!mine) dropObject(p.id); }
+                    else if (p.action === 'remove') { if (!mine) dropObject(p.id, true); }
                     else if (p.action === 'clear') {
                         dropAll();
                         // Someone started a blank map. This screen was writing
