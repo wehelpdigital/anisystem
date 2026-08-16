@@ -1223,6 +1223,25 @@
            Tools menu (#activityActionsBtn) on every screen size. They stay in the
            DOM so the menu rows can forward clicks to their real handlers. */
         .toolbar-in-menu { display: none !important; }
+
+        /* ---- the toolbar fits on one line -----------------------------
+           On the board a phone was carrying Modules("Activities"), Tools,
+           Notice, the note button, Undo and Redo — about 370px of controls
+           in the 328px a 360px screen leaves after padding. Redo lost, and
+           dropped to a line of its own.
+
+           The word that goes is the module's own name, and only while the
+           board is what is on screen: the app header already says
+           "Activities" directly above this row, so the button was spending
+           seventy pixels to repeat it. Open another module and the name
+           comes back — there it is doing real work, and the activities-only
+           buttons have stepped aside to make room for it. */
+        @media (max-width: 767px) {
+            body:has(#activitiesRoot:not(.module-hidden)) #currentModuleLabel { display: none; }
+            /* Tighter too, so the row has slack rather than being exactly as
+               wide as its contents. */
+            #actToolbar { gap: .375rem; row-gap: .375rem; }
+        }
         #toggleHiddenBtn.hidden { display: none !important; }
         /* !important so the disabled dimming survives the sheet's fade-in
            animation (which otherwise forces opacity back to 1). */
@@ -1902,7 +1921,7 @@
      offset from. The two are changed together, always, or the shelf bar
      floats free of the toolbar it is supposed to sit under. --}}
 <div class="sticky top-14 md:top-16 z-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 pt-0 pb-2 mb-2 border-b border-gray-100">
-    <div class="flex items-center gap-2 flex-wrap">
+    <div id="actToolbar" class="flex items-center gap-2 flex-wrap">
         <button type="button" id="modulesBtn" class="btn btn-white btn-sm" title="Switch module">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             {{-- "Modules - " is dropped on phones so the label stays short and

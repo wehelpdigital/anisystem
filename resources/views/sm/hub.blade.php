@@ -225,11 +225,15 @@
         /* Quick Capture — amber, the colour it wears everywhere else. */
         .qc-cta { --cta-accent: #d97706; }
         .qc-cta:hover { border-color: #f0dcae; }
+        /* Quick Record — the red it wears on the schedule list. */
+        .qr-cta { --cta-accent: #b91c1c; }
+        .qr-cta:hover { border-color: #f3c4c4; }
 
         html.dark .cta-tile { background: #151b12; border-color: #2b3a1c; color: #e8efe1; }
         html.dark .cta-tile .cta-sub { color: #9fb08e; }
         html.dark .act-cta { --cta-accent: #6b9f3d; }
         html.dark .qc-cta { --cta-accent: #e0912e; }
+        html.dark .qr-cta { --cta-accent: #e06a6a; }
         @media (prefers-reduced-motion: reduce) {
             .cta-tile, .cta-tile .cta-chip, .cta-tile .cta-arrow { transition: none; }
         }
@@ -271,8 +275,12 @@
         }
     </style>
 
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-        {{-- Activities (2/3) --}}
+    {{-- Four columns, not three: Activities keeps half the row and the two
+         quick doors take a quarter each. Both of them are the same act — you
+         are standing in front of something and want it kept — so they belong
+         side by side rather than one of them being somewhere else. --}}
+    <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 mb-4">
+        {{-- Activities (2/4) --}}
         <a href="{{ route('sm.activities', ['id' => $schedule->id]) }}"
             class="cta-tile act-cta sm:col-span-2 rounded-2xl p-5 flex items-center gap-4">
             <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
@@ -288,8 +296,8 @@
             <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
 
-        {{-- Quick Capture (1/3) — the same shape as its neighbour, so the pair
-             reads as two doors rather than two different kinds of thing. --}}
+        {{-- Quick Capture (1/4) — the same shape as its neighbours, so the
+             three read as three doors rather than three kinds of thing. --}}
         <button type="button" id="quickCaptureBtn"
             class="cta-tile qc-cta rounded-2xl p-5 flex items-center gap-4 text-left">
             <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
@@ -298,6 +306,21 @@
             <span class="min-w-0 grow">
                 <span class="cta-title block text-lg font-bold leading-tight">Quick Capture</span>
                 <span class="cta-sub block text-sm leading-snug mt-0.5">Snap a photo, file it in seconds.</span>
+            </span>
+            <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+
+        {{-- Quick Record (1/4). Some of what a field does is only legible
+             moving — a pump that sounds wrong, water finding a path — and
+             the Hub is where somebody standing in that field arrives. --}}
+        <button type="button" id="quickRecordBtn"
+            class="cta-tile qr-cta rounded-2xl p-5 flex items-center gap-4 text-left">
+            <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg>
+            </span>
+            <span class="min-w-0 grow">
+                <span class="cta-title block text-lg font-bold leading-tight">Quick Record</span>
+                <span class="cta-sub block text-sm leading-snug mt-0.5">Film it when a picture will not do.</span>
             </span>
             <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
@@ -373,6 +396,10 @@
 
     @include('sm.partials.share-sheet', ['schedule' => $schedule])
     @include('sm.partials.quick-capture', ['fixedScheduleId' => $schedule->id])
+    {{-- Both quick doors are fixed to this schedule, so neither asks which
+         one you meant. Quick Record borrows the shared recorder. --}}
+    @include('sm.partials.quick-record', ['fixedScheduleId' => $schedule->id, 'allSchedules' => collect()])
+    @include('community.partials.video-js')
     @include('sm.partials.ai-float', ['schedule' => $schedule])
     {{-- Team chat + whiteboard now live in the Collab Room. --}}
 @endsection

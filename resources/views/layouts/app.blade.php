@@ -358,6 +358,7 @@
                 count: @json(route('notifications.count')),
                 read: @json(route('notifications.read')),
                 readAll: @json(route('notifications.read-all')),
+                seen: @json(route('notifications.seen')),
             };
             return {
                 open: false, loading: false, items: [], unread: 0,
@@ -401,7 +402,28 @@
                 },
                 async toggle() {
                     this.open = !this.open;
-                    if (this.open) await this.load();
+                    if (!this.open) return;
+                    await this.load();
+                    /* Seeing them is reading them.
+                     *
+                     * The badge counted every unread row while this panel
+                     * shows the newest thirty, so anyone past thirty read all
+                     * they could see and the number stayed up — which reads
+                     * as the badge counting things already read. The rows
+                     * keep their dots for this view; only the count settles.
+                     *
+                     * After a beat, so a panel opened and shut by accident
+                     * does not silently clear the lot. */
+                    clearTimeout(this._seenTimer);
+                    this._seenTimer = setTimeout(async () => {
+                        if (!this.open || this.unread === 0) return;
+                        this.unread = 0;
+                        try {
+                            await fetch(urls.seen, { method: 'POST',
+                                headers: { 'X-CSRF-TOKEN': csrf(), Accept: 'application/json' },
+                                credentials: 'same-origin' });
+                        } catch (_) { /* the poll will correct it */ }
+                    }, 900);
                 },
                 async load() {
                     this.loading = true;

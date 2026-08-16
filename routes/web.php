@@ -143,6 +143,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/notifications/count', [App\Http\Controllers\NotificationController::class, 'count'])->name('notifications.count');
     Route::post('/notifications/read', [App\Http\Controllers\NotificationController::class, 'markRead'])->name('notifications.read');
     Route::post('/notifications/read-all', [App\Http\Controllers\NotificationController::class, 'markAllRead'])->name('notifications.read-all');
+    Route::post('/notifications/seen', [App\Http\Controllers\NotificationController::class, 'markSeen'])->name('notifications.seen');
 });
 
 /*

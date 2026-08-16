@@ -179,6 +179,31 @@
         .dn-rail { scroll-behavior: auto; }
     }
 
+    /* ---- a season on the home page folds too -------------------------
+       Same idea as the schedules page: the name stays, the working detail
+       goes. The transition is armed only while a fold is happening —
+       grid-template-rows: 1fr resolves against content, so a permanently
+       transitioned row re-animates on every relayout the card has. */
+    .ds-head { display: flex; align-items: center; gap: .5rem; width: 100%; text-align: left;
+        background: none; border: none; padding: 0; cursor: pointer; }
+    .ds-head h3 { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ds-chev { flex: none; width: 1.4rem; height: 1.4rem; border-radius: 999px;
+        display: flex; align-items: center; justify-content: center;
+        color: var(--color-gray-400); background: var(--color-gray-100);
+        transition: transform .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .ds-chev svg { width: .8rem; height: .8rem; }
+    .ds-head:hover .ds-chev { color: #3d6823; }
+    .ds-card.is-folded .ds-chev { transform: rotate(-90deg); }
+    .ds-fold-wrap { display: grid; grid-template-rows: 1fr; min-height: 0; }
+    .ds-card.is-folding .ds-fold-wrap { transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+    .ds-card.is-folded .ds-fold-wrap { grid-template-rows: 0fr; }
+    .ds-fold-wrap > * { min-height: 0; overflow: hidden; }
+    .ds-card.is-folded { align-self: start; }
+    html.dark .ds-chev { background: rgb(255 255 255 / .07); color: #9fb08e; }
+    @media (prefers-reduced-motion: reduce) {
+        .ds-chev, .ds-card.is-folding .ds-fold-wrap { transition: none; }
+    }
+
     /* Your face on the composer, with what's on your mind above it — the
        same cloud, in the same place, as everywhere else in the community.
        The shared .status-cloud does the shape; this only makes it yours:
@@ -358,9 +383,20 @@
                         [$sBadge, $sLabel] = $scheduleBadge($schedule->status);
                         $next = $scheduleNext[$schedule->id] ?? null;
                     @endphp
-                    <div class="card card-hover min-w-0">
+                    {{-- Folds the same way the schedules page folds, and
+                         remembers it in the same place, so a season you put
+                         away stays away wherever you meet it. --}}
+                    <div class="card card-hover min-w-0 ds-card" data-schedule-card="{{ $schedule->id }}">
                         <div class="card-body !p-4 flex flex-col gap-3 h-full min-w-0">
-                            <h3 class="font-bold text-gray-900 leading-snug">{{ $schedule->title }}</h3>
+                            <button type="button" class="ds-head" data-ds-fold aria-expanded="true"
+                                    aria-label="Fold or unfold {{ $schedule->title }}">
+                                <h3 class="font-bold text-gray-900 leading-snug min-w-0">{{ $schedule->title }}</h3>
+                                <span class="ds-chev" aria-hidden="true">
+                                    <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                                </span>
+                            </button>
+                            <div class="ds-fold-wrap">
+                            <div class="ds-body flex flex-col gap-3 h-full min-w-0">
 
                             {{-- What is next on THIS season: today's work, or
                                  the nearest day that has any. The day is a
@@ -476,6 +512,8 @@
                                 </div>
                                 <a href="{{ route('sm.hub', ['id' => $schedule->id]) }}" class="btn btn-outline btn-sm shrink-0">Open</a>
                             </div>
+                            </div>
+                            </div>{{-- /.ds-fold-wrap --}}
                         </div>
                     </div>
                 @endforeach
@@ -727,6 +765,58 @@
 
 @push('scripts')
 <script>
+/* Folding a season on the home page.
+ *
+ * It shares the schedules page's memory — the same key, keyed to the farm —
+ * because it is the same question about the same seasons. Put one away on
+ * either page and it is away on both. */
+(function dashFold() {
+    const KEY = 'smFolded:' + @json(\App\Support\WorkerContext::effectiveOwnerId());
+
+    const read = () => {
+        try { return new Set(JSON.parse(localStorage.getItem(KEY) || '[]')); }
+        catch (_) { return new Set(); }
+    };
+    const write = (set) => {
+        try { localStorage.setItem(KEY, JSON.stringify([...set])); } catch (_) {}
+    };
+
+    const cards = () => document.querySelectorAll('.ds-card[data-schedule-card]');
+
+    // Armed only for the length of a fold; see the note beside the CSS.
+    function arm(card) {
+        card.classList.add('is-folding');
+        clearTimeout(card.__foldTimer);
+        card.__foldTimer = setTimeout(() => card.classList.remove('is-folding'), 340);
+    }
+
+    function apply() {
+        const folded = read();
+        cards().forEach((card) => {
+            const on = folded.has(String(card.dataset.scheduleCard));
+            card.classList.toggle('is-folded', on);
+            card.querySelector('[data-ds-fold]')?.setAttribute('aria-expanded', on ? 'false' : 'true');
+        });
+    }
+
+    document.addEventListener('click', (e) => {
+        const head = e.target.closest('[data-ds-fold]');
+        if (!head) return;
+        const card = head.closest('.ds-card[data-schedule-card]');
+        if (!card) return;
+        const folded = read();
+        const id = String(card.dataset.scheduleCard);
+        const now = !card.classList.contains('is-folded');
+        arm(card);
+        card.classList.toggle('is-folded', now);
+        head.setAttribute('aria-expanded', now ? 'false' : 'true');
+        now ? folded.add(id) : folded.delete(id);
+        write(folded);
+    });
+
+    apply();
+})();
+
 (function dashToday() {
     /* Each day's tasks slide one whole card at a time.
      *

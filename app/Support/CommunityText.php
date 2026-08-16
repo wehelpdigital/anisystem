@@ -98,6 +98,37 @@ class CommunityText
     }
 
     /**
+     * The same text as plain words, for places that cannot show markup.
+     *
+     * A notification preview is text in a small grey line — no HTML, no
+     * links — so render() is the wrong tool and the raw token is worse: it
+     * reads as "@[admin john tugare](24)", which is a name wearing the
+     * machinery that found it. Here the tokens become what they name.
+     *
+     * Also strips any HTML, because some bodies (a note, a whiteboard save)
+     * arrive as rich text rather than as composer text.
+     */
+    public static function plain(?string $raw, int $limit = 0): string
+    {
+        $text = (string) $raw;
+        if ($text === '') {
+            return '';
+        }
+
+        $text = preg_replace(self::MENTION_RE, '@$1', $text);
+        $text = preg_replace(self::LOCATION_RE, '$1', $text);
+        $text = preg_replace(self::PIN_RE, '$1', $text);
+
+        // <br> and </p> are line breaks before tags are stripped, or two
+        // paragraphs become one run-on word.
+        $text = preg_replace('~<br\s*/?>|</p>|</div>~i', ' ', $text);
+        $text = trim(html_entity_decode(strip_tags($text), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+        $text = preg_replace('/\s+/u', ' ', $text);
+
+        return $limit > 0 ? \Illuminate\Support\Str::limit($text, $limit) : $text;
+    }
+
+    /**
      * Extract the distinct user ids mentioned in a body (from @[Name](id)
      * tokens), for notifications. Only returns ids of real, active users.
      */

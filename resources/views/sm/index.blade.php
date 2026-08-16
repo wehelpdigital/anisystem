@@ -225,14 +225,20 @@
            the card vanishing. grid-template-rows does it without anyone
            having to measure the content first. */
         .se-body { display: block; }
-        .se-card .se-fold-wrap { display: grid; grid-template-rows: 1fr;
-            transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+        .se-card .se-fold-wrap { display: grid; grid-template-rows: 1fr; }
+        /* The transition is on ONLY while a fold is actually happening.
+           `1fr` resolves against the content, so a permanently-transitioned
+           row animates on every relayout the card ever has — and swiping the
+           lot strip is a relayout. That is what made the whole card bounce
+           up and down under the finger: not the strip moving, but the row
+           height being re-animated a hundred times on the way past. */
+        .se-card.is-folding .se-fold-wrap { transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
         .se-card.is-folded .se-fold-wrap { grid-template-rows: 0fr; }
         .se-card .se-fold-wrap > * { min-height: 0; overflow: hidden; }
         .se-card.is-folded .se-body { padding-top: 0; padding-bottom: 0; }
         .se-card.is-folded { align-self: start; }
         @media (prefers-reduced-motion: reduce) {
-            .se-chev, .se-card .se-fold-wrap { transition: none; }
+            .se-chev, .se-card.is-folding .se-fold-wrap { transition: none; }
         }
 
         /* ---- season cards: each schedule is a shelfful of ground, so the
@@ -799,10 +805,22 @@ document.addEventListener('DOMContentLoaded', () => {
         paintFoldAll();
     }
 
+    /* The height transition is armed only for the length of a fold.
+     *
+     * Left on permanently it animated every relayout the card ever had —
+     * including the ones a swipe of the lot strip causes — which is what
+     * made the card bounce under the finger. */
+    function arm(card) {
+        card.classList.add('is-folding');
+        clearTimeout(card.__foldTimer);
+        card.__foldTimer = setTimeout(() => card.classList.remove('is-folding'), 340);
+    }
+
     function toggleCard(card) {
         const id = String(card.dataset.scheduleCard);
         const folded = foldedSet();
         const nowFolded = !card.classList.contains('is-folded');
+        arm(card);
         card.classList.toggle('is-folded', nowFolded);
         card.querySelector('[data-se-fold]')?.setAttribute('aria-expanded', nowFolded ? 'false' : 'true');
         nowFolded ? folded.add(id) : folded.delete(id);
@@ -832,6 +850,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const shut = cards.some((c) => !c.classList.contains('is-folded'));
         const folded = foldedSet();
         cards.forEach((card) => {
+            arm(card);
             card.classList.toggle('is-folded', shut);
             card.querySelector('[data-se-fold]')?.setAttribute('aria-expanded', shut ? 'false' : 'true');
             const id = String(card.dataset.scheduleCard);
