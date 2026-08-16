@@ -1475,6 +1475,23 @@
             map.setCenter({ lat, lng });
             if (zooms) map.setZoom(Math.round(toZoom));
             cancelFly();
+
+            /* Check that it actually arrived.
+             *
+             * The camera is not ours alone — a fitBounds finishing late, a
+             * resize restoring the view it remembered, a stored view being
+             * reapplied — and any of those landing just after this one wins,
+             * silently, leaving a map that plainly did not go where it was
+             * asked. Cheaper to look than to reason about who else was writing:
+             * if the centre is more than a few metres off once the map settles,
+             * say so once more, plainly. Once only, so two writers cannot spend
+             * the afternoon correcting each other. */
+            G().event.addListenerOnce(map, 'idle', () => {
+                const at = map.getCenter();
+                if (!at) return;
+                const off = Math.abs(at.lat() - lat) + Math.abs(at.lng() - lng);
+                if (off > 1e-5) map.setCenter({ lat, lng });
+            });
         };
         // Armed before the first frame, so a drag that starts inside the very
         // first tick still calls it off. A pinch reports as a drag too.
@@ -1489,6 +1506,61 @@
      * to tell them what they were told ten seconds ago. */
     let myFix = null;
     const FIX_FRESH = 20000;
+
+    /* How close to go in, decided by how well the browser actually knows.
+     *
+     * This used to be a flat zoom 17 whatever came back. A phone under open sky
+     * reports five metres and 17 is right; a laptop with no GPS radio reports
+     * a wifi or IP guess measured in kilometres, and diving to 17 on that lands
+     * you in a hundred-metre square that is nowhere near where you are standing
+     * — while the only thing you can SEE happening is a very large zoom. Which
+     * is a fair description of the complaint.
+     *
+     * So the accuracy circle is made to fill about half the smaller side of the
+     * map instead: a good fix goes in close, a vague one stops where the truth
+     * stops. metres-per-pixel at zoom z is 156543.03392·cos(lat)/2^z, and this
+     * is that, solved for z. */
+    function zoomForAccuracy(lat, acc) {
+        const el = document.getElementById('cmapMap');
+        const side = Math.max(160, Math.min(el?.clientWidth || 640, el?.clientHeight || 480));
+        const metres = Math.max(8, Number(acc) || 0);      // 8 m is as sure as anything gets
+        const perPixel = (2 * metres) / (side * 0.5);
+        const z = Math.log2((156543.03392 * Math.cos(lat * Math.PI / 180)) / perPixel);
+        return Math.max(12, Math.min(19, Math.round(z)));
+    }
+
+    /* The circle the fix is actually promising. Ephemeral and stand-alone: it
+     * is not in `layers`, so nothing saves it, draws it into the picture or
+     * sweeps it up with a clear — it just fades out on its own. */
+    let accRing = null, accTimer = null;
+    function showAccuracy(lat, lng, acc) {
+        if (accRing) { accRing.setMap(null); accRing = null; }
+        clearTimeout(accTimer);
+        const metres = Math.max(8, Number(acc) || 0);
+        try {
+            accRing = new (G().Circle)({
+                map, center: { lat, lng }, radius: metres, clickable: false, zIndex: 5,
+                strokeColor: '#2f6fed', strokeOpacity: .9, strokeWeight: 2,
+                fillColor: '#2f6fed', fillOpacity: .12,
+            });
+        } catch (_) { accRing = null; return; }
+        accTimer = setTimeout(() => { if (accRing) { accRing.setMap(null); accRing = null; } }, 9000);
+    }
+
+    /* Say how sure it is, because "it moved somewhere" and "it moved somewhere
+     * right" look identical, and the difference is usually the device rather
+     * than the map. A reading in kilometres is the answer to "why is it not
+     * where I am standing". */
+    function sayWhere(acc) {
+        if (!window.toast) return;
+        const m = Math.round(Number(acc) || 0);
+        if (!m) { toast('Centred on you.'); return; }
+        if (m > 750) {
+            toast(`Centred on you, but only to about ${(m / 1000).toFixed(1)} km — this device is guessing from the network, not GPS.`, 'error');
+            return;
+        }
+        toast(`Centred on you — accurate to about ${m} m.`);
+    }
 
     function findMe(btn) {
         // The button is drawn with the toolbar, which is drawn before the map
@@ -1508,9 +1580,11 @@
             // Local only — sharing is the button next door, and stays its own
             // decision.
             renderLoc({ userId: ME, name: 'Me', lat, lng, acc });
+            showAccuracy(lat, lng, acc);
             centeredOnMe = true;
             dropVeil();
-            flyTo(lat, lng, Math.max(map.getZoom() || 0, 17));
+            flyTo(lat, lng, zoomForAccuracy(lat, acc));
+            sayWhere(acc);
         };
 
         if (myFix && Date.now() - myFix.at < FIX_FRESH) { land(myFix); return; }
@@ -1528,7 +1602,11 @@
                 else if (err && err.code === 3) toast('Still looking for a signal. Under open sky it comes faster.', 'error');
                 else toast('Could not work out where you are.', 'error');
             },
-            { enableHighAccuracy: true, maximumAge: 10000, timeout: 15000 }
+            // maximumAge 0: ask for a real reading. The twenty-second cache
+            // above already covers "do not pester the satellites"; letting the
+            // browser answer from ITS cache as well is how a stale, coarse fix
+            // from whenever the tab last felt like it gets treated as now.
+            { enableHighAccuracy: true, maximumAge: 0, timeout: 20000 }
         );
     }
 
