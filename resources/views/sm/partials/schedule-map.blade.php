@@ -1533,6 +1533,12 @@
         clearTimeout(autoTimer);
         autoTimer = setTimeout(runAutosave, Math.max(AUTO_QUIET, AUTO_EVERY - (Date.now() - autoLast)));
     }
+    /** Drop a queued write: the map it was queued against is no longer here. */
+    function cancelAutosave() {
+        clearTimeout(autoTimer);
+        autoTimer = null;
+        autoAgain = false;
+    }
     async function runAutosave() {
         if (!LOADED_SAVE) return;
         // An emptied canvas is far more often "about to draw" than "meant to
@@ -1547,6 +1553,16 @@
         // makes it carry the measurements. A failure only costs the picture.
         let image = null;
         try { image = await composeMapPng(); } catch (_) { image = null; }
+        // Composing fetches the imagery, which takes as long as it takes — and
+        // in that gap the room can clear this map or open a different one. The
+        // shapes on screen now belong to whatever arrived; writing them into
+        // the file we set out to save would put one map inside another.
+        if (!LOADED_SAVE || LOADED_SAVE.id !== target.id) {
+            autoBusy = false;
+            // A change made to whatever is open now still deserves its write.
+            if (autoAgain) { autoAgain = false; markMapDirty(); }
+            return;
+        }
         try {
             const c = map.getCenter();
             await api(`${URLS.save}?scheduleId=${SID}`, { method: 'POST', body: {
@@ -1694,6 +1710,8 @@
         // re-loaded from its own save.
         try {
             await api(`${URLS.load}?scheduleId=${SID}`, { method: 'POST', body: { id: sv.id } });
+            // Anything still queued was queued for the map being replaced.
+            cancelAutosave();
             setLoadedSave(sv);
             window.closeSheet?.('cmapSavesSheet');
             endEdit(); dropAll();
@@ -1714,6 +1732,11 @@
         const snapshot = [...objIndex.values()];
         await api(`${URLS.clear}?scheduleId=${SID}`, { method: 'POST' });
         dropAll();
+        // Same reasoning as the clear that arrives from the room: an emptied
+        // canvas is not the saved map any more, and what gets drawn next is a
+        // new map — not a replacement for the one that was just swept away.
+        cancelAutosave();
+        setLoadedSave(null);
         if (snapshot.length) pushHist({ type: 'clear', objects: snapshot });
     }
     async function startBlankCanvas() {
@@ -1724,8 +1747,7 @@
             : confirm('Start a blank map? This clears the current shapes for everyone.');
         if (!ok) return;
         try {
-            await wipeCanvas();
-            setLoadedSave(null);
+            await wipeCanvas();   // which is also what lets go of the open map
         } catch (err) { if (window.toast) toast(err.message, 'error'); }
     }
     // One drain at a time: two quick taps otherwise raced two loadSave POSTs,
@@ -1915,7 +1937,16 @@
                         dropObject(p.object.id); renderObject(p.object);
                     }
                     else if (p.action === 'remove') dropObject(p.id);
-                    else if (p.action === 'clear') dropAll();
+                    else if (p.action === 'clear') {
+                        dropAll();
+                        // Someone started a blank map. This screen was writing
+                        // into a saved one, and going on believing that is how
+                        // the next shape drawn here ends up posted as the whole
+                        // of somebody's map — so let the file go, and drop the
+                        // write that was already queued for it.
+                        cancelAutosave();
+                        setLoadedSave(null);
+                    }
                     else if (p.action === 'saved') {
                         // Someone's map wrote itself back. Follow the file, so
                         // an edit made from this screen lands in the same one
@@ -1924,7 +1955,9 @@
                         sayAutosave('saved');
                     }
                     else if (p.action === 'reload') {
-                        // Someone loaded a saved map — take the fresh set whole.
+                        // Someone loaded a saved map — take the fresh set whole,
+                        // and drop a write queued for the map it replaced.
+                        cancelAutosave();
                         endEdit(); dropAll();
                         histUndo.length = 0; histRedo.length = 0; syncHistBtns();
                         // And take which file it is: without this the room ends

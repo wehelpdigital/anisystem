@@ -283,6 +283,8 @@ class ScheduleBoardController extends BaseScheduleController
                 ->where('id', '<', $event->id)
                 ->update(['deleteStatus' => 0]);
 
+            $this->releaseEmptiedBoard($schedule->id);
+
             return $this->emit($schedule->id, $event);
         }
 
@@ -325,6 +327,44 @@ class ScheduleBoardController extends BaseScheduleController
         ]);
 
         return $this->emit($schedule->id, $event);
+    }
+
+    /**
+     * A board cleared down to nothing stops being the drawing it was saved as.
+     *
+     * The canvas stays bound to its note so that later strokes update that note
+     * instead of filing another copy of the same picture. But once a clear
+     * leaves nothing standing on any page, whatever gets drawn next is a
+     * different drawing — and the autosave two seconds later would hand it the
+     * old note: same row, new images, the kept ones deleted to make room, and
+     * nobody ever asked for that. Letting go here costs a second note in the
+     * notebook; holding on costs the first one. The strokes behind the old note
+     * were archived beside it when it was saved, so it stays reopenable.
+     *
+     * Clearing one page of a multi-page drawing is an edit of that drawing, not
+     * the start of a new one, so the note survives it.
+     */
+    private function releaseEmptiedBoard(int $scheduleId): void
+    {
+        $stillDrawn = ScheduleBoardEvent::active()
+            ->where('scheduleId', $scheduleId)
+            ->where('type', 'draw')
+            ->exists();
+
+        if ($stillDrawn) {
+            return;
+        }
+
+        $state = ScheduleBoardState::forSchedule($scheduleId);
+        if (! $state->currentNoteId && ! $state->currentDraftId) {
+            return;
+        }
+
+        $state->update([
+            'currentNoteId' => null,
+            'currentDraftId' => null,
+            'savedUpToEventId' => 0,
+        ]);
     }
 
     /**

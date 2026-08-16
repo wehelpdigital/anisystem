@@ -326,8 +326,13 @@
         @endphp
         <div class="act-rem" data-rem-activity="{{ $a->id }}">
             @foreach ($rems as $i => $r)
-                <label class="act-rem-row{{ $r['done'] ? ' is-done' : '' }}" data-rem-index="{{ $i }}">
-                    <input type="checkbox" @checked($r['done'])>
+                {{-- Ticking an errand writes a money row, so it needs the same
+                     right as any other change to the plan. A tick a viewer may
+                     not make still shows, greyed — an inviting box that flips,
+                     403s and flips back is worse than one that says "not
+                     yours". Twin of reminderChecklist() in the JS renderer. --}}
+                <label class="act-rem-row{{ $r['done'] ? ' is-done' : '' }}{{ $mayEdit ? '' : ' is-locked' }}" data-rem-index="{{ $i }}" title="{{ $editTitle('Tick this errand off') }}">
+                    <input type="checkbox" @checked($r['done']) @disabled(! $mayEdit)>
                     <span class="act-rem-name">{{ $r['text'] }}</span>
                     @if ($r['kind'] !== 'none' && $r['amount'] > 0)
                         <span class="act-rem-amt is-{{ $r['kind'] }}">{{ $r['kind'] === 'income' ? '+' : '−' }}₱{{ number_format($r['amount'], 2) }}</span>

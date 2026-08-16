@@ -336,6 +336,14 @@ class QuickCaptureController extends BaseScheduleController
         // should drop the descriptions, not the whole capture.
         $canDescribe = \Illuminate\Support\Facades\Schema::hasColumn('as_gallery_images', 'description');
 
+        // Where this capture starts in the album's order. Counting from zero
+        // every time tore an existing album in half: everything already on the
+        // shelf sits at 0, so the first new picture joined that block and the
+        // rest sank below it. A capture is one walk and reads as one run.
+        $max = \App\Models\AsGalleryImage::where('albumId', $album->id)
+            ->where('deleteStatus', 1)->max('sortOrder');
+        $order = $max === null ? 0 : (int) $max + 1;
+
         $added = 0;
         $counts = ['image' => 0, 'video' => 0];
         foreach ($stored as $i => $item) {
@@ -351,7 +359,7 @@ class QuickCaptureController extends BaseScheduleController
                 'caption' => $caption,
                 // The album reads back in the order the walk happened, rather
                 // than newest-first inside a single capture.
-                'sortOrder' => $added,
+                'sortOrder' => $order + $added,
                 'deleteStatus' => 1,
             ]);
             // Assigned rather than mass-filled: `description` is newer than
@@ -384,6 +392,12 @@ class QuickCaptureController extends BaseScheduleController
         return $this->jsonOk($message, [
             'count' => $added,
             'albumId' => $album->id,
+            // Some of it arrived and some of it did not, which is neither a
+            // success nor a failure. Said out loud, because a green tick over
+            // "Could not process the video" is how a lost clip goes unnoticed
+            // until the day somebody goes looking for it.
+            'partial' => $clipTrouble !== null,
+            'trouble' => $clipTrouble,
             'galleryUrl' => route('sm.gallery', ['id' => $schedule->id]),
         ]);
     }

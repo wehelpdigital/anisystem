@@ -128,7 +128,10 @@
 (function attachBar() {
     if (window.smAttachBar) return;
 
-    const CSRF = document.querySelector('meta[name=csrf-token]')?.content || '';
+    // Read at send time, not at load. A composer sits open for as long as it
+    // takes to write the observation, and a token that rotated underneath a
+    // snapshot taken once turns the first upload after it into a 419.
+    const csrf = () => document.querySelector('meta[name=csrf-token]')?.content || '';
     const VID_RE = /\.(mp4|mov|webm|mkv|avi|3gp|m4v)$/i;
     const isVideo = (f) => /^video\//.test(f.type || '') || VID_RE.test(f.name || '');
     const say = (m, t) => window.toast?.(m, t);
@@ -164,7 +167,7 @@
             const xhr = new XMLHttpRequest();
             xhr.open('POST', url, true);
             xhr.withCredentials = true;
-            xhr.setRequestHeader('X-CSRF-TOKEN', CSRF);
+            xhr.setRequestHeader('X-CSRF-TOKEN', csrf());
             xhr.setRequestHeader('Accept', 'application/json');
             xhr.upload.addEventListener('progress', (e) => {
                 if (!e.lengthComputable) return;

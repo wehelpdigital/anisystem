@@ -279,6 +279,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let quill = null;
     let stream = null;       // live camera MediaStream, when open
     let albumNamed = false;  // the album name was typed, not inherited
+    // The album was chosen for them by a clip, not by them. It has to be
+    // remembered: a destination picked on their behalf may be taken back when
+    // the clip that forced it goes, and one picked by hand may not.
+    let targetForced = false;
     // Photos are cheap and clips are not; both ceilings match what the
     // controller will accept, so the refusal happens before the upload.
     const MAX_PHOTOS = 10;
@@ -379,8 +383,27 @@ document.addEventListener('DOMContentLoaded', () => {
         items.forEach((it) => URL.revokeObjectURL(it.url));
         items = [];
         albumNamed = false;
+        targetForced = false;
         renderPreviews();
         if (quill) quill.setText('');
+        // Every field, not just the photos. A second capture in one session
+        // inherited the first one's title, album name and description — and
+        // since the picker opens on "New album", it quietly made a second
+        // album out of them and put this capture in there.
+        $('qcNoteTitle').value = '';
+        $('qcAlbumTitle').value = '';
+        $('qcAlbumDesc').value = '';
+        $('qcAlbum').value = '';
+        $('qcItems').innerHTML = '';
+        // Last run's answer, still on the result step behind us.
+        $('qcResult').innerHTML = '';
+        const link = $('qcResultLink');
+        link.classList.add('hidden'); link.href = '#'; link.textContent = 'Open';
+        $('qcTitle').textContent = 'Quick Capture';
+        // Nothing has been captured yet, so every destination is open again —
+        // last run's clip may have left two of them disabled.
+        syncDestinations();
+        pickTarget('note');
         showStep('capture');
         if (hasCameraApp()) { $('qcFile').click(); return; }
         const camOk = await openCamera();
@@ -540,11 +563,24 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.querySelectorAll('[data-qc-target-row]').forEach((row) => {
         row.addEventListener('click', () => {
             if (row.classList.contains('is-off')) return;   // the radio is disabled; the paint must agree
-            modal.querySelectorAll('[data-qc-target-row]').forEach((r) => r.classList.remove('is-on'));
-            row.classList.add('is-on');
-            syncTarget();
+            // Chosen by hand, so nothing may quietly move it back later.
+            targetForced = false;
+            pickTarget(row.querySelector('input[name=qcTarget]').value);
         });
     });
+
+    /* Choose a destination and make the paint agree. The rows are labels
+       around radios, so checking one without repainting leaves two of them
+       looking chosen. */
+    function pickTarget(value) {
+        const input = modal.querySelector('input[name=qcTarget][value=' + value + ']');
+        if (!input || input.disabled) return;
+        input.checked = true;
+        modal.querySelectorAll('[data-qc-target-row]').forEach((r) => {
+            r.classList.toggle('is-on', r.contains(input));
+        });
+        syncTarget();
+    }
 
     /**
      * Which destinations this capture can actually reach.
@@ -565,11 +601,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         $('qcClipHint').classList.toggle('hidden', !hasClip);
         if (hasClip && !modal.querySelector('input[name=qcTarget]:checked')) {
-            const gallery = modal.querySelector('input[name=qcTarget][value=gallery]');
-            gallery.checked = true;
-            modal.querySelectorAll('[data-qc-target-row]').forEach((r) => {
-                r.classList.toggle('is-on', r.contains(gallery));
-            });
+            targetForced = true;   // the album was chosen for them, not by them
+            pickTarget('gallery');
+            return;
+        }
+        // The clips are gone and nobody ever asked for the album: put the
+        // destination back. Without this the album stuck, and every later
+        // photo-only capture in the session opened on the wrong one.
+        if (!hasClip && targetForced) {
+            targetForced = false;
+            pickTarget('note');
+            return;
         }
         syncTarget();
     }
@@ -729,14 +771,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         const data = await res.json().catch(() => ({}));
         if (!res.ok || !data.success) throw new Error(data.message || 'Could not save.');
-        $('qcResult').innerHTML = `<div class="flex items-center gap-2 text-brand-700 font-semibold mb-1">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-            ${escapeHtml(data.message)}</div><p class="text-gray-500 text-sm">You can move or rename them anytime in the Gallery.</p>`;
+        // Some of it saved and some of it did not. A green tick and a success
+        // toast over "Could not process the video" is how a lost clip goes
+        // unnoticed until somebody goes looking for it, so a partial save
+        // wears a warning and the toast says the part that failed.
+        const partial = !!data.partial;
+        const mark = partial
+            ? '<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 4.3L2.6 18a2 2 0 001.7 3h15.4a2 2 0 001.7-3L13.7 4.3a2 2 0 00-3.4 0z"/></svg>'
+            : '<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+        $('qcResult').innerHTML = `<div class="flex items-start gap-2 ${partial ? 'text-amber-700' : 'text-brand-700'} font-semibold mb-1">
+            ${mark}
+            <span>${escapeHtml(data.message)}</span></div><p class="text-gray-500 text-sm">${partial
+                ? 'What did not save is still on your device — try that one on its own.'
+                : 'You can move or rename them anytime in the Gallery.'}</p>`;
         const link = $('qcResultLink');
         link.href = data.galleryUrl; link.classList.remove('hidden'); link.textContent = 'Open gallery';
-        $('qcTitle').textContent = 'Saved';
+        $('qcTitle').textContent = partial ? 'Partly saved' : 'Saved';
         showStep('result');
-        toast(data.message);
+        toast(partial ? (data.trouble || data.message) : data.message, partial ? 'error' : 'success');
     }
 
     async function saveNotes(scheduleId) {

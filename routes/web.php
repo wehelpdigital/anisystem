@@ -260,6 +260,10 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/help/{module}', [App\Http\Controllers\HelpController::class, 'show'])->name('help.show');
     // Gallery: albums a grower makes and names, and the pictures in them.
     Route::get('/app/sm-activity-advanced', [App\Http\Controllers\Manager\ActivityController::class, 'advanced'])->name('sm.activity.advanced');
+    // What this season already has, for any composer asking for an attachment.
+    // Read-only, so it rides the same GET gate every other listing does.
+    Route::get('/app/sm-media-picker', [App\Http\Controllers\Manager\MediaPickerController::class, 'index'])->name('sm.media-picker');
+
     Route::get('/app/sm-gallery', [App\Http\Controllers\Manager\GalleryController::class, 'page'])->name('sm.gallery');
     Route::post('/app/sm-gallery-album', [App\Http\Controllers\Manager\GalleryController::class, 'albumSave'])->name('sm.gallery.album.save');
     Route::delete('/app/sm-gallery-album', [App\Http\Controllers\Manager\GalleryController::class, 'albumDestroy'])->name('sm.gallery.album.destroy');

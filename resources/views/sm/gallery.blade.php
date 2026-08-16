@@ -52,6 +52,25 @@
     .ga-cell.is-picked .ga-pick { background: #4a7c2a; border-color: #fff; color: #fff; }
     .ga-cell.is-picked { outline: 3px solid #4a7c2a; outline-offset: -3px; }
     .ga-pick svg { width: .9rem; height: .9rem; }
+    /* What the capture called this one picture, on the picture. A tile with
+       no name is a square of pixels, and somebody typed that name for a
+       reason. The description follows it when there is a line to spare. */
+    .ga-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.1rem .4rem .35rem;
+        background: linear-gradient(to top, rgb(0 0 0 / .8), rgb(0 0 0 / 0));
+        color: #fff; pointer-events: none; }
+    .ga-cap b { display: block; font-size: .68rem; font-weight: 800; line-height: 1.3;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ga-cap i { display: block; font-style: normal; font-size: .62rem; line-height: 1.35; opacity: .8;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    /* The strip the Gallery hangs on the shared lightbox — see
+       lightboxCaption() for why it is hung rather than built in. */
+    .ga-lb-cap { position: fixed; left: 50%; transform: translateX(-50%); bottom: 1.1rem; z-index: 2;
+        max-width: min(90vw, 40rem); padding: .5rem .9rem; border-radius: .8rem; text-align: center;
+        background: rgb(0 0 0 / .62); backdrop-filter: blur(3px); color: #fff; pointer-events: none; }
+    .ga-lb-cap[hidden] { display: none; }
+    .ga-lb-cap b { display: block; font-size: .88rem; font-weight: 800; line-height: 1.35; }
+    .ga-lb-cap i { display: block; font-style: normal; font-size: .78rem; line-height: 1.45;
+        margin-top: .1rem; opacity: .82; }
     .ga-empty { padding: 0 .9rem 1rem; font-size: .8rem; color: var(--color-gray-400); }
 
     /* The bar that appears once something is picked. */
@@ -458,20 +477,33 @@
 
         function albumHtml(a) {
             const cells = a.images.map((im) => {
+                const name = im.caption || '';
+                const about = im.description || '';
                 // A clip in an album is a clip. Putting one in an <img> is how
-                // a perfectly good recording came to report itself missing.
+                // a perfectly good recording came to report itself missing —
+                // and a <video> has no alt, so its name has to be said another
+                // way or the tile is announced as nothing at all.
                 const shot = im.kind === 'video'
                     ? `<video src="${esc(im.url)}#t=0.1" preload="metadata" playsinline muted
+                        aria-label="${esc(name || 'Clip in this album')}"
                         onloadeddata="this.classList.add('is-loaded')"
                         onerror="this.closest('.ga-cell')?.classList.add('is-gone'); this.remove();"></video>
                        <span class="ga-vid" aria-hidden="true">▶</span>`
-                    : `<img src="${esc(im.url)}" alt="${esc(im.caption || '')}" loading="lazy"
+                    : `<img src="${esc(im.url)}" alt="${esc(name)}" loading="lazy"
                         onload="this.classList.add('is-loaded')"
                         onerror="this.closest('.ga-cell')?.classList.add('is-gone'); this.remove();">`;
+                // The tile says what it is called; the full text is the tooltip
+                // for the descriptions a 7rem square cannot hold.
+                const label = (name || about)
+                    ? `<span class="ga-cap">${name ? `<b>${esc(name)}</b>` : ''}${about ? `<i>${esc(about)}</i>` : ''}</span>`
+                    : '';
+                const tip = [name, about].filter(Boolean).join(' — ');
                 return `
-                <div class="ga-cell" data-image="${im.id}" data-lb-type="${im.kind === 'video' ? 'video' : 'image'}" data-lb-url="${esc(im.url)}">
+                <div class="ga-cell" data-image="${im.id}" data-lb-type="${im.kind === 'video' ? 'video' : 'image'}" data-lb-url="${esc(im.url)}"
+                     data-lb-caption="${esc(name)}" data-lb-desc="${esc(about)}"${tip ? ` title="${esc(tip)}"` : ''}>
                     ${shot}
                     <span class="ga-pick" data-pick><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
+                    ${label}
                 </div>`;
             }).join('');
             return `<div class="ga-album" data-album="${a.id}">
@@ -979,6 +1011,43 @@
                 toast(err.message || 'Could not delete that.', 'error');
             }
         });
+
+        /* ---- The name, in the lightbox ----------------------------------
+         * The shared lightbox is handed a type and a url and nothing else,
+         * and it is included on half the app's pages — so the Gallery hangs
+         * its own strip on it rather than teaching every module about
+         * captions. The click that opens a picture also says what it is.
+         */
+        (function lightboxCaption() {
+            const lb = document.getElementById('noteLightbox');
+            // Inside the Activities shell the lightbox belongs to the host
+            // page and outlives this module, so a second visit would hang a
+            // second strip on it. One is enough, and it is still wired.
+            if (!lb || lb.querySelector('.ga-lb-cap')) return;
+            const bar = document.createElement('div');
+            bar.className = 'ga-lb-cap';
+            bar.hidden = true;
+            lb.appendChild(bar);
+
+            // Runs after the lightbox's own handler — that one is registered
+            // while the page is still parsing, this one from the script stack
+            // at the end — so by now the picture is already on the stage.
+            document.addEventListener('click', (e) => {
+                const cell = e.target.closest('[data-lb-url]');
+                if (!cell) return;
+                const name = cell.getAttribute('data-lb-caption') || '';
+                const about = cell.getAttribute('data-lb-desc') || '';
+                bar.innerHTML = (name ? `<b>${esc(name)}</b>` : '') + (about ? `<i>${esc(about)}</i>` : '');
+                bar.hidden = !(name || about);
+            });
+
+            // The lightbox closes half a dozen ways — the backdrop, Escape,
+            // another overlay taking over — so the strip watches for the
+            // class going off instead of guessing which one happened.
+            new MutationObserver(() => {
+                if (!lb.classList.contains('is-open')) bar.hidden = true;
+            }).observe(lb, { attributes: true, attributeFilter: ['class'] });
+        })();
 
         $('gaFind')?.addEventListener('input', (e) => { findText = e.target.value; paintAll(); });
         $('gaFilters')?.addEventListener('click', (e) => {

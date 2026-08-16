@@ -157,7 +157,12 @@ class GalleryController extends BaseScheduleController
                 'images' => $a->images->map(fn ($i) => [
                     'id' => $i->id,
                     'url' => MediaStore::url($i->path),
+                    // What the capture called this one picture, and what it
+                    // said about it. Both were asked for, written, and then
+                    // shown nowhere — the caption only ever reached an <img
+                    // alt>, and the description did not leave the database.
                     'caption' => $i->caption,
+                    'description' => $i->description,
                     'kind' => preg_match('~\.(mp4|mov|webm|mkv|m4v|3gp)$~i', (string) $i->path) ? 'video' : 'image',
                 ])->values()->all(),
             ])

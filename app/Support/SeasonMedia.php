@@ -27,6 +27,22 @@ use App\Models\ScheduleMapSave;
 class SeasonMedia
 {
     /**
+     * Photo or clip, read off the file name.
+     *
+     * The name is all there is to go on: the attachment columns hold a flat
+     * list of paths and nothing records which is which. So the list of
+     * extensions has to be one list — it was three, and the odd one out was
+     * AVI, which the uploader accepted and this filed as a picture.
+     *
+     * Keep in step with the attach bar's VID_RE and with what
+     * PostHarvestController::storeVideo() lets past the validator.
+     */
+    public static function kindOf(?string $path): string
+    {
+        return preg_match('~\.(mp4|mov|webm|mkv|m4v|3gp|avi)$~i', (string) $path) ? 'video' : 'image';
+    }
+
+    /**
      * @return list<array{kind:string, source:string, title:string, url:string,
      *     posterUrl:?string, href:?string, when:?string, sortKey:int,
      *     editable:bool}>
@@ -133,7 +149,12 @@ class SeasonMedia
                 is_array($ph->imagePaths) ? $ph->imagePaths : []
             ));
             foreach (array_unique($paths) as $path) {
-                $push(['type' => 'image', 'path' => $path], 'Post-harvest', $label, $ph->updated_at,
+                // An observation can carry a clip now — the attach bar offers
+                // Record — and this column is a flat list of paths with nothing
+                // to say which. Asked of the name, the same way the album
+                // branch below does it; hardcoding 'image' rendered the clip as
+                // a broken picture.
+                $push(['type' => self::kindOf($path), 'path' => $path], 'Post-harvest', $label, $ph->updated_at,
                     route('sm.post-harvest', ['id' => $schedule->id]));
             }
         }
@@ -171,10 +192,7 @@ class SeasonMedia
                 $push(
                     // Quick Record can file a clip in an album, so the album
                     // does not only hold pictures.
-                    [
-                        'type' => preg_match('~\.(mp4|mov|webm|mkv|m4v|3gp)$~i', (string) $img->path) ? 'video' : 'image',
-                        'path' => $img->path,
-                    ],
+                    ['type' => self::kindOf($img->path), 'path' => $img->path],
                     'Album',
                     (string) ($img->caption ?: 'In an album'),
                     $img->updated_at,

@@ -188,15 +188,33 @@ class ActivityController extends BaseScheduleController
         }
 
         // The categories a grower actually asks about, in the order they ask.
+        //
+        // The family is what makes the sheet worth opening. A person filling a
+        // tank for a foliar spray wants to know what else has been on those
+        // leaves lately — copper burns, a fungicide kills the microbes they
+        // paid for. They do not care when the ground last got a granular. So
+        // each group says which question it belongs to, and the ones that
+        // answer a different question are folded away rather than shown.
         $groups = [
-            'herbicide' => ['label' => 'Herbicide', 'types' => ['herbicide']],
-            'foliar_spray' => ['label' => 'Foliar spray', 'types' => ['foliar_spray']],
-            'fertilizer' => ['label' => 'Granular fertiliser', 'types' => ['fertilizer']],
-            'pesticide' => ['label' => 'Pesticide / insecticide', 'types' => ['pesticide']],
-            'fungicide' => ['label' => 'Fungicide', 'types' => ['fungicide']],
-            'copper_fungicide' => ['label' => 'Copper-based fungicide', 'types' => ['copper_fungicide']],
-            'microbial' => ['label' => 'Microbial / bio', 'types' => ['microbial']],
+            'herbicide' => ['label' => 'Herbicide', 'types' => ['herbicide'], 'family' => 'weeds'],
+            'foliar_spray' => ['label' => 'Foliar spray', 'types' => ['foliar_spray'], 'family' => 'leaf'],
+            'pesticide' => ['label' => 'Pesticide / insecticide', 'types' => ['pesticide'], 'family' => 'leaf'],
+            'fungicide' => ['label' => 'Fungicide', 'types' => ['fungicide'], 'family' => 'leaf'],
+            'copper_fungicide' => ['label' => 'Copper-based fungicide', 'types' => ['copper_fungicide'], 'family' => 'leaf'],
+            'microbial' => ['label' => 'Microbial / bio', 'types' => ['microbial'], 'family' => 'leaf'],
+            'fertilizer' => ['label' => 'Granular fertiliser', 'types' => ['fertilizer'], 'family' => 'ground'],
         ];
+
+        // Which questions this task itself raises. A task with no kind on it
+        // raises all of them, so nothing gets hidden from someone who never
+        // told us what they were doing.
+        $mine = $activity->typeSlugs();
+        $families = [];
+        foreach ($groups as $g) {
+            if (array_intersect($g['types'], $mine)) {
+                $families[$g['family']] = true;
+            }
+        }
 
         $on = $activity->targetDate ? $activity->targetDate->copy()->startOfDay() : now()->startOfDay();
         $lotIds = $activity->lots->pluck('id')->all();
@@ -238,8 +256,20 @@ class ActivityController extends BaseScheduleController
                     ? (int) $hit->targetDate->copy()->startOfDay()->diffInDays($on)
                     : null,
                 'lots' => $hit ? $hit->lots->pluck('lotName')->all() : [],
+                // This very kind of task — the row they opened the sheet for.
+                'own' => (bool) array_intersect($g['types'], $mine),
+                // Same question, so worth reading beside it.
+                'related' => $families ? isset($families[$g['family']]) : true,
             ];
         }
+
+        // Own kind first, then the rest of its family, then everything else —
+        // and within each of those, a real answer before "never".
+        usort($rows, function ($a, $b) {
+            $rank = fn ($r) => $r['own'] ? 0 : ($r['related'] ? 1 : 2);
+            return [$rank($a), $a['daysBefore'] === null, $a['daysBefore'] ?? 0]
+                <=> [$rank($b), $b['daysBefore'] === null, $b['daysBefore'] ?? 0];
+        });
 
         return $this->jsonOk('Advanced info.', [
             'data' => [
@@ -251,6 +281,9 @@ class ActivityController extends BaseScheduleController
                 ],
                 'lots' => $activity->lots->pluck('lotName')->all(),
                 'rows' => $rows,
+                // False when the task carries no kind: then nothing is folded
+                // away, and the sheet should not offer to unfold it.
+                'narrowed' => (bool) $families,
             ],
         ]);
     }

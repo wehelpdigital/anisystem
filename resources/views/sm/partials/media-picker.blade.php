@@ -21,9 +21,8 @@
     // routes/web.php belongs to the integrator, so this partial cannot assume
     // the name is registered yet — it falls back to the path the route line
     // uses so a page that includes it still renders while that lands.
-    $smPickerUrl = \Illuminate\Support\Facades\Route::has('sm.media-picker')
-        ? route('sm.media-picker')
-        : url('/app/sm-media-picker');
+    $smPickerWired = \Illuminate\Support\Facades\Route::has('sm.media-picker');
+    $smPickerUrl = $smPickerWired ? route('sm.media-picker') : url('/app/sm-media-picker');
 @endphp
 <div class="sheet hidden" id="smMediaPickerSheet" style="--sheet-width:36rem">
     <div class="sheet-handle"></div>
@@ -34,42 +33,42 @@
     <div class="sheet-body">
         <input type="search" id="smMediaPickerSearch" class="form-input mb-3"
                placeholder="Search by name, or where it came from…" autocomplete="off">
-        <div id="smMediaPickerGrid" class="mp-grid" role="listbox" aria-label="Season media"></div>
-        <p class="mp-state" id="smMediaPickerState">Loading…</p>
+        <div id="smMediaPickerGrid" class="smp-grid" role="listbox" aria-label="Season media"></div>
+        <p class="smp-state" id="smMediaPickerState">Loading…</p>
     </div>
 </div>
 
 <style>
-    .mp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: .5rem; }
-    .mp-grid:empty { display: none; }
-    .mp-tile { position: relative; display: block; width: 100%; text-align: left; padding: 0;
+    .smp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: .5rem; }
+    .smp-grid:empty { display: none; }
+    .smp-tile { position: relative; display: block; width: 100%; text-align: left; padding: 0;
         border: 1px solid var(--tl-border, #e5e7eb); border-radius: .7rem; overflow: hidden;
         background: var(--tl-surface, #fff); cursor: pointer;
         transition: transform .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1),
             box-shadow .28s cubic-bezier(.22,1,.36,1); }
-    .mp-tile:hover, .mp-tile:focus-visible { transform: translateY(-2px); border-color: #a8cc7e;
+    .smp-tile:hover, .smp-tile:focus-visible { transform: translateY(-2px); border-color: #a8cc7e;
         box-shadow: 0 8px 20px -12px rgb(0 0 0 / .45); }
-    .mp-shot { position: relative; aspect-ratio: 1; background: var(--color-gray-100, #f3f4f6); }
-    .mp-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .smp-shot { position: relative; aspect-ratio: 1; background: var(--color-gray-100, #f3f4f6); }
+    .smp-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
     /* A clip with no poster frame is still a clip: say so rather than show a
        grey square that looks like a failed photo. */
-    .mp-shot .mp-blank { position: absolute; inset: 0; display: flex; align-items: center;
+    .smp-shot .smp-blank { position: absolute; inset: 0; display: flex; align-items: center;
         justify-content: center; font-size: 1.4rem; color: var(--tl-text-faint, #9ca3af); }
-    .mp-badge { position: absolute; left: .3rem; top: .3rem; display: inline-flex; align-items: center;
+    .smp-badge { position: absolute; left: .3rem; top: .3rem; display: inline-flex; align-items: center;
         gap: .15rem; padding: .1rem .35rem; border-radius: 999px; background: rgb(17 24 39 / .72);
         color: #fff; font-size: .62rem; font-weight: 800; letter-spacing: .02em; }
-    .mp-meta { padding: .3rem .4rem .4rem; }
-    .mp-name { display: block; font-size: .7rem; font-weight: 700; color: var(--tl-text, #374151);
+    .smp-meta { padding: .3rem .4rem .4rem; }
+    .smp-name { display: block; font-size: .7rem; font-weight: 700; color: var(--tl-text, #374151);
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .mp-sub { display: block; font-size: .62rem; color: var(--tl-text-faint, #9ca3af);
+    .smp-sub { display: block; font-size: .62rem; color: var(--tl-text-faint, #9ca3af);
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .mp-state { padding: 1.5rem .5rem; text-align: center; font-size: .82rem; font-weight: 600;
+    .smp-state { padding: 1.5rem .5rem; text-align: center; font-size: .82rem; font-weight: 600;
         color: var(--tl-text-faint, #9ca3af); }
-    .mp-state[hidden] { display: none; }
-    html.dark .mp-tile { background: #1c2416; border-color: #2b3a1c; }
-    html.dark .mp-shot { background: #151b12; }
-    html.dark .mp-name { color: #e5e9f5; }
-    @media (prefers-reduced-motion: reduce) { .mp-tile { transition: none; } .mp-tile:hover { transform: none; } }
+    .smp-state[hidden] { display: none; }
+    html.dark .smp-tile { background: #1c2416; border-color: #2b3a1c; }
+    html.dark .smp-shot { background: #151b12; }
+    html.dark .smp-name { color: #e5e9f5; }
+    @media (prefers-reduced-motion: reduce) { .smp-tile { transition: none; } .smp-tile:hover { transform: none; } }
 </style>
 
 <script>
@@ -77,8 +76,21 @@
     if (window.smPickMedia) return;
 
     const URL_BASE = @json($smPickerUrl);
+    const WIRED = @json($smPickerWired);
     const $ = (id) => document.getElementById(id);
-    const esc = window.escapeHtml || ((s) => String(s ?? ''));
+
+    // Resolved per call, not once at IIFE time. This is an inline script inside
+    // @@section('content') and window.escapeHtml arrives with app.js, which
+    // @@vite loads as a deferred module — so on a direct page load this runs
+    // first and a captured reference would be captured empty, for the life of
+    // the page. And the fallback escapes as well: the titles below are typed by
+    // workers, so a "fallback" that hands the string back untouched is not a
+    // fallback, it is the hole.
+    const esc = (s) => (typeof window.escapeHtml === 'function'
+        ? window.escapeHtml(s)
+        : String(s ?? '')
+            .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;').replaceAll("'", '&#039;'));
 
     let items = [];
     let onPick = null;
@@ -95,12 +107,12 @@
             const shot = m.posterUrl || (m.type === 'image' ? m.url : null);
             const inner = shot
                 ? `<img src="${esc(shot)}" alt="" loading="lazy">`
-                : '<span class="mp-blank">🎬</span>';
-            return `<button type="button" class="mp-tile" role="option" data-pick="${i}">
-                <span class="mp-shot">${inner}<span class="mp-badge">${esc(LABELS[m.kind] || 'File')}</span></span>
-                <span class="mp-meta">
-                    <span class="mp-name">${esc(m.title)}</span>
-                    <span class="mp-sub">${esc(m.source)}${m.when ? ' · ' + esc(m.when) : ''}</span>
+                : '<span class="smp-blank">🎬</span>';
+            return `<button type="button" class="smp-tile" role="option" data-pick="${i}">
+                <span class="smp-shot">${inner}<span class="smp-badge">${esc(LABELS[m.kind] || 'File')}</span></span>
+                <span class="smp-meta">
+                    <span class="smp-name">${esc(m.title)}</span>
+                    <span class="smp-sub">${esc(m.source)}${m.when ? ' · ' + esc(m.when) : ''}</span>
                 </span>
             </button>`;
         }).join('');
@@ -143,6 +155,14 @@
         state.hidden = false;
         state.textContent = 'Loading…';
         window.openSheet?.('smMediaPickerSheet');
+
+        // Without the route registered there is nothing at the other end, and a
+        // raw 404 in the sheet reads as "this season has no photos" rather than
+        // "nobody wired this up". Say which.
+        if (!WIRED) {
+            state.textContent = 'The gallery is not connected on this install yet.';
+            return;
+        }
 
         // Re-read on every open rather than cache: the photo somebody wants to
         // attach is very often the one they took a minute ago in another tab.

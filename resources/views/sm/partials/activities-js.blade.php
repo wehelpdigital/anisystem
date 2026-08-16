@@ -950,8 +950,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (r.done && kind === 'income') earn += amt;
             const money = kind === 'none' || !amt ? ''
                 : `<span class="act-rem-amt is-${kind}">${kind === 'income' ? '+' : '−'}${esc(money2(amt))}</span>`;
-            return `<label class="act-rem-row${r.done ? ' is-done' : ''}" data-rem-index="${i}">
-                <input type="checkbox"${r.done ? ' checked' : ''}>
+            /* Ticking an errand writes a money row, so it takes the same right
+               as any other change to the plan — no per-worker exception like
+               the payroll roster has. Drawn greyed rather than dropped, and
+               mirrored in activity-card.blade.php. */
+            return `<label class="act-rem-row${r.done ? ' is-done' : ''}${LOCK_EDIT_CLS}" data-rem-index="${i}" title="${esc(editTitle('Tick this errand off'))}">
+                <input type="checkbox"${r.done ? ' checked' : ''}${LOCK_EDIT}>
                 <span class="act-rem-name">${esc(r.text)}</span>
                 ${money}
             </label>`;
@@ -1172,15 +1176,37 @@ document.addEventListener('DOMContentLoaded', () => {
      * person scroll weeks of it to find out. */
     const ADV_URL = @json(route('sm.activity.advanced')) + '?scheduleId=' + SCHEDULE_ID;
 
+    function advGap(n) {
+        // Counted back from this task's own date, so "ago" would be a lie for
+        // anything planned. "Before" is true whichever side of today it sits.
+        if (n === 0) return 'same day';
+        return n + ' day' + (n === 1 ? '' : 's') + ' before';
+    }
+
     function advRow(r) {
         const none = r.daysBefore === null || r.daysBefore === undefined;
-        const days = none ? '' : (r.daysBefore === 0 ? 'today' : r.daysBefore + ' day' + (r.daysBefore === 1 ? '' : 's') + ' before');
         return `<div class="adv-row${none ? ' is-none' : ''}">
             <span class="adv-lbl">${esc(r.label)}</span>
             ${none
                 ? '<span class="adv-none">never on this ground</span>'
                 : `<span class="adv-n">${r.daysBefore}</span>
-                   <span class="adv-when">${esc(days)}<small>${esc(r.when || '')}${r.title ? ' · ' + esc(r.title) : ''}</small></span>`}
+                   <span class="adv-when">${esc(advGap(r.daysBefore))}<small>${esc(r.when || '')}${r.title ? ' · ' + esc(r.title) : ''}</small></span>`}
+        </div>`;
+    }
+
+    function advList(rows) {
+        return '<div class="adv-list">' + rows.map(advRow).join('') + '</div>';
+    }
+
+    /* The answer, in words, before the table says it again in numbers. The
+     * person opening this sheet has one question and it is nearly always this
+     * one; making them read a table to find it was the whole complaint. */
+    function advLede(r) {
+        const none = r.daysBefore === null || r.daysBefore === undefined;
+        return `<div class="adv-lede${none ? ' is-none' : ''}">
+            <div class="adv-lede-k">Last ${esc(String(r.label).toLowerCase())} on this ground</div>
+            <div class="adv-lede-a">${none ? 'Never — this is the first' : esc(advGap(r.daysBefore))}</div>
+            ${none ? '' : `<div class="adv-lede-s">${esc(r.when || '')}${r.title ? ' · ' + esc(r.title) : ''}</div>`}
         </div>`;
     }
 
@@ -1195,8 +1221,42 @@ document.addEventListener('DOMContentLoaded', () => {
             const lots = (d.lots || []).length ? d.lots.join(', ') : 'every lot';
             $id('advInfoSub').textContent = `${d.activity?.date || ''} · ${lots}`
                 + (d.activity?.types?.length ? ' · ' + d.activity.types.join(' + ') : '');
-            $id('advInfoBody').innerHTML = '<div class="adv-list">' + (d.rows || []).map(advRow).join('') + '</div>'
-                + '<p class="adv-foot">Counted from this task’s own date, against the lots it covers. Drafts are not counted — a draft has not happened.</p>';
+            /* Three tiers, and only the first two are shown. A foliar spray
+             * raises questions about what else has been on those leaves; the
+             * last granular answers a different question, so it waits behind
+             * a button instead of crowding the one they asked. */
+            const rows = d.rows || [];
+            const own = rows.filter((r) => r.own);
+            const kin = rows.filter((r) => !r.own && r.related);
+            const rest = rows.filter((r) => !r.own && !r.related);
+
+            let html = '';
+            if (own.length) html += advLede(own[0]);
+            if (own.length > 1) html += '<p class="adv-head">Also this kind of work</p>' + advList(own.slice(1));
+            if (kin.length) {
+                html += `<p class="adv-head">${d.narrowed ? 'Worth knowing before you mix' : 'On this ground'}</p>`
+                    + advList(kin);
+            }
+            if (rest.length) {
+                html += `<button type="button" class="adv-more" id="advMore" aria-expanded="false" aria-controls="advRest">`
+                    + `Show ${rest.length} more, from other kinds of work</button>`
+                    + `<div class="adv-rest" id="advRest" hidden>${advList(rest)}</div>`;
+            }
+            html += '<p class="adv-foot">Counted from this task’s own date, against the lots it covers. Drafts are not counted — a draft has not happened.</p>';
+            $id('advInfoBody').innerHTML = html;
+
+            const more = $id('advMore');
+            if (more) {
+                more.addEventListener('click', () => {
+                    const box = $id('advRest');
+                    const open = box.hasAttribute('hidden');
+                    if (open) box.removeAttribute('hidden'); else box.setAttribute('hidden', '');
+                    more.setAttribute('aria-expanded', open ? 'true' : 'false');
+                    more.textContent = open
+                        ? 'Hide the other kinds of work'
+                        : `Show ${rest.length} more, from other kinds of work`;
+                });
+            }
         } catch (err) {
             $id('advInfoBody').innerHTML = `<p class="text-sm text-red-600 text-center py-6">${esc(err.message || 'Could not read that.')}</p>`;
         }
@@ -1634,9 +1694,14 @@ document.addEventListener('DOMContentLoaded', () => {
         '.delete-activity-btn', '.tag-activity-btn', '.hide-activity-toggle', '.add-note-activity-btn',
         '.group-add-activity-btn', '.rest-day-add-btn', '.day-expense-btn', '.date-marker-btn',
         '.change-group-date-btn', '.move-group-das-btn', '.delete-group-date-btn',
+        // A reminder tick is a write like any other: it books the errand's
+        // money. Not a button, but `disabled` greys a checkbox just as well.
+        '.act-rem-row input[type=checkbox]',
     ].join(', ');
     // Writing on the day itself — which is exactly what "notes only" buys.
-    const NOTE_CONTROLS = '.date-note-btn, .date-note-edit, .date-note-del';
+    // The inline notes belong here too: their ✕ and pencil write the same
+    // rows the per-day note's do.
+    const NOTE_CONTROLS = '.date-note-btn, .date-note-edit, .date-note-del, .inline-note-edit, .inline-note-del';
     function lockBoardControls() {
         if (CAN_EDIT && MAY_NOTE) return;
         const list = $id('activitiesList');
@@ -1653,6 +1718,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('activities:rendered', lockBoardControls);
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', lockBoardControls, { once: true });
     else lockBoardControls();
+
+    /* A note's body is words, not a button, so nothing above can grey it out —
+       and clicking the words is the usual way into the editor. Without this the
+       gate only catches the pencil: a viewer clicks the note, gets the whole
+       editor, writes a paragraph, hits Save and meets the 403 there. Ask
+       before the editor opens instead. */
+    function mayWriteNotes() {
+        if (MAY_NOTE) return true;
+        toast(WHY_NO_NOTE, 'error');
+        return false;
+    }
 
     document.addEventListener('click', (e) => {
         const header = e.target.closest && e.target.closest('#activitiesList .date-header');
@@ -5476,10 +5552,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const dk = block.getAttribute('data-date') || '';
             // Same rule as the inline note: on a phone the body is clamped to
             // one line, so tapping it opens the note to read, not to edit.
+            // Reading stays open to everyone; the sheet just loses its Edit
+            // button for someone who may not write.
             if (window.matchMedia('(pointer: coarse)').matches) {
-                openNoteInfo(block, () => openDateNoteEditor(dk));
+                openNoteInfo(block, MAY_NOTE ? () => openDateNoteEditor(dk) : null);
                 return;
             }
+            if (!mayWriteNotes()) return;
             openDateNoteEditor(dk);
         }
     });
@@ -5488,6 +5567,9 @@ document.addEventListener('DOMContentLoaded', () => {
     async function confirmDeleteDateNote(dateKey) {
         dateKey = (dateKey || '').trim();
         if (!dateKey) return;
+        // The touch long-press gets here with no button to grey out, so the
+        // one gate that catches every way in is the one on the way out.
+        if (!mayWriteNotes()) return;
         const ok = (typeof confirmAction === 'function')
             ? await confirmAction({ title: 'Delete this note?', message: 'The note for this day will be permanently removed.', confirmText: 'Delete', danger: true })
             : confirm('Delete the note for this day?');
@@ -6492,11 +6574,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const note = e.target.closest && e.target.closest('.inline-note');
         if (note && !e.target.closest('.inline-note-grip, .na, .nm, a')) {
             // Clamped to one line on a phone, so a tap means "let me read it".
-            // Editing is a button away, here and in the sheet's footer.
+            // Editing is a button away, here and in the sheet's footer — and
+            // that footer button goes away for someone who may not write.
             if (window.matchMedia('(pointer: coarse)').matches && !note.classList.contains('is-editing')) {
-                openNoteInfo(note, () => openInlineNoteEditor(note));
+                openNoteInfo(note, MAY_NOTE ? () => openInlineNoteEditor(note) : null);
                 return;
             }
+            if (!mayWriteNotes()) return;
             openInlineNoteEditor(note);
         }
     });

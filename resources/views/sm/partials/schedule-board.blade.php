@@ -245,6 +245,10 @@
         let drawing = false, uid = null, prevLocal = null, pending = [], lastSent = null, lastFlush = 0;
         let shapeStart = null, shapeEnd = null, snapshot = null;   // in-progress shape preview
         let lastId = 0, pollTimer = null, channel = null;
+        // Which drawing the canvas is holding. A clear or a fresh session makes
+        // it a different one, and an autosave exports the pages over a fetch
+        // each — long enough for that to happen halfway through.
+        let drawingEpoch = 0;
         const rendered = new Set();
         const isFreehand = () => tool === 'pen' || tool === 'eraser';
 
@@ -383,7 +387,10 @@
             if (ev.type === 'undo') { if (!isRebuild && ev.userId !== ME) scheduleRebuild(); return; }
             const shaping = drawing && !isFreehand() && snapshot;
             if (shaping) ctx.putImageData(snapshot, 0, 0);   // strip my live preview first
-            if (ev.type === 'clear') { clearCanvas(); }
+            // A clear — a teammate's, or mine arriving back — is the end of one
+            // drawing and the start of another, so an autosave that is already
+            // halfway through exporting the old one must not file what it has.
+            if (ev.type === 'clear') { clearCanvas(); drawingEpoch++; }
             else if (isRebuild || ev.userId !== ME) paintEvent(ctx, ev.mode, ev.points, ev.color, ev.width, ev.text);
             if (shaping) { snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height); drawShape(ctx, tool, shapeStart, shapeEnd, color, width); }
         }
@@ -524,6 +531,13 @@
                 : confirm('Clear the page for everyone?');
             if (!ok) return;
             dropRedo();
+            // Clearing starts a new drawing rather than editing the saved one.
+            // The server lets go of the note as the last page empties (see
+            // releaseEmptiedBoard), so the next autosave files what gets drawn
+            // next as its own note instead of replacing the pictures in the one
+            // that was already kept — and this bump stops an export that is
+            // already in flight from landing on top of it either.
+            drawingEpoch++;
             armAutosave();
             clearCanvas();
             api(`${U.push}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { type: 'clear', page: currentPage } })
@@ -646,9 +660,16 @@
             if (drawing || savingNow || !saveModal.classList.contains('hidden')) { queueAutosave(); return; }
             autoBusy = true;
             sayAuto('saving');
+            const epoch = drawingEpoch;
             try {
                 const { images, ink } = await exportAllPages();
                 if (!ink) { autoDirty = false; sayAuto(''); return; }
+                // A clear or a fresh session landed while these pages were
+                // being exported: they are a picture of a drawing that is no
+                // longer on the board, and sending them would file it over
+                // whatever the board has become. The next run exports what is
+                // actually there.
+                if (epoch !== drawingEpoch) { queueAutosave(); return; }
                 const r = await api(`${U.saveNotes}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { images, auto: 1 } });
                 autoDirty = false; autoAt = Date.now();
                 sayAuto(r && r.data && r.data.skipped ? '' : 'saved');
@@ -691,16 +712,19 @@
                         if (!ev) return;
                         // A teammate saved the board — which is this board, all
                         // of it, my strokes included. Nothing left to send.
-                        // My own save answers for itself; the echo arriving a
-                        // moment later must not settle a stroke drawn since.
-                        if (ev.action === 'saved') { if (ev.by !== ME && !autoBusy) autoSettled(); return; }
+                        // My own save answers for itself; and a stroke of mine
+                        // still waiting to be saved is one their export may
+                        // have started before, so it keeps its own timer rather
+                        // than being called safe by somebody else's save.
+                        if (ev.action === 'saved') { if (ev.by !== ME && !autoBusy && !autoDirty) autoSettled(); return; }
                         if (!Array.isArray(ev.pages)) return;
                         pages = ev.pages;
                         renderPageBar();
                         // A new session started, or someone reopened a past
                         // drawing: the canvas underneath us is a different one
-                        // now, so repaint rather than drawing onto a ghost.
-                        if (ev.action === 'reset') { currentPage = 1; renderPageBar(); rebuildPage(); }
+                        // now, so repaint rather than drawing onto a ghost —
+                        // and an export of the old one, half done, is scrap.
+                        if (ev.action === 'reset') { drawingEpoch++; currentPage = 1; renderPageBar(); rebuildPage(); }
                     });
                 } catch (_) { channel = null; }
             }
@@ -829,6 +853,10 @@
                 const r = await api(`${U.draftOpen}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { id } });
                 $('sbDraftsModal').classList.add('hidden');
                 if (window.toast) toast(r.message || 'Drawing opened.', 'success');
+                // The board is that past drawing from here on, and the note it
+                // belongs to with it — so whatever my own autosave was still
+                // exporting belongs to nothing now.
+                drawingEpoch++;
                 currentPage = 1;
                 await loadPages();
                 await rebuildPage();

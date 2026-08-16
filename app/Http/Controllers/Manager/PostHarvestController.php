@@ -160,7 +160,12 @@ class PostHarvestController extends BaseScheduleController
     private function storeVideo(Request $request, $schedule)
     {
         $validator = Validator::make($request->all(), [
-            'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-msvideo|max:307200',
+            // One entry per extension kindOf() calls a video, so nothing gets
+            // through here that the card will then try to show as a photo —
+            // and nothing the attach bar routes to this endpoint is turned
+            // away as "not a supported video" for want of a mimetype. x-m4v
+            // was the other half of that gap.
+            'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-m4v,video/x-msvideo|max:307200',
         ], [
             'video.required' => 'Pick a video first.',
             'video.max' => 'Video is too large — max 300 MB.',
@@ -210,10 +215,18 @@ class PostHarvestController extends BaseScheduleController
         ]);
     }
 
-    /** Photo or clip? The name is all there is to go on — see validated(). */
+    /**
+     * Photo or clip? The name is all there is to go on — see validated().
+     *
+     * The list of extensions lives in SeasonMedia because three copies had
+     * drifted: this one said an AVI was a photo while the validator below and
+     * the attach bar's VID_RE both called it a video, so an AVI was accepted,
+     * filed as a picture and rendered in an <img>. One list, three readers.
+     * Kept as a method here because the Blade card calls it by this name.
+     */
     public static function kindOf(?string $path): string
     {
-        return preg_match('~\.(mp4|mov|webm|mkv|m4v|3gp)$~i', (string) $path) ? 'video' : 'image';
+        return \App\Support\SeasonMedia::kindOf($path);
     }
 
     private function find(int $scheduleId, int $id): ?AsSchedulePostHarvest

@@ -179,26 +179,36 @@
     html.dark .gif-badge { border:1px solid rgb(255 255 255 / .15); }
 
     /* --- Composer + reply pill ---
-       The field gets a line to itself and the tools sit under it. They used to
-       ride inside the pill beside the text, which on a phone left maybe four
-       characters of typing room once photo / video / record / emoji / send had
-       taken their share. Nothing moved out of the form — the delegated
-       handlers all still find their buttons where they expect them. */
-    .reply-shell { display:flex; flex-wrap:wrap; align-items:center; gap:.25rem; flex:1 1 100%; min-width:0;
-        border:1.5px solid var(--color-gray-200); border-radius:1.15rem; background:var(--color-gray-50);
-        padding:.3rem .35rem;
+       The shell is shared: the wall's comment forms and the group discussions'
+       .post-reply-form both wrap their field in one. So the pill stays the pill
+       here, and the two-row shape below is scoped to the wall — where it was
+       asked for and where the tool row is long enough to need it. */
+    .reply-shell { display:flex; align-items:center; gap:.375rem; flex-grow:1; min-width:0;
+        border:1.5px solid var(--color-gray-200); border-radius:9999px; background:var(--color-gray-50);
+        padding:.25rem .25rem .25rem .625rem;
         transition: border-color var(--dur) var(--ease-house), background-color var(--dur) var(--ease-house),
             box-shadow var(--dur) var(--ease-house); }
     .reply-shell:focus-within { border-color:var(--color-brand-500); background:#fff; box-shadow:0 0 0 3px rgb(107 159 61 / .18); }
     html.dark .reply-shell:focus-within { background:var(--color-gray-100); box-shadow:0 0 0 3px rgb(107 159 61 / .28); }
     /* Only the visible field: the photo/video pickers are inputs in here too. */
-    .reply-shell input[type="text"] { flex:1 1 100%; min-width:0; background:transparent; border:0; outline:none;
-        box-shadow:none; font-size:.875rem; line-height:1.45; padding:.35rem .45rem; color:var(--color-gray-900); }
+    .reply-shell input[type="text"] { flex:1; min-width:0; background:transparent; border:0; outline:none;
+        box-shadow:none; font-size:.875rem; color:var(--color-gray-900); }
+
+    /* The wall's shell only: the field gets a line to itself and the tools sit
+       under it. They used to ride inside the pill beside the text, which on a
+       phone left maybe four characters of typing room once photo / video /
+       record / emoji / send had taken their share. A group reply carries a
+       shorter row and a 4rem cap (see .post-reply-form), so it keeps one line.
+       Nothing moved out of either form — the delegated handlers all still find
+       their buttons where they expect them. */
+    .wall-comment-form .reply-shell { flex-wrap:wrap; gap:.25rem; flex:1 1 100%;
+        border-radius:1.15rem; padding:.3rem .35rem; }
+    .wall-comment-form .reply-shell input[type="text"] { flex:1 1 100%; line-height:1.45; padding:.35rem .45rem; }
     /* Send closes the tool row on the right, where the thumb already is —
        unless a reply's ✕ is riding along, and then it leads the pair. */
-    .reply-shell .reply-send { margin-left:auto; }
-    .reply-shell .js-reply-cancel { margin-left:auto; }
-    .reply-shell .js-reply-cancel ~ .reply-send { margin-left:0; }
+    .wall-comment-form .reply-shell .reply-send { margin-left:auto; }
+    .wall-comment-form .reply-shell .js-reply-cancel { margin-left:auto; }
+    .wall-comment-form .reply-shell .js-reply-cancel ~ .reply-send { margin-left:0; }
     .reply-send { width:2.25rem; height:2.25rem; flex-shrink:0; border:0; border-radius:9999px;
         display:inline-flex; align-items:center; justify-content:center; background:var(--color-brand-600); color:#fff;
         cursor:pointer; transition: background-color var(--dur) var(--ease-house), transform .15s var(--ease-house); }

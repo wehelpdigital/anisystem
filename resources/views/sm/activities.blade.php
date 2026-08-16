@@ -242,20 +242,53 @@
         /* Task types: many can be on at once, so they are toggles rather
            than a list you choose from. */
         /* Advanced info: one line per chemical family, the number first
-           because the number is the question. */
+           because the number is the question.
+
+           The sheet is read in one order every time — the answer for THIS
+           kind of task, then the rest of the same question, and only on
+           asking, the families that answer a different question entirely. */
         .adv-list { display: grid; gap: .4rem; }
         .adv-row { display: flex; align-items: center; gap: .6rem; padding: .55rem .7rem;
             border: 1px solid var(--color-gray-200); border-radius: .7rem; background: var(--color-white); }
         .adv-lbl { font-size: .8rem; font-weight: 700; color: var(--color-gray-800); flex: 1 1 auto; min-width: 0; }
         .adv-n { font-size: 1.15rem; font-weight: 800; color: #3d6823; flex: none; }
-        .adv-when { font-size: .72rem; color: var(--color-gray-500); text-align: right; flex: none; }
-        .adv-when small { display: block; font-size: .66rem; color: var(--color-gray-400); }
+        /* Shrinkable, or a long activity title pushes the number off the row. */
+        .adv-when { font-size: .72rem; color: var(--color-gray-500); text-align: right;
+            flex: 0 1 auto; min-width: 0; }
+        .adv-when small { display: block; font-size: .66rem; color: var(--color-gray-400);
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .adv-none { font-size: .72rem; color: var(--color-gray-400); font-style: italic; }
         .adv-row.is-none { background: var(--color-gray-50); }
         .adv-foot { margin-top: .7rem; font-size: .72rem; line-height: 1.5; color: var(--color-gray-400); }
+
+        /* The answer they came for, said in words before the table repeats it. */
+        .adv-lede { border-radius: .9rem; padding: .8rem .9rem; margin-bottom: .8rem;
+            background: linear-gradient(160deg, #f2f7ec, #e7f0dd); border: 1px solid #cfe0bd; }
+        .adv-lede-k { font-size: .68rem; font-weight: 800; letter-spacing: .04em;
+            text-transform: uppercase; color: #567c3a; }
+        .adv-lede-a { font-size: 1.05rem; font-weight: 800; color: #2f4d1c; line-height: 1.3; margin-top: .15rem; }
+        .adv-lede-s { font-size: .74rem; color: var(--color-gray-500); margin-top: .2rem; }
+        .adv-lede.is-none { background: var(--color-gray-50); border-color: var(--color-gray-200); }
+        .adv-lede.is-none .adv-lede-k { color: var(--color-gray-400); }
+        .adv-lede.is-none .adv-lede-a { color: var(--color-gray-600); }
+
+        .adv-head { font-size: .68rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
+            color: var(--color-gray-400); margin: .9rem 0 .35rem; }
+        .adv-head:first-child { margin-top: 0; }
+        .adv-more { width: 100%; margin-top: .8rem; font-size: .75rem; font-weight: 700;
+            color: var(--color-gray-500); padding: .5rem; border-radius: .7rem;
+            border: 1px dashed var(--color-gray-300); background: transparent; }
+        .adv-more:hover { background: var(--color-gray-50); color: var(--color-gray-700); }
+        .adv-rest[hidden] { display: none; }
+
         html.dark .adv-row { background: #151b12; border-color: #2b3a1c; }
         html.dark .adv-lbl { color: #e8efe1; }
         html.dark .adv-row.is-none { background: #1c2416; }
+        html.dark .adv-lede { background: linear-gradient(160deg, #1b2716, #16200f); border-color: #33471f; }
+        html.dark .adv-lede-a { color: #d9ecc5; }
+        html.dark .adv-lede.is-none { background: #1c2416; border-color: #2b3a1c; }
+        html.dark .adv-more { border-color: #2b3a1c; }
+        html.dark .adv-more:hover { background: #1c2416; }
 
         /* The reminder card names itself where other cards name their lot. */
         /* Which count a move is being made in, when the lot keeps two. */
