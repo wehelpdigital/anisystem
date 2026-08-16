@@ -184,7 +184,16 @@
             </div>
         </div>
         {{-- Where you are, and what the ground looks like — beside the pen's
-             own settings, because they are all "how the map reads". --}}
+             own settings, because they are all "how the map reads".
+
+             Two buttons, because they are two different questions. This one
+             answers "where am I" and moves the map there; the one beside it
+             answers "everyone, here I am" and keeps answering it. Sharing used
+             to be the only way to get taken to yourself, which made a private
+             question cost a broadcast. --}}
+        <button type="button" class="cmap-tool" id="cmapFindMe" title="Centre the map on me" aria-label="Centre the map on my position">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.25"/><circle cx="12" cy="12" r="8"/><path stroke-linecap="round" d="M12 1.5v2.5M12 20v2.5M1.5 12h2.5M20 12h2.5"/></svg>
+        </button>
         <button type="button" class="cmap-tool" id="cmapGps" title="Share my live GPS position with the team" aria-label="Share my live GPS position">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/><path stroke-linecap="round" d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22M12 12h.01"/></svg>
         </button>
@@ -272,6 +281,19 @@
     .cmap-tool.is-active,
     html.dark .cmap-tool.is-active { background: var(--color-brand-100); color: var(--color-brand-800); }
     .cmap-tool:disabled { opacity: .35; pointer-events: none; }
+    /* Waiting on a satellite, which on a phone under trees is a real wait. The
+       pulse is on the icon rather than the button so the button keeps its shape
+       in the row, and it overrides the :disabled dimming — a control that is
+       busy is not the same as one that is refused, and should not look it. */
+    .cmap-tool.is-busy { opacity: 1; }
+    .cmap-tool.is-busy svg { animation: cmapSeek 1.1s ease-in-out infinite; transform-origin: 50% 50%; }
+    @keyframes cmapSeek {
+        0%, 100% { opacity: .45; transform: scale(.88); }
+        50% { opacity: 1; transform: scale(1.06); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .cmap-tool.is-busy svg { animation: none; opacity: .55; }
+    }
     /* Cooperative mode keeps two-finger pinch alive while drawing, but its
        "use two fingers to move the map" scrim would flash over every stroke —
        one finger here IS the tool, not a mistake. */
@@ -1368,6 +1390,118 @@
         // A ghost whose artist stopped reporting is an abandoned gesture.
         ghosts.forEach((v, k) => { if (Date.now() - v.at > 8000) dropGhost(k); });
     }, 15000);
+    /* ---------- being taken to yourself ----------------------------------
+     *
+     * map.panTo() animates a short hop and teleports a long one, which is the
+     * wrong way round: the long trip is exactly the one where a person needs to
+     * see which way the ground moved. So the centre is eased by hand, on the
+     * house curve, and the zoom rides the same clock so arriving is one motion
+     * rather than a slide followed by a jerk.
+     *
+     * Interrupted by touching the map, and by pressing the button again — a
+     * flight you are trying to escape from is a hijack, not an animation. */
+    const FLY_MS = 620;
+    let flying = null;
+    function cancelFly() {
+        if (!flying) return;
+        cancelAnimationFrame(flying.raf);
+        if (flying.escape) G().event.removeListener(flying.escape);
+        flying = null;
+    }
+    function flyTo(lat, lng, wantZoom) {
+        if (!map) return;
+        cancelFly();
+        const from = map.getCenter();
+        if (!from) return;
+        const fromLat = from.lat(), fromLng = from.lng();
+        const fromZoom = map.getZoom() || 17;
+        const toZoom = typeof wantZoom === 'number' ? wantZoom : fromZoom;
+        const still = Math.abs(fromLat - lat) < 1e-7 && Math.abs(fromLng - lng) < 1e-7
+            && Math.abs(fromZoom - toZoom) < 0.01;
+        if (still) return;
+
+        // Somebody who has asked not to be moved through space still wants to
+        // end up in the right place.
+        const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (calm) {
+            map.setCenter({ lat, lng });
+            if (Math.abs(toZoom - fromZoom) > 0.01) map.setZoom(toZoom);
+            return;
+        }
+
+        // cubic-bezier(.22,1,.36,1) is the house curve; this is its shape —
+        // nearly all of the distance early, settling rather than braking.
+        const ease = (t) => 1 - Math.pow(1 - t, 4);
+        const t0 = performance.now();
+        const step = (now) => {
+            const t = Math.min(1, (now - t0) / FLY_MS);
+            const k = ease(t);
+            map.setCenter({ lat: fromLat + (lat - fromLat) * k, lng: fromLng + (lng - fromLng) * k });
+            if (Math.abs(toZoom - fromZoom) > 0.01) map.setZoom(fromZoom + (toZoom - fromZoom) * k);
+            if (t < 1) { flying.raf = requestAnimationFrame(step); return; }
+            // Land on whole numbers: a raster basemap left at zoom 16.98 keeps
+            // rendering scaled tiles, which reads as a map that is slightly out
+            // of focus and never comes back.
+            map.setCenter({ lat, lng });
+            map.setZoom(Math.round(toZoom));
+            cancelFly();
+        };
+        // Armed before the first frame, so a drag that starts inside the very
+        // first tick still calls it off. A pinch reports as a drag too.
+        flying = {
+            raf: requestAnimationFrame(step),
+            escape: G().event.addListenerOnce(map, 'dragstart', () => cancelFly()),
+        };
+    }
+
+    /* The last fix we were given, whoever asked for it. Pressing the button a
+     * second time should not make somebody stand still waiting for a satellite
+     * to tell them what they were told ten seconds ago. */
+    let myFix = null;
+    const FIX_FRESH = 20000;
+
+    function findMe(btn) {
+        // The button is drawn with the toolbar, which is drawn before the map
+        // has finished booting — and everything below wants a map to move.
+        if (!map) {
+            if (window.toast) toast('The map is still loading.', 'error');
+            return;
+        }
+        if (!navigator.geolocation) {
+            if (window.toast) toast('This device has no GPS.', 'error');
+            return;
+        }
+        const land = ({ latitude: lat, longitude: lng, accuracy: acc }) => {
+            myFix = { lat, lng, acc, at: Date.now() };
+            // Draw the dot as well as move: a map that jumps somewhere with
+            // nothing on it has not actually answered "where am I".
+            // Local only — sharing is the button next door, and stays its own
+            // decision.
+            renderLoc({ userId: ME, name: 'Me', lat, lng, acc });
+            centeredOnMe = true;
+            dropVeil();
+            flyTo(lat, lng, Math.max(map.getZoom() || 0, 17));
+        };
+
+        if (myFix && Date.now() - myFix.at < FIX_FRESH) { land(myFix); return; }
+
+        btn.classList.add('is-busy');
+        btn.disabled = true;
+        const done = () => { btn.classList.remove('is-busy'); btn.disabled = false; };
+        navigator.geolocation.getCurrentPosition(
+            (pos) => { done(); land(pos.coords); },
+            (err) => {
+                done();
+                if (!window.toast) return;
+                // Three different problems that all used to say the same thing.
+                if (err && err.code === 1) toast('This app is not allowed to use your location — turn it on for this site in your browser settings.', 'error');
+                else if (err && err.code === 3) toast('Still looking for a signal. Under open sky it comes faster.', 'error');
+                else toast('Could not work out where you are.', 'error');
+            },
+            { enableHighAccuracy: true, maximumAge: 10000, timeout: 15000 }
+        );
+    }
+
     function toggleGps(btn) {
         if (gpsWatch !== null) {
             navigator.geolocation.clearWatch(gpsWatch); gpsWatch = null;
@@ -1387,6 +1521,10 @@
         let goToMe = true;
         gpsWatch = navigator.geolocation.watchPosition((pos) => {
             const { latitude: lat, longitude: lng, accuracy: acc } = pos.coords;
+            // Feeds the same cache the Centre-on-me button reads, so while
+            // sharing is on that button answers off this stream instead of
+            // asking the satellites all over again.
+            myFix = { lat, lng, acc, at: Date.now() };
             renderLoc({ userId: ME, name: 'Me', lat, lng, acc });
             if (goToMe) {
                 goToMe = false;
@@ -2052,6 +2190,7 @@
             e.currentTarget.classList.toggle('is-active', satOn);
             e.currentTarget.setAttribute('aria-pressed', satOn ? 'true' : 'false');
         });
+        document.getElementById('cmapFindMe')?.addEventListener('click', (e) => findMe(e.currentTarget));
         document.getElementById('cmapGps').addEventListener('click', (e) => toggleGps(e.currentTarget));
         document.getElementById('cmapClear').addEventListener('click', async () => {
             const ok = window.confirmAction

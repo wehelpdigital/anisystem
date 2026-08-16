@@ -58,6 +58,17 @@
         .mp-act:hover { background: var(--color-gray-200); color: var(--color-gray-800); }
         .mp-act:active { transform: scale(.92); }
         .mp-act.is-off { opacity: .35; pointer-events: none; }
+        /* Wins over .is-off, which the proxy also wears while the real button is
+           disabled: the press has been taken, not turned down. */
+        .mp-act.is-busy { opacity: 1; pointer-events: none; }
+        .mp-act.is-busy svg { animation: mpSeek 1.1s ease-in-out infinite; transform-origin: 50% 50%; }
+        @keyframes mpSeek {
+            0%, 100% { opacity: .45; transform: scale(.88); }
+            50% { opacity: 1; transform: scale(1.06); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .mp-act.is-busy svg { animation: none; opacity: .55; }
+        }
         .mp-act.is-on, html.dark .mp-act.is-on { background: var(--color-brand-100); color: var(--color-brand-800); }
         .mp-act.is-save { width: auto; padding: 0 .7rem; background: #4a7c2a; color: #fff; font-size: .78rem; font-weight: 800; }
         .mp-act.is-save:hover { background: #3d6823; color: #fff; }
@@ -71,6 +82,7 @@
            inside this module they would be the same button twice. */
         #smapStageWrap .cmap-bar #cmapUndo,
         #smapStageWrap .cmap-bar #cmapRedo,
+        #smapStageWrap .cmap-bar #cmapFindMe,
         #smapStageWrap .cmap-bar #cmapSaveMenuBtn,
         #smapStageWrap .cmap-bar .cmap-div { display: none; }
         @media (max-width: 520px) {
@@ -178,6 +190,13 @@
                 </button>
                 <button type="button" class="mp-act" data-proxy="cmapRedo" title="Redo" aria-label="Redo">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg>
+                </button>
+                {{-- The map's own Centre-on-me, driven from out here like the
+                     rest. On this screen the map's toolbar is off looking after
+                     the drawing tools, and "take me to where I am standing" is
+                     the one thing a person in a field wants without hunting. --}}
+                <button type="button" class="mp-act" data-proxy="cmapFindMe" title="Centre the map on me" aria-label="Centre the map on my position">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.25"/><circle cx="12" cy="12" r="8"/><path stroke-linecap="round" d="M12 1.5v2.5M12 20v2.5M1.5 12h2.5M20 12h2.5"/></svg>
                 </button>
                 <button type="button" class="mp-act is-save" data-proxy="cmapSaveMenuBtn" title="Open or save a map" aria-label="Open or save a map">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg>
@@ -322,12 +341,16 @@
                     const real = realOf(btn.getAttribute('data-proxy'));
                     if (!real) return;
                     btn.classList.toggle('is-off', !!real.disabled);
+                    // Hunting for a satellite is not the same as being refused,
+                    // and the proxy is the only one of the pair on screen here,
+                    // so it has to carry the difference itself.
+                    btn.classList.toggle('is-busy', real.classList.contains('is-busy'));
                     if (!btn.classList.contains('is-save') && !btn.classList.contains('is-danger')) {
                         btn.classList.toggle('is-on', real.classList.contains('is-active'));
                     }
                 });
                 const watch = new MutationObserver(sync);
-                ['cmapUndo', 'cmapRedo'].forEach((id) => {
+                ['cmapUndo', 'cmapRedo', 'cmapFindMe'].forEach((id) => {
                     const real = document.getElementById(id);
                     if (real) watch.observe(real, { attributes: true, attributeFilter: ['disabled', 'class'] });
                 });
