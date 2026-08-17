@@ -78,13 +78,51 @@
     .qc-add { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .35rem; aspect-ratio: 1;
         border: 1.5px dashed var(--color-gray-300); border-radius: .6rem; color: var(--color-gray-500); font-size: .75rem; font-weight: 600; cursor: pointer; background: var(--color-gray-50); }
     .qc-add:hover { border-color: var(--color-gray-400); color: var(--color-gray-600); }
-    .qc-target { display: flex; align-items: flex-start; gap: .6rem; padding: .75rem; border: 1.5px solid var(--color-gray-200); border-radius: .7rem; cursor: pointer; }
-    .qc-target.is-on { border-color: var(--color-brand-600, #4a7c2a); background: rgba(74,124,42,.12); }
-    /* A destination that cannot take what was captured stays on screen, greyed:
-       "where did Save to notes go?" is a worse question than a row you can see
-       is unavailable and a line saying why. */
-    .qc-target.is-off { opacity: .5; cursor: not-allowed; }
-    .qc-target input { margin-top: .2rem; }
+    /* The destination strip: three segments, one choice, up top where it
+       shapes the questions below it. The radios stay for the JS that has
+       always read them; the look is the tab strip the rest of the app uses. */
+    .qc-tabs { display: flex; gap: .25rem; padding: .25rem; background: var(--color-gray-100); border-radius: .7rem; }
+    .qc-tab { flex: 1 1 0; display: flex; align-items: center; justify-content: center; padding: .5rem .4rem;
+        border-radius: .5rem; font-size: .82rem; font-weight: 700; color: var(--color-gray-500); cursor: pointer;
+        transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .qc-tab input { position: absolute; opacity: 0; pointer-events: none; }
+    .qc-tab.is-on { background: var(--color-white); color: var(--color-gray-900); box-shadow: 0 1px 3px rgb(0 0 0 / .1); }
+    .qc-tab.is-off { opacity: .45; cursor: not-allowed; }
+    .qc-tabhint { font-size: .72rem; color: var(--color-gray-400); margin-top: .45rem; min-height: 1em; }
+    @media (prefers-reduced-motion: reduce) { .qc-tab { transition: none; } }
+    html.dark .qc-tabs { background: rgb(255 255 255 / .06); }
+    html.dark .qc-tab.is-on { background: #1c2416; color: #e8efe1; }
+
+    /* A name box that was left empty when it was needed. */
+    .qc-item.is-missing input[aria-label$="title"] { border-color: #dc2626; background: #fef2f2; }
+    html.dark .qc-item.is-missing input[aria-label$="title"] { background: #2b1414; }
+
+    /* The saving veil: a real modal over everything, because "did it upload or
+       did I close it" is exactly the confusion this step used to leave. */
+    .qc-busy { position: fixed; inset: 0; z-index: 460; display: flex; align-items: center; justify-content: center;
+        background: rgb(0 0 0 / .55); animation: qcBusyIn .28s cubic-bezier(.22,1,.36,1) both; }
+    .qc-busy[hidden] { display: none; }
+    .qc-busy-card { width: min(20rem, calc(100vw - 3rem)); background: var(--color-white); border-radius: 1rem;
+        padding: 1.4rem 1.2rem; text-align: center; box-shadow: 0 30px 60px -30px rgb(0 0 0 / .6); }
+    .qc-busy-title { font-weight: 800; color: var(--color-gray-800); margin-bottom: .8rem; }
+    .qc-busy-track { height: .55rem; border-radius: 999px; background: var(--color-gray-100); overflow: hidden; }
+    .qc-busy-fill { height: 100%; width: 0%; border-radius: 999px; background: #4a7c2a;
+        transition: width .2s ease; }
+    /* Before the first byte moves there is no honest percentage — the bar
+       breathes instead of lying about one. */
+    .qc-busy.is-vague .qc-busy-fill { width: 40% !important; animation: qcBusyVague 1.1s ease-in-out infinite alternate; }
+    .qc-busy-pct { font-size: .74rem; font-weight: 700; color: var(--color-gray-500); margin-top: .5rem; min-height: 1em; }
+    @keyframes qcBusyIn { from { opacity: 0; } }
+    @keyframes qcBusyVague { from { margin-left: 0; } to { margin-left: 60%; } }
+    @media (prefers-reduced-motion: reduce) {
+        .qc-busy { animation: none; }
+        .qc-busy.is-vague .qc-busy-fill { animation: none; margin-left: 30%; }
+    }
+    html.dark .qc-busy-card { background: #151b12; }
+    html.dark .qc-busy-title { color: #e8efe1; }
+    html.dark .qc-busy-track { background: rgb(255 255 255 / .08); }
+
+/* (the stacked destination cards these styled are gone - tabs now) */
     /* One row per captured thing: a thumbnail to recognise it by, a name, a
        description. Deliberately cramped — ten of these sit under everything
        else the details step already asks for. */
@@ -164,18 +202,42 @@
         {{-- STEP 2 — details --}}
         <div data-qc-step="details" class="hidden">
             <div class="qc-body space-y-4">
-                {{-- A capture deserves a name of its own. Without one every
-                     record read "Quick capture — Aug 13, 2026 4:02 PM", which
-                     tells you when you were there and nothing about what you
-                     saw. --}}
+                {{-- Where it goes, decided first — because the destination
+                     decides which questions are worth asking. These used to be
+                     three stacked cards below the title, which meant filling in
+                     a note title and THEN discovering the album asks for its
+                     own name anyway. --}}
                 <div>
-                    <label class="form-label" for="qcNoteTitle">Title</label>
-                    <input type="text" id="qcNoteTitle" class="form-input" maxlength="191"
-                           placeholder="e.g. Flooded corner, east lot" autocomplete="off">
+                    <div class="qc-tabs" role="tablist" aria-label="Where to save">
+                        <label class="qc-tab is-on" data-qc-target-row role="tab">
+                            <input type="radio" name="qcTarget" value="note" checked>
+                            <span>Notes</span>
+                        </label>
+                        <label class="qc-tab" data-qc-target-row role="tab">
+                            <input type="radio" name="qcTarget" value="gallery">
+                            <span>Gallery</span>
+                        </label>
+                        <label class="qc-tab" data-qc-target-row role="tab">
+                            <input type="radio" name="qcTarget" value="ai">
+                            <span>Ask AI</span>
+                        </label>
+                    </div>
+                    <p class="qc-tabhint" id="qcTabHint"></p>
+                    <p id="qcClipHint" class="hidden text-xs text-gray-500 mt-1">A clip can only go to an album — notes and the AI Technician read photos.</p>
                 </div>
-                <div>
-                    <label class="form-label">Description <span class="text-gray-400 font-normal">(optional)</span></label>
-                    <div class="qc-editor-wrap"><div id="qcEditor"></div></div>
+                {{-- A note deserves a name of its own. The Gallery does not ask
+                     these two: the album has its own name, and every photo gets
+                     one below — a third title with nowhere to go was noise. --}}
+                <div id="qcNoteWrap" class="space-y-4">
+                    <div>
+                        <label class="form-label" for="qcNoteTitle">Title</label>
+                        <input type="text" id="qcNoteTitle" class="form-input" maxlength="191"
+                               placeholder="e.g. Flooded corner, east lot" autocomplete="off">
+                    </div>
+                    <div>
+                        <label class="form-label">Description <span class="text-gray-400 font-normal">(optional)</span></label>
+                        <div class="qc-editor-wrap"><div id="qcEditor"></div></div>
+                    </div>
                 </div>
                 @if (!empty($fixedScheduleId))
                     {{-- Inside a schedule: the target is known, no picker needed. --}}
@@ -190,33 +252,6 @@
                         </select>
                     </div>
                 @endif
-                <div>
-                    <span class="form-label">What should we do with it?</span>
-                    <div class="grid gap-2 mt-1.5">
-                        <label class="qc-target is-on" data-qc-target-row>
-                            <input type="radio" name="qcTarget" value="note" checked>
-                            <span>
-                                <span class="block font-semibold text-gray-900">Save to notes</span>
-                                <span class="block text-xs text-gray-500">Keep the photos in this schedule's notebook.</span>
-                            </span>
-                        </label>
-                        <label class="qc-target" data-qc-target-row>
-                            <input type="radio" name="qcTarget" value="gallery">
-                            <span>
-                                <span class="block font-semibold text-gray-900">Save to gallery</span>
-                                <span class="block text-xs text-gray-500">An album of their own — photos, clips, or both, each one named.</span>
-                            </span>
-                        </label>
-                        <label class="qc-target" data-qc-target-row>
-                            <input type="radio" name="qcTarget" value="ai">
-                            <span>
-                                <span class="block font-semibold text-gray-900">Ask the AI Technician</span>
-                                <span class="block text-xs text-gray-500">Get advice on the first photo (uses AI Credits).</span>
-                            </span>
-                        </label>
-                    </div>
-                    <p id="qcClipHint" class="hidden text-xs text-gray-500 mt-1.5">A clip can only go to an album — notes and the AI Technician read photos.</p>
-                </div>
                 {{-- Only asked once the gallery is the destination. --}}
                 <div id="qcAlbumWrap" class="hidden">
                     <label class="form-label" for="qcAlbum">Album</label>
@@ -236,7 +271,7 @@
                 {{-- A note tells one story about its photos, but an album is a
                      shelf: every picture and clip on it wants its own label. --}}
                 <div id="qcItemsWrap" class="hidden">
-                    <span class="form-label">Name each item <span class="text-gray-400 font-normal">(optional)</span></span>
+                    <span class="form-label">Name each item</span>
                     <div id="qcItems"></div>
                 </div>
             </div>
@@ -256,6 +291,17 @@
                 <button type="button" class="btn btn-primary ml-auto" data-qc-cancel>Done</button>
             </div>
         </div>
+    </div>
+</div>
+
+{{-- The saving veil. A sibling of the modal, not a child: .qc-modal carries a
+     transform, and a transform ancestor traps position:fixed - inside it this
+     would pin to the modal, not the screen. --}}
+<div class="qc-busy" id="qcBusy" hidden role="alert" aria-busy="true">
+    <div class="qc-busy-card">
+        <p class="qc-busy-title">Saving…</p>
+        <div class="qc-busy-track"><div class="qc-busy-fill" id="qcBusyFill"></div></div>
+        <p class="qc-busy-pct" id="qcBusyPct"></p>
     </div>
 </div>
 
@@ -621,12 +667,39 @@ document.addEventListener('DOMContentLoaded', () => {
     function noteHtml() { return quill ? quill.root.innerHTML : ''; }
     function noteText() { return quill ? quill.getText().trim() : ''; }
 
+    /* Our own validation, on purpose. `required` hands the complaint to the
+     * browser, which bubbles it in its own voice, half off-screen inside a
+     * scrolling modal - and says nothing about WHICH of ten photos it means.
+     * This marks the rows, says how many, and puts the cursor in the first. */
+    function namesMissing() {
+        const rows = Array.from($('qcItems').children);
+        let first = null, n = 0;
+        items.forEach((it, i) => {
+            const bad = !it.title.trim();
+            if (rows[i]) rows[i].classList.toggle('is-missing', bad);
+            if (bad) { n++; first = first || (rows[i] && rows[i].querySelector('input')); }
+        });
+        if (!n) return false;
+        toast(n === 1 ? 'One photo still needs a name.' : n + ' photos still need names.', 'error');
+        if (first) { first.focus(); first.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+        return true;
+    }
+
     $('qcConfirm').addEventListener('click', async () => {
         if (!items.length) { toast('Capture a photo first.', 'error'); showStep('capture'); return; }
         const scheduleId = $('qcSchedule').value;
         const target = modal.querySelector('input[name=qcTarget]:checked')?.value || 'note';
+        if (target === 'gallery') {
+            if (namesMissing()) return;
+            if (!$('qcAlbum').value && !$('qcAlbumTitle').value.trim()) {
+                toast('Name the new album first.', 'error');
+                $('qcAlbumTitle').focus();
+                return;
+            }
+        }
         const btn = $('qcConfirm');
         btn.disabled = true; const orig = btn.textContent; btn.textContent = 'Working…';
+        busyShow();
         try {
             if (target === 'note') {
                 await saveNotes(scheduleId);
@@ -638,9 +711,68 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             toast(err.message || 'Something went wrong.', 'error');
         } finally {
+            busyHide();
             btn.disabled = false; btn.textContent = orig;
         }
     });
+
+    /* ---- the veil, the shrink, and the wire ---- */
+    function busyShow() {
+        const b = $('qcBusy');
+        b.hidden = false; b.classList.add('is-vague');
+        $('qcBusyFill').style.width = '0%';
+        $('qcBusyPct').textContent = '';
+    }
+    function busyPct(p) {
+        const b = $('qcBusy');
+        b.classList.remove('is-vague');
+        $('qcBusyFill').style.width = p + '%';
+        // 100% of the bytes sent is not the same as saved - the server is
+        // still chewing. Saying "100%" and then sitting there reads as hung.
+        $('qcBusyPct').textContent = p < 100 ? p + '%' : 'Finishing…';
+    }
+    function busyHide() { $('qcBusy').hidden = true; }
+
+    /* A field photo is 8-12 MB the camera wrote for printing, going up a farm
+     * connection to be looked at on phones. Shrunk client-side before the
+     * wire; the veil never says so - it is part of saving, not a separate
+     * ceremony to narrate. Anything that fails to shrink goes up as it is. */
+    async function shrunk(item) {
+        if (item.kind !== 'image') return item.file;
+        if (item.file.size <= 2.4 * 1024 * 1024) return item.file;
+        try {
+            const bmp = await createImageBitmap(item.file, { imageOrientation: 'from-image' });
+            const MAX = 2000;
+            const sc = Math.min(1, MAX / Math.max(bmp.width, bmp.height));
+            const c = document.createElement('canvas');
+            c.width = Math.round(bmp.width * sc); c.height = Math.round(bmp.height * sc);
+            c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+            if (bmp.close) bmp.close();
+            const blob = await new Promise((res) => c.toBlob(res, 'image/jpeg', 0.85));
+            if (!blob || blob.size >= item.file.size) return item.file;
+            return new File([blob], (item.file.name || 'photo').replace(/\.\w+$/, '') + '.jpg', { type: 'image/jpeg' });
+        } catch (_) { return item.file; }
+    }
+
+    /* fetch() cannot watch an upload - only XHR reports bytes as they leave,
+     * and the bytes leaving are the whole reason the veil has a bar. */
+    function wire(url, fd) {
+        return new Promise((resolve, reject) => {
+            const x = new XMLHttpRequest();
+            x.open('POST', url);
+            x.setRequestHeader('X-CSRF-TOKEN', CSRF);
+            x.setRequestHeader('Accept', 'application/json');
+            x.upload.onprogress = (e) => { if (e.lengthComputable) busyPct(Math.round((e.loaded / e.total) * 100)); };
+            x.onload = () => {
+                let data = {};
+                try { data = JSON.parse(x.responseText); } catch (_) { }
+                if (x.status >= 200 && x.status < 300 && data.success) resolve(data);
+                else reject(new Error(data.message || 'Could not save.'));
+            };
+            x.onerror = () => reject(new Error('The connection dropped mid-save. Nothing may have arrived - try again.'));
+            x.send(fd);
+        });
+    }
 
     /* ---- Gallery: the album picker, filled from the chosen schedule ---- */
     function currentTarget() {
@@ -648,9 +780,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function syncTarget() {
-        const gallery = currentTarget() === 'gallery';
+        const t = currentTarget();
+        const gallery = t === 'gallery';
+        // The Gallery asks for the album's name and each photo's - a third
+        // title on top of those had nowhere to go, so it is not asked.
+        $('qcNoteWrap').classList.toggle('hidden', gallery);
         $('qcAlbumWrap').classList.toggle('hidden', !gallery);
         $('qcItemsWrap').classList.toggle('hidden', !gallery);
+        const hints = {
+            note: "Keep the photos in this schedule's notebook.",
+            gallery: 'An album of their own - name each photo below.',
+            ai: 'Get advice on the first photo (uses AI Credits).',
+        };
+        const hint = $('qcTabHint');
+        if (hint) hint.textContent = hints[t] || '';
         if (gallery) { loadAlbums(); syncAlbumField(); renderItemRows(); }
     }
 
@@ -699,7 +842,7 @@ document.addEventListener('DOMContentLoaded', () => {
             title.placeholder = noun + ' ' + (i + 1) + ' — name it';
             title.setAttribute('aria-label', noun + ' ' + (i + 1) + ' title');
             title.value = item.title;
-            title.addEventListener('input', () => { item.title = title.value; });
+            title.addEventListener('input', () => { item.title = title.value; if (title.value.trim()) row.classList.remove('is-missing'); });
 
             // One line, not a textarea: ten stacked boxes turned the details
             // step into a page nobody scrolled to the bottom of.
@@ -754,25 +897,19 @@ document.addEventListener('DOMContentLoaded', () => {
             if ($('qcAlbumTitle').value.trim()) fd.append('albumTitle', $('qcAlbumTitle').value.trim());
             if ($('qcAlbumDesc').value.trim()) fd.append('albumDescription', $('qcAlbumDesc').value.trim());
         }
-        if ($('qcNoteTitle').value.trim()) fd.append('title', $('qcNoteTitle').value.trim());
-        const gHtml = noteHtml();
-        if (gHtml && gHtml !== '<p><br></p>') fd.append('note', gHtml);
+        // No note title or body here - the Gallery asks for the album's name
+        // and each photo's own, and this destination hides those two fields.
         // The index in the field name is the pairing. Photos and clips go in
         // separate buckets because the server checks and stores them
         // differently, but the names are one list, so images[2] and titles[2]
         // are the same thing.
-        items.forEach((item, i) => {
-            fd.append((item.kind === 'video' ? 'clips[' : 'images[') + i + ']', item.file);
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            fd.append((item.kind === 'video' ? 'clips[' : 'images[') + i + ']', await shrunk(item));
             if (item.title.trim()) fd.append('titles[' + i + ']', item.title.trim());
             if (item.desc.trim()) fd.append('descriptions[' + i + ']', item.desc.trim());
-        });
-        const res = await fetch(GALLERY_URL, {
-            method: 'POST',
-            headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' },
-            body: fd,
-        });
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok || !data.success) throw new Error(data.message || 'Could not save.');
+        }
+        const data = await wire(GALLERY_URL, fd);
         // Some of it saved and some of it did not. A green tick and a success
         // toast over "Could not process the video" is how a lost clip goes
         // unnoticed until somebody goes looking for it, so a partial save
@@ -801,14 +938,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (html && html !== '<p><br></p>') fd.append('note', html);
         // Photos only — a note takes pictures, which is why a set with a clip
         // in it never gets offered this destination.
-        items.filter((it) => it.kind === 'image').forEach((it) => fd.append('images[]', it.file));
-        const res = await fetch(NOTES_URL, {
-            method: 'POST',
-            headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' },
-            body: fd,
-        });
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok || !data.success) throw new Error(data.message || 'Could not save.');
+        const shots = items.filter((it) => it.kind === 'image');
+        for (const it of shots) fd.append('images[]', await shrunk(it));
+        const data = await wire(NOTES_URL, fd);
         $('qcResult').innerHTML = `<div class="flex items-center gap-2 text-brand-700 font-semibold mb-1">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             ${escapeHtml(data.message)}</div><p class="text-gray-500 text-sm">Find it anytime in this schedule's Notes module.</p>`;

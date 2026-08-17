@@ -79,17 +79,28 @@
         margin-top: .1rem; opacity: .82; }
     .ga-empty { padding: 0 .9rem 1rem; font-size: .8rem; color: var(--color-gray-400); }
 
-    /* The bar that appears once something is picked. */
-    .ga-bar { position: fixed; left: 50%; transform: translateX(-50%); bottom: 1rem; z-index: 60;
-        display: flex; align-items: center; gap: .5rem; padding: .5rem .6rem; border-radius: 999px;
-        background: #10160c; color: #e8efe1; box-shadow: 0 18px 40px -18px rgb(0 0 0 / .8);
+    /* The picking bar. It appears IN the album being picked from, right under
+       its header, because that is where the eyes already are - a dark pill at
+       the bottom of the viewport read as an unrelated popup, and on a phone it
+       sat over the very pictures being chosen. It moves between albums with
+       the most recent pick, while the actions always cover everything picked. */
+    .ga-bar { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap;
+        margin: 0 .9rem .6rem; padding: .5rem .6rem; border-radius: .7rem;
+        background: var(--color-brand-50); border: 1px solid var(--color-brand-200, #cfe0bd);
         animation: gaBarIn .28s cubic-bezier(.22,1,.36,1) both; }
-    @keyframes gaBarIn { from { opacity: 0; transform: translate(-50%, 1rem); } }
+    @keyframes gaBarIn { from { opacity: 0; transform: translateY(-.35rem); } }
+    @media (prefers-reduced-motion: reduce) { .ga-bar { animation: none; } }
     .ga-bar[hidden] { display: none; }
-    .ga-bar-n { font-size: .78rem; font-weight: 800; padding-left: .35rem; }
-    .ga-bar button { font-size: .78rem; font-weight: 700; padding: .4rem .7rem; border-radius: 999px;
-        background: rgb(255 255 255 / .12); color: #e8efe1; cursor: pointer; }
-    .ga-bar button:hover { background: rgb(255 255 255 / .22); }
+    .ga-bar-n { font-size: .78rem; font-weight: 800; color: #3d6823; margin-right: auto; }
+    .ga-bar button { font-size: .76rem; font-weight: 700; padding: .38rem .7rem; border-radius: .55rem;
+        background: var(--color-white); color: var(--color-gray-700);
+        border: 1px solid var(--color-gray-200); cursor: pointer; }
+    .ga-bar button:hover { background: var(--color-gray-50); }
+    .ga-bar .ga-bar-del { color: #b91c1c; border-color: #fecaca; }
+    .ga-bar .ga-bar-del:hover { background: #fef2f2; }
+    html.dark .ga-bar { background: #1b2716; border-color: #33471f; }
+    html.dark .ga-bar-n { color: #cde3b3; }
+    html.dark .ga-bar button { background: #151b12; color: #cdd8c0; border-color: #2b3a1c; }
     .ga-bar .ga-bar-del:hover { background: #b91c1c; color: #fff; }
     @media (prefers-reduced-motion: reduce) { .ga-bar { animation: none; } .ga-cell img { transition: none; } }
 
@@ -549,15 +560,32 @@
         }
 
         function paint() {
+            // The bar may be docked inside an album card, and the next line
+            // rebuilds every card from a string - anything standing inside is
+            // destroyed, not moved. Lift it out first; paintBar docks it back.
+            const liveBar = $('gaBar');
+            if (liveBar && liveBar.parentElement !== document.body) document.body.appendChild(liveBar);
             $('gaAlbums').innerHTML = ALBUMS.map(albumHtml).join('');
             $('gaEmpty').classList.toggle('hidden', ALBUMS.length > 0);
             paintBar();
         }
 
+        let barHome = null;   // data-album of the album the bar docks in
         function paintBar() {
             const n = picked.size;
-            $('gaBar').hidden = n === 0;
+            const bar = $('gaBar');
+            bar.hidden = n === 0;
             $('gaBarN').textContent = n + ' picked';
+            if (n) {
+                // Docked inside the album of the most recent pick, right after
+                // its header. paint() rebuilds the grid with innerHTML, which
+                // would eat the bar - so it lives outside the grid and is
+                // APPENDED here on every paint, never serialized.
+                const home = (barHome && document.querySelector('.ga-album[data-album="' + barHome + '"]'))
+                    || document.querySelector('.ga-album');
+                const head = home && home.querySelector('.ga-head');
+                if (head && head.nextElementSibling !== bar) head.insertAdjacentElement('afterend', bar);
+            }
             document.querySelectorAll('.ga-cell').forEach((c) => {
                 c.classList.toggle('is-picked', picked.has(c.getAttribute('data-image')));
             });
@@ -668,6 +696,9 @@
                 e.preventDefault();
                 e.stopPropagation();
                 if (picked.has(id)) picked.delete(id); else picked.add(id);
+                // The bar follows the hand: it docks in the album this pick
+                // happened in. Picks in another album keep counting here too.
+                if (albumEl) barHome = albumEl.getAttribute('data-album');
                 paintBar();
             }
         }, true);

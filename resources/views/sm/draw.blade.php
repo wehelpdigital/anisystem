@@ -15,6 +15,22 @@
             border: 1px solid var(--color-gray-200); border-radius: .85rem; text-align: left;
             transition: box-shadow .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
         .dr-card:hover { box-shadow: 0 10px 26px -18px rgb(0 0 0 / .45); transform: translateY(-1px); }
+        /* Deleting has two acts and the card plays both: first it waits (dim,
+           spinner, deaf to clicks) while the server is asked, then it leaves
+           (shrink and fade) before the grid closes over the gap. Snapping from
+           "there" to "not" read as the page glitching, not as a thing done. */
+        .dr-card.is-going { opacity: .45; pointer-events: none; position: relative; }
+        .dr-card.is-going::after { content: ''; position: absolute; top: 50%; left: 50%;
+            width: 1.6rem; height: 1.6rem; margin: -.8rem 0 0 -.8rem; border-radius: 999px;
+            border: 3px solid rgb(74 124 42 / .25); border-top-color: #4a7c2a;
+            animation: drSpin .7s linear infinite; }
+        .dr-card.is-gone { opacity: 0; transform: scale(.88);
+            transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+        @keyframes drSpin { to { transform: rotate(360deg); } }
+        @media (prefers-reduced-motion: reduce) {
+            .dr-card.is-going::after { animation: none; }
+            .dr-card.is-gone { transition: none; }
+        }
         .dr-thumb { position: relative; aspect-ratio: 4 / 3; background: var(--color-gray-50); overflow: hidden; cursor: pointer; }
         .dr-thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0;
             transition: opacity .28s cubic-bezier(.22,1,.36,1); }
@@ -308,12 +324,21 @@
                         ? await confirmAction({ title: 'Delete this drawing?', message: 'It goes from the notebook too.', confirmText: 'Delete', danger: true })
                         : confirm('Delete this drawing?');
                     if (!ok) return;
+                    cardEl.classList.add('is-going');
                     try {
                         await api(`${U.destroy}&noteId=${d.noteId}&index=${d.index}&source=${encodeURIComponent(d.source || '')}`, { method: 'DELETE' });
                         drawings = drawings.filter((x) => x !== d);
-                        paint();
-                        toast('Drawing deleted.');
-                    } catch (err) { toast(err.message || 'Could not delete that.', 'error'); }
+                        // The card leaves before the grid closes over it —
+                        // repainting straight away is the "it just vanishes"
+                        // that was complained about.
+                        cardEl.classList.remove('is-going');
+                        cardEl.classList.add('is-gone');
+                        const calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+                        setTimeout(() => { paint(); toast('Drawing deleted.'); }, calm ? 0 : 300);
+                    } catch (err) {
+                        cardEl.classList.remove('is-going');
+                        toast(err.message || 'Could not delete that.', 'error');
+                    }
                     return;
                 }
 
