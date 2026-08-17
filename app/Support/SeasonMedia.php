@@ -205,7 +205,13 @@ class SeasonMedia
 
         usort($out, fn ($a, $b) => $b['sortKey'] <=> $a['sortKey']);
 
-        return $out;
+        // A ceiling, because this list rides INSIDE the gallery page as JSON.
+        // Every item is a couple hundred bytes; a long season's thousand items
+        // was a quarter-megabyte of blocking HTML on a 3G phone before one
+        // picture had loaded. Six hundred newest is more than the shelves can
+        // usefully show; anything older is still reachable where it lives —
+        // its note, its album, its module.
+        return array_slice($out, 0, 600);
     }
 
     /**

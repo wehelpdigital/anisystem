@@ -629,7 +629,10 @@
             // destroyed, not moved. Lift it out first; paintBar docks it back.
             const liveBar = $('gaBar');
             if (liveBar && liveBar.parentElement !== document.body) document.body.appendChild(liveBar);
-            $('gaAlbums').innerHTML = ALBUMS.map(albumHtml).join('');
+            // Through the same windowed fill() the shelves use: a season of
+            // albums arrives 24 sections at a time instead of as one document.
+            // (fill() empties the host itself, after the bar rescue above.)
+            fill($('gaAlbums'), ALBUMS, '', albumHtml);
             $('gaEmpty').classList.toggle('hidden', ALBUMS.length > 0);
             paintBar();
         }
