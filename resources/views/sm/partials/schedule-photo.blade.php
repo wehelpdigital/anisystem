@@ -13,29 +13,29 @@
 @include('sm.partials.media-picker', ['schedule' => $schedule])
 
 <div class="cph-wrap" id="cphWrap">
-    {{-- No photo yet: the three ways to put one up. --}}
-    <div class="cph-empty" id="cphEmpty">
-        <p class="cph-empty-title">Put a photo under the team's pens</p>
-        <p class="cph-empty-sub">Everyone in the room draws on the same picture, live.</p>
-        <div class="cph-sources">
-            <button type="button" class="cph-source" id="cphPickBtn">
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/><circle cx="9" cy="9" r="1.2"/></svg>
-                <span>From the gallery</span>
-            </button>
-            <button type="button" class="cph-source" id="cphUploadBtn">
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0L7 9m5-5l5 5M5 20h14"/></svg>
-                <span>Upload a photo</span>
-            </button>
-            <button type="button" class="cph-source" id="cphCameraBtn">
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8a2 2 0 012-2h1l1.4-2h7.2L17 6h1a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V8z"/><circle cx="12" cy="13" r="3.5"/></svg>
-                <span>Take a photo</span>
-            </button>
-        </div>
+    {{-- The three ways to a photo, as one slim row of chips. Always visible,
+         because "change the photo" and "put up the first one" are the same
+         three buttons — a full-screen card for them left the tab mostly
+         furniture, which is what was complained about. --}}
+    <div class="cph-srcrow">
+        <span class="cph-srclbl">Photo</span>
+        <button type="button" class="cph-chip" id="cphPickBtn">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/></svg>
+            Gallery
+        </button>
+        <button type="button" class="cph-chip" id="cphUploadBtn">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0L7 9m5-5l5 5M5 20h14"/></svg>
+            Upload
+        </button>
+        <button type="button" class="cph-chip" id="cphCameraBtn">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8a2 2 0 012-2h1l1.4-2h7.2L17 6h1a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V8z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            Camera
+        </button>
     </div>
 
     {{-- The photo, and the pens over it. --}}
-    <div class="cph-stage hidden" id="cphStage">
-        <div class="cph-bar">
+    <div class="cph-stage" id="cphStage">
+        <div class="cph-bar" id="cphBar" hidden>
             <button type="button" class="cph-tool is-active" data-cph-tool="pen" title="Pen"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z"/></svg></button>
             <button type="button" class="cph-tool" data-cph-tool="line" title="Line"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 19L19 5"/></svg></button>
             <button type="button" class="cph-tool" data-cph-tool="arrow" title="Arrow"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 19L19 5m0 0h-7m7 0v7"/></svg></button>
@@ -49,14 +49,16 @@
             <button type="button" class="cph-tool" id="cphUndo" title="Take back my last stroke"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg></button>
             <button type="button" class="cph-tool" id="cphRedo" title="Put it back" disabled><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg></button>
             <button type="button" class="cph-tool cph-danger" id="cphClear" title="Clear all strokes for the team"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg></button>
-            <button type="button" class="cph-tool" id="cphSwap" title="Change the photo"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l2-2h6l2 2h3v11H4V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 13a3 3 0 006 0"/></svg></button>
             <button type="button" class="cph-save" id="cphSaveBtn">Save</button>
         </div>
         <div class="cph-box" id="cphBox">
-            <img id="cphImg" alt="The team's shared photo" draggable="false">
-            <canvas id="cphCanvas"></canvas>
+            <div class="cph-none" id="cphNone">
+                <svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/><circle cx="9" cy="9" r="1.2"/></svg>
+                <span>No photo up yet — pick, upload, or take one, and the whole team draws on it together.</span>
+            </div>
+            <img id="cphImg" alt="" draggable="false" hidden>
+            <canvas id="cphCanvas" style="visibility:hidden"></canvas>
         </div>
-        <p class="cph-hint" id="cphHint"></p>
     </div>
 
     <input type="file" id="cphUploadInput" accept="image/jpeg,image/png,image/webp" hidden>
@@ -116,18 +118,29 @@
 </div>
 
 <style>
-    .cph-wrap { display: flex; flex-direction: column; min-height: 0; height: 100%; }
-    .cph-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-        gap: .35rem; padding: 2rem 1rem; text-align: center; }
-    .cph-empty-title { font-weight: 800; color: var(--color-gray-800); }
-    .cph-empty-sub { font-size: .8rem; color: var(--color-gray-400); margin-bottom: .8rem; }
-    .cph-sources { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
-    .cph-source { display: flex; flex-direction: column; align-items: center; gap: .45rem;
-        width: 8.5rem; padding: 1rem .6rem; border-radius: .9rem; font-size: .78rem; font-weight: 700;
-        color: var(--color-gray-700); background: var(--color-gray-50); border: 1px solid var(--color-gray-200);
-        transition: background .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
-    .cph-source:hover { background: var(--color-brand-50); transform: translateY(-1px); }
-    .cph-source svg { width: 1.7rem; height: 1.7rem; color: #4a7c2a; }
+    .cph-wrap { display: flex; flex-direction: column; min-height: 0; height: 100%; gap: .4rem; }
+    /* One slim row: a word and three tag-sized buttons. */
+    .cph-srcrow { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+    .cph-srclbl { font-size: .72rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
+        color: var(--color-gray-400); margin-right: .1rem; }
+    .cph-chip { display: inline-flex; align-items: center; gap: .3rem; padding: .32rem .6rem;
+        border-radius: 999px; font-size: .74rem; font-weight: 700;
+        color: var(--color-gray-700); background: var(--color-gray-100);
+        transition: background .28s cubic-bezier(.22,1,.36,1), transform .1s ease; }
+    .cph-chip:hover { background: var(--color-brand-50); color: #3d6823; }
+    .cph-chip:active { transform: scale(.95); }
+    .cph-chip svg { width: .95rem; height: .95rem; }
+    @media (prefers-reduced-motion: reduce) { .cph-chip { transition: none; } }
+    html.dark .cph-chip { background: #1c2416; color: #cdd8c0; }
+
+    /* Before a photo: a quiet dashed square with a line of words. Pure CSS and
+       inline SVG — never an <img> with nothing behind it, which renders as the
+       browser's broken-picture glyph and reads as a bug. */
+    .cph-none { display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: .5rem; padding: 1.2rem; text-align: center; color: var(--color-gray-400);
+        font-size: .78rem; max-width: 22rem; }
+    .cph-none svg { width: 2rem; height: 2rem; opacity: .6; }
+    .cph-none[hidden] { display: none; }
 
     .cph-stage { flex: 1; display: flex; flex-direction: column; min-height: 0; gap: .4rem; }
     .cph-bar { display: flex; align-items: center; gap: .25rem; flex-wrap: wrap; }
@@ -152,10 +165,15 @@
 
     /* The photo sits in a box; the canvas covers the box exactly, so a canvas
        point IS a box point and only the contain-rect math knows the image. */
-    .cph-box { position: relative; flex: 1; min-height: 14rem; border-radius: .8rem; overflow: hidden;
-        background: #10140c; display: flex; align-items: center; justify-content: center; }
+    .cph-box { position: relative; flex: 1; min-height: 12rem; border-radius: .8rem; overflow: hidden;
+        border: 1.5px dashed var(--color-gray-200); background: var(--color-gray-50);
+        display: flex; align-items: center; justify-content: center; }
+    .cph-box.has-photo { border: 0; background: #10140c; }
+    html.dark .cph-box { background: #151b12; border-color: #2b3a1c; }
+    html.dark .cph-box.has-photo { background: #10140c; }
     .cph-box img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
         user-select: none; -webkit-user-drag: none; }
+    .cph-box img[hidden] { display: none; }
     .cph-box canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none;
         cursor: crosshair; }
     .cph-hint { font-size: .7rem; color: var(--color-gray-400); min-height: 1em; }
@@ -313,15 +331,29 @@
         loadPhoto(url);
     }
     function showStage(on) {
-        $id('cphEmpty').classList.toggle('hidden', on);
-        $id('cphStage').classList.toggle('hidden', !on);
+        // The stage is always the layout; what changes is whether it holds a
+        // photo or the placeholder. The img is display:none until it has a
+        // real picture — an <img> with nothing behind it renders the browser's
+        // broken-picture glyph, which reads as a bug rather than an absence.
+        $id('cphBar').hidden = !on;
+        $id('cphNone').hidden = on;
+        $id('cphBox').classList.toggle('has-photo', on);
+        img().hidden = !on;
+        $id('cphCanvas').style.visibility = on ? '' : 'hidden';
     }
     function loadPhoto(url) {
+        if (!url) { showStage(false); return; }
         const im = img();
         // anonymous so the save-composite is allowed to read the pixels back —
         // the mother site already answers its storage with open CORS.
         im.crossOrigin = 'anonymous';
         im.onload = () => paintAll();
+        // A picker path whose file is gone (this dev disk forgets) must not
+        // sit there as a broken glyph pretending to be the team's photo.
+        im.onerror = () => {
+            showStage(false);
+            if (window.toast) toast('That photo could not be loaded — pick another.', 'error');
+        };
         im.src = url;
     }
 
@@ -525,8 +557,6 @@
             api(`${U.push}?scheduleId=${SID}`, { method: 'POST', body: { type: 'clear' } }).catch(() => {});
             myOrder.length = 0; redoStack = []; $id('cphRedo').disabled = true;
         });
-        $id('cphSwap').addEventListener('click', () => { showStage(false); });
-
         $id('cphPickBtn').addEventListener('click', () => {
             if (typeof window.smPickMedia !== 'function') { if (window.toast) toast('The gallery picker is not available here.', 'error'); return; }
             window.smPickMedia({
