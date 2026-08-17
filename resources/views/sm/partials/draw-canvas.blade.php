@@ -52,6 +52,9 @@
                 <button type="button" class="draw-tool" data-tool="eraser" title="Eraser (rub out a shape)">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15l7-7 6 6-4 4H8l-4-3z" stroke-linejoin="round"/><path d="M8 18h11" stroke-linecap="round"/></svg>
                 </button>
+                <button type="button" class="draw-tool" id="drawInsertImg" title="Insert a picture (it becomes a shape: move, resize, rotate, draw over it)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-5 4 4 3-3 6 6" stroke-linejoin="round"/><circle cx="9" cy="9" r="1.3"/></svg>
+                </button>
             </div>
             <span class="draw-div"></span>
             <div class="draw-colors" id="drawColors"></div>
@@ -154,7 +157,8 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
         </div>
-        <p class="draw-hint" id="drawHint">Pick a tool, colour and size. Hold <b>Shift</b> for a perfect square/circle. Use <b>Select</b> to move, resize or delete anything you drew — including text. The <b>+</b> above adds another page to this drawing.</p>
+        <p class="draw-hint" id="drawHint">Pick a tool, colour and size. Hold <b>Shift</b> for a perfect square/circle. Use <b>Select</b> to move, resize or delete anything you drew — including text and inserted pictures, which also get a rotate knob. The <b>+</b> above adds another page to this drawing.</p>
+        <input type="file" id="drawImgInput" accept="image/jpeg,image/png,image/webp" class="hidden">
     </div>
 </div>
 
@@ -412,6 +416,11 @@
             const w = ctx.measureText(o.text).width;
             return { x: o.x, y: o.y - o.size, w: Math.max(w, 8), h: o.size * 1.3 };
         }
+        if (o.type === 'image') {
+            // The box the SCREEN sees: the rotated picture's envelope, so
+            // selection, marquee and hit-testing follow the pixels around.
+            return (o.rot || 0) ? imageAabb(o) : norm(o.x, o.y, o.x + o.w, o.y + o.h);
+        }
         // rect / ellipse
         return norm(o.x, o.y, o.x + o.w, o.y + o.h);
     }
@@ -427,7 +436,57 @@
         if (o.type === 'path') o.points.forEach((p) => { p.x = mx(p.x); p.y = my(p.y); });
         else if (o.type === 'line' || o.type === 'arrow') { o.x1 = mx(o.x1); o.y1 = my(o.y1); o.x2 = mx(o.x2); o.y2 = my(o.y2); }
         else if (o.type === 'text') { const b = bbox(o); o.x = mx(o.x); o.size = Math.max(6, o.size * sy); o.y = my(b.y) + o.size; }
+        else if (o.type === 'image') {
+            // Scale about the centre and carry the rotation along — mapping
+            // the corners like a rect would shear a turned picture.
+            const cx = mx(o.x + o.w / 2), cy = my(o.y + o.h / 2);
+            o.w = Math.max(12, o.w * sx); o.h = Math.max(12, o.h * sy);
+            o.x = cx - o.w / 2; o.y = cy - o.h / 2;
+        }
         else { const nx = mx(o.x), ny = my(o.y); o.x = nx; o.y = ny; o.w *= sx; o.h *= sy; }
+    }
+
+    /* ---------- inserted pictures ----------
+       A picture is an object like any other: it lives in `objects`, so undo,
+       marquee, move, resize and delete all already know it. Its pixels ride
+       INSIDE the strokes as a data URL — shrunk hard first — so an editable
+       drawing reopens whole on any device with no second fetch to lose. The
+       Image elements for painting are cached here by that data URL, because
+       JSON snapshots (undo) can clone the object freely but the decoded
+       bitmap must not be decoded again every frame. */
+    const imgCache = new Map();       // src -> { el, ready, promise }
+    function padImage(src) {
+        let c = imgCache.get(src);
+        if (c) return c;
+        const el = new Image();
+        c = { el, ready: false };
+        c.promise = new Promise((res) => {
+            el.onload = () => { c.ready = true; render(); res(); };
+            el.onerror = () => { c.ready = false; res(); };
+        });
+        el.src = src;
+        imgCache.set(src, c);
+        return c;
+    }
+    /** Every picture on every page, decoded — the export must not race one. */
+    function imagesReady() {
+        stashPage();
+        const waits = [];
+        pages.forEach((pg) => (pg.objects || []).forEach((o) => {
+            if (o.type === 'image' && o.src) waits.push(padImage(o.src).promise);
+        }));
+        return Promise.all(waits);
+    }
+    /** The four corners of a rotated image, for its on-screen bounding box. */
+    function imageAabb(o) {
+        const cx = o.x + o.w / 2, cy = o.y + o.h / 2;
+        const cos = Math.cos(o.rot || 0), sin = Math.sin(o.rot || 0);
+        const xs = [], ys = [];
+        [[-o.w / 2, -o.h / 2], [o.w / 2, -o.h / 2], [o.w / 2, o.h / 2], [-o.w / 2, o.h / 2]].forEach(([dx, dy]) => {
+            xs.push(cx + dx * cos - dy * sin);
+            ys.push(cy + dx * sin + dy * cos);
+        });
+        return norm(Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys));
     }
 
     /* ---------- rendering ---------- */
@@ -457,6 +516,21 @@
         } else if (o.type === 'text') {
             ctx.font = 'bold ' + o.size + 'px sans-serif'; ctx.textBaseline = 'alphabetic';
             ctx.fillText(o.text, o.x, o.y);
+        } else if (o.type === 'image') {
+            const c = padImage(o.src);
+            ctx.save();
+            ctx.translate(o.x + o.w / 2, o.y + o.h / 2);
+            if (o.rot) ctx.rotate(o.rot);
+            if (c.ready) {
+                ctx.drawImage(c.el, -o.w / 2, -o.h / 2, o.w, o.h);
+            } else {
+                // Still decoding (or gone): a quiet frame, never a broken glyph.
+                ctx.fillStyle = 'rgba(107,114,128,.12)';
+                ctx.fillRect(-o.w / 2, -o.h / 2, o.w, o.h);
+                ctx.strokeStyle = 'rgba(107,114,128,.5)'; ctx.lineWidth = 1.5;
+                ctx.strokeRect(-o.w / 2, -o.h / 2, o.w, o.h);
+            }
+            ctx.restore();
         }
     }
     function drawSelection() {
@@ -470,6 +544,14 @@
             const b = bbox(single);
             ctx.fillStyle = '#2563eb';
             handlePoints(b).forEach((h) => { ctx.fillRect(h.x - HANDLE / 2, h.y - HANDLE / 2, HANDLE, HANDLE); });
+            if (single.type === 'image') {
+                // The rotate knob: a stem out of the top, a ring on its end —
+                // the grammar picture editors already taught.
+                const kx = b.x + b.w / 2, ky = b.y - ROT_REACH;
+                ctx.beginPath(); ctx.moveTo(kx, b.y); ctx.lineTo(kx, ky + 5); ctx.stroke();
+                ctx.beginPath(); ctx.arc(kx, ky, 5, 0, 7); ctx.fillStyle = '#fff'; ctx.fill();
+                ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 2; ctx.stroke();
+            }
         }
         ctx.restore();
     }
@@ -509,14 +591,20 @@
         for (let i = objects.length - 1; i >= 0; i--) { if (inBox(bbox(objects[i]), x, y)) return objects[i]; }
         return null;
     }
+    const ROT_REACH = 26;             // how far the rotate knob stands off the box
     function hitHandle(x, y) {
         if (selected.size !== 1) return null;
         const o = objects.find((k) => selected.has(k.id));
         if (!o) return null;
-        for (const h of handlePoints(bbox(o))) { if (Math.abs(x - h.x) <= HANDLE && Math.abs(y - h.y) <= HANDLE) return h.n; }
+        const b = bbox(o);
+        if (o.type === 'image') {
+            const kx = b.x + b.w / 2, ky = b.y - ROT_REACH;
+            if (Math.hypot(x - kx, y - ky) <= HANDLE + 3) return 'rot';
+        }
+        for (const h of handlePoints(b)) { if (Math.abs(x - h.x) <= HANDLE && Math.abs(y - h.y) <= HANDLE) return h.n; }
         return null;
     }
-    const CURSORS = { nw: 'nwse-resize', se: 'nwse-resize', ne: 'nesw-resize', sw: 'nesw-resize', n: 'ns-resize', s: 'ns-resize', e: 'ew-resize', w: 'ew-resize' };
+    const CURSORS = { nw: 'nwse-resize', se: 'nwse-resize', ne: 'nesw-resize', sw: 'nesw-resize', n: 'ns-resize', s: 'ns-resize', e: 'ew-resize', w: 'ew-resize', rot: 'grab' };
 
     /* ---------- undo ---------- */
     /* ---------- history ----------
@@ -760,6 +848,17 @@
             moveStart = p;
         } else if (mode === 'resize') {
             const o = objects.find((k) => selected.has(k.id)); if (!o) return;
+            if (resizeHandle === 'rot') {
+                // The knob leads and the picture follows: the angle is wherever
+                // the finger is, measured from the centre, minus the quarter
+                // turn that puts the knob at the top. Shift snaps to 15° so a
+                // straightening-up ends straight.
+                const cx = o.x + o.w / 2, cy = o.y + o.h / 2;
+                let a = Math.atan2(p.y - cy, p.x - cx) + Math.PI / 2;
+                if (e.shiftKey) a = Math.round(a / (Math.PI / 12)) * (Math.PI / 12);
+                o.rot = a;
+                render(); return;
+            }
             let { x, y, w, h } = startBBox; let l = x, t = y, r = x + w, bt = y + h;
             if (resizeHandle.includes('w')) l = p.x; if (resizeHandle.includes('e')) r = p.x;
             if (resizeHandle.includes('n')) t = p.y; if (resizeHandle.includes('s')) bt = p.y;
@@ -794,6 +893,59 @@
     function deleteSelected() {
         if (!selected.size) return;
         pushUndo(); objects = objects.filter((o) => !selected.has(o.id)); selected.clear(); render();
+    }
+
+    /* ---------- inserting a picture ----------
+       Shrunk hard before it becomes an object: a camera photo is megabytes the
+       strokes JSON would have to carry forever. 1400px is plenty to draw over
+       and keeps a page of pictures around the size of one photo upload. */
+    const imgInput = document.getElementById('drawImgInput');
+    document.getElementById('drawInsertImg')?.addEventListener('click', () => imgInput.click());
+    imgInput?.addEventListener('change', async (e) => {
+        const f = e.target.files && e.target.files[0];
+        e.target.value = '';
+        if (!f) return;
+        try {
+            const bmp = await createImageBitmap(f, { imageOrientation: 'from-image' });
+            const MAX = 1400;
+            const k = Math.min(1, MAX / Math.max(bmp.width, bmp.height));
+            const c = document.createElement('canvas');
+            c.width = Math.max(1, Math.round(bmp.width * k));
+            c.height = Math.max(1, Math.round(bmp.height * k));
+            c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+            if (bmp.close) bmp.close();
+            // JPEG unless the picture has transparency to lose. A screenshot
+            // with an alpha channel keeps it; a photo shrinks fourfold.
+            const src = f.type === 'image/png' && hasAlpha(c)
+                ? c.toDataURL('image/png')
+                : c.toDataURL('image/jpeg', 0.82);
+            // Landing size: comfortably inside the sheet, centred, ready to be
+            // taken by the corners.
+            const fit = Math.min(1, (W * 0.6) / c.width, (H * 0.6) / c.height);
+            const w = c.width * fit, h = c.height * fit;
+            pushUndo();
+            const o = { id: nextId(), type: 'image', src, x: (W - w) / 2, y: (H - h) / 2, w, h, rot: 0 };
+            objects.push(o);
+            padImage(src);
+            selected = new Set([o.id]);
+            setTool('select');
+            render();
+            window.toast?.('Picture placed — drag it, take a corner, turn the knob, and draw right over it.');
+        } catch (_) {
+            window.toast?.('That picture could not be read.', 'error');
+        }
+    });
+    function hasAlpha(c) {
+        // Sampled, not scanned: a corner-to-corner diagonal is plenty to say
+        // whether transparency is real, and a full readback of 1400px is not
+        // free on a field phone.
+        const g = c.getContext('2d');
+        const n = 24;
+        for (let i = 0; i < n; i++) {
+            const d = g.getImageData(Math.floor((c.width - 1) * i / n), Math.floor((c.height - 1) * i / n), 1, 1).data;
+            if (d[3] < 250) return true;
+        }
+        return false;
     }
 
     /* ---------- the text tool's question ----------
@@ -999,7 +1151,7 @@
         if (on) window.registerOverlay?.('drawAsk', () => showAsk(false));
         else window.unregisterOverlay?.('drawAsk');
     }
-    function saveAs(mode) {
+    async function saveAs(mode) {
         // A backdrop that never arrived leaves a blank sheet, and saving that
         // over the drawing it was meant to be editing destroys it — which is
         // exactly what "I opened my drawing and the note went blank" was.
@@ -1007,6 +1159,9 @@
             window.toast?.('That drawing could not be loaded — saving now would replace it with a blank one.', 'error');
             return;
         }
+        // A drawing reopened seconds ago may still be decoding its pictures;
+        // exporting mid-decode bakes the grey placeholder into the note.
+        await imagesReady();
         const data = exportPng();
         // 'overwrite' keeps the strokes as 'drawing' does — the difference is
         // which file it lands in, which is the caller's business.
