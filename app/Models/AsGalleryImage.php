@@ -7,7 +7,7 @@ class AsGalleryImage extends BaseModel
 {
     protected $table = 'as_gallery_images';
 
-    protected $fillable = ['albumId', 'croppingScheduleId', 'userId', 'path', 'caption', 'sortOrder', 'deleteStatus'];
+    protected $fillable = ['albumId', 'croppingScheduleId', 'userId', 'path', 'caption', 'description', 'isTeam', 'sortOrder', 'deleteStatus'];
 
     protected $casts = [
         'albumId' => 'integer',

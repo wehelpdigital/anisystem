@@ -62,6 +62,12 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536M9 11l6-6 3 3-6 6H9v-3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h16"/></svg>
             <span>Drawing</span>
         </button>
+        {{-- A photo everyone draws on together — distinct from Drawing, whose
+             sheet is blank on purpose. Here the picture IS the subject. --}}
+        <button type="button" class="collab-tab" data-tab="photo" role="tab" aria-selected="false">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/><circle cx="9" cy="9" r="1.2"/></svg>
+            <span>Photo</span>
+        </button>
         {{-- Cameras and positions are their own tabs rather than corners of
              the call, because they are used while other things are happening:
              somebody points a phone at a bund while the chat argues about it. --}}
@@ -91,6 +97,7 @@
     <div class="collab-panels">
         <div class="collab-panel is-active" data-panel="chat" id="collabChat"></div>
         <div class="collab-panel" data-panel="drawing" id="collabDrawing"></div>
+        <div class="collab-panel" data-panel="photo" id="collabPhoto">@include('sm.partials.schedule-photo', ['schedule' => $schedule])</div>
         <div class="collab-panel" data-panel="camera" id="collabCamera">@include('sm.partials.collab-camera', ['schedule' => $schedule, 'isOwner' => $isOwner])</div>
         <div class="collab-panel" data-panel="location" id="collabLocation">@include('sm.partials.collab-location', ['schedule' => $schedule])</div>
         <div class="collab-panel" data-panel="map" id="collabMap">@include("sm.partials.schedule-map", ["schedule" => $schedule])</div>
@@ -226,6 +233,7 @@
         chat: 'Loading…', drawing: 'Loading…', map: 'Loading the map…',
         activities: 'Loading…', ai: 'Loading…',
         camera: 'Starting the cameras…', location: 'Loading the map…',
+        photo: 'Loading the photo…',
     };
     const loader = document.getElementById('collabLoader');
     const loaderText = document.getElementById('collabLoaderText');
@@ -273,6 +281,11 @@
         } else if (tab === 'drawing') {
             if (typeof window.mountScheduleBoard === 'function') window.mountScheduleBoard(document.getElementById('collabDrawing'));
             rafReady('drawing');
+        } else if (tab === 'photo') {
+            // Boots on first show — the state fetch and the poll only start
+            // once somebody actually opens the tab.
+            if (typeof window.initCollabPhoto === 'function') window.initCollabPhoto();
+            rafReady('photo');
         } else if (tab === 'map') {
             if (typeof window.initCollabMap === 'function') window.initCollabMap();
             rafReady('map');

@@ -37,6 +37,12 @@
         opacity: 0; transition: opacity .28s ease; }
     .ga-cell img.is-loaded, .ga-cell video.is-loaded { opacity: 1; }
     /* So a still frame is not mistaken for a photo. */
+    /* An image the room drew together wears its provenance. Top-left, because
+       the selection tick owns the other corner and the caption owns the foot. */
+    .ga-teamchip { position: absolute; top: .3rem; right: .3rem; z-index: 2;
+        font-size: .56rem; font-weight: 800; letter-spacing: .03em; text-transform: uppercase;
+        color: #fff; background: rgb(61 104 35 / .92); border-radius: .5rem; padding: .12rem .34rem;
+        pointer-events: none; }
     .ga-vid { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
         width: 2rem; height: 2rem; border-radius: 999px; background: rgb(0 0 0 / .55); color: #fff;
         display: flex; align-items: center; justify-content: center; font-size: .8rem; pointer-events: none; }
@@ -512,6 +518,7 @@
                 <div class="ga-cell" data-image="${im.id}" data-lb-type="${im.kind === 'video' ? 'video' : 'image'}" data-lb-url="${esc(im.url)}"
                      data-lb-caption="${esc(name)}" data-lb-desc="${esc(about)}"${tip ? ` title="${esc(tip)}"` : ''}>
                     ${shot}
+                    ${im.team ? '<span class="ga-teamchip" title="Drawn together in the Collab Room">Team</span>' : ''}
                     <span class="ga-pick" data-pick><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
                     ${label}
                 </div>`;

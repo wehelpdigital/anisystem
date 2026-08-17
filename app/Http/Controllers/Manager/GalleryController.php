@@ -164,6 +164,8 @@ class GalleryController extends BaseScheduleController
                     // alt>, and the description did not leave the database.
                     'caption' => $i->caption,
                     'description' => $i->description,
+                    // Drawn together in the Collab Room — the tile says so.
+                    'team' => (bool) ($i->isTeam ?? false),
                     // Asked of the one shared list rather than a private copy
                     // of the regex: the copies drifted, and the extension they
                     // drifted over was AVI — accepted by the uploader, filed

@@ -243,6 +243,13 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-board-page', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'createPage'])->name('sm.board.page-create');
     Route::post('/app/sm-board-save-notes', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'saveToNotes'])->name('sm.board.save-notes');
     Route::post('/app/sm-board-undo', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'undo'])->name('sm.board.undo');
+
+    // The Collab Room's shared photo: one picture, the whole team's pens.
+    Route::get('/app/sm-photo', [App\Http\Controllers\Manager\SchedulePhotoController::class, 'state'])->name('sm.photo');
+    Route::post('/app/sm-photo-set', [App\Http\Controllers\Manager\SchedulePhotoController::class, 'setPhoto'])->name('sm.photo.set');
+    Route::post('/app/sm-photo-push', [App\Http\Controllers\Manager\SchedulePhotoController::class, 'push'])->name('sm.photo.push');
+    Route::post('/app/sm-photo-undo', [App\Http\Controllers\Manager\SchedulePhotoController::class, 'undo'])->name('sm.photo.undo');
+    Route::post('/app/sm-photo-save', [App\Http\Controllers\Manager\SchedulePhotoController::class, 'save'])->name('sm.photo.save');
     // --- Collab Room map (persistent shapes + ephemeral live positions) ---
     Route::get('/app/sm-map', [App\Http\Controllers\Manager\ScheduleMapController::class, 'objects'])->name('sm.map');
     Route::post('/app/sm-map-push', [App\Http\Controllers\Manager\ScheduleMapController::class, 'push'])->name('sm.map.push');
