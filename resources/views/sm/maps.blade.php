@@ -45,6 +45,9 @@
         @keyframes mpViewIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
         .mp-view-in { animation: mpViewIn .28s cubic-bezier(.22,1,.36,1); }
         .mp-stagebar { display: flex; align-items: center; gap: .5rem; margin-bottom: .5rem; }
+        /* The ways out keep their width — squeezing "All maps" to "All ma…"
+           is the same lie as labelling it wrong. */
+        .mp-stagebar > .btn { flex-shrink: 0; }
         .mp-stagehint { font-size: .72rem; color: var(--color-gray-400); min-width: 0; flex: 1 1 auto;
             overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         /* Everything that is not a drawing tool lives here, out of the map's
@@ -89,6 +92,12 @@
             /* The words stay: an arrow on its own said nothing about where
                it went, and "Save" is the whole point of the green button. */
             .mp-stagehint { display: none; }
+            /* With two ways out named, the row is wider than a phone. It wraps
+               — the map's controls drop to a second line, right-aligned as
+               they already are — rather than pushing Save off the edge or
+               shortening a label until it stops being true. Only while both
+               are there; the ordinary one-button row stays one line. */
+            .mp-stagebar.has-origin { flex-wrap: wrap; row-gap: .4rem; }
         }
         @media (prefers-reduced-motion: reduce) {
             .mp-card, .mp-new, .mp-thumb img { transition: none; }
@@ -179,8 +188,18 @@
              in the map's toolbar, which on a phone pushed the drawing tools off
              the screen. Each one drives the real control inside the map. --}}
         <div class="mp-stagebar">
-            <button type="button" class="btn btn-white btn-sm" id="mpBackHome">
+            <button type="button" class="btn btn-white btn-sm" id="mpBackHome" title="Back to all maps">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                <span class="mp-backword">All maps</span>
+            </button>
+            {{-- A map opened from somewhere else — a note's "View map" tag, a
+                 map tapped in the Gallery — has two places you might mean by
+                 "done": the errand you came from, which the button on the left
+                 names, and the shelf of every map, which is this one. Both are
+                 reasonable, so both are offered rather than guessed at. It
+                 only appears on a visit that came from elsewhere. --}}
+            <button type="button" class="btn btn-white btn-sm hidden" id="mpAllMaps" title="Show every saved map">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
                 <span class="mp-backword">All maps</span>
             </button>
             <span class="mp-stagehint" id="mpStageHint"></span>
@@ -293,10 +312,36 @@
                 el.classList.add('mp-view-in');
             };
 
-            /* Whether the current stage visit came from a note's "View map"
-               link — leaving it then returns to the note, not the shelf. */
-            let arrivedByLink = false;
-            function enterStage(ask) {
+            /* Where this stage visit was asked for from — a note's "View map"
+               tag, a map tapped in the Gallery — held as the sender's own name
+               because the way back has to say it out loud. Null when the shelf
+               sent you, which is its own way back. */
+            let origin = null;
+            const backBtn = document.getElementById('mpBackHome');
+            const backWord = backBtn.querySelector('.mp-backword');
+            const shelfBtn = document.getElementById('mpAllMaps');
+            const stagebar = document.querySelector('.mp-stagebar');
+
+            /* The control says where it goes, always. A visit that came from
+               somewhere names that place and stands the shelf next to it; a
+               visit from the shelf only ever had the one way back. */
+            function paintBack() {
+                backWord.textContent = origin || 'All maps';
+                backBtn.title = origin ? 'Back to ' + origin : 'Back to all maps';
+                if (window.animToggleHidden) window.animToggleHidden(shelfBtn, !origin);
+                else shelfBtn.classList.toggle('hidden', !origin);
+                // Two worded buttons and the map's own controls do not share a
+                // phone row; it is allowed to wrap only while both are there.
+                stagebar?.classList.toggle('has-origin', !!origin);
+            }
+
+            /**
+             * @param ask   'blank', a save id, or null for the live canvas
+             * @param from  the name of whatever sent us, when something did
+             */
+            function enterStage(ask, from) {
+                origin = from || null;
+                paintBack();
                 home.classList.add('hidden');
                 stageWrap.classList.remove('hidden');
                 easeIn(stageWrap);
@@ -310,6 +355,10 @@
             }
 
             function goHome() {
+                // Standing on the shelf, the errand is over — the button must
+                // not still be offering to finish it.
+                origin = null;
+                paintBack();
                 stageWrap.classList.add('hidden');
                 home.classList.remove('hidden');
                 easeIn(home);
@@ -357,16 +406,22 @@
                 sync();
             })();
 
-            document.getElementById('mpBackHome').addEventListener('click', () => {
-                // Sent here by a note's "View map" tag: leaving the map is
-                // being done with the errand, so it hands you back to the
-                // note rather than parking you on the shelf.
-                if (arrivedByLink) {
-                    arrivedByLink = false;
+            backBtn.addEventListener('click', () => {
+                // Sent here by a note's "View map" tag or a map tapped in the
+                // Gallery: leaving the map is being done with the errand, so
+                // it hands you back to whoever sent you — which is what the
+                // button now says it will do. The shelf is the button beside
+                // it, for when the shelf is what you actually wanted.
+                if (origin) {
+                    origin = null;
+                    paintBack();
                     if (window.smReturnToOrigin?.()) return;
+                    // The shell has forgotten the way back; the shelf is the
+                    // honest fallback, and the label already reads that way.
                 }
                 goHome();
             });
+            shelfBtn.addEventListener('click', goHome);
             grid.addEventListener('click', (e) => {
                 if (e.target.closest('a[href]')) return;   // "In a note" goes where it says
                 if (e.target.closest('[data-new]')) { enterStage('blank'); return; }
@@ -376,7 +431,10 @@
             });
 
             paint();
-            if (OPEN_SAVE) { arrivedByLink = true; enterStage(OPEN_SAVE); }
+            // Rendered with ?save= — inside the shell that means something
+            // sent us and the shell knows its name; on the standalone page
+            // nobody did, and then the shelf is the only truthful way back.
+            if (OPEN_SAVE) enterStage(OPEN_SAVE, window.smOriginLabel?.());
 
             /* The shell keeps this pane alive between visits; when it shows
                again the shelf re-reads the saves so nothing new is missing.
@@ -385,6 +443,15 @@
             let firstShow = true;
             document.addEventListener('sm:module-shown', (e) => {
                 if (!e.detail || e.detail.key !== 'maps') return;
+                // The shell forgets where a deep link came from the moment you
+                // walk off somewhere else, so a stage left open can come back
+                // to a shell that no longer knows the way to the Gallery.
+                // Rather than keep a button that names a place it can no longer
+                // reach, it falls back to the shelf — which it can.
+                if (origin && (window.smOriginLabel?.() || null) !== origin) {
+                    origin = null;
+                    paintBack();
+                }
                 if (firstShow) { firstShow = false; return; }
                 if (!home.classList.contains('hidden')) refresh();
             });
@@ -394,7 +461,7 @@
                would orphan the already-booted Google map. */
             (window.smModuleDeepLink = window.smModuleDeepLink || {}).maps = (q) => {
                 const id = parseInt(new URLSearchParams(q).get('save') || '', 10);
-                if (Number.isFinite(id) && id > 0) { arrivedByLink = true; enterStage(id); }
+                if (Number.isFinite(id) && id > 0) enterStage(id, window.smOriginLabel?.());
             };
 
             /* Fill whatever is left of the screen, measured rather than

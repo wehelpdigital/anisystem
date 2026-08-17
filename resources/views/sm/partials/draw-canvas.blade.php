@@ -3,7 +3,9 @@
        window.openDrawCanvas(onSaveDataUrl [, existingPngUrl])
          → opens the full-screen pad; onSaveDataUrl(pngDataUrl) on save.
      Tools: select (move/resize/delete), pen (freehand), line, arrow, box,
-     circle, text, and an object eraser. Works with mouse, pen and touch. --}}
+     circle, text, and an object eraser. Works with mouse, pen and touch.
+     A drawing can be several pages; they travel with the strokes, and a
+     drawing saved before pages existed still opens as its one page. --}}
 <div class="draw-modal" id="drawModal" aria-hidden="true">
     <div class="draw-shell">
         {{-- Header: the way out and the way to keep the work, both on top where
@@ -100,7 +102,7 @@
                     </span>
                     <span class="min-w-0">
                         <span class="draw-ask-name" id="drawAskNewName">Save as drawing</span>
-                        <span class="draw-ask-hint">Reopen it later and keep changing it</span>
+                        <span class="draw-ask-hint" id="drawAskNewHint">Reopen it later and keep changing it</span>
                     </span>
                 </button>
                 <button type="button" class="draw-ask-opt" data-save-mode="image">
@@ -109,13 +111,50 @@
                     </span>
                     <span class="min-w-0">
                         <span class="draw-ask-name">Save as image</span>
-                        <span class="draw-ask-hint">A flat picture — it can be drawn over, not edited</span>
+                        <span class="draw-ask-hint" id="drawAskImageHint">A flat picture — it can be drawn over, not edited</span>
                     </span>
                 </button>
                 <button type="button" class="btn btn-ghost w-full mt-1" id="drawAskCancel">Cancel</button>
             </div>
         </div>
-        <p class="draw-hint" id="drawHint">Pick a tool, colour and size. Hold <b>Shift</b> for a perfect square/circle. Use <b>Select</b> to move, resize or delete anything you drew — including text.</p>
+        {{-- Words to put on the sheet. Same reasoning as the save question: it
+             lives inside the pad, because anything the app puts on its sheet
+             layer opens underneath a full-screen pad. --}}
+        <div class="draw-ask" id="drawTextAsk" hidden>
+            <div class="draw-ask-card" role="dialog" aria-modal="true" aria-labelledby="drawTextAskTitle">
+                <h4 class="draw-ask-title" id="drawTextAskTitle">Add text</h4>
+                <input type="text" id="drawTextInput" class="draw-text-input" maxlength="200"
+                       autocomplete="off" placeholder="What should it say?">
+                <p class="draw-ask-hint">It lands where you tapped, in the colour and size you picked.</p>
+                <div class="draw-ask-row">
+                    <button type="button" class="btn btn-ghost" id="drawTextCancel">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="drawTextOk">Add it</button>
+                </div>
+            </div>
+        </div>
+        {{-- Pages. One drawing is often more than one sheet — a plan and then
+             the detail of it — and before this the only way to get a second
+             sheet was to save and start again, which filed them as two
+             unrelated drawings. --}}
+        <div class="draw-pages" id="drawPages">
+            <span class="draw-pages-label" id="drawPagesLabel">Page 1 of 1</span>
+            <button type="button" class="draw-tool" id="drawPagePrev" title="Previous page" aria-label="Previous page">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="draw-page-chips" id="drawPageChips"></div>
+            <button type="button" class="draw-tool" id="drawPageNext" title="Next page" aria-label="Next page">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <span class="draw-div"></span>
+            <button type="button" class="draw-tool" id="drawPageAdd" title="Add a page after this one">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="draw-page-add-label">Page</span>
+            </button>
+            <button type="button" class="draw-tool" id="drawPageDel" title="Remove this page" aria-label="Remove this page">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+        </div>
+        <p class="draw-hint" id="drawHint">Pick a tool, colour and size. Hold <b>Shift</b> for a perfect square/circle. Use <b>Select</b> to move, resize or delete anything you drew — including text. The <b>+</b> above adds another page to this drawing.</p>
     </div>
 </div>
 
@@ -167,6 +206,12 @@
     .draw-ask-ico svg { width:1.3rem; height:1.3rem; }
     .draw-ask-name { display:block; font-weight:800; font-size:.88rem; color:var(--color-gray-900); }
     .draw-ask-hint { display:block; font-size:.72rem; color:var(--color-gray-500); }
+    .draw-ask-row { display:flex; gap:.5rem; margin-top:.25rem; }
+    .draw-ask-row .btn { flex:1; }
+    .draw-text-input { width:100%; border:1px solid var(--color-gray-300); border-radius:.7rem;
+        padding:.65rem .75rem; font-size:.95rem; color:var(--color-gray-900); background:var(--color-white); }
+    .draw-text-input:focus { outline:none; border-color:var(--color-brand-500);
+        box-shadow:0 0 0 2px var(--color-brand-200); }
     @keyframes drawAskFade { from { opacity:0; } to { opacity:1; } }
     @keyframes drawAskUp { from { transform:translateY(14%); opacity:0; } to { transform:none; opacity:1; } }
     @media (min-width:640px) {
@@ -209,6 +254,37 @@
         border-radius:.35rem; touch-action:none; cursor:crosshair; }
     .draw-hint { font-size:.72rem; color:var(--color-gray-400); padding:.4rem .7rem; flex-shrink:0; }
     .draw-hint b { color:var(--color-gray-600); }
+    /* The page strip sits under the sheet, where a pile of paper would be. */
+    .draw-pages { display:flex; align-items:center; gap:.35rem; padding:.4rem .7rem; flex-shrink:0;
+        border-top:1px solid var(--color-gray-100); overflow-x:auto; }
+    .draw-pages-label { font-size:.72rem; font-weight:700; color:var(--color-gray-500); flex-shrink:0;
+        margin-right:.15rem; }
+    .draw-page-chips { display:flex; gap:.2rem; }
+    .draw-page { display:inline-flex; align-items:center; justify-content:center; min-width:1.9rem; height:1.9rem;
+        padding:0 .35rem; border-radius:.5rem; font-size:.75rem; font-weight:700; cursor:pointer;
+        background:var(--color-gray-50); color:var(--color-gray-600);
+        transition:background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .draw-page:hover { background:var(--color-gray-100); }
+    .draw-page.is-active { background:var(--color-brand-100); color:var(--color-brand-800); }
+    .draw-page-add-label { font-size:.72rem; margin-left:.2rem; }
+    /* Phones: the strip is the one place the toolbar cannot borrow room from,
+       so the "+ Page" button loses its word rather than its target size. */
+    @media (max-width:480px) {
+        .draw-pages-label { display:none; }
+        .draw-page-add-label { display:none; }
+    }
+    @media (prefers-reduced-motion:reduce) { .draw-page { transition:none; } }
+    /* Toasts (z-250) and the app's confirm sheet (z-50) both live below a pad
+       at z-400 — a warning nobody can see is not a warning. While the pad is
+       up its own messages come over it, and the shared confirm is lifted for
+       exactly as long as it is asking (any other sheet stays where it is:
+       the note editor is often open behind the pad, and it belongs behind). */
+    html.draw-pad-open #toast-stack { z-index:450; }
+    /* Both halves of the lift are spelled with .draw-pad-open too, so a class
+       left behind by some future accident cannot put the shared backdrop over
+       every sheet in an app that has no pad up. */
+    html.draw-pad-open.draw-pad-asking .sheet-backdrop.is-open { z-index:460; }
+    html.draw-pad-open.draw-pad-asking #confirm-sheet { z-index:470; }
     html.dark .draw-shell { background:#151b12; }
     html.dark .draw-toolbar { border-color:#2b3a1c; }
     html.dark .draw-head { border-color:#2b3a1c; }
@@ -222,6 +298,10 @@
     html.dark .draw-tool:hover { background:#243019; }
     html.dark .draw-tool:disabled:hover { background:#1c2416; }
     html.dark .draw-div { background:#2b3a1c; }
+    html.dark .draw-pages { border-color:#2b3a1c; }
+    html.dark .draw-page { background:#1c2416; color:#cdd8c0; }
+    html.dark .draw-page:hover { background:#243019; }
+    html.dark .draw-text-input { background:#141a10; border-color:#2b3a1c; color:#e6eddd; }
 </style>
 
 <script>
@@ -254,10 +334,24 @@
     const GRID = 40;                  // grid spacing in canvas units
     const nextId = () => uid++;
 
-    let objects = [];                 // the scene
+    let objects = [];                 // the scene on the page in front of you
     let selected = new Set();         // selected object ids
     const undoStack = [];             // JSON snapshots, oldest first
     const redoStack = [];             // snapshots undone, newest first
+
+    /* Pages. Only the page you are looking at is live in `objects` and the two
+       history stacks; the others wait here holding their own, so stepping to
+       page 2 and pressing undo does not quietly rub out page 1. */
+    let pages = [blankPage()];
+    let pageIndex = 0;
+    const MAX_PAGES = 12;             // past this a "drawing" is a document
+    const PAGE_GAP = 28;              // white between pages in a stacked export
+    // What a stacked export is allowed to be. The budget is in pixels, not in
+    // height, because the height is what a browser refuses to allocate — and
+    // capping the height alone shrank the width with it (see exportPng).
+    const EXPORT_MAX_PX = 15e6;       // the most a canvas will still hand back a PNG for
+    const EXPORT_MAX_H = 16000;       // and a height no browser argues with
+    function blankPage() { return { objects: [], undo: [], redo: [] }; }
 
     // gesture state
     let mode = null;                  // 'draw' | 'move' | 'resize' | 'erase' | 'marquee'
@@ -454,6 +548,163 @@
     const undo = () => step(undoStack, redoStack);
     const redo = () => step(redoStack, undoStack);
 
+    /* ---------- pages ----------
+       `objects` is reassigned all over this file (every filter makes a new
+       array), so the page it belongs to only learns about it here. Read
+       pages[] anywhere without stashing first and you are reading history. */
+    const chipsWrap = document.getElementById('drawPageChips');
+    const pageLabel = document.getElementById('drawPagesLabel');
+    const pagePrev = document.getElementById('drawPagePrev');
+    const pageNext = document.getElementById('drawPageNext');
+    const pageAdd = document.getElementById('drawPageAdd');
+    const pageDel = document.getElementById('drawPageDel');
+
+    function stashPage() {
+        const p = pages[pageIndex];
+        if (!p) return;
+        p.objects = objects;
+        p.undo = undoStack.slice();
+        p.redo = redoStack.slice();
+    }
+    function loadPage(i) {
+        pageIndex = Math.max(0, Math.min(i, pages.length - 1));
+        const p = pages[pageIndex];
+        objects = p.objects;
+        undoStack.length = 0; p.undo.forEach((s) => undoStack.push(s));
+        redoStack.length = 0; p.redo.forEach((s) => redoStack.push(s));
+        selected.clear(); cur = null; mode = null; marquee = null;
+        paintHistory(); paintPages(); render();
+    }
+    function goPage(i) {
+        if (i < 0 || i >= pages.length || i === pageIndex) return;
+        stashPage();
+        loadPage(i);
+    }
+    function addPage() {
+        if (pages.length >= MAX_PAGES) {
+            window.toast?.('That is as many pages as one drawing keeps.', 'error');
+            return;
+        }
+        stashPage();
+        // After this one, not at the end: pages are read in order, and a page
+        // added while looking at page 2 belongs behind page 2.
+        pages.splice(pageIndex + 1, 0, blankPage());
+        loadPage(pageIndex + 1);
+    }
+    async function removePage() {
+        if (pages.length < 2) return;
+        stashPage();
+        const on = (pages[pageIndex].objects || []).length;
+        // Undo lives inside a page, so it cannot bring a removed page back —
+        // which is the whole reason this one asks and Clear's dialog is only
+        // about being sure.
+        if (on) {
+            const ok = await padConfirm({
+                title: 'Remove page ' + (pageIndex + 1) + '?',
+                message: 'Everything on it goes with it — ' + on + (on === 1 ? ' thing' : ' things') + ' drawn here.',
+                detail: 'Undo cannot bring a whole page back.',
+                confirmText: 'Remove page',
+            });
+            if (!ok) return;
+        }
+        pages.splice(pageIndex, 1);
+        loadPage(Math.min(pageIndex, pages.length - 1));
+    }
+    function paintPages() {
+        if (!chipsWrap) return;
+        chipsWrap.innerHTML = pages.map((p, i) => '<button type="button" class="draw-page'
+            + (i === pageIndex ? ' is-active" aria-current="true"' : '"')
+            + ' data-page="' + i + '" aria-label="Page ' + (i + 1) + '">' + (i + 1) + '</button>').join('');
+        if (pageLabel) pageLabel.textContent = 'Page ' + (pageIndex + 1) + ' of ' + pages.length;
+        if (pagePrev) pagePrev.disabled = pageIndex === 0;
+        if (pageNext) pageNext.disabled = pageIndex >= pages.length - 1;
+        if (pageAdd) pageAdd.disabled = pages.length >= MAX_PAGES;
+        if (pageDel) pageDel.disabled = pages.length < 2;
+    }
+    chipsWrap?.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-page]');
+        if (b) goPage(parseInt(b.getAttribute('data-page'), 10));
+    });
+    pagePrev?.addEventListener('click', () => goPage(pageIndex - 1));
+    pageNext?.addEventListener('click', () => goPage(pageIndex + 1));
+    pageAdd?.addEventListener('click', addPage);
+    pageDel?.addEventListener('click', removePage);
+
+    /**
+     * Strokes on the wire, in the shape the reader can cope with.
+     *
+     * One page goes out flat, exactly as every drawing did before pages
+     * existed — nothing that reads a saved drawing needs to learn anything
+     * new. Only a drawing that really has pages sends pages, and it says
+     * which one was in front so reopening puts you back on it.
+     */
+    function strokePayload() {
+        stashPage();
+        if (pages.length === 1) return JSON.parse(JSON.stringify(pages[0].objects || []));
+        return pages.map((p, i) => ({
+            objects: JSON.parse(JSON.stringify(p.objects || [])),
+            current: i === pageIndex,
+        }));
+    }
+    /** The other direction: a flat drawing is one page, pages are pages. */
+    function normalizePages(raw) {
+        const out = { pages: [], current: 0 };
+        if (!Array.isArray(raw) || !raw.length) return out;
+        const paged = raw.every((p) => p && typeof p === 'object' && Array.isArray(p.objects));
+        if (paged) {
+            raw.forEach((p, i) => {
+                out.pages.push(JSON.parse(JSON.stringify(p.objects || [])));
+                if (p.current) out.current = i;
+            });
+        } else {
+            out.pages.push(JSON.parse(JSON.stringify(raw)));
+        }
+        return out;
+    }
+    const totalObjects = () => { stashPage(); return pages.reduce((n, p) => n + (p.objects || []).length, 0); };
+
+    /**
+     * The app's confirm is a sheet (z-50) and this pad is z-400, so asking
+     * anything from in here used to be a dialog you could hear and not see.
+     * It gets lifted for as long as it is asking, and put back after.
+     * `assumeYes` is for the questions whose answer is recoverable anyway.
+     */
+    let asking = false;               // a shared confirm is up, over the pad
+    async function padConfirm(opts) {
+        if (typeof window.confirmAction !== 'function') return !!opts.assumeYes;
+        const root = document.documentElement;
+        asking = true;
+        root.classList.add('draw-pad-asking');
+        try {
+            return await new Promise((resolve) => {
+                let settled = false;
+                const finish = (answer) => {
+                    if (settled) return;
+                    settled = true;
+                    document.removeEventListener('sm:sheet-closed', onSheetClosed);
+                    resolve(answer);
+                };
+                // confirmAction only resolves when one of its two buttons is
+                // pressed. Escape, a tap on the dimmed backdrop and Android Back
+                // all just close the sheet, and the answer never comes — which
+                // used to leave the lift below stuck on <html> for the rest of
+                // the page's life, and with it the shared backdrop sitting on
+                // top of every other sheet in the app. A question waved away is
+                // a "no". The tick is so a real answer still wins: it closes the
+                // sheet first and resolves a microtask later.
+                const onSheetClosed = (e) => {
+                    if (e.detail && e.detail.id !== 'confirm-sheet') return;
+                    setTimeout(() => finish(false), 0);
+                };
+                document.addEventListener('sm:sheet-closed', onSheetClosed);
+                Promise.resolve(window.confirmAction(opts)).then(finish, () => finish(false));
+            });
+        } finally {
+            asking = false;
+            root.classList.remove('draw-pad-asking');
+        }
+    }
+
     /* ---------- pointer input ---------- */
     function pos(e) {
         const r = canvas.getBoundingClientRect();
@@ -477,11 +728,7 @@
             render(); return;
         }
         if (tool === 'eraser') { pushUndo(); mode = 'erase'; eraseAt(p); return; }
-        if (tool === 'text') {
-            const t = prompt('Text to add:');
-            if (t && t.trim()) { pushUndo(); const o = { id: nextId(), type: 'text', color, size: fontPx(), x: p.x, y: p.y + fontPx() * 0.4, text: t.trim() }; objects.push(o); selected = new Set([o.id]); setTool('select'); }
-            render(); return;
-        }
+        if (tool === 'text') { askForText(p); return; }
         // freehand / shapes
         pushUndo(); mode = 'draw';
         if (tool === 'pen') cur = { id: nextId(), type: 'path', color, width: strokeW(), points: [p] };
@@ -549,11 +796,78 @@
         pushUndo(); objects = objects.filter((o) => !selected.has(o.id)); selected.clear(); render();
     }
 
+    /* ---------- the text tool's question ----------
+       Words are typed into the pad's own dialog. The browser's prompt() box
+       could not be read on a phone, could not be styled, and on a full-screen
+       pad it looked like the page had been hijacked by something else. */
+    const textAsk = document.getElementById('drawTextAsk');
+    const textInput = document.getElementById('drawTextInput');
+    let textAt = null;                // where on the sheet the words will land
+    const textAskOpen = () => textAsk && !textAsk.hidden;
+    function showTextAsk(on) {
+        if (!textAsk) return;
+        textAsk.hidden = !on;
+        // Back dismisses the question, the way it dismisses any other overlay.
+        if (on) { window.registerOverlay?.('drawText', () => showTextAsk(false)); }
+        else { window.unregisterOverlay?.('drawText'); textAt = null; }
+    }
+    function askForText(p) {
+        if (!textAsk || !textInput) return;
+        textAt = p;
+        textInput.value = '';
+        showTextAsk(true);
+        // `always`: on a phone this dialog exists to be typed into, so the
+        // keyboard is wanted rather than an intrusion.
+        window.smFocus?.(textInput, { delay: 80, always: true });
+    }
+    function commitText() {
+        const t = (textInput?.value || '').trim();
+        const p = textAt;
+        showTextAsk(false);
+        if (!t || !p) return;
+        pushUndo();
+        const o = { id: nextId(), type: 'text', color, size: fontPx(), x: p.x, y: p.y + fontPx() * 0.4, text: t };
+        objects.push(o);
+        selected = new Set([o.id]);
+        setTool('select');
+        render();
+    }
+    document.getElementById('drawTextOk')?.addEventListener('click', commitText);
+    document.getElementById('drawTextCancel')?.addEventListener('click', () => showTextAsk(false));
+    textAsk?.addEventListener('click', (e) => { if (e.target === textAsk) showTextAsk(false); });
+    textInput?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); commitText(); }
+    });
+
     /* ---------- toolbar buttons ---------- */
     document.getElementById('drawDelete').addEventListener('click', deleteSelected);
     document.getElementById('drawUndo').addEventListener('click', undo);
     document.getElementById('drawRedo').addEventListener('click', redo);
-    document.getElementById('drawClear').addEventListener('click', () => { pushUndo(); objects = []; selected.clear(); render(); });
+    document.getElementById('drawClear').addEventListener('click', async (e) => {
+        // An empty sheet has nothing to lose, and a dialog with only one
+        // possible answer is a tap for its own sake.
+        if (!objects.length) { window.toast?.('This sheet is already empty.', 'info'); return; }
+        const btn = e.currentTarget;
+        if (btn.disabled) return;
+        btn.disabled = true;                     // no second Clear while the first is being asked
+        try {
+            const many = pages.length > 1;
+            const ok = await padConfirm({
+                title: many ? 'Clear page ' + (pageIndex + 1) + '?' : 'Clear this drawing?',
+                message: many
+                    ? 'This clears the whole sheet — every stroke on page ' + (pageIndex + 1)
+                        + '. The other pages are left alone.'
+                    : 'This clears the whole sheet — every stroke on it goes.',
+                detail: 'Undo brings it back.',
+                confirmText: 'Clear the sheet',
+                // Nothing to ask with (no dialog helper) is not a reason to
+                // block the button: this one is undoable.
+                assumeYes: true,
+            });
+            if (!ok) return;
+            pushUndo(); objects = []; selected.clear(); render();
+        } finally { btn.disabled = false; }
+    });
     document.getElementById('drawGrid').addEventListener('click', (e) => {
         gridOn = !gridOn;
         e.currentTarget.classList.toggle('is-active', gridOn);
@@ -561,6 +875,23 @@
     });
     document.addEventListener('keydown', (e) => {
         if (!modal.classList.contains('show')) return;
+        // A confirm on top of the pad answers its own Escape (app.js closes the
+        // sheet). Letting this handler see the same press shut the whole pad and
+        // threw the drawing away, which is a strange answer to "clear a page?".
+        if (asking) return;
+        // Typing into the pad's own text box is typing, not shortcuts —
+        // otherwise a Backspace meant for a typo deletes the shape behind it.
+        // Only fields you type into, though: the stroke-size slider is an
+        // <input> too, and it kept the focus after a drag, which left Delete and
+        // Ctrl+Z doing nothing until you clicked back on the canvas.
+        const el = e.target;
+        const tag = (el && el.tagName) || '';
+        const typing = /^textarea$/i.test(tag)
+            || (/^input$/i.test(tag) && !/^(range|checkbox|radio|button|submit|reset|color|file)$/i.test(el.type || 'text'));
+        if (textAskOpen() || typing) {
+            if (e.key === 'Escape' && textAskOpen()) { e.preventDefault(); showTextAsk(false); }
+            return;
+        }
         if ((e.key === 'Delete' || e.key === 'Backspace') && selected.size) { e.preventDefault(); deleteSelected(); }
         // Both spellings of redo: Ctrl+Shift+Z everywhere, Ctrl+Y on Windows.
         if ((e.ctrlKey || e.metaKey) && (e.key === 'z' || e.key === 'Z')) { e.preventDefault(); e.shiftKey ? redo() : undo(); }
@@ -582,8 +913,14 @@
 
     function close() {
         showAsk(false);
+        showTextAsk(false);
         window.unregisterOverlay?.('drawPad');
         modal.classList.remove('show'); modal.setAttribute('aria-hidden', 'true');
+        document.documentElement.classList.remove('draw-pad-open');
+        // The lift belongs to a question this pad is asking. Nothing outside the
+        // pad should ever be left wearing it — a stray one puts the shared
+        // backdrop over every sheet in the app until the page is reloaded.
+        if (!asking) document.documentElement.classList.remove('draw-pad-asking');
         onSave = null; document.body.style.overflow = '';
         // Whoever opened this may have somewhere to send you afterwards.
         document.dispatchEvent(new CustomEvent('sm:draw-pad-closed'));
@@ -592,9 +929,46 @@
     document.getElementById('drawBack').addEventListener('click', close);
     function exportPng() {
         selected.clear(); marquee = null;
+        stashPage();
         // Capture without the grid guide, then restore the on-screen view.
-        exporting = true; render();
-        const data = canvas.toDataURL('image/png');
+        exporting = true;
+        const live = objects;
+        let data;
+        if (pages.length === 1) {
+            render();
+            data = canvas.toDataURL('image/png');
+        } else {
+            // Every page in one picture, top to bottom. The alternative was to
+            // photograph whichever page happened to be in front, which would
+            // have made a three-page drawing look like a third of itself in
+            // the Gallery and on its note.
+            const tall = H * pages.length + PAGE_GAP * (pages.length - 1);
+            // Scaling to a fixed height scaled the width with it, so a five-page
+            // sketch on a phone came out 677px wide and its writing unreadable.
+            // Pages are stacked, so the width never grows: it keeps every pixel
+            // it has until the whole picture is more than a canvas will export.
+            const k = Math.min(1, EXPORT_MAX_H / tall, Math.sqrt(EXPORT_MAX_PX / (W * tall)));
+            const out = document.createElement('canvas');
+            out.width = Math.max(1, Math.round(W * k));
+            out.height = Math.max(1, Math.round(tall * k));
+            const octx = out.getContext('2d');
+            octx.fillStyle = '#ffffff'; octx.fillRect(0, 0, out.width, out.height);
+            octx.strokeStyle = '#d1d5db'; octx.lineWidth = 1;
+            pages.forEach((p, i) => {
+                objects = p.objects || [];
+                render();
+                const y = Math.round(i * (H + PAGE_GAP) * k);
+                octx.drawImage(canvas, 0, y, out.width, Math.max(1, Math.round(H * k)));
+                // A hairline in the gutter, so the join reads as a page break
+                // and not as a gap somebody forgot to draw in.
+                if (i) {
+                    const cut = y - Math.round(PAGE_GAP * k / 2) + 0.5;
+                    octx.beginPath(); octx.moveTo(0, cut); octx.lineTo(out.width, cut); octx.stroke();
+                }
+            });
+            data = out.toDataURL('image/png');
+        }
+        objects = live;
         exporting = false; render();
         return data;
     }
@@ -606,6 +980,20 @@
     const askOpen = () => !ask.hidden;
     function showAsk(on) {
         ask.hidden = !on;
+        // Several pages keep their strokes when saved as a drawing, and are
+        // stacked into one tall picture when saved as an image. Say so while
+        // the choice is being made, not afterwards.
+        if (on) {
+            const many = pages.length > 1;
+            const kept = document.getElementById('drawAskNewHint');
+            const flat = document.getElementById('drawAskImageHint');
+            if (kept) kept.textContent = many
+                ? 'All ' + pages.length + ' pages, still editable later'
+                : 'Reopen it later and keep changing it';
+            if (flat) flat.textContent = many
+                ? 'All ' + pages.length + ' pages in one tall picture — not editable'
+                : 'A flat picture — it can be drawn over, not edited';
+        }
         // Back answers the question by dismissing it, the way it dismisses any
         // other overlay, rather than walking out of the pad.
         if (on) window.registerOverlay?.('drawAsk', () => showAsk(false));
@@ -615,16 +1003,14 @@
         // A backdrop that never arrived leaves a blank sheet, and saving that
         // over the drawing it was meant to be editing destroys it — which is
         // exactly what "I opened my drawing and the note went blank" was.
-        if (backdropFailed && !objects.length) {
+        if (backdropFailed && !totalObjects()) {
             window.toast?.('That drawing could not be loaded — saving now would replace it with a blank one.', 'error');
             return;
         }
         const data = exportPng();
         // 'overwrite' keeps the strokes as 'drawing' does — the difference is
         // which file it lands in, which is the caller's business.
-        const strokes = (mode === 'drawing' || mode === 'overwrite')
-            ? JSON.parse(JSON.stringify(objects || []))
-            : null;
+        const strokes = (mode === 'drawing' || mode === 'overwrite') ? strokePayload() : null;
         if (onSave) onSave(data, strokes, mode);
         close();
     }
@@ -643,7 +1029,15 @@
 
     function reset(existingUrl, existingObjects) {
         backdropFailed = false;
+        // A fresh drawing gets a usable Clear, whatever happened to the last one.
+        const clearBtn = document.getElementById('drawClear');
+        if (clearBtn) clearBtn.disabled = false;
         objects = []; selected.clear(); undoStack.length = 0; redoStack.length = 0; marquee = null; mode = null; cur = null; uid = 1;
+        pages = [blankPage()]; pageIndex = 0;
+        // A drawing saved before pages existed is a flat list of strokes; one
+        // saved since is a list of pages. Both have to open, and neither may
+        // lose a stroke on the way in.
+        const restored = normalizePages(existingObjects);
         paintHistory();
         // A new drawing takes the aspect of the screen it opens on, so the
         // white sheet fills the stage instead of letterboxing inside it. An
@@ -659,19 +1053,24 @@
             const aw = Math.max(1, stage.clientWidth), ah = Math.max(1, stage.clientHeight);
             const forThisScreen = Math.min(2600, Math.max(520, Math.round(W0 * ah / aw)));
             W = W0;
-            H = (existingUrl || (existingObjects && existingObjects.length))
+            H = (existingUrl || restored.pages.length)
                 ? Math.max(H0, forThisScreen)
                 : forThisScreen;
         }
         canvas.width = W; canvas.height = H;
-        setTool('pen'); render();
-        if (existingObjects && existingObjects.length) {
+        setTool('pen');
+        if (restored.pages.length) {
             // Real strokes, so each one can be selected, moved and undone again
-            // — unlike a PNG backdrop, which can only be drawn over.
-            objects = JSON.parse(JSON.stringify(existingObjects));
-            uid = objects.reduce((m, o) => Math.max(m, (o && o.id) || 0), 0) + 1;
-            render();
-        } else if (existingUrl) {
+            // — unlike a PNG backdrop, which can only be drawn over. Ids are
+            // counted across every page: one counter, no collisions when a
+            // shape is drawn on page 3.
+            pages = restored.pages.map((list) => ({ objects: list, undo: [], redo: [] }));
+            uid = pages.reduce((m, p) => p.objects.reduce((n, o) => Math.max(n, (o && o.id) || 0), m), 0) + 1;
+            // Back on the page you left off on.
+            pageIndex = Math.min(restored.current, pages.length - 1);
+        }
+        loadPage(pageIndex);
+        if (!restored.pages.length && existingUrl) {
             const img = new Image();
             // Cross-origin only where it is actually cross-origin: media now
             // lives on the mother app, and a canvas that has drawn an image
@@ -701,7 +1100,10 @@
 
     /**
      * openDrawCanvas(cb, existingPngUrl, opts)
-     *   cb(dataUrl, objects)  objects is null unless "Save as drawing" was used
+     *   cb(dataUrl, objects)  objects is null unless "Save as drawing" was used;
+     *                         one page comes back flat, several come back as
+     *                         [{objects, current}] — hand either one straight
+     *                         back through opts.objects to reopen it
      *   opts.objects          strokes from a previous drawing save, to reopen
      *   opts.editable         offer the "Save as drawing" button
      */
@@ -723,12 +1125,16 @@
         const title = document.getElementById('drawTitleText');
         if (title) title.textContent = opts.title || 'Drawing';
         showAsk(false);
+        showTextAsk(false);
         // Re-parent to <body> so `position:fixed` is relative to the viewport —
         // never trapped/cramped inside a transformed ancestor (the notes module
         // wrapper, an open sheet, etc.). Also sidesteps any duplicate #drawModal.
         if (modal.parentElement !== document.body) document.body.appendChild(modal);
         modal.classList.add('show');
         modal.setAttribute('aria-hidden', 'false');
+        // Marks the whole app as "a pad is up", which is what lets the pad's
+        // own toasts and questions come over it instead of under it.
+        document.documentElement.classList.add('draw-pad-open');
         // A full-screen pad is the clearest case of all: Back should shut it,
         // not the page underneath it.
         window.registerOverlay?.('drawPad', close);

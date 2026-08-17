@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Models\AsScheduleNote;
+use App\Support\DrawStrokes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -51,6 +52,9 @@ class ScheduleDrawController extends BaseScheduleController
                     // would be megabytes of them. They come one at a time, when
                     // a drawing is actually opened for editing.
                     'editable' => $type === 'drawing' && ! empty($m['strokes']),
+                    // How many sheets it turned out to be, so the card can say
+                    // so without the strokes being sent to work it out.
+                    'pages' => DrawStrokes::pageCount($m['strokes'] ?? null),
                     'team' => $team,
                     'url' => \App\Support\MediaStore::url($path),
                     'when' => $holder->updated_at?->timezone('Asia/Manila')->format('M j, Y'),
@@ -124,7 +128,9 @@ class ScheduleDrawController extends BaseScheduleController
             'note' => 'nullable|string|max:2000',
             'image' => 'required|string',
             'editable' => 'nullable|boolean',
-            'strokes' => 'nullable|array|max:4000',
+            // max:4000 counts the top level, which for a paged drawing is the
+            // page list — the rule is what counts the objects inside them.
+            'strokes' => ['nullable', 'array', 'max:4000', DrawStrokes::rule()],
             'noteId' => 'nullable|integer',
             'index' => 'nullable|integer|min:0',
         ]);
@@ -191,6 +197,7 @@ class ScheduleDrawController extends BaseScheduleController
             'index' => (int) $request->input('index', 0),
             'url' => \App\Support\MediaStore::url($path),
             'editable' => $editable,
+            'pages' => DrawStrokes::pageCount($strokes),
             'title' => (string) $note->title,
             'note' => trim(strip_tags((string) $note->body)),
         ]]);

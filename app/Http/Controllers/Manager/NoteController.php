@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Models\AsScheduleNote;
+use App\Support\DrawStrokes;
 use App\Support\HtmlSanitizer;
 use App\Support\MediaOptimizer;
 use App\Support\UploadHelper;
@@ -230,7 +231,9 @@ class NoteController extends BaseScheduleController
             'media.*.type' => 'required_with:media|in:image,video,drawing,map',
             'media.*.path' => 'required_with:media|string|max:500',
             'media.*.poster' => 'nullable|string|max:500',
-            'media.*.strokes' => 'nullable|array|max:4000',
+            // max:4000 counts the top level, which for a paged drawing is the
+            // page list — the rule is what counts the objects inside them.
+            'media.*.strokes' => ['nullable', 'array', 'max:4000', DrawStrokes::rule()],
         ]);
         if ($validator->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);

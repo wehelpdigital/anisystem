@@ -13,6 +13,7 @@ use App\Models\AsScheduleMaterial;
 use App\Models\AsScheduleService;
 use App\Models\AsScheduleWorker;
 use App\Services\ScheduleReadinessService;
+use App\Support\DrawStrokes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -1391,7 +1392,9 @@ class ActivityController extends BaseScheduleController
             'media.*.type'   => 'required_with:media|in:image,video,drawing,map',
             'media.*.path'   => 'required_with:media|string|max:500',
             'media.*.poster' => 'nullable|string|max:500',
-            'media.*.strokes' => 'nullable|array|max:4000',
+            // max:4000 counts the top level, which for a paged drawing is the
+            // page list — the rule is what counts the objects inside them.
+            'media.*.strokes' => ['nullable', 'array', 'max:4000', DrawStrokes::rule()],
         ]);
         if ($validator->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
@@ -1513,7 +1516,9 @@ class ActivityController extends BaseScheduleController
             'media.*.type'   => 'required_with:media|in:image,video,drawing,map',
             'media.*.path'   => 'required_with:media|string|max:500',
             'media.*.poster' => 'nullable|string|max:500',
-            'media.*.strokes' => 'nullable|array|max:4000',
+            // max:4000 counts the top level, which for a paged drawing is the
+            // page list — the rule is what counts the objects inside them.
+            'media.*.strokes' => ['nullable', 'array', 'max:4000', DrawStrokes::rule()],
         ]);
         if ($validator->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);

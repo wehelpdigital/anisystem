@@ -45,8 +45,29 @@
         .dr-new:hover { border-color: var(--color-brand-500); background: var(--color-brand-50); }
         .dr-new svg { width: 1.6rem; height: 1.6rem; }
         .dr-empty { text-align: center; color: var(--color-gray-400); font-size: .8rem; padding: 1.25rem .5rem 0; }
+        /* Where a picture went. It has to be as findable as the card it is
+           standing in for, so it sits above the grid rather than as a toast
+           that is gone before it is read. */
+        .dr-kept { display: flex; align-items: flex-start; gap: .7rem; margin-bottom: .75rem; padding: .75rem .8rem;
+            border: 1px solid #cfe3b6; border-radius: .85rem; background: #f3f9ea;
+            opacity: 0; transform: translateY(-.35rem);
+            transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+        /* This block is pushed into the head AFTER the stylesheet, so a bare
+           display:flex here would out-rank .hidden and the notice would be up
+           before anything had been saved. Two classes settle it. */
+        .dr-kept.hidden { display: none; }
+        .dr-kept.is-in { opacity: 1; transform: none; }
+        .dr-kept-ico { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem;
+            flex-shrink: 0; border-radius: .6rem; background: #dcecc6; color: #3d6823; }
+        .dr-kept-ico svg { width: 1.15rem; height: 1.15rem; }
+        .dr-kept-title { font-size: .85rem; font-weight: 800; color: var(--color-gray-900); }
+        .dr-kept-say { font-size: .75rem; line-height: 1.45; color: var(--color-gray-600); margin-top: .1rem; }
+        .dr-kept-acts { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .55rem; }
+        .dr-kept-x { flex-shrink: 0; color: var(--color-gray-400); padding: .15rem; border-radius: .4rem; cursor: pointer; }
+        .dr-kept-x:hover { color: var(--color-gray-700); background: #e6f0d6; }
+        .dr-kept-x svg { width: 1rem; height: 1rem; }
         @media (prefers-reduced-motion: reduce) {
-            .dr-card, .dr-thumb img, .dr-new { transition: none; }
+            .dr-card, .dr-thumb img, .dr-new, .dr-kept { transition: none; }
         }
     </style>
 @endpush
@@ -55,6 +76,26 @@
     @include('sm.partials.module-note', [
         'say' => 'Every drawing in this schedule — your own and the team’s. Each one is kept as an attachment on a note, so the tag on a card opens the words that explain it.',
     ])
+    {{-- A drawing kept as a flat picture stops being a drawing: this module
+         lists the ones that still carry their strokes, so a card for it would
+         disappear on the next refresh. Rather than that small lie, say where
+         the picture actually went. --}}
+    <div class="dr-kept hidden" id="drKept" role="status">
+        <span class="dr-kept-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </span>
+        <div class="min-w-0 grow">
+            <p class="dr-kept-title" id="drKeptTitle">Kept as a picture.</p>
+            <p class="dr-kept-say" id="drKeptSay">It is not a drawing any more, so it is not on this shelf — you will find it in the Gallery and on its note.</p>
+            <div class="dr-kept-acts">
+                <a class="btn btn-sm btn-white" id="drKeptGallery" href="{{ route('sm.gallery', ['id' => $schedule->id]) }}">Open the Gallery</a>
+                <a class="btn btn-sm btn-white hidden" id="drKeptNote" href="#">Open the note</a>
+            </div>
+        </div>
+        <button type="button" class="dr-kept-x" data-kept-dismiss aria-label="Dismiss">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+    </div>
     <div class="dr-grid" id="drGrid"></div>
     <p class="dr-empty hidden" id="drEmpty">Nothing drawn yet. Start one above — save it as a picture, or as a drawing you can come back and change.</p>
 
@@ -80,7 +121,11 @@
                  six weeks later is half a record. What it shows, and why it
                  was worth drawing. --}}
             <label class="form-label mt-3" for="drNote">Description <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="drNote" class="form-input" rows="3" maxlength="2000" placeholder="What this shows, and why it was worth drawing."></textarea>
+            {{-- form-input alone has side padding only — fine for a one-line
+                 field that centres its text, but a textarea sat its first line
+                 hard against the top border. form-textarea is the same field
+                 with the vertical padding a multi-line box needs. --}}
+            <textarea id="drNote" class="form-input form-textarea" rows="3" maxlength="2000" placeholder="What this shows, and why it was worth drawing."></textarea>
             <p class="text-xs text-gray-400 mt-1.5" id="drKind"></p>
             <button type="button" class="btn btn-primary w-full mt-3" id="drConfirm">Save drawing</button>
         </div>
@@ -93,6 +138,8 @@
                 save: @json(route('sm.draw.save')) + '?scheduleId=' + SCHEDULE_ID,
                 one: @json(route('sm.draw.one')) + '?scheduleId=' + SCHEDULE_ID,
                 destroy: @json(route('sm.draw.destroy')) + '?scheduleId=' + SCHEDULE_ID,
+                // Where a picture ends up, for the notice that says so.
+                notes: @json(route('sm.notes', ['id' => $schedule->id])),
             };
             const esc = window.escapeHtml || ((s) => String(s ?? '')
                 .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'));
@@ -102,6 +149,34 @@
 
             const grid = document.getElementById('drGrid');
             const empty = document.getElementById('drEmpty');
+            const kept = document.getElementById('drKept');
+
+            /* ---------- "it went to the Gallery" ---------- */
+            function showKept(row) {
+                if (!kept) return;
+                document.getElementById('drKeptTitle').textContent =
+                    '“' + (row.title || 'Drawing') + '” was kept as a picture.';
+                document.getElementById('drKeptSay').textContent =
+                    'A picture is not a drawing any more, so it does not sit on this shelf. '
+                    + 'It is in the Gallery, and on the note it was saved to.';
+                const noteLink = document.getElementById('drKeptNote');
+                // Only the notebook can open a note by name. A picture saved
+                // onto a board or a day note is reached from the board itself,
+                // so a link there would promise more than it can do.
+                const canOpen = row.noteId && (row.source || 'note') === 'note';
+                noteLink.classList.toggle('hidden', !canOpen);
+                if (canOpen) noteLink.href = U.notes + '&open=' + row.noteId;
+                kept.classList.remove('hidden');
+                requestAnimationFrame(() => kept.classList.add('is-in'));
+            }
+            function hideKept() {
+                if (!kept || kept.classList.contains('hidden')) return;
+                kept.classList.remove('is-in');
+                // Let it fade before it stops taking up room; if something put
+                // it back in the meantime, leave it alone.
+                setTimeout(() => { if (!kept.classList.contains('is-in')) kept.classList.add('hidden'); }, 300);
+            }
+            kept?.addEventListener('click', (e) => { if (e.target.closest('[data-kept-dismiss]')) hideKept(); });
 
             const NEW_TILE = '<button type="button" class="dr-new" data-new>'
                 + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>'
@@ -116,6 +191,9 @@
                 tags.push(d.editable
                     ? '<span class="badge badge-green">Editable</span>'
                     : '<span class="badge badge-gray">Picture</span>');
+                // A drawing that runs to several sheets says so: the thumbnail
+                // is all of them stacked, which is easy to mistake for one.
+                if (d.pages > 1) tags.push(`<span class="badge badge-gray">${d.pages} pages</span>`);
                 // Which note this belongs to. A drawing is never loose — it is
                 // an attachment on a note, and the note is where the reason
                 // for it is written down.
@@ -187,7 +265,7 @@
                         ? 'Saving over the drawing you opened.'
                         : (objects
                             ? 'Kept as a drawing — you can reopen and change it later.'
-                            : 'Kept as a picture — it can be drawn over, but not edited stroke by stroke.');
+                            : 'Kept as a picture — it goes to the Gallery and its note, not to this shelf.');
                     window.openSheet('drSaveSheet');
                     window.smFocus('drTitle', { delay: 120 });
                 }, seed.url || null, {
@@ -263,16 +341,27 @@
                         source: (pending && pending.noteId) ? (pending.source || 'note') : 'note',
                         note: d.note != null ? d.note : note,
                         editable: !!d.editable, team: false, url: d.url, when: 'Just now',
+                        pages: d.pages || 1,
                     };
-                    // Cache-bust: a re-saved drawing keeps its slot in the grid
-                    // and the browser would otherwise show the old picture.
+                    // A re-saved drawing keeps its slot in the grid rather than
+                    // arriving as a second copy of itself.
                     const at = drawings.findIndex((x) => x.noteId === row.noteId && x.index === row.index
                         && (x.source || 'note') === row.source);
-                    if (at >= 0) drawings[at] = row; else drawings.unshift(row);
+                    if (row.editable) {
+                        hideKept();
+                        if (at >= 0) drawings[at] = row; else drawings.unshift(row);
+                    } else {
+                        // Saved as a picture: the module only shelves drawings
+                        // that kept their strokes, so leaving a card here would
+                        // be a card that vanishes on the next refresh. Take it
+                        // out and say where the picture went instead.
+                        if (at >= 0) drawings.splice(at, 1);
+                        showKept(row);
+                    }
                     pending = null;
                     paint();
                     window.closeSheet('drSaveSheet');
-                    toast('Drawing saved.');
+                    toast(row.editable ? 'Drawing saved.' : 'Kept as a picture — see the Gallery and its note.');
                 } catch (err) {
                     toast(err.message || 'Could not save that.', 'error');
                 } finally { btn.disabled = false; }

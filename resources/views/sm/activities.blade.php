@@ -2682,6 +2682,10 @@
      * remembered here so the thing you opened knows where to return you. */
     let cameFrom = null;
     window.smCameFrom = () => cameFrom;
+    // The origin's own name, so a module that offers a way back can say where
+    // back goes instead of hoping the reader guesses. A button labelled
+    // "All maps" that lands on the Gallery is a lie whichever place is right.
+    window.smOriginLabel = () => (cameFrom && MODULES[cameFrom]) ? MODULES[cameFrom].label : null;
     window.smReturnToOrigin = () => {
         const back = cameFrom;
         cameFrom = null;

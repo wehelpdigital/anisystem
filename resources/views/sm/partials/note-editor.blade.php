@@ -125,13 +125,25 @@
     .ne-tagrow[hidden] { display: none; }
     .ne-taglabel { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .03em;
         text-transform: uppercase; color: var(--tl-text-faint, #9ca3af); margin-bottom: .25rem; }
-    .ne-tagpills { display: flex; flex-wrap: wrap; gap: .3rem; }
-    .ne-tagpill { display: inline-flex; align-items: center; gap: .25rem; max-width: 100%;
+    /* A grid track and a flex item both size themselves to their longest
+       unbreakable line unless told they may be narrower, and a lot called
+       "Apartado 1 — riverside terraces behind the pump house" is one long
+       line. Without these min-width:0s the row grew past the sheet and the
+       body got a sideways scrollbar. */
+    .ne-tagrow { min-width: 0; }
+    .ne-tagpills { display: flex; flex-wrap: wrap; gap: .3rem; min-width: 0; }
+    .ne-tagpill { display: inline-flex; align-items: center; gap: .25rem; max-width: 100%; min-width: 0;
         padding: .3rem .6rem; border-radius: 999px; cursor: pointer;
         border: 1px solid var(--tl-border, #e5e7eb); background: var(--tl-surface, #fff);
         font-size: .72rem; font-weight: 700; color: var(--tl-text-muted, #4b5563);
         transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
-    .ne-tagpill span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    /* A long name wraps onto a second line rather than being cut to an
+       ellipsis: you are choosing which lot you are writing about, and "Apar…"
+       does not tell you that. `anywhere` breaks names with no spaces in them
+       at all. Three lines is the ceiling, so a truly absurd name makes a
+       taller pill, not a taller sheet. */
+    .ne-tagpill span { min-width: 0; white-space: normal; overflow-wrap: anywhere;
+        line-height: 1.25; max-height: 3.75em; overflow: hidden; }
     .ne-tagpill:hover { border-color: #a8cc7e; color: #3d6823; }
     .ne-tagpill.is-on { background: #eaf4dd; border-color: #4a7c2a; color: #2f5a17; }
     .ne-tagpill.is-on::before { content: '✓'; font-size: .68rem; }
