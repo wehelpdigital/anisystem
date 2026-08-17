@@ -36,20 +36,28 @@
     {{-- The photo, and the pens over it. --}}
     <div class="cph-stage" id="cphStage">
         <div class="cph-bar" id="cphBar" hidden>
-            <button type="button" class="cph-tool is-active" data-cph-tool="pen" title="Pen"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z"/></svg></button>
-            <button type="button" class="cph-tool" data-cph-tool="line" title="Line"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 19L19 5"/></svg></button>
-            <button type="button" class="cph-tool" data-cph-tool="arrow" title="Arrow"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 19L19 5m0 0h-7m7 0v7"/></svg></button>
-            <button type="button" class="cph-tool" data-cph-tool="rect" title="Box"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg></button>
-            <button type="button" class="cph-tool" data-cph-tool="circle" title="Circle"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg></button>
-            <button type="button" class="cph-tool" data-cph-tool="text" title="Text"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 6h14M12 6v13"/></svg></button>
-            <button type="button" class="cph-tool" data-cph-tool="eraser" title="Eraser (strokes only — the photo is safe)"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 20h10M6.5 14.5l8-8a2 2 0 012.8 0l2.2 2.2a2 2 0 010 2.8l-8 8H8l-3.5-3.5a1.5 1.5 0 010-2.1l2-2z"/></svg></button>
-            <span class="cph-div"></span>
-            <button type="button" class="cph-tool" id="cphColor" title="Colour"><span class="cph-color-dot" id="cphColorDot"></span></button>
-            <span class="cph-div"></span>
-            <button type="button" class="cph-tool" id="cphUndo" title="Take back my last stroke"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg></button>
-            <button type="button" class="cph-tool" id="cphRedo" title="Put it back" disabled><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg></button>
-            <button type="button" class="cph-tool cph-danger" id="cphClear" title="Clear all strokes for the team"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg></button>
-            <button type="button" class="cph-save" id="cphSaveBtn">Save</button>
+            {{-- Row one: what you draw with. --}}
+            <div class="cph-row">
+                <button type="button" class="cph-tool is-active" data-cph-tool="pen" title="Pen"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z"/></svg></button>
+                <button type="button" class="cph-tool" data-cph-tool="line" title="Line"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 19L19 5"/></svg></button>
+                <button type="button" class="cph-tool" data-cph-tool="arrow" title="Arrow"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 19L19 5m0 0h-7m7 0v7"/></svg></button>
+                <button type="button" class="cph-tool" data-cph-tool="rect" title="Box"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg></button>
+                <button type="button" class="cph-tool" data-cph-tool="circle" title="Circle"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg></button>
+                <button type="button" class="cph-tool" data-cph-tool="text" title="Text"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 6h14M12 6v13"/></svg></button>
+                <button type="button" class="cph-tool" data-cph-tool="eraser" title="Eraser (strokes only — the photo is safe)"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 20h10M6.5 14.5l8-8a2 2 0 012.8 0l2.2 2.2a2 2 0 010 2.8l-8 8H8l-3.5-3.5a1.5 1.5 0 010-2.1l2-2z"/></svg></button>
+                <button type="button" class="cph-tool" data-cph-tool="move" title="Move and zoom the photo"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v20M2 12h20M12 2l-3 3m3-3l3 3M12 22l-3-3m3 3l3-3M2 12l3-3m-3 3l3 3M22 12l-3-3m3 3l-3 3"/></svg></button>
+            </div>
+            {{-- Row two: what you do about it. Redo used to wrap down here on
+                 its own on a phone; now the split is on purpose. --}}
+            <div class="cph-row">
+                <button type="button" class="cph-tool" id="cphColor" title="Colour"><span class="cph-color-dot" id="cphColorDot"></span></button>
+                <button type="button" class="cph-tool" id="cphSize" title="Line thickness"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="1" d="M4 6h16"/><path stroke-linecap="round" stroke-width="2.5" d="M4 12h16"/><path stroke-linecap="round" stroke-width="4.5" d="M4 18.5h16"/></svg></button>
+                <span class="cph-div"></span>
+                <button type="button" class="cph-tool" id="cphUndo" title="Take back my last stroke"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg></button>
+                <button type="button" class="cph-tool" id="cphRedo" title="Put it back" disabled><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg></button>
+                <button type="button" class="cph-tool cph-danger" id="cphClear" title="Clear all strokes for the team"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg></button>
+                <button type="button" class="cph-tool cph-saveic" id="cphSaveBtn" title="Keep this image" aria-label="Keep this image"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg></button>
+            </div>
         </div>
         <div class="cph-box" id="cphBox">
             <div class="cph-none" id="cphNone">
@@ -73,10 +81,20 @@
         <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button></div>
     <div class="sheet-body" style="padding-bottom:1.1rem">
         <div class="cph-swatches" id="cphSwatches"></div>
+    </div>
+</div>
+
+{{-- Line thickness, its own sheet like the drawing surfaces have. --}}
+<div class="sheet hidden" id="cphSizeSheet" style="--sheet-width:20rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header"><h3 class="sheet-title">Line thickness</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button></div>
+    <div class="sheet-body" style="padding-bottom:1.1rem">
         <div class="cph-widths" id="cphWidths">
             <button type="button" data-cph-width="3"><span style="height:3px"></span><b>Fine</b></button>
             <button type="button" class="is-active" data-cph-width="5"><span style="height:5px"></span><b>Normal</b></button>
             <button type="button" data-cph-width="9"><span style="height:9px"></span><b>Thick</b></button>
+            <button type="button" data-cph-width="14"><span style="height:14px"></span><b>Heavy</b></button>
         </div>
     </div>
 </div>
@@ -143,7 +161,15 @@
     .cph-none[hidden] { display: none; }
 
     .cph-stage { flex: 1; display: flex; flex-direction: column; min-height: 0; gap: .4rem; }
-    .cph-bar { display: flex; align-items: center; gap: .25rem; flex-wrap: wrap; }
+    .cph-bar { display: flex; flex-direction: column; gap: .25rem; }
+    .cph-bar[hidden] { display: none; }
+    .cph-row { display: flex; align-items: center; gap: .25rem; flex-wrap: wrap; }
+    .cph-row .cph-saveic { margin-left: auto; background: #4a7c2a; color: #fff; }
+    .cph-row .cph-saveic:hover { background: #3d6823; color: #fff; }
+    .cph-saveic.is-gone { display: none; }
+    /* The move tool holds the photo, not a pen. */
+    .cph-box.is-move canvas { cursor: grab; }
+    .cph-box.is-move canvas:active { cursor: grabbing; }
     .cph-tool { min-width: 2.15rem; height: 2.15rem; border-radius: .6rem; flex-shrink: 0;
         display: inline-flex; align-items: center; justify-content: center;
         background: var(--color-gray-100); color: var(--color-gray-600);
@@ -158,10 +184,6 @@
     .cph-div { width: 1px; height: 1.3rem; background: var(--color-gray-200); margin: 0 .1rem; flex-shrink: 0; }
     .cph-color-dot { width: 1.05rem; height: 1.05rem; border-radius: 999px; background: #f5c518;
         border: 2px solid rgb(255 255 255 / .9); box-shadow: 0 0 0 1px rgb(0 0 0 / .12); }
-    .cph-save { margin-left: auto; height: 2.15rem; padding: 0 .9rem; border-radius: .6rem;
-        background: #4a7c2a; color: #fff; font-size: .78rem; font-weight: 800; flex-shrink: 0; }
-    .cph-save:hover { background: #3d6823; }
-    .cph-save.is-gone { display: none; }
 
     /* The photo sits in a box; the canvas covers the box exactly, so a canvas
        point IS a box point and only the contain-rect math knows the image. */
@@ -228,12 +250,48 @@
     /* Strokes live in the photo's own 0..1 space. The canvas covers the box;
        the photo sits inside it object-fit:contain — this is that rectangle. */
     const img = () => $id('cphImg');
+    /* The viewport: zoom and pan, one set of numbers. The img wears it as a
+     * CSS transform and fitRect folds the SAME numbers into the stroke math,
+     * so the ink and the photo can never slide apart. Strokes live in the
+     * photo's own 0..1 space throughout — the room never sees your zoom. */
+    const view = { z: 1, x: 0, y: 0 };
+    function applyView() {
+        const im = img();
+        im.style.transformOrigin = '0 0';
+        im.style.transform = (view.z === 1 && !view.x && !view.y)
+            ? '' : 'translate(' + view.x + 'px,' + view.y + 'px) scale(' + view.z + ')';
+        paintAll();
+    }
+    function resetView() { view.z = 1; view.x = 0; view.y = 0; applyView(); }
+    function zoomAt(px, py, factor) {
+        const z = Math.max(1, Math.min(6, view.z * factor));
+        if (z === view.z) return;
+        // The point under the finger stays under the finger.
+        view.x = px - ((px - view.x) / view.z) * z;
+        view.y = py - ((py - view.y) / view.z) * z;
+        view.z = z;
+        if (z === 1) { view.x = 0; view.y = 0; }
+        clampView();
+        applyView();
+    }
+    function clampView() {
+        // The photo may wander but never leave: at least a third of the box
+        // stays covered, or a hard pan strands the screen on blank ground.
+        const b = $id('cphBox');
+        view.x = Math.max(-b.clientWidth * view.z + b.clientWidth / 3, Math.min(view.x, b.clientWidth * 2 / 3));
+        view.y = Math.max(-b.clientHeight * view.z + b.clientHeight / 3, Math.min(view.y, b.clientHeight * 2 / 3));
+    }
     function fitRect() {
         const box = $id('cphBox').getBoundingClientRect();
         const iw = img().naturalWidth || 1, ih = img().naturalHeight || 1;
         const s = Math.min(box.width / iw, box.height / ih);
         const dw = iw * s, dh = ih * s;
-        return { dx: (box.width - dw) / 2, dy: (box.height - dh) / 2, dw, dh, bw: box.width, bh: box.height };
+        const bx = (box.width - dw) / 2, by = (box.height - dh) / 2;
+        return {
+            dx: bx * view.z + view.x, dy: by * view.z + view.y,
+            dw: dw * view.z, dh: dh * view.z,
+            bw: box.width, bh: box.height,
+        };
     }
     const toNorm = (x, y, r) => [
         Math.max(0, Math.min(1, (x - r.dx) / r.dw)),
@@ -327,6 +385,9 @@
     function applyPhoto(url, g2) {
         photoUrl = url; gen = g2 || '';
         strokes = []; rendered.clear(); lastId = 0;
+        // A new photo starts at its own size, not the last one's zoom.
+        view.z = 1; view.x = 0; view.y = 0;
+        img().style.transform = '';
         showStage(true);
         loadPhoto(url);
     }
@@ -433,10 +494,28 @@
         return [e.clientX - b.left, e.clientY - b.top];
     }
 
+    /* The move tool's fingers. Two at once is a pinch; the map of live
+     * pointers is what tells one from the other. */
+    const fingers = new Map();
+    let pan = null, pinch = null;
+
     function bindCanvas() {
         const c = $id('cphCanvas');
         c.addEventListener('pointerdown', (e) => {
             if (e.pointerType === 'mouse' && e.button !== 0) return;
+            if (tool === 'move') {
+                c.setPointerCapture(e.pointerId);
+                const [mx, my] = canvasPoint(e);
+                fingers.set(e.pointerId, { x: mx, y: my });
+                if (fingers.size === 2) {
+                    const [a, b] = [...fingers.values()];
+                    pinch = { d: Math.hypot(a.x - b.x, a.y - b.y) || 1, z: view.z };
+                    pan = null;
+                } else {
+                    pan = { x: mx, y: my, vx: view.x, vy: view.y };
+                }
+                return;
+            }
             const r = fitRect();
             const [x, y] = canvasPoint(e);
             const p = toNorm(x, y, r);
@@ -454,6 +533,22 @@
             }
         });
         c.addEventListener('pointermove', (e) => {
+            if (tool === 'move') {
+                if (!fingers.has(e.pointerId)) return;
+                const [mx, my] = canvasPoint(e);
+                fingers.set(e.pointerId, { x: mx, y: my });
+                if (pinch && fingers.size === 2) {
+                    const [a, b] = [...fingers.values()];
+                    const d = Math.hypot(a.x - b.x, a.y - b.y) || 1;
+                    zoomAt((a.x + b.x) / 2, (a.y + b.y) / 2, (pinch.z * (d / pinch.d)) / view.z);
+                } else if (pan) {
+                    view.x = pan.vx + (mx - pan.x);
+                    view.y = pan.vy + (my - pan.y);
+                    clampView();
+                    applyView();
+                }
+                return;
+            }
             if (!drawing) return;
             const r = fitRect();
             const [x, y] = canvasPoint(e);
@@ -466,7 +561,12 @@
                 paintAll({ mode: drawing.mode, color, width, points: drawing.points });
             }
         });
-        const up = () => {
+        const up = (e) => {
+            if (e && fingers.delete(e.pointerId)) {
+                if (fingers.size < 2) pinch = null;
+                if (!fingers.size) pan = null;
+                if (fingers.size === 1) { const f = [...fingers.values()][0]; pan = { x: f.x, y: f.y, vx: view.x, vy: view.y }; }
+            }
             if (!drawing) return;
             const d = drawing;
             if (d.mode === 'pen' || d.mode === 'eraser') {
@@ -484,6 +584,16 @@
         };
         c.addEventListener('pointerup', up);
         c.addEventListener('pointercancel', up);
+        // A wheel zooms under the move tool — the desktop's pinch.
+        c.addEventListener('wheel', (e) => {
+            if (tool !== 'move') return;
+            e.preventDefault();
+            const [mx, my] = canvasPoint(e);
+            zoomAt(mx, my, e.deltaY < 0 ? 1.15 : 1 / 1.15);
+        }, { passive: false });
+        // Double-tap puts the whole photo back — the gesture every map has
+        // taught. dblclick fires for a double-tap on touch screens too.
+        c.addEventListener('dblclick', () => { if (tool === 'move') resetView(); });
         window.addEventListener('resize', () => paintAll());
     }
 
@@ -601,6 +711,7 @@
         document.querySelectorAll('[data-cph-tool]').forEach((b) => b.addEventListener('click', () => {
             tool = b.getAttribute('data-cph-tool');
             document.querySelectorAll('[data-cph-tool]').forEach((x) => x.classList.toggle('is-active', x === b));
+            $id('cphBox').classList.toggle('is-move', tool === 'move');
         }));
         const host = $id('cphSwatches');
         SWATCHES.forEach((c) => {
@@ -617,9 +728,11 @@
             host.appendChild(b);
         });
         $id('cphColor').addEventListener('click', () => window.openSheet?.('cphColorSheet'));
+        $id('cphSize').addEventListener('click', () => window.openSheet?.('cphSizeSheet'));
         document.querySelectorAll('[data-cph-width]').forEach((b) => b.addEventListener('click', () => {
             width = parseInt(b.getAttribute('data-cph-width'), 10) || 5;
             document.querySelectorAll('[data-cph-width]').forEach((x) => x.classList.toggle('is-active', x === b));
+            window.closeSheet?.('cphSizeSheet');
         }));
     }
 
