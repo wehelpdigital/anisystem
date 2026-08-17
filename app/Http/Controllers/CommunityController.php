@@ -263,6 +263,11 @@ class CommunityController extends Controller
 
         $plans = $this->community->browse($userId, $filters);
 
+        // The scroller asks for cards alone.
+        if ($request->boolean('rows')) {
+            return response()->view('community.partials.plan-rows', ['plans' => $plans]);
+        }
+
         $crops = AsCroppingSchedule::active()
             ->where('isPublic', 1)
             ->whereNotNull('cropType')

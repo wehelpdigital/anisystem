@@ -146,23 +146,46 @@ class CommunityConnectController extends Controller
     {
         $meId = (int) Auth::id();
         $ids = \App\Models\CommunityConnection::connectedIds($meId);
+
+        // A page of friends, then the wall lookups scoped to THAT page. The
+        // old shape fetched every wall post of every friend — with authors,
+        // and every comment thread — and picked one per friend in PHP. A
+        // well-connected member's "friends" page was reading a large slice of
+        // the whole wall table to show twelve cards.
         $friends = \App\Models\User::whereIn('id', $ids)
             ->where('deleteStatus', 1)
             ->orderBy('firstName')
-            ->get();
+            ->paginate(12)
+            ->withQueryString();
 
-        $latestPosts = \App\Models\CommunityWallPost::whereIn('wallUserId', $ids)
+        $pageIds = $friends->getCollection()->pluck('id')->all();
+
+        // One newest post per friend on this page. MAX(id) per wall is a
+        // single indexed pass, and newest-by-id matches newest-by-created for
+        // these rows; the threads stay unloaded, so the card's comment strip
+        // uses its fetch-on-tap mode exactly as the feed now does.
+        $latestIds = \App\Models\CommunityWallPost::whereIn('wallUserId', $pageIds ?: [-1])
             ->where('deleteStatus', 1)
-            ->with(['author', 'comments.author'])
+            ->selectRaw('MAX(id) as id')
+            ->groupBy('wallUserId')
+            ->pluck('id')
+            ->all();
+        $latestPosts = \App\Models\CommunityWallPost::whereIn('id', $latestIds ?: [-1])
+            ->with(['author'])
             ->withCount('comments')
-            ->orderByDesc('created_at')
             ->get()
-            ->unique('wallUserId')
             ->keyBy('wallUserId');
 
         // Reaction summaries so the inline "Latest" post is react/commentable.
         \App\Models\CommunityReaction::attach($latestPosts, 'wallpost', $meId);
-        \App\Models\CommunityReaction::attach($latestPosts->flatMap->comments, 'wallcomment', $meId);
+
+        // The scroller asks for cards alone.
+        if ($request->boolean('rows')) {
+            return response()->view('community.partials.cofarmer-rows', [
+                'friends' => $friends,
+                'latestPosts' => $latestPosts,
+            ]);
+        }
 
         return view('community.cofarmers', [
             'friends' => $friends,

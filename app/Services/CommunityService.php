@@ -79,9 +79,13 @@ class CommunityService
             ->orderByDesc('publishedAt')
             ->orderByDesc('id');
 
-        $plans = $query->with('owner')->get();
+        // A page, not the platform. This list grows with every plan anyone
+        // ever publishes — the one list in the app whose ceiling is not a
+        // single farm's activity — and it was fetched whole on every visit.
+        $plans = $query->with('owner')->paginate(18)->withQueryString();
+        $plans->setCollection($this->decorate($plans->getCollection()));
 
-        return $this->decorate($plans);
+        return $plans;
     }
 
     /** Attach rating + comment counts to a set of plans in two queries. */
