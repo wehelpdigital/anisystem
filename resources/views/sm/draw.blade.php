@@ -61,6 +61,11 @@
         .dr-new:hover { border-color: var(--color-brand-500); background: var(--color-brand-50); }
         .dr-new svg { width: 1.6rem; height: 1.6rem; }
         .dr-empty { text-align: center; color: var(--color-gray-400); font-size: .8rem; padding: 1.25rem .5rem 0; }
+        .dr-more { grid-column: 1 / -1; display: flex; align-items: center; justify-content: center; padding: .9rem 0; }
+        .dr-more-spin { width: 1.2rem; height: 1.2rem; border-radius: 999px;
+            border: 2.5px solid rgb(74 124 42 / .2); border-top-color: #4a7c2a;
+            animation: drSpin .8s linear infinite; }
+        @media (prefers-reduced-motion: reduce) { .dr-more-spin { animation-duration: 1.6s; } }
         /* Where a picture went. It has to be as findable as the card it is
            standing in for, so it sits above the grid rather than as a toast
            that is gone before it is read. */
@@ -246,9 +251,41 @@
                 </div>`;
             }
 
+            /* The shelf pages itself the way the Gallery's shelves do: a
+               window of tiles and a sentinel that asks for more as it nears
+               the screen. Six hundred thumbnails in one innerHTML is a long
+               white pause on a farm phone; twenty-four is a shelf. Cards keep
+               their data-i index into the ONE `drawings` array, so the
+               open/edit/delete handlers need never know about the windowing —
+               grow() hands each late tile its true index. */
+            const PAGE = 24;
+            let shownCount = 0, shelfIO = null;
             function paint() {
-                grid.innerHTML = NEW_TILE + drawings.map(card).join('');
+                shelfIO?.disconnect(); shelfIO = null;
+                // A repaint keeps roughly the window the person had scrolled
+                // to — deleting one card must not fold the shelf to page one.
+                shownCount = Math.min(Math.max(PAGE, shownCount), drawings.length);
+                grid.innerHTML = NEW_TILE + drawings.slice(0, shownCount).map(card).join('');
                 empty.classList.toggle('hidden', drawings.length > 0);
+                if (shownCount >= drawings.length) return;
+                const sentinel = document.createElement('div');
+                sentinel.className = 'dr-more';
+                sentinel.innerHTML = '<span class="dr-more-spin" aria-hidden="true"></span>';
+                grid.appendChild(sentinel);
+                const grow = () => {
+                    const from = shownCount;
+                    shownCount = Math.min(shownCount + PAGE, drawings.length);
+                    // insertAdjacentHTML, not innerHTML — a rebuild would drop
+                    // every thumbnail already decoded and fetch them again.
+                    sentinel.insertAdjacentHTML('beforebegin',
+                        drawings.slice(from, shownCount).map((d, i) => card(d, from + i)).join(''));
+                    return shownCount < drawings.length;
+                };
+                shelfIO = new IntersectionObserver((entries) => {
+                    if (!entries.some((e) => e.isIntersecting)) return;
+                    if (!grow()) { shelfIO.disconnect(); sentinel.remove(); }
+                }, { rootMargin: '600px 0px' });   // ask early, so it never stalls
+                shelfIO.observe(sentinel);
             }
 
             /* ---------- opening the pad ---------- */
