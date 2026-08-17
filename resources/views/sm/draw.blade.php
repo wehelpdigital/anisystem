@@ -121,6 +121,11 @@
         @include('sm.partials.draw-canvas')
         @include('sm.partials.note-lightbox')
     @endif
+    {{-- Unlike those two, no shell carries the gallery picker — so the pad's
+         "From the gallery" door only works if this module brings it along, in
+         both modes. Safe to repeat: its script binds once and by id, so a copy
+         another module already injected simply wins. --}}
+    @include('sm.partials.media-picker')
 
     <div class="sheet hidden" id="drSaveSheet" style="--sheet-width:26rem">
         <div class="sheet-handle"></div>
@@ -290,6 +295,8 @@
                     title: seed.title || 'Drawing',
                     overwrite: !!seed.noteId,
                     overwriteLabel: seed.title ? `“${seed.title}”` : 'the one you opened',
+                    // Lights the pad's "From the gallery" door for this season.
+                    scheduleId: SCHEDULE_ID,
                 });
             }
 

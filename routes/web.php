@@ -276,6 +276,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-gallery-album', [App\Http\Controllers\Manager\GalleryController::class, 'albumDestroy'])->name('sm.gallery.album.destroy');
     Route::post('/app/sm-gallery-images', [App\Http\Controllers\Manager\GalleryController::class, 'imageStore'])->name('sm.gallery.image.store');
     Route::post('/app/sm-gallery-move', [App\Http\Controllers\Manager\GalleryController::class, 'imageMove'])->name('sm.gallery.image.move');
+    // Renaming is a write like moving: same gate, one field of its own.
+    Route::post('/app/sm-gallery-rename', [App\Http\Controllers\Manager\GalleryController::class, 'imageRename'])->name('sm.gallery.image.rename');
     Route::delete('/app/sm-gallery-images', [App\Http\Controllers\Manager\GalleryController::class, 'imageDestroy'])->name('sm.gallery.image.destroy');
     // Growth Stages: what each lot's crop is doing, read off its own day count.
     Route::get('/app/sm-growth', [App\Http\Controllers\Manager\GrowthStageController::class, 'page'])->name('sm.growth');

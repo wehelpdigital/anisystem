@@ -16,6 +16,9 @@ use Illuminate\Support\Str;
  */
 class CommunityMessageController extends Controller
 {
+    /** Extensions that mark a stored media path as a clip rather than a picture. */
+    private const VIDEO_EXTS = ['mp4', 'mov', 'webm', 'mkv', 'm4v', '3gp', 'avi'];
+
     public function __construct(private readonly NotificationService $notifications)
     {
     }

@@ -127,10 +127,20 @@
     }
     .team-panel.hidden { display: none; }
     /* When docked into the whiteboard sidebar it fills the column, no float. */
-    .team-panel.team-panel-docked { position: static; inset: auto; width: 100%; height: 100%; max-height: none; border: 0; border-radius: 0; box-shadow: none; animation: none; }
+    /* z-index: auto because the float's stack level (62) travels with the
+       class otherwise — position:static does not neutralise z-index on a
+       flex child, so the docked panel painted over the room's sheets (z-50):
+       tap the member stack in the header and the list opened BEHIND the
+       chat. Docked, the panel is furniture, not a float. */
+    .team-panel.team-panel-docked { position: static; inset: auto; width: 100%; height: 100%; max-height: none; border: 0; border-radius: 0; box-shadow: none; animation: none; z-index: auto; }
     /* The board owns close + whiteboard toggles while docked. */
     .team-panel.team-panel-docked #teamClose,
     .team-panel.team-panel-docked #teamBoardBtn { display: none; }
+    /* Docked means the Collab Room, and the room's page header already
+       carries the member faces — the strip under this header was the same
+       people twice, spending a row the thread needs. PMs from inside the
+       room start from that header list instead. */
+    .team-panel.team-panel-docked .team-members { display: none; }
     @keyframes teamIn { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } }
     @media (max-width: 640px) {
         .team-panel { left: 0; right: 0; bottom: 0; width: 100%; height: 82dvh; border-radius: 1.1rem 1.1rem 0 0; }
@@ -275,6 +285,14 @@
         let clipFile = null, clipKind = 'file';
 
         const scrollDown = () => { thread.scrollTop = thread.scrollHeight; };
+        // Docked = the Collab Room, and there the polls double as the room's
+        // presence heartbeat — announce() spares whoever it marks from a bell
+        // about a thread already in front of them. Only while the tab is
+        // actually being looked at: a backgrounded room is not being watched,
+        // and the bells the heartbeat suppresses should reach it. The same
+        // rule markSeen() already lives by.
+        const heartbeat = () => (panel.classList.contains('team-panel-docked')
+            && document.visibilityState === 'visible') ? '&inRoom=1' : '';
         const faceHtml = (avatar, initials) => avatar
             ? `<img src="${escapeHtml(avatar)}" alt="">`
             : escapeHtml(initials || '·');
@@ -310,7 +328,7 @@
         /* ---------- group mode ---------- */
         async function loadMembers() {
             try {
-                const res = await api(`${U.members}?scheduleId=${SCHEDULE_ID}`);
+                const res = await api(`${U.members}?scheduleId=${SCHEDULE_ID}${heartbeat()}`);
                 const d = res.data;
                 if (mode === 'group') $('teamSub').textContent = `${d.online} of ${d.total} online`;
                 const wrap = $('teamMembers');
@@ -326,7 +344,7 @@
 
         async function pollGroup() {
             try {
-                const res = await api(`${U.messages}?scheduleId=${SCHEDULE_ID}&after=${lastGroupId}`);
+                const res = await api(`${U.messages}?scheduleId=${SCHEDULE_ID}&after=${lastGroupId}${heartbeat()}`);
                 const msgs = res.data.messages || [];
                 if (lastGroupId === 0) clearThread();
                 if (msgs.length) {

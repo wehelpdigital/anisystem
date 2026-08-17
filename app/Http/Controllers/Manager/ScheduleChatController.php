@@ -7,6 +7,7 @@ use App\Support\MediaOptimizer;
 use App\Support\ScheduleTeam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -18,6 +19,34 @@ use Illuminate\Support\Facades\Validator;
  */
 class ScheduleChatController extends BaseScheduleController
 {
+    /**
+     * How long after its last heartbeat a member still counts as "in the
+     * Collab Room". The room's own polls beat every 5–30 seconds, so ninety
+     * survives one missed request without keeping a ghost in the room for
+     * long after the tab is closed.
+     */
+    public const IN_ROOM_SECONDS = 90;
+
+    /**
+     * Being "in the Collab Room" lives in cache, not in a table.
+     *
+     * NOT ScheduleBoardPresence: that row answers "is a teammate mid-sketch
+     * on the whiteboard" and BoardSession clears the canvas by it — counting
+     * someone reading the chat as board presence would quietly change when a
+     * drawing is judged safe to archive. A cache key with a TTL also expires
+     * by itself, so nobody has to sweep up after a closed browser.
+     */
+    public static function markInRoom(int $scheduleId, int $userId): void
+    {
+        Cache::put('collab-here.' . $scheduleId . '.' . $userId, time(), self::IN_ROOM_SECONDS);
+    }
+
+    /** Whether this member's Collab Room heartbeat is still fresh. */
+    public static function isInRoom(int $scheduleId, int $userId): bool
+    {
+        return Cache::has('collab-here.' . $scheduleId . '.' . $userId);
+    }
+
     /** History + live poll. `?after=<lastId>` returns only newer messages. */
     public function messages(Request $request)
     {
@@ -25,6 +54,13 @@ class ScheduleChatController extends BaseScheduleController
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
             return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+
+        // The chat panel polls this every few seconds while it is docked in
+        // the Collab Room; that poll doubling as the room's heartbeat is what
+        // lets announce() know who does NOT need a bell.
+        if ($request->boolean('inRoom')) {
+            self::markInRoom((int) $schedule->id, $meId);
         }
 
         $after = (int) $request->query('after', 0);
@@ -55,6 +91,12 @@ class ScheduleChatController extends BaseScheduleController
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
             return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+
+        // The room page itself polls the roster on a slower beat than the
+        // thread — a second heartbeat so presence outlives a hiccup in one.
+        if ($request->boolean('inRoom')) {
+            self::markInRoom((int) $schedule->id, $meId);
         }
 
         $ownerId = (int) $schedule->anisystemUserId;
@@ -186,12 +228,16 @@ class ScheduleChatController extends BaseScheduleController
     }
 
     /**
-     * Put the message on the team's channel, and in everyone else's bell.
+     * Put the message on the team's channel, and in the bell of everyone who
+     * is NOT in the Collab Room.
      *
      * The thread still polls, so a lost broadcast costs seconds. The bell is
-     * what reaches somebody who is not looking at the chat at all — deduped
-     * to one an hour per schedule, because a busy morning should not leave
-     * forty identical rows in the notification list.
+     * what reaches somebody who is not looking at the chat at all — which is
+     * why members whose room heartbeat is fresh are skipped entirely: the
+     * message is already appearing in front of them. For the rest it is one
+     * bell per ten minutes per schedule, not the service's hour: a chat burst
+     * is one errand, but ten quiet minutes later a new message is plausibly a
+     * new conversation worth its own line.
      */
     private function announce($schedule, ScheduleChatMessage $message, int $meId): void
     {
@@ -216,11 +262,27 @@ class ScheduleChatController extends BaseScheduleController
         }
         $notes = app(\App\Services\NotificationService::class);
         foreach (ScheduleTeam::memberIds($schedule) as $memberId) {
-            if ((int) $memberId === $meId) {
+            $memberId = (int) $memberId;
+            if ($memberId === $meId) {
+                continue;
+            }
+            // In the room = watching the thread happen. No bell.
+            if (self::isInRoom((int) $schedule->id, $memberId)) {
+                continue;
+            }
+            // The ten-minute window is checked here rather than through the
+            // service's dedupe parameter, which only speaks in whole hours.
+            $recent = \App\Models\AnisystemNotification::active()
+                ->forUser($memberId)
+                ->where('type', 'team-chat')
+                ->where('croppingScheduleId', (int) $schedule->id)
+                ->where('created_at', '>=', now()->subMinutes(10))
+                ->exists();
+            if ($recent) {
                 continue;
             }
             $notes->notify(
-                (int) $memberId,
+                $memberId,
                 'team-chat',
                 $who . ' messaged the team',
                 // Plain words: a chat body can carry mention tokens, and a
@@ -232,7 +294,6 @@ class ScheduleChatController extends BaseScheduleController
                 route('sm.enter', ['schedule' => $schedule->id, 'to' => 'sm.collab']),
                 $meId,
                 (int) $schedule->id,
-                1,
             );
         }
     }

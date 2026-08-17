@@ -222,16 +222,33 @@
         } catch (_) { /* a dropped position is replaced a second later */ }
     }
 
+    /* ensure() connects to the SAME LiveKit room a group call uses, and
+     * joining turns the microphone on — so sharing a position used to open a
+     * hot mic on the whole team, which is a group call in everything but the
+     * ring. A dot on a map says nothing out loud: hush the mic when the join
+     * was ours. Through the widget's own mute button rather than
+     * setMicrophoneEnabled() directly, so its micOn flag and icon keep
+     * telling the truth. */
+    function hushJoin() {
+        if (window.smCall?.room()?.localParticipant?.isMicrophoneEnabled) {
+            document.getElementById('ccallMic')?.click();
+        }
+    }
+
     async function startSharing() {
         if (!navigator.geolocation) { window.toast?.('This device cannot report a location.', 'error'); return; }
         if (!window.isSecureContext && !/^(localhost|127\.)/.test(location.hostname)) {
             window.toast?.('Sharing a location needs HTTPS — open the app over https://.', 'error');
             return;
         }
+        // Remembered so only a join this tab caused goes quiet — somebody
+        // already mid-call keeps their mic exactly as it was.
+        const hadCall = !!window.smCall?.room();
         window.__smCameraJoin = true;                 // the widget stays out of the way
         const ok = await (window.smCall?.ensure('Team room') ?? Promise.resolve(false));
         window.__smCameraJoin = false;
         if (!ok) return;
+        if (!hadCall) hushJoin();
 
         watchId = navigator.geolocation.watchPosition(
             (pos) => {

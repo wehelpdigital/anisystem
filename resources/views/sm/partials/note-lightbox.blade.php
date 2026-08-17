@@ -22,6 +22,11 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
     </button>
     <button type="button" class="note-lb-close" aria-label="Close">✕</button>
+    {{-- A video takes seconds to arrive over farm internet, and until now the
+         viewer showed a black rectangle that read as broken. The spinner lives
+         OUTSIDE the stage because the stage is wiped on every open — an
+         overlay inside it would be wiped with it. --}}
+    <div class="note-lb-wait" aria-hidden="true"><span></span></div>
     <div class="note-lb-stage"></div>
 </div>
 
@@ -99,6 +104,20 @@
     .note-lb-ai svg { width: 1.3rem; height: 1.3rem; }
     .note-lb-ai.is-gone { display: none; }
     @media (prefers-reduced-motion: reduce) { .note-lb-ai { transition: none; } }
+    /* The wait spinner. pointer-events: none so the backdrop tap that closes
+       the lightbox still lands while a slow file is on its way. */
+    .note-lb-wait { position: fixed; inset: 0; display: none; align-items: center;
+        justify-content: center; pointer-events: none; z-index: 1; }
+    .note-lb.is-waiting .note-lb-wait { display: flex; animation: noteLbFade .28s cubic-bezier(.22,1,.36,1) both; }
+    .note-lb-wait span { width: 2.6rem; height: 2.6rem; border-radius: 999px;
+        border: 3px solid rgb(255 255 255 / .22); border-top-color: #fff;
+        animation: noteLbSpin .7s linear infinite; }
+    @keyframes noteLbSpin { to { transform: rotate(360deg); } }
+    /* Slower, not frozen: a spinner that does not move says "hung". */
+    @media (prefers-reduced-motion: reduce) {
+        .note-lb-wait span { animation-duration: 1.6s; }
+        .note-lb.is-waiting .note-lb-wait { animation: none; }
+    }
 </style>
 
 <script>
@@ -218,10 +237,41 @@
             window.toast?.(err.message, 'error');
         }
     });
+    /* The wait: a clip over farm internet takes seconds to produce a first
+     * frame, and until then the stage was a black rectangle that read as
+     * broken. One timer, one class — and every path out of "waiting" runs
+     * through waitOver(), so the spinner cannot outlive the load it was
+     * announcing: load/canplay clears it, error clears it (with a word about
+     * why), closing the lightbox clears it. */
+    let waitTimer = 0;
+    function waitOver() { clearTimeout(waitTimer); lb.classList.remove('is-waiting'); }
+    function waitFor(media) {
+        waitOver();
+        if (!media) return;
+        const isVideo = media.tagName === 'VIDEO';
+        // Already decoded (a small or cached picture): nothing to wait for.
+        if (!isVideo && media.complete && media.naturalWidth > 0) return;
+        // A beat of grace, so a file that arrives instantly never flashes a
+        // spinner for a single frame.
+        waitTimer = setTimeout(() => lb.classList.add('is-waiting'), 180);
+        // Both video events, whichever the browser reports first; the loser
+        // calls waitOver() on an already-clear class, which is harmless.
+        if (isVideo) {
+            media.addEventListener('loadeddata', waitOver, { once: true });
+            media.addEventListener('canplay', waitOver, { once: true });
+        } else {
+            media.addEventListener('load', waitOver, { once: true });
+        }
+        media.addEventListener('error', () => {
+            waitOver();
+            window.toast?.(isVideo ? 'This video could not be loaded.' : 'This picture could not be loaded.', 'error');
+        }, { once: true });
+    }
     function open(type, url, poster, fromRect) {
         stage.innerHTML = type === 'video'
             ? `<video src="${esc(url)}"${poster ? ` poster="${esc(poster)}"` : ''} controls autoplay playsinline></video>`
             : `<img src="${esc(url)}" alt="">`;
+        waitFor(stage.firstElementChild);
         const dl = document.getElementById('noteLbDownload');
         if (dl) {
             // A sensible filename rather than the storage hash, where the
@@ -323,6 +373,9 @@
     }
     function close() {
         window.unregisterOverlay?.('noteLightbox');
+        // The wait goes with the stage it was waiting on, or the next open
+        // would inherit a spinner for a file nobody is loading.
+        waitOver();
         lb.classList.remove('is-open'); lb.setAttribute('aria-hidden', 'true'); stage.innerHTML = '';
     }
 

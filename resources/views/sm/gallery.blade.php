@@ -36,6 +36,26 @@
     .ga-cell img, .ga-cell video { width: 100%; height: 100%; object-fit: cover; display: block;
         opacity: 0; transition: opacity .28s ease; }
     .ga-cell img.is-loaded, .ga-cell video.is-loaded { opacity: 1; }
+    /* While the picture decodes the square shimmers instead of sitting black —
+       the same sweep the note thumbnails wear (.nm in the lightbox partial).
+       The cell background is dark in both themes, so one white sweep serves
+       light and dark alike. .ga-shot is the All-shelf twin of this cell. */
+    .ga-cell::before, .ga-shot::before { content: ''; position: absolute; inset: 0;
+        background: linear-gradient(100deg, rgba(255,255,255,0) 20%, rgba(255,255,255,.14) 50%, rgba(255,255,255,0) 80%);
+        background-size: 220% 100%; animation: gaShimmer 1.15s linear infinite; pointer-events: none; }
+    /* .ga-noshot is the poster that 404'd under a clip that may be fine:
+       not "File missing" (that is is-gone, and it would slander the video),
+       but the sweep must stop — a shimmer with nothing coming reads as
+       "still loading" forever. The play disc stands on the dark square. */
+    .ga-cell:has(img.is-loaded)::before, .ga-cell:has(video.is-loaded)::before, .ga-cell.is-gone::before,
+    .ga-shot:has(img.is-loaded)::before, .ga-shot:has(video.is-loaded)::before,
+    .ga-shot.is-gone::before, .ga-shot.ga-noshot::before, .ga-shot:empty::before { display: none; }
+    @keyframes gaShimmer { from { background-position: 220% 0; } to { background-position: -220% 0; } }
+    /* Still a loader, just a quiet one: a faint standing sheen rather than a
+       moving sweep, so reduced motion is not a return to the black square. */
+    @media (prefers-reduced-motion: reduce) {
+        .ga-cell::before, .ga-shot::before { animation: none; background: rgb(255 255 255 / .07); }
+    }
     /* So a still frame is not mistaken for a photo. */
     /* An image the room drew together wears its provenance. Top-left, because
        the selection tick owns the other corner and the caption owns the foot. */
@@ -77,6 +97,26 @@
     .ga-lb-cap b { display: block; font-size: .88rem; font-weight: 800; line-height: 1.35; }
     .ga-lb-cap i { display: block; font-style: normal; font-size: .78rem; line-height: 1.45;
         margin-top: .1rem; opacity: .82; }
+    /* The rename pencil the Gallery hangs beside the lightbox's download
+       button — the top-right row runs close 1rem / download 4.25 / AI 7.5 /
+       this 10.75, the same 3.25rem rhythm the other three keep. Only media
+       carrying a gallery image id ever shows it; see lightboxRename(). */
+    .ga-lb-rename { position: fixed; top: 1rem; right: 10.75rem; width: 2.75rem; height: 2.75rem;
+        border-radius: 999px; background: rgb(255 255 255 / .16); color: #fff; display: inline-flex;
+        align-items: center; justify-content: center; cursor: pointer; z-index: 2;
+        transition: background .28s cubic-bezier(.22,1,.36,1); }
+    .ga-lb-rename:hover { background: #4a7c2a; }
+    .ga-lb-rename svg { width: 1.2rem; height: 1.2rem; }
+    /* Explicit: the class's inline-flex outranks the UA's [hidden] rule. */
+    .ga-lb-rename[hidden] { display: none; }
+    @media (prefers-reduced-motion: reduce) { .ga-lb-rename { transition: none; } }
+    /* Sheets live at z-50 and the lightbox at z-160, so the rename sheet
+       would open UNDERNEATH the picture it renames. While it is up, it and
+       the shared backdrop step over the lightbox — the same scoped bump the
+       draw pad gives its confirm sheet. The class comes off when the sheet
+       closes, so nothing else ever stacks differently. */
+    html.ga-naming .sheet-backdrop.is-open { z-index: 170; }
+    html.ga-naming #gaNameSheet { z-index: 180; }
     .ga-empty { padding: 0 .9rem 1rem; font-size: .8rem; color: var(--color-gray-400); }
 
     /* The picking bar. It appears IN the album being picked from, right under
@@ -470,6 +510,29 @@
     </div>
     <div class="sheet-body" id="gaMoveList" style="padding-bottom:1rem"></div>
 </div>
+
+{{-- The name a picture was given, editable at last — opened from the pencil
+     the Gallery hangs on the shared lightbox. Both fields arrive prefilled,
+     and both are sent back whatever they hold: an emptied field means "take
+     the name off", which the endpoint honours on purpose. --}}
+<div class="sheet hidden" id="gaNameSheet" style="--sheet-width:28rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Rename this picture</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <input type="hidden" id="gaNameId">
+        <label class="form-label" for="gaNameCaption">Name</label>
+        <input type="text" id="gaNameCaption" class="form-input" maxlength="255" placeholder="What this one is called">
+        <label class="form-label mt-3" for="gaNameDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
+        <textarea id="gaNameDesc" class="form-input" rows="3" maxlength="2000" placeholder="What it is about."></textarea>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" class="btn btn-primary" id="gaNameSave">Save name</button>
+    </div>
+</div>
 @endpush
 
 @push('scripts')
@@ -483,6 +546,7 @@
             albumDel: @json(route('sm.gallery.album.destroy')) + '?scheduleId=' + SCHEDULE_ID,
             upload: @json(route('sm.gallery.image.store')) + '?scheduleId=' + SCHEDULE_ID,
             move: @json(route('sm.gallery.image.move')) + '?scheduleId=' + SCHEDULE_ID,
+            rename: @json(route('sm.gallery.image.rename')) + '?scheduleId=' + SCHEDULE_ID,
             del: @json(route('sm.gallery.image.destroy')) + '?scheduleId=' + SCHEDULE_ID,
         };
         const CSRF = document.querySelector('meta[name=csrf-token]').content;
@@ -527,7 +591,7 @@
                 const tip = [name, about].filter(Boolean).join(' — ');
                 return `
                 <div class="ga-cell" data-image="${im.id}" data-lb-type="${im.kind === 'video' ? 'video' : 'image'}" data-lb-url="${esc(im.url)}"
-                     data-lb-caption="${esc(name)}" data-lb-desc="${esc(about)}"${tip ? ` title="${esc(tip)}"` : ''}>
+                     data-lb-image="${im.id}" data-lb-caption="${esc(name)}" data-lb-desc="${esc(about)}"${tip ? ` title="${esc(tip)}"` : ''}>
                     ${shot}
                     ${im.team ? '<span class="ga-teamchip" title="Drawn together in the Collab Room">Team</span>' : ''}
                     <span class="ga-pick" data-pick><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
@@ -794,7 +858,8 @@
             // than an empty black box.
             const shot = kind === 'video'
                 ? `<div class="ga-shot">${m.posterUrl
-                        ? `<img src="${esc(m.posterUrl)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')">`
+                        ? `<img src="${esc(m.posterUrl)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')"
+                             onerror="this.closest('.ga-shot')?.classList.add('ga-noshot')">`
                         : `<video src="${esc(m.url)}#t=0.1" preload="metadata" playsinline muted
                              onloadeddata="this.classList.add('is-loaded')"
                              onerror="this.closest('.ga-shot')?.classList.add('is-gone'); this.remove();"></video>`}
@@ -827,9 +892,12 @@
                 // these. Without them one album picture said its name when
                 // opened from Albums and nothing when opened from All — the
                 // same picture, two answers.
+                // data-lb-image only for an album's own row: it is what makes
+                // the lightbox offer a rename, and renaming is only honest for
+                // the one kind of tile whose name lives in the Gallery.
                 : `<button type="button" class="ga-item" data-lb-type="${kind === 'video' ? 'video' : 'image'}"
                         data-lb-url="${esc(m.url)}" data-lb-poster="${esc(m.posterUrl || '')}"
-                        data-lb-caption="${esc(m.title || '')}"
+                        ${m.albumImageId ? `data-lb-image="${m.albumImageId}" ` : ''}data-lb-caption="${esc(m.title || '')}"
                         data-lb-desc="${esc([m.source, m.when].filter(Boolean).join(' · '))}">${inner}</button>`;
             return bin ? `<div class="ga-wrap">${tile}${bin}</div>` : tile;
         }
@@ -1112,6 +1180,142 @@
             new MutationObserver(() => {
                 if (!lb.classList.contains('is-open')) bar.hidden = true;
             }).observe(lb, { attributes: true, attributeFilter: ['class'] });
+        })();
+
+        /* ---- The rename pencil, in the lightbox -------------------------
+         * The server's question is "does this row belong to the schedule";
+         * the button's question is only "does this media carry a gallery
+         * image id". The lightbox is shared by notes, activities and the
+         * Gallery, and a note's photo has no name here to edit — so no id,
+         * no button, the same way the caption strip stays hidden. Hung on
+         * the lightbox for the same reason the strip is: the lightbox
+         * belongs to the host page and knows nothing about captions.
+         */
+        (function lightboxRename() {
+            const lb = document.getElementById('noteLightbox');
+            const sheet = $('gaNameSheet');
+            if (!lb || !sheet) return;
+
+            let btn = lb.querySelector('.ga-lb-rename');
+            if (!btn) {
+                btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'ga-lb-rename';
+                btn.title = 'Edit the name';
+                btn.setAttribute('aria-label', 'Edit the name');
+                btn.hidden = true;
+                // The same pencil the album header wears for its own rename.
+                btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>';
+                lb.appendChild(btn);
+
+                // Deliberately stateless: a deep link throws this pane away
+                // and refetches it, while the lightbox — and this button —
+                // belong to the host page and live on. Everything the
+                // handlers need is read off the DOM or reached through
+                // window.gaRenameOpen, which every init re-points at its own
+                // fresh ALBUMS.
+                document.addEventListener('click', (e) => {
+                    const cell = e.target.closest('[data-lb-url]');
+                    if (!cell) return;
+                    btn.hidden = !cell.getAttribute('data-lb-image');
+                    btn.dataset.image = cell.getAttribute('data-lb-image') || '';
+                    // Which subtitle the strip is wearing: an album cell
+                    // shows the picture's own description, an All-shelf tile
+                    // shows where it came from — only the former should
+                    // change when the words do.
+                    btn.dataset.live = cell.classList.contains('ga-cell') ? '1' : '';
+                    btn.dataset.sub = cell.getAttribute('data-lb-desc') || '';
+                });
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (btn.dataset.image) window.gaRenameOpen?.(btn.dataset.image);
+                });
+                // Programmatic opens (openNoteLightbox) never pass the click
+                // listener above, so the last visit's pencil would linger on
+                // media with no name to edit. The class going off is the one
+                // signal every close path shares.
+                new MutationObserver(() => {
+                    if (!lb.classList.contains('is-open')) btn.hidden = true;
+                }).observe(lb, { attributes: true, attributeFilter: ['class'] });
+            }
+
+            window.gaRenameOpen = (imageId) => {
+                // From state, not from the opening click's attributes: a
+                // second rename in the same viewing must prefill what the
+                // first one just saved.
+                let im = null;
+                for (const a of ALBUMS) {
+                    im = a.images.find((x) => String(x.id) === String(imageId));
+                    if (im) break;
+                }
+                if (!im) { toast('That picture is no longer here.', 'error'); return; }
+                $('gaNameId').value = im.id;
+                $('gaNameCaption').value = im.caption || '';
+                $('gaNameDesc').value = im.description || '';
+                openSheet('gaNameSheet');
+                window.smFocus($('gaNameCaption'), { delay: 150 });
+            };
+
+            // The scoped z bump (see the CSS above): on while the sheet is
+            // up, off again on every way the sheet closes.
+            sheet.addEventListener('sheet:open', () => document.documentElement.classList.add('ga-naming'));
+            sheet.addEventListener('sheet:close', () => document.documentElement.classList.remove('ga-naming'));
+
+            // The lightbox's own Escape handler cannot see the sheet standing
+            // over it and would take the picture away with the form. Capture
+            // phase runs before every bubble handler on document, so while
+            // the sheet is up Escape peels only the top layer. (Duplicates
+            // from a refetched pane are harmless: the first stops the rest.)
+            document.addEventListener('keydown', (e) => {
+                if (e.key !== 'Escape') return;
+                if (!document.documentElement.classList.contains('ga-naming')) return;
+                e.stopImmediatePropagation();
+                closeSheet('gaNameSheet');
+            }, true);
+
+            $('gaNameSave').addEventListener('click', async (e) => {
+                const save = e.currentTarget;
+                const id = $('gaNameId').value;
+                if (!id) return;
+                save.disabled = true;
+                try {
+                    const res = await api(U.rename, { method: 'POST', body: {
+                        id,
+                        caption: $('gaNameCaption').value.trim() || null,
+                        description: $('gaNameDesc').value.trim() || null,
+                    } });
+                    const row = res.data;
+                    ALBUMS.forEach((a) => a.images.forEach((im) => {
+                        if (String(im.id) === String(row.id)) { im.caption = row.caption; im.description = row.description; }
+                    }));
+                    // The All shelf reads titles from its own list — same
+                    // fallback as the server, so a cleared name says the same
+                    // thing after a refresh as it does right now.
+                    const it = EVERYTHING.find((m) => String(m.albumImageId) === String(row.id));
+                    if (it) it.title = row.caption || 'In an album';
+                    paint();
+                    // The shelf tiles are patched in place rather than
+                    // refilled: fill() would fold a long scroll back to its
+                    // first screenful, the same reason deleting one does.
+                    document.querySelectorAll('.ga-item[data-lb-image="' + row.id + '"]').forEach((t) => {
+                        t.setAttribute('data-lb-caption', row.caption || '');
+                        const ti = t.querySelector('.ga-it');
+                        if (ti) ti.textContent = it ? it.title : (row.caption || 'In an album');
+                    });
+                    // And the strip on the still-open lightbox says the new
+                    // name without anyone closing and reopening anything.
+                    const bar = lb.querySelector('.ga-lb-cap');
+                    const pencil = lb.querySelector('.ga-lb-rename');
+                    if (bar && lb.classList.contains('is-open')) {
+                        const sub = pencil?.dataset.live ? (row.description || '') : (pencil?.dataset.sub || '');
+                        bar.innerHTML = (row.caption ? `<b>${esc(row.caption)}</b>` : '') + (sub ? `<i>${esc(sub)}</i>` : '');
+                        bar.hidden = !(row.caption || sub);
+                    }
+                    closeSheet('gaNameSheet');
+                    toast(res.message);
+                } catch (err) { toast(err.message || 'Could not save that.', 'error'); }
+                finally { save.disabled = false; }
+            });
         })();
 
         $('gaFind')?.addEventListener('input', (e) => { findText = e.target.value; paintAll(); });

@@ -203,6 +203,21 @@
     /* ---- Sharing -------------------------------------------------------
      * Joining is the call's job; this only asks for it. A member who was
      * already on a call simply publishes a camera into the room they are in. */
+
+    /* ensure() connects to the SAME LiveKit room a group call uses (one
+     * identity, one connection) — and joining turns the microphone on. So
+     * "Share my camera" used to put a hot mic into every teammate's speakers
+     * and light the call widget, which is a group call in everything but the
+     * ring. Sharing pictures is not placing a call: hush the mic when the
+     * join was ours. Through the widget's own mute button rather than
+     * setMicrophoneEnabled() directly, so its micOn flag and icon keep
+     * telling the truth. */
+    function hushJoin() {
+        if (window.smCall?.room()?.localParticipant?.isMicrophoneEnabled) {
+            document.getElementById('ccallMic')?.click();
+        }
+    }
+
     $('camShare').addEventListener('click', async () => {
         const room = window.smCall?.room();
         if (!sharing && !room) {
@@ -212,6 +227,9 @@
             const ok = await window.smCall.ensure('Team room');
             window.__smCameraJoin = false;
             if (!ok) return;
+            // Only a join this tab caused goes quiet — somebody already
+            // mid-call keeps their mic exactly as it was.
+            hushJoin();
         }
         const live = window.smCall?.room();
         if (!live) return;

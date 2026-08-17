@@ -360,6 +360,45 @@ class GalleryController extends BaseScheduleController
         ]);
     }
 
+    /**
+     * Rename one picture (or clip): its caption and what it is about.
+     *
+     * Albums could be renamed from the day they existed; the pictures inside
+     * them could not, so a name mistyped at capture time was a name for life.
+     * Same gate as every other gallery write, and the row must belong to the
+     * schedule — an id from another farm is simply not found.
+     */
+    public function imageRename(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|integer',
+            'caption' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:2000',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail($validator->errors()->first(), 422);
+        }
+
+        $image = AsGalleryImage::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)->find((int) $request->input('id'));
+        if (! $image) {
+            return $this->jsonFail('That picture is no longer here.', 404);
+        }
+
+        // Blank means "take the name off", not "keep the old one" — the sheet
+        // always sends both fields, so an emptied field is a decision.
+        $image->update([
+            'caption' => filled($request->input('caption')) ? trim((string) $request->input('caption')) : null,
+            'description' => filled($request->input('description')) ? trim((string) $request->input('description')) : null,
+        ]);
+
+        return $this->jsonOk('Name saved.', [
+            'data' => ['id' => $image->id, 'caption' => $image->caption, 'description' => $image->description],
+        ]);
+    }
+
     public function imageDestroy(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request);

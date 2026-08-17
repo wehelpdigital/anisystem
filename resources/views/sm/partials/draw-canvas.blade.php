@@ -3,7 +3,9 @@
        window.openDrawCanvas(onSaveDataUrl [, existingPngUrl])
          → opens the full-screen pad; onSaveDataUrl(pngDataUrl) on save.
      Tools: select (move/resize/delete), pen (freehand), line, arrow, box,
-     circle, text, and an object eraser. Works with mouse, pen and touch.
+     circle, text, an object eraser, and inserted pictures — camera, upload,
+     or the season's gallery (opts.scheduleId says whose). Works with mouse,
+     pen and touch.
      A drawing can be several pages; they travel with the strokes, and a
      drawing saved before pages existed still opens as its one page. --}}
 <div class="draw-modal" id="drawModal" aria-hidden="true">
@@ -135,6 +137,44 @@
                 </div>
             </div>
         </div>
+        {{-- Where a picture comes from. Three doors, asked inside the pad for
+             the usual reason: the app's sheet layer opens underneath a
+             full-screen pad. Only the gallery door has to borrow that layer,
+             and it is lifted for exactly as long as it is borrowed (see the
+             draw-pad-picking rules below). --}}
+        <div class="draw-ask" id="drawImgAsk" hidden>
+            <div class="draw-ask-card" role="dialog" aria-modal="true" aria-labelledby="drawImgAskTitle">
+                <h4 class="draw-ask-title" id="drawImgAskTitle">Add a picture</h4>
+                <button type="button" class="draw-ask-opt" data-img-from="camera">
+                    <span class="draw-ask-ico">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8a2 2 0 012-2h1.4l1.2-1.6a1 1 0 01.8-.4h5.2a1 1 0 01.8.4L16.6 6H18a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V8z"/><circle cx="12" cy="12.5" r="3.2"/></svg>
+                    </span>
+                    <span class="min-w-0">
+                        <span class="draw-ask-name">Take a photo</span>
+                        <span class="draw-ask-hint">Straight from the camera onto this sheet</span>
+                    </span>
+                </button>
+                <button type="button" class="draw-ask-opt" data-img-from="upload">
+                    <span class="draw-ask-ico">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15V4m0 0L8 8m4-4l4 4"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg>
+                    </span>
+                    <span class="min-w-0">
+                        <span class="draw-ask-name">Upload a picture</span>
+                        <span class="draw-ask-hint">A file already on this device</span>
+                    </span>
+                </button>
+                <button type="button" class="draw-ask-opt" data-img-from="gallery" id="drawImgAskGallery">
+                    <span class="draw-ask-ico">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="7" width="14" height="12" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M7 5h12a2 2 0 012 2v10M3 15l4-4 3 3 2-2 5 5"/><circle cx="8" cy="10.5" r="1.2"/></svg>
+                    </span>
+                    <span class="min-w-0">
+                        <span class="draw-ask-name">From the gallery</span>
+                        <span class="draw-ask-hint" id="drawImgAskGalleryHint">A photo this season already keeps</span>
+                    </span>
+                </button>
+                <button type="button" class="btn btn-ghost w-full mt-1" id="drawImgAskCancel">Cancel</button>
+            </div>
+        </div>
         {{-- Pages. One drawing is often more than one sheet — a plan and then
              the detail of it — and before this the only way to get a second
              sheet was to save and start again, which filed them as two
@@ -159,6 +199,10 @@
         </div>
         <p class="draw-hint" id="drawHint">Pick a tool, colour and size. Hold <b>Shift</b> for a perfect square/circle. Use <b>Select</b> to move, resize or delete anything you drew — including text and inserted pictures, which also get a rotate knob. The <b>+</b> above adds another page to this drawing.</p>
         <input type="file" id="drawImgInput" accept="image/jpeg,image/png,image/webp" class="hidden">
+        {{-- `capture` skips the file dialog and opens the camera itself; a
+             desktop with no camera quietly falls back to the plain picker,
+             which is the right answer there too. --}}
+        <input type="file" id="drawImgCapture" accept="image/*" capture="environment" class="hidden">
     </div>
 </div>
 
@@ -205,6 +249,11 @@
         border:1px solid var(--color-gray-200); border-radius:.85rem; background:var(--color-white); cursor:pointer;
         transition:border-color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
     .draw-ask-opt:hover { border-color:var(--color-brand-400); background:var(--color-brand-50); }
+    /* An option that cannot work on this page says so instead of vanishing:
+       a missing button reads as "this app cannot", a greyed one as "not
+       here". The hint under it carries the reason, so hover stays quiet. */
+    .draw-ask-opt:disabled { opacity:.5; cursor:default; }
+    .draw-ask-opt:disabled:hover { border-color:var(--color-gray-200); background:var(--color-white); }
     .draw-ask-ico { display:inline-flex; align-items:center; justify-content:center; width:2.4rem; height:2.4rem;
         border-radius:.7rem; background:var(--color-brand-50); color:var(--color-brand-700); flex-shrink:0; }
     .draw-ask-ico svg { width:1.3rem; height:1.3rem; }
@@ -289,6 +338,12 @@
        every sheet in an app that has no pad up. */
     html.draw-pad-open.draw-pad-asking .sheet-backdrop.is-open { z-index:460; }
     html.draw-pad-open.draw-pad-asking #confirm-sheet { z-index:470; }
+    /* The gallery picker is an app sheet with the confirm's exact problem —
+       born at z-50, under a pad at z-400 — so it gets the confirm's exact
+       lift, on its own class so a pick and a question being open at once
+       could never strand each other's z-index. */
+    html.draw-pad-open.draw-pad-picking .sheet-backdrop.is-open { z-index:460; }
+    html.draw-pad-open.draw-pad-picking #smMediaPickerSheet { z-index:470; }
     html.dark .draw-shell { background:#151b12; }
     html.dark .draw-toolbar { border-color:#2b3a1c; }
     html.dark .draw-head { border-color:#2b3a1c; }
@@ -297,6 +352,7 @@
     html.dark .draw-ask-title, html.dark .draw-ask-name { color:#e6eddd; }
     html.dark .draw-ask-opt { background:#141a10; border-color:#2b3a1c; }
     html.dark .draw-ask-opt:hover { background:#1c2416; }
+    html.dark .draw-ask-opt:disabled:hover { background:#141a10; border-color:#2b3a1c; }
     html.dark .draw-stage { background:#0f130c; }
     html.dark .draw-tool { background:#1c2416; color:#cdd8c0; }
     html.dark .draw-tool:hover { background:#243019; }
@@ -331,6 +387,7 @@
     let tool = 'pen';
     let onSave = null;
     let overwriteLabel = '';   // set per open: the drawing being replaced
+    let scheduleId = null;     // set per open: whose gallery "From the gallery" lists
     let backdropFailed = false;   // the picture we were asked to edit never loaded
     let uid = 1;
     let gridOn = false;               // show a grid guide (not saved into the PNG)
@@ -900,41 +957,130 @@
        strokes JSON would have to carry forever. 1400px is plenty to draw over
        and keeps a page of pictures around the size of one photo upload. */
     const imgInput = document.getElementById('drawImgInput');
-    document.getElementById('drawInsertImg')?.addEventListener('click', () => imgInput.click());
-    imgInput?.addEventListener('change', async (e) => {
+    const imgCapture = document.getElementById('drawImgCapture');
+    /** The one funnel. Camera, file and gallery all end here, so every source
+        gets the same shrink, the same placement and the same select tool. */
+    async function insertPicture(f) {
+        const bmp = await createImageBitmap(f, { imageOrientation: 'from-image' });
+        const MAX = 1400;
+        const k = Math.min(1, MAX / Math.max(bmp.width, bmp.height));
+        const c = document.createElement('canvas');
+        c.width = Math.max(1, Math.round(bmp.width * k));
+        c.height = Math.max(1, Math.round(bmp.height * k));
+        c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+        if (bmp.close) bmp.close();
+        // JPEG unless the picture has transparency to lose. A screenshot
+        // with an alpha channel keeps it; a photo shrinks fourfold.
+        const src = f.type === 'image/png' && hasAlpha(c)
+            ? c.toDataURL('image/png')
+            : c.toDataURL('image/jpeg', 0.82);
+        // Landing size: comfortably inside the sheet, centred, ready to be
+        // taken by the corners.
+        const fit = Math.min(1, (W * 0.6) / c.width, (H * 0.6) / c.height);
+        const w = c.width * fit, h = c.height * fit;
+        pushUndo();
+        const o = { id: nextId(), type: 'image', src, x: (W - w) / 2, y: (H - h) / 2, w, h, rot: 0 };
+        objects.push(o);
+        padImage(src);
+        selected = new Set([o.id]);
+        setTool('select');
+        render();
+        window.toast?.('Picture placed — drag it, take a corner, turn the knob, and draw right over it.');
+    }
+    async function onPickedFile(e) {
         const f = e.target.files && e.target.files[0];
-        e.target.value = '';
+        e.target.value = '';   // so the same file can be picked twice
         if (!f) return;
-        try {
-            const bmp = await createImageBitmap(f, { imageOrientation: 'from-image' });
-            const MAX = 1400;
-            const k = Math.min(1, MAX / Math.max(bmp.width, bmp.height));
-            const c = document.createElement('canvas');
-            c.width = Math.max(1, Math.round(bmp.width * k));
-            c.height = Math.max(1, Math.round(bmp.height * k));
-            c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
-            if (bmp.close) bmp.close();
-            // JPEG unless the picture has transparency to lose. A screenshot
-            // with an alpha channel keeps it; a photo shrinks fourfold.
-            const src = f.type === 'image/png' && hasAlpha(c)
-                ? c.toDataURL('image/png')
-                : c.toDataURL('image/jpeg', 0.82);
-            // Landing size: comfortably inside the sheet, centred, ready to be
-            // taken by the corners.
-            const fit = Math.min(1, (W * 0.6) / c.width, (H * 0.6) / c.height);
-            const w = c.width * fit, h = c.height * fit;
-            pushUndo();
-            const o = { id: nextId(), type: 'image', src, x: (W - w) / 2, y: (H - h) / 2, w, h, rot: 0 };
-            objects.push(o);
-            padImage(src);
-            selected = new Set([o.id]);
-            setTool('select');
-            render();
-            window.toast?.('Picture placed — drag it, take a corner, turn the knob, and draw right over it.');
-        } catch (_) {
-            window.toast?.('That picture could not be read.', 'error');
+        try { await insertPicture(f); }
+        catch (_) { window.toast?.('That picture could not be read.', 'error'); }
+    }
+    imgInput?.addEventListener('change', onPickedFile);
+    imgCapture?.addEventListener('change', onPickedFile);
+
+    /* ---------- where the picture comes from ----------
+       The image button used to be a bare file input; a phone answers that
+       with its own chooser and a desktop with none at all, so "just take a
+       photo" was buried a menu deep on the one device that has a camera. */
+    const imgAsk = document.getElementById('drawImgAsk');
+    const imgAskOpen = () => imgAsk && !imgAsk.hidden;
+    function showImgAsk(on) {
+        if (!imgAsk) return;
+        if (on) {
+            // Judged at open, not at build: whether the picker partial made it
+            // onto this page (and which season this is) differs page to page,
+            // and a dead-looking door with no reason on it reads as broken.
+            const g = document.getElementById('drawImgAskGallery');
+            const hint = document.getElementById('drawImgAskGalleryHint');
+            const why = typeof window.smPickMedia !== 'function'
+                ? 'The gallery picker is not on this page.'
+                : (scheduleId ? '' : 'No season to borrow a gallery from here.');
+            if (g) { g.disabled = !!why; g.title = why; }
+            if (hint) hint.textContent = why || 'A photo this season already keeps';
         }
+        imgAsk.hidden = !on;
+        // Back dismisses the question, the way it dismisses any other overlay.
+        if (on) window.registerOverlay?.('drawImgAsk', () => showImgAsk(false));
+        else window.unregisterOverlay?.('drawImgAsk');
+    }
+    document.getElementById('drawInsertImg')?.addEventListener('click', () => showImgAsk(true));
+    imgAsk?.addEventListener('click', (e) => {
+        const opt = e.target.closest('[data-img-from]');
+        if (opt) {
+            const from = opt.getAttribute('data-img-from');
+            showImgAsk(false);
+            if (from === 'camera') imgCapture?.click();
+            else if (from === 'upload') imgInput?.click();
+            else pickFromGallery();
+            return;
+        }
+        // The backdrop and Cancel close the question, not the drawing.
+        if (e.target === imgAsk || e.target.closest('#drawImgAskCancel')) showImgAsk(false);
     });
+
+    /* The gallery is the one door that opens an app sheet (z-50) under this
+       pad (z-400) — the padConfirm story again, so it gets the same lift for
+       exactly as long as the sheet is up, and the same insurance: the sheet
+       closing IS the end of the pick, answered or waved away, because a pick
+       dismissed on the backdrop never calls onPick and a lift left behind
+       would sit the shared backdrop over the pad for the rest of the page. */
+    let picking = false;              // the media picker sheet is up, over the pad
+    function pickFromGallery() {
+        if (typeof window.smPickMedia !== 'function' || !scheduleId) return;
+        const root = document.documentElement;
+        picking = true;
+        root.classList.add('draw-pad-picking');
+        const done = () => {
+            picking = false;
+            root.classList.remove('draw-pad-picking');
+            document.removeEventListener('sm:sheet-closed', onClosed);
+        };
+        const onClosed = (e) => {
+            if (e.detail && e.detail.id !== 'smMediaPickerSheet') return;
+            // Next tick, so a real pick (which closes the sheet first) still
+            // finds the pad in its lifted, listening state when it lands.
+            setTimeout(done, 0);
+        };
+        document.addEventListener('sm:sheet-closed', onClosed);
+        window.smPickMedia({
+            scheduleId,
+            kinds: 'image',
+            title: 'Add to the drawing',
+            onPick: async (item) => {
+                try {
+                    // The stored file, refetched and fed through the same
+                    // funnel as an upload: the mother site serves media with
+                    // open CORS and same-origin needs none, so a failure here
+                    // is a network story — said plainly, never left as a
+                    // silently missing picture.
+                    const res = await fetch(item.url);
+                    if (!res.ok) throw new Error();
+                    await insertPicture(await res.blob());
+                } catch (_) {
+                    window.toast?.('That picture could not be fetched from the gallery.', 'error');
+                }
+            },
+        });
+    }
     function hasAlpha(c) {
         // Sampled, not scanned: a corner-to-corner diagonal is plenty to say
         // whether transparency is real, and a full readback of 1400px is not
@@ -1027,10 +1173,19 @@
     });
     document.addEventListener('keydown', (e) => {
         if (!modal.classList.contains('show')) return;
-        // A confirm on top of the pad answers its own Escape (app.js closes the
-        // sheet). Letting this handler see the same press shut the whole pad and
-        // threw the drawing away, which is a strange answer to "clear a page?".
-        if (asking) return;
+        // A confirm (or the media picker) on top of the pad answers its own
+        // Escape (app.js closes the sheet). Letting this handler see the same
+        // press shut the whole pad and threw the drawing away, which is a
+        // strange answer to "clear a page?" — or to "choose a photo".
+        if (asking || picking) return;
+        // While "where from?" is up, the pad's shortcuts would act on shapes
+        // nobody can see behind it — a Backspace aimed at the question must
+        // not delete a drawing. Only the key that answers it gets through,
+        // and it answers the chooser, never the pad.
+        if (imgAskOpen()) {
+            if (e.key === 'Escape') { e.preventDefault(); showImgAsk(false); }
+            return;
+        }
         // Typing into the pad's own text box is typing, not shortcuts —
         // otherwise a Backspace meant for a typo deletes the shape behind it.
         // Only fields you type into, though: the stroke-size slider is an
@@ -1066,6 +1221,7 @@
     function close() {
         showAsk(false);
         showTextAsk(false);
+        showImgAsk(false);
         window.unregisterOverlay?.('drawPad');
         modal.classList.remove('show'); modal.setAttribute('aria-hidden', 'true');
         document.documentElement.classList.remove('draw-pad-open');
@@ -1073,6 +1229,10 @@
         // pad should ever be left wearing it — a stray one puts the shared
         // backdrop over every sheet in the app until the page is reloaded.
         if (!asking) document.documentElement.classList.remove('draw-pad-asking');
+        // Same insurance for the picker's lift: its own closer clears it while
+        // the sheet is genuinely up, so this only catches a pad shut around a
+        // pick that never happened.
+        if (!picking) document.documentElement.classList.remove('draw-pad-picking');
         onSave = null; document.body.style.overflow = '';
         // Whoever opened this may have somewhere to send you afterwards.
         document.dispatchEvent(new CustomEvent('sm:draw-pad-closed'));
@@ -1261,11 +1421,19 @@
      *                         back through opts.objects to reopen it
      *   opts.objects          strokes from a previous drawing save, to reopen
      *   opts.editable         offer the "Save as drawing" button
+     *   opts.scheduleId       whose gallery "From the gallery" lists; without
+     *                         one (and no shell tag) the door says why not
      */
     window.openDrawCanvas = function (cb, existingUrl, opts) {
         opts = opts || {};
         onSave = cb || null;
         editableAllowed = !!opts.editable;
+        // Whose gallery the picture chooser may borrow. Callers that know
+        // their season say so; on the schedule shell every module is one
+        // season, so its tag answers for the callers that predate the chooser.
+        scheduleId = opts.scheduleId
+            || (window.SM_SHARE && window.SM_SHARE.scheduleId)
+            || null;
         // What the pad is looking at, if it is looking at something that
         // already has a name. Drives the "save over this one" answer.
         overwriteLabel = opts.overwrite ? (opts.overwriteLabel || 'the one you opened') : '';
@@ -1281,6 +1449,7 @@
         if (title) title.textContent = opts.title || 'Drawing';
         showAsk(false);
         showTextAsk(false);
+        showImgAsk(false);
         // Re-parent to <body> so `position:fixed` is relative to the viewport —
         // never trapped/cramped inside a transformed ancestor (the notes module
         // wrapper, an open sheet, etc.). Also sidesteps any duplicate #drawModal.

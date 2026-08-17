@@ -94,7 +94,9 @@ class ScheduleCallController extends BaseScheduleController
         // The ring only reaches whoever has the app open. The bell reaches
         // the rest — and on a phone that has the app installed, the phone
         // itself. A call is the one thing worth interrupting someone for,
-        // so it is not deduped.
+        // so it is not deduped. Members whose Collab Room heartbeat is fresh
+        // are skipped: the ring prompt is already on their screen, and a
+        // bell row about it would be the same interruption twice.
         $notes = app(\App\Services\NotificationService::class);
         $who = $me->firstName ?: 'A teammate';
         // Through the entry route, not straight at the room: a member who
@@ -109,11 +111,16 @@ class ScheduleCallController extends BaseScheduleController
             if ((int) $memberId === $meId) {
                 continue;
             }
+            if (ScheduleChatController::isInRoom((int) $schedule->id, (int) $memberId)) {
+                continue;
+            }
             $notes->notify(
                 (int) $memberId,
                 'team-call',
                 $kind === 'group' ? $who . ' started a team call' : $who . ' is calling you',
-                'Tap to join.',
+                // Which farm the call is in, because the reader may be
+                // standing in a different one when the bell rings.
+                'In "' . $schedule->title . '" — tap to join.',
                 $url,
                 $meId,
                 (int) $schedule->id,

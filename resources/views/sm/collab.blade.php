@@ -39,8 +39,14 @@
             </button>
         </div>
         <div class="sheet-body" id="collabPresence">
+            {{-- A teammate's row opens their PM in the Chat tab. The chat
+                 panel's own member strip is hidden while it is docked in this
+                 room (the header already shows those faces), so this list is
+                 where a private word starts. --}}
             @foreach ($members as $m)
-                <div class="collab-mem {{ $m->isOnline() ? 'on' : '' }}" data-uid="{{ $m->id }}">
+                @php $isSelf = (int) $m->id === (int) auth()->id(); @endphp
+                <div class="collab-mem {{ $m->isOnline() ? 'on' : '' }}{{ $isSelf ? '' : ' pmable' }}" data-uid="{{ $m->id }}"
+                     @unless ($isSelf) data-pm-name="{{ $m->full_name }}" role="button" tabindex="0" title="Message {{ $m->full_name }} privately" @endunless>
                     <span class="collab-mem-face">
                         @if ($m->avatarPath)<img src="{{ \App\Support\MediaStore::url($m->avatarPath) }}" alt="">@else{{ $m->initials }}@endif
                         <span class="collab-mem-dot"></span>
@@ -154,6 +160,11 @@
     .collab-mem-name { font-size: .85rem; font-weight: 700; color: var(--color-gray-800); min-width: 0; flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .collab-mem-state { font-size: .68rem; font-weight: 800; color: var(--color-gray-400); text-transform: uppercase; letter-spacing: .04em; }
     .collab-mem.on .collab-mem-state { color: #16a34a; }
+    /* Teammate rows open a PM (see the sheet-body note) — say so on hover. */
+    .collab-mem.pmable { cursor: pointer; border-radius: .55rem; transition: background .28s cubic-bezier(.22,1,.36,1); }
+    .collab-mem.pmable:hover, .collab-mem.pmable:focus-visible { background: var(--color-gray-50); }
+    .collab-mem.pmable:hover .collab-mem-face { box-shadow: 0 0 0 2px var(--color-brand-500); }
+    @media (prefers-reduced-motion: reduce) { .collab-mem.pmable { transition: none; } }
 
     /* Phones: the room takes the whole width — the page gutters were dead
        space beside a full-height workspace. */
@@ -330,9 +341,36 @@
 
     // Live presence: reuse the team-chat members endpoint to refresh online dots.
     const presence = document.getElementById('collabPresence');
+
+    // A teammate's row in the sheet opens their PM in the docked chat: the
+    // panel's own member strip is hidden while docked, so without this the
+    // room would have no way to say something privately. The listener sits on
+    // the element itself because openSheet() re-parents the sheet to <body> —
+    // delegation from the room wrapper would lose it on first open.
+    const pmFromRow = (row) => {
+        window.closeSheet?.('collabMembersSheet');
+        show('chat');
+        window.scheduleTeamPm?.(parseInt(row.dataset.uid, 10), row.dataset.pmName || 'Member');
+    };
+    presence?.addEventListener('click', (e) => {
+        const row = e.target.closest('.collab-mem.pmable');
+        if (row) pmFromRow(row);
+    });
+    presence?.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        const row = e.target.closest('.collab-mem.pmable');
+        if (row) { e.preventDefault(); pmFromRow(row); }
+    });
+
     async function refreshPresence() {
         try {
-            const res = await fetch(`{{ route('sm.chat.members') }}?scheduleId={{ $schedule->id }}`, { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
+            // This roster poll is the room's second presence heartbeat (the
+            // docked chat's message poll is the first) — either one keeps a
+            // member "in the room", so a hiccup in one does not start ringing
+            // bells at somebody who is right here. A hidden tab sends no beat
+            // on purpose: someone not looking at the room SHOULD get the bell.
+            const beat = document.visibilityState === 'visible' ? '&inRoom=1' : '';
+            const res = await fetch(`{{ route('sm.chat.members') }}?scheduleId={{ $schedule->id }}${beat}`, { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
             const d = (await res.json()).data;
             const online = new Set((d.members || []).filter((m) => m.online).map((m) => String(m.id)));
             presence.querySelectorAll('.collab-mem').forEach((el) => {
