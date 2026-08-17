@@ -247,8 +247,22 @@ class CommunityConnectController extends Controller
         // they shared on walls (posts they authored), newest first. Album items
         // are deletable by the owner; wall-sourced media is read-only here and
         // stays managed from the wall itself.
-        $photos = $this->collectProfilePhotos($member->id, $isSelf);
-        $videos = $this->collectProfileVideos($member->id, $isSelf);
+        //
+        // Paged, because a member two seasons in has hundreds and the page
+        // rendered every one of them. Distinct page names (pp/pv) so the two
+        // desktop pagers cannot page each other; the phone auto-loader always
+        // sends plain ?page=, which paged() also accepts.
+        $photos = $this->paged($this->collectProfilePhotos($member->id, $isSelf), 24, 'pp', $request);
+        $videos = $this->paged($this->collectProfileVideos($member->id, $isSelf), 12, 'pv', $request);
+
+        // The scroller asks for tiles alone — no layout, no scripts.
+        if ($request->boolean('rows')) {
+            return response()->view('community.connect.partials.profile-media-rows', [
+                'tab' => $request->query('tab') === 'videos' ? 'videos' : 'photos',
+                'photos' => $photos,
+                'videos' => $videos,
+            ]);
+        }
 
         return view('community.connect.profile', [
             'member' => $member,
@@ -259,6 +273,28 @@ class CommunityConnectController extends Controller
             'photos' => $photos,
             'videos' => $videos,
         ]);
+    }
+
+    /**
+     * One page of an in-memory collection, wearing the pager contract.
+     *
+     * The tabs are merged from two tables and sorted in PHP, so a query-side
+     * paginate() has nothing to hold on to — this slices the merged list the
+     * way NotesHub does. $pageName keeps the two tabs' desktop links from
+     * stepping on each other; the rows fetch sends a bare `page`, so that is
+     * honoured too.
+     */
+    private function paged(\Illuminate\Support\Collection $items, int $perPage, string $pageName, Request $request): \Illuminate\Pagination\LengthAwarePaginator
+    {
+        $page = max(1, (int) $request->query($pageName, $request->query('page', 1)));
+
+        return new \Illuminate\Pagination\LengthAwarePaginator(
+            $items->forPage($page, $perPage)->values(),
+            $items->count(),
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'pageName' => $pageName, 'query' => $request->query()]
+        );
     }
 
     /** Album photos + wall images the member shared, normalised + newest first. */

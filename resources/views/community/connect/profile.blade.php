@@ -85,8 +85,8 @@
     {{-- Wall | Shared Plans tabs --}}
     <div class="profile-tabs flex gap-1 p-1 rounded-xl bg-gray-100 mb-4" role="tablist" id="profileTabs">
         <button type="button" class="profile-tab is-active" data-tab="wall" aria-selected="true">Wall</button>
-        <button type="button" class="profile-tab" data-tab="photos" aria-selected="false">Photos <span class="text-xs opacity-70">({{ $photos->count() }})</span></button>
-        <button type="button" class="profile-tab" data-tab="videos" aria-selected="false">Videos <span class="text-xs opacity-70">({{ $videos->count() }})</span></button>
+        <button type="button" class="profile-tab" data-tab="photos" aria-selected="false">Photos <span class="text-xs opacity-70">({{ $photos->total() }})</span></button>
+        <button type="button" class="profile-tab" data-tab="videos" aria-selected="false">Videos <span class="text-xs opacity-70">({{ $videos->total() }})</span></button>
         <button type="button" class="profile-tab" data-tab="plans" aria-selected="false">Shared Plans <span class="text-xs opacity-70">({{ $plans->count() }})</span></button>
     </div>
 
@@ -132,6 +132,8 @@
                     @include('community.connect.partials.photo-tile', ['item' => $photo])
                 @endforeach
             </div>
+            @include('partials.list-pager', ['noun' => 'photo', 'paginator' => $photos,
+                'rowsUrl' => route('community.connect.profile', ['userId' => $member->id]) . '?rows=1&tab=photos'])
             <p class="text-sm text-gray-400 py-6 text-center {{ $photos->isNotEmpty() ? 'hidden' : '' }}" id="profilePhotosEmpty">
                 {{ $isSelf ? 'Add photos of your farm, harvest, or yourself — tap “Add photos”.' : $member->firstName . ' has not added any photos yet.' }}
             </p>
@@ -161,6 +163,8 @@
                     @include('community.connect.partials.video-tile', ['item' => $video])
                 @endforeach
             </div>
+            @include('partials.list-pager', ['noun' => 'video', 'paginator' => $videos,
+                'rowsUrl' => route('community.connect.profile', ['userId' => $member->id]) . '?rows=1&tab=videos'])
             <p class="text-sm text-gray-400 py-6 text-center {{ $videos->isNotEmpty() ? 'hidden' : '' }}" id="profileVideosEmpty">
                 {{ $isSelf ? 'Share a short clip of your farm or harvest — tap “Add video”. It’s compressed automatically.' : $member->firstName . ' has not added any videos yet.' }}
             </p>
@@ -214,6 +218,102 @@
 @push('scripts')
 @include('community.partials.emoji-js')
 <script>
+(() => {
+    const CSRF = document.querySelector('meta[name=csrf-token]')?.content || '';
+    const say = (m, t) => { if (window.toast) toast(m, t); };
+    const syncEmpty = (kind) => {
+        const grid = document.getElementById(kind === 'photo' ? 'profilePhotosGrid' : 'profileVideosGrid');
+        const empty = document.getElementById(kind === 'photo' ? 'profilePhotosEmpty' : 'profileVideosEmpty');
+        if (!grid || !empty) return;
+        const any = !!grid.querySelector('.profile-photo-tile, .profile-video-tile');
+        grid.classList.toggle('hidden', !any);
+        empty.classList.toggle('hidden', any);
+    };
+
+    // Deleting. Confirmed first — a photo off a profile is not undoable.
+    document.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.js-photo-delete, .js-video-delete');
+        if (!btn) return;
+        e.preventDefault();
+        const isPhoto = btn.classList.contains('js-photo-delete');
+        const id = btn.getAttribute(isPhoto ? 'data-photo-id' : 'data-video-id');
+        if (!id) return;
+        const ok = window.confirmAction
+            ? await confirmAction({ title: isPhoto ? 'Delete this photo?' : 'Delete this video?', message: 'It comes off your profile for everyone.', confirmText: 'Delete' })
+            : confirm('Delete?');
+        if (!ok) return;
+        try {
+            const res = await fetch('{{ url('/app/community/profile') }}/' + (isPhoto ? 'photos' : 'videos') + '/' + id, {
+                method: 'DELETE',
+                headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' },
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok || !data.success) throw new Error(data.message || 'Could not delete.');
+            btn.closest('.profile-photo-tile, .profile-video-tile')?.remove();
+            syncEmpty(isPhoto ? 'photo' : 'video');
+            say(data.message || 'Deleted.');
+        } catch (err) { say(err.message, 'error'); }
+    });
+
+    // Adding photos: the endpoint answers with rendered tiles, newest first.
+    document.getElementById('profilePhotoInput')?.addEventListener('change', async (e) => {
+        const files = [...(e.target.files || [])];
+        e.target.value = '';
+        if (!files.length) return;
+        const fd = new FormData();
+        files.forEach((f) => fd.append('photos[]', f));
+        say('Uploading…');
+        try {
+            const res = await fetch(@json(route('community.profile.photos.store')), {
+                method: 'POST', headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' }, body: fd,
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok || !data.success) throw new Error(data.message || 'Could not upload.');
+            const grid = document.getElementById('profilePhotosGrid');
+            if (grid && data.data?.html) grid.insertAdjacentHTML('afterbegin', data.data.html);
+            syncEmpty('photo');
+            say(data.message || 'Added.');
+        } catch (err) { say(err.message, 'error'); }
+    });
+
+    // Adding a video: XHR so the long compress-and-upload shows the veil the
+    // markup always had, and a percent while the bytes actually move.
+    document.getElementById('profileVideoInput')?.addEventListener('change', (e) => {
+        const f = e.target.files && e.target.files[0];
+        e.target.value = '';
+        if (!f) return;
+        const veil = document.getElementById('profileVideoUploading');
+        veil?.classList.remove('hidden');
+        const fd = new FormData();
+        fd.append('video', f);
+        const x = new XMLHttpRequest();
+        x.open('POST', @json(route('community.profile.videos.store')));
+        x.setRequestHeader('X-CSRF-TOKEN', CSRF);
+        x.setRequestHeader('Accept', 'application/json');
+        x.upload.onprogress = (ev) => {
+            if (!ev.lengthComputable || !veil) return;
+            const pct = Math.round((ev.loaded / ev.total) * 100);
+            const label = veil.querySelector('span:last-child');
+            // 100% of the bytes up is not saved — the server is still
+            // compressing, which is the slow half for a long clip.
+            if (label) label.textContent = pct < 100 ? 'Uploading your video… ' + pct + '%' : 'Compressing… this can take a moment for longer clips.';
+        };
+        x.onload = () => {
+            veil?.classList.add('hidden');
+            let data = {};
+            try { data = JSON.parse(x.responseText); } catch (_) { }
+            if (x.status >= 200 && x.status < 300 && data.success) {
+                const grid = document.getElementById('profileVideosGrid');
+                if (grid && data.data?.html) grid.insertAdjacentHTML('afterbegin', data.data.html);
+                syncEmpty('video');
+                say(data.message || 'Video added.');
+            } else { say(data.message || 'Could not upload the video.', 'error'); }
+        };
+        x.onerror = () => { veil?.classList.add('hidden'); say('The connection dropped mid-upload — try again.', 'error'); };
+        x.send(fd);
+    });
+})();
+
 document.getElementById('profileTabs')?.addEventListener('click', (e) => {
     const btn = e.target.closest('.profile-tab');
     if (!btn) return;

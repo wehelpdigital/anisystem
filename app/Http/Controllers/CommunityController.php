@@ -34,21 +34,33 @@ class CommunityController extends Controller
         $me = Auth::user();
         $friendIds = \App\Models\CommunityConnection::connectedIds((int) $me->id);
 
+        // Ten posts, no threads. The first paint used to be forty posts EACH
+        // carrying its complete comment thread with authors — on a farm phone
+        // that is the whole feed's history as one blocking document. The
+        // feed-post partial has always had a second mode for exactly this:
+        // when comments are not loaded it renders "View all N comments", which
+        // fetches the thread ten at a time through the sentinel pager. One tap
+        // costs less than every thread nobody asked for. The 24-row scan
+        // (for 10 kept) buys headroom for the deleted-author filter below, the
+        // same ratio the old 120-for-40 did.
         $posts = \App\Models\CommunityWallPost::where('deleteStatus', 1)
-            ->with(['author', 'comments.author'])
+            ->with(['author'])
             ->withCount('comments')
             ->orderByDesc('created_at')
-            ->limit(120)
+            ->limit(24)
             ->get()
             ->filter(fn ($p) => $p->author && (int) $p->author->deleteStatus === 1);
 
         // Newest first, always — a fresh post lands on top (the composer reloads
         // onto page 1), and the wall reads chronologically. feedMore() continues
         // older posts beneath, in the same order.
-        $posts = $posts->sortByDesc(fn ($p) => [$p->created_at->timestamp, $p->id])->values()->take(40);
+        $posts = $posts->sortByDesc(fn ($p) => [$p->created_at->timestamp, $p->id])->values()->take(10);
 
         \App\Models\CommunityReaction::attach($posts, 'wallpost', (int) $me->id);
-        \App\Models\CommunityReaction::attach($posts->flatMap->comments, 'wallcomment', (int) $me->id);
+        // No comment reactions to attach: the threads are not loaded any more,
+        // and flatMap->comments here would lazy-load every one of them back —
+        // one query per post, which is the N+1 this page just stopped paying.
+        // The thread fetch attaches its own when a thread is actually opened.
 
         // Left rail — incoming friend (co-farmer) requests.
         $requestRows = \App\Models\CommunityConnection::active()
@@ -97,7 +109,7 @@ class CommunityController extends Controller
 
         $rows = \App\Models\CommunityWallPost::where('deleteStatus', 1)
             ->where('created_at', '<', $beforeTs)
-            ->with(['author', 'comments.author'])->withCount('comments')
+            ->with(['author'])->withCount('comments')
             ->orderByDesc('created_at')
             ->limit(11)->get()
             ->filter(fn ($p) => $p->author && (int) $p->author->deleteStatus === 1)
@@ -106,7 +118,6 @@ class CommunityController extends Controller
         $hasMore = $rows->count() > 10;
         $items = $rows->take(10)->values();
         \App\Models\CommunityReaction::attach($items, 'wallpost', (int) $me->id);
-        \App\Models\CommunityReaction::attach($items->flatMap->comments, 'wallcomment', (int) $me->id);
 
         $html = '';
         foreach ($items as $post) {
