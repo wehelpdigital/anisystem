@@ -702,7 +702,10 @@
             applyPhoto(d.url, d.gen);
             myOrder.length = 0; redoStack = []; $id('cphRedo').disabled = true;
         } catch (e) { if (window.toast) toast(e.message, 'error'); }
-        finally { busy?.done?.(); }
+        // close(), which is what smBusy actually hands back. This said done()
+        // with optional chaining, which is how a wrong method name becomes a
+        // spinner that never leaves instead of an error that names itself.
+        finally { busy?.close?.(); }
     }
 
     /* ---------- tools, colour, width ---------- */
