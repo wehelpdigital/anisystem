@@ -45,7 +45,14 @@ class AiController extends Controller
             'settings' => $settings,
             'balance' => $this->credits->balance($userId),
             'conversation' => $conversation,
-            'messages' => $conversation ? $conversation->messages : collect(),
+            'messages' => $conversation
+                // Newest sixty, oldest first. The relation is every turn the
+                // thread has ever had, markdown-rendered — a season of daily
+                // questions was arriving as one document. Sixty covers what a
+                // person scrolls back through; the full history is still in
+                // the row for anything that ever needs it.
+                ? $conversation->messages()->latest('id')->limit(60)->get()->reverse()->values()
+                : collect(),
             'conversations' => AiConversation::active()
                 ->where('userId', $userId)
                 ->with('linkedActivity')
@@ -482,7 +489,14 @@ class AiController extends Controller
             'settings' => $settings,
             'balance' => $this->credits->balance($userId),
             'conversation' => $conversation,
-            'messages' => $conversation ? $conversation->messages : collect(),
+            'messages' => $conversation
+                // Newest sixty, oldest first. The relation is every turn the
+                // thread has ever had, markdown-rendered — a season of daily
+                // questions was arriving as one document. Sixty covers what a
+                // person scrolls back through; the full history is still in
+                // the row for anything that ever needs it.
+                ? $conversation->messages()->latest('id')->limit(60)->get()->reverse()->values()
+                : collect(),
             'conversations' => AiConversation::active()
                 ->where('userId', $userId)
                 ->where('croppingScheduleId', $schedule->id)
