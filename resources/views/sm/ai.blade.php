@@ -305,11 +305,12 @@
          aiMenuSheet behind one square button — beside the bell in full-page
          mode, a slim row of its own inside the shell where no app bar exists. --}}
     @if (request()->boolean('partial'))
-        <div class="flex justify-end mb-1">
-            <button type="button" class="ai-sq" id="aiMenuBtn" title="AI options" aria-label="AI options" aria-haspopup="dialog">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
-            </button>
-        </div>
+        {{-- Born hidden; the script seats it on the shell's toolbar — the
+             same line as the hamburger, per the owner — and the module-shown
+             event keeps it there only while this module holds the stage. --}}
+        <button type="button" class="btn btn-white btn-sm hidden" id="aiMenuBtn" title="AI options" aria-label="AI options" aria-haspopup="dialog" style="margin-left:auto">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
+        </button>
     @endif
 
     {{-- Chip: the day/activity this chat is pinned to (kept in the AI's focus). --}}
@@ -912,8 +913,23 @@ const __init = () => {
     /* history + conversations */
     byId('aiHistoryBtn')?.addEventListener('click', () => openSheet('aiHistorySheet'));
 
-    /* The square button beside the bell (or atop the pane in the shell):
-       its sheet closes underneath whichever job the row hands off to. */
+    /* The square button beside the bell — or, in the shell, seated on the
+       toolbar beside the hamburger. Relocated by hand because the pane's
+       markup cannot reach the shell's row; margin-left:auto keeps it at the
+       right edge without asking the row to wrap. */
+    const IN_SHELL = @json(request()->boolean('partial'));
+    if (IN_SHELL) {
+        const btn = byId('aiMenuBtn');
+        const bar = document.getElementById('actToolbar');
+        if (btn && bar) {
+            bar.querySelector('#aiMenuBtn')?.remove();   // a re-fetched pane must not double it
+            bar.appendChild(btn);
+            btn.classList.remove('hidden');
+            document.addEventListener('sm:module-shown', (e) => {
+                btn.classList.toggle('hidden', (e.detail && e.detail.key) !== 'ai');
+            });
+        }
+    }
     byId('aiMenuBtn')?.addEventListener('click', () => openSheet('aiMenuSheet'));
     ['aiNewChatBtn', 'aiHistoryBtn', 'aiLinkBtn'].forEach((id) =>
         byId(id)?.addEventListener('click', () => window.closeSheet?.('aiMenuSheet')));
