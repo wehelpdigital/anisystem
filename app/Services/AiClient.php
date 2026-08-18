@@ -18,6 +18,13 @@ class AiClient
     private const TIMEOUT = 90;
 
     /**
+     * How much silent reasoning a Gemini thinking model may spend per ask.
+     * Bounded so a hard photo cannot think the wallet dry, roomy enough that
+     * the diagnosis is done thinking before it starts talking.
+     */
+    private const GEMINI_THINKING_BUDGET = 2048;
+
+    /**
      * @param  array<int, array{mime:string,data:string}>|array{mime:string,data:string}|null  $image
      *   One picture or several. A single one is still accepted as it always
      *   was, because every existing caller passes exactly that.
@@ -183,8 +190,15 @@ class AiClient
                 'systemInstruction' => ['parts' => [['text' => $s->systemPrompt]]],
                 'contents' => $contents,
                 'generationConfig' => [
-                    'maxOutputTokens' => (int) $s->maxOutputTokens,
+                    /* Thinking models charge their reasoning against this cap,
+                     * and a photo makes them reason hard: measured, a grass
+                     * ID spent 1152 thought tokens against a 1200 cap and the
+                     * farmer got a 44-token stub cut mid-sentence. So the
+                     * thoughts get their own bounded lane, and the settings
+                     * row's number stays what it reads as: the ANSWER budget. */
+                    'maxOutputTokens' => (int) $s->maxOutputTokens + self::GEMINI_THINKING_BUDGET,
                     'temperature' => (float) $s->temperature,
+                    'thinkingConfig' => ['thinkingBudget' => self::GEMINI_THINKING_BUDGET],
                 ],
             ]);
 
@@ -193,13 +207,20 @@ class AiClient
         }
 
         $json = $res->json();
-        $text = collect($json['candidates'][0]['content']['parts'] ?? [])->pluck('text')->implode("\n");
+        // Never the thought parts — some models return their reasoning as
+        // parts flagged `thought`, and reasoning read aloud is not an answer.
+        $text = collect($json['candidates'][0]['content']['parts'] ?? [])
+            ->reject(fn ($p) => ! empty($p['thought']))
+            ->pluck('text')->filter()->implode("\n");
 
         return [
             'ok' => true,
             'text' => trim($text),
             'tokensIn' => (int) ($json['usageMetadata']['promptTokenCount'] ?? 0),
-            'tokensOut' => (int) ($json['usageMetadata']['candidatesTokenCount'] ?? 0),
+            // Thoughts are billed output at Google even though they are not
+            // candidate text — the ledger counts what the house actually pays.
+            'tokensOut' => (int) ($json['usageMetadata']['candidatesTokenCount'] ?? 0)
+                + (int) ($json['usageMetadata']['thoughtsTokenCount'] ?? 0),
             'error' => null,
         ];
     }
