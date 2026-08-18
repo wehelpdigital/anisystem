@@ -359,6 +359,144 @@ class AiController extends Controller
         return $this->json(true, 'Renamed.', ['title' => $conversation->fresh()->title]);
     }
 
+    /**
+     * The floating chat's doorway into the past: recent conversations as
+     * JSON, because the float lives on pages that never render the AI
+     * page's server-side history rail.
+     */
+    public function conversations()
+    {
+        $rows = AiConversation::active()
+            ->where('userId', Auth::id())
+            ->orderByDesc('updated_at')
+            ->limit(20)
+            ->get()
+            ->map(fn ($c) => [
+                'id' => (int) $c->id,
+                'title' => $c->title ?: 'New question',
+                'when' => $c->updated_at?->diffForHumans(),
+            ])
+            ->values();
+
+        return $this->json(true, 'Conversations.', ['conversations' => $rows]);
+    }
+
+    /** One conversation replayed for the float — newest 60 turns, oldest first. */
+    public function transcript(Request $request)
+    {
+        $conversation = AiConversation::active()
+            ->where('userId', Auth::id())
+            ->find((int) $request->query('conversationId'));
+        if (! $conversation) {
+            return $this->json(false, 'That conversation is gone.', [], 404);
+        }
+
+        $messages = $conversation->messages()
+            ->orderByDesc('id')
+            ->limit(60)
+            ->get()
+            ->reverse()
+            ->values()
+            ->map(fn ($m) => [
+                'role' => $m->role,
+                'content' => (string) $m->content,
+                'images' => collect((array) ($m->imagePaths ?: ($m->imagePath ? [$m->imagePath] : [])))
+                    ->map(fn ($p) => \App\Support\MediaStore::url($p))
+                    ->filter()
+                    ->values(),
+                'at' => $m->created_at?->format('g:i A'),
+            ]);
+
+        return $this->json(true, 'Transcript.', [
+            'conversationId' => (int) $conversation->id,
+            'title' => $conversation->title ?: 'New question',
+            'messages' => $messages,
+        ]);
+    }
+
+    /**
+     * File a conversation into the schedule's notebook — on its own, or
+     * titled onto one of the schedule's tasks. The transcript becomes a
+     * note because that is where everything a season keeps ends up; the
+     * task variant names the activity so the note reads as its record.
+     */
+    public function saveToNote(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'conversationId' => 'required|integer',
+            'scheduleId' => 'required|integer',
+            'activityId' => 'nullable|integer',
+        ]);
+        if ($validator->fails()) {
+            return $this->json(false, 'Validation failed.', ['errors' => $validator->errors()], 422);
+        }
+
+        $conversation = AiConversation::active()
+            ->where('userId', Auth::id())
+            ->find((int) $request->input('conversationId'));
+        if (! $conversation) {
+            return $this->json(false, 'That conversation is gone.', [], 404);
+        }
+
+        $schedule = AsCroppingSchedule::active()
+            ->forClient(\App\Support\WorkerContext::effectiveOwnerId())
+            ->where('id', (int) $request->input('scheduleId'))
+            ->first();
+        if (! $schedule) {
+            return $this->json(false, 'That schedule is not yours to write to.', [], 404);
+        }
+        // Writing the notebook is the note right — the same line every other
+        // door into the schedule's records draws for a worker.
+        if (\App\Support\WorkerContext::activeGrant() && ! \App\Support\WorkerContext::canAddNotes()) {
+            return $this->json(false, 'You are not allowed to write notes on this schedule.', [], 403);
+        }
+
+        $activity = null;
+        if ($request->filled('activityId')) {
+            $activity = \App\Models\AsScheduleActivity::query()
+                ->where('croppingScheduleId', $schedule->id)
+                ->find((int) $request->input('activityId'));
+            if (! $activity) {
+                return $this->json(false, 'That task is not on this schedule.', [], 404);
+            }
+        }
+
+        $messages = $conversation->messages()->orderBy('id')->limit(120)->get();
+        if ($messages->isEmpty()) {
+            return $this->json(false, 'This conversation has no messages yet.', [], 422);
+        }
+
+        $tech = AiSetting::current()?->assistantName ?: 'AI Technician';
+        $html = '';
+        if ($activity) {
+            $when = $activity->targetDate
+                ? \Illuminate\Support\Carbon::parse($activity->targetDate)->format('M j, Y')
+                : 'no set date';
+            $html .= '<p><em>Attached to the task "' . e($activity->activityTitle ?: 'Task') . '" (' . e($when) . ').</em></p>';
+        }
+        foreach ($messages as $m) {
+            $who = $m->role === 'assistant' ? $tech : 'You';
+            $cls = $m->role === 'assistant' ? 'color:#3d6823' : 'color:#1f2937';
+            $html .= '<p><strong style="' . $cls . '">' . e($who) . ':</strong> '
+                . nl2br(e((string) $m->content)) . '</p>';
+        }
+
+        $title = 'AI · ' . ($conversation->title ?: 'Conversation')
+            . ($activity ? ' — ' . ($activity->activityTitle ?: 'Task') : '');
+        $note = \App\Models\AsScheduleNote::create([
+            'croppingScheduleId' => $schedule->id,
+            'userId' => (int) Auth::id(),
+            'title' => mb_substr($title, 0, 180),
+            'body' => \App\Support\HtmlSanitizer::rich($html),
+            'media' => [],
+            'deleteStatus' => 1,
+        ]);
+
+        return $this->json(true, $activity
+            ? 'Saved this conversation onto the task, in the schedule notebook.'
+            : 'Saved this conversation to the schedule notebook.', ['noteId' => (int) $note->id]);
+    }
+
     public function deleteConversation(Request $request)
     {
         $conversation = AiConversation::active()

@@ -361,6 +361,10 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // "Ask the AI about this" from a picture the app is already showing.
     Route::post('/app/ai-photo-existing', [App\Http\Controllers\AiController::class, 'attachExisting'])->name('ai.photo.existing');
     Route::post('/app/ai-conversation-new', [App\Http\Controllers\AiController::class, 'newConversation'])->name('ai.conversation.new');
+    // The floating chat's doors: list old chats, replay one, file one away.
+    Route::get('/app/ai-conversations', [App\Http\Controllers\AiController::class, 'conversations'])->name('ai.conversations');
+    Route::get('/app/ai-transcript', [App\Http\Controllers\AiController::class, 'transcript'])->name('ai.transcript');
+    Route::post('/app/ai-conversation-note', [App\Http\Controllers\AiController::class, 'saveToNote'])->name('ai.conversation.note');
     Route::delete('/app/ai-conversation-delete', [App\Http\Controllers\AiController::class, 'deleteConversation'])->name('ai.conversation.delete');
     Route::post('/app/ai-conversation-rename', [App\Http\Controllers\AiController::class, 'renameConversation'])->name('ai.conversation.rename');
     Route::post('/app/ai-conversation-link', [App\Http\Controllers\AiController::class, 'linkConversation'])->name('ai.conversation.link');

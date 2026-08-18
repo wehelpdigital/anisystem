@@ -15,6 +15,13 @@
     // Same free-rider rule as the full pages: an account that is never
     // charged is never shown a price, a balance, or a purchase card.
     $aiFloatUnlimited = app(\App\Services\AiCreditService::class)->unlimited((int) auth()->id());
+    // The menu's "save onto a task" picker — rendered with the page, since
+    // the float already knows its schedule and tasks change rarely enough.
+    $aiFloatTasks = \App\Models\AsScheduleActivity::query()
+        ->where('croppingScheduleId', $schedule->id)
+        ->orderByDesc('targetDate')
+        ->limit(30)
+        ->get(['id', 'activityTitle', 'targetDate']);
 @endphp
 @if ($aiFloatSettings && $aiFloatSettings->isUsable())
 <div id="aiFloat" class="ai-float{{ request('module') === 'ai' ? ' ai-float-off' : '' }}">
@@ -41,6 +48,43 @@
                     <span id="aiFloatBalance">{{ rtrim(rtrim(number_format($aiFloatBalance, 2), '0'), '.') }}</span>&nbsp;credits
                 </a>
                 @endunless
+            </div>
+            <div class="relative shrink-0">
+                <button type="button" id="aiFloatMenuBtn" class="ai-float-icon" title="Chat options" aria-label="Chat options" aria-haspopup="menu">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6h.01M12 12h.01M12 18h.01"/></svg>
+                </button>
+                {{-- The pocket version of the AI page's session menu: the
+                     past, a fresh start, and two ways to file this chat. --}}
+                <div id="aiFloatMenu" class="ai-float-attmenu is-belowright hidden">
+                    <button type="button" id="aiFloatOldChats">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Old chats
+                    </button>
+                    <button type="button" id="aiFloatNewChat">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                        New session
+                    </button>
+                    <button type="button" id="aiFloatToTask">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                        Attach to a task
+                    </button>
+                    <button type="button" id="aiFloatToNote">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.4-9.4a2 2 0 112.8 2.8L11 15l-4 1 1-4 8.6-8.4z"/></svg>
+                        Save as a new note
+                    </button>
+                </div>
+                {{-- Which task: rendered with the page, shown on ask. --}}
+                <div id="aiFloatTaskMenu" class="ai-float-attmenu is-belowright is-tall hidden">
+                    @forelse ($aiFloatTasks as $t)
+                        <button type="button" data-task="{{ $t->id }}">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span class="min-w-0"><span class="block truncate">{{ \Illuminate\Support\Str::limit($t->activityTitle ?: 'Task', 34) }}</span>
+                            <span class="block text-[0.62rem] text-gray-400">{{ $t->targetDate ? \Illuminate\Support\Carbon::parse($t->targetDate)->format('M j, Y') : 'no set date' }}</span></span>
+                        </button>
+                    @empty
+                        <p class="px-2 py-2 text-xs text-gray-400">No tasks on this schedule yet.</p>
+                    @endforelse
+                </div>
             </div>
             <button type="button" id="aiFloatClose" class="ai-float-icon" aria-label="Close">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -242,6 +286,20 @@
     .ai-float-attmenu button.hidden { display: none; }
     .ai-float-attmenu button svg { color: var(--color-brand-600); flex-shrink: 0; }
     @keyframes aiFloatMenuIn { from { opacity: 0; transform: scale(.9) translateY(4px); } to { opacity: 1; transform: none; } }
+    /* The header's menus hang below their button, right-aligned — above the
+       composer's, which grows upward. */
+    .ai-float-attmenu.is-belowright { bottom: auto; top: calc(100% + .4rem); left: auto; right: 0; transform-origin: top right; }
+    .ai-float-attmenu.is-tall { max-height: 14rem; overflow-y: auto; }
+    /* An old chat offered as a row: title above, its age whispered under. */
+    .ai-float-convo { display: flex; flex-direction: column; gap: .1rem; width: 100%; padding: .55rem .7rem;
+        border: 1px solid var(--color-gray-200); border-radius: .8rem; background: var(--color-white);
+        text-align: left; cursor: pointer; margin-bottom: .4rem; }
+    .ai-float-convo:hover { border-color: var(--color-brand-300); background: var(--color-brand-50); }
+    .ai-float-convo .t { font-size: .82rem; font-weight: 700; color: var(--color-gray-800);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ai-float-convo .w { font-size: .68rem; color: var(--color-gray-400); }
+    /* Replayed history arrives settled — entrance animations are for news. */
+    .ai-float-thread.is-replay .ai-float-msg { animation: none; }
     .ai-float-box { display: flex; align-items: flex-end; gap: .25rem; border: 1.5px solid var(--color-gray-200); border-radius: 1.1rem; padding: .25rem .25rem .25rem .4rem; background: var(--color-white); transition: border-color .15s ease, box-shadow .15s ease; }
     .ai-float-box:focus-within { border-color: var(--color-brand-500); box-shadow: 0 0 0 3px rgb(107 159 61 / .18); }
     .ai-float-cam { width: 2.25rem; height: 2.25rem; border-radius: .75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--color-brand-50); color: var(--color-brand-700); cursor: pointer; transition: background .15s ease; }
@@ -342,6 +400,9 @@
             photo: @json(route('ai.photo')),
             attach: @json(route('ai.photo.existing')),
             credits: @json(route('ai.credits')),
+            convos: @json(route('ai.conversations')),
+            transcript: @json(route('ai.transcript')),
+            toNote: @json(route('ai.conversation.note')),
         };
         const UNLIMITED = @json($aiFloatUnlimited);
         const SCHEDULE_ID = @json($schedule->id);
@@ -425,10 +486,14 @@
         $('aiFloatClose')?.addEventListener('click', () => openPanel(false));
 
         const input = $('aiFloatText');
-        panel.querySelectorAll('.js-float-suggest').forEach((b) => b.addEventListener('click', () => {
+        // Delegated, because "new session" re-inserts the welcome markup and
+        // fresh nodes would arrive deaf to listeners bound at init.
+        panel.addEventListener('click', (e) => {
+            const b = e.target.closest('.js-float-suggest');
+            if (!b) return;
             input.value = (b.querySelector('.t')?.textContent || b.textContent).trim();
             input.dispatchEvent(new Event('input')); input.focus();
-        }));
+        });
         input?.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 96) + 'px'; });
         input?.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey && window.matchMedia('(min-width: 768px)').matches) { e.preventDefault(); send(); }
@@ -487,6 +552,79 @@
             attMenu?.classList.toggle('hidden');
         });
         document.addEventListener('click', (e) => { if (attMenu && !attMenu.classList.contains('hidden') && !attMenu.contains(e.target)) closeMenu(); });
+
+        /* ---- The session menu: the past, a fresh start, two filings. ---- */
+        const WELCOME_HTML = thread.innerHTML;   // the welcome, kept for "new session"
+        const sessMenu = $('aiFloatMenu'), taskMenu = $('aiFloatTaskMenu');
+        const closeSessMenus = () => { sessMenu?.classList.add('hidden'); taskMenu?.classList.add('hidden'); };
+        $('aiFloatMenuBtn')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            taskMenu?.classList.add('hidden');
+            sessMenu?.classList.toggle('hidden');
+        });
+        document.addEventListener('click', (e) => {
+            if (sessMenu && !sessMenu.classList.contains('hidden') && !sessMenu.contains(e.target)) sessMenu.classList.add('hidden');
+            if (taskMenu && !taskMenu.classList.contains('hidden') && !taskMenu.contains(e.target)) taskMenu.classList.add('hidden');
+        });
+
+        $('aiFloatNewChat')?.addEventListener('click', () => {
+            closeSessMenus();
+            conversationId = null;
+            clearPhotos();
+            thread.innerHTML = WELCOME_HTML;
+            window.toast?.('Fresh session — ask away.');
+        });
+
+        $('aiFloatOldChats')?.addEventListener('click', async () => {
+            closeSessMenus();
+            thread.innerHTML = '<span class="ai-float-dots" style="margin:1rem auto"><i></i><i></i><i></i></span>';
+            try {
+                const res = await api(URLS.convos);
+                const rows = (res.data && res.data.conversations) || [];
+                if (!rows.length) { thread.innerHTML = WELCOME_HTML; toast('No past chats yet.'); return; }
+                thread.innerHTML = '<p class="text-xs font-bold text-gray-400 mb-2" style="text-transform:uppercase;letter-spacing:.04em">Old chats — pick one to continue</p>'
+                    + rows.map((c) => `<button type="button" class="ai-float-convo" data-convo="${c.id}"><span class="t">${escapeHtml(c.title)}</span><span class="w">${escapeHtml(c.when || '')}</span></button>`).join('');
+            } catch (err) { thread.innerHTML = WELCOME_HTML; toast(err.message, 'error'); }
+        });
+
+        thread.addEventListener('click', async (e) => {
+            const row = e.target.closest('.ai-float-convo');
+            if (!row) return;
+            thread.innerHTML = '<span class="ai-float-dots" style="margin:1rem auto"><i></i><i></i><i></i></span>';
+            try {
+                const res = await api(URLS.transcript + '?conversationId=' + row.dataset.convo);
+                conversationId = res.data.conversationId;
+                thread.innerHTML = '';
+                // Replayed history arrives settled — entrances are for news.
+                thread.classList.add('is-replay');
+                (res.data.messages || []).forEach((m) => addTurn(m.role === 'user',
+                    m.role === 'user' ? '<p>' + escapeHtml(m.content).replace(/\r?\n/g, '<br>') + '</p>' : render(m.content),
+                    m.images || [], null, false));
+                thread.classList.remove('is-replay');
+                scrollDown();
+            } catch (err) { thread.innerHTML = WELCOME_HTML; toast(err.message, 'error'); }
+        });
+
+        async function fileAway(activityId) {
+            if (!conversationId) { toast('Nothing to save yet — ask something first, or open an old chat.', 'error'); return; }
+            try {
+                const res = await api(URLS.toNote, { method: 'POST', body: { conversationId, scheduleId: SCHEDULE_ID, activityId: activityId || null } });
+                toast(res.message || 'Saved.');
+            } catch (err) { toast(err.message, 'error'); }
+        }
+        $('aiFloatToNote')?.addEventListener('click', () => { closeSessMenus(); fileAway(null); });
+        $('aiFloatToTask')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!conversationId) { closeSessMenus(); toast('Nothing to save yet — ask something first, or open an old chat.', 'error'); return; }
+            sessMenu?.classList.add('hidden');
+            taskMenu?.classList.remove('hidden');
+        });
+        taskMenu?.addEventListener('click', (e) => {
+            const b = e.target.closest('[data-task]');
+            if (!b) return;
+            taskMenu.classList.add('hidden');
+            fileAway(parseInt(b.dataset.task, 10));
+        });
         $('aiFloatAttUpload')?.addEventListener('click', () => { closeMenu(); $('aiFloatPhotoFiles')?.click(); });
         $('aiFloatAttCamera')?.addEventListener('click', () => { closeMenu(); $('aiFloatPhotoCam')?.click(); });
         $('aiFloatAttGallery')?.addEventListener('click', () => {
