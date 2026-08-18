@@ -597,6 +597,18 @@
             .dh-long, .dh-word, .dh-modprefix { display: none; }
             .dh-short { display: inline; }
 
+            /* One toolbar line: a long module name gives way — truncated in
+               the hamburger — rather than shoving a right-seated button (the
+               AI module parks its menu here) onto a second row. The small
+               buttons refuse to shrink so the label is the only thing that
+               bends. */
+            #modulesBtn { min-width: 0; }
+            #currentModuleLabel { display: block; max-width: 5.5rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            #moduleBackBtn, #actToolbar > .btn:last-child { flex-shrink: 0; }
+            /* The arrow reads as "back" on its own; the word was the width
+               that pushed the row's right-seated button onto a second line. */
+            #moduleBackBtn span { display: none; }
+
             /* A multi-day group reads as one range instead of a start date plus
                an arrow badge repeating it — same information, about half the
                width, and the kebab keeps its place on the line. */
