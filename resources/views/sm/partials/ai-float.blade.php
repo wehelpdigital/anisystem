@@ -124,6 +124,9 @@
 
         <div class="ai-float-composer">
             <div id="aiFloatChips" class="ai-float-chips hidden"></div>
+            <div id="aiFloatBusy" class="ai-float-busyline hidden" role="status">
+                <span class="sp" aria-hidden="true"></span><span class="tx">Attaching photo…</span>
+            </div>
             <div class="ai-float-box">
                 <div class="relative shrink-0">
                     <button type="button" id="aiFloatAttach" class="ai-float-cam" title="Attach photos" aria-label="Attach photos">
@@ -259,6 +262,15 @@
 
     .ai-float-composer { flex-shrink: 0; padding: .6rem .75rem .75rem; border-top: 1px solid var(--color-gray-100); }
     .ai-float-chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .4rem; }
+    .ai-float-busyline { display: flex; align-items: center; gap: .35rem; margin-bottom: .35rem;
+        font-size: .68rem; font-weight: 700; color: var(--color-brand-700); }
+    .ai-float-busyline.hidden { display: none; }
+    .ai-float-busyline .sp { width: .7rem; height: .7rem; border-radius: 999px; flex-shrink: 0;
+        border: 2px solid var(--color-brand-200); border-top-color: var(--color-brand-600);
+        animation: aiFloatSpin .8s linear infinite; }
+    .ai-float-chip.is-busy { background: linear-gradient(100deg, var(--color-gray-100) 40%, var(--color-gray-200) 50%, var(--color-gray-100) 60%);
+        background-size: 200% 100%; animation: aiFloatChipShimmer 1.2s linear infinite; }
+    @keyframes aiFloatChipShimmer { to { background-position: -200% 0; } }
     .ai-float-chips.hidden { display: none; }
     .ai-float-chip { position: relative; width: 2.6rem; height: 2.6rem; border-radius: .6rem; overflow: hidden;
         box-shadow: 0 0 0 2px var(--color-brand-200); animation: aiFloatChipIn .28s cubic-bezier(.22,1,.36,1); }
@@ -329,6 +341,8 @@
         .ai-float-sug, .ai-float-box, .ai-float-send { transition: none; }
         /* Slowed, not stopped — the pulse is the message that work is happening. */
         .ai-float-dots i { animation-duration: 1.8s; }
+        .ai-float-busyline .sp { animation-duration: 1.6s; }
+        .ai-float-chip.is-busy { animation: none; }
         .ai-float-chip.is-busy::after { animation-duration: 1.6s; }
     }
 
@@ -412,6 +426,12 @@
         const COIN = '<svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>';
         const buyCard = (msg) => `<div class="ai-buyc"><span class="ico">${COIN}</span><div><h3>You're out of AI Credits</h3><p>${escapeHtml(msg)}</p><a class="btn btn-accent btn-sm mt-2" href="${escapeHtml(URLS.credits)}">Purchase AI credits</a></div></div>`;
         let conversationId = null, busy = false, uploadsBusy = 0;
+        const sayBusy = () => {
+            const line = $('aiFloatBusy');
+            if (!line) return;
+            line.classList.toggle('hidden', uploadsBusy === 0);
+            line.querySelector('.tx').textContent = uploadsBusy > 1 ? `Attaching ${uploadsBusy} photos…` : 'Attaching photo…';
+        };
         const MAX_SHOTS = 6;
 
         const face = (me) => me ? escapeHtml(MY) : (AVATAR ? `<img src="${escapeHtml(AVATAR)}" alt="">` : BOT);
@@ -531,12 +551,12 @@
             const preview = URL.createObjectURL(file);
             const chip = addChip(preview);
             chip._blob = preview;
-            uploadsBusy++;
+            uploadsBusy++; sayBusy();
             const form = new FormData(); form.append('image', file);
             api(URLS.photo, { method: 'POST', body: form })
                 .then((res) => { chip.dataset.path = res.data.path; chip.classList.remove('is-busy'); })
                 .catch((err) => { toast(err.message, 'error'); dropChip(chip); })
-                .finally(() => { uploadsBusy--; });
+                .finally(() => { uploadsBusy--; sayBusy(); });
         }
         $('aiFloatPhotoFiles')?.addEventListener('change', (e) => { [...(e.target.files || [])].forEach(uploadOne); e.target.value = ''; });
         $('aiFloatPhotoCam')?.addEventListener('change', (e) => { [...(e.target.files || [])].forEach(uploadOne); e.target.value = ''; });
@@ -640,11 +660,11 @@
                 onPick: (item) => {
                     if (!item || !item.url || !roomForAnother()) return;
                     const chip = addChip(item.url);
-                    uploadsBusy++;
+                    uploadsBusy++; sayBusy();
                     api(URLS.attach, { method: 'POST', body: { url: item.url } })
                         .then((res) => { chip.dataset.path = res.data.path; chip.querySelector('img').src = res.data.url; chip.classList.remove('is-busy'); })
                         .catch((err) => { toast(err.message, 'error'); dropChip(chip); })
-                        .finally(() => { uploadsBusy--; });
+                        .finally(() => { uploadsBusy--; sayBusy(); });
                 },
             });
         });

@@ -200,6 +200,20 @@
                own remove. A chip mid-upload wears a spinner instead of ✕. --- */
         #aiPhotoChips { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: .45rem; }
         #aiPhotoChips:empty { display: none; }
+        /* Says so while a photo is on the wire - a busy chip alone was easy
+           to read as a broken thumbnail rather than work in progress. */
+        .ai-busyline { display: flex; align-items: center; gap: .4rem; margin-bottom: .45rem;
+            font-size: .72rem; font-weight: 700; color: var(--color-brand-700); }
+        .ai-busyline.hidden { display: none; }
+        .ai-busyline .sp { width: .8rem; height: .8rem; border-radius: 999px; flex-shrink: 0;
+            border: 2px solid var(--color-brand-200); border-top-color: var(--color-brand-600);
+            animation: aiBusySpin .8s linear infinite; }
+        @keyframes aiBusySpin { to { transform: rotate(360deg); } }
+        /* The chip shimmers under its picture while the copy is in flight -
+           gallery images can take a moment to even paint. */
+        .ai-chip.is-busy { background: linear-gradient(100deg, var(--color-gray-100) 40%, var(--color-gray-200) 50%, var(--color-gray-100) 60%);
+            background-size: 200% 100%; animation: aiChipShimmer 1.2s linear infinite; }
+        @keyframes aiChipShimmer { to { background-position: -200% 0; } }
         .ai-chip { position: relative; width: 3.4rem; height: 3.4rem; border-radius: .75rem; overflow: hidden;
             box-shadow: 0 0 0 2px var(--color-brand-200); background: var(--color-gray-100);
             animation: aiChipIn .28s cubic-bezier(.22,1,.36,1) both; }
@@ -253,6 +267,8 @@
             .aisuggest, .aisuggest .go, .aichat-box, #aiSendBtn, .ai-credits, .ai-sq, .ai-attach-opt, .ai-chip .x { transition: none; }
             /* Slowed, not stopped — the pulse is the message that work is happening. */
             .aidots i { animation-duration: 1.8s; }
+            .ai-busyline .sp { animation-duration: 1.6s; }
+            .ai-chip.is-busy { animation: none; }
             [style*="ai-spin"] { animation-duration: 1.6s !important; }
         }
     </style>
@@ -374,6 +390,7 @@
     <div class="aichat-composer">
         {{-- One chip per attached photo, each with its own remove. --}}
         <div id="aiPhotoChips" aria-label="Attached photos" aria-live="polite"></div>
+        <div id="aiAttachBusy" class="ai-busyline hidden" role="status"><span class="sp" aria-hidden="true"></span><span class="tx">Attaching photo…</span></div>
         <div class="aichat-box">
             <button type="button" class="ai-cam shrink-0" id="aiAttachBtn" title="Add photos" aria-label="Add photos" aria-haspopup="dialog">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -596,6 +613,11 @@ const __init = () => {
     function updateSend() {
         const btn = byId('aiSendBtn');
         if (btn) btn.disabled = !CAN_ASK || busy || uploadsBusy > 0;
+        const line = byId('aiAttachBusy');
+        if (line) {
+            line.classList.toggle('hidden', uploadsBusy === 0);
+            line.querySelector('.tx').textContent = uploadsBusy > 1 ? `Attaching ${uploadsBusy} photos…` : 'Attaching photo…';
+        }
     }
     function setSending(on) {
         const btn = byId('aiSendBtn');
