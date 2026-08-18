@@ -1,31 +1,134 @@
-{{-- Community section tabs, shared by every community page.
-     Expects: $active (wall | plans | groups | members | cofarmers | profile). --}}
+{{-- Community section nav, shared by every community page.
+     One hamburger + one chat seat, the way the schedule shell does it: the
+     button wears the section you are standing in, the sheet holds the rest.
+     Expects: $active (wall | groups | blog | members | cofarmers | requests | profile). --}}
 @php
-    $tabs = [
-        'wall' => ['🏠 Wall', route('community.index')],
-        'plans' => ['🌾 Shared Plans', route('community.plans')],
-        'groups' => ['💬 Discussions', route('community.groups.index')],
-        'blog' => ['📰 Tech Blog', route('community.blog')],
-        'members' => ['🧑‍🌾 Members', route('community.connect.members')],
-        'cofarmers' => ['🤝 My Co-Farmers', route('community.cofarmers')],
-        'profile' => ['🙍 Profile', route('community.connect.profile', ['userId' => auth()->id()])],
+    // Icons are inline paths (same shape as the schedule's modules sheet) so a
+    // section can be added here without touching an icon font or a sprite.
+    $sections = [
+        'wall' => [
+            'label' => 'Wall', 'short' => 'Wall',
+            'url' => route('community.index'),
+            'icon' => 'M3 12l9-9 9 9M5 10v10h14V10',
+        ],
+        'groups' => [
+            'label' => 'Discussions', 'short' => 'Discussions',
+            'url' => route('community.groups.index'),
+            'icon' => 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.9 9.9 0 01-4.29-.94L3 20l1.05-3.15A7.6 7.6 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z',
+        ],
+        'blog' => [
+            'label' => 'Tech Blog', 'short' => 'Blog',
+            'url' => route('community.blog'),
+            'icon' => 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h9l7 7v7a2 2 0 01-2 2zM7 9h5M7 13h9M7 17h9',
+        ],
+        'members' => [
+            'label' => 'Members', 'short' => 'Members',
+            'url' => route('community.connect.members'),
+            'icon' => 'M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4z',
+        ],
+        'cofarmers' => [
+            'label' => 'My Co-Farmers', 'short' => 'Co-Farmers',
+            'url' => route('community.cofarmers'),
+            'icon' => 'M12 21c-4.5 0-8-2.5-8-5.5V13a3 3 0 013-3h10a3 3 0 013 3v2.5c0 3-3.5 5.5-8 5.5zM9 7a3 3 0 106 0 3 3 0 00-6 0z',
+        ],
+        'requests' => [
+            'label' => 'Requests', 'short' => 'Requests',
+            'url' => route('community.connect.requests'),
+            'icon' => 'M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM19 8v6M22 11h-6',
+        ],
+        'profile' => [
+            'label' => 'Profile', 'short' => 'Profile',
+            'url' => route('community.connect.profile', ['userId' => auth()->id()]),
+            'icon' => 'M5.1 19a7 7 0 0113.8 0M12 11a4 4 0 100-8 4 4 0 000 8z',
+        ],
     ];
+
+    // The page's own $active is the answer, except where one blade serves two
+    // sections (Requests renders with $active = 'members'); there the URL is
+    // the more truthful witness, so it gets first say.
+    $here = rtrim(url()->current(), '/');
+    $currentKey = null;
+    foreach ($sections as $key => $section) {
+        if (rtrim($section['url'], '/') === $here) { $currentKey = $key; break; }
+    }
+    if ($currentKey === null && isset($sections[$active ?? ''])) {
+        $currentKey = $active;
+    }
+    // An unknown section (a page still passing a retired key) must not claim a
+    // row in the sheet, so the button says where you are in general terms.
+    $currentShort = $currentKey ? $sections[$currentKey]['short'] : 'Sections';
 @endphp
 <style>
-    /* The page you are on wears the app's drifting header green (gradSweep
-       lives in the layout), so the nav and the messenger speak one language. */
-    .community-nav .chip.is-selected { border-color:transparent; color:#fff;
+    /* One line, always: the row never wraps, and it is the section name that
+       gives way (ellipsis) rather than the chat button falling to line two. */
+    .community-nav { display:flex; align-items:center; gap:.5rem; flex-wrap:nowrap; }
+    .cn-hamburger { min-width:0; }
+    .cn-hamburger svg { flex-shrink:0; }
+    .cn-current { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    /* The prefix is desktop-only room; a phone needs the section name alone. */
+    @media (max-width:639px) { .cn-prefix { display:none; } }
+    /* Where the messenger dock seats its launcher. Empty on pages that carry
+       no dock — and :empty keeps the row's gap from paying for a chair that
+       nobody sat in. */
+    .cn-seat { display:inline-flex; align-items:center; flex-shrink:0; }
+    .cn-seat:empty { display:none; }
+
+    .cn-row { display:flex; align-items:center; gap:.75rem; width:100%; padding:.75rem;
+        border-radius:.75rem; font-weight:600; color:#374151; text-decoration:none;
+        transition:background-color .28s cubic-bezier(.22,1,.36,1); }
+    .cn-row:hover { background:#f9fafb; }
+    .cn-ico { width:2.25rem; height:2.25rem; border-radius:.75rem; flex-shrink:0;
+        display:flex; align-items:center; justify-content:center;
+        background:var(--color-brand-50, #eef4e6); color:var(--color-brand-600, #4a7c2a); }
+    .cn-ico svg { width:1.25rem; height:1.25rem; }
+    .cn-row-label { flex:1; min-width:0; }
+    .cn-check { width:1rem; height:1rem; flex-shrink:0; color:var(--color-brand-600, #4a7c2a); }
+    /* The section you are standing in wears the header green, the same tell
+       the old selected chip carried. */
+    .cn-row.is-current { color:#fff;
         background:linear-gradient(120deg, #3d6823, #6b9f3d 35%, #4a7c2a 60%, #2f5219 85%, #3d6823);
-        background-size:240% 240%; animation:gradSweep 12s ease-in-out infinite alternate;
-        box-shadow: 0 2px 8px -2px rgb(74 124 42 / .45); }
-    @media (prefers-reduced-motion: reduce) { .community-nav .chip.is-selected { animation:none; } }
+        background-size:240% 240%; animation:gradSweep 12s ease-in-out infinite alternate; }
+    .cn-row.is-current .cn-ico { background:rgb(255 255 255 / .18); color:#fff; }
+    .cn-row.is-current .cn-check { color:#fff; }
+    html.dark .cn-row { color:#dbe6cf; }
+    html.dark .cn-row:hover { background:rgb(255 255 255 / .07); }
+    html.dark .cn-ico { background:rgb(255 255 255 / .08); color:#a7c98a; }
+    @media (prefers-reduced-motion: reduce) {
+        .cn-row { transition:none; }
+        .cn-row.is-current { animation:none; }
+    }
 </style>
-<div class="scroll-chips mb-4 community-nav">
-    @foreach ($tabs as $key => [$label, $url])
-        @if (($active ?? '') === $key)
-            <span class="chip is-selected shrink-0">{{ $label }}</span>
-        @else
-            <a href="{{ $url }}" class="chip shrink-0">{{ $label }}</a>
-        @endif
-    @endforeach
+<div class="community-nav mb-4">
+    <button type="button" class="btn btn-white btn-sm cn-hamburger" data-sheet-open="communitySectionsSheet"
+            aria-haspopup="dialog" title="Community sections">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <span class="cn-current"><span class="cn-prefix">Community &middot; </span>{{ $currentShort }}</span>
+    </button>
+    {{-- The messenger dock moves its launcher in here on arrival, so the chat
+         button sits beside the sections instead of floating over the page. --}}
+    <span id="msgrSeat" class="cn-seat" aria-live="polite"></span>
+</div>
+
+<div class="sheet hidden" id="communitySectionsSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Community</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full -mr-1" aria-label="Close">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+    </div>
+    <div class="sheet-body space-y-1">
+        @foreach ($sections as $key => $section)
+            <a href="{{ $section['url'] }}" class="cn-row{{ $key === $currentKey ? ' is-current' : '' }}"
+               @if ($key === $currentKey) aria-current="page" @endif>
+                <span class="cn-ico">
+                    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $section['icon'] }}"/></svg>
+                </span>
+                <span class="cn-row-label">{{ $section['label'] }}</span>
+                @if ($key === $currentKey)
+                    <svg class="cn-check" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                @endif
+            </a>
+        @endforeach
+    </div>
 </div>

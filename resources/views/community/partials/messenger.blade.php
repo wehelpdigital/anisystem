@@ -1,6 +1,10 @@
-{{-- Messenger-style dock: a launcher (bottom-right) that opens a conversation
-     list and sticky chat windows. Global — include once in the app layout for
-     logged-in users. Exposes window.plazaOpenDm(userId, name). --}}
+{{-- Messenger-style dock: a launcher that opens a conversation list and sticky
+     chat windows. Global — include once in the app layout for logged-in users.
+     Exposes window.plazaOpenDm(userId, name).
+
+     The launcher floats bottom-right, except where the page offers it a chair:
+     the community nav renders #msgrSeat and the launcher moves into that row
+     instead (see the seating step in the script below). --}}
 <div id="msgrDock" aria-live="polite">
     <div class="msgr-panel hidden" id="msgrPanel">
         <div class="msgr-panel-head">
@@ -18,6 +22,9 @@
     <div class="msgr-windows" id="msgrWindows"></div>
     <button type="button" class="msgr-launcher" id="msgrLauncher" aria-label="Messages">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.9 9.9 0 01-4.29-.94L3 20l1.05-3.15A7.6 7.6 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        {{-- A word only when the button sits in a row of worded buttons; the
+             floating circle stays a circle. --}}
+        <span class="msgr-launcher-word">Chat</span>
         <span class="msgr-badge hidden" id="msgrBadge">0</span>
     </button>
 </div>
@@ -53,10 +60,54 @@
     html.dark .msgr-launcher { box-shadow:0 0 0 2px #151b12, 0 0 0 4px rgb(255 255 255 / .16), 0 10px 26px rgb(0 0 0 / .6); }
     html.dark .msgr-launcher:hover { box-shadow:0 0 0 2px #151b12, 0 0 0 4px rgb(255 255 255 / .24), 0 12px 30px rgb(0 0 0 / .65); }
     .msgr-launcher:active { transform:scale(.94); }
+    .msgr-launcher-word { display:none; }
     .msgr-badge { position:absolute; top:-2px; right:-2px; min-width:1.15rem; height:1.15rem; padding:0 .3rem;
         border-radius:9999px; background:#ef4444; color:#fff; font-size:.65rem; font-weight:800;
         display:inline-flex; align-items:center; justify-content:center; }
     .msgr-badge.hidden { display:none; }
+
+    /* ---- Seated launcher (community nav row) -----------------------------
+       Sat in a row of btn-white controls it has to read as one of them, so
+       the circle's size, ring and green are all unwound here rather than the
+       button being duplicated — one button means one set of handlers and one
+       unread count. The house button values are written out because this
+       sheet is parsed after app.css and would otherwise win by order. */
+    /* If the seat exists, the floating copy must never be what you see — not
+       even for the frame before the script moves it, and not at all if that
+       script dies first (an unseated launcher on such a page has no click
+       handler yet, so it would only be a button that does nothing). */
+    html:has(#msgrSeat) #msgrDock > .msgr-launcher { display:none; }
+    .msgr-launcher.is-seated { width:auto; height:auto; min-height:2.25rem; padding:.375rem .75rem;
+        border-radius:.5rem; gap:.4rem; font-size:.875rem; font-weight:600; flex-shrink:0;
+        background:var(--color-white, #fff); color:var(--color-gray-800, #1f2937);
+        border:1px solid var(--color-gray-200, #e5e7eb);
+        box-shadow:0 1px 2px rgb(0 0 0 / .05); }
+    .msgr-launcher.is-seated:hover { background:var(--color-gray-50, #f9fafb); box-shadow:0 1px 2px rgb(0 0 0 / .05); }
+    .msgr-launcher.is-seated svg { width:1.05rem; height:1.05rem; }
+    .msgr-launcher.is-seated .msgr-launcher-word { display:inline; }
+    .msgr-launcher.is-seated .msgr-badge { top:-.35rem; right:-.35rem; }
+    /* Colour comes from the ramp above, which dark mode already flips, so the
+       seated button lands on the same grey as the hamburger beside it; only
+       the shadow needs a darker night value. */
+    html.dark .msgr-launcher.is-seated,
+    html.dark .msgr-launcher.is-seated:hover { box-shadow:0 1px 2px rgb(0 0 0 / .4); }
+    /* Waiting messages: the button goes green and pulses a ring while the
+       count blinks, so the row itself says "someone is talking to you".
+       Under reduced motion the pulse stops and the number stays — the news
+       is in the badge, never only in the movement. */
+    .msgr-launcher.is-seated.has-unread { background:var(--color-brand-600); color:#fff;
+        border-color:var(--color-brand-600); animation:msgrSeatPulse 1.4s cubic-bezier(.22,1,.36,1) infinite; }
+    html.dark .msgr-launcher.is-seated.has-unread { background:var(--color-brand-600); color:#fff;
+        border-color:var(--color-brand-600); }
+    .msgr-launcher.is-seated.has-unread:hover { background:var(--color-brand-700); }
+    .msgr-launcher.is-seated.has-unread .msgr-badge { animation:msgrSeatBlink 1.4s cubic-bezier(.22,1,.36,1) infinite; }
+    @keyframes msgrSeatPulse { 0%, 100% { box-shadow:0 0 0 0 rgb(74 124 42 / .55); } 60% { box-shadow:0 0 0 .5rem rgb(74 124 42 / 0); } }
+    @keyframes msgrSeatBlink { 0%, 100% { opacity:1; } 50% { opacity:.25; } }
+    @media (prefers-reduced-motion: reduce) {
+        .msgr-launcher.is-seated { transition:none; }
+        .msgr-launcher.is-seated.has-unread { animation:none; }
+        .msgr-launcher.is-seated.has-unread .msgr-badge { animation:none; opacity:1; }
+    }
     .msgr-panel { width:20rem; max-width:calc(100vw - 2rem); max-height:28rem; background:#fff; border-radius:1rem;
         box-shadow:0 16px 48px rgb(0 0 0 / .22); overflow:hidden; display:flex; flex-direction:column;
         animation:msgrIn .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
@@ -346,9 +397,21 @@
     const openWins = {};   // userId -> element
     const esc = (s) => { const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; };
 
+    /* Where a page offers a chair, take it. The community nav renders an empty
+       #msgrSeat right after its hamburger; moving the node (rather than
+       rendering a second button there) keeps one click handler, one badge and
+       one unread poll. Pages without a seat — the dashboard — keep the float.
+       The panel and the chat windows stay in the fixed dock either way: the
+       seat is for the launcher alone. */
+    const seat = document.getElementById('msgrSeat');
+    if (seat) { seat.appendChild(launcher); launcher.classList.add('is-seated'); }
+
     function setBadge(n) {
         if (n > 0) { badge.textContent = n > 99 ? '99+' : n; badge.classList.remove('hidden'); }
         else badge.classList.add('hidden');
+        // Seated, this is what makes the button blink; floating, it is inert.
+        launcher.classList.toggle('has-unread', n > 0);
+        launcher.setAttribute('aria-label', n > 0 ? `Messages, ${n} unread` : 'Messages');
     }
     async function refreshBadge() {
         try {
