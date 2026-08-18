@@ -51,7 +51,7 @@ class AiController extends Controller
                 // questions was arriving as one document. Sixty covers what a
                 // person scrolls back through; the full history is still in
                 // the row for anything that ever needs it.
-                ? $conversation->messages()->latest('id')->limit(60)->get()->reverse()->values()
+                ? $conversation->messages()->reorder('id', 'desc')->limit(60)->get()->reverse()->values()
                 : collect(),
             'conversations' => AiConversation::active()
                 ->where('userId', $userId)
@@ -151,7 +151,10 @@ class AiController extends Controller
 
         $history = $conversation->messages()
             ->where('id', '<', $userMessage->id)
-            ->orderByDesc('id')
+            // reorder(), not orderByDesc(): the relation bakes ASC, and a
+            // stacked DESC loses - the model was being briefed with the
+            // conversation's OLDEST turns instead of its latest.
+            ->reorder('id', 'desc')
             ->limit(self::HISTORY_TURNS)
             ->get()
             ->reverse()
@@ -392,7 +395,7 @@ class AiController extends Controller
         }
 
         $messages = $conversation->messages()
-            ->orderByDesc('id')
+            ->reorder('id', 'desc')
             ->limit(60)
             ->get()
             ->reverse()
@@ -666,7 +669,7 @@ class AiController extends Controller
                 // questions was arriving as one document. Sixty covers what a
                 // person scrolls back through; the full history is still in
                 // the row for anything that ever needs it.
-                ? $conversation->messages()->latest('id')->limit(60)->get()->reverse()->values()
+                ? $conversation->messages()->reorder('id', 'desc')->limit(60)->get()->reverse()->values()
                 : collect(),
             'conversations' => AiConversation::active()
                 ->where('userId', $userId)
