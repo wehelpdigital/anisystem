@@ -168,6 +168,28 @@
      sheet's position:fixed. @once — pages already carrying it are unchanged. --}}
 @include('sm.partials.media-picker')
 
+{{-- Filing a chat asks what to call it — the transcript is the attachment,
+     not the whole story. Outside the panel for the same transform reason. --}}
+<div class="sheet hidden" id="aiFloatNoteSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="aiFloatNoteHeading">Save this chat as a note</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-3">
+        <div>
+            <label class="form-label" for="aiFloatNoteTitle">Title</label>
+            <input type="text" id="aiFloatNoteTitle" class="form-input" maxlength="180" placeholder="Name this note">
+        </div>
+        <div>
+            <label class="form-label" for="aiFloatNoteDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
+            <textarea id="aiFloatNoteDesc" class="form-textarea" rows="3" maxlength="2000" placeholder="Why this chat is worth keeping…"></textarea>
+        </div>
+        <p class="text-xs text-gray-400">The whole conversation is attached underneath.</p>
+        <button type="button" id="aiFloatNoteSave" class="btn btn-primary w-full">Save to the notebook</button>
+    </div>
+</div>
+
 <style>
     /* Same "Field Advisor" language as the full AI page, pocket-sized.
        Theme vars only — html.dark's variable repoint restyles it for free. */
@@ -346,6 +368,7 @@
         .ai-float-dots i { animation-duration: 1.8s; }
         .ai-float-busyline .sp { animation-duration: 1.6s; }
         .ai-float-chip.is-busy { animation: none; }
+        .ai-float-thread.is-leaving, .ai-float-thread.is-arriving { animation: none; }
         .ai-float-chip.is-busy::after { animation-duration: 1.6s; }
     }
 
@@ -377,6 +400,12 @@
        is; its z-index still scopes the whole thing above the page. */
     html.ai-float-open, html.ai-float-open body { overflow: hidden; height: 100%; }
     .ai-float-thread { overscroll-behavior: contain; }
+    /* A saved chat leaves the stage; the welcome takes it. Class-driven so
+       reduced motion can decline both. */
+    .ai-float-thread.is-leaving { animation: aiFloatFadeOut .22s cubic-bezier(.22,1,.36,1) both; }
+    .ai-float-thread.is-arriving { animation: aiFloatFadeIn .28s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes aiFloatFadeOut { to { opacity: 0; transform: translateY(6px); } }
+    @keyframes aiFloatFadeIn { from { opacity: 0; transform: translateY(6px); } }
     @media (max-width: 767px) {
         .ai-float.is-open { z-index: 200; }
         .ai-float.is-open::before { content: ''; position: fixed; inset: 0; background: rgb(15 23 42 / .5); }
@@ -616,12 +645,27 @@
             if (taskMenu && !taskMenu.classList.contains('hidden') && !taskMenu.contains(e.target)) taskMenu.classList.add('hidden');
         });
 
-        $('aiFloatNewChat')?.addEventListener('click', () => {
-            closeSessMenus();
+        function startFresh(say) {
             conversationId = null;
             clearPhotos();
-            thread.innerHTML = WELCOME_HTML;
-            window.toast?.('Fresh session — ask away.');
+            input.value = ''; sayEstimate();
+            const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const land = () => {
+                thread.classList.remove('is-leaving');
+                thread.innerHTML = WELCOME_HTML;
+                if (!still) {
+                    thread.classList.add('is-arriving');
+                    setTimeout(() => thread.classList.remove('is-arriving'), 320);
+                }
+                if (say) window.toast?.(say);
+            };
+            if (still) { land(); return; }
+            thread.classList.add('is-leaving');
+            setTimeout(land, 220);
+        }
+        $('aiFloatNewChat')?.addEventListener('click', () => {
+            closeSessMenus();
+            startFresh('Fresh session — ask away.');
         });
 
         $('aiFloatOldChats')?.addEventListener('click', async () => {
@@ -654,13 +698,37 @@
             } catch (err) { thread.innerHTML = WELCOME_HTML; toast(err.message, 'error'); }
         });
 
-        async function fileAway(activityId) {
+        let pendingTaskId = null;
+        function fileAway(activityId) {
             if (!conversationId) { toast('Nothing to save yet — ask something first, or open an old chat.', 'error'); return; }
-            try {
-                const res = await api(URLS.toNote, { method: 'POST', body: { conversationId, scheduleId: SCHEDULE_ID, activityId: activityId || null } });
-                toast(res.message || 'Saved.');
-            } catch (err) { toast(err.message, 'error'); }
+            pendingTaskId = activityId || null;
+            const head = $('aiFloatNoteHeading');
+            if (head) head.textContent = pendingTaskId ? 'Attach this chat to the task' : 'Save this chat as a note';
+            $('aiFloatNoteTitle').value = '';
+            $('aiFloatNoteDesc').value = '';
+            window.openSheet?.('aiFloatNoteSheet');
+            window.smFocus?.($('aiFloatNoteTitle'), { delay: 120 });
         }
+        $('aiFloatNoteSave')?.addEventListener('click', async () => {
+            const btn = $('aiFloatNoteSave');
+            const was = btn.textContent;
+            btn.disabled = true; btn.textContent = 'Saving…';
+            try {
+                const res = await api(URLS.toNote, { method: 'POST', body: {
+                    conversationId,
+                    scheduleId: SCHEDULE_ID,
+                    activityId: pendingTaskId,
+                    title: $('aiFloatNoteTitle').value.trim(),
+                    description: $('aiFloatNoteDesc').value.trim(),
+                } });
+                window.closeSheet?.('aiFloatNoteSheet');
+                toast(res.message || 'Saved.');
+                // Filed away means finished with: the chat clears into a
+                // fresh session, as the owner asked.
+                startFresh();
+            } catch (err) { toast(err.message, 'error'); }
+            finally { btn.disabled = false; btn.textContent = was; }
+        });
         $('aiFloatToNote')?.addEventListener('click', () => { closeSessMenus(); fileAway(null); });
         $('aiFloatToTask')?.addEventListener('click', (e) => {
             e.stopPropagation();

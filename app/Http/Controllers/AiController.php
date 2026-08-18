@@ -438,6 +438,10 @@ class AiController extends Controller
             'conversationId' => 'required|integer',
             'scheduleId' => 'required|integer',
             'activityId' => 'nullable|integer',
+            // The farmer names the note and may say why it was kept — the
+            // transcript is the attachment, not the whole story.
+            'title' => 'nullable|string|max:180',
+            'description' => 'nullable|string|max:2000',
         ]);
         if ($validator->fails()) {
             return $this->json(false, 'Validation failed.', ['errors' => $validator->errors()], 422);
@@ -480,6 +484,9 @@ class AiController extends Controller
 
         $tech = AiSetting::current()?->assistantName ?: 'AI Technician';
         $html = '';
+        if (filled($request->input('description'))) {
+            $html .= '<p>' . nl2br(e(trim((string) $request->input('description')))) . '</p>';
+        }
         if ($activity) {
             $when = $activity->targetDate
                 ? \Illuminate\Support\Carbon::parse($activity->targetDate)->format('M j, Y')
@@ -493,8 +500,9 @@ class AiController extends Controller
                 . nl2br(e((string) $m->content)) . '</p>';
         }
 
-        $title = 'AI · ' . ($conversation->title ?: 'Conversation')
-            . ($activity ? ' — ' . ($activity->activityTitle ?: 'Task') : '');
+        $title = trim((string) $request->input('title'))
+            ?: ('AI · ' . ($conversation->title ?: 'Conversation')
+                . ($activity ? ' — ' . ($activity->activityTitle ?: 'Task') : ''));
         $note = \App\Models\AsScheduleNote::create([
             'croppingScheduleId' => $schedule->id,
             'userId' => (int) Auth::id(),
