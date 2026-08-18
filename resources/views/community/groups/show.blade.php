@@ -26,9 +26,100 @@
     .group-post-body a { color:var(--color-brand-700); text-decoration:underline; }
     .group-post-body h3, .group-post-body h4 { font-weight:700; margin:.25rem 0; }
     .group-post-body blockquote { border-left:3px solid var(--color-gray-200); padding-left:.75rem; color:var(--color-gray-500); }
-    /* dvh so a phone's collapsing URL bar doesn't swallow the chat composer;
-       vh stays as the fallback for browsers without it. */
+    /* A pasted URL or a long crop name must not push the room sideways on a
+       360px screen — nothing in a topic body may set the page's width. */
+    .group-post-body, .group-post-body * { overflow-wrap:anywhere; }
+    .group-post-body img, .group-post-body iframe, .group-post-body table { max-width:100%; }
+    .group-post-body pre { overflow-x:auto; }
+
+    /* --- The room's head: a place banner, not a wall of text. The name, who
+       is in it, and the one thing you can do about that, in one row. --- */
+    .disc-hero { padding:.85rem; margin-bottom:.75rem; }
+    .disc-hero-row { display:flex; align-items:flex-start; gap:.7rem; }
+    .disc-hero-title { font-family:var(--font-heading); font-size:1.05rem; font-weight:800; line-height:1.25;
+        color:var(--color-gray-900); overflow-wrap:anywhere; }
+    .disc-hero-meta { display:flex; flex-wrap:wrap; gap:.1rem .7rem; margin-top:.25rem;
+        font-size:.72rem; font-weight:700; color:var(--color-gray-500); }
+    .disc-hero-desc { margin-top:.55rem; font-size:.82rem; line-height:1.45; color:var(--color-gray-600);
+        overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .disc-hero-desc.is-open { display:block; }
+    .disc-hero-more { display:inline-block; margin-top:.3rem; border:0; background:transparent; padding:0;
+        font-size:.72rem; font-weight:800; color:var(--color-brand-700); cursor:pointer; }
+    .disc-hero-more[hidden] { display:none; }
+    @media (min-width:640px) {
+        .disc-hero { padding:1.15rem; margin-bottom:1rem; }
+        .disc-hero-title { font-size:1.3rem; }
+        .disc-hero-desc { font-size:.9rem; -webkit-line-clamp:3; }
+    }
+
+    /* --- Topics / Group chat: a segmented switch, both halves always visible,
+       with the selected half carried across on the house easing. --- */
+    .disc-seg { position:relative; display:grid; grid-template-columns:1fr 1fr; gap:0; padding:.25rem;
+        margin-bottom:.85rem; background:var(--color-gray-100); border-radius:999px; }
+    html.dark .disc-seg { background:rgb(255 255 255 / .07); }
+    .disc-seg::before { content:''; position:absolute; z-index:0; top:.25rem; bottom:.25rem; left:.25rem;
+        width:calc(50% - .25rem); border-radius:999px; background:var(--color-white, #fff);
+        box-shadow:0 1px 3px rgb(0 0 0 / .12); transition:transform var(--dur) var(--ease-house); }
+    html.dark .disc-seg::before { background:#25301c; }
+    .disc-seg[data-active="chat"]::before { transform:translateX(100%); }
+    .disc-seg-btn { position:relative; z-index:1; border:0; background:transparent; cursor:pointer;
+        min-height:2.4rem; padding:.35rem .5rem; border-radius:999px; font-size:.85rem; font-weight:700;
+        color:var(--color-gray-500); display:flex; align-items:center; justify-content:center; gap:.35rem;
+        transition:color var(--dur) var(--ease-house); }
+    .disc-seg-btn.is-selected { color:var(--color-brand-700); }
+    html.dark .disc-seg-btn.is-selected { color:var(--color-brand-300); }
+    .disc-seg-btn .seg-ico { font-size:.95rem; line-height:1; }
+
+    /* Composer: on a phone the editor gets the whole width — the avatar was
+       spending 3rem of a 360px screen to say who is typing. */
+    .disc-composer { padding:.85rem; }
+    @media (max-width:479px) {
+        .disc-composer .disc-composer-av { display:none; }
+        .disc-composer .ql-toolbar.ql-snow { padding:.25rem; }
+    }
+    @media (min-width:640px) { .disc-composer { padding:1rem; } }
+
+    /* Topics: the replies sit below a divider, and nothing is glued to it. */
+    .post-thread { margin-top:.9rem; padding-top:.85rem; border-top:1px solid var(--color-gray-100); }
+    html.dark .post-thread { border-top-color:rgb(255 255 255 / .08); }
+    .post-thread-more { display:inline-block; margin:.15rem 0 .55rem; border:0; background:transparent; padding:0;
+        font-size:.75rem; font-weight:800; color:var(--color-brand-700); cursor:pointer; }
+    .post-thread .replies-label { margin-bottom:.45rem; }
+    @media (max-width:479px) {
+        .group-post .react-bar { gap:.3rem; }
+        /* One level of nesting is all a phone can indent and still read. */
+        .reply-thread { margin-left:1.35rem; }
+    }
+
+    /* --- Group chat: dvh so a phone's collapsing URL bar doesn't swallow the
+       composer; vh stays as the fallback for browsers without it. --- */
     .chat-card { height:70vh; height:70dvh; }
+    #paneChat { scroll-margin-top:4rem; }
+    @media (max-width:1023px) {
+        /* The card is parked under the sticky app bar when the tab opens, so
+           this height leaves the composer sitting just above the tab bar
+           instead of behind it. */
+        .chat-card { height:calc(100vh - 9rem); height:calc(100dvh - 9rem); min-height:min(20rem, 60dvh); }
+    }
+    .chat-send { min-height:2.4rem; }
+
+    /* The tail of the topics: a button, a loader, or the end of the road —
+       never two of them at once (the wall's shape, in this room's words). */
+    .disc-tail { text-align:center; margin-top:.25rem; padding-bottom:.5rem; }
+    .disc-spin { display:flex; align-items:center; justify-content:center; gap:.35rem; padding:.9rem 0; }
+    .disc-spin i { display:block; width:.45rem; height:.45rem; border-radius:9999px;
+        background:var(--color-brand-400); animation:discDot 1s cubic-bezier(.22,1,.36,1) infinite; }
+    .disc-spin i:nth-child(2) { animation-delay:.12s; }
+    .disc-spin i:nth-child(3) { animation-delay:.24s; }
+    @keyframes discDot { 0%,100% { opacity:.25; transform:translateY(0); } 50% { opacity:1; transform:translateY(-.25rem); } }
+    .disc-end { font-size:.78rem; font-weight:600; color:var(--color-gray-400); padding:1rem 0 .4rem; }
+    .disc-spin[hidden], .disc-end[hidden] { display:none; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .disc-seg::before, .disc-seg-btn { transition:none; }
+        /* A loader that stops looks like a page that broke; slow it instead. */
+        .disc-spin i { animation-duration:2.6s; }
+    }
 </style>
 @endpush
 
@@ -37,17 +128,15 @@
 <div data-group-member="{{ $isMember ? 1 : 0 }}" id="groupRoot" data-group-id="{{ $group->id }}">
 
     {{-- Group header: the place banner --}}
-    <div class="card p-4 mb-4 group-hero {{ CommunityAvatar::hue($group->name) }}">
-        <div class="flex items-start justify-between gap-3">
-            <div class="flex items-start gap-3 min-w-0">
-                <span class="avatar avatar-lg avatar-sq overflow-hidden {{ CommunityAvatar::hue($group->name) }}">@if ($group->coverImagePath)<img src="{{ \App\Support\MediaStore::url($group->coverImagePath) }}" alt="" class="w-full h-full object-cover">@else{{ CommunityAvatar::monogram($group->name) }}@endif</span>
-                <div class="min-w-0">
-                    <h2 class="text-xl font-bold text-gray-900 leading-snug" style="font-family:var(--font-heading)">{{ $group->name }}</h2>
-                    @if ($group->description)
-                        <p class="text-sm text-gray-500 mt-1">{{ $group->description }}</p>
-                    @endif
-                    <p class="text-xs text-gray-500 font-semibold mt-2">🧑‍🌾 <span id="memberCount">{{ $memberCount }}</span> {{ \Illuminate\Support\Str::plural('member', $memberCount) }}</p>
-                </div>
+    <div class="card disc-hero group-hero {{ CommunityAvatar::hue($group->name) }}">
+        <div class="disc-hero-row">
+            <span class="avatar avatar-md avatar-sq overflow-hidden {{ CommunityAvatar::hue($group->name) }}">@if ($group->coverImagePath)<img src="{{ \App\Support\MediaStore::url($group->coverImagePath) }}" alt="" class="w-full h-full object-cover">@else{{ CommunityAvatar::monogram($group->name) }}@endif</span>
+            <div class="min-w-0 grow">
+                <h2 class="disc-hero-title">{{ $group->name }}</h2>
+                <p class="disc-hero-meta">
+                    <span>🧑‍🌾 <span id="memberCount">{{ $memberCount }}</span> {{ \Illuminate\Support\Str::plural('member', $memberCount) }}</span>
+                    <span id="heroMemberTag" class="{{ $isMember ? '' : 'hidden' }}">✓ Kasali ka</span>
+                </p>
             </div>
             @unless ($isOwner)
                 <button type="button" id="joinLeaveBtn" class="btn btn-sm shrink-0 {{ $isMember ? 'btn-white' : 'btn-primary' }}"
@@ -56,19 +145,28 @@
                 <span class="badge badge-green shrink-0">Owner</span>
             @endunless
         </div>
+        @if ($group->description)
+            {{-- Clamped by default: the description is context, not the room. --}}
+            <p class="disc-hero-desc" id="heroDesc">{{ $group->description }}</p>
+            <button type="button" class="disc-hero-more" id="heroDescMore" hidden>Show more</button>
+        @endif
     </div>
 
     {{-- Tabs: Discussion topics vs. live group chat --}}
-    <div class="scroll-chips mb-4" id="groupTabs">
-        <button type="button" class="chip is-selected shrink-0" data-tab="discussion">🗂️ Discussion</button>
-        <button type="button" class="chip shrink-0" data-tab="chat">💬 Group Chat</button>
+    <div class="disc-seg" id="groupTabs" data-active="discussion" role="tablist" aria-label="Discussion or group chat">
+        <button type="button" class="disc-seg-btn is-selected" data-tab="discussion" role="tab" aria-selected="true" aria-controls="paneDiscussion">
+            <span class="seg-ico" aria-hidden="true">🗂️</span>Topics
+        </button>
+        <button type="button" class="disc-seg-btn" data-tab="chat" role="tab" aria-selected="false" aria-controls="paneChat">
+            <span class="seg-ico" aria-hidden="true">💬</span>Group Chat
+        </button>
     </div>
 
-    <div id="paneDiscussion">
+    <div id="paneDiscussion" role="tabpanel">
     {{-- Composer (members only) --}}
-    <div class="card p-4 mb-4 plaza-accent {{ $isMember ? '' : 'hidden' }}" id="composerCard">
+    <div class="card disc-composer mb-4 plaza-accent {{ $isMember ? '' : 'hidden' }}" id="composerCard">
         <div class="flex items-start gap-3">
-            <span class="avatar avatar-md {{ CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} mt-1">{{ auth()->user()->initials ?? '?' }}</span>
+            <span class="avatar avatar-md disc-composer-av {{ CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} mt-1">{{ auth()->user()->initials ?? '?' }}</span>
             <div class="min-w-0 grow">
                 <input type="text" id="postTitle" class="form-input mb-2" maxlength="191" required placeholder="Topic title *">
                 {{-- WYSIWYG topic body (Quill). Format with the toolbar — bold,
@@ -122,12 +220,15 @@
         @endif
     </div>
 
-    @if ($hasMore)
-        <div class="mt-2">
-            <button type="button" id="loadMoreBtn" class="btn btn-white w-full border-dashed!" data-next="2" data-infinite>Show older posts</button>
+    @if ($posts->isNotEmpty())
+        {{-- The reader meets the next page already there; the button stays for
+             a deliberate retry (and for anyone driving by keyboard). --}}
+        <div class="disc-tail" id="postsTail">
+            <button type="button" id="loadMoreBtn" class="btn btn-white btn-sm" data-next="2" data-infinite @unless ($hasMore) hidden @endunless>Show older topics</button>
+            <div class="disc-spin" id="postsSpin" role="status" aria-label="Loading older topics" hidden><i></i><i></i><i></i></div>
+            <p class="disc-end" id="postsEnd" @if ($hasMore) hidden @endif>🌾 Nasa dulo ka na — iyan ang buong usapan.</p>
         </div>
     @endif
-
 
     @if ($isMember)
         <button type="button" class="write-fab is-hidden" id="writeFab" aria-label="Write a post">
@@ -137,11 +238,11 @@
     </div>{{-- /paneDiscussion --}}
 
     {{-- ===================== GROUP CHAT PANE ===================== --}}
-    <div id="paneChat" class="hidden">
+    <div id="paneChat" class="hidden" role="tabpanel">
         @if ($isMember)
             <div class="chat-shell">
             <div class="card overflow-hidden chat-card" style="display:flex;flex-direction:column;">
-                <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-100">
+                <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-100 shrink-0">
                     <span class="font-bold text-gray-900 text-sm">Group chat</span>
                     {{-- Mobile members toggle; desktop shows the persistent sidebar instead. --}}
                     <button type="button" id="chatMembersToggle" class="btn btn-white btn-sm ms-auto shrink-0 lg:hidden">
@@ -154,7 +255,7 @@
                 <div id="chatScroll" class="grow overflow-y-auto p-3" style="display:flex;flex-direction:column;gap:.5rem;background:var(--color-gray-50)">
                     <p class="text-xs text-gray-400 text-center py-4" id="chatLoading">Loading…</p>
                 </div>
-                <div class="border-t border-gray-100 p-2" data-video-host>
+                <div class="border-t border-gray-100 p-2 shrink-0" data-video-host>
                     <div class="flex items-center gap-0.5 mb-1.5">
                         <label class="wall-act cursor-pointer" title="Add a photo" aria-label="Add a photo">
                             <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -174,7 +275,7 @@
                     </div>
                     <div class="flex items-center gap-2">
                         <input type="text" id="chatInput" data-mentionable class="form-input grow" maxlength="5000" placeholder="Message the group…">
-                        <button type="button" id="chatSend" class="btn btn-primary btn-sm shrink-0">Send</button>
+                        <button type="button" id="chatSend" class="btn btn-primary btn-sm chat-send shrink-0">Send</button>
                     </div>
                     <div id="chatAttach" class="hidden mt-1.5 text-xs text-gray-500 flex items-center gap-2">
                         <img id="chatAttachThumb" alt="" style="width:2.2rem;height:2.2rem;object-fit:cover;border-radius:.4rem;">
@@ -198,7 +299,8 @@
             <div class="card p-6 text-center">
                 <div class="empty-tile" style="width:3.5rem;height:3.5rem;font-size:1.5rem;">💬</div>
                 <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Members only</p>
-                <p class="text-sm text-gray-600 mt-1">Join {{ $group->name }} to chat with the group.</p>
+                <p class="text-sm text-gray-600 mt-1 mb-3">Join {{ $group->name }} to chat with the group.</p>
+                <button type="button" class="btn btn-primary w-full" id="joinFromChat">Sali sa usapan</button>
             </div>
         @endif
     </div>
@@ -224,6 +326,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* Reactions are handled by the shared community.partials.react-js include. */
 
+    /* ---------------- the head: description is context, not the room ---------------- */
+    const heroDesc = document.getElementById('heroDesc');
+    const heroMore = document.getElementById('heroDescMore');
+    if (heroDesc && heroMore) {
+        // Only offer the toggle when there is something the clamp is hiding.
+        if (heroDesc.scrollHeight - heroDesc.clientHeight > 4) heroMore.hidden = false;
+        heroMore.addEventListener('click', () => {
+            const open = heroDesc.classList.toggle('is-open');
+            heroMore.textContent = open ? 'Show less' : 'Show more';
+        });
+    }
+
     /* ---------------- join / leave: everything swaps live ---------------- */
     async function setMembership(join) {
         const btn = document.getElementById('joinLeaveBtn');
@@ -236,6 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const n = parseInt(count.textContent || '0', 10) + (join ? 1 : -1);
         count.textContent = String(Math.max(0, n));
         if (!reduceMotion) { count.classList.remove('tick'); void count.offsetWidth; count.classList.add('tick'); }
+        document.getElementById('heroMemberTag')?.classList.toggle('hidden', !join);
         if (btn) {
             btn.textContent = join ? 'Leave' : 'Join';
             btn.classList.toggle('btn-primary', !join);
@@ -274,6 +389,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('joinFromGate')?.addEventListener('click', async (e) => {
         e.currentTarget.disabled = true;
         try { await setMembership(true); }
+        catch (_) { toast('Network error — try again.', 'error'); }
+        finally { e.currentTarget.disabled = false; }
+    });
+    // Joining from the chat tab's gate: the chat itself only arrives on a
+    // reload, so say so rather than leaving a dead pane behind.
+    document.getElementById('joinFromChat')?.addEventListener('click', async (e) => {
+        e.currentTarget.disabled = true;
+        try { if (await setMembership(true)) window.location.reload(); }
         catch (_) { toast('Network error — try again.', 'error'); }
         finally { e.currentTarget.disabled = false; }
     });
@@ -496,24 +619,81 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (_) { toast('Network error — try again.', 'error'); }
     });
 
-    /* ---------------- load more: dots + dim, never blank ---------------- */
-    document.getElementById('loadMoreBtn')?.addEventListener('click', async (e) => {
-        const btn = e.currentTarget;
-        const page = btn.getAttribute('data-next');
-        btn.disabled = true;
-        btn.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
-        wrap.classList.add('is-refetching');
+    /* ---------------- older topics: scroll pagination ----------------
+       The wall's contract, in this room: one page in flight at a time (the
+       `loading` latch AND the hidden button, because the shared observer
+       fires on its own schedule), a loader while it waits, and one plain line
+       when the room runs out. An IntersectionObserver only reports a change,
+       so a trigger that is already inside the pre-load margin when a page
+       lands would never cross it again — the scroll position is read directly
+       as well, and both paths funnel through the same latch. */
+    const moreBtn = document.getElementById('loadMoreBtn');
+    const spin = document.getElementById('postsSpin');
+    const endNote = document.getElementById('postsEnd');
+    let loading = false;
+    let done = !moreBtn || moreBtn.hidden;
+
+    function finishPosts() {
+        done = true;
+        moreBtn?.remove();
+        if (spin) spin.hidden = true;
+        if (endNote) endNote.hidden = false;
+    }
+
+    async function loadMore() {
+        if (!moreBtn || done || loading || moreBtn.disabled) return;
+        const page = moreBtn.getAttribute('data-next');
+        loading = true;
+        moreBtn.disabled = true;
+        moreBtn.hidden = true;
+        if (spin) spin.hidden = false;
         try {
             const res = await fetch(`/app/community/groups/${groupId}/posts?page=${page}`, { headers: { Accept: 'application/json' } });
             const data = await res.json();
-            if (data.success) {
-                wrap.insertAdjacentHTML('beforeend', data.data.html);
-                if (data.data.hasMore) { btn.setAttribute('data-next', data.data.nextPage); btn.disabled = false; btn.textContent = 'Show older posts'; }
-                else btn.remove();
+            if (!data.success) throw new Error('load failed');
+            wrap.insertAdjacentHTML('beforeend', data.data.html);
+            if (spin) spin.hidden = true;
+            if (data.data.hasMore) {
+                moreBtn.setAttribute('data-next', data.data.nextPage);
+                moreBtn.disabled = false;
+                moreBtn.hidden = false;
+                moreBtn.textContent = 'Show older topics';   // clears a previous failure's label
+                loading = false;
+                setTimeout(nearTail, 0);   // still near the bottom? keep going
+                return;
             }
-        } catch (_) { btn.disabled = false; btn.textContent = 'Show older posts'; toast('Could not load more.', 'error'); }
-        finally { wrap.classList.remove('is-refetching'); }
-    });
+            finishPosts();
+        } catch (_) {
+            // Leave the button for a deliberate retry rather than hammering.
+            if (spin) spin.hidden = true;
+            moreBtn.hidden = false;
+            moreBtn.disabled = false;
+            moreBtn.textContent = 'Try again';
+            toast('Could not load more.', 'error');
+        } finally {
+            loading = false;
+        }
+    }
+
+    // 700px of runway, the margin the shared observer uses, so the reader
+    // meets the older topics already there rather than a spinner.
+    function nearTail() {
+        if (!moreBtn || done || loading || moreBtn.hidden || moreBtn.disabled) return;
+        if (moreBtn.getBoundingClientRect().top < window.innerHeight + 700) loadMore();
+    }
+    /* Throttled on the clock, not on requestAnimationFrame: a tab that is not
+       painting (backgrounded, or a headless run) never delivers the frame. */
+    let lastLook = 0;
+    function onScroll() {
+        const now = Date.now();
+        if (now - lastLook < 100) return;
+        lastLook = now;
+        nearTail();
+    }
+    moreBtn?.addEventListener('click', loadMore);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    nearTail();   // a short room can end with the tail already in view
 
     /* ---------------- write-FAB: shows when the composer scrolls away ---------------- */
     const fab = document.getElementById('writeFab');
@@ -540,6 +720,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const groupId = document.getElementById('groupRoot')?.getAttribute('data-group-id');
     const isMember = document.getElementById('groupRoot')?.getAttribute('data-group-member') === '1';
     const esc = window.escapeHtml || ((s) => { const d = document.createElement('div'); d.textContent = s ?? ''; return d.innerHTML; });
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const paneDiscussion = document.getElementById('paneDiscussion');
     const paneChat = document.getElementById('paneChat');
@@ -549,12 +730,23 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs?.addEventListener('click', (e) => {
         const btn = e.target.closest('[data-tab]');
         if (!btn) return;
-        tabs.querySelectorAll('.chip').forEach((c) => c.classList.remove('is-selected'));
-        btn.classList.add('is-selected');
         const chat = btn.getAttribute('data-tab') === 'chat';
+        tabs.querySelectorAll('.disc-seg-btn').forEach((c) => {
+            const on = c === btn;
+            c.classList.toggle('is-selected', on);
+            c.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        tabs.setAttribute('data-active', chat ? 'chat' : 'discussion');
         paneChat.classList.toggle('hidden', !chat);
         paneDiscussion.classList.toggle('hidden', chat);
-        if (chat && !chatStarted) startChat();
+        if (chat) {
+            // The chat is a full-height column: park its top under the app bar
+            // so the composer lands above the tab bar instead of below the fold.
+            paneChat.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+            // A guest's pane is the members-only card; the chat endpoints 403
+            // for them, so don't ask.
+            if (isMember && !chatStarted) startChat();
+        }
     });
 
     // Render a chat body: escape, then bold @mentions and 📍locations.
@@ -577,7 +769,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (m.body) inner += `<div style="font-size:.9rem;line-height:1.4;white-space:pre-wrap;word-break:break-word;">${renderChatBody(m.body)}</div>`;
         if (m.image) inner += `<img src="${esc(m.image)}" alt="" loading="lazy" data-lightbox style="max-width:100%;border-radius:.5rem;margin-top:.15rem;display:block;">`;
         if (m.video) inner += `<video controls preload="metadata" playsinline ${m.poster ? `poster="${esc(m.poster)}"` : ''} style="max-width:100%;max-height:14rem;border-radius:.5rem;margin-top:.15rem;display:block;background:#000;"><source src="${esc(m.video)}" type="video/mp4"></video>`;
-        wrap.innerHTML = `${av}<div style="border-radius:.9rem;padding:.45rem .7rem;${bg}">${inner}</div>`;
+        wrap.innerHTML = `${av}<div style="min-width:0;border-radius:.9rem;padding:.45rem .7rem;${bg}">${inner}</div>`;
         return wrap;
     }
 
@@ -591,6 +783,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function startChat() {
         const scroll = document.getElementById('chatScroll');
+        if (!scroll) return;
         try {
             const r = await fetch(`/app/community/groups/${groupId}/chat`, { headers: { Accept: 'application/json' } });
             let d = null;
@@ -725,11 +918,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // presence periodically while it's visible.
     const _origStartChat = startChat;
     startChat = async function () { await _origStartChat(); loadMembers(); };
-    setInterval(() => { const pane = document.getElementById('paneChat'); if (pane && !pane.classList.contains('hidden')) loadMembers(); }, 45000);
+    setInterval(() => { const pane = document.getElementById('paneChat'); if (isMember && pane && !pane.classList.contains('hidden')) loadMembers(); }, 45000);
 
     // Preload the group chat in the background (after the Discussion tab settles)
     // so switching to the Group Chat tab is instant instead of showing a loader.
-    setTimeout(() => { if (!chatStarted) startChat(); }, 400);
+    if (isMember) setTimeout(() => { if (!chatStarted) startChat(); }, 400);
 
     // DM a member from either the sidebar or the mobile panel.
     document.getElementById('paneChat')?.addEventListener('click', (e) => {

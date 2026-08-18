@@ -15,7 +15,7 @@
     {{-- The id is what a notification's #post-N lands on. Without it the
          reader is dropped at the top of the group to go and find the thing
          they were told about. --}}
-    <article class="card p-4 mb-5 group-post" id="post-{{ $post->id }}" data-post-id="{{ $post->id }}">
+    <article class="card p-3 sm:p-4 mb-4 sm:mb-5 group-post" id="post-{{ $post->id }}" data-post-id="{{ $post->id }}">
         <header class="flex items-start gap-3">
             @include('community.partials.avatar-status', ['user' => $post->author, 'size' => 'avatar-md'])
             <div class="min-w-0 grow">
@@ -62,16 +62,16 @@
 
         @include('community.partials.react-bar', ['type' => 'post', 'id' => $post->id, 'summary' => $pSummary])
 
-        <div class="mt-3 pt-3 border-t border-gray-100">
+        <div class="post-thread">
             @php
                 $topReplies = $post->replies->whereNull('parentId')->sortBy('id')->values();
                 $collapseReplies = $topReplies->count() > 3;
             @endphp
             @if ($replyCount > 0)
-                <p class="replies-label">{{ $replyCount }} {{ $replyCount === 1 ? 'sagot' : 'sagot' }}</p>
+                <p class="replies-label">{{ $replyCount }} sagot</p>
             @endif
             @if ($collapseReplies)
-                <button type="button" class="js-view-all-replies text-xs font-semibold text-brand-700 hover:text-brand-800 mb-1" data-post-id="{{ $post->id }}">
+                <button type="button" class="js-view-all-replies post-thread-more" data-post-id="{{ $post->id }}">
                     View all {{ $topReplies->count() }} replies
                 </button>
             @endif
@@ -86,7 +86,7 @@
             </div>
         </div>
 
-        <form class="post-reply-form flex flex-wrap items-center gap-2 mt-2" data-post-id="{{ $post->id }}">
+        <form class="post-reply-form flex flex-wrap items-center gap-2 mt-3" data-post-id="{{ $post->id }}">
             <span class="avatar avatar-sm {{ CommunityAvatar::hue(auth()->user()->full_name ?? '?') }}">{{ auth()->user()->initials ?? '?' }}</span>
             <span class="reply-shell">
                 <input type="text" placeholder="Sumagot ka…" maxlength="4000">

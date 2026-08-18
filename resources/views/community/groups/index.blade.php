@@ -9,14 +9,65 @@
 
 @push('head')
 @include('community.partials.plaza-css')
+<style>
+    /* The section head is one row wherever the two halves fit: the copy takes
+       whatever is left, the button keeps its own width and never squeezes the
+       heading into a narrow column beside it. Below that width the button
+       wraps to a full-width line instead of a stub in the corner. */
+    .disc-head { display:flex; align-items:center; gap:.75rem; flex-wrap:wrap; margin-bottom:1rem; }
+    .disc-head-copy { flex:1 1 8rem; min-width:0; }
+    .disc-head-title { font-family:var(--font-heading); font-size:1rem; font-weight:800; line-height:1.2;
+        color:var(--color-gray-900); }
+    .disc-head-sub { font-size:.78rem; line-height:1.35; color:var(--color-gray-500); margin-top:.1rem; }
+    .disc-head-btn { flex:0 0 auto; margin-left:auto; }
+    @media (max-width:22.4rem) {
+        .disc-head-btn { width:100%; margin-left:0; justify-content:center; }
+    }
+
+    /* One action per card: Join until you are in, Open once you are. They
+       swap in place, so the card never grows or shifts under the thumb. */
+    .disc-act { margin-top:auto; }
+    .disc-act .btn { width:100%; }
+    .disc-act .is-off { display:none; }
+    .disc-join { transition:opacity var(--dur) var(--ease-house), transform var(--dur) var(--ease-house); }
+    .disc-join.is-going { opacity:0; transform:scale(.96); pointer-events:none; }
+    @keyframes discSwap { from { opacity:0; transform:scale(.96); } to { opacity:1; transform:none; } }
+    .disc-open.is-arriving { animation:discSwap var(--dur) var(--ease-house); }
+
+    /* The tail of the list: a button, a loader, or the end of the road —
+       never two of them at once (the wall's shape, in this page's words). */
+    .disc-tail { text-align:center; margin-top:.75rem; padding-bottom:.5rem; }
+    .disc-tail[hidden] { display:none; }
+    .disc-spin { display:flex; align-items:center; justify-content:center; gap:.35rem; padding:.9rem 0; }
+    .disc-spin i { display:block; width:.45rem; height:.45rem; border-radius:9999px;
+        background:var(--color-brand-400); animation:discDot 1s cubic-bezier(.22,1,.36,1) infinite; }
+    .disc-spin i:nth-child(2) { animation-delay:.12s; }
+    .disc-spin i:nth-child(3) { animation-delay:.24s; }
+    @keyframes discDot { 0%,100% { opacity:.25; transform:translateY(0); } 50% { opacity:1; transform:translateY(-.25rem); } }
+    .disc-end { font-size:.78rem; font-weight:600; color:var(--color-gray-400); padding:1rem 0 .4rem; }
+    .disc-spin[hidden], .disc-end[hidden] { display:none; }
+
+    /* Cards past the first page wait off-stage and arrive a page at a time. */
+    .disc-card.is-paged-out { display:none; }
+    .disc-card.is-paged-in { animation:discSwap .32s var(--ease-house) both; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .disc-join, .disc-open.is-arriving, .disc-card.is-paged-in { transition:none; animation:none; }
+        /* A loader that stops looks like a page that broke; slow it instead. */
+        .disc-spin i { animation-duration:2.6s; }
+    }
+</style>
 @endpush
 
 @section('content')
 @include('community.partials.nav', ['active' => 'groups'])
 
-<div class="flex items-center justify-between gap-3 mb-4">
-    <p class="text-sm text-gray-500">Sali ka sa usapan — post questions, share what works.</p>
-    <button type="button" id="createGroupBtn" class="btn btn-primary btn-sm shrink-0">
+<div class="disc-head">
+    <div class="disc-head-copy">
+        <h2 class="disc-head-title">Sali ka sa usapan</h2>
+        <p class="disc-head-sub">Post questions, share what works.</p>
+    </div>
+    <button type="button" id="createGroupBtn" class="btn btn-primary btn-sm disc-head-btn">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
         New Discussion
     </button>
@@ -32,10 +83,11 @@
         </div>
     </div>
 @else
+    @php $discPerPage = 8; @endphp
     <div class="grid gap-3 sm:grid-cols-2 stagger-children" id="groupsGrid">
-        @foreach ($groups as $g)
+        @foreach ($groups as $i => $g)
             @php $hue = CommunityAvatar::hue($g->name); @endphp
-            <div class="card card-hover flex flex-col overflow-hidden" data-group-card="{{ $g->id }}">
+            <div class="card card-hover disc-card flex flex-col overflow-hidden {{ $i >= $discPerPage ? 'is-paged-out' : '' }}" data-group-card="{{ $g->id }}">
                 <div class="group-cap {{ $hue }}"></div>
                 <div class="card-body flex flex-col grow pt-4!">
                     <div class="flex items-start gap-3 min-w-0">
@@ -55,14 +107,23 @@
                         <span>🧑‍🌾 {{ $g->member_count }} {{ \Illuminate\Support\Str::plural('member', $g->member_count) }}</span>
                         <span>💬 {{ $g->post_count }} {{ \Illuminate\Support\Str::plural('post', $g->post_count) }}</span>
                     </div>
-                    <div class="flex items-center gap-2 mt-auto">
+                    {{-- "Open" is a promise you can only keep for a member; for
+                         everyone else the honest word is Join. --}}
+                    <div class="disc-act">
                         <a href="{{ route('community.groups.show', ['id' => $g->id]) }}"
-                           class="btn btn-white flex-1 btn-open {{ $g->joined ? 'is-promoted' : '' }}">Open</a>
-                        <button type="button" class="btn btn-primary shrink-0 group-join-btn {{ $g->joined ? 'hidden' : '' }}" data-group-id="{{ $g->id }}">Join</button>
+                           class="btn btn-primary disc-open {{ $g->joined ? '' : 'is-off' }}">Open</a>
+                        <button type="button" class="btn btn-primary disc-join {{ $g->joined ? 'is-off' : '' }}"
+                                data-group-id="{{ $g->id }}">Join</button>
                     </div>
                 </div>
             </div>
         @endforeach
+    </div>
+
+    <div class="disc-tail" id="discTail" @if ($groups->count() <= $discPerPage) hidden @endif>
+        <button type="button" id="discMore" class="btn btn-white btn-sm" data-infinite>Show more discussions</button>
+        <div class="disc-spin" id="discSpin" role="status" aria-label="Loading more discussions" hidden><i></i><i></i><i></i></div>
+        <p class="disc-end" id="discEnd" hidden>🌾 Iyan na ang lahat ng usapan.</p>
     </div>
 @endif
 
@@ -99,6 +160,7 @@
 @endsection
 
 @push('scripts')
+@include('community.partials.infinite-js')
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const CSRF = document.querySelector('meta[name=csrf-token]').content;
@@ -156,14 +218,16 @@ document.addEventListener('DOMContentLoaded', () => {
         finally { e.currentTarget.disabled = false; }
     });
 
-    // Join from a card: the Join button folds away while Open turns green —
-    // the primary color visibly travels from one to the other.
+    /* ---------------- Join from a card ----------------
+       The card's one action changes word rather than the reader learning a
+       new place to tap: Join fades out and Open arrives where it stood. */
     document.addEventListener('click', async (e) => {
-        const btn = e.target.closest('.group-join-btn');
+        const btn = e.target.closest('.disc-join');
         if (!btn || btn.dataset.busy) return;
         btn.dataset.busy = '1';
         const id = btn.getAttribute('data-group-id');
         const card = btn.closest('[data-group-card]');
+        const open = card?.querySelector('.disc-open');
         btn.style.opacity = '.6';
         try {
             const res = await fetch(`/app/community/groups/${id}/join`, { method: 'POST', headers: jsonHeaders });
@@ -173,14 +237,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.textContent = '✓';
                 btn.style.opacity = '';
                 const finish = () => {
-                    btn.classList.add('hidden');
-                    card.querySelector('.group-joined-tag')?.classList.remove('hidden');
+                    btn.classList.add('is-off');
+                    btn.classList.remove('is-going');
+                    open?.classList.remove('is-off');
+                    if (!reduceMotion) {
+                        open?.classList.add('is-arriving');
+                        open?.addEventListener('animationend', () => open.classList.remove('is-arriving'), { once: true });
+                    }
+                    card?.querySelector('.group-joined-tag')?.classList.remove('hidden');
                 };
-                if (reduceMotion) { finish(); card.querySelector('.btn-open')?.classList.add('is-promoted'); }
+                if (reduceMotion) finish();
                 else {
                     setTimeout(() => {
-                        btn.classList.add('is-morphing');
-                        card.querySelector('.btn-open')?.classList.add('is-promoted');
+                        btn.classList.add('is-going');
                         btn.addEventListener('transitionend', finish, { once: true });
                         setTimeout(finish, 500);   // safety if transitionend is missed
                     }, 300);
@@ -189,6 +258,80 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (_) { toast('Network error — try again.', 'error'); btn.style.opacity = ''; }
         finally { delete btn.dataset.busy; }
     });
+
+    /* ---------------- Scroll pagination ----------------
+       Every group already comes down with the page (the list is small and the
+       index has no JSON page endpoint), so a "page" here is a reveal, not a
+       fetch. The reader still meets the wall's contract: one page at a time,
+       a loader while it turns, one latch so nothing turns twice, and a plain
+       line when the list ends. */
+    const PER_PAGE = 8;
+    const grid = document.getElementById('groupsGrid');
+    const tail = document.getElementById('discTail');
+    const moreBtn = document.getElementById('discMore');
+    const spin = document.getElementById('discSpin');
+    const endNote = document.getElementById('discEnd');
+    let loading = false;
+    let done = false;
+
+    const pending = () => (grid ? Array.from(grid.querySelectorAll('.disc-card.is-paged-out')) : []);
+
+    function finish() {
+        done = true;
+        moreBtn?.remove();
+        if (spin) spin.hidden = true;
+        if (endNote) endNote.hidden = false;
+    }
+
+    function revealPage() {
+        if (!grid || done || loading || !moreBtn || moreBtn.disabled) return;
+        const batch = pending().slice(0, PER_PAGE);
+        if (!batch.length) { finish(); return; }
+        loading = true;
+        moreBtn.disabled = true;
+        moreBtn.hidden = true;
+        if (spin) spin.hidden = false;
+        // A beat on the loader so the page turn reads as one, then the cards
+        // land staggered the way the first page did.
+        setTimeout(() => {
+            batch.forEach((el, i) => {
+                el.classList.remove('is-paged-out');
+                if (!reduceMotion) {
+                    el.classList.add('is-paged-in');
+                    el.style.animationDelay = Math.min(i * 45, 300) + 'ms';
+                    el.addEventListener('animationend', () => { el.classList.remove('is-paged-in'); el.style.animationDelay = ''; }, { once: true });
+                }
+            });
+            if (spin) spin.hidden = true;
+            loading = false;
+            if (!pending().length) { finish(); return; }
+            moreBtn.disabled = false;
+            moreBtn.hidden = false;
+            setTimeout(nearTail, 0);   // still near the bottom? keep going
+        }, reduceMotion ? 0 : 220);
+    }
+
+    // 700px of runway, the margin the shared observer uses, so the next cards
+    // are already there when the reader arrives.
+    function nearTail() {
+        if (!moreBtn || done || loading || moreBtn.hidden || moreBtn.disabled) return;
+        if (moreBtn.getBoundingClientRect().top < window.innerHeight + 700) revealPage();
+    }
+    /* Throttled on the clock rather than requestAnimationFrame: a tab that is
+       not painting never delivers the frame, and the list would stop looking. */
+    let lastLook = 0;
+    function onScroll() {
+        const now = Date.now();
+        if (now - lastLook < 100) return;
+        lastLook = now;
+        nearTail();
+    }
+    if (tail && !tail.hidden) {
+        moreBtn?.addEventListener('click', revealPage);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+        nearTail();   // a short list can end with the tail already in view
+    }
 });
 </script>
 @endpush
