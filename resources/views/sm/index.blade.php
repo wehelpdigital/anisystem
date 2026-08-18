@@ -39,9 +39,14 @@
         .sch-hero { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
             gap: .85rem 1.25rem; padding: 1.05rem 1.25rem; margin-bottom: 1rem; border-radius: 1.1rem;
             background: var(--color-white); border: 1px solid var(--color-gray-200); position: relative; overflow: hidden; }
-        /* One restrained accent: a hairline of field-green along the top. */
+        /* One restrained accent: a hairline of field-green along the top.
+           It drifts on the shared gradSweep tide (layout) — the oversize is
+           what gives the gradient room to move. */
         .sch-hero::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
-            background: linear-gradient(90deg, #6b9f3d, #b8d38e 55%, transparent); }
+            background: linear-gradient(90deg, #6b9f3d, #b8d38e 55%, transparent);
+            background-size: 220% 100%;
+            animation: gradSweep 12s ease-in-out infinite alternate; }
+        @media (prefers-reduced-motion: reduce) { .sch-hero::before { animation: none; } }
         .sch-hero-left { display: flex; align-items: center; gap: .85rem; min-width: 0; }
         /* A drawn mark, not an emoji: platform emoji arrive as square little
            pictures and sat in the round badge like a photo in a porthole.
@@ -250,7 +255,15 @@
            name it describes. */
         .se-cover { position: relative; height: 4.6rem; display: flex; align-items: center;
             gap: .6rem; padding: .55rem .8rem; }
-        /* Soft, desaturated tints — the status is the weather over the field. */
+        /* Soft, desaturated tints — the status is the weather over the field.
+           The cover breathes on the shared gradSweep tide: slow enough that a
+           shelf of seasons shimmers like ground, not like adverts.
+           !important because every status (and its night twin, at higher
+           specificity) paints via the `background` shorthand, which quietly
+           resets background-size to auto. */
+        .se-cover { background-size: 220% 100% !important;
+            animation: gradSweep 13s ease-in-out infinite alternate; }
+        @media (prefers-reduced-motion: reduce) { .se-cover { animation: none; } }
         .se-cover-active    { background: linear-gradient(120deg, #eef6e6, #d9e9c8); }
         .se-cover-setup     { background: linear-gradient(120deg, #fdf6e6, #f5e6c4); }
         .se-cover-generated { background: linear-gradient(120deg, #eef0fb, #dde2f5); }
@@ -316,7 +329,11 @@
         .se-lotbar { height: .3rem; border-radius: 999px; background: var(--color-gray-100);
             overflow: hidden; margin-top: .35rem; }
         .se-lotbar span { display: block; height: 100%; border-radius: 999px;
-            background: linear-gradient(90deg, #8fbf5e, #4a7c2a); }
+            background: linear-gradient(90deg, #8fbf5e, #4a7c2a);
+            /* The day-count fills share the gradSweep tide (layout). */
+            background-size: 220% 100%;
+            animation: gradSweep 9s ease-in-out infinite alternate; }
+        @media (prefers-reduced-motion: reduce) { .se-lotbar span { animation: none; } }
         .se-lotfoot { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem;
             margin-top: .2rem; font-size: .66rem; color: var(--color-gray-400); }
         .se-lotfoot span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -354,14 +371,17 @@
             overflow: hidden; margin-top: .55rem; }
         .se-prog span { display: block; height: 100%; border-radius: 999px;
             background: linear-gradient(90deg, #8fbf5e, #4a7c2a);
+            /* Same tide as the lot bars; the size gives it room to drift. */
+            background-size: 220% 100%;
+            animation: gradSweep 9s ease-in-out infinite alternate;
             transition: width .28s cubic-bezier(.22,1,.36,1); }
-        .se-cover-completed ~ .card-body .se-prog span { background: linear-gradient(90deg, #93c5fd, #2563eb); }
+        .se-cover-completed ~ .card-body .se-prog span { background: linear-gradient(90deg, #93c5fd, #2563eb); background-size: 220% 100%; }
         .se-progline { display: flex; justify-content: space-between; align-items: baseline;
             margin-top: .3rem; font-size: .68rem; color: var(--color-gray-400); }
         .se-progline b { color: var(--color-gray-600); font-weight: 700; }
         html.dark .se-prog { background: rgb(255 255 255 / .08); }
         html.dark .se-progline b { color: #cdd8c0; }
-        @media (prefers-reduced-motion: reduce) { .se-prog span { transition: none; } }
+        @media (prefers-reduced-motion: reduce) { .se-prog span { transition: none; animation: none; } }
 
         .se-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .9rem;
             margin-top: auto; padding-top: .7rem; font-size: .72rem; font-weight: 500;

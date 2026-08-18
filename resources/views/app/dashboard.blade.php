@@ -46,7 +46,12 @@
         padding: 1.05rem 1.25rem; border-radius: 1.1rem; position: relative; overflow: hidden;
         background: var(--color-white); border: 1px solid var(--color-gray-200); }
     .dash-hero::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
-        background: linear-gradient(90deg, #6b9f3d, #b8d38e 55%, transparent); }
+        background: linear-gradient(90deg, #6b9f3d, #b8d38e 55%, transparent);
+        /* The hairline drifts like the rest of the app's accents — gradSweep
+           lives in the layout; the oversize is what gives it room to move. */
+        background-size: 220% 100%;
+        animation: gradSweep 12s ease-in-out infinite alternate; }
+    @media (prefers-reduced-motion: reduce) { .dash-hero::before { animation: none; } }
     .dash-hero-mark { width: 3rem; height: 3rem; border-radius: 999px; flex-shrink: 0;
         display: inline-flex; align-items: center; justify-content: center; }
     .dash-hero-mark svg { width: 1.55rem; height: 1.55rem; }
@@ -194,6 +199,13 @@
     .ds-chev svg { width: .8rem; height: .8rem; }
     .ds-head:hover .ds-chev { color: #3d6823; }
     .ds-card.is-folded .ds-chev { transform: rotate(-90deg); }
+    /* The space between the name and the detail belongs to the detail: flex
+       `gap` stands its ground even beside a zero-height row, which left every
+       folded season wearing an empty strip under its title. As ds-body
+       padding it lives inside the fold, so the closing row clips it — and the
+       fold animation carries it, instead of the gap snapping away after. */
+    .ds-card .card-body { gap: 0; }
+    .ds-body { padding-top: .75rem; }
     .ds-fold-wrap { display: grid; grid-template-rows: 1fr; min-height: 0; }
     .ds-card.is-folding .ds-fold-wrap { transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
     .ds-card.is-folded .ds-fold-wrap { grid-template-rows: 0fr; }

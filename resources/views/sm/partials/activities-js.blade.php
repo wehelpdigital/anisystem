@@ -1238,9 +1238,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     + advList(kin);
             }
             if (rest.length) {
+                // The count rides the button as a badge and the chevron says
+                // which way this goes, so the label can stay the same words in
+                // both states instead of rewriting itself.
                 html += `<button type="button" class="adv-more" id="advMore" aria-expanded="false" aria-controls="advRest">`
-                    + `Show ${rest.length} more, from other kinds of work</button>`
-                    + `<div class="adv-rest" id="advRest" hidden>${advList(rest)}</div>`;
+                    + `<span>From other kinds of work</span>`
+                    + `<span class="adv-more-n">${rest.length}</span>`
+                    + `<svg class="adv-more-chev" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>`
+                    + `</button>`
+                    + `<div class="adv-rest" id="advRest" aria-hidden="true"><div class="adv-rest-in">${advList(rest)}</div></div>`;
             }
             html += '<p class="adv-foot">Counted from this task’s own date, against the lots it covers. Drafts are not counted — a draft has not happened.</p>';
             $id('advInfoBody').innerHTML = html;
@@ -1249,12 +1255,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (more) {
                 more.addEventListener('click', () => {
                     const box = $id('advRest');
-                    const open = box.hasAttribute('hidden');
-                    if (open) box.removeAttribute('hidden'); else box.setAttribute('hidden', '');
+                    const open = !box.classList.contains('is-open');
+                    // Armed only for this fold, then disarmed — the sheet
+                    // relayouts constantly and 1fr resolves against content.
+                    box.classList.add('is-folding');
+                    box.classList.toggle('is-open', open);
+                    box.setAttribute('aria-hidden', open ? 'false' : 'true');
                     more.setAttribute('aria-expanded', open ? 'true' : 'false');
-                    more.textContent = open
-                        ? 'Hide the other kinds of work'
-                        : `Show ${rest.length} more, from other kinds of work`;
+                    setTimeout(() => box.classList.remove('is-folding'), 300);
                 });
             }
         } catch (err) {
@@ -4846,10 +4854,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (menuBtn) {
             CARD_MENU = { id: menuBtn.getAttribute('data-id'), name: menuBtn.getAttribute('data-name') || 'Activity' };
             $id('cardMenuTitle').textContent = CARD_MENU.name;
-            const card = $qs(`#activitiesList .activity-card[data-id="${CARD_MENU.id}"]`);
-            $id('cardMenuHideLabel').textContent = card && card.classList.contains('is-hidden')
-                ? 'Show in presentations'
-                : 'Hide from presentations';
             openSheet('cardMenuSheet');
             return;
         }
@@ -4874,7 +4878,8 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (action === 'tag') openActivityTagSheet(id, name);
             else if (action === 'draft') moveActivityToDrafts(id, name);
             else if (action === 'delete') deleteActivity(id, name);
-            else if (action === 'hide') toggleActivityHidden(id);
+            // 'hide' left the menu (2026-08): the card's eye toggle is the one
+            // way to hide from presentations now; the endpoint itself stays.
             else if (action === 'move') openMoveSheet(id, name);
             return;
         }

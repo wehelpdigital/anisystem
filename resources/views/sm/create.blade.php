@@ -72,7 +72,9 @@
                             <label class="form-label">Title <span class="text-red-500">*</span></label>
                             <input type="text" x-model="form.title" maxlength="255"
                                    @keydown.enter.prevent="canNext && next()"
-                                   class="form-input" placeholder="e.g. Wet Season 2026 — Rice Cropping" autofocus>
+                                   {{-- No autofocus: on a phone it summoned the keypad over a form
+                                        the farmer had not read yet. Tapping the field still focuses it. --}}
+                                   class="form-input" placeholder="e.g. Wet Season 2026 — Rice Cropping">
                         </div>
                         <div>
                             <label class="form-label">Description <span class="text-gray-400 font-normal">(optional)</span></label>

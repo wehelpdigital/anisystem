@@ -40,6 +40,10 @@
             const dark = saved ? saved === 'dark'
                 : window.matchMedia('(prefers-color-scheme: dark)').matches;
             root.classList.toggle('dark', dark);
+            // Mirrored into a cookie because the login page is served before
+            // auth — localStorage stays the in-app source of truth, the cookie
+            // is what lets a guest page match the mode pre-paint.
+            try { document.cookie = 'anisystem-theme=' + (dark ? 'dark' : 'light') + ';path=/;max-age=31536000;SameSite=Lax'; } catch (_) {}
             // Accessibility: text size, contrast, motion, link underlines.
             root.dataset.fontScale = get('sm-a11y-font') || 'md';
             root.classList.toggle('sm-contrast', get('sm-a11y-contrast') === '1');
@@ -478,23 +482,90 @@
 
     {{-- Mobile bottom tab bar --}}
     <nav class="tabbar">
-        <a href="{{ route('app.dashboard') }}" class="tabbar-item {{ request()->routeIs('app.dashboard') ? 'is-active' : '' }}">
+        <a href="{{ route('app.dashboard') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('app.dashboard') ? 'is-active' : '' }}">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-8 9 8M5 10v10a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V10"/></svg>
             <span>Home</span>
         </a>
-        <a href="{{ route('sm.index') }}" class="tabbar-item {{ request()->routeIs('sm.*') ? 'is-active' : '' }}">
+        <a href="{{ route('sm.index') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('sm.*') ? 'is-active' : '' }}">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v3m8-3v3M4 8h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1zm4 8h2m4 0h2m-8 4h2m4 0h2"/></svg>
             <span>Schedules</span>
         </a>
-        <a href="{{ route('community.index') }}" class="tabbar-item {{ request()->routeIs('community.*') ? 'is-active' : '' }}">
+        <a href="{{ route('community.index') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('community.*') ? 'is-active' : '' }}">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
             <span>Community</span>
         </a>
-        <a href="{{ route('account.index') }}" class="tabbar-item {{ request()->routeIs('account.*') ? 'is-active' : '' }}">
+        <a href="{{ route('account.index') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('account.*') ? 'is-active' : '' }}">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
             <span>Account</span>
         </a>
     </nav>
+
+    {{-- Navigation veil: the app answers a tap on a place-to-go immediately,
+         even when the next page is still being cooked. Opt-in via
+         data-nav-loader on real links only — buttons that open sheets keep
+         answering for themselves, and the module shell swaps panes without
+         leaving the page, so it never wears this. --}}
+    <style>
+        .nav-loader { position: fixed; inset: 0; z-index: 300; display: flex; align-items: center; justify-content: center;
+            background: rgb(249 250 251 / .72); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+            opacity: 0; pointer-events: none;
+            transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+        /* pointer-events stay off until it is truly on, so a cancelled show
+           can never trap a tap behind an invisible sheet of glass. */
+        .nav-loader.is-on { opacity: 1; pointer-events: auto; }
+        .nav-loader-spin { width: 2.4rem; height: 2.4rem; border-radius: 999px;
+            border: 3px solid rgb(74 124 42 / .2); border-top-color: #4a7c2a;
+            animation: navLoaderSpin .8s linear infinite; }
+        @keyframes navLoaderSpin { to { transform: rotate(360deg); } }
+        html.dark .nav-loader { background: rgb(10 14 8 / .72); }
+        html.dark .nav-loader-spin { border-color: rgb(107 159 61 / .25); border-top-color: #6b9f3d; }
+        @media (prefers-reduced-motion: reduce) {
+            .nav-loader { transition: none; }
+            /* Slowed, not stopped: the turn is the message that work is happening. */
+            .nav-loader-spin { animation-duration: 1.6s; }
+        }
+
+        /* One slow tide for every gradient that wants to look alive — accent
+           lines, season covers, progress fills. Sites give the element a
+           background-size over 100% on whichever axis should drift and play
+           this at 8-14s alternate; layers sized to the box simply stay put.
+           Each site carries its own reduced-motion guard, and html.sm-still
+           blankets the lot. */
+        @keyframes gradSweep {
+            from { background-position: 0% 0%; }
+            to   { background-position: 100% 100%; }
+        }
+    </style>
+    <div id="navLoader" class="nav-loader" hidden aria-hidden="true">
+        <div class="nav-loader-spin"></div>
+    </div>
+    <script>
+        (() => {
+            const veil = document.getElementById('navLoader');
+            if (!veil) return;
+            const clear = () => { veil.classList.remove('is-on'); veil.hidden = true; };
+            document.addEventListener('click', (e) => {
+                const a = e.target.closest('a[data-nav-loader]');
+                if (!a || e.defaultPrevented) return;
+                // Only a plain left-click in this tab is a navigation we will
+                // witness: new-tab clicks and downloads leave this page alone.
+                if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+                if ((a.target && a.target !== '_self') || a.hasAttribute('download')) return;
+                const href = a.getAttribute('href') || '';
+                if (!href || href.startsWith('#') || href.startsWith('javascript:')) return;
+                let url;
+                try { url = new URL(a.href, location.href); } catch (_) { return; }
+                if (url.origin !== location.origin) return;
+                // A hash-jump within this page never unloads it.
+                if (url.hash && url.pathname === location.pathname && url.search === location.search) return;
+                veil.hidden = false;
+                requestAnimationFrame(() => veil.classList.add('is-on'));
+            });
+            // Fired on every arrival including back/forward cache restores —
+            // the one signal that always says "you can see the page again".
+            window.addEventListener('pageshow', clear);
+        })();
+    </script>
 
     {{-- Messenger dock — community pages + the dashboard (which shows the
          co-farmer feed with its Message buttons). Kept off the schedule pages
@@ -561,6 +632,11 @@
         (() => {
             const root = document.documentElement;
             const btn = document.getElementById('themeToggle');
+            // Kept beside localStorage so the login page still shows the right
+            // mode after a logout that follows a toggle on this very page.
+            const remember = (dark) => {
+                try { document.cookie = 'anisystem-theme=' + (dark ? 'dark' : 'light') + ';path=/;max-age=31536000;SameSite=Lax'; } catch (_) {}
+            };
 
             const paint = () => {
                 const dark = root.classList.contains('dark');
@@ -577,6 +653,7 @@
                 root.classList.add('theme-animating');
                 root.classList.toggle('dark', dark);
                 localStorage.setItem('anisystem-theme', dark ? 'dark' : 'light');
+                remember(dark);
                 paint();
                 setTimeout(() => root.classList.remove('theme-animating'), 300);
             });
@@ -585,6 +662,7 @@
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
                 if (localStorage.getItem('anisystem-theme')) return;
                 root.classList.toggle('dark', e.matches);
+                remember(e.matches);
                 paint();
             });
 

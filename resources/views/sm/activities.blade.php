@@ -93,13 +93,40 @@
         html.dark .date-color-7 { --date-color: #4FD0B4; }
 
         .date-group {
-            background: var(--tl-surface); border: 1px solid var(--tl-border); border-left: 4px solid var(--date-color, #4A90E2);
+            /* The day's side colour is painted as a border-box gradient under
+               a transparent left border (rather than the border itself) so it
+               can drift on the shared gradSweep tide — the surface layer sits
+               on the padding box, exactly where the old flat background was,
+               and the three opaque tl-border edges cover the gradient. */
+            border: 1px solid var(--tl-border); border-left: 4px solid transparent;
+            background:
+                linear-gradient(var(--tl-surface), var(--tl-surface)) padding-box,
+                linear-gradient(180deg,
+                    var(--date-color, #4A90E2),
+                    color-mix(in srgb, var(--date-color, #4A90E2) 58%, var(--tl-surface)) 50%,
+                    var(--date-color, #4A90E2)) border-box;
+            background-size: auto, 100% 220%;
+            animation: gradSweep 12s ease-in-out infinite alternate;
             border-radius: 1rem; box-shadow: var(--shadow-card); margin-bottom: .9rem;
+            /* A long season is hundreds of cards; days off screen keep their
+               scrollbar-worth of height without paying layout for it. */
+            content-visibility: auto;
+            contain-intrinsic-size: auto 400px;
         }
         .date-header {
             display: flex; align-items: center; gap: .4rem; flex-wrap: wrap;
             padding: .55rem .8rem; border-radius: calc(1rem - 2px) calc(1rem - 2px) 0 0;
-            background: color-mix(in srgb, var(--date-color, #4A90E2) var(--tl-header-tint), var(--tl-surface));
+            /* The old flat tint, now the middle of a shallow swell in the
+               day's own hue, drifting on the same shared tide. */
+            background: linear-gradient(100deg,
+                color-mix(in srgb, var(--date-color, #4A90E2) var(--tl-header-tint), var(--tl-surface)),
+                color-mix(in srgb, var(--date-color, #4A90E2) calc(var(--tl-header-tint) + 8%), var(--tl-surface)) 50%,
+                color-mix(in srgb, var(--date-color, #4A90E2) var(--tl-header-tint), var(--tl-surface)));
+            background-size: 220% 100%;
+            animation: gradSweep 11s ease-in-out infinite alternate;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .date-group, .date-header { animation: none; }
         }
         .date-header-day { font-weight: 800; font-size: .8rem; color: var(--date-color); text-transform: uppercase; }
         .date-header-date { font-weight: 800; font-size: 1rem; color: var(--tl-text); }
@@ -275,11 +302,32 @@
         .adv-head { font-size: .68rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
             color: var(--color-gray-400); margin: .9rem 0 .35rem; }
         .adv-head:first-child { margin-top: 0; }
-        .adv-more { width: 100%; margin-top: .8rem; font-size: .75rem; font-weight: 700;
-            color: var(--color-gray-500); padding: .5rem; border-radius: .7rem;
-            border: 1px dashed var(--color-gray-300); background: transparent; }
+        .adv-more { display: flex; align-items: center; justify-content: center; gap: .45rem;
+            width: 100%; margin-top: .8rem; font-size: .75rem; font-weight: 700;
+            color: var(--color-gray-500); padding: .5rem .7rem; border-radius: .7rem;
+            border: 1px dashed var(--color-gray-300); background: transparent; cursor: pointer;
+            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
         .adv-more:hover { background: var(--color-gray-50); color: var(--color-gray-700); }
-        .adv-rest[hidden] { display: none; }
+        /* How many wait behind the button — the reason to press it. */
+        .adv-more-n { min-width: 1.25rem; height: 1.25rem; padding: 0 .3rem; border-radius: 999px;
+            display: inline-flex; align-items: center; justify-content: center; flex: none;
+            font-size: .66rem; font-weight: 800;
+            background: var(--color-gray-100); color: var(--color-gray-600); }
+        .adv-more-chev { width: .8rem; height: .8rem; flex: none;
+            transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        .adv-more[aria-expanded="true"] .adv-more-chev { transform: rotate(180deg); }
+        /* Folds on grid rows, and the transition is armed only while a fold is
+           actually happening — the same reasoning as .se-fold-wrap: a
+           permanently transitioned 1fr re-animates on every relayout. */
+        .adv-rest { display: grid; grid-template-rows: 0fr; }
+        .adv-rest.is-open { grid-template-rows: 1fr; }
+        .adv-rest.is-folding { transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+        .adv-rest > .adv-rest-in { min-height: 0; overflow: hidden; }
+        /* Breathing room that folds away with the list it belongs to. */
+        .adv-rest-in .adv-list { padding-top: .55rem; }
+        @media (prefers-reduced-motion: reduce) {
+            .adv-more, .adv-more-chev, .adv-rest.is-folding { transition: none; }
+        }
 
         html.dark .adv-row { background: #151b12; border-color: #2b3a1c; }
         html.dark .adv-lbl { color: #e8efe1; }
@@ -289,6 +337,7 @@
         html.dark .adv-lede.is-none { background: #1c2416; border-color: #2b3a1c; }
         html.dark .adv-more { border-color: #2b3a1c; }
         html.dark .adv-more:hover { background: #1c2416; }
+        html.dark .adv-more-n { background: rgb(255 255 255 / .08); color: #cdd8c0; }
 
         /* The reminder card names itself where other cards name their lot. */
         /* Which count a move is being made in, when the lot keeps two. */
@@ -1281,6 +1330,15 @@
                wide as its contents. */
             #actToolbar { gap: .375rem; row-gap: .375rem; }
         }
+        /* The app bar is h-14/h-16 PLUS its 1px border, and the count badges on
+           Notice/Undo/Redo hang above the buttons' top edge — so at top-14 with
+           pt-0 the border overlapped the row and the header sliced every badge
+           in half. The bar drops by the border and trades its bottom padding
+           for top padding: the badges now live inside the bar's own paint, and
+           the total height is unchanged, which is what the Gallery's hardcoded
+           shelf-bar offset (ga-shelfbar) is measured against. */
+        .sticky.top-14 { top: calc(3.5rem + 1px); padding-top: .5rem; padding-bottom: 0; }
+        @media (min-width: 768px) { .sticky.top-14 { top: calc(4rem + 1px); } }
         #toggleHiddenBtn.hidden { display: none !important; }
         /* !important so the disabled dimming survives the sheet's fade-in
            animation (which otherwise forces opacity back to 1). */
@@ -1951,14 +2009,13 @@
 {{-- ===================== TOOLBAR (sticky, persistent) =====================
      The modules hamburger lives here, inline with the activity actions. When
      another module is showing, the activities-only buttons hide. --}}
-{{-- pt-0: the floor. The buttons now start at the bar's very top edge,
-     flush under the app header, and there is no padding left above them to
-     remove. Anything further would mean sliding the bar behind the header —
-     which hides the top of the buttons rather than raising them.
-
-     The bar's height is what the Gallery's shelf bar measures its sticky
-     offset from. The two are changed together, always, or the shelf bar
-     floats free of the toolbar it is supposed to sit under. --}}
+{{-- The utility classes here are corrected by the .sticky.top-14 rule in this
+     page's own <style>: top-14 ignores the app bar's 1px border, and pt-0 left
+     the count badges (which hang above the buttons) under the header's paint —
+     so the CSS drops the bar by the border and moves the bottom padding to the
+     top. Total height is unchanged on purpose: it is what the Gallery's shelf
+     bar measures its sticky offset from. The two are changed together, always,
+     or the shelf bar floats free of the toolbar it is supposed to sit under. --}}
 <div class="sticky top-14 md:top-16 z-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 pt-0 pb-2 mb-2 border-b border-gray-100">
     <div id="actToolbar" class="flex items-center gap-2 flex-wrap">
         <button type="button" id="modulesBtn" class="btn btn-white btn-sm" title="Switch module">

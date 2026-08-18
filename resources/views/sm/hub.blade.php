@@ -143,7 +143,12 @@
             border: 1px solid var(--color-gray-200, #e5e7eb);
             box-shadow: 0 12px 32px -26px rgb(15 23 42 / .5); }
         .sched-head::before { content: ''; position: absolute; inset: 0 0 auto 0; height: .35rem;
-            background: linear-gradient(90deg, #3d6823, #6b9f3d 55%, #a8cc7e); }
+            background: linear-gradient(90deg, #3d6823, #6b9f3d 55%, #a8cc7e);
+            /* Drifts on the shared gradSweep tide (layout); the oversize is
+               what gives the band room to move. */
+            background-size: 220% 100%;
+            animation: gradSweep 12s ease-in-out infinite alternate; }
+        @media (prefers-reduced-motion: reduce) { .sched-head::before { animation: none; } }
         .sched-head-top { display: flex; align-items: flex-start; gap: .75rem; padding: 1.05rem 1.1rem .35rem; }
         .sched-title { font-size: 1.3rem; font-weight: 800; line-height: 1.2;
             color: var(--color-gray-900, #111827); word-break: break-word; }
@@ -208,7 +213,15 @@
             transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1),
                 border-color .28s cubic-bezier(.22,1,.36,1); }
         .cta-tile::before { content: ''; position: absolute; inset: 0 auto 0 0; width: .3rem;
-            background: var(--cta-accent, #6b9f3d); }
+            /* A quiet glint sliding along each door's own accent — the shared
+               gradSweep tide, vertical this time. */
+            background: linear-gradient(180deg,
+                var(--cta-accent, #6b9f3d),
+                color-mix(in srgb, var(--cta-accent, #6b9f3d) 62%, #fff) 50%,
+                var(--cta-accent, #6b9f3d));
+            background-size: 100% 220%;
+            animation: gradSweep 10s ease-in-out infinite alternate; }
+        @media (prefers-reduced-motion: reduce) { .cta-tile::before { animation: none; } }
         .cta-tile:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -20px rgb(0 0 0 / .5); }
         .cta-tile:active { transform: translateY(0); }
         .cta-tile .cta-chip { color: #fff; background: var(--cta-accent, #6b9f3d);
@@ -281,7 +294,7 @@
          side by side rather than one of them being somewhere else. --}}
     <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 mb-4">
         {{-- Activities (2/4) --}}
-        <a href="{{ route('sm.activities', ['id' => $schedule->id]) }}"
+        <a href="{{ route('sm.activities', ['id' => $schedule->id]) }}" data-nav-loader
             class="cta-tile act-cta sm:col-span-2 rounded-2xl p-5 flex items-center gap-4">
             <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
@@ -334,7 +347,7 @@
     {{-- Module grid + the team/share/report actions, all as matched square tiles. --}}
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 stagger-children hub-grid">
         @foreach ($moduleCards as [$label, $moduleKey, $count, $iconPath])
-            <a href="{{ route('sm.activities', ['id' => $schedule->id, 'module' => $moduleKey]) }}" class="card card-hover block">
+            <a href="{{ route('sm.activities', ['id' => $schedule->id, 'module' => $moduleKey]) }}" data-nav-loader class="card card-hover block">
                 <div class="p-4 flex flex-col gap-3">
                     <div class="flex items-start justify-between">
                         <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
@@ -351,6 +364,8 @@
 
         {{-- Collab Room — right after AI Technician --}}
         @if (\App\Support\ScheduleTeam::hasTeam($schedule))
+            {{-- No data-nav-loader: data-collab-open intercepts this click to
+                 ask about the team first, so the tap does not always leave. --}}
             <a href="{{ route('sm.collab', ['id' => $schedule->id]) }}" data-collab-open class="card card-hover block">
                 <div class="p-4 flex flex-col gap-3">
                     <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
@@ -372,7 +387,7 @@
         </button>
 
         {{-- Reports --}}
-        <a href="{{ route('sm.reports', ['id' => $schedule->id]) }}" class="card card-hover block">
+        <a href="{{ route('sm.reports', ['id' => $schedule->id]) }}" data-nav-loader class="card card-hover block">
             <div class="p-4 flex flex-col gap-3">
                 <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
                     <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9 9 0 1020.945 13H12a1 1 0 01-1-1V3.055zM15 3.936A9.02 9.02 0 0120.064 9H15V3.936z"/></svg>
@@ -383,7 +398,17 @@
     </div>
 
     {{-- Danger zone --}}
-    <div class="card border-red-100">
+    <style>
+        /* A red band over the one card that can end a season: the same slow
+           gradSweep tide as the green lines above, wearing warning colours. */
+        .danger-head { position: relative; overflow: hidden; }
+        .danger-head::before { content: ''; position: absolute; inset: 0 0 auto 0; height: .25rem;
+            background: linear-gradient(90deg, #b91c1c, #f87171 55%, #b91c1c);
+            background-size: 220% 100%;
+            animation: gradSweep 10s ease-in-out infinite alternate; }
+        @media (prefers-reduced-motion: reduce) { .danger-head::before { animation: none; } }
+    </style>
+    <div class="card border-red-100 danger-head">
         <div class="card-body">
             <h3 class="font-bold text-red-700 mb-1">Danger zone</h3>
             <p class="text-sm text-gray-500 mb-4">Deleting hides this schedule and all its modules from your account.</p>

@@ -766,7 +766,6 @@
             <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="edit" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Edit</button>
             <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="move" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Move to date…</button>
             <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="duplicate" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Duplicate</button>
-            <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="hide" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif><span id="cardMenuHideLabel">Hide from presentations</span></button>
             {{-- Reading what went on this ground before is a read. It stays. --}}
             <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="advanced">Advanced info</button>
             <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="tag" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Tag a drawing, map or note</button>

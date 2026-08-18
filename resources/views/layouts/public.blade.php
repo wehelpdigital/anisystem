@@ -23,6 +23,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    {{-- Night mode for guests: the app mirrors its theme choice into a cookie,
+         so the login page can match before the user is even logged in. Runs
+         inline before the stylesheet so dark never flashes white. No cookie
+         means light — guests default bright, never the OS preference. --}}
+    <script>
+        (() => {
+            try {
+                if (/(?:^|;\s*)anisystem-theme=dark(?:;|$)/.test(document.cookie)) {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (_) {}
+        })();
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
 </head>
