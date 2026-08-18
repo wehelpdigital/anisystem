@@ -1241,11 +1241,16 @@
                 api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: o.id } }).catch(() => {});
                 dropObject(o.id, true);
             } else if (tool === 'edit') {
+                // Whether this tap is the pick-up or the follow-up decides
+                // what it means, so ask before beginEdit muddies the answer.
+                const held = editing && editing.o.id === o.id;
                 beginEdit(o, parts);
-                // A label's whole content is words, so picking one up and
-                // opening what it says are the same intention. A drag never
-                // gets here — Google fires click only when nothing moved.
-                if (o.kind === 'text') openTextSheet(objIndex.get(o.id) || o);
+                // First tap takes hold — move it, size it, walk away. The
+                // words open on the SECOND tap of a label already in hand:
+                // a sheet over every selection buried the drag half of the
+                // gesture the label was picked up for. (A drag never gets
+                // here — Google fires click only when nothing moved.)
+                if (o.kind === 'text' && held) openTextSheet(objIndex.get(o.id) || o);
             } else if (tool === 'text' && o.kind === 'text') {
                 // With the Text tool out, a tap on ground writes a new label
                 // and a tap on a label rewrites that one — otherwise the only
@@ -1939,7 +1944,12 @@
                 dropObject(o.id);
                 renderObject(res.data.object);
                 // Stay picked up, so nudging can continue without re-tapping.
-                if (tool === 'edit') beginEdit(res.data.object, layers.get(res.data.object.id));
+                // Unconditionally: a hold only reaches this line alive (the
+                // timer bails once editing ends), and every hold was taken on
+                // purpose — Select's tap, or the auto-hold on a fresh label.
+                // Gating on the Select tool dropped that fresh label's hold on
+                // its first nudge, taking the size handle with it.
+                beginEdit(res.data.object, layers.get(res.data.object.id));
             } catch (e) { if (window.toast) toast(e.message, 'error'); }
         }, 700);
     }
