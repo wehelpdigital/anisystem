@@ -8,6 +8,10 @@
     // Super admins ride free — the wallet row hides for them (view-side check,
     // same pattern the floating assistant already uses).
     $aiUnlimited = app(\App\Services\AiCreditService::class)->unlimited((int) auth()->id());
+    // The real per-photo price, so the hint stays honest when several photos
+    // ride on one question.
+    $aiPerPhoto = (float) ($settings->creditsPerImage ?? 0);
+    $aiPerPhotoTxt = rtrim(rtrim(number_format($aiPerPhoto, 2), '0'), '.');
 @endphp
 
 @push('head')
@@ -173,10 +177,43 @@
         #aiSendBtn:active:not(:disabled) { transform: scale(.95); }
         #aiSendBtn:disabled { opacity: .55; }
         .ai-hint { text-align: center; font-size: .72rem; font-weight: 600; color: var(--color-gray-500); margin-top: .4rem; }
-        #aiPhotoChip { background: var(--color-gray-100); border-radius: .75rem; padding: .35rem .6rem; }
-        #aiPhotoChip.hidden { display: none; }
-        #aiPhotoThumb { box-shadow: 0 0 0 2px var(--color-brand-200); }
         #aiSchedule { max-width: 11rem; }
+
+        /* --- Attached photo chips: one thumbnail per photo, each with its
+               own remove. A chip mid-upload wears a spinner instead of ✕. --- */
+        #aiPhotoChips { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: .45rem; }
+        #aiPhotoChips:empty { display: none; }
+        .ai-chip { position: relative; width: 3.4rem; height: 3.4rem; border-radius: .75rem; overflow: hidden;
+            box-shadow: 0 0 0 2px var(--color-brand-200); background: var(--color-gray-100);
+            animation: aiChipIn .28s cubic-bezier(.22,1,.36,1) both; }
+        .ai-chip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .ai-chip .x { position: absolute; top: .15rem; right: .15rem; width: 1.2rem; height: 1.2rem;
+            border-radius: 999px; display: flex; align-items: center; justify-content: center;
+            background: rgb(17 24 39 / .72); color: #fff; font-size: .62rem; font-weight: 800; line-height: 1;
+            transition: transform .15s ease, background-color .15s ease; }
+        .ai-chip .x:hover { background: #b91c1c; transform: scale(1.1); }
+        .ai-chip .st { position: absolute; inset: 0; display: none; align-items: center; justify-content: center;
+            background: rgb(255 255 255 / .55); color: var(--color-brand-700); }
+        .ai-chip.is-busy .st { display: flex; }
+        .ai-chip.is-busy .x { display: none; }
+        html.dark .ai-chip .st { background: rgb(0 0 0 / .45); color: #fff; }
+        @keyframes aiChipIn { from { opacity: 0; transform: scale(.8); } to { opacity: 1; transform: none; } }
+
+        /* --- Photos inside a bubble: one keeps its natural shape, two or
+               more settle into a tidy square grid. --- */
+        .ai-shots { display: grid; gap: .35rem; margin-top: .4rem; }
+        .ai-shots img { margin-top: 0; }
+        .ai-shots.is-multi { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .ai-shots.is-multi img { width: 100%; aspect-ratio: 1; object-fit: cover; max-height: none; }
+
+        /* --- The attach chooser's doors (house sheet rows) --- */
+        .ai-attach-opt { display: flex; align-items: center; gap: .75rem; width: 100%; padding: .7rem .8rem;
+            border-radius: .9rem; text-align: left; font-size: .95rem; font-weight: 700; color: var(--color-gray-800);
+            transition: background-color .15s ease; }
+        .ai-attach-opt:hover { background: var(--color-gray-100); }
+        .ai-attach-opt .ic { width: 2.4rem; height: 2.4rem; border-radius: .8rem; flex-shrink: 0; display: flex;
+            align-items: center; justify-content: center; background: var(--color-brand-50); color: var(--color-brand-700); }
+        .ai-attach-opt .sub { display: block; font-size: .72rem; font-weight: 600; color: var(--color-gray-400); }
 
         /* --- Notices: warm field notes (accent = money/attention) --- */
         .ai-note { display: flex; gap: .8rem; align-items: flex-start; margin-bottom: .75rem; padding: 1rem 1.1rem; border-radius: 1.25rem; border: 1px solid rgb(245 197 24 / .4); background: linear-gradient(115deg, rgb(245 197 24 / .14), rgb(245 197 24 / .04)), var(--color-white); }
@@ -195,8 +232,8 @@
         html.dark .ai-hello .aimsg-face { box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-200), 0 10px 24px -8px rgb(0 0 0 / .6); }
 
         @media (prefers-reduced-motion: reduce) {
-            .ai-head, .aimsg.is-new, .aisuggest, .ai-hello .aimsg-face { animation: none; }
-            .aisuggest, .aisuggest .go, .aichat-box, #aiSendBtn, .ai-credits, .ai-sq { transition: none; }
+            .ai-head, .aimsg.is-new, .aisuggest, .ai-hello .aimsg-face, .ai-chip { animation: none; }
+            .aisuggest, .aisuggest .go, .aichat-box, #aiSendBtn, .ai-credits, .ai-sq, .ai-attach-opt, .ai-chip .x { transition: none; }
             /* Slowed, not stopped — the pulse is the message that work is happening. */
             .aidots i { animation-duration: 1.8s; }
             [style*="ai-spin"] { animation-duration: 1.6s !important; }
@@ -283,7 +320,7 @@
         </span>
         <div>
             <h3>You have no AI Credits left</h3>
-            <p>A question costs about 4 credits, or 7 with a photo. Top up to keep asking.</p>
+            <p>A question costs about 4 credits{{ $aiPerPhoto > 0 ? ', plus ' . $aiPerPhotoTxt . ' for each photo' : '' }}. Top up to keep asking.</p>
             <a href="{{ route('ai.credits') }}" class="btn btn-accent btn-sm mt-2">Get AI Credits</a>
         </div>
     </div>
@@ -312,8 +349,17 @@
                 </span>
                 <div class="aibubble">
                     {!! \App\Support\AiMarkdown::toHtml($m->content) !!}
-                    @if ($m->imagePath)
-                        <img src="{{ \App\Support\MediaStore::url($m->imagePath) }}" alt="Attached photo">
+                    @php
+                        // Every photo on the turn — the new column when it is
+                        // there, the legacy single path for older rows.
+                        $mShots = array_values(array_filter((array) ($m->imagePaths ?: ($m->imagePath ? [$m->imagePath] : []))));
+                    @endphp
+                    @if ($mShots)
+                        <div class="ai-shots {{ count($mShots) > 1 ? 'is-multi' : '' }}">
+                            @foreach ($mShots as $mShot)
+                                <img src="{{ \App\Support\MediaStore::url($mShot) }}" alt="Attached photo">
+                            @endforeach
+                        </div>
                     @endif
                     @if ($m->role === 'assistant' && (float) $m->creditsCharged > 0 && ! $aiUnlimited)
                         <p class="aibubble-cost">{{ rtrim(rtrim(number_format((float) $m->creditsCharged, 2), '0'), '.') }} credits</p>
@@ -335,16 +381,14 @@
 
     {{-- Composer: pinned to the bottom of the dvh column --}}
     <div class="aichat-composer">
-        <div id="aiPhotoChip" class="hidden mb-1.5 flex items-center gap-2 text-xs font-semibold text-gray-600">
-            <img src="" alt="" class="w-9 h-9 rounded-lg object-cover" id="aiPhotoThumb">
-            <span>Photo attached</span>
-            <button type="button" class="text-red-600 font-bold" id="aiPhotoRemove">Remove</button>
-        </div>
+        {{-- One chip per attached photo, each with its own remove. --}}
+        <div id="aiPhotoChips" aria-label="Attached photos" aria-live="polite"></div>
         <div class="aichat-box">
-            <label class="ai-cam shrink-0" title="Attach a photo" aria-label="Attach a photo">
+            <button type="button" class="ai-cam shrink-0" id="aiAttachBtn" title="Add photos" aria-label="Add photos" aria-haspopup="dialog">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                <input type="file" id="aiPhoto" accept="image/*" capture="environment" class="hidden">
-            </label>
+            </button>
+            <input type="file" id="aiPhotoFiles" accept="image/*" multiple class="hidden">
+            <input type="file" id="aiPhotoCam" accept="image/*" capture="environment" class="hidden">
             <textarea id="aiInput" class="form-textarea border-0! shadow-none! focus:ring-0! p-2 grow bg-transparent!" rows="1"
                       maxlength="4000" placeholder="Ask about your crop…"
                       {{ $settings->isUsable() ? '' : 'disabled' }}></textarea>
@@ -363,7 +407,7 @@
                 </select>
             @endif
             @unless ($aiUnlimited)
-                <p class="ai-hint mt-0!">≈ 4 credits per answer · 7 with a photo</p>
+                <p class="ai-hint mt-0!">≈ 4 credits per answer{{ $aiPerPhoto > 0 ? ' · +' . $aiPerPhotoTxt . ' per photo' : '' }}</p>
             @endunless
         </div>
     </div>
@@ -372,6 +416,30 @@
 @endsection
 
 @push('sheets')
+{{-- The attach chooser: every way a photo can arrive, behind one button
+     (the messenger's + chooser, spoken in the house sheet language). The
+     gallery door only shows where the season picker travels with the page. --}}
+<div class="sheet hidden" id="aiAttachSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Add photos</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-1">
+        <button type="button" class="ai-attach-opt" id="aiAttachUpload">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>
+            <span>Upload photos<span class="sub">Pick one or several from your device</span></span>
+        </button>
+        <button type="button" class="ai-attach-opt" id="aiAttachCamera">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
+            <span>Take a photo<span class="sub">Point the camera at the problem</span></span>
+        </button>
+        <button type="button" class="ai-attach-opt hidden" id="aiAttachGallery">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l2-3h6l2 3h3v13H4V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 13l2.5-2.5L14 14l2-2 2 2"/></svg></span>
+            <span>From the gallery<span class="sub">A photo this season already keeps</span></span>
+        </button>
+    </div>
+</div>
 <div class="sheet hidden" id="aiHistorySheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -391,16 +459,21 @@ const __init = () => {
     const URLS = {
         ask: @json(route('ai.ask')),
         photo: @json(route('ai.photo')),
+        attach: @json(route('ai.photo.existing')),
         newConvo: @json(route('ai.conversation.new')),
         delConvo: (id) => @json(route('ai.conversation.delete')) + '?id=' + id,
     };
+    const CAN_ASK = @json((bool) $settings->isUsable());
     const AVATAR = @json($settings->avatarPath ? \App\Support\MediaStore::url($settings->avatarPath) : null);
     const MY_INITIALS = @json(auth()->user()->initials);
     const UNLIMITED = @json((bool) $aiUnlimited);
     const BOT_SVG = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>';
 
     let conversationId = @json($conversation->id ?? null);
-    let photoPath = null;
+    // Up to six photos ride on one question; each chip carries its stored
+    // path once its upload lands, and send waits for the stragglers.
+    const MAX_PHOTOS = 6;
+    let uploadsBusy = 0;
     let busy = false;
 
     const byId = (id) => document.getElementById(id);
@@ -450,15 +523,20 @@ const __init = () => {
         .replace(/(^|\s)\*([^*]+)\*(?=\s|$|[.,;:!?])/g, '$1<em>$2</em>');
 
     // New turns wear .is-new so only they animate in — history stays settled.
-    function addTurn(isMe, html, imageUrl, costLine, stamped) {
+    // `images` is a list of URLs: one renders naturally, two or more grid up.
+    function addTurn(isMe, html, images, costLine, stamped) {
         byId('aiWelcome')?.remove();
+        const shots = (images || []).filter(Boolean);
+        const shotsHtml = shots.length
+            ? `<div class="ai-shots${shots.length > 1 ? ' is-multi' : ''}">${shots.map((u) => `<img src="${escapeHtml(u)}" alt="Attached photo">`).join('')}</div>`
+            : '';
         const el = document.createElement('div');
         el.className = 'aimsg is-new' + (isMe ? ' me' : '');
         el.innerHTML = `
             <span class="aimsg-face">${face(isMe)}</span>
             <div class="aibubble">
                 ${html}
-                ${imageUrl ? `<img src="${escapeHtml(imageUrl)}" alt="Attached photo">` : ''}
+                ${shotsHtml}
                 ${costLine ? `<p class="aibubble-cost">${escapeHtml(costLine)} credits</p>` : ''}
                 ${stamped ? `<time class="ai-when">${escapeHtml(nowStamp())}</time>` : ''}
             </div>`;
@@ -474,11 +552,16 @@ const __init = () => {
         byId('aiNoCredits')?.classList.toggle('hidden', UNLIMITED || value > 0);
     }
 
-    // The send button says what it is doing.
+    // The send button says what it is doing — and stays down while any
+    // photo upload is still in flight.
+    function updateSend() {
+        const btn = byId('aiSendBtn');
+        if (btn) btn.disabled = !CAN_ASK || busy || uploadsBusy > 0;
+    }
     function setSending(on) {
         const btn = byId('aiSendBtn');
         if (!btn) return;
-        btn.disabled = on;
+        updateSend();
         const label = btn.querySelector('.ai-send-label');
         if (label) label.textContent = on ? 'Sending…' : 'Ask';
         btn.setAttribute('aria-label', on ? 'Sending' : 'Send');
@@ -507,40 +590,122 @@ const __init = () => {
         input.focus();
     });
 
-    /* ---- Photo ---- */
-    byId('aiPhoto')?.addEventListener('change', async (e) => {
-        const file = e.target.files && e.target.files[0];
-        if (!file) return;
+    /* ---- Photos: chips under the composer, one per attachment ---- */
+    const chips = byId('aiPhotoChips');
+    const CHIP_SPIN = '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="animation:ai-spin .7s linear infinite"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.6" stroke-opacity=".3"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>';
+
+    function attachedPaths() {
+        return [...chips.querySelectorAll('.ai-chip[data-path]')].map((c) => c.dataset.path);
+    }
+    function attachedUrls() {
+        return [...chips.querySelectorAll('.ai-chip[data-path] img')].map((i) => i.src);
+    }
+    function roomForAnother() {
+        if (chips.children.length < MAX_PHOTOS) return true;
+        toast('Up to ' + MAX_PHOTOS + ' photos per question — remove one to add another.', 'error');
+        return false;
+    }
+    function addChip(previewUrl) {
+        const el = document.createElement('div');
+        el.className = 'ai-chip is-busy';
+        el.innerHTML = `<img src="${escapeHtml(previewUrl)}" alt="">`
+            + `<span class="st">${CHIP_SPIN}</span>`
+            + '<button type="button" class="x" aria-label="Remove photo">✕</button>';
+        chips.appendChild(el);
+        return el;
+    }
+    function dropChip(el) {
+        if (el._blob) { try { URL.revokeObjectURL(el._blob); } catch (e) {} }
+        el.remove();
+    }
+    function clearPhotos() {
+        [...chips.children].forEach(dropChip);
+    }
+    chips?.addEventListener('click', (e) => {
+        const x = e.target.closest('.ai-chip .x');
+        if (x) dropChip(x.closest('.ai-chip'));
+    });
+
+    // Uploads run one call per file; the chip spins until its path lands.
+    function uploadOne(file) {
+        if (!file || !(file.type || '').startsWith('image/')) return;
+        if (!roomForAnother()) return;
+        const preview = URL.createObjectURL(file);
+        const chip = addChip(preview);
+        chip._blob = preview;
+        uploadsBusy++; updateSend();
         const form = new FormData();
         form.append('image', file);
-        try {
-            const res = await api(URLS.photo, { method: 'POST', body: form });
-            photoPath = res.data.path;
-            byId('aiPhotoThumb').src = res.data.url;
-            byId('aiPhotoChip').classList.remove('hidden');
-            byId('aiPhotoChip').classList.add('flex');
-        } catch (err) {
-            toast(err.message, 'error');
-        } finally {
-            e.target.value = '';
-        }
+        api(URLS.photo, { method: 'POST', body: form })
+            .then((res) => { chip.dataset.path = res.data.path; chip.classList.remove('is-busy'); })
+            .catch((err) => { toast(err.message, 'error'); dropChip(chip); })
+            .finally(() => { uploadsBusy--; updateSend(); });
+    }
+    byId('aiPhotoFiles')?.addEventListener('change', (e) => {
+        [...(e.target.files || [])].forEach(uploadOne);
+        e.target.value = '';
     });
-    byId('aiPhotoRemove')?.addEventListener('click', () => {
-        photoPath = null;
-        byId('aiPhotoChip').classList.add('hidden');
-        byId('aiPhotoChip').classList.remove('flex');
+    byId('aiPhotoCam')?.addEventListener('change', (e) => {
+        [...(e.target.files || [])].forEach(uploadOne);
+        e.target.value = '';
+    });
+
+    // A gallery pick is already hosted here — the server keeps its own copy.
+    function attachFromGallery(item) {
+        if (!item || !item.url || !roomForAnother()) return;
+        const chip = addChip(item.url);
+        uploadsBusy++; updateSend();
+        api(URLS.attach, { method: 'POST', body: { url: item.url } })
+            .then((res) => {
+                chip.dataset.path = res.data.path;
+                chip.querySelector('img').src = res.data.url;
+                chip.classList.remove('is-busy');
+            })
+            .catch((err) => { toast(err.message, 'error'); dropChip(chip); })
+            .finally(() => { uploadsBusy--; updateSend(); });
+    }
+
+    /* ---- The attach chooser (house sheet). The gallery door shows only
+            where the season picker travels with the page and a plan is
+            chosen — the messenger's rule, spoken here. ---- */
+    function galleryScheduleId() {
+        return parseInt(byId('aiSchedule')?.value || '', 10) || 0;
+    }
+    const canGallery = () => typeof window.smPickMedia === 'function' && galleryScheduleId() > 0;
+    byId('aiAttachBtn')?.addEventListener('click', () => {
+        byId('aiAttachGallery')?.classList.toggle('hidden', !canGallery());
+        openSheet('aiAttachSheet');
+    });
+    byId('aiAttachUpload')?.addEventListener('click', () => {
+        window.closeSheet && window.closeSheet('aiAttachSheet');
+        byId('aiPhotoFiles')?.click();
+    });
+    byId('aiAttachCamera')?.addEventListener('click', () => {
+        window.closeSheet && window.closeSheet('aiAttachSheet');
+        byId('aiPhotoCam')?.click();
+    });
+    byId('aiAttachGallery')?.addEventListener('click', () => {
+        window.closeSheet && window.closeSheet('aiAttachSheet');
+        if (!canGallery()) return;
+        window.smPickMedia({
+            scheduleId: galleryScheduleId(),
+            kinds: 'image',
+            title: 'Attach from the gallery',
+            onPick: attachFromGallery,
+        });
     });
 
     /* ---- Ask ---- */
     async function send() {
         if (busy) return;
+        if (uploadsBusy > 0) { toast('Wait a moment — a photo is still uploading.', 'error'); return; }
         const message = input.value.trim();
         if (!message) { toast('Type a question first.', 'error'); return; }
 
         busy = true;
         setSending(true);
-        const myPhoto = photoPath ? byId('aiPhotoThumb').src : null;
-        addTurn(true, '<p>' + escapeHtml(message).replace(/\r?\n/g, '<br>') + '</p>', myPhoto, null, true);
+        const myPaths = attachedPaths();
+        addTurn(true, '<p>' + escapeHtml(message).replace(/\r?\n/g, '<br>') + '</p>', attachedUrls(), null, true);
         input.value = '';
         input.style.height = 'auto';
 
@@ -552,7 +717,7 @@ const __init = () => {
                 body: {
                     message,
                     conversationId,
-                    imagePath: photoPath,
+                    imagePaths: myPaths,
                     scheduleId: byId('aiSchedule')?.value || null,
                 },
             });
@@ -563,7 +728,7 @@ const __init = () => {
                 + costLine
                 + `<time class="ai-when">${escapeHtml(nowStamp())}</time>`;
             setBalance(res.data.balance);
-            byId('aiPhotoRemove').click();
+            clearPhotos();
             thinking.scrollIntoView({ behavior: 'smooth', block: 'end' });
         } catch (err) {
             thinking.remove();
@@ -653,7 +818,8 @@ const __init = () => {
         const ok = await confirmAction({
             title: 'Delete this conversation?',
             message: 'The questions and answers in it will be removed.',
-            detail: 'Credits already spent are not refunded.',
+            // Accounts that ride free never hear about credits.
+            detail: UNLIMITED ? '' : 'Credits already spent are not refunded.',
             confirmText: 'Delete',
         });
         if (!ok) return;

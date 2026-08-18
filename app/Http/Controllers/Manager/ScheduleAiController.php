@@ -193,10 +193,10 @@ class ScheduleAiController extends BaseScheduleController
         $validator = Validator::make($request->all(), [
             'message' => 'required|string|max:4000',
             'imagePath' => 'nullable|string|max:500',
-            // Several pictures of the same problem is one question, not four.
+            // Several pictures of the same problem is one question, not six.
             // Capped, because each one is a whole image sent to the model and
             // charged to the owner's pool.
-            'imagePaths' => 'nullable|array|max:4',
+            'imagePaths' => 'nullable|array|max:6',
             'imagePaths.*' => 'string|max:500',
             'sessionId' => 'nullable|integer',
         ]);
@@ -380,13 +380,42 @@ class ScheduleAiController extends BaseScheduleController
             . implode('. ', $bits) . ".\n\nQuestion: ";
     }
 
-    /** Read the asker's uploaded photo for the provider call (scoped to them). */
+    /**
+     * Read the asker's uploaded photo for the provider call (scoped to them).
+     * Mirrors AiController::loadImage: MediaStore files everything under an
+     * app-level `anisystem/` folder (and marks mother-app files remote), so
+     * both path shapes are the asker's own and a remote one is fetched over
+     * HTTP rather than looked for on a disk it never touched.
+     */
     private function loadImage(int $userId, string $path): ?array
     {
-        $expectedPrefix = 'ai-photos/' . $userId . '/';
-        if (! str_starts_with($path, $expectedPrefix) || str_contains($path, '..')) {
+        $bare = \App\Support\MediaStore::isRemote($path)
+            ? substr($path, strlen(\App\Support\MediaStore::REMOTE_PREFIX))
+            : $path;
+        $owned = ! str_contains($bare, '..')
+            && (str_starts_with($bare, 'ai-photos/' . $userId . '/')
+                || str_starts_with($bare, 'anisystem/ai-photos/' . $userId . '/'));
+        if (! $owned) {
             return null;
         }
+
+        if (\App\Support\MediaStore::isRemote($path)) {
+            $url = \App\Support\MediaStore::url($path);
+            try {
+                $res = \Illuminate\Support\Facades\Http::timeout(15)->get($url);
+                if (! $res->successful()) {
+                    return null;
+                }
+
+                return [
+                    'data' => base64_encode($res->body()),
+                    'mime' => $res->header('Content-Type') ?: 'image/jpeg',
+                ];
+            } catch (\Throwable $e) {
+                return null;
+            }
+        }
+
         $disk = Storage::disk('public');
         if (! $disk->exists($path)) {
             return null;

@@ -81,6 +81,10 @@ class AiController extends Controller
             'message' => 'required|string|max:4000',
             'conversationId' => 'nullable|integer',
             'imagePath' => 'nullable|string|max:500',
+            // Several pictures of the same problem is one question, not six.
+            // Capped, because each one is a whole image sent to the model.
+            'imagePaths' => 'nullable|array|max:6',
+            'imagePaths.*' => 'string|max:500',
             'scheduleId' => 'nullable|integer',
         ]);
         if ($validator->fails()) {
@@ -88,12 +92,34 @@ class AiController extends Controller
         }
 
         $prompt = trim($request->input('message'));
-        $imagePath = $request->input('imagePath');
-        $image = $imagePath ? $this->loadImage($userId, $imagePath) : null;
+
+        /* One picture or several.
+         *
+         * imagePath is what every existing caller sends; imagePaths is the
+         * newer list. Both are read so nothing that already worked has to
+         * change. Every path must load — a path the ownership check throws
+         * out is refused loudly rather than quietly answering a question
+         * about fewer photos than the farmer attached. */
+        $wanted = array_values(array_unique(array_filter(array_merge(
+            [(string) $request->input('imagePath')],
+            array_map('strval', (array) $request->input('imagePaths', []))
+        ))));
+        $images = [];
+        $imagePaths = [];
+        foreach ($wanted as $path) {
+            $loaded = $this->loadImage($userId, $path);
+            if ($loaded === null) {
+                return $this->json(false, 'One of the attached photos could not be read. Remove it and try again.', [], 422);
+            }
+            $images[] = $loaded;
+            $imagePaths[] = $path;
+        }
+        $imagePath = $imagePaths[0] ?? null;
+        $image = $images ?: null;
 
         // Refuse before spending anything the client does not have.
         $balance = $this->credits->balance($userId);
-        $estimate = $this->credits->estimate($settings, $prompt, $image ? 1 : 0);
+        $estimate = $this->credits->estimate($settings, $prompt, count($images));
         if ($balance < $estimate && ! $this->credits->unlimited((int) \Illuminate\Support\Facades\Auth::id())) {
             return $this->json(false, $balance <= 0
                 ? 'You have no AI Credits left. Top up to keep asking questions.'
@@ -112,7 +138,10 @@ class AiController extends Controller
             'conversationId' => $conversation->id,
             'role' => 'user',
             'content' => $prompt,
+            // Both columns on purpose: the first photo where old renderers
+            // look, the whole set where the new ones do.
             'imagePath' => $imagePath,
+            'imagePaths' => $imagePaths ?: null,
             'deleteStatus' => 1,
         ]);
 
@@ -135,7 +164,7 @@ class AiController extends Controller
             return $this->json(false, $result['error'], [], 502);
         }
 
-        $charged = $this->credits->priceFor($settings, $result['tokensIn'], $result['tokensOut'], $image ? 1 : 0);
+        $charged = $this->credits->priceFor($settings, $result['tokensIn'], $result['tokensOut'], count($images));
 
         $answer = AiMessage::create([
             'conversationId' => $conversation->id,
@@ -544,11 +573,17 @@ class AiController extends Controller
         // A photo kept by the mother app is fetched over HTTP; one kept here
         // is read off the disk. Either way the folder rule holds: the path
         // must be inside this client's own folder, remote marker and all.
+        // MediaStore files everything under an app-level `anisystem/` folder
+        // (local and remote alike), so both shapes are this client's own —
+        // checking only the bare one is how attached photos were silently
+        // dropped before they ever reached the model.
         $bare = \App\Support\MediaStore::isRemote($path)
             ? substr($path, strlen(\App\Support\MediaStore::REMOTE_PREFIX))
             : $path;
-        $expectedPrefix = 'ai-photos/' . $userId . '/';
-        if (! str_starts_with($bare, $expectedPrefix) || str_contains($bare, '..')) {
+        $owned = ! str_contains($bare, '..')
+            && (str_starts_with($bare, 'ai-photos/' . $userId . '/')
+                || str_starts_with($bare, 'anisystem/ai-photos/' . $userId . '/'));
+        if (! $owned) {
             return null;
         }
 
