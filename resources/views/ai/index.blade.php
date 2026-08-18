@@ -1,4 +1,7 @@
 @extends('layouts.app')
+{{-- On phones this page is a chat app: the tab bar would eat the composer's
+     row, so it steps aside the way the Collab Room's does. --}}
+@section('body-class', 'hide-tabbar')
 
 @section('title', $settings->assistantName)
 @section('page-title', 'AI Technician')
@@ -63,9 +66,16 @@
                pinned and the thread scrolls inside (dvh keeps the phone URL
                bar honest). --- */
         .aichat { display: flex; flex-direction: column; height: calc(100dvh - 12.5rem); min-height: min(26rem, 60dvh); width: 100%; }
-        /* The chrome above shrank (one-line crumbs, one-row masthead), so the
-           conversation gets the reclaimed inch and a half of phone. */
-        @media (max-width: 767px) { .aichat { height: calc(100dvh - 13.5rem); min-height: min(22rem, 55dvh); } }
+        /* On a phone this page IS the chat: the tab bar is hidden (body
+           class), the footer steps aside, main's paddings are cancelled, and
+           the column runs to the true bottom of the viewport — measured, so
+           the composer sits ON the footer line instead of floating 115px
+           above it. 6.3rem = app bar + main's top padding + one crumb line. */
+        @media (max-width: 767px) {
+            .aichat { height: calc(100dvh - 6.3rem); min-height: min(22rem, 55dvh); margin-bottom: -1rem; }
+            .aichat-composer { padding-bottom: calc(.3rem + env(safe-area-inset-bottom)); }
+            footer { display: none; }
+        }
         .aichat-thread { flex: 1 1 auto; overflow-y: auto; padding: .5rem .25rem 1.25rem; scroll-behavior: smooth; display: flex; flex-direction: column; scrollbar-width: thin; scrollbar-color: var(--color-gray-300) transparent; }
         .aichat-thread::-webkit-scrollbar { width: 6px; }
         .aichat-thread::-webkit-scrollbar-track { background: transparent; }
@@ -90,7 +100,7 @@
         .ai-avatar::after { content: ""; position: absolute; right: -1px; bottom: -1px; width: .75rem; height: .75rem; border-radius: 999px; background: var(--color-accent-500); border: 2.5px solid #3d6823; }
         .ai-head-name { font-family: var(--font-heading); font-weight: 700; font-size: 1.02rem; line-height: 1.15; color: #fff; }
         .ai-role { display: inline-flex; align-items: center; margin-top: .2rem; padding: .1rem .55rem; border-radius: 999px; font-size: .68rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; color: #fff; background: rgb(255 255 255 / .18); }
-        .ai-credits { display: inline-flex; align-items: center; gap: .35rem; min-height: 2.5rem; padding: .3rem .8rem; border-radius: 999px; background: rgb(255 255 255 / .18); color: #fff; font-weight: 800; font-size: .92rem; font-variant-numeric: tabular-nums; transition: background .15s ease; }
+        .ai-credits { display: inline-flex; align-items: center; gap: .35rem; min-height: 2.1rem; padding: .25rem .7rem; border-radius: 999px; background: rgb(255 255 255 / .18); color: #fff; font-weight: 800; font-size: .8rem; font-variant-numeric: tabular-nums; transition: background .15s ease; }
         .ai-credits:hover { background: rgb(255 255 255 / .28); }
         .ai-credits svg { color: var(--color-accent-400); }
         .ai-sq { width: 2.5rem; height: 2.5rem; min-height: 2.5rem; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: .8rem; background: rgb(255 255 255 / .18); color: #fff; transition: background .15s ease, transform .15s ease; }
@@ -109,16 +119,16 @@
 
         /* --- Welcome hero --- */
         .ai-hello { text-align: center; padding: 2rem 1.25rem 1.25rem; border-radius: 1.5rem; background: radial-gradient(120% 90% at 50% 0%, var(--color-brand-50) 0%, transparent 70%); }
-        .ai-hello .aimsg-face { width: 4.5rem; height: 4.5rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-200), 0 10px 24px -8px rgb(74 124 42 / .45); animation: aiFloatIdle 5s ease-in-out infinite; }
-        .ai-hello h2 { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; margin-top: 1rem; color: var(--color-gray-900); }
-        .ai-hello .sub { font-size: 1rem; color: var(--color-gray-500); margin-top: .4rem; max-width: 26rem; margin-inline: auto; line-height: 1.6; }
+        .ai-hello .aimsg-face { width: 3.5rem; height: 3.5rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-200), 0 10px 24px -8px rgb(74 124 42 / .45); animation: aiFloatIdle 5s ease-in-out infinite; }
+        .ai-hello h2 { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; margin-top: 1rem; color: var(--color-gray-900); }
+        .ai-hello .sub { font-size: .85rem; color: var(--color-gray-500); margin-top: .4rem; max-width: 26rem; margin-inline: auto; line-height: 1.6; }
         .ai-caps { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem; margin-top: .9rem; }
-        .ai-cap { display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .7rem; border-radius: 999px; font-size: .8rem; font-weight: 700; color: var(--color-brand-700); background: var(--color-brand-50); border: 1px solid var(--color-brand-100); }
+        .ai-cap { display: inline-flex; align-items: center; gap: .35rem; padding: .25rem .6rem; border-radius: 999px; font-size: .74rem; font-weight: 700; color: var(--color-brand-700); background: var(--color-brand-50); border: 1px solid var(--color-brand-100); }
         .ai-overline { font-size: .7rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--color-gray-400); margin: 1.6rem 0 .6rem; }
         @keyframes aiFloatIdle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
         /* --- Suggestion cards --- */
-        .aisuggest { display: flex; align-items: center; gap: .75rem; width: 100%; min-height: 3.5rem; padding: .75rem 1rem; text-align: left; border: 1px solid var(--color-gray-200); border-radius: 1rem; background: var(--color-white); box-shadow: var(--shadow-card); font-size: .97rem; font-weight: 700; color: var(--color-gray-800); cursor: pointer; transition: transform .18s cubic-bezier(.22,1,.36,1), border-color .18s ease, box-shadow .18s ease; animation: aiRise .3s ease both; }
+        .aisuggest { display: flex; align-items: center; gap: .75rem; width: 100%; min-height: 3rem; padding: .6rem .85rem; text-align: left; border: 1px solid var(--color-gray-200); border-radius: 1rem; background: var(--color-white); box-shadow: var(--shadow-card); font-size: .85rem; font-weight: 700; color: var(--color-gray-800); cursor: pointer; transition: transform .18s cubic-bezier(.22,1,.36,1), border-color .18s ease, box-shadow .18s ease; animation: aiRise .3s ease both; }
         .aisuggest:nth-child(2) { animation-delay: .06s; }
         .aisuggest:nth-child(3) { animation-delay: .12s; }
         .aisuggest:hover { transform: translateY(-1px); border-color: var(--color-brand-300); box-shadow: var(--shadow-card-lg); }
@@ -144,7 +154,7 @@
         .aimsg:not(.me) .aimsg-face { box-shadow: 0 0 0 2px var(--color-white), 0 0 0 3px var(--color-brand-200); }
 
         /* Assistant "writes" on a sheet; the user "sends" a green slip. */
-        .aibubble { max-width: min(82%, 34rem); padding: .8rem 1.05rem; font-size: 1.02rem; line-height: 1.62; background: var(--color-white); border: 1px solid var(--color-gray-100); border-radius: 1.15rem 1.15rem 1.15rem .35rem; box-shadow: 0 1px 2px rgb(26 26 26 / .06), 0 3px 10px -4px rgb(26 26 26 / .08); }
+        .aibubble { max-width: min(82%, 34rem); padding: .6rem .85rem; font-size: .92rem; line-height: 1.55; background: var(--color-white); border: 1px solid var(--color-gray-100); border-radius: 1.15rem 1.15rem 1.15rem .35rem; box-shadow: 0 1px 2px rgb(26 26 26 / .06), 0 3px 10px -4px rgb(26 26 26 / .08); }
         /* Literal hex: var(--color-brand-700) repoints bright in dark mode and
            would sink the white text. */
         .aimsg.me .aibubble { background: linear-gradient(135deg, #4a7c2a, #3d6823); border-color: transparent; color: #fff; border-radius: 1.15rem 1.15rem .35rem 1.15rem; box-shadow: 0 3px 12px -4px rgb(45 80 22 / .45); }
@@ -446,10 +456,13 @@
         </button>
         <button type="button" class="ai-attach-opt hidden" id="aiAttachGallery">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l2-3h6l2 3h3v13H4V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 13l2.5-2.5L14 14l2-2 2 2"/></svg></span>
-            <span>From the gallery<span class="sub">A photo this season already keeps</span></span>
+            <span>From the gallery<span class="sub">A photo one of your seasons keeps</span></span>
         </button>
     </div>
 </div>
+{{-- The season picker itself — this page never carried it, so the gallery
+     door above stayed shut for everyone. @once, so nothing doubles up. --}}
+@include('sm.partials.media-picker')
 <div class="sheet hidden" id="aiHistorySheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -675,13 +688,19 @@ const __init = () => {
             .finally(() => { uploadsBusy--; updateSend(); });
     }
 
-    /* ---- The attach chooser (house sheet). The gallery door shows only
-            where the season picker travels with the page and a plan is
-            chosen — the messenger's rule, spoken here. ---- */
+    /* ---- The attach chooser (house sheet). The picker now travels with
+            this page, so the gallery door shows for anyone with a season to
+            pick from. Which season: the chosen plan, or the only one there
+            is; with several and none chosen, the door asks rather than
+            guesses at whose photos to show. ---- */
     function galleryScheduleId() {
-        return parseInt(byId('aiSchedule')?.value || '', 10) || 0;
+        const chosen = parseInt(byId('aiSchedule')?.value || '', 10) || 0;
+        if (chosen) return chosen;
+        const opts = [...(byId('aiSchedule')?.options || [])].filter((o) => o.value);
+        return opts.length === 1 ? parseInt(opts[0].value, 10) || 0 : 0;
     }
-    const canGallery = () => typeof window.smPickMedia === 'function' && galleryScheduleId() > 0;
+    const hasSchedules = () => [...(byId('aiSchedule')?.options || [])].some((o) => o.value);
+    const canGallery = () => typeof window.smPickMedia === 'function' && hasSchedules();
     byId('aiAttachBtn')?.addEventListener('click', () => {
         byId('aiAttachGallery')?.classList.toggle('hidden', !canGallery());
         openSheet('aiAttachSheet');
@@ -697,8 +716,14 @@ const __init = () => {
     byId('aiAttachGallery')?.addEventListener('click', () => {
         window.closeSheet && window.closeSheet('aiAttachSheet');
         if (!canGallery()) return;
+        const sid = galleryScheduleId();
+        if (!sid) {
+            toast('Pick which plan this is about first — its gallery is what opens.', 'error');
+            window.smFocus?.(byId('aiSchedule'));
+            return;
+        }
         window.smPickMedia({
-            scheduleId: galleryScheduleId(),
+            scheduleId: sid,
             kinds: 'image',
             title: 'Attach from the gallery',
             onPick: attachFromGallery,

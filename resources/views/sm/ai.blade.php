@@ -1,4 +1,7 @@
 @extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
+{{-- On phones the full page is a chat app: tab bar steps aside (only
+     layouts.app reads this — the in-shell partial keeps its pane). --}}
+@section('body-class', 'hide-tabbar')
 
 @section('title', 'AI Technician — ' . $schedule->title)
 @section('page-title', 'AI Technician')
@@ -40,6 +43,15 @@
         .aichat { display: flex; flex-direction: column; height: calc(100dvh - 11rem); min-height: min(26rem, 60dvh); width: 100%; }
         /* Mobile: clear the fixed bottom tab bar so the composer + hint stay visible. */
         @media (max-width: 767px) { .aichat { height: calc(100dvh - 13.5rem); min-height: min(22rem, 55dvh); } }
+        /* Full-page mode only (the body class never reaches the shell's
+           partial): the chat runs to the viewport's true bottom — measured,
+           the composer sat 87px adrift. 8.1rem = app bar + main's top
+           padding + this page's own crumb row. */
+        @media (max-width: 767px) {
+            body.hide-tabbar .aichat { height: calc(100dvh - 8.1rem); margin-bottom: -1rem; }
+            body.hide-tabbar .aichat-composer { padding-bottom: calc(.3rem + env(safe-area-inset-bottom)); }
+            body.hide-tabbar footer { display: none; }
+        }
         .aichat-thread { flex: 1 1 auto; overflow-y: auto; padding: .5rem .25rem 1.25rem; scroll-behavior: smooth; display: flex; flex-direction: column; scrollbar-width: thin; scrollbar-color: var(--color-gray-300) transparent; }
         .aichat-thread::-webkit-scrollbar { width: 6px; }
         .aichat-thread::-webkit-scrollbar-track { background: transparent; }
@@ -64,7 +76,7 @@
         .ai-avatar::after { content: ""; position: absolute; right: -1px; bottom: -1px; width: .75rem; height: .75rem; border-radius: 999px; background: var(--color-accent-500); border: 2.5px solid #3d6823; }
         .ai-head-name { font-family: var(--font-heading); font-weight: 700; font-size: 1.02rem; line-height: 1.15; color: #fff; }
         .ai-role { display: inline-flex; align-items: center; margin-top: .2rem; padding: .1rem .55rem; border-radius: 999px; font-size: .68rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; color: #fff; background: rgb(255 255 255 / .18); }
-        .ai-credits { display: inline-flex; align-items: center; gap: .35rem; min-height: 2.5rem; padding: .3rem .8rem; border-radius: 999px; background: rgb(255 255 255 / .18); color: #fff; font-weight: 800; font-size: .92rem; font-variant-numeric: tabular-nums; transition: background .15s ease; }
+        .ai-credits { display: inline-flex; align-items: center; gap: .35rem; min-height: 2.1rem; padding: .25rem .7rem; border-radius: 999px; background: rgb(255 255 255 / .18); color: #fff; font-weight: 800; font-size: .8rem; font-variant-numeric: tabular-nums; transition: background .15s ease; }
         .ai-credits:hover { background: rgb(255 255 255 / .28); }
         .ai-credits svg { color: var(--color-accent-400); }
         .ai-credits:focus-visible, .aisuggest:focus-visible, #aiSendBtn:focus-visible, .ai-cam:focus-visible, .ai-sq:focus-visible { outline: 2px solid var(--color-accent-400); outline-offset: 2px; }
@@ -82,16 +94,16 @@
 
         /* ===== Welcome hero ===== */
         .ai-hello { text-align: center; padding: 2rem 1.25rem 1.25rem; border-radius: 1.5rem; background: radial-gradient(120% 90% at 50% 0%, var(--color-brand-50) 0%, transparent 70%); }
-        .ai-hello .aimsg-face { width: 4.5rem; height: 4.5rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-200), 0 10px 24px -8px rgb(74 124 42 / .45); animation: aiFloatIdle 5s ease-in-out infinite; }
-        .ai-hello h2 { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; margin-top: 1rem; color: var(--color-gray-900); }
-        .ai-hello .sub { font-size: 1rem; color: var(--color-gray-500); margin-top: .4rem; max-width: 26rem; margin-inline: auto; line-height: 1.6; }
+        .ai-hello .aimsg-face { width: 3.5rem; height: 3.5rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-200), 0 10px 24px -8px rgb(74 124 42 / .45); animation: aiFloatIdle 5s ease-in-out infinite; }
+        .ai-hello h2 { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; margin-top: 1rem; color: var(--color-gray-900); }
+        .ai-hello .sub { font-size: .85rem; color: var(--color-gray-500); margin-top: .4rem; max-width: 26rem; margin-inline: auto; line-height: 1.6; }
         .ai-caps { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem; margin-top: .9rem; }
-        .ai-cap { display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .7rem; border-radius: 999px; font-size: .8rem; font-weight: 700; color: var(--color-brand-700); background: var(--color-brand-50); border: 1px solid var(--color-brand-100); }
+        .ai-cap { display: inline-flex; align-items: center; gap: .35rem; padding: .25rem .6rem; border-radius: 999px; font-size: .74rem; font-weight: 700; color: var(--color-brand-700); background: var(--color-brand-50); border: 1px solid var(--color-brand-100); }
         .ai-overline { font-size: .7rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--color-gray-400); margin: 1.6rem 0 .6rem; }
         @keyframes aiFloatIdle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
         /* ===== Suggestion cards ===== */
-        .aisuggest { display: flex; align-items: center; gap: .75rem; width: 100%; min-height: 3.5rem; padding: .75rem 1rem; text-align: left; border: 1px solid var(--color-gray-200); border-radius: 1rem; background: var(--color-white); box-shadow: var(--shadow-card); font-size: .97rem; font-weight: 700; color: var(--color-gray-800); cursor: pointer; transition: transform .18s cubic-bezier(.22,1,.36,1), border-color .18s ease, box-shadow .18s ease; animation: aiRise .3s ease both; }
+        .aisuggest { display: flex; align-items: center; gap: .75rem; width: 100%; min-height: 3rem; padding: .6rem .85rem; text-align: left; border: 1px solid var(--color-gray-200); border-radius: 1rem; background: var(--color-white); box-shadow: var(--shadow-card); font-size: .85rem; font-weight: 700; color: var(--color-gray-800); cursor: pointer; transition: transform .18s cubic-bezier(.22,1,.36,1), border-color .18s ease, box-shadow .18s ease; animation: aiRise .3s ease both; }
         .aisuggest:nth-child(2) { animation-delay: .06s; }
         .aisuggest:nth-child(3) { animation-delay: .12s; }
         .aisuggest:hover { transform: translateY(-1px); border-color: var(--color-brand-300); box-shadow: var(--shadow-card-lg); }
@@ -118,7 +130,7 @@
         .aimsg:not(.me) .aimsg-face { box-shadow: 0 0 0 2px var(--color-white), 0 0 0 3px var(--color-brand-200); }
 
         /* Assistant "writes" on a sheet; the user "sends" a green slip. */
-        .aibubble { max-width: min(82%, 34rem); padding: .8rem 1.05rem; font-size: 1.02rem; line-height: 1.62; background: var(--color-white); border: 1px solid var(--color-gray-100); border-radius: 1.15rem 1.15rem 1.15rem .35rem; box-shadow: 0 1px 2px rgb(26 26 26 / .06), 0 3px 10px -4px rgb(26 26 26 / .08); }
+        .aibubble { max-width: min(82%, 34rem); padding: .6rem .85rem; font-size: .92rem; line-height: 1.55; background: var(--color-white); border: 1px solid var(--color-gray-100); border-radius: 1.15rem 1.15rem 1.15rem .35rem; box-shadow: 0 1px 2px rgb(26 26 26 / .06), 0 3px 10px -4px rgb(26 26 26 / .08); }
         /* Literal hex: var(--color-brand-700) repoints to a bright green in dark
            mode and would sink the white text. */
         .aimsg.me .aibubble { background: linear-gradient(135deg, #4a7c2a, #3d6823); border-color: transparent; color: #fff; border-radius: 1.15rem 1.15rem .35rem 1.15rem; box-shadow: 0 3px 12px -4px rgb(45 80 22 / .45); }

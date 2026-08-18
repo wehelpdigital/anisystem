@@ -2,7 +2,18 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    {{-- Page pinch-zoom is off app-wide, on the owner's ask: the two places
+         zoom belongs (the Google map, the image lightbox) implement their own
+         and keep working — element handlers still receive their events. The
+         meta covers Chrome/Android; Safari ignores it, so its gesture is
+         refused by hand, and touch-action drops the browser's double-tap
+         zoom while leaving pan and element-level pinch alone. --}}
+    <style>html { touch-action: manipulation; }</style>
+    <script>
+        document.addEventListener('gesturestart', function (e) { e.preventDefault(); });
+        document.addEventListener('gesturechange', function (e) { e.preventDefault(); });
+    </script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- Enables the scroll-reveal hidden state only when JS is present, with a
          failsafe that shows everything if the JS bundle never boots — so

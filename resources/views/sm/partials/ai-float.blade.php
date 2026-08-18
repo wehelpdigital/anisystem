@@ -114,6 +114,12 @@
     </div>
 </div>
 
+{{-- The float promises a gallery door, so it brings the picker along rather
+     than hoping the page happened to. Outside the panel on purpose: the
+     panel animates with transforms, and a transform ancestor traps the
+     sheet's position:fixed. @once — pages already carrying it are unchanged. --}}
+@include('sm.partials.media-picker')
+
 <style>
     /* Same "Field Advisor" language as the full AI page, pocket-sized.
        Theme vars only — html.dark's variable repoint restyles it for free. */
