@@ -859,6 +859,9 @@ const __init = () => {
                 setBalance(err.data.balance || 0);
                 addTurn(false, buyCard(err.message)).querySelector('.aibubble').classList.add('is-buy');
             } else { addTurn(false, '<p>' + escapeHtml(err.message) + '</p>'); }
+            // Kept on purpose - a retry should not re-pick its photos. Said
+            // out loud, so a failed send never reads as "sent but not cleared".
+            if (chips.children.length) toast('Your photos are still attached, ready for the retry.');
             input.value = message; input.dispatchEvent(new Event('input'));
         } finally { busy = false; setSending(false); input.focus(); }
     }

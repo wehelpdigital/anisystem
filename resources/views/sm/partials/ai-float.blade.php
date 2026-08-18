@@ -742,6 +742,9 @@
                     addTurn(false, buyCard(err.message)).querySelector('.b').classList.add('is-buy');
                     setBalance(err.data.balance || 0);
                 } else { addTurn(false, '<p>' + escapeHtml(err.message) + '</p>'); }
+                // Kept on purpose - said out loud so a failed send never reads
+                // as "sent but not cleared".
+                if (chipCount()) toast('Your photos are still attached, ready for the retry.');
                 input.value = message; input.dispatchEvent(new Event('input'));
             } finally { busy = false; sendBtn.disabled = false; sendBtn.setAttribute('aria-label', 'Send'); input.focus(); }
         }

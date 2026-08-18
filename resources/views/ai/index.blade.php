@@ -843,6 +843,9 @@ const __init = () => {
             } else {
                 addTurn(false, '<p>' + escapeHtml(err.message) + '</p>');
             }
+            // Kept on purpose - a retry should not re-pick its photos. Said
+            // out loud, so a failed send never reads as "sent but not cleared".
+            if (chips.children.length) toast('Your photos are still attached, ready for the retry.');
             // Give the question back so it is not lost.
             input.value = message;
             input.dispatchEvent(new Event('input'));
