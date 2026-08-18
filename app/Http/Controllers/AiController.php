@@ -563,8 +563,14 @@ class AiController extends Controller
             $lots ? 'Lots: ' . $lots : null,
         ]);
 
-        return "The farmer is asking about their cropping plan \"{$schedule->title}\". "
-            . implode('. ', $bits) . ".\n\nQuestion: ";
+        // Reference, not premise: told as "the question is about this plan",
+        // the model dressed every answer in the schedule's assumptions — the
+        // farmer asked about a weed and heard about their rice at 25 DAS.
+        return "Background on the farmer's cropping plan \"{$schedule->title}\", for reference only: "
+            . implode('. ', $bits) . '. '
+            . 'Use it only if the question is clearly about this plan; never assume the question '
+            . 'refers to this plan, its crop, or its conditions — if that matters and is unclear, ask.'
+            . "\n\nQuestion: ";
     }
 
     /**

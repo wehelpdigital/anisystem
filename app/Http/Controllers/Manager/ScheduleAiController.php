@@ -376,8 +376,13 @@ class ScheduleAiController extends BaseScheduleController
             $lots ? 'Lots: ' . $lots : null,
         ]);
 
-        return "The farm team is asking about their cropping plan \"{$schedule->title}\". "
-            . implode('. ', $bits) . ".\n\nQuestion: ";
+        // Reference, not premise — same lesson as the personal page: assert
+        // the plan as the subject and every answer wears its assumptions.
+        return "Background on the team's cropping plan \"{$schedule->title}\", for reference only: "
+            . implode('. ', $bits) . '. '
+            . 'Use it only if the question is clearly about this plan; never assume the question '
+            . 'refers to this plan, its crop, or its conditions — if that matters and is unclear, ask.'
+            . "\n\nQuestion: ";
     }
 
     /**
