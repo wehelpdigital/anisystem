@@ -508,6 +508,52 @@
     html.dark .reco-nav { background: #1a2414; border-color: #2b3a1c; color: #cde0b8; }
     html.dark .reco-nav:hover { background: #24331a; color: #e5e9df; }
 
+    /* --- The composer, as the homepage draws it ---
+       The dashboard keeps .dash-me inside its own page style, so no other
+       page can reuse it. This is the same idea living where the community
+       can see it: your face, what's on your mind floating above it, and a
+       field with room to actually write in. */
+    .comp-me { position: relative; border: 0; background: none; padding: 0; cursor: pointer; max-width: 3.5rem; }
+    /* The cloud is decoration everywhere else, so the shared rule turns
+       pointer events off. Here it is half the button. */
+    .comp-me .status-cloud { pointer-events: auto; max-width: 9rem;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .comp-me:hover .status-cloud { transform: translateY(-1px); box-shadow: 0 6px 16px rgb(0 0 0 / .18); }
+    /* Nothing said yet: a dashed invitation rather than a statement. */
+    .comp-me .status-cloud.is-empty { background: var(--color-brand-50);
+        border-color: var(--color-brand-300); border-style: dashed; }
+    .comp-me .status-cloud.is-empty .status-cloud-text { color: var(--color-brand-700); font-weight: 700; }
+    .comp-me .status-cloud.is-empty::after { border-top-color: var(--color-brand-50); }
+    /* Room for the cloud to sit above the avatar without meeting the card. */
+    .comp-row { padding-top: 1.35rem; }
+    /* A box you can see yourself writing in — and one the invitation fits
+       inside: at 360px the old two-row field cut its own placeholder off. */
+    .comp-box { min-height: 6.5rem; font-size: .85rem; line-height: 1.55; resize: vertical; }
+    .comp-box::placeholder { font-size: .82rem; }
+    /* The action row wraps instead of squeezing the send button into a
+       two-line sliver next to four icons on a narrow phone. */
+    .comp-bar { display: flex; align-items: center; justify-content: space-between; gap: .5rem; flex-wrap: wrap; }
+    .comp-send { flex: 0 0 auto; }
+    @media (max-width: 26rem) { .comp-send { flex: 1 0 100%; } }
+    @media (prefers-reduced-motion: reduce) { .comp-me .status-cloud { transition: none; } }
+
+    /* --- Rail cards (your discussions, what's new in the blog) --- */
+    .rail-row { display: flex; gap: .6rem; align-items: flex-start; padding: .5rem .35rem;
+        border-radius: .6rem; border-top: 1px solid var(--color-gray-100);
+        transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    .rail-row:first-of-type { border-top: 0; }
+    .rail-row:hover { background: var(--color-gray-50); }
+    .rail-thumb { width: 2.9rem; height: 2.9rem; flex: 0 0 auto; border-radius: .6rem; overflow: hidden;
+        display: flex; align-items: center; justify-content: center; font-size: 1.15rem;
+        background: linear-gradient(120deg, var(--color-brand-100), var(--color-brand-50)); }
+    .rail-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    /* Two lines of headline, then an ellipsis — a rail is a glance, not a read. */
+    .rail-title { font-size: .8rem; font-weight: 600; color: var(--color-gray-900); line-height: 1.3;
+        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .rail-meta { display: block; font-size: .688rem; color: var(--color-gray-400); margin-top: .15rem; }
+    html.dark .rail-row:hover { background: #1c2416; }
+    @media (prefers-reduced-motion: reduce) { .rail-row { transition: none; } }
+
     /* --- Reduced motion: kill every plaza animation --- */
     @media (prefers-reduced-motion: reduce) {
         .post-enter, .post-enter::after, .attach-chip, .group-joined-tag:not(.hidden), .wall-reply-form,
