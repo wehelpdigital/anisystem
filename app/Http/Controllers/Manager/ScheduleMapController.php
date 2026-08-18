@@ -197,6 +197,12 @@ class ScheduleMapController extends BaseScheduleController
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
             return $this->jsonFail('You are not part of this schedule team.', 403);
         }
+        // Membership lets you draw; wiping the whole team's canvas is an edit
+        // of the schedule's record, and a view-only worker holds no such right.
+        // The button is hidden for them too — this is the lock behind the door.
+        if (! \App\Support\WorkerContext::canEdit()) {
+            return $this->jsonFail('Only someone with edit access can clear the team map.', 403);
+        }
 
         ScheduleMapObject::active()->where('scheduleId', $schedule->id)->update(['deleteStatus' => 0]);
         $this->emit($schedule->id, ['action' => 'clear', 'actorUserId' => $meId]);
@@ -478,6 +484,11 @@ class ScheduleMapController extends BaseScheduleController
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
             return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+        // Saving files the map into the schedule's records — the note right,
+        // same line the whiteboard's save draws.
+        if (! \App\Support\WorkerContext::canAddNotes()) {
+            return $this->jsonFail('You are not allowed to save to this schedule.', 403);
         }
 
         $validator = Validator::make($request->all(), [

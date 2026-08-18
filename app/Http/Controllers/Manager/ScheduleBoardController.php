@@ -118,9 +118,14 @@ class ScheduleBoardController extends BaseScheduleController
     {
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
-        // Same gate as push(): anyone on the team who can draw can reopen.
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
             return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+        // Not push()'s gate after all: reopening rebinds the whole board to a
+        // note, and the autosave then FILES into it — a view-only worker would
+        // be writing the schedule's records through everyone else's session.
+        if (! \App\Support\WorkerContext::canAddNotes()) {
+            return $this->jsonFail('You are not allowed to reopen saved drawings on this schedule.', 403);
         }
 
         $draft = ScheduleBoardDraft::active()
@@ -297,6 +302,10 @@ class ScheduleBoardController extends BaseScheduleController
         $page = max(1, (int) $request->input('page', 1));
 
         if ($request->input('type') === 'clear') {
+            // Wiping the team's canvas is an edit; drawing on it is not.
+            if (! \App\Support\WorkerContext::canEdit()) {
+                return $this->jsonFail('Only someone with edit access can clear the board.', 403);
+            }
             $event = ScheduleBoardEvent::create([
                 'scheduleId' => $schedule->id, 'page' => $page, 'userId' => $meId,
                 'type' => 'clear', 'deleteStatus' => 1,

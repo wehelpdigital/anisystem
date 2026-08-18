@@ -217,10 +217,12 @@
                 <button type="button" class="mp-act" data-proxy="cmapFindMe" title="Centre the map on me" aria-label="Centre the map on my position">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.25"/><circle cx="12" cy="12" r="8"/><path stroke-linecap="round" d="M12 1.5v2.5M12 20v2.5M1.5 12h2.5M20 12h2.5"/></svg>
                 </button>
+                @if (\App\Support\WorkerContext::canAddNotes())
                 <button type="button" class="mp-act is-save" data-proxy="cmapSaveMenuBtn" title="Open or save a map" aria-label="Open or save a map">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg>
                     <span class="mp-actword">Save</span>
                 </button>
+                @endif
             </div>
         </div>
         <div class="smap-stage">

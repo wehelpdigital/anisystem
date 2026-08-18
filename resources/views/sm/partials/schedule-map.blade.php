@@ -250,13 +250,17 @@
         <button type="button" class="cmap-tool is-active" id="cmapLayer" title="Toggle map / satellite" aria-label="Toggle map or satellite view" aria-pressed="true">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg>
         </button>
+        @if (\App\Support\WorkerContext::canEdit())
         <button type="button" class="cmap-tool cmap-danger" id="cmapClear" title="Clear the whole map for the team" aria-label="Clear the map for the team">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>
         </button>
+        @endif
         {{-- Opening and saving, together, out of the tools list. --}}
+        @if (\App\Support\WorkerContext::canAddNotes())
         <button type="button" class="cmap-tool cmap-savebtn" id="cmapSaveMenuBtn" title="Open or save a map" aria-label="Open or save a map">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg>
         </button>
+        @endif
         <div class="sheet hidden" id="cmapSaveMenuSheet" style="--sheet-width:24rem">
             <div class="sheet-handle"></div>
             <div class="sheet-header">
@@ -3475,7 +3479,7 @@
         });
         document.getElementById('cmapFindMe')?.addEventListener('click', (e) => findMe(e.currentTarget));
         document.getElementById('cmapGps').addEventListener('click', (e) => toggleGps(e.currentTarget));
-        document.getElementById('cmapClear').addEventListener('click', async () => {
+        document.getElementById('cmapClear')?.addEventListener('click', async () => {
             const ok = window.confirmAction
                 ? await confirmAction({ title: 'Clear the map?', message: 'Removes every shape for the whole team.', confirmText: 'Clear map' })
                 : confirm('Clear the map for everyone?');

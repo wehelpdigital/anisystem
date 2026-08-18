@@ -51,6 +51,11 @@
             <button type="button" class="sb-tool" data-tool="text" title="Text" aria-label="Text"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 6h14M12 6v12"/></svg></button>
             <button type="button" class="sb-tool" data-tool="eraser" title="Eraser" aria-label="Eraser"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h16M8.5 16.5l8-8a2.5 2.5 0 000-3.5l-1.5-1.5a2.5 2.5 0 00-3.5 0l-8 8a2.5 2.5 0 000 3.5L5 16.5a2 2 0 001.4.6h2.1a2 2 0 001.4-.6z"/></svg></button>
         </div>
+        {{-- Membership lets you draw; filing and destroying are rights of
+             their own. A view-only worker gets neither button nor endpoint —
+             a hidden control over an open route is the hole this app keeps
+             re-learning, so the controller checks these same lines. --}}
+        @if (\App\Support\WorkerContext::canAddNotes())
         <button type="button" id="sbSaveNotes" class="sb-btn" title="Save pages to schedule notes" aria-label="Save to notes">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a1 1 0 011-1h9l4 4v10a1 1 0 01-1 1H6a1 1 0 01-1-1V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 4v4h6M8 19v-5h8v5"/></svg>
         </button>
@@ -58,6 +63,7 @@
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7a1 1 0 011-1h4l2 2h8a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V7z"/></svg>
             <span class="sb-badge hidden" id="sbDraftCount">0</span>
         </button>
+        @endif
         <button type="button" id="sbGrid" class="sb-btn" title="Toggle grid" aria-label="Toggle grid">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4z"/><path stroke-linecap="round" d="M4 10h16M4 15h16M10 4v16M15 4v16"/></svg>
         </button>
@@ -67,9 +73,11 @@
         <button type="button" id="sbRedo" class="sb-btn" title="Redo" aria-label="Redo" disabled>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 14l4-4-4-4"/><path stroke-linecap="round" stroke-linejoin="round" d="M19 10h-8a5 5 0 000 10h3"/></svg>
         </button>
+        @if (\App\Support\WorkerContext::canEdit())
         <button type="button" id="sbClear" class="sb-btn sb-btn-danger" title="Clear board" aria-label="Clear board">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg>
         </button>
+        @endif
         <button type="button" id="sbChatToggle" class="sb-btn is-active" title="Show or hide team chat" aria-label="Toggle team chat">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12a8 8 0 01-11.6 7.1L3 20l1-5.5A8 8 0 1121 12z"/></svg>
         </button>
@@ -564,7 +572,7 @@
         document.getElementById('sbUndo').addEventListener('click', () => stepUndo(false));
         document.getElementById('sbRedo').addEventListener('click', () => stepUndo(true));
 
-        document.getElementById('sbClear').addEventListener('click', async () => {
+        document.getElementById('sbClear')?.addEventListener('click', async () => {
             const ok = (typeof confirmAction === 'function')
                 ? await confirmAction({ title: 'Clear the page?', message: 'This clears the current whiteboard page for everyone on the team.', confirmText: 'Clear' })
                 : confirm('Clear the page for everyone?');
@@ -618,7 +626,7 @@
             window.smFocus('sbSaveTitle', { delay: 30 });
         }
         function closeSaveModal() { saveModal.classList.add('hidden'); }
-        document.getElementById('sbSaveNotes').addEventListener('click', openSaveModal);
+        document.getElementById('sbSaveNotes')?.addEventListener('click', openSaveModal);
         document.getElementById('sbSaveCancel').addEventListener('click', closeSaveModal);
         document.getElementById('sbSaveCancelX').addEventListener('click', closeSaveModal);
         saveModal.addEventListener('click', (e) => { if (e.target === saveModal) closeSaveModal(); });

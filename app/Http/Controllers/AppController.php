@@ -16,12 +16,20 @@ class AppController extends Controller
 
         $subscription = $user->currentSubscription();
 
-        $scheduleCount = $user->schedules()->count();
+        // Whose farm this dashboard is about. A worker who has switched into
+        // a boss's account was still shown their OWN schedules here — cards
+        // for a farm the session was no longer looking at, every one of which
+        // 404'd when tapped, because the modules resolve schedules against the
+        // effective owner and these ids belonged to somebody else's context.
+        $ownerId = \App\Support\WorkerContext::effectiveOwnerId();
+        $schedulesQ = fn () => \App\Models\AsCroppingSchedule::active()->forClient($ownerId);
+
+        $scheduleCount = $schedulesQ()->count();
 
         // A schedule counts as "active" when it has at least one activity dated
         // within 6 months of today (either side). The dashboard only lists these
         // — schedules with no near-term activity are hidden here.
-        $scheduleIds = $user->schedules()->pluck('id')->all();
+        $scheduleIds = $schedulesQ()->pluck('id')->all();
         $activeVersionIds = \App\Models\AsScheduleActivityVersion::active()
             ->whereIn('croppingScheduleId', $scheduleIds ?: [-1])
             ->where('isActive', 1)
@@ -40,7 +48,7 @@ class AppController extends Controller
             ->pluck('croppingScheduleId')
             ->all();
 
-        $latestSchedules = $user->schedules()
+        $latestSchedules = $schedulesQ()
             ->whereIn('id', $activeScheduleIds ?: [-1])
             ->orderByDesc('created_at')
             ->limit(4)
