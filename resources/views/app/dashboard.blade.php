@@ -209,6 +209,11 @@
     .ds-fold-wrap { display: grid; grid-template-rows: 1fr; min-height: 0; }
     .ds-card.is-folding .ds-fold-wrap { transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
     .ds-card.is-folded .ds-fold-wrap { grid-template-rows: 0fr; }
+    /* Padding is incompressible: a 0fr row still stands as tall as its
+       child's padding-top, so a folded card wore a 12px ghost strip under
+       the title — more below the name than above it. Folded, the padding
+       goes too, and the card closes around the name evenly. */
+    .ds-card.is-folded .ds-body { padding-top: 0; }
     .ds-fold-wrap > * { min-height: 0; overflow: hidden; }
     .ds-card.is-folded { align-self: start; }
     html.dark .ds-chev { background: rgb(255 255 255 / .07); color: #9fb08e; }
