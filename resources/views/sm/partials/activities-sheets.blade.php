@@ -957,7 +957,11 @@
 
         <div>
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Email the plan to workers</p>
-            <p class="text-sm text-gray-600 mb-2">Sends the day's activities to workers who have a registered email (add emails in the Workers module).</p>
+            {{-- The parenthesis is directions to a module a worker no longer
+                 has, so it is dropped for them rather than left pointing at a
+                 door that is not there. --}}
+            @php $emailHint = $isWorker ? '' : ' (add emails in the Workers module)'; @endphp
+            <p class="text-sm text-gray-600 mb-2">Sends the day's activities to workers who have a registered email{{ $emailHint }}.</p>
             <div class="grid gap-2">
                 {{-- Copying the link is reading; posting the day to every worker
                      on the roster is not, so these two follow $mayEdit while the

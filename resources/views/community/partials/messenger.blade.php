@@ -81,7 +81,10 @@
         border-radius:.5rem; gap:.4rem; font-size:.875rem; font-weight:600; flex-shrink:0;
         background:var(--color-white, #fff); color:var(--color-gray-800, #1f2937);
         border:1px solid var(--color-gray-200, #e5e7eb);
-        box-shadow:0 1px 2px rgb(0 0 0 / .05); }
+        box-shadow:0 1px 2px rgb(0 0 0 / .05);
+        /* The float's own quicker easing reads as a different control next to
+           the hamburger; in the row it settles on the house curve. */
+        transition:background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
     .msgr-launcher.is-seated:hover { background:var(--color-gray-50, #f9fafb); box-shadow:0 1px 2px rgb(0 0 0 / .05); }
     .msgr-launcher.is-seated svg { width:1.05rem; height:1.05rem; }
     .msgr-launcher.is-seated .msgr-launcher-word { display:inline; }

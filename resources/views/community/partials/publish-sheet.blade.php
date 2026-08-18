@@ -1,4 +1,4 @@
-{{-- Shared by the locked gate, the browse page and a plan's own page. --}}
+{{-- Opened from a plan's own page, where a member chooses to share it. --}}
 <div class="sheet hidden" id="publishSheet" style="--sheet-width:30rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
