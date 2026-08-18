@@ -126,6 +126,9 @@
 @include('sm.partials.note-editor')
 @include('sm.partials.note-lightbox')
 @include('community.partials.video-js')
+{{-- The post-recording sheet: a clip filmed inside the editor is named the
+     moment it stops, before it joins the note. --}}
+@include('sm.partials.recording-save')
 @endsection
 
 @push('scripts')

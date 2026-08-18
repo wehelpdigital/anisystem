@@ -99,6 +99,20 @@
     <button type="button" class="js-video-record"></button>
 </span>
 
+{{-- The uploading veil — Quick Capture's, borrowed shape for shape. A clip is
+     tens of megabytes on a farm line, and a spinner that says nothing for a
+     minute reads as a hang: the bar breathes until the first byte moves,
+     counts while the bytes travel, and says "Finishing…" while the server is
+     still compressing. A sibling of the modal, not a child: the card carries
+     a transform, and a transform ancestor traps position:fixed. --}}
+<div class="qr-busy" id="qrBusy" hidden role="alert" aria-busy="true">
+    <div class="qr-busy-card">
+        <p class="qr-busy-title">Uploading the video…</p>
+        <div class="qr-busy-track"><div class="qr-busy-fill" id="qrBusyFill"></div></div>
+        <p class="qr-busy-pct" id="qrBusyPct"></p>
+    </div>
+</div>
+
 @push('head')
 <style>
     .qr-modal { position: fixed; inset: 0; z-index: 90; display: flex; align-items: center; justify-content: center; padding: 1rem; }
@@ -129,7 +143,31 @@
     html.dark .qr-head, html.dark .qr-foot { border-color: #2b3a1c; }
     html.dark .qr-target { background: #1c2416; border-color: #2b3a1c; }
     html.dark .qr-target.is-on { background: #24301a; border-color: #6ba33c; }
-    @media (prefers-reduced-motion: reduce) { .qr-backdrop, .qr-card { transition: none; } }
+    /* The uploading veil — same bones as Quick Capture's .qc-busy, sat above
+       the modal (90) and every ambient float. */
+    .qr-busy { position: fixed; inset: 0; z-index: 460; display: flex; align-items: center; justify-content: center;
+        background: rgb(0 0 0 / .55); animation: qrBusyIn .28s cubic-bezier(.22,1,.36,1) both; }
+    .qr-busy[hidden] { display: none; }
+    .qr-busy-card { width: min(20rem, calc(100vw - 3rem)); background: var(--color-white); border-radius: 1rem;
+        padding: 1.4rem 1.2rem; text-align: center; box-shadow: 0 30px 60px -30px rgb(0 0 0 / .6); }
+    .qr-busy-title { font-weight: 800; color: var(--color-gray-800); margin-bottom: .8rem; }
+    .qr-busy-track { height: .55rem; border-radius: 999px; background: var(--color-gray-100); overflow: hidden; }
+    .qr-busy-fill { height: 100%; width: 0%; border-radius: 999px; background: #4a7c2a;
+        transition: width .2s ease; }
+    /* Before the first byte moves there is no honest percentage — the bar
+       breathes instead of lying about one. */
+    .qr-busy.is-vague .qr-busy-fill { width: 40% !important; animation: qrBusyVague 1.1s ease-in-out infinite alternate; }
+    .qr-busy-pct { font-size: .74rem; font-weight: 700; color: var(--color-gray-500); margin-top: .5rem; min-height: 1em; }
+    @keyframes qrBusyIn { from { opacity: 0; } }
+    @keyframes qrBusyVague { from { margin-left: 0; } to { margin-left: 60%; } }
+    html.dark .qr-busy-card { background: #151b12; }
+    html.dark .qr-busy-title { color: #e8efe1; }
+    html.dark .qr-busy-track { background: rgb(255 255 255 / .08); }
+    @media (prefers-reduced-motion: reduce) {
+        .qr-backdrop, .qr-card { transition: none; }
+        .qr-busy { animation: none; }
+        .qr-busy.is-vague .qr-busy-fill { animation: none; margin-left: 30%; }
+    }
 </style>
 @endpush
 
@@ -228,6 +266,44 @@
         } catch (_) { /* the new-album path still works */ }
     }
 
+    /* ---- the veil and the wire — Quick Capture's, name for name ------
+     * fetch() cannot watch an upload: only XHR reports bytes as they leave,
+     * and the bytes leaving are the whole wait here. Vague until the first
+     * byte moves (no honest number exists yet), percent while they travel,
+     * and "Finishing…" at 100% — all sent is not the same as saved, the
+     * server is still compressing. */
+    function busyShow() {
+        const b = $('qrBusy');
+        b.hidden = false; b.classList.add('is-vague');
+        $('qrBusyFill').style.width = '0%';
+        $('qrBusyPct').textContent = '';
+    }
+    function busyPct(p) {
+        const b = $('qrBusy');
+        b.classList.remove('is-vague');
+        $('qrBusyFill').style.width = p + '%';
+        $('qrBusyPct').textContent = p < 100 ? p + '%' : 'Finishing…';
+    }
+    function busyHide() { $('qrBusy').hidden = true; }
+    function wire(url, fd) {
+        return new Promise((resolve, reject) => {
+            const x = new XMLHttpRequest();
+            x.open('POST', url);
+            x.withCredentials = true;
+            x.setRequestHeader('X-CSRF-TOKEN', CSRF);
+            x.setRequestHeader('Accept', 'application/json');
+            x.upload.onprogress = (e) => { if (e.lengthComputable) busyPct(Math.round((e.loaded / e.total) * 100)); };
+            x.onload = () => {
+                let data = {};
+                try { data = JSON.parse(x.responseText); } catch (_) { }
+                if (x.status >= 200 && x.status < 300 && data.success) resolve(data);
+                else reject(new Error(data.message || 'Could not save the clip.'));
+            };
+            x.onerror = () => reject(new Error('The connection dropped mid-upload. Nothing may have arrived — try again.'));
+            x.send(fd);
+        });
+    }
+
     $('qrSave').addEventListener('click', async () => {
         const title = $('qrTitle').value.trim();
         if (!clip) { window.toast?.('Record or choose a clip first.', 'error'); return; }
@@ -235,10 +311,7 @@
 
         const btn = $('qrSave');
         btn.disabled = true;
-        // Says uploading, because that is the part the person is waiting
-        // through and the part their connection decides. What the server does
-        // with it afterwards is the server's business.
-        const waiting = window.smBusy('Uploading the video…');
+        busyShow();
 
         const form = new FormData();
         form.append('clip', clip, clip.name || 'recording.webm');
@@ -253,19 +326,12 @@
         }
 
         try {
-            const res = await fetch(CLIP_URL, {
-                method: 'POST',
-                headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' },
-                body: form,
-                credentials: 'same-origin',
-            });
-            const json = await res.json().catch(() => ({}));
-            if (!json.success) throw new Error(json.message || 'Could not save the clip.');
-            waiting.close();
+            const json = await wire(CLIP_URL, form);
+            busyHide();
             window.toast?.(json.message);
             close();
         } catch (err) {
-            waiting.close();
+            busyHide();
             window.toast?.(err.message, 'error');
         } finally {
             btn.disabled = false;

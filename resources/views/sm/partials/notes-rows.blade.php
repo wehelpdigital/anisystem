@@ -34,6 +34,9 @@
                 'type' => $isMap ? 'map' : ($m['type'] ?? 'image'),
                 'url' => \App\Support\MediaStore::url($m['path']),
                 'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
+                // A recording's own name — the chip wears it instead of the
+                // word "Video", so three clips on one note read apart.
+                'title' => $m['title'] ?? null,
                 'mapUrl' => $isMap ? $mapUrl : null,
                 // A drawing opens where it can be changed, not where it can
                 // be squinted at: the Draw module, on this exact drawing.
@@ -47,6 +50,8 @@
                 'type' => $isMap ? 'map' : ($m['type'] ?? 'image'),
                 'path' => $m['path'],
                 'strokes' => $m['strokes'] ?? null,
+                'title' => $m['title'] ?? null,
+                'description' => $m['description'] ?? null,
                 'url' => \App\Support\MediaStore::url($m['path']),
                 'poster' => $m['poster'] ?? null,
                 'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,

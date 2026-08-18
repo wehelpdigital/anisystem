@@ -117,6 +117,11 @@ class NotesHubController extends Controller
             'media.*.type'   => 'required_with:media|in:image,video',
             'media.*.path'   => 'required_with:media|string|max:500',
             'media.*.poster' => 'nullable|string|max:500',
+            // A recording is asked for its name and story the moment it
+            // stops; validated() strips anything without a rule, so without
+            // these two the typed name silently fell off the note.
+            'media.*.title' => 'nullable|string|max:191',
+            'media.*.description' => 'nullable|string|max:2000',
         ]);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => 'Validation failed.', 'errors' => $validator->errors()], 422);
@@ -180,6 +185,27 @@ class NotesHubController extends Controller
             return response()->json(['success' => false, 'message' => 'Video processing failed: ' . $e->getMessage()], 500);
         }
 
+        // Compress here, keep there — the same handover the schedule notebook
+        // does. This path used to stop at the local disk, which this app
+        // loses on every deploy: a global note's video "was not added"
+        // because by the time anyone looked, the file was gone.
+        foreach (['video', 'poster'] as $part) {
+            $local = $out[$part] ?? null;
+            if (! $local || ! \App\Support\MediaStore::enabled()) {
+                continue;
+            }
+            $kept = \App\Support\MediaStore::putBinary(
+                Storage::disk('public')->get($local),
+                'notes',
+                pathinfo($local, PATHINFO_EXTENSION) ?: ($part === 'poster' ? 'jpg' : 'mp4'),
+                'global'
+            );
+            if ($kept && $kept !== $local) {
+                Storage::disk('public')->delete($local);
+                $out[$part] = $kept;
+            }
+        }
+
         return response()->json(['success' => true, 'data' => [
             'type' => 'video',
             'path' => $out['video'],
@@ -195,6 +221,8 @@ class NotesHubController extends Controller
             ->filter(fn ($m) => in_array($m['type'] ?? '', ['image', 'video'], true) && filled($m['path'] ?? null))
             ->map(fn ($m) => array_filter([
                 'type' => $m['type'], 'path' => $m['path'], 'poster' => $m['poster'] ?? null,
+                'title' => filled($m['title'] ?? null) ? trim((string) $m['title']) : null,
+                'description' => filled($m['description'] ?? null) ? trim((string) $m['description']) : null,
             ], fn ($v) => $v !== null))
             ->values()->all() ?: null;
     }
@@ -204,6 +232,8 @@ class NotesHubController extends Controller
         return collect(is_array($media) ? $media : [])
             ->map(fn ($m) => empty($m['path']) ? null : [
                 'type' => $m['type'] ?? 'image',
+                // The chip wears a recording's own name instead of "Video".
+                'title' => $m['title'] ?? null,
                 'url' => \App\Support\MediaStore::url($m['path']),
                 'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
             ])

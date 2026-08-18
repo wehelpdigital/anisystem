@@ -235,6 +235,9 @@
 @include('sm.partials.note-lightbox')
 @endif
 @include('community.partials.video-js')
+{{-- The post-recording sheet: a filmed clip is named the moment it stops,
+     and can be filed in a Gallery album on the way into the note. --}}
+@include('sm.partials.recording-save')
 @endpush
 
 @push('scripts')
@@ -248,6 +251,9 @@ const __init = () => {
         destroy: (id) => @json(route('sm.notes.destroy')) + '?scheduleId=' + SCHEDULE_ID + '&id=' + id,
         upload: @json(route('sm.notes.image-upload')) + '?scheduleId=' + SCHEDULE_ID,
         videoUpload: @json(route('sm.notes.video-upload')) + '?scheduleId=' + SCHEDULE_ID,
+        // This schedule's Gallery albums, for the post-recording sheet's
+        // "file it in an album too" select.
+        albums: @json(route('quick-capture.albums')),
     };
     const CSRF = document.querySelector('meta[name=csrf-token]').content;
     @php
@@ -266,6 +272,8 @@ const __init = () => {
                     'type' => $isMap ? 'map' : ($m['type'] ?? 'image'),
                     'path' => $m['path'],
                     'strokes' => $m['strokes'] ?? null,
+                    'title' => $m['title'] ?? null,
+                    'description' => $m['description'] ?? null,
                     'url' => \App\Support\MediaStore::url($m['path']),
                     'poster' => $m['poster'] ?? null,
                     'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
@@ -524,7 +532,11 @@ const __init = () => {
         if (!bytes) return '';
         return bytes >= 1048576 ? (bytes / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(bytes / 1024)) + ' KB';
     }
-    function uploadWithProgress(url, field, file) {
+    // Uploads still on the wire. Save used to be perfectly happy to file the
+    // note while a clip was mid-flight — the video never joined the media
+    // list, so the saved note arrived without it and nobody was told.
+    let uploadsInFlight = 0;
+    function uploadWithProgress(url, field, file, extra) {
         const row = document.createElement('div');
         row.className = 'note-up';
         row.innerHTML = `
@@ -538,9 +550,15 @@ const __init = () => {
         const pct = row.querySelector('.note-up-pct');
         const fill = row.querySelector('.note-up-fill');
 
+        uploadsInFlight++;
         return new Promise((resolve, reject) => {
             const form = new FormData();
             form.append(field, file);
+            // A recording travels with its name, story and album choice; a
+            // plain picked file sends none of these.
+            Object.entries(extra || {}).forEach(([k, v]) => {
+                if (v !== null && v !== undefined && v !== '') form.append(k, v);
+            });
             const xhr = new XMLHttpRequest();
             xhr.open('POST', url, true);
             xhr.withCredentials = true;
@@ -573,7 +591,7 @@ const __init = () => {
             xhr.addEventListener('error', () => fail('Upload failed — check your connection.'));
             xhr.addEventListener('abort', () => fail('Upload cancelled.'));
             xhr.send(form);
-        });
+        }).finally(() => { uploadsInFlight--; });
     }
 
     // Draw → upload the sketch → add it as an attachment (not inline).
@@ -596,17 +614,45 @@ const __init = () => {
     // Add / record a video — the shared video partial writes the picked or
     // recorded file into .js-video-file; we compress + attach it here.
     const noteVideoInput = document.querySelector('#noteSheet .js-video-file');
+
+    async function attachVideo(file, meta) {
+        try {
+            const json = await uploadWithProgress(URLS.videoUpload, 'video', file, meta);
+            media.push({
+                type: 'video', path: json.data.path, poster: json.data.poster,
+                url: json.data.url, posterUrl: json.data.posterUrl,
+                title: json.data.title || null, description: json.data.description || null,
+            });
+            renderMthumbs();
+            // The server says when the clip was also filed in an album.
+            toast(json.message || 'Video attached.');
+        } catch (err) { toast(err.message, 'error'); }
+    }
+
     noteVideoInput?.addEventListener('change', async () => {
         const file = noteVideoInput.files && noteVideoInput.files[0]; if (!file) return;
-        try {
-            const json = await uploadWithProgress(URLS.videoUpload, 'video', file);
-            media.push({ type: 'video', path: json.data.path, poster: json.data.poster, url: json.data.url, posterUrl: json.data.posterUrl });
-            renderMthumbs();
-            toast('Video attached.');
-        } catch (err) { toast(err.message, 'error'); }
+        // A clip filmed just now gets asked its name, story and album while
+        // everyone still remembers what it was of; a file picked off the
+        // device keeps the quick road it has always had. Read-and-clear —
+        // the flag must not outlive this change.
+        const recorded = noteVideoInput.dataset.smRecorded === '1';
+        delete noteVideoInput.dataset.smRecorded;
         noteVideoInput.value = '';
         const host = document.querySelector('#noteSheet [data-video-host]');
         if (host && window.plazaClearVideo) window.plazaClearVideo(host);
+
+        if (recorded && window.smAskRecording) {
+            window.smAskRecording({
+                sizeMB: file.size / 1048576,
+                hint: 'Attached to this note — give it a name the Notes list can show.',
+                albumsUrl: URLS.albums,
+                scheduleId: SCHEDULE_ID,
+                onSave: ({ title, description, albumId }) =>
+                    attachVideo(file, { title, description, albumId }),
+            });
+            return;
+        }
+        attachVideo(file, null);
     });
 
     /** Everything this note carries, with a drawing knowing where it lives.
@@ -661,6 +707,12 @@ const __init = () => {
     refreshToolbar();
 
     fld('noteSaveBtn').addEventListener('click', async () => {
+        // Saving mid-upload filed the note without its video — the clip had
+        // not joined the media list yet, and nobody was told.
+        if (uploadsInFlight > 0) {
+            toast('Still uploading an attachment — one moment, then save.', 'error');
+            return;
+        }
         const id = fld('noteId').value;
         const title = fld('noteTitle').value.trim();
         if (!title) { toast('Give the note a title.', 'error'); return; }
@@ -669,7 +721,9 @@ const __init = () => {
             title,
             body: (body === '<p><br></p>' ? null : body),
             imagePath: null,
-            media: media.map((m) => ({ type: m.type, path: m.path, poster: m.poster || null, strokes: m.strokes || null })),
+            // title/description ride with a recording; dropping them here
+            // would strip a named clip on its first edit.
+            media: media.map((m) => ({ type: m.type, path: m.path, poster: m.poster || null, title: m.title || null, description: m.description || null, strokes: m.strokes || null })),
         };
 
         const btn = fld('noteSaveBtn'); btn.disabled = true;

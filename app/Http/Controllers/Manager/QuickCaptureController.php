@@ -167,10 +167,17 @@ class QuickCaptureController extends BaseScheduleController
             return $this->jsonFail($e->getMessage() ?: 'The clip could not be saved.', 422);
         }
 
+        // The words with the markup stripped — what a caption field can hold.
+        $plainBody = $body !== null ? trim(strip_tags($body)) : '';
+
         $media = [array_filter([
             'type' => 'video',
             'path' => $stored['video'],
             'poster' => $stored['poster'] ?? null,
+            // The clip's own name rides on the media entry, so the note's
+            // chip can say what the video is instead of the word "Video".
+            'title' => $title,
+            'description' => $plainBody !== '' ? $plainBody : null,
         ], fn ($v) => $v !== null)];
 
         if ($request->input('target') === 'gallery') {
@@ -182,7 +189,7 @@ class QuickCaptureController extends BaseScheduleController
             // photos it belongs behind.
             $max = \App\Models\AsGalleryImage::where('albumId', $album->id)
                 ->where('deleteStatus', 1)->max('sortOrder');
-            \App\Models\AsGalleryImage::create([
+            $image = new \App\Models\AsGalleryImage([
                 'albumId' => $album->id,
                 'croppingScheduleId' => $schedule->id,
                 'userId' => Auth::id(),
@@ -191,6 +198,14 @@ class QuickCaptureController extends BaseScheduleController
                 'sortOrder' => $max === null ? 0 : (int) $max + 1,
                 'deleteStatus' => 1,
             ]);
+            // The description asked for at record time belongs on the album
+            // row too — the photos' path keeps it, this one used to drop it.
+            // Assigned rather than mass-filled: the column is newer than
+            // $fillable, and fill() drops strangers without saying so.
+            if (\Illuminate\Support\Facades\Schema::hasColumn('as_gallery_images', 'description')) {
+                $image->description = $plainBody !== '' ? $plainBody : null;
+            }
+            $image->save();
 
             return $this->jsonOk('Clip saved to "' . $album->title . '".', [
                 'albumId' => $album->id,

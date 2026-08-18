@@ -136,6 +136,10 @@
         padding: .3rem .6rem; border-radius: 999px; cursor: pointer;
         border: 1px solid var(--tl-border, #e5e7eb); background: var(--tl-surface, #fff);
         font-size: .72rem; font-weight: 700; color: var(--tl-text-muted, #4b5563);
+        /* Buttons centre their text by default, so a task name long enough
+           to wrap read as a centred poem. Ragged-right like any other line
+           of reading. */
+        text-align: left; justify-content: flex-start;
         transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
     /* A long name wraps onto a second line rather than being cut to an
        ellipsis: you are choosing which lot you are writing about, and "Apar…"
@@ -186,6 +190,10 @@
     // What this note is about. Null means "not said", which is different from
     // "no lot" — a note can simply be about the day.
     let tagLot = null, tagAct = null;
+    // Uploads still on the wire. A phone clip takes real seconds, and Save
+    // used to be perfectly happy to file the note without it — the video
+    // "disappeared" because it had never joined the media list yet.
+    let uploadsInFlight = 0;
 
     function ensureQuill() {
         if (!quill && window.Quill) {
@@ -241,8 +249,9 @@
     }
 
     /** Upload one file, saying how far it has got. XHR, not fetch, because
-     *  fetch cannot report upload progress. */
-    function upload(url, field, file) {
+     *  fetch cannot report upload progress. `extra` rides along as form
+     *  fields — a recording's title and story. */
+    function upload(url, field, file, extra) {
         const row = document.createElement('div');
         row.className = 'ne-up';
         row.innerHTML = '<div class="ne-up-top"><span class="ne-up-name"></span><span class="ne-up-pct">0%</span></div>'
@@ -252,8 +261,14 @@
         const pct = row.querySelector('.ne-up-pct');
         const fill = row.querySelector('.ne-up-fill');
 
+        uploadsInFlight++;
         return new Promise((resolve, reject) => {
             const form = new FormData(); form.append(field, file);
+            // A recording travels with the name and story it was just asked
+            // for; a plain picked file sends none of these.
+            Object.entries(extra || {}).forEach(([k, v]) => {
+                if (v !== null && v !== undefined && v !== '') form.append(k, v);
+            });
             const xhr = new XMLHttpRequest();
             xhr.open('POST', url, true);
             xhr.withCredentials = true;
@@ -283,7 +298,7 @@
             xhr.addEventListener('error', () => fail('Upload failed — check your connection.'));
             xhr.addEventListener('abort', () => fail('Upload cancelled.'));
             xhr.send(form);
-        });
+        }).finally(() => { uploadsInFlight--; });
     }
 
     // ---- Photos: taken here, or already on the device. Same road after that.
@@ -301,13 +316,43 @@
 
     // ---- Video (shared partial writes the file into .js-video-file)
     const vInput = document.querySelector('#noteEditorSheet .js-video-file');
+
+    async function attachVideo(file, meta) {
+        try {
+            const d = await upload(cfg.videoUploadUrl, 'video', file, meta);
+            media.push({
+                type: 'video', path: d.path, poster: d.poster, url: d.url, posterUrl: d.posterUrl,
+                // Some upload endpoints echo the name back, older ones do not
+                // — what was typed is the truth either way.
+                title: (meta && meta.title) || d.title || null,
+                description: (meta && meta.description) || d.description || null,
+            });
+            renderThumbs();
+            window.toast?.('Video attached.');
+        } catch (err) { window.toast?.(err.message, 'error'); }
+    }
+
     vInput?.addEventListener('change', async () => {
         const file = vInput.files && vInput.files[0]; if (!file) return;
-        try { const d = await upload(cfg.videoUploadUrl, 'video', file); media.push({ type: 'video', path: d.path, poster: d.poster, url: d.url, posterUrl: d.posterUrl }); renderThumbs(); window.toast?.('Video attached.'); }
-        catch (err) { window.toast?.(err.message, 'error'); }
+        // A clip filmed just now is asked its name and story while everyone
+        // still remembers what it was of; a file picked off the device keeps
+        // the quick road. Read-and-clear — the recorder's flag must not
+        // outlive this change event.
+        const recorded = vInput.dataset.smRecorded === '1';
+        delete vInput.dataset.smRecorded;
         vInput.value = '';
         const host = document.querySelector('#noteEditorSheet [data-video-host]');
         if (host && window.plazaClearVideo) window.plazaClearVideo(host);
+
+        if (recorded && window.smAskRecording) {
+            window.smAskRecording({
+                sizeMB: file.size / 1048576,
+                hint: 'Attached to this note — give the clip a name.',
+                onSave: ({ title, description }) => attachVideo(file, { title, description }),
+            });
+            return;
+        }
+        attachVideo(file, null);
     });
 
     // ---- Remove a media item
@@ -378,6 +423,12 @@
 
     // ---- Save / delete
     $('noteEditorSave').addEventListener('click', () => {
+        // Saving mid-upload filed the note without its video — the clip had
+        // not joined the media list yet, and nobody was told.
+        if (uploadsInFlight > 0) {
+            window.toast?.('Still uploading an attachment — one moment, then save.', 'error');
+            return;
+        }
         const raw = quill ? quill.root.innerHTML : '';
         const body = (raw === '<p><br></p>' || raw.trim() === '') ? '' : raw;
         // The whole item goes back, urls and strokes included: the server

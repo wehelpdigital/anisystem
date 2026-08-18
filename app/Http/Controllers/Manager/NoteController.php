@@ -160,6 +160,11 @@ class NoteController extends BaseScheduleController
 
         $validator = Validator::make($request->all(), [
             'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-msvideo|max:307200',
+            // A recording arrives with its name and story already asked for
+            // (the post-recording sheet); a picked file sends none of these.
+            'title' => 'nullable|string|max:191',
+            'description' => 'nullable|string|max:2000',
+            'albumId' => 'nullable|integer',
         ], [
             'video.required' => 'Pick a video first.',
             'video.max' => 'Video is too large — max 300 MB.',
@@ -195,13 +200,52 @@ class NoteController extends BaseScheduleController
             }
         }
 
-        return $this->jsonOk('Video attached.', [
+        // The same clip can also sit in a Gallery album beside the photos of
+        // the same walk — one upload, two doors to it. The album row points at
+        // the already-stored file, so nothing travels twice; asked for before
+        // the note is saved, on purpose, because the person chose the album.
+        $filedIn = null;
+        if ($request->filled('albumId')) {
+            $album = \App\Models\AsGalleryAlbum::where('croppingScheduleId', $schedule->id)
+                ->where('deleteStatus', 1)->find((int) $request->input('albumId'));
+            if ($album) {
+                // Counted like every other arrival, or the clip heads the
+                // album instead of joining the end of it.
+                $max = \App\Models\AsGalleryImage::where('albumId', $album->id)
+                    ->where('deleteStatus', 1)->max('sortOrder');
+                $image = new \App\Models\AsGalleryImage([
+                    'albumId' => $album->id,
+                    'croppingScheduleId' => $schedule->id,
+                    'userId' => Auth::id(),
+                    'path' => $out['video'],
+                    'caption' => filled($request->input('title'))
+                        ? Str::limit(trim((string) $request->input('title')), 250)
+                        : null,
+                    'sortOrder' => $max === null ? 0 : (int) $max + 1,
+                    'deleteStatus' => 1,
+                ]);
+                // Assigned rather than mass-filled: the column is newer than
+                // $fillable, and fill() drops strangers without saying so.
+                if (\Illuminate\Support\Facades\Schema::hasColumn('as_gallery_images', 'description')) {
+                    $image->description = filled($request->input('description'))
+                        ? trim((string) $request->input('description'))
+                        : null;
+                }
+                $image->save();
+                $filedIn = $album->title;
+            }
+        }
+
+        return $this->jsonOk($filedIn ? 'Video attached — also filed in "' . $filedIn . '".' : 'Video attached.', [
             'data' => [
                 'type' => 'video',
                 'path' => $out['video'],
                 'poster' => $out['poster'] ?? null,
                 'url' => \App\Support\MediaStore::url($out['video']),
                 'posterUrl' => ! empty($out['poster']) ? \App\Support\MediaStore::url($out['poster']) : null,
+                'title' => filled($request->input('title')) ? trim((string) $request->input('title')) : null,
+                'description' => filled($request->input('description')) ? trim((string) $request->input('description')) : null,
+                'filedIn' => $filedIn,
             ],
         ]);
     }
@@ -231,6 +275,10 @@ class NoteController extends BaseScheduleController
             'media.*.type' => 'required_with:media|in:image,video,drawing,map',
             'media.*.path' => 'required_with:media|string|max:500',
             'media.*.poster' => 'nullable|string|max:500',
+            // A recording is asked for its name and story the moment it
+            // stops; they ride on the media entry so the note can show them.
+            'media.*.title' => 'nullable|string|max:191',
+            'media.*.description' => 'nullable|string|max:2000',
             // max:4000 counts the top level, which for a paged drawing is the
             // page list — the rule is what counts the objects inside them.
             'media.*.strokes' => ['nullable', 'array', 'max:4000', DrawStrokes::rule()],
@@ -249,6 +297,8 @@ class NoteController extends BaseScheduleController
                 'type' => $m['type'],
                 'path' => $m['path'],
                 'poster' => $m['poster'] ?? null,
+                'title' => filled($m['title'] ?? null) ? trim((string) $m['title']) : null,
+                'description' => filled($m['description'] ?? null) ? trim((string) $m['description']) : null,
                 // Kept with the note rather than in a file: strokes are what
                 // makes a drawing reopenable, and the disk is not permanent.
                 'strokes' => ($m['type'] ?? '') === 'drawing' ? ($m['strokes'] ?? null) : null,
@@ -275,6 +325,8 @@ class NoteController extends BaseScheduleController
                 'type' => $m['type'] ?? 'image',
                 'path' => $m['path'] ?? null,
                 'poster' => $m['poster'] ?? null,
+                'title' => $m['title'] ?? null,
+                'description' => $m['description'] ?? null,
                 // Without the strokes a reopened drawing would come back as a
                 // flat picture — editable is the whole point of the type.
                 'strokes' => $m['strokes'] ?? null,

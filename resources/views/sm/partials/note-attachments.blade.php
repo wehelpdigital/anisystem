@@ -52,9 +52,13 @@
                     </button>
                 @endif
             @elseif ($type === 'video')
-                <button type="button" class="na na-video" data-lb-type="video" data-lb-url="{{ $m['url'] }}" data-lb-poster="{{ $m['posterUrl'] ?? '' }}" title="Play this video">
+                {{-- A recording carries the name it was given the moment it
+                     stopped; the chip wears it so three clips on one note
+                     read apart. Clamped inline — the chip's own styles live
+                     with the lightbox, which is not this file's to grow. --}}
+                <button type="button" class="na na-video" data-lb-type="video" data-lb-url="{{ $m['url'] }}" data-lb-poster="{{ $m['posterUrl'] ?? '' }}" title="{{ filled($m['title'] ?? null) ? 'Play: ' . $m['title'] : 'Play this video' }}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg>
-                    <span>Video</span>
+                    <span style="max-width: 11rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ filled($m['title'] ?? null) ? $m['title'] : 'Video' }}</span>
                 </button>
             @else
                 <button type="button" class="na na-photo" data-lb-type="image" data-lb-url="{{ $m['url'] }}" title="Open this photo">

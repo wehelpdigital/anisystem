@@ -40,6 +40,12 @@
         }
         try { const dt = new DataTransfer(); dt.items.add(file); input.files = dt.files; }
         catch (_) { return false; }
+        // Every road through here is the recorder (camera app or the modal);
+        // a picked file fires its own change without passing this way. The
+        // flag lets a listener ask "was this filmed just now?" — the note
+        // flows only raise the naming sheet for filmed clips. Read-and-clear
+        // is the consumer's job.
+        input.dataset.smRecorded = '1';
         setChip(host, file);
         // Assigning .files in script does not fire change — the browser only
         // does that for a human choosing a file. Everything downstream waits
@@ -61,7 +67,14 @@
 
     document.addEventListener('click', (e) => {
         const attach = e.target.closest('.js-video-attach');
-        if (attach) { e.preventDefault(); hostOf(attach)?.querySelector('.js-video-file')?.click(); return; }
+        if (attach) {
+            e.preventDefault();
+            const input = hostOf(attach)?.querySelector('.js-video-file');
+            // A stale "filmed just now" flag from an earlier recording must
+            // not survive into a picked file's change event.
+            if (input) { delete input.dataset.smRecorded; input.click(); }
+            return;
+        }
         const clear = e.target.closest('.js-video-clear');
         if (clear) { e.preventDefault(); window.plazaClearVideo(hostOf(clear)); return; }
         const rec = e.target.closest('.js-video-record');
@@ -259,8 +272,24 @@
         font-size: .8rem; font-weight: 800; padding: .15rem .6rem; border-radius: 999px;
         font-variant-numeric: tabular-nums; }
     .pvm-foot { display: flex; align-items: center; justify-content: center; gap: .6rem;
-        padding: 1rem 1rem calc(1rem + env(safe-area-inset-bottom, 0px)); flex: none; }
+        padding: 1rem 1rem calc(1rem + env(safe-area-inset-bottom, 0px)); flex: none;
+        /* A solid near-black band under the decision row: over a bright
+           snapshot the old see-through footing let Re-record and Use video
+           melt into whatever was just filmed. */
+        background: rgb(0 0 0 / .78); border-top: 1px solid rgb(255 255 255 / .14); }
     .pvm-rec { min-width: 8rem; }
+    /* The recorder's card is always dark, so its buttons must not follow the
+       page theme: in dark mode `bg-white` names the darkest surface, which
+       painted Cancel and ● Re-record near-black on black — the "retry" button
+       nobody could see. Pinned to real white / real green here. */
+    .pvm-foot .btn-white, html.dark .pvm-foot .btn-white {
+        background: #fff; color: #111827; border-color: #fff; }
+    .pvm-foot .btn-white:hover, html.dark .pvm-foot .btn-white:hover { background: #e5e7eb; }
+    .pvm-foot .btn-primary, html.dark .pvm-foot .btn-primary {
+        background: #4a7c2a; color: #fff; box-shadow: 0 0 0 1.5px rgb(255 255 255 / .35); }
+    .pvm-foot .btn-primary:hover, html.dark .pvm-foot .btn-primary:hover { background: #3d6823; }
+    /* Thumb-sized on a phone: these are the only two choices on screen. */
+    .pvm-foot .btn-sm { min-height: 2.75rem; }
     @media (min-width: 768px) {
         /* A desktop has room to keep the page behind it, so the viewfinder
            is a large panel rather than the entire window. */
