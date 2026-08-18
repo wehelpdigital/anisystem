@@ -742,6 +742,9 @@ const __init = () => {
             scheduleId: sid,
             kinds: 'image',
             title: 'Attach from the gallery',
+            // Several at once - the question can carry what room remains.
+            multiple: true,
+            max: MAX_PHOTOS - chips.children.length,
             onPick: attachFromGallery,
         });
     });
@@ -773,13 +776,15 @@ const __init = () => {
                 },
             });
             conversationId = res.data.conversationId;
+            // The chips leave the moment the send is known good - before any
+            // templating that could throw and strand them in the composer.
+            clearPhotos();
             const costLine = UNLIMITED ? '' : `<p class="aibubble-cost">${escapeHtml(String(Math.round(res.data.answer.creditsCharged * 100) / 100))} credits</p>`;
             thinking.querySelector('.aibubble').innerHTML =
                 renderAnswer(res.data.answer.content)
                 + costLine
                 + `<time class="ai-when">${escapeHtml(nowStamp())}</time>`;
             setBalance(res.data.balance);
-            clearPhotos();
             thinking.scrollIntoView({ behavior: 'smooth', block: 'end' });
         } catch (err) {
             thinking.remove();

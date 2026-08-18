@@ -496,6 +496,9 @@
                 scheduleId: SCHEDULE_ID,
                 kinds: 'image',
                 title: 'Attach from the gallery',
+                // Several at once - up to the room the strip has left.
+                multiple: true,
+                max: MAX_SHOTS - chipCount(),
                 onPick: (item) => {
                     if (!item || !item.url || !roomForAnother()) return;
                     const chip = addChip(item.url);
@@ -541,9 +544,11 @@
             try {
                 const res = await api(URLS.ask, { method: 'POST', body: { message, conversationId, imagePaths: myPaths, scheduleId: SCHEDULE_ID } });
                 conversationId = res.data.conversationId;
+                // Chips leave the moment the send is known good.
+                clearPhotos();
                 const costLine = UNLIMITED ? '' : `<p class="cost">${escapeHtml(String(Math.round(res.data.answer.creditsCharged * 100) / 100))} credits</p>`;
                 thinking.querySelector('.b').innerHTML = render(res.data.answer.content) + costLine + `<time class="when">${escapeHtml(nowStamp())}</time>`;
-                setBalance(res.data.balance); clearPhotos(); scrollDown();
+                setBalance(res.data.balance); scrollDown();
             } catch (err) {
                 thinking.remove();
                 if (err.data && err.data.outOfCredits) {

@@ -38,6 +38,10 @@
         {{-- The scroll asks for the next page when this edges into view. --}}
         <div id="smMediaPickerMore" aria-hidden="true"></div>
     </div>
+    {{-- Multi-select only: taps collect, this one button hands them over. --}}
+    <div class="sheet-footer hidden" id="smMediaPickerFoot">
+        <button type="button" class="btn btn-primary btn-sm w-full" id="smMediaPickerAttach" disabled>Attach</button>
+    </div>
 </div>
 
 <style>
@@ -74,6 +78,11 @@
         background-size: 200% 100%; animation: smpShimmer 1.2s linear infinite; }
     @keyframes smpShimmer { to { background-position: -200% 0; } }
     html.dark .smp-skel { background: linear-gradient(100deg, #1c2416 40%, #26301c 50%, #1c2416 60%); background-size: 200% 100%; animation: smpShimmer 1.2s linear infinite; }
+    /* A collected tile wears the ring and the check; taps toggle it. */
+    .smp-tile.is-picked { border-color: var(--color-brand-500, #4a7c2a); box-shadow: 0 0 0 2px var(--color-brand-300, #a8cc7e); }
+    .smp-tile.is-picked::after { content: '✓'; position: absolute; right: .3rem; top: .3rem; width: 1.25rem; height: 1.25rem;
+        border-radius: 999px; background: var(--color-brand-600, #3d6823); color: #fff; font-size: .72rem; font-weight: 800;
+        display: flex; align-items: center; justify-content: center; }
     html.dark .smp-tile { background: #1c2416; border-color: #2b3a1c; }
     html.dark .smp-shot { background: #151b12; }
     html.dark .smp-name { color: #e5e9f5; }
@@ -108,6 +117,17 @@
        for the next while the reader nears the bottom. `gen` stamps every
        fetch — a new open or a new search obsoletes whatever is on the wire. */
     let cfg = {}, page = 0, more = false, loading = false, gen = 0;
+    /* Multi-select (opt-in): taps collect indices, one button hands them
+       over together — the AI composer takes several photos per question. */
+    let multi = false, pickMax = Infinity;
+    const picked = new Set();
+
+    function sayFoot() {
+        const btn = $('smMediaPickerAttach');
+        if (!btn) return;
+        btn.disabled = picked.size === 0;
+        btn.textContent = picked.size > 1 ? `Attach ${picked.size} photos` : 'Attach';
+    }
 
     const LABELS = { image: 'Photo', video: 'Clip', drawing: 'Drawing', map: 'Map' };
 
@@ -174,6 +194,8 @@
 
     function restart() {
         gen += 1; items = []; page = 0; more = true; loading = false;
+        // A new listing renumbers everything, so the collection starts over.
+        picked.clear(); sayFoot();
         $('smMediaPickerGrid').__shown = [];
         loadPage();
     }
@@ -205,11 +227,28 @@
     });
 
     document.addEventListener('click', (e) => {
+        // The footer's one button: hand over the collection, oldest tap first.
+        if (e.target.closest('#smMediaPickerAttach')) {
+            const chosen = [...picked].sort((a, b) => a - b).map((i) => items[i]).filter(Boolean);
+            window.closeSheet?.('smMediaPickerSheet');
+            if (onPick) chosen.forEach((item) => onPick(item));
+            return;
+        }
         const tile = e.target.closest('#smMediaPickerGrid [data-pick]');
         if (!tile) return;
+        const idx = parseInt(tile.getAttribute('data-pick'), 10);
         const shown = $('smMediaPickerGrid').__shown || [];
-        const item = shown[parseInt(tile.getAttribute('data-pick'), 10)];
+        const item = shown[idx];
         if (!item) return;
+        if (multi) {
+            // Taps collect; the footer button is the only way anything leaves.
+            if (picked.has(idx)) picked.delete(idx);
+            else if (picked.size >= pickMax) { window.toast?.(`Up to ${pickMax} photos for this question.`, 'error'); return; }
+            else picked.add(idx);
+            tile.classList.toggle('is-picked', picked.has(idx));
+            sayFoot();
+            return;
+        }
         window.closeSheet?.('smMediaPickerSheet');
         onPick && onPick(item);
     });
@@ -217,6 +256,11 @@
     window.smPickMedia = function (opts) {
         cfg = opts || {};
         onPick = typeof cfg.onPick === 'function' ? cfg.onPick : null;
+        multi = !!cfg.multiple;
+        pickMax = Number.isFinite(cfg.max) && cfg.max > 0 ? cfg.max : Infinity;
+        picked.clear();
+        $('smMediaPickerFoot')?.classList.toggle('hidden', !multi);
+        sayFoot();
         $('smMediaPickerTitle').textContent = cfg.title || 'Choose from the gallery';
         $('smMediaPickerSearch').value = '';
         $('smMediaPickerGrid').innerHTML = '';
