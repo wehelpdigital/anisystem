@@ -74,6 +74,12 @@ class ScheduleMapController extends BaseScheduleController
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
             return $this->jsonFail('You are not part of this schedule team.', 403);
         }
+        // Membership was the whole of this test, so a VIEW-ONLY worker could
+        // put shapes on the team's map by calling this directly — the one
+        // promise "view-only access" makes is that nothing they do is
+        // written down. Drawing is an edit like reshaping and removing,
+        // which have asked this all along.
+        $this->assertCanEdit();
 
         $validator = Validator::make($request->all(), [
             'kind' => 'required|in:pen,line,path,rect,area,text,arrow',
