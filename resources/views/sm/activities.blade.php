@@ -1333,11 +1333,13 @@
         /* The app bar is h-14/h-16 PLUS its 1px border, and the count badges on
            Notice/Undo/Redo hang above the buttons' top edge — so at top-14 with
            pt-0 the border overlapped the row and the header sliced every badge
-           in half. The bar drops by the border and trades its bottom padding
-           for top padding: the badges now live inside the bar's own paint, and
-           the total height is unchanged, which is what the Gallery's hardcoded
-           shelf-bar offset (ga-shelfbar) is measured against. */
-        .sticky.top-14 { top: calc(3.5rem + 1px); padding-top: .5rem; padding-bottom: 0; }
+           in half. The bar drops by the border; the top padding keeps the
+           badges inside the bar's own paint, and the bottom padding keeps the
+           buttons off the bar's border-bottom divider (they used to sit right
+           on the line). The total height this produces is what the Gallery's
+           hardcoded shelf-bar offset (ga-shelfbar) is measured against — the
+           two are changed together, always. */
+        .sticky.top-14 { top: calc(3.5rem + 1px); padding-top: .5rem; padding-bottom: .5rem; }
         @media (min-width: 768px) { .sticky.top-14 { top: calc(4rem + 1px); } }
         #toggleHiddenBtn.hidden { display: none !important; }
         /* !important so the disabled dimming survives the sheet's fade-in
@@ -2012,8 +2014,9 @@
 {{-- The utility classes here are corrected by the .sticky.top-14 rule in this
      page's own <style>: top-14 ignores the app bar's 1px border, and pt-0 left
      the count badges (which hang above the buttons) under the header's paint —
-     so the CSS drops the bar by the border and moves the bottom padding to the
-     top. Total height is unchanged on purpose: it is what the Gallery's shelf
+     so the CSS drops the bar by the border and pads BOTH sides: top so the
+     badges live inside the bar's paint, bottom so the buttons don't sit on the
+     bar's own divider line. The resulting height is what the Gallery's shelf
      bar measures its sticky offset from. The two are changed together, always,
      or the shelf bar floats free of the toolbar it is supposed to sit under. --}}
 <div class="sticky top-14 md:top-16 z-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 pt-0 pb-2 mb-2 border-b border-gray-100">

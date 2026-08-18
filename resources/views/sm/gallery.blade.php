@@ -157,15 +157,14 @@
     @media (min-width: 768px) { .ga-shelfbar { top: 4rem; } }
     /* Inside the Activities shell the toolbar is already sticky below the app
        bar, so the picker sits under both. */
-    /* App header + the shell's toolbar. Half a rem shorter than it was, so
-       these come down by the same half rem — measured from the toolbar, not
-       guessed. */
-    /* App header + the shell's toolbar. The toolbar lost .375rem of bottom
-       padding, so these lose exactly that — the margin below it does not
-       count, because when the page is scrolled the shelf bar sticks against
-       the toolbar's edge, not against the gap after it. */
-    body:has(#activitiesRoot) .ga-shelfbar { top: 6.15rem; }
-    @media (min-width: 768px) { body:has(#activitiesRoot) .ga-shelfbar { top: 6.95rem; } }
+    /* App header + the shell's toolbar, measured from the toolbar, not
+       guessed. The toolbar regained .5rem of bottom padding (buttons were
+       sitting on its divider line), so these come up by the same half rem —
+       the margin below it does not count, because when the page is scrolled
+       the shelf bar sticks against the toolbar's edge, not against the gap
+       after it. */
+    body:has(#activitiesRoot) .ga-shelfbar { top: 6.65rem; }
+    @media (min-width: 768px) { body:has(#activitiesRoot) .ga-shelfbar { top: 7.45rem; } }
     /* In the Collab Room the app bar is hidden entirely. */
     html.collab-embed .ga-shelfbar { top: 0; }
     html.dark .ga-shelfbar { background: #10160e; }
