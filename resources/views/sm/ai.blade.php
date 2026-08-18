@@ -274,6 +274,12 @@
     // Super admins ride free — the wallet row hides for them (view-side check,
     // same pattern the floating assistant already uses).
     $aiUnlimited = app(\App\Services\AiCreditService::class)->unlimited((int) auth()->id());
+    // The menu's "attach to a task" picker, rendered with the page.
+    $aiPageTasks = \App\Models\AsScheduleActivity::query()
+        ->where('croppingScheduleId', $schedule->id)
+        ->orderByDesc('targetDate')
+        ->limit(30)
+        ->get(['id', 'activityTitle', 'targetDate']);
     // The real per-photo price, so the hint stays honest when several photos
     // ride on one question.
     $aiPerPhoto = (float) ($settings->creditsPerImage ?? 0);
@@ -602,6 +608,14 @@
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.83 10.17a4 4 0 010 5.66l-3 3a4 4 0 11-5.66-5.66l1.5-1.5m6.33-1.83a4 4 0 000-5.66l-1.5-1.5"/></svg></span>
             <span>Link<span class="sub">Tie this chat to a day or activity</span></span>
         </button>
+        <button type="button" class="ai-attach-opt" id="aiMenuToTask">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></span>
+            <span>Attach to a task<span class="sub">File this chat onto a task, in the notebook</span></span>
+        </button>
+        <button type="button" class="ai-attach-opt" id="aiMenuToNote">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.4-9.4a2 2 0 112.8 2.8L11 15l-4 1 1-4 8.6-8.4z"/></svg></span>
+            <span>Save as a new note<span class="sub">The whole conversation, into the notebook</span></span>
+        </button>
         @unless ($aiUnlimited)
             <a href="{{ route('ai.credits') }}" class="ai-attach-opt">
                 <span class="ic"><svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg></span>
@@ -611,6 +625,44 @@
     </div>
 </div>
 @endpush
+
+<div class="sheet hidden" id="aiTaskSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Which task?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-1">
+        @forelse ($aiPageTasks as $t)
+            <button type="button" class="ai-attach-opt" data-ai-task="{{ $t->id }}">
+                <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                <span class="min-w-0">{{ \Illuminate\Support\Str::limit($t->activityTitle ?: 'Task', 40) }}<span class="sub">{{ $t->targetDate ? \Illuminate\Support\Carbon::parse($t->targetDate)->format('M j, Y') : 'no set date' }}</span></span>
+            </button>
+        @empty
+            <p class="text-sm text-gray-500 text-center py-6">No tasks on this schedule yet.</p>
+        @endforelse
+    </div>
+</div>
+
+<div class="sheet hidden" id="aiNoteSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="aiNoteHeading">Save this chat as a note</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-3">
+        <div>
+            <label class="form-label" for="aiNoteTitle">Title</label>
+            <input type="text" id="aiNoteTitle" class="form-input" maxlength="180" placeholder="Name this note">
+        </div>
+        <div>
+            <label class="form-label" for="aiNoteDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
+            <textarea id="aiNoteDesc" class="form-textarea" rows="3" maxlength="2000" placeholder="Why this chat is worth keeping…"></textarea>
+        </div>
+        <p class="text-xs text-gray-400">The whole conversation is attached underneath.</p>
+        <button type="button" id="aiNoteSave" class="btn btn-primary w-full">Save to the notebook</button>
+    </div>
+</div>
 
 @unless (request()->boolean('partial'))
 @push('appbar-actions')
@@ -639,6 +691,7 @@ const __init = () => {
         delConvo: (id) => @json(route('ai.conversation.delete')) + '?id=' + id,
         page: @json(route('sm.ai', ['id' => $schedule->id])),
         credits: @json(route('ai.credits')),
+        toNote: @json(route('ai.conversation.note')),
         rename: @json(route('ai.conversation.rename')),
         link: @json(route('ai.conversation.link')),
     };
@@ -921,6 +974,50 @@ const __init = () => {
 
     /* history + conversations */
     byId('aiHistoryBtn')?.addEventListener('click', () => openSheet('aiHistorySheet'));
+
+    /* Filing this chat into the notebook — plain, or onto a task. */
+    let aiPendingTaskId = null;
+    function aiFileAway(activityId) {
+        if (!conversationId) { toast('Nothing to save yet — ask something first, or open an old chat.', 'error'); return; }
+        aiPendingTaskId = activityId || null;
+        const head = byId('aiNoteHeading');
+        if (head) head.textContent = aiPendingTaskId ? 'Attach this chat to the task' : 'Save this chat as a note';
+        byId('aiNoteTitle').value = '';
+        byId('aiNoteDesc').value = '';
+        openSheet('aiNoteSheet');
+        window.smFocus?.(byId('aiNoteTitle'), { delay: 120 });
+    }
+    byId('aiMenuToNote')?.addEventListener('click', () => { window.closeSheet?.('aiMenuSheet'); aiFileAway(null); });
+    byId('aiMenuToTask')?.addEventListener('click', () => {
+        window.closeSheet?.('aiMenuSheet');
+        if (!conversationId) { toast('Nothing to save yet — ask something first, or open an old chat.', 'error'); return; }
+        openSheet('aiTaskSheet');
+    });
+    document.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-ai-task]');
+        if (!b) return;
+        window.closeSheet?.('aiTaskSheet');
+        aiFileAway(parseInt(b.dataset.aiTask, 10));
+    });
+    byId('aiNoteSave')?.addEventListener('click', async () => {
+        const btn = byId('aiNoteSave');
+        const was = btn.textContent;
+        btn.disabled = true; btn.textContent = 'Saving…';
+        try {
+            const res = await api(URLS.toNote, { method: 'POST', body: {
+                conversationId,
+                scheduleId: SCHEDULE_ID,
+                activityId: aiPendingTaskId,
+                title: byId('aiNoteTitle').value.trim(),
+                description: byId('aiNoteDesc').value.trim(),
+            } });
+            window.closeSheet?.('aiNoteSheet');
+            toast(res.message || 'Saved.');
+            // Filed away means finished with: on to a fresh session.
+            startNew();
+        } catch (err) { toast(err.message, 'error'); }
+        finally { btn.disabled = false; btn.textContent = was; }
+    });
 
     /* The square button beside the bell — or, in the shell, seated on the
        toolbar beside the hamburger. Relocated by hand because the pane's

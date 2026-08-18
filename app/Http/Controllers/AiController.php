@@ -669,10 +669,15 @@ class AiController extends Controller
         }
 
         $settings = AiSetting::current();
-        $conversation = $this->resolveConversation(
-            $request->merge(['scheduleId' => $schedule->id]),
-            $userId
-        );
+        // A fresh session unless one was asked for by id: opening the module
+        // used to resume the latest thread, and the owner wants a clean desk —
+        // the old chats wait behind "Recent chats".
+        $conversation = $request->filled('c')
+            ? $this->resolveConversation(
+                $request->merge(['scheduleId' => $schedule->id]),
+                $userId
+            )
+            : null;
         $conversation?->loadMissing('linkedActivity');
 
         return view('sm.ai', [
