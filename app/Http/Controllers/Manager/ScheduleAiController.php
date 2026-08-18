@@ -228,7 +228,7 @@ class ScheduleAiController extends BaseScheduleController
         // Refuse before spending the owner's pool on something it can't cover.
         $balance = $this->credits->balance($ownerId);
         $estimate = $this->credits->estimate($settings, $prompt, count($images));
-        if ($balance < $estimate) {
+        if ($balance < $estimate && ! $this->credits->unlimited((int) \Illuminate\Support\Facades\Auth::id())) {
             return response()->json([
                 'success' => false,
                 'message' => $balance <= 0

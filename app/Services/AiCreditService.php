@@ -36,9 +36,22 @@ class AiCreditService
      * afford it — the caller must have checked `canAfford` first, but this is
      * the authority.
      */
+    /**
+     * Whether this account rides free. Mother-site admins bridged into
+     * AniSystem run the platform - metering them would be charging the house
+     * for its own electricity, and the owner said it plainly: admin accounts
+     * have unlimited AI credits.
+     */
+    public function unlimited(int $userId): bool
+    {
+        $u = \App\Models\User::find($userId);
+
+        return $u !== null && $u->isSuperAdmin();
+    }
+
     public function charge(int $userId, float $credits, string $reason, ?int $messageId = null): ?float
     {
-        if ($credits <= 0) {
+        if ($credits <= 0 || $this->unlimited($userId)) {
             return $this->balance($userId);
         }
 
@@ -70,6 +83,10 @@ class AiCreditService
     /** Deduct without refusing — used to true-up after a call already happened. */
     public function chargeAllowingNegative(int $userId, float $credits, string $reason, ?int $messageId = null): float
     {
+        if ($this->unlimited($userId)) {
+            return $this->balance($userId);
+        }
+
         return $this->write($userId, -1 * round($credits, 2), $reason, 'usage', $messageId);
     }
 

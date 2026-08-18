@@ -94,7 +94,7 @@ class AiController extends Controller
         // Refuse before spending anything the client does not have.
         $balance = $this->credits->balance($userId);
         $estimate = $this->credits->estimate($settings, $prompt, $image ? 1 : 0);
-        if ($balance < $estimate) {
+        if ($balance < $estimate && ! $this->credits->unlimited((int) \Illuminate\Support\Facades\Auth::id())) {
             return $this->json(false, $balance <= 0
                 ? 'You have no AI Credits left. Top up to keep asking questions.'
                 : 'You need about ' . ceil($estimate) . ' credits for this question and have ' . rtrim(rtrim(number_format($balance, 2), '0'), '.') . '.',
