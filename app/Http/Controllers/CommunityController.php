@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 /**
- * Community: browse, question and rate cropping plans other members have
- * published. Access is earned by publishing one of your own.
+ * Community: the wall, plus reading, questioning and rating the cropping plans
+ * members have published. Open to every member — publishing a plan of your own
+ * is a thing you may do, never a toll you pay to get in.
  */
 class CommunityController extends Controller
 {
@@ -245,58 +246,12 @@ class CommunityController extends Controller
         ]);
     }
 
-    public function index(Request $request)
-    {
-        $userId = Auth::id();
-
-        // The gate: you see other people's plans once you have shared one.
-        if (! $this->community->hasPublished($userId)) {
-            return view('community.locked', [
-                'candidates' => $this->publishCandidates($userId),
-            ]);
-        }
-
-        $filters = [
-            'q' => trim((string) $request->query('q')),
-            'crop' => trim((string) $request->query('crop')),
-        ];
-
-        $plans = $this->community->browse($userId, $filters);
-
-        // The scroller asks for cards alone.
-        if ($request->boolean('rows')) {
-            return response()->view('community.partials.plan-rows', ['plans' => $plans]);
-        }
-
-        $crops = AsCroppingSchedule::active()
-            ->where('isPublic', 1)
-            ->whereNotNull('cropType')
-            ->where('cropType', '!=', '')
-            ->distinct()
-            ->orderBy('cropType')
-            ->pluck('cropType');
-
-        return view('community.index', [
-            'plans' => $plans,
-            'crops' => $crops,
-            'filters' => $filters,
-            'myPlans' => $this->community->decorate(
-                AsCroppingSchedule::active()->forClient($userId)->where('isPublic', 1)->with('owner')->get()
-            ),
-        ]);
-    }
-
     /** A public plan, read-only, with its thread and ratings. */
     public function show(Request $request)
     {
         $userId = Auth::id();
         $plan = $this->publicPlan($request->query('id'));
         $isOwner = (int) $plan->anisystemUserId === (int) $userId;
-
-        // Non-owners must have published something before they can read plans.
-        if (! $isOwner && ! $this->community->hasPublished($userId)) {
-            return redirect()->route('community.index');
-        }
 
         $plan->load(['lots', 'owner', 'workers', 'activities.lots']);
 
@@ -356,11 +311,6 @@ class CommunityController extends Controller
     {
         $userId = Auth::id();
         $plan = $this->publicPlan($request->input('scheduleId'));
-        $isOwner = (int) $plan->anisystemUserId === (int) $userId;
-
-        if (! $isOwner && ! $this->community->hasPublished($userId)) {
-            return $this->json(false, 'Publish one of your own plans first.', [], 403);
-        }
 
         $validator = Validator::make($request->all(), [
             'body' => 'required|string|max:4000',
@@ -433,9 +383,6 @@ class CommunityController extends Controller
         if ((int) $plan->anisystemUserId === (int) $userId) {
             return $this->json(false, 'You cannot rate your own plan.', [], 403);
         }
-        if (! $this->community->hasPublished($userId)) {
-            return $this->json(false, 'Publish one of your own plans first.', [], 403);
-        }
 
         $validator = Validator::make($request->all(), [
             'rating' => 'required|integer|min:1|max:5',
@@ -460,20 +407,6 @@ class CommunityController extends Controller
     }
 
     // ------------------------------------------------------------------
-
-    /** Schedules the member could publish, with the reasons blocking each. */
-    private function publishCandidates(int $userId)
-    {
-        return AsCroppingSchedule::active()
-            ->forClient($userId)
-            ->orderByDesc('id')
-            ->get()
-            ->map(function ($schedule) {
-                $schedule->eligibility = $this->community->publishEligibility($schedule);
-
-                return $schedule;
-            });
-    }
 
     private function publicPlan($id): AsCroppingSchedule
     {

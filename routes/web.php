@@ -372,9 +372,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/ai-credits/{packKey}', [App\Http\Controllers\AiCreditController::class, 'payment'])->name('ai.credits.payment');
     Route::post('/app/ai-credits/{packKey}', [App\Http\Controllers\AiCreditController::class, 'submit'])->name('ai.credits.submit');
 
-    // --- Community: browse, question and rate published plans ---
+    // --- Community: the wall, and the plans members publish from it ---
     Route::get('/app/community', [App\Http\Controllers\CommunityController::class, 'feed'])->name('community.index');
-    Route::get('/app/community-plans', [App\Http\Controllers\CommunityController::class, 'index'])->name('community.plans');
     Route::get('/app/community/co-farmers', [App\Http\Controllers\CommunityConnectController::class, 'cofarmers'])->name('community.cofarmers');
     Route::get('/app/community/co-farmers-list', [App\Http\Controllers\CommunityConnectController::class, 'cofarmersList'])->name('community.cofarmers.list');
     Route::get('/app/community/feed-more', [App\Http\Controllers\CommunityController::class, 'feedMore'])->name('community.feed-more');
