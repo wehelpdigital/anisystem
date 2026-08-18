@@ -44,6 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // roster row and needs none — CAN_EDIT already covers them.
     const CAN_EDIT = @json(\App\Support\WorkerContext::canEdit());
     const ME_WORKER_ID = @json(optional(\App\Support\WorkerContext::activeGrant())->scheduleWorkerId);
+    // A worker context at all — the visibility rule keys on this. For owners a
+    // locked control stays visible and greyed (their own mid-states teach
+    // them); for a worker it is not rendered: an offer you may never accept is
+    // not an offer, it is clutter with a padlock.
+    const IS_WORKER = @json((bool) \App\Support\WorkerContext::activeGrant());
     // The third answer the board needs: a worker can be trusted with the day's
     // notes without being trusted with the plan. Anyone who may edit may write
     // notes, so the two are folded into one question for the note controls.
@@ -1735,6 +1740,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (CAN_EDIT && MAY_NOTE) return;
         const list = $id('activitiesList');
         const lock = (sel, why, root) => $qsa(sel, root).forEach((el) => {
+            // Workers do not get greyed offers — the control goes entirely.
+            if (IS_WORKER) { el.remove(); return; }
             if (el.disabled) return;   // a renderer already said this
             el.disabled = true;
             el.title = why;
@@ -4550,7 +4557,10 @@ document.addEventListener('DOMContentLoaded', () => {
     $id('actJumpBottom')?.addEventListener('click', () => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' }));
 
     // The floating + forwards to the real Add Activity button.
-    $id('actFabAdd')?.addEventListener('click', () => $id('addActivityBtn')?.click());
+    // No add button, no FAB mirroring it: the FAB exists to reach a control
+    // this worker does not have.
+    if ($id('addActivityBtn')) $id('actFabAdd')?.addEventListener('click', () => $id('addActivityBtn')?.click());
+    else $id('actFabAdd')?.remove();
 
     // Phones: one Versions button opens a sheet of the strip's chips. Rows
     // are rebuilt from the strip on every open, so renames, adds and the

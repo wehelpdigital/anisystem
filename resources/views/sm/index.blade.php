@@ -707,18 +707,25 @@
 
                         <div class="flex items-center gap-2 mt-3 sch-acts">
                             <a href="{{ route('sm.hub', ['id' => $s->id]) }}" class="btn btn-primary flex-1">Open</a>
-                            <button type="button"
+                            {{-- A worker duplicates only with the edit right; deleting a whole
+                                 season is the owner's alone — an edit grant lets you
+                                 tend the farm, not remove it. --}}
+                            @if (! \App\Support\WorkerContext::activeGrant() || \App\Support\WorkerContext::canEdit())
+<button type="button"
                                 class="btn btn-ghost px-3! text-gray-500 hover:bg-gray-100!"
                                 data-duplicate-schedule="{{ $s->id }}" data-title="{{ $s->title }}"
                                 title="Duplicate this schedule" aria-label="Duplicate schedule">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                             </button>
+                            @endif
+                            @if (! \App\Support\WorkerContext::activeGrant())
                             <button type="button"
                                 class="btn btn-ghost px-3! text-red-500 hover:bg-red-50!"
                                 data-delete-schedule="{{ $s->id }}" data-title="{{ $s->title }}"
                                 aria-label="Delete schedule">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16m-10 4v6m4-6v6"/></svg>
                             </button>
+                            @endif
                         </div>
                     </div>
                     </div>{{-- /.se-fold-wrap --}}

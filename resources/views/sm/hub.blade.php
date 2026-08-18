@@ -19,6 +19,11 @@
     // Each tile opens the Activities single-page shell with that module already
     // loaded (?module=key), so the module shows with the hamburger nav rather
     // than as its own standalone page.
+    // The doors a worker without the note right does not get offered — the
+    // owner named this list. Defined up here because the Quick buttons render
+    // long before the module grid does.
+    $workerNoNotes = \App\Support\WorkerContext::activeGrant() && ! \App\Support\WorkerContext::canAddNotes();
+    $noteDoors = ['documentation', 'post-harvest', 'notes', 'draw', 'maps'];
     $moduleCards = [
         ['Settings', 'settings', null,
             'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065zM15 12a3 3 0 11-6 0 3 3 0 016 0z'],
@@ -311,6 +316,7 @@
 
         {{-- Quick Capture (1/4) — the same shape as its neighbours, so the
              three read as three doors rather than three kinds of thing. --}}
+        @if (! $workerNoNotes)
         <button type="button" id="quickCaptureBtn"
             class="cta-tile qc-cta rounded-2xl p-5 flex items-center gap-4 text-left">
             <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
@@ -322,10 +328,12 @@
             </span>
             <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
+        @endif
 
         {{-- Quick Record (1/4). Some of what a field does is only legible
              moving — a pump that sounds wrong, water finding a path — and
              the Hub is where somebody standing in that field arrives. --}}
+        @if (! $workerNoNotes)
         <button type="button" id="quickRecordBtn"
             class="cta-tile qr-cta rounded-2xl p-5 flex items-center gap-4 text-left">
             <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
@@ -337,6 +345,7 @@
             </span>
             <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
+        @endif
     </div>
 
     {{-- Collab Room, Share and Reports live as square tiles in the grid below. --}}
@@ -347,6 +356,7 @@
     {{-- Module grid + the team/share/report actions, all as matched square tiles. --}}
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 stagger-children hub-grid">
         @foreach ($moduleCards as [$label, $moduleKey, $count, $iconPath])
+            @continue($workerNoNotes && in_array($moduleKey, $noteDoors, true))
             <a href="{{ route('sm.activities', ['id' => $schedule->id, 'module' => $moduleKey]) }}" data-nav-loader class="card card-hover block">
                 <div class="p-4 flex flex-col gap-3">
                     <div class="flex items-start justify-between">

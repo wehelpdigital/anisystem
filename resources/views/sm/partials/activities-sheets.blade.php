@@ -651,43 +651,56 @@
          exactly what "notes only" buys, so those rows follow $mayNote. Money,
          markers and moving the day are the plan, and follow $mayEdit. --}}
     <div class="sheet-body space-y-1">
+        @if (! \App\Support\WorkerContext::activeGrant() || $mayNote)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetNoteLock }}" data-action="date-note-btn" @disabled(! $mayNote) @if(! $mayNote) title="{{ $whyNoNote }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.5 20H7a2 2 0 01-2-2V5a2 2 0 012-2h6l4 4v3M9 8h3M9 12h3"/><path stroke-linecap="round" stroke-linejoin="round" d="M17 15v5m2.5-2.5h-5"/></svg>
             Add a note to this day
         </button>
+        @endif
         {{-- The camera is the fastest note anyone writes. Standing in front of
              the thing you want to record, opening a note and hunting for an
              attach button is three steps too many — so the picture and the
              clip are offered where the day is, and become a note once they
              exist. --}}
+        @if (! \App\Support\WorkerContext::activeGrant() || $mayNote)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetNoteLock }}" data-action="capture-photo" @disabled(! $mayNote) @if(! $mayNote) title="{{ $whyNoNote }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
             Capture a photo
         </button>
+        @endif
+        @if (! \App\Support\WorkerContext::activeGrant() || $mayNote)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetNoteLock }}" data-action="record-video" @disabled(! $mayNote) @if(! $mayNote) title="{{ $whyNoNote }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg>
             Record a video
         </button>
+        @endif
         {{-- A drawing and a map are things a day has, like a note — not things
              buried inside the note editor, which is where they used to hide. --}}
+        @if (! \App\Support\WorkerContext::activeGrant() || $mayNote)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetNoteLock }}" data-action="add-drawing" @disabled(! $mayNote) @if(! $mayNote) title="{{ $whyNoNote }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L20 7a2 2 0 00-3-3L5 16l-1 4zM14 6l4 4"/></svg>
             Add a drawing
         </button>
+        @endif
+        @if (! \App\Support\WorkerContext::activeGrant() || $mayNote)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetNoteLock }}" data-action="add-map" @disabled(! $mayNote) @if(! $mayNote) title="{{ $whyNoNote }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
             Add a map
         </button>
+        @endif
+        @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetLock }}" data-action="day-expense-btn" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v10M14.4 9.4a2.3 2.3 0 00-2.4-1.3c-1.3.1-2.3.8-2.3 1.9s1 1.7 2.5 1.9 2.6.8 2.6 2-1.1 1.9-2.5 1.9a2.4 2.4 0 01-2.4-1.3"/></svg>
             Add extra expense
         </button>
+        @endif
         {{-- Only shown for days the forecast store actually holds a reading
              for; the board hides it otherwise (see savedWeatherDates). --}}
         <button type="button" id="daySavedWxRow" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50 hidden" data-action="view-saved-weather">
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg>
             View saved weather
         </button>
+        @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetLock }}" data-action="add-income" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <rect x="2.5" y="7.5" width="19" height="11" rx="2"/>
@@ -696,26 +709,33 @@
             </svg>
             Add income
         </button>
+        @endif
+        @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetLock }}" data-action="date-marker-btn" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
             Resume-here marker
         </button>
+        @endif
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50" data-action="share-day-btn">
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z"/></svg>
             Share this day
         </button>
+        @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetLock }}" data-action="change-group-date-btn" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
             Move this day to…
         </button>
+        @endif
         {{-- "Move this day to <day number>" lived here too. Moving a day by
              its date is the same move said in the way people actually think
              about it, and two doors to one action only invited the wrong
              one. --}}
+        @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-red-600 hover:bg-red-50{{ $sheetLock }}" data-action="delete-group-date-btn" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
             Delete all activities this day
         </button>
+        @endif
     </div>
 </div>
 
@@ -763,14 +783,26 @@
     </div>
     <div class="sheet-body">
         <div class="grid gap-1">
+            @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
             <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="edit" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Edit</button>
+            @endif
+            @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
             <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="move" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Move to date…</button>
+            @endif
+            @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
             <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="duplicate" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Duplicate</button>
+            @endif
             {{-- Reading what went on this ground before is a read. It stays. --}}
             <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="advanced">Advanced info</button>
+            @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
             <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="tag" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Tag a drawing, map or note</button>
+            @endif
+            @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
             <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="draft" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Move to drafts</button>
+            @endif
+            @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
             <button type="button" class="btn btn-ghost justify-start! text-red-600!{{ $sheetLock }}" data-card-menu-action="delete" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Delete</button>
+            @endif
         </div>
     </div>
 </div>

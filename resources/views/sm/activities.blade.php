@@ -2269,11 +2269,13 @@
     <div class="shrink-0" id="addActivityWrap" data-activities-only>
         {{-- The board's most prominent write: drawn where everyone else has it,
              greyed and inert, saying why. openAddActivitySheet refuses too. --}}
+        @if (! \App\Support\WorkerContext::activeGrant() || \App\Support\WorkerContext::canEdit())
         <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm{{ $boardMayEdit ? '' : ' is-locked' }}"
                 @disabled(! $boardMayEdit) @if (! $boardMayEdit) title="{{ $whyNoEdit }}" @endif>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
             <span class="hidden sm:inline">Add Activity</span>
         </button>
+        @endif
     </div>
 </div>
 
