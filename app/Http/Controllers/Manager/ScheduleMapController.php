@@ -177,6 +177,12 @@ class ScheduleMapController extends BaseScheduleController
             return $this->jsonFail('You are not part of this schedule team.', 403);
         }
 
+        // Same line clear() and update() draw: membership lets you draw,
+        // but taking a shape OFF the team's map — even one at a time — is an
+        // edit of the farm's record. The button is already gone for a
+        // view-only worker; this is the lock behind that door.
+        $this->assertCanEdit();
+
         $object = ScheduleMapObject::active()
             ->where('scheduleId', $schedule->id)
             ->find($request->input('id'));
