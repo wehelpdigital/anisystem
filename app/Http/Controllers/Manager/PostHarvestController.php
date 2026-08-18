@@ -22,17 +22,34 @@ class PostHarvestController extends BaseScheduleController
         $schedule = $this->scheduleFromRequest($request, 'id');
         $schedule->load('lots');
 
-        $observations = AsSchedulePostHarvest::active()
+        $all = AsSchedulePostHarvest::active()
             ->where('croppingScheduleId', $schedule->id)
             ->orderByDesc('observationDate')
-            ->orderByDesc('id')
-            ->get();
+            ->orderByDesc('id');
+
+        // The summary reads every row (yields only add up whole), but the PAGE
+        // renders ten at a time — each card carries its photos, and a season of
+        // observations was one long document before anything painted.
+        $observations = (clone $all)->paginate(10)->withQueryString();
+        $summary = $this->summarise((clone $all)->get([
+            // gross_value is an accessor over yieldAmount × pricePerUnit — the
+            // select must carry its ingredients or every row sums as null.
+            'yieldAmount', 'yieldUnit', 'moisturePercent', 'pricePerUnit',
+        ]));
+
+        // The scroller asks for cards alone.
+        if ($request->boolean('rows')) {
+            return response()->view('sm.partials.post-harvest-rows', [
+                'observations' => $observations,
+                'schedule' => $schedule,
+            ]);
+        }
 
         return view('sm.post-harvest', [
             'schedule' => $schedule,
             'observations' => $observations,
             'categories' => AsSchedulePostHarvest::CATEGORIES,
-            'summary' => $this->summarise($observations),
+            'summary' => $summary,
         ]);
     }
 

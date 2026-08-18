@@ -103,6 +103,35 @@
 
 <div class="space-y-3" id="phList" data-animate-list>
     @foreach ($observations as $o)
+        @include('sm.partials.post-harvest-card', ['o' => $o, 'categories' => $categories, 'schedule' => $schedule])
+    @endforeach
+        @if ($summary['revenue'] !== null)
+            <div class="ph-figure">
+                <dt class="text-gray-400">Gross value</dt>
+                <dd class="text-brand-700">₱ {{ number_format($summary['revenue'], 2) }}</dd>
+            </div>
+        @endif
+        @if ($summary['avgMoisture'] !== null)
+            <div class="ph-figure">
+                <dt class="text-gray-400">Avg moisture</dt>
+                <dd class="text-gray-900">{{ $summary['avgMoisture'] }}%</dd>
+            </div>
+        @endif
+        <div class="ph-figure">
+            <dt class="text-gray-400">Observations</dt>
+            <dd class="text-gray-900" id="phSummaryCount">{{ $summary['count'] }}</dd>
+        </div>
+    </dl>
+</div>
+
+{{-- Desktop add button --}}
+<button type="button" class="btn btn-primary w-full mb-4 inline-flex" data-ph-add>
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+    Record an observation
+</button>
+
+<div class="space-y-3" id="phList" data-animate-list>
+    @foreach ($observations as $o)
         <div class="card p-4 ph-card" data-id="{{ $o->id }}">
             <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0 grow">
@@ -196,6 +225,8 @@
         </div>
     @endforeach
 </div>
+@include('partials.list-pager', ['noun' => 'observation', 'paginator' => $observations,
+    'rowsUrl' => route('sm.post-harvest', ['id' => $schedule->id]) . '&rows=1'])
 
 {{-- Empty state --}}
 <div class="card p-8 text-center {{ $observations->isEmpty() ? '' : 'hidden' }}" id="phEmpty">
