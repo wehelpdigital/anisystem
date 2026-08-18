@@ -47,6 +47,55 @@ class ScheduleChatController extends BaseScheduleController
         return Cache::has('collab-here.' . $scheduleId . '.' . $userId);
     }
 
+    /**
+     * How long one "I am typing" ping stays true — the markInRoom() shape at
+     * typing speed. The sender throttles to a ping every couple of seconds
+     * while keys actually move, so a live typist keeps the flag renewed and
+     * silence simply lets it lapse; a closed tab never leaves a ghost
+     * "…is typing" behind.
+     */
+    public const TYPING_SECONDS = 4;
+
+    /**
+     * "I am mid-sentence in this team chat." The cached value is the first
+     * name, so the poll can say "Maria is typing…" without a user lookup.
+     */
+    public function typing(Request $request)
+    {
+        $schedule = $this->schedule($request->query('scheduleId'));
+        $meId = (int) Auth::id();
+        if (! ScheduleTeam::canAccess($schedule, $meId)) {
+            return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+
+        $name = (string) \Illuminate\Support\Str::of(Auth::user()?->full_name ?: 'Someone')
+            ->explode(' ')->first();
+        Cache::put('collab-typing.' . $schedule->id . '.' . $meId, $name, self::TYPING_SECONDS);
+
+        return response()->json(['success' => true]);
+    }
+
+    /**
+     * First names of teammates (never mine) whose typing flag is still fresh.
+     * The roster is asked key by key because a cache can be checked but not
+     * scanned — teams are a handful of people, so that is a handful of gets.
+     */
+    private function typingNames($schedule, int $meId): array
+    {
+        $names = [];
+        foreach (ScheduleTeam::memberIds($schedule) as $memberId) {
+            if ((int) $memberId === $meId) {
+                continue;
+            }
+            $name = Cache::get('collab-typing.' . $schedule->id . '.' . (int) $memberId);
+            if ($name) {
+                $names[] = (string) $name;
+            }
+        }
+
+        return $names;
+    }
+
     /** History + live poll. `?after=<lastId>` returns only newer messages. */
     public function messages(Request $request)
     {
@@ -80,6 +129,9 @@ class ScheduleChatController extends BaseScheduleController
             'data' => [
                 'messages' => $messages,
                 'maxId' => $rows->max('id') ?: $after,
+                // Who is mid-sentence right now — the poll doubles as the
+                // typing wire, so no extra request is spent asking.
+                'typing' => $this->typingNames($schedule, $meId),
             ],
         ]);
     }

@@ -207,6 +207,24 @@
         padding: 0 .2rem .25rem; }
     html.dark .team-seen { color: #7d8f6e; }
 
+    /* Someone is mid-sentence: the classic three-dot bubble at the thread's
+       foot, with the name beside it ("Maria is typing…"). Rises in like a
+       message; the dots park under reduced motion but the words still tell. */
+    .team-typing { display: flex; align-items: center; gap: .45rem; padding: .1rem .1rem .35rem;
+        animation: teamRise .24s cubic-bezier(.22,1,.36,1) both; }
+    .team-typing-dots { display: inline-flex; align-items: center; gap: .28rem; padding: .5rem .65rem;
+        border-radius: .9rem .9rem .9rem .25rem; background: var(--color-gray-100); }
+    .team-typing-dots i { width: .4rem; height: .4rem; border-radius: 999px; background: var(--color-gray-400);
+        display: block; animation: teamTypingDot 1.2s ease-in-out infinite; }
+    .team-typing-dots i:nth-child(2) { animation-delay: .15s; }
+    .team-typing-dots i:nth-child(3) { animation-delay: .3s; }
+    @keyframes teamTypingDot { 0%, 60%, 100% { transform: none; opacity: .45; } 30% { transform: translateY(-3px); opacity: 1; } }
+    .team-typing-who { font-size: .68rem; font-weight: 600; color: var(--color-gray-500);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    html.dark .team-typing-dots { background: rgb(255 255 255 / .08); }
+    html.dark .team-typing-dots i { background: #9aa69a; }
+    html.dark .team-typing-who { color: #9aa69a; }
+
     .team-thread { flex: 1 1 auto; overflow-y: auto; padding: .75rem; display: flex; flex-direction: column; gap: .1rem; scrollbar-width: thin; }
     .team-loading { margin: auto; color: var(--color-gray-400); font-size: .85rem; }
     .team-msg { display: flex; gap: .45rem; margin-bottom: .5rem; align-items: flex-end; animation: teamRise .24s cubic-bezier(.22,1,.36,1) both; }
@@ -251,7 +269,8 @@
     html.dark .team-emoji-pop { background: #1c2416; border-color: #2b3a1c; }
 
     @media (prefers-reduced-motion: reduce) {
-        .team-panel, .team-msg, .team-emoji-pop.is-open { animation: none; }
+        .team-panel, .team-msg, .team-emoji-pop.is-open, .team-typing { animation: none; }
+        .team-typing-dots i { animation: none; opacity: .7; }
         .team-cam { transition: none; }
     }
 </style>
@@ -266,11 +285,17 @@
         const SCHEDULE_ID = @json($schedule->id);
         const ME = @json((int) auth()->id());
         const MY_INITIALS = @json(auth()->user()->initials ?? '');
+        // First name only — it rides typing whispers, where "Maria is
+        // typing…" is the whole message.
+        const MY_NAME = @json(auth()->user()->firstName ?? 'Someone');
         const U = {
             messages: @json(route('sm.chat')),
             send: @json(route('sm.chat.send')),
             members: @json(route('sm.chat.members')),
             seen: @json(route('sm.chat.seen')),
+            // Literal on purpose: route('sm.chat.typing') would take the whole
+            // page down until the route lands, a 404 just means no dots yet.
+            typing: @json(url('/app/sm-chat-typing')),
             dmBase: @json(url('/app/community/messages')),
         };
         const CSRF = document.querySelector('meta[name=csrf-token]')?.content || '';
@@ -298,7 +323,7 @@
             : escapeHtml(initials || '·');
 
         /* ---------- rendering ---------- */
-        function clearThread() { thread.innerHTML = ''; }
+        function clearThread() { thread.innerHTML = ''; typingSeen = {}; }
         function bubble(m, opts) {
             const el = document.createElement('div');
             el.className = 'team-msg' + (m.mine ? ' me' : '');
@@ -322,8 +347,57 @@
             el.innerHTML = `${face}<div class="col">${who}<div class="b"${m.image ? ' data-lightbox' : ''}>${body}${img}${files}</div><span class="at">${escapeHtml(m.at || '')}</span></div>`;
             el.dataset.mid = m.id;
             thread.appendChild(el);
+            // The typing dots always sit at the foot — a message landing while
+            // they show must not leave them stranded mid-thread.
+            const ty = thread.querySelector('.team-typing');
+            if (ty) thread.appendChild(ty);
             return el;
         }
+
+        /* ---------- typing dots -------------------------------------------
+         * Names arrive two ways and land in one place: the poll asserts the
+         * whole set each beat (authoritative, a little late), a whisper drops
+         * a single name in instantly. Every name carries its own expiry, so
+         * whoever goes quiet just fades off the label without a "stopped
+         * typing" message ever crossing the wire. */
+        let typingSeen = {};   // first name -> epoch ms it stops being true
+        function noteTyping(name) {
+            if (!name) return;
+            typingSeen[name] = Date.now() + 4000;
+            paintTyping();
+        }
+        function setTyping(names) {
+            typingSeen = {};
+            // Past the poll's own beat by a little, so the label doesn't
+            // flicker between two beats of one person's slow sentence.
+            (names || []).forEach((n) => { if (n) typingSeen[n] = Date.now() + 7000; });
+            paintTyping();
+        }
+        function paintTyping() {
+            const now = Date.now();
+            const names = Object.keys(typingSeen).filter((n) => typingSeen[n] > now);
+            let el = thread.querySelector('.team-typing');
+            if (!names.length) { el?.remove(); return; }
+            // Only follow the dots down if the reader is already at the foot.
+            const nearFoot = thread.scrollHeight - thread.scrollTop - thread.clientHeight < 80;
+            if (!el) {
+                el = document.createElement('div');
+                el.className = 'team-typing';
+            }
+            const who = names.length > 2
+                ? `${names.slice(0, 2).join(', ')} +${names.length - 2} are typing…`
+                : `${names.join(' and ')} ${names.length > 1 ? 'are' : 'is'} typing…`;
+            // Touch the DOM only on change — re-appending or rewriting an
+            // unchanged strip every sweep would restart its animations.
+            if (el._label !== who) {
+                el.innerHTML = `<span class="team-typing-dots"><i></i><i></i><i></i></span><span class="team-typing-who">${escapeHtml(who)}</span>`;
+                el._label = who;
+            }
+            if (thread.lastElementChild !== el) thread.appendChild(el);
+            if (nearFoot) scrollDown();
+        }
+        // The quiet expiry sweep — lets a lapsed name disappear between polls.
+        setInterval(paintTyping, 1500);
 
         /* ---------- group mode ---------- */
         async function loadMembers() {
@@ -357,6 +431,8 @@
                     } else { scrollDown(); }
                     if (first) scrollDown();
                 }
+                // The poll doubles as the typing wire: assert the whole set.
+                setTyping(res.data.typing || []);
                 $('teamLoading')?.remove();
             } catch (_) { /* transient */ }
         }
@@ -391,6 +467,8 @@
                 $('teamComposerState')?.remove();
                 clearThread();
                 (d.messages || []).forEach((m) => bubble({ mine: m.mine, body: m.body, image: m.image, at: m.at }, { showSender: false }));
+                // The PM thread refetches on its own beat, so typing rides it.
+                setTyping(d.typing ? [pmName] : []);
                 setComposerEnabled(canSend);
                 if (initial) scrollDown();
                 else scrollDown();
@@ -500,6 +578,25 @@
         // Composer.
         const input = $('teamText');
         input.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 88) + 'px'; });
+
+        // Typing pings: one every 2.5s while keys actually move. The server
+        // flag lives four seconds, so a live typist keeps it renewed and
+        // going quiet simply lets it lapse. The whisper makes the Pusher-live
+        // case instant; the endpoint is the floor either way.
+        let lastTypingPing = 0;
+        input.addEventListener('input', () => {
+            if (!input.value.trim()) return;   // clearing the field is not typing
+            const now = Date.now();
+            if (now - lastTypingPing < 2500) return;
+            lastTypingPing = now;
+            if (mode === 'pm' && pmUser) {
+                // A PM is a community DM, so its typing flag lives there too.
+                fetch(`${U.dmBase}/${pmUser}/typing`, { method: 'POST', headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' }, credentials: 'same-origin' }).catch(() => {});
+                return;
+            }
+            api(`${U.typing}?scheduleId=${SCHEDULE_ID}`, { method: 'POST' }).catch(() => {});
+            try { window.Echo?.private('schedule-board.' + SCHEDULE_ID).whisper('typing', { userId: ME, name: MY_NAME }); } catch (_) { /* poll covers it */ }
+        });
         input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey && window.matchMedia('(min-width: 768px)').matches) { e.preventDefault(); currentSend(); }
         });
@@ -673,11 +770,19 @@
          * instant. A nudge carries an id, never a body — the thread asks for
          * the message itself through the endpoint that authorises it. */
         try {
-            window.Echo?.private('schedule-board.' + SCHEDULE_ID).listen('.chat.message', (p) => {
-                if (p && p.userId === ME) return;   // my own echo
-                if (mode === 'group') pollGroup().then(() => markSeen());
-                else $('teamChatDot').classList.remove('hidden');
-            });
+            window.Echo?.private('schedule-board.' + SCHEDULE_ID)
+                .listen('.chat.message', (p) => {
+                    if (p && p.userId === ME) return;   // my own echo
+                    if (mode === 'group') pollGroup().then(() => markSeen());
+                    else $('teamChatDot').classList.remove('hidden');
+                })
+                // A teammate's typing whisper: instant dots, own 4s decay.
+                // Client events never touch the server, so this is free when
+                // Pusher allows them and silently absent when it doesn't.
+                .listenForWhisper('typing', (p) => {
+                    if (!p || p.userId === ME || mode !== 'group') return;
+                    noteTyping(String(p.name || 'Someone'));
+                });
         } catch (_) { /* no realtime here — the poll covers it */ }
 
         // Public hook so worker cards / other UI can open a worker PM in this panel.

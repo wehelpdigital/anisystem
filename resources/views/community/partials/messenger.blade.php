@@ -8,7 +8,11 @@
             <button type="button" class="msgr-x" data-msgr-close-panel aria-label="Close">✕</button>
         </div>
         <div class="msgr-panel-body" id="msgrThreads">
-            <p class="text-sm text-gray-400 text-center py-6">Loading…</p>
+            {{-- Skeleton rows in the shape of the list they become — the JS
+                 paints the same ones on every reopen while the fetch is out. --}}
+            <div class="msgr-skel"><span class="msgr-skel-av"></span><span class="msgr-skel-mid"><span class="msgr-skel-line w1"></span><span class="msgr-skel-line w2"></span></span></div>
+            <div class="msgr-skel"><span class="msgr-skel-av"></span><span class="msgr-skel-mid"><span class="msgr-skel-line w1"></span><span class="msgr-skel-line w2"></span></span></div>
+            <div class="msgr-skel"><span class="msgr-skel-av"></span><span class="msgr-skel-mid"><span class="msgr-skel-line w1"></span><span class="msgr-skel-line w2"></span></span></div>
         </div>
     </div>
     <div class="msgr-windows" id="msgrWindows"></div>
@@ -38,10 +42,16 @@
     #msgrDock { position:fixed; right:1rem; bottom:1rem; z-index:90; display:flex; align-items:flex-end; gap:.75rem; }
     /* Clear the mobile bottom tab bar (visible < md) so the launcher doesn't sit on the Account button. */
     @media (max-width:767px) { #msgrDock { bottom:calc(4.5rem + env(safe-area-inset-bottom, 0px)); } }
+    /* The white ring is what keeps the launcher legible when a green CTA sits
+       right behind it — a green-on-green shadow alone just blended in. */
     .msgr-launcher { position:relative; width:3.25rem; height:3.25rem; border-radius:9999px; border:0;
-        background:var(--color-brand-600); color:#fff; box-shadow:0 8px 24px rgb(74 124 42 / .4); cursor:pointer;
-        display:flex; align-items:center; justify-content:center; transition:transform .15s ease, background .2s ease; }
-    .msgr-launcher:hover { background:var(--color-brand-700); }
+        background:var(--color-brand-600); color:#fff; cursor:pointer;
+        box-shadow:0 0 0 2px #fff, 0 0 0 4px rgb(61 104 35 / .22), 0 10px 26px rgb(0 0 0 / .32);
+        display:flex; align-items:center; justify-content:center; transition:transform .15s ease, background .2s ease, box-shadow .2s ease; }
+    .msgr-launcher:hover { background:var(--color-brand-700);
+        box-shadow:0 0 0 2px #fff, 0 0 0 4px rgb(61 104 35 / .3), 0 12px 30px rgb(0 0 0 / .38); }
+    html.dark .msgr-launcher { box-shadow:0 0 0 2px #151b12, 0 0 0 4px rgb(255 255 255 / .16), 0 10px 26px rgb(0 0 0 / .6); }
+    html.dark .msgr-launcher:hover { box-shadow:0 0 0 2px #151b12, 0 0 0 4px rgb(255 255 255 / .24), 0 12px 30px rgb(0 0 0 / .65); }
     .msgr-launcher:active { transform:scale(.94); }
     .msgr-badge { position:absolute; top:-2px; right:-2px; min-width:1.15rem; height:1.15rem; padding:0 .3rem;
         border-radius:9999px; background:#ef4444; color:#fff; font-size:.65rem; font-weight:800;
@@ -52,9 +62,28 @@
         animation:msgrIn .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
     .msgr-panel.hidden { display:none; }
     @keyframes msgrIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
-    .msgr-panel-head { display:flex; align-items:center; justify-content:space-between; padding:.7rem 1rem; }
+    .msgr-panel-head { display:flex; align-items:center; justify-content:space-between; padding:.7rem .7rem .7rem 1rem; }
     .msgr-panel-title { color:#fff; font-weight:800; font-size:1rem; letter-spacing:.01em; }
-    .msgr-panel-body { overflow-y:auto; }
+    /* min-height so one lone thread still reads as a panel — without it the
+       list hugged a single row and the whole thing sat as a sliver on the
+       bottom edge, close button and all. The padding keeps the last row off
+       the rounded corner. */
+    .msgr-panel-body { overflow-y:auto; min-height:14rem; padding-bottom:.75rem; }
+    /* Skeleton rows in the exact shape of the threads they become; the
+       shimmer parks under reduced motion but the shapes still say "loading". */
+    .msgr-skel { display:flex; align-items:center; gap:.65rem; padding:.6rem 1rem; }
+    .msgr-skel + .msgr-skel { border-top:1px solid #f6f7f8; }
+    .msgr-skel-av { width:2.6rem; height:2.6rem; border-radius:9999px; flex-shrink:0; }
+    .msgr-skel-mid { flex:1; min-width:0; display:flex; flex-direction:column; gap:.45rem; }
+    .msgr-skel-line { height:.55rem; border-radius:9999px; }
+    .msgr-skel-line.w1 { width:55%; } .msgr-skel-line.w2 { width:82%; }
+    .msgr-skel-av, .msgr-skel-line { background:linear-gradient(100deg, #eef0f2 40%, #f7f8f9 50%, #eef0f2 60%);
+        background-size:200% 100%; animation:msgrShimmer 1.2s linear infinite; }
+    @keyframes msgrShimmer { to { background-position:-200% 0; } }
+    html.dark .msgr-skel + .msgr-skel { border-color:#232a1c; }
+    html.dark .msgr-skel-av, html.dark .msgr-skel-line { background:linear-gradient(100deg, #232a1c 40%, #2c3620 50%, #232a1c 60%);
+        background-size:200% 100%; animation:msgrShimmer 1.2s linear infinite; }
+    @media (prefers-reduced-motion: reduce) { .msgr-skel-av, .msgr-skel-line { animation:none; } }
     /* Two-line Messenger rows: name + when up top, preview + unread below,
        everything truncating so one long name never bends the column. */
     .msgr-thread { display:flex; align-items:center; gap:.65rem; padding:.6rem 1rem; cursor:pointer;
@@ -207,9 +236,34 @@
     .msgr-spin { width:.82rem; height:.82rem; border-radius:9999px; border:2px solid currentColor; border-top-color:transparent; display:inline-block; animation:msgrSpin .6s linear infinite; }
     @keyframes msgrSpin { to { transform:rotate(360deg); } }
     @media (prefers-reduced-motion: reduce) { .msgr-bubble-in, .msgr-send.is-sending { animation:none; } .msgr-spin { animation-duration:1.4s; } }
+    /* The classic three-dot bubble at the thread's foot while the other side
+       types. Enters like any incoming bubble; the dots park under reduced
+       motion but the bubble still says what it means. */
+    .msgr-typing { display:flex; align-items:center; gap:.3rem; align-self:flex-start; flex-shrink:0;
+        padding:.6rem .8rem; border-radius:1rem; border-bottom-left-radius:.3rem; background:#eceff2;
+        animation:msgrBubbleIn .28s var(--ease-house, cubic-bezier(.22,1,.36,1)) both; transform-origin:bottom left; }
+    .msgr-typing i { width:.42rem; height:.42rem; border-radius:9999px; background:#9ca3af; display:block;
+        animation:msgrTypingDot 1.2s ease-in-out infinite; }
+    .msgr-typing i:nth-child(2) { animation-delay:.15s; }
+    .msgr-typing i:nth-child(3) { animation-delay:.3s; }
+    @keyframes msgrTypingDot { 0%, 60%, 100% { transform:none; opacity:.45; } 30% { transform:translateY(-3px); opacity:1; } }
+    html.dark .msgr-typing { background:#232a1c; }
+    html.dark .msgr-typing i { background:#9aa69a; }
+    @media (prefers-reduced-motion: reduce) {
+        .msgr-typing { animation:none; }
+        .msgr-typing i { animation:none; opacity:.7; }
+    }
     .msgr-off { padding:1rem; text-align:center; font-size:.8rem; color:#9ca3af; }
-    .msgr-x { border:0; background:transparent; color:#9ca3af; cursor:pointer; font-size:.9rem; }
-    .msgr-window-head .msgr-x { color:#fff; opacity:.9; }
+    /* A close you can actually see and hit: solid white on the green header,
+       with a real (2.1rem) target so a near-miss never lands on the profile
+       link stretched beside it. */
+    .msgr-x { border:0; background:transparent; color:#9ca3af; cursor:pointer; font-size:1rem; line-height:1;
+        width:2.1rem; height:2.1rem; border-radius:9999px; flex-shrink:0;
+        display:inline-flex; align-items:center; justify-content:center;
+        transition:background-color .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+    .msgr-panel-head .msgr-x, .msgr-window-head .msgr-x { color:#fff; }
+    .msgr-panel-head .msgr-x:hover, .msgr-window-head .msgr-x:hover { background:rgb(255 255 255 / .2); }
+    @media (prefers-reduced-motion: reduce) { .msgr-x { transition:none; } }
     html.dark .msgr-panel, html.dark .msgr-window { background:#151b12; }
     html.dark .msgr-window-body { background:#10160c; }
     html.dark .msgr-thread-name { color:#e5e9df; }
@@ -254,11 +308,25 @@
             max-height:76vh; max-height:76dvh;
             border-radius:1.1rem 1.1rem 0 0; z-index:95;
             animation:msgrSheetIn .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
-        .msgr-panel-body { padding-bottom:env(safe-area-inset-bottom, 0px); }
+        .msgr-panel-body { padding-bottom:calc(.75rem + env(safe-area-inset-bottom, 0px)); }
+        /* On a phone the exit is the sheet's: back down over the edge. */
+        .msgr-window.is-closing, .msgr-panel.is-closing { animation:msgrSheetOut .28s var(--ease-house, cubic-bezier(.22,1,.36,1)) both; }
     }
     @keyframes msgrSheetIn { from { transform:translateY(100%); } to { transform:none; } }
+    @keyframes msgrSheetOut { from { transform:none; } to { transform:translateY(100%); } }
+    /* Closing is the entrance run backwards; the node leaves the DOM after.
+       pointer-events off so a dying window can't swallow one more tap. The
+       fade-out is desktop-only BY MEDIA QUERY: this rule sits later in the
+       sheet than the phone's slide-down, and at equal specificity it would
+       win there too. */
+    @keyframes msgrOut { from { opacity:1; transform:none; } to { opacity:0; transform:translateY(12px); } }
+    .msgr-window.is-closing, .msgr-panel.is-closing { pointer-events:none; }
+    @media (min-width:768px) {
+        .msgr-window.is-closing, .msgr-panel.is-closing { animation:msgrOut .22s var(--ease-house, cubic-bezier(.22,1,.36,1)) both; }
+    }
     @media (prefers-reduced-motion: reduce) {
         .msgr-window, .msgr-panel { animation:none; }
+        .msgr-window.is-closing, .msgr-panel.is-closing { animation:none; }
         .msgr-window-head, .msgr-panel-head { animation:none; }
         .msgr-thread { transition:none; }
     }
@@ -294,9 +362,15 @@
     let synced = false;
     async function livePoll() {
         try {
-            const r = await fetch(@json(route('community.messages.poll')) + '?after=' + lastSeenId, { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
+            // The poll names the open windows so the server can answer "which
+            // of these people are mid-sentence to me" — a cache can be asked
+            // about a key but never scanned.
+            const openIds = Object.keys(openWins).join(',');
+            const r = await fetch(@json(route('community.messages.poll')) + '?after=' + lastSeenId + (openIds ? '&typingFrom=' + openIds : ''), { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
             const d = await r.json();
             setBadge(d.data.unread);
+            const typing = (d.data.typing || []).map(Number);
+            for (const uid of Object.keys(openWins)) showTyping(openWins[uid], typing.includes(parseInt(uid, 10)));
             if (!synced) { lastSeenId = d.data.maxId || 0; synced = true; return; }  // first sync: adopt maxId, don't replay history
             for (const m of (d.data.incoming || [])) {
                 if (m.id > lastSeenId) lastSeenId = m.id;
@@ -312,9 +386,15 @@
         } catch (_) {}
     }
 
+    // The loading state is the list's own silhouette, not a word — the panel
+    // opens onto something that already looks like messages on their way.
+    const skeletonRows = () => Array.from({ length: 4 }, () =>
+        '<div class="msgr-skel"><span class="msgr-skel-av"></span><span class="msgr-skel-mid"><span class="msgr-skel-line w1"></span><span class="msgr-skel-line w2"></span></span></div>'
+    ).join('');
+
     async function loadThreads() {
         const box = document.getElementById('msgrThreads');
-        box.innerHTML = '<p class="text-sm text-gray-400 text-center py-6">Loading…</p>';
+        box.innerHTML = skeletonRows();
         try {
             const r = await fetch(@json(route('community.messages.threads')), { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
             const d = await r.json();
@@ -339,13 +419,43 @@
                     </span>
                 </div>`;
             }).join('');
-        } catch (_) { box.innerHTML = '<p class="text-sm text-red-500 text-center py-6">Could not load.</p>'; }
+        } catch (_) {
+            // A dead end that offers the way back — the error never has to
+            // stick until the next open.
+            box.innerHTML = `<div class="msgr-empty">
+                <p class="msgr-empty-t">Couldn't load your messages.</p>
+                <p class="msgr-empty-s"><button type="button" class="msgr-retry" style="color:var(--color-brand-600);text-decoration:underline;cursor:pointer;background:none;border:0;font:inherit">Try again</button></p>
+            </div>`;
+            box.querySelector('.msgr-retry')?.addEventListener('click', () => loadThreads());
+        }
+    }
+
+    // Exit = the entrance run backwards; the node is dealt with only after the
+    // animation finishes. The timeout is the guard for reduced motion (where
+    // animation:none means animationend never fires) and for a dropped event.
+    function closeAnimated(el, done) {
+        if (el.classList.contains('is-closing')) return;
+        el.classList.add('is-closing');
+        let gone = false;
+        const finish = () => {
+            if (gone) return; gone = true;
+            el.removeEventListener('animationend', finish);
+            // Reopened mid-exit (is-closing cleared) → this close is void.
+            if (el.classList.contains('is-closing')) done();
+        };
+        el.addEventListener('animationend', finish);
+        setTimeout(finish, 400);
     }
 
     function togglePanel(show) {
-        const on = show ?? panel.classList.contains('hidden');
-        panel.classList.toggle('hidden', !on);
-        if (on) loadThreads();
+        const on = show ?? (panel.classList.contains('hidden') || panel.classList.contains('is-closing'));
+        if (on) {
+            panel.classList.remove('is-closing');
+            panel.classList.remove('hidden');
+            loadThreads();
+        } else if (!panel.classList.contains('hidden')) {
+            closeAnimated(panel, () => { panel.classList.add('hidden'); panel.classList.remove('is-closing'); });
+        }
     }
     launcher.addEventListener('click', () => togglePanel());
     dock.addEventListener('click', (e) => {
@@ -552,10 +662,15 @@
         camInput.addEventListener('change', () => attachFile(camInput.files[0]));
         win.querySelector('.msgr-attach-x').addEventListener('click', clearAttach);
         win.querySelector('.rb-x')?.addEventListener('click', () => clearReply(win));
-        win.querySelector('[data-close]').addEventListener('click', () => {
+        win.querySelector('[data-close]').addEventListener('click', (e) => {
+            // A close is a close: stop the tap dead so it can never reach the
+            // profile link stretched across the header behind it — that link
+            // is how "closing the chat" was turning into a page navigation.
+            e.preventDefault(); e.stopPropagation();
             if (recWin === win) stopRec();   // never leave a camera running behind a closed chat
             clearAttach();
-            win.remove(); delete openWins[userId];
+            delete openWins[userId];         // a message landing mid-exit opens a fresh window
+            closeAnimated(win, () => win.remove());
         });
 
         // The + chooser: every way media can arrive, behind one button, so
@@ -620,6 +735,19 @@
         win.querySelector('.msgr-send').addEventListener('click', doSend);
         input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); doSend(); } });
 
+        // Typing pings: one every 2.5s while keys actually move. The server
+        // flag lives four seconds, so a live typist keeps it renewed and
+        // going quiet simply lets it lapse — no "stopped typing" traffic.
+        let lastTypingPing = 0;
+        input.addEventListener('input', () => {
+            if (!input.value) return;   // clearing the field is not typing
+            const now = Date.now();
+            if (now - lastTypingPing < 2500) return;
+            lastTypingPing = now;
+            fetch(`/app/community/messages/${userId}/typing`, { method: 'POST',
+                headers: { 'X-CSRF-TOKEN': CSRF(), Accept: 'application/json' }, credentials: 'same-origin' }).catch(() => {});
+        });
+
         // Load the thread with retries so a transient hiccup never leaves a
         // dead "Could not load" — it keeps trying, then offers a Retry button.
         async function loadThread(attempt) {
@@ -682,7 +810,35 @@
         addBubbleActs(row, m);
 
         bodyEl.appendChild(row);
+        // The typing dots always sit at the foot — a message landing while
+        // they show would otherwise leave them stranded mid-thread.
+        const ty = bodyEl.querySelector('.msgr-typing');
+        if (ty) bodyEl.appendChild(ty);
         bodyEl.scrollTop = bodyEl.scrollHeight;
+    }
+
+    /* Typing dots for one window. The poll asserts the state each beat; the
+       timer is the quiet expiry for when the last "true" beat never gets its
+       "false" (window closed on their side, poll hiccup). */
+    function showTyping(win, on) {
+        const bodyEl = win.querySelector('.msgr-window-body');
+        if (!bodyEl) return;
+        let t = bodyEl.querySelector('.msgr-typing');
+        if (on) {
+            clearTimeout(win._typingHide);
+            win._typingHide = setTimeout(() => showTyping(win, false), 7000);
+            if (!t) {
+                t = document.createElement('div');
+                t.className = 'msgr-typing';
+                t.setAttribute('aria-label', 'Typing…');
+                t.innerHTML = '<i></i><i></i><i></i>';
+                bodyEl.appendChild(t);
+                bodyEl.scrollTop = bodyEl.scrollHeight;
+            }
+        } else if (t) {
+            clearTimeout(win._typingHide);
+            t.remove();
+        }
     }
 
     // Per-bubble hover actions (reply needs an id, forward needs text). Shared
@@ -877,7 +1033,16 @@
         });
     } catch (_) { /* no realtime here — the poll covers it */ }
 
+    // The poll quickens to a 3s beat while a conversation is open — typing
+    // dots need a faster ear than badge counting — and relaxes back to 8s
+    // when none is. Self-scheduling, so the next wait always sees the
+    // current state and a slow request never stacks another behind it.
     livePoll();
-    setInterval(livePoll, 8000);
+    (function pollBeat() {
+        setTimeout(async () => {
+            await livePoll();
+            pollBeat();
+        }, Object.keys(openWins).length ? 3000 : 8000);
+    })();
 })();
 </script>

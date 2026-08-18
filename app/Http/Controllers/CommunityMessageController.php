@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -18,6 +19,21 @@ class CommunityMessageController extends Controller
 {
     /** Extensions that mark a stored media path as a clip rather than a picture. */
     private const VIDEO_EXTS = ['mp4', 'mov', 'webm', 'mkv', 'm4v', '3gp', 'avi'];
+
+    /**
+     * How long one "I am typing" ping stays true. The sender throttles to a
+     * ping every couple of seconds while keys actually move, so a live typist
+     * keeps the flag renewed and silence simply lets it lapse — no "stopped
+     * typing" traffic, and a closed tab never leaves a ghost behind. Same
+     * shape as the Collab Room presence heartbeat.
+     */
+    private const TYPING_SECONDS = 4;
+
+    /** The cache key that says $fromId is mid-sentence to $toId. */
+    private static function typingKey(int $fromId, int $toId): string
+    {
+        return 'dm-typing.' . $fromId . '.' . $toId;
+    }
 
     public function __construct(private readonly NotificationService $notifications)
     {
@@ -112,6 +128,9 @@ class CommunityMessageController extends Controller
             ],
             'canMessage' => (bool) $other->allowMessages || (int) $other->id === $meId,
             'messages' => $msgs,
+            // For viewers that refetch the whole thread on a beat (the Collab
+            // Room's PM tab) instead of riding the dock's poll.
+            'typing' => Cache::has(self::typingKey($userId, $meId)),
         ]]);
     }
 
@@ -298,6 +317,18 @@ class CommunityMessageController extends Controller
         ], $this->mediaPayload($mediaPath))]);
     }
 
+    /**
+     * "I am mid-sentence to {userId}." No body travels and nothing is stored
+     * — just a short-lived cache flag the recipient's poll reads. Renewed by
+     * the sender's throttled pings while they type; expires by itself.
+     */
+    public function typing(Request $request, int $userId)
+    {
+        Cache::put(self::typingKey((int) Auth::id(), $userId), time(), self::TYPING_SECONDS);
+
+        return response()->json(['success' => true]);
+    }
+
     /** Just the unread total, for the dock badge poll. */
     public function unreadCount(Request $request)
     {
@@ -345,9 +376,19 @@ class CommunityMessageController extends Controller
             'replyTo' => $this->replySnippet($parents->get($m->replyToId), $meId),
         ], $this->mediaPayload($m->imagePath)))->values();
 
+        // Who among the client's OPEN windows is mid-sentence to me. The
+        // client names them (`?typingFrom=1,2,3`) because a cache can be
+        // asked about a key but never scanned — and only open windows could
+        // show the dots anyway. Capped so the list can't become a probe loop.
+        $typing = collect(explode(',', (string) $request->query('typingFrom', '')))
+            ->map(fn ($v) => (int) $v)->filter()->unique()->take(20)
+            ->filter(fn ($id) => Cache::has(self::typingKey($id, $meId)))
+            ->values();
+
         return response()->json(['success' => true, 'data' => [
             'incoming' => $incoming,
             'maxId' => $maxId,
+            'typing' => $typing,
             'unread' => (int) CommunityMessage::where('recipientId', $meId)->where('isRead', 0)->where('deleteStatus', 1)->count(),
         ]]);
     }

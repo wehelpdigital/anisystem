@@ -235,6 +235,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-chat-send', [App\Http\Controllers\Manager\ScheduleChatController::class, 'send'])->name('sm.chat.send');
     // Who has seen what: posted when the thread is actually on screen.
     Route::post('/app/sm-chat-seen', [App\Http\Controllers\Manager\ScheduleChatController::class, 'seen'])->name('sm.chat.seen');
+    // A keystroke's heartbeat: a 4s cache flag the poll reads back as "…is typing".
+    Route::post('/app/sm-chat-typing', [App\Http\Controllers\Manager\ScheduleChatController::class, 'typing'])->name('sm.chat.typing');
 
     // --- Schedule team collaborative whiteboard ---
     Route::get('/app/sm-board', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'events'])->name('sm.board');
@@ -387,6 +389,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/community/messages/poll', [App\Http\Controllers\CommunityMessageController::class, 'poll'])->name('community.messages.poll');
     Route::get('/app/community/messages/{userId}', [App\Http\Controllers\CommunityMessageController::class, 'thread'])->whereNumber('userId')->name('community.messages.thread');
     Route::post('/app/community/messages/{userId}', [App\Http\Controllers\CommunityMessageController::class, 'send'])->whereNumber('userId')->name('community.messages.send');
+    Route::post('/app/community/messages/{userId}/typing', [App\Http\Controllers\CommunityMessageController::class, 'typing'])->whereNumber('userId')->name('community.messages.typing');
     Route::get('/app/community-plan', [App\Http\Controllers\CommunityController::class, 'show'])->name('community.show');
     Route::post('/app/community-publish', [App\Http\Controllers\CommunityController::class, 'togglePublish'])->name('community.publish');
     Route::post('/app/community-comment', [App\Http\Controllers\CommunityController::class, 'comment'])->name('community.comment');
