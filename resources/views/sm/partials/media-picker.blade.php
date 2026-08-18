@@ -35,6 +35,8 @@
                placeholder="Search by name, or where it came from…" autocomplete="off">
         <div id="smMediaPickerGrid" class="smp-grid" role="listbox" aria-label="Season media"></div>
         <p class="smp-state" id="smMediaPickerState">Loading…</p>
+        {{-- The scroll asks for the next page when this edges into view. --}}
+        <div id="smMediaPickerMore" aria-hidden="true"></div>
     </div>
 </div>
 
@@ -65,10 +67,18 @@
     .smp-state { padding: 1.5rem .5rem; text-align: center; font-size: .82rem; font-weight: 600;
         color: var(--tl-text-faint, #9ca3af); }
     .smp-state[hidden] { display: none; }
+    /* Ghost tiles while a page is on the wire — the sheet reads as loading
+       instead of stuck, in the exact silhouette of what is coming. */
+    .smp-skel { border-radius: .7rem; aspect-ratio: 1 / 1.28; background:
+        linear-gradient(100deg, var(--color-gray-100, #f3f4f6) 40%, var(--color-gray-200, #e5e7eb) 50%, var(--color-gray-100, #f3f4f6) 60%);
+        background-size: 200% 100%; animation: smpShimmer 1.2s linear infinite; }
+    @keyframes smpShimmer { to { background-position: -200% 0; } }
+    html.dark .smp-skel { background: linear-gradient(100deg, #1c2416 40%, #26301c 50%, #1c2416 60%); background-size: 200% 100%; animation: smpShimmer 1.2s linear infinite; }
     html.dark .smp-tile { background: #1c2416; border-color: #2b3a1c; }
     html.dark .smp-shot { background: #151b12; }
     html.dark .smp-name { color: #e5e9f5; }
-    @media (prefers-reduced-motion: reduce) { .smp-tile { transition: none; } .smp-tile:hover { transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .smp-tile { transition: none; } .smp-tile:hover { transform: none; }
+        .smp-skel { animation: none; } }
 </style>
 
 <script>
@@ -94,44 +104,104 @@
 
     let items = [];
     let onPick = null;
+    /* Paged, not poured: the sheet fetches a screenful, and the scroll asks
+       for the next while the reader nears the bottom. `gen` stamps every
+       fetch — a new open or a new search obsoletes whatever is on the wire. */
+    let cfg = {}, page = 0, more = false, loading = false, gen = 0;
 
     const LABELS = { image: 'Photo', video: 'Clip', drawing: 'Drawing', map: 'Map' };
 
-    function paint() {
-        const q = ($('smMediaPickerSearch').value || '').trim().toLowerCase();
-        const shown = q
-            ? items.filter((m) => (m.title + ' ' + m.source).toLowerCase().includes(q))
-            : items;
+    const tileHtml = (m, i) => {
+        const shot = m.posterUrl || (m.type === 'image' ? m.url : null);
+        const inner = shot
+            ? `<img src="${esc(shot)}" alt="" loading="lazy" decoding="async">`
+            : '<span class="smp-blank">🎬</span>';
+        return `<button type="button" class="smp-tile" role="option" data-pick="${i}">
+            <span class="smp-shot">${inner}<span class="smp-badge">${esc(LABELS[m.kind] || 'File')}</span></span>
+            <span class="smp-meta">
+                <span class="smp-name">${esc(m.title)}</span>
+                <span class="smp-sub">${esc(m.source)}${m.when ? ' · ' + esc(m.when) : ''}</span>
+            </span>
+        </button>`;
+    };
 
-        $('smMediaPickerGrid').innerHTML = shown.map((m, i) => {
-            const shot = m.posterUrl || (m.type === 'image' ? m.url : null);
-            const inner = shot
-                ? `<img src="${esc(shot)}" alt="" loading="lazy">`
-                : '<span class="smp-blank">🎬</span>';
-            return `<button type="button" class="smp-tile" role="option" data-pick="${i}">
-                <span class="smp-shot">${inner}<span class="smp-badge">${esc(LABELS[m.kind] || 'File')}</span></span>
-                <span class="smp-meta">
-                    <span class="smp-name">${esc(m.title)}</span>
-                    <span class="smp-sub">${esc(m.source)}${m.when ? ' · ' + esc(m.when) : ''}</span>
-                </span>
-            </button>`;
-        }).join('');
-        // The index on the tile is into the filtered list, so keep that list
-        // where the click handler can reach it.
-        $('smMediaPickerGrid').__shown = shown;
+    const skeletons = (n) => Array.from({ length: n }, () => '<span class="smp-skel"></span>').join('');
 
+    function sayState() {
         const state = $('smMediaPickerState');
-        state.hidden = shown.length > 0;
-        state.textContent = items.length === 0
-            ? 'Nothing kept for this season yet — take a photo or upload one instead.'
-            : 'Nothing matches that.';
+        if (loading) { state.hidden = items.length > 0; state.textContent = 'Loading…'; return; }
+        state.hidden = items.length > 0;
+        state.textContent = ($('smMediaPickerSearch').value || '').trim()
+            ? 'Nothing matches that.'
+            : 'Nothing kept for this season yet — take a photo or upload one instead.';
+    }
+
+    async function loadPage() {
+        if (loading || !more) return;
+        loading = true;
+        const myGen = gen;
+        const grid = $('smMediaPickerGrid');
+        if (items.length === 0) grid.innerHTML = skeletons(8);
+        const params = new URLSearchParams({ scheduleId: String(cfg.scheduleId || ''), page: String(page + 1) });
+        if (cfg.kinds) params.set('kinds', cfg.kinds);
+        const q = ($('smMediaPickerSearch').value || '').trim();
+        if (q) params.set('q', q);
+        try {
+            const res = await window.api(URL_BASE + '?' + params.toString());
+            if (myGen !== gen) return;               // superseded while flying
+            const fresh = (res.data && res.data.items) || [];
+            more = !!(res.data && res.data.more);
+            page += 1;
+            if (page === 1) grid.innerHTML = '';     // the skeletons go
+            // Appended, not repainted: a repaint would restart every lazy
+            // image the reader already scrolled past.
+            const base = items.length;
+            grid.insertAdjacentHTML('beforeend', fresh.map((m, i) => tileHtml(m, base + i)).join(''));
+            items.push(...fresh);
+            grid.__shown = items;
+            sayState();
+        } catch (err) {
+            if (myGen !== gen) return;
+            more = false;
+            const state = $('smMediaPickerState');
+            state.hidden = false;
+            state.textContent = err.message || 'Could not load this season\'s media.';
+            if (items.length === 0) grid.innerHTML = '';
+        } finally {
+            if (myGen === gen) loading = false;
+        }
+    }
+
+    function restart() {
+        gen += 1; items = []; page = 0; more = true; loading = false;
+        $('smMediaPickerGrid').__shown = [];
+        loadPage();
+    }
+
+    /* The sentinel at the sheet's foot asks for the next page. Rebuilt on
+       every open — an SPA navigation injects fresh markup, and an observer
+       holding the first copy would watch a sheet nobody can see. */
+    let watcher = null;
+    function watchMore() {
+        watcher?.disconnect();
+        const foot = $('smMediaPickerMore');
+        if (!foot || typeof IntersectionObserver !== 'function') return;
+        watcher = new IntersectionObserver((entries) => {
+            if (entries.some((en) => en.isIntersecting)) loadPage();
+        }, { root: foot.closest('.sheet-body'), rootMargin: '200px' });
+        watcher.observe(foot);
     }
 
     // Bound to the document, not to the elements: this script runs once, but
     // an SPA navigation injects the sheet's markup again, and a listener held
     // on the first copy would be listening to a sheet nobody can see.
+    let searchTimer = null;
     document.addEventListener('input', (e) => {
-        if (e.target.id === 'smMediaPickerSearch') paint();
+        if (e.target.id !== 'smMediaPickerSearch') return;
+        // The server owns the search now — the sheet only holds fetched pages,
+        // and filtering a third of the list would lie about the rest.
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(restart, 300);
     });
 
     document.addEventListener('click', (e) => {
@@ -144,10 +214,9 @@
         onPick && onPick(item);
     });
 
-    window.smPickMedia = async function (opts) {
-        const cfg = opts || {};
+    window.smPickMedia = function (opts) {
+        cfg = opts || {};
         onPick = typeof cfg.onPick === 'function' ? cfg.onPick : null;
-        items = [];
         $('smMediaPickerTitle').textContent = cfg.title || 'Choose from the gallery';
         $('smMediaPickerSearch').value = '';
         $('smMediaPickerGrid').innerHTML = '';
@@ -166,16 +235,8 @@
 
         // Re-read on every open rather than cache: the photo somebody wants to
         // attach is very often the one they took a minute ago in another tab.
-        const params = new URLSearchParams({ scheduleId: String(cfg.scheduleId || '') });
-        if (cfg.kinds) params.set('kinds', cfg.kinds);
-        try {
-            const res = await window.api(URL_BASE + '?' + params.toString());
-            items = (res.data && res.data.items) || [];
-            paint();
-        } catch (err) {
-            state.hidden = false;
-            state.textContent = err.message || 'Could not load this season\'s media.';
-        }
+        watchMore();
+        restart();
     };
 })();
 </script>

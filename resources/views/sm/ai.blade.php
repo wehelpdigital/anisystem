@@ -81,6 +81,10 @@
         .ai-credits svg { color: var(--color-accent-400); }
         .ai-credits:focus-visible, .aisuggest:focus-visible, #aiSendBtn:focus-visible, .ai-cam:focus-visible, .ai-sq:focus-visible { outline: 2px solid var(--color-accent-400); outline-offset: 2px; }
         .ai-sq { width: 2.5rem; height: 2.5rem; min-height: 2.5rem; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: .8rem; background: rgb(255 255 255 / .18); color: #fff; transition: background .15s ease, transform .15s ease; }
+        /* The white-on-green square, re-inked for a white page: the shell's
+           pane has no green masthead left to sit on. */
+        .aichat > div > .ai-sq { background: var(--color-gray-100); color: var(--color-gray-600); border: 1px solid var(--color-gray-200); }
+        .aichat > div > .ai-sq:hover { background: var(--color-brand-50); color: var(--color-brand-700); }
         .ai-sq:hover { background: rgb(255 255 255 / .28); }
         .ai-sq:active { transform: scale(.94); }
         /* A linked chat marks its button: white pill, brand icon (JS toggles
@@ -281,41 +285,16 @@
     </aside>
 
 <div class="aichat">
-    {{-- Masthead: identity + wallet + history + new --}}
-    <div class="ai-head">
-        <div class="flex items-center gap-3 min-w-0">
-            <div class="ai-avatar">
-                <span class="aimsg-face">
-                    @if ($settings->avatarPath)
-                        <img src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="">
-                    @else
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
-                    @endif
-                </span>
-            </div>
-            <div class="min-w-0">
-                <p class="ai-head-name truncate">{{ $settings->assistantName }}</p>
-                <span class="ai-role">Crop Technician</span>
-            </div>
-        </div>
-        <div class="flex items-center gap-1.5 shrink-0">
-            @unless ($aiUnlimited)
-            <a href="{{ route('ai.credits') }}" class="ai-credits" title="AI Credits" aria-label="AI credits balance">
-                <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>
-                <span id="aiBalance">{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</span>
-            </a>
-            @endunless
-            <button type="button" class="ai-sq" id="aiNewChatBtn" title="New question" aria-label="Start a new question">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-            </button>
-            <button type="button" class="ai-sq" id="aiHistoryBtn" title="Past questions" aria-label="Past questions">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            </button>
-            <button type="button" class="ai-sq {{ $conversation && $conversation->link_label ? 'text-brand-700' : '' }}" id="aiLinkBtn" title="Link this chat to a day or activity" aria-label="Link to a day or activity">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.83 10.17a4 4 0 010 5.66l-3 3a4 4 0 11-5.66-5.66l1.5-1.5m6.33-1.83a4 4 0 000-5.66l-1.5-1.5"/></svg>
+    {{-- The green masthead is gone on the owner's ask: its jobs live in the
+         aiMenuSheet behind one square button — beside the bell in full-page
+         mode, a slim row of its own inside the shell where no app bar exists. --}}
+    @if (request()->boolean('partial'))
+        <div class="flex justify-end mb-1">
+            <button type="button" class="ai-sq" id="aiMenuBtn" title="AI options" aria-label="AI options" aria-haspopup="dialog">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
             </button>
         </div>
-    </div>
+    @endif
 
     {{-- Chip: the day/activity this chat is pinned to (kept in the AI's focus). --}}
     <div id="aiLinkChip" class="{{ $conversation && $conversation->link_label ? 'flex' : 'hidden' }} items-center gap-2 -mt-1 mb-2 text-sm">
@@ -574,7 +553,51 @@
         @endif
     </div>
 </div>
+
+{{-- The masthead's jobs, one sheet behind the square button. The rows keep
+     the ids the page's handlers already bind — no second wiring. --}}
+<div class="sheet hidden" id="aiMenuSheet" style="--sheet-width:20rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">{{ $settings->assistantName }}</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-1">
+        <button type="button" class="ai-attach-opt" id="aiNewChatBtn">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg></span>
+            <span>New session<span class="sub">Start a fresh question</span></span>
+        </button>
+        <button type="button" class="ai-attach-opt" id="aiHistoryBtn">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+            <span>Recent chats<span class="sub">Pick up an earlier question</span></span>
+        </button>
+        <button type="button" class="ai-attach-opt" id="aiLinkBtn">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.83 10.17a4 4 0 010 5.66l-3 3a4 4 0 11-5.66-5.66l1.5-1.5m6.33-1.83a4 4 0 000-5.66l-1.5-1.5"/></svg></span>
+            <span>Link<span class="sub">Tie this chat to a day or activity</span></span>
+        </button>
+        @unless ($aiUnlimited)
+            <a href="{{ route('ai.credits') }}" class="ai-attach-opt">
+                <span class="ic"><svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg></span>
+                <span>AI credits<span class="sub"><span id="aiBalance">{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</span> left — top up here</span></span>
+            </a>
+        @endunless
+    </div>
+</div>
 @endpush
+
+@unless (request()->boolean('partial'))
+@push('appbar-actions')
+<button type="button" id="aiMenuBtn"
+        class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full text-gray-500 hover:bg-gray-100 transition overflow-hidden"
+        title="AI Technician options" aria-label="AI Technician options" aria-haspopup="dialog">
+    @if ($settings->avatarPath)
+        <img src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="" class="w-7 h-7 md:w-8 md:h-8 rounded-full object-cover">
+    @else
+        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
+    @endif
+</button>
+@endpush
+@endunless
 
 @push('scripts')
 <script>
@@ -833,6 +856,12 @@ const __init = () => {
 
     /* history + conversations */
     byId('aiHistoryBtn')?.addEventListener('click', () => openSheet('aiHistorySheet'));
+
+    /* The square button beside the bell (or atop the pane in the shell):
+       its sheet closes underneath whichever job the row hands off to. */
+    byId('aiMenuBtn')?.addEventListener('click', () => openSheet('aiMenuSheet'));
+    ['aiNewChatBtn', 'aiHistoryBtn', 'aiLinkBtn'].forEach((id) =>
+        byId(id)?.addEventListener('click', () => window.closeSheet?.('aiMenuSheet')));
     async function startNew() {
         try { const res = await api(URLS.newConvo, { method: 'POST', body: { scheduleId: SCHEDULE_ID } }); location.href = URLS.page + '&c=' + res.data.conversationId; }
         catch (err) { toast(err.message, 'error'); }

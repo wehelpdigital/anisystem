@@ -19,8 +19,15 @@ use Illuminate\Support\Str;
  */
 class MediaPickerController extends BaseScheduleController
 {
-    /** How many items the sheet offers. */
+    /** How many items the sheet offers in total. */
     private const LIMIT = 300;
+
+    /**
+     * One screenful per request. 300 tiles in one payload was 300 images
+     * racing each other the moment the sheet opened — the "stuck" the owner
+     * reported was the browser paying for pictures nobody had scrolled to.
+     */
+    private const PAGE = 40;
 
     public function index(Request $request)
     {
@@ -34,8 +41,16 @@ class MediaPickerController extends BaseScheduleController
             ->filter()
             ->all();
 
+        // Search runs here, not in the sheet: the sheet only ever holds the
+        // pages it has fetched, and a filter over a third of the list would
+        // quietly answer "nothing matches" about photos it never saw.
+        $q = trim((string) $request->query('q', ''));
+        $page = max(1, (int) $request->query('page', 1));
+
         $items = collect(SeasonMedia::all($schedule))
             ->filter(fn ($m) => $this->wanted($m['kind'], $kinds))
+            ->filter(fn ($m) => $q === ''
+                || stripos($m['title'] . ' ' . $m['source'], $q) !== false)
             ->map(fn ($m) => [
                 // What it is, for the badge on the tile…
                 'kind' => $m['kind'],
@@ -58,10 +73,15 @@ class MediaPickerController extends BaseScheduleController
             // was never offered.
             ->filter(fn ($m) => $m['path'] !== null)
             ->take(self::LIMIT)
-            ->values()
-            ->all();
+            ->values();
 
-        return $this->jsonOk('Media loaded.', ['data' => ['items' => $items]]);
+        $slice = $items->slice(($page - 1) * self::PAGE, self::PAGE)->values()->all();
+
+        return $this->jsonOk('Media loaded.', ['data' => [
+            'items' => $slice,
+            'more' => $items->count() > $page * self::PAGE,
+            'total' => $items->count(),
+        ]]);
     }
 
     // ------------------------------------------------------------------

@@ -292,35 +292,6 @@
 <div class="aichat">
 
     {{-- Masthead: identity + wallet + history --}}
-    <div class="ai-head">
-        <div class="flex items-center gap-3 min-w-0">
-            <div class="ai-avatar">
-                <span class="aimsg-face">
-                    @if ($settings->avatarPath)
-                        <img src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="">
-                    @else
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
-                    @endif
-                </span>
-            </div>
-            <div class="min-w-0">
-                <p class="ai-head-name truncate">{{ $settings->assistantName }}</p>
-                <span class="ai-role">Crop Technician</span>
-            </div>
-        </div>
-        <div class="flex items-center gap-1.5 shrink-0">
-            @unless ($aiUnlimited)
-                <a href="{{ route('ai.credits') }}" class="ai-credits" title="AI Credits" aria-label="AI credits balance">
-                    <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>
-                    <span id="aiBalance">{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</span>
-                </a>
-            @endunless
-            <button type="button" class="ai-sq lg:hidden" id="aiHistoryBtn" title="Past questions" aria-label="Past questions">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            </button>
-        </div>
-    </div>
-
     @unless ($settings->isUsable())
         <div class="ai-note">
             <span class="ico">
@@ -463,6 +434,51 @@
 {{-- The season picker itself — this page never carried it, so the gallery
      door above stayed shut for everyone. @once, so nothing doubles up. --}}
 @include('sm.partials.media-picker')
+
+{{-- The big green masthead is gone on the owner's ask; what it held lives
+     behind one square button beside the bell. --}}
+<div class="sheet hidden" id="aiMenuSheet" style="--sheet-width:20rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">{{ $settings->assistantName }}</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-1">
+        <button type="button" class="ai-attach-opt js-ai-new" id="aiMenuNew">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg></span>
+            <span>New session<span class="sub">Start a fresh question</span></span>
+        </button>
+        <button type="button" class="ai-attach-opt" id="aiMenuHistory">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+            <span>Recent chats<span class="sub">Pick up an earlier question</span></span>
+        </button>
+        <button type="button" class="ai-attach-opt" id="aiMenuLink">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 010 5.656l-3 3a4 4 0 01-5.656-5.656l1.5-1.5m7.156-2.344a4 4 0 015.656 0l.014.014a4 4 0 010 5.642l-1.5 1.5M8.5 15.5l7-7"/></svg></span>
+            <span>Link<span class="sub">Tie this chat to one of your plans</span></span>
+        </button>
+        @unless ($aiUnlimited)
+            <a href="{{ route('ai.credits') }}" class="ai-attach-opt">
+                <span class="ic"><svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg></span>
+                <span>AI credits<span class="sub"><span id="aiBalance">{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</span> left — top up here</span></span>
+            </a>
+        @endunless
+    </div>
+</div>
+@endpush
+
+@push('appbar-actions')
+<button type="button" id="aiMenuBtn"
+        class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full text-gray-500 hover:bg-gray-100 transition overflow-hidden"
+        title="AI Technician options" aria-label="AI Technician options" aria-haspopup="dialog">
+    @if ($settings->avatarPath)
+        <img src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="" class="w-7 h-7 md:w-8 md:h-8 rounded-full object-cover">
+    @else
+        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
+    @endif
+</button>
+@endpush
+
+@push('sheets')
 <div class="sheet hidden" id="aiHistorySheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -787,6 +803,18 @@ const __init = () => {
 
     /* ---- Conversations ---- */
     byId('aiHistoryBtn')?.addEventListener('click', () => openSheet('aiHistorySheet'));
+
+    /* The square button beside the bell — the masthead's jobs, one sheet. */
+    byId('aiMenuBtn')?.addEventListener('click', () => openSheet('aiMenuSheet'));
+    byId('aiMenuNew')?.addEventListener('click', () => window.closeSheet?.('aiMenuSheet'));
+    byId('aiMenuHistory')?.addEventListener('click', () => { window.closeSheet?.('aiMenuSheet'); openSheet('aiHistorySheet'); });
+    byId('aiMenuLink')?.addEventListener('click', () => {
+        window.closeSheet?.('aiMenuSheet');
+        // This page ties a chat to a plan through the composer's selector —
+        // walk the hand there rather than grow a second control for it.
+        toast('Pick the plan below — this chat ties itself to it.');
+        window.smFocus?.(byId('aiSchedule'));
+    });
 
     const AI_INDEX = @json(route('ai.index'));
     const SPIN_SVG = '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="animation:ai-spin .6s linear infinite"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.4" stroke-opacity=".25"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';

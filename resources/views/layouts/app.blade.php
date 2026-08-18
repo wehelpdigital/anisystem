@@ -165,6 +165,11 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-5m0-3h.01"/></svg>
                     </button>
 
+                    {{-- A page's own header controls, seated beside the bell —
+                         the AI chat parks its session menu here instead of
+                         spending a banner on it. --}}
+                    @stack('appbar-actions')
+
                     {{-- Notification bell --}}
                     {{-- While this is open the page's floating buttons step
                          aside: the AI bubble and the team bubble both live in
