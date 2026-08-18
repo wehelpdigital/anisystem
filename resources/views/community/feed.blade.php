@@ -38,8 +38,25 @@
 <div class="plaza-shell">
 {{-- CENTER — the feed (now full width beside a single right rail) --}}
 <div class="plaza-center min-w-0">
+{{-- The right rail folds away on phones and takes the co-farmer requests with
+     it — so on small screens the requests announce themselves up top instead
+     of silently not existing. --}}
+@if (($friendRequestCount ?? 0) > 0 && ($friendRequests ?? collect())->isNotEmpty())
+    <a href="{{ route('community.connect.requests') }}" class="card p-3 mb-4 lg:hidden flex items-center gap-3 plaza-accent">
+        <span class="flex -space-x-2 shrink-0">
+            @foreach ($friendRequests->take(3) as $reqUser)
+                @include('community.partials.avatar', ['user' => $reqUser, 'size' => 'avatar-sm', 'link' => false])
+            @endforeach
+        </span>
+        <span class="min-w-0 grow">
+            <span class="block text-sm font-bold text-gray-900" style="font-family:var(--font-heading)">{{ $friendRequestCount }} co-farmer {{ Str::plural('request', $friendRequestCount) }}</span>
+            <span class="block text-xs text-gray-500 truncate">{{ $friendRequests->first()->full_name }}{{ $friendRequestCount > 1 ? ' and others are' : ' is' }} waiting for you</span>
+        </span>
+        <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+    </a>
+@endif
 {{-- Share to your own wall, straight from the feed --}}
-<div class="card p-4 mb-4" id="feedComposer" data-video-host>
+<div class="card p-4 mb-4 plaza-accent" id="feedComposer" data-video-host>
     <div class="flex items-start gap-3">
         @include('community.partials.avatar', ['user' => auth()->user(), 'size' => 'avatar-md', 'link' => false])
         <div class="min-w-0 grow">

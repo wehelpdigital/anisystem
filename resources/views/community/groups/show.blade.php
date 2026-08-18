@@ -26,6 +26,9 @@
     .group-post-body a { color:var(--color-brand-700); text-decoration:underline; }
     .group-post-body h3, .group-post-body h4 { font-weight:700; margin:.25rem 0; }
     .group-post-body blockquote { border-left:3px solid var(--color-gray-200); padding-left:.75rem; color:var(--color-gray-500); }
+    /* dvh so a phone's collapsing URL bar doesn't swallow the chat composer;
+       vh stays as the fallback for browsers without it. */
+    .chat-card { height:70vh; height:70dvh; }
 </style>
 @endpush
 
@@ -63,7 +66,7 @@
 
     <div id="paneDiscussion">
     {{-- Composer (members only) --}}
-    <div class="card p-4 mb-4 {{ $isMember ? '' : 'hidden' }}" id="composerCard">
+    <div class="card p-4 mb-4 plaza-accent {{ $isMember ? '' : 'hidden' }}" id="composerCard">
         <div class="flex items-start gap-3">
             <span class="avatar avatar-md {{ CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} mt-1">{{ auth()->user()->initials ?? '?' }}</span>
             <div class="min-w-0 grow">
@@ -137,7 +140,7 @@
     <div id="paneChat" class="hidden">
         @if ($isMember)
             <div class="chat-shell">
-            <div class="card overflow-hidden" style="display:flex;flex-direction:column;height:70vh;">
+            <div class="card overflow-hidden chat-card" style="display:flex;flex-direction:column;">
                 <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-100">
                     <span class="font-bold text-gray-900 text-sm">Group chat</span>
                     {{-- Mobile members toggle; desktop shows the persistent sidebar instead. --}}
@@ -181,7 +184,7 @@
                 </div>
             </div>
             {{-- Desktop members sidebar: who's in the group + online status + DM. --}}
-            <aside class="card hidden lg:flex" style="flex-direction:column;height:70vh;">
+            <aside class="card hidden lg:flex chat-card" style="flex-direction:column;">
                 <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-100 shrink-0">
                     <span class="font-bold text-gray-900 text-sm">👥 Members</span>
                     <span id="chatOnlineCountSide" class="text-xs font-semibold text-gray-400 ms-auto"></span>
@@ -521,7 +524,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { threshold: 0 }).observe(composerCard);
         fab.addEventListener('click', () => {
             composerCard.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
-            window.smFocus(body, { delay: reduceMotion ? 0 : 350 });
+            // The composer's first field is the title — the old `body` var died
+            // when the body became a Quill editor, and focusing an undefined
+            // threw before the keyboard could come up.
+            window.smFocus?.(document.getElementById('postTitle'), { delay: reduceMotion ? 0 : 350 });
         });
     }
 });

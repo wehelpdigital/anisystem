@@ -51,10 +51,10 @@
 @section('content')
 
 {{-- Plan header --}}
-<div class="card p-4 mb-4">
+<div class="card p-4 mb-4 plaza-accent">
     <div class="flex items-start justify-between gap-3">
         <div class="min-w-0">
-            <h2 class="text-lg font-bold text-gray-900 leading-snug">{{ $plan->title }}</h2>
+            <h2 class="text-lg font-bold text-gray-900 leading-snug" style="font-family:var(--font-heading)">{{ $plan->title }}</h2>
             <div class="flex flex-wrap items-center gap-1.5 mt-1.5">
                 @if ($plan->cropType)
                     <span class="badge badge-green">{{ $plan->cropType }}</span>
@@ -107,7 +107,7 @@
 {{-- Owner's inbox: ratings breakdown --}}
 @if ($isOwner && $ratings['count'] > 0)
     <div class="card p-4 mb-4">
-        <h3 class="font-bold text-gray-900 mb-3">How members rated it</h3>
+        <h3 class="font-bold text-gray-900 mb-3" style="font-family:var(--font-heading)">How members rated it</h3>
         <div class="space-y-1.5">
             @foreach ($ratings['histogram'] as $star => $n)
                 <div class="flex items-center gap-2">

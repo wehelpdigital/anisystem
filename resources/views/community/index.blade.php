@@ -27,8 +27,8 @@
 
 {{-- Your own shared plans, so the owner can find their inbox --}}
 @if ($myPlans->isNotEmpty())
-    <div class="card p-4 mb-4">
-        <h3 class="font-bold text-gray-900 mb-3">Your shared plans</h3>
+    <div class="card p-4 mb-4 plaza-accent">
+        <h3 class="font-bold text-gray-900 mb-3" style="font-family:var(--font-heading)">Your shared plans</h3>
         <div class="space-y-2">
             @foreach ($myPlans as $mine)
                 <div class="flex items-center justify-between gap-3 plan-row">

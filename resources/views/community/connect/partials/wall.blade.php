@@ -1,7 +1,7 @@
 {{-- Account wall on a member profile. Any member can post; comments too.
      Expects: $member, $isSelf. Posts load via AJAX (load-more pattern). --}}
 <div class="card p-4 mb-4" id="wallRoot" data-wall-user="{{ $member->id }}">
-    <h3 class="font-bold text-gray-900 mb-3">{{ $isSelf ? 'Your wall' : $member->firstName . "'s wall" }}</h3>
+    <h3 class="font-bold text-gray-900 mb-3" style="font-family:var(--font-heading)">{{ $isSelf ? 'Your wall' : $member->firstName . "'s wall" }}</h3>
 
     {{-- Composer --}}
     <div class="mb-4" data-video-host>

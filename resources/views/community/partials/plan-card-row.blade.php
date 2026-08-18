@@ -1,8 +1,12 @@
 {{-- One browse card. Shared by the page and its pager rows. --}}
-    <a href="{{ route('community.show', ['id' => $plan->id]) }}" class="card p-4 mb-3 block hover:shadow-card-lg transition">
+{{-- Compiled partials do not inherit the parent view's `use` — without its
+     own import the bare CommunityAvatar below was a fatal on any real
+     request that had a plan to show. --}}
+@php use App\Support\CommunityAvatar; @endphp
+    <a href="{{ route('community.show', ['id' => $plan->id]) }}" class="card card-hover p-4 mb-3 block">
         <div class="flex items-start justify-between gap-3">
             <div class="min-w-0">
-                <h3 class="font-bold text-gray-900 leading-snug">{{ $plan->title }}</h3>
+                <h3 class="font-bold text-gray-900 leading-snug" style="font-family:var(--font-heading)">{{ $plan->title }}</h3>
                 <div class="flex flex-wrap items-center gap-1.5 mt-1.5">
                     @if ($plan->cropType)
                         <span class="badge badge-green">{{ $plan->cropType }}</span>

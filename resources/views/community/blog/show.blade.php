@@ -14,8 +14,20 @@
     .bc a:hover { background:var(--color-brand-50); }
     .bc .sep { color:var(--color-gray-300); }
     .bc .cur { padding:.3rem .55rem; color:var(--color-gray-500); font-weight:600; max-width:16rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .article-cover { border-radius:1rem; overflow:hidden; margin-bottom:1rem; background:var(--color-brand-50); }
-    .article-cover img { width:100%; height:auto; display:block; max-height:22rem; object-fit:cover; }
+    .article-cover { position:relative; border-radius:1rem; overflow:hidden; margin-bottom:1rem; background:var(--color-brand-50); }
+    .article-cover img { width:100%; height:auto; display:block; max-height:22rem; object-fit:cover;
+        opacity:0; transition:opacity .28s ease; }
+    .article-cover img.is-loaded { opacity:1; }
+    /* Hold a cover-shaped box and shimmer while the hero decodes, so the
+       headline doesn't leap down the page when it lands. */
+    .article-cover:not(:has(img.is-loaded)) { aspect-ratio:16/9; max-height:22rem; }
+    .article-cover:not(:has(img.is-loaded))::before { content:''; position:absolute; inset:0; pointer-events:none;
+        background:linear-gradient(100deg, rgba(255,255,255,0) 20%, rgba(255,255,255,.5) 50%, rgba(255,255,255,0) 80%);
+        background-size:220% 100%; animation:articleShimmer 1.15s linear infinite; }
+    @keyframes articleShimmer { from { background-position:220% 0; } to { background-position:-220% 0; } }
+    @media (prefers-reduced-motion: reduce) {
+        .article-cover:not(:has(img.is-loaded))::before { animation:none; background:rgb(255 255 255 / .25); }
+    }
     .article-title { font-family:var(--font-heading); font-weight:800; font-size:1.6rem; line-height:1.2; color:var(--color-gray-900); }
     .article-meta { font-size:.8rem; color:var(--color-gray-400); margin:.4rem 0 1rem; display:flex; gap:.8rem; flex-wrap:wrap; }
     .article-body { font-size:.98rem; line-height:1.7; color:var(--color-gray-800); }
@@ -39,7 +51,8 @@
     </nav>
 
     @if ($post->coverUrl())
-        <div class="article-cover"><img src="{{ $post->coverUrl() }}" alt=""></div>
+        <div class="article-cover"><img src="{{ $post->coverUrl() }}" alt=""
+            onload="this.classList.add('is-loaded')" onerror="this.closest('.article-cover')?.remove()"></div>
     @endif
     <h1 class="article-title">{{ $post->title }}</h1>
     <div class="article-meta">

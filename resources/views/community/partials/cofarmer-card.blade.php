@@ -30,9 +30,16 @@
                         </div>
                     @endif
                     @if ($latest->imagePath)
-                        <img src="{{ \App\Support\MediaStore::url($latest->imagePath) }}"
-                             alt="Photo from {{ $friend->full_name }}" loading="lazy"
-                             class="post-img rounded-lg mt-2 max-h-40 w-auto border border-gray-100">
+                        {{-- media-skel: shimmer while it decodes, vanish if it 404s.
+                             The inline cap keeps the placeholder at this card's
+                             thumbnail height, not the feed's full-photo box. --}}
+                        <div class="post-media media-skel" style="max-height:10rem">
+                            <img src="{{ \App\Support\MediaStore::url($latest->imagePath) }}"
+                                 alt="Photo from {{ $friend->full_name }}" loading="lazy"
+                                 class="post-img rounded-lg max-h-40 w-auto border border-gray-100"
+                                 onload="this.classList.add('is-loaded')"
+                                 onerror="this.closest('.media-skel')?.classList.add('is-gone')">
+                        </div>
                     @elseif (!$latest->body)
                         <p class="text-sm text-gray-400">📷 Shared a photo.</p>
                     @endif

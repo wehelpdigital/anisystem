@@ -25,9 +25,11 @@
     </a>
 </div>
 
-<form method="GET" action="{{ route('community.connect.members') }}" class="card p-3 mb-4" role="search" id="memberFilters">
-    <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-[1fr_11rem_11rem_auto]">
-        <div class="relative">
+{{-- Phones: search owns a row, the two selects share one — half the height
+     the old single-column stack spent before the first member appeared. --}}
+<form method="GET" action="{{ route('community.connect.members') }}" class="card p-3 mb-4 plaza-accent" role="search" id="memberFilters">
+    <div class="grid grid-cols-2 gap-2 lg:grid-cols-[1fr_11rem_11rem_auto]">
+        <div class="relative col-span-2 lg:col-span-1">
             <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
             <input type="search" name="q" value="{{ $filters['q'] }}" class="form-input pl-11! w-full" placeholder="Search by name or place…" autocomplete="off">
         </div>
@@ -39,7 +41,7 @@
             <option value="">🌾 All crops</option>
             @foreach ($crops as $cr)<option value="{{ $cr }}" @selected($filters['crop'] === $cr)>{{ ucfirst($cr) }}</option>@endforeach
         </select>
-        <div class="flex gap-2">
+        <div class="flex gap-2 col-span-2 lg:col-span-1">
             <button type="submit" class="btn btn-primary btn-sm grow">Filter</button>
             @if ($anyFilter)<a href="{{ route('community.connect.members') }}" class="btn btn-white btn-sm" title="Clear filters">Clear</a>@endif
         </div>

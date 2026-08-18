@@ -5,6 +5,12 @@
 @section('page-subtitle', 'Members who want to connect')
 @section('back', route('community.connect.members'))
 
+{{-- The shared plaza styles were missing here, so this page's avatars were
+     hand-rolled brand circles instead of the one community identity. --}}
+@push('head')
+@include('community.partials.plaza-css')
+@endpush
+
 @section('content')
 @include('community.partials.nav', ['active' => 'members'])
 
@@ -17,7 +23,7 @@
             @if ($u)
                 <div class="card flex items-center gap-3 p-3.5" data-member-card="{{ $u->id }}">
                     <a href="{{ route('community.connect.profile', ['userId' => $u->id]) }}" class="flex items-center gap-3 min-w-0 grow">
-                        <span class="w-11 h-11 rounded-full bg-brand-600 text-white text-sm font-bold flex items-center justify-center shrink-0">{{ $u->initials ?: '?' }}</span>
+                        @include('community.partials.avatar', ['user' => $u, 'size' => 'avatar-md', 'link' => false])
                         <span class="min-w-0">
                             <span class="block font-semibold text-gray-900 truncate">{{ $u->full_name }}</span>
                             @if (filled($u->location))<span class="block text-xs text-gray-500 truncate">{{ $u->location }}</span>@endif

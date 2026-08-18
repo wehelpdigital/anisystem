@@ -46,14 +46,20 @@
     html.dark .av-h6 { --av-bg:#3d2a17; --av-fg:#fdba74; } html.dark .av-h7 { --av-bg:#252c36; --av-fg:#9aa3b2; }
     html.dark .avatar { box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / .12); }
 
-    /* --- Group place identity: color cap + hero wash (both take an av-h class) --- */
-    .group-cap { height:6px; border-radius:1rem 1rem 0 0; background:var(--av-fg); opacity:.85; }
+    /* --- Group place identity: color cap + hero wash (both take an av-h class).
+       Both drift on the shared gradSweep tide (layout) — the cap like the hub
+       tiles' side accents, the wash like a slow weather front. --- */
+    .group-cap { height:6px; border-radius:1rem 1rem 0 0; opacity:.85;
+        background:linear-gradient(90deg, var(--av-fg), color-mix(in srgb, var(--av-fg) 55%, var(--av-bg)) 55%, var(--av-fg));
+        background-size:220% 100%; animation:gradSweep 12s ease-in-out infinite alternate; }
     html.dark .group-cap { opacity:.55; }
     .group-hero { position:relative; overflow:hidden; border-radius:inherit; }
     .group-hero::before { content:''; position:absolute; inset:0; pointer-events:none;
-        background:linear-gradient(150deg, var(--av-bg) 0%, transparent 70%); opacity:.9; }
+        background:linear-gradient(150deg, var(--av-bg) 0%, transparent 70%); opacity:.9;
+        background-size:220% 220%; animation:gradSweep 14s ease-in-out infinite alternate; }
     html.dark .group-hero::before { opacity:.3; }
     .group-hero > * { position:relative; }
+    @media (prefers-reduced-motion: reduce) { .group-cap, .group-hero::before { animation:none; } }
 
     /* --- Join → Open morph (group cards) --- */
     .group-join-btn { max-width:9rem; overflow:hidden; white-space:nowrap;
@@ -253,6 +259,12 @@
         align-items:center; justify-content:center; box-shadow:var(--shadow-card-lg); cursor:pointer;
         transition: opacity var(--dur) var(--ease-house), transform var(--dur) var(--ease-house); }
     .write-fab.is-hidden { opacity:0; transform:scale(.6); pointer-events:none; }
+    /* On phones the messenger launcher owns the same corner (its dock rides at
+       4.5rem above the tab bar) — the write FAB steps up one storey so both
+       stay tappable instead of stacking on the same spot. */
+    @media (max-width:767px) {
+        .write-fab { bottom:calc(8.5rem + env(safe-area-inset-bottom, 0px)); }
+    }
 
     /* --- Join gate: invitation card, live melt, animated reply-form gate --- */
     #joinPrompt { border:1.5px dashed var(--color-brand-300); background:var(--color-brand-50); border-radius:1rem;
@@ -346,6 +358,56 @@
         background:var(--color-brand-50); display:flex; align-items:center; justify-content:center; font-size:2rem; }
     html.dark .empty-tile { background:rgb(74 124 42 / .15); }
 
+    /* --- Section accent: the hairline the app's modern headers wear, in
+       community green, drifting on the shared gradSweep tide (layout). Any
+       card or header block takes the class; popovers all live on <body>, so
+       the overflow clip costs nothing. --- */
+    .plaza-accent { position:relative; overflow:hidden; }
+    .plaza-accent::before { content:''; position:absolute; inset:0 0 auto 0; height:3px;
+        background:linear-gradient(90deg, #3d6823, #6b9f3d 45%, #a8cc7e 75%, transparent);
+        background-size:220% 100%; animation:gradSweep 12s ease-in-out infinite alternate; }
+    html.dark .plaza-accent::before { opacity:.8; }
+    @media (prefers-reduced-motion: reduce) { .plaza-accent::before { animation:none; } }
+
+    /* --- Post-photo skeleton: while a wall/feed picture decodes, its box
+       shimmers instead of the layout jumping open around a half-arrived
+       image (gallery's sweep, aimed at the plaza). Opt-in via .media-skel on
+       .post-media plus the is-loaded hooks on the <img>; the box holds a
+       likely photo shape until the real one takes over. --- */
+    .media-skel:not(:has(img.is-loaded)):not(.is-gone) { width:min(100%, 24rem); aspect-ratio:16/10; max-height:18rem; }
+    .media-skel:not(:has(img.is-loaded)) img { position:absolute; inset:0; }
+    .media-skel img { opacity:0; transition:opacity .28s ease; }
+    .media-skel img.is-loaded { opacity:1; }
+    .media-skel::before { content:''; position:absolute; inset:0; border-radius:.75rem; pointer-events:none;
+        background:linear-gradient(100deg, rgba(255,255,255,0) 20%, rgba(255,255,255,.55) 50%, rgba(255,255,255,0) 80%), var(--color-gray-100);
+        background-size:220% 100%, auto; animation:mediaSkelSweep 1.15s linear infinite; }
+    html.dark .media-skel::before {
+        background:linear-gradient(100deg, rgba(255,255,255,0) 20%, rgba(255,255,255,.09) 50%, rgba(255,255,255,0) 80%), rgb(255 255 255 / .05);
+        background-size:220% 100%, auto; }
+    @keyframes mediaSkelSweep { from { background-position:220% 0, 0 0; } to { background-position:-220% 0, 0 0; } }
+    .media-skel:has(img.is-loaded)::before { display:none; }
+    /* A broken picture is not "still loading" — the box goes away, the words stay. */
+    .media-skel.is-gone { display:none; }
+    /* Reduced motion keeps a loader, just a still one — not a blank square. */
+    @media (prefers-reduced-motion: reduce) {
+        .media-skel::before { animation:none;
+            background:var(--color-gray-100); }
+        html.dark .media-skel::before { background:rgb(255 255 255 / .06); }
+    }
+
+    /* --- Thumb-size targets on touch: the composer tools grow to 44px, the
+       corner ⋯ grows with them, and the small text actions (react pills,
+       Reply, thread toggles) keep their look while their hit area quietly
+       spreads past 44px via an invisible pseudo layer. --- */
+    .react-btn, .reply-link, .thread-toggle { position:relative; }
+    @media (pointer: coarse) {
+        .wall-act { min-width:2.75rem; min-height:2.75rem; justify-content:center; }
+        .wc-more { width:2.75rem; height:2.75rem; }
+        .emoji-btn, .reply-send { width:2.75rem; height:2.75rem; }
+        .react-btn::after { content:''; position:absolute; inset:-.45rem 0; }
+        .reply-link::after, .thread-toggle::after { content:''; position:absolute; inset:-.55rem -.25rem; }
+    }
+
     {{-- Lightbox styles live inside community/partials/lightbox-js so pages
          outside the plaza (e.g. schedule activities) can use it standalone. --}}
 
@@ -424,7 +486,8 @@
         border:1px dashed var(--color-gray-300); border-radius:.7rem; color:#5b6472; font-size:.85rem;
         font-weight:600; margin-bottom:.75rem; background:var(--color-gray-50); }
     .profile-video-uploading:not(.hidden) { display:flex; }
-    html.dark .profile-video-uploading { background:#1c2136; border-color:#3a4160; color:#c3cbe0; }
+    /* Night palette is the plaza's green-tinted dark, not the old blue. */
+    html.dark .profile-video-uploading { background:#1a2213; border-color:#2b3a1c; color:#c3cdb5; }
     .profile-video-spin { width:1.1rem; height:1.1rem; border-radius:9999px; border:2px solid var(--color-brand-200);
         border-top-color:var(--color-brand-600); animation:pv-spin .7s linear infinite; flex:0 0 auto; }
     @keyframes pv-spin { to { transform:rotate(360deg); } }

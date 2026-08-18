@@ -11,7 +11,7 @@
 @section('content')
 @include('community.partials.nav', ['active' => 'wall'])
 
-<div class="card p-4 mb-4 flex items-center gap-3">
+<div class="card p-4 mb-4 flex items-center gap-3 plaza-accent">
     <div class="avatar avatar-lg av-h4" style="font-size:1.4rem;">#</div>
     <div>
         <h2 class="font-bold text-gray-900 text-lg" style="font-family:var(--font-heading)">#{{ $tag }}</h2>
@@ -42,7 +42,8 @@
         </header>
         <p class="text-sm text-gray-700 mt-2 whitespace-pre-line break-words">{!! \App\Support\CommunityText::render($post->body) !!}</p>
         @if ($post->imagePath)
-            <div class="post-media"><img src="{{ \App\Support\MediaStore::url($post->imagePath) }}" alt="" loading="lazy"></div>
+            <div class="post-media media-skel"><img src="{{ \App\Support\MediaStore::url($post->imagePath) }}" alt="" loading="lazy"
+                onload="this.classList.add('is-loaded')" onerror="this.closest('.media-skel')?.classList.add('is-gone')"></div>
         @endif
         @include('community.partials.react-bar', ['type' => 'wallpost', 'id' => $post->id, 'summary' => $post->reactionSummary ?? null])
         <div class="mt-3 pt-2 border-t border-gray-100">

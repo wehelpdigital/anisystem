@@ -6,9 +6,16 @@
 
 @section('content')
 
+<style>
+    /* The invitation banner breathes on the shared gradSweep tide (layout),
+       the same slow green the messenger and nav headers wear. */
+    .locked-hero { background:linear-gradient(120deg, #3d6823, #6b9f3d 35%, #4a7c2a 60%, #2f5219 85%, #3d6823);
+        background-size:240% 240%; animation:gradSweep 14s ease-in-out infinite alternate; }
+    @media (prefers-reduced-motion: reduce) { .locked-hero { animation:none; } }
+</style>
 <div class="card overflow-hidden mb-4">
-    <div class="card-body bg-gradient-to-br from-brand-600 to-brand-800 !rounded-2xl text-white">
-        <h2 class="text-xl md:text-2xl font-bold">Share a plan, see everyone else's</h2>
+    <div class="card-body locked-hero !rounded-2xl text-white">
+        <h2 class="text-xl md:text-2xl font-bold" style="font-family:var(--font-heading)">Share a plan, see everyone else's</h2>
         <p class="text-sm text-brand-100 mt-1.5">
             The Community runs on give-and-take. Publish one of your cropping plans and you
             get to read, question and rate every plan other members have shared.

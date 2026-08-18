@@ -34,7 +34,12 @@
                 @endif
             @endif
             @if ($post->imagePath)
-                <div class="mt-2"><img src="{{ \App\Support\MediaStore::url($post->imagePath) }}" alt="Photo" loading="lazy" class="post-img rounded-lg max-h-72 w-auto"></div>
+                {{-- media-skel: shimmer while it decodes, vanish if it 404s. --}}
+                <div class="post-media media-skel">
+                    <img src="{{ \App\Support\MediaStore::url($post->imagePath) }}" alt="Photo" loading="lazy" class="post-img"
+                        onload="this.classList.add('is-loaded')"
+                        onerror="this.closest('.media-skel')?.classList.add('is-gone')">
+                </div>
             @endif
             @if ($post->videoPath ?? null)
                 @include('community.partials.video-embed', ['src' => $post->videoPath, 'poster' => $post->videoPoster ?? null])

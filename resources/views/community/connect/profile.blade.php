@@ -20,6 +20,11 @@
                  browser would have guessed. --}}
             <div class="-mx-5 -mt-5 mb-4 h-32 sm:h-44 rounded-t-xl bg-gray-100 bg-cover bg-no-repeat"
                  style="background-image:url('{{ \App\Support\MediaStore::url($member->coverPath) }}'); background-position: 50% {{ (int) ($member->coverPos ?? 50) }}%"></div>
+        @else
+            {{-- No cover yet: the app's drifting header green stands in, so a
+                 bare profile still opens with a header instead of a name
+                 floating in white space. --}}
+            <div class="-mx-5 -mt-5 mb-4 h-20 sm:h-28 rounded-t-xl profile-cover-fallback" aria-hidden="true"></div>
         @endif
         <div class="flex items-start gap-4">
             <span class="status-avatar inline-block shrink-0 relative" style="width:4rem;height:4rem;" data-self="{{ $isSelf ? 1 : 0 }}">
@@ -29,7 +34,7 @@
                       @if ($isSelf) role="button" tabindex="0" title="Set your status" data-status-bubble @endif><span class="status-bubble-text" @if ($isSelf) data-status-text @endif>{{ $member->statusBubble ?: ($isSelf ? "💭 What's on your mind?" : '') }}</span></span>
             </span>
             <div class="min-w-0 grow">
-                <h2 class="text-xl font-bold text-gray-900 leading-tight">{{ $member->full_name }}</h2>
+                <h2 class="text-xl font-bold text-gray-900 leading-tight" style="font-family:var(--font-heading)">{{ $member->full_name }}</h2>
                 @if (filled($member->headline))
                     <p class="text-sm text-gray-600 font-medium mt-0.5">{{ $member->headline }}</p>
                 @endif
@@ -96,7 +101,7 @@
 
     <div data-tab-panel="plans" class="hidden">
         <div class="card p-4">
-            <h3 class="font-bold text-gray-900 mb-2">Shared plans</h3>
+            <h3 class="font-bold text-gray-900 mb-2" style="font-family:var(--font-heading)">Shared plans</h3>
             @if ($plans->isNotEmpty())
                 <div class="space-y-2">
                     @foreach ($plans as $plan)
@@ -118,7 +123,7 @@
     <div data-tab-panel="photos" class="hidden">
         <div class="card p-4">
             <div class="flex items-center justify-between gap-3 mb-3">
-                <h3 class="font-bold text-gray-900">Photos</h3>
+                <h3 class="font-bold text-gray-900" style="font-family:var(--font-heading)">Photos</h3>
                 @if ($isSelf)
                     <label class="btn btn-primary btn-sm cursor-pointer mb-0">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
@@ -143,7 +148,7 @@
     <div data-tab-panel="videos" class="hidden">
         <div class="card p-4">
             <div class="flex items-center justify-between gap-3 mb-3">
-                <h3 class="font-bold text-gray-900">Videos</h3>
+                <h3 class="font-bold text-gray-900" style="font-family:var(--font-heading)">Videos</h3>
                 @if ($isSelf)
                     <label class="btn btn-primary btn-sm cursor-pointer mb-0" id="profileVideoAddBtn">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
@@ -179,12 +184,27 @@
 
 @push('head')
 <style>
-    .profile-tab { flex:1; padding:.55rem .75rem; border:0; background:transparent; border-radius:.6rem;
+    /* Stand-in cover: the same slow green the messenger and nav wear. */
+    .profile-cover-fallback {
+        background:linear-gradient(120deg, #3d6823, #6b9f3d 35%, #4a7c2a 60%, #2f5219 85%, #3d6823);
+        background-size:240% 240%; animation:gradSweep 14s ease-in-out infinite alternate; }
+    @media (prefers-reduced-motion: reduce) { .profile-cover-fallback { animation:none; } }
+
+    /* Four tabs don't fit a phone as equal columns — they keep their words
+       and the row scrolls instead of crushing "Shared Plans" to a smudge. */
+    .profile-tabs { overflow-x:auto; scrollbar-width:none; }
+    .profile-tabs::-webkit-scrollbar { display:none; }
+    .profile-tab { flex:1; white-space:nowrap; min-height:2.75rem; padding:.55rem .75rem; border:0; background:transparent; border-radius:.6rem;
         font-size:.9rem; font-weight:600; color:#5b6472; cursor:pointer; transition:background .2s ease, color .2s ease, box-shadow .2s ease; }
     .profile-tab.is-active { background:#fff; color:#1f2937; box-shadow:0 1px 2px rgba(0,0,0,.08); }
-    html.dark .profile-tabs { background:#1c2136; }
-    html.dark .profile-tab.is-active { background:#2a3050; color:#e5e9f5; }
+    html.dark .profile-tabs { background:#1a2213; }
+    html.dark .profile-tab { color:#9aa69a; }
+    html.dark .profile-tab.is-active { background:#232a1c; color:#e5e9df; }
     [data-tab-panel].hidden { display:none; }
+    /* A tab change arrives, it doesn't snap. */
+    @keyframes profilePanelIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+    [data-tab-panel]:not(.hidden) { animation:profilePanelIn .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+    @media (prefers-reduced-motion: reduce) { [data-tab-panel]:not(.hidden) { animation:none; } }
 
     /* Chat bubble above the profile pic, with a tail pointing down at the photo. */
     .status-bubble { position:absolute; bottom:calc(100% + .3rem); left:0; right:auto;

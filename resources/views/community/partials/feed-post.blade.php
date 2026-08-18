@@ -29,8 +29,11 @@
             @include('community.partials.youtube-card', ['vid' => $ytVid])
         @endif
         @if ($post->imagePath)
-            <div class="post-media">
-                <img src="{{ \App\Support\MediaStore::url($post->imagePath) }}" alt="" loading="lazy">
+            {{-- media-skel: shimmer while the photo decodes, vanish if it 404s. --}}
+            <div class="post-media media-skel">
+                <img src="{{ \App\Support\MediaStore::url($post->imagePath) }}" alt="" loading="lazy"
+                    onload="this.classList.add('is-loaded')"
+                    onerror="this.closest('.media-skel')?.classList.add('is-gone')">
             </div>
         @endif
         @if ($post->videoPath ?? null)
