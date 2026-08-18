@@ -2,6 +2,48 @@
 
 @section('title', 'Log In')
 
+{{-- The only public page that wears the saved theme. Declared at the top level
+     rather than inside @section('content') because the layout tests this flag
+     in <head>, long before the content section is yielded. --}}
+@section('honours-theme-cookie', true)
+
+@push('head')
+<style>
+    /* The spinner grows out of the label instead of popping in, so the text
+       sliding left reads as one motion. The negative end-margin cancels .btn's
+       own gap while the spinner is collapsed, leaving the idle button pixel
+       identical to before. */
+    #loginSubmit .login-spin {
+        flex: none;
+        width: 0;
+        height: 1.25rem;
+        opacity: 0;
+        margin-inline-end: -0.5rem;
+        transition: width .28s cubic-bezier(.22,1,.36,1),
+                    opacity .28s cubic-bezier(.22,1,.36,1),
+                    margin-inline-end .28s cubic-bezier(.22,1,.36,1);
+    }
+    #loginSubmit.is-busy .login-spin {
+        width: 1.25rem;
+        opacity: 1;
+        margin-inline-end: 0;
+        animation: loginSpin .9s linear infinite;
+    }
+    @keyframes loginSpin { to { transform: rotate(360deg); } }
+    /* Busy is not the same as unavailable, so the button keeps its full weight
+       while it works — .btn's disabled fade would leave the spinner at roughly
+       a quarter alpha on yellow. The disabled attribute itself stays: that is
+       what actually blocks a second submit. */
+    #loginSubmit.is-busy:disabled { opacity: 1; color: #1a1a1a; }
+    /* Reduced motion drops the grow-in travel but only slows the spin — a
+       frozen spinner reads as a hung request rather than a working one. */
+    @media (prefers-reduced-motion: reduce) {
+        #loginSubmit .login-spin { transition: none; }
+        #loginSubmit.is-busy .login-spin { animation-duration: 2.4s; }
+    }
+</style>
+@endpush
+
 @section('content')
 <div class="bg-gray-50 py-10 md:py-16 px-4 min-h-[70vh] flex items-start justify-center">
     <div class="w-full max-w-md">
@@ -12,7 +54,7 @@
         </div>
 
         <div class="card card-body">
-            <form method="POST" action="{{ route('login.attempt') }}" class="space-y-4" novalidate>
+            <form id="loginForm" method="POST" action="{{ route('login.attempt') }}" class="space-y-4" novalidate>
                 @csrf
 
                 <div>
@@ -38,7 +80,10 @@
                     Keep me logged in
                 </label>
 
-                <button type="submit" class="btn btn-accent btn-lg w-full">Log In</button>
+                <button type="submit" id="loginSubmit" class="btn btn-accent btn-lg w-full">
+                    <svg class="login-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
+                    <span data-login-label>Log In</span>
+                </button>
             </form>
         </div>
 
@@ -92,3 +137,40 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    (() => {
+        const form = document.getElementById('loginForm');
+        const btn = document.getElementById('loginSubmit');
+        if (!form || !btn) return;
+        const label = btn.querySelector('[data-login-label]');
+
+        form.addEventListener('submit', (e) => {
+            // A second Enter or tap while the POST is in flight would log the
+            // attempt twice and eat a slot of the login throttle, so the flag
+            // is checked before anything else — it beats the disabled
+            // attribute, which cannot land until after this handler returns.
+            if (btn.dataset.busy === '1') { e.preventDefault(); return; }
+            btn.dataset.busy = '1';
+            btn.classList.add('is-busy');
+            btn.setAttribute('aria-busy', 'true');
+            if (label) label.textContent = 'Signing in…';
+            // Deferred: a submit button disabled inside its own submit handler
+            // can cancel the very submission it is reporting on.
+            setTimeout(() => { btn.disabled = true; }, 0);
+        });
+
+        // Back-button restores the page mid-spin from the bfcache, disabled
+        // button and all; without this the form is dead on arrival.
+        window.addEventListener('pageshow', (e) => {
+            if (!e.persisted) return;
+            delete btn.dataset.busy;
+            btn.disabled = false;
+            btn.classList.remove('is-busy');
+            btn.removeAttribute('aria-busy');
+            if (label) label.textContent = 'Log In';
+        });
+    })();
+</script>
+@endpush

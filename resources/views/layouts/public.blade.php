@@ -34,19 +34,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    {{-- Night mode for guests: the app mirrors its theme choice into a cookie,
-         so the login page can match before the user is even logged in. Runs
-         inline before the stylesheet so dark never flashes white. No cookie
-         means light — guests default bright, never the OS preference. --}}
-    <script>
-        (() => {
-            try {
-                if (/(?:^|;\s*)anisystem-theme=dark(?:;|$)/.test(document.cookie)) {
-                    document.documentElement.classList.add('dark');
-                }
-            } catch (_) {}
-        })();
-    </script>
+    {{-- Night mode for guests belongs to the login page alone: the app mirrors
+         its theme choice into a cookie so a returning member's login screen
+         matches the app they left. The marketing pages are a different
+         audience and stay bright whatever that cookie says, so the pre-paint
+         is emitted only for views that opt in with
+         @section('honours-theme-cookie'). Inline and ahead of the stylesheet
+         so dark never flashes white. No cookie means light — guests default
+         bright, never the OS preference. --}}
+    @hasSection('honours-theme-cookie')
+        <script data-theme-prepaint>
+            (() => {
+                try {
+                    if (/(?:^|;\s*)anisystem-theme=dark(?:;|$)/.test(document.cookie)) {
+                        document.documentElement.classList.add('dark');
+                    }
+                } catch (_) {}
+            })();
+        </script>
+    @endif
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
 </head>
