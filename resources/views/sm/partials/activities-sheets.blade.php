@@ -10,6 +10,10 @@
     // one tap further in. Same treatment: shown, disabled, greyed.
     $mayEdit = \App\Support\WorkerContext::canEdit();
     $mayNote = $mayEdit || \App\Support\WorkerContext::canAddNotes();
+    // A separate question from the two above, and asked of every tier: the
+    // owner closed the camera, the recorder, the drawing board, the maps and
+    // the technician to workers outright, not to the ones who may not write.
+    $isWorker = \App\Support\WorkerContext::activeGrant() !== null;
     $sheetLock = $mayEdit ? '' : ' is-locked';
     $sheetNoteLock = $mayNote ? '' : ' is-locked';
     $whyNoEdit = 'Only someone who can edit the plan may do this';
@@ -461,6 +465,13 @@
                 ['weather', 'Weather', 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z'],
                 ['ai', 'AI Technician', 'M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5'],
             ];
+            // Filtered rather than wrapped row by row: the shell's own MODULES
+            // table drops the same three, so a row left here would open onto
+            // nothing at all.
+            if ($isWorker) {
+                $closed = ['workers', 'maps', 'ai'];
+                $modNav = array_values(array_filter($modNav, fn ($m) => ! in_array($m[0], $closed, true)));
+            }
         @endphp
         @foreach ($modNav as [$key, $label, $icon])
             <button type="button" class="module-nav-row w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50"
@@ -618,8 +629,17 @@
             // The AI chat bubble is hidden on phones (it covered the board), so
             // the menu is how it opens there. Forwarding to the bubble's own
             // launcher keeps a single open/close code path.
-            if (\App\Models\AiSetting::current()?->isUsable()) {
+            if (\App\Models\AiSetting::current()?->isUsable() && ! $isWorker) {
                 $actRows[] = ['aiFloatFab', 'AI Technician', 'M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5', '', ''];
+            }
+            // The other four the owner closed (the technician is dropped just
+            // above). Each row only forwards a click to a real toolbar button,
+            // and those are not rendered for a worker either — a row left
+            // standing would be a tap that does nothing, which reads as a
+            // broken menu rather than a closed door.
+            if ($isWorker) {
+                $closedTools = ['captureTodayPhotoBtn', 'recordTodayVideoBtn', 'openDrawBtn', 'openMapsBtn'];
+                $actRows = array_values(array_filter($actRows, fn ($r) => ! in_array($r[0], $closedTools, true)));
             }
         @endphp
         @foreach ($actRows as [$target, $label, $icon, $badgeId, $labelId])
@@ -662,13 +682,13 @@
              attach button is three steps too many — so the picture and the
              clip are offered where the day is, and become a note once they
              exist. --}}
-        @if (! \App\Support\WorkerContext::activeGrant() || $mayNote)
+        @if (! $isWorker)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetNoteLock }}" data-action="capture-photo" @disabled(! $mayNote) @if(! $mayNote) title="{{ $whyNoNote }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
             Capture a photo
         </button>
         @endif
-        @if (! \App\Support\WorkerContext::activeGrant() || $mayNote)
+        @if (! $isWorker)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetNoteLock }}" data-action="record-video" @disabled(! $mayNote) @if(! $mayNote) title="{{ $whyNoNote }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg>
             Record a video
@@ -676,13 +696,13 @@
         @endif
         {{-- A drawing and a map are things a day has, like a note — not things
              buried inside the note editor, which is where they used to hide. --}}
-        @if (! \App\Support\WorkerContext::activeGrant() || $mayNote)
+        @if (! $isWorker)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetNoteLock }}" data-action="add-drawing" @disabled(! $mayNote) @if(! $mayNote) title="{{ $whyNoNote }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L20 7a2 2 0 00-3-3L5 16l-1 4zM14 6l4 4"/></svg>
             Add a drawing
         </button>
         @endif
-        @if (! \App\Support\WorkerContext::activeGrant() || $mayNote)
+        @if (! $isWorker)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetNoteLock }}" data-action="add-map" @disabled(! $mayNote) @if(! $mayNote) title="{{ $whyNoNote }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
             Add a map

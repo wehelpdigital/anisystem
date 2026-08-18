@@ -50,6 +50,13 @@ class ActivityVersionController extends BaseScheduleController
     {
         $schedule = $this->scheduleFromRequest($request);
 
+        // Authoring a second plan is the farm owner's call, not a worker's —
+        // assertCanEdit() above waves an editing worker through, and the "+
+        // Version" chip is not drawn for them either.
+        if (\App\Support\WorkerContext::inWorkerContext()) {
+            return $this->jsonFail('Only the farm owner can add a plan version.', 403);
+        }
+
         // Cap the number of versions — the client hides the add button at the
         // limit, but a request can still arrive, so this is the authority.
         $versionCount = AsScheduleActivityVersion::active()->forSchedule($schedule->id)->count();

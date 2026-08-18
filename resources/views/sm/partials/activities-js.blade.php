@@ -54,6 +54,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // notes, so the two are folded into one question for the note controls.
     const CAN_ADD_NOTES = @json(\App\Support\WorkerContext::canAddNotes());
     const MAY_NOTE = CAN_EDIT || CAN_ADD_NOTES;
+    /* Dragging is asked separately from writing, and the answer is no for every
+       worker. Rearranging a season by thumb is the one write with no name on
+       it: nothing says what moved or why, and a worker who may edit a day
+       through a sheet still should not be able to reshuffle the plan by
+       brushing the board. Both the affordance and the handler read these, so
+       the gesture is never armed rather than being refused once it lands.
+       Twin of $boardMayDrag / $boardMayDragNote in activities.blade.php. */
+    const MAY_DRAG = CAN_EDIT && ! IS_WORKER;
+    const MAY_DRAG_NOTE = MAY_NOTE && ! IS_WORKER;
     /* A control a viewer may not use is drawn where everyone else has it,
        greyed and inert, rather than left out: a board whose buttons come and
        go per person is one nobody can be told how to use, and a missing button
@@ -864,7 +873,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const nameAttr = esc(a.activityTitle || '');
 
         const isDoneFlag = boolFlag(a.isDone) ? 1 : 0;
-        return `<div class="activity-card prio-${esc(priority)}${isHiddenFlag ? ' is-hidden' : ''}${isDoneFlag ? ' is-done' : ''}" draggable="${(isDoneFlag || !CAN_EDIT) ? 'false' : 'true'}"
+        return `<div class="activity-card prio-${esc(priority)}${isHiddenFlag ? ' is-hidden' : ''}${isDoneFlag ? ' is-done' : ''}" draggable="${(isDoneFlag || !MAY_DRAG) ? 'false' : 'true'}"
      data-id="${a.id}"
      data-is-done="${isDoneFlag}"
      data-tags="${esc(JSON.stringify(Array.isArray(a.tags) ? a.tags : []))}"
@@ -1556,7 +1565,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function buildMarkerHtml(dateKey, info) {
         const noteRaw = info.note || '';
-        return `<div class="progress-marker" data-marker-id="${esc(String(info.id || ''))}" data-date="${esc(dateKey)}"${CAN_EDIT ? ' draggable="true"' : ''} title="${esc(editTitle('Drag to move this marker to another day'))}">
+        return `<div class="progress-marker" data-marker-id="${esc(String(info.id || ''))}" data-date="${esc(dateKey)}"${MAY_DRAG ? ' draggable="true"' : ''} title="${esc(MAY_DRAG ? 'Drag to move this marker to another day' : WHY_NO_EDIT)}">
             <div class="progress-marker-line">
                 <span class="progress-marker-bookmark">${SVG.bookmarkSolid} Resume here — ${esc(prettyDate(dateKey))}</span>
                 <span class="flex items-center gap-0.5">
@@ -1653,7 +1662,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const wrap = document.createElement('div');
         wrap.innerHTML = `<div class="date-group date-color-${colorIdx}${allHidden ? ' all-hidden' : ''}${OPEN_DAYS.has(dateKey) ? '' : ' is-folded'}" data-date="${esc(dateKey)}">
-            <div class="date-header"${(dateObj && CAN_EDIT) ? ' draggable="true" title="Drag this header to move the whole day to another date"' : ''}>
+            <div class="date-header"${(dateObj && MAY_DRAG) ? ' draggable="true" title="Drag this header to move the whole day to another date"' : ''}>
                 <svg class="date-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 ${headerDate}
                 <span class="date-header-count">${count}<span class="dh-word"> ${count === 1 ? 'activity' : 'activities'}</span></span>
@@ -1756,6 +1765,33 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('activities:rendered', lockBoardControls);
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', lockBoardControls, { once: true });
     else lockBoardControls();
+
+    /* The board is drawn twice — once by the server on first paint, once here
+       on every rebuild — and only this half knows the drag rule. An editing
+       worker's server cards therefore arrive draggable="true" wearing a grab
+       cursor, and the CSS that paints that cursor keys off the attribute. So
+       the attribute is what comes off; the grip goes with it, since a handle
+       for a gesture that no longer exists is just a smaller lie. */
+    function dropDragAffordances() {
+        if (MAY_DRAG && MAY_DRAG_NOTE) return;
+        const list = $id('activitiesList');
+        if (!list) return;
+        if (!MAY_DRAG) {
+            $qsa('.activity-card[draggable="true"], .date-header[draggable="true"], .progress-marker[draggable="true"]', list)
+                .forEach((el) => el.setAttribute('draggable', 'false'));
+        }
+        if (!MAY_DRAG_NOTE) {
+            $qsa('.inline-note-grip', list).forEach((el) => el.remove());
+            $qsa('.inline-note[title], .date-note-block[title]', list).forEach((el) => {
+                if (/^Drag/.test(el.getAttribute('title') || '')) {
+                    el.setAttribute('title', MAY_NOTE ? 'Click to edit this note' : WHY_NO_NOTE);
+                }
+            });
+        }
+    }
+    document.addEventListener('activities:rendered', dropDragAffordances);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', dropDragAffordances, { once: true });
+    else dropDragAffordances();
 
     /* A note's body is words, not a button, so nothing above can grey it out —
        and clicking the words is the usual way into the editor. Without this the
@@ -4590,6 +4626,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 row.addEventListener('click', () => { closeSheet('versionsSheet'); setTimeout(() => chip.click(), 240); });
                 list.appendChild(row);
             });
+            // Starting a second plan is the owner's call, so a worker is not
+            // offered the row at all — the chip it forwards to is not rendered
+            // for them either.
+            if (IS_WORKER) return;
             const add = document.createElement('button');
             add.type = 'button';
             // It forwards to #addVersionBtn, which the lock sweep disables — a
@@ -4676,7 +4716,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setDoneMeta(card, done) {
         card.setAttribute('data-is-done', done ? 1 : 0);
-        card.setAttribute('draggable', (done || !CAN_EDIT) ? 'false' : 'true');
+        card.setAttribute('draggable', (done || !MAY_DRAG) ? 'false' : 'true');
         const check = $qs('.done-check', card);
         if (check) {
             check.classList.toggle('is-checked', done);
@@ -6503,8 +6543,8 @@ document.addEventListener('DOMContentLoaded', () => {
         el.setAttribute('data-sort-key', '0');
         el.setAttribute('data-media', JSON.stringify(mediaArr || []));
         el.setAttribute('data-title', title || '');
-        el.setAttribute('title', 'Drag the grip to move · tap the pencil to edit');
-        el.innerHTML = INLINE_GRIP + INLINE_TAG
+        el.setAttribute('title', MAY_DRAG_NOTE ? 'Drag the grip to move · tap the pencil to edit' : 'Tap the pencil to edit');
+        el.innerHTML = (MAY_DRAG_NOTE ? INLINE_GRIP : '') + INLINE_TAG
             + inlineTitleHtml(title)
             + '<div class="inline-note-body">' + (bodyHtml || '') + '</div>'
             + '<div class="inline-note-media">' + inlineAttachments(mediaArr) + '</div>'
@@ -6771,7 +6811,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // a per-day note into an inline one, or long-press to delete. So it
             // never arms for someone who may not write. Nothing is said here —
             // a press is not a request; the click that follows explains.
-            if (!MAY_NOTE) return;
+            if (!MAY_DRAG_NOTE) return;
             if (dateNote) {
                 if (dateNote.style.display === 'none' || !(dateNote.textContent || '').trim()) return;
                 if (e.target.closest('a')) return;   // let links inside the note work
@@ -6886,7 +6926,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!groupDate || groupDate === '__no-date__') return;
             // Moving a whole day is an edit. Refuse the gesture, the way the
             // note and inline-note branches below do.
-            if (!CAN_EDIT) { e.preventDefault(); return; }
+            if (!MAY_DRAG) { e.preventDefault(); return; }
             dragGroupDate = groupDate;
             header.classList.add('dragging');
             if (e.dataTransfer) {
@@ -6902,7 +6942,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target.closest('a')) return;   // let links inside the note behave
             // Dropping this rewrites two days' notes. Refuse the gesture rather
             // than the drop, the same way the pointer drag does.
-            if (!MAY_NOTE) { e.preventDefault(); return; }
+            if (!MAY_DRAG_NOTE) { e.preventDefault(); return; }
             dragNoteDate = (noteBlk.getAttribute('data-date') || '').trim();
             noteBlk.classList.add('dragging');
             if (e.dataTransfer) { e.dataTransfer.effectAllowed = 'move'; try { e.dataTransfer.setData('text/plain', 'note:' + dragNoteDate); } catch (_) { /* noop */ } }
@@ -6913,6 +6953,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const mk = e.target.closest && e.target.closest('.progress-marker[data-date]');
         if (mk) {
             if (e.target.closest('button, a')) return;   // its own edit/delete buttons
+            // The marker leaned entirely on its draggable attribute for this,
+            // which the server writes and anything can rewrite.
+            if (!MAY_DRAG) { e.preventDefault(); return; }
             dragMarkerDate = (mk.getAttribute('data-date') || '').trim();
             mk.classList.add('dragging');
             if (e.dataTransfer) { e.dataTransfer.effectAllowed = 'move'; try { e.dataTransfer.setData('text/plain', 'marker:' + dragMarkerDate); } catch (_) { /* noop */ } }
@@ -6923,7 +6966,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const inl = e.target.closest && e.target.closest('.inline-note[data-inline-note]');
         if (inl) {
             if (inl.classList.contains('is-editing') || (e.target.closest && e.target.closest('.inline-note-del'))) { e.preventDefault(); return; }
-            if (!MAY_NOTE) { e.preventDefault(); return; }   // its slot is a saved field like any other
+            if (!MAY_DRAG_NOTE) { e.preventDefault(); return; }   // its slot is a saved field like any other
             dragInlineEl = inl;
             setTimeout(() => inl.classList.add('dragging'), 0);
             if (e.dataTransfer) { e.dataTransfer.effectAllowed = 'move'; try { e.dataTransfer.setData('text/plain', 'inline:' + inl.getAttribute('data-inline-note')); } catch (_) { /* noop */ } }
@@ -6933,7 +6976,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const card = e.target.closest && e.target.closest('.activity-card[data-id]');
         if (!card) return;
         if (card.getAttribute('data-is-done') === '1') { e.preventDefault(); return; }   // done = locked in place
-        if (!CAN_EDIT) { e.preventDefault(); return; }   // dropping rewrites dates and order
+        if (!MAY_DRAG) { e.preventDefault(); return; }   // dropping rewrites dates and order
         dragSourceCard = card;
         dragOrigin = {
             date: (card.getAttribute('data-target-date') || '').trim(),
@@ -7399,7 +7442,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // because the drop handler below still knows how to move a sticky note,
         // and whoever reconnects that should get the notes question with it
         // rather than the plan's.
-        if (td.note ? !MAY_NOTE : !CAN_EDIT) return;
+        if (td.note ? !MAY_DRAG_NOTE : !MAY_DRAG) return;
         td.active = true;
         document.body.classList.add('is-touch-dragging');
         navigator.vibrate?.(15);
@@ -7433,6 +7476,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('touchstart', (e) => {
         if (e.touches.length !== 1 || touchDrag) return;
+        // The long press is only ever the opening move of a drag, so it never
+        // starts counting for someone whose drop would be refused.
+        if (!MAY_DRAG && !MAY_DRAG_NOTE) return;
         const t = e.touches[0];
         // Taps on controls stay taps.
         if (t.target.closest?.('button, a, input, select, textarea, [contenteditable], .sheet')) return;

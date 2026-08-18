@@ -23,7 +23,10 @@
         @endif
     </div>
     <p class="tod-text">{{ $tip['text'] }}</p>
-    @if (! empty($aiHref))
+    {{-- The tip stays — it is worth knowing whoever reads it — but the way
+         through to the technician does not: sm.ai answers a worker with a 404,
+         and a link that lands there teaches them the tip is broken too. --}}
+    @if (! empty($aiHref) && ! \App\Support\WorkerContext::activeGrant())
         <a class="tod-ask" href="{{ $aiHref }}">
             Ask the AI technician about this
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>

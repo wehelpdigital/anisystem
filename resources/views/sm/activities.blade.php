@@ -2022,6 +2022,12 @@
     }
 
     $hiddenCount = $sortedActivities->where('isHidden', true)->count();
+
+    // Whether this request is standing in somebody else's farm. Not the same
+    // question as canEdit(): the doors below are closed to every worker, an
+    // editing one included, so the tier never comes into it. Declared up here
+    // because the toolbar renders long before $boardMayEdit is worked out.
+    $isWorker = \App\Support\WorkerContext::activeGrant() !== null;
 @endphp
 
 {{-- ===================== TOOLBAR (sticky, persistent) =====================
@@ -2112,6 +2118,11 @@
              rows forward their clicks here. --}}
         {{-- The camera lives only in the menu: it is a phone action, and the
              toolbar is already full on the screens that have one. --}}
+        {{-- The four the owner closed to workers. The Tools rows forward their
+             clicks to these buttons, so the rows alone were never the door —
+             leave the buttons standing and anything that can call .click()
+             still walks straight through. --}}
+        @if (! $isWorker)
         <button type="button" id="captureTodayPhotoBtn" class="btn btn-white btn-sm toolbar-in-menu hidden" data-activities-only aria-hidden="true" tabindex="-1">Capture a photo</button>
         <button type="button" id="recordTodayVideoBtn" class="btn btn-white btn-sm toolbar-in-menu hidden" data-activities-only aria-hidden="true" tabindex="-1">Record a video</button>
         <button type="button" id="openDrawBtn" class="btn btn-white btn-sm toolbar-in-menu" data-activities-only>
@@ -2122,6 +2133,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
             Maps
         </button>
+        @endif
         <button type="button" id="openDraftsBtn" class="btn btn-white btn-sm toolbar-in-menu" data-activities-only>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
             Drafts <span id="draftsBadge" class="badge badge-gray">{{ $draftsCount }}</span>
@@ -2169,6 +2181,12 @@
     // button to grey out, so the affordance itself has to come and go.
     $boardMayEdit = \App\Support\WorkerContext::canEdit();
     $boardMayNote = $boardMayEdit || \App\Support\WorkerContext::canAddNotes();
+    // Dragging is its own question now. An editing worker may still change a
+    // day through the sheets, where the change is deliberate and named; what
+    // they may not do is rearrange the season with a thumb. Twin of MAY_DRAG /
+    // MAY_DRAG_NOTE in partials/activities-js.blade.php.
+    $boardMayDrag = $boardMayEdit && ! $isWorker;
+    $boardMayDragNote = $boardMayNote && ! $isWorker;
     $whyNoEdit = 'Only someone who can edit the plan may do this';
     $whyNoNote = 'You are not allowed to write notes on this schedule';
 @endphp
@@ -2248,7 +2266,12 @@
                 {{ $v->versionName }}
             </button>
         @endforeach
+        {{-- Switching between versions is reading the plan another way, so the
+             chips stay. Starting a new one is authoring a second plan, which
+             is the owner's call — for a worker the door is not drawn at all. --}}
+        @if (! $isWorker)
         <button type="button" id="addVersionBtn" class="chip chip-dashed shrink-0" data-chip-manual>+ Version</button>
+        @endif
     </div>
     <button type="button" id="manageVersionBtn" class="icon-btn shrink-0" title="Rename or delete the current version">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
@@ -2414,7 +2437,7 @@
                 </div>
             @elseif ($item['type'] === 'marker')
                 @php $marker = $item['marker']; @endphp
-                <div class="progress-marker" data-marker-id="{{ $marker->id }}" data-date="{{ $item['date'] }}" @if ($boardMayEdit) draggable="true" @endif title="{{ $boardMayEdit ? 'Drag to move this marker to another day' : $whyNoEdit }}">
+                <div class="progress-marker" data-marker-id="{{ $marker->id }}" data-date="{{ $item['date'] }}" @if ($boardMayDrag) draggable="true" @endif title="{{ $boardMayDrag ? 'Drag to move this marker to another day' : $whyNoEdit }}">
                     <div class="progress-marker-line">
                         <span class="progress-marker-bookmark">
                             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
@@ -2465,7 +2488,7 @@
                     </div>
                 @endif
                 <div class="date-group date-color-{{ $item['color'] }} {{ $allHidden ? 'all-hidden' : '' }} is-folded" data-date="{{ $dateKey }}">
-                    <div class="date-header"@if ($dateCarbon && $boardMayEdit) draggable="true" title="Drag this header to move the whole day to another date"@endif>
+                    <div class="date-header"@if ($dateCarbon && $boardMayDrag) draggable="true" title="Drag this header to move the whole day to another date"@endif>
                         <svg class="date-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                         @if ($dateCarbon)
                             <span class="date-header-day">{{ $dateCarbon->format('D') }}</span>
@@ -2556,7 +2579,7 @@
                                     'strokes' => ($m['type'] ?? '') === 'drawing' ? ($m['strokes'] ?? null) : null,
                                 ])->filter()->values();
                         @endphp
-                        <div class="date-note-block" data-date="{{ $dateKey }}" data-content="{{ $noteRow?->noteContent }}" data-media="{{ $dnMedia->toJson() }}" title="{{ $boardMayNote ? 'Drag to place it between activities · click to edit' : $whyNoNote }}" @if(!$noteRow) style="display:none;" @endif><div class="date-note-inner rich-text">{!! $noteRow?->noteContent !!}</div>@if ($dnMedia->count())<div class="date-note-media">@include('sm.partials.note-attachments', ['media' => $dnMedia])</div>@endif<button type="button" class="date-note-edit" title="Edit note" aria-label="Edit note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button type="button" class="date-note-del" title="Delete note" aria-label="Delete note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg></button></div>
+                        <div class="date-note-block" data-date="{{ $dateKey }}" data-content="{{ $noteRow?->noteContent }}" data-media="{{ $dnMedia->toJson() }}" title="{{ $boardMayDragNote ? 'Drag to place it between activities · click to edit' : ($boardMayNote ? 'Click to edit this note' : $whyNoNote) }}" @if(!$noteRow) style="display:none;" @endif><div class="date-note-inner rich-text">{!! $noteRow?->noteContent !!}</div>@if ($dnMedia->count())<div class="date-note-media">@include('sm.partials.note-attachments', ['media' => $dnMedia])</div>@endif<button type="button" class="date-note-edit" title="Edit note" aria-label="Edit note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button type="button" class="date-note-del" title="Delete note" aria-label="Delete note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg></button></div>
                         <div class="day-expense-block" data-date="{{ $dateKey }}"></div>
                         <div class="day-income-block" data-date="{{ $dateKey }}" hidden></div>
                     @endif
@@ -2586,7 +2609,12 @@
 
 </div>{{-- /#activitiesRoot --}}
 
+{{-- The bubble is the same technician the Tools row opened, so it goes with
+     it: a door closed in the menu and left floating over the board is not
+     closed. --}}
+@if (! $isWorker)
 @include('sm.partials.ai-float', ['schedule' => $schedule])
+@endif
 {{-- Team chat + whiteboard now live in the Collab Room (Collab Room button). --}}
 @endsection
 
@@ -2662,7 +2690,9 @@
         activities:    { label: 'Activities',    url: @json(route('sm.activities',    ['id' => $schedule->id])) },
         settings:      { label: 'Settings',      url: @json(route('sm.settings',      ['id' => $schedule->id])) },
         lots:          { label: 'Lots',          url: @json(route('sm.lots',          ['id' => $schedule->id])) },
+        @if (! $isWorker)
         workers:       { label: 'Workers',       url: @json(route('sm.workers',       ['id' => $schedule->id])) },
+        @endif
         documentation: { label: 'Documentation', url: @json(route('sm.documentation', ['id' => $schedule->id])) },
         'post-harvest': { label: 'Post-harvest', url: @json(route('sm.post-harvest',  ['id' => $schedule->id])) },
         notes:         { label: 'Notes',         url: @json(route('sm.notes',        ['id' => $schedule->id])) },
@@ -2670,8 +2700,13 @@
         // re-injection (its script guards itself against running twice), so a
         // deep link is HANDED to the kept pane via window.smModuleDeepLink
         // instead of re-fetching it.
+        {{-- Closed to workers, and closed HERE rather than only in the menus:
+             this table is what a ?module= deep link is answered from, so a
+             module left in it is still one URL away however few doors show. --}}
+        @if (! $isWorker)
         maps:          { label: 'Maps',          url: @json(route('sm.maps',         ['id' => $schedule->id])), sticky: true },
         draw:          { label: 'Draw',          url: @json(route('sm.draw',         ['id' => $schedule->id])) },
+        @endif
         // Kept as an alias: 'media' was the Media Box, which is now the
         // Gallery's first tab. Old links and bookmarks still land right.
         media:         { label: 'Gallery',       url: @json(route('sm.gallery',      ['id' => $schedule->id])) },
@@ -2682,7 +2717,9 @@
         growth:        { label: 'Growth Stages', url: @json(route('sm.growth',       ['id' => $schedule->id])), fresh: true },
         gallery:       { label: 'Gallery',       url: @json(route('sm.gallery',      ['id' => $schedule->id])) },
         weather:       { label: 'Weather',       url: @json(route('sm.weather.page', ['id' => $schedule->id])) },
+        @if (! $isWorker)
         ai:            { label: 'AI Technician', url: @json(route('sm.ai',           ['id' => $schedule->id])) },
+        @endif
     };
 
     // The address bar always stays on the Activities shell (…/sm-activities?id=X

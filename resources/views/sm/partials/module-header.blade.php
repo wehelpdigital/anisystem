@@ -15,6 +15,13 @@
         'gallery' => ['label' => 'Gallery', 'route' => 'sm.gallery'],
         'ai' => ['label' => 'AI Technician', 'route' => 'sm.ai'],
     ];
+    // The two the owner closed to workers. This row is how a module page is
+    // reached when it is opened on its own rather than inside the Activities
+    // shell, so a chip left standing here is the door the hub tile and the
+    // modules sheet already dropped — and both of these now answer 404.
+    if (\App\Support\WorkerContext::activeGrant()) {
+        unset($modules['workers'], $modules['ai']);
+    }
 @endphp
 
 {{-- The same tightening the shell's toolbar got. This is the row every

@@ -24,6 +24,13 @@
     // long before the module grid does.
     $workerNoNotes = \App\Support\WorkerContext::activeGrant() && ! \App\Support\WorkerContext::canAddNotes();
     $noteDoors = ['documentation', 'post-harvest', 'notes', 'draw', 'maps'];
+    // The doors no worker gets, whatever their tier. Workers is the roster and
+    // the logins that go with it — a worker managing the people they are one of
+    // is the wrong way round. The other four are the ones the owner named in
+    // the Activities toolbar; the hub is the same door in another coat, and
+    // leaving it open here would only make the toolbar's absence look broken.
+    $isWorker = \App\Support\WorkerContext::activeGrant() !== null;
+    $ownerOnlyDoors = ['workers', 'maps', 'draw', 'ai'];
     $moduleCards = [
         ['Settings', 'settings', null,
             'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065zM15 12a3 3 0 11-6 0 3 3 0 016 0z'],
@@ -297,10 +304,16 @@
          quick doors take a quarter each. Both of them are the same act — you
          are standing in front of something and want it kept — so they belong
          side by side rather than one of them being somewhere else. --}}
-    <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 mb-4">
+    {{-- One column for a worker rather than four: the two quick doors beside
+         Activities are not drawn for them, and a half-width card floating
+         against 550px of nothing reads as a card that failed to load rather
+         than one that is on its own. Done by collapsing the row instead of
+         widening the card, because col-span-4 is not a class this build's CSS
+         carries and the card would silently fall back to a single column. --}}
+    <div class="grid grid-cols-1 {{ $isWorker ? '' : 'sm:grid-cols-4' }} gap-3 mb-4">
         {{-- Activities (2/4) --}}
         <a href="{{ route('sm.activities', ['id' => $schedule->id]) }}" data-nav-loader
-            class="cta-tile act-cta sm:col-span-2 rounded-2xl p-5 flex items-center gap-4">
+            class="cta-tile act-cta {{ $isWorker ? '' : 'sm:col-span-2' }} rounded-2xl p-5 flex items-center gap-4">
             <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             </span>
@@ -316,7 +329,7 @@
 
         {{-- Quick Capture (1/4) — the same shape as its neighbours, so the
              three read as three doors rather than three kinds of thing. --}}
-        @if (! $workerNoNotes)
+        @if (! $isWorker)
         <button type="button" id="quickCaptureBtn"
             class="cta-tile qc-cta rounded-2xl p-5 flex items-center gap-4 text-left">
             <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
@@ -333,7 +346,7 @@
         {{-- Quick Record (1/4). Some of what a field does is only legible
              moving — a pump that sounds wrong, water finding a path — and
              the Hub is where somebody standing in that field arrives. --}}
-        @if (! $workerNoNotes)
+        @if (! $isWorker)
         <button type="button" id="quickRecordBtn"
             class="cta-tile qr-cta rounded-2xl p-5 flex items-center gap-4 text-left">
             <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
@@ -356,6 +369,7 @@
     {{-- Module grid + the team/share/report actions, all as matched square tiles. --}}
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 stagger-children hub-grid">
         @foreach ($moduleCards as [$label, $moduleKey, $count, $iconPath])
+            @continue($isWorker && in_array($moduleKey, $ownerOnlyDoors, true))
             @continue($workerNoNotes && in_array($moduleKey, $noteDoors, true))
             <a href="{{ route('sm.activities', ['id' => $schedule->id, 'module' => $moduleKey]) }}" data-nav-loader class="card card-hover block">
                 <div class="p-4 flex flex-col gap-3">
@@ -407,7 +421,10 @@
         </a>
     </div>
 
-    {{-- Danger zone --}}
+    {{-- Danger zone. Ending a season belongs to whoever owns it: sm.destroy
+         has always refused a worker, so the card was a red button that could
+         only ever answer no. --}}
+    @if (! $isWorker)
     <style>
         /* A red band over the one card that can end a season: the same slow
            gradSweep tide as the green lines above, wearing warning colours. */
@@ -428,14 +445,24 @@
             </button>
         </div>
     </div>
+    @endif
 
     @include('sm.partials.share-sheet', ['schedule' => $schedule])
+    {{-- The camera and the recorder come with their own sheets and pickers;
+         with both doors gone for a worker there is nothing left to open them. --}}
+    @if (! $isWorker)
     @include('sm.partials.quick-capture', ['fixedScheduleId' => $schedule->id])
     {{-- Both quick doors are fixed to this schedule, so neither asks which
          one you meant. Quick Record borrows the shared recorder. --}}
     @include('sm.partials.quick-record', ['fixedScheduleId' => $schedule->id, 'allSchedules' => collect()])
+    @endif
     @include('community.partials.video-js')
+    {{-- The bubble is the AI technician wearing a different hat: removing its
+         tile and leaving the bubble floating over it would only teach a worker
+         that the tile was the broken half. --}}
+    @if (! $isWorker)
     @include('sm.partials.ai-float', ['schedule' => $schedule])
+    @endif
     {{-- Team chat + whiteboard now live in the Collab Room. --}}
 @endsection
 

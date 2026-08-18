@@ -36,8 +36,10 @@
     $editTitle = fn ($plain) => $mayEdit ? $plain : 'Only someone who can edit the plan may do this';
 @endphp
 {{-- draggable follows $mayEdit too: a grip cursor on a card whose drop the
-     gate will refuse is a promise the board cannot keep. --}}
-<div class="activity-card prio-{{ $a->priority }}{{ $a->isHidden ? ' is-hidden' : '' }}{{ $a->isDone ? ' is-done' : '' }}" draggable="{{ ($a->isDone || ! $mayEdit) ? 'false' : 'true' }}"
+     gate will refuse is a promise the board cannot keep. A worker never drags,
+     editing or not — the board's JS asks the same question as MAY_DRAG, and
+     asking it here as well is what keeps the grab cursor off the first paint. --}}
+<div class="activity-card prio-{{ $a->priority }}{{ $a->isHidden ? ' is-hidden' : '' }}{{ $a->isDone ? ' is-done' : '' }}" draggable="{{ ($a->isDone || ! $mayEdit || \App\Support\WorkerContext::activeGrant()) ? 'false' : 'true' }}"
      data-id="{{ $a->id }}"
      data-is-done="{{ $a->isDone ? 1 : 0 }}"
      data-tags="{{ json_encode(is_array($a->tags) ? $a->tags : []) }}"

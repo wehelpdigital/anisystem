@@ -16,14 +16,28 @@
             'strokes' => ($m['type'] ?? '') === 'drawing' ? ($m['strokes'] ?? null) : null,
         ])
         ->filter()->values();
+    // No worker moves a note, whatever their tier — the same question the
+    // board's MAY_DRAG_NOTE asks, asked here so the grip is never painted in
+    // the first place rather than swept off a moment later.
+    $noteMayDrag = ! \App\Support\WorkerContext::activeGrant();
+    // Same three answers, and the same words, the board's own sweep gives —
+    // a note that says "tap the pencil" to somebody the pencil will refuse is
+    // the lie the drag grip was.
+    $noteTitle = $noteMayDrag
+        ? 'Drag the grip to move · tap the pencil to edit'
+        : ((\App\Support\WorkerContext::canEdit() || \App\Support\WorkerContext::canAddNotes())
+            ? 'Tap the pencil to edit'
+            : 'You are not allowed to write notes on this schedule');
 @endphp
 <div class="inline-note" data-inline-note="{{ $note->id }}" data-date="{{ $note->noteDate->format('Y-m-d') }}"
      data-sort-key="{{ (int) $note->sortKey }}" data-media="{{ $noteMedia->toJson() }}"
      data-title="{{ $note->title }}"
      @if ($note->lotId) data-lot-id="{{ (int) $note->lotId }}" @endif
      @if ($note->activityId) data-activity-id="{{ (int) $note->activityId }}" @endif
-     title="Drag the grip to move · tap the pencil to edit">
+     title="{{ $noteTitle }}">
+    @if ($noteMayDrag)
     <span class="inline-note-grip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></span>
+    @endif
     <span class="inline-note-tag" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 3h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2zM9 8h6M9 12h6M9 16h3"/></svg>Note</span>
     @if (filled($note->title))
         <div class="inline-note-title">{{ $note->title }}</div>

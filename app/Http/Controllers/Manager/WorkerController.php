@@ -17,10 +17,34 @@ use Illuminate\Validation\Rule;
 class WorkerController extends BaseScheduleController
 {
     /**
+     * The roster, and the logins that hang off it, belong to the farm owner.
+     *
+     * scheduleFromRequest()'s assertCanEdit() is not this question: it stops a
+     * view-only worker and waves an editing one through, and an editing worker
+     * is still one of the names on this list. Every door to the module is gone
+     * from the UI, so anything arriving here is arriving by URL.
+     */
+    private function refuseWorker(): ?\Illuminate\Http\JsonResponse
+    {
+        if (! \App\Support\WorkerContext::inWorkerContext()) {
+            return null;
+        }
+
+        return $this->jsonFail('Only the farm owner can manage workers.', 403);
+    }
+
+    /**
      * Module page: GET /app/sm-workers?id={scheduleId}
      */
     public function page(Request $request)
     {
+        // A page, not an endpoint: 404 rather than a JSON refusal, so the
+        // module reads as one this account does not have rather than one it is
+        // being kept out of.
+        if (\App\Support\WorkerContext::inWorkerContext()) {
+            abort(404);
+        }
+
         $schedule = $this->schedule($request->query('id'));
         $schedule->load(['workers.offDates', 'workers.offDays']);
 
@@ -54,6 +78,10 @@ class WorkerController extends BaseScheduleController
 
     public function store(Request $request)
     {
+        if ($refusal = $this->refuseWorker()) {
+            return $refusal;
+        }
+
         $schedule = $this->scheduleFromRequest($request);
 
         $allowedSkillKeys = array_keys(AsScheduleWorker::SKILLS);
@@ -94,6 +122,10 @@ class WorkerController extends BaseScheduleController
 
     public function update(Request $request)
     {
+        if ($refusal = $this->refuseWorker()) {
+            return $refusal;
+        }
+
         $schedule = $this->scheduleFromRequest($request);
         $id = $this->queryId($request);
         $worker = AsScheduleWorker::active()->where('croppingScheduleId', $schedule->id)->where('id', $id)->first();
@@ -139,6 +171,10 @@ class WorkerController extends BaseScheduleController
 
     public function destroy(Request $request)
     {
+        if ($refusal = $this->refuseWorker()) {
+            return $refusal;
+        }
+
         $schedule = $this->scheduleFromRequest($request);
         $id = $this->queryId($request);
         $worker = AsScheduleWorker::active()->where('croppingScheduleId', $schedule->id)->where('id', $id)->first();
@@ -151,6 +187,10 @@ class WorkerController extends BaseScheduleController
 
     public function rules(Request $request)
     {
+        if ($refusal = $this->refuseWorker()) {
+            return $refusal;
+        }
+
         $schedule = $this->scheduleFromRequest($request);
         $id = $this->queryId($request);
         $worker = AsScheduleWorker::active()
@@ -172,6 +212,10 @@ class WorkerController extends BaseScheduleController
 
     public function saveRules(Request $request)
     {
+        if ($refusal = $this->refuseWorker()) {
+            return $refusal;
+        }
+
         $schedule = $this->scheduleFromRequest($request);
         $id = $this->queryId($request);
         $worker = AsScheduleWorker::active()->where('croppingScheduleId', $schedule->id)->where('id', $id)->first();
