@@ -341,7 +341,9 @@
     .ai-float-box:focus-within { border-color: var(--color-brand-500); box-shadow: 0 0 0 3px rgb(107 159 61 / .18); }
     .ai-float-cam { width: 2.25rem; height: 2.25rem; border-radius: .75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--color-brand-50); color: var(--color-brand-700); cursor: pointer; transition: background .15s ease; }
     .ai-float-cam:hover { background: var(--color-brand-100); }
-    #aiFloatText { resize: none; border: 0; outline: none; background: transparent; flex: 1 1 auto; max-height: 6rem; padding: .4rem .25rem; font-size: .95rem; color: inherit; }
+    /* No scrollbar while the box is still growing — the autosize handler flips
+       this to auto only once the text passes the max height. */
+    #aiFloatText { resize: none; border: 0; outline: none; background: transparent; flex: 1 1 auto; max-height: 6rem; overflow-y: hidden; padding: .4rem .25rem; font-size: .95rem; color: inherit; }
     .ai-float-send { width: 2.25rem; height: 2.25rem; border-radius: 999px; background: linear-gradient(140deg, #6b9f3d, #3d6823); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 8px -2px rgb(45 80 22 / .5); transition: transform .15s ease, opacity .15s ease; }
     .ai-float-send:hover:not(:disabled) { transform: scale(1.06); }
     .ai-float-send:active:not(:disabled) { transform: scale(.92); }
@@ -570,7 +572,9 @@
             input.value = (b.querySelector('.t')?.textContent || b.textContent).trim();
             input.dispatchEvent(new Event('input')); input.focus();
         });
-        input?.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 96) + 'px';  sayEstimate(); });
+        // The bar only shows once the box has stopped growing — while it still
+        // fits, the height IS the scroll.
+        input?.addEventListener('input', () => { input.style.height = 'auto'; input.style.overflowY = input.scrollHeight > 96 ? 'auto' : 'hidden'; input.style.height = Math.min(input.scrollHeight, 96) + 'px';  sayEstimate(); });
         input?.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey && window.matchMedia('(min-width: 768px)').matches) { e.preventDefault(); send(); }
         });

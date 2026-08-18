@@ -3,6 +3,27 @@
      threads; any member asks, the question broadcasts instantly and the answer
      when it returns. Funded by the schedule owner's credits. Sessions can be
      saved to the schedule notebook. Expects: $schedule. --}}
+@php
+    // Compiled partials do not inherit the page's use-imports — fully qualified.
+    $saiSettings = \App\Models\AiSetting::current();
+    // Precomputed: @json splits on commas (value, flags, depth) and an inline
+    // array literal compiles to truncated, unparseable PHP.
+    $saiPriceCard = [
+        'inK' => (float) $saiSettings->creditsPerInputK,
+        'outK' => (float) $saiSettings->creditsPerOutputK,
+        'img' => (float) $saiSettings->creditsPerImage,
+        'halfOut' => (int) $saiSettings->maxOutputTokens / 2,
+    ];
+    $saiPerPhoto = (float) $saiSettings->creditsPerImage;
+    $saiPerPhotoTxt = rtrim(rtrim(number_format($saiPerPhoto, 2), '0'), '.');
+    $saiHintIdle = '≈ 4 credits per answer' . ($saiPerPhoto > 0 ? ' · +' . $saiPerPhotoTxt . ' per photo' : '');
+    // The "attach to a task" picker, rendered with the page.
+    $saiTasks = \App\Models\AsScheduleActivity::query()
+        ->where('croppingScheduleId', $schedule->id)
+        ->orderByDesc('targetDate')
+        ->limit(30)
+        ->get(['id', 'activityTitle', 'targetDate']);
+@endphp
 <div class="sai-wrap" id="saiWrap" data-schedule="{{ $schedule->id }}">
     <div class="sai-layout">
         {{-- Sessions sidebar (team-visible) --}}
@@ -27,7 +48,7 @@
                 </button>
                 <span class="sai-title">🤖 AI Technician <span class="sai-sub">· shared with your team</span></span>
                 <span class="sai-spacer"></span>
-                <button type="button" id="saiSaveSession" class="sai-save" title="Save this session to the schedule notes">
+                <button type="button" id="saiSaveSession" class="sai-save" title="Keep this session — as a note, or on a task" aria-haspopup="dialog">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a1 1 0 011-1h9l4 4v10a1 1 0 01-1 1H6a1 1 0 01-1-1V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 4v4h6M8 19v-5h8v5"/></svg>
                     <span class="hidden sm:inline">Save</span>
                 </button>
@@ -49,19 +70,112 @@
                 {{-- A question can be about several photos: four pictures of
                      one leaf are one question, not four. Each carries its own
                      remove, because the usual correction is "not that one". --}}
-                <div id="saiPhotoChips" class="sai-photochips"></div>
+                <div id="saiPhotoChips" class="sai-photochips" aria-label="Attached photos" aria-live="polite"></div>
+                {{-- Says so while a photo is on the wire — a busy chip alone
+                     reads as a broken thumbnail rather than work in progress. --}}
+                <div id="saiAttachBusy" class="sai-busyline hidden" role="status"><span class="sp" aria-hidden="true"></span><span class="tx">Attaching photo…</span></div>
                 <div class="sai-box">
-                    <label class="sai-cam" title="Attach a photo">
+                    <button type="button" class="sai-cam" id="saiAttachBtn" title="Add photos" aria-label="Add photos" aria-haspopup="dialog">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                        <input type="file" id="saiPhoto" accept="image/*" class="hidden">
-                    </label>
+                    </button>
+                    <input type="file" id="saiPhotoFiles" accept="image/*" multiple class="hidden">
+                    <input type="file" id="saiPhotoCam" accept="image/*" capture="environment" class="hidden">
                     <textarea id="saiText" rows="1" maxlength="4000" placeholder="Ask the AI — the whole team sees the reply…"></textarea>
                     <button type="button" id="saiSend" class="sai-send" aria-label="Send">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
                     </button>
                 </div>
+                {{-- The bill quoted before it is run up: the owner's pool pays
+                     for the whole room, so everyone sees the price — admins
+                     included, who ride free but still spend the owner's. --}}
+                <p class="sai-estimate" id="saiEstimate" data-idle="{{ $saiHintIdle }}">{{ $saiHintIdle }}</p>
             </div>
         </div>
+    </div>
+</div>
+
+{{-- The attach chooser: every way a photo can arrive, behind one button —
+     the same three doors the page composer offers, spoken in sheet language. --}}
+<div class="sheet hidden" id="saiAttachSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Add photos</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-1">
+        <button type="button" class="sai-opt" id="saiAttachUpload">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>
+            <span>Upload photos<span class="sub">Pick one or several from your phone</span></span>
+        </button>
+        <button type="button" class="sai-opt" id="saiAttachCamera">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
+            <span>Take a photo<span class="sub">Point the camera at the problem</span></span>
+        </button>
+        <button type="button" class="sai-opt hidden" id="saiAttachGallery">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l2-3h6l2 3h3v13H4V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 13l2.5-2.5L14 14l2-2 2 2"/></svg></span>
+            <span>From the gallery<span class="sub">A photo this season already keeps</span></span>
+        </button>
+    </div>
+</div>
+{{-- The gallery door needs the picker on the page; @@once, so a room that
+     already carries it (the Photo tab does) still gets exactly one. --}}
+@include('sm.partials.media-picker')
+
+{{-- Save: which door first, then the naming sheet — nothing lands in the
+     notebook unnamed. --}}
+<div class="sheet hidden" id="saiSaveSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Keep this session</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-1">
+        <button type="button" class="sai-opt" id="saiSaveToNote">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.4-9.4a2 2 0 112.8 2.8L11 15l-4 1 1-4 8.6-8.4z"/></svg></span>
+            <span>Save as a new note<span class="sub">The whole session, into the notebook</span></span>
+        </button>
+        <button type="button" class="sai-opt" id="saiSaveToTask">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></span>
+            <span>Attach to a task<span class="sub">File this session onto a task, in the notebook</span></span>
+        </button>
+    </div>
+</div>
+
+<div class="sheet hidden" id="saiTaskSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Which task?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-1">
+        @forelse ($saiTasks as $saiTask)
+            <button type="button" class="sai-opt" data-sai-task="{{ $saiTask->id }}">
+                <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                <span class="min-w-0">{{ \Illuminate\Support\Str::limit($saiTask->activityTitle ?: 'Task', 40) }}<span class="sub">{{ $saiTask->targetDate ? \Illuminate\Support\Carbon::parse($saiTask->targetDate)->format('M j, Y') : 'no set date' }}</span></span>
+            </button>
+        @empty
+            <p class="text-sm text-gray-500 text-center py-6">No tasks on this schedule yet.</p>
+        @endforelse
+    </div>
+</div>
+
+<div class="sheet hidden" id="saiNoteSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="saiNoteHeading">Save this session as a note</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-3">
+        <div>
+            <label class="form-label" for="saiNoteTitle">Title</label>
+            <input type="text" id="saiNoteTitle" class="form-input" maxlength="180" placeholder="Name this note">
+        </div>
+        <div>
+            <label class="form-label" for="saiNoteDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
+            <textarea id="saiNoteDesc" class="form-textarea" rows="3" maxlength="2000" placeholder="Why this session is worth keeping…"></textarea>
+        </div>
+        <p class="text-xs text-gray-400">The whole session is attached underneath.</p>
+        <button type="button" id="saiNoteSave" class="btn btn-primary w-full">Save to the notebook</button>
     </div>
 </div>
 
@@ -162,16 +276,56 @@
     .sai-dots i:nth-child(2) { animation-delay: .15s; } .sai-dots i:nth-child(3) { animation-delay: .3s; }
     @keyframes saidot { 0%,60%,100% { opacity: .3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
     .sai-composer { flex-shrink: 0; padding: .55rem .7rem .7rem; border-top: 1px solid var(--color-gray-100); }
-    .sai-photochips { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .4rem; }
+    /* One chip per attached photo, each with its own remove; a chip mid-upload
+       wears a spinner instead of ✕ (same language as the page composer). */
+    .sai-photochips { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .4rem; }
     .sai-photochips:empty { display: none; }
-    .sai-photochip { display: inline-flex; align-items: center; gap: .35rem; font-size: .72rem; font-weight: 600;
-        color: var(--color-gray-500); background: var(--color-gray-100); border-radius: .6rem; padding: .25rem .45rem; }
-    .sai-photochip img { width: 1.9rem; height: 1.9rem; border-radius: .4rem; object-fit: cover; }
-    .sai-photochip button { color: #b91c1c; font-weight: 800; line-height: 1; }
+    .sai-chip { position: relative; width: 3rem; height: 3rem; border-radius: .7rem; overflow: hidden;
+        box-shadow: 0 0 0 2px var(--color-brand-200); background: var(--color-gray-100);
+        animation: saiChipIn .28s cubic-bezier(.22,1,.36,1) both; }
+    .sai-chip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .sai-chip .x { position: absolute; top: .12rem; right: .12rem; width: 1.15rem; height: 1.15rem;
+        border-radius: 999px; display: flex; align-items: center; justify-content: center;
+        background: rgb(17 24 39 / .72); color: #fff; font-size: .6rem; font-weight: 800; line-height: 1;
+        transition: transform .15s ease, background-color .15s ease; }
+    .sai-chip .x:hover { background: #b91c1c; transform: scale(1.1); }
+    .sai-chip .st { position: absolute; inset: 0; display: none; align-items: center; justify-content: center;
+        background: rgb(255 255 255 / .55); color: var(--color-brand-700); }
+    .sai-chip.is-busy .st { display: flex; }
+    .sai-chip.is-busy .x { display: none; }
+    html.dark .sai-chip .st { background: rgb(0 0 0 / .45); color: #fff; }
+    @keyframes saiChipIn { from { opacity: 0; transform: scale(.8); } to { opacity: 1; transform: none; } }
+    /* The chip shimmers under its picture while the copy is in flight. */
+    .sai-chip.is-busy { background: linear-gradient(100deg, var(--color-gray-100) 40%, var(--color-gray-200) 50%, var(--color-gray-100) 60%);
+        background-size: 200% 100%; animation: saiChipShimmer 1.2s linear infinite; }
+    @keyframes saiChipShimmer { to { background-position: -200% 0; } }
+    .sai-busyline { display: flex; align-items: center; gap: .4rem; margin-bottom: .4rem;
+        font-size: .72rem; font-weight: 700; color: var(--color-brand-700); }
+    .sai-busyline.hidden { display: none; }
+    .sai-busyline .sp { width: .8rem; height: .8rem; border-radius: 999px; flex-shrink: 0;
+        border: 2px solid var(--color-brand-200); border-top-color: var(--color-brand-600);
+        animation: saiSpin .8s linear infinite; }
+    @keyframes saiSpin { to { transform: rotate(360deg); } }
+    .sai-spin { animation: saiSpin .7s linear infinite; }
+    /* The running price, under the box where the eye already is. */
+    .sai-estimate { margin-top: .35rem; text-align: center; font-size: .7rem; font-weight: 600;
+        color: var(--color-gray-500); font-variant-numeric: tabular-nums; }
+    /* The sheets' rows (house sheet language; the page's .ai-attach-opt is not
+       on this page's stylesheet). */
+    .sai-opt { display: flex; align-items: center; gap: .75rem; width: 100%; padding: .7rem .8rem;
+        border-radius: .9rem; text-align: left; font-size: .95rem; font-weight: 700; color: var(--color-gray-800);
+        transition: background-color .15s ease; }
+    .sai-opt:hover { background: var(--color-gray-100); }
+    .sai-opt .ic { width: 2.4rem; height: 2.4rem; border-radius: .8rem; flex-shrink: 0; display: flex;
+        align-items: center; justify-content: center; background: var(--color-brand-50); color: var(--color-brand-700); }
+    .sai-opt .sub { display: block; font-size: .72rem; font-weight: 600; color: var(--color-gray-400); }
     .sai-box { display: flex; align-items: flex-end; gap: .25rem; border: 1.5px solid var(--color-gray-200); border-radius: 1.1rem; padding: .2rem .2rem .2rem .4rem; background: var(--color-white); }
     .sai-box:focus-within { border-color: var(--color-brand-500); box-shadow: 0 0 0 3px rgb(107 159 61 / .18); }
     .sai-cam { width: 2.15rem; height: 2.15rem; border-radius: .7rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--color-brand-50); color: var(--color-brand-700); cursor: pointer; }
-    #saiText { resize: none; border: 0; outline: none; background: transparent; flex: 1 1 auto; max-height: 6rem; padding: .4rem .25rem; font-size: .92rem; color: inherit; }
+    .sai-cam:hover { background: var(--color-brand-100); }
+    /* No scrollbar while the box is still growing — the autosize handler flips
+       this to auto only once the text passes the max height. */
+    #saiText { resize: none; border: 0; outline: none; background: transparent; flex: 1 1 auto; max-height: 6rem; overflow-y: hidden; padding: .4rem .25rem; font-size: .92rem; color: inherit; }
     .sai-send { width: 2.15rem; height: 2.15rem; border-radius: 999px; background: linear-gradient(140deg, #6b9f3d, #3d6823); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 8px -2px rgb(45 80 22 / .5); transition: transform .15s ease, opacity .15s ease; }
     .sai-send:hover:not(:disabled) { transform: scale(1.06); }
     .sai-send:active:not(:disabled) { transform: scale(.92); }
@@ -185,10 +339,12 @@
         .sai-sessions.collapsed { transform: translateX(-102%); }
     }
     @media (prefers-reduced-motion: reduce) {
-        .sai-head, .sai-msg.is-new, .sai-intro { animation: none; }
-        .sai-sessions, .sai-backdrop, .sai-send, .sai-save, .sai-chip { transition: none; }
+        .sai-head, .sai-msg.is-new, .sai-intro, .sai-chip { animation: none; }
+        .sai-sessions, .sai-backdrop, .sai-send, .sai-save, .sai-chip, .sai-chip .x, .sai-opt { transition: none; }
         /* Loaders slow down rather than stop — the motion is the message. */
         .sai-dots i { animation-duration: 1.8s; }
+        .sai-busyline .sp, .sai-spin { animation-duration: 1.6s; }
+        .sai-chip.is-busy { animation: none; }
         .sai-skel-face::before, .sai-skel-b::before, .sai-sess-skel::before { animation: none; }
     }
 </style>
@@ -214,9 +370,11 @@
             sessionNote: @json(route('sm.ai.group.session-note')),
         };
 
+        const PRICE = @json($saiPriceCard);
+
         const rendered = new Set();
-        let lastId = 0, photos = [], busy = false, started = false, pollTimer = null, sessTimer = null, channel = null, thinkingEl = null;
-        let currentSession = null, sessions = [], sessReq = 0;
+        let lastId = 0, busy = false, started = false, pollTimer = null, sessTimer = null, channel = null, thinkingEl = null;
+        let currentSession = null, sessions = [], sessReq = 0, uploadsBusy = 0;
 
         const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         const scrollDown = () => { thread.scrollTop = thread.scrollHeight; };
@@ -353,14 +511,35 @@
             } catch (err) { if (window.toast) toast(err.message || 'Could not start a session.', 'error'); }
         }
 
-        async function saveSession(e) {
-            const btn = e.currentTarget; if (btn.disabled || !currentSession) return;
-            btn.disabled = true;
+        /* Keeping a session: which door first, then its name. Nothing lands in
+         * the notebook unnamed, and a task variant says which task it belongs
+         * to before the transcript starts. */
+        let pendingTaskId = null;
+        function fileAway(activityId) {
+            if (!currentSession) { window.toast?.('Nothing to keep yet — ask something first.', 'error'); return; }
+            pendingTaskId = activityId || null;
+            const head = $('saiNoteHeading');
+            if (head) head.textContent = pendingTaskId ? 'Attach this session to the task' : 'Save this session as a note';
+            $('saiNoteTitle').value = '';
+            $('saiNoteDesc').value = '';
+            window.openSheet?.('saiNoteSheet');
+            window.smFocus?.($('saiNoteTitle'), { delay: 120 });
+        }
+        async function saveNote() {
+            const btn = $('saiNoteSave');
+            const was = btn.textContent;
+            btn.disabled = true; btn.textContent = 'Saving…';
             try {
-                const r = await api(`${U.sessionNote}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { sessionId: currentSession } });
+                const r = await api(`${U.sessionNote}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: {
+                    sessionId: currentSession,
+                    activityId: pendingTaskId,
+                    title: $('saiNoteTitle').value.trim(),
+                    description: $('saiNoteDesc').value.trim(),
+                } });
+                window.closeSheet?.('saiNoteSheet');
                 if (window.toast) toast((r && r.message) || 'Saved to the schedule notebook.', 'success');
             } catch (err) { if (window.toast) toast(err.message || 'Could not save this session.', 'error'); }
-            finally { btn.disabled = false; }
+            finally { btn.disabled = false; btn.textContent = was; }
         }
 
         const refreshSessionsSoon = (() => {
@@ -371,29 +550,37 @@
         /* ---------- ask / realtime ---------- */
         async function send() {
             if (busy) return;
+            if (uploadsBusy > 0) { window.toast?.('Wait a moment — a photo is still uploading.', 'error'); return; }
             const text = ($('saiText').value || '').trim();
-            if (!text && !photos.length) return;
+            const shots = attachedPaths();
+            if (!text && !shots.length) return;
             if (!currentSession) { await loadSessions(); }
             busy = true; $('saiSend').disabled = true; clearIntro();
-            addMsg({ id: null, role: 'user', mine: true, content: text, image: photos[0]?.url || null });
-            $('saiText').value = ''; $('saiText').style.height = 'auto';
+            addMsg({ id: null, role: 'user', mine: true, content: text, image: attachedUrls()[0] || null });
+            $('saiText').value = ''; $('saiText').style.height = 'auto'; $('saiText').style.overflowY = 'hidden';
             showThinking();
             try {
                 const res = await api(U.ask + `?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: {
                     message: text,
-                    imagePaths: photos.map((p) => p.path),
+                    imagePaths: shots,
+                    imageScheduleIds: attachedScheds(),
                     sessionId: currentSession,
                 } });
+                // Chips leave the moment the send is known good — before any
+                // templating that could throw and strand them in the composer.
+                clearPhotos();
                 if (res.data.question && res.data.question.id) { rendered.add(res.data.question.id); lastId = Math.max(lastId, res.data.question.id); }
                 clearThinking();
                 addMsg(res.data.answer); setBalance(res.data.balance);
-                photos = []; paintPhotos();
                 refreshSessionsSoon();
             } catch (err) {
                 clearThinking();
                 addMsg({ role: 'assistant', content: err.message || 'The AI could not answer.' });
                 if (err.data && err.data.outOfCredits) setBalance(err.data.balance);
-            } finally { busy = false; $('saiSend').disabled = false; $('saiText').focus(); }
+                // Kept on purpose — a retry should not re-pick its photos. Said
+                // out loud, so a failed send never reads as "sent but cleared".
+                if (chips.children.length) window.toast?.('Your photos are still attached, ready for the retry.');
+            } finally { busy = false; $('saiSend').disabled = false; $('saiText').focus(); sayEstimate(); }
         }
 
         function onQuestion(m) {
@@ -452,56 +639,164 @@
 
         // Composer + control wiring.
         const input = $('saiText');
-        input.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 96) + 'px'; });
+        const TEXT_MAX = 96;
+        input.addEventListener('input', () => {
+            input.style.height = 'auto';
+            // The bar only shows once the box has stopped growing — while it
+            // still fits, the height IS the scroll.
+            input.style.overflowY = input.scrollHeight > TEXT_MAX ? 'auto' : 'hidden';
+            input.style.height = Math.min(input.scrollHeight, TEXT_MAX) + 'px';
+            sayEstimate();
+        });
         input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey && window.matchMedia('(min-width: 768px)').matches) { e.preventDefault(); send(); } });
         $('saiSend').addEventListener('click', send);
         $('saiNewSession').addEventListener('click', newSession);
-        $('saiSaveSession').addEventListener('click', saveSession);
         $('saiSessToggle').addEventListener('click', () => {
             const collapsed = $('saiSessions').classList.contains('collapsed');
             if (collapsed) openSidebarMobile(); else closeSidebarMobile();
         });
-        /* The chips, and the one door every "ask about this" comes through.
-         *
-         * The lightbox hands over a photo it has already copied into this
-         * user's AI folder; the file input uploads a new one. Both end up as
-         * the same {path, url} in the same list, so nothing downstream needs
-         * to know which way a picture arrived. */
-        function paintPhotos() {
-            const host = $('saiPhotoChips');
-            if (!host) return;
-            host.innerHTML = photos.map((p, i) =>
-                `<span class="sai-photochip"><img src="${esc(p.url)}" alt="">`
-                + `<button type="button" data-drop="${i}" aria-label="Remove">✕</button></span>`).join('');
-        }
-        $('saiPhotoChips')?.addEventListener('click', (e) => {
-            const b = e.target.closest('[data-drop]');
+
+        /* ---------- keeping a session: the two doors ---------- */
+        $('saiSaveSession').addEventListener('click', () => window.openSheet?.('saiSaveSheet'));
+        $('saiSaveToNote').addEventListener('click', () => { window.closeSheet?.('saiSaveSheet'); fileAway(null); });
+        $('saiSaveToTask').addEventListener('click', () => {
+            window.closeSheet?.('saiSaveSheet');
+            if (!currentSession) { window.toast?.('Nothing to keep yet — ask something first.', 'error'); return; }
+            window.openSheet?.('saiTaskSheet');
+        });
+        // Bound on the sheet itself: openSheet moves it to <body>, out of this
+        // partial's subtree, so a wrapper-level listener would never hear it.
+        $('saiTaskSheet').addEventListener('click', (e) => {
+            const b = e.target.closest('[data-sai-task]');
             if (!b) return;
-            photos.splice(parseInt(b.dataset.drop, 10), 1);
-            paintPhotos();
+            window.closeSheet?.('saiTaskSheet');
+            fileAway(parseInt(b.dataset.saiTask, 10));
+        });
+        $('saiNoteSave').addEventListener('click', saveNote);
+
+        /* The chips, and every door a photo comes through.
+         *
+         * The lightbox hands over a photo already copied into this user's AI
+         * folder; the file inputs upload new ones; the gallery hands back a
+         * reference to what this season already keeps. All three end as the
+         * same chip, so nothing downstream needs to know which way it arrived. */
+        const chips = $('saiPhotoChips');
+        const MAX_PHOTOS = 4;
+        const CHIP_SPIN = '<svg class="w-4 h-4 sai-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.6" stroke-opacity=".3"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>';
+
+        function attachedChips() { return [...chips.querySelectorAll('.sai-chip[data-path]')]; }
+        function attachedPaths() { return attachedChips().map((c) => c.dataset.path); }
+        function attachedUrls() { return attachedChips().map((c) => c.querySelector('img')?.src).filter(Boolean); }
+        // Index-aligned with the paths: which season's gallery a picture was
+        // referenced from, null for this user's own uploads.
+        function attachedScheds() { return attachedChips().map((c) => (c.dataset.sched ? parseInt(c.dataset.sched, 10) : null)); }
+        function roomForAnother() {
+            if (chips.children.length < MAX_PHOTOS) return true;
+            window.toast?.('Four photos is as many as one question can carry.', 'error');
+            return false;
+        }
+        function addChip(previewUrl) {
+            const el = document.createElement('div');
+            el.className = 'sai-chip is-busy';
+            el.innerHTML = `<img src="${esc(previewUrl)}" alt="">`
+                + `<span class="st">${CHIP_SPIN}</span>`
+                + '<button type="button" class="x" aria-label="Remove photo">✕</button>';
+            chips.appendChild(el);
+            sayEstimate();
+            return el;
+        }
+        function dropChip(el) {
+            if (el._blob) { try { URL.revokeObjectURL(el._blob); } catch (e) {} }
+            el.remove();
+            sayEstimate();
+        }
+        function clearPhotos() { [...chips.children].forEach(dropChip); }
+        chips.addEventListener('click', (e) => {
+            const x = e.target.closest('.sai-chip .x');
+            if (x) dropChip(x.closest('.sai-chip'));
+        });
+        function sayAttaching() {
+            const line = $('saiAttachBusy');
+            if (!line) return;
+            line.classList.toggle('hidden', uploadsBusy === 0);
+            line.querySelector('.tx').textContent = uploadsBusy > 1 ? `Attaching ${uploadsBusy} photos…` : 'Attaching photo…';
+            $('saiSend').disabled = busy || uploadsBusy > 0;
+        }
+        // Uploads run one call per file; the chip spins until its path lands.
+        function uploadOne(file) {
+            if (!file || !(file.type || '').startsWith('image/')) return;
+            if (!roomForAnother()) return;
+            const preview = URL.createObjectURL(file);
+            const chip = addChip(preview);
+            chip._blob = preview;
+            uploadsBusy++; sayAttaching();
+            const form = new FormData(); form.append('image', file);
+            api(U.photo, { method: 'POST', body: form })
+                .then((r) => { chip.dataset.path = r.data.path; chip.classList.remove('is-busy'); })
+                .catch((err) => { window.toast?.(err.message, 'error'); dropChip(chip); })
+                .finally(() => { uploadsBusy--; sayAttaching(); });
+        }
+        $('saiPhotoFiles').addEventListener('change', (e) => { [...(e.target.files || [])].forEach(uploadOne); e.target.value = ''; });
+        $('saiPhotoCam').addEventListener('change', (e) => { [...(e.target.files || [])].forEach(uploadOne); e.target.value = ''; });
+
+        /* A gallery pick is a REFERENCE, not a copy: the server already hosts
+         * this picture and the ask endpoint honours this schedule's own media
+         * list — so the chip lands done, instantly. */
+        function attachFromGallery(item) {
+            if (!item || !item.url || !item.path || !roomForAnother()) return;
+            const chip = addChip(item.url);
+            chip.dataset.path = item.path;
+            chip.dataset.sched = String(SCHEDULE_ID);
+            chip.classList.remove('is-busy');
+            sayEstimate();
+        }
+
+        const canGallery = () => typeof window.smPickMedia === 'function' && SCHEDULE_ID > 0;
+        $('saiAttachBtn').addEventListener('click', () => {
+            $('saiAttachGallery')?.classList.toggle('hidden', !canGallery());
+            window.openSheet?.('saiAttachSheet');
+        });
+        $('saiAttachUpload').addEventListener('click', () => { window.closeSheet?.('saiAttachSheet'); $('saiPhotoFiles').click(); });
+        $('saiAttachCamera').addEventListener('click', () => { window.closeSheet?.('saiAttachSheet'); $('saiPhotoCam').click(); });
+        $('saiAttachGallery').addEventListener('click', () => {
+            window.closeSheet?.('saiAttachSheet');
+            if (!canGallery()) return;
+            window.smPickMedia({
+                scheduleId: SCHEDULE_ID,
+                kinds: 'image',
+                title: 'Attach from the gallery',
+                // Several at once — the question can carry what room remains.
+                multiple: true,
+                max: MAX_PHOTOS - chips.children.length,
+                onPick: attachFromGallery,
+            });
         });
 
-        const MAX_PHOTOS = 4;
         window.smAskAiAbout = function (item) {
             if (!item || !item.path) return;
-            if (photos.length >= MAX_PHOTOS) {
-                window.toast?.('Four photos is as many as one question can carry.', 'error');
-                return;
-            }
-            if (!photos.some((p) => p.path === item.path)) photos.push(item);
-            paintPhotos();
+            if (attachedPaths().includes(item.path)) return;
+            if (!roomForAnother()) return;
+            const chip = addChip(item.url || '');
+            chip.dataset.path = item.path;
+            chip.classList.remove('is-busy');
             // Bring the composer into view and let them type the question.
             window.smShowAiTab?.();
             window.smFocus?.($('saiText'), { delay: 120 });
             window.toast?.('Photo attached — what would you like to ask about it?');
         };
 
-        $('saiPhoto').addEventListener('change', async (e) => {
-            const f = e.target.files && e.target.files[0]; if (!f) return;
-            const form = new FormData(); form.append('image', f);
-            try { const r = await api(U.photo, { method: 'POST', body: form }); photos.push({ path: r.data.path, url: r.data.url }); paintPhotos(); }
-            catch (err) { if (window.toast) toast(err.message, 'error'); } finally { e.target.value = ''; }
-        });
+        /* The bill, quoted before it is run up: the server's own pre-flight
+         * formula, mirrored, repriced on every keystroke and every chip. */
+        function sayEstimate() {
+            const line = $('saiEstimate');
+            if (!line) return;
+            const msg = (input.value || '').trim();
+            const shots = chips ? chips.children.length : 0;
+            if (!msg && !shots) { line.textContent = line.dataset.idle || ''; return; }
+            const tin = Math.ceil(msg.length / 4) + 900;
+            const cost = Math.max(.01, Math.round((tin / 1000 * PRICE.inK + PRICE.halfOut / 1000 * PRICE.outK + shots * PRICE.img) * 100) / 100);
+            line.textContent = `≈ ${cost} credits for this question`;
+        }
 
 
         // Start when the AI tab is first shown.

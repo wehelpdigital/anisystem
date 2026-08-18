@@ -188,7 +188,9 @@
         .aichat-box:focus-within { border-color: var(--color-brand-500); box-shadow: 0 0 0 3px rgb(107 159 61 / .18), var(--shadow-card-lg); }
         .ai-cam { width: 2.75rem; height: 2.75rem; border-radius: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--color-brand-50); color: var(--color-brand-700); cursor: pointer; transition: background .15s ease; }
         .ai-cam:hover { background: var(--color-brand-100); }
-        #aiInput { resize: none; max-height: 9rem; font-size: 1rem; }
+        /* No scrollbar while the box is still growing — the autosize handler
+           flips this to auto only once the text passes the max height. */
+        #aiInput { resize: none; max-height: 9rem; overflow-y: hidden; font-size: 1rem; }
         #aiSendBtn { display: inline-flex; align-items: center; gap: .4rem; min-height: 2.9rem; padding: 0 1.1rem; border-radius: 999px; color: #fff; font-weight: 700; font-size: .92rem; background: linear-gradient(140deg, #6b9f3d, #3d6823); box-shadow: 0 4px 12px -3px rgb(45 80 22 / .5); transition: transform .15s ease, opacity .15s ease; flex-shrink: 0; }
         #aiSendBtn:hover:not(:disabled) { transform: scale(1.04); }
         #aiSendBtn:active:not(:disabled) { transform: scale(.95); }
@@ -649,6 +651,9 @@ const __init = () => {
     const input = byId('aiInput');
     input?.addEventListener('input', () => {
         input.style.height = 'auto';
+        // The bar only shows once the box has stopped growing — while it still
+        // fits, the height IS the scroll.
+        input.style.overflowY = input.scrollHeight > 144 ? 'auto' : 'hidden';
         input.style.height = Math.min(input.scrollHeight, 144) + 'px';
         sayEstimate();
     });

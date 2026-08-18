@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Manager;
 
 use App\Events\ScheduleAiMessagePushed;
 use App\Models\AiSetting;
+use App\Models\AsCroppingSchedule;
+use App\Models\AsScheduleActivity;
 use App\Models\AsScheduleNote;
 use App\Models\ScheduleAiMessage;
 use App\Models\ScheduleAiSession;
@@ -12,6 +14,7 @@ use App\Services\AiClient;
 use App\Services\AiCreditService;
 use App\Support\HtmlSanitizer;
 use App\Support\ScheduleTeam;
+use App\Support\WorkerContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -86,7 +89,12 @@ class ScheduleAiController extends BaseScheduleController
         return response()->json(['success' => true, 'data' => ['session' => $shaped]]);
     }
 
-    /** Save a whole session's transcript into the schedule notebook. */
+    /**
+     * Save a whole session's transcript into the schedule notebook — on its
+     * own, or titled onto one of the schedule's tasks. The team names the note
+     * and may say why it was kept; the transcript is the attachment, not the
+     * whole story (same shape as AiController::saveToNote).
+     */
     public function saveSessionNote(Request $request)
     {
         $schedule = $this->schedule($request->query('scheduleId'));
@@ -94,12 +102,37 @@ class ScheduleAiController extends BaseScheduleController
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
             return $this->jsonFail('You are not part of this schedule team.', 403);
         }
+        // Writing the notebook is the note right — the same line every other
+        // door into the schedule's records draws for a worker.
+        if (WorkerContext::activeGrant() && ! WorkerContext::canAddNotes()) {
+            return $this->jsonFail('You are not allowed to write notes on this schedule.', 403);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'sessionId' => 'required|integer',
+            'activityId' => 'nullable|integer',
+            'title' => 'nullable|string|max:180',
+            'description' => 'nullable|string|max:2000',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
 
         $session = ScheduleAiSession::active()
             ->where('scheduleId', $schedule->id)
             ->find((int) $request->input('sessionId'));
         if (! $session) {
             return $this->jsonFail('Session not found.', 404);
+        }
+
+        $activity = null;
+        if ($request->filled('activityId')) {
+            $activity = AsScheduleActivity::query()
+                ->where('croppingScheduleId', $schedule->id)
+                ->find((int) $request->input('activityId'));
+            if (! $activity) {
+                return $this->jsonFail('That task is not on this schedule.', 404);
+            }
         }
 
         $msgs = ScheduleAiMessage::active()
@@ -111,7 +144,17 @@ class ScheduleAiController extends BaseScheduleController
             return $this->jsonFail('This session has no messages yet.', 422);
         }
 
+        // Why it was kept leads; what it was filed onto follows; the talk last.
         $html = '';
+        if (filled($request->input('description'))) {
+            $html .= '<p>' . nl2br(e(trim((string) $request->input('description')))) . '</p>';
+        }
+        if ($activity) {
+            $when = $activity->targetDate
+                ? \Illuminate\Support\Carbon::parse($activity->targetDate)->format('M j, Y')
+                : 'no set date';
+            $html .= '<p><em>Attached to the task "' . e($activity->activityTitle ?: 'Task') . '" (' . e($when) . ').</em></p>';
+        }
         foreach ($msgs as $m) {
             $who = $m->role === 'assistant' ? 'AI Technician' : ($m->author?->full_name ?: 'Member');
             $cls = $m->role === 'assistant' ? 'color:#3d6823' : 'color:#1f2937';
@@ -119,7 +162,9 @@ class ScheduleAiController extends BaseScheduleController
                 . nl2br(e((string) $m->content)) . '</p>';
         }
 
-        $title = trim((string) $request->input('title')) ?: ('AI · ' . ($session->title ?: 'Session'));
+        $title = trim((string) $request->input('title'))
+            ?: ('AI · ' . ($session->title ?: 'Session')
+                . ($activity ? ' — ' . ($activity->activityTitle ?: 'Task') : ''));
         $note = AsScheduleNote::create([
             'croppingScheduleId' => $schedule->id,
             'userId' => $meId,
@@ -131,7 +176,9 @@ class ScheduleAiController extends BaseScheduleController
 
         return response()->json([
             'success' => true,
-            'message' => 'Saved this AI session to the schedule notebook.',
+            'message' => $activity
+                ? 'Saved this AI session onto the task, in the schedule notebook.'
+                : 'Saved this AI session to the schedule notebook.',
             'data' => ['noteId' => $note->id],
         ]);
     }
@@ -198,6 +245,10 @@ class ScheduleAiController extends BaseScheduleController
             // charged to the owner's pool.
             'imagePaths' => 'nullable|array|max:6',
             'imagePaths.*' => 'string|max:500',
+            // Index-aligned with imagePaths: which season's gallery a picture
+            // was referenced from, null for the asker's own uploads.
+            'imageScheduleIds' => 'nullable|array|max:6',
+            'imageScheduleIds.*' => 'nullable|integer',
             'sessionId' => 'nullable|integer',
         ]);
         if ($validator->fails()) {
@@ -210,19 +261,31 @@ class ScheduleAiController extends BaseScheduleController
          *
          * imagePath is what every existing caller sends; imagePaths is the
          * newer list. Both are read so nothing that already worked has to
-         * change, and anything the reader is not allowed to attach is simply
-         * dropped by loadImage rather than failing the whole question. */
-        $wanted = array_values(array_unique(array_filter(array_merge(
-            [(string) $request->input('imagePath')],
-            array_map('strval', (array) $request->input('imagePaths', []))
-        ))));
-        $images = array_values(array_filter(array_map(
-            fn ($path) => $this->loadImage($askerId, $path),
-            $wanted
-        )));
+         * change. Every path must load — a path the ownership check throws out
+         * is refused loudly rather than quietly answering a question about
+         * fewer photos than the team attached. */
+        $scheds = array_values((array) $request->input('imageScheduleIds', []));
+        $wanted = [];
+        if (filled($request->input('imagePath'))) {
+            $wanted[(string) $request->input('imagePath')] = null;
+        }
+        foreach (array_values((array) $request->input('imagePaths', [])) as $i => $p) {
+            // First mention wins on a duplicate — same photo, same rights.
+            $wanted[(string) $p] = $wanted[(string) $p] ?? (($scheds[$i] ?? null) ? (int) $scheds[$i] : null);
+        }
+        $images = [];
+        $imagePaths = [];
+        foreach ($wanted as $path => $gallerySid) {
+            $loaded = $this->loadImage($askerId, (string) $path, $gallerySid);
+            if ($loaded === null) {
+                return $this->jsonFail('One of the attached photos could not be read. Remove it and try again.', 422);
+            }
+            $images[] = $loaded;
+            $imagePaths[] = (string) $path;
+        }
         // The transcript keeps one picture per turn, so the first stands for
         // the set in the history; all of them go to the model.
-        $imagePath = $wanted[0] ?? null;
+        $imagePath = $imagePaths[0] ?? null;
         $image = $images ?: null;
 
         // Refuse before spending the owner's pool on something it can't cover.
@@ -392,7 +455,7 @@ class ScheduleAiController extends BaseScheduleController
      * both path shapes are the asker's own and a remote one is fetched over
      * HTTP rather than looked for on a disk it never touched.
      */
-    private function loadImage(int $userId, string $path): ?array
+    private function loadImage(int $userId, string $path, ?int $galleryScheduleId = null): ?array
     {
         $bare = \App\Support\MediaStore::isRemote($path)
             ? substr($path, strlen(\App\Support\MediaStore::REMOTE_PREFIX))
@@ -400,7 +463,11 @@ class ScheduleAiController extends BaseScheduleController
         $owned = ! str_contains($bare, '..')
             && (str_starts_with($bare, 'ai-photos/' . $userId . '/')
                 || str_starts_with($bare, 'anisystem/ai-photos/' . $userId . '/'));
-        if (! $owned) {
+        // Not the asker's own AI folder: the one other door is a REFERENCE to
+        // season media the whole room can already see. The chip lands instantly
+        // because nothing is copied — the allowlist at send is exactly what the
+        // picker offered for that schedule.
+        if (! $owned && ! ($galleryScheduleId && $this->galleryAllows($galleryScheduleId, $path))) {
             return null;
         }
 
@@ -431,5 +498,34 @@ class ScheduleAiController extends BaseScheduleController
         }
 
         return ['mime' => $mime, 'data' => base64_encode($disk->get($path))];
+    }
+
+    /** Season-media paths per schedule, built once per request. */
+    private array $galleryPaths = [];
+
+    /**
+     * Whether this path is on the named schedule's own media list — the same
+     * list the picker offered, resolved by the same URL-to-path inverse. The
+     * schedule must be reachable by the asker before its list says anything.
+     */
+    private function galleryAllows(int $scheduleId, string $path): bool
+    {
+        if (! array_key_exists($scheduleId, $this->galleryPaths)) {
+            $schedule = AsCroppingSchedule::active()
+                ->forClient(WorkerContext::effectiveOwnerId())
+                ->find($scheduleId);
+            $this->galleryPaths[$scheduleId] = $schedule
+                ? collect(\App\Support\SeasonMedia::all($schedule))
+                    ->flatMap(fn ($m) => [
+                        \App\Support\MediaStore::pathFromUrl($m['url'] ?? null),
+                        \App\Support\MediaStore::pathFromUrl($m['posterUrl'] ?? null),
+                    ])
+                    ->filter()
+                    ->values()
+                    ->all()
+                : [];
+        }
+
+        return in_array($path, $this->galleryPaths[$scheduleId], true);
     }
 }
