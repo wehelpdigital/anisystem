@@ -375,6 +375,8 @@
        fringes) makes it a place you are IN rather than a widget in the way.
        position:fixed escapes the .ai-float container, which stays where it
        is; its z-index still scopes the whole thing above the page. */
+    html.ai-float-open, html.ai-float-open body { overflow: hidden; height: 100%; }
+    .ai-float-thread { overscroll-behavior: contain; }
     @media (max-width: 767px) {
         .ai-float.is-open { z-index: 200; }
         .ai-float.is-open::before { content: ''; position: fixed; inset: 0; background: rgb(15 23 42 / .5); }
@@ -503,6 +505,8 @@
                 root?.classList.remove('is-closing');
                 panel.classList.remove('hidden');
                 root?.classList.add('is-open');
+                // The chat holds the whole phone; the page underneath holds still.
+                document.documentElement.classList.add('ai-float-open');
                 // On a phone, focusing on open throws the keyboard over the
                 // chat before a word has been read. A tap still opens it.
                 if (!window.matchMedia('(pointer: coarse)').matches) {
@@ -513,6 +517,7 @@
             if (panel.classList.contains('hidden')) return;
             // .hidden is display:none, which no exit animation survives — so
             // is-closing plays the exit first and the hide lands after it.
+            document.documentElement.classList.remove('ai-float-open');
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 panel.classList.add('hidden');
                 root?.classList.remove('is-open');
