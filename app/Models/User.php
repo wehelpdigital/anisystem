@@ -180,7 +180,11 @@ class User extends Authenticatable
     /** Basic tier (and no-subscription) cannot use AI or buy AI credits. */
     public function canUseAi(): bool
     {
-        return $this->planTier() !== 'none' && (bool) ($this->tierConfig()['ai'] ?? true);
+        // Admins ride the AI free of credits, and free of the plan wall too —
+        // a bridged admin account holds no subscription, and asking the house
+        // to upgrade its own plan is the "asks for credits" the owner reported.
+        return $this->isSuperAdmin()
+            || ($this->planTier() !== 'none' && (bool) ($this->tierConfig()['ai'] ?? true));
     }
 
     /** Only Boss/Lifetime can create worker logins + send worker notifications. */
