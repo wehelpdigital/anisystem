@@ -35,10 +35,16 @@ class CommunityBlogController extends Controller
         // Cheap view counter (not deduped — good enough for a reading metric).
         $post->increment('viewCount');
 
+        // Newest 150, oldest-first — a popular post's thread was unbounded,
+        // and this page also carries the article itself. Deleted-author
+        // filtering happens after, so the page can run a little short rather
+        // than a query per comment.
         $comments = $post->comments()
             ->with('author')
-            ->orderBy('id')
+            ->latest('id')
+            ->limit(150)
             ->get()
+            ->reverse()
             ->filter(fn ($c) => $c->author && (int) $c->author->deleteStatus === 1)
             ->values();
 
