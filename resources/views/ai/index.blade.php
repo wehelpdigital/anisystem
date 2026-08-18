@@ -414,9 +414,7 @@
                     @endforeach
                 </select>
             @endif
-            @unless ($aiUnlimited)
                 <p class="ai-hint mt-0!" id="aiHint" data-idle="≈ 4 credits per answer{{ $aiPerPhoto > 0 ? ' · +' . $aiPerPhotoTxt . ' per photo' : '' }}">≈ 4 credits per answer{{ $aiPerPhoto > 0 ? ' · +' . $aiPerPhotoTxt . ' per photo' : '' }}</p>
-            @endunless
         </div>
     </div>
 </div>{{-- /.aichat --}}
@@ -533,7 +531,7 @@ const __init = () => {
     const PRICE = @json($aiPriceCard);
     function sayEstimate() {
         const hint = byId('aiHint');
-        if (UNLIMITED || !hint) return;
+        if (!hint) return;
         const msg = (input?.value || '').trim();
         const shots = chips ? chips.children.length : 0;
         if (!msg && !shots) { hint.textContent = hint.dataset.idle || ''; return; }

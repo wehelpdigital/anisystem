@@ -452,7 +452,7 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
             </button>
         </div>
-        @php $aiHintIdle = $aiUnlimited ? '' : ('≈ 4 credits per answer' . ($aiPerPhoto > 0 ? ' · +' . $aiPerPhotoTxt . ' per photo' : '')); @endphp
+        @php $aiHintIdle = '≈ 4 credits per answer' . ($aiPerPhoto > 0 ? ' · +' . $aiPerPhotoTxt . ' per photo' : ''); @endphp
         <p class="ai-hint" id="aiHint" data-idle="{{ $aiHintIdle }}">{{ $aiHintIdle }}</p>
     </div>
 </div>
@@ -649,7 +649,7 @@ const __init = () => {
     const PRICE = @json($aiPriceCard);
     function sayEstimate() {
         const hint = byId('aiHint');
-        if (UNLIMITED || !hint) return;
+        if (!hint) return;
         const msg = (input?.value || '').trim();
         const shots = chips ? chips.children.length : 0;
         if (!msg && !shots) { hint.textContent = hint.dataset.idle || ''; return; }

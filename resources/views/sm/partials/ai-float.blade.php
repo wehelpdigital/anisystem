@@ -124,9 +124,7 @@
 
         <div class="ai-float-composer">
             <div id="aiFloatChips" class="ai-float-chips hidden"></div>
-            @unless ($aiFloatUnlimited)
             <p class="ai-float-est hidden" id="aiFloatEst" aria-live="polite"></p>
-            @endunless
             <div id="aiFloatBusy" class="ai-float-busyline hidden" role="status">
                 <span class="sp" aria-hidden="true"></span><span class="tx">Attaching photo…</span>
             </div>
@@ -434,7 +432,7 @@
         // estimate, mirrored, repriced on every keystroke and chip.
         const sayEstimate = () => {
             const el = $('aiFloatEst');
-            if (UNLIMITED || !el) return;
+            if (!el) return;
             const msg = ($('aiFloatText')?.value || '').trim();
             const shots = chips.children.length;
             if (!msg && !shots) { el.classList.add('hidden'); return; }
