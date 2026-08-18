@@ -139,9 +139,13 @@ class AiController extends Controller
             'role' => 'user',
             'content' => $prompt,
             // Both columns on purpose: the first photo where old renderers
-            // look, the whole set where the new ones do.
+            // look, the whole set where the new ones do. Schema-guarded so a
+            // deploy whose release step skipped the migration degrades to
+            // first-photo transcripts instead of a column-not-found 500 —
+            // every photo still reaches the model either way.
             'imagePath' => $imagePath,
-            'imagePaths' => $imagePaths ?: null,
+        ] + (\Illuminate\Support\Facades\Schema::hasColumn((new AiMessage)->getTable(), 'imagePaths')
+            ? ['imagePaths' => $imagePaths ?: null] : []) + [
             'deleteStatus' => 1,
         ]);
 

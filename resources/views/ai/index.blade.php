@@ -63,7 +63,9 @@
                pinned and the thread scrolls inside (dvh keeps the phone URL
                bar honest). --- */
         .aichat { display: flex; flex-direction: column; height: calc(100dvh - 12.5rem); min-height: min(26rem, 60dvh); width: 100%; }
-        @media (max-width: 767px) { .aichat { height: calc(100dvh - 15rem); min-height: min(22rem, 55dvh); } }
+        /* The chrome above shrank (one-line crumbs, one-row masthead), so the
+           conversation gets the reclaimed inch and a half of phone. */
+        @media (max-width: 767px) { .aichat { height: calc(100dvh - 13.5rem); min-height: min(22rem, 55dvh); } }
         .aichat-thread { flex: 1 1 auto; overflow-y: auto; padding: .5rem .25rem 1.25rem; scroll-behavior: smooth; display: flex; flex-direction: column; scrollbar-width: thin; scrollbar-color: var(--color-gray-300) transparent; }
         .aichat-thread::-webkit-scrollbar { width: 6px; }
         .aichat-thread::-webkit-scrollbar-track { background: transparent; }
@@ -95,9 +97,14 @@
         .ai-sq:hover { background: rgb(255 255 255 / .28); }
         .ai-sq:active { transform: scale(.94); }
         .ai-credits:focus-visible, .ai-sq:focus-visible, .aisuggest:focus-visible, #aiSendBtn:focus-visible, .ai-cam:focus-visible { outline: 2px solid var(--color-accent-400); outline-offset: 2px; }
+        /* One row on phones, not two: the name truncates, so nothing needs
+           the wrap that used to drop the wallet under the title and double
+           the masthead's height on exactly the screens with least to spare. */
         @media (max-width: 479px) {
-            .ai-head { flex-wrap: wrap; row-gap: .5rem; padding: .6rem .75rem; }
-            .ai-head > div:last-child { margin-left: auto; }
+            .ai-head { padding: .55rem .7rem; gap: .5rem; }
+            .ai-avatar .aimsg-face { width: 2.25rem; height: 2.25rem; }
+            .ai-head-name { font-size: .92rem; }
+            .ai-role { font-size: .6rem; padding: .08rem .45rem; }
         }
 
         /* --- Welcome hero --- */
@@ -245,13 +252,16 @@
 
 {{-- Dynamic breadcrumbs — the last crumb tracks the open chat and updates
      without a reload when you start a new question. --}}
-<nav class="flex items-center gap-1.5 text-xs font-semibold text-gray-400 mb-3 flex-wrap" aria-label="Breadcrumb">
-    <a href="{{ route('app.dashboard') }}" class="hover:text-brand-700 transition inline-flex items-center gap-1">
+{{-- On phones the middle crumb is the masthead's own name repeated one line
+     above it, and the wrap it forced pushed the chat below the fold — so the
+     trail stays one line and the name crumb waits for a wider screen. --}}
+<nav class="flex items-center gap-1.5 text-xs font-semibold text-gray-400 mb-3 min-w-0" aria-label="Breadcrumb">
+    <a href="{{ route('app.dashboard') }}" class="hover:text-brand-700 transition inline-flex items-center gap-1 shrink-0">
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-8 9 8M5 10v10a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V10"/></svg>
         Dashboard
     </a>
-    <span class="text-gray-300">/</span>
-    <a href="{{ route('ai.index') }}" class="hover:text-brand-700 transition">{{ $settings->assistantName }}</a>
+    <span class="text-gray-300 hidden sm:inline">/</span>
+    <a href="{{ route('ai.index') }}" class="hover:text-brand-700 transition hidden sm:inline truncate">{{ $settings->assistantName }}</a>
     <span class="text-gray-300">/</span>
     <span id="aiCrumbCurrent" class="text-gray-700 truncate max-w-[45vw] sm:max-w-xs">{{ $conversation && $messages->isNotEmpty() ? \Illuminate\Support\Str::limit($conversation->title, 40) : 'New question' }}</span>
 </nav>

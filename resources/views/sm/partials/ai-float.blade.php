@@ -12,6 +12,9 @@
     $aiFloatAvatar = $aiFloatSettings && $aiFloatSettings->avatarPath
         ? \App\Support\MediaStore::url($aiFloatSettings->avatarPath)
         : null;
+    // Same free-rider rule as the full pages: an account that is never
+    // charged is never shown a price, a balance, or a purchase card.
+    $aiFloatUnlimited = app(\App\Services\AiCreditService::class)->unlimited((int) auth()->id());
 @endphp
 @if ($aiFloatSettings && $aiFloatSettings->isUsable())
 <div id="aiFloat" class="ai-float{{ request('module') === 'ai' ? ' ai-float-off' : '' }}">
@@ -32,10 +35,12 @@
             </span>
             <div class="min-w-0 grow">
                 <p class="ai-float-name truncate">{{ $aiFloatSettings->assistantName }}</p>
+                @unless ($aiFloatUnlimited)
                 <a href="{{ route('ai.credits') }}" class="ai-float-credits">
                     <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>
                     <span id="aiFloatBalance">{{ rtrim(rtrim(number_format($aiFloatBalance, 2), '0'), '.') }}</span>&nbsp;credits
                 </a>
+                @endunless
             </div>
             <button type="button" id="aiFloatClose" class="ai-float-icon" aria-label="Close">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -60,6 +65,7 @@
             </div>
         </div>
 
+        @unless ($aiFloatUnlimited)
         <div class="ai-float-nocredits hidden" id="aiFloatNoCredits">
             <span class="ico">
                 <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>
@@ -70,17 +76,35 @@
                 <a href="{{ route('ai.credits') }}" class="btn btn-accent btn-sm mt-2">Purchase AI credits</a>
             </div>
         </div>
+        @endunless
 
         <div class="ai-float-composer">
-            <div id="aiFloatPhotoChip" class="ai-float-photochip hidden">
-                <img src="" alt="" id="aiFloatPhotoThumb"><span class="grow">Photo attached</span>
-                <button type="button" id="aiFloatPhotoRemove" class="text-red-600 font-bold">Remove</button>
-            </div>
+            <div id="aiFloatChips" class="ai-float-chips hidden"></div>
             <div class="ai-float-box">
-                <label class="ai-float-cam shrink-0" title="Attach a photo">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    <input type="file" id="aiFloatPhoto" accept="image/*" capture="environment" class="hidden">
-                </label>
+                <div class="relative shrink-0">
+                    <button type="button" id="aiFloatAttach" class="ai-float-cam" title="Attach photos" aria-label="Attach photos">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    </button>
+                    {{-- The same three doors the full pages offer, popover-sized
+                         because the float is: a bottom sheet under a floating
+                         panel would bury the panel it serves. --}}
+                    <div id="aiFloatAttachMenu" class="ai-float-attmenu hidden">
+                        <button type="button" id="aiFloatAttUpload">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0-12L7 9m5-5l5 5"/></svg>
+                            Upload photos
+                        </button>
+                        <button type="button" id="aiFloatAttCamera">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            Take a photo
+                        </button>
+                        <button type="button" id="aiFloatAttGallery" class="hidden">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5h16v14H4V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/></svg>
+                            From the gallery
+                        </button>
+                    </div>
+                    <input type="file" id="aiFloatPhotoFiles" accept="image/*" multiple class="hidden">
+                    <input type="file" id="aiFloatPhotoCam" accept="image/*" capture="environment" class="hidden">
+                </div>
                 <textarea id="aiFloatText" rows="1" maxlength="4000" placeholder="Ask about your crop…"></textarea>
                 <button type="button" id="aiFloatSend" class="ai-float-send" aria-label="Send">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
@@ -184,9 +208,34 @@
     .ai-float-nocredits .ico { width: 2rem; height: 2rem; border-radius: .7rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--color-accent-500); color: #1a1a1a; }
 
     .ai-float-composer { flex-shrink: 0; padding: .6rem .75rem .75rem; border-top: 1px solid var(--color-gray-100); }
-    .ai-float-photochip { display: flex; align-items: center; gap: .4rem; font-size: .72rem; font-weight: 600; color: var(--color-gray-500); margin-bottom: .4rem; background: var(--color-gray-100); border-radius: .6rem; padding: .3rem .5rem; }
-    .ai-float-photochip.hidden { display: none; }
-    .ai-float-photochip img { width: 1.9rem; height: 1.9rem; border-radius: .4rem; object-fit: cover; box-shadow: 0 0 0 2px var(--color-brand-200); }
+    .ai-float-chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .4rem; }
+    .ai-float-chips.hidden { display: none; }
+    .ai-float-chip { position: relative; width: 2.6rem; height: 2.6rem; border-radius: .6rem; overflow: hidden;
+        box-shadow: 0 0 0 2px var(--color-brand-200); animation: aiFloatChipIn .28s cubic-bezier(.22,1,.36,1); }
+    .ai-float-chip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ai-float-chip .x { position: absolute; top: 1px; right: 1px; width: 1.1rem; height: 1.1rem; border-radius: 999px;
+        display: flex; align-items: center; justify-content: center; background: rgb(0 0 0 / .55); color: #fff;
+        font-size: .7rem; line-height: 1; border: none; cursor: pointer; }
+    /* Mid-upload the picture is a promise, not a path — say so, and hold the
+       remove until there is something on the server to remove. */
+    .ai-float-chip.is-busy img { opacity: .45; }
+    .ai-float-chip.is-busy .x { display: none; }
+    .ai-float-chip.is-busy::after { content: ''; position: absolute; inset: 0; margin: auto; width: 1rem; height: 1rem;
+        border: 2px solid rgb(255 255 255 / .5); border-top-color: #fff; border-radius: 999px; animation: aiFloatSpin .8s linear infinite; }
+    @keyframes aiFloatChipIn { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: scale(1); } }
+    @keyframes aiFloatSpin { to { transform: rotate(360deg); } }
+    .ai-float-attmenu { position: absolute; bottom: calc(100% + .4rem); left: 0; z-index: 5; min-width: 11.5rem;
+        background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: .8rem;
+        box-shadow: 0 10px 28px rgb(0 0 0 / .16); padding: .3rem; display: flex; flex-direction: column;
+        transform-origin: bottom left; animation: aiFloatMenuIn .28s cubic-bezier(.22,1,.36,1); }
+    .ai-float-attmenu.hidden { display: none; }
+    .ai-float-attmenu button { display: flex; align-items: center; gap: .5rem; width: 100%; padding: .5rem .6rem;
+        border: none; background: none; border-radius: .55rem; font-size: .8rem; font-weight: 600;
+        color: var(--color-gray-700); cursor: pointer; text-align: left; }
+    .ai-float-attmenu button:hover { background: var(--color-brand-50); color: var(--color-brand-700); }
+    .ai-float-attmenu button.hidden { display: none; }
+    .ai-float-attmenu button svg { color: var(--color-brand-600); flex-shrink: 0; }
+    @keyframes aiFloatMenuIn { from { opacity: 0; transform: scale(.9) translateY(4px); } to { opacity: 1; transform: none; } }
     .ai-float-box { display: flex; align-items: flex-end; gap: .25rem; border: 1.5px solid var(--color-gray-200); border-radius: 1.1rem; padding: .25rem .25rem .25rem .4rem; background: var(--color-white); transition: border-color .15s ease, box-shadow .15s ease; }
     .ai-float-box:focus-within { border-color: var(--color-brand-500); box-shadow: 0 0 0 3px rgb(107 159 61 / .18); }
     .ai-float-cam { width: 2.25rem; height: 2.25rem; border-radius: .75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--color-brand-50); color: var(--color-brand-700); cursor: pointer; transition: background .15s ease; }
@@ -211,10 +260,12 @@
     html.dark .ai-float-msg .b.is-buy { border-color: rgb(245 197 24 / .25); background: linear-gradient(115deg, rgb(245 197 24 / .10), rgb(245 197 24 / .03)), var(--color-white); }
 
     @media (prefers-reduced-motion: reduce) {
-        .ai-float-fab, .ai-float-msg, .ai-float-panel, .ai-float-head { animation: none; }
+        .ai-float-fab, .ai-float-msg, .ai-float-panel, .ai-float-head,
+        .ai-float-chip, .ai-float-attmenu { animation: none; }
         .ai-float-sug, .ai-float-box, .ai-float-send { transition: none; }
         /* Slowed, not stopped — the pulse is the message that work is happening. */
         .ai-float-dots i { animation-duration: 1.8s; }
+        .ai-float-chip.is-busy::after { animation-duration: 1.6s; }
     }
 
     /* ---- Green identity ----
@@ -283,15 +334,18 @@
         const URLS = {
             ask: @json(route('ai.ask')),
             photo: @json(route('ai.photo')),
+            attach: @json(route('ai.photo.existing')),
             credits: @json(route('ai.credits')),
         };
+        const UNLIMITED = @json($aiFloatUnlimited);
         const SCHEDULE_ID = @json($schedule->id);
         const AVATAR = @json($aiFloatAvatar);
         const MY = @json(auth()->user()->initials ?? '');
         const BOT = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7z"/></svg>';
         const COIN = '<svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>';
         const buyCard = (msg) => `<div class="ai-buyc"><span class="ico">${COIN}</span><div><h3>You're out of AI Credits</h3><p>${escapeHtml(msg)}</p><a class="btn btn-accent btn-sm mt-2" href="${escapeHtml(URLS.credits)}">Purchase AI credits</a></div></div>`;
-        let conversationId = null, photoPath = null, busy = false;
+        let conversationId = null, busy = false, uploadsBusy = 0;
+        const MAX_SHOTS = 6;
 
         const face = (me) => me ? escapeHtml(MY) : (AVATAR ? `<img src="${escapeHtml(AVATAR)}" alt="">` : BOT);
         const scrollDown = () => { thread.scrollTop = thread.scrollHeight; };
@@ -312,11 +366,13 @@
             }
             close(); return html || '<p></p>';
         }
-        function addTurn(me, html, imageUrl, cost, stamped) {
+        function addTurn(me, html, imageUrls, cost, stamped) {
             $('aiFloatWelcome')?.remove();
             const el = document.createElement('div');
             el.className = 'ai-float-msg' + (me ? ' me' : '');
-            el.innerHTML = `<span class="ai-float-face">${face(me)}</span><div class="b">${html}${imageUrl ? `<img src="${escapeHtml(imageUrl)}" alt="">` : ''}${cost ? `<p class="cost">${escapeHtml(cost)}</p>` : ''}${stamped ? `<time class="when">${escapeHtml(nowStamp())}</time>` : ''}</div>`;
+            const shots = (Array.isArray(imageUrls) ? imageUrls : (imageUrls ? [imageUrls] : []))
+                .map((u) => `<img src="${escapeHtml(u)}" alt="">`).join('');
+            el.innerHTML = `<span class="ai-float-face">${face(me)}</span><div class="b">${html}${shots}${cost ? `<p class="cost">${escapeHtml(cost)}</p>` : ''}${stamped ? `<time class="when">${escapeHtml(nowStamp())}</time>` : ''}</div>`;
             thread.appendChild(el); scrollDown(); return el;
         }
         function setBalance(v) {
@@ -324,9 +380,10 @@
             // A failed send already answers with a purchase card in the thread,
             // right where the user is looking — the banner on top of it said
             // the same thing twice. It still covers opening the chat when the
-            // credits were already gone, where no card exists yet.
+            // credits were already gone, where no card exists yet. (The banner
+            // is not rendered at all for accounts that ride free.)
             const saidInChat = !!thread.querySelector('.is-buy');
-            $('aiFloatNoCredits').classList.toggle('hidden', v > 0 || saidInChat);
+            $('aiFloatNoCredits')?.classList.toggle('hidden', v > 0 || saidInChat);
         }
 
         let closeTimer = null;
@@ -371,16 +428,79 @@
             if (e.key === 'Enter' && !e.shiftKey && window.matchMedia('(min-width: 768px)').matches) { e.preventDefault(); send(); }
         });
 
-        $('aiFloatPhoto')?.addEventListener('change', async (e) => {
-            const file = e.target.files && e.target.files[0]; if (!file) return;
+        /* ---- Attached photos: a strip of chips, up to six, from any of the
+                three doors the full pages offer. Same contract too — a chip
+                without data-path is still uploading and cannot be sent. ---- */
+        const chips = $('aiFloatChips');
+        const chipCount = () => chips.children.length;
+        const roomForAnother = () => {
+            if (chipCount() < MAX_SHOTS) return true;
+            toast(`Up to ${MAX_SHOTS} photos per question.`, 'error');
+            return false;
+        };
+        const syncChips = () => chips.classList.toggle('hidden', chipCount() === 0);
+        const attachedPaths = () => [...chips.children].map((c) => c.dataset.path).filter(Boolean);
+        const attachedUrls = () => [...chips.children].map((c) => c.querySelector('img')?.src).filter(Boolean);
+        function addChip(url) {
+            const chip = document.createElement('span');
+            chip.className = 'ai-float-chip is-busy';
+            chip.innerHTML = `<img src="${escapeHtml(url)}" alt=""><button type="button" class="x" aria-label="Remove photo">✕</button>`;
+            chip.querySelector('.x').addEventListener('click', () => dropChip(chip));
+            chips.appendChild(chip); syncChips();
+            return chip;
+        }
+        function dropChip(chip) {
+            if (chip._blob) URL.revokeObjectURL(chip._blob);
+            chip.remove(); syncChips();
+        }
+        function clearPhotos() { [...chips.children].forEach(dropChip); }
+        function uploadOne(file) {
+            if (!file || !(file.type || '').startsWith('image/')) return;
+            if (!roomForAnother()) return;
+            const preview = URL.createObjectURL(file);
+            const chip = addChip(preview);
+            chip._blob = preview;
+            uploadsBusy++;
             const form = new FormData(); form.append('image', file);
-            try {
-                const res = await api(URLS.photo, { method: 'POST', body: form });
-                photoPath = res.data.path; $('aiFloatPhotoThumb').src = res.data.url;
-                $('aiFloatPhotoChip').classList.remove('hidden');
-            } catch (err) { toast(err.message, 'error'); } finally { e.target.value = ''; }
+            api(URLS.photo, { method: 'POST', body: form })
+                .then((res) => { chip.dataset.path = res.data.path; chip.classList.remove('is-busy'); })
+                .catch((err) => { toast(err.message, 'error'); dropChip(chip); })
+                .finally(() => { uploadsBusy--; });
+        }
+        $('aiFloatPhotoFiles')?.addEventListener('change', (e) => { [...(e.target.files || [])].forEach(uploadOne); e.target.value = ''; });
+        $('aiFloatPhotoCam')?.addEventListener('change', (e) => { [...(e.target.files || [])].forEach(uploadOne); e.target.value = ''; });
+
+        /* The chooser popover. The gallery door opens only where the season
+           picker travelled with the page — the messenger's rule. */
+        const attMenu = $('aiFloatAttachMenu');
+        const canGallery = () => typeof window.smPickMedia === 'function' && SCHEDULE_ID > 0;
+        const closeMenu = () => attMenu?.classList.add('hidden');
+        $('aiFloatAttach')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            $('aiFloatAttGallery')?.classList.toggle('hidden', !canGallery());
+            attMenu?.classList.toggle('hidden');
         });
-        $('aiFloatPhotoRemove')?.addEventListener('click', () => { photoPath = null; $('aiFloatPhotoChip').classList.add('hidden'); });
+        document.addEventListener('click', (e) => { if (attMenu && !attMenu.classList.contains('hidden') && !attMenu.contains(e.target)) closeMenu(); });
+        $('aiFloatAttUpload')?.addEventListener('click', () => { closeMenu(); $('aiFloatPhotoFiles')?.click(); });
+        $('aiFloatAttCamera')?.addEventListener('click', () => { closeMenu(); $('aiFloatPhotoCam')?.click(); });
+        $('aiFloatAttGallery')?.addEventListener('click', () => {
+            closeMenu();
+            if (!canGallery()) return;
+            window.smPickMedia({
+                scheduleId: SCHEDULE_ID,
+                kinds: 'image',
+                title: 'Attach from the gallery',
+                onPick: (item) => {
+                    if (!item || !item.url || !roomForAnother()) return;
+                    const chip = addChip(item.url);
+                    uploadsBusy++;
+                    api(URLS.attach, { method: 'POST', body: { url: item.url } })
+                        .then((res) => { chip.dataset.path = res.data.path; chip.querySelector('img').src = res.data.url; chip.classList.remove('is-busy'); })
+                        .catch((err) => { toast(err.message, 'error'); dropChip(chip); })
+                        .finally(() => { uploadsBusy--; });
+                },
+            });
+        });
 
         /* "Ask the AI about this", from a picture the app is already showing.
          *
@@ -390,10 +510,11 @@
          * schedule pages, which is why the hook lives here as well as in the
          * Collab Room's tab — whichever is on the page answers. */
         window.smAskAiAbout = function (item) {
-            if (!item || !item.path) return;
-            photoPath = item.path;
-            $('aiFloatPhotoThumb').src = item.url;
-            $('aiFloatPhotoChip').classList.remove('hidden');
+            if (!item || !item.path || !roomForAnother()) return;
+            // Already copied into this user's own AI folder — a done chip.
+            const chip = addChip(item.url);
+            chip.dataset.path = item.path;
+            chip.classList.remove('is-busy');
             openPanel(true);
             window.smFocus?.($('aiFloatText'), { delay: 160 });
             window.toast?.('Photo attached — what would you like to ask about it?');
@@ -401,19 +522,22 @@
 
         async function send() {
             if (busy) return;
+            if (uploadsBusy > 0) { toast('Wait a moment — a photo is still uploading.', 'error'); return; }
             const message = (input.value || '').trim();
             if (!message) { toast('Type a question first.', 'error'); return; }
             busy = true;
             const sendBtn = $('aiFloatSend');
             sendBtn.disabled = true; sendBtn.setAttribute('aria-label', 'Sending');
-            addTurn(true, '<p>' + escapeHtml(message).replace(/\r?\n/g, '<br>') + '</p>', photoPath ? $('aiFloatPhotoThumb').src : null, null, true);
+            const myPaths = attachedPaths();
+            addTurn(true, '<p>' + escapeHtml(message).replace(/\r?\n/g, '<br>') + '</p>', attachedUrls(), null, true);
             input.value = ''; input.style.height = 'auto';
             const thinking = addTurn(false, '<span class="ai-float-dots"><i></i><i></i><i></i></span>');
             try {
-                const res = await api(URLS.ask, { method: 'POST', body: { message, conversationId, imagePath: photoPath, scheduleId: SCHEDULE_ID } });
+                const res = await api(URLS.ask, { method: 'POST', body: { message, conversationId, imagePaths: myPaths, scheduleId: SCHEDULE_ID } });
                 conversationId = res.data.conversationId;
-                thinking.querySelector('.b').innerHTML = render(res.data.answer.content) + `<p class="cost">${escapeHtml(String(Math.round(res.data.answer.creditsCharged * 100) / 100))} credits</p>` + `<time class="when">${escapeHtml(nowStamp())}</time>`;
-                setBalance(res.data.balance); photoPath = null; $('aiFloatPhotoChip').classList.add('hidden'); scrollDown();
+                const costLine = UNLIMITED ? '' : `<p class="cost">${escapeHtml(String(Math.round(res.data.answer.creditsCharged * 100) / 100))} credits</p>`;
+                thinking.querySelector('.b').innerHTML = render(res.data.answer.content) + costLine + `<time class="when">${escapeHtml(nowStamp())}</time>`;
+                setBalance(res.data.balance); clearPhotos(); scrollDown();
             } catch (err) {
                 thinking.remove();
                 if (err.data && err.data.outOfCredits) {
