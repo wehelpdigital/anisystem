@@ -806,6 +806,7 @@ const __init = () => {
         const myScheds = attachedScheds();
         addTurn(true, '<p>' + escapeHtml(message).replace(/\r?\n/g, '<br>') + '</p>', attachedUrls(), null, true);
         input.value = '';
+        sayEstimate();
         input.style.height = 'auto';
 
         const thinking = addTurn(false, '<span class="aidots"><i></i><i></i><i></i></span>');

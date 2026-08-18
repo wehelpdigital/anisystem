@@ -842,7 +842,7 @@ const __init = () => {
         const myPaths = attachedPaths();
         const myScheds = attachedScheds();
         addTurn(true, '<p>' + escapeHtml(message).replace(/\r?\n/g, '<br>') + '</p>', attachedUrls(), null, true);
-        input.value = ''; input.style.height = 'auto';
+        input.value = ''; input.style.height = 'auto'; sayEstimate();
         const thinking = addTurn(false, '<span class="aidots"><i></i><i></i><i></i></span>');
         try {
             const res = await api(URLS.ask, { method: 'POST', body: { message, conversationId, imagePaths: myPaths, imageScheduleIds: myScheds, scheduleId: SCHEDULE_ID } });

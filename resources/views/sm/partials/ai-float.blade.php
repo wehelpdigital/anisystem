@@ -722,7 +722,7 @@
             sendBtn.disabled = true; sendBtn.setAttribute('aria-label', 'Sending');
             const myPaths = attachedPaths();
             addTurn(true, '<p>' + escapeHtml(message).replace(/\r?\n/g, '<br>') + '</p>', attachedUrls(), null, true);
-            input.value = ''; input.style.height = 'auto';
+            input.value = ''; input.style.height = 'auto'; sayEstimate();
             const thinking = addTurn(false, '<span class="ai-float-dots"><i></i><i></i><i></i></span>');
             try {
                 const res = await api(URLS.ask, { method: 'POST', body: { message, conversationId, imagePaths: myPaths, imageScheduleIds: attachedScheds(), scheduleId: SCHEDULE_ID } });
