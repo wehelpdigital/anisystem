@@ -4,7 +4,7 @@
 <div id="msgrDock" aria-live="polite">
     <div class="msgr-panel hidden" id="msgrPanel">
         <div class="msgr-panel-head">
-            <span class="font-bold text-gray-900">Messages</span>
+            <span class="msgr-panel-title">Messages</span>
             <button type="button" class="msgr-x" data-msgr-close-panel aria-label="Close">✕</button>
         </div>
         <div class="msgr-panel-body" id="msgrThreads">
@@ -47,25 +47,49 @@
         border-radius:9999px; background:#ef4444; color:#fff; font-size:.65rem; font-weight:800;
         display:inline-flex; align-items:center; justify-content:center; }
     .msgr-badge.hidden { display:none; }
-    .msgr-panel { width:19rem; max-width:calc(100vw - 2rem); max-height:26rem; background:#fff; border-radius:1rem;
+    .msgr-panel { width:20rem; max-width:calc(100vw - 2rem); max-height:28rem; background:#fff; border-radius:1rem;
         box-shadow:0 16px 48px rgb(0 0 0 / .22); overflow:hidden; display:flex; flex-direction:column;
-        animation:msgrIn .2s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+        animation:msgrIn .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
     .msgr-panel.hidden { display:none; }
     @keyframes msgrIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
-    .msgr-panel-head { display:flex; align-items:center; justify-content:space-between; padding:.75rem 1rem; border-bottom:1px solid #f1f3f5; }
+    .msgr-panel-head { display:flex; align-items:center; justify-content:space-between; padding:.7rem 1rem; }
+    .msgr-panel-title { color:#fff; font-weight:800; font-size:1rem; letter-spacing:.01em; }
     .msgr-panel-body { overflow-y:auto; }
-    .msgr-thread { display:flex; align-items:center; gap:.6rem; padding:.6rem 1rem; cursor:pointer; border-bottom:1px solid #f6f7f8; }
+    /* Two-line Messenger rows: name + when up top, preview + unread below,
+       everything truncating so one long name never bends the column. */
+    .msgr-thread { display:flex; align-items:center; gap:.65rem; padding:.6rem 1rem; cursor:pointer;
+        transition:background-color .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+    .msgr-thread + .msgr-thread { border-top:1px solid #f6f7f8; }
     .msgr-thread:hover { background:var(--color-brand-50); }
-    .msgr-thread .avatar { width:2.25rem; height:2.25rem; font-size:.7rem; }
-    .msgr-thread-name { font-weight:600; font-size:.85rem; color:#1f2937; }
-    .msgr-thread-last { font-size:.75rem; color:#6b7280; }
-    .msgr-thread-unread { margin-left:auto; min-width:1.1rem; height:1.1rem; padding:0 .3rem; border-radius:9999px;
+    .msgr-thread .avatar { width:2.6rem; height:2.6rem; font-size:.78rem; flex-shrink:0; }
+    .msgr-thread-mid { min-width:0; flex:1; display:flex; flex-direction:column; gap:.1rem; }
+    .msgr-thread-top, .msgr-thread-row2 { display:flex; align-items:center; gap:.5rem; }
+    .msgr-thread-name { font-weight:600; font-size:.88rem; color:#1f2937; min-width:0; flex:1;
+        overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .msgr-thread-at { font-size:.68rem; color:#9ca3af; flex-shrink:0; }
+    .msgr-thread-last { font-size:.78rem; color:#6b7280; min-width:0; flex:1;
+        overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    /* Unread is a state the whole row wears, not just a pill in the corner. */
+    .msgr-thread.is-unread .msgr-thread-name, .msgr-thread.is-unread .msgr-thread-last { color:#111827; font-weight:700; }
+    .msgr-thread-unread { min-width:1.1rem; height:1.1rem; padding:0 .3rem; border-radius:9999px; flex-shrink:0;
         background:var(--color-brand-600); color:#fff; font-size:.62rem; font-weight:800; display:inline-flex; align-items:center; justify-content:center; }
+    .msgr-empty { padding:2rem 1.25rem; text-align:center; color:#9ca3af; }
+    .msgr-empty svg { width:2.4rem; height:2.4rem; margin:0 auto .5rem; opacity:.45; }
+    .msgr-empty-t { font-weight:700; font-size:.9rem; color:#6b7280; }
+    .msgr-empty-s { font-size:.78rem; margin-top:.15rem; }
     .msgr-windows { display:flex; align-items:flex-end; gap:.75rem; }
     .msgr-window { width:24rem; max-width:calc(100vw - 2rem); height:33rem; background:#fff; border-radius:1rem 1rem 0 0;
         box-shadow:0 16px 48px rgb(0 0 0 / .22); display:flex; flex-direction:column; overflow:hidden;
-        animation:msgrIn .2s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
-    .msgr-window-head { display:flex; align-items:center; gap:.5rem; padding:.5rem .75rem; background:var(--color-brand-600); color:#fff; }
+        animation:msgrIn .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+    /* The green the app's modern headers wear, kept slowly on the move so an
+       open conversation reads as live. The thread list wears the same one so
+       the whole dock speaks a single header language. Reduced motion parks
+       it on frame one. */
+    .msgr-window-head, .msgr-panel-head { color:#fff;
+        background:linear-gradient(120deg, #3d6823, #6b9f3d 35%, #4a7c2a 60%, #2f5219 85%, #3d6823);
+        background-size:240% 240%; animation:msgrHeadDrift 12s ease-in-out infinite alternate; }
+    .msgr-window-head { display:flex; align-items:center; gap:.5rem; padding:.55rem .75rem; }
+    @keyframes msgrHeadDrift { from { background-position:0% 35%; } to { background-position:100% 65%; } }
     .msgr-window-head .avatar { width:2.1rem; height:2.1rem; font-size:.7rem; box-shadow:none; }
     .msgr-window-head a { color:#fff; font-weight:700; font-size:.98rem; text-decoration:none; }
     .msgr-window-body { flex:1; overflow-y:auto; padding:.75rem; display:flex; flex-direction:column; gap:.35rem; background:#fafbfc; }
@@ -83,11 +107,65 @@
     .msgr-icon:hover { background:#f1f3f5; color:#374151; }
     html.dark .msgr-icon { color:#9fb389; }
     html.dark .msgr-icon:hover { background:rgb(255 255 255 / .07); color:#e5e9df; }
-    .msgr-attach { display:flex; align-items:center; gap:.4rem; padding:.5rem .5rem 0; }
+    .msgr-attach { display:flex; align-items:center; gap:.4rem; padding:.5rem .5rem 0; font-size:.78rem; color:#6b7280; }
     .msgr-attach.hidden { display:none; }
     .msgr-attach-thumb { width:2.75rem; height:2.75rem; object-fit:cover; border-radius:.5rem; }
-    .msgr-attach-x { border:0; background:transparent; color:#9ca3af; cursor:pointer; font-size:.9rem; }
+    .msgr-attach-thumb.hidden, .msgr-attach-clip.hidden { display:none; }
+    .msgr-attach-clip { width:2.75rem; height:2.75rem; border-radius:.5rem; background:var(--color-brand-50, #eef4e6);
+        display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+    .msgr-attach-name { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600; }
+    .msgr-attach-x { border:0; background:transparent; color:#9ca3af; cursor:pointer; font-size:.9rem; margin-left:auto; flex-shrink:0; }
     .msgr-bubble img { max-width:100%; border-radius:.65rem; margin-top:.15rem; display:block; cursor:pointer; }
+    .msgr-bubble video { max-width:100%; max-height:16rem; border-radius:.65rem; margin-top:.15rem; display:block; background:#000; }
+    /* A clip mid-upload: a quiet dark tile instead of a player that cannot play yet. */
+    .msgr-vid-pending { display:flex; align-items:center; justify-content:center; width:11rem; max-width:100%;
+        height:6.5rem; border-radius:.65rem; margin-top:.15rem; background:rgb(0 0 0 / .35); font-size:1.4rem; }
+    /* ONE + beside the field opens the media chooser, so attach options never
+       eat the room the sentence needs. */
+    .msgr-plus-wrap { position:relative; flex-shrink:0; }
+    .msgr-plus svg { transition:transform .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+    .msgr-plus.is-open { background:var(--color-brand-50, #eef4e6); color:var(--color-brand-700, #3d6823); }
+    .msgr-plus.is-open svg { transform:rotate(45deg); }
+    .msgr-plus-menu { position:absolute; bottom:calc(100% + .55rem); left:0; z-index:5; min-width:13.5rem;
+        background:#fff; border:1px solid #e5e7eb; border-radius:.9rem; padding:.35rem;
+        box-shadow:0 14px 36px -10px rgb(0 0 0 / .35); transform-origin:bottom left;
+        animation:msgrMenuIn .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+    .msgr-plus-menu[hidden] { display:none; }
+    @keyframes msgrMenuIn { from { opacity:0; transform:translateY(8px) scale(.92); } to { opacity:1; transform:none; } }
+    .msgr-plus-opt { display:flex; align-items:center; gap:.6rem; width:100%; border:0; background:transparent;
+        cursor:pointer; padding:.5rem .6rem; border-radius:.6rem; font-size:.85rem; font-weight:600; color:#374151;
+        text-align:left; transition:background-color .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+    .msgr-plus-opt:hover { background:var(--color-brand-50, #eef4e6); }
+    .msgr-plus-opt.hidden { display:none; }
+    .msgr-plus-ico { width:2rem; height:2rem; border-radius:.55rem; flex-shrink:0; display:flex; align-items:center;
+        justify-content:center; background:var(--color-brand-50, #eef4e6); color:var(--color-brand-700, #3d6823); }
+    .msgr-plus-ico svg { width:1.1rem; height:1.1rem; }
+    /* Recording strip: mirrors the team chat's, because it is the same act. */
+    .msgr-recbar { display:flex; align-items:center; gap:.5rem; margin:.5rem .5rem 0; padding:.4rem .6rem;
+        border-radius:.6rem; background:#fef2f2; border:1px solid #fecaca; font-size:.78rem; font-weight:700; color:#b91c1c; }
+    .msgr-recbar.hidden { display:none; }
+    .msgr-recdot { width:.55rem; height:.55rem; border-radius:9999px; background:#dc2626;
+        animation:msgrRecPulse 1.1s ease-in-out infinite; }
+    @keyframes msgrRecPulse { 0%, 100% { opacity:1; } 50% { opacity:.25; } }
+    .msgr-rec-stop { margin-left:auto; border:0; padding:.15rem .6rem; border-radius:9999px; background:#dc2626;
+        color:#fff; font-size:.72rem; font-weight:800; cursor:pointer; }
+    /* While the gallery picker is borrowed, lift the app sheet layer over the
+       dock (sheets are born at z-50, the phone conversation sits at z-96) —
+       the draw pad's picking lift, aimed at this dock instead. */
+    html.msgr-picking .sheet-backdrop.is-open { z-index:97; }
+    html.msgr-picking #smMediaPickerSheet { z-index:98; }
+    html.dark .msgr-plus-menu { background:#151b12; border-color:#2b3a1c; }
+    html.dark .msgr-plus-opt { color:#dbe6cf; }
+    html.dark .msgr-plus-opt:hover { background:rgb(255 255 255 / .07); }
+    html.dark .msgr-plus-ico { background:rgb(255 255 255 / .08); color:#a7c98a; }
+    html.dark .msgr-plus.is-open { background:rgb(255 255 255 / .08); color:#a7c98a; }
+    html.dark .msgr-attach-clip { background:rgb(255 255 255 / .08); }
+    html.dark .msgr-recbar { background:rgb(153 27 27 / .2); border-color:rgb(153 27 27 / .5); color:#fca5a5; }
+    @media (prefers-reduced-motion: reduce) {
+        .msgr-plus-menu { animation:none; }
+        .msgr-plus svg, .msgr-plus-opt { transition:none; }
+        .msgr-recdot { animation:none; }
+    }
     /* Quoted reply inside a bubble (FB Messenger style). */
     .msgr-quote { font-size:.78rem; opacity:.8; padding:.25rem .5rem; margin:-.1rem -.2rem .3rem; border-left:2px solid currentColor;
         border-radius:.35rem; background:rgb(0 0 0 / .06); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
@@ -135,6 +213,11 @@
     html.dark .msgr-panel, html.dark .msgr-window { background:#151b12; }
     html.dark .msgr-window-body { background:#10160c; }
     html.dark .msgr-thread-name { color:#e5e9df; }
+    html.dark .msgr-thread + .msgr-thread { border-color:#232a1c; }
+    html.dark .msgr-thread:hover { background:rgb(255 255 255 / .06); }
+    html.dark .msgr-thread-last { color:#9aa69a; }
+    html.dark .msgr-thread.is-unread .msgr-thread-name, html.dark .msgr-thread.is-unread .msgr-thread-last { color:#f2f6ec; }
+    html.dark .msgr-empty-t { color:#c3cdb5; }
     html.dark .msgr-bubble.them { background:#232a1c; color:#dbe6cf; }
     html.dark .msgr-window-foot input { background:#10160c; border-color:#2b3a1c; color:#e5e9df; }
     /* On a phone one conversation owns the bottom of the screen.
@@ -144,13 +227,40 @@
        parent renders nothing at all. That is the entire "messaging does not
        work on my phone": the window was being built and then never drawn.
        `display:contents` gets the row out of the way without taking its
-       children with it. */
-    @media (max-width:480px) {
+       children with it.
+
+       Why the sheet was STILL not full width: the base rule's
+       max-width:calc(100vw - 2rem) survived into this query, and with
+       left/right both 0 the width resolves to that cap — a 2rem gap down the
+       right edge on every phone. And the old 480px cutoff missed larger
+       phones and landscape entirely, which kept the floating 24rem window.
+       767px is the breakpoint the dock itself already uses. */
+    @media (max-width:767px) {
         .msgr-windows { display:contents; }
-        .msgr-window { position:fixed; inset:auto 0 0 0; width:100%; height:70vh;
-            border-radius:1rem 1rem 0 0; z-index:96; }
+        .msgr-window { position:fixed; inset:auto 0 0 0; width:auto; max-width:none;
+            /* dvh so the URL bar collapsing doesn't hide the composer; vh is
+               the fallback for browsers without it. */
+            height:82vh; height:82dvh;
+            border-radius:1.1rem 1.1rem 0 0; z-index:96;
+            /* Arrives like a sheet: up from the bottom edge, house easing. */
+            animation:msgrSheetIn .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+        .msgr-window-foot-wrap { padding-bottom:env(safe-area-inset-bottom, 0px); }
         /* Two open at once would stack on the same spot; the newest wins. */
         .msgr-window:not(:last-child) { display:none; }
+        /* The thread list becomes a bottom sheet too — full width, up from
+           the edge — and sits one layer under a conversation (95 vs 96) so
+           tapping a thread visibly hands over to the chat. */
+        .msgr-panel { position:fixed; inset:auto 0 0 0; width:auto; max-width:none;
+            max-height:76vh; max-height:76dvh;
+            border-radius:1.1rem 1.1rem 0 0; z-index:95;
+            animation:msgrSheetIn .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+        .msgr-panel-body { padding-bottom:env(safe-area-inset-bottom, 0px); }
+    }
+    @keyframes msgrSheetIn { from { transform:translateY(100%); } to { transform:none; } }
+    @media (prefers-reduced-motion: reduce) {
+        .msgr-window, .msgr-panel { animation:none; }
+        .msgr-window-head, .msgr-panel-head { animation:none; }
+        .msgr-thread { transition:none; }
     }
 </style>
 
@@ -192,7 +302,7 @@
                 if (m.id > lastSeenId) lastSeenId = m.id;
                 if (openWins[m.senderId]) {
                     // Window already open → append the new bubble live + mark read.
-                    appendBubble(openWins[m.senderId].querySelector('.msgr-window-body'), { id: m.id, body: m.body, image: m.image, mine: false, replyTo: m.replyTo }, true);
+                    appendBubble(openWins[m.senderId].querySelector('.msgr-window-body'), { id: m.id, body: m.body, image: m.image, video: m.video, poster: m.poster, mine: false, replyTo: m.replyTo }, true);
                     fetch(`/app/community/messages/${m.senderId}`, { headers: { Accept: 'application/json' }, credentials: 'same-origin' }).then(refreshBadge).catch(() => {});
                 } else {
                     // Otherwise pop a chat window open (FB-style), which loads the thread.
@@ -210,14 +320,24 @@
             const d = await r.json();
             setBadge(d.data.unread);
             const threads = d.data.threads || [];
-            if (!threads.length) { box.innerHTML = '<p class="text-sm text-gray-400 text-center py-8">No messages yet.<br>Open a member\'s profile and tap Message.</p>'; return; }
+            if (!threads.length) {
+                box.innerHTML = `<div class="msgr-empty">
+                    <svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.9 9.9 0 01-4.29-.94L3 20l1.05-3.15A7.6 7.6 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                    <p class="msgr-empty-t">No messages yet</p>
+                    <p class="msgr-empty-s">Open a co-farmer's profile and tap Message to start a conversation.</p>
+                </div>`;
+                return;
+            }
             box.innerHTML = threads.map((t) => {
                 const av = t.avatar ? `<span class="avatar overflow-hidden"><img src="${esc(t.avatar)}" class="w-full h-full object-cover" alt=""></span>`
                     : `<span class="avatar av-h${t.userId % 8}">${esc(t.initials || '?')}</span>`;
-                return `<div class="msgr-thread" data-user="${t.userId}" data-name="${esc(t.name)}">
-                    ${av}<span class="min-w-0"><span class="msgr-thread-name block truncate">${esc(t.name)}</span>
-                    <span class="msgr-thread-last block truncate">${esc(t.lastBody)} · ${esc(t.lastAt)}</span></span>
-                    ${t.unread ? `<span class="msgr-thread-unread">${t.unread}</span>` : ''}</div>`;
+                return `<div class="msgr-thread${t.unread ? ' is-unread' : ''}" data-user="${t.userId}" data-name="${esc(t.name)}">
+                    ${av}
+                    <span class="msgr-thread-mid">
+                        <span class="msgr-thread-top"><span class="msgr-thread-name">${esc(t.name)}</span><span class="msgr-thread-at">${esc(t.lastAt || '')}</span></span>
+                        <span class="msgr-thread-row2"><span class="msgr-thread-last">${esc(t.lastBody)}</span>${t.unread ? `<span class="msgr-thread-unread">${t.unread > 9 ? '9+' : t.unread}</span>` : ''}</span>
+                    </span>
+                </div>`;
             }).join('');
         } catch (_) { box.innerHTML = '<p class="text-sm text-red-500 text-center py-6">Could not load.</p>'; }
     }
@@ -233,6 +353,119 @@
         const t = e.target.closest('.msgr-thread');
         if (t) { openWindow(parseInt(t.dataset.user, 10), t.dataset.name); togglePanel(false); }
     });
+
+    // ---- media chooser support -------------------------------------------
+    const MAX_VIDEO_BYTES = 300 * 1024 * 1024;   // the server's clip ceiling
+    // Recording needs both halves; phones and desktops that lack either get
+    // the option hidden rather than a button that apologises when tapped.
+    const canRecord = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+    // The season gallery picker is schedule-scoped and only some pages carry
+    // it, so "share from gallery" appears only where both it and a schedule
+    // to point it at exist.
+    function galleryScheduleId() {
+        const el = document.querySelector('[data-schedule-id]');
+        const v = el ? parseInt(el.getAttribute('data-schedule-id'), 10) : 0;
+        if (v) return v;
+        const qs = new URLSearchParams(location.search);
+        const q = parseInt(qs.get('scheduleId') || qs.get('id') || '', 10);
+        return /^\/app\/sm-/.test(location.pathname) && q ? q : 0;
+    }
+    const canGallery = () => typeof window.smPickMedia === 'function' && galleryScheduleId() > 0;
+
+    /* Record a clip in place — the team chat's recorder, pointed at a DM.
+       No preview pane on purpose: the person is filming the field, not the
+       phone; the chip under the composer is where the result lands. */
+    let recorder = null, recChunks = [], recStream = null, recWin = null, recTimer = null;
+    const bestRecMime = () => ['video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm', 'video/mp4']
+        .find((t) => MediaRecorder.isTypeSupported(t)) || '';
+    async function startRec(win, onClip) {
+        if (recorder) { stopRec(); return; }
+        try {
+            recStream = await navigator.mediaDevices.getUserMedia({ audio: true,
+                video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } } });
+        } catch (_) {
+            if (window.toast) toast('Camera or microphone blocked. Allow it for this site.', 'error');
+            return;
+        }
+        recWin = win; recChunks = [];
+        const mime = bestRecMime();
+        try { recorder = new MediaRecorder(recStream, mime ? { mimeType: mime } : undefined); }
+        catch (_) { recorder = new MediaRecorder(recStream); }
+        recorder.ondataavailable = (e) => { if (e.data && e.data.size) recChunks.push(e.data); };
+        recorder.onstop = () => {
+            const type = recorder.mimeType || 'video/webm';
+            const blob = new Blob(recChunks, { type });
+            recStream.getTracks().forEach((t) => t.stop());
+            const forWin = recWin;
+            recorder = null; recStream = null; recChunks = []; recWin = null;
+            clearTimeout(recTimer);
+            forWin?.querySelector('.msgr-recbar')?.classList.add('hidden');
+            // A window shut mid-recording has nowhere to put the clip.
+            if (blob.size && forWin && document.body.contains(forWin)) {
+                onClip(new File([blob], 'clip.' + (type.includes('mp4') ? 'mp4' : 'webm'), { type }));
+            }
+        };
+        recorder.start();
+        win.querySelector('.msgr-recbar').classList.remove('hidden');
+        // Never leave one running — five minutes outruns any DM-worthy clip.
+        recTimer = setTimeout(stopRec, 5 * 60 * 1000);
+    }
+    function stopRec() { try { if (recorder) recorder.stop(); } catch (_) { /* already stopped */ } }
+
+    /* Borrow the season media picker. It opens in the app's sheet layer
+       (z-50), underneath this dock, so the layer is lifted for exactly as
+       long as it is borrowed — the draw pad's picking pattern, aimed here. */
+    function pickFromGallery(attachPick) {
+        const sid = galleryScheduleId();
+        if (typeof window.smPickMedia !== 'function' || !sid) return;
+        const root = document.documentElement;
+        root.classList.add('msgr-picking');
+        const onClosed = (e) => {
+            if (e.detail && e.detail.id !== 'smMediaPickerSheet') return;
+            document.removeEventListener('sm:sheet-closed', onClosed);
+            // Next tick, so a pick (which closes the sheet first) still lands
+            // while the layer is lifted.
+            setTimeout(() => root.classList.remove('msgr-picking'), 0);
+        };
+        document.addEventListener('sm:sheet-closed', onClosed);
+        window.smPickMedia({
+            scheduleId: sid,
+            title: 'Share from the gallery',
+            onPick: (item) => attachPick(
+                { pick: item, kind: item.type === 'video' ? 'video' : 'image', url: item.url, poster: item.posterUrl || null },
+                item.title || 'From the gallery'
+            ),
+        });
+    }
+
+    // One closer for every window's chooser: a tap anywhere else puts it away.
+    document.addEventListener('click', (e) => {
+        document.querySelectorAll('.msgr-plus-menu:not([hidden])').forEach((menu) => {
+            const wrap = menu.closest('.msgr-plus-wrap');
+            if (wrap && wrap.contains(e.target)) return;
+            menu.hidden = true;
+            const btn = wrap && wrap.querySelector('.js-msgr-plus');
+            if (btn) { btn.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); }
+        });
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        document.querySelectorAll('.msgr-plus-menu:not([hidden])').forEach((menu) => {
+            menu.hidden = true;
+            const btn = menu.closest('.msgr-plus-wrap')?.querySelector('.js-msgr-plus');
+            if (btn) { btn.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); }
+        });
+    });
+
+    // A clip plays where it sits; metadata-only preload keeps data bills sane
+    // and still paints a first frame where there is no poster.
+    function buildVideo(m, bodyEl) {
+        const v = document.createElement('video');
+        v.src = m.video; v.controls = true; v.playsInline = true; v.preload = 'metadata';
+        if (m.poster) v.poster = m.poster;
+        v.addEventListener('loadedmetadata', () => { bodyEl.scrollTop = bodyEl.scrollHeight; });
+        return v;
+    }
 
     async function openWindow(userId, name) {
         if (openWins[userId]) { openWins[userId].querySelector('.msgr-window-foot input')?.focus(); return; }
@@ -250,10 +483,25 @@
                     <span class="rb-body"></span>
                     <button type="button" class="rb-x" aria-label="Cancel reply">✕</button>
                 </div>
-                <div class="msgr-attach hidden"><img class="msgr-attach-thumb" alt=""><button type="button" class="msgr-attach-x" aria-label="Remove photo">✕</button></div>
+                <div class="msgr-attach hidden">
+                    <img class="msgr-attach-thumb hidden" alt="">
+                    <span class="msgr-attach-clip hidden">🎬</span>
+                    <span class="msgr-attach-name"></span>
+                    <button type="button" class="msgr-attach-x" aria-label="Remove attachment">✕</button>
+                </div>
+                <div class="msgr-recbar hidden"><span class="msgr-recdot"></span><span class="msgr-rec-what">Recording video…</span><button type="button" class="msgr-rec-stop">Stop</button></div>
                 <div class="msgr-window-foot">
-                    <button type="button" class="msgr-icon js-msgr-photo" aria-label="Add a photo" title="Photo"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></button>
-                    <input type="file" class="js-msgr-file hidden" accept="image/*">
+                    <div class="msgr-plus-wrap">
+                        <button type="button" class="msgr-icon msgr-plus js-msgr-plus" aria-label="Add a photo or video" aria-expanded="false" title="Add media"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg></button>
+                        <div class="msgr-plus-menu" hidden>
+                            <button type="button" class="msgr-plus-opt" data-msgr-add="upload"><span class="msgr-plus-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>Upload photo or video</button>
+                            <button type="button" class="msgr-plus-opt" data-msgr-add="camera"><span class="msgr-plus-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>Take a photo</button>
+                            <button type="button" class="msgr-plus-opt" data-msgr-add="record"><span class="msgr-plus-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg></span>Record a video</button>
+                            <button type="button" class="msgr-plus-opt" data-msgr-add="gallery"><span class="msgr-plus-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l2-3h6l2 3h3v13H4V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 13l2.5-2.5L14 14l2-2 2 2"/></svg></span>Share from gallery</button>
+                        </div>
+                    </div>
+                    <input type="file" class="js-msgr-file hidden" accept="image/*,video/*">
+                    <input type="file" class="js-msgr-cam hidden" accept="image/*" capture="environment">
                     <button type="button" class="msgr-icon js-emoji-btn" aria-label="Add an emoji" title="Emoji"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></button>
                     <input type="text" placeholder="Aa" maxlength="5000">
                     <button type="button" class="msgr-send" aria-label="Send"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
@@ -262,50 +510,110 @@
         windowsWrap.appendChild(win);
         openWins[userId] = win;
 
-        win.querySelector('[data-close]').addEventListener('click', () => { win.remove(); delete openWins[userId]; });
         const input = win.querySelector('input[type="text"]');
         const bodyEl = win.querySelector('.msgr-window-body');
         const fileInput = win.querySelector('.js-msgr-file');
+        const camInput = win.querySelector('.js-msgr-cam');
         const attach = win.querySelector('.msgr-attach');
         const attachThumb = win.querySelector('.msgr-attach-thumb');
+        const attachClip = win.querySelector('.msgr-attach-clip');
+        const attachName = win.querySelector('.msgr-attach-name');
         const clearAttach = () => {
-            if (fileInput) fileInput.value = '';
-            attach?.classList.add('hidden');
-            if (attachThumb?.src) { try { URL.revokeObjectURL(attachThumb.src); } catch (e) {} attachThumb.removeAttribute('src'); }
+            // Only a freshly-chosen file owns an object URL; a gallery pick's
+            // URL is the stored one and must not be revoked.
+            if (win._att && win._att.file && win._att.url) { try { URL.revokeObjectURL(win._att.url); } catch (e) {} }
+            win._att = null;
+            fileInput.value = ''; camInput.value = '';
+            attach.classList.add('hidden');
+            attachThumb.classList.add('hidden'); attachThumb.removeAttribute('src');
+            attachClip.classList.add('hidden');
+            attachName.textContent = '';
         };
-        win.querySelector('.js-msgr-photo').addEventListener('click', () => fileInput.click());
-        fileInput.addEventListener('change', () => {
-            const f = fileInput.files[0];
-            if (f) { attachThumb.src = URL.createObjectURL(f); attach.classList.remove('hidden'); }
-            else clearAttach();
-        });
+        // One attachment at a time whichever door it came through — a DM
+        // carries a single media slot, and the chip below says what is loaded.
+        const setAttach = (att, label) => {
+            clearAttach();
+            win._att = att;
+            if (att.kind === 'image') { attachThumb.src = att.url; attachThumb.classList.remove('hidden'); }
+            else attachClip.classList.remove('hidden');
+            attachName.textContent = label || (att.kind === 'video' ? 'Video ready to send' : 'Photo ready to send');
+            attach.classList.remove('hidden');
+        };
+        const attachFile = (f) => {
+            if (!f) return;
+            const kind = (f.type || '').startsWith('video/') ? 'video' : 'image';
+            if (kind === 'video' && f.size > MAX_VIDEO_BYTES) {
+                if (window.toast) toast('That video is over 300 MB — pick or record a shorter one.', 'error');
+                return;
+            }
+            setAttach({ file: f, kind, url: URL.createObjectURL(f) }, f.name);
+        };
+        fileInput.addEventListener('change', () => attachFile(fileInput.files[0]));
+        camInput.addEventListener('change', () => attachFile(camInput.files[0]));
         win.querySelector('.msgr-attach-x').addEventListener('click', clearAttach);
         win.querySelector('.rb-x')?.addEventListener('click', () => clearReply(win));
+        win.querySelector('[data-close]').addEventListener('click', () => {
+            if (recWin === win) stopRec();   // never leave a camera running behind a closed chat
+            clearAttach();
+            win.remove(); delete openWins[userId];
+        });
+
+        // The + chooser: every way media can arrive, behind one button, so
+        // the typing field keeps its width.
+        const plusBtn = win.querySelector('.js-msgr-plus');
+        const plusMenu = win.querySelector('.msgr-plus-menu');
+        const toggleMenu = (open) => {
+            const on = open ?? plusMenu.hidden;
+            plusMenu.hidden = !on;
+            plusBtn.classList.toggle('is-open', on);
+            plusBtn.setAttribute('aria-expanded', on ? 'true' : 'false');
+        };
+        // Doors that cannot open here stay off the menu — no dead buttons.
+        if (!canRecord) plusMenu.querySelector('[data-msgr-add="record"]').classList.add('hidden');
+        if (!canGallery()) plusMenu.querySelector('[data-msgr-add="gallery"]').classList.add('hidden');
+        plusBtn.addEventListener('click', () => toggleMenu());
+        plusMenu.addEventListener('click', (e) => {
+            const opt = e.target.closest('[data-msgr-add]');
+            if (!opt) return;
+            toggleMenu(false);
+            const how = opt.getAttribute('data-msgr-add');
+            if (how === 'upload') fileInput.click();
+            else if (how === 'camera') camInput.click();
+            else if (how === 'record') startRec(win, attachFile);
+            else if (how === 'gallery') pickFromGallery(setAttach);
+        });
+        win.querySelector('.msgr-rec-stop').addEventListener('click', stopRec);
         const sendBtn = win.querySelector('.msgr-send');
         const doSend = async () => {
             const text = input.value.trim();
-            const file = fileInput.files[0];
-            if (!text && !file) return;
+            const att = win._att;
+            if (!text && !att) return;
             sendBtn.classList.remove('is-sending'); void sendBtn.offsetWidth; sendBtn.classList.add('is-sending');
             input.value = '';
-            // Independent object URL for the optimistic bubble (clearAttach revokes
-            // the composer's own preview URL, so we can't reuse it).
-            const pendingImageUrl = file ? URL.createObjectURL(file) : null;
+            // The optimistic bubble needs a URL of its own: a fresh file gets
+            // an independent object URL (clearAttach revokes the composer's),
+            // a gallery pick keeps the stored URL it will render with anyway.
+            const pendingMedia = att ? {
+                kind: att.kind,
+                url: att.file ? URL.createObjectURL(att.file) : att.url,
+                local: !!att.file,
+            } : null;
             const replyMeta = win._reply ? { body: win._reply.body || '📷 Photo', mine: false } : null;
             const fd = new FormData();
             if (text) fd.append('body', text);
-            if (file) fd.append('image', file);
+            if (att && att.file) fd.append(att.kind === 'video' ? 'video' : 'image', att.file, att.file.name || (att.kind === 'video' ? 'clip' : 'photo'));
+            if (att && att.pick) fd.append('galleryPath', att.pick.path);
             if (win._reply && win._reply.id) fd.append('replyToId', win._reply.id);
             clearAttach();
             clearReply(win);
 
             // Show the message right away with an uploading loader.
-            const pending = appendPendingBubble(bodyEl, { text, image: pendingImageUrl, replyTo: replyMeta });
+            const pending = appendPendingBubble(bodyEl, { text, media: pendingMedia, replyTo: replyMeta });
             try {
                 const r = await fetch(`/app/community/messages/${userId}`, { method: 'POST',
                     headers: { 'X-CSRF-TOKEN': CSRF(), Accept: 'application/json' }, body: fd });
                 const d = await r.json();
-                if (d.success) { finalizePending(bodyEl, pending, { id: d.data.id, body: d.data.body, image: d.data.image, replyTo: d.data.replyTo }); }
+                if (d.success) { finalizePending(bodyEl, pending, { id: d.data.id, body: d.data.body, image: d.data.image, video: d.data.video, poster: d.data.poster, replyTo: d.data.replyTo }); }
                 else { failPending(pending, d.message); if (text) input.value = text; }
             } catch (_) { failPending(pending, 'Network error — try again.'); if (text) input.value = text; }
         };
@@ -365,6 +673,10 @@
             img.addEventListener('load', () => { bodyEl.scrollTop = bodyEl.scrollHeight; });
             b.appendChild(img);
         }
+        if (m.video) {
+            b.dataset.msgKind = 'video';   // so a reply to it can say "🎬 Video"
+            b.appendChild(buildVideo(m, bodyEl));
+        }
         row.appendChild(b);
 
         addBubbleActs(row, m);
@@ -404,25 +716,39 @@
             b.appendChild(q);
         }
         if (m.text) { const t = document.createElement('div'); t.textContent = m.text; b.appendChild(t); }
-        if (m.image) { const img = document.createElement('img'); img.src = m.image; img.alt = ''; b.appendChild(img); }
+        let mediaEl = null;
+        if (m.media && m.media.kind === 'image') {
+            mediaEl = document.createElement('img'); mediaEl.src = m.media.url; mediaEl.alt = '';
+            b.appendChild(mediaEl);
+        } else if (m.media && m.media.kind === 'video') {
+            // A tile, not a player: a half-uploaded clip cannot play yet.
+            mediaEl = document.createElement('div'); mediaEl.className = 'msgr-vid-pending'; mediaEl.textContent = '🎬';
+            b.appendChild(mediaEl);
+        }
         const load = document.createElement('div');
         load.className = 'msgr-uploading';
-        load.innerHTML = '<span class="msgr-spin"></span><span>' + (m.image ? 'Sending photo…' : 'Sending…') + '</span>';
+        load.innerHTML = '<span class="msgr-spin"></span><span>' + (m.media ? (m.media.kind === 'video' ? 'Sending video…' : 'Sending photo…') : 'Sending…') + '</span>';
         b.appendChild(load);
         row.appendChild(b);
         bodyEl.appendChild(row);
         bodyEl.scrollTop = bodyEl.scrollHeight;
-        return { row, b, load, localUrl: m.image };
+        return { row, b, load, mediaEl, localUrl: (m.media && m.media.local) ? m.media.url : null };
     }
     function finalizePending(bodyEl, p, m) {
         p.load?.remove();
         p.b.classList.remove('is-pending');
         if (m.id) p.b.dataset.msgId = m.id;
         if (m.body) p.b.dataset.msgBody = m.body;
-        const img = p.b.querySelector('img');
-        if (img) {
+        if (m.video) {
+            // The placeholder tile hands over to the real player.
+            p.b.dataset.msgKind = 'video';
+            if (p.mediaEl) p.mediaEl.remove();
+            p.b.appendChild(buildVideo(m, bodyEl));
+        } else if (m.image) {
+            let img = (p.mediaEl && p.mediaEl.tagName === 'IMG') ? p.mediaEl : null;
+            if (!img) { img = document.createElement('img'); img.alt = ''; p.b.appendChild(img); }
             img.setAttribute('data-lightbox', '');
-            if (m.image) img.src = m.image;         // swap local preview → stored URL
+            img.src = m.image;                      // swap local preview → stored URL
             img.addEventListener('load', () => { bodyEl.scrollTop = bodyEl.scrollHeight; });
         }
         if (p.localUrl) { try { URL.revokeObjectURL(p.localUrl); } catch (_) {} }
@@ -495,7 +821,8 @@
             const win = act.closest('.msgr-window');
             if (!bubble) return;
             if (act.getAttribute('data-msgr-act') === 'reply') {
-                startReply(win, bubble.dataset.msgId, bubble.dataset.msgBody || '📷 Photo');
+                // A wordless bubble is quoted by what it holds — clip or photo.
+                startReply(win, bubble.dataset.msgId, bubble.dataset.msgBody || (bubble.dataset.msgKind === 'video' ? '🎬 Video' : '📷 Photo'));
             } else {
                 openForward(bubble.dataset.msgBody || '');
             }

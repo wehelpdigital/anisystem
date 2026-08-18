@@ -48,12 +48,18 @@ class CommunityMessageController extends Controller
             if (! $u) {
                 return null;
             }
+            // A media-only message used to leave the preview line blank, which
+            // reads as an empty thread rather than "they sent you a photo".
+            $lastText = trim((string) $t['last']->body) !== ''
+                ? Str::limit($t['last']->body, 48)
+                : ($t['last']->imagePath ? $this->mediaLabel($t['last']->imagePath) : '');
+
             return [
                 'userId' => (int) $otherId,
                 'name' => $u->full_name,
                 'avatar' => $u->avatarPath ? \App\Support\MediaStore::url($u->avatarPath) : null,
                 'initials' => $u->initials,
-                'lastBody' => ((int) $t['last']->senderId === $meId ? 'You: ' : '') . Str::limit($t['last']->body, 48),
+                'lastBody' => ((int) $t['last']->senderId === $meId ? 'You: ' : '') . $lastText,
                 'lastAt' => $t['last']->created_at?->diffForHumans(null, true),
                 'unread' => $t['unread'],
             ];
@@ -77,23 +83,25 @@ class CommunityMessageController extends Controller
         CommunityMessage::where('recipientId', $meId)->where('senderId', $userId)
             ->where('isRead', 0)->update(['isRead' => 1]);
 
+        // The NEWEST 200, delivered oldest-first for rendering. Ascending with
+        // a limit took the OLDEST 200, so a long conversation froze at its own
+        // history and today's messages never reached the window.
         $rows = CommunityMessage::where('deleteStatus', 1)
             ->where(function ($q) use ($meId, $userId) {
                 $q->where(fn ($w) => $w->where('senderId', $meId)->where('recipientId', $userId))
                   ->orWhere(fn ($w) => $w->where('senderId', $userId)->where('recipientId', $meId));
             })
-            ->orderBy('id')->limit(200)->get();
+            ->latest('id')->limit(200)->get()->reverse()->values();
 
         // Lookup for resolving quoted-reply snippets without extra queries.
         $byId = $rows->keyBy('id');
-        $msgs = $rows->map(fn ($m) => [
+        $msgs = $rows->map(fn ($m) => array_merge([
             'id' => $m->id,
             'body' => $m->body,
-            'image' => $m->imagePath ? \App\Support\MediaStore::url($m->imagePath) : null,
             'mine' => (int) $m->senderId === $meId,
             'at' => $m->created_at?->diffForHumans(null, true),
             'replyTo' => $this->replySnippet($byId->get($m->replyToId), $meId),
-        ])->values();
+        ], $this->mediaPayload($m->imagePath)))->values();
 
         return response()->json(['success' => true, 'data' => [
             'user' => [
@@ -115,7 +123,7 @@ class CommunityMessageController extends Controller
         }
         $text = trim((string) $m->body);
         if ($text === '' && $m->imagePath) {
-            $text = '📷 Photo';
+            $text = $this->mediaLabel($m->imagePath);
         }
 
         return [
@@ -125,13 +133,88 @@ class CommunityMessageController extends Controller
         ];
     }
 
+    /** True when a stored media path is a clip rather than a picture. */
+    private function isVideo(?string $path): bool
+    {
+        return filled($path)
+            && in_array(strtolower(pathinfo($path, PATHINFO_EXTENSION)), self::VIDEO_EXTS, true);
+    }
+
+    /** How this media is described in words (previews, notifications). */
+    private function mediaLabel(?string $path): string
+    {
+        return $this->isVideo($path) ? '🎬 Video' : '📷 Photo';
+    }
+
+    /**
+     * One media slot, told apart by extension: imagePath predates clips, so a
+     * video rides in the same column and this payload says which one it was.
+     * A local clip's poster shares its basename (VideoOptimizer writes
+     * uuid.mp4 + uuid.webp side by side), so it is derived here rather than
+     * given a column of its own; a remote clip has no derivable sibling and
+     * the <video preload="metadata"> bubble paints its own first frame.
+     */
+    private function mediaPayload(?string $path): array
+    {
+        if (blank($path)) {
+            return ['image' => null, 'video' => null, 'poster' => null];
+        }
+        if (! $this->isVideo($path)) {
+            return ['image' => \App\Support\MediaStore::url($path), 'video' => null, 'poster' => null];
+        }
+
+        $poster = null;
+        if (! \App\Support\MediaStore::isRemote($path)) {
+            $sibling = preg_replace('/\.[A-Za-z0-9]+$/', '.webp', $path);
+            if ($sibling !== $path && Storage::disk('public')->exists($sibling)) {
+                $poster = \App\Support\MediaStore::url($sibling);
+            }
+        }
+
+        return ['image' => null, 'video' => \App\Support\MediaStore::url($path), 'poster' => $poster];
+    }
+
+    /**
+     * A gallery share arrives as the stored path the media picker handed the
+     * browser — attach-by-reference, the same contract notes and observations
+     * use, so a season keeps one copy of each file. The path space is
+     * unguessable (uuid/random names from the picker), but the shape is still
+     * checked and, when the path claims to live on this disk, so is the file:
+     * a share that points nowhere would render as a broken bubble forever.
+     */
+    private function galleryShare(string $path): ?string
+    {
+        $path = trim($path);
+        if ($path === '' || str_contains($path, '..') || str_contains($path, '://')) {
+            return null;
+        }
+        $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+        if (! in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif'], true)
+            && ! in_array($ext, self::VIDEO_EXTS, true)) {
+            return null;
+        }
+        if (\App\Support\MediaStore::isRemote($path)) {
+            return $path;
+        }
+
+        return Storage::disk('public')->exists($path) ? $path : null;
+    }
+
     /** Send a message (respects the recipient's allowMessages switch). */
     public function send(Request $request, int $userId)
     {
         $meId = (int) Auth::id();
         $data = $request->validate([
             'body' => 'nullable|string|max:5000',
-            'image' => 'nullable|image|max:5120',
+            // 8 MB like the rest of the app — "capture photo" hands over a
+            // camera JPEG, which routinely cleared the old 5 MB cap.
+            'image' => 'nullable|image|max:8192',
+            // 300 MB ceiling and the mime list every clip path enforces;
+            // VideoOptimizer re-encodes to a streamable size on the way in.
+            'video' => 'nullable|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-m4v|max:307200',
+            // A stored path picked from the season gallery — a reference,
+            // not a copy (validated in galleryShare()).
+            'galleryPath' => 'nullable|string|max:500',
             'replyToId' => 'nullable|integer',
         ]);
         $recipient = User::where('deleteStatus', 1)->find($userId);
@@ -146,11 +229,27 @@ class CommunityMessageController extends Controller
         }
 
         $body = trim((string) ($data['body'] ?? ''));
-        $imagePath = $request->hasFile('image')
-            ? \App\Support\MediaOptimizer::storeImageAsWebp($request->file('image'), 'community/messages')
-            : null;
-        if ($body === '' && ! $imagePath) {
-            return response()->json(['success' => false, 'message' => 'Write a message or add a photo.'], 422);
+        $mediaPath = null;
+        if ($request->hasFile('video')) {
+            // The same pass every clip in the app takes (Quick Record, walls):
+            // ≤720p MP4 with a poster frame beside it, because these travel
+            // over a farm's phone signal in both directions.
+            try {
+                $stored = \App\Support\VideoOptimizer::storeCompressed($request->file('video'), 'community/messages');
+                $mediaPath = $stored['video'];
+            } catch (\Throwable $e) {
+                return response()->json(['success' => false, 'message' => $e->getMessage() ?: 'The video could not be saved.'], 422);
+            }
+        } elseif ($request->hasFile('image')) {
+            $mediaPath = \App\Support\MediaOptimizer::storeImageAsWebp($request->file('image'), 'community/messages');
+        } elseif (filled($data['galleryPath'] ?? null)) {
+            $mediaPath = $this->galleryShare((string) $data['galleryPath']);
+            if ($mediaPath === null) {
+                return response()->json(['success' => false, 'message' => 'That gallery item could not be shared.'], 422);
+            }
+        }
+        if ($body === '' && ! $mediaPath) {
+            return response()->json(['success' => false, 'message' => 'Write a message or add a photo or video.'], 422);
         }
 
         // A reply must point at a real message in *this* conversation.
@@ -174,7 +273,7 @@ class CommunityMessageController extends Controller
             'recipientId' => $recipient->id,
             'replyToId' => $replyToId,
             'body' => $body,
-            'imagePath' => $imagePath,
+            'imagePath' => $mediaPath,
             'isRead' => 0,
             'deleteStatus' => 1,
         ]);
@@ -184,20 +283,19 @@ class CommunityMessageController extends Controller
             userId: $recipient->id,
             type: 'message',
             title: ($actor->full_name ?: 'A member') . ' sent you a message',
-            body: $body !== '' ? Str::limit($body, 90) : '📷 Photo',
+            body: $body !== '' ? Str::limit($body, 90) : $this->mediaLabel($mediaPath),
             url: route('community.index') . '?dm=' . $meId,
             actorUserId: $meId,
             dedupeWindowHours: null,
         );
 
-        return response()->json(['success' => true, 'data' => [
+        return response()->json(['success' => true, 'data' => array_merge([
             'id' => $msg->id,
             'body' => $msg->body,
-            'image' => $imagePath ? \App\Support\MediaStore::url($imagePath) : null,
             'mine' => true,
             'at' => 'now',
             'replyTo' => $this->replySnippet($replyRow, $meId),
-        ]]);
+        ], $this->mediaPayload($mediaPath))]);
     }
 
     /** Just the unread total, for the dock badge poll. */
@@ -237,16 +335,15 @@ class CommunityMessageController extends Controller
         $parents = $parentIds->isNotEmpty()
             ? CommunityMessage::whereIn('id', $parentIds)->get()->keyBy('id')
             : collect();
-        $incoming = $rows->map(fn ($m) => [
+        $incoming = $rows->map(fn ($m) => array_merge([
             'id' => (int) $m->id,
             'senderId' => (int) $m->senderId,
             'senderName' => optional($users->get((int) $m->senderId))->full_name ?? 'Member',
             'senderAvatar' => optional($users->get((int) $m->senderId))->avatarPath ? \App\Support\MediaStore::url($users->get((int) $m->senderId)->avatarPath) : null,
             'senderInitials' => optional($users->get((int) $m->senderId))->initials ?? '?',
             'body' => $m->body,
-            'image' => $m->imagePath ? \App\Support\MediaStore::url($m->imagePath) : null,
             'replyTo' => $this->replySnippet($parents->get($m->replyToId), $meId),
-        ])->values();
+        ], $this->mediaPayload($m->imagePath)))->values();
 
         return response()->json(['success' => true, 'data' => [
             'incoming' => $incoming,
