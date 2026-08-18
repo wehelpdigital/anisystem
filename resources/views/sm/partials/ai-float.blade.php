@@ -124,6 +124,9 @@
 
         <div class="ai-float-composer">
             <div id="aiFloatChips" class="ai-float-chips hidden"></div>
+            @unless ($aiFloatUnlimited)
+            <p class="ai-float-est hidden" id="aiFloatEst" aria-live="polite"></p>
+            @endunless
             <div id="aiFloatBusy" class="ai-float-busyline hidden" role="status">
                 <span class="sp" aria-hidden="true"></span><span class="tx">Attaching photo…</span>
             </div>
@@ -262,6 +265,8 @@
 
     .ai-float-composer { flex-shrink: 0; padding: .6rem .75rem .75rem; border-top: 1px solid var(--color-gray-100); }
     .ai-float-chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .4rem; }
+    .ai-float-est { font-size: .66rem; font-weight: 700; color: var(--color-gray-400); margin-bottom: .3rem; }
+    .ai-float-est.hidden { display: none; }
     .ai-float-busyline { display: flex; align-items: center; gap: .35rem; margin-bottom: .35rem;
         font-size: .68rem; font-weight: 700; color: var(--color-brand-700); }
     .ai-float-busyline.hidden { display: none; }
@@ -419,6 +424,25 @@
             toNote: @json(route('ai.conversation.note')),
         };
         const UNLIMITED = @json($aiFloatUnlimited);
+        @php
+        // Precomputed: @json splits on commas (value, flags, depth) and an
+        // inline array literal compiles to truncated, unparseable PHP.
+        $aiPriceCard = ['inK' => (float) $aiFloatSettings->creditsPerInputK, 'outK' => (float) $aiFloatSettings->creditsPerOutputK, 'img' => (float) $aiFloatSettings->creditsPerImage, 'halfOut' => (int) $aiFloatSettings->maxOutputTokens / 2];
+    @endphp
+    const PRICE = @json($aiPriceCard);
+        // The bill quoted before it is run up — the server's pre-flight
+        // estimate, mirrored, repriced on every keystroke and chip.
+        const sayEstimate = () => {
+            const el = $('aiFloatEst');
+            if (UNLIMITED || !el) return;
+            const msg = ($('aiFloatText')?.value || '').trim();
+            const shots = chips.children.length;
+            if (!msg && !shots) { el.classList.add('hidden'); return; }
+            const tin = Math.ceil(msg.length / 4) + 900;
+            const cost = Math.max(.01, Math.round((tin / 1000 * PRICE.inK + PRICE.halfOut / 1000 * PRICE.outK + shots * PRICE.img) * 100) / 100);
+            el.textContent = `≈ ${cost} credits for this question`;
+            el.classList.remove('hidden');
+        };
         const SCHEDULE_ID = @json($schedule->id);
         const AVATAR = @json($aiFloatAvatar);
         const MY = @json(auth()->user()->initials ?? '');
@@ -514,7 +538,7 @@
             input.value = (b.querySelector('.t')?.textContent || b.textContent).trim();
             input.dispatchEvent(new Event('input')); input.focus();
         });
-        input?.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 96) + 'px'; });
+        input?.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 96) + 'px';  sayEstimate(); });
         input?.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey && window.matchMedia('(min-width: 768px)').matches) { e.preventDefault(); send(); }
         });
@@ -531,18 +555,20 @@
         };
         const syncChips = () => chips.classList.toggle('hidden', chipCount() === 0);
         const attachedPaths = () => [...chips.children].map((c) => c.dataset.path).filter(Boolean);
+        const attachedScheds = () => [...chips.children].filter((c) => c.dataset.path)
+            .map((c) => c.dataset.sched ? parseInt(c.dataset.sched, 10) : null);
         const attachedUrls = () => [...chips.children].map((c) => c.querySelector('img')?.src).filter(Boolean);
         function addChip(url) {
             const chip = document.createElement('span');
             chip.className = 'ai-float-chip is-busy';
             chip.innerHTML = `<img src="${escapeHtml(url)}" alt=""><button type="button" class="x" aria-label="Remove photo">✕</button>`;
             chip.querySelector('.x').addEventListener('click', () => dropChip(chip));
-            chips.appendChild(chip); syncChips();
+            chips.appendChild(chip); syncChips(); sayEstimate();
             return chip;
         }
         function dropChip(chip) {
             if (chip._blob) URL.revokeObjectURL(chip._blob);
-            chip.remove(); syncChips();
+            chip.remove(); syncChips(); sayEstimate();
         }
         function clearPhotos() { [...chips.children].forEach(dropChip); }
         function uploadOne(file) {
@@ -658,13 +684,14 @@
                 multiple: true,
                 max: MAX_SHOTS - chipCount(),
                 onPick: (item) => {
-                    if (!item || !item.url || !roomForAnother()) return;
+                    // A reference, not a copy — the ask endpoint honours the
+                    // picker's own list, so the chip lands done, instantly.
+                    if (!item || !item.url || !item.path || !roomForAnother()) return;
                     const chip = addChip(item.url);
-                    uploadsBusy++; sayBusy();
-                    api(URLS.attach, { method: 'POST', body: { url: item.url } })
-                        .then((res) => { chip.dataset.path = res.data.path; chip.querySelector('img').src = res.data.url; chip.classList.remove('is-busy'); })
-                        .catch((err) => { toast(err.message, 'error'); dropChip(chip); })
-                        .finally(() => { uploadsBusy--; sayBusy(); });
+                    chip.dataset.path = item.path;
+                    chip.dataset.sched = String(SCHEDULE_ID);
+                    chip.classList.remove('is-busy');
+                    sayEstimate();
                 },
             });
         });
@@ -700,7 +727,7 @@
             input.value = ''; input.style.height = 'auto';
             const thinking = addTurn(false, '<span class="ai-float-dots"><i></i><i></i><i></i></span>');
             try {
-                const res = await api(URLS.ask, { method: 'POST', body: { message, conversationId, imagePaths: myPaths, scheduleId: SCHEDULE_ID } });
+                const res = await api(URLS.ask, { method: 'POST', body: { message, conversationId, imagePaths: myPaths, imageScheduleIds: attachedScheds(), scheduleId: SCHEDULE_ID } });
                 conversationId = res.data.conversationId;
                 // Chips leave the moment the send is known good.
                 clearPhotos();

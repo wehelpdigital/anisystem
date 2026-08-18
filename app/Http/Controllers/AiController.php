@@ -85,6 +85,10 @@ class AiController extends Controller
             // Capped, because each one is a whole image sent to the model.
             'imagePaths' => 'nullable|array|max:6',
             'imagePaths.*' => 'string|max:500',
+            // Index-aligned with imagePaths: which season's gallery a picture
+            // was referenced from, null for the asker's own uploads.
+            'imageScheduleIds' => 'nullable|array|max:6',
+            'imageScheduleIds.*' => 'nullable|integer',
             'scheduleId' => 'nullable|integer',
         ]);
         if ($validator->fails()) {
@@ -100,19 +104,24 @@ class AiController extends Controller
          * change. Every path must load — a path the ownership check throws
          * out is refused loudly rather than quietly answering a question
          * about fewer photos than the farmer attached. */
-        $wanted = array_values(array_unique(array_filter(array_merge(
-            [(string) $request->input('imagePath')],
-            array_map('strval', (array) $request->input('imagePaths', []))
-        ))));
+        $scheds = (array) $request->input('imageScheduleIds', []);
+        $wanted = [];
+        if (filled($request->input('imagePath'))) {
+            $wanted[(string) $request->input('imagePath')] = null;
+        }
+        foreach (array_values((array) $request->input('imagePaths', [])) as $i => $p) {
+            // First mention wins on a duplicate — same photo, same rights.
+            $wanted[(string) $p] = $wanted[(string) $p] ?? ($scheds[$i] ?? null ? (int) $scheds[$i] : null);
+        }
         $images = [];
         $imagePaths = [];
-        foreach ($wanted as $path) {
-            $loaded = $this->loadImage($userId, $path);
+        foreach ($wanted as $path => $gallerySid) {
+            $loaded = $this->loadImage($userId, (string) $path, $gallerySid);
             if ($loaded === null) {
                 return $this->json(false, 'One of the attached photos could not be read. Remove it and try again.', [], 422);
             }
             $images[] = $loaded;
-            $imagePaths[] = $path;
+            $imagePaths[] = (string) $path;
         }
         $imagePath = $imagePaths[0] ?? null;
         $image = $images ?: null;
@@ -719,7 +728,7 @@ class AiController extends Controller
      * into the caller's own folder, so a tampered `imagePath` cannot reach
      * another client's photo or anywhere else on disk.
      */
-    private function loadImage(int $userId, string $path): ?array
+    private function loadImage(int $userId, string $path, ?int $galleryScheduleId = null): ?array
     {
         // A photo kept by the mother app is fetched over HTTP; one kept here
         // is read off the disk. Either way the folder rule holds: the path
@@ -734,7 +743,13 @@ class AiController extends Controller
         $owned = ! str_contains($bare, '..')
             && (str_starts_with($bare, 'ai-photos/' . $userId . '/')
                 || str_starts_with($bare, 'anisystem/ai-photos/' . $userId . '/'));
-        if (! $owned) {
+        // Not the asker's own AI folder: the one other door is a REFERENCE to
+        // season media the asker can already see. Attaching used to copy the
+        // file at attach time — a download and a re-upload through the mother
+        // app before a word was typed, which is the slowness the owner asked
+        // about. A reference costs nothing until send, and the allowlist is
+        // exactly what the picker offered.
+        if (! $owned && ! ($galleryScheduleId && $this->galleryAllows($galleryScheduleId, $path))) {
             return null;
         }
 
@@ -766,6 +781,36 @@ class AiController extends Controller
         }
 
         return ['mime' => $mime, 'data' => base64_encode($disk->get($path))];
+    }
+
+    /** Season-media paths per schedule, built once per request. */
+    private array $galleryPaths = [];
+
+    /**
+     * Whether this path is on the named schedule's own media list — the same
+     * list the picker offered, resolved by the same URL-to-path inverse. The
+     * schedule must be reachable by the asker (their own, or their boss's
+     * with a grant) before its list says anything at all.
+     */
+    private function galleryAllows(int $scheduleId, string $path): bool
+    {
+        if (! array_key_exists($scheduleId, $this->galleryPaths)) {
+            $schedule = AsCroppingSchedule::active()
+                ->forClient(\App\Support\WorkerContext::effectiveOwnerId())
+                ->find($scheduleId);
+            $this->galleryPaths[$scheduleId] = $schedule
+                ? collect(\App\Support\SeasonMedia::all($schedule))
+                    ->flatMap(fn ($m) => [
+                        \App\Support\MediaStore::pathFromUrl($m['url'] ?? null),
+                        \App\Support\MediaStore::pathFromUrl($m['posterUrl'] ?? null),
+                    ])
+                    ->filter()
+                    ->values()
+                    ->all()
+                : [];
+        }
+
+        return in_array($path, $this->galleryPaths[$scheduleId], true);
     }
 
     private function json(bool $ok, string $message, array $data = [], int $status = 200)

@@ -116,22 +116,8 @@ class MediaPickerController extends BaseScheduleController
      */
     private function pathFor(?string $url): ?string
     {
-        if (blank($url)) {
-            return null;
-        }
-
-        $mother = (string) config('mother.url');
-        if (filled($mother)) {
-            $remoteBase = rtrim($mother, '/') . '/storage/';
-            if (Str::startsWith($url, $remoteBase)) {
-                return MediaStore::REMOTE_PREFIX . Str::after($url, $remoteBase);
-            }
-        }
-
-        // Asked of the disk rather than assumed: an install serving /storage
-        // from a CDN or another host still resolves.
-        $localBase = Str::beforeLast(Storage::disk('public')->url('probe.tmp'), 'probe.tmp');
-
-        return Str::startsWith($url, $localBase) ? Str::after($url, $localBase) : null;
+        // One truth, shared with the AI's gallery references — the list this
+        // picker offers is exactly the list the ask endpoint will honour.
+        return MediaStore::pathFromUrl($url);
     }
 }

@@ -415,7 +415,7 @@
                 </select>
             @endif
             @unless ($aiUnlimited)
-                <p class="ai-hint mt-0!">≈ 4 credits per answer{{ $aiPerPhoto > 0 ? ' · +' . $aiPerPhotoTxt . ' per photo' : '' }}</p>
+                <p class="ai-hint mt-0!" id="aiHint" data-idle="≈ 4 credits per answer{{ $aiPerPhoto > 0 ? ' · +' . $aiPerPhotoTxt . ' per photo' : '' }}">≈ 4 credits per answer{{ $aiPerPhoto > 0 ? ' · +' . $aiPerPhotoTxt . ' per photo' : '' }}</p>
             @endunless
         </div>
     </div>
@@ -523,6 +523,25 @@ const __init = () => {
     const AVATAR = @json($settings->avatarPath ? \App\Support\MediaStore::url($settings->avatarPath) : null);
     const MY_INITIALS = @json(auth()->user()->initials);
     const UNLIMITED = @json((bool) $aiUnlimited);
+    /* The bill, quoted before it is run up: the server's own pre-flight
+       formula, mirrored, repriced on every keystroke and every chip. */
+    @php
+        // Precomputed: @json splits on commas (value, flags, depth) and an
+        // inline array literal compiles to truncated, unparseable PHP.
+        $aiPriceCard = ['inK' => (float) $settings->creditsPerInputK, 'outK' => (float) $settings->creditsPerOutputK, 'img' => (float) $settings->creditsPerImage, 'halfOut' => (int) $settings->maxOutputTokens / 2];
+    @endphp
+    const PRICE = @json($aiPriceCard);
+    function sayEstimate() {
+        const hint = byId('aiHint');
+        if (UNLIMITED || !hint) return;
+        const msg = (input?.value || '').trim();
+        const shots = chips ? chips.children.length : 0;
+        if (!msg && !shots) { hint.textContent = hint.dataset.idle || ''; return; }
+        const tin = Math.ceil(msg.length / 4) + 900;
+        const cost = Math.max(.01, Math.round((tin / 1000 * PRICE.inK + PRICE.halfOut / 1000 * PRICE.outK + shots * PRICE.img) * 100) / 100);
+        hint.textContent = `≈ ${cost} credits for this question`;
+    }
+
     const BOT_SVG = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>';
 
     let conversationId = @json($conversation->id ?? null);
@@ -633,6 +652,7 @@ const __init = () => {
     input?.addEventListener('input', () => {
         input.style.height = 'auto';
         input.style.height = Math.min(input.scrollHeight, 144) + 'px';
+        sayEstimate();
     });
     input?.addEventListener('keydown', (e) => {
         // Enter sends on a desktop keyboard; Shift+Enter always adds a line.
@@ -661,6 +681,9 @@ const __init = () => {
     function attachedUrls() {
         return [...chips.querySelectorAll('.ai-chip[data-path] img')].map((i) => i.src);
     }
+    function attachedScheds() {
+        return [...chips.querySelectorAll('.ai-chip[data-path]')].map((c) => c.dataset.sched ? parseInt(c.dataset.sched, 10) : null);
+    }
     function roomForAnother() {
         if (chips.children.length < MAX_PHOTOS) return true;
         toast('Up to ' + MAX_PHOTOS + ' photos per question — remove one to add another.', 'error');
@@ -673,11 +696,13 @@ const __init = () => {
             + `<span class="st">${CHIP_SPIN}</span>`
             + '<button type="button" class="x" aria-label="Remove photo">✕</button>';
         chips.appendChild(el);
+        sayEstimate();
         return el;
     }
     function dropChip(el) {
         if (el._blob) { try { URL.revokeObjectURL(el._blob); } catch (e) {} }
         el.remove();
+        sayEstimate();
     }
     function clearPhotos() {
         [...chips.children].forEach(dropChip);
@@ -712,18 +737,17 @@ const __init = () => {
     });
 
     // A gallery pick is already hosted here — the server keeps its own copy.
-    function attachFromGallery(item) {
-        if (!item || !item.url || !roomForAnother()) return;
+    function attachFromGallery(item, gallerySid) {
+        // A reference, not a copy: the server already hosts this picture and
+        // the ask endpoint honours the picker's own list — so the chip lands
+        // done, instantly. Copying at attach time (a download plus a
+        // re-upload before a word was typed) was the slowness.
+        if (!item || !item.url || !item.path || !roomForAnother()) return;
         const chip = addChip(item.url);
-        uploadsBusy++; updateSend();
-        api(URLS.attach, { method: 'POST', body: { url: item.url } })
-            .then((res) => {
-                chip.dataset.path = res.data.path;
-                chip.querySelector('img').src = res.data.url;
-                chip.classList.remove('is-busy');
-            })
-            .catch((err) => { toast(err.message, 'error'); dropChip(chip); })
-            .finally(() => { uploadsBusy--; updateSend(); });
+        chip.dataset.path = item.path;
+        chip.dataset.sched = String(gallerySid || '');
+        chip.classList.remove('is-busy');
+        sayEstimate();
     }
 
     /* ---- The attach chooser (house sheet). The picker now travels with
@@ -767,7 +791,7 @@ const __init = () => {
             // Several at once - the question can carry what room remains.
             multiple: true,
             max: MAX_PHOTOS - chips.children.length,
-            onPick: attachFromGallery,
+            onPick: (item) => attachFromGallery(item, sid),
         });
     });
 
@@ -781,6 +805,7 @@ const __init = () => {
         busy = true;
         setSending(true);
         const myPaths = attachedPaths();
+        const myScheds = attachedScheds();
         addTurn(true, '<p>' + escapeHtml(message).replace(/\r?\n/g, '<br>') + '</p>', attachedUrls(), null, true);
         input.value = '';
         input.style.height = 'auto';
@@ -794,6 +819,7 @@ const __init = () => {
                     message,
                     conversationId,
                     imagePaths: myPaths,
+                    imageScheduleIds: myScheds,
                     scheduleId: byId('aiSchedule')?.value || null,
                 },
             });

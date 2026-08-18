@@ -130,6 +130,34 @@ class MediaStore
         return $path !== null && Str::startsWith($path, self::REMOTE_PREFIX);
     }
 
+    /**
+     * url() run backwards: the stored path behind a public address, or null
+     * for an address neither host of ours hands out. Both addresses url()
+     * can build are plain prefixes over the path, so stripping the right one
+     * is an exact inverse rather than a guess. The picker and the AI's
+     * gallery references both lean on this being the same truth.
+     */
+    public static function pathFromUrl(?string $url): ?string
+    {
+        if (blank($url)) {
+            return null;
+        }
+
+        $mother = (string) config('mother.url');
+        if (filled($mother)) {
+            $remoteBase = rtrim($mother, '/') . '/storage/';
+            if (Str::startsWith($url, $remoteBase)) {
+                return self::REMOTE_PREFIX . Str::after($url, $remoteBase);
+            }
+        }
+
+        // Asked of the disk rather than assumed: an install serving /storage
+        // from a CDN or another host still resolves.
+        $localBase = Str::beforeLast(Storage::disk('public')->url('probe.tmp'), 'probe.tmp');
+
+        return Str::startsWith($url, $localBase) ? Str::after($url, $localBase) : null;
+    }
+
     /** The path without its marker, as the mother app knows it. */
     public static function strip(string $path): string
     {
