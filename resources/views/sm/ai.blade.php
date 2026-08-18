@@ -43,6 +43,15 @@
         .aichat { display: flex; flex-direction: column; height: calc(100dvh - 11rem); min-height: min(26rem, 60dvh); width: 100%; }
         /* Mobile: clear the fixed bottom tab bar so the composer + hint stay visible. */
         @media (max-width: 767px) { .aichat { height: calc(100dvh - 13.5rem); min-height: min(22rem, 55dvh); } }
+        /* Inside the shell the page bobbed a little: the pane's height was a
+           guess and the footer sat underneath. While the AI module is the one
+           showing, the document locks, the footer steps aside, and the pane
+           is sized to the chrome that is actually above it (app bar + main's
+           top padding + the toolbar row). Tuned by measurement. */
+        html.sm-ai-open body { overflow: hidden; }
+        html.sm-ai-open footer { display: none; }
+        html.sm-ai-open .aichat { height: calc(100dvh - 9.4rem); min-height: 0; }
+        @media (min-width: 768px) { html.sm-ai-open .aichat { height: calc(100dvh - 10.4rem); } }
         /* Full-page mode only (the body class never reaches the shell's
            partial): the chat runs to the viewport's true bottom — measured,
            the composer sat 87px adrift. 8.1rem = app bar + main's top
@@ -925,10 +934,15 @@ const __init = () => {
             bar.querySelector('#aiMenuBtn')?.remove();   // a re-fetched pane must not double it
             bar.appendChild(btn);
             btn.classList.remove('hidden');
-            document.addEventListener('sm:module-shown', (e) => {
-                btn.classList.toggle('hidden', (e.detail && e.detail.key) !== 'ai');
-            });
         }
+        // While this module holds the stage: the button shows, the page
+        // holds still. Both undone the moment another module takes over.
+        document.documentElement.classList.add('sm-ai-open');
+        document.addEventListener('sm:module-shown', (e) => {
+            const mine = (e.detail && e.detail.key) === 'ai';
+            btn?.classList.toggle('hidden', !mine);
+            document.documentElement.classList.toggle('sm-ai-open', mine);
+        });
     }
     byId('aiMenuBtn')?.addEventListener('click', () => openSheet('aiMenuSheet'));
     ['aiNewChatBtn', 'aiHistoryBtn', 'aiLinkBtn'].forEach((id) =>

@@ -602,12 +602,11 @@
                AI module parks its menu here) onto a second row. The small
                buttons refuse to shrink so the label is the only thing that
                bends. */
-            #modulesBtn { min-width: 0; }
-            #currentModuleLabel { display: block; max-width: 5.5rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            /* The owner's call: "Activities" stays written on the back
+               button; the hamburger gives up its module name instead — the
+               menu it opens says where you are anyway. */
+            #currentModuleLabel { display: none; }
             #moduleBackBtn, #actToolbar > .btn:last-child { flex-shrink: 0; }
-            /* The arrow reads as "back" on its own; the word was the width
-               that pushed the row's right-seated button onto a second line. */
-            #moduleBackBtn span { display: none; }
 
             /* A multi-day group reads as one range instead of a start date plus
                an arrow badge repeating it — same information, about half the
