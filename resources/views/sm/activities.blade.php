@@ -1339,8 +1339,13 @@
            on the line). The total height this produces is what the Gallery's
            hardcoded shelf-bar offset (ga-shelfbar) is measured against — the
            two are changed together, always. */
-        .sticky.top-14 { top: calc(3.5rem + 1px); padding-top: .5rem; padding-bottom: .5rem; }
-        @media (min-width: 768px) { .sticky.top-14 { top: calc(4rem + 1px); } }
+        /* The bar is a second header, and a header does not float a page-
+           padding below the first one: the negative top margin mirrors main's
+           py-4/md:py-8 the same way -mx mirrors its px, so at rest the bar
+           sits where sticking pins it anyway. In this style block, not
+           utilities — the CSS bundle is prebuilt and never heard of -mt-4. */
+        .sticky.top-14 { top: calc(3.5rem + 1px); margin-top: -1rem; padding-top: .5rem; padding-bottom: .5rem; }
+        @media (min-width: 768px) { .sticky.top-14 { top: calc(4rem + 1px); margin-top: -2rem; } }
         #toggleHiddenBtn.hidden { display: none !important; }
         /* !important so the disabled dimming survives the sheet's fade-in
            animation (which otherwise forces opacity back to 1). */
