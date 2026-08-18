@@ -168,6 +168,8 @@
     .ai-float-msg .b .cost::before { content: ""; width: .32rem; height: .32rem; border-radius: 999px; background: var(--color-accent-500); }
     .ai-float-msg.me .b .cost { background: rgb(255 255 255 / .2); color: #fff; }
     .ai-float-msg.me .b .cost::before { background: #fff; }
+    /* A whispered clock, not a shout. */
+    .ai-float-msg .b .when { display: block; font-size: .6rem; font-weight: 600; opacity: .55; margin-top: .25rem; text-align: right; font-variant-numeric: tabular-nums; }
 
     /* Out-of-credits purchase card, rendered as an assistant turn. */
     .ai-float-msg .b.is-buy { border-color: rgb(245 197 24 / .4); background: linear-gradient(115deg, rgb(245 197 24 / .14), rgb(245 197 24 / .04)), var(--color-white); }
@@ -190,8 +192,9 @@
     .ai-float-cam { width: 2.25rem; height: 2.25rem; border-radius: .75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--color-brand-50); color: var(--color-brand-700); cursor: pointer; transition: background .15s ease; }
     .ai-float-cam:hover { background: var(--color-brand-100); }
     #aiFloatText { resize: none; border: 0; outline: none; background: transparent; flex: 1 1 auto; max-height: 6rem; padding: .4rem .25rem; font-size: .95rem; color: inherit; }
-    .ai-float-send { width: 2.25rem; height: 2.25rem; border-radius: 999px; background: linear-gradient(140deg, #6b9f3d, #3d6823); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 8px -2px rgb(45 80 22 / .5); transition: transform .15s ease; }
+    .ai-float-send { width: 2.25rem; height: 2.25rem; border-radius: 999px; background: linear-gradient(140deg, #6b9f3d, #3d6823); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 8px -2px rgb(45 80 22 / .5); transition: transform .15s ease, opacity .15s ease; }
     .ai-float-send:hover:not(:disabled) { transform: scale(1.06); }
+    .ai-float-send:active:not(:disabled) { transform: scale(.92); }
     .ai-float-send:disabled { opacity: .4; }
     .ai-float-dots { display: inline-flex; gap: .2rem; align-items: center; height: 1rem; }
     .ai-float-dots i { width: .35rem; height: .35rem; border-radius: 999px; background: var(--color-brand-500); opacity: .35; animation: aidot .9s cubic-bezier(.4,0,.2,1) infinite; }
@@ -208,8 +211,10 @@
     html.dark .ai-float-msg .b.is-buy { border-color: rgb(245 197 24 / .25); background: linear-gradient(115deg, rgb(245 197 24 / .10), rgb(245 197 24 / .03)), var(--color-white); }
 
     @media (prefers-reduced-motion: reduce) {
-        .ai-float-fab, .ai-float-msg, .ai-float-panel { animation: none; }
+        .ai-float-fab, .ai-float-msg, .ai-float-panel, .ai-float-head { animation: none; }
         .ai-float-sug, .ai-float-box, .ai-float-send { transition: none; }
+        /* Slowed, not stopped — the pulse is the message that work is happening. */
+        .ai-float-dots i { animation-duration: 1.8s; }
     }
 
     /* ---- Green identity ----
@@ -219,7 +224,11 @@
        the chat reads as one thing at a glance. Later in the sheet than the
        rules it overrides, deliberately. */
     .ai-float-panel { border: 2px solid #4a7c2a; }
-    .ai-float-head { background: linear-gradient(140deg, #6b9f3d, #3d6823); border-bottom-color: transparent; }
+    /* Kept slowly on the move (gradSweep tide, layout) so the open chat reads
+       as live — the same drifting header language the messenger wears. */
+    .ai-float-head { background: linear-gradient(120deg, #3d6823, #6b9f3d 35%, #4a7c2a 60%, #2f5219 85%, #3d6823);
+        background-size: 240% 240%; animation: gradSweep 12s ease-in-out infinite alternate;
+        border-bottom-color: transparent; }
     .ai-float-head .ai-float-name { color: #fff; }
     .ai-float-head .ai-float-credits { background: rgb(255 255 255 / .2); color: #fff; }
     .ai-float-head .ai-float-credits:hover { background: rgb(255 255 255 / .3); }
@@ -286,6 +295,7 @@
 
         const face = (me) => me ? escapeHtml(MY) : (AVATAR ? `<img src="${escapeHtml(AVATAR)}" alt="">` : BOT);
         const scrollDown = () => { thread.scrollTop = thread.scrollHeight; };
+        const nowStamp = () => new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
 
         function render(text) {
             const esc = escapeHtml(text || '');
@@ -302,11 +312,11 @@
             }
             close(); return html || '<p></p>';
         }
-        function addTurn(me, html, imageUrl, cost) {
+        function addTurn(me, html, imageUrl, cost, stamped) {
             $('aiFloatWelcome')?.remove();
             const el = document.createElement('div');
             el.className = 'ai-float-msg' + (me ? ' me' : '');
-            el.innerHTML = `<span class="ai-float-face">${face(me)}</span><div class="b">${html}${imageUrl ? `<img src="${escapeHtml(imageUrl)}" alt="">` : ''}${cost ? `<p class="cost">${escapeHtml(cost)}</p>` : ''}</div>`;
+            el.innerHTML = `<span class="ai-float-face">${face(me)}</span><div class="b">${html}${imageUrl ? `<img src="${escapeHtml(imageUrl)}" alt="">` : ''}${cost ? `<p class="cost">${escapeHtml(cost)}</p>` : ''}${stamped ? `<time class="when">${escapeHtml(nowStamp())}</time>` : ''}</div>`;
             thread.appendChild(el); scrollDown(); return el;
         }
         function setBalance(v) {
@@ -393,14 +403,16 @@
             if (busy) return;
             const message = (input.value || '').trim();
             if (!message) { toast('Type a question first.', 'error'); return; }
-            busy = true; $('aiFloatSend').disabled = true;
-            addTurn(true, '<p>' + escapeHtml(message).replace(/\r?\n/g, '<br>') + '</p>', photoPath ? $('aiFloatPhotoThumb').src : null);
+            busy = true;
+            const sendBtn = $('aiFloatSend');
+            sendBtn.disabled = true; sendBtn.setAttribute('aria-label', 'Sending');
+            addTurn(true, '<p>' + escapeHtml(message).replace(/\r?\n/g, '<br>') + '</p>', photoPath ? $('aiFloatPhotoThumb').src : null, null, true);
             input.value = ''; input.style.height = 'auto';
             const thinking = addTurn(false, '<span class="ai-float-dots"><i></i><i></i><i></i></span>');
             try {
                 const res = await api(URLS.ask, { method: 'POST', body: { message, conversationId, imagePath: photoPath, scheduleId: SCHEDULE_ID } });
                 conversationId = res.data.conversationId;
-                thinking.querySelector('.b').innerHTML = render(res.data.answer.content) + `<p class="cost">${escapeHtml(String(Math.round(res.data.answer.creditsCharged * 100) / 100))} credits</p>`;
+                thinking.querySelector('.b').innerHTML = render(res.data.answer.content) + `<p class="cost">${escapeHtml(String(Math.round(res.data.answer.creditsCharged * 100) / 100))} credits</p>` + `<time class="when">${escapeHtml(nowStamp())}</time>`;
                 setBalance(res.data.balance); photoPath = null; $('aiFloatPhotoChip').classList.add('hidden'); scrollDown();
             } catch (err) {
                 thinking.remove();
@@ -411,7 +423,7 @@
                     setBalance(err.data.balance || 0);
                 } else { addTurn(false, '<p>' + escapeHtml(err.message) + '</p>'); }
                 input.value = message; input.dispatchEvent(new Event('input'));
-            } finally { busy = false; $('aiFloatSend').disabled = false; input.focus(); }
+            } finally { busy = false; sendBtn.disabled = false; sendBtn.setAttribute('aria-label', 'Send'); input.focus(); }
         }
         $('aiFloatSend')?.addEventListener('click', send);
     };

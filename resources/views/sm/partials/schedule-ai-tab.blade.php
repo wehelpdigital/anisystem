@@ -14,7 +14,9 @@
                 </button>
             </div>
             <div class="sai-sessions-list" id="saiSessionsList">
-                <div class="sai-sessions-empty">Loading…</div>
+                <div class="sai-sess-skel" aria-hidden="true"></div>
+                <div class="sai-sess-skel" aria-hidden="true"></div>
+                <div class="sai-sess-skel" aria-hidden="true"></div>
             </div>
         </aside>
 
@@ -34,7 +36,15 @@
                     <span id="saiBalance">…</span>&nbsp;<span class="hidden sm:inline">credits</span>
                 </a>
             </div>
-            <div class="sai-thread" id="saiThread"><div class="sai-loading" id="saiLoading">Loading…</div></div>
+            <div class="sai-thread" id="saiThread">
+                {{-- Ghost bubbles while the first load is in flight — the
+                     shimmer says "coming", not a bare word on white. --}}
+                <div class="sai-skel" id="saiLoading" aria-hidden="true">
+                    <div class="sai-skel-row"><span class="sai-skel-face"></span><span class="sai-skel-b"></span></div>
+                    <div class="sai-skel-row me"><span class="sai-skel-face"></span><span class="sai-skel-b"></span></div>
+                    <div class="sai-skel-row tall"><span class="sai-skel-face"></span><span class="sai-skel-b"></span></div>
+                </div>
+            </div>
             <div class="sai-composer">
                 {{-- A question can be about several photos: four pictures of
                      one leaf are one question, not four. Each carries its own
@@ -73,17 +83,51 @@
     .sai-sess-meta { font-size: .62rem; color: var(--color-gray-400); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     /* Main column */
     .sai-main { flex: 1 1 auto; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
-    .sai-head { display: flex; align-items: center; gap: .5rem; padding: .55rem .8rem; border-bottom: 1px solid var(--color-gray-100); }
+    /* The tab's header wears the app's drifting header green (messenger
+       language, gradSweep tide from the layout). Literal hex — identical in
+       both modes so the white text always holds. */
+    .sai-head { display: flex; align-items: center; gap: .5rem; padding: .55rem .8rem; color: #fff;
+        background: linear-gradient(120deg, #3d6823, #6b9f3d 35%, #4a7c2a 60%, #2f5219 85%, #3d6823);
+        background-size: 240% 240%; animation: gradSweep 12s ease-in-out infinite alternate; }
     .sai-spacer { flex: 1 1 auto; }
-    .sai-sess-toggle { display: none; width: 2rem; height: 2rem; border-radius: .5rem; align-items: center; justify-content: center; color: var(--color-gray-500); background: var(--color-gray-100); flex-shrink: 0; }
-    .sai-save { display: inline-flex; align-items: center; gap: .3rem; padding: .3rem .55rem; border-radius: .6rem; font-size: .74rem; font-weight: 700; color: var(--color-gray-600); background: var(--color-gray-100); flex-shrink: 0; }
-    .sai-save:hover { background: var(--color-gray-200); color: var(--color-gray-800); }
+    .sai-sess-toggle { display: none; width: 2rem; height: 2rem; border-radius: .5rem; align-items: center; justify-content: center; color: #fff; background: rgb(255 255 255 / .18); flex-shrink: 0; }
+    .sai-sess-toggle:hover { background: rgb(255 255 255 / .28); }
+    .sai-save { display: inline-flex; align-items: center; gap: .3rem; padding: .3rem .55rem; border-radius: .6rem; font-size: .74rem; font-weight: 700; color: #fff; background: rgb(255 255 255 / .18); flex-shrink: 0; transition: background .15s ease; }
+    .sai-save:hover { background: rgb(255 255 255 / .28); color: #fff; }
     .sai-save:disabled { opacity: .5; }
-    .sai-title { font-weight: 800; font-size: .9rem; color: var(--color-gray-900); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .sai-sub { font-weight: 600; font-size: .72rem; color: var(--color-gray-400); }
-    .sai-credits { display: inline-flex; align-items: center; gap: .25rem; padding: .12rem .5rem; border-radius: 999px; background: rgb(245 197 24 / .16); color: #8a6100; font-size: .72rem; font-weight: 800; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+    .sai-title { font-weight: 800; font-size: .9rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sai-sub { font-weight: 600; font-size: .72rem; color: rgb(255 255 255 / .75); }
+    .sai-credits { display: inline-flex; align-items: center; gap: .25rem; padding: .12rem .5rem; border-radius: 999px; background: rgb(255 255 255 / .18); color: #fff; font-size: .72rem; font-weight: 800; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+    .sai-credits:hover { background: rgb(255 255 255 / .28); }
+    .sai-credits svg { color: var(--color-accent-400); }
     .sai-thread { flex: 1 1 auto; overflow-y: auto; padding: .8rem; display: flex; flex-direction: column; gap: .1rem; scrollbar-width: thin; }
     .sai-loading { margin: auto; color: var(--color-gray-400); font-size: .85rem; }
+    /* Loading skeleton: ghost bubbles shimmer (plaza media-skel language)
+       instead of a bare word on white. */
+    .sai-skel { margin: auto 0 0; display: flex; flex-direction: column; gap: .7rem; padding: .25rem 0; width: 100%; }
+    .sai-skel-row { display: flex; gap: .45rem; align-items: flex-end; }
+    .sai-skel-row.me { flex-direction: row-reverse; }
+    .sai-skel-face, .sai-skel-b { position: relative; overflow: hidden; background: var(--color-gray-100); }
+    .sai-skel-face { width: 1.8rem; height: 1.8rem; border-radius: 999px; flex-shrink: 0; }
+    .sai-skel-b { height: 2.6rem; border-radius: .9rem .9rem .9rem .25rem; width: min(60%, 16rem); }
+    .sai-skel-row.me .sai-skel-b { border-radius: .9rem .9rem .25rem .9rem; width: min(45%, 12rem); }
+    .sai-skel-row.tall .sai-skel-b { height: 4.2rem; }
+    .sai-skel-face::before, .sai-skel-b::before { content: ''; position: absolute; inset: 0;
+        background: linear-gradient(100deg, rgba(255,255,255,0) 20%, rgba(255,255,255,.55) 50%, rgba(255,255,255,0) 80%);
+        background-size: 220% 100%; animation: saiSkelSweep 1.15s linear infinite; }
+    html.dark .sai-skel-face, html.dark .sai-skel-b { background: rgb(255 255 255 / .06); }
+    html.dark .sai-skel-face::before, html.dark .sai-skel-b::before {
+        background: linear-gradient(100deg, rgba(255,255,255,0) 20%, rgba(255,255,255,.09) 50%, rgba(255,255,255,0) 80%);
+        background-size: 220% 100%; }
+    @keyframes saiSkelSweep { from { background-position: 220% 0; } to { background-position: -220% 0; } }
+    .sai-sess-skel { height: 2.4rem; border-radius: .55rem; position: relative; overflow: hidden; background: var(--color-gray-100); flex-shrink: 0; }
+    html.dark .sai-sess-skel { background: rgb(255 255 255 / .06); }
+    .sai-sess-skel::before { content: ''; position: absolute; inset: 0;
+        background: linear-gradient(100deg, rgba(255,255,255,0) 20%, rgba(255,255,255,.55) 50%, rgba(255,255,255,0) 80%);
+        background-size: 220% 100%; animation: saiSkelSweep 1.15s linear infinite; }
+    html.dark .sai-sess-skel::before {
+        background: linear-gradient(100deg, rgba(255,255,255,0) 20%, rgba(255,255,255,.09) 50%, rgba(255,255,255,0) 80%);
+        background-size: 220% 100%; }
     /* Intro card shown when a session is empty */
     .sai-intro { margin: auto; max-width: 30rem; text-align: center; color: var(--color-gray-500); padding: 1.5rem 1rem; animation: saiRise .28s cubic-bezier(.22,1,.36,1) both; }
     .sai-intro-badge { width: 3rem; height: 3rem; border-radius: 999px; margin: 0 auto .7rem; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 6px 18px rgb(61 104 35 / .3); }
@@ -92,7 +136,10 @@
     .sai-intro .sai-chips { display: flex; flex-wrap: wrap; gap: .35rem; justify-content: center; margin-top: .9rem; }
     .sai-chip { padding: .3rem .6rem; border-radius: 999px; background: var(--color-gray-100); color: var(--color-gray-700); font-size: .74rem; font-weight: 700; transition: background .15s ease; }
     .sai-chip:hover { background: var(--color-brand-50); color: var(--color-brand-700); }
-    .sai-msg { display: flex; gap: .45rem; margin-bottom: .6rem; align-items: flex-end; animation: saiRise .24s cubic-bezier(.22,1,.36,1) both; }
+    /* Only NEW messages animate in — a session's history arrives settled, it
+       does not cascade on open. */
+    .sai-msg { display: flex; gap: .45rem; margin-bottom: .6rem; align-items: flex-end; }
+    .sai-msg.is-new { animation: saiRise .24s cubic-bezier(.22,1,.36,1) both; }
     .sai-msg.me { flex-direction: row-reverse; }
     @keyframes saiRise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
     .sai-face { width: 1.8rem; height: 1.8rem; border-radius: 999px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: .62rem; font-weight: 800; background: var(--color-brand-50); color: var(--color-brand-700); }
@@ -107,6 +154,9 @@
     .sai-b ul { list-style: disc; padding-left: 1.1rem; margin: .25rem 0; } .sai-b ol { list-style: decimal; padding-left: 1.25rem; margin: .25rem 0; }
     .sai-b img { max-width: 100%; max-height: 180px; border-radius: .5rem; margin-top: .3rem; }
     .sai-cost { display: inline-flex; align-items: center; gap: .25rem; margin-top: .35rem; padding: .1rem .45rem; border-radius: 999px; font-size: .62rem; font-weight: 800; color: #8a6100; background: rgb(245 197 24 / .15); }
+    html.dark .sai-cost { color: var(--color-accent-400); }
+    /* A whispered clock, not a shout. */
+    .sai-when { display: block; font-size: .62rem; font-weight: 600; opacity: .55; margin-top: .25rem; text-align: right; font-variant-numeric: tabular-nums; }
     .sai-dots { display: inline-flex; gap: .2rem; align-items: center; height: 1rem; }
     .sai-dots i { width: .35rem; height: .35rem; border-radius: 999px; background: var(--color-brand-500); opacity: .35; animation: saidot .9s cubic-bezier(.4,0,.2,1) infinite; }
     .sai-dots i:nth-child(2) { animation-delay: .15s; } .sai-dots i:nth-child(3) { animation-delay: .3s; }
@@ -122,7 +172,9 @@
     .sai-box:focus-within { border-color: var(--color-brand-500); box-shadow: 0 0 0 3px rgb(107 159 61 / .18); }
     .sai-cam { width: 2.15rem; height: 2.15rem; border-radius: .7rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--color-brand-50); color: var(--color-brand-700); cursor: pointer; }
     #saiText { resize: none; border: 0; outline: none; background: transparent; flex: 1 1 auto; max-height: 6rem; padding: .4rem .25rem; font-size: .92rem; color: inherit; }
-    .sai-send { width: 2.15rem; height: 2.15rem; border-radius: 999px; background: linear-gradient(140deg, #6b9f3d, #3d6823); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .sai-send { width: 2.15rem; height: 2.15rem; border-radius: 999px; background: linear-gradient(140deg, #6b9f3d, #3d6823); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 8px -2px rgb(45 80 22 / .5); transition: transform .15s ease, opacity .15s ease; }
+    .sai-send:hover:not(:disabled) { transform: scale(1.06); }
+    .sai-send:active:not(:disabled) { transform: scale(.92); }
     .sai-send:disabled { opacity: .4; }
     /* Sidebar backdrop on mobile */
     .sai-backdrop { position: absolute; inset: 0; z-index: 4; background: rgb(17 24 39 / .35); opacity: 0; visibility: hidden; transition: opacity .28s cubic-bezier(.22,1,.36,1), visibility .28s; }
@@ -133,7 +185,11 @@
         .sai-sessions.collapsed { transform: translateX(-102%); }
     }
     @media (prefers-reduced-motion: reduce) {
-        .sai-sessions, .sai-backdrop { transition: none; }
+        .sai-head, .sai-msg.is-new, .sai-intro { animation: none; }
+        .sai-sessions, .sai-backdrop, .sai-send, .sai-save, .sai-chip { transition: none; }
+        /* Loaders slow down rather than stop — the motion is the message. */
+        .sai-dots i { animation-duration: 1.8s; }
+        .sai-skel-face::before, .sai-skel-b::before, .sai-sess-skel::before { animation: none; }
     }
 </style>
 
@@ -184,6 +240,14 @@
             ? '<span class="sai-face bot">AI</span>'
             : `<span class="sai-face">${esc(m.mine ? MY_INITIALS : (m.initials || '·'))}</span>`;
 
+        // Ghost bubbles shown while a session loads (matches the server-rendered
+        // skeleton the tab opens with).
+        const SKEL = '<div class="sai-skel" id="saiLoading" aria-hidden="true">'
+            + '<div class="sai-skel-row"><span class="sai-skel-face"></span><span class="sai-skel-b"></span></div>'
+            + '<div class="sai-skel-row me"><span class="sai-skel-face"></span><span class="sai-skel-b"></span></div>'
+            + '<div class="sai-skel-row tall"><span class="sai-skel-face"></span><span class="sai-skel-b"></span></div>'
+            + '</div>';
+
         /* ---------- intro (shown when a session is empty) ---------- */
         function showIntro() {
             if ($('saiIntro')) return;
@@ -206,23 +270,26 @@
         }
         const clearIntro = () => $('saiIntro')?.remove();
 
-        function addMsg(m) {
+        // `settled` marks history batches: they arrive without the entrance
+        // animation, so opening a session never cascades.
+        function addMsg(m, settled) {
             if (m.id) { if (rendered.has(m.id)) return; rendered.add(m.id); if (m.id > lastId) lastId = m.id; }
             $('saiLoading')?.remove(); clearIntro();
             const me = !!m.mine;
             const el = document.createElement('div');
-            el.className = 'sai-msg' + (me ? ' me' : '');
+            el.className = 'sai-msg' + (settled ? '' : ' is-new') + (me ? ' me' : '');
             const who = (!me && m.role === 'user') ? `<span class="sai-who">${esc(m.name || 'Member')}</span>` : '';
             const body = m.role === 'assistant' ? render(m.content) : ('<p>' + esc(m.content).replace(/\r?\n/g, '<br>') + '</p>');
             const img = m.image ? `<img src="${esc(m.image)}" alt="">` : '';
             const cost = (m.role === 'assistant' && m.creditsCharged) ? `<p class="sai-cost">${esc(String(Math.round(m.creditsCharged * 100) / 100))} credits</p>` : '';
-            el.innerHTML = `${faceHtml(m)}<div class="sai-col">${who}<div class="sai-b ${m.role === 'assistant' ? 'bot' : ''}">${body}${img}${cost}</div></div>`;
+            const when = m.at ? `<time class="sai-when">${esc(m.at)}</time>` : '';
+            el.innerHTML = `${faceHtml(m)}<div class="sai-col">${who}<div class="sai-b ${m.role === 'assistant' ? 'bot' : ''}">${body}${img}${cost}${when}</div></div>`;
             thread.appendChild(el); scrollDown();
         }
         function showThinking() {
             clearThinking(); clearIntro();
             const el = document.createElement('div');
-            el.className = 'sai-msg';
+            el.className = 'sai-msg is-new';
             el.innerHTML = '<span class="sai-face bot">AI</span><div class="sai-col"><div class="sai-b bot"><span class="sai-dots"><i></i><i></i><i></i></span></div></div>';
             thread.appendChild(el); thinkingEl = el; scrollDown();
         }
@@ -266,16 +333,17 @@
             currentSession = id;
             renderSessions();
             rendered.clear(); lastId = 0; clearThinking();
-            thread.innerHTML = '<div class="sai-loading" id="saiLoading">Loading…</div>';
+            thread.innerHTML = SKEL;
             try {
                 const res = await api(`${U.messages}?scheduleId=${SCHEDULE_ID}&sessionId=${currentSession}&after=0`);
                 currentSession = res.data.sessionId || currentSession;
                 $('saiLoading')?.remove();
                 const msgs = res.data.messages || [];
-                if (!msgs.length) showIntro(); else msgs.forEach(addMsg);
+                // History arrives settled — only live turns animate in.
+                if (!msgs.length) showIntro(); else msgs.forEach((m) => addMsg(m, true));
                 if (res.data.maxId > lastId) lastId = res.data.maxId;
                 setBalance(res.data.balance);
-            } catch (_) { const l = $('saiLoading'); if (l) l.textContent = 'Could not load.'; }
+            } catch (_) { const l = $('saiLoading'); if (l) l.outerHTML = '<div class="sai-loading" id="saiLoading">Could not load.</div>'; }
         }
 
         async function newSession() {

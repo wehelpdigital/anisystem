@@ -46,24 +46,34 @@
         .aichat-thread::-webkit-scrollbar-thumb { background: var(--color-gray-300); border-radius: 999px; }
         /* Welcome hero centers; a short conversation grows up from the composer. */
         #aiWelcome { margin: auto 0; }
-        .aimsg:first-child { margin-top: auto; }
+        .aimsg:first-child, .aichat-day:first-child { margin-top: auto; }
 
         .aichat-day { display: flex; align-items: center; gap: .75rem; margin: .75rem 0; text-align: center; }
         .aichat-day::before, .aichat-day::after { content: ""; flex: 1; height: 1px; background: var(--color-gray-200); }
         .aichat-day span { font-size: .69rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-gray-400); }
 
-        /* ===== Masthead ===== */
-        .ai-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .7rem .9rem; margin-bottom: .75rem; border-radius: 1.25rem; border: 1px solid var(--color-brand-100); background: linear-gradient(115deg, var(--color-brand-50) 0%, var(--color-white) 70%); }
+        /* ===== Masthead: the app's drifting header green (messenger language,
+               gradSweep tide from the layout). Literal hex — the gradient must
+               stay identical in both modes so the white text always holds. ===== */
+        .ai-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .7rem .9rem; margin-bottom: .75rem; border-radius: 1.25rem; color: #fff;
+            background: linear-gradient(120deg, #3d6823, #6b9f3d 35%, #4a7c2a 60%, #2f5219 85%, #3d6823);
+            background-size: 240% 240%; animation: gradSweep 12s ease-in-out infinite alternate;
+            box-shadow: 0 4px 16px -6px rgb(45 80 22 / .45); }
         .ai-avatar { position: relative; flex-shrink: 0; }
-        .ai-avatar .aimsg-face { width: 2.75rem; height: 2.75rem; box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-brand-200); }
-        .ai-avatar::after { content: ""; position: absolute; right: -1px; bottom: -1px; width: .75rem; height: .75rem; border-radius: 999px; background: var(--color-brand-500); border: 2.5px solid var(--color-white); }
-        .ai-head-name { font-family: var(--font-heading); font-weight: 700; font-size: 1.02rem; line-height: 1.15; color: var(--color-gray-900); }
-        .ai-role { display: inline-flex; align-items: center; margin-top: .2rem; padding: .1rem .55rem; border-radius: 999px; font-size: .68rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; color: var(--color-brand-700); background: var(--color-brand-100); }
-        /* Literal amber: accent-700 fails contrast on the cream wash in light mode. */
-        .ai-credits { display: inline-flex; align-items: center; gap: .35rem; min-height: 2.5rem; padding: .3rem .8rem; border-radius: 999px; background: rgb(245 197 24 / .16); color: #8a6100; font-weight: 800; font-size: .92rem; font-variant-numeric: tabular-nums; transition: background .15s ease; }
-        .ai-credits:hover { background: rgb(245 197 24 / .26); }
-        .ai-credits:focus-visible, .aisuggest:focus-visible, #aiSendBtn:focus-visible, .ai-cam:focus-visible { outline: 2px solid var(--color-brand-500); outline-offset: 2px; }
-        .ai-sq { width: 2.5rem; height: 2.5rem; min-height: 2.5rem; padding: 0; }
+        .ai-avatar .aimsg-face { width: 2.75rem; height: 2.75rem; box-shadow: 0 0 0 2px rgb(255 255 255 / .9); background: rgb(255 255 255 / .16); color: #fff; }
+        .ai-avatar::after { content: ""; position: absolute; right: -1px; bottom: -1px; width: .75rem; height: .75rem; border-radius: 999px; background: var(--color-accent-500); border: 2.5px solid #3d6823; }
+        .ai-head-name { font-family: var(--font-heading); font-weight: 700; font-size: 1.02rem; line-height: 1.15; color: #fff; }
+        .ai-role { display: inline-flex; align-items: center; margin-top: .2rem; padding: .1rem .55rem; border-radius: 999px; font-size: .68rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; color: #fff; background: rgb(255 255 255 / .18); }
+        .ai-credits { display: inline-flex; align-items: center; gap: .35rem; min-height: 2.5rem; padding: .3rem .8rem; border-radius: 999px; background: rgb(255 255 255 / .18); color: #fff; font-weight: 800; font-size: .92rem; font-variant-numeric: tabular-nums; transition: background .15s ease; }
+        .ai-credits:hover { background: rgb(255 255 255 / .28); }
+        .ai-credits svg { color: var(--color-accent-400); }
+        .ai-credits:focus-visible, .aisuggest:focus-visible, #aiSendBtn:focus-visible, .ai-cam:focus-visible, .ai-sq:focus-visible { outline: 2px solid var(--color-accent-400); outline-offset: 2px; }
+        .ai-sq { width: 2.5rem; height: 2.5rem; min-height: 2.5rem; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: .8rem; background: rgb(255 255 255 / .18); color: #fff; transition: background .15s ease, transform .15s ease; }
+        .ai-sq:hover { background: rgb(255 255 255 / .28); }
+        .ai-sq:active { transform: scale(.94); }
+        /* A linked chat marks its button: white pill, brand icon (JS toggles
+           the utility class). */
+        .ai-sq.text-brand-700 { background: #fff; }
         /* Narrow phones: let the controls wrap under the full-width name row. */
         @media (max-width: 479px) {
             .ai-head { flex-wrap: wrap; row-gap: .5rem; padding: .6rem .75rem; }
@@ -91,8 +101,10 @@
         .aisuggest .go { margin-left: auto; flex-shrink: 0; color: var(--color-gray-400); transition: transform .18s ease, color .18s ease; }
         .aisuggest:hover .go { transform: translateX(3px); color: var(--color-brand-600); }
 
-        /* ===== Turns ===== */
-        .aimsg { display: flex; gap: .65rem; margin-bottom: 1rem; align-items: flex-end; animation: aiRise .28s cubic-bezier(.22,1,.36,1) both; }
+        /* ===== Turns. Only NEW messages animate in — server-rendered history
+               arrives settled, it does not cascade on load. ===== */
+        .aimsg { display: flex; gap: .65rem; margin-bottom: 1rem; align-items: flex-end; }
+        .aimsg.is-new { animation: aiRise .28s cubic-bezier(.22,1,.36,1) both; }
         .aimsg.me { flex-direction: row-reverse; }
         @keyframes aiRise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
         .aimsg-face {
@@ -116,6 +128,12 @@
         .aibubble li { margin: .2rem 0; }
         .aibubble strong { font-weight: 700; }
         .aibubble img { max-width: 100%; max-height: 260px; border-radius: .6rem; margin-top: .4rem; }
+        /* If an answer ever carries a table, it scrolls inside the bubble —
+           never the page. */
+        .aibubble table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: .9em; margin: .4rem 0; }
+        .aibubble th, .aibubble td { border: 1px solid var(--color-gray-200); padding: .3rem .55rem; text-align: left; }
+        /* A whispered clock, not a shout. */
+        .ai-when { display: block; font-size: .66rem; font-weight: 600; opacity: .55; margin-top: .3rem; text-align: right; font-variant-numeric: tabular-nums; }
         .aibubble-cost { display: inline-flex; align-items: center; gap: .3rem; margin-top: .55rem; padding: .12rem .55rem; border-radius: 999px; font-size: .69rem; font-weight: 800; font-variant-numeric: tabular-nums; color: #8a6100; background: rgb(245 197 24 / .15); }
         .aibubble-cost::before { content: ""; width: .4rem; height: .4rem; border-radius: 999px; background: var(--color-accent-500); }
         .aimsg.me .aibubble-cost { background: rgb(255 255 255 / .2); color: #fff; }
@@ -126,6 +144,7 @@
         .aidots i { width: .42rem; height: .42rem; border-radius: 999px; background: var(--color-brand-500); opacity: .35; animation: aidot .9s cubic-bezier(.4,0,.2,1) infinite; }
         .aidots i:nth-child(2) { animation-delay: .15s; } .aidots i:nth-child(3) { animation-delay: .3s; }
         @keyframes aidot { 0%, 60%, 100% { opacity: .3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+        @keyframes ai-spin { to { transform: rotate(360deg); } }
 
         /* ===== Composer dock ===== */
         .aichat-composer { flex-shrink: 0; padding: .6rem 0 .1rem; background: linear-gradient(to top, var(--color-gray-50) 70%, transparent); }
@@ -162,20 +181,27 @@
         html.dark .aibubble { box-shadow: 0 1px 2px rgb(0 0 0 / .35), 0 3px 10px -4px rgb(0 0 0 / .4); }
         html.dark .aibubble-cost { color: var(--color-accent-400); }
         html.dark .aimsg.me .aibubble-cost { color: #fff; }
-        html.dark .ai-credits { color: var(--color-accent-400); }
         html.dark .aichat-box:focus-within { box-shadow: 0 0 0 3px rgb(124 184 79 / .22), var(--shadow-card-lg); }
         html.dark .ai-note { border-color: rgb(245 197 24 / .25); background: linear-gradient(115deg, rgb(245 197 24 / .10), rgb(245 197 24 / .03)), var(--color-white); }
         html.dark .aibubble.is-buy { border-color: rgb(245 197 24 / .25); background: linear-gradient(115deg, rgb(245 197 24 / .10), rgb(245 197 24 / .03)), var(--color-white); }
         html.dark .ai-hello .aimsg-face { box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-200), 0 10px 24px -8px rgb(0 0 0 / .6); }
 
         @media (prefers-reduced-motion: reduce) {
-            .aimsg, .aisuggest, .ai-hello .aimsg-face { animation: none; }
-            .aisuggest, .aisuggest .go, .aichat-box, #aiSendBtn, .ai-credits { transition: none; }
+            .ai-head, .aimsg.is-new, .aisuggest, .ai-hello .aimsg-face { animation: none; }
+            .aisuggest, .aisuggest .go, .aichat-box, #aiSendBtn, .ai-credits, .ai-sq { transition: none; }
+            /* Slowed, not stopped — the pulse is the message that work is happening. */
+            .aidots i { animation-duration: 1.8s; }
+            [style*="ai-spin"] { animation-duration: 1.6s !important; }
         }
     </style>
 @endpush
 
 @section('content')
+@php
+    // Super admins ride free — the wallet row hides for them (view-side check,
+    // same pattern the floating assistant already uses).
+    $aiUnlimited = app(\App\Services\AiCreditService::class)->unlimited((int) auth()->id());
+@endphp
 @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'ai'])
 
 <div class="ai-shell">
@@ -225,17 +251,19 @@
             </div>
         </div>
         <div class="flex items-center gap-1.5 shrink-0">
+            @unless ($aiUnlimited)
             <a href="{{ route('ai.credits') }}" class="ai-credits" title="AI Credits" aria-label="AI credits balance">
-                <svg class="w-4 h-4 text-accent-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>
+                <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>
                 <span id="aiBalance">{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</span>
             </a>
-            <button type="button" class="btn btn-white btn-sm ai-sq" id="aiNewChatBtn" title="New question" aria-label="Start a new question">
+            @endunless
+            <button type="button" class="ai-sq" id="aiNewChatBtn" title="New question" aria-label="Start a new question">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
             </button>
-            <button type="button" class="btn btn-white btn-sm ai-sq" id="aiHistoryBtn" title="Past questions" aria-label="Past questions">
+            <button type="button" class="ai-sq" id="aiHistoryBtn" title="Past questions" aria-label="Past questions">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </button>
-            <button type="button" class="btn btn-white btn-sm ai-sq {{ $conversation && $conversation->link_label ? 'text-brand-700' : '' }}" id="aiLinkBtn" title="Link this chat to a day or activity" aria-label="Link to a day or activity">
+            <button type="button" class="ai-sq {{ $conversation && $conversation->link_label ? 'text-brand-700' : '' }}" id="aiLinkBtn" title="Link this chat to a day or activity" aria-label="Link to a day or activity">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.83 10.17a4 4 0 010 5.66l-3 3a4 4 0 11-5.66-5.66l1.5-1.5m6.33-1.83a4 4 0 000-5.66l-1.5-1.5"/></svg>
             </button>
         </div>
@@ -262,7 +290,7 @@
         </div>
     @endunless
 
-    <div class="ai-note {{ $balance > 0 ? 'hidden' : '' }}" id="aiNoCredits">
+    <div class="ai-note {{ ($balance > 0 || $aiUnlimited) ? 'hidden' : '' }}" id="aiNoCredits">
         <span class="ico">
             <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>
         </span>
@@ -273,9 +301,18 @@
         </div>
     </div>
 
-    {{-- Thread --}}
+    {{-- Thread. History renders settled (no entrance cascade); day separators
+         and whispered timestamps keep a long thread readable. --}}
     <div class="aichat-thread" id="aiThread">
+        @php $aiPrevDay = null; @endphp
         @forelse ($messages as $m)
+            @php
+                $aiDay = $m->created_at?->isToday() ? 'Today' : ($m->created_at?->isYesterday() ? 'Yesterday' : $m->created_at?->format('M j, Y'));
+            @endphp
+            @if ($aiDay && $aiDay !== $aiPrevDay)
+                <div class="aichat-day"><span>{{ $aiDay }}</span></div>
+                @php $aiPrevDay = $aiDay; @endphp
+            @endif
             <div class="aimsg {{ $m->role === 'user' ? 'me' : '' }}">
                 <span class="aimsg-face">
                     @if ($m->role === 'user')
@@ -291,8 +328,11 @@
                     @if ($m->imagePath)
                         <img src="{{ \App\Support\MediaStore::url($m->imagePath) }}" alt="">
                     @endif
-                    @if ($m->role === 'assistant' && (float) $m->creditsCharged > 0)
+                    @if ($m->role === 'assistant' && (float) $m->creditsCharged > 0 && ! $aiUnlimited)
                         <p class="aibubble-cost">{{ rtrim(rtrim(number_format((float) $m->creditsCharged, 2), '0'), '.') }} credits</p>
+                    @endif
+                    @if ($m->created_at)
+                        <time class="ai-when" datetime="{{ $m->created_at->toIso8601String() }}">{{ $m->created_at->format('g:i A') }}</time>
                     @endif
                 </div>
             </div>
@@ -361,7 +401,7 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
             </button>
         </div>
-        <p class="ai-hint">≈ 4 credits per answer · 7 with a photo</p>
+        <p class="ai-hint" id="aiHint" data-idle="{{ $aiUnlimited ? '' : '≈ 4 credits per answer · 7 with a photo' }}">{{ $aiUnlimited ? '' : '≈ 4 credits per answer · 7 with a photo' }}</p>
     </div>
 </div>
 </div>
@@ -476,6 +516,8 @@ const __init = () => {
     const MY = @json(auth()->user()->initials);
     const BOT = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>';
 
+    const UNLIMITED = @json((bool) $aiUnlimited);
+
     let conversationId = @json($conversation->id ?? null);
     let photoPath = null;
     let busy = false;
@@ -483,6 +525,7 @@ const __init = () => {
     const byId = (id) => document.getElementById(id);
     const thread = byId('aiThread');
     const face = (me) => me ? escapeHtml(MY) : (AVATAR ? `<img src="${escapeHtml(AVATAR)}" alt="">` : BOT);
+    const nowStamp = () => new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
 
     /** Light markdown -> safe HTML (escape-first allow-list). */
     function render(text) {
@@ -503,19 +546,35 @@ const __init = () => {
 
     function scrollDown() { thread.scrollTop = thread.scrollHeight; }
 
-    function addTurn(me, html, imageUrl, cost) {
+    // New turns wear .is-new so only they animate in — history stays settled.
+    function addTurn(me, html, imageUrl, cost, stamped) {
         byId('aiWelcome')?.remove();
         const el = document.createElement('div');
-        el.className = 'aimsg' + (me ? ' me' : '');
-        el.innerHTML = `<span class="aimsg-face">${face(me)}</span><div class="aibubble">${html}${imageUrl ? `<img src="${escapeHtml(imageUrl)}" alt="">` : ''}${cost ? `<p class="aibubble-cost">${escapeHtml(cost)}</p>` : ''}</div>`;
+        el.className = 'aimsg is-new' + (me ? ' me' : '');
+        el.innerHTML = `<span class="aimsg-face">${face(me)}</span><div class="aibubble">${html}${imageUrl ? `<img src="${escapeHtml(imageUrl)}" alt="">` : ''}${cost ? `<p class="aibubble-cost">${escapeHtml(cost)}</p>` : ''}${stamped ? `<time class="ai-when">${escapeHtml(nowStamp())}</time>` : ''}</div>`;
         thread.appendChild(el);
         scrollDown();
         return el;
     }
 
     function setBalance(v) {
-        byId('aiBalance').textContent = String(Math.round(v * 100) / 100);
-        byId('aiNoCredits').classList.toggle('hidden', v > 0);
+        const balEl = byId('aiBalance');
+        if (balEl) balEl.textContent = String(Math.round(v * 100) / 100);
+        // Accounts that ride free never see the empty-wallet note.
+        byId('aiNoCredits')?.classList.toggle('hidden', UNLIMITED || v > 0);
+    }
+
+    // The send button and the hint line both say what is happening.
+    const SPIN = '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="animation:ai-spin .7s linear infinite"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.4" stroke-opacity=".3"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
+    const sendIdleHtml = byId('aiSendBtn') ? byId('aiSendBtn').innerHTML : '';
+    function setSending(on) {
+        const btn = byId('aiSendBtn');
+        if (!btn) return;
+        btn.disabled = on;
+        btn.innerHTML = on ? SPIN : sendIdleHtml;
+        btn.setAttribute('aria-label', on ? 'Sending' : 'Send');
+        const hint = byId('aiHint');
+        if (hint) hint.textContent = on ? 'Asking the technician…' : (hint.dataset.idle || '');
     }
 
     const input = byId('aiText');
@@ -540,14 +599,15 @@ const __init = () => {
         if (busy) return;
         const message = input.value.trim();
         if (!message) { toast('Type a question first.', 'error'); return; }
-        busy = true; byId('aiSendBtn').disabled = true;
-        addTurn(true, '<p>' + escapeHtml(message).replace(/\r?\n/g, '<br>') + '</p>', photoPath ? byId('aiPhotoThumb').src : null);
+        busy = true; setSending(true);
+        addTurn(true, '<p>' + escapeHtml(message).replace(/\r?\n/g, '<br>') + '</p>', photoPath ? byId('aiPhotoThumb').src : null, null, true);
         input.value = ''; input.style.height = 'auto';
         const thinking = addTurn(false, '<span class="aidots"><i></i><i></i><i></i></span>');
         try {
             const res = await api(URLS.ask, { method: 'POST', body: { message, conversationId, imagePath: photoPath, scheduleId: SCHEDULE_ID } });
             conversationId = res.data.conversationId;
-            thinking.querySelector('.aibubble').innerHTML = render(res.data.answer.content) + `<p class="aibubble-cost">${escapeHtml(String(Math.round(res.data.answer.creditsCharged * 100) / 100))} credits</p>`;
+            const costLine = UNLIMITED ? '' : `<p class="aibubble-cost">${escapeHtml(String(Math.round(res.data.answer.creditsCharged * 100) / 100))} credits</p>`;
+            thinking.querySelector('.aibubble').innerHTML = render(res.data.answer.content) + costLine + `<time class="ai-when">${escapeHtml(nowStamp())}</time>`;
             setBalance(res.data.balance); byId('aiPhotoRemove').click(); scrollDown();
         } catch (err) {
             thinking.remove();
@@ -556,7 +616,7 @@ const __init = () => {
                 addTurn(false, buyCard(err.message)).querySelector('.aibubble').classList.add('is-buy');
             } else { addTurn(false, '<p>' + escapeHtml(err.message) + '</p>'); }
             input.value = message; input.dispatchEvent(new Event('input'));
-        } finally { busy = false; byId('aiSendBtn').disabled = false; input.focus(); }
+        } finally { busy = false; setSending(false); input.focus(); }
     }
     byId('aiSendBtn')?.addEventListener('click', send);
 
