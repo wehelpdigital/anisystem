@@ -10,18 +10,56 @@
 <style>
     /* The composer, in the homepage's proportions rather than its own. */
     .comp-card { padding: .85rem; }
+    /* Who is writing, across the top — so the field below has the card's
+       whole width rather than sharing it with a face. */
+    .comp-top { display: flex; align-items: center; gap: .6rem; margin-bottom: .6rem; }
+    .comp-who { display: flex; flex-direction: column; min-width: 0; }
+    .comp-who b { font-size: .85rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.2;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .comp-who i { font-style: normal; font-size: .7rem; color: var(--color-gray-400); }
+    /* The attached photo, shown as itself. */
+    .comp-shot { display: flex; align-items: center; gap: .6rem; margin-top: .6rem; padding: .45rem .5rem;
+        border-radius: .7rem; background: var(--color-gray-100); }
+    .comp-shot.hidden { display: none; }
+    .comp-shot img { width: 3rem; height: 3rem; border-radius: .5rem; object-fit: cover; flex: none;
+        background: var(--color-gray-200); }
+    .comp-shot-txt { display: flex; flex-direction: column; min-width: 0; flex: 1 1 auto; }
+    .comp-shot-txt b { font-size: .76rem; font-weight: 800; color: var(--color-gray-800); }
+    .comp-shot-txt i { font-style: normal; font-size: .68rem; color: var(--color-gray-500); }
+    .comp-shot-x { flex: none; width: 1.6rem; height: 1.6rem; border-radius: 999px; border: 0; cursor: pointer;
+        background: transparent; color: var(--color-gray-400); font-size: .8rem; }
+    .comp-shot-x:hover { color: #b91c1c; background: var(--color-gray-200); }
+    /* The ways to add to a post, named: four unlabelled icons are four
+       guesses, and the line beside them answers all of them at once. */
+    .comp-add { margin-top: .7rem; padding-top: .6rem; border-top: 1px solid var(--color-gray-100);
+        display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+    .comp-add-lbl { font-size: .72rem; font-weight: 800; color: var(--color-gray-500); }
+    .comp-add-row { display: flex; align-items: center; gap: .35rem; flex-wrap: wrap; margin-left: auto; }
+    html.dark .comp-who b { color: #e8efe1; }
+    html.dark .comp-shot { background: rgb(255 255 255 / .05); }
+    html.dark .comp-add { border-top-color: rgb(255 255 255 / .08); }
     .comp-hint { font-size: .72rem; color: var(--color-gray-400); margin-top: .35rem; }
     .comp-hint b { color: var(--color-gray-500); font-weight: 800; }
     /* A thought bubble floats above the avatar and out of the card, so a card
        that has one needs the room; one that does not would just look adrift. */
-    #feedComposer.has-bubble { margin-top: 1.5rem; }
+    /* The cloud floats above the face, and the face now sits at the top of
+       the card — so the room it needs is INSIDE the card, not only above
+       it. The margin keeps it off the card before; the padding keeps it off
+       this card's own edge. */
+    #feedComposer.has-bubble { margin-top: 1.5rem; padding-top: 1.9rem; }
 
     /* People you may know — a rail that scrolls sideways on a phone. */
-    /* Enclosed now, so the strip reads as one thing rather than a heading
-       with loose cards under it. The rail keeps its own edge-to-edge feel
-       inside by bleeding into the box's padding. */
-    .pymk { margin-bottom: 1.25rem; padding: .8rem .75rem .7rem; }
-    .pymk-rail { margin-right: -.75rem; padding-right: .75rem; }
+    /* A band across the wall, not a card on it.
+       It runs to both edges the way the posts do, so the green shows only
+       above and below — two rules the eye reads as "this belongs to the
+       page", where four rules and rounded corners read as "this is a box
+       sitting on it". */
+    .pymk { margin: 0 calc(var(--plaza-gutter, 1rem) * -1) 1.25rem;
+        padding: .85rem var(--plaza-gutter, 1rem) .75rem;
+        border-radius: 0; border-left: 0; border-right: 0; box-shadow: none; }
+    /* The rail still runs off the right edge, so the next card peeks. */
+    .pymk-rail { margin-right: calc(var(--plaza-gutter, 1rem) * -1);
+        padding-right: var(--plaza-gutter, 1rem); }
     .pymk-head { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; margin-bottom: .5rem; }
     .pymk-head h2 { font-family: var(--font-heading); font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
     .pymk-head a { font-size: .78rem; font-weight: 700; color: var(--color-brand-700); }
@@ -159,9 +197,10 @@
      homepage composer has: your face, what's on your mind floating above it,
      and a field with room to write in. --}}
 <div class="card comp-card mb-4 plaza-accent{{ filled(auth()->user()?->statusBubble) ? ' has-bubble' : '' }}" id="feedComposer" data-video-host>
-    <div class="flex items-start gap-2.5 comp-row">
-        {{-- Your photo, and the one thing people expect to be able to change
-             by tapping it: what is on your mind. --}}
+    {{-- Who is writing, and what is on their mind: one row across the top,
+         so the field below gets the card's whole width instead of sharing it
+         with a face. --}}
+    <div class="comp-top">
         <button type="button" id="feedMe" class="comp-me status-cloud-wrap shrink-0" title="Set what's on your mind" data-status-bubble>
             <span class="status-cloud{{ filled(auth()->user()?->statusBubble) ? '' : ' is-empty' }}">
                 <span class="status-cloud-text" data-status-text data-empty-label="💭 What's on your mind?">{{ auth()->user()?->statusBubble ?: "💭 What's on your mind?" }}</span>
@@ -174,36 +213,52 @@
                 @endif
             </span>
         </button>
-        <div class="min-w-0 grow">
-            {{-- The @ and # hint lives in the placeholder, where it is read at
-                 the moment it applies. As a line under the box it was standing
-                 advice nobody needed twice, and it pushed the buttons down. --}}
-            <textarea id="feedPostBody" class="form-textarea w-full comp-box" rows="4" maxlength="4000" data-mentionable data-preview="#feedPreview"
-                placeholder="Kamusta ang bukid, {{ auth()->user()->firstName }}? Type @ to mention a co-farmer, # to tag a topic."></textarea>
-            <div id="feedPreview" class="cp-preview" style="display:none"><span class="cp-label">Preview</span><div class="cp-body"></div></div>
-            <span class="attach-chip hidden mt-2" id="feedChip"><span id="feedChipName" class="text-xs font-semibold text-gray-700 truncate"></span><button type="button" id="feedChipClear" class="btn-ghost rounded-full w-6 h-6 flex items-center justify-center text-gray-400 hover:text-red-500" aria-label="Remove photo">✕</button></span>
-            <span class="js-video-chip mt-2 items-center gap-2 text-xs font-semibold text-gray-600" style="display:none"><span class="js-video-name"></span><button type="button" class="js-video-clear text-red-600 font-bold">Remove</button></span>
-            <div class="comp-bar mt-2">
-                <div class="flex items-center gap-1 flex-wrap">
-                    <label class="wall-act cursor-pointer" title="Add a photo" aria-label="Add a photo">
-                        <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                        <input type="file" id="feedImage" accept="image/*" class="hidden">
-                    </label>
-                    <button type="button" class="wall-act js-video-attach" title="Upload a video" aria-label="Upload a video">
-                        <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                    </button>
-                    <button type="button" class="wall-act js-video-record" title="Record a video" aria-label="Record a video">
-                        <svg class="w-5 h-5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="currentColor"/></svg>
-                    </button>
-                    <input type="file" class="js-video-file hidden" accept="video/*">
-                    <button type="button" class="wall-act js-emoji-btn" data-target="feedPostBody" aria-label="Add an emoji" title="Emoji">
-                        <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    </button>
-                </div>
-                <button type="button" id="feedPostSubmit" class="btn btn-primary btn-sm comp-send">Post</button>
-            </div>
+        <span class="comp-who">
+            <b>{{ auth()->user()->full_name }}</b>
+            <i>Posting to the community wall</i>
+        </span>
+    </div>
+
+    {{-- The @ and # hint lives in the placeholder, where it is read at the
+         moment it applies. --}}
+    <textarea id="feedPostBody" class="form-textarea w-full comp-box" rows="4" maxlength="4000" data-mentionable data-preview="#feedPreview"
+        placeholder="Kamusta ang bukid, {{ auth()->user()->firstName }}? Type @ to mention a co-farmer, # to tag a topic."></textarea>
+    <div id="feedPreview" class="cp-preview" style="display:none"><span class="cp-label">Preview</span><div class="cp-body"></div></div>
+
+    {{-- What is coming with the post, shown as itself. The photo has usually
+         just been through the editor, so its file name is one the editor
+         invented about a file nobody has seen. --}}
+    <div class="comp-shot hidden" id="feedChip">
+        <img id="feedChipThumb" src="" alt="">
+        <span class="comp-shot-txt"><b>Photo ready</b><i id="feedChipName"></i></span>
+        <button type="button" id="feedChipClear" class="comp-shot-x" aria-label="Remove photo">✕</button>
+    </div>
+    <span class="js-video-chip mt-2 items-center gap-2 text-xs font-semibold text-gray-600" style="display:none"><span class="js-video-name"></span><button type="button" class="js-video-clear text-red-600 font-bold">Remove</button></span>
+
+    {{-- The ways to add to it, said out loud. Four unlabelled icons in a row
+         are four guesses; the line above them costs nothing and answers all
+         four. --}}
+    <div class="comp-add">
+        <span class="comp-add-lbl">Add to your post</span>
+        <div class="comp-add-row">
+            <label class="wall-act cursor-pointer" title="Add a photo" aria-label="Add a photo">
+                <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <input type="file" id="feedImage" accept="image/*" class="hidden">
+            </label>
+            <button type="button" class="wall-act js-video-attach" title="Upload a video" aria-label="Upload a video">
+                <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            </button>
+            <button type="button" class="wall-act js-video-record" title="Record a video" aria-label="Record a video">
+                <svg class="w-5 h-5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="currentColor"/></svg>
+            </button>
+            <input type="file" class="js-video-file hidden" accept="video/*">
+            <button type="button" class="wall-act js-emoji-btn" data-target="feedPostBody" aria-label="Add an emoji" title="Emoji">
+                <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </button>
         </div>
     </div>
+
+    <button type="button" id="feedPostSubmit" class="btn btn-primary comp-send">Post</button>
 </div>
 
 {{-- People you may know — above the wall, right after the composer, and
@@ -415,10 +470,30 @@ document.addEventListener('DOMContentLoaded', () => {
         if (fileInput.files[0] && window.smEditInto) await window.smEditInto(fileInput);
         const f = fileInput.files[0];
         chip.classList.toggle('hidden', !f);
-        if (f) document.getElementById('feedChipName').textContent = f.name;
+        showShot(f);
     });
+    /* The picture, not its file name.
+     *
+     * A photo that has been through the editor is written back as a name the
+     * editor made up ("a1b2c3d4.webp"), which tells the person nothing about
+     * a file they have never seen. The object URL is released when the chip
+     * is cleared or replaced, so a long session does not leak them. */
+    let shotUrl = null;
+    function showShot(f) {
+        const img = document.getElementById('feedChipThumb');
+        const name = document.getElementById('feedChipName');
+        if (shotUrl) { try { URL.revokeObjectURL(shotUrl); } catch (_) {} shotUrl = null; }
+        if (!f) { img.removeAttribute('src'); name.textContent = ''; return; }
+        shotUrl = URL.createObjectURL(f);
+        img.src = shotUrl;
+        // Its size is the honest thing to say about a file nobody named.
+        const kb = Math.max(1, Math.round(f.size / 1024));
+        name.textContent = kb > 1024 ? (kb / 1024).toFixed(1) + ' MB' : kb + ' KB';
+    }
     document.getElementById('feedChipClear')?.addEventListener('click', () => {
-        fileInput.value = ''; chip.classList.add('hidden');
+        fileInput.value = '';
+        chip.classList.add('hidden');
+        showShot(null);
     });
 
     document.getElementById('feedPostSubmit')?.addEventListener('click', async (e) => {
