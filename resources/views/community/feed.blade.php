@@ -21,13 +21,15 @@
     .pymk-head { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; margin-bottom: .5rem; }
     .pymk-head h2 { font-family: var(--font-heading); font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
     .pymk-head a { font-size: .78rem; font-weight: 700; color: var(--color-brand-700); }
-    .pymk-rail { display: flex; gap: .6rem; overflow-x: auto; padding-bottom: .35rem;
-        scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
+    /* Stretch, so a card with a short reason is still as tall as its
+       neighbour; and no scrollbar under it — the half-card showing past the
+       edge says it scrolls, and says it without a grey stripe. */
+    .pymk-rail { display: flex; align-items: stretch; gap: .5rem; overflow-x: auto; padding-bottom: .1rem;
+        scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
     .pymk-rail > * { scroll-snap-align: start; }
-    .pymk-rail::-webkit-scrollbar { height: 5px; }
-    .pymk-rail::-webkit-scrollbar-thumb { background: var(--color-gray-300); border-radius: 999px; }
+    .pymk-rail::-webkit-scrollbar { display: none; }
     /* The shape of what is coming, shimmering while it comes. */
-    .pymk-skel { flex: none; width: 11.5rem; height: 11.5rem; border-radius: 1rem;
+    .pymk-skel { flex: none; width: 9.5rem; height: 11.5rem; border-radius: 1rem;
         background: linear-gradient(100deg, var(--color-gray-100) 40%, var(--color-gray-200) 50%, var(--color-gray-100) 60%);
         background-size: 200% 100%; animation: pymkShim 1.2s linear infinite; }
     @keyframes pymkShim { to { background-position: -200% 0; } }

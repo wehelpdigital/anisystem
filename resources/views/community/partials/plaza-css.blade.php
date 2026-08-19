@@ -462,6 +462,42 @@
 
     /* --- Read-only "cloud" status floating over a member's avatar, shown
        wherever members appear (wall, members, co-farmers, discussions). --- */
+    /* ---- "People you may know" card -------------------------------------
+       Dealt out in a sideways rail on the wall and on the members page, so it
+       is described once here. Narrow enough that a third card shows past the
+       edge of a phone — which is the only thing that tells anybody the row
+       scrolls — and every card the same height, so a row of them reads as a
+       row rather than as a broken fence. */
+    .reco-card { flex: none; width: 9.5rem; padding: .7rem .55rem .6rem; border-radius: 1rem;
+        display: flex; flex-direction: column; align-items: stretch; text-align: center; }
+    @media (min-width: 480px) { .reco-card { width: 10.5rem; } }
+    .reco-who { display: block; min-width: 0; }
+    .reco-face { display: flex; justify-content: center; }
+    .reco-face .avatar { width: 3.25rem; height: 3.25rem; font-size: 1rem; }
+    .reco-name { display: block; margin-top: .45rem; font-size: .82rem; font-weight: 700; line-height: 1.25;
+        color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    /* Two lines of reason, always: one line and two lines would otherwise
+       make neighbouring cards different heights. */
+    .reco-why { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        margin-top: .15rem; font-size: .68rem; font-weight: 600; line-height: 1.45;
+        color: var(--color-brand-700); }
+    html.dark .reco-name { color: #e8efe1; }
+    html.dark .reco-why { color: #a5c97e; }
+    /* The buttons: same width, same height, at the foot of every card. */
+    .reco-acts { margin-top: auto; padding-top: .5rem; display: grid; gap: .35rem; }
+    .reco-acts .conn-action { display: grid; gap: .35rem; }
+    .reco-acts .conn-action .conn-btn,
+    .reco-acts .reco-follow { width: 100%; min-height: 1.95rem; padding: .25rem .5rem;
+        font-size: .72rem; font-weight: 800; border-radius: .6rem; }
+    /* Accept and Decline arrive as a pair; they share the row rather than
+       stacking, because they are one question with two answers. */
+    .reco-acts .conn-action:has(.conn-btn + .conn-btn) { grid-template-columns: 1fr 1fr; }
+    /* Already connected: the badge says so across the card and the ✕ that
+       undoes it sits beside, rather than the badge being hidden and a bare
+       cross left standing on its own. */
+    .reco-acts .conn-action:has(.badge) { grid-template-columns: 1fr auto; align-items: center; }
+    .reco-acts .badge { justify-content: center; }
+
     .status-cloud-wrap { position: relative; display: inline-block; }
     /* A card carrying a cloud needs air above it.
        The cloud floats above its avatar and out of the card entirely, so with
