@@ -178,8 +178,31 @@
     .attach-chip.hidden { display:none !important; }
     .attach-chip img { width:3rem; height:3rem; object-fit:cover; border-radius:.5rem; }
     html.dark .attach-chip img { box-shadow: inset 0 0 0 1px rgb(255 255 255 / .1); }
-    .post-media { position:relative; display:inline-block; margin-top:.5rem; }
-    .post-media img { border-radius:.75rem; max-height:18rem; width:auto; max-width:100%; display:block; }
+    /* A photo is the width of the post, always.
+       As an inline-block sized to the file, a portrait shot sat in a narrow
+       column with dead card either side and a landscape one nearly filled it
+       — the same wall, two different shapes. One box, 4:3, filled by the
+       picture: the crop is what makes a column of posts read as a column. */
+    .post-media { position:relative; display:block; width:100%; margin-top:.5rem;
+        aspect-ratio:4/3; max-height:22rem; border-radius:.75rem; overflow:hidden;
+        background:var(--color-gray-100); cursor:zoom-in; }
+    .post-media img { width:100%; height:100%; object-fit:cover; display:block; border-radius:0;
+        transition:transform .4s cubic-bezier(.22,1,.36,1); }
+    /* The lean-in: it says the picture has more to give than the crop shows. */
+    .post-media:hover img { transform:scale(1.04); }
+    @media (prefers-reduced-motion:reduce) { .post-media img { transition:none; } .post-media:hover img { transform:none; } }
+    /* A tall picture is cropped hard by 4:3; say so rather than pretending the
+       crop is the photo. */
+    .post-media::after { content:''; position:absolute; inset:auto 0 0 0; height:35%; pointer-events:none;
+        background:linear-gradient(to top, rgb(0 0 0 / .28), transparent); opacity:0;
+        transition:opacity .28s cubic-bezier(.22,1,.36,1); }
+    .post-media:hover::after { opacity:1; }
+    .post-media-full { position:absolute; right:.5rem; bottom:.5rem; z-index:2; display:inline-flex;
+        align-items:center; gap:.25rem; padding:.2rem .5rem; border-radius:999px; pointer-events:none;
+        background:rgb(17 24 39 / .68); color:#fff; font-size:.62rem; font-weight:800;
+        opacity:0; transition:opacity .28s cubic-bezier(.22,1,.36,1); }
+    .post-media:hover .post-media-full { opacity:1; }
+    @media (hover:none) { .post-media-full { opacity:.85; } }
     .gif-badge { position:absolute; top:.5rem; left:.5rem; padding:.25rem .4rem; border-radius:.375rem;
         background:rgb(26 26 26 / .72); color:#fff; font:800 .6rem/1 var(--font-heading); letter-spacing:.08em; }
     html.dark .gif-badge { border:1px solid rgb(255 255 255 / .15); }
@@ -385,7 +408,9 @@
        image (gallery's sweep, aimed at the plaza). Opt-in via .media-skel on
        .post-media plus the is-loaded hooks on the <img>; the box holds a
        likely photo shape until the real one takes over. --- */
-    .media-skel:not(:has(img.is-loaded)):not(.is-gone) { width:min(100%, 24rem); aspect-ratio:16/10; max-height:18rem; }
+    /* The box already has its shape (see .post-media), so the shimmer only
+       has to fill it while the picture decodes. */
+    .media-skel:not(:has(img.is-loaded)):not(.is-gone) { min-height:6rem; }
     .media-skel:not(:has(img.is-loaded)) img { position:absolute; inset:0; }
     .media-skel img { opacity:0; transition:opacity .28s ease; }
     .media-skel img.is-loaded { opacity:1; }

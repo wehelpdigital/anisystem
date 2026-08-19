@@ -305,6 +305,13 @@
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => scan(), { once: true });
     else scan();
 
+    /* Which post an element belongs to.
+     *
+     * On the wall that is the card it sits in. In the comment sheet there is
+     * no card — the sheet declares itself the scope instead, so every
+     * handler below works in both places without being written twice. */
+    const postScope = (el) => el.closest('.wall-post') || el.closest('[data-comment-scope]');
+
     // Comment + reply submit (multipart — comments/replies can carry a photo).
     document.addEventListener('submit', async (e) => {
         const form = e.target.closest('.wall-comment-form');
@@ -346,7 +353,8 @@
                     animateIn(form.previousElementSibling);
                     form.remove();
                 } else {
-                    const zone = form.closest('.wall-post').querySelector('.wall-comments');
+                    const zone = postScope(form)?.querySelector('.wall-comments');
+                    if (!zone) { input.value = ''; return; }
                     openZone(zone, false);
                     zone.insertAdjacentHTML('beforeend', data.data.html);
                     animateIn(zone.lastElementChild);
@@ -365,7 +373,7 @@
         const btn = e.target.closest('.js-wall-reply');
         if (!btn) return;
         const parentId = btn.getAttribute('data-parent-id');
-        const post = btn.closest('.wall-post');
+        const post = postScope(btn);
         const zone = post && post.querySelector(`.wall-replies[data-parent-id="${parentId}"]`);
         if (!zone) return;
         // Show what is being replied to before asking for the reply.
@@ -444,7 +452,7 @@
         const btn = e.target.closest('.js-view-all-comments, .js-load-more-comments');
         if (!btn) return;
         e.preventDefault();
-        const post = btn.closest('.wall-post');
+        const post = postScope(btn);
         const wrap = post && post.querySelector('.wall-comments');
         if (!wrap || wrap.dataset.loading) return;
         const postId = post.getAttribute('data-post-id');

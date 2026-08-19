@@ -44,7 +44,7 @@
         @include('community.partials.restricted', ['reason' => $post->restrictedReason ?? null])
     @else
         @if (trim((string) $post->body) !== '')
-            <p class="text-sm text-gray-700 mt-2 whitespace-pre-line break-words">{!! \App\Support\CommunityText::render($post->body) !!}</p>
+            <p class="fp-body text-sm text-gray-700 mt-2 whitespace-pre-line break-words">{!! \App\Support\CommunityText::render($post->body) !!}</p>
         @endif
         @php $ytVid = \App\Support\CommunityText::youtubeId($post->body); @endphp
         @if ($ytVid)
@@ -52,10 +52,19 @@
         @endif
         @if ($post->imagePath)
             {{-- media-skel: shimmer while the photo decodes, vanish if it 404s. --}}
-            <div class="post-media media-skel">
+            {{-- Tapping the picture opens it whole, with the post's comments
+                 under it — the crop above is only what fits the column. --}}
+            <div class="post-media media-skel js-post-photo" role="button" tabindex="0"
+                 data-post-id="{{ $post->id }}"
+                 data-full="{{ \App\Support\MediaStore::url($post->imagePath) }}"
+                 aria-label="Open this photo and its comments">
                 <img src="{{ \App\Support\MediaStore::url($post->imagePath) }}" alt="" loading="lazy"
                     onload="this.classList.add('is-loaded')"
                     onerror="this.closest('.media-skel')?.classList.add('is-gone')">
+                <span class="post-media-full">
+                    <svg style="width:.7rem;height:.7rem" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4h4M20 8V4h-4M4 16v4h4m12-4v4h-4"/></svg>
+                    See it whole
+                </span>
             </div>
         @endif
         @if ($post->videoPath ?? null)
