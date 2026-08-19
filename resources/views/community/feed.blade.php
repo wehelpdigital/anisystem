@@ -57,9 +57,11 @@
     .comp-hint b { color: var(--color-gray-500); font-weight: 800; }
     /* A thought bubble floats above the avatar and out of the card, so a card
        that has one needs the room; one that does not would just look adrift. */
-    /* The cloud hangs above the face and out of the card, so the card keeps
-       room for it — the same air a post carrying one is given. */
-    #feedComposer { margin-top: 1.35rem; padding-top: 1.6rem; }
+    /* The same trade a post carrying a cloud makes: the card keeps its own
+       padding, the cloud rides ITS top edge rather than being tucked inside,
+       and the margin above is what keeps it off the card before. Padding here
+       instead would sit the cloud lower than every cloud under it. */
+    #feedComposer { margin-top: 1.35rem; }
 
     /* People you may know — a rail that scrolls sideways on a phone. */
     /* A band across the wall, not a card on it.

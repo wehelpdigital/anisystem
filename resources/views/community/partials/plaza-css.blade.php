@@ -396,8 +396,13 @@
        community green, drifting on the shared gradSweep tide (layout). Any
        card or header block takes the class; popovers all live on <body>, so
        the overflow clip costs nothing. --- */
-    .plaza-accent { position:relative; overflow:hidden; }
+    /* No overflow:hidden — it was there to keep the accent line inside the
+       card's rounded corners, and it also cut the status cloud in half, since
+       the cloud hangs above the card by design. The line takes the card's own
+       top corners instead, which is all it ever needed. */
+    .plaza-accent { position:relative; }
     .plaza-accent::before { content:''; position:absolute; inset:0 0 auto 0; height:3px;
+        border-top-left-radius:inherit; border-top-right-radius:inherit;
         background:linear-gradient(90deg, #3d6823, #6b9f3d 45%, #a8cc7e 75%, transparent);
         background-size:220% 100%; animation:gradSweep 12s ease-in-out infinite alternate; }
     html.dark .plaza-accent::before { opacity:.8; }
@@ -645,19 +650,14 @@
     .comp-me { position: relative; border: 0; background: none; padding: 0; cursor: pointer; max-width: 3.5rem; }
     /* The cloud is decoration everywhere else, so the shared rule turns
        pointer events off. Here it is half the button. */
-    /* On this card the cloud is not decoration: it is the one thing people
-       tap without being told to, and it was the smallest thing on the card.
-       Bigger, and lifted off the page by a real shadow so it reads as
-       something floating above the face rather than printed behind it. */
-    .comp-me .status-cloud { pointer-events: auto; max-width: 15rem;
-        padding: .35rem .75rem; border-radius: .9rem;
-        box-shadow: 0 10px 22px -10px rgb(0 0 0 / .45), 0 2px 6px -2px rgb(0 0 0 / .25);
+    /* The same cloud a post carries — same width, same type, same tail. It
+       was grown here and then read as a different component sitting above a
+       column of small ones, and a wider box only truncated later, not less.
+       All this rule adds is that yours can be tapped. */
+    .comp-me .status-cloud { pointer-events: auto;
         transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
-    .comp-me .status-cloud .status-cloud-text { font-size: .76rem; font-weight: 700; }
-    .comp-me .status-cloud::after { left: 1.05rem; bottom: -.4rem;
-        border-left-width: .4rem; border-right-width: .4rem; border-top-width: .42rem; }
-    .comp-me:hover .status-cloud { transform: translateY(-2px);
-        box-shadow: 0 16px 30px -12px rgb(0 0 0 / .55), 0 3px 8px -3px rgb(0 0 0 / .3); }
+    .comp-me:hover .status-cloud { transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgb(0 0 0 / .18); }
     /* Nothing said yet: a dashed invitation rather than a statement. */
     .comp-me .status-cloud.is-empty { background: var(--color-brand-50);
         border-color: var(--color-brand-300); border-style: dashed; }
