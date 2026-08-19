@@ -111,7 +111,14 @@
         .msgr-launcher.is-seated.has-unread { animation:none; }
         .msgr-launcher.is-seated.has-unread .msgr-badge { animation:none; opacity:1; }
     }
-    .msgr-panel { width:20rem; max-width:calc(100vw - 2rem); max-height:28rem; background:#fff; border-radius:1rem;
+    /* A FIXED box, not one that grows to its contents.
+       The panel opens onto skeleton rows and then swaps in the real threads,
+       which is a height change — and because the panel is pinned by its
+       bottom edge, a height change moves its TOP. That was the jump: the
+       animation was smooth, the box under it was resizing. Now the box is one
+       size from the first frame and the list scrolls inside it. */
+    .msgr-panel { width:20rem; max-width:calc(100vw - 2rem); height:28rem; max-height:calc(100vh - 6rem);
+        display:flex; flex-direction:column; background:#fff; border-radius:1rem;
         box-shadow:0 16px 48px rgb(0 0 0 / .22); overflow:hidden; display:flex; flex-direction:column;
         animation:msgrIn .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
     .msgr-panel.hidden { display:none; }
@@ -122,7 +129,10 @@
        list hugged a single row and the whole thing sat as a sliver on the
        bottom edge, close button and all. The padding keeps the last row off
        the rounded corner. */
-    .msgr-panel-body { overflow-y:auto; min-height:14rem; padding-bottom:.75rem; }
+    /* min-height:0 is what lets a flex child actually scroll instead of
+       pushing its parent taller. */
+    .msgr-panel-body { flex:1 1 auto; min-height:0; overflow-y:auto; padding-bottom:.75rem; }
+    .msgr-panel-head { flex:none; }
     /* Skeleton rows in the exact shape of the threads they become; the
        shimmer parks under reduced motion but the shapes still say "loading". */
     .msgr-skel { display:flex; align-items:center; gap:.65rem; padding:.6rem 1rem; }
@@ -359,7 +369,9 @@
            the edge — and sits one layer under a conversation (95 vs 96) so
            tapping a thread visibly hands over to the chat. */
         .msgr-panel { position:fixed; inset:auto 0 0 0; width:auto; max-width:none;
-            max-height:76vh; max-height:76dvh;
+            /* Same reasoning on a phone, where the sheet is pinned harder
+               still: one height, decided before the first frame. */
+            height:76vh; height:76dvh; max-height:none;
             border-radius:1.1rem 1.1rem 0 0; z-index:95;
             animation:msgrSheetIn .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
         .msgr-panel-body { padding-bottom:calc(.75rem + env(safe-area-inset-bottom, 0px)); }
