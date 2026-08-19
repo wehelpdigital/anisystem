@@ -235,7 +235,19 @@
     .pf-id { display:flex; align-items:flex-end; gap:.85rem; margin-top:-2rem; }
     .pf-face { position:relative; display:inline-block; flex:none; width:5rem; height:5rem;
         border-radius:999px; box-shadow:0 0 0 3px var(--color-white); background:var(--color-white); }
-    .pf-face .avatar { width:100%; height:100%; font-size:1.5rem; }
+    /* The face is a circle whatever shape the file is.
+       On your own profile the avatar arrives wrapped in .avatar-online-wrap
+       (it carries the green dot), and that wrapper is an inline-block with no
+       height — so `height:100%` on the avatar inside it resolved against
+       nothing and the picture kept its own proportions: 80x53 for a landscape
+       photo, taller than its box for a portrait one, which is what was
+       leaning on the name below. Each link in the chain is given the size. */
+    .pf-face > .avatar-online-wrap { display:block; width:100%; height:100%; }
+    .pf-face .avatar { display:block; width:100%; height:100%; font-size:1.5rem;
+        border-radius:999px; overflow:hidden; }
+    .pf-face .avatar img { width:100%; height:100%; object-fit:cover; display:block; }
+    /* The dot rides on the rim of the circle, not on the picture's corner. */
+    .pf-face .avatar-online-dot { position:absolute; right:.15rem; bottom:.15rem; z-index:2; }
     @media (min-width:640px) { .pf-face { width:6rem; height:6rem; } }
     .pf-name { min-width:0; padding-bottom:.15rem; }
     .pf-name h2 { font-family:var(--font-heading); font-size:1.15rem; font-weight:800; line-height:1.2;
