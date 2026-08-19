@@ -575,8 +575,11 @@
     /* The action row wraps instead of squeezing the send button into a
        two-line sliver next to four icons on a narrow phone. */
     .comp-bar { display: flex; align-items: center; justify-content: space-between; gap: .5rem; flex-wrap: wrap; }
+    /* Post sits on the same row as the buttons that fill the post, at every
+       width. It used to take a row of its own below 26rem, which is most
+       phones — the dashboard's composer never did, and the two are the same
+       box doing the same job. */
     .comp-send { flex: 0 0 auto; }
-    @media (max-width: 26rem) { .comp-send { flex: 1 0 100%; } }
     @media (prefers-reduced-motion: reduce) { .comp-me .status-cloud { transition: none; } }
 
     /* --- Rail cards (your discussions, what's new in the blog) --- */

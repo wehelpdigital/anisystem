@@ -169,9 +169,11 @@
             </span>
         </button>
         <div class="min-w-0 grow">
+            {{-- The @ and # hint lives in the placeholder, where it is read at
+                 the moment it applies. As a line under the box it was standing
+                 advice nobody needed twice, and it pushed the buttons down. --}}
             <textarea id="feedPostBody" class="form-textarea w-full comp-box" rows="4" maxlength="4000" data-mentionable data-preview="#feedPreview"
-                placeholder="Kamusta ang bukid, {{ auth()->user()->firstName }}?"></textarea>
-            <p class="comp-hint">Type <b>@</b> to mention a co-farmer, <b>#</b> to tag a topic.</p>
+                placeholder="Kamusta ang bukid, {{ auth()->user()->firstName }}? Type @ to mention a co-farmer, # to tag a topic."></textarea>
             <div id="feedPreview" class="cp-preview" style="display:none"><span class="cp-label">Preview</span><div class="cp-body"></div></div>
             <span class="attach-chip hidden mt-2" id="feedChip"><span id="feedChipName" class="text-xs font-semibold text-gray-700 truncate"></span><button type="button" id="feedChipClear" class="btn-ghost rounded-full w-6 h-6 flex items-center justify-center text-gray-400 hover:text-red-500" aria-label="Remove photo">✕</button></span>
             <span class="js-video-chip mt-2 items-center gap-2 text-xs font-semibold text-gray-600" style="display:none"><span class="js-video-name"></span><button type="button" class="js-video-clear text-red-600 font-bold">Remove</button></span>
