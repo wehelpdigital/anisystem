@@ -8,14 +8,16 @@
      Expects: $discussion (with member_count, post_count, joined). --}}
 @php use App\Support\CommunityAvatar; @endphp
 @php $hue = CommunityAvatar::hue($discussion->name); @endphp
-<article class="card p-0 mb-5 feed-post fp-card fd-card overflow-hidden" data-discussion-card="{{ $discussion->id }}">
-    <div class="fd-banner {{ $hue }}">
-        @if ($discussion->bannerImagePath)
+<article class="card p-0 mb-5 feed-post fp-card fd-card" data-discussion-card="{{ $discussion->id }}">
+    {{-- A banner only when there is one to show. Empty, it was a dark strip
+         with the word "Discussion" pinned to the very edge of the screen. --}}
+    @if ($discussion->bannerImagePath)
+        <div class="fd-banner {{ $hue }}">
             <img src="{{ \App\Support\MediaStore::url($discussion->bannerImagePath) }}" alt="" loading="lazy">
-        @endif
-        <span class="fd-kicker">Discussion</span>
-    </div>
+        </div>
+    @endif
     <div class="p-4">
+        <span class="fd-kicker">Discussion</span>
         <div class="flex items-start gap-3">
             <span class="avatar avatar-md avatar-sq overflow-hidden {{ $hue }} shrink-0">
                 @if ($discussion->coverImagePath)
@@ -43,6 +45,8 @@
         @if ($discussion->description)
             <p class="text-sm text-gray-500 mt-2 line-clamp-2">{{ $discussion->description }}</p>
         @endif
-        <a href="{{ route('community.groups.show', ['id' => $discussion->id]) }}" class="btn btn-white btn-sm mt-3">Open the discussion</a>
+        {{-- The way in, across the card: this is the one thing the card is
+             for, and it was a small button sitting off to one side. --}}
+        <a href="{{ route('community.groups.show', ['id' => $discussion->id]) }}" class="btn btn-white btn-sm fd-open">Open the discussion</a>
     </div>
 </article>

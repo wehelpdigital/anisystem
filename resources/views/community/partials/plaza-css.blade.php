@@ -480,6 +480,17 @@
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     html.dark .fp-mind { background: #232a1c; border-color: #3a4a2c; color: #dbe6cf; }
 
+    /* A discussion dealt into the wall. It wears the post card's shape, so
+       only what differs is described here. */
+    .fd-kicker { display: inline-flex; align-items: center; margin-bottom: .5rem;
+        padding: .15rem .5rem; border-radius: 999px;
+        background: var(--color-brand-50); color: var(--color-brand-700);
+        font-size: .62rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+    .fd-banner { position: relative; height: 7rem; overflow: hidden;
+        border-top-left-radius: inherit; border-top-right-radius: inherit; }
+    .fd-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .fd-open { display: block; width: 100%; margin-top: .75rem; text-align: center; }
+
     /* The name and place beside a face, centred on it.
        With both lines the block is about the face's height and centring
        changes nothing; with only a name — nobody has said where they farm —

@@ -90,8 +90,17 @@
         background:#ef4444; color:#fff; font-size:.625rem; font-weight:800; line-height:1; }
     .cn-row-dot { margin-left:auto; }
     .cn-saved { flex-shrink:0; }
-    /* On a phone the row is tight: the bookmark keeps its icon, drops its word. */
-    @media (max-width:640px) { .cn-saved-word { display:none; } }
+    /* The word stays at every width. A bookmark is the one icon nobody agrees
+       on — save, read later, favourite — and the row has the room. */
+
+    /* The three controls above the wall wear the app's colour, not the grey
+       of the button they sit in: this row is the community's own furniture. */
+    .cn-hamburger .cn-icon,
+    .cn-saved svg,
+    .cn-seat .msgr-launcher.is-seated svg { color:var(--color-brand-600); }
+    html.dark .cn-hamburger .cn-icon,
+    html.dark .cn-saved svg,
+    html.dark .cn-seat .msgr-launcher.is-seated svg { color:var(--color-brand-500); }
 
     .cn-row { display:flex; align-items:center; gap:.75rem; width:100%; padding:.75rem;
         border-radius:.75rem; font-weight:600; color:#374151; text-decoration:none;
