@@ -552,9 +552,10 @@
        the usual gap it lands on the bottom edge of the card above — which is
        what made a column of posts look like the tags were falling off. Only
        cards that actually carry one pay for the space. */
-    /* Only the discussion card still floats one; the wall's posts say it in
-       the flow now (see .fp-mind) and need no air above them for it. */
-    .group-post:has(.status-cloud) { margin-top: 1.1rem; }
+    /* The wall's posts float one again, so they need the air back: without
+       it the cloud lands on the card above and on this card's own coloured
+       edge. Only cards that actually carry one pay for the space. */
+    .feed-post:has(.status-cloud), .group-post:has(.status-cloud) { margin-top: 1.25rem; }
     /* Chat bubble above the avatar, with a tail pointing down at the photo. */
     .status-cloud {
         position: absolute; left: 0; right: auto; bottom: calc(100% + .3rem);
