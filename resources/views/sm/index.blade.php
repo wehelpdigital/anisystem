@@ -48,6 +48,37 @@
             animation: gradSweep 12s ease-in-out infinite alternate; }
         @media (prefers-reduced-motion: reduce) { .sch-hero::before { animation: none; } }
         .sch-hero-left { display: flex; align-items: center; gap: .85rem; min-width: 0; }
+
+        /* Whose farm this is. A quiet strip above the greeting — it is a
+           fact about the page, not an alarm, so it reads as a label until you
+           are somewhere that is not your own, where it takes the brand tint. */
+        .hat-strip { display: flex; align-items: center; flex-wrap: wrap; gap: .4rem .55rem;
+            margin-bottom: .6rem; padding: .45rem .7rem; border-radius: .7rem;
+            background: var(--color-gray-100); border: 1px solid var(--color-gray-200); }
+        .hat-strip.is-worker { background: var(--color-brand-50); border-color: var(--color-brand-100); }
+        .hat-badge { font-size: .62rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
+            color: var(--color-gray-500); }
+        .hat-strip.is-worker .hat-badge { color: var(--color-brand-700); }
+        .hat-where { font-size: .84rem; font-weight: 800; color: var(--color-gray-900); min-width: 0;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .hat-what { font-size: .68rem; font-weight: 700; color: var(--color-gray-500);
+            padding: .1rem .45rem; border-radius: 999px; background: var(--color-white); }
+        .hat-switch { margin-left: auto; font-size: .72rem; font-weight: 800; color: var(--color-brand-700);
+            padding: .15rem .5rem; border-radius: 999px; border: 1px solid var(--color-brand-200);
+            background: var(--color-white); cursor: pointer;
+            transition: background .28s cubic-bezier(.22,1,.36,1); }
+        .hat-switch:hover { background: var(--color-brand-50); }
+        .hat-opt { display: flex; align-items: center; gap: .6rem; width: 100%; text-align: left;
+            padding: .6rem .7rem; border-radius: .7rem; cursor: pointer;
+            transition: background .28s cubic-bezier(.22,1,.36,1); }
+        .hat-opt:hover { background: var(--color-gray-50); }
+        .hat-opt.is-on { background: var(--color-brand-50); }
+        .hat-opt-txt { display: flex; flex-direction: column; gap: .1rem; min-width: 0; flex: 1 1 auto; }
+        .hat-opt-txt b { font-size: .86rem; font-weight: 700; color: var(--color-gray-900); }
+        .hat-opt-txt i { font-style: normal; font-size: .72rem; line-height: 1.4; color: var(--color-gray-500); }
+        .hat-opt-tick { flex: none; width: 1.1rem; height: 1.1rem; color: var(--color-brand-600); }
+        .hat-opt-tick svg { width: 100%; height: 100%; }
+        @media (prefers-reduced-motion: reduce) { .hat-switch, .hat-opt { transition: none; } }
         /* A drawn mark, not an emoji: platform emoji arrive as square little
            pictures and sat in the round badge like a photo in a porthole.
            The stroke icons match every other icon in the app. */
@@ -421,6 +452,66 @@
 
     {{-- A hello with the day's answer in it: who you are, what today holds,
          and the way straight onto the board that holds it. --}}
+    {{-- Whose seasons these are.
+
+         One account is often several things at once — a farm of your own,
+         work on a neighbour's, sometimes both — and every screen below is
+         scoped to whichever is active. Without a line saying which, an
+         unfamiliar list of seasons has to be decoded from the names on it.
+         It only appears when there is something to say: a plain owner with no
+         second hat is never told they are themselves. --}}
+    @php
+        $hatList = collect($hats ?? []);
+        $hereKey = $isWorkerHere ? 'worker:' . optional(\App\Support\WorkerContext::activeGrant())->bossUserId : 'own';
+        $hereName = $isWorkerHere
+            ? ($workerBossName ?: 'a farm')
+            : 'Your own farm';
+        $canSwitch = $hatList->count() > 1;
+    @endphp
+    @if ($isWorkerHere || $canSwitch)
+        <div class="hat-strip{{ $isWorkerHere ? ' is-worker' : '' }}">
+            <span class="hat-badge">{{ $isWorkerHere ? 'Working at' : 'You are in' }}</span>
+            <span class="hat-where">{{ $hereName }}</span>
+            @if ($isWorkerHere)
+                <span class="hat-what">{{ \App\Support\WorkerContext::canEdit() ? 'can add and change work' : 'can look, not change' }}</span>
+            @endif
+            @if ($canSwitch)
+                <button type="button" class="hat-switch" id="hatSwitchBtn" aria-haspopup="dialog">Switch</button>
+            @endif
+        </div>
+
+        @if ($canSwitch)
+            {{-- The switch existed as a route and was reachable only at login;
+                 somebody who wears two hats changes them during the day. --}}
+            <div class="sheet hidden" id="hatSheet" style="--sheet-width:24rem">
+                <div class="sheet-handle"></div>
+                <div class="sheet-header">
+                    <h3 class="sheet-title">Which farm?</h3>
+                    <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+                </div>
+                <div class="sheet-body space-y-1">
+                    @foreach ($hatList as $hat)
+                        <form method="POST" action="{{ route('worker.switch') }}">
+                            @csrf
+                            <input type="hidden" name="bossId" value="{{ $hat['bossId'] ?? 0 }}">
+                            <button type="submit" class="hat-opt{{ $hat['key'] === $hereKey ? ' is-on' : '' }}">
+                                <span class="hat-opt-txt">
+                                    <b>{{ $hat['title'] }}</b>
+                                    <i>{{ $hat['detail'] }}</i>
+                                </span>
+                                @if ($hat['key'] === $hereKey)
+                                    <span class="hat-opt-tick" aria-hidden="true">
+                                        <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                    </span>
+                                @endif
+                            </button>
+                        </form>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+    @endif
+
     <div class="sch-hero">
         @php
             $__h = (int) now()->format('G');
@@ -536,10 +627,12 @@
              bare `.btn` is unlayered CSS and would otherwise beat `hidden`);
              the floating + button is the phone equivalent. --}}
         <div class="hidden md:flex md:justify-end md:items-center gap-2">
+            @if (! $isWorkerHere)
             <a href="{{ route('sm.create') }}" class="btn btn-primary">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
                 New Cropping Schedule
             </a>
+            @endif
         </div>
     </div>
 
@@ -607,12 +700,20 @@
                     <p class="text-sm text-gray-500 mb-5">Try a different search, or clear it to see all your schedules.</p>
                     <a href="{{ route('sm.index') }}" class="btn btn-outline">Clear search</a>
                 @else
-                    <h2 class="text-lg font-bold text-gray-900 mb-1">No cropping schedules yet</h2>
-                    <p class="text-sm text-gray-500 mb-5">Create your first schedule to start planning lots, workers and day-by-day activities.</p>
-                    <a href="{{ route('sm.create') }}" class="btn btn-primary btn-lg">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
-                        New Cropping Schedule
-                    </a>
+                    @if ($isWorkerHere)
+                        {{-- A worker sees the farm they were let into, so an
+                             empty page means nothing has been shared with them
+                             yet — not that they should start something. --}}
+                        <h2 class="text-lg font-bold text-gray-900 mb-1">Nothing shared with you yet</h2>
+                        <p class="text-sm text-gray-500 mb-5">When {{ $workerBossName ?: 'the farm owner' }} gives you a season to work on, it appears here.</p>
+                    @else
+                        <h2 class="text-lg font-bold text-gray-900 mb-1">No cropping schedules yet</h2>
+                        <p class="text-sm text-gray-500 mb-5">Create your first schedule to start planning lots, workers and day-by-day activities.</p>
+                        <a href="{{ route('sm.create') }}" class="btn btn-primary btn-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
+                            New Cropping Schedule
+                        </a>
+                    @endif
                 @endif
             </div>
         </div>
@@ -758,12 +859,15 @@
          schedules themselves below the fold on a phone. --}}
     @include('sm.partials.tip-of-day', ['tip' => $tip ?? null, 'aiHref' => ($schedules->first() ? route('sm.ai', ['id' => $schedules->first()->id]) : null)])
 
-    {{-- One floating button, for the one thing this page exists to start. --}}
+    {{-- One floating button, for the one thing this page exists to start —
+         and nothing a worker can start, so it is not drawn for them. --}}
+    @if (! $isWorkerHere)
     <a href="{{ route('sm.create') }}"
         class="md:hidden fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full btn-primary shadow-lg flex items-center justify-center"
         aria-label="New cropping schedule">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
     </a>
+    @endif
 
     @include('sm.partials.quick-capture', ['allSchedules' => $allSchedules])
     @include('sm.partials.quick-record', ['allSchedules' => $allSchedules])
@@ -772,6 +876,11 @@
 @endsection
 
 @push('scripts')
+<script>
+    // The hat switcher's opener. The sheet itself is the app's own component,
+    // so closing, the backdrop and Escape are already handled.
+    document.getElementById('hatSwitchBtn')?.addEventListener('click', () => window.openSheet?.('hatSheet'));
+</script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     /* ---- the lot strip on a season card -----------------------------

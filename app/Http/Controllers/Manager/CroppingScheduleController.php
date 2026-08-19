@@ -208,11 +208,35 @@ class CroppingScheduleController extends Controller
             ?? $schedules->first();
         $todayHref = $todaySchedule ? route('sm.activities', ['id' => $todaySchedule->id]) : null;
 
-        return view('sm.index', compact('schedules', 'allSchedules', 'tip', 'summary', 'cards', 'todayHref', 'sorts', 'sort'));
+        /* Which hat this page is being read through.
+         *
+         * One account is often several things — a farm of one's own, work
+         * on a neighbour's, sometimes both — and every screen below is
+         * scoped to whichever is active. Somebody looking at an unfamiliar
+         * list of seasons deserves to be told whose they are rather than
+         * having to work it out from the names. */
+        $grant = \App\Support\WorkerContext::activeGrant();
+        $boss = $grant?->boss;
+
+        return view('sm.index', compact('schedules', 'allSchedules', 'tip', 'summary', 'cards', 'todayHref', 'sorts', 'sort') + [
+            'isWorkerHere' => $grant !== null,
+            'workerBossName' => $boss ? trim(($boss->firstName ?? '') . ' ' . ($boss->lastName ?? '')) : null,
+            'hats' => \App\Support\UserHats::for(Auth::user()),
+        ]);
     }
 
     public function create()
     {
+        /* A season belongs to the farm that owns it.
+         *
+         * A worker is inside somebody else's farm; there is no farm of their
+         * own here to add a season to, so the form is not theirs to open. The
+         * dashboard withholds the buttons, and this answers anyone who types
+         * the URL. */
+        if ($no = $this->workerNoAccess('creating a cropping schedule', route('sm.index'), 'Back to the seasons')) {
+            return $no;
+        }
+
         if ($redirect = $this->guardScheduleLimit()) {
             return $redirect;
         }
@@ -239,6 +263,11 @@ class CroppingScheduleController extends Controller
 
     public function store(Request $request)
     {
+        // The form's own door, closed to the same people (see create()).
+        if ($no = $this->workerNoAccess('creating a cropping schedule', route('sm.index'), 'Back to the seasons')) {
+            return $no;
+        }
+
         if ($redirect = $this->guardScheduleLimit()) {
             return $redirect;
         }
