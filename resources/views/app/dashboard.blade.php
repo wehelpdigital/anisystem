@@ -768,6 +768,7 @@
 </div>
 
 {{-- The wall's cards work here too, so their sheets have to come along. --}}
+@include('community.partials.photo-editor')
 @include('community.partials.post-actions')
 @include('community.partials.wall-comments-modal')
 {{-- Tapping your own photo on the composer asks what is on your mind, the
@@ -934,7 +935,9 @@
     const csrf = () => document.querySelector('meta[name=csrf-token]')?.content || '';
 
     // Photo chip
-    imageInput?.addEventListener('change', () => {
+    imageInput?.addEventListener('change', async () => {
+        // Same stop as the community composer: edit first, then it is a post.
+        if (imageInput.files[0] && window.smEditInto) await window.smEditInto(imageInput);
         const f = imageInput.files[0];
         if (f) { document.getElementById('dashImageThumb').src = URL.createObjectURL(f); imgChip.style.display = 'flex'; }
         else imgChip.style.display = 'none';

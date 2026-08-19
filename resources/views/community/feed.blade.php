@@ -277,6 +277,7 @@
 </aside>
 </div>{{-- /plaza-shell --}}
 
+@include('community.partials.photo-editor')
 @include('community.partials.post-actions')
 @include('community.partials.pymk-js')
 @include('community.partials.wall-comments-modal')
@@ -396,7 +397,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileInput = document.getElementById('feedImage');
     const chip = document.getElementById('feedChip');
 
-    fileInput?.addEventListener('change', () => {
+    fileInput?.addEventListener('change', async () => {
+        // The photo goes through the editor before it is a photo you are
+        // posting: filters, a word, an arrow at the thing you mean. The
+        // result is written back into the input, so the send path below is
+        // untouched. Backing out clears the pick.
+        if (fileInput.files[0] && window.smEditInto) await window.smEditInto(fileInput);
         const f = fileInput.files[0];
         chip.classList.toggle('hidden', !f);
         if (f) document.getElementById('feedChipName').textContent = f.name;
