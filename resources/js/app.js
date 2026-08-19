@@ -1142,7 +1142,10 @@ window.smQuillTouch = function smQuillTouch(quill) {
      * Measured against what the field already has: a composer that keeps a
      * right-hand column for its own send button needs nothing from us, and
      * shrinking its padding to ours would be worse than doing nothing. */
-    const GUTTER = 44;          // the button (32) plus its gap, twice over
+    /* Wide enough that the words stop short of the button rather than up
+     * against it: the button is 32, its gap 6, and the language chip juts
+     * another 6 past its corner. 52 leaves daylight. */
+    const GUTTER = 52;
     let gutterHeld = null;      // { el, had } while a field is holding one
 
     function openGutter(el) {
@@ -1150,13 +1153,20 @@ window.smQuillTouch = function smQuillTouch(quill) {
         if (!el) return;
         const now = parseFloat(getComputedStyle(el).paddingRight) || 0;
         if (now >= GUTTER) return;                 // it already keeps the room
-        gutterHeld = { el, had: el.style.paddingRight };
-        el.style.paddingRight = GUTTER + 'px';
+        gutterHeld = { el, had: el.style.getPropertyValue('padding-right'), prio: el.style.getPropertyPriority('padding-right') };
+        /* Set with priority: a field styled by a class that itself shouts
+         * (`pr-16!` and friends are all over this codebase) would otherwise
+         * beat a plain inline style, and the words would go right back under
+         * the button on exactly the screens nobody thought to check. */
+        el.style.setProperty('padding-right', GUTTER + 'px', 'important');
     }
     function closeGutter() {
         if (!gutterHeld) return;
-        // Back to exactly what the field said before, inline or nothing.
-        gutterHeld.el.style.paddingRight = gutterHeld.had || '';
+        // Back to exactly what the field said before, priority and all.
+        gutterHeld.el.style.removeProperty('padding-right');
+        if (gutterHeld.had) {
+            gutterHeld.el.style.setProperty('padding-right', gutterHeld.had, gutterHeld.prio || '');
+        }
         gutterHeld = null;
     }
 
