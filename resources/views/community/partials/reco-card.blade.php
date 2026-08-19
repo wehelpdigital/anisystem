@@ -6,7 +6,12 @@
         <span class="flex justify-center">@include('community.partials.avatar', ['user' => $u, 'size' => 'avatar-lg', 'link' => false, 'showOnline' => true])</span>
         <span class="block font-semibold text-gray-900 truncate mt-2">{{ $u->full_name }}</span>
     </a>
-    <span class="block text-[0.688rem] text-brand-700 font-semibold truncate mt-0.5" title="{{ $u->recoReason }}">{{ $u->recoReason }}</span>
+    {{-- Only when there is something to say. A suggestion with no reason
+         behind it — somebody topped up to fill the strip — would otherwise
+         carry a blank line and sit taller than its neighbours. --}}
+    @if (filled($u->recoReason ?? null))
+        <span class="block text-[0.688rem] text-brand-700 font-semibold truncate mt-0.5" title="{{ $u->recoReason }}">{{ $u->recoReason }}</span>
+    @endif
     <div class="mt-2 flex flex-col gap-1.5 items-stretch">
         @include('community.connect.partials.action', ['status' => $u->connStatus, 'memberId' => $u->id])
         {{-- Following costs the other person nothing and needs no permission,

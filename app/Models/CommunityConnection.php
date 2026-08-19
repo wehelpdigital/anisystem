@@ -57,6 +57,60 @@ class CommunityConnection extends BaseModel
     }
 
     /** IDs of everyone $userId is accepted-connected to. */
+    /**
+     * Everyone this account has already dealt with, whatever came of it.
+     *
+     * Accepted, pending in either direction, declined, blocked — one row is
+     * enough. A suggestion is an introduction, and you cannot be introduced
+     * to somebody you have already met.
+     *
+     * @return list<int>
+     */
+    public static function spokenFor(int $userId): array
+    {
+        return static::active()
+            ->where(fn ($q) => $q->where('userId', $userId)->orWhere('friendUserId', $userId))
+            ->get(['userId', 'friendUserId'])
+            ->map(fn ($r) => (int) $r->userId === $userId ? (int) $r->friendUserId : (int) $r->userId)
+            ->unique()
+            ->values()
+            ->all();
+    }
+
+    /**
+     * Members this account has never met, in no particular order.
+     *
+     * Random rather than newest-first: the newest handful would be the same
+     * handful for everybody, every day, and a strip that never changes is one
+     * nobody looks at twice.
+     *
+     * @param  list<int>  $exclude
+     */
+    public static function strangers(int $viewerId, array $exclude, int $take): \Illuminate\Support\Collection
+    {
+        if ($take < 1) {
+            return collect();
+        }
+
+        return User::where('deleteStatus', 1)
+            ->whereNotIn('id', $exclude ?: [0])
+            ->inRandomOrder()
+            ->limit($take)
+            ->get()
+            ->map(function ($u) use ($viewerId) {
+                $u->recoMutual = 0;
+                $u->recoScore = 0;
+                /* Where they farm, if they have said — true, useful, and not
+                 * a claim of any connection. Nothing at all when they have
+                 * not: better a card with one line than an invented reason. */
+                $where = trim((string) ($u->city ?: $u->province));
+                $u->recoReason = $where !== '' ? 'In ' . $where : '';
+                $u->connStatus = static::statusFor($viewerId, (int) $u->id);
+
+                return $u;
+            });
+    }
+
     public static function connectedIds(int $userId): array
     {
         return static::active()
@@ -89,7 +143,15 @@ class CommunityConnection extends BaseModel
 
         $friends = static::connectedIds($viewerId);
         $friendSet = array_flip($friends);
-        $excludeSet = array_flip(array_merge([$viewerId], $friends));
+        /* Anyone this account has already had dealings with is out.
+         *
+         * It used to exclude accepted co-farmers alone, so somebody you had
+         * already sent a request to kept turning up in a strip whose only
+         * offer is "ask them" — and the one waiting on YOUR answer belongs
+         * in the requests card, not here. Pending both ways, declined and
+         * blocked all count: this strip is for strangers. */
+        $known = static::spokenFor($viewerId);
+        $excludeSet = array_flip(array_merge([$viewerId], $friends, $known));
 
         // Mutual counts: one pass over accepted connections that touch a friend.
         $mutual = [];
@@ -162,9 +224,6 @@ class CommunityConnection extends BaseModel
         }
 
         $ids = array_values(array_unique(array_merge(array_keys($mutual), $locIds, array_keys($talked))));
-        if (empty($ids)) {
-            return collect();
-        }
 
         $users = User::where('deleteStatus', 1)->whereIn('id', $ids)->get()->keyBy('id');
         $out = collect();
@@ -202,6 +261,23 @@ class CommunityConnection extends BaseModel
             $out->push($u);
         }
 
-        return $out->sortByDesc('recoScore')->take($limit)->values();
+        $out = $out->sortByDesc('recoScore')->take($limit)->values();
+
+        /* Top up with strangers when the reasons run out.
+         *
+         * A new account has no mutual co-farmers, has commented nowhere and
+         * often has not said where it farms — so nothing scores, and the
+         * account that most needs introducing to somebody was shown nobody.
+         * These carry no reason line, because there is no reason beyond "they
+         * are here too", and that is a fair thing to say. */
+        if ($out->count() < $limit) {
+            $out = $out->concat(static::strangers(
+                $viewerId,
+                array_merge(array_keys($excludeSet), $out->pluck('id')->map(fn ($i) => (int) $i)->all()),
+                $limit - $out->count()
+            ));
+        }
+
+        return $out->values();
     }
 }
