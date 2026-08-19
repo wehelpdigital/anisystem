@@ -856,6 +856,9 @@
         if (m.replyTo && m.replyTo.body) {
             const q = document.createElement('div');
             q.className = 'msgr-quote';
+            // The id turns the quote from a label into a way back: the shared
+            // chat-media script walks the thread to it and lights it up.
+            if (m.replyTo.id) q.setAttribute('data-reply-to', m.replyTo.id);
             q.textContent = (m.replyTo.mine ? 'You: ' : '') + m.replyTo.body;
             b.appendChild(q);
         }
@@ -915,7 +918,11 @@
         if (row.querySelector('.msgr-acts')) return;
         const actsHtml =
             (m.id ? '<button type="button" class="msgr-act" data-msgr-act="reply" aria-label="Reply" title="Reply">' + ICON_REPLY + '</button>' : '') +
-            (m.body ? '<button type="button" class="msgr-act" data-msgr-act="forward" aria-label="Forward" title="Forward">' + ICON_FWD + '</button>' : '');
+            // A photo or a clip is worth passing on even with nothing typed
+            // over it — the old rule offered Forward only for words.
+            ((m.body || m.image || m.video) && m.id
+                ? '<button type="button" class="msgr-act" data-msgr-act="forward" aria-label="Forward" title="Forward">' + ICON_FWD + '</button>'
+                : '');
         if (!actsHtml) return;
         const acts = document.createElement('div');
         acts.className = 'msgr-acts';
@@ -934,6 +941,9 @@
         if (m.replyTo && m.replyTo.body) {
             const q = document.createElement('div');
             q.className = 'msgr-quote';
+            // The id turns the quote from a label into a way back: the shared
+            // chat-media script walks the thread to it and lights it up.
+            if (m.replyTo.id) q.setAttribute('data-reply-to', m.replyTo.id);
             q.textContent = (m.replyTo.mine ? 'You: ' : '') + m.replyTo.body;
             b.appendChild(q);
         }
@@ -999,12 +1009,21 @@
     }
 
     // Forward: pick a co-farmer and send them the message body.
-    let forwardBody = null, forwardCache = null;
-    function openForward(body) {
-        if (!body) { if (window.toast) toast('Nothing to forward.', 'error'); return; }
-        forwardBody = body;
+    let forwardBody = null, forwardCache = null, forwardId = null, forwardKind = null;
+    function openForward(body, id, kind) {
+        if (!body && !id) { if (window.toast) toast('Nothing to forward.', 'error'); return; }
+        forwardBody = body || '';
+        // The id is what lets the server re-send the attachment without the
+        // phone uploading it again.
+        forwardId = id || null;
+        forwardKind = kind || null;
         const prev = document.getElementById('msgrForwardPreview');
-        if (prev) prev.textContent = body.length > 90 ? body.slice(0, 90) + '…' : body;
+        if (prev) {
+            const label = forwardBody
+                ? (forwardBody.length > 90 ? forwardBody.slice(0, 90) + '…' : forwardBody)
+                : (kind === 'video' ? '🎬 Video' : '🖼️ Photo');
+            prev.textContent = label;
+        }
         if (window.openSheet) window.openSheet('msgrForwardSheet');
         loadForwardList();
     }
@@ -1046,18 +1065,19 @@
                 // A wordless bubble is quoted by what it holds — clip or photo.
                 startReply(win, bubble.dataset.msgId, bubble.dataset.msgBody || (bubble.dataset.msgKind === 'video' ? '🎬 Video' : '📷 Photo'));
             } else {
-                openForward(bubble.dataset.msgBody || '');
+                openForward(bubble.dataset.msgBody || '', bubble.dataset.msgId || null, bubble.dataset.msgKind || null);
             }
             return;
         }
         const fwd = e.target.closest('[data-msgr-fwd]');
         if (fwd) {
             const userId = fwd.getAttribute('data-msgr-fwd');
-            if (!userId || !forwardBody) return;
+            if (!userId || (!forwardBody && !forwardId)) return;
             fwd.disabled = true; const orig = fwd.textContent; fwd.textContent = 'Sending…';
             try {
                 const fd = new FormData();
                 fd.append('body', forwardBody);
+                if (forwardId) fd.append('forwardOfId', forwardId);
                 const r = await fetch(`/app/community/messages/${userId}`, { method: 'POST', headers: { 'X-CSRF-TOKEN': CSRF(), Accept: 'application/json' }, body: fd });
                 const d = await r.json();
                 if (d.success) { fwd.textContent = 'Sent ✓'; if (window.toast) toast('Message forwarded.'); }
@@ -1112,3 +1132,5 @@
     })();
 })();
 </script>
+
+@include('community.partials.chat-media-js')

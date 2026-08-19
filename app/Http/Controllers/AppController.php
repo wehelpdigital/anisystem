@@ -142,6 +142,21 @@ class AppController extends Controller
             ->get()
             ->filter(fn ($p) => $p->author && (int) $p->author->deleteStatus === 1)
             ->values();
+        /* The homepage wall keeps the same promise the community wall makes:
+         * whoever you follow does not go unheard, one post apiece, above the
+         * co-farmer stream. Without this the same card on two pages disagreed
+         * about whether you follow its author. */
+        $social = app(\App\Services\CommunitySocialService::class);
+        $wallFollowing = $social->followingIds($meId);
+        $lifted = $social->latestFromFollowed($meId, $connectedWall->pluck('id')->all(), 3);
+        if ($lifted->isNotEmpty()) {
+            $lifted->loadCount('comments');
+            \App\Models\CommunityReaction::attach($lifted, 'wallpost', $meId);
+            $connectedWall = $lifted->concat($connectedWall)->take(6)->values();
+        }
+        $connectedWall->loadMissing('sharedPost');
+        $wallSaved = $social->bookmarkedIds($meId);
+
         \App\Models\CommunityReaction::attach($connectedWall, 'wallpost', $meId);
         \App\Models\CommunityReaction::attach($connectedWall->flatMap->comments, 'wallcomment', $meId);
 
@@ -173,6 +188,8 @@ class AppController extends Controller
             'scheduleNext' => $scheduleNext,
             'latestDiscussions' => $latestDiscussions,
             'connectedWall' => $connectedWall,
+            'followingIds' => $wallFollowing,
+            'savedIds' => $wallSaved,
             'friendIds' => $friendIds,
             'recentChats' => $recentChats,
             'openTickets' => $openTickets,

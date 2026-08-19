@@ -411,6 +411,7 @@
 @include('community.partials.react-js')
 @include('community.partials.mention-js')
 @include('community.partials.video-js')
+@include('community.partials.chat-media-js')
 @include('community.partials.infinite-js')
 <script>
 document.addEventListener('DOMContentLoaded', () => {

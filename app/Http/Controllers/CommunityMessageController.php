@@ -235,6 +235,11 @@ class CommunityMessageController extends Controller
             // not a copy (validated in galleryShare()).
             'galleryPath' => 'nullable|string|max:500',
             'replyToId' => 'nullable|integer',
+            // Forwarding points at what is already stored rather than sending
+            // the file again: the clip is on the server, and asking a farmer's
+            // phone to upload it a second time to pass it on is a tax on
+            // being helpful.
+            'forwardOfId' => 'nullable|integer',
         ]);
         $recipient = User::where('deleteStatus', 1)->find($userId);
         if (! $recipient) {
@@ -267,6 +272,23 @@ class CommunityMessageController extends Controller
                 return response()->json(['success' => false, 'message' => 'That gallery item could not be shared.'], 422);
             }
         }
+        /* A forward carries the original's attachment by reference.
+         *
+         * Only from a message this account can actually see — one it sent or
+         * received — so a guessed id cannot lift somebody else's photo out of
+         * a conversation it was never part of. */
+        if ($mediaPath === null && filled($data['forwardOfId'] ?? null)) {
+            $source = CommunityMessage::where('deleteStatus', 1)
+                ->where('id', (int) $data['forwardOfId'])
+                ->where(function ($q) use ($meId) {
+                    $q->where('senderId', $meId)->orWhere('recipientId', $meId);
+                })
+                ->first();
+            if ($source && filled($source->imagePath)) {
+                $mediaPath = $source->imagePath;
+            }
+        }
+
         if ($body === '' && ! $mediaPath) {
             return response()->json(['success' => false, 'message' => 'Write a message or add a photo or video.'], 422);
         }

@@ -646,7 +646,12 @@
 
                 <div id="dashWallFeed" data-animate-list>
                     @foreach ($connectedWall as $post)
-                        @include('community.partials.feed-post', ['post' => $post, 'friendIds' => $friendIds])
+                        @include('community.partials.feed-post', [
+                            'post' => $post,
+                            'friendIds' => $friendIds,
+                            'followingIds' => $followingIds ?? [],
+                            'savedIds' => $savedIds ?? [],
+                        ])
                     @endforeach
                 </div>
                 <a href="{{ route('community.index') }}" id="dashWallEmpty" class="card card-hover block {{ $connectedWall->isEmpty() ? '' : 'hidden' }}">
@@ -762,6 +767,8 @@
 
 </div>
 
+{{-- The wall's cards work here too, so their sheets have to come along. --}}
+@include('community.partials.post-actions')
 @include('community.partials.wall-comments-modal')
 {{-- Tapping your own photo on the composer asks what is on your mind, the
      same composer the community profile uses. --}}

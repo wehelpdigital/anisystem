@@ -814,3 +814,5 @@
 {{-- Chat photos expand into the shared lightbox (include is self-guarded). --}}
 @include('community.partials.lightbox-js')
 @endif
+
+@include('community.partials.chat-media-js')
