@@ -20,9 +20,12 @@
        whole width rather than sharing it with a face. */
     .comp-top { display: flex; align-items: center; gap: .6rem; margin-bottom: .6rem; }
     .comp-face { flex: none; }
-    .comp-who { display: flex; flex-direction: column; align-items: flex-start; gap: .25rem; min-width: 0; }
+    .comp-who { display: flex; flex-direction: column; align-items: flex-start; gap: .2rem; min-width: 0; }
     .comp-who b { font-size: .85rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.2;
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    /* Where you farm, in the post's own words and size. */
+    .comp-where { font-style: normal; font-size: .72rem; color: var(--color-gray-400);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
     /* In the flow, not above the card: nothing to overlap, no headroom to
        buy, and it still repaints as the shared cloud when a new one is set. */
     .comp-mind { position: static; display: inline-flex; align-items: center; max-width: 100%;
@@ -246,6 +249,15 @@
                 <span class="status-cloud-text" data-status-text data-empty-label="💭 What's on your mind?">{{ auth()->user()?->statusBubble ?: "💭 What's on your mind?" }}</span>
             </button>
             <b>{{ auth()->user()->full_name }}</b>
+            {{-- The same three lines a post carries, in the same order: what
+                 is on your mind, who you are, where you farm. The card you
+                 write in and the card it becomes should not be two shapes. --}}
+            @php
+                $myPlace = trim(implode(', ', array_filter([auth()->user()->city, auth()->user()->province])));
+            @endphp
+            @if ($myPlace !== '')
+                <i class="comp-where">📍 {{ $myPlace }}</i>
+            @endif
         </span>
     </div>
 
