@@ -663,9 +663,20 @@ class AiController extends Controller
     public function schedulePage(Request $request)
     {
         $userId = Auth::id();
-        $schedule = AsCroppingSchedule::active()->forClient($userId)->where('id', $request->query('id'))->first();
+        // Resolved against the farm being worked, not the account doing the
+        // working: under a worker's own id a boss's schedule is invisible, and
+        // the page answered "no such schedule" when the truth is "not yours".
+        $schedule = AsCroppingSchedule::active()
+            ->forClient(\App\Support\WorkerContext::effectiveOwnerId())
+            ->where('id', $request->query('id'))
+            ->first();
         if (! $schedule) {
             abort(404);
+        }
+        // The technician is the owner's tool: off a worker's menus, and off
+        // the URL they might still remember.
+        if ($no = $this->workerNoAccess('the AI Technician', route('sm.hub', ['id' => $schedule->id]), 'Back to the season')) {
+            return $no;
         }
 
         $settings = AiSetting::current();

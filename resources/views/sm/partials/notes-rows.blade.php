@@ -20,9 +20,12 @@
         // badge is where it came from.
         $fromBoard = collect(is_array($n->media) ? $n->media : [])
             ->contains(fn ($m) => (bool) preg_match('~/board-[A-Za-z0-9]+\.png$~', (string) ($m['path'] ?? '')));
-        $mapUrl = $saveIdForNote
+        // The picture stays on the note for everyone; only the "open it in the
+        // Maps module" link is withheld, because that module is not a worker's
+        // to open — better no link than one that lands on "no access".
+        $mapUrl = \App\Support\WorkerContext::inWorkerContext() ? null : ($saveIdForNote
             ? route('sm.maps', ['id' => $schedule->id, 'save' => $saveIdForNote])
-            : route('sm.maps', ['id' => $schedule->id]);
+            : route('sm.maps', ['id' => $schedule->id]));
         foreach ((is_array($n->media) ? $n->media : []) as $mIndex => $m) {
             if (empty($m['path'])) continue;
             // Maps saved before they announced themselves are recognised by

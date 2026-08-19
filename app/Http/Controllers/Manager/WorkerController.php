@@ -38,11 +38,11 @@ class WorkerController extends BaseScheduleController
      */
     public function page(Request $request)
     {
-        // A page, not an endpoint: 404 rather than a JSON refusal, so the
-        // module reads as one this account does not have rather than one it is
-        // being kept out of.
-        if (\App\Support\WorkerContext::inWorkerContext()) {
-            abort(404);
+        // A page, not an endpoint, so the answer is a page too. It used to be
+        // a 404, which told a farmer the module was missing when it is simply
+        // not theirs — the owner asked for the plain version instead.
+        if ($no = $this->workerNoAccess('the Workers module')) {
+            return $no;
         }
 
         $schedule = $this->schedule($request->query('id'));

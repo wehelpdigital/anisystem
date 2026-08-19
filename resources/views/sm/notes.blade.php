@@ -259,7 +259,11 @@ const __init = () => {
     @php
         // Same classification as the server-rendered list above, so a note
         // re-rendered after an edit keeps its "View map" tile.
-        $mapModuleUrl = route('sm.maps', ['id' => $schedule->id]);
+        // Withheld from a worker, like the list's own chips: the Maps module
+        // is not theirs to open, and a link to "no access" helps nobody.
+        $mapModuleUrl = \App\Support\WorkerContext::inWorkerContext()
+            ? null
+            : route('sm.maps', ['id' => $schedule->id]);
         $mediaUrls = function ($items) use ($mapModuleUrl) {
             return collect(is_array($items) ? $items : [])->map(function ($m) use ($mapModuleUrl) {
                 if (empty($m['path'])) {
@@ -355,9 +359,13 @@ const __init = () => {
 
     // Where a saved map opens. Read by noteMediaThumb for tiles it builds
     // after an edit, which have no per-item link of their own.
-    window.NOTE_MAP_URL = @json(route('sm.maps', ['id' => $schedule->id]));
+    window.NOTE_MAP_URL = @json(\App\Support\WorkerContext::inWorkerContext()
+        ? null
+        : route('sm.maps', ['id' => $schedule->id]));
     // Where a drawing goes when its chip is tapped; the index is appended.
-    const DRAW_URL = @json(route('sm.draw', ['id' => $schedule->id]));
+    const DRAW_URL = @json(\App\Support\WorkerContext::inWorkerContext()
+        ? null
+        : route('sm.draw', ['id' => $schedule->id]));
     window.NOTE_DRAW_URL = DRAW_URL;
 
     document.querySelectorAll('[data-note-add]').forEach((b) => b.addEventListener('click', () => openNoteSheet(null)));

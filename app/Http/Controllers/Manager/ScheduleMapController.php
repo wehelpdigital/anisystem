@@ -37,6 +37,11 @@ class ScheduleMapController extends BaseScheduleController
     public function page(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request, 'id');
+        // The owner took Maps off a worker's menus; a typed URL is the same
+        // question asked a second way, and gets the same answer.
+        if ($no = $this->workerNoAccess('the Maps module', route('sm.hub', ['id' => $schedule->id]), 'Back to the season')) {
+            return $no;
+        }
 
         return view('sm.maps', [
             'schedule' => $schedule,

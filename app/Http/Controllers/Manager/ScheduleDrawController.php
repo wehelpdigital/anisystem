@@ -27,6 +27,9 @@ class ScheduleDrawController extends BaseScheduleController
     public function page(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request, 'id');
+        if ($no = $this->workerNoAccess('the Drawing module', route('sm.hub', ['id' => $schedule->id]), 'Back to the season')) {
+            return $no;
+        }
 
         $drawings = [];
         $collect = function ($holder, string $source, string $title, string $words, ?string $noteHref) use (&$drawings) {
