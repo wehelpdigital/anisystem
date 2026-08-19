@@ -526,6 +526,14 @@
             window.smFocus?.($('saiNoteTitle'), { delay: 120 });
         }
         async function saveNote() {
+            // Its own gate, not fileAway's. This button lives on the sheet, and
+            // a sheet outlives the door that opened it — a stale one still on
+            // screen must never POST a null sessionId at the notebook.
+            if (!currentSession) {
+                window.toast?.('Nothing to keep yet — ask something first.', 'error');
+                window.closeSheet?.('saiNoteSheet');
+                return;
+            }
             const btn = $('saiNoteSave');
             const was = btn.textContent;
             btn.disabled = true; btn.textContent = 'Saving…';
@@ -743,12 +751,23 @@
          * this picture and the ask endpoint honours this schedule's own media
          * list — so the chip lands done, instantly. */
         function attachFromGallery(item) {
-            if (!item || !item.url || !item.path || !roomForAnother()) return;
+            if (!item || !item.url || !item.path) return;
+            // The same picture picked twice is one photo to the server, which
+            // dedupes by path and bills once — a second chip would only make
+            // the estimate under the box quote a photo nobody pays for. Asked
+            // before the room count, so a re-pick never burns one of the four
+            // slots nor fires the "four is as many as one question can carry"
+            // toast. (window.smAskAiAbout has always asked this; this door,
+            // and only this door, forgot to.)
+            if (attachedPaths().includes(item.path)) return;
+            if (!roomForAnother()) return;
+            // addChip reprices the line; the chip is the only thing the
+            // estimate and the remove button both count, so one add is one
+            // quote and one ✕ is one unquote.
             const chip = addChip(item.url);
             chip.dataset.path = item.path;
             chip.dataset.sched = String(SCHEDULE_ID);
             chip.classList.remove('is-busy');
-            sayEstimate();
         }
 
         const canGallery = () => typeof window.smPickMedia === 'function' && SCHEDULE_ID > 0;

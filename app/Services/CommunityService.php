@@ -5,12 +5,15 @@ namespace App\Services;
 use App\Models\AsCroppingSchedule;
 use App\Models\CommunityComment;
 use App\Models\CommunityRating;
-use Illuminate\Support\Facades\DB;
 
 /**
- * The Community is a give-to-get space: a member browses other people's crop
- * plans only once they have published one of their own, and a plan is only
- * publishable when there is actually something to learn from it.
+ * What the Community needs to know about a crop plan: whether it is worth
+ * publishing, what people have said about it, and how its days are counted.
+ *
+ * It was once a give-to-get space, and this class held the toll: hasPublished()
+ * asked whether you had shared anything, browse() and decorate() built the
+ * gallery of other people's plans. The owner opened the doors to everyone and
+ * the Shared Plans page went with them, so all three went too.
  */
 class CommunityService
 {
@@ -44,95 +47,6 @@ class CommunityService
             'lots' => $lots,
             'reasons' => $reasons,
         ];
-    }
-
-    /** Has this member published anything? Browsing is gated on it. */
-    public function hasPublished(int $userId): bool
-    {
-        return AsCroppingSchedule::active()
-            ->forClient($userId)
-            ->where('isPublic', 1)
-            ->exists();
-    }
-
-    /**
-     * Published plans, newest first, with their author, rating summary and
-     * comment count. Excludes the viewer's own plans by default so the browse
-     * page is about learning from other people.
-     */
-    public function browse(int $viewerId, array $filters = [], bool $includeOwn = false)
-    {
-        $query = AsCroppingSchedule::active()
-            ->where('isPublic', 1)
-            ->when(! $includeOwn, fn ($q) => $q->where('anisystemUserId', '!=', $viewerId))
-            ->when(filled($filters['q'] ?? null), function ($q) use ($filters) {
-                $term = '%' . $filters['q'] . '%';
-                $q->where(function ($sub) use ($term) {
-                    $sub->where('title', 'like', $term)
-                        ->orWhere('cropType', 'like', $term)
-                        ->orWhere('cropVariety', 'like', $term)
-                        ->orWhere('publicSummary', 'like', $term)
-                        ->orWhere('publicRegion', 'like', $term);
-                });
-            })
-            ->when(filled($filters['crop'] ?? null), fn ($q) => $q->where('cropType', $filters['crop']))
-            ->orderByDesc('publishedAt')
-            ->orderByDesc('id');
-
-        // A page, not the platform. This list grows with every plan anyone
-        // ever publishes — the one list in the app whose ceiling is not a
-        // single farm's activity — and it was fetched whole on every visit.
-        $plans = $query->with('owner')->paginate(18)->withQueryString();
-        $plans->setCollection($this->decorate($plans->getCollection()));
-
-        return $plans;
-    }
-
-    /** Attach rating + comment counts to a set of plans in two queries. */
-    public function decorate($plans)
-    {
-        $ids = $plans->pluck('id')->all();
-        if ($ids === []) {
-            return $plans;
-        }
-
-        $ratings = CommunityRating::active()
-            ->whereIn('croppingScheduleId', $ids)
-            ->groupBy('croppingScheduleId')
-            ->select('croppingScheduleId', DB::raw('AVG(rating) as avgRating'), DB::raw('COUNT(*) as ratingCount'))
-            ->get()
-            ->keyBy('croppingScheduleId');
-
-        $comments = CommunityComment::active()
-            ->whereIn('croppingScheduleId', $ids)
-            ->groupBy('croppingScheduleId')
-            ->select('croppingScheduleId', DB::raw('COUNT(*) as commentCount'))
-            ->get()
-            ->keyBy('croppingScheduleId');
-
-        // Activity counts drive the "N steps" line on each card.
-        $activities = DB::table('as_schedule_activities')
-            ->join('as_schedule_activity_versions', function ($join) {
-                $join->on('as_schedule_activity_versions.id', '=', 'as_schedule_activities.versionId')
-                    ->where('as_schedule_activity_versions.isActive', 1)
-                    ->where('as_schedule_activity_versions.deleteStatus', 1);
-            })
-            ->whereIn('as_schedule_activities.croppingScheduleId', $ids)
-            ->where('as_schedule_activities.deleteStatus', 1)
-            ->where('as_schedule_activities.isDraft', 0)
-            ->groupBy('as_schedule_activities.croppingScheduleId')
-            ->select('as_schedule_activities.croppingScheduleId', DB::raw('COUNT(*) as activityCount'))
-            ->pluck('activityCount', 'croppingScheduleId');
-
-        foreach ($plans as $plan) {
-            $r = $ratings->get($plan->id);
-            $plan->avgRating = $r ? round((float) $r->avgRating, 1) : null;
-            $plan->ratingCount = $r ? (int) $r->ratingCount : 0;
-            $plan->commentCount = (int) (optional($comments->get($plan->id))->commentCount ?? 0);
-            $plan->activityCount = (int) ($activities[$plan->id] ?? 0);
-        }
-
-        return $plans;
     }
 
     /**
