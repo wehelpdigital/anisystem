@@ -19,15 +19,16 @@
         <a href="{{ route('community.connect.members') }}" class="btn btn-primary">Find members</a>
     </div>
 @else
-    <div class="masonry-2" id="cofarmersGrid">
-        @foreach ($friends as $friend)
-            @include('community.partials.cofarmer-card', ['friend' => $friend, 'latestPosts' => $latestPosts])
-        @endforeach
+    {{-- The members page's card, so a co-farmer looks the same wherever they
+         are met: cover, face, what they last said and how it went. --}}
+    <div id="cofarmersGrid">
+        @include('community.connect.partials.members', ['members' => $friends])
     </div>
     @include('partials.list-pager', ['noun' => 'co-farmer', 'paginator' => $friends,
         'rowsUrl' => route('community.cofarmers') . '?rows=1'])
 @endif
 
+@include('community.partials.post-actions')
 @include('community.partials.wall-comments-modal')
 @endsection
 

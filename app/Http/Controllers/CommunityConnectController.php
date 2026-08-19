@@ -179,6 +179,17 @@ class CommunityConnectController extends Controller
         // Reaction summaries so the inline "Latest" post is react/commentable.
         \App\Models\CommunityReaction::attach($latestPosts, 'wallpost', $meId);
 
+        /* Dressed like a member card, because the owner asked for one layout.
+         * A co-farmer is an accepted connection by definition, so the status
+         * needs no query — and the newest post is already in hand above. */
+        $social = app(\App\Services\CommunitySocialService::class);
+        $followingIds = $social->followingIds($meId);
+        foreach ($friends as $friend) {
+            $friend->connStatus = 'accepted';
+            $friend->latestPost = $latestPosts->get($friend->id);
+            $friend->isFollowed = in_array((int) $friend->id, $followingIds, true);
+        }
+
         // The scroller asks for cards alone.
         if ($request->boolean('rows')) {
             return response()->view('community.partials.cofarmer-rows', [
@@ -574,13 +585,30 @@ class CommunityConnectController extends Controller
 
         $query = User::where('deleteStatus', 1)
             ->whereNotIn('id', $exclude ?: [0])
+            /* One field, everything behind it.
+             *
+             * The page used to carry a search plus a province menu plus a crop
+             * menu — three controls asking the same question in three shapes.
+             * A farmer typing "Nueva Ecija" or "palay" means the same thing
+             * either way, so the term is matched against who somebody is,
+             * where they are, what they do, and what they grow. */
             ->when($q !== '', function ($sub) use ($q) {
                 $term = '%' . $q . '%';
-                $sub->where(function ($w) use ($term) {
+                $growerIds = AsCroppingSchedule::active()
+                    ->where('isPublic', 1)
+                    ->where('cropType', 'like', $term)
+                    ->pluck('anisystemUserId')->filter()->unique()->values()->all();
+                $sub->where(function ($w) use ($term, $growerIds) {
                     $w->where('firstName', 'like', $term)
                         ->orWhere('lastName', 'like', $term)
                         ->orWhere('city', 'like', $term)
-                        ->orWhere('province', 'like', $term);
+                        ->orWhere('province', 'like', $term)
+                        ->orWhere('headline', 'like', $term)
+                        ->orWhere('profession', 'like', $term)
+                        ->orWhere('cropsGrown', 'like', $term);
+                    if ($growerIds !== []) {
+                        $w->orWhereIn('id', $growerIds);
+                    }
                 });
             })
             ->when($province !== '', fn ($s) => $s->where('province', $province))
@@ -599,8 +627,37 @@ class CommunityConnectController extends Controller
         $hasMore = $rows->count() > self::PER_PAGE;
         $items = $rows->take(self::PER_PAGE)->values();
 
+        /* Each card carries the person's newest post and how it did.
+         *
+         * Two queries for the whole page rather than two per member: the
+         * newest post id per author, then those posts with their counts. A
+         * directory of names told a reader nothing about who was worth
+         * following; a directory of last words tells them everything. */
+        $ids = $items->pluck('id')->all();
+        $latest = collect();
+        if ($ids !== []) {
+            $newestIds = \App\Models\CommunityWallPost::active()
+                ->whereIn('authorUserId', $ids)
+                ->selectRaw('MAX(id) as id')
+                ->groupBy('authorUserId')
+                ->pluck('id')
+                ->all();
+            if ($newestIds !== []) {
+                $latest = \App\Models\CommunityWallPost::active()
+                    ->whereIn('id', $newestIds)
+                    ->withCount('comments')
+                    ->get()
+                    ->keyBy('authorUserId');
+            }
+        }
+
+        $social = app(\App\Services\CommunitySocialService::class);
+        $followingIds = $social->followingIds($viewerId);
+
         foreach ($items as $m) {
             $m->connStatus = CommunityConnection::statusFor($viewerId, $m->id);
+            $m->latestPost = $latest->get($m->id);
+            $m->isFollowed = in_array((int) $m->id, $followingIds, true);
         }
 
         return ['items' => $items, 'hasMore' => $hasMore];
