@@ -17,7 +17,11 @@
     #feedComposer.has-bubble { margin-top: 1.5rem; }
 
     /* People you may know — a rail that scrolls sideways on a phone. */
-    .pymk { margin-bottom: 1.25rem; }
+    /* Enclosed now, so the strip reads as one thing rather than a heading
+       with loose cards under it. The rail keeps its own edge-to-edge feel
+       inside by bleeding into the box's padding. */
+    .pymk { margin-bottom: 1.25rem; padding: .8rem .75rem .7rem; }
+    .pymk-rail { margin-right: -.75rem; padding-right: .75rem; }
     .pymk-head { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; margin-bottom: .5rem; }
     .pymk-head h2 { font-family: var(--font-heading); font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
     .pymk-head a { font-size: .78rem; font-weight: 700; color: var(--color-brand-700); }
@@ -206,7 +210,7 @@
      fetched rather than rendered: the ranking walks friends-of-friends and
      the threads you have commented in, which is slower than the wall should
      ever wait for. Skeleton cards hold the space so nothing jumps. --}}
-<section class="pymk" id="pymk" aria-label="People you may know">
+<section class="pymk reco-edge" id="pymk" aria-label="People you may know">
     <div class="pymk-head">
         <h2>People you may know</h2>
         <a href="{{ route('community.connect.members') }}">See all</a>

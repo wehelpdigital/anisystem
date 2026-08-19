@@ -462,6 +462,23 @@
 
     /* --- Read-only "cloud" status floating over a member's avatar, shown
        wherever members appear (wall, members, co-farmers, discussions). --- */
+    /* The strip's own edge: the house green, drifting.
+
+       Two backgrounds in one box — the card's own surface clipped to the
+       padding box, the gradient clipped to the border box — which is how a
+       border can hold a gradient at all. It rides the shared gradSweep tide
+       the hero and the covers use, slowly enough to be noticed only if you
+       look. The surface layer is a solid colour, so the drift moves the green
+       and leaves the fill where it is. */
+    .reco-edge { position: relative; border: 1.5px solid transparent; border-radius: 1.1rem;
+        background:
+            linear-gradient(var(--color-white), var(--color-white)) padding-box,
+            linear-gradient(120deg, #2f5219, #6b9f3d 28%, #b8d38e 48%, #4a7c2a 72%, #2f5219) border-box;
+        background-size: auto, 220% 220%;
+        animation: gradSweep 14s ease-in-out infinite alternate;
+        box-shadow: var(--shadow-card); }
+    @media (prefers-reduced-motion: reduce) { .reco-edge { animation: none; } }
+
     /* ---- "People you may know" card -------------------------------------
        Dealt out in a sideways rail on the wall and on the members page, so it
        is described once here. Narrow enough that a third card shows past the

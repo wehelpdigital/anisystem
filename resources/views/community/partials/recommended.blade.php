@@ -2,7 +2,9 @@
      ranked. Expects: $recommendations (collection of User with reco fields).
      Horizontally scrollable (drag-to-scroll via .scroll-chips). --}}
 @if (($recommendations ?? collect())->isNotEmpty())
-    <div class="card p-4 mb-4">
+    {{-- The same green edge the wall's strip wears, so the two read as the
+         same thing in two places. --}}
+    <div class="card reco-edge p-4 mb-4">
         <div class="flex items-center justify-between mb-3">
             <h3 class="font-bold text-gray-900" style="font-family:var(--font-heading)">
                 🤝 People you may know
