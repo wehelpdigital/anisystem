@@ -38,6 +38,11 @@
        never two of them at once (the wall's shape, in this page's words). */
     .disc-tail { text-align:center; margin-top:.75rem; padding-bottom:.5rem; }
     .disc-tail[hidden] { display:none; }
+    .gb-well { display:flex; align-items:center; justify-content:center; overflow:hidden;
+        width:100%; height:6rem; border-radius:.75rem; cursor:pointer; text-align:center;
+        background:var(--color-gray-100); border:1px dashed var(--color-gray-300); }
+    .gb-well i { font-style:normal; font-size:.75rem; font-weight:600; color:var(--color-gray-400); padding:0 .75rem; }
+    .gb-well img { width:100%; height:100%; object-fit:cover; }
     .disc-spin { display:flex; align-items:center; justify-content:center; gap:.35rem; padding:.9rem 0; }
     .disc-spin i { display:block; width:.45rem; height:.45rem; border-radius:9999px;
         background:var(--color-brand-400); animation:discDot 1s cubic-bezier(.22,1,.36,1) infinite; }
@@ -117,6 +122,16 @@
             <label class="form-label" for="groupDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
             <textarea id="groupDesc" class="form-textarea" rows="3" maxlength="500" placeholder="What's this discussion about?"></textarea>
         </div>
+        <div>
+            {{-- The wide picture at the top of the room. Asked for here so a
+                 new discussion opens looking like somewhere, instead of having
+                 to be edited the moment it is made. --}}
+            <label class="form-label" for="groupBanner">Cover photo <span class="text-gray-400 font-normal">(optional)</span></label>
+            <label class="gb-well" id="groupBannerPreview">
+                <i>Add a wide photo for the top of the discussion</i>
+                <input type="file" id="groupBanner" accept="image/jpeg,image/png,image/webp" class="hidden">
+            </label>
+        </div>
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
@@ -134,6 +149,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     document.getElementById('createGroupBtn')?.addEventListener('click', () => openSheet('createGroupSheet'));
+    // Shown before it is sent: a wrong pick is caught here, not after a save.
+    document.getElementById('groupBanner')?.addEventListener('change', (e) => {
+        const f = e.target.files && e.target.files[0];
+        if (!f) return;
+        const box = document.getElementById('groupBannerPreview');
+        const url = URL.createObjectURL(f);
+        box.querySelector('i')?.remove();
+        const old = box.querySelector('img');
+        if (old) old.remove();
+        const img = document.createElement('img');
+        img.src = url;
+        box.prepend(img);
+    });
 
     // Live monogram preview — mirrors the PHP crc32 hue formula.
     const crcTable = (() => {
@@ -174,6 +202,8 @@ document.addEventListener('DOMContentLoaded', () => {
         fd.append('name', name);
         if (description) fd.append('description', description);
         if (img) fd.append('image', img);
+        const banner = document.getElementById('groupBanner')?.files[0];
+        if (banner) fd.append('banner', banner);
         e.currentTarget.disabled = true;
         try {
             const res = await fetch(@json(route('community.groups.store')), { method: 'POST', headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' }, body: fd });

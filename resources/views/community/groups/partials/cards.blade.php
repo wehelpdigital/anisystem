@@ -26,7 +26,8 @@
             @endif
             <div class="flex items-center gap-3 text-xs text-gray-500 font-semibold mt-2 mb-3">
                 <span>🧑‍🌾 {{ $g->member_count }} {{ \Illuminate\Support\Str::plural('member', $g->member_count) }}</span>
-                <span>💬 {{ $g->post_count }} {{ \Illuminate\Support\Str::plural('post', $g->post_count) }}</span>
+                <span>💬 {{ $g->post_count }} {{ \Illuminate\Support\Str::plural('topic', $g->post_count) }}</span>
+                <span title="Replies across every topic">↩ {{ $g->reply_count ?? 0 }} {{ \Illuminate\Support\Str::plural('reply', $g->reply_count ?? 0) }}</span>
             </div>
             {{-- "Open" is a promise you can only keep for a member; for
                  everyone else the honest word is Join. --}}

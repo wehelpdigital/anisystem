@@ -34,7 +34,26 @@
 
     /* --- The room's head: a place banner, not a wall of text. The name, who
        is in it, and the one thing you can do about that, in one row. --- */
-    .disc-hero { padding:.85rem; margin-bottom:.75rem; }
+    .disc-hero { padding:.85rem; margin-bottom:.75rem; border-radius:1.1rem; }
+    .eg-pics { display:flex; gap:.6rem; align-items:flex-start; }
+    .eg-pic { display:block; cursor:pointer; }
+    .eg-pic-wide { flex:1; min-width:0; }
+    .eg-pic-lbl { display:block; font-size:.72rem; font-weight:700; color:var(--color-gray-500); margin-bottom:.25rem; }
+    .eg-pic-box { display:flex; align-items:center; justify-content:center; overflow:hidden;
+        width:4.5rem; height:4.5rem; border-radius:.75rem; background:var(--color-gray-100);
+        border:1px dashed var(--color-gray-300); color:var(--color-gray-400); font-size:.75rem; }
+    .eg-pic-box img { width:100%; height:100%; object-fit:cover; }
+    .eg-pic-box i { font-style:normal; font-weight:800; }
+    .eg-pic-banner { width:100%; height:4.5rem; }
+    /* The banner bleeds to the card's edge and takes the top two corners with
+       it; the padding below is the card's own again. */
+    .disc-hero.has-banner { padding-top:0; }
+    .disc-banner { margin:-.85rem -.85rem .75rem; height:7rem; overflow:hidden;
+        border-top-left-radius:1.1rem; border-top-right-radius:1.1rem; background:var(--color-gray-100); }
+    .disc-banner img { width:100%; height:100%; object-fit:cover; display:block; }
+    @media (min-width:640px) {
+        .disc-banner { margin:-1.15rem -1.15rem 1rem; height:9.5rem; }
+    }
     .disc-hero-row { display:flex; align-items:flex-start; gap:.7rem; }
     .disc-hero-title { font-family:var(--font-heading); font-size:1.05rem; font-weight:800; line-height:1.25;
         color:var(--color-gray-900); overflow-wrap:anywhere; }
@@ -127,8 +146,17 @@
 @include('community.partials.nav', ['active' => 'groups'])
 <div data-group-member="{{ $isMember ? 1 : 0 }}" id="groupRoot" data-group-id="{{ $group->id }}">
 
-    {{-- Group header: the place banner --}}
-    <div class="card disc-hero group-hero {{ CommunityAvatar::hue($group->name) }}">
+    {{-- Group header: the place banner.
+
+         The cover is the room's face — a discussion with one looks like
+         somewhere rather than like a row in a list — and it sits OUTSIDE the
+         padded body so it can run to the card's own rounded edge. --}}
+    <div class="card disc-hero group-hero {{ CommunityAvatar::hue($group->name) }}{{ $group->bannerImagePath ? ' has-banner' : '' }}">
+        @if ($group->bannerImagePath)
+            <div class="disc-banner">
+                <img src="{{ \App\Support\MediaStore::url($group->bannerImagePath) }}" alt="" loading="lazy">
+            </div>
+        @endif
         <div class="disc-hero-row">
             <span class="avatar avatar-md avatar-sq overflow-hidden {{ CommunityAvatar::hue($group->name) }}">@if ($group->coverImagePath)<img src="{{ \App\Support\MediaStore::url($group->coverImagePath) }}" alt="" class="w-full h-full object-cover">@else{{ CommunityAvatar::monogram($group->name) }}@endif</span>
             <div class="min-w-0 grow">
@@ -144,6 +172,12 @@
             @else
                 <span class="badge badge-green shrink-0">Owner</span>
             @endunless
+            {{-- Whoever started the room keeps it, and so does the house. --}}
+            @if ($canEditGroup ?? false)
+                <button type="button" id="editGroupBtn" class="btn btn-white btn-sm shrink-0" title="Edit this discussion" aria-label="Edit this discussion">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.4-9.4a2 2 0 112.8 2.8L11 15l-4 1 1-4 8.6-8.4z"/></svg>
+                </button>
+            @endif
         </div>
         @if ($group->description)
             {{-- Clamped by default: the description is context, not the room. --}}
@@ -151,6 +185,54 @@
             <button type="button" class="disc-hero-more" id="heroDescMore" hidden>Show more</button>
         @endif
     </div>
+
+    @if ($canEditGroup ?? false)
+    {{-- Renaming the room and changing its two pictures. Kept in the room
+         rather than on a settings page: this is where you notice the name is
+         wrong. Either picture left empty keeps the one it had. --}}
+    <div class="sheet hidden" id="editGroupSheet" style="--sheet-width:28rem">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+            <h3 class="sheet-title">Edit this discussion</h3>
+            <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+        </div>
+        <div class="sheet-body space-y-3">
+            <div>
+                <label class="form-label" for="egName">Name</label>
+                <input type="text" id="egName" class="form-input" maxlength="150" value="{{ $group->name }}">
+            </div>
+            <div>
+                <label class="form-label" for="egDesc">What is this discussion about?</label>
+                <textarea id="egDesc" class="form-textarea" rows="3" maxlength="500">{{ $group->description }}</textarea>
+            </div>
+            <div class="eg-pics">
+                <label class="eg-pic">
+                    <span class="eg-pic-lbl">Badge</span>
+                    <span class="eg-pic-box" id="egCoverBox">
+                        @if ($group->coverImagePath)
+                            <img src="{{ \App\Support\MediaStore::url($group->coverImagePath) }}" alt="">
+                        @else
+                            <i>{{ CommunityAvatar::monogram($group->name) }}</i>
+                        @endif
+                    </span>
+                    <input type="file" id="egCover" accept="image/jpeg,image/png,image/webp" class="hidden">
+                </label>
+                <label class="eg-pic eg-pic-wide">
+                    <span class="eg-pic-lbl">Cover photo</span>
+                    <span class="eg-pic-box eg-pic-banner" id="egBannerBox">
+                        @if ($group->bannerImagePath)
+                            <img src="{{ \App\Support\MediaStore::url($group->bannerImagePath) }}" alt="">
+                        @else
+                            <i>Add a cover</i>
+                        @endif
+                    </span>
+                    <input type="file" id="egBanner" accept="image/jpeg,image/png,image/webp" class="hidden">
+                </label>
+            </div>
+            <button type="button" id="egSave" class="btn btn-primary w-full">Save changes</button>
+        </div>
+    </div>
+    @endif
 
     {{-- Tabs: Discussion topics vs. live group chat --}}
     <div class="disc-seg" id="groupTabs" data-active="discussion" role="tablist" aria-label="Discussion or group chat">
@@ -164,7 +246,7 @@
 
     <div id="paneDiscussion" role="tabpanel">
     {{-- Composer (members only) --}}
-    <div class="card disc-composer mb-4 plaza-accent {{ $isMember ? '' : 'hidden' }}" id="composerCard">
+    <div class="card disc-composer mb-4 plaza-accent {{ $isMember ? '' : 'hidden' }}" id="composerCard" data-video-host>
         <div class="flex items-start gap-3">
             <span class="avatar avatar-md disc-composer-av {{ CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} mt-1">{{ auth()->user()->initials ?? '?' }}</span>
             <div class="min-w-0 grow">
@@ -187,6 +269,21 @@
                 <label class="wall-act cursor-pointer" title="Add a photo" aria-label="Add a photo">
                     <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     <input type="file" id="postImage" accept="image/jpeg,image/png,image/webp" class="hidden">
+                </label>
+                {{-- Upload a clip, or film one on the spot: the same pair the
+                     wall composer carries, driven by the same shared script. --}}
+                <button type="button" class="wall-act js-video-attach" title="Upload a video" aria-label="Upload a video">
+                    <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                </button>
+                <button type="button" class="wall-act js-video-record" title="Record a video" aria-label="Record a video">
+                    <svg class="w-5 h-5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="currentColor"/></svg>
+                </button>
+                <input type="file" class="js-video-file hidden" accept="video/*">
+                <span class="js-video-chip items-center gap-2 text-xs font-semibold text-gray-600" style="display:none">
+                    <span class="js-video-name"></span>
+                    <button type="button" class="js-video-clear text-red-600 font-bold">Remove</button>
+                </span>
+                <label class="hidden">
                 </label>
                 <button type="button" class="wall-act js-emoji-btn" data-target="postBody" aria-label="Add an emoji" title="Emoji">
                     <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -453,6 +550,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (imgInput.files && imgInput.files[0]) fd.append('image', imgInput.files[0]);
         e.currentTarget.disabled = true;
         try {
+            // The shared video script owns the picked clip; ask it rather than
+            // reaching into the input, which a recording never touches.
+            const host = document.getElementById('composerCard');
+            const clip = window.plazaVideoFile ? window.plazaVideoFile(host) : null;
+            if (clip) fd.append('video', clip);
             const res = await fetch(`/app/community/groups/${groupId}/post`, { method: 'POST', headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' }, body: fd });
             const data = await res.json();
             if (data.success) {
@@ -932,5 +1034,58 @@ document.addEventListener('DOMContentLoaded', () => {
         else window.location = '/app/community?dm=' + pm.getAttribute('data-pm');
     });
 });
+
+    /* ---------------- editing the room ---------------- */
+    (function editGroup() {
+        const btn = document.getElementById('editGroupBtn');
+        if (!btn) return;
+        const sheet = 'editGroupSheet';
+        const preview = (input, box) => input?.addEventListener('change', () => {
+            const f = input.files && input.files[0];
+            if (!f) return;
+            // Shown before it is sent, so a wrong pick is caught here rather
+            // than after a save.
+            const url = URL.createObjectURL(f);
+            box.innerHTML = '<img src="' + url + '" alt="">';
+        });
+        preview(document.getElementById('egCover'), document.getElementById('egCoverBox'));
+        preview(document.getElementById('egBanner'), document.getElementById('egBannerBox'));
+
+        btn.addEventListener('click', () => window.openSheet?.(sheet));
+        document.getElementById('egSave')?.addEventListener('click', async (e) => {
+            const save = e.currentTarget;
+            const name = document.getElementById('egName').value.trim();
+            if (!name) { window.toast?.('A discussion needs a name.', 'error'); return; }
+            const was = save.textContent;
+            save.disabled = true; save.textContent = 'Saving…';
+            const fd = new FormData();
+            fd.append('name', name);
+            fd.append('description', document.getElementById('egDesc').value.trim());
+            const cover = document.getElementById('egCover').files[0];
+            const banner = document.getElementById('egBanner').files[0];
+            if (cover) fd.append('image', cover);
+            if (banner) fd.append('banner', banner);
+            try {
+                const gid = document.getElementById('groupRoot')?.getAttribute('data-group-id');
+                const r = await fetch(@json(url('/app/community/groups')) + '/' + gid + '/edit', {
+                    method: 'POST',
+                    headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, Accept: 'application/json' },
+                    credentials: 'same-origin',
+                    body: fd,
+                });
+                const j = await r.json();
+                if (!r.ok || j.success === false) throw new Error(j.message || 'Could not save.');
+                window.closeSheet?.(sheet);
+                window.toast?.(j.message);
+                // The room is renamed in front of the reader rather than after
+                // a reload they did not ask for.
+                const title = document.querySelector('.disc-hero-title');
+                if (title) title.textContent = j.data.name;
+                const desc = document.getElementById('heroDesc');
+                if (desc) desc.textContent = j.data.description || '';
+            } catch (err) { window.toast?.(err.message, 'error'); }
+            finally { save.disabled = false; save.textContent = was; }
+        });
+    })();
 </script>
 @endpush

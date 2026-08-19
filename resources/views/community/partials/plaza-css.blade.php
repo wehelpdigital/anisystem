@@ -213,6 +213,17 @@
     /* Send closes the tool row on the right, where the thumb already is —
        unless a reply's ✕ is riding along, and then it leads the pair. */
     .wall-comment-form .reply-shell .reply-send { margin-left:auto; }
+
+    /* A discussion reply gets the same two-row shape on a phone, for the same
+       reason: photo + emoji + send take a fixed 6rem out of a 360px screen,
+       and what was left of "Sumagot ka…" was four characters wedged between
+       buttons. The field takes the first line, the tools the second. Desktop
+       keeps the single pill, where there is room for both. */
+    @media (max-width:640px) {
+        .post-reply-form .reply-shell { flex-wrap:wrap; gap:.25rem; border-radius:1.15rem; padding:.3rem .35rem; }
+        .post-reply-form .reply-shell input[type="text"] { flex:1 1 100%; line-height:1.45; padding:.35rem .45rem; }
+        .post-reply-form .reply-shell .reply-send { margin-left:auto; }
+    }
     .wall-comment-form .reply-shell .js-reply-cancel { margin-left:auto; }
     .wall-comment-form .reply-shell .js-reply-cancel ~ .reply-send { margin-left:0; }
     .reply-send { width:2.25rem; height:2.25rem; flex-shrink:0; border:0; border-radius:9999px;

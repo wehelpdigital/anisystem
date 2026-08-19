@@ -78,6 +78,9 @@ class CommunityGroupController extends Controller
             ->withCount([
                 'members as member_count',
                 'posts as post_count',
+                // How much talking has actually happened in here — the owner
+                // asked for it beside the topics and the members.
+                'replies as reply_count',
             ])
             ->orderByDesc('id')
             ->skip(($page - 1) * $per)
@@ -113,6 +116,8 @@ class CommunityGroupController extends Controller
             'group' => $group,
             'isMember' => $isMember,
             'isOwner' => (int) $group->createdByUserId === (int) $userId,
+            // Whoever started the room keeps it; the house can fix any of them.
+            'canEditGroup' => $this->canEditGroup($group),
             'memberCount' => $group->members()->count(),
             'posts' => $posts['items'],
             'hasMore' => $posts['hasMore'],
@@ -137,26 +142,87 @@ class CommunityGroupController extends Controller
         ]);
     }
 
+    /**
+     * Whether this account may change the room: the member who started it, or
+     * a mother-site admin bridged in (who runs the platform and has to be able
+     * to fix a name nobody else can).
+     */
+    private function canEditGroup(CommunityGroup $group): bool
+    {
+        $user = Auth::user();
+
+        return $user !== null
+            && ((int) $group->createdByUserId === (int) $user->id || $user->isSuperAdmin());
+    }
+
+    /** Rename a discussion, or give it a new face and banner. */
+    public function update(Request $request, int $id)
+    {
+        $group = $this->group($id);
+        if (! $this->canEditGroup($group)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Only the one who started this discussion can change it.',
+            ], 403);
+        }
+
+        $data = $request->validate([
+            'name' => 'required|string|max:150',
+            'description' => 'nullable|string|max:500',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'banner' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+        ]);
+
+        $patch = [
+            'name' => $data['name'],
+            'description' => $data['description'] ?? null,
+        ];
+        // A picture left alone keeps the one it had: an edit that quietly
+        // cleared the banner because the field was empty would be a trap.
+        if ($request->hasFile('image')) {
+            $patch['coverImagePath'] = $this->storeImage($request->file('image'), 'community-groups/covers');
+        }
+        if ($request->hasFile('banner')) {
+            $patch['bannerImagePath'] = $this->storeImage($request->file('banner'), 'community-groups/banners');
+        }
+        $group->update($patch);
+
+        return response()->json(['success' => true, 'message' => 'Discussion updated.', 'data' => [
+            'name' => $group->name,
+            'description' => $group->description,
+            'cover' => \App\Support\MediaStore::url($group->coverImagePath),
+            'banner' => \App\Support\MediaStore::url($group->bannerImagePath),
+        ]]);
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([
             'name' => 'required|string|max:150',
             'description' => 'nullable|string|max:500',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            // Two pictures, two jobs: the badge is the room's face in a list,
+            // the banner is what makes its own page look like somewhere.
+            'banner' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
         ]);
 
         $coverPath = null;
         if ($request->hasFile('image')) {
             $coverPath = $this->storeImage($request->file('image'), 'community-groups/covers');
         }
+        $bannerPath = null;
+        if ($request->hasFile('banner')) {
+            $bannerPath = $this->storeImage($request->file('banner'), 'community-groups/banners');
+        }
 
         $group = null;
-        DB::transaction(function () use ($data, $coverPath, &$group) {
+        DB::transaction(function () use ($data, $coverPath, $bannerPath, &$group) {
             $group = CommunityGroup::create([
                 'name' => $data['name'],
                 'slug' => $this->uniqueSlug($data['name']),
                 'description' => $data['description'] ?? null,
                 'coverImagePath' => $coverPath,
+                'bannerImagePath' => $bannerPath,
                 'createdByUserId' => Auth::id(),
                 'deleteStatus' => 1,
             ]);
@@ -208,6 +274,10 @@ class CommunityGroupController extends Controller
             'title' => 'required|string|max:191',
             'body' => 'required|string|max:20000',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:8192',
+            // A topic can carry a clip, uploaded or filmed on the spot — the
+            // wall has always allowed it and a discussion is where a farmer
+            // most wants to SHOW the problem. VideoOptimizer enforces the mime.
+            'video' => 'nullable|file|max:307200',
         ]);
         // The body arrives as WYSIWYG HTML — sanitize to a safe subset on store.
         $safeBody = \App\Support\CommunityText::safeHtml($request->input('body'));
@@ -220,12 +290,31 @@ class CommunityGroupController extends Controller
             $imagePath = $this->storeImage($request->file('image'), 'community-groups/' . $group->id);
         }
 
+        $videoPath = null;
+        $videoPoster = null;
+        if ($request->hasFile('video')) {
+            try {
+                $stored = \App\Support\VideoOptimizer::storeCompressed(
+                    $request->file('video'),
+                    'community-groups/' . $group->id . '/videos'
+                );
+                $videoPath = $stored['video'];
+                $videoPoster = $stored['poster'] ?? null;
+            } catch (\Throwable $e) {
+                // The clip is the reason the post exists often enough that
+                // saving it without one would be the wrong kind of helpful.
+                return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
+            }
+        }
+
         $post = CommunityGroupPost::create([
             'groupId' => $group->id,
             'userId' => Auth::id(),
             'title' => $request->input('title') ?: null,
             'body' => $safeBody,
             'imagePath' => $imagePath,
+            'videoPath' => $videoPath,
+            'videoPoster' => $videoPoster,
             'deleteStatus' => 1,
         ]);
 

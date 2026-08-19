@@ -184,6 +184,26 @@
         finally { delete btn.dataset.busy; }
     });
 
+    /* ---------------- join a discussion, from its wall card ---------------- */
+    document.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.js-join-group');
+        if (!btn || btn.dataset.busy) return;
+        // Already in it: the tag is a link to the room, not a leave button —
+        // leaving belongs in the room, where you can see what you are leaving.
+        if (btn.classList.contains('is-on')) {
+            window.location.href = @json(url('/app/community/groups')) + '/' + btn.dataset.groupId;
+            return;
+        }
+        btn.dataset.busy = '1';
+        try {
+            await post(@json(url('/app/community/groups')) + '/' + btn.dataset.groupId + '/join');
+            btn.classList.add('is-on');
+            btn.setAttribute('aria-pressed', 'true');
+            window.toast?.('Sali ka na sa ' + (btn.dataset.name || 'usapan') + '.');
+        } catch (err) { window.toast?.(err.message, 'error'); }
+        finally { delete btn.dataset.busy; }
+    });
+
     /* ---------------- bookmark ---------------- */
     document.addEventListener('click', async (e) => {
         const btn = e.target.closest('.js-bookmark');

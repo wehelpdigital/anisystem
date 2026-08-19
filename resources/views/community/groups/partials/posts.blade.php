@@ -57,6 +57,9 @@
                         @if ($isGif)<span class="gif-badge">GIF</span>@endif
                     </div>
                 @endif
+                @if ($post->videoPath ?? null)
+                    @include('community.partials.video-embed', ['src' => $post->videoPath, 'poster' => $post->videoPoster ?? null])
+                @endif
             @endif
         </div>
 

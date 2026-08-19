@@ -6,7 +6,7 @@ class CommunityGroupPost extends BaseModel
 {
     protected $table = 'as_community_group_posts';
 
-    protected $fillable = ['groupId', 'userId', 'title', 'body', 'imagePath', 'isRestricted', 'restrictedReason', 'deleteStatus'];
+    protected $fillable = ['groupId', 'userId', 'title', 'body', 'imagePath', 'isRestricted', 'restrictedReason', 'deleteStatus', 'videoPath', 'videoPoster',];
 
     protected $casts = ['isRestricted' => 'boolean'];
 
