@@ -14,14 +14,22 @@
        whatever is left, the button keeps its own width and never squeezes the
        heading into a narrow column beside it. Below that width the button
        wraps to a full-width line instead of a stub in the corner. */
-    .disc-head { display:flex; align-items:center; gap:.75rem; flex-wrap:wrap; margin-bottom:1rem; }
-    .disc-head-copy { flex:1 1 8rem; min-width:0; }
-    .disc-head-title { font-family:var(--font-heading); font-size:1rem; font-weight:800; line-height:1.2;
+    /* Stacked first, paired only where there is honestly room.
+       Side-by-side held all the way down to 358px, which on a real phone left
+       "Sali ka sa usapan" wrapping into a two-line column beside a button —
+       the two-column look the owner has now flagged twice. The heading takes
+       its own line, the button takes a full one under it, and they share a
+       row from 30rem up where both fit without either bending. */
+    .disc-head { display:flex; flex-direction:column; align-items:stretch; gap:.6rem; margin-bottom:1rem; }
+    .disc-head-copy { min-width:0; }
+    .disc-head-title { font-family:var(--font-heading); font-size:1.05rem; font-weight:800; line-height:1.25;
         color:var(--color-gray-900); }
-    .disc-head-sub { font-size:.78rem; line-height:1.35; color:var(--color-gray-500); margin-top:.1rem; }
-    .disc-head-btn { flex:0 0 auto; margin-left:auto; }
-    @media (max-width:22.4rem) {
-        .disc-head-btn { width:100%; margin-left:0; justify-content:center; }
+    .disc-head-sub { font-size:.8rem; line-height:1.4; color:var(--color-gray-500); margin-top:.15rem; }
+    .disc-head-btn { width:100%; justify-content:center; }
+    @media (min-width:30rem) {
+        .disc-head { flex-direction:row; align-items:center; gap:.75rem; }
+        .disc-head-copy { flex:1 1 auto; }
+        .disc-head-btn { width:auto; flex:0 0 auto; margin-left:auto; }
     }
 
     /* One action per card: Join until you are in, Open once you are. They
@@ -38,6 +46,11 @@
        never two of them at once (the wall's shape, in this page's words). */
     .disc-tail { text-align:center; margin-top:.75rem; padding-bottom:.5rem; }
     .disc-tail[hidden] { display:none; }
+    /* The same red circle the nav and the bell use. */
+    .disc-new { display:inline-flex; align-items:center; justify-content:center;
+        min-width:1.15rem; height:1.15rem; padding:0 .3rem; border-radius:999px;
+        background:#ef4444; color:#fff; font-size:.625rem; font-weight:800;
+        line-height:1; vertical-align:middle; margin-left:.25rem; }
     .gb-well { display:flex; align-items:center; justify-content:center; overflow:hidden;
         width:100%; height:6rem; border-radius:.75rem; cursor:pointer; text-align:center;
         background:var(--color-gray-100); border:1px dashed var(--color-gray-300); }

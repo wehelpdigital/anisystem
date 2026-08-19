@@ -22,6 +22,11 @@ class CommunityBlogController extends Controller
             ->orderByDesc('id')
             ->paginate(12);
 
+        // Opening the blog is reading it — the badge counts what was
+        // published while nobody was looking, not what remains unopened.
+        app(\App\Services\CommunityUnreadService::class)
+            ->markRead(\App\Services\CommunityUnreadService::KIND_BLOG);
+
         return view('community.blog.index', ['posts' => $posts]);
     }
 

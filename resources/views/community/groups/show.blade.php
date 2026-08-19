@@ -478,8 +478,29 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('joinLeaveBtn')?.addEventListener('click', async (e) => {
         const btn = e.currentTarget;
         const joined = btn.getAttribute('data-joined') === '1';
+        /* Leaving costs you the room: the topics, the chat, everything behind
+           the gate — and getting back in means joining again. That is worth a
+           question. Joining is not; it costs nothing and undoes in one tap. */
+        if (joined) {
+            const ok = window.confirmAction
+                ? await window.confirmAction({
+                    title: 'Leave this discussion?',
+                    body: 'You will stop seeing its topics and chat, and you will have to join again to come back.',
+                    confirmText: 'Leave',
+                })
+                : true;
+            if (!ok) return;
+        }
         btn.disabled = true;
-        try { await setMembership(!joined); }
+        try {
+            const done = await setMembership(!joined);
+            // Out means out: the room closes behind you rather than leaving a
+            // reader looking at posts they no longer have.
+            if (done !== false && joined) {
+                toast('You left the discussion.');
+                setTimeout(() => { window.location.href = @json(route('community.groups.index')); }, 400);
+            }
+        }
         catch (_) { toast('Network error — try again.', 'error'); }
         finally { btn.disabled = false; }
     });

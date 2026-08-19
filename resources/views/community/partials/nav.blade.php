@@ -5,6 +5,16 @@
 @php
     // Icons are inline paths (same shape as the schedule's modules sheet) so a
     // section can be added here without touching an icon font or a sprite.
+    // What is new since this member last looked. Asked once here, because
+    // every community page draws this bar.
+    $unread = app(\App\Services\CommunityUnreadService::class);
+    $badges = [
+        'groups' => $unread->discussionTotal(),
+        'blog' => $unread->blogCount(),
+        'requests' => $unread->requestCount(),
+    ];
+    $badgeTotal = array_sum($badges);
+
     $sections = [
         'wall' => [
             'label' => 'Wall', 'short' => 'Wall',
@@ -73,6 +83,12 @@
     .cn-seat { display:inline-flex; align-items:center; flex-shrink:0; }
     .cn-seat:empty { display:none; }
     .cn-caret { flex-shrink:0; opacity:.5; }
+    /* The same small red circle the bell uses, so "new" reads the same
+       everywhere in the app. */
+    .cn-dot { display:inline-flex; align-items:center; justify-content:center; flex:none;
+        min-width:1.15rem; height:1.15rem; padding:0 .3rem; border-radius:999px;
+        background:#ef4444; color:#fff; font-size:.625rem; font-weight:800; line-height:1; }
+    .cn-row-dot { margin-left:auto; }
     .cn-saved { flex-shrink:0; }
     /* On a phone the row is tight: the bookmark keeps its icon, drops its word. */
     @media (max-width:640px) { .cn-saved-word { display:none; } }
@@ -109,6 +125,10 @@
              where you are twice over — the lines alone said only "menu". --}}
         <svg class="w-4 h-4 cn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $sections[$active]['icon'] ?? 'M4 6h16M4 12h16M4 18h16' }}"/></svg>
         <span class="cn-current"><span class="cn-prefix">Community &middot; </span>{{ $currentShort }}</span>
+        @if ($badgeTotal > 0)
+            {{-- Closed, the button still says there is something inside. --}}
+            <span class="cn-dot" aria-label="{{ $badgeTotal }} new">{{ $badgeTotal > 99 ? '99+' : $badgeTotal }}</span>
+        @endif
         <svg class="w-3.5 h-3.5 cn-caret" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
     </button>
     {{-- Everything you kept, one tap from everywhere you might keep something. --}}
@@ -137,6 +157,11 @@
                     <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $section['icon'] }}"/></svg>
                 </span>
                 <span class="cn-row-label">{{ $section['label'] }}</span>
+                {{-- Which section the news is actually in, so the total on the
+                     button can be acted on rather than just noticed. --}}
+                @if (($badges[$key] ?? 0) > 0)
+                    <span class="cn-dot cn-row-dot">{{ $badges[$key] > 99 ? '99+' : $badges[$key] }}</span>
+                @endif
                 @if ($key === $currentKey)
                     <svg class="cn-check" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                 @endif

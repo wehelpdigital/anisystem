@@ -90,6 +90,10 @@ class CommunityGroupController extends Controller
         $hasMore = $rows->count() > $per;
         $items = $rows->take($per)->values();
 
+        // What is new in the rooms this member joined — the list is where a
+        // farmer decides which conversation to walk back into.
+        $unreadByGroup = app(\App\Services\CommunityUnreadService::class)->discussionCounts($userId);
+
         $myGroupIds = CommunityGroupMember::active()
             ->where('userId', $userId)
             ->pluck('groupId')
@@ -97,6 +101,7 @@ class CommunityGroupController extends Controller
 
         foreach ($items as $g) {
             $g->joined = in_array($g->id, $myGroupIds, true);
+            $g->unreadCount = $unreadByGroup[(int) $g->id] ?? 0;
         }
 
         return ['items' => $items, 'hasMore' => $hasMore, 'myGroupIds' => $myGroupIds];
@@ -111,6 +116,13 @@ class CommunityGroupController extends Controller
 
         $posts = $this->pagePosts($group->id, 1);
         $this->withReactions($posts['items']);
+
+        // Being here IS reading it: the room's badge clears on arrival, and
+        // only for somebody who actually joined (a visitor has no badge).
+        if ($isMember) {
+            app(\App\Services\CommunityUnreadService::class)
+                ->markRead(\App\Services\CommunityUnreadService::KIND_GROUP, $group->id);
+        }
 
         return view('community.groups.show', [
             'group' => $group,

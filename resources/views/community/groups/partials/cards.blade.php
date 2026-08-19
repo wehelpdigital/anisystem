@@ -15,6 +15,10 @@
                 <span class="avatar avatar-md avatar-sq overflow-hidden {{ $hue }}">@if ($g->coverImagePath)<img src="{{ \App\Support\MediaStore::url($g->coverImagePath) }}" alt="" class="w-full h-full object-cover">@else{{ CommunityAvatar::monogram($g->name) }}@endif</span>
                 <a href="{{ route('community.groups.show', ['id' => $g->id]) }}" class="min-w-0 grow">
                     <h3 class="font-bold text-gray-900 leading-snug" style="font-family:var(--font-heading)">{{ $g->name }}
+                        @if (($g->unreadCount ?? 0) > 0)
+                            {{-- New topics since you were last in this room. --}}
+                            <span class="disc-new" title="{{ $g->unreadCount }} new since your last visit">{{ $g->unreadCount > 99 ? '99+' : $g->unreadCount }}</span>
+                        @endif
                         <span class="badge badge-green group-joined-tag align-middle {{ $g->joined ? '' : 'hidden' }}" data-group-id="{{ $g->id }}">Joined</span>
                     </h3>
                 </a>
