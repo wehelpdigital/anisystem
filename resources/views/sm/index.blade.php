@@ -491,7 +491,7 @@
                  pictures. Looking for a photo is remembering a picture, not a
                  season, so it does not ask which one first. --}}
             <a href="{{ route('gallery.hub') }}" class="qa-tile qa-gallery">
-                <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>
+                <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM8 14l2.5-3 2 2.5L15 10l3 4"/></svg></span>
                 <span class="qa-txt">
                     <b>Global Gallery</b>
                     <i>Every photo, drawing and saved map, from every schedule.</i>

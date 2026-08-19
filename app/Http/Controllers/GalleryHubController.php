@@ -30,24 +30,148 @@ class GalleryHubController extends Controller
         $q = trim((string) $request->query('q', ''));
 
         $items = $this->gather($kinds, $q);
-        $slice = array_slice($items, ($page - 1) * self::PER_PAGE, self::PER_PAGE);
-        $hasMore = count($items) > $page * self::PER_PAGE;
 
+        // The messenger and the pickers ask for JSON and want the flat list of
+        // everything; only the page itself has shelves.
         if ($request->wantsJson() || $request->boolean('json')) {
+            $slice = array_slice($items, ($page - 1) * self::PER_PAGE, self::PER_PAGE);
+
             return response()->json(['success' => true, 'data' => [
                 'items' => $slice,
-                'hasMore' => $hasMore,
+                'hasMore' => count($items) > $page * self::PER_PAGE,
                 'nextPage' => $page + 1,
                 'total' => count($items),
             ]]);
         }
 
+        /* The same four shelves the season's own Gallery has.
+         *
+         * This IS that module, asked across every season instead of one, so it
+         * wears the same chrome: a grower who has learned where photos live in
+         * a season should not have to learn a second place. Only the shelf
+         * being looked at is built — the Team box alone is three queries a
+         * season, and paying for it to render a number nobody asked for is how
+         * a page with forty seasons behind it stops opening. */
+        $tab = in_array($request->query('tab'), ['albums', 'videos', 'team'], true)
+            ? $request->query('tab')
+            : 'all';
+
+        $schedules = $this->schedules();
+        $stills = array_values(array_filter($items, fn ($m) => $m['type'] !== 'video'));
+        $clips = array_values(array_filter($items, fn ($m) => $m['type'] === 'video'));
+
+        $shelf = match ($tab) {
+            'albums' => $this->albums($schedules, $q),
+            'team' => $this->teamBox($schedules, $q),
+            'videos' => $clips,
+            default => $stills,
+        };
+
+        $paged = $tab === 'albums' ? $shelf : array_slice($shelf, 0, self::PER_PAGE);
+
         return view('sm.gallery-hub', [
-            'items' => $slice,
-            'hasMore' => $hasMore,
-            'total' => count($items),
+            'tab' => $tab,
+            'items' => $paged,
+            'albums' => $tab === 'albums' ? $shelf : [],
+            'team' => $tab === 'team' ? $shelf : [],
+            'hasMore' => $tab !== 'albums' && count($shelf) > self::PER_PAGE,
+            'total' => count($shelf),
+            'counts' => [
+                'all' => count($stills),
+                'videos' => count($clips),
+                // Counted only when its own shelf is open; the button shows a
+                // dash otherwise rather than a number bought at that price.
+                'albums' => $tab === 'albums' ? count($shelf) : null,
+                'team' => $tab === 'team' ? count($shelf) : null,
+            ],
             'q' => $q,
         ]);
+    }
+
+    /** The seasons this viewer may look at, newest first. */
+    private function schedules()
+    {
+        return AsCroppingSchedule::active()
+            ->forClient(WorkerContext::effectiveOwnerId())
+            ->orderByDesc('id')
+            ->limit(40)
+            ->get();
+    }
+
+    /**
+     * Every album from every season, each still saying which season it is
+     * from — an album's name ("the flooded corner") only means something
+     * next to the season it belonged to.
+     *
+     * @return list<array<string,mixed>>
+     */
+    private function albums($schedules, string $q): array
+    {
+        $ids = $schedules->pluck('id')->all();
+        $titles = $schedules->pluck('title', 'id');
+
+        $rows = \App\Models\AsGalleryAlbum::whereIn('croppingScheduleId', $ids)
+            ->where('deleteStatus', 1)
+            ->with('images')
+            ->orderByDesc('id')
+            ->get();
+
+        $out = [];
+        foreach ($rows as $a) {
+            $season = (string) ($titles[$a->croppingScheduleId] ?? '');
+            if ($q !== '' && stripos($a->title . ' ' . $a->description . ' ' . $season, $q) === false) {
+                continue;
+            }
+            $pictures = $a->images
+                ->map(fn ($i) => [
+                    'id' => (int) $i->id,
+                    'url' => MediaStore::url($i->path),
+                    'caption' => $i->caption,
+                    'video' => (bool) preg_match('/\.(mp4|mov|webm|m4v|3gp)$/i', (string) $i->path),
+                ])
+                ->values()
+                ->all();
+
+            $out[] = [
+                'id' => (int) $a->id,
+                'title' => $a->title ?: 'Untitled album',
+                'description' => $a->description,
+                'scheduleId' => (int) $a->croppingScheduleId,
+                'scheduleTitle' => $season,
+                'count' => count($pictures),
+                'cover' => $pictures[0]['url'] ?? null,
+                'pictures' => $pictures,
+            ];
+        }
+
+        return $out;
+    }
+
+    /**
+     * What every Collab Room made, gathered.
+     *
+     * @return list<array<string,mixed>>
+     */
+    private function teamBox($schedules, string $q): array
+    {
+        $out = [];
+        foreach ($schedules as $schedule) {
+            foreach (\App\Support\SeasonTeamBox::for($schedule) as $row) {
+                if ($q !== '' && stripos($row['title'] . ' ' . $row['kind'] . ' ' . $schedule->title, $q) === false) {
+                    continue;
+                }
+                $row['scheduleId'] = (int) $schedule->id;
+                $row['scheduleTitle'] = (string) $schedule->title;
+                $out[] = $row;
+            }
+            if (count($out) > 600) {
+                break;
+            }
+        }
+
+        usort($out, fn ($a, $b) => $b['sortKey'] <=> $a['sortKey']);
+
+        return $out;
     }
 
     /**
@@ -63,11 +187,7 @@ class GalleryHubController extends Controller
      */
     private function gather(array $kinds, string $q): array
     {
-        $schedules = AsCroppingSchedule::active()
-            ->forClient(WorkerContext::effectiveOwnerId())
-            ->orderByDesc('id')
-            ->limit(40)
-            ->get();
+        $schedules = $this->schedules();
 
         $out = [];
         foreach ($schedules as $schedule) {
@@ -95,6 +215,12 @@ class GalleryHubController extends Controller
                     'posterUrl' => $m['posterUrl'] ?? null,
                     'title' => $title,
                     'source' => $source,
+                    // Where the thing itself lives — a drawing opens its pad,
+                    // a saved map opens the map with its shapes still editable.
+                    // SeasonMedia already worked this out; guessing a route
+                    // here would send a grower to the module's front door
+                    // instead of to the thing they tapped.
+                    'href' => $m['href'] ?? null,
                     'when' => $m['when'] ?? null,
                     'scheduleId' => (int) $schedule->id,
                     'scheduleTitle' => (string) $schedule->title,
