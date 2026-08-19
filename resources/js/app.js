@@ -1119,14 +1119,17 @@ window.smQuillTouch = function smQuillTouch(quill) {
         // a module is re-fetched. Listening on into a node nobody can see is
         // worse than losing the sentence, so that ends the dictation rather
         // than being refused by hide()'s own guard.
-        if (gone()) { stop(); mic.hidden = true; target = null; return; }
+        if (gone()) { stop(); mic.hidden = true; closeGutter(); target = null; return; }
         const r = target.getBoundingClientRect();
         const size = 32, gap = 6;
-        // Inside the field's right edge: on a tall box (a textarea, an
-        // editor) it sits at the bottom, out of the way of the words.
+        /* Inside the field's right edge, in the gutter opened for it, so the
+         * words stop before the button rather than running underneath it. On
+         * a tall box it sits at the bottom of that column, where the caret is
+         * least likely to be. */
         const tall = r.height > 60;
+        const border = parseFloat(getComputedStyle(target).borderRightWidth) || 0;
         let top = tall ? r.bottom - size - gap : r.top + (r.height - size) / 2;
-        let left = r.right - size - gap;
+        let left = r.right - size - gap - border;
         // Never off-screen, and never under the keyboard's own bar.
         top = Math.max(gap, Math.min(top, window.innerHeight - size - gap));
         left = Math.max(gap, Math.min(left, window.innerWidth - size - gap));
@@ -1134,9 +1137,33 @@ window.smQuillTouch = function smQuillTouch(quill) {
         mic.style.left = left + 'px';
     }
 
+    /* The room the mic stands in, given back when it leaves.
+     *
+     * Measured against what the field already has: a composer that keeps a
+     * right-hand column for its own send button needs nothing from us, and
+     * shrinking its padding to ours would be worse than doing nothing. */
+    const GUTTER = 44;          // the button (32) plus its gap, twice over
+    let gutterHeld = null;      // { el, had } while a field is holding one
+
+    function openGutter(el) {
+        closeGutter();
+        if (!el) return;
+        const now = parseFloat(getComputedStyle(el).paddingRight) || 0;
+        if (now >= GUTTER) return;                 // it already keeps the room
+        gutterHeld = { el, had: el.style.paddingRight };
+        el.style.paddingRight = GUTTER + 'px';
+    }
+    function closeGutter() {
+        if (!gutterHeld) return;
+        // Back to exactly what the field said before, inline or nothing.
+        gutterHeld.el.style.paddingRight = gutterHeld.had || '';
+        gutterHeld = null;
+    }
+
     function show(el) {
         target = el;
         mic.hidden = false;
+        openGutter(el);
         place();
         // A sheet is still sliding when the field inside it takes focus, so
         // the first measurement is of a rectangle on its way somewhere. A few
@@ -1146,6 +1173,7 @@ window.smQuillTouch = function smQuillTouch(quill) {
     function hide() {
         if (listening) return;              // never vanish mid-sentence
         mic.hidden = true;
+        closeGutter();
         target = null;
     }
 
