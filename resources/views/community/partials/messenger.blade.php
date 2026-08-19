@@ -200,8 +200,24 @@
     .msgr-icon:hover { background:#f1f3f5; color:#374151; }
     html.dark .msgr-icon { color:#9fb389; }
     html.dark .msgr-icon:hover { background:rgb(255 255 255 / .07); color:#e5e9df; }
-    .msgr-attach { display:flex; align-items:center; gap:.4rem; padding:.5rem .5rem 0; font-size:.78rem; color:#6b7280; }
+    /* A strip, not a slot: several photos can wait here at once, and it
+       scrolls sideways rather than growing the composer downward. */
+    .msgr-attach { display:flex; align-items:center; gap:.4rem; padding:.5rem .5rem 0; font-size:.78rem; color:#6b7280;
+        overflow-x:auto; overflow-y:hidden; scrollbar-width:none; }
+    .msgr-attach::-webkit-scrollbar { display:none; }
     .msgr-attach.hidden { display:none; }
+    .msgr-att { position:relative; flex:none; width:2.75rem; height:2.75rem; border-radius:.5rem; overflow:hidden;
+        animation:msgrAttIn .28s cubic-bezier(.22,1,.36,1); }
+    @keyframes msgrAttIn { from { opacity:0; transform:scale(.8); } }
+    @media (prefers-reduced-motion:reduce) { .msgr-att { animation:none; } }
+    .msgr-att img { width:100%; height:100%; object-fit:cover; display:block; }
+    .msgr-att-clip { width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+        background:var(--color-brand-50, #eef4e6); font-size:1.05rem; }
+    /* The remove button sits on the corner of its own thumbnail, so with four
+       photos queued it is still obvious which one goes. */
+    .msgr-att-x { position:absolute; top:1px; right:1px; width:1.05rem; height:1.05rem; border:0; padding:0;
+        border-radius:999px; background:rgb(0 0 0 / .58); color:#fff; font-size:.6rem; line-height:1; cursor:pointer; }
+    .msgr-att-count { flex:none; font-weight:700; padding-left:.15rem; }
     .msgr-attach-thumb { width:2.75rem; height:2.75rem; object-fit:cover; border-radius:.5rem; }
     .msgr-attach-thumb.hidden, .msgr-attach-clip.hidden { display:none; }
     .msgr-attach-clip { width:2.75rem; height:2.75rem; border-radius:.5rem; background:var(--color-brand-50, #eef4e6);
@@ -624,6 +640,9 @@
             // Inside a season, that season. Anywhere else, everything.
             scheduleId: sid,
             allSchedules: !sid,
+            // Several at a time: the picker fires onPick once per chosen item
+            // and the composer's queue takes them all.
+            multiple: true,
             title: sid ? 'Share from the gallery' : 'Share from your gallery',
             onPick: (item) => attachPick(
                 { pick: item, kind: item.type === 'video' ? 'video' : 'image', url: item.url, poster: item.posterUrl || null },
@@ -677,12 +696,7 @@
                     <span class="rb-body"></span>
                     <button type="button" class="rb-x" aria-label="Cancel reply">✕</button>
                 </div>
-                <div class="msgr-attach hidden">
-                    <img class="msgr-attach-thumb hidden" alt="">
-                    <span class="msgr-attach-clip hidden">🎬</span>
-                    <span class="msgr-attach-name"></span>
-                    <button type="button" class="msgr-attach-x" aria-label="Remove attachment">✕</button>
-                </div>
+                <div class="msgr-attach hidden"></div>
                 <div class="msgr-recbar hidden"><span class="msgr-recdot"></span><span class="msgr-rec-what">Recording video…</span><button type="button" class="msgr-rec-stop">Stop</button></div>
                 <div class="msgr-window-foot">
                     <div class="msgr-plus-wrap">
@@ -694,7 +708,7 @@
                             <button type="button" class="msgr-plus-opt" data-msgr-add="gallery"><span class="msgr-plus-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l2-3h6l2 3h3v13H4V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 13l2.5-2.5L14 14l2-2 2 2"/></svg></span>Share from gallery</button>
                         </div>
                     </div>
-                    <input type="file" class="js-msgr-file hidden" accept="image/*,video/*">
+                    <input type="file" class="js-msgr-file hidden" accept="image/*,video/*" multiple>
                     <input type="file" class="js-msgr-cam hidden" accept="image/*" capture="environment">
                     <button type="button" class="msgr-icon js-emoji-btn" aria-label="Add an emoji" title="Emoji"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></button>
                     <input type="text" placeholder="Aa" maxlength="5000">
@@ -709,29 +723,59 @@
         const fileInput = win.querySelector('.js-msgr-file');
         const camInput = win.querySelector('.js-msgr-cam');
         const attach = win.querySelector('.msgr-attach');
-        const attachThumb = win.querySelector('.msgr-attach-thumb');
-        const attachClip = win.querySelector('.msgr-attach-clip');
-        const attachName = win.querySelector('.msgr-attach-name');
-        const clearAttach = () => {
-            // Only a freshly-chosen file owns an object URL; a gallery pick's
-            // URL is the stored one and must not be revoked.
-            if (win._att && win._att.file && win._att.url) { try { URL.revokeObjectURL(win._att.url); } catch (e) {} }
-            win._att = null;
-            fileInput.value = ''; camInput.value = '';
-            attach.classList.add('hidden');
-            attachThumb.classList.add('hidden'); attachThumb.removeAttribute('src');
-            attachClip.classList.add('hidden');
-            attachName.textContent = '';
+        /* Several at once.
+         *
+         * Picking six photos and sending them one at a time is six trips
+         * through the chooser, and nobody does that — they give up and send
+         * one. The queue below holds them all; sending walks it. */
+        win._atts = [];
+        const MAX_ATTS = 10;
+        const drawAttach = () => {
+            attach.innerHTML = '';
+            attach.classList.toggle('hidden', !win._atts.length);
+            win._atts.forEach((att, i) => {
+                const cell = document.createElement('div');
+                cell.className = 'msgr-att';
+                cell.title = att.label || '';
+                cell.innerHTML = att.kind === 'image'
+                    ? `<img src="${esc(att.url)}" alt="">`
+                    : (att.poster ? `<img src="${esc(att.poster)}" alt="">` : '<span class="msgr-att-clip">🎬</span>')
+                    ;
+                const x = document.createElement('button');
+                x.type = 'button'; x.className = 'msgr-att-x'; x.setAttribute('aria-label', 'Remove');
+                x.textContent = '✕';
+                x.addEventListener('click', () => dropAttach(i));
+                cell.appendChild(x);
+                attach.appendChild(cell);
+            });
+            if (win._atts.length > 1) {
+                const n = document.createElement('span');
+                n.className = 'msgr-att-count';
+                n.textContent = win._atts.length + ' to send';
+                attach.appendChild(n);
+            }
         };
-        // One attachment at a time whichever door it came through — a DM
-        // carries a single media slot, and the chip below says what is loaded.
+        // Only a freshly-chosen file owns an object URL; a gallery pick's URL
+        // is the stored one and must not be revoked.
+        const freeAtt = (att) => { if (att && att.file && att.url) { try { URL.revokeObjectURL(att.url); } catch (e) {} } };
+        const dropAttach = (i) => { freeAtt(win._atts[i]); win._atts.splice(i, 1); drawAttach(); };
+        const clearAttach = () => {
+            win._atts.forEach(freeAtt);
+            win._atts = [];
+            fileInput.value = ''; camInput.value = '';
+            drawAttach();
+        };
+        // Every door adds to the same queue — two from the gallery, one from
+        // the camera and one recorded all wait together.
         const setAttach = (att, label) => {
-            clearAttach();
-            win._att = att;
-            if (att.kind === 'image') { attachThumb.src = att.url; attachThumb.classList.remove('hidden'); }
-            else attachClip.classList.remove('hidden');
-            attachName.textContent = label || (att.kind === 'video' ? 'Video ready to send' : 'Photo ready to send');
-            attach.classList.remove('hidden');
+            if (win._atts.length >= MAX_ATTS) {
+                if (window.toast) toast(`That is ${MAX_ATTS} already — send these first.`, 'error');
+                freeAtt(att);
+                return;
+            }
+            att.label = label || (att.kind === 'video' ? 'Video' : 'Photo');
+            win._atts.push(att);
+            drawAttach();
         };
         const attachFile = (f) => {
             if (!f) return;
@@ -742,9 +786,9 @@
             }
             setAttach({ file: f, kind, url: URL.createObjectURL(f) }, f.name);
         };
-        fileInput.addEventListener('change', () => attachFile(fileInput.files[0]));
-        camInput.addEventListener('change', () => attachFile(camInput.files[0]));
-        win.querySelector('.msgr-attach-x').addEventListener('click', clearAttach);
+        const attachMany = (list) => { Array.from(list || []).forEach(attachFile); };
+        fileInput.addEventListener('change', () => { attachMany(fileInput.files); fileInput.value = ''; });
+        camInput.addEventListener('change', () => { attachFile(camInput.files[0]); camInput.value = ''; });
         win.querySelector('.rb-x')?.addEventListener('click', () => clearReply(win));
         win.querySelector('[data-close]').addEventListener('click', (e) => {
             // A close is a close: stop the tap dead so it can never reach the
@@ -783,38 +827,59 @@
         });
         win.querySelector('.msgr-rec-stop').addEventListener('click', stopRec);
         const sendBtn = win.querySelector('.msgr-send');
+        /* One message per attachment, in the order they were picked.
+         *
+         * That is what every messenger does with a multi-pick, and it is also
+         * what this thread can carry: a message holds one photo or one clip.
+         * The words ride with the first, so a caption still reads as a caption
+         * rather than arriving after four silent photos. Each is uploaded on
+         * its own so a failure loses one, not the batch. */
         const doSend = async () => {
             const text = input.value.trim();
-            const att = win._att;
-            if (!text && !att) return;
+            const atts = (win._atts || []).slice();
+            if (!text && !atts.length) return;
             sendBtn.classList.remove('is-sending'); void sendBtn.offsetWidth; sendBtn.classList.add('is-sending');
             input.value = '';
-            // The optimistic bubble needs a URL of its own: a fresh file gets
-            // an independent object URL (clearAttach revokes the composer's),
-            // a gallery pick keeps the stored URL it will render with anyway.
-            const pendingMedia = att ? {
-                kind: att.kind,
-                url: att.file ? URL.createObjectURL(att.file) : att.url,
-                local: !!att.file,
-            } : null;
             const replyMeta = win._reply ? { body: win._reply.body || '📷 Photo', mine: false } : null;
-            const fd = new FormData();
-            if (text) fd.append('body', text);
-            if (att && att.file) fd.append(att.kind === 'video' ? 'video' : 'image', att.file, att.file.name || (att.kind === 'video' ? 'clip' : 'photo'));
-            if (att && att.pick) fd.append('galleryPath', att.pick.path);
-            if (win._reply && win._reply.id) fd.append('replyToId', win._reply.id);
+            const reply = win._reply && win._reply.id ? win._reply.id : null;
+            // Taken before clearAttach frees them, because these are what the
+            // uploads carry — the composer's own URLs go with the strip.
+            const queue = atts.length ? atts.map((att, i) => ({
+                att,
+                // The optimistic bubble needs a URL of its own: a fresh file
+                // gets an independent object URL (clearAttach revokes the
+                // composer's), a gallery pick keeps the stored one it will
+                // render with anyway.
+                media: { kind: att.kind, url: att.file ? URL.createObjectURL(att.file) : att.url, local: !!att.file },
+                text: i === 0 ? text : '',
+            })) : [{ att: null, media: null, text }];
             clearAttach();
             clearReply(win);
 
-            // Show the message right away with an uploading loader.
-            const pending = appendPendingBubble(bodyEl, { text, media: pendingMedia, replyTo: replyMeta });
-            try {
-                const r = await fetch(`/app/community/messages/${userId}`, { method: 'POST',
-                    headers: { 'X-CSRF-TOKEN': CSRF(), Accept: 'application/json' }, body: fd });
-                const d = await r.json();
-                if (d.success) { finalizePending(bodyEl, pending, { id: d.data.id, body: d.data.body, image: d.data.image, video: d.data.video, poster: d.data.poster, replyTo: d.data.replyTo }); }
-                else { failPending(pending, d.message); if (text) input.value = text; }
-            } catch (_) { failPending(pending, 'Network error — try again.'); if (text) input.value = text; }
+            // Every bubble appears at once, in order, each with its own loader:
+            // a five-photo send should look like five photos immediately.
+            const pendings = queue.map((q, i) => appendPendingBubble(bodyEl, {
+                text: q.text, media: q.media, replyTo: i === 0 ? replyMeta : null,
+            }));
+
+            // Sequential, not parallel: the order the bubbles show is the
+            // order they must land in, and phones uploading six videos at once
+            // finish none of them.
+            for (let i = 0; i < queue.length; i++) {
+                const q = queue[i];
+                const fd = new FormData();
+                if (q.text) fd.append('body', q.text);
+                if (q.att && q.att.file) fd.append(q.att.kind === 'video' ? 'video' : 'image', q.att.file, q.att.file.name || (q.att.kind === 'video' ? 'clip' : 'photo'));
+                if (q.att && q.att.pick) fd.append('galleryPath', q.att.pick.path);
+                if (reply && i === 0) fd.append('replyToId', reply);
+                try {
+                    const r = await fetch(`/app/community/messages/${userId}`, { method: 'POST',
+                        headers: { 'X-CSRF-TOKEN': CSRF(), Accept: 'application/json' }, body: fd });
+                    const d = await r.json();
+                    if (d.success) { finalizePending(bodyEl, pendings[i], { id: d.data.id, body: d.data.body, image: d.data.image, video: d.data.video, poster: d.data.poster, replyTo: d.data.replyTo }); }
+                    else { failPending(pendings[i], d.message); if (q.text && !input.value) input.value = q.text; }
+                } catch (_) { failPending(pendings[i], 'Network error — try again.'); if (q.text && !input.value) input.value = q.text; }
+            }
         };
         win.querySelector('.msgr-send').addEventListener('click', doSend);
         input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); doSend(); } });

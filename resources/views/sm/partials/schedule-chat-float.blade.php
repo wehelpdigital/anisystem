@@ -47,10 +47,9 @@
         </div>
 
         <div class="team-composer">
-            <div id="teamPhotoChip" class="team-photochip hidden">
-                <img src="" alt="" id="teamPhotoThumb"><span class="grow">Photo attached</span>
-                <button type="button" id="teamPhotoRemove" class="text-red-600 font-bold">Remove</button>
-            </div>
+            {{-- Several photos can wait here at once; each one goes as its own
+                 message when Send is pressed. --}}
+            <div id="teamPhotoChip" class="team-photostrip hidden"></div>
             {{-- What is attached, before it is sent. --}}
             <div id="teamClipChip" class="team-photochip hidden">
                 <span class="team-clipico" id="teamClipIco"></span>
@@ -73,7 +72,7 @@
             <div class="team-tools">
                 <label class="team-cam shrink-0" title="Attach a photo">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    <input type="file" id="teamPhoto" accept="image/*" class="hidden">
+                    <input type="file" id="teamPhoto" accept="image/*" class="hidden" multiple>
                 </label>
                 {{-- Say it instead of typing it: on a farm, hands are busy
                      and a voice note is faster than a keyboard. --}}
@@ -245,6 +244,20 @@
     .team-photochip { display: flex; align-items: center; gap: .4rem; font-size: .72rem; font-weight: 600; color: var(--color-gray-500); margin-bottom: .4rem; background: var(--color-gray-100); border-radius: .6rem; padding: .3rem .5rem; }
     .team-photochip.hidden { display: none; }
     .team-photochip img { width: 1.9rem; height: 1.9rem; border-radius: .4rem; object-fit: cover; }
+    /* The queue of photos waiting to go: sideways, so four of them do not
+       push the typing box off a phone. */
+    .team-photostrip { display: flex; align-items: center; gap: .35rem; margin-bottom: .4rem;
+        overflow-x: auto; scrollbar-width: none; }
+    .team-photostrip::-webkit-scrollbar { display: none; }
+    .team-photostrip.hidden { display: none; }
+    .team-shot { position: relative; flex: none; width: 2.4rem; height: 2.4rem; border-radius: .45rem;
+        overflow: hidden; animation: teamShotIn .28s cubic-bezier(.22,1,.36,1); }
+    @keyframes teamShotIn { from { opacity: 0; transform: scale(.8); } }
+    @media (prefers-reduced-motion: reduce) { .team-shot { animation: none; } }
+    .team-shot img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 0; }
+    .team-shot-x { position: absolute; top: 1px; right: 1px; width: 1rem; height: 1rem; border-radius: 999px;
+        background: rgb(0 0 0 / .58); color: #fff; font-size: .58rem; line-height: 1; }
+    .team-shot-n { flex: none; font-size: .72rem; font-weight: 700; color: var(--color-gray-500); }
     .team-box { display: flex; align-items: flex-end; border: 1.5px solid var(--color-gray-200); border-radius: 1.1rem; padding: .1rem .7rem; background: var(--color-white); }
     .team-box:focus-within { border-color: #3f7fb0; box-shadow: 0 0 0 3px rgb(63 127 176 / .16); }
     /* Attach / mic / video / emoji live under the field, not in it. Send sits
@@ -303,7 +316,12 @@
         let mode = 'group';           // 'group' | 'pm'
         let pmUser = null, pmName = '';
         let lastGroupId = 0;          // highest group message id seen
-        let photoFile = null;
+        /* Photos waiting to go, in the order they were picked.
+         *
+         * A message carries one picture, so four picked photos become four
+         * messages — which is what every chat does with a multi-pick, and
+         * beats making somebody open the chooser four times. */
+        let photoFiles = [];
         let msgTimer = null, memTimer = null;
         let canSend = true;
         // One attachment in flight at a time — see showClip().
@@ -437,25 +455,42 @@
             } catch (_) { /* transient */ }
         }
 
+        /* One trip per photo, the words riding with the first.
+         *
+         * Sequential rather than at once: the order they appear in the thread
+         * is the order they were picked, and a farm uplink does not finish
+         * four parallel uploads any sooner. */
         async function sendGroup() {
             const text = ($('teamText').value || '').trim();
-            if (!text && !photoFile && !clipFile) return;
-            const fd = new FormData();
-            if (text) fd.append('body', text);
-            if (photoFile) fd.append('image', photoFile);
-            if (clipFile) { fd.append('clip', clipFile, clipFile.name || 'clip'); fd.append('kind', clipKind); }
+            const shots = photoFiles.slice();
+            if (!text && !shots.length && !clipFile) return;
+            const clip = clipFile, kind = clipKind;
             $('teamSend').disabled = true;
-            // A minute of video is a real wait on a farm's signal; say so
-            // rather than leaving a dead button.
-            if (clipFile) sayRec('Sending…', true);
+            // A minute of video is a real wait on a farm signal; say so rather
+            // than leaving a dead button.
+            if (clip) sayRec('Sending…', true);
+            resetComposer();
+
+            // Each leg: the photo it carries, the words if it is the first,
+            // and the clip on the last so one message never holds both ends.
+            const legs = shots.length ? shots.map((f, i) => ({ photo: f, text: i === 0 ? text : '' }))
+                : [{ photo: null, text }];
+            if (clip) legs[legs.length - 1].clip = clip;
+
             try {
-                const res = await api(`${U.send}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: fd });
-                const m = res.data.message;
-                bubble(m, { showSender: true });
-                lastGroupId = Math.max(lastGroupId, m.id);
-                resetComposer(); scrollDown();
+                for (const leg of legs) {
+                    const fd = new FormData();
+                    if (leg.text) fd.append('body', leg.text);
+                    if (leg.photo) fd.append('image', leg.photo);
+                    if (leg.clip) { fd.append('clip', leg.clip, leg.clip.name || 'clip'); fd.append('kind', kind); }
+                    const res = await api(`${U.send}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: fd });
+                    const m = res.data.message;
+                    bubble(m, { showSender: true });
+                    lastGroupId = Math.max(lastGroupId, m.id);
+                    scrollDown();
+                }
             } catch (err) { toast(err.message || 'Could not send.', 'error'); }
-            finally { $('teamSend').disabled = false; sayRec(null); }
+            finally { $('teamSend').disabled = false; sayRec(null); shots.forEach(freeShot); }
         }
 
         /* ---------- PM mode (reuses community DM → shared history) ---------- */
@@ -476,20 +511,26 @@
         }
         async function sendPm() {
             const text = ($('teamText').value || '').trim();
-            if (!text && !photoFile) return;
-            const fd = new FormData();
-            if (text) fd.append('body', text);
-            if (photoFile) fd.append('image', photoFile);
+            const shots = photoFiles.slice();
+            if (!text && !shots.length) return;
             $('teamSend').disabled = true;
+            resetComposer();
+            const legs = shots.length ? shots.map((f, i) => ({ photo: f, text: i === 0 ? text : '' }))
+                : [{ photo: null, text }];
             try {
-                const res = await fetch(`${U.dmBase}/${pmUser}`, { method: 'POST', headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' }, body: fd });
-                const j = await res.json();
-                if (!j.success) throw new Error(j.message || 'Could not send.');
-                const m = j.data;
-                bubble({ mine: true, body: m.body, image: m.image, at: m.at }, { showSender: false });
-                resetComposer(); scrollDown();
+                for (const leg of legs) {
+                    const fd = new FormData();
+                    if (leg.text) fd.append('body', leg.text);
+                    if (leg.photo) fd.append('image', leg.photo);
+                    const res = await fetch(`${U.dmBase}/${pmUser}`, { method: 'POST', headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' }, body: fd });
+                    const j = await res.json();
+                    if (!j.success) throw new Error(j.message || 'Could not send.');
+                    const m = j.data;
+                    bubble({ mine: true, body: m.body, image: m.image, at: m.at }, { showSender: false });
+                    scrollDown();
+                }
             } catch (err) { toast(err.message || 'Could not send.', 'error'); }
-            finally { $('teamSend').disabled = false; }
+            finally { $('teamSend').disabled = false; shots.forEach(freeShot); }
         }
 
         /* ---------- mode switching ---------- */
@@ -530,9 +571,46 @@
         function stopTimers() { clearInterval(msgTimer); clearInterval(memTimer); msgTimer = memTimer = null; }
 
         /* ---------- composer helpers ---------- */
+        const MAX_SHOTS = 10;
+        function drawShots() {
+            const strip = $('teamPhotoChip');
+            strip.innerHTML = '';
+            strip.classList.toggle('hidden', !photoFiles.length);
+            photoFiles.forEach((f, i) => {
+                const cell = document.createElement('div');
+                cell.className = 'team-shot';
+                cell.title = f.name || 'Photo';
+                const img = document.createElement('img');
+                img.src = f._url || (f._url = URL.createObjectURL(f));
+                img.alt = '';
+                const x = document.createElement('button');
+                x.type = 'button'; x.className = 'team-shot-x'; x.setAttribute('aria-label', 'Remove');
+                x.textContent = '✕';
+                x.addEventListener('click', () => { dropShot(i); });
+                cell.append(img, x);
+                strip.appendChild(cell);
+            });
+            if (photoFiles.length > 1) {
+                const n = document.createElement('span');
+                n.className = 'team-shot-n';
+                n.textContent = photoFiles.length + ' photos';
+                strip.appendChild(n);
+            }
+        }
+        function freeShot(f) { if (f && f._url) { try { URL.revokeObjectURL(f._url); } catch (e) {} } }
+        function dropShot(i) { freeShot(photoFiles[i]); photoFiles.splice(i, 1); drawShots(); }
+        function addPhotos(list) {
+            const room = MAX_SHOTS - photoFiles.length;
+            const picked = Array.from(list || []).filter(Boolean);
+            picked.slice(0, Math.max(0, room)).forEach((f) => photoFiles.push(f));
+            if (picked.length > room) {
+                toast(`Only ${MAX_SHOTS} photos at a time — send these first.`, 'error');
+            }
+            drawShots();
+        }
         function resetComposer() {
             $('teamText').value = ''; $('teamText').style.height = 'auto';
-            photoFile = null; $('teamPhotoChip').classList.add('hidden');
+            photoFiles = []; drawShots();
             clearClip();
         }
         function currentSend() { return mode === 'pm' ? sendPm() : sendGroup(); }
@@ -602,14 +680,9 @@
         });
         $('teamSend').addEventListener('click', currentSend);
         $('teamPhoto').addEventListener('change', (e) => {
-            const f = e.target.files && e.target.files[0];
-            if (!f) return;
-            photoFile = f;
-            $('teamPhotoThumb').src = URL.createObjectURL(f);
-            $('teamPhotoChip').classList.remove('hidden');
+            addPhotos(e.target.files);
             e.target.value = '';
         });
-        $('teamPhotoRemove').addEventListener('click', () => { photoFile = null; $('teamPhotoChip').classList.add('hidden'); });
 
         /* ---------- emoji ------------------------------------------------
          * Its own popover rather than the community one: this panel can be
