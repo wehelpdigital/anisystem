@@ -2,8 +2,14 @@
      for use wherever members appear — wall, members, co-farmers, discussions.
      Falls back to a plain avatar when the member has no status.
      Expects: $user, $size (default avatar-md), optional $link. --}}
-@php $sz = $size ?? 'avatar-md'; @endphp
-@if (filled(optional($user)->statusBubble))
+@php
+    $sz = $size ?? 'avatar-md';
+    // A caller that shows the status itself passes cloud => false: two copies
+    // of "what is on their mind" on one card is one too many, and the floating
+    // one is the copy that hangs out of the card.
+    $showCloud = $cloud ?? true;
+@endphp
+@if ($showCloud && filled(optional($user)->statusBubble))
     <span class="status-cloud-wrap shrink-0">
         @include('community.partials.avatar', ['user' => $user, 'size' => $sz, 'link' => $link ?? true, 'showOnline' => true])
         <span class="status-cloud" title="{{ $user->statusBubble }}"><span class="status-cloud-text">💭 {{ \Illuminate\Support\Str::limit($user->statusBubble, 60) }}</span></span>

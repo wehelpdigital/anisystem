@@ -18,13 +18,17 @@
              profile does, so a card reads as a person rather than a row. --}}
         <div class="mc-cover">
             @if ($m->coverPath)
-                <img src="{{ \App\Support\MediaStore::url($m->coverPath) }}" alt="" loading="lazy">
+                {{-- A cover whose file has gone leaves a broken-image glyph
+                     across the top of the card; the band's own tint is a
+                     better answer than that. --}}
+                <img src="{{ \App\Support\MediaStore::url($m->coverPath) }}" alt="" loading="lazy"
+                     onerror="this.remove()">
             @endif
         </div>
         <div class="mc-body">
             <div class="flex items-start gap-3">
                 <a href="{{ route('community.connect.profile', ['userId' => $m->id]) }}" class="shrink-0 mc-face">
-                    @include('community.partials.avatar-status', ['user' => $m, 'size' => 'avatar-md', 'link' => false])
+                    @include('community.partials.avatar-status', ['user' => $m, 'size' => 'avatar-md', 'link' => false, 'cloud' => false])
                 </a>
                 <div class="min-w-0 grow">
                     <a href="{{ route('community.connect.profile', ['userId' => $m->id]) }}" class="block font-semibold text-gray-900 truncate leading-tight hover:text-brand-700">{{ $m->full_name }}</a>

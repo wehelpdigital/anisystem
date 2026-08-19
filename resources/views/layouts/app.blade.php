@@ -64,6 +64,12 @@
     </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
+    {{-- Five pages pushed their whole stylesheet to a stack nobody rendered,
+         and shipped unstyled because of it: the wall, saved posts, co-farmers,
+         the Global Gallery and the no-access page. Both names are honoured
+         rather than renaming every push, so the next page to guess "styles"
+         still works. --}}
+    @stack('styles')
 </head>
 {{-- `body-class` lets a page opt into layout-level changes, e.g. the Collab
      Room hiding the mobile tab bar to use the full screen. --}}

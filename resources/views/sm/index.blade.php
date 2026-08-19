@@ -118,6 +118,7 @@
             transition: transform .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
         .qa-tile:hover .qa-go { transform: translateX(2px); }
         .qa-notes:hover { border-color: #f0dcae; } .qa-notes:hover .qa-go { color: #b45309; }
+        .qa-gallery:hover { border-color: #c7dbf5; } .qa-gallery:hover .qa-go { color: #1d4ed8; }
         .qa-cap:hover { border-color: #cfe3b8; } .qa-cap:hover .qa-go { color: #3d6823; }
         .qa-rec:hover { border-color: #f3c4c4; } .qa-rec:hover .qa-go { color: #b91c1c; }
         html.dark .qa-tile { background: #151b12; border-color: #2b3a1c; }
@@ -130,9 +131,11 @@
            shape of one stay separate things. */
         .qa-ico { border-radius: .75rem; }
         .qa-notes .qa-ico { background: #fdf6e6; color: #b45309; }
+        .qa-gallery .qa-ico { background: #eaf1fd; color: #1d4ed8; }
         .qa-cap .qa-ico { background: #eef6e6; color: #3d6823; }
         .qa-rec .qa-ico { background: #fdecec; color: #b91c1c; }
         html.dark .qa-notes .qa-ico { background: rgb(180 83 9 / .18); color: #e0b457; }
+        html.dark .qa-gallery .qa-ico { background: rgb(29 78 216 / .22); color: #9fc0f5; }
         html.dark .qa-cap .qa-ico { background: rgb(61 104 35 / .25); color: #a5c97e; }
         html.dark .qa-rec .qa-ico { background: rgb(185 28 28 / .2); color: #f0a3a3; }
 
@@ -488,7 +491,7 @@
                  pictures. Looking for a photo is remembering a picture, not a
                  season, so it does not ask which one first. --}}
             <a href="{{ route('gallery.hub') }}" class="qa-tile qa-gallery">
-                <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5h16v14H4V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/><circle cx="9" cy="9" r="1.3"/></svg></span>
+                <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>
                 <span class="qa-txt">
                     <b>Global Gallery</b>
                     <i>Every photo, drawing and saved map, from every schedule.</i>

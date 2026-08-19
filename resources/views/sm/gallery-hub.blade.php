@@ -17,7 +17,7 @@
     <div class="relative grow">
         <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
         <input type="search" name="q" value="{{ $q }}" class="form-input pl-11! w-full"
-               placeholder="Search by name, season, or where it came from…" autocomplete="off">
+               placeholder="Search your pictures…" autocomplete="off">
     </div>
     <button type="submit" class="btn btn-primary btn-sm shrink-0">Search</button>
     @if ($q !== '')<a href="{{ route('gallery.hub') }}" class="btn btn-white btn-sm shrink-0">Clear</a>@endif
@@ -58,13 +58,13 @@
         border: 1px solid var(--color-gray-200); background: var(--color-white);
         transition: transform .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
     .gh-tile:hover { transform: translateY(-2px); border-color: var(--color-brand-300); }
-    .gh-shot { position: relative; aspect-ratio: 1; background: var(--color-gray-100); }
+    .gh-shot { display: block; position: relative; aspect-ratio: 1; background: var(--color-gray-100); }
     .gh-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .gh-blank { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
         font-size: 1.5rem; color: var(--color-gray-400); }
     .gh-badge { position: absolute; left: .3rem; top: .3rem; padding: .1rem .35rem; border-radius: 999px;
         background: rgb(17 24 39 / .72); color: #fff; font-size: .6rem; font-weight: 800; }
-    .gh-meta { padding: .3rem .45rem .45rem; }
+    .gh-meta { display: block; padding: .3rem .45rem .45rem; }
     .gh-name { display: block; font-size: .7rem; font-weight: 700; color: var(--color-gray-700);
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .gh-sub { display: block; font-size: .62rem; color: var(--color-gray-400);
