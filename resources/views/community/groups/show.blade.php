@@ -103,6 +103,52 @@
     html.dark .post-thread { border-top-color:rgb(255 255 255 / .08); }
     .post-thread-more { display:inline-block; margin:.15rem 0 .55rem; border:0; background:transparent; padding:0;
         font-size:.75rem; font-weight:800; color:var(--color-brand-700); cursor:pointer; }
+
+    /* A long body is folded to about six lines with a way in; the whole thing
+       is read in the thread modal rather than swallowing the room. */
+    .group-post-body.is-clamped { display:-webkit-box; -webkit-line-clamp:6; -webkit-box-orient:vertical;
+        overflow:hidden; }
+    .post-readmore { display:inline-block; margin-top:.3rem; border:0; background:transparent; padding:0;
+        font-size:.75rem; font-weight:800; color:var(--color-brand-700); cursor:pointer; }
+
+    /* ---- The thread modal ---- */
+    .thread-modal { position:fixed; inset:0; z-index:60; display:flex; align-items:flex-end; justify-content:center; }
+    .thread-modal.hidden { display:none; }
+    .thread-modal-back { position:absolute; inset:0; background:rgb(17 24 39 / .5); backdrop-filter:blur(2px);
+        animation:thmFade .28s cubic-bezier(.22,1,.36,1); }
+    .thread-modal-card { position:relative; display:flex; flex-direction:column; width:100%; max-width:42rem;
+        max-height:92dvh; background:var(--color-surface, #fff); border-radius:1.1rem 1.1rem 0 0;
+        box-shadow:0 -8px 40px rgb(0 0 0 / .22); animation:thmUp .28s cubic-bezier(.22,1,.36,1); }
+    @keyframes thmFade { from { opacity:0; } }
+    @keyframes thmUp { from { opacity:0; transform:translateY(14px); } }
+    .thread-modal.is-closing .thread-modal-card { animation:thmDown .2s cubic-bezier(.22,1,.36,1) forwards; }
+    .thread-modal.is-closing .thread-modal-back { animation:thmFadeOut .2s cubic-bezier(.22,1,.36,1) forwards; }
+    @keyframes thmDown { to { opacity:0; transform:translateY(14px); } }
+    @keyframes thmFadeOut { to { opacity:0; } }
+    @media (prefers-reduced-motion:reduce) {
+        .thread-modal-card, .thread-modal-back, .thread-modal.is-closing .thread-modal-card,
+        .thread-modal.is-closing .thread-modal-back { animation:none; }
+    }
+    .thread-modal-head { display:flex; align-items:center; gap:.5rem; padding:.85rem 1rem .6rem;
+        border-bottom:1px solid var(--color-gray-100); }
+    .thread-modal-title { font-family:var(--font-heading); font-weight:800; font-size:.95rem;
+        color:var(--color-gray-900); flex:1 1 auto; }
+    .thread-modal-x { border:0; background:transparent; color:var(--color-gray-400); font-size:1rem;
+        cursor:pointer; padding:.2rem .3rem; }
+    /* The scrolling part, and the only one — the head stays put. */
+    .thread-modal-body { flex:1 1 auto; min-height:0; overflow-y:auto; padding:.85rem 1rem 1.1rem;
+        -webkit-overflow-scrolling:touch; }
+    /* Inside the modal the post is the page: no card chrome, nothing folded. */
+    .thread-modal-body .group-post { border:0; box-shadow:none; padding:0; margin:0; background:transparent; }
+    .thread-modal-body .post-replies.is-collapsed > .group-reply { display:block; }
+    .thread-modal-body .post-thread-more, .thread-modal-body .post-readmore { display:none; }
+    .thread-modal-body .group-post-body.is-clamped { -webkit-line-clamp:unset; display:block; overflow:visible; }
+    html.dark .thread-modal-card { background:var(--color-gray-900, #111827); }
+    html.dark .thread-modal-head { border-bottom-color:rgb(255 255 255 / .08); }
+    @media (min-width:640px) {
+        .thread-modal { align-items:center; padding:1.5rem; }
+        .thread-modal-card { border-radius:1.1rem; max-height:86dvh; }
+    }
     .post-thread .replies-label { margin-bottom:.45rem; }
     @media (max-width:479px) {
         .group-post .react-bar { gap:.3rem; }
@@ -402,6 +448,23 @@
         @endif
     </div>
 </div>
+    {{-- A long thread, read on its own.
+         A topic with twenty answers pushes every other topic off the page, so
+         the room keeps the last few inline and opens the rest here. The post
+         itself moves in and back out again — it is not re-rendered — so
+         reacting, replying and deleting behave exactly as they do in the
+         room, because they are literally the same nodes. --}}
+    <div class="thread-modal hidden" id="threadModal" role="dialog" aria-modal="true" aria-label="Thread">
+        <div class="thread-modal-back" data-thread-close></div>
+        <div class="thread-modal-card">
+            <div class="thread-modal-head">
+                <h3 class="thread-modal-title">Thread</h3>
+                <button type="button" class="thread-modal-x" data-thread-close aria-label="Close">✕</button>
+            </div>
+            <div class="thread-modal-body" id="threadModalBody"></div>
+        </div>
+    </div>
+
 @endsection
 
 @push('scripts')
@@ -987,23 +1050,96 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('chatSend')?.addEventListener('click', sendChat);
     input?.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); sendChat(); } });
 
-    // "View all replies" → reveal the collapsed (older) replies inline with a
-    // small staggered animation (accordion, no modal).
+    /* ---- A long thread reads in its own modal ------------------------
+     *
+     * Twenty answers inline push every other topic off the page. The room
+     * keeps the last few and opens the rest here.
+     *
+     * The post is MOVED into the modal, not copied: reacting, replying,
+     * deleting and the reply composer are all delegated off document and
+     * all reach for .closest('.group-post'), so the same nodes in a new
+     * place keep working with nothing rewritten. A marker holds its place
+     * in the room, and closing puts it back exactly where it was. */
+    const threadModal = document.getElementById('threadModal');
+    const threadBody = document.getElementById('threadModalBody');
+    let threadSlot = null, threadPost = null;
+
+    function openThread(post) {
+        if (!post || !threadModal || threadPost) return;
+        threadSlot = document.createComment('thread-slot');
+        post.parentNode.insertBefore(threadSlot, post);
+        threadPost = post;
+        threadBody.appendChild(post);
+        const t = post.querySelector('h3');
+        document.querySelector('.thread-modal-title').textContent =
+            (t && t.textContent.trim()) ? t.textContent.trim().slice(0, 80) : 'Thread';
+        threadModal.classList.remove('hidden');
+        // The page behind must not scroll under a full-height sheet.
+        document.documentElement.style.overflow = 'hidden';
+        threadBody.scrollTop = 0;
+    }
+
+    function closeThread() {
+        if (!threadModal || !threadPost) return;
+        const post = threadPost, slot = threadSlot;
+        threadPost = null; threadSlot = null;
+        threadModal.classList.add('is-closing');
+        const done = () => {
+            threadModal.classList.remove('is-closing');
+            threadModal.classList.add('hidden');
+            document.documentElement.style.overflow = '';
+            if (slot && slot.parentNode) { slot.parentNode.insertBefore(post, slot); slot.remove(); }
+            else document.getElementById('postsWrap')?.appendChild(post);
+        };
+        // Wait out the close animation, but never hang on a browser that
+        // skipped it (reduced motion, a hidden tab).
+        let finished = false;
+        const once = () => { if (finished) return; finished = true; done(); };
+        threadModal.querySelector('.thread-modal-card')
+            ?.addEventListener('animationend', once, { once: true });
+        setTimeout(once, 260);
+    }
+
     document.addEventListener('click', (e) => {
-        const btn = e.target.closest('.js-view-all-replies');
+        if (e.target.closest('[data-thread-close]')) { closeThread(); return; }
+        const btn = e.target.closest('.js-view-all-replies, .post-readmore');
         if (!btn) return;
-        const post = btn.closest('.group-post');
-        const replies = post && post.querySelector('.post-replies');
-        if (!replies) return;
-        const hidden = Array.from(replies.querySelectorAll(':scope > .group-reply')).slice(0, -3);
-        replies.classList.remove('is-collapsed');
-        hidden.forEach((el, i) => {
-            el.classList.add('comment-reveal');
-            el.style.animationDelay = Math.min(i * 45, 400) + 'ms';
-            el.addEventListener('animationend', () => { el.classList.remove('comment-reveal'); el.style.animationDelay = ''; }, { once: true });
-        });
-        btn.remove();
+        openThread(btn.closest('.group-post'));
     });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && threadPost) closeThread(); });
+
+    /* Fold any post whose body runs long, and give it a way in.
+     *
+     * Measured rather than counted: markup makes a character count a poor
+     * guess at height, and this is about how much room it takes on screen. */
+    function foldLongPosts(scope) {
+        (scope || document).querySelectorAll('.group-post-body:not([data-folded])').forEach((b) => {
+            b.setAttribute('data-folded', '1');
+            if (b.closest('.thread-modal-body')) return;
+            // ~6 lines at .875rem/1.5 is about 126px; past that it is folded.
+            if (b.scrollHeight <= 150) return;
+            b.classList.add('is-clamped');
+            const more = document.createElement('button');
+            more.type = 'button';
+            more.className = 'post-readmore';
+            more.textContent = 'Read more';
+            b.after(more);
+        });
+    }
+    foldLongPosts(document);
+    /* Posts arrive later too — "load more", and a topic just written.
+     *
+     * Watched rather than announced: every path that adds a post already
+     * writes into this one container, and an observer cannot be forgotten
+     * by the next path somebody adds. */
+    const postsHost = document.getElementById('postsWrap');
+    if (postsHost && 'MutationObserver' in window) {
+        new MutationObserver((records) => {
+            records.forEach((r) => r.addedNodes.forEach((n) => {
+                if (n.nodeType === 1) foldLongPosts(n);
+            }));
+        }).observe(postsHost, { childList: true, subtree: true });
+    }
 
     // ---- Members panel: online/offline presence + PM a member ----
     const membersToggle = document.getElementById('chatMembersToggle');
