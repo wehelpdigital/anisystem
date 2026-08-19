@@ -71,26 +71,10 @@
             @include('community.partials.video-embed', ['src' => $post->videoPath, 'poster' => $post->videoPoster ?? null])
         @endif
 
-        {{-- A share carries the original rather than copying it, so what is
-             quoted here is always what its author currently says. --}}
+        {{-- A share carries the original rather than copying it. Drawn by
+             the shared partial, so the profile wall shows the same thing. --}}
         @if ($shared)
-            <a class="fp-shared" href="{{ route('community.index') }}#wallpost-{{ $shared->id }}">
-                <span class="fp-shared-head">
-                    @if ($shared->author?->avatarPath)
-                        <img src="{{ \App\Support\MediaStore::url($shared->author->avatarPath) }}" alt="">
-                    @else
-                        <i>{{ $shared->author?->initials ?: '?' }}</i>
-                    @endif
-                    <b>{{ $shared->author?->full_name ?: 'A farmer' }}</b>
-                    <em>{{ $shared->created_at?->diffForHumans() }}</em>
-                </span>
-                @if (trim((string) $shared->body) !== '')
-                    <span class="fp-shared-body">{{ \Illuminate\Support\Str::limit(strip_tags($shared->body), 220) }}</span>
-                @endif
-                @if ($shared->imagePath)
-                    <img class="fp-shared-img" src="{{ \App\Support\MediaStore::url($shared->imagePath) }}" alt="" loading="lazy">
-                @endif
-            </a>
+            @include('community.partials.shared-post', ['shared' => $shared])
         @endif
     @endif
 

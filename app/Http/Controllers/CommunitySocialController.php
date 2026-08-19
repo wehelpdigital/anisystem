@@ -163,7 +163,16 @@ class CommunitySocialController extends Controller
             );
         }
 
-        return $this->json(true, 'Shared to your wall.', ['postId' => (int) $post->id]);
+        /* The card itself, so the wall shows the share the moment it is made.
+         *
+         * Rendered the way the composer's own new post is — one card partial,
+         * one appearance — and with sharedPost loaded, because the whole point
+         * of a share is the post quoted inside it. */
+        $html = $request->input('render') === 'wall'
+            ? view('community.connect.partials.wall-posts', ['posts' => collect([$post->load('author', 'sharedPost')])])->render()
+            : view('community.partials.feed-post', ['post' => $post->load('author', 'sharedPost'), 'friendIds' => []])->render();
+
+        return $this->json(true, 'Shared to your wall.', ['postId' => (int) $post->id, 'html' => $html]);
     }
 
     /** Pass a post to one co-farmer as a message. */

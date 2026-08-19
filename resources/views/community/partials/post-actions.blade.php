@@ -450,9 +450,32 @@
         const was = btn.textContent;
         btn.disabled = true; btn.textContent = 'Sharing…';
         try {
-            const res = await post(URLS.shareWall(sPost), { body: $('shareWallBody').value.trim() });
+            /* Which card to ask for: the community feed draws one shape, a
+               member's own wall another. Whichever wrapper is on the page is
+               the one the share is about to join. */
+            const feedWrap = document.getElementById('feedWrap');
+            const wallWrap = document.getElementById('wallPosts') || document.getElementById('profileWall');
+            const res = await post(URLS.shareWall(sPost), {
+                body: $('shareWallBody').value.trim(),
+                render: feedWrap ? 'feed' : 'wall',
+            });
             window.closeSheet?.('shareWallSheet');
             window.toast?.(res.message);
+            /* Put it up straight away. A share that only appears after a
+               reload reads as one that did not happen — and what a person
+               wants to see is their words with the original quoted under
+               them, which is the whole reason they shared it. */
+            const wrap = feedWrap || wallWrap;
+            if (wrap && res.data?.html) {
+                wrap.querySelector('.card.p-8.text-center')?.remove();
+                wrap.insertAdjacentHTML('afterbegin', res.data.html);
+                const added = wrap.firstElementChild;
+                if (added) {
+                    added.classList.add('plaza-comment-enter');
+                    added.addEventListener('animationend', () => added.classList.remove('plaza-comment-enter'), { once: true });
+                    added.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            }
         } catch (err) { window.toast?.(err.message, 'error'); }
         finally { btn.disabled = false; btn.textContent = was; }
     });

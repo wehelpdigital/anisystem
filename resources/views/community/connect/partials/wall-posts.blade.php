@@ -46,6 +46,14 @@
             @endif
         @endif
 
+        {{-- What this post shares, if it shares something. Without it a
+             shared post on a profile was a remark about something the
+             reader could not see. --}}
+        @php $sharedHere = $post->sharedPostId ? $post->sharedPost : null; @endphp
+        @if ($sharedHere)
+            @include('community.partials.shared-post', ['shared' => $sharedHere])
+        @endif
+
         @include('community.partials.react-bar', ['type' => 'wallpost', 'id' => $post->id, 'summary' => $post->reactionSummary ?? null])
 
         @php
