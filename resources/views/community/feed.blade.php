@@ -19,10 +19,22 @@
     /* Who is writing, across the top — so the field below has the card's
        whole width rather than sharing it with a face. */
     .comp-top { display: flex; align-items: center; gap: .6rem; margin-bottom: .6rem; }
-    .comp-who { display: flex; flex-direction: column; min-width: 0; }
+    .comp-face { flex: none; }
+    .comp-who { display: flex; flex-direction: column; align-items: flex-start; gap: .25rem; min-width: 0; }
     .comp-who b { font-size: .85rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.2;
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .comp-who i { font-style: normal; font-size: .7rem; color: var(--color-gray-400); }
+    /* In the flow, not above the card: nothing to overlap, no headroom to
+       buy, and it still repaints as the shared cloud when a new one is set. */
+    .comp-mind { position: static; display: inline-flex; align-items: center; max-width: 100%;
+        border: 1px solid var(--color-gray-200); border-radius: 999px; padding: .3rem .7rem;
+        background: var(--color-white); cursor: pointer;
+        box-shadow: 0 6px 16px -8px rgb(0 0 0 / .4), 0 1px 3px -1px rgb(0 0 0 / .2);
+        transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .comp-mind::after { display: none; }
+    .comp-mind .status-cloud-text { font-size: .74rem; font-weight: 700; }
+    .comp-mind:hover { transform: translateY(-1px);
+        box-shadow: 0 10px 22px -10px rgb(0 0 0 / .5), 0 2px 5px -2px rgb(0 0 0 / .28); }
+    @media (prefers-reduced-motion: reduce) { .comp-mind { transition: none; } .comp-mind:hover { transform: none; } }
     /* The attached photo, shown as itself. */
     .comp-shot { display: flex; align-items: center; gap: .6rem; margin-top: .6rem; padding: .45rem .5rem;
         border-radius: .7rem; background: var(--color-gray-100); }
@@ -40,7 +52,12 @@
        No rule above it — a divider between the field and the things that
        fill it separates what belongs together, and cost a rem and a half of
        air to do it. */
-    .comp-add { margin-top: .45rem; display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+    .comp-add { margin-top: .55rem; display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+    /* A box of its own, so the row is a thing to reach into rather than four
+       icons adrift under the field. */
+    .comp-add-box { padding: .35rem .5rem .35rem .7rem; border-radius: .8rem;
+        border: 1px solid var(--color-gray-200); background: var(--color-gray-50); }
+    html.dark .comp-add-box { border-color: rgb(255 255 255 / .08); background: rgb(255 255 255 / .03); }
     .comp-add-lbl { font-size: .72rem; font-weight: 800; color: var(--color-gray-500); }
     .comp-add-row { display: flex; align-items: center; gap: .35rem; flex-wrap: wrap; margin-left: auto; }
     html.dark .comp-who b { color: #e8efe1; }
@@ -56,11 +73,8 @@
     .comp-hint b { color: var(--color-gray-500); font-weight: 800; }
     /* A thought bubble floats above the avatar and out of the card, so a card
        that has one needs the room; one that does not would just look adrift. */
-    /* The cloud floats above the face, and the face now sits at the top of
-       the card — so the room it needs is INSIDE the card, not only above
-       it. The margin keeps it off the card before; the padding keeps it off
-       this card's own edge. */
-    #feedComposer.has-bubble { margin-top: 1.6rem; padding-top: 2.15rem; }
+    /* The cloud is in the flow now (see .comp-mind), so the composer needs
+       no headroom bought for something floating out of it. */
 
     /* People you may know — a rail that scrolls sideways on a phone. */
     /* A band across the wall, not a card on it.
@@ -210,15 +224,12 @@
 {{-- Share to your own wall, straight from the feed — the same shape the
      homepage composer has: your face, what's on your mind floating above it,
      and a field with room to write in. --}}
-<div class="card comp-card mb-4 plaza-accent{{ filled(auth()->user()?->statusBubble) ? ' has-bubble' : '' }}" id="feedComposer" data-video-host>
-    {{-- Who is writing, and what is on their mind: one row across the top,
-         so the field below gets the card's whole width instead of sharing it
-         with a face. --}}
+<div class="card comp-card mb-4 plaza-accent" id="feedComposer" data-video-host>
+    {{-- Who is writing, and what is on their mind. The cloud sits IN the
+         column above the name rather than floating over the face: floating,
+         it had to hang above the top of the card and crossed its border. --}}
     <div class="comp-top">
-        <button type="button" id="feedMe" class="comp-me status-cloud-wrap shrink-0" title="Set what's on your mind" data-status-bubble>
-            <span class="status-cloud{{ filled(auth()->user()?->statusBubble) ? '' : ' is-empty' }}">
-                <span class="status-cloud-text" data-status-text data-empty-label="💭 What's on your mind?">{{ auth()->user()?->statusBubble ?: "💭 What's on your mind?" }}</span>
-            </span>
+        <span class="comp-face">
             <span class="avatar avatar-md {{ \App\Support\CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} overflow-hidden">
                 @if (auth()->user()?->avatarPath)
                     <img src="{{ \App\Support\MediaStore::url(auth()->user()->avatarPath) }}" alt="" class="w-full h-full object-cover">
@@ -226,10 +237,15 @@
                     {{ auth()->user()->initials ?? '?' }}
                 @endif
             </span>
-        </button>
+        </span>
         <span class="comp-who">
+            {{-- Still the shared .status-cloud, so saving a new one repaints
+                 this the same as every other copy on the page. --}}
+            <button type="button" id="feedMe" class="status-cloud comp-mind{{ filled(auth()->user()?->statusBubble) ? '' : ' is-empty' }}"
+                    data-status-bubble title="Set what's on your mind">
+                <span class="status-cloud-text" data-status-text data-empty-label="💭 What's on your mind?">{{ auth()->user()?->statusBubble ?: "💭 What's on your mind?" }}</span>
+            </button>
             <b>{{ auth()->user()->full_name }}</b>
-            <i>Posting to the community wall</i>
         </span>
     </div>
 
@@ -252,7 +268,7 @@
     {{-- The ways to add to it, said out loud. Four unlabelled icons in a row
          are four guesses; the line above them costs nothing and answers all
          four. --}}
-    <div class="comp-add">
+    <div class="comp-add comp-add-box">
         <span class="comp-add-lbl">Add to your post</span>
         <div class="comp-add-row">
             <label class="wall-act cursor-pointer" title="Add a photo" aria-label="Add a photo">
