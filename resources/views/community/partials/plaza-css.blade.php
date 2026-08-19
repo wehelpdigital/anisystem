@@ -462,6 +462,24 @@
 
     /* --- Read-only "cloud" status floating over a member's avatar, shown
        wherever members appear (wall, members, co-farmers, discussions). --- */
+    /* ---- The post's coloured edge ----
+       A line across the top of every post, a different colour per post, so a
+       column of them has a rhythm and the eye can see where one ends and the
+       next begins while scrolling. The green stays first among them: this is
+       still the app's wall, not a paint chart. */
+    /* No overflow:hidden here — the status cloud floats above the card and
+       clipping the card clipped the cloud in half. The strip takes the card's
+       own top corners instead, which is all the clipping it needed. */
+    .fp-card { position: relative; }
+    .fp-card::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px; pointer-events: none;
+        border-top-left-radius: inherit; border-top-right-radius: inherit;
+        background: linear-gradient(90deg, #4a7c2a, #8fc267 55%, transparent); }
+    .fp-hue-1::before { background: linear-gradient(90deg, #1d4ed8, #7aa5f5 55%, transparent); }
+    .fp-hue-2::before { background: linear-gradient(90deg, #b45309, #ecc06a 55%, transparent); }
+    .fp-hue-3::before { background: linear-gradient(90deg, #0f766e, #6cc9bf 55%, transparent); }
+    .fp-hue-4::before { background: linear-gradient(90deg, #7c3aed, #b393f5 55%, transparent); }
+    .fp-hue-5::before { background: linear-gradient(90deg, #be185d, #f090b8 55%, transparent); }
+
     /* The strip's own edge: the house green, drifting.
 
        Two backgrounds in one box — the card's own surface clipped to the

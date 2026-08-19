@@ -16,7 +16,16 @@
     $shared = $post->relationLoaded('sharedPost') ? $post->sharedPost : ($post->sharedPostId ? $post->sharedPost : null);
     $commentCount = $post->comments_count ?? ($post->comment_count ?? 0);
 @endphp
-<article class="card p-4 mb-5 feed-post wall-post fp-card" id="wallpost-{{ $post->id }}" data-post-id="{{ $post->id }}">
+@php
+    /* The post's own colour, chosen by its id.
+     *
+     * Six of them, taken in turn — the same post keeps the same edge on every
+     * render and on every screen, and a column of posts gets a rhythm instead
+     * of a single repeated green. Deterministic, so nothing shifts under a
+     * reader when the wall pages in more. */
+    $fpHue = $post->id % 6;
+@endphp
+<article class="card p-4 mb-5 feed-post wall-post fp-card fp-hue-{{ $fpHue }}" id="wallpost-{{ $post->id }}" data-post-id="{{ $post->id }}">
     <header class="flex items-start gap-3">
         @include('community.partials.avatar-status', ['user' => $author, 'size' => 'avatar-md'])
         <div class="min-w-0 grow">
@@ -25,9 +34,9 @@
                 @if ($isFriend)<span class="badge badge-green align-middle">Co-farmer</span>@endif
                 @include('community.partials.dm-btn', ['user' => $author])
             </p>
-            <p class="text-xs text-gray-400">
-                @if ($place)📍 {{ $place }} · @endif{{ $post->created_at?->diffForHumans() }}
-            </p>
+            @if ($place)
+                <p class="text-xs text-gray-400">📍 {{ $place }}</p>
+            @endif
         </div>
         {{-- Following is one-sided, so it belongs on the post as well as the
              profile: this is where you decide you want more of somebody. --}}
@@ -95,8 +104,14 @@
             <span class="fp-lbl"><span class="on">Saved</span><span class="off">Save</span></span>
         </button>
         <button type="button" class="fp-act js-share" data-post-id="{{ $post->id }}" aria-label="Share this post">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7M16 6l-4-4-4 4M12 2v14"/></svg>
+            {{-- The bent arrow everybody already reads as "share", rather than
+                 the upload tray this carried, which reads as "send a file". --}}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M21 11L13 4v4C7.5 8.5 4.5 12.5 3.5 19c2.2-3.2 5.2-4.7 9.5-4.7V18l8-7z"/></svg>
             <span class="fp-lbl">Share</span>
         </button>
+        {{-- When it was written, at the end of the row: a fact about the post
+             rather than a third thing crowding the name. --}}
+        <time class="fp-when" datetime="{{ $post->created_at?->toIso8601String() }}"
+              title="{{ $post->created_at?->timezone('Asia/Manila')->format('M j, Y g:i A') }}">{{ $post->created_at?->diffForHumans() }}</time>
     </div>
 </article>

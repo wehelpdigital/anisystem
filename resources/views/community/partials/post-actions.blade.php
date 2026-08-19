@@ -164,6 +164,9 @@
     }
 
     /* --- the action row under every post --- */
+    /* The time closes the row, pushed to the far edge. */
+    .fp-when { margin-left:auto; flex:none; font-size:.7rem; font-weight:600; color:var(--color-gray-400);
+        white-space:nowrap; padding-left:.4rem; }
     .fp-acts { display:flex; align-items:center; gap:.35rem; margin-top:.6rem;
         padding-top:.55rem; border-top:1px solid var(--color-gray-100); }
     .fp-act { display:inline-flex; align-items:center; gap:.35rem; padding:.4rem .6rem;
