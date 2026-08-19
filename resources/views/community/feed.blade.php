@@ -9,7 +9,13 @@
 @push('styles')
 <style>
     /* The composer, in the homepage's proportions rather than its own. */
-    .comp-card { padding: .85rem; }
+    /* The composer runs to both edges, like the posts under it and the
+       suggestions below them: the wall is a column of bands, and a rounded
+       box floating on that column was the odd one out. */
+    .comp-card { margin-left: calc(var(--plaza-gutter, 1rem) * -1);
+        margin-right: calc(var(--plaza-gutter, 1rem) * -1);
+        padding: .85rem var(--plaza-gutter, 1rem);
+        border-radius: 0; border-left: 0; border-right: 0; }
     /* Who is writing, across the top — so the field below has the card's
        whole width rather than sharing it with a face. */
     .comp-top { display: flex; align-items: center; gap: .6rem; margin-bottom: .6rem; }
@@ -30,14 +36,22 @@
         background: transparent; color: var(--color-gray-400); font-size: .8rem; }
     .comp-shot-x:hover { color: #b91c1c; background: var(--color-gray-200); }
     /* The ways to add to a post, named: four unlabelled icons are four
-       guesses, and the line beside them answers all of them at once. */
-    .comp-add { margin-top: .7rem; padding-top: .6rem; border-top: 1px solid var(--color-gray-100);
-        display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+       guesses, and the line beside them answers all of them at once.
+       No rule above it — a divider between the field and the things that
+       fill it separates what belongs together, and cost a rem and a half of
+       air to do it. */
+    .comp-add { margin-top: .45rem; display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
     .comp-add-lbl { font-size: .72rem; font-weight: 800; color: var(--color-gray-500); }
     .comp-add-row { display: flex; align-items: center; gap: .35rem; flex-wrap: wrap; margin-left: auto; }
     html.dark .comp-who b { color: #e8efe1; }
     html.dark .comp-shot { background: rgb(255 255 255 / .05); }
-    html.dark .comp-add { border-top-color: rgb(255 255 255 / .08); }
+    /* The icons carry their own weight now the rule is gone. */
+    .comp-add-row .wall-act { width: 2.15rem; height: 2.15rem; border-radius: .6rem;
+        display: inline-flex; align-items: center; justify-content: center;
+        transition: background .28s cubic-bezier(.22,1,.36,1); }
+    .comp-add-row .wall-act:hover { background: var(--color-gray-100); }
+    html.dark .comp-add-row .wall-act:hover { background: rgb(255 255 255 / .06); }
+    @media (prefers-reduced-motion: reduce) { .comp-add-row .wall-act { transition: none; } }
     .comp-hint { font-size: .72rem; color: var(--color-gray-400); margin-top: .35rem; }
     .comp-hint b { color: var(--color-gray-500); font-weight: 800; }
     /* A thought bubble floats above the avatar and out of the card, so a card
@@ -46,7 +60,7 @@
        the card — so the room it needs is INSIDE the card, not only above
        it. The margin keeps it off the card before; the padding keeps it off
        this card's own edge. */
-    #feedComposer.has-bubble { margin-top: 1.5rem; padding-top: 1.9rem; }
+    #feedComposer.has-bubble { margin-top: 1.6rem; padding-top: 2.15rem; }
 
     /* People you may know — a rail that scrolls sideways on a phone. */
     /* A band across the wall, not a card on it.
