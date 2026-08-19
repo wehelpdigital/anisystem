@@ -20,6 +20,9 @@ use Illuminate\Support\Str;
  */
 class AiController extends Controller
 {
+    /** How many activities an attached plan may carry into one question. */
+    private const PLAN_MAX_ROWS = 80;
+
     /** How many previous turns to send back as context. */
     private const HISTORY_TURNS = 10;
 
@@ -128,7 +131,13 @@ class AiController extends Controller
 
         // Refuse before spending anything the client does not have.
         $balance = $this->credits->balance($userId);
-        $estimate = $this->credits->estimate($settings, $prompt, count($images));
+        // Priced with the plan in it when one is attached — the composer
+        // quotes that number, and a wall that disagreed with the quote would
+        // refuse a question the farmer was told they could afford.
+        $priced = $request->boolean('attachPlan')
+            ? $prompt . $this->planContext($request->input('scheduleId'), $userId)
+            : $prompt;
+        $estimate = $this->credits->estimate($settings, $priced, count($images));
         if ($balance < $estimate && ! $this->credits->unlimited((int) \Illuminate\Support\Facades\Auth::id())) {
             return $this->json(false, $balance <= 0
                 ? 'You have no AI Credits left. Top up to keep asking questions.'
@@ -138,9 +147,13 @@ class AiController extends Controller
 
         $conversation = $this->resolveConversation($request, $userId, true);
 
-        // Attach the plan the question is about, when one is selected — plus the
-        // day/activity this thread is pinned to, when the farmer set one.
-        $context = $this->scheduleContext($request->input('scheduleId'), $userId);
+        /* The plan, when the farmer attached it to THIS question; otherwise
+         * the light background a bound conversation carries. The two are not
+         * the same thing: one was asked for and is paid for, the other is a
+         * label on a chat that already belongs to a season. */
+        $context = $request->boolean('attachPlan')
+            ? $this->planContext($request->input('scheduleId'), $userId)
+            : $this->scheduleContext($request->input('scheduleId'), $userId);
         $context = $this->applyLinkContext($context, $conversation);
 
         $userMessage = AiMessage::create([
@@ -711,6 +724,103 @@ class AiController extends Controller
                 ->orderByDesc('updated_at')
                 ->limit(30)
                 ->get(),
+        ]);
+    }
+
+    /**
+     * The plan itself, attached on purpose.
+     *
+     * scheduleContext() below is a label — crop, variety, lots — and it is
+     * what a chat bound to a season carries in the background. This is what
+     * the farmer means by "read my plan first": the work itself, in order,
+     * with what is done and what is still ahead. It is only ever built when
+     * somebody attached it, because it is long enough to be worth credits.
+     *
+     * Capped hard. A season with three hundred activities is not a preamble,
+     * and the tail of it is the part least likely to bear on the question.
+     */
+    private function planContext($scheduleId, int $userId): string
+    {
+        $schedule = $this->planFor($scheduleId, $userId);
+        if (! $schedule) {
+            return '';
+        }
+
+        $schedule->load('lots');
+        $lots = $schedule->lots
+            ->map(fn ($l) => trim($l->lotName . ' (' . rtrim(rtrim((string) $l->lotSize, '0'), '.') . ' ' . $l->lotSizeUnit . ')'))
+            ->implode(', ');
+
+        $head = array_filter([
+            'Crop: ' . ($schedule->cropType ?: 'not set'),
+            $schedule->cropVariety ? 'Variety: ' . $schedule->cropVariety : null,
+            $schedule->dayType ? 'Day counting: ' . $schedule->dayType : null,
+            $lots ? 'Lots: ' . $lots : null,
+        ]);
+
+        $rows = [];
+        foreach ($this->planActivities($schedule) as $a) {
+            $when = $a->targetDate ? \Carbon\Carbon::parse($a->targetDate)->format('M j, Y') : 'no date';
+            $done = (int) ($a->isDone ?? 0) === 1 ? 'done' : 'planned';
+            $rows[] = '- ' . $when . ': ' . trim((string) $a->activityTitle) . ' (' . $done . ')';
+            if (count($rows) >= self::PLAN_MAX_ROWS) {
+                $rows[] = '- (…older entries left out)';
+                break;
+            }
+        }
+
+        return "The farmer has attached their cropping plan \"{$schedule->title}\" as background for THIS question.\n"
+            . implode('. ', $head) . ".\n"
+            . ($rows ? "Work so far, newest first:\n" . implode("\n", $rows) . "\n" : "No activities are on this plan yet.\n")
+            . "Read it before answering, and use it where it bears on the question. It is the farmer's own record, "
+            . "not a rule: where it disagrees with good practice, say so plainly.\n\nQuestion: ";
+    }
+
+    /** The plan a caller may attach, or null. */
+    private function planFor($scheduleId, int $userId): ?AsCroppingSchedule
+    {
+        $scheduleId = (int) $scheduleId;
+
+        return $scheduleId
+            ? AsCroppingSchedule::active()->forClient($userId)->where('id', $scheduleId)->first()
+            : null;
+    }
+
+    /** The plan's activities, newest first — what a question is most likely about. */
+    private function planActivities(AsCroppingSchedule $schedule)
+    {
+        return \App\Models\AsScheduleActivity::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->orderByDesc('targetDate')
+            ->orderByDesc('id')
+            ->limit(self::PLAN_MAX_ROWS + 1)
+            ->get();
+    }
+
+    /**
+     * What attaching this plan would cost, before it is attached.
+     *
+     * The composer prices a question as it is typed; a plan is by far the
+     * biggest thing that can join one, so it cannot be guessed at from the
+     * page. Asked here, from the same builder the question will use.
+     */
+    public function planPreview(Request $request)
+    {
+        $userId = (int) Auth::id();
+        $schedule = $this->planFor($request->query('scheduleId'), $userId);
+        if (! $schedule) {
+            return $this->json(false, 'That plan could not be found.', [], 404);
+        }
+
+        $text = $this->planContext($schedule->id, $userId);
+        // The same rule the credit service uses: about four characters a token.
+        $tokens = (int) ceil(mb_strlen($text) / 4);
+
+        return $this->json(true, 'Plan measured.', [
+            'id' => (int) $schedule->id,
+            'title' => (string) $schedule->title,
+            'activities' => $this->planActivities($schedule)->count(),
+            'tokens' => $tokens,
         ]);
     }
 

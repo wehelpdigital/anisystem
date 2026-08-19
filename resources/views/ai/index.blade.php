@@ -196,7 +196,27 @@
         #aiSendBtn:active:not(:disabled) { transform: scale(.95); }
         #aiSendBtn:disabled { opacity: .55; }
         .ai-hint { text-align: center; font-size: .72rem; font-weight: 600; color: var(--color-gray-500); margin-top: .4rem; }
-        #aiSchedule { max-width: 11rem; }
+        /* The attached plan, above the box. Reads as a thing carried with
+           the question, like a photo chip, because that is what it is. */
+        .ai-planchip { display: flex; align-items: center; gap: .5rem; margin: 0 0 .4rem; padding: .4rem .55rem;
+            border-radius: .7rem; background: var(--color-brand-50); border: 1px solid var(--color-brand-100);
+            animation: aiPlanIn .28s cubic-bezier(.22,1,.36,1); }
+        .ai-planchip[hidden] { display: none; }
+        @keyframes aiPlanIn { from { opacity: 0; transform: translateY(.25rem); } }
+        @media (prefers-reduced-motion: reduce) { .ai-planchip { animation: none; } }
+        .ai-planchip-ic { flex: none; width: 1.8rem; height: 1.8rem; border-radius: .5rem; display: flex;
+            align-items: center; justify-content: center; background: var(--color-white);
+            color: var(--color-brand-700); }
+        .ai-planchip-ic svg { width: 1rem; height: 1rem; }
+        .ai-planchip-txt { display: flex; flex-direction: column; min-width: 0; flex: 1 1 auto; }
+        .ai-planchip-txt b { font-size: .76rem; font-weight: 800; color: var(--color-gray-900);
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .ai-planchip-txt i { font-style: normal; font-size: .66rem; color: var(--color-gray-500); }
+        .ai-planchip-x { flex: none; border: 0; background: transparent; color: var(--color-gray-400);
+            font-size: .8rem; cursor: pointer; padding: .15rem .25rem; }
+        .ai-planchip-x:hover { color: #b91c1c; }
+        /* The plan button wears the camera's shape; when a plan is on, it is lit. */
+        #aiPlanBtn.is-on { color: var(--color-brand-700); background: var(--color-brand-50); }
 
         /* --- Attached photo chips: one thumbnail per photo, each with its
                own remove. A chip mid-upload wears a spinner instead of ✕. --- */
@@ -392,11 +412,28 @@
     <div class="aichat-composer">
         {{-- One chip per attached photo, each with its own remove. --}}
         <div id="aiPhotoChips" aria-label="Attached photos" aria-live="polite"></div>
+        {{-- The attached plan, and what it is adding. --}}
+        <div id="aiPlanChip" class="ai-planchip" hidden>
+            <span class="ai-planchip-ic">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </span>
+            <span class="ai-planchip-txt"><b id="aiPlanName">Plan</b><i id="aiPlanSub">attached</i></span>
+            <button type="button" id="aiPlanX" class="ai-planchip-x" aria-label="Remove the plan">✕</button>
+        </div>
         <div id="aiAttachBusy" class="ai-busyline hidden" role="status"><span class="sp" aria-hidden="true"></span><span class="tx">Attaching photo…</span></div>
         <div class="aichat-box">
             <button type="button" class="ai-cam shrink-0" id="aiAttachBtn" title="Add photos" aria-label="Add photos" aria-haspopup="dialog">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
             </button>
+            {{-- Beside the camera, because it is the same kind of act: this
+                 question carries something extra. Not a dropdown — a chat is
+                 not "about" a season, a question either brings the plan or
+                 does not. --}}
+            @if ($schedules->isNotEmpty())
+                <button type="button" class="ai-cam shrink-0" id="aiPlanBtn" title="Attach my plan" aria-label="Attach my plan">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                </button>
+            @endif
             <input type="file" id="aiPhotoFiles" accept="image/*" multiple class="hidden">
             <input type="file" id="aiPhotoCam" accept="image/*" capture="environment" class="hidden">
             <textarea id="aiInput" class="form-textarea border-0! shadow-none! focus:ring-0! p-2 grow bg-transparent!" rows="1"
@@ -408,14 +445,6 @@
             </button>
         </div>
         <div class="flex items-center justify-center gap-2 mt-1.5">
-            @if ($schedules->isNotEmpty())
-                <select id="aiSchedule" class="form-select text-xs py-1 pl-2 pr-7 w-auto" title="Which plan is this about?">
-                    <option value="">No plan</option>
-                    @foreach ($schedules as $s)
-                        <option value="{{ $s->id }}" @selected($conversation && $conversation->croppingScheduleId == $s->id)>{{ \Illuminate\Support\Str::limit($s->title, 26) }}</option>
-                    @endforeach
-                </select>
-            @endif
                 <p class="ai-hint mt-0!" id="aiHint" data-idle="≈ 4 credits per answer{{ $aiPerPhoto > 0 ? ' · +' . $aiPerPhotoTxt . ' per photo' : '' }}">≈ 4 credits per answer{{ $aiPerPhoto > 0 ? ' · +' . $aiPerPhotoTxt . ' per photo' : '' }}</p>
         </div>
     </div>
@@ -427,6 +456,16 @@
 {{-- The attach chooser: every way a photo can arrive, behind one button
      (the messenger's + chooser, spoken in the house sheet language). The
      gallery door only shows where the season picker travels with the page. --}}
+{{-- Which plan, when there is more than one. --}}
+<div class="sheet hidden" id="aiPlanSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Attach a plan</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-1" id="aiPlanList"></div>
+</div>
+
 <div class="sheet hidden" id="aiAttachSheet" style="--sheet-width:22rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -518,6 +557,7 @@ const __init = () => {
         attach: @json(route('ai.photo.existing')),
         newConvo: @json(route('ai.conversation.new')),
         delConvo: (id) => @json(route('ai.conversation.delete')) + '?id=' + id,
+        planPreview: @json(route('ai.plan.preview')),
     };
     const CAN_ASK = @json((bool) $settings->isUsable());
     const AVATAR = @json($settings->avatarPath ? \App\Support\MediaStore::url($settings->avatarPath) : null);
@@ -531,15 +571,25 @@ const __init = () => {
         $aiPriceCard = ['inK' => (float) $settings->creditsPerInputK, 'outK' => (float) $settings->creditsPerOutputK, 'img' => (float) $settings->creditsPerImage, 'halfOut' => (int) $settings->maxOutputTokens / 2];
     @endphp
     const PRICE = @json($aiPriceCard);
+    // The seasons this account may attach. The old dropdown carried them; the
+    // picker sheet does now, and the send path reads the attached one.
+    const PLANS = @json($schedules->map(fn ($s) => ['id' => (int) $s->id, 'title' => (string) $s->title])->values());
+    /* The plan riding on this question, if the farmer attached one.
+       tokens is measured by the server from the very text the question will
+       carry, so the quote below is the same arithmetic the charge uses. */
+    let attachedPlan = null;   // { id, title, activities, tokens }
+
     function sayEstimate() {
         const hint = byId('aiHint');
         if (!hint) return;
         const msg = (input?.value || '').trim();
         const shots = chips ? chips.children.length : 0;
-        if (!msg && !shots) { hint.textContent = hint.dataset.idle || ''; return; }
-        const tin = Math.ceil(msg.length / 4) + 900;
+        if (!msg && !shots && !attachedPlan) { hint.textContent = hint.dataset.idle || ''; return; }
+        const tin = Math.ceil(msg.length / 4) + 900 + (attachedPlan ? attachedPlan.tokens : 0);
         const cost = Math.max(.01, Math.round((tin / 1000 * PRICE.inK + PRICE.halfOut / 1000 * PRICE.outK + shots * PRICE.img) * 100) / 100);
-        hint.textContent = `≈ ${cost} credits for this question`;
+        hint.textContent = attachedPlan
+            ? `≈ ${cost} credits — your plan is attached`
+            : `≈ ${cost} credits for this question`;
     }
 
     const BOT_SVG = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>';
@@ -753,18 +803,93 @@ const __init = () => {
         sayEstimate();
     }
 
+    /* ---- Attaching the plan ----------------------------------------
+     * One button, one question: shall this question carry your plan? With
+     * several seasons it asks which; with one it asks whether. Either way the
+     * answer is measured before it is agreed to, because it costs credits and
+     * a farmer should never find that out afterwards. */
+    function drawPlanChip() {
+        const chip = byId('aiPlanChip');
+        if (!chip) return;
+        byId('aiPlanBtn')?.classList.toggle('is-on', !!attachedPlan);
+        if (!attachedPlan) { chip.hidden = true; sayEstimate(); return; }
+        byId('aiPlanName').textContent = attachedPlan.title;
+        byId('aiPlanSub').textContent = attachedPlan.activities
+            ? `${attachedPlan.activities} ${attachedPlan.activities === 1 ? 'activity' : 'activities'} — the AI reads this first`
+            : 'the AI reads this first';
+        chip.hidden = false;
+        sayEstimate();
+    }
+
+    async function attachPlan(id, title) {
+        const busy = byId('aiAttachBusy');
+        if (busy) { busy.querySelector('.tx').textContent = 'Measuring your plan…'; busy.classList.remove('hidden'); }
+        try {
+            const res = await api(URLS.planPreview + '?scheduleId=' + encodeURIComponent(id), { method: 'GET' });
+            const d = res.data || {};
+            attachedPlan = { id: d.id, title: d.title || title, activities: d.activities || 0, tokens: d.tokens || 0 };
+            drawPlanChip();
+        } catch (err) {
+            toast(err.message || 'That plan could not be attached.', 'error');
+        } finally {
+            if (busy) { busy.classList.add('hidden'); busy.querySelector('.tx').textContent = 'Attaching photo…'; }
+        }
+    }
+
+    byId('aiPlanBtn')?.addEventListener('click', async () => {
+        if (attachedPlan) {
+            const off = await (window.confirmAction
+                ? window.confirmAction({
+                    title: 'Take the plan off this question?',
+                    body: 'The answer will be about what you ask, without your season behind it.',
+                    confirmText: 'Take it off',
+                })
+                : Promise.resolve(true));
+            if (off) { attachedPlan = null; drawPlanChip(); }
+            return;
+        }
+        if (!PLANS.length) { toast('You have no cropping plan to attach yet.', 'error'); return; }
+        if (PLANS.length === 1) {
+            const ok = await (window.confirmAction
+                ? window.confirmAction({
+                    title: 'Attach "' + PLANS[0].title + '"?',
+                    body: 'The AI reads your plan — the work so far, day by day — before answering. It uses a few more credits, and the estimate below will say how many.',
+                    confirmText: 'Attach it',
+                })
+                : Promise.resolve(true));
+            if (ok) attachPlan(PLANS[0].id, PLANS[0].title);
+            return;
+        }
+        // Several: ask which, in the house sheet the attach chooser uses.
+        const list = byId('aiPlanList');
+        list.innerHTML = PLANS.map((p) => `
+            <button type="button" class="ai-attach-opt" data-plan="${p.id}">
+                <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span>
+                <span>${escapeHtml(p.title)}<span class="sub">The AI reads this plan first</span></span>
+            </button>`).join('');
+        openSheet('aiPlanSheet');
+    });
+    byId('aiPlanList')?.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-plan]');
+        if (!b) return;
+        window.closeSheet && window.closeSheet('aiPlanSheet');
+        const id = parseInt(b.getAttribute('data-plan'), 10);
+        attachPlan(id, (PLANS.find((p) => p.id === id) || {}).title || 'Plan');
+    });
+    byId('aiPlanX')?.addEventListener('click', () => { attachedPlan = null; drawPlanChip(); });
+
     /* ---- The attach chooser (house sheet). The picker now travels with
             this page, so the gallery door shows for anyone with a season to
             pick from. Which season: the chosen plan, or the only one there
             is; with several and none chosen, the door asks rather than
             guesses at whose photos to show. ---- */
     function galleryScheduleId() {
-        const chosen = parseInt(byId('aiSchedule')?.value || '', 10) || 0;
-        if (chosen) return chosen;
-        const opts = [...(byId('aiSchedule')?.options || [])].filter((o) => o.value);
-        return opts.length === 1 ? parseInt(opts[0].value, 10) || 0 : 0;
+        // The attached plan is the season whose gallery is meant; failing
+        // that, the only season there is.
+        if (attachedPlan) return attachedPlan.id;
+        return PLANS.length === 1 ? PLANS[0].id : 0;
     }
-    const hasSchedules = () => [...(byId('aiSchedule')?.options || [])].some((o) => o.value);
+    const hasSchedules = () => PLANS.length > 0;
     const canGallery = () => typeof window.smPickMedia === 'function' && hasSchedules();
     byId('aiAttachBtn')?.addEventListener('click', () => {
         byId('aiAttachGallery')?.classList.toggle('hidden', !canGallery());
@@ -783,8 +908,8 @@ const __init = () => {
         if (!canGallery()) return;
         const sid = galleryScheduleId();
         if (!sid) {
-            toast('Pick which plan this is about first — its gallery is what opens.', 'error');
-            window.smFocus?.(byId('aiSchedule'));
+            toast('Attach the plan first — its gallery is what opens.', 'error');
+            byId('aiPlanBtn')?.focus();
             return;
         }
         window.smPickMedia({
@@ -824,7 +949,10 @@ const __init = () => {
                     conversationId,
                     imagePaths: myPaths,
                     imageScheduleIds: myScheds,
-                    scheduleId: byId('aiSchedule')?.value || null,
+                    // Sent only when the farmer attached it; the flag is what
+                    // turns a label into the plan being read.
+                    scheduleId: attachedPlan ? attachedPlan.id : null,
+                    attachPlan: attachedPlan ? 1 : 0,
                 },
             });
             conversationId = res.data.conversationId;
@@ -873,7 +1001,7 @@ const __init = () => {
         // This page ties a chat to a plan through the composer's selector —
         // walk the hand there rather than grow a second control for it.
         toast('Pick the plan below — this chat ties itself to it.');
-        window.smFocus?.(byId('aiSchedule'));
+        byId('aiPlanBtn')?.focus();
     });
 
     const AI_INDEX = @json(route('ai.index'));
@@ -918,7 +1046,7 @@ const __init = () => {
         b.disabled = true;
         b.innerHTML = SPIN_SVG + '<span>Starting…</span>';
         try {
-            const res = await api(URLS.newConvo, { method: 'POST', body: { scheduleId: byId('aiSchedule')?.value || null } });
+            const res = await api(URLS.newConvo, { method: 'POST', body: { scheduleId: attachedPlan ? attachedPlan.id : null } });
             conversationId = res.data.conversationId;
             resetToWelcome();
             setCrumb('New question');
