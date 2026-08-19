@@ -493,6 +493,12 @@
         .date-body-inner { overflow: hidden; min-height: 0; }
         .date-group.is-folded .date-body { grid-template-rows: 0fr; }
         /* Restoring the remembered open days on load applies instantly. */
+        /* A day scrolled to must clear the sticky app bar and toolbar above
+           it, or block:'start' parks its header behind them and the jump
+           looks like it overshot by one day. Matches what the Gallery's
+           shelf bar sticks at inside this shell. */
+        #activitiesList .date-group { scroll-margin-top: 6.9rem; }
+        @media (min-width: 768px) { #activitiesList .date-group { scroll-margin-top: 7.7rem; } }
         #activitiesList.no-fold-anim .date-body,
         #activitiesList.no-fold-anim .date-chevron { transition: none; }
         @media (prefers-reduced-motion: reduce) { .date-body, .date-chevron { transition: none; } }
@@ -2530,7 +2536,17 @@
                             </button>
                             {{-- Secondary day actions: inline on desktop, overflow sheet on phones. --}}
                             <span class="hidden md:flex items-center gap-0.5">
-                                <button type="button" class="date-header-btn date-note-btn" data-date="{{ $dateKey }}" title="Add a note to this day">
+                                {{-- The same lock the JS-rendered copy of this
+                                     button carries. Without it the first render
+                                     handed a worker who may not write notes a
+                                     live button, and only a redraw took it away. --}}
+                                @php
+                                    $mayNoteHere = \App\Support\WorkerContext::canEdit()
+                                        || \App\Support\WorkerContext::canAddNotes();
+                                @endphp
+                                <button type="button" class="date-header-btn date-note-btn{{ $mayNoteHere ? '' : ' is-locked' }}" data-date="{{ $dateKey }}"
+                                        @disabled(! $mayNoteHere)
+                                        title="{{ $mayNoteHere ? 'Add a note to this day' : 'You are not allowed to write notes on this schedule' }}">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.5 20H7a2 2 0 01-2-2V5a2 2 0 012-2h6l4 4v3M9 8h3M9 12h3"/><path stroke-linecap="round" stroke-linejoin="round" d="M17 15v5m2.5-2.5h-5"/></svg>
                                 </button>
                                 <button type="button" class="date-header-btn day-expense-btn" data-date="{{ $dateKey }}" title="Add an extra expense for this day">

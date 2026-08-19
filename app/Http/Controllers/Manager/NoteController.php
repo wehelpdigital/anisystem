@@ -67,7 +67,13 @@ class NoteController extends BaseScheduleController
 
     public function store(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        /* The notebook asks the NOTES question, not the edit one.
+         *
+         * scheduleFromRequest() calls assertCanEdit() on every write, so the
+         * notebook was closed to the one tier it most obviously belongs to:
+         * a worker given "can add notes" but not the run of the plan. They
+         * were shown the buttons and refused by the endpoint. */
+        $schedule = $this->scheduleForNote($request);
         $data = $this->validated($request);
         if (! is_array($data)) {
             return $data;
@@ -84,7 +90,7 @@ class NoteController extends BaseScheduleController
 
     public function update(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForNote($request);
         $note = $this->find($schedule->id, $this->queryId($request));
         if (! $note) {
             return $this->jsonFail('Note not found.', 404);
@@ -102,7 +108,7 @@ class NoteController extends BaseScheduleController
 
     public function destroy(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForNote($request);
         $note = $this->find($schedule->id, $this->queryId($request));
         if (! $note) {
             return $this->jsonFail('Note not found.', 404);
@@ -115,7 +121,7 @@ class NoteController extends BaseScheduleController
 
     public function uploadImage(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForNote($request);
 
         $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:8192',
@@ -156,7 +162,7 @@ class NoteController extends BaseScheduleController
     /** Attach or record a video — compressed to ≤720p H.264 with a poster. */
     public function uploadVideo(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForNote($request);
 
         $validator = Validator::make($request->all(), [
             'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-msvideo|max:307200',

@@ -244,12 +244,18 @@
                     <input type="hidden" id="qcSchedule" value="{{ $fixedScheduleId }}">
                 @else
                     <div>
-                        <label class="form-label" for="qcSchedule">Connect to schedule</label>
-                        <select id="qcSchedule" class="form-select">
+                        <label class="form-label" for="qcSchedule">Connect to schedule <span aria-hidden="true">*</span></label>
+                        {{-- Nothing chosen to begin with. It used to open on
+                             whichever season came first, so a photo taken in a
+                             hurry filed itself somewhere nobody picked — and
+                             that is only discovered later, by not finding it. --}}
+                        <select id="qcSchedule" class="form-select" required aria-describedby="qcScheduleErr">
+                            <option value="" selected>Choose a schedule…</option>
                             @foreach ($allSchedules as $s)
                                 <option value="{{ $s->id }}">{{ $s->title }}</option>
                             @endforeach
                         </select>
+                        <p class="form-error hidden" id="qcScheduleErr" role="alert">Choose which schedule this belongs to.</p>
                     </div>
                 @endif
                 {{-- Only asked once the gallery is the destination. --}}
@@ -685,8 +691,28 @@ document.addEventListener('DOMContentLoaded', () => {
         return true;
     }
 
+    /* Which season this belongs to, or a refusal to guess. */
+    function scheduleChosen() {
+        const sel = $('qcSchedule');
+        const err = $('qcScheduleErr');
+        const ok = !!(sel && sel.value);
+        if (err) err.classList.toggle('hidden', ok);
+        if (sel) sel.setAttribute('aria-invalid', ok ? 'false' : 'true');
+        if (!ok && sel) {
+            toast('Choose which schedule this belongs to.', 'error');
+            sel.focus();
+            if (typeof sel.scrollIntoView === 'function') sel.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }
+        return ok;
+    }
+    // The error clears the moment it stops being true.
+    $('qcSchedule')?.addEventListener('change', () => {
+        if ($('qcSchedule').value) scheduleChosen();
+    });
+
     $('qcConfirm').addEventListener('click', async () => {
         if (!items.length) { toast('Capture a photo first.', 'error'); showStep('capture'); return; }
+        if (!scheduleChosen()) return;
         const scheduleId = $('qcSchedule').value;
         const target = modal.querySelector('input[name=qcTarget]:checked')?.value || 'note';
         if (target === 'gallery') {
@@ -863,6 +889,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let albumsFor = null;   // schedule id the picker was last filled for
     async function loadAlbums() {
         const scheduleId = $('qcSchedule').value;
+        // Nothing chosen yet: there is no season to ask for albums of, and
+        // asking with an empty id fetches an error nobody can act on.
+        if (!scheduleId) {
+            albumsFor = null;
+            $('qcAlbum').innerHTML = '<option value="">➕ New album…</option>';
+            return;
+        }
         if (albumsFor === scheduleId) return;
         albumsFor = scheduleId;
         const sel = $('qcAlbum');

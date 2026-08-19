@@ -1,5 +1,15 @@
 @extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
+@php
+    /* Who may write in this notebook.
+     *
+     * "Notes only" is a real tier — a worker who may write here but may not
+     * touch the plan — so this is its own question, not a reading of edit
+     * rights. A worker without it gets the buttons REMOVED, which is the
+     * house rule for a door the owner closed; the endpoints refuse it too. */
+    $mayNote = \App\Support\WorkerContext::canEdit() || \App\Support\WorkerContext::canAddNotes();
+@endphp
+
 @section('title', 'Notes — ' . $schedule->title)
 @section('page-title', 'Notes')
 @section('page-subtitle', $schedule->title)
@@ -136,10 +146,12 @@
             <svg class="nfa-ico" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
             <span id="noteFoldAllLabel">Collapse all</span>
         </button>
+        @if ($mayNote)
         <button type="button" class="note-newbtn" data-note-add>
             <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
             <span>New note</span>
         </button>
+        @endif
     </div>
 </div>
 <p class="note-count hidden" id="noteCount" aria-live="polite"></p>
@@ -162,7 +174,9 @@
     <svg class="w-12 h-12 mx-auto text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
     <p class="font-semibold text-gray-700 mt-3">No notes yet</p>
     <p class="text-sm text-gray-500 mt-1">Jot down observations, reminders or anything worth remembering — attach a photo too.</p>
-    <button type="button" class="btn btn-primary mt-4" data-note-add>New note</button>
+    @if ($mayNote)
+        <button type="button" class="btn btn-primary mt-4" data-note-add>New note</button>
+    @endif
 </div>
 @endsection
 
@@ -256,6 +270,9 @@ const __init = () => {
         albums: @json(route('quick-capture.albums')),
     };
     const CSRF = document.querySelector('meta[name=csrf-token]').content;
+    // A row built after a save must obey the same rule as one the server
+    // rendered; two answers to one question is how a closed door reopens.
+    const MAY_NOTE = @json($mayNote);
     @php
         // Same classification as the server-rendered list above, so a note
         // re-rendered after an edit keeps its "View map" tile.
@@ -697,8 +714,8 @@ const __init = () => {
                     </div>
                 </div>
                 <div class="flex gap-1 shrink-0 note-acts">
-                    <button type="button" class="btn btn-sm btn-ghost js-edit" aria-label="Edit note"><svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
-                    <button type="button" class="btn btn-sm btn-ghost text-red-600 js-delete" aria-label="Delete note"><svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
+                    ${MAY_NOTE ? `<button type="button" class="btn btn-sm btn-ghost js-edit" aria-label="Edit note"><svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+                    <button type="button" class="btn btn-sm btn-ghost text-red-600 js-delete" aria-label="Delete note"><svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>` : ''}
                 </div>
             </div>
             <div class="note-fold"><div class="note-fold-inner js-note-body-wrap">

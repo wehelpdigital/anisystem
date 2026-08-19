@@ -7951,6 +7951,53 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         return best;
     }
+    /* Land on the day, and stay landed.
+     *
+     * A smooth scroll aims at a position worked out the moment it starts, so
+     * anything that changes height while it flies sends it somewhere else.
+     * Two things used to: the days were unfolded AFTER the scroll began, and
+     * on a first open the board is still settling — fold state restored,
+     * reminder pills filled in, pictures decoding. That is how "scroll to
+     * today" arrived at the bottom of the board.
+     *
+     * So: open the days first, wait two frames for the layout, then scroll —
+     * and look again when the animation should be done, correcting once if
+     * the ground moved anyway. */
+    function _jumpToDay(target, openThese) {
+        openThese.forEach((g) => {
+            // Jumping to a day should show its work, not a folded header.
+            g.classList.remove('is-folded');
+            OPEN_DAYS.add((g.getAttribute('data-date') || '').trim());
+            g.classList.add('tt-highlight');
+            setTimeout(() => g.classList.remove('tt-highlight'), 2200);
+        });
+        if (openThese.length) saveOpenDays();
+
+        // Landed means "near the top of the scrollport", allowing for the
+        // sticky toolbar the group tucks under (its scroll-margin-top).
+        const drift = () => Math.abs(target.getBoundingClientRect().top - _stickyTop());
+        const settle = (tries) => {
+            target.scrollIntoView({ behavior: tries === 0 ? 'smooth' : 'auto', block: 'start' });
+            if (tries >= 2) return;
+            // 420ms covers a smooth scroll; the correction is instant.
+            setTimeout(() => { if (drift() > 24) settle(tries + 1); }, tries === 0 ? 420 : 140);
+        };
+        /* Two frames is the ideal: one for the class change, one for the
+         * layout. But frames are not promised — a throttled or backgrounded
+         * tab can sit on a nested rAF indefinitely, and a jump that never
+         * fires is worse than one that lands badly. Whichever arrives first
+         * wins, and it only ever runs once. */
+        let fired = false;
+        const go = () => { if (fired) return; fired = true; settle(0); };
+        requestAnimationFrame(() => requestAnimationFrame(go));
+        setTimeout(go, 80);
+    }
+    function _stickyTop() {
+        // What scroll-margin-top puts between the group and the scrollport's
+        // edge, read from the element rather than guessed at in two places.
+        const v = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+        return window.matchMedia('(min-width: 768px)').matches ? 7.7 * v : 6.9 * v;
+    }
     ttBtn?.addEventListener('click', () => {
         // Scrolling needs the list; hop out of calendar view first.
         if (window.smSetActivitiesView) window.smSetActivitiesView('list');
@@ -7960,17 +8007,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const target = todayGroup || tomorrowGroup || _nearestUpcomingGroup(today);
         if (!target) { toast('No upcoming activities to jump to.', 'error'); return; }
         // Defer so a just-triggered view switch has rendered the list.
-        setTimeout(() => {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            [todayGroup, tomorrowGroup].filter(Boolean).forEach((g) => {
-                // Jumping to a day should show its work, not a folded header.
-                g.classList.remove('is-folded');
-                OPEN_DAYS.add((g.getAttribute('data-date') || '').trim());
-                saveOpenDays();
-                g.classList.add('tt-highlight');
-                setTimeout(() => g.classList.remove('tt-highlight'), 2200);
-            });
-        }, 60);
+        // The day landed on is opened too, not just today and tomorrow: when
+        // neither has work the jump goes to the next scheduled day, and
+        // arriving at a folded header shows nothing of what is there.
+        const toOpen = [...new Set([todayGroup, tomorrowGroup, target].filter(Boolean))];
+        setTimeout(() => _jumpToDay(target, toOpen), 60);
         toast(todayGroup || tomorrowGroup ? 'Jumped to today' : 'Jumped to the next scheduled day');
     });
     window.smTodayTomorrowActive = () => false;
