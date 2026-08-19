@@ -233,7 +233,7 @@
                 @endif
             </span>
         </button>
-        <div class="min-w-0 grow">
+        <div class="min-w-0 grow fp-head-txt">
             <p class="text-sm leading-tight font-semibold text-gray-900">{{ auth()->user()->full_name }}</p>
             @if ($mePlace)
                 <p class="text-xs text-gray-400">📍 {{ $mePlace }}</p>

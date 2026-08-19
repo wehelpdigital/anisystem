@@ -480,6 +480,12 @@
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     html.dark .fp-mind { background: #232a1c; border-color: #3a4a2c; color: #dbe6cf; }
 
+    /* The name and place beside a face, centred on it.
+       With both lines the block is about the face's height and centring
+       changes nothing; with only a name — nobody has said where they farm —
+       it stops the name hanging from the top of a row twice its height. */
+    .fp-head-txt { align-self: center; }
+
     /* ---- The post's coloured edge ----
        A line across the top of every post, a different colour per post, so a
        column of them has a rhythm and the eye can see where one ends and the

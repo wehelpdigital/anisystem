@@ -28,7 +28,11 @@
 <article class="card p-4 mb-5 feed-post wall-post fp-card fp-hue-{{ $fpHue }}" id="wallpost-{{ $post->id }}" data-post-id="{{ $post->id }}">
     <header class="flex items-start gap-3">
         @include('community.partials.avatar-status', ['user' => $author, 'size' => 'avatar-md'])
-        <div class="min-w-0 grow">
+        {{-- Centred against the face: with a place under it the block is the
+             face's height anyway and nothing moves, but a member who has not
+             said where they farm gets their name in the middle of the row
+             instead of hanging from the top of it. --}}
+        <div class="min-w-0 grow fp-head-txt">
             <p class="text-sm leading-tight flex items-center flex-wrap gap-x-1.5 gap-y-0.5">
                 <a href="{{ route('community.connect.profile', ['userId' => $author->id]) }}" class="font-semibold text-gray-900 hover:text-brand-700">{{ $author->full_name }}</a>
                 @if ($isFriend)<span class="badge badge-green align-middle">Co-farmer</span>@endif
