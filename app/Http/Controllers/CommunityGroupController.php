@@ -30,31 +30,73 @@ class CommunityGroupController extends Controller
     }
 
     /** All groups, with membership + counts, plus the ones you're in. */
+    /** Discussions per page — the same handful the room's posts arrive in. */
+    private const GROUPS_PER_PAGE = 8;
+
     public function index(Request $request)
     {
         $userId = Auth::id();
+        $page = $this->pageGroups($userId, 1);
 
-        $groups = CommunityGroup::active()
+        return view('community.groups.index', [
+            'groups' => $page['items'],
+            'hasMore' => $page['hasMore'],
+            'myGroupIds' => $page['myGroupIds'],
+        ]);
+    }
+
+    /** JSON page of discussion cards for "load more". */
+    public function groupsPage(Request $request)
+    {
+        $page = max(1, (int) $request->query('page', 1));
+        $data = $this->pageGroups(Auth::id(), $page);
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'html' => view('community.groups.partials.cards', ['groups' => $data['items']])->render(),
+                'hasMore' => $data['hasMore'],
+                'nextPage' => $page + 1,
+            ],
+        ]);
+    }
+
+    /**
+     * One page of discussions, newest first, each told whether the viewer is
+     * already in it.
+     *
+     * Asked for one more row than the page holds: that surplus is the whole
+     * answer to "is there another page", and it costs nothing next to a
+     * second count query.
+     *
+     * @return array{items:\Illuminate\Support\Collection, hasMore:bool, myGroupIds:array<int,int>}
+     */
+    private function pageGroups(int $userId, int $page): array
+    {
+        $per = self::GROUPS_PER_PAGE;
+        $rows = CommunityGroup::active()
             ->withCount([
                 'members as member_count',
                 'posts as post_count',
             ])
             ->orderByDesc('id')
+            ->skip(($page - 1) * $per)
+            ->take($per + 1)
             ->get();
+
+        $hasMore = $rows->count() > $per;
+        $items = $rows->take($per)->values();
 
         $myGroupIds = CommunityGroupMember::active()
             ->where('userId', $userId)
             ->pluck('groupId')
             ->all();
 
-        foreach ($groups as $g) {
+        foreach ($items as $g) {
             $g->joined = in_array($g->id, $myGroupIds, true);
         }
 
-        return view('community.groups.index', [
-            'groups' => $groups,
-            'myGroupIds' => $myGroupIds,
-        ]);
+        return ['items' => $items, 'hasMore' => $hasMore, 'myGroupIds' => $myGroupIds];
     }
 
     /** One group: its posts (first page) and the composer if you're a member. */

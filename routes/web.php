@@ -401,6 +401,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
 
     // --- Community: groups (topics + replies) ---
     Route::get('/app/community/groups', [App\Http\Controllers\CommunityGroupController::class, 'index'])->name('community.groups.index');
+    // The list's next page of cards, the way a room pages its posts.
+    Route::get('/app/community/groups-page', [App\Http\Controllers\CommunityGroupController::class, 'groupsPage'])->name('community.groups.page');
     Route::post('/app/community/groups', [App\Http\Controllers\CommunityGroupController::class, 'store'])->name('community.groups.store');
     Route::get('/app/community/groups/{id}', [App\Http\Controllers\CommunityGroupController::class, 'show'])->whereNumber('id')->name('community.groups.show');
     Route::get('/app/community/groups/{id}/posts', [App\Http\Controllers\CommunityGroupController::class, 'posts'])->whereNumber('id')->name('community.groups.posts');

@@ -48,7 +48,6 @@
     .disc-spin[hidden], .disc-end[hidden] { display:none; }
 
     /* Cards past the first page wait off-stage and arrive a page at a time. */
-    .disc-card.is-paged-out { display:none; }
     .disc-card.is-paged-in { animation:discSwap .32s var(--ease-house) both; }
 
     @media (prefers-reduced-motion: reduce) {
@@ -83,44 +82,11 @@
         </div>
     </div>
 @else
-    @php $discPerPage = 8; @endphp
     <div class="grid gap-3 sm:grid-cols-2 stagger-children" id="groupsGrid">
-        @foreach ($groups as $i => $g)
-            @php $hue = CommunityAvatar::hue($g->name); @endphp
-            <div class="card card-hover disc-card flex flex-col overflow-hidden {{ $i >= $discPerPage ? 'is-paged-out' : '' }}" data-group-card="{{ $g->id }}">
-                <div class="group-cap {{ $hue }}"></div>
-                <div class="card-body flex flex-col grow pt-4!">
-                    <div class="flex items-start gap-3 min-w-0">
-                        <span class="avatar avatar-md avatar-sq overflow-hidden {{ $hue }}">@if ($g->coverImagePath)<img src="{{ \App\Support\MediaStore::url($g->coverImagePath) }}" alt="" class="w-full h-full object-cover">@else{{ CommunityAvatar::monogram($g->name) }}@endif</span>
-                        <a href="{{ route('community.groups.show', ['id' => $g->id]) }}" class="min-w-0 grow">
-                            <h3 class="font-bold text-gray-900 leading-snug" style="font-family:var(--font-heading)">{{ $g->name }}
-                                <span class="badge badge-green group-joined-tag align-middle {{ $g->joined ? '' : 'hidden' }}" data-group-id="{{ $g->id }}">Joined</span>
-                            </h3>
-                        </a>
-                    </div>
-                    @if ($g->description)
-                        <p class="text-sm text-gray-500 mt-2 line-clamp-2 min-h-[2.5rem]">{{ $g->description }}</p>
-                    @else
-                        <p class="mt-2 min-h-[2.5rem]"></p>
-                    @endif
-                    <div class="flex items-center gap-3 text-xs text-gray-500 font-semibold mt-2 mb-3">
-                        <span>🧑‍🌾 {{ $g->member_count }} {{ \Illuminate\Support\Str::plural('member', $g->member_count) }}</span>
-                        <span>💬 {{ $g->post_count }} {{ \Illuminate\Support\Str::plural('post', $g->post_count) }}</span>
-                    </div>
-                    {{-- "Open" is a promise you can only keep for a member; for
-                         everyone else the honest word is Join. --}}
-                    <div class="disc-act">
-                        <a href="{{ route('community.groups.show', ['id' => $g->id]) }}"
-                           class="btn btn-primary disc-open {{ $g->joined ? '' : 'is-off' }}">Open</a>
-                        <button type="button" class="btn btn-primary disc-join {{ $g->joined ? 'is-off' : '' }}"
-                                data-group-id="{{ $g->id }}">Join</button>
-                    </div>
-                </div>
-            </div>
-        @endforeach
+        @include('community.groups.partials.cards', ['groups' => $groups])
     </div>
 
-    <div class="disc-tail" id="discTail" @if ($groups->count() <= $discPerPage) hidden @endif>
+    <div class="disc-tail" id="discTail" @unless ($hasMore) hidden @endunless>
         <button type="button" id="discMore" class="btn btn-white btn-sm" data-infinite>Show more discussions</button>
         <div class="disc-spin" id="discSpin" role="status" aria-label="Loading more discussions" hidden><i></i><i></i><i></i></div>
         <p class="disc-end" id="discEnd" hidden>🌾 Iyan na ang lahat ng usapan.</p>
@@ -260,21 +226,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ---------------- Scroll pagination ----------------
-       Every group already comes down with the page (the list is small and the
-       index has no JSON page endpoint), so a "page" here is a reveal, not a
-       fetch. The reader still meets the wall's contract: one page at a time,
-       a loader while it turns, one latch so nothing turns twice, and a plain
-       line when the list ends. */
-    const PER_PAGE = 8;
+       A page is a fetch, not a reveal. The list used to ship every discussion
+       in the first response and merely uncover them as the reader scrolled,
+       which is the cost pagination exists to avoid: a farm with three hundred
+       usapan paid for all of them to see eight. The server now sends one
+       screenful and says whether another exists.
+
+       One page in flight at a time, a loader while it turns, a plain line at
+       the end — and a failure stops the automatic pull: a scroll handler that
+       retries on every frame turns one dead network into a storm, so the
+       button comes back and waits to be asked. */
+    const PAGE_URL = @json(route('community.groups.page'));
     const grid = document.getElementById('groupsGrid');
     const tail = document.getElementById('discTail');
     const moreBtn = document.getElementById('discMore');
     const spin = document.getElementById('discSpin');
     const endNote = document.getElementById('discEnd');
+    let nextPage = 2;
     let loading = false;
     let done = false;
-
-    const pending = () => (grid ? Array.from(grid.querySelectorAll('.disc-card.is-paged-out')) : []);
+    let autoPull = true;
 
     function finish() {
         done = true;
@@ -283,39 +254,59 @@ document.addEventListener('DOMContentLoaded', () => {
         if (endNote) endNote.hidden = false;
     }
 
-    function revealPage() {
-        if (!grid || done || loading || !moreBtn || moreBtn.disabled) return;
-        const batch = pending().slice(0, PER_PAGE);
-        if (!batch.length) { finish(); return; }
+    function land(el, i) {
+        grid.appendChild(el);
+        if (reduceMotion) return;
+        el.classList.add('is-paged-in');
+        el.style.animationDelay = Math.min(i * 45, 300) + 'ms';
+        el.addEventListener('animationend', () => {
+            el.classList.remove('is-paged-in');
+            el.style.animationDelay = '';
+        }, { once: true });
+    }
+
+    async function loadPage() {
+        if (!grid || done || loading) return;
         loading = true;
-        moreBtn.disabled = true;
-        moreBtn.hidden = true;
+        if (moreBtn) { moreBtn.disabled = true; moreBtn.hidden = true; }
         if (spin) spin.hidden = false;
-        // A beat on the loader so the page turn reads as one, then the cards
-        // land staggered the way the first page did.
-        setTimeout(() => {
-            batch.forEach((el, i) => {
-                el.classList.remove('is-paged-out');
-                if (!reduceMotion) {
-                    el.classList.add('is-paged-in');
-                    el.style.animationDelay = Math.min(i * 45, 300) + 'ms';
-                    el.addEventListener('animationend', () => { el.classList.remove('is-paged-in'); el.style.animationDelay = ''; }, { once: true });
-                }
+        try {
+            const res = await fetch(PAGE_URL + '?page=' + nextPage, {
+                headers: { Accept: 'application/json' },
+                credentials: 'same-origin',
             });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const data = (await res.json()).data || {};
+            const holder = document.createElement('div');
+            holder.innerHTML = data.html || '';
+            const fresh = Array.from(holder.children);
+            fresh.forEach(land);
+            nextPage = data.nextPage || nextPage + 1;
+            autoPull = true;
             if (spin) spin.hidden = true;
             loading = false;
-            if (!pending().length) { finish(); return; }
-            moreBtn.disabled = false;
-            moreBtn.hidden = false;
+            if (!fresh.length || !data.hasMore) { finish(); return; }
+            if (moreBtn) { moreBtn.disabled = false; moreBtn.hidden = false; }
             setTimeout(nearTail, 0);   // still near the bottom? keep going
-        }, reduceMotion ? 0 : 220);
+        } catch (e) {
+            loading = false;
+            // Hand the next page back to the reader rather than to the scroll.
+            autoPull = false;
+            if (spin) spin.hidden = true;
+            if (moreBtn) {
+                moreBtn.disabled = false;
+                moreBtn.hidden = false;
+                moreBtn.textContent = 'Try again';
+            }
+            if (window.toast) toast('Could not load more discussions.', 'error');
+        }
     }
 
     // 700px of runway, the margin the shared observer uses, so the next cards
     // are already there when the reader arrives.
     function nearTail() {
-        if (!moreBtn || done || loading || moreBtn.hidden || moreBtn.disabled) return;
-        if (moreBtn.getBoundingClientRect().top < window.innerHeight + 700) revealPage();
+        if (!moreBtn || done || loading || !autoPull || moreBtn.hidden || moreBtn.disabled) return;
+        if (moreBtn.getBoundingClientRect().top < window.innerHeight + 700) loadPage();
     }
     /* Throttled on the clock rather than requestAnimationFrame: a tab that is
        not painting never delivers the frame, and the list would stop looking. */
@@ -327,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nearTail();
     }
     if (tail && !tail.hidden) {
-        moreBtn?.addEventListener('click', revealPage);
+        moreBtn?.addEventListener('click', () => { autoPull = true; loadPage(); });
         window.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', onScroll, { passive: true });
         nearTail();   // a short list can end with the tail already in view
