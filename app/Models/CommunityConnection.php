@@ -73,6 +73,7 @@ class CommunityConnection extends BaseModel
      * "People you may know" — non-contacts ranked by signal strength:
      *   mutual co-farmers (friends-of-friends)  ×5   (the strongest cue)
      *   same city                                +4
+     *   talked under the same post               +3   (met, not just near)
      *   same province                            +2
      * Each candidate carries recoMutual, recoReason and connStatus so the card
      * can render a reason line and the right Connect button. Highest first.
@@ -129,7 +130,38 @@ class CommunityConnection extends BaseModel
                 ->limit(80)->pluck('id')->all();
         }
 
-        $ids = array_values(array_unique(array_merge(array_keys($mutual), $locIds)));
+        /* People met in the comments.
+         *
+         * Two names under one post is the weakest kind of introduction and the
+         * most human: you have already spoken. Read from the viewer's own
+         * recent comments outward — the posts they commented on, then everyone
+         * else who commented there — and capped at both ends, because this is
+         * a suggestion strip, not a report. */
+        $talked = [];
+        $myPostIds = CommunityWallComment::active()
+            ->where('userId', $viewerId)
+            ->orderByDesc('id')
+            ->limit(120)
+            ->pluck('wallPostId')
+            ->unique()
+            ->all();
+        if (! empty($myPostIds)) {
+            $rows = CommunityWallComment::active()
+                ->whereIn('wallPostId', $myPostIds)
+                ->where('userId', '!=', $viewerId)
+                ->orderByDesc('id')
+                ->limit(400)
+                ->pluck('userId');
+            foreach ($rows as $uid) {
+                $uid = (int) $uid;
+                if (isset($excludeSet[$uid])) {
+                    continue;
+                }
+                $talked[$uid] = ($talked[$uid] ?? 0) + 1;
+            }
+        }
+
+        $ids = array_values(array_unique(array_merge(array_keys($mutual), $locIds, array_keys($talked))));
         if (empty($ids)) {
             return collect();
         }
@@ -144,7 +176,8 @@ class CommunityConnection extends BaseModel
             $m = $mutual[$id] ?? 0;
             $sameCity = $city !== '' && trim((string) $u->city) === $city;
             $sameProvince = $province !== '' && trim((string) $u->province) === $province;
-            $score = $m * 5 + ($sameCity ? 4 : 0) + ($sameProvince ? 2 : 0);
+            $met = $talked[$id] ?? 0;
+            $score = $m * 5 + ($sameCity ? 4 : 0) + ($met > 0 ? 3 : 0) + ($sameProvince ? 2 : 0);
             if ($score <= 0) {
                 continue;
             }
@@ -152,6 +185,9 @@ class CommunityConnection extends BaseModel
             $reasons = [];
             if ($m > 0) {
                 $reasons[] = $m . ' mutual co-farmer' . ($m > 1 ? 's' : '');
+            }
+            if ($met > 0) {
+                $reasons[] = 'You both commented on the same post';
             }
             if ($sameCity && $u->city) {
                 $reasons[] = 'Also in ' . $u->city;

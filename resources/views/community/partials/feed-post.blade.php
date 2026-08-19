@@ -1,12 +1,22 @@
-{{-- One feed post card. Reused by the feed's first render and the
-     infinite-scroll "older posts" endpoint. Expects: $post (with author,
-     comments_count, reactionSummary), $friendIds. --}}
+{{-- One feed post card. Drawn by the wall's first render, by the "older posts"
+     endpoint, by a profile wall and by the saved-posts page, so everything a
+     post can be must be expressible here.
+
+     Expects: $post (with author, comments_count, reactionSummary). Optional:
+     $friendIds, $followingIds, $savedIds — each defaulted, because older
+     callers do not know about following or bookmarks and must keep working. --}}
 @php
     $author = $post->author;
+    $meId = (int) auth()->id();
     $isFriend = in_array((int) $post->authorUserId, $friendIds ?? [], true);
+    $isMine = (int) $post->authorUserId === $meId;
+    $following = in_array((int) $post->authorUserId, $followingIds ?? [], true);
+    $saved = in_array((int) $post->id, $savedIds ?? [], true);
     $place = trim(implode(', ', array_filter([$author->city, $author->province])));
+    $shared = $post->relationLoaded('sharedPost') ? $post->sharedPost : ($post->sharedPostId ? $post->sharedPost : null);
+    $commentCount = $post->comments_count ?? ($post->comment_count ?? 0);
 @endphp
-<article class="card p-4 mb-5 feed-post wall-post" id="wallpost-{{ $post->id }}" data-post-id="{{ $post->id }}">
+<article class="card p-4 mb-5 feed-post wall-post fp-card" id="wallpost-{{ $post->id }}" data-post-id="{{ $post->id }}">
     <header class="flex items-start gap-3">
         @include('community.partials.avatar-status', ['user' => $author, 'size' => 'avatar-md'])
         <div class="min-w-0 grow">
@@ -19,11 +29,23 @@
                 @if ($place)📍 {{ $place }} · @endif{{ $post->created_at?->diffForHumans() }}
             </p>
         </div>
+        {{-- Following is one-sided, so it belongs on the post as well as the
+             profile: this is where you decide you want more of somebody. --}}
+        @unless ($isMine)
+            <button type="button" class="fp-follow {{ $following ? 'is-on' : '' }}"
+                    data-follow="{{ $author->id }}" data-name="{{ $author->full_name }}"
+                    aria-pressed="{{ $following ? 'true' : 'false' }}">
+                <span class="on">Following</span><span class="off">+ Follow</span>
+            </button>
+        @endunless
     </header>
+
     @if ($post->isRestricted ?? false)
         @include('community.partials.restricted', ['reason' => $post->restrictedReason ?? null])
     @else
-        <p class="text-sm text-gray-700 mt-2 whitespace-pre-line break-words">{!! \App\Support\CommunityText::render($post->body) !!}</p>
+        @if (trim((string) $post->body) !== '')
+            <p class="text-sm text-gray-700 mt-2 whitespace-pre-line break-words">{!! \App\Support\CommunityText::render($post->body) !!}</p>
+        @endif
         @php $ytVid = \App\Support\CommunityText::youtubeId($post->body); @endphp
         @if ($ytVid)
             @include('community.partials.youtube-card', ['vid' => $ytVid])
@@ -39,33 +61,49 @@
         @if ($post->videoPath ?? null)
             @include('community.partials.video-embed', ['src' => $post->videoPath, 'poster' => $post->videoPoster ?? null])
         @endif
+
+        {{-- A share carries the original rather than copying it, so what is
+             quoted here is always what its author currently says. --}}
+        @if ($shared)
+            <a class="fp-shared" href="{{ route('community.index') }}#wallpost-{{ $shared->id }}">
+                <span class="fp-shared-head">
+                    @if ($shared->author?->avatarPath)
+                        <img src="{{ \App\Support\MediaStore::url($shared->author->avatarPath) }}" alt="">
+                    @else
+                        <i>{{ $shared->author?->initials ?: '?' }}</i>
+                    @endif
+                    <b>{{ $shared->author?->full_name ?: 'A farmer' }}</b>
+                    <em>{{ $shared->created_at?->diffForHumans() }}</em>
+                </span>
+                @if (trim((string) $shared->body) !== '')
+                    <span class="fp-shared-body">{{ \Illuminate\Support\Str::limit(strip_tags($shared->body), 220) }}</span>
+                @endif
+                @if ($shared->imagePath)
+                    <img class="fp-shared-img" src="{{ \App\Support\MediaStore::url($shared->imagePath) }}" alt="" loading="lazy">
+                @endif
+            </a>
+        @endif
     @endif
+
     @include('community.partials.react-bar', ['type' => 'wallpost', 'id' => $post->id, 'summary' => $post->reactionSummary ?? null])
 
-    @php
-        $hasComments = $post->relationLoaded('comments');
-        $topComments = $hasComments ? $post->comments->whereNull('parentId')->sortBy('id')->values() : collect();
-        $totalComments = $post->comments_count ?? $topComments->count();
-    @endphp
-    {{-- The whole thread is printed; wall-comment-js folds everything past the
-         first two behind its own toggle. Trimming to a preview here as well
-         would mean two collapse rules disagreeing about what "all" means. --}}
-    <div class="mt-3 space-y-1.5 wall-comments">
-        {{-- A listing that skipped the comments has nothing to fold, so it keeps
-             the button that fetches the thread from the server instead. --}}
-        @if (! $hasComments && $totalComments > 0)
-            <button type="button" class="js-view-all-comments text-xs font-semibold text-brand-700 hover:text-brand-800" data-post-id="{{ $post->id }}">
-                View all {{ $totalComments }} comments
-            </button>
-        @endif
-        @foreach ($topComments as $comment)
-            @include('community.connect.partials.wall-comment', [
-                'comment' => $comment,
-                'isReply' => false,
-                'replies' => $post->comments->where('parentId', $comment->id)->sortBy('id'),
-            ])
-        @endforeach
+    {{-- The comments used to be printed under every post, which made the wall
+         a wall of other people's conversations. The count is the door now, and
+         the conversation opens in a sheet. --}}
+    <div class="fp-acts">
+        <button type="button" class="fp-act js-open-comments" data-post-id="{{ $post->id }}" aria-label="Comments">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h8m-8-4h5m-5 8h3m-6 4V6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H8l-4 4z"/></svg>
+            <span class="fp-n" data-comment-count="{{ $post->id }}">{{ $commentCount }}</span>
+            <span class="fp-lbl">{{ \Illuminate\Support\Str::plural('Comment', $commentCount) }}</span>
+        </button>
+        <button type="button" class="fp-act js-bookmark {{ $saved ? 'is-on' : '' }}" data-post-id="{{ $post->id }}"
+                aria-pressed="{{ $saved ? 'true' : 'false' }}" aria-label="Save this post">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-4-7 4V5z"/></svg>
+            <span class="fp-lbl"><span class="on">Saved</span><span class="off">Save</span></span>
+        </button>
+        <button type="button" class="fp-act js-share" data-post-id="{{ $post->id }}" aria-label="Share this post">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7M16 6l-4-4-4 4M12 2v14"/></svg>
+            <span class="fp-lbl">Share</span>
+        </button>
     </div>
-
-    @include('community.partials.wall-comment-form', ['postId' => $post->id])
 </article>

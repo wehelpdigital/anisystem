@@ -72,6 +72,10 @@
        nobody sat in. */
     .cn-seat { display:inline-flex; align-items:center; flex-shrink:0; }
     .cn-seat:empty { display:none; }
+    .cn-caret { flex-shrink:0; opacity:.5; }
+    .cn-saved { flex-shrink:0; }
+    /* On a phone the row is tight: the bookmark keeps its icon, drops its word. */
+    @media (max-width:640px) { .cn-saved-word { display:none; } }
 
     .cn-row { display:flex; align-items:center; gap:.75rem; width:100%; padding:.75rem;
         border-radius:.75rem; font-weight:600; color:#374151; text-decoration:none;
@@ -101,9 +105,17 @@
 <div class="community-nav mb-4">
     <button type="button" class="btn btn-white btn-sm cn-hamburger" data-sheet-open="communitySectionsSheet"
             aria-haspopup="dialog" title="Community sections">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        {{-- The section you are in wears its own mark, so the button says
+             where you are twice over — the lines alone said only "menu". --}}
+        <svg class="w-4 h-4 cn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $sections[$active]['icon'] ?? 'M4 6h16M4 12h16M4 18h16' }}"/></svg>
         <span class="cn-current"><span class="cn-prefix">Community &middot; </span>{{ $currentShort }}</span>
+        <svg class="w-3.5 h-3.5 cn-caret" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
     </button>
+    {{-- Everything you kept, one tap from everywhere you might keep something. --}}
+    <a href="{{ route('community.saved') }}" class="btn btn-white btn-sm cn-saved" title="Saved posts" aria-label="Saved posts">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-4-7 4V5z"/></svg>
+        <span class="cn-saved-word">Saved</span>
+    </a>
     {{-- The messenger dock moves its launcher in here on arrival, so the chat
          button sits beside the sections instead of floating over the page. --}}
     <span id="msgrSeat" class="cn-seat" aria-live="polite"></span>

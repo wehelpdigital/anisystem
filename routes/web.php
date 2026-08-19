@@ -58,6 +58,12 @@ Route::get('/deploy-check', function () {
     ]);
 })->name('deploy.check');
 
+// A wall post somebody shared outward. Unguessable token, read-only, and
+// every way to join in asks the reader to sign in first.
+Route::get('/pw/{token}', [App\Http\Controllers\CommunityPublicController::class, 'post'])
+    ->where('token', '[A-Za-z0-9]{10,64}')
+    ->name('community.public.post');
+
 Route::get('/worker-invite/{token}', [App\Http\Controllers\WorkerInviteController::class, 'show'])->name('worker.invite.show');
 Route::post('/worker-invite/{token}', [App\Http\Controllers\WorkerInviteController::class, 'accept'])->name('worker.invite.accept');
 
@@ -420,6 +426,15 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // --- Community: co-farmer connections (friend requests) ---
     Route::get('/app/community/members', [App\Http\Controllers\CommunityConnectController::class, 'members'])->name('community.connect.members');
     Route::get('/app/community/requests', [App\Http\Controllers\CommunityConnectController::class, 'requests'])->name('community.connect.requests');
+
+    // Following, keeping and passing on.
+    Route::post('/app/community/follow/{userId}', [App\Http\Controllers\CommunitySocialController::class, 'follow'])->whereNumber('userId')->name('community.follow');
+    Route::post('/app/community/bookmark/{postId}', [App\Http\Controllers\CommunitySocialController::class, 'bookmark'])->whereNumber('postId')->name('community.bookmark');
+    Route::get('/app/community/suggestions', [App\Http\Controllers\CommunitySocialController::class, 'suggestions'])->name('community.suggestions');
+    Route::get('/app/community/saved', [App\Http\Controllers\CommunitySocialController::class, 'saved'])->name('community.saved');
+    Route::post('/app/community/share/{postId}/wall', [App\Http\Controllers\CommunitySocialController::class, 'shareToWall'])->whereNumber('postId')->name('community.share.wall');
+    Route::post('/app/community/share/{postId}/message', [App\Http\Controllers\CommunitySocialController::class, 'shareToMessage'])->whereNumber('postId')->name('community.share.message');
+    Route::post('/app/community/share/{postId}/link', [App\Http\Controllers\CommunitySocialController::class, 'publicLink'])->whereNumber('postId')->name('community.share.link');
     Route::get('/app/community/members/{userId}', [App\Http\Controllers\CommunityConnectController::class, 'profile'])->whereNumber('userId')->name('community.connect.profile');
     Route::post('/app/community/profile/photos', [App\Http\Controllers\CommunityConnectController::class, 'uploadPhotos'])->name('community.profile.photos.store');
     Route::delete('/app/community/profile/photos/{photoId}', [App\Http\Controllers\CommunityConnectController::class, 'deletePhoto'])->whereNumber('photoId')->name('community.profile.photos.delete');

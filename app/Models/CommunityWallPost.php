@@ -6,9 +6,18 @@ class CommunityWallPost extends BaseModel
 {
     protected $table = 'as_community_wall_posts';
 
-    protected $fillable = ['wallUserId', 'authorUserId', 'body', 'imagePath', 'videoPath', 'videoPoster', 'isRestricted', 'restrictedReason', 'deleteStatus'];
+    protected $fillable = ['wallUserId', 'authorUserId', 'body', 'sharedPostId', 'publicToken', 'imagePath', 'videoPath', 'videoPoster', 'isRestricted', 'restrictedReason', 'deleteStatus'];
 
     protected $casts = ['isRestricted' => 'boolean'];
+
+    /**
+     * The post this one is sharing, if any — loaded with its own author so a
+     * shared card can be drawn without a second trip per post.
+     */
+    public function sharedPost()
+    {
+        return $this->belongsTo(self::class, 'sharedPostId')->with('author');
+    }
 
     public function author()
     {

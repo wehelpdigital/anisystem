@@ -6,6 +6,47 @@
 
 @push('head')
 @include('community.partials.plaza-css')
+@push('styles')
+<style>
+    /* The composer, in the homepage's proportions rather than its own. */
+    .comp-card { padding: .85rem; }
+    .comp-hint { font-size: .72rem; color: var(--color-gray-400); margin-top: .35rem; }
+    .comp-hint b { color: var(--color-gray-500); font-weight: 800; }
+    /* A thought bubble floats above the avatar and out of the card, so a card
+       that has one needs the room; one that does not would just look adrift. */
+    #feedComposer.has-bubble { margin-top: 1.5rem; }
+
+    /* People you may know — a rail that scrolls sideways on a phone. */
+    .pymk { margin-bottom: 1.25rem; }
+    .pymk-head { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; margin-bottom: .5rem; }
+    .pymk-head h2 { font-family: var(--font-heading); font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
+    .pymk-head a { font-size: .78rem; font-weight: 700; color: var(--color-brand-700); }
+    .pymk-rail { display: flex; gap: .6rem; overflow-x: auto; padding-bottom: .35rem;
+        scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
+    .pymk-rail > * { scroll-snap-align: start; }
+    .pymk-rail::-webkit-scrollbar { height: 5px; }
+    .pymk-rail::-webkit-scrollbar-thumb { background: var(--color-gray-300); border-radius: 999px; }
+    /* The shape of what is coming, shimmering while it comes. */
+    .pymk-skel { flex: none; width: 11.5rem; height: 11.5rem; border-radius: 1rem;
+        background: linear-gradient(100deg, var(--color-gray-100) 40%, var(--color-gray-200) 50%, var(--color-gray-100) 60%);
+        background-size: 200% 100%; animation: pymkShim 1.2s linear infinite; }
+    @keyframes pymkShim { to { background-position: -200% 0; } }
+    .pymk-empty { font-size: .82rem; color: var(--color-gray-400); padding: .5rem 0; }
+
+    /* On a phone the wall is the screen: a card that keeps side margins and
+       rounded corners is a card pretending it is not the whole page. */
+    @media (max-width: 640px) {
+        .plaza-center .fp-card, .plaza-center .feed-post {
+            border-radius: 0; border-left: 0; border-right: 0;
+            margin-left: calc(var(--plaza-gutter, 1rem) * -1);
+            margin-right: calc(var(--plaza-gutter, 1rem) * -1);
+        }
+    }
+
+    html.dark .pymk-skel { background: linear-gradient(100deg, #1c2416 40%, #26301c 50%, #1c2416 60%); background-size: 200% 100%; }
+    @media (prefers-reduced-motion: reduce) { .pymk-skel { animation: none; } }
+</style>
+@endpush
 <style>
     /* Feed + a single right rail on wide screens (co-farmer requests, your
        discussions, what's new in the blog, sponsors). Below 1024px there is no
@@ -111,7 +152,7 @@
 {{-- Share to your own wall, straight from the feed — the same shape the
      homepage composer has: your face, what's on your mind floating above it,
      and a field with room to write in. --}}
-<div class="card p-4 mb-4 plaza-accent" id="feedComposer" data-video-host>
+<div class="card comp-card mb-4 plaza-accent{{ filled(auth()->user()?->statusBubble) ? ' has-bubble' : '' }}" id="feedComposer" data-video-host>
     <div class="flex items-start gap-2.5 comp-row">
         {{-- Your photo, and the one thing people expect to be able to change
              by tapping it: what is on your mind. --}}
@@ -128,8 +169,9 @@
             </span>
         </button>
         <div class="min-w-0 grow">
-            <textarea id="feedPostBody" class="form-textarea w-full comp-box" rows="3" maxlength="4000" data-mentionable data-preview="#feedPreview"
-                placeholder="Kamusta ang bukid mo ngayon, {{ auth()->user()->firstName }}? Use @ to mention, # to tag"></textarea>
+            <textarea id="feedPostBody" class="form-textarea w-full comp-box" rows="4" maxlength="4000" data-mentionable data-preview="#feedPreview"
+                placeholder="Kamusta ang bukid, {{ auth()->user()->firstName }}?"></textarea>
+            <p class="comp-hint">Type <b>@</b> to mention a co-farmer, <b>#</b> to tag a topic.</p>
             <div id="feedPreview" class="cp-preview" style="display:none"><span class="cp-label">Preview</span><div class="cp-body"></div></div>
             <span class="attach-chip hidden mt-2" id="feedChip"><span id="feedChipName" class="text-xs font-semibold text-gray-700 truncate"></span><button type="button" id="feedChipClear" class="btn-ghost rounded-full w-6 h-6 flex items-center justify-center text-gray-400 hover:text-red-500" aria-label="Remove photo">✕</button></span>
             <span class="js-video-chip mt-2 items-center gap-2 text-xs font-semibold text-gray-600" style="display:none"><span class="js-video-name"></span><button type="button" class="js-video-clear text-red-600 font-bold">Remove</button></span>
@@ -150,19 +192,46 @@
                         <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     </button>
                 </div>
-                <button type="button" id="feedPostSubmit" class="btn btn-primary btn-sm comp-send">Share on my wall</button>
+                <button type="button" id="feedPostSubmit" class="btn btn-primary btn-sm comp-send">Post</button>
             </div>
         </div>
     </div>
 </div>
 
-{{-- People you may know — above the wall, right after the composer. --}}
-@include('community.partials.recommended', ['recommendations' => $recommendations])
+{{-- People you may know — above the wall, right after the composer, and
+     fetched rather than rendered: the ranking walks friends-of-friends and
+     the threads you have commented in, which is slower than the wall should
+     ever wait for. Skeleton cards hold the space so nothing jumps. --}}
+<section class="pymk" id="pymk" aria-label="People you may know">
+    <div class="pymk-head">
+        <h2>People you may know</h2>
+        <a href="{{ route('community.connect.members') }}">See all</a>
+    </div>
+    <div class="pymk-rail" id="pymkRail">
+        @for ($i = 0; $i < 4; $i++)
+            <div class="pymk-skel" aria-hidden="true"></div>
+        @endfor
+    </div>
+    <p class="pymk-empty hidden" id="pymkEmpty">No suggestions yet — connect with a few co-farmers and this fills up.</p>
+</section>
 
 {{-- The feed: friends and kapit-bahay provinces first --}}
 <div id="feedWrap">
     @forelse ($posts as $post)
-        @include('community.partials.feed-post', ['post' => $post, 'friendIds' => $friendIds])
+        @include('community.partials.feed-post', [
+            'post' => $post,
+            'friendIds' => $friendIds,
+            'followingIds' => $followingIds ?? [],
+            'savedIds' => $savedIds ?? [],
+        ])
+        {{-- A discussion and an article, dealt in where a reader is already
+             moving rather than stacked at the top where they read as ads. --}}
+        @if ($loop->iteration === 2 && ($injectDiscussion ?? null))
+            @include('community.partials.feed-discussion', ['discussion' => $injectDiscussion])
+        @endif
+        @if ($loop->iteration === 5 && ($injectArticle ?? null))
+            @include('community.partials.feed-article', ['article' => $injectArticle])
+        @endif
         {{-- Phones have no rail. Stacking it above the wall would bury the
              feed under four cards before the first post; stacking it below an
              endless feed means nobody ever reaches it. So it rides here — a
@@ -179,6 +248,12 @@
             <p class="text-sm text-gray-500 mt-1">Ikaw ang mauna — share what's happening sa bukid mo.</p>
         </div>
     @endforelse
+    @if ($posts->count() < 2 && ($injectDiscussion ?? null))
+        @include('community.partials.feed-discussion', ['discussion' => $injectDiscussion])
+    @endif
+    @if ($posts->count() < 5 && ($injectArticle ?? null))
+        @include('community.partials.feed-article', ['article' => $injectArticle])
+    @endif
     @if ($posts->count() < 3)
         {{-- Too few posts for the rail to ride after the third one. --}}
         <div class="lg:hidden" id="feedRailMobile">
@@ -202,6 +277,8 @@
 </aside>
 </div>{{-- /plaza-shell --}}
 
+@include('community.partials.post-actions')
+@include('community.partials.pymk-js')
 @include('community.partials.wall-comments-modal')
 {{-- Tapping your own photo on the composer asks what is on your mind — the
      same cloud the wall draws over every other member's face. --}}

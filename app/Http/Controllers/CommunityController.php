@@ -63,6 +63,22 @@ class CommunityController extends Controller
         // one query per post, which is the N+1 this page just stopped paying.
         // The thread fetch attaches its own when a thread is actually opened.
 
+        /* Nobody you follow goes unheard.
+         *
+         * Following is a promise that this person's news reaches you, so their
+         * newest post is lifted above the general wall — one apiece, because
+         * the promise is "not missed", not "takes the whole screen". Whatever
+         * the feed already holds is excluded, so nothing appears twice. */
+        $social = app(\App\Services\CommunitySocialService::class);
+        $followingIds = $social->followingIds((int) $me->id);
+        $lifted = $social->latestFromFollowed((int) $me->id, $posts->pluck('id')->all(), 6);
+        if ($lifted->isNotEmpty()) {
+            $lifted->loadCount('comments');
+            \App\Models\CommunityReaction::attach($lifted, 'wallpost', (int) $me->id);
+            $posts = $lifted->concat($posts)->values();
+        }
+        $posts->loadMissing('sharedPost');
+
         // Left rail — incoming friend (co-farmer) requests.
         $requestRows = \App\Models\CommunityConnection::active()
             ->where('friendUserId', (int) $me->id)
@@ -76,20 +92,35 @@ class CommunityController extends Controller
             ->limit(6)
             ->get();
 
-        // Right rail — recent discussions (groups).
-        $recentGroups = \App\Models\CommunityGroup::active()
-            ->withCount(['members as member_count'])
-            ->orderByDesc('id')
-            ->limit(6)
-            ->get();
+        /* One discussion and one article, dealt into the wall itself.
+         *
+         * Randomised rather than newest, so the same two never own the page —
+         * and drawn as posts because that is how they get read: a rail card is
+         * furniture, a card in the stream is something you stop at. */
+        $discussion = \App\Models\CommunityGroup::active()
+            ->withCount(['members as member_count', 'posts as post_count'])
+            ->inRandomOrder()
+            ->first();
+        if ($discussion) {
+            $discussion->joined = \App\Models\CommunityGroupMember::active()
+                ->where('groupId', $discussion->id)
+                ->where('userId', (int) $me->id)
+                ->exists();
+        }
+        $article = \App\Models\AsCommunityBlogPost::where('deleteStatus', 1)
+            ->where('isPublished', 1)
+            ->inRandomOrder()
+            ->first();
 
         return view('community.feed', [
             'posts' => $posts,
             'friendIds' => $friendIds,
-            'recommendations' => \App\Models\CommunityConnection::recommendationsFor((int) $me->id, 8),
+            'followingIds' => $followingIds,
+            'savedIds' => $social->bookmarkedIds((int) $me->id),
             'friendRequests' => $friendRequests,
             'friendRequestCount' => $friendRequestCount,
-            'recentGroups' => $recentGroups,
+            'injectDiscussion' => $discussion,
+            'injectArticle' => $article,
             // No sponsor inventory yet — the rail hides while this is empty.
             'sponsors' => collect(),
         ]);
@@ -107,6 +138,9 @@ class CommunityController extends Controller
         $before = $request->query('before');
         $beforeTs = $before ? \Illuminate\Support\Carbon::parse($before) : now();
         $friendIds = \App\Models\CommunityConnection::connectedIds((int) $me->id);
+        $moreSocial = app(\App\Services\CommunitySocialService::class);
+        $moreFollowing = $moreSocial->followingIds((int) $me->id);
+        $moreSaved = $moreSocial->bookmarkedIds((int) $me->id);
 
         $rows = \App\Models\CommunityWallPost::where('deleteStatus', 1)
             ->where('created_at', '<', $beforeTs)
@@ -122,7 +156,12 @@ class CommunityController extends Controller
 
         $html = '';
         foreach ($items as $post) {
-            $html .= view('community.partials.feed-post', ['post' => $post, 'friendIds' => $friendIds])->render();
+            $html .= view('community.partials.feed-post', [
+                'post' => $post,
+                'friendIds' => $friendIds,
+                'followingIds' => $moreFollowing,
+                'savedIds' => $moreSaved,
+            ])->render();
         }
 
         return response()->json(['success' => true, 'data' => [
