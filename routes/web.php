@@ -433,6 +433,10 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // Following, keeping and passing on.
     Route::post('/app/community/follow/{userId}', [App\Http\Controllers\CommunitySocialController::class, 'follow'])->whereNumber('userId')->name('community.follow');
     Route::post('/app/community/bookmark/{postId}', [App\Http\Controllers\CommunitySocialController::class, 'bookmark'])->whereNumber('postId')->name('community.bookmark');
+    // Reels: sixty seconds, filling the phone.
+    Route::post('/app/community/reels', [App\Http\Controllers\ReelController::class, 'store'])->name('community.reels.store');
+    Route::get('/app/community/reels', [App\Http\Controllers\ReelController::class, 'feed'])->name('community.reels.feed');
+    Route::get('/app/community/reel-music', [App\Http\Controllers\ReelController::class, 'music'])->name('community.reels.music');
     Route::get('/app/community/suggestions', [App\Http\Controllers\CommunitySocialController::class, 'suggestions'])->name('community.suggestions');
     Route::get('/app/community/saved', [App\Http\Controllers\CommunitySocialController::class, 'saved'])->name('community.saved');
     Route::post('/app/community/share/{postId}/wall', [App\Http\Controllers\CommunitySocialController::class, 'shareToWall'])->whereNumber('postId')->name('community.share.wall');

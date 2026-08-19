@@ -215,6 +215,8 @@
     <p class="pymk-empty hidden" id="pymkEmpty">No suggestions yet — connect with a few co-farmers and this fills up.</p>
 </section>
 
+@include('community.partials.reels')
+
 {{-- The feed: friends and kapit-bahay provinces first --}}
 <div id="feedWrap">
     @forelse ($posts as $post)

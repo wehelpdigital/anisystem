@@ -6,9 +6,9 @@ class CommunityWallPost extends BaseModel
 {
     protected $table = 'as_community_wall_posts';
 
-    protected $fillable = ['wallUserId', 'authorUserId', 'body', 'sharedPostId', 'publicToken', 'imagePath', 'videoPath', 'videoPoster', 'isRestricted', 'restrictedReason', 'deleteStatus'];
+    protected $fillable = ['wallUserId', 'authorUserId', 'body', 'sharedPostId', 'publicToken', 'imagePath', 'videoPath', 'videoPoster', 'isReel', 'durationSec', 'audioTitle', 'isRestricted', 'restrictedReason', 'deleteStatus'];
 
-    protected $casts = ['isRestricted' => 'boolean'];
+    protected $casts = ['isRestricted' => 'boolean', 'isReel' => 'boolean'];
 
     /**
      * The post this one is sharing, if any — loaded with its own author so a
