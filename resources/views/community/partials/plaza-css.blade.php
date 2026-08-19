@@ -462,6 +462,19 @@
 
     /* --- Read-only "cloud" status floating over a member's avatar, shown
        wherever members appear (wall, members, co-farmers, discussions). --- */
+    /* What the poster had on their mind, above their name.
+       In the flow rather than floating over the face: floating, it met the
+       top of the card — first overlapping the border, then being cut in
+       half by the clip that kept the coloured edge inside its corners. Same
+       pill the composer wears, one size down, and read-only. */
+    .fp-mind { display: inline-flex; align-items: center; max-width: 100%; margin-bottom: .25rem;
+        padding: .2rem .55rem; border-radius: 999px;
+        border: 1px solid var(--color-gray-200); background: var(--color-white);
+        font-size: .68rem; font-weight: 700; line-height: 1.3; color: var(--color-gray-600);
+        box-shadow: 0 4px 12px -8px rgb(0 0 0 / .4);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    html.dark .fp-mind { background: #232a1c; border-color: #3a4a2c; color: #dbe6cf; }
+
     /* ---- The post's coloured edge ----
        A line across the top of every post, a different colour per post, so a
        column of them has a rhythm and the eye can see where one ends and the
@@ -539,7 +552,9 @@
        the usual gap it lands on the bottom edge of the card above — which is
        what made a column of posts look like the tags were falling off. Only
        cards that actually carry one pay for the space. */
-    .feed-post:has(.status-cloud), .group-post:has(.status-cloud) { margin-top: 1.1rem; }
+    /* Only the discussion card still floats one; the wall's posts say it in
+       the flow now (see .fp-mind) and need no air above them for it. */
+    .group-post:has(.status-cloud) { margin-top: 1.1rem; }
     /* Chat bubble above the avatar, with a tail pointing down at the photo. */
     .status-cloud {
         position: absolute; left: 0; right: auto; bottom: calc(100% + .3rem);

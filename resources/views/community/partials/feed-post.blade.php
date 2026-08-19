@@ -27,8 +27,14 @@
 @endphp
 <article class="card p-4 mb-5 feed-post wall-post fp-card fp-hue-{{ $fpHue }}" id="wallpost-{{ $post->id }}" data-post-id="{{ $post->id }}">
     <header class="flex items-start gap-3">
-        @include('community.partials.avatar-status', ['user' => $author, 'size' => 'avatar-md'])
+        {{-- The plain face: what is on their mind is said in the column
+             beside it (see .fp-mind), not floating over the card. --}}
+        @include('community.partials.avatar', ['user' => $author, 'size' => 'avatar-md', 'showOnline' => true])
         <div class="min-w-0 grow">
+            @if (filled($author?->statusBubble))
+                {{-- Read-only here: it is their thought, not yours to set. --}}
+                <span class="fp-mind" title="{{ $author->statusBubble }}">{{ \Illuminate\Support\Str::limit($author->statusBubble, 60) }}</span>
+            @endif
             <p class="text-sm leading-tight flex items-center flex-wrap gap-x-1.5 gap-y-0.5">
                 <a href="{{ route('community.connect.profile', ['userId' => $author->id]) }}" class="font-semibold text-gray-900 hover:text-brand-700">{{ $author->full_name }}</a>
                 @if ($isFriend)<span class="badge badge-green align-middle">Co-farmer</span>@endif
