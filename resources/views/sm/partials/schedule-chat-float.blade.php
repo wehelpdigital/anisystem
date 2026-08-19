@@ -251,7 +251,8 @@
     .team-photostrip::-webkit-scrollbar { display: none; }
     .team-photostrip.hidden { display: none; }
     .team-shot { position: relative; flex: none; width: 2.4rem; height: 2.4rem; border-radius: .45rem;
-        overflow: hidden; animation: teamShotIn .28s cubic-bezier(.22,1,.36,1); }
+        overflow: hidden; background: var(--color-gray-100); border: 1px solid var(--color-gray-200);
+        animation: teamShotIn .28s cubic-bezier(.22,1,.36,1); }
     @keyframes teamShotIn { from { opacity: 0; transform: scale(.8); } }
     @media (prefers-reduced-motion: reduce) { .team-shot { animation: none; } }
     .team-shot img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 0; }

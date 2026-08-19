@@ -117,7 +117,7 @@
     .thread-modal-back { position:absolute; inset:0; background:rgb(17 24 39 / .5); backdrop-filter:blur(2px);
         animation:thmFade .28s cubic-bezier(.22,1,.36,1); }
     .thread-modal-card { position:relative; display:flex; flex-direction:column; width:100%; max-width:42rem;
-        max-height:92dvh; background:var(--color-surface, #fff); border-radius:1.1rem 1.1rem 0 0;
+        max-height:92dvh; background:var(--color-white); border-radius:1.1rem 1.1rem 0 0;
         box-shadow:0 -8px 40px rgb(0 0 0 / .22); animation:thmUp .28s cubic-bezier(.22,1,.36,1); }
     @keyframes thmFade { from { opacity:0; } }
     @keyframes thmUp { from { opacity:0; transform:translateY(14px); } }
@@ -139,11 +139,10 @@
     .thread-modal-body { flex:1 1 auto; min-height:0; overflow-y:auto; padding:.85rem 1rem 1.1rem;
         -webkit-overflow-scrolling:touch; }
     /* Inside the modal the post is the page: no card chrome, nothing folded. */
-    .thread-modal-body .group-post { border:0; box-shadow:none; padding:0; margin:0; background:transparent; }
+    .thread-modal-body .group-post { border:0; box-shadow:none; padding:1.4rem 0 0; margin:0; background:transparent; }
     .thread-modal-body .post-replies.is-collapsed > .group-reply { display:block; }
     .thread-modal-body .post-thread-more, .thread-modal-body .post-readmore { display:none; }
     .thread-modal-body .group-post-body.is-clamped { -webkit-line-clamp:unset; display:block; overflow:visible; }
-    html.dark .thread-modal-card { background:var(--color-gray-900, #111827); }
     html.dark .thread-modal-head { border-bottom-color:rgb(255 255 255 / .08); }
     @media (min-width:640px) {
         .thread-modal { align-items:center; padding:1.5rem; }

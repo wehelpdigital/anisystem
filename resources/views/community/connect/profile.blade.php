@@ -234,7 +234,7 @@
        what makes a header read as a profile rather than as a banner ad. */
     .pf-id { display:flex; align-items:flex-end; gap:.85rem; margin-top:-2rem; }
     .pf-face { position:relative; display:inline-block; flex:none; width:5rem; height:5rem;
-        border-radius:999px; box-shadow:0 0 0 3px var(--color-surface,#fff); background:var(--color-surface,#fff); }
+        border-radius:999px; box-shadow:0 0 0 3px var(--color-white); background:var(--color-white); }
     .pf-face .avatar { width:100%; height:100%; font-size:1.5rem; }
     @media (min-width:640px) { .pf-face { width:6rem; height:6rem; } }
     .pf-name { min-width:0; padding-bottom:.15rem; }
@@ -255,7 +255,6 @@
     .pf-acts { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; margin-top:.9rem;
         padding-top:.9rem; border-top:1px solid var(--color-gray-100); }
     html.dark .pf-acts { border-top-color:rgb(255 255 255 / .08); }
-    html.dark .pf-name h2 { color:var(--color-gray-100); }
 
     /* ---- About panel ---- */
     .pf-about { padding:1rem; }
@@ -268,7 +267,6 @@
     .pf-about-empty { font-size:.8rem; color:var(--color-gray-400); }
     .pf-about-empty a { color:var(--color-brand-700); font-weight:700; text-decoration:underline; }
     html.dark .pf-rows > div { border-top-color:rgb(255 255 255 / .08); }
-    html.dark .pf-rows dd { color:var(--color-gray-200); }
 
     /* Stand-in cover: the same slow green the messenger and nav wear. */
     .profile-cover-fallback {

@@ -168,7 +168,12 @@
     .rl-studio.hidden { display: none; }
     .rl-bar { display: flex; align-items: center; justify-content: space-between; gap: .5rem;
         padding: .55rem .7rem; border-bottom: 1px solid rgb(255 255 255 / .08); flex: none; }
-    .rl-title { font-weight: 700; font-size: .95rem; }
+    /* Centred between the two buttons, and it stays centred when Post is
+       hidden — space-between alone shoved the title against the right edge
+       on the first step, where there is no Post yet. */
+    .rl-title { flex: 1 1 auto; text-align: center; font-weight: 700; font-size: .95rem; }
+    /* The counterweight for the ✕ on steps that have no Post button. */
+    .rl-bar .btn.hidden { display: block; visibility: hidden; }
     .rl-icon { width: 2.25rem; height: 2.25rem; border-radius: 999px; border: 0; cursor: pointer;
         background: rgb(255 255 255 / .12); color: #fff; }
 

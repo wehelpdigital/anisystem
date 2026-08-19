@@ -438,6 +438,12 @@
     /* --- Read-only "cloud" status floating over a member's avatar, shown
        wherever members appear (wall, members, co-farmers, discussions). --- */
     .status-cloud-wrap { position: relative; display: inline-block; }
+    /* A card carrying a cloud needs air above it.
+       The cloud floats above its avatar and out of the card entirely, so with
+       the usual gap it lands on the bottom edge of the card above — which is
+       what made a column of posts look like the tags were falling off. Only
+       cards that actually carry one pay for the space. */
+    .feed-post:has(.status-cloud), .group-post:has(.status-cloud) { margin-top: 1.1rem; }
     /* Chat bubble above the avatar, with a tail pointing down at the photo. */
     .status-cloud {
         position: absolute; left: 0; right: auto; bottom: calc(100% + .3rem);

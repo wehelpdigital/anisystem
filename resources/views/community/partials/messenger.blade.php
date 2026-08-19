@@ -207,6 +207,7 @@
     .msgr-attach::-webkit-scrollbar { display:none; }
     .msgr-attach.hidden { display:none; }
     .msgr-att { position:relative; flex:none; width:2.75rem; height:2.75rem; border-radius:.5rem; overflow:hidden;
+        background:var(--color-gray-100); border:1px solid var(--color-gray-200);
         animation:msgrAttIn .28s cubic-bezier(.22,1,.36,1); }
     @keyframes msgrAttIn { from { opacity:0; transform:scale(.8); } }
     @media (prefers-reduced-motion:reduce) { .msgr-att { animation:none; } }
