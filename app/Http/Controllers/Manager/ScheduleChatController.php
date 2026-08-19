@@ -351,6 +351,54 @@ class ScheduleChatController extends BaseScheduleController
     }
 
     /**
+     * Somebody walked into the Collab Room.
+     *
+     * The same rule the chat announcement follows, for the same reason: a
+     * member whose room heartbeat is fresh is already watching the door, so
+     * a bell would only tell them what they can see. The rest get one line —
+     * which is the whole point of a room you can be invited into and then
+     * never notice anyone arriving at.
+     *
+     * Announced once per arrival, not once per page load: the caller only
+     * reaches here when the joiner's heartbeat was cold, and the cache key
+     * below covers a bounce (a reload right after the heartbeat lapses).
+     */
+    public static function announceJoin($schedule, int $joinerId): void
+    {
+        $sid = (int) $schedule->id;
+        // Cache::add is the atomic "was I first?" — a second tab racing the
+        // first must not produce a second round of bells.
+        if (! Cache::add('collab-joined.' . $sid . '.' . $joinerId, 1, 900)) {
+            return;
+        }
+
+        $who = \App\Models\User::find($joinerId)?->full_name ?: 'A teammate';
+        $notes = app(\App\Services\NotificationService::class);
+
+        foreach (ScheduleTeam::memberIds($schedule) as $memberId) {
+            $memberId = (int) $memberId;
+            if ($memberId === $joinerId) {
+                continue;
+            }
+            // In the room already: they can see who just arrived.
+            if (self::isInRoom($sid, $memberId)) {
+                continue;
+            }
+            $notes->notify(
+                $memberId,
+                'collab-join',
+                $who . ' joined the Collab Room',
+                (string) $schedule->title,
+                // Through the entry route, so a member who also farms their
+                // own land is switched into the right farm on the way in.
+                route('sm.enter', ['schedule' => $sid, 'to' => 'sm.collab']),
+                $joinerId,
+                $sid,
+            );
+        }
+    }
+
+    /**
      * Mark messages as seen by me, and say who has seen mine.
      *
      * Called by the thread only while it is actually on screen: a message

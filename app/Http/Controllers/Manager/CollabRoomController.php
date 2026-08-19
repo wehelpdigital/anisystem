@@ -21,6 +21,17 @@ class CollabRoomController extends BaseScheduleController
             abort(403);
         }
 
+        /* Opening the room is joining it.
+         *
+         * Only a cold heartbeat counts as an arrival — a refresh, or a second
+         * tab, is the same person still here — so the question is asked
+         * before the beat is marked, never after. */
+        $arriving = ! ScheduleChatController::isInRoom((int) $schedule->id, $meId);
+        ScheduleChatController::markInRoom((int) $schedule->id, $meId);
+        if ($arriving) {
+            ScheduleChatController::announceJoin($schedule, $meId);
+        }
+
         // The opener can pick who's in this room (?members=1,2,3). Whoever opens
         // is always in; unknown ids are ignored; an empty result falls back to all.
         $all = ScheduleTeam::members($schedule);
