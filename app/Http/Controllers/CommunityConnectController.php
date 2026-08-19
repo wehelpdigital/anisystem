@@ -298,6 +298,11 @@ class CommunityConnectController extends Controller
             ]);
         }
 
+        // What the header counts. A profile that says only "3 connections"
+        // tells a visitor nothing about whether this is somebody worth
+        // following, which is the decision the page exists to support.
+        $social = app(\App\Services\CommunitySocialService::class);
+
         return view('community.connect.profile', [
             'member' => $member,
             'status' => $status,
@@ -306,6 +311,10 @@ class CommunityConnectController extends Controller
             'connectionCount' => count(CommunityConnection::connectedIds($member->id)),
             'photos' => $photos,
             'videos' => $videos,
+            'postCount' => \App\Models\CommunityWallPost::active()->where('authorUserId', $member->id)->count(),
+            'followerCount' => $social->followerCount($member->id),
+            'followingCount' => $social->followingCount($member->id),
+            'isFollowed' => ! $isSelf && $social->isFollowing((int) Auth::id(), (int) $member->id),
         ]);
     }
 

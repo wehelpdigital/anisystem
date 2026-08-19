@@ -13,79 +13,119 @@
 <div>
     @include('community.partials.nav', ['active' => (int) $member->id === (int) auth()->id() ? 'profile' : 'members'])
 
-    {{-- Profile header --}}
-    <div class="card p-5 mb-4">
+    {{-- The profile header.
+
+         A cover with the face sitting on its edge, then the name, then the
+         numbers that answer "is this somebody worth following" — which is
+         the decision this page exists to support. Everything descriptive
+         moved out into the About panel below; it used to sit here as loose
+         chips and pushed the buttons off a phone's first screen. --}}
+    <div class="card pf-head mb-4">
         @if (filled($member->coverPath))
             {{-- The band the owner dragged into place, not the middle the
                  browser would have guessed. --}}
-            <div class="-mx-5 -mt-5 mb-4 h-32 sm:h-44 rounded-t-xl bg-gray-100 bg-cover bg-no-repeat"
-                 style="background-image:url('{{ \App\Support\MediaStore::url($member->coverPath) }}'); background-position: 50% {{ (int) ($member->coverPos ?? 50) }}%"></div>
+            <div class="pf-cover" style="background-image:url('{{ \App\Support\MediaStore::url($member->coverPath) }}'); background-position: 50% {{ (int) ($member->coverPos ?? 50) }}%"></div>
         @else
             {{-- No cover yet: the app's drifting header green stands in, so a
                  bare profile still opens with a header instead of a name
                  floating in white space. --}}
-            <div class="-mx-5 -mt-5 mb-4 h-20 sm:h-28 rounded-t-xl profile-cover-fallback" aria-hidden="true"></div>
+            <div class="pf-cover profile-cover-fallback" aria-hidden="true"></div>
         @endif
-        <div class="flex items-start gap-4">
-            <span class="status-avatar inline-block shrink-0 relative" style="width:4rem;height:4rem;" data-self="{{ $isSelf ? 1 : 0 }}">
-                @include('community.partials.avatar', ['user' => $member, 'size' => 'avatar-lg', 'link' => false, 'showOnline' => true])
-                {{-- Thought bubble floating over the profile pic. --}}
-                <span class="status-bubble {{ filled($member->statusBubble) ? '' : 'is-empty' }}" id="statusBubble"
-                      @if ($isSelf) role="button" tabindex="0" title="Set your status" data-status-bubble @endif><span class="status-bubble-text" @if ($isSelf) data-status-text @endif>{{ $member->statusBubble ?: ($isSelf ? "💭 What's on your mind?" : '') }}</span></span>
-            </span>
-            <div class="min-w-0 grow">
-                <h2 class="text-xl font-bold text-gray-900 leading-tight" style="font-family:var(--font-heading)">{{ $member->full_name }}</h2>
-                @if (filled($member->headline))
-                    <p class="text-sm text-gray-600 font-medium mt-0.5">{{ $member->headline }}</p>
-                @endif
-                @if (filled($member->location))
-                    <p class="text-sm text-gray-500 mt-0.5 flex items-center gap-1">
-                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                        {{ $member->location }}
-                    </p>
-                @endif
-                <div class="flex items-center gap-4 text-xs text-gray-500 font-medium mt-2">
-                    <span>{{ $connectionCount }} {{ \Illuminate\Support\Str::plural('connection', $connectionCount) }}</span>
-                    <span>{{ $plans->count() }} shared {{ \Illuminate\Support\Str::plural('plan', $plans->count()) }}</span>
+
+        <div class="pf-body">
+            <div class="pf-id">
+                <span class="status-avatar pf-face" data-self="{{ $isSelf ? 1 : 0 }}">
+                    @include('community.partials.avatar', ['user' => $member, 'size' => 'avatar-lg', 'link' => false, 'showOnline' => true])
+                    {{-- Thought bubble floating over the profile pic. --}}
+                    <span class="status-bubble {{ filled($member->statusBubble) ? '' : 'is-empty' }}" id="statusBubble"
+                          @if ($isSelf) role="button" tabindex="0" title="Set your status" data-status-bubble @endif><span class="status-bubble-text" @if ($isSelf) data-status-text @endif>{{ $member->statusBubble ?: ($isSelf ? "💭 What's on your mind?" : '') }}</span></span>
+                </span>
+                <div class="pf-name">
+                    <h2>{{ $member->full_name }}</h2>
+                    @if (filled($member->headline))
+                        <p class="pf-headline">{{ $member->headline }}</p>
+                    @endif
+                    @if (filled($member->location))
+                        <p class="pf-loc">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        {{ $member->location }}</p>
+                    @endif
                 </div>
             </div>
-        </div>
 
-        @if (filled($member->bio))
-            <p class="text-sm text-gray-700 mt-4 whitespace-pre-line">{{ $member->bio }}</p>
-        @endif
-
-        @php
-            $farmChips = array_filter([
-                filled($member->profession) ? '💼 ' . $member->profession : null,
-                filled($member->yearsFarming) ? '👨‍🌾 ' . $member->yearsFarming . ' ' . \Illuminate\Support\Str::plural('year', (int) $member->yearsFarming) . ' farming' : null,
-                filled($member->farmSize) ? '📏 ' . $member->farmSize : null,
-                filled($member->cropsGrown) ? '🌾 ' . $member->cropsGrown : null,
-                filled($member->farmingMethod) ? '🧑‍🔬 ' . $member->farmingMethod : null,
-            ]);
-        @endphp
-        @if (!empty($farmChips))
-            <div class="flex flex-wrap gap-2 mt-4">
-                @foreach ($farmChips as $chip)
-                    <span class="inline-flex items-center text-xs font-semibold text-brand-800 bg-brand-50 border border-brand-100 rounded-full px-3 py-1">{{ $chip }}</span>
-                @endforeach
+            {{-- The numbers, as a row that scrolls rather than wraps: five of
+                 them stacked two-and-three looks like a table nobody reads. --}}
+            <div class="pf-stats">
+                <span class="pf-stat"><b>{{ $postCount }}</b><i>{{ \Illuminate\Support\Str::plural('post', $postCount) }}</i></span>
+                <span class="pf-stat"><b>{{ $followerCount }}</b><i>{{ \Illuminate\Support\Str::plural('follower', $followerCount) }}</i></span>
+                <span class="pf-stat"><b>{{ $followingCount }}</b><i>following</i></span>
+                {{-- Shared plans are not here: the tab below already carries
+                     that count, and a fifth number pushed the row off a
+                     360px screen entirely rather than half-showing. --}}
+                <span class="pf-stat"><b>{{ $connectionCount }}</b><i>{{ \Illuminate\Support\Str::plural('connection', $connectionCount) }}</i></span>
             </div>
-        @endif
 
-        {{-- Action buttons — Message leads on the left. --}}
-        <div class="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-gray-100">
-            @if ($isSelf)
-                <a href="{{ route('account.index') }}" class="btn btn-white btn-sm">✏️ Edit profile</a>
-            @else
-                @if ($member->allowMessages)
-                    <button type="button" class="btn btn-primary btn-sm js-open-dm" data-dm-user="{{ $member->id }}" data-dm-name="{{ $member->full_name }}">
-                        💬 Message
-                    </button>
-                @endif
-                @include('community.connect.partials.action', ['status' => $status, 'memberId' => $member->id])
+            @if (filled($member->bio))
+                <p class="pf-bio">{{ $member->bio }}</p>
             @endif
+
+            {{-- Message leads: it is the thing a visitor most often came for. --}}
+            <div class="pf-acts">
+                @if ($isSelf)
+                    <a href="{{ route('account.index') }}" class="btn btn-white btn-sm">✏️ Edit profile</a>
+                @else
+                    @if ($member->allowMessages)
+                        <button type="button" class="btn btn-primary btn-sm js-open-dm" data-dm-user="{{ $member->id }}" data-dm-name="{{ $member->full_name }}">
+                            💬 Message
+                        </button>
+                    @endif
+                    <button type="button" class="fp-follow {{ $isFollowed ? 'is-on' : '' }}"
+                            data-follow="{{ $member->id }}" data-name="{{ $member->full_name }}"
+                            aria-pressed="{{ $isFollowed ? 'true' : 'false' }}">
+                        <span class="on">Following</span><span class="off">+ Follow</span>
+                    </button>
+                    @include('community.connect.partials.action', ['status' => $status, 'memberId' => $member->id])
+                @endif
+            </div>
         </div>
     </div>
+
+    {{-- About: labelled rows, not a paragraph of emoji chips.
+
+         The chips read fine at five words and turned into a wall at fifteen;
+         a visitor scanning for "what do they grow" now has a line to land on.
+         Hidden entirely when there is nothing to say, so an empty profile is
+         not a list of blanks. --}}
+    @php
+        $about = array_filter([
+            'Location' => $member->location,
+            'Does' => $member->profession,
+            'Farming for' => filled($member->yearsFarming)
+                ? $member->yearsFarming . ' ' . \Illuminate\Support\Str::plural('year', (int) $member->yearsFarming)
+                : null,
+            'Farm size' => $member->farmSize,
+            'Grows' => $member->cropsGrown,
+            'Method' => $member->farmingMethod,
+        ], fn ($v) => filled($v));
+    @endphp
+    @if (! empty($about) || $isSelf)
+        <div class="card pf-about mb-4">
+            <h3>About</h3>
+            @if (! empty($about))
+                <dl class="pf-rows">
+                    @foreach ($about as $label => $value)
+                        <div><dt>{{ $label }}</dt><dd>{{ $value }}</dd></div>
+                    @endforeach
+                </dl>
+            @else
+                <p class="pf-about-empty">
+                    Nothing here yet — what you grow and how long you have farmed
+                    helps other farmers know whether to ask you.
+                    <a href="{{ route('account.index') }}">Fill it in</a>.
+                </p>
+            @endif
+        </div>
+    @endif
 
     {{-- Wall | Shared Plans tabs --}}
     <div class="profile-tabs flex gap-1 p-1 rounded-xl bg-gray-100 mb-4" role="tablist" id="profileTabs">
@@ -177,6 +217,7 @@
     </div>
 </div>
 
+@include('community.partials.post-actions')
 @if ($isSelf)
     @include('community.partials.status-modal')
 @endif
@@ -184,6 +225,51 @@
 
 @push('head')
 <style>
+    /* ---- Profile header ---- */
+    .pf-head { padding:0; overflow:hidden; }
+    .pf-cover { height:7rem; background-size:cover; background-repeat:no-repeat; background-color:var(--color-gray-100); }
+    @media (min-width:640px) { .pf-cover { height:11rem; } }
+    .pf-body { padding:0 1rem 1rem; }
+    /* The face sits on the cover's edge — half over, half under — which is
+       what makes a header read as a profile rather than as a banner ad. */
+    .pf-id { display:flex; align-items:flex-end; gap:.85rem; margin-top:-2rem; }
+    .pf-face { position:relative; display:inline-block; flex:none; width:5rem; height:5rem;
+        border-radius:999px; box-shadow:0 0 0 3px var(--color-surface,#fff); background:var(--color-surface,#fff); }
+    .pf-face .avatar { width:100%; height:100%; font-size:1.5rem; }
+    @media (min-width:640px) { .pf-face { width:6rem; height:6rem; } }
+    .pf-name { min-width:0; padding-bottom:.15rem; }
+    .pf-name h2 { font-family:var(--font-heading); font-size:1.15rem; font-weight:800; line-height:1.2;
+        color:var(--color-gray-900); overflow-wrap:anywhere; }
+    .pf-headline { font-size:.82rem; font-weight:600; color:var(--color-gray-600); margin-top:.1rem; }
+    .pf-loc { display:flex; align-items:center; gap:.25rem; font-size:.78rem; color:var(--color-gray-500); margin-top:.15rem; }
+    .pf-loc svg { width:.85rem; height:.85rem; color:var(--color-gray-400); flex:none; }
+
+    /* Five numbers: a row that scrolls, never a grid that wraps two-and-three. */
+    .pf-stats { display:flex; gap:.9rem; margin-top:.85rem; padding-bottom:.15rem;
+        overflow-x:auto; scrollbar-width:none; }
+    .pf-stats::-webkit-scrollbar { display:none; }
+    .pf-stat { flex:none; display:flex; align-items:baseline; gap:.28rem; }
+    .pf-stat b { font-size:.95rem; font-weight:800; color:var(--color-gray-900); }
+    .pf-stat i { font-style:normal; font-size:.72rem; font-weight:600; color:var(--color-gray-500); }
+    .pf-bio { font-size:.85rem; color:var(--color-gray-700); margin-top:.75rem; white-space:pre-line; overflow-wrap:anywhere; }
+    .pf-acts { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; margin-top:.9rem;
+        padding-top:.9rem; border-top:1px solid var(--color-gray-100); }
+    html.dark .pf-acts { border-top-color:rgb(255 255 255 / .08); }
+    html.dark .pf-name h2 { color:var(--color-gray-100); }
+
+    /* ---- About panel ---- */
+    .pf-about { padding:1rem; }
+    .pf-about h3 { font-family:var(--font-heading); font-size:.9rem; font-weight:800;
+        color:var(--color-gray-900); margin-bottom:.5rem; }
+    .pf-rows > div { display:flex; gap:.75rem; padding:.4rem 0; border-top:1px solid var(--color-gray-100); }
+    .pf-rows > div:first-child { border-top:0; }
+    .pf-rows dt { flex:none; width:6.5rem; font-size:.78rem; font-weight:700; color:var(--color-gray-500); }
+    .pf-rows dd { min-width:0; font-size:.82rem; color:var(--color-gray-800); overflow-wrap:anywhere; }
+    .pf-about-empty { font-size:.8rem; color:var(--color-gray-400); }
+    .pf-about-empty a { color:var(--color-brand-700); font-weight:700; text-decoration:underline; }
+    html.dark .pf-rows > div { border-top-color:rgb(255 255 255 / .08); }
+    html.dark .pf-rows dd { color:var(--color-gray-200); }
+
     /* Stand-in cover: the same slow green the messenger and nav wear. */
     .profile-cover-fallback {
         background:linear-gradient(120deg, #3d6823, #6b9f3d 35%, #4a7c2a 60%, #2f5219 85%, #3d6823);
@@ -207,7 +293,7 @@
     @media (prefers-reduced-motion: reduce) { [data-tab-panel]:not(.hidden) { animation:none; } }
 
     /* Chat bubble above the profile pic, with a tail pointing down at the photo. */
-    .status-bubble { position:absolute; bottom:calc(100% + .3rem); left:0; right:auto;
+    .status-bubble { position:absolute; bottom:calc(100% + .35rem); left:.25rem; right:auto;
         max-width:12rem;
         background:#fff; border:1px solid #e5e7eb; border-radius:.7rem; padding:.2rem .6rem;
         box-shadow:0 3px 10px rgba(0,0,0,.12); z-index:2;
