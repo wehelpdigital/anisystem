@@ -131,6 +131,8 @@ Route::middleware('auth')->group(function () {
     // Support tickets (client side).
     Route::get('/app/tutorials', [App\Http\Controllers\TutorialController::class, 'index'])->name('tutorials.index');
     Route::get('/app/notes', [App\Http\Controllers\NotesHubController::class, 'index'])->name('notes.hub');
+    // Every picture from every season, the way Global Notes gathers the words.
+    Route::get('/app/gallery', [App\Http\Controllers\GalleryHubController::class, 'index'])->name('gallery.hub');
     Route::post('/app/notes-store', [App\Http\Controllers\NotesHubController::class, 'store'])->name('notes.hub.store');
     Route::delete('/app/notes-delete', [App\Http\Controllers\NotesHubController::class, 'destroy'])->name('notes.hub.destroy');
     Route::post('/app/notes-draw', [App\Http\Controllers\NotesHubController::class, 'drawUpload'])->name('notes.hub.draw');

@@ -95,6 +95,13 @@
     if (window.smPickMedia) return;
 
     const URL_BASE = @json($smPickerUrl);
+    /* Every season at once.
+     *
+     * The per-season list is right when you are inside a season. The messenger
+     * is not: a farmer attaching a photo there is remembering a picture, not a
+     * schedule. Same sheet, same rows, same pick contract — only the source
+     * changes, so callers pass allSchedules and nothing else moves. */
+    const URL_ALL = @json(route('gallery.hub'));
     const WIRED = @json($smPickerWired);
     const $ = (id) => document.getElementById(id);
 
@@ -162,12 +169,15 @@
         const myGen = gen;
         const grid = $('smMediaPickerGrid');
         if (items.length === 0) grid.innerHTML = skeletons(8);
-        const params = new URLSearchParams({ scheduleId: String(cfg.scheduleId || ''), page: String(page + 1) });
+        const all = !!cfg.allSchedules;
+        const params = new URLSearchParams({ page: String(page + 1) });
+        if (all) params.set('json', '1');
+        else params.set('scheduleId', String(cfg.scheduleId || ''));
         if (cfg.kinds) params.set('kinds', cfg.kinds);
         const q = ($('smMediaPickerSearch').value || '').trim();
         if (q) params.set('q', q);
         try {
-            const res = await window.api(URL_BASE + '?' + params.toString());
+            const res = await window.api((all ? URL_ALL : URL_BASE) + '?' + params.toString());
             if (myGen !== gen) return;               // superseded while flying
             const fresh = (res.data && res.data.items) || [];
             more = !!(res.data && res.data.more);
@@ -272,7 +282,7 @@
         // Without the route registered there is nothing at the other end, and a
         // raw 404 in the sheet reads as "this season has no photos" rather than
         // "nobody wired this up". Say which.
-        if (!WIRED) {
+        if (!WIRED && !cfg.allSchedules) {
             state.textContent = 'The gallery is not connected on this install yet.';
             return;
         }

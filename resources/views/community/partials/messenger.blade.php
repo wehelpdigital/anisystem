@@ -546,7 +546,11 @@
         const q = parseInt(qs.get('scheduleId') || qs.get('id') || '', 10);
         return /^\/app\/sm-/.test(location.pathname) && q ? q : 0;
     }
-    const canGallery = () => typeof window.smPickMedia === 'function' && galleryScheduleId() > 0;
+    /* The gallery door used to appear only on pages that carried a season,
+       which meant never in the community — exactly where somebody is most
+       likely to be reaching for a photo they already have. With no season on
+       the page it opens across every season instead of hiding. */
+    const canGallery = () => typeof window.smPickMedia === 'function';
 
     /* Record a clip in place — the team chat's recorder, pointed at a DM.
        No preview pane on purpose: the person is filming the field, not the
@@ -593,7 +597,7 @@
        long as it is borrowed — the draw pad's picking pattern, aimed here. */
     function pickFromGallery(attachPick) {
         const sid = galleryScheduleId();
-        if (typeof window.smPickMedia !== 'function' || !sid) return;
+        if (typeof window.smPickMedia !== 'function') return;
         const root = document.documentElement;
         root.classList.add('msgr-picking');
         const onClosed = (e) => {
@@ -605,8 +609,10 @@
         };
         document.addEventListener('sm:sheet-closed', onClosed);
         window.smPickMedia({
+            // Inside a season, that season. Anywhere else, everything.
             scheduleId: sid,
-            title: 'Share from the gallery',
+            allSchedules: !sid,
+            title: sid ? 'Share from the gallery' : 'Share from your gallery',
             onPick: (item) => attachPick(
                 { pick: item, kind: item.type === 'video' ? 'video' : 'image', url: item.url, poster: item.posterUrl || null },
                 item.title || 'From the gallery'
@@ -1133,4 +1139,6 @@
 })();
 </script>
 
+{{-- The dock offers "from your gallery", so it carries the sheet. @once. --}}
+@include('sm.partials.media-picker')
 @include('community.partials.chat-media-js')
