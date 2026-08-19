@@ -736,7 +736,11 @@
                 + ' href="' + esc(SAVE_URL + '?u=' + encodeURIComponent(r.url) + '&n=' + encodeURIComponent(r.title || 'recording'))
                 + '" download onclick="event.stopPropagation()">'
                 + '<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v10m0 0l-3.5-3.5M12 14l3.5-3.5M5 19h14"/></svg></a>';
-            const inner = '<span class="tb-shot"><span class="tb-kind">' + esc(r.kind) + '</span>' + shot + save + '</span>'
+            // The save button only goes on a card that is NOT a link: an
+            // anchor inside an anchor is invalid HTML, and the parser closes
+            // the card early, spilling its title and date out beside it.
+            const inner = '<span class="tb-shot"><span class="tb-kind">' + esc(r.kind) + '</span>' + shot
+                + (r.href ? '' : save) + '</span>'
                 + '<span class="tb-body">'
                 + '<span class="tb-title">' + esc(r.title) + '</span>'
                 + (r.note ? '<span class="tb-note">' + esc(r.note) + '</span>' : '')

@@ -25,28 +25,6 @@
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     html.dark .gh-season { color: #a5c97e; }
     .gh-search-form { display: flex; gap: .5rem; align-items: center; margin-bottom: .7rem; flex-wrap: wrap; }
-    .gh-albums { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: .7rem; }
-    .gh-album { display: flex; flex-direction: column; border-radius: .8rem; overflow: hidden;
-        background: var(--color-white); border: 1px solid var(--color-gray-200); text-align: left; width: 100%;
-        cursor: pointer;
-        transition: transform .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
-    .gh-album:hover { transform: translateY(-2px); border-color: #a8cc7e; }
-    .gh-album-shot { position: relative; aspect-ratio: 4/3; background: #0b1220; }
-    .gh-album-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .gh-album-n { position: absolute; right: .35rem; bottom: .35rem; padding: .1rem .45rem; border-radius: 999px;
-        background: rgb(17 24 39 / .72); color: #fff; font-size: .62rem; font-weight: 800; }
-    .gh-album-info { padding: .45rem .55rem .55rem; }
-    .gh-album-info b { display: block; font-size: .78rem; font-weight: 700; color: var(--color-gray-900);
-        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    html.dark .gh-album { background: #151b12; border-color: #2b3a1c; }
-    html.dark .gh-album-info b { color: #e8efe1; }
-    @media (prefers-reduced-motion: reduce) { .gh-album { transition: none; } .gh-album:hover { transform: none; } }
-    /* Opening an album: its pictures, in place, with a way back. */
-    .gh-open-head { display: flex; align-items: center; gap: .6rem; margin-bottom: .7rem; }
-    .gh-open-head h2 { font-family: var(--font-heading); font-size: .95rem; font-weight: 800;
-        color: var(--color-gray-900); line-height: 1.2; }
-    html.dark .gh-open-head h2 { color: #e8efe1; }
-    .gh-open-head p { font-size: .72rem; color: var(--color-gray-500); }
     .gh-tail { text-align: center; margin-top: 1rem; }
     .gh-spin { display: inline-flex; gap: .25rem; }
     .gh-spin i { width: .4rem; height: .4rem; border-radius: 999px; background: var(--color-brand-400);
@@ -128,41 +106,62 @@
 
     @if ($tab === 'albums')
         <p class="tb-say">
-            Albums from every season. One is made inside the season it belongs to —
-            here they are only read, so a picture never loses which season it came from.
+            Albums from every season, each with what is in it. One is made inside
+            the season it belongs to — here they are only read, so a picture
+            never loses which season it came from.
         </p>
         @if (empty($albums))
-            <p class="ga-none">{{ $q !== '' ? 'No album matches that.' : 'No albums yet. Make one inside a season’s Gallery — a corner of the field, a problem you are following, the pictures a buyer asked for.' }}</p>
+            <p class="ga-none">{{ $q !== '' ? 'No album matches that.' : 'No albums yet. Make one inside a season\u2019s Gallery — a corner of the field, a problem you are following, the pictures a buyer asked for.' }}</p>
         @else
-            <div class="gh-albums" id="ghAlbums">
-                @foreach ($albums as $a)
-                    <button type="button" class="gh-album" data-album="{{ $a['id'] }}"
-                            data-title="{{ $a['title'] }}" data-season="{{ $a['scheduleTitle'] }}"
-                            data-pictures="{{ json_encode($a['pictures']) }}">
-                        <span class="gh-album-shot">
-                            @if ($a['cover'])
-                                <img src="{{ $a['cover'] }}" alt="" loading="lazy" onerror="this.remove()">
+            @foreach ($albums as $a)
+                {{-- The season Gallery's own album section: a heading, then the
+                     pictures in it. No add/rename/delete — an album belongs to
+                     its season, so the header links there instead. --}}
+                <div class="ga-album">
+                    <div class="ga-head">
+                        <span class="min-w-0 grow">
+                            <span class="ga-title block">{{ $a['title'] }}</span>
+                            @if (filled($a['description']))
+                                <span class="ga-desc block">{{ $a['description'] }}</span>
                             @endif
-                            <span class="gh-album-n">{{ $a['count'] }}</span>
-                        </span>
-                        <span class="gh-album-info">
-                            <b>{{ $a['title'] }}</b>
                             <span class="gh-season">{{ $a['scheduleTitle'] }}</span>
+                            <span class="ga-count mt-1 inline-block">{{ $a['count'] }} {{ \Illuminate\Support\Str::plural('picture', $a['count']) }}</span>
                         </span>
-                    </button>
-                @endforeach
-            </div>
-            {{-- An album, opened in place. --}}
-            <div id="ghOpen" hidden>
-                <div class="gh-open-head">
-                    <button type="button" class="btn btn-white btn-sm" id="ghBack">← All albums</button>
-                    <span class="min-w-0">
-                        <h2 id="ghOpenTitle">Album</h2>
-                        <p id="ghOpenSeason"></p>
-                    </span>
+                        <span class="ga-acts">
+                            <a class="ga-act" href="{{ route('sm.gallery', ['id' => $a['scheduleId'], 'tab' => 'albums']) }}"
+                               title="Open in {{ $a['scheduleTitle'] }}" aria-label="Open in its season">
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                            </a>
+                        </span>
+                    </div>
+                    @if ($a['count'])
+                        <div class="ga-grid">
+                            @foreach ($a['pictures'] as $im)
+                                <div class="ga-cell" data-lb-type="{{ $im['video'] ? 'video' : 'image' }}"
+                                     data-lb-url="{{ $im['url'] }}" data-lb-caption="{{ $im['caption'] }}"
+                                     @if (filled($im['caption'])) title="{{ $im['caption'] }}" @endif>
+                                    @if ($im['video'])
+                                        <video src="{{ $im['url'] }}#t=0.1" preload="metadata" playsinline muted
+                                               aria-label="{{ $im['caption'] ?: 'Clip in this album' }}"
+                                               onloadeddata="this.classList.add('is-loaded')"
+                                               onerror="this.closest('.ga-cell')?.classList.add('is-gone'); this.remove();"></video>
+                                        <span class="ga-vid" aria-hidden="true">▶</span>
+                                    @else
+                                        <img src="{{ $im['url'] }}" alt="{{ $im['caption'] }}" loading="lazy"
+                                             onload="this.classList.add('is-loaded')"
+                                             onerror="this.closest('.ga-cell')?.classList.add('is-gone'); this.remove();">
+                                    @endif
+                                    @if (filled($im['caption']))
+                                        <span class="ga-cap"><b>{{ $im['caption'] }}</b></span>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="ga-empty">Nothing in here yet — add pictures in the season it belongs to.</p>
+                    @endif
                 </div>
-                <div class="ga-all" id="ghOpenGrid"></div>
-            </div>
+            @endforeach
         @endif
     @elseif ($tab === 'team')
         <p class="tb-say">What every Collab Room made — recordings, whiteboards and saved maps, newest first.</p>
@@ -171,21 +170,46 @@
         @else
             <div class="tb-grid">
                 @foreach ($team as $row)
-                    <a class="tb-card" href="{{ $row['href'] ?: $row['url'] }}" @unless ($row['href']) target="_blank" rel="noopener" @endunless>
+                    {{-- The module's own team card. A recording is watched here,
+                         so it is a plain card with a save button; a drawing or a
+                         map is a way back to the thing itself, so it is a link
+                         and carries no save button — an anchor inside an anchor
+                         is invalid HTML and the parser tears the card in half. --}}
+                    @php
+                        $goes = filled($row['href']);
+                        $clipSrc = $row['url'] . ($row['posterUrl'] ? '' : '#t=0.1');
+                    @endphp
+                    <{{ $goes ? 'a' : 'div' }} class="tb-card" @if ($goes) href="{{ $row['href'] }}" @endif>
                         <span class="tb-shot">
+                            <span class="tb-kind">{{ $row['kind'] }}</span>
                             @if ($row['video'])
-                                <video src="{{ $row['url'] }}" @if ($row['posterUrl']) poster="{{ $row['posterUrl'] }}" @endif muted playsinline preload="metadata"></video>
+                                <video src="{{ $clipSrc }}"
+                                       @if ($row['posterUrl']) poster="{{ $row['posterUrl'] }}" @endif
+                                       preload="metadata" playsinline controls></video>
+                                @unless ($row['posterUrl'])<span class="tb-play"><span>▶</span></span>@endunless
                             @else
                                 <img src="{{ $row['url'] }}" alt="" loading="lazy" onerror="this.remove()">
                             @endif
-                            <span class="tb-kind">{{ $row['kind'] }}</span>
+                            @unless ($goes)
+                                {{-- A recording is a thing people want off the app
+                                     and onto a phone. Re-served through our own
+                                     origin so the browser saves rather than opens. --}}
+                                <a class="tb-save" title="Save to this device" aria-label="Save"
+                                   href="{{ route('media.save') }}?u={{ urlencode($row['url']) }}&n={{ urlencode($row['title'] ?: 'recording') }}"
+                                   download onclick="event.stopPropagation()">
+                                    <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v10m0 0l-3.5-3.5M12 14l3.5-3.5M5 19h14"/></svg>
+                                </a>
+                            @endunless
                         </span>
-                        <span class="tb-info">
-                            <b>{{ $row['title'] }}</b>
+                        <span class="tb-body">
+                            <span class="tb-title">{{ $row['title'] }}</span>
+                            @if (filled($row['note']))
+                                <span class="tb-note">{{ $row['note'] }}</span>
+                            @endif
                             <span class="gh-season">{{ $row['scheduleTitle'] }}</span>
-                            <i>{{ $row['when'] }}@if ($row['by']) · {{ $row['by'] }}@endif</i>
+                            <span class="tb-meta">{{ collect([$row['by'], $row['when']])->filter()->implode(' · ') }}</span>
                         </span>
-                    </a>
+                    </{{ $goes ? 'a' : 'div' }}>
                 @endforeach
             </div>
         @endif
@@ -236,44 +260,6 @@
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) openModal(false);
     });
-
-    /* An album opens in place rather than in a new page: it is a handful of
-       pictures, and going back to the shelf should not cost a page load. */
-    const albums = $('ghAlbums');
-    const open = $('ghOpen');
-    if (albums && open) {
-        const grid = $('ghOpenGrid');
-        const esc = (s) => String(s == null ? '' : s)
-            .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
-            .replaceAll('"', '&quot;').replaceAll("'", '&#039;');
-        albums.addEventListener('click', (e) => {
-            const card = e.target.closest('.gh-album');
-            if (!card) return;
-            let pics = [];
-            try { pics = JSON.parse(card.getAttribute('data-pictures') || '[]'); } catch (_) { pics = []; }
-            $('ghOpenTitle').textContent = card.getAttribute('data-title') || 'Album';
-            $('ghOpenSeason').textContent = card.getAttribute('data-season') || '';
-            grid.innerHTML = pics.map((p) => `
-                <div class="ga-wrap">
-                    <a class="ga-item" href="${esc(p.url)}"${p.video ? ' target="_blank" rel="noopener"' : ' data-lightbox'}>
-                        <span class="ga-shot">
-                            ${p.video
-                                ? `<video src="${esc(p.url)}" muted playsinline preload="metadata" onloadeddata="this.classList.add('is-loaded')"></video><span class="ga-play"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>`
-                                : `<img src="${esc(p.url)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')" onerror="this.closest('.ga-shot')?.classList.add('is-gone')">`}
-                        </span>
-                        <span class="ga-info"><span class="ga-it">${esc(p.caption || 'Untitled')}</span></span>
-                    </a>
-                </div>`).join('');
-            albums.hidden = true;
-            open.hidden = false;
-            open.classList.add('ga-pane', 'is-in');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-        $('ghBack')?.addEventListener('click', () => {
-            open.hidden = true;
-            albums.hidden = false;
-        });
-    }
 
     /* Paged from the server, the way the wall and the discussions list are: a
        farm with ten seasons of photographs is not a page. One request at a
