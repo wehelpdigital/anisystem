@@ -203,20 +203,12 @@ class CommunityMessageController extends Controller
      */
     private function galleryShare(string $path): ?string
     {
-        $path = trim($path);
-        if ($path === '' || str_contains($path, '..') || str_contains($path, '://')) {
-            return null;
-        }
-        $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-        if (! in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif'], true)
-            && ! in_array($ext, self::VIDEO_EXTS, true)) {
-            return null;
-        }
-        if (\App\Support\MediaStore::isRemote($path)) {
-            return $path;
-        }
-
-        return Storage::disk('public')->exists($path) ? $path : null;
+        // The check itself lives in Support/GalleryPick now — the discussions
+        // needed the same one, and one copy of it is enough.
+        return \App\Support\GalleryPick::path(
+            $path,
+            array_merge(\App\Support\GalleryPick::IMAGE_EXTS, self::VIDEO_EXTS)
+        );
     }
 
     /** Send a message (respects the recipient's allowMessages switch). */

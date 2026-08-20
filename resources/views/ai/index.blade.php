@@ -841,7 +841,7 @@ const __init = () => {
             const off = await (window.confirmAction
                 ? window.confirmAction({
                     title: 'Take the plan off this question?',
-                    body: 'The answer will be about what you ask, without your season behind it.',
+                    message: 'The answer will be about what you ask, without your season behind it.',
                     confirmText: 'Take it off',
                 })
                 : Promise.resolve(true));
@@ -853,7 +853,7 @@ const __init = () => {
             const ok = await (window.confirmAction
                 ? window.confirmAction({
                     title: 'Attach "' + PLANS[0].title + '"?',
-                    body: 'The AI reads your plan — the work so far, day by day — before answering. It uses a few more credits, and the estimate below will say how many.',
+                    message: 'The AI reads your plan — the work so far, day by day — before answering. It uses a few more credits, and the estimate below will say how many.',
                     confirmText: 'Attach it',
                 })
                 : Promise.resolve(true));

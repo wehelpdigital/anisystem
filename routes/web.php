@@ -413,6 +413,9 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/community/groups', [App\Http\Controllers\CommunityGroupController::class, 'index'])->name('community.groups.index');
     // The list's next page of cards, the way a room pages its posts.
     Route::get('/app/community/groups-page', [App\Http\Controllers\CommunityGroupController::class, 'groupsPage'])->name('community.groups.page');
+    // Which rooms you are in — asked by a page the back button restored,
+    // whose Join buttons cannot know what happened while it was away.
+    Route::get('/app/community/groups-mine', [App\Http\Controllers\CommunityGroupController::class, 'myGroups'])->name('community.groups.mine');
     Route::post('/app/community/groups', [App\Http\Controllers\CommunityGroupController::class, 'store'])->name('community.groups.store');
     Route::post('/app/community/groups/{id}/edit', [App\Http\Controllers\CommunityGroupController::class, 'update'])->whereNumber('id')->name('community.groups.update');
     Route::get('/app/community/groups/{id}', [App\Http\Controllers\CommunityGroupController::class, 'show'])->whereNumber('id')->name('community.groups.show');

@@ -97,16 +97,7 @@ class CommunityController extends Controller
          * Randomised rather than newest, so the same two never own the page —
          * and drawn as posts because that is how they get read: a rail card is
          * furniture, a card in the stream is something you stop at. */
-        $discussion = \App\Models\CommunityGroup::active()
-            ->withCount(['members as member_count', 'posts as post_count'])
-            ->inRandomOrder()
-            ->first();
-        if ($discussion) {
-            $discussion->joined = \App\Models\CommunityGroupMember::active()
-                ->where('groupId', $discussion->id)
-                ->where('userId', (int) $me->id)
-                ->exists();
-        }
+        $discussion = $this->liveDiscussion((int) $me->id);
         $article = \App\Models\AsCommunityBlogPost::where('deleteStatus', 1)
             ->where('isPublished', 1)
             ->inRandomOrder()
@@ -124,6 +115,60 @@ class CommunityController extends Controller
             // No sponsor inventory yet — the rail hides while this is empty.
             'sponsors' => collect(),
         ]);
+    }
+
+    /**
+     * A discussion worth putting in front of somebody.
+     *
+     * Only rooms where something has actually been said lately: a card
+     * advertising a room whose last word was in March is an invitation to
+     * walk into an empty hall. Among those, at random — so the wall does not
+     * hand the same room the same slot every day.
+     *
+     * Comes back carrying the last topic and how many have answered it, which
+     * is what tells a reader whether this is a conversation they want.
+     */
+    private function liveDiscussion(int $meId): ?\App\Models\CommunityGroup
+    {
+        $since = now()->subDays(30);
+
+        $spoken = \App\Models\CommunityGroupPost::active()
+            ->where('created_at', '>=', $since)
+            ->distinct()
+            ->pluck('groupId');
+        $answered = \App\Models\CommunityGroupReply::active()
+            ->where('as_community_group_replies.created_at', '>=', $since)
+            ->join('as_community_group_posts as t', 't.id', '=', 'as_community_group_replies.postId')
+            ->where('t.deleteStatus', 1)
+            ->distinct()
+            ->pluck('t.groupId');
+        $live = $spoken->merge($answered)->map(fn ($id) => (int) $id)->unique()->values();
+
+        $discussion = \App\Models\CommunityGroup::active()
+            ->withCount(['members as member_count', 'posts as post_count'])
+            // Nothing recent anywhere (a new farm): show a room anyway rather
+            // than a gap where the card should be.
+            ->when($live->isNotEmpty(), fn ($q) => $q->whereIn('id', $live->all()))
+            ->inRandomOrder()
+            ->first();
+
+        if (! $discussion) {
+            return null;
+        }
+
+        $discussion->joined = \App\Models\CommunityGroupMember::active()
+            ->where('groupId', $discussion->id)
+            ->where('userId', $meId)
+            ->exists();
+
+        $discussion->latestTopic = \App\Models\CommunityGroupPost::active()
+            ->where('groupId', $discussion->id)
+            ->withCount(['replies as reply_count'])
+            ->with('author')
+            ->orderByDesc('id')
+            ->first();
+
+        return $discussion;
     }
 
     /**

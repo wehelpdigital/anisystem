@@ -32,6 +32,22 @@
         .disc-head-btn { width:auto; flex:0 0 auto; margin-left:auto; }
     }
 
+    /* The cover and the face. A coloured stripe told a reader nothing about
+       the room; a picture of it tells them whether they want to walk in. */
+    .disc-card { overflow: visible; }
+    .dc-top { position: relative; }
+    .dc-cover { height: 6.5rem; overflow: hidden; border-radius: 1rem 1rem 0 0; }
+    .dc-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .dc-face { position: absolute; left: .9rem; bottom: -1.35rem;
+        display: flex; align-items: center; justify-content: center;
+        width: 3.5rem; height: 3.5rem; border-radius: .95rem; overflow: hidden;
+        border: 3px solid var(--color-white); background: var(--color-white);
+        font-family: var(--font-heading); font-weight: 800; color: #fff;
+        box-shadow: 0 10px 22px -14px rgb(0 0 0 / .8); text-decoration: none; }
+    .dc-face img { width: 100%; height: 100%; object-fit: cover; }
+    /* Room for the face, which stands half off the cover. */
+    .dc-body { padding-top: 1.85rem !important; }
+
     /* One action per card: Join until you are in, Open once you are. They
        swap in place, so the card never grows or shifts under the thumb. */
     .disc-act { margin-top:auto; }
@@ -52,10 +68,47 @@
         background:#ef4444; color:#fff; font-size:.625rem; font-weight:800;
         line-height:1; vertical-align:middle; margin-left:.25rem; }
     .gb-well { display:flex; align-items:center; justify-content:center; overflow:hidden;
-        width:100%; height:6rem; border-radius:.75rem; cursor:pointer; text-align:center;
-        background:var(--color-gray-100); border:1px dashed var(--color-gray-300); }
+        width:100%; height:7rem; border-radius:.75rem; cursor:pointer; text-align:center;
+        background:var(--color-gray-100); border:1px dashed var(--color-gray-300);
+        transition:border-color var(--dur) var(--ease-house), background var(--dur) var(--ease-house); }
+    .gb-well:hover { border-color:var(--color-brand-400); background:var(--color-brand-50); }
     .gb-well i { font-style:normal; font-size:.75rem; font-weight:600; color:var(--color-gray-400); padding:0 .75rem; }
     .gb-well img { width:100%; height:100%; object-fit:cover; }
+    /* Missing, after the save was refused: the ask, made visible. */
+    .gb-well.is-wanted, .gb-face.is-wanted { border-color:#ef4444; border-style:solid; }
+
+    .gb-req { font-size:.62rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase;
+        color:var(--color-brand-700); background:var(--color-brand-50);
+        padding:.1rem .4rem; border-radius:999px; margin-left:.25rem; }
+    /* The face sits half over the cover above it, the way it will in the
+       room — so the sheet shows what is being made, not two form fields. */
+    .gb-face-row { display:flex; align-items:center; gap:.75rem; margin-top:-2.25rem; }
+    .gb-face { position:relative; flex:0 0 auto; width:4.5rem; height:4.5rem; border-radius:1.15rem;
+        overflow:hidden; cursor:pointer; display:flex; align-items:center; justify-content:center;
+        border:3px solid var(--color-white); background:var(--color-gray-200);
+        box-shadow:0 10px 22px -14px rgb(0 0 0 / .8); }
+    .gb-face img { width:100%; height:100%; object-fit:cover; }
+    .gb-face-mono { font-family:var(--font-heading); font-weight:800; font-size:1.2rem; color:var(--color-gray-500); }
+    .gb-face-cam { position:absolute; right:.15rem; bottom:.15rem; width:1.35rem; height:1.35rem;
+        border-radius:999px; background:var(--color-brand-600); color:#fff;
+        display:flex; align-items:center; justify-content:center; }
+    .gb-face-cam svg { width:.85rem; height:.85rem; }
+    .gb-face-lbl { font-size:.85rem; font-weight:700; color:var(--color-gray-900); }
+    .gb-face-sub { font-size:.72rem; color:var(--color-gray-400); }
+
+    /* One row per way in. The AI composer's rows, in this page's words —
+       that sheet's class is scoped to its own page. */
+    .gb-src { display:flex; align-items:center; gap:.75rem; width:100%; padding:.7rem .8rem;
+        border:0; border-radius:.85rem; background:transparent; text-align:left; cursor:pointer;
+        font-size:.9rem; font-weight:700; color:var(--color-gray-800);
+        transition:background var(--dur) var(--ease-house); }
+    .gb-src:hover { background:var(--color-gray-100); }
+    .gb-src .ic { width:2.4rem; height:2.4rem; border-radius:.8rem; flex-shrink:0;
+        display:flex; align-items:center; justify-content:center;
+        background:var(--color-brand-50); color:var(--color-brand-700); }
+    .gb-src .ic svg { width:1.25rem; height:1.25rem; }
+    .gb-src .sub { display:block; font-size:.72rem; font-weight:600; color:var(--color-gray-400); }
+    @media (prefers-reduced-motion: reduce) { .gb-well, .gb-src { transition:none; } }
     .disc-spin { display:flex; align-items:center; justify-content:center; gap:.35rem; padding:.9rem 0; }
     .disc-spin i { display:block; width:.45rem; height:.45rem; border-radius:9999px;
         background:var(--color-brand-400); animation:discDot 1s cubic-bezier(.22,1,.36,1) infinite; }
@@ -119,12 +172,26 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-3">
-        <div class="flex flex-col items-center gap-2">
-            <label class="cursor-pointer" title="Upload a discussion photo">
-                <span class="avatar avatar-lg avatar-sq av-h7 overflow-hidden" id="groupMonogramPreview" style="width:4.5rem;height:4.5rem;">?</span>
-                <input type="file" id="groupImage" accept="image/jpeg,image/png,image/webp" class="hidden">
-            </label>
-            <label for="groupImage" class="text-xs font-semibold text-brand-700 hover:text-brand-800 cursor-pointer">Upload discussion photo</label>
+        {{-- Both pictures, up front. A room made without them is a coloured
+             square with two letters in it, and the one making it is the only
+             person who can fix that. --}}
+        <div>
+            <label class="form-label">Cover photo <span class="gb-req">required</span></label>
+            <button type="button" class="gb-well" id="groupBannerPreview" data-pic="banner">
+                <i>Add a wide photo for the top of the discussion</i>
+            </button>
+        </div>
+        <div class="gb-face-row">
+            <button type="button" class="gb-face" id="groupMonogramPreview" data-pic="image">
+                <span class="gb-face-mono">?</span>
+                <span class="gb-face-cam" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                </span>
+            </button>
+            <div class="min-w-0">
+                <p class="gb-face-lbl">Discussion photo <span class="gb-req">required</span></p>
+                <p class="gb-face-sub">The room's face, wherever it is listed.</p>
+            </div>
         </div>
         <div>
             <label class="form-label" for="groupName">Discussion name</label>
@@ -135,25 +202,46 @@
             <label class="form-label" for="groupDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
             <textarea id="groupDesc" class="form-textarea" rows="3" maxlength="500" placeholder="What's this discussion about?"></textarea>
         </div>
-        <div>
-            {{-- The wide picture at the top of the room. Asked for here so a
-                 new discussion opens looking like somewhere, instead of having
-                 to be edited the moment it is made. --}}
-            <label class="form-label" for="groupBanner">Cover photo <span class="text-gray-400 font-normal">(optional)</span></label>
-            <label class="gb-well" id="groupBannerPreview">
-                <i>Add a wide photo for the top of the discussion</i>
-                <input type="file" id="groupBanner" accept="image/jpeg,image/png,image/webp" class="hidden">
-            </label>
-        </div>
+        {{-- The three doors, shared by both pictures: whichever well was
+             tapped is the one the pick lands in. --}}
+        <input type="file" id="groupPicFile" accept="image/jpeg,image/png,image/webp" class="hidden">
+        <input type="file" id="groupPicCam" accept="image/*" capture="environment" class="hidden">
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
         <button type="button" class="btn btn-primary" id="createGroupSave">Create discussion</button>
     </div>
 </div>
+{{-- Where a picture comes from. The same three the AI composer, the
+     messenger and the notes all offer, in the same order. --}}
+<div class="sheet hidden" id="groupPicSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="groupPicTitle">Add a photo</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-1">
+        <button type="button" class="gb-src" data-src="cam">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
+            <span>Take a photo<span class="sub">Use the camera now</span></span>
+        </button>
+        <button type="button" class="gb-src" data-src="file">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>
+            <span>From this phone<span class="sub">Pick a picture you already have</span></span>
+        </button>
+        <button type="button" class="gb-src" data-src="gallery">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l2-3h6l2 3h3v13H4V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 13l2.5-2.5L14 14l2-2 2 2"/></svg></span>
+            <span>From the AniSenso gallery<span class="sub">A photo your seasons already keep</span></span>
+        </button>
+    </div>
+</div>
+{{-- The gallery sheet itself. @once inside, so including it here is safe. --}}
+@include('sm.partials.media-picker')
 @endsection
 
 @push('scripts')
+{{-- Rooms are looked at too: the same counter the wall uses. --}}
+@include('community.partials.views-js')
 @include('community.partials.infinite-js')
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -162,19 +250,77 @@ document.addEventListener('DOMContentLoaded', () => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     document.getElementById('createGroupBtn')?.addEventListener('click', () => openSheet('createGroupSheet'));
-    // Shown before it is sent: a wrong pick is caught here, not after a save.
-    document.getElementById('groupBanner')?.addEventListener('change', (e) => {
-        const f = e.target.files && e.target.files[0];
-        if (!f) return;
-        const box = document.getElementById('groupBannerPreview');
-        const url = URL.createObjectURL(f);
+
+    /* ---------------- the two pictures ----------------
+       A camera file, a phone file and a gallery path are three different
+       things; what the save needs to know is only which picture each one is.
+       So one object holds both, and every door writes into it. */
+    const pics = { image: null, banner: null };   // {file} | {path, url}
+    let picking = null;                           // which well opened the sheet
+
+    function showPic(which, url) {
+        const box = document.getElementById(which === 'banner' ? 'groupBannerPreview' : 'groupMonogramPreview');
+        if (!box) return;
+        box.classList.remove('is-wanted');
         box.querySelector('i')?.remove();
-        const old = box.querySelector('img');
-        if (old) old.remove();
+        box.querySelector('.gb-face-mono')?.remove();
+        box.querySelector('img')?.remove();
         const img = document.createElement('img');
         img.src = url;
+        img.alt = '';
         box.prepend(img);
+    }
+
+    function tookFile(f) {
+        if (!f || !picking) return;
+        pics[picking] = { file: f };
+        showPic(picking, URL.createObjectURL(f));
+        if (picking === 'image') groupImageChosen = true;
+        picking = null;
+    }
+
+    // Either well opens the same three doors; the well that was tapped is
+    // remembered, so the pick knows where to land.
+    document.querySelectorAll('[data-pic]').forEach((well) => {
+        well.addEventListener('click', () => {
+            picking = well.getAttribute('data-pic');
+            const title = document.getElementById('groupPicTitle');
+            if (title) title.textContent = picking === 'banner' ? 'Add a cover photo' : 'Add the discussion photo';
+            openSheet('groupPicSheet');
+        });
     });
+
+    document.querySelectorAll('.gb-src').forEach((row) => {
+        row.addEventListener('click', () => {
+            const src = row.getAttribute('data-src');
+            window.closeSheet && window.closeSheet('groupPicSheet');
+            if (src === 'cam') { document.getElementById('groupPicCam')?.click(); return; }
+            if (src === 'file') { document.getElementById('groupPicFile')?.click(); return; }
+            // The gallery every season keeps, asked across all of them: a
+            // farmer choosing a room's picture is remembering a photo, not a
+            // schedule.
+            const which = picking;
+            if (!window.smPickMedia) { toast('The gallery is not available here.', 'error'); return; }
+            window.smPickMedia({
+                allSchedules: true,
+                kinds: 'image',
+                title: 'Choose from your gallery',
+                onPick: (item) => {
+                    if (!which || !item) return;
+                    pics[which] = { path: item.path, url: item.url };
+                    showPic(which, item.url);
+                    if (which === 'image') groupImageChosen = true;
+                    picking = null;
+                },
+            });
+        });
+    });
+
+    // Shown before it is sent: a wrong pick is caught here, not after a save.
+    document.getElementById('groupPicFile')?.addEventListener('change', (e) => { tookFile(e.target.files && e.target.files[0]); e.target.value = ''; });
+    document.getElementById('groupPicCam')?.addEventListener('change', (e) => { tookFile(e.target.files && e.target.files[0]); e.target.value = ''; });
+
+    let groupImageChosen = false;
 
     // Live monogram preview — mirrors the PHP crc32 hue formula.
     const crcTable = (() => {
@@ -188,35 +334,39 @@ document.addEventListener('DOMContentLoaded', () => {
         for (const b of bytes) c = crcTable[(c ^ b) & 0xFF] ^ (c >>> 8);
         return (c ^ 0xFFFFFFFF) >>> 0;
     };
-    let groupImageChosen = false;
     document.getElementById('groupName')?.addEventListener('input', (e) => {
         if (groupImageChosen) return;   // don't overwrite a chosen photo with the monogram
         const name = e.target.value.trim();
-        const prev = document.getElementById('groupMonogramPreview');
-        const mono = name ? name.split(/\s+/).map((w) => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase() : '?';
-        prev.textContent = mono || '?';
-        prev.className = 'avatar avatar-lg avatar-sq overflow-hidden av-h' + (name ? crc32str(name.toLowerCase()) % 8 : 7);
-    });
-    document.getElementById('groupImage')?.addEventListener('change', (e) => {
-        const f = e.target.files[0];
-        if (!f) return;
-        groupImageChosen = true;
-        const prev = document.getElementById('groupMonogramPreview');
-        prev.textContent = '';
-        prev.innerHTML = `<img src="${URL.createObjectURL(f)}" alt="" class="w-full h-full object-cover">`;
+        const mono = document.querySelector('#groupMonogramPreview .gb-face-mono');
+        if (!mono) return;
+        mono.textContent = (name ? name.split(/\s+/).map((w) => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase() : '?') || '?';
+        const face = document.getElementById('groupMonogramPreview');
+        face.className = 'gb-face av-h' + (name ? crc32str(name.toLowerCase()) % 8 : 7);
     });
 
     document.getElementById('createGroupSave')?.addEventListener('click', async (e) => {
         const name = document.getElementById('groupName').value.trim();
         const description = document.getElementById('groupDesc').value.trim();
-        const img = document.getElementById('groupImage').files[0];
         if (!name) { toast('Give your discussion a name.', 'error'); return; }
+        /* Both pictures, and said plainly: the room is going to be listed
+           beside rooms that have them. */
+        const missing = ['image', 'banner'].filter((k) => !pics[k]);
+        if (missing.length) {
+            missing.forEach((k) => document.getElementById(k === 'banner' ? 'groupBannerPreview' : 'groupMonogramPreview')?.classList.add('is-wanted'));
+            toast(missing.length === 2
+                ? 'Add a discussion photo and a cover photo.'
+                : (missing[0] === 'banner' ? 'Add a cover photo.' : 'Add a discussion photo.'), 'error');
+            return;
+        }
         const fd = new FormData();
         fd.append('name', name);
         if (description) fd.append('description', description);
-        if (img) fd.append('image', img);
-        const banner = document.getElementById('groupBanner')?.files[0];
-        if (banner) fd.append('banner', banner);
+        // A file goes up; a gallery pick goes up as the path it already has.
+        [['image', 'imagePath'], ['banner', 'bannerPath']].forEach(([key, pathKey]) => {
+            const pic = pics[key];
+            if (pic.file) fd.append(key, pic.file);
+            else if (pic.path) fd.append(pathKey, pic.path);
+        });
         e.currentTarget.disabled = true;
         try {
             const res = await fetch(@json(route('community.groups.store')), { method: 'POST', headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' }, body: fd });
@@ -233,6 +383,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', async (e) => {
         const btn = e.target.closest('.disc-join');
         if (!btn || btn.dataset.busy) return;
+        /* Asked first: joining puts your name in a room other people can
+           see, and a tap on a card in a scrolling list is easy to make by
+           accident. */
+        const name = btn.getAttribute('data-name') || 'this discussion';
+        const ok = await (window.confirmAction ? window.confirmAction({
+            title: 'Join ' + name + '?',
+            message: 'You will see its topics on your wall, and the others there will see you as a member.',
+            confirmText: 'Join',
+            confirmClass: 'btn-primary',
+        }) : Promise.resolve(true));
+        if (!ok) return;
         btn.dataset.busy = '1';
         const id = btn.getAttribute('data-group-id');
         const card = btn.closest('[data-group-card]');
@@ -360,6 +521,27 @@ document.addEventListener('DOMContentLoaded', () => {
         lastLook = now;
         nearTail();
     }
+    /* Back-button arrivals.
+       A browser restores this page exactly as it was left — so a room joined
+       on its own page still says Join here, which is the "it says I am joined
+       but the button is still Join" the owner hit. Nothing else on the page
+       can tell; ask the server what is true. */
+    window.addEventListener('pageshow', (ev) => {
+        if (!ev.persisted) return;
+        fetch(@json(route('community.groups.mine')), { headers: { Accept: 'application/json' }, credentials: 'same-origin' })
+            .then((r) => r.json())
+            .then((j) => {
+                const mine = new Set(((j.data && j.data.groupIds) || []).map(Number));
+                document.querySelectorAll('[data-group-card]').forEach((card) => {
+                    const joined = mine.has(Number(card.getAttribute('data-group-card')));
+                    card.querySelector('.disc-join')?.classList.toggle('is-off', joined);
+                    card.querySelector('.disc-open')?.classList.toggle('is-off', !joined);
+                    card.querySelector('.group-joined-tag')?.classList.toggle('hidden', !joined);
+                });
+            })
+            .catch(() => { /* leave the page as it was rather than break it */ });
+    });
+
     if (tail && !tail.hidden) {
         moreBtn?.addEventListener('click', () => { autoPull = true; loadPage(); });
         window.addEventListener('scroll', onScroll, { passive: true });

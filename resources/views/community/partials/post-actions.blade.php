@@ -250,7 +250,7 @@
             const ok = window.confirmAction
                 ? await window.confirmAction({
                     title: 'Unfollow ' + (btn.dataset.name || 'this member') + '?',
-                    body: 'Their posts will stop being lifted to the top of your wall.',
+                    message: 'Their posts will stop being lifted to the top of your wall.',
                     confirmText: 'Unfollow',
                 })
                 : true;
@@ -281,11 +281,26 @@
             window.location.href = @json(url('/app/community/groups')) + '/' + btn.dataset.groupId;
             return;
         }
+        /* Asked first: joining puts your name in a room other people can
+           see, which is not the sort of thing a thumb should do by brushing
+           past a card on a wall. */
+        const name = btn.dataset.name || 'this discussion';
+        const ok = await (window.confirmAction ? window.confirmAction({
+            title: 'Join ' + name + '?',
+            message: 'You will see its topics on your wall, and the others there will see you as a member.',
+            confirmText: 'Join',
+            confirmClass: 'btn-primary',
+        }) : Promise.resolve(true));
+        if (!ok) return;
         btn.dataset.busy = '1';
         try {
             await post(@json(url('/app/community/groups')) + '/' + btn.dataset.groupId + '/join');
             btn.classList.add('is-on');
             btn.setAttribute('aria-pressed', 'true');
+            // The way in says so too, now that there is a way in.
+            const card = btn.closest('[data-discussion-card]');
+            const open = card?.querySelector('.fd-open');
+            if (open) open.textContent = 'Open the discussion';
             window.toast?.('Sali ka na sa ' + (btn.dataset.name || 'usapan') + '.');
         } catch (err) { window.toast?.(err.message, 'error'); }
         finally { delete btn.dataset.busy; }

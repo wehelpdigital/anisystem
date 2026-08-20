@@ -49,6 +49,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ------------------------------------------------------------------ */
+/* `hidden` means hidden                                               */
+/* ------------------------------------------------------------------ */
+
+/* Tailwind's utilities live in a cascade layer; every component class in this
+   file (.btn, .badge, .card, .avatar, …) is emitted plain, and unlayered CSS
+   beats layered CSS no matter the order. So `class="badge hidden"` stayed
+   inline-flex, and a "Joined" tag showed on discussions nobody had joined —
+   the same way `.btn` did until somebody patched .btn alone, and the way a
+   dozen `.thing.hidden { display: none }` rules scattered through the views
+   each patched one more component after being caught by it.
+
+   One rule, at the top of the components, so the utility does what it says
+   for all of them. Nothing in this app uses `hidden` to mean anything else. */
+.hidden { display: none !important; }
+
+/* ------------------------------------------------------------------ */
 /* Shared components (used across public site + client app)            */
 /* ------------------------------------------------------------------ */
 
@@ -63,7 +79,9 @@ h1, h2, h3, h4, h5, h6 {
     touch-action: manipulation;
 }
 /* .btn is plain CSS emitted after the Tailwind import, so its display would
-   otherwise beat the `hidden` utility — re-assert it. */
+   otherwise beat the `hidden` utility — re-assert it. See `hidden` below:
+   this file had begun growing one of these per component, which is the shape
+   a missing rule leaves behind. */
 .btn.hidden { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
     .btn { @apply active:scale-100; }

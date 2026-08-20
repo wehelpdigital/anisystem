@@ -35,6 +35,28 @@
     /* --- The room's head: a place banner, not a wall of text. The name, who
        is in it, and the one thing you can do about that, in one row. --- */
     .disc-hero { padding:.85rem; margin-bottom:.75rem; border-radius:1.1rem; }
+    /* The head of the room. Cover, then the face half on it, then the name
+       and the numbers across the whole card. */
+    /* overflow:visible, so the face can stand on the cover's edge; the
+       picture keeps the corners the clip used to give it. */
+    .disc-hero.has-banner .disc-banner { position:relative; overflow:visible; }
+    .disc-hero.has-banner .disc-banner img { border-radius:1.1rem 1.1rem 0 0; }
+    .disc-face { position:absolute; left:1rem; bottom:-1.6rem; z-index:1;
+        display:flex; align-items:center; justify-content:center;
+        width:4.5rem; height:4.5rem; border-radius:1.15rem; overflow:hidden;
+        border:3px solid var(--color-white); background:var(--color-white);
+        font-family:var(--font-heading); font-weight:800; font-size:1.3rem; color:#fff;
+        box-shadow:0 10px 24px -14px rgb(0 0 0 / .8); }
+    .disc-face img { width:100%; height:100%; object-fit:cover; }
+    .disc-hero.has-banner .disc-hero-row { padding-top:2.1rem; }
+    /* No cover: the face keeps its place in the row instead of hanging off
+       an edge that is not there. */
+    .disc-hero:not(.has-banner) .disc-face { position:static; width:3.5rem; height:3.5rem;
+        box-shadow:none; border-width:0; margin-bottom:.5rem; }
+    .disc-hero-acts { display:flex; align-items:center; gap:.5rem; margin-top:.7rem; }
+    .disc-hero-acts .btn { flex:1 1 auto; }
+    .disc-hero-acts .btn-icon { flex:0 0 auto; width:2.75rem; padding-left:0; padding-right:0; }
+    .disc-hero-num { display:inline-flex; align-items:center; gap:.25rem; }
     .eg-pics { display:flex; gap:.6rem; align-items:flex-start; }
     .eg-pic { display:block; cursor:pointer; }
     .eg-pic-wide { flex:1; min-width:0; }
@@ -54,7 +76,7 @@
     @media (min-width:640px) {
         .disc-banner { margin:-1.15rem -1.15rem 1rem; height:9.5rem; }
     }
-    .disc-hero-row { display:flex; align-items:flex-start; gap:.7rem; }
+    .disc-hero-row { display:block; }
     .disc-hero-title { font-family:var(--font-heading); font-size:1.05rem; font-weight:800; line-height:1.25;
         color:var(--color-gray-900); overflow-wrap:anywhere; }
     .disc-hero-meta { display:flex; flex-wrap:wrap; gap:.1rem .7rem; margin-top:.25rem;
@@ -189,7 +211,8 @@
 
 @section('content')
 @include('community.partials.nav', ['active' => 'groups'])
-<div data-group-member="{{ $isMember ? 1 : 0 }}" id="groupRoot" data-group-id="{{ $group->id }}">
+<div data-group-member="{{ $isMember ? 1 : 0 }}" id="groupRoot" data-group-id="{{ $group->id }}"
+     data-view="group:{{ $group->id }}">
 
     {{-- Group header: the place banner.
 
@@ -200,26 +223,37 @@
         @if ($group->bannerImagePath)
             <div class="disc-banner">
                 <img src="{{ \App\Support\MediaStore::url($group->bannerImagePath) }}" alt="" loading="lazy">
+                <span class="disc-face {{ CommunityAvatar::hue($group->name) }}">
+                    @if ($group->coverImagePath)<img src="{{ \App\Support\MediaStore::url($group->coverImagePath) }}" alt="">@else{{ CommunityAvatar::monogram($group->name) }}@endif
+                </span>
             </div>
         @endif
         <div class="disc-hero-row">
-            <span class="avatar avatar-md avatar-sq overflow-hidden {{ CommunityAvatar::hue($group->name) }}">@if ($group->coverImagePath)<img src="{{ \App\Support\MediaStore::url($group->coverImagePath) }}" alt="" class="w-full h-full object-cover">@else{{ CommunityAvatar::monogram($group->name) }}@endif</span>
-            <div class="min-w-0 grow">
-                <h2 class="disc-hero-title">{{ $group->name }}</h2>
-                <p class="disc-hero-meta">
-                    <span>🧑‍🌾 <span id="memberCount">{{ $memberCount }}</span> {{ \Illuminate\Support\Str::plural('member', $memberCount) }}</span>
-                    <span id="heroMemberTag" class="{{ $isMember ? '' : 'hidden' }}">✓ Kasali ka</span>
-                </p>
-            </div>
+            @unless ($group->bannerImagePath)
+                <span class="disc-face {{ CommunityAvatar::hue($group->name) }}">
+                    @if ($group->coverImagePath)<img src="{{ \App\Support\MediaStore::url($group->coverImagePath) }}" alt="">@else{{ CommunityAvatar::monogram($group->name) }}@endif
+                </span>
+            @endunless
+            <h2 class="disc-hero-title">{{ $group->name }}</h2>
+            <p class="disc-hero-meta">
+                <span class="disc-hero-num">🧑‍🌾 <span id="memberCount">{{ $memberCount }}</span> {{ \Illuminate\Support\Str::plural('member', $memberCount) }}</span>
+                <span class="disc-hero-num">💬 {{ $topicCount }} {{ \Illuminate\Support\Str::plural('topic', $topicCount) }}</span>
+                {{-- How many have looked in. Counted on arrival, like every
+                     other thing in the community that carries an eye. --}}
+                <span class="disc-hero-num">@include('community.partials.views-count', ['kind' => 'group', 'id' => $group->id, 'count' => $group->viewCount ?? 0])</span>
+                <span id="heroMemberTag" class="{{ $isMember ? '' : 'hidden' }}">✓ Kasali ka</span>
+            </p>
+        </div>
+        <div class="disc-hero-acts">
             @unless ($isOwner)
-                <button type="button" id="joinLeaveBtn" class="btn btn-sm shrink-0 {{ $isMember ? 'btn-white' : 'btn-primary' }}"
-                        data-joined="{{ $isMember ? 1 : 0 }}">{{ $isMember ? 'Leave' : 'Join' }}</button>
+                <button type="button" id="joinLeaveBtn" class="btn btn-sm {{ $isMember ? 'btn-white' : 'btn-primary' }}"
+                        data-joined="{{ $isMember ? 1 : 0 }}" data-name="{{ $group->name }}">{{ $isMember ? 'Leave this discussion' : 'Join this discussion' }}</button>
             @else
-                <span class="badge badge-green shrink-0">Owner</span>
+                <span class="badge badge-green">Owner</span>
             @endunless
             {{-- Whoever started the room keeps it, and so does the house. --}}
             @if ($canEditGroup ?? false)
-                <button type="button" id="editGroupBtn" class="btn btn-white btn-sm shrink-0" title="Edit this discussion" aria-label="Edit this discussion">
+                <button type="button" id="editGroupBtn" class="btn btn-white btn-sm btn-icon" title="Edit this discussion" aria-label="Edit this discussion">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.4-9.4a2 2 0 112.8 2.8L11 15l-4 1 1-4 8.6-8.4z"/></svg>
                 </button>
             @endif
@@ -467,6 +501,8 @@
 @endsection
 
 @push('scripts')
+{{-- Rooms are looked at too: the same counter the wall uses. --}}
+@include('community.partials.views-js')
 @include('community.partials.emoji-js')
 @include('community.partials.lightbox-js')
 @include('community.partials.comment-tools-js')
@@ -512,7 +548,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!reduceMotion) { count.classList.remove('tick'); void count.offsetWidth; count.classList.add('tick'); }
         document.getElementById('heroMemberTag')?.classList.toggle('hidden', !join);
         if (btn) {
-            btn.textContent = join ? 'Leave' : 'Join';
+            btn.textContent = join ? 'Leave this discussion' : 'Join this discussion';
             btn.classList.toggle('btn-primary', !join);
             btn.classList.toggle('btn-white', join);
             btn.setAttribute('data-joined', join ? '1' : '0');
@@ -541,19 +577,28 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('joinLeaveBtn')?.addEventListener('click', async (e) => {
         const btn = e.currentTarget;
         const joined = btn.getAttribute('data-joined') === '1';
-        /* Leaving costs you the room: the topics, the chat, everything behind
-           the gate — and getting back in means joining again. That is worth a
-           question. Joining is not; it costs nothing and undoes in one tap. */
-        if (joined) {
-            const ok = window.confirmAction
-                ? await window.confirmAction({
-                    title: 'Leave this discussion?',
-                    body: 'You will stop seeing its topics and chat, and you will have to join again to come back.',
-                    confirmText: 'Leave',
-                })
-                : true;
-            if (!ok) return;
-        }
+        /* Both directions are asked about.
+
+           Leaving costs you the room: the topics, the chat, everything behind
+           the gate. Joining puts your name in a room other people can see —
+           the owner asked for that one to be a decision rather than a tap.
+
+           `message` is the word confirmAction reads; this said `body`, and
+           the sheet asked the question over an empty space. */
+        const name = btn.getAttribute('data-name') || 'this discussion';
+        const ok = window.confirmAction
+            ? await window.confirmAction(joined ? {
+                title: 'Leave ' + name + '?',
+                message: 'You will stop seeing its topics and chat, and you will have to join again to come back.',
+                confirmText: 'Leave',
+            } : {
+                title: 'Join ' + name + '?',
+                message: 'You will be able to post and reply here, and the others in the room will see you as a member.',
+                confirmText: 'Join',
+                confirmClass: 'btn-primary',
+            })
+            : true;
+        if (!ok) return;
         btn.disabled = true;
         try {
             const done = await setMembership(!joined);

@@ -481,15 +481,65 @@
     html.dark .fp-mind { background: #232a1c; border-color: #3a4a2c; color: #dbe6cf; }
 
     /* A discussion dealt into the wall. It wears the post card's shape, so
-       only what differs is described here. */
-    .fd-kicker { display: inline-flex; align-items: center; margin-bottom: .5rem;
-        padding: .15rem .5rem; border-radius: 999px;
-        background: var(--color-brand-50); color: var(--color-brand-700);
-        font-size: .62rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
-    .fd-banner { position: relative; height: 7rem; overflow: hidden;
+       only what differs is described here: a cover with the room's own face
+       standing on it, and the last thing anybody said in there. */
+    .fd-top { position: relative; }
+    .fd-banner { position: relative; height: 8.5rem; overflow: hidden;
         border-top-left-radius: inherit; border-top-right-radius: inherit; }
     .fd-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* A foot under the cover, so a white face and a white word sit on
+       something rather than on whatever the photograph happens to be. */
+    .fd-banner::after { content: ''; position: absolute; inset: auto 0 0 0; height: 60%;
+        background: linear-gradient(to top, rgb(0 0 0 / .45), transparent); }
+    .fd-kicker { position: absolute; top: .6rem; left: .75rem; z-index: 1;
+        display: inline-flex; align-items: center;
+        padding: .2rem .55rem; border-radius: 999px;
+        background: rgb(255 255 255 / .92); color: var(--color-brand-700);
+        font-size: .62rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
+        box-shadow: 0 4px 12px -6px rgb(0 0 0 / .5); }
+    /* The room's face, half on the cover and half off it — the shape a
+       reader already knows a group by. */
+    .fd-face { position: absolute; left: 1rem; bottom: -1.5rem; z-index: 1;
+        display: flex; align-items: center; justify-content: center;
+        width: 4.25rem; height: 4.25rem; border-radius: 1.1rem; overflow: hidden;
+        border: 3px solid var(--color-white); background: var(--color-white);
+        font-family: var(--font-heading); font-weight: 800; font-size: 1.25rem; color: #fff;
+        box-shadow: 0 10px 24px -14px rgb(0 0 0 / .8); text-decoration: none; }
+    .fd-face img { width: 100%; height: 100%; object-fit: cover; }
+    .fd-body { padding: 1rem; padding-top: 2rem; }
+    .fd-head { display: flex; align-items: flex-start; gap: .75rem; }
+    .fd-name { display: block; font-family: var(--font-heading); font-weight: 800;
+        font-size: 1.02rem; line-height: 1.25; color: var(--color-gray-900); text-decoration: none; }
+    .fd-name:hover { color: var(--color-brand-700); }
+    .fd-meta { margin-top: .15rem; font-size: .72rem; color: var(--color-gray-400); }
+    .fd-desc { margin-top: .5rem; font-size: .82rem; line-height: 1.5; color: var(--color-gray-500);
+        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+    /* The last topic: the part of the card that earns the tap. Its own well,
+       so it reads as a thing said in there rather than more of the blurb. */
+    .fd-topic { display: block; margin-top: .75rem; padding: .65rem .75rem;
+        border: 1px solid var(--color-gray-200); border-left: 3px solid var(--color-brand-500);
+        border-radius: .7rem; background: var(--color-gray-50); text-decoration: none;
+        transition: background var(--dur) var(--ease-house), border-color var(--dur) var(--ease-house); }
+    .fd-topic:hover { background: var(--color-brand-50); border-color: var(--color-brand-200);
+        border-left-color: var(--color-brand-600); }
+    .fd-topic-tag { display: block; font-size: .6rem; font-weight: 800; letter-spacing: .06em;
+        text-transform: uppercase; color: var(--color-brand-700); }
+    .fd-topic-title { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+        overflow: hidden; margin-top: .15rem; font-size: .85rem; font-weight: 700; line-height: 1.35;
+        color: var(--color-gray-900); }
+    .fd-topic-meta { display: flex; align-items: center; flex-wrap: wrap; gap: .35rem;
+        margin-top: .4rem; font-size: .7rem; color: var(--color-gray-500); }
+    .fd-topic-meta .avatar { width: 1.15rem; height: 1.15rem; font-size: .5rem; }
+    .fd-topic-meta b { color: var(--color-gray-700); font-weight: 700; }
     .fd-open { display: block; width: 100%; margin-top: .75rem; text-align: center; }
+
+    /* The eye that counts looks. Sized to sit in a line of small print,
+       wherever that line is. */
+    .v-eye { display: inline-flex; align-items: center; gap: .2rem; vertical-align: -.1em; }
+    .v-eye svg { width: .95em; height: .95em; opacity: .75; }
+
+    @media (prefers-reduced-motion: reduce) { .fd-topic { transition: none; } }
 
     /* The name and place beside a face, centred on it.
        With both lines the block is about the face's height and centring

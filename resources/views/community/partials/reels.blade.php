@@ -569,7 +569,7 @@
         const ok = window.confirmAction
             ? await window.confirmAction({
                 title: 'Delete this story?',
-                body: 'It comes off the wall and out of the rail for everyone.',
+                message: 'It comes off the wall and out of the rail for everyone.',
                 confirmText: 'Delete',
             })
             : true;

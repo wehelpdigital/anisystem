@@ -9,6 +9,7 @@ use App\Models\CommunityGroupPost;
 use App\Models\CommunityGroupReply;
 use App\Models\User;
 use App\Services\NotificationService;
+use App\Support\GalleryPick;
 use App\Support\UploadHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,6 +60,24 @@ class CommunityGroupController extends Controller
                 'nextPage' => $page + 1,
             ],
         ]);
+    }
+
+    /**
+     * The rooms this member belongs to, as bare ids.
+     *
+     * For a page the browser restored from its cache: it was drawn before
+     * the member joined anything and has no way to know better. Cheap enough
+     * to ask on every such arrival.
+     */
+    public function myGroups()
+    {
+        return response()->json(['success' => true, 'data' => [
+            'groupIds' => CommunityGroupMember::active()
+                ->where('userId', Auth::id())
+                ->pluck('groupId')
+                ->map(fn ($id) => (int) $id)
+                ->all(),
+        ]]);
     }
 
     /**
@@ -131,6 +150,7 @@ class CommunityGroupController extends Controller
             // Whoever started the room keeps it; the house can fix any of them.
             'canEditGroup' => $this->canEditGroup($group),
             'memberCount' => $group->members()->count(),
+            'topicCount' => $group->posts()->count(),
             'posts' => $posts['items'],
             'hasMore' => $posts['hasMore'],
         ]);
@@ -183,6 +203,10 @@ class CommunityGroupController extends Controller
             'description' => 'nullable|string|max:500',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
             'banner' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            // Or pointed at in the gallery, the same three ways the room was
+            // made with.
+            'imagePath' => 'nullable|string|max:500',
+            'bannerPath' => 'nullable|string|max:500',
         ]);
 
         $patch = [
@@ -193,9 +217,13 @@ class CommunityGroupController extends Controller
         // cleared the banner because the field was empty would be a trap.
         if ($request->hasFile('image')) {
             $patch['coverImagePath'] = $this->storeImage($request->file('image'), 'community-groups/covers');
+        } elseif ($picked = GalleryPick::path($data['imagePath'] ?? null)) {
+            $patch['coverImagePath'] = $picked;
         }
         if ($request->hasFile('banner')) {
             $patch['bannerImagePath'] = $this->storeImage($request->file('banner'), 'community-groups/banners');
+        } elseif ($picked = GalleryPick::path($data['bannerPath'] ?? null)) {
+            $patch['bannerImagePath'] = $picked;
         }
         $group->update($patch);
 
@@ -216,15 +244,28 @@ class CommunityGroupController extends Controller
             // Two pictures, two jobs: the badge is the room's face in a list,
             // the banner is what makes its own page look like somewhere.
             'banner' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            // Either picture may instead be pointed at in the AniSenso
+            // gallery — a reference to a file that already exists rather than
+            // a second copy of it.
+            'imagePath' => 'nullable|string|max:500',
+            'bannerPath' => 'nullable|string|max:500',
         ]);
 
-        $coverPath = null;
-        if ($request->hasFile('image')) {
-            $coverPath = $this->storeImage($request->file('image'), 'community-groups/covers');
-        }
-        $bannerPath = null;
-        if ($request->hasFile('banner')) {
-            $bannerPath = $this->storeImage($request->file('banner'), 'community-groups/banners');
+        $coverPath = $request->hasFile('image')
+            ? $this->storeImage($request->file('image'), 'community-groups/covers')
+            : GalleryPick::path($data['imagePath'] ?? null);
+        $bannerPath = $request->hasFile('banner')
+            ? $this->storeImage($request->file('banner'), 'community-groups/banners')
+            : GalleryPick::path($data['bannerPath'] ?? null);
+
+        /* Both, or none of it. A room with no pictures is the coloured square
+         * with two letters in it that every discussion here used to be, and
+         * the one who makes the room is the only one who can fix that. */
+        if (! $coverPath || ! $bannerPath) {
+            return response()->json([
+                'success' => false,
+                'message' => 'A discussion needs both a photo and a cover photo.',
+            ], 422);
         }
 
         $group = null;
