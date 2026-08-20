@@ -59,41 +59,106 @@
         </div>
     </div>
 
-    {{-- Step two: making it yours. --}}
+    {{-- Step two: the editor. Picture on top, tools under it — the shape
+         every reel editor uses, because your thumb is at the bottom and your
+         eyes are at the top. --}}
     <div class="rl-edit hidden" id="rlEdit">
         <div class="rl-stage">
             <video id="rlPreview" playsinline muted loop></video>
-            <div class="rl-overlay-text" id="rlOverlayText"></div>
+            {{-- What has been stuck on: words and pictures, dragged where
+                 they are wanted. --}}
+            <div class="rl-layer" id="rlLayer"></div>
+            {{-- Words are edited over the picture, where you can see them
+                 land, rather than in a field somewhere below it. --}}
+            <div class="rl-textedit" id="rlTextEdit" hidden>
+                <input type="text" id="rlTextInput" maxlength="120" placeholder="Type your words…" autocomplete="off">
+                <div class="rl-fonts" id="rlTextFonts"></div>
+                <div class="rl-inks" id="rlTextInks"></div>
+                <label class="rl-size">
+                    <span>Size</span>
+                    <input type="range" id="rlTextSize" min=".6" max="2.2" step=".05" value="1">
+                </label>
+                <div class="rl-textedit-acts">
+                    <button type="button" id="rlTextDrop" class="btn btn-white btn-sm">Remove</button>
+                    <button type="button" id="rlTextDone" class="btn btn-primary btn-sm">Done</button>
+                </div>
+            </div>
         </div>
 
         <div class="rl-tools">
-            <div class="rl-trim">
-                <label class="rl-lbl" for="rlStart">Start</label>
-                <input type="range" id="rlStart" min="0" max="0" step="0.1" value="0">
-                <span class="rl-time" id="rlStartLabel">0.0s</span>
+            {{-- The clip itself: real frames, and a handle at each end. --}}
+            <div class="rl-timeline" id="rlTimeline">
+                <div class="rl-film" id="rlFilm"></div>
+                <div class="rl-window" id="rlWindow">
+                    <span class="rl-handle rl-handle-a" data-rl-handle="a" role="slider" aria-label="Start"></span>
+                    <span class="rl-handle rl-handle-b" data-rl-handle="b" role="slider" aria-label="End"></span>
+                </div>
+                <div class="rl-playhead" id="rlPlayhead"></div>
             </div>
-            <div class="rl-trim">
-                <label class="rl-lbl" for="rlLen">Length</label>
-                <input type="range" id="rlLen" min="1" max="60" step="1" value="15">
-                <span class="rl-time" id="rlLenLabel">15s</span>
+            <div class="rl-timeline-say">
+                <span id="rlTrimSay">0.0s → 15.0s</span>
+                <span id="rlTrimLen">15s</span>
             </div>
 
-            <div class="rl-looks" id="rlLooks"></div>
+            {{-- The music, as its own strip under the clip. --}}
+            <div class="rl-track" id="rlTrack">
+                <button type="button" class="rl-track-main" id="rlMusicBtn">
+                    <span class="rl-track-ic">🎵</span>
+                    <span class="rl-track-txt"><b id="rlMusicName">Add music</b><i id="rlMusicSub">Free to use, or a file from this phone</i></span>
+                </button>
+                <button type="button" class="rl-track-play hidden" id="rlMusicPlay" aria-label="Hear it">▶</button>
+                <button type="button" class="rl-track-x hidden" id="rlMusicX" aria-label="Remove the music">✕</button>
+            </div>
+            <audio id="rlMusicAudio" preload="none"></audio>
 
-            <input type="text" id="rlOverlay" class="form-input" maxlength="120" placeholder="Words on the video (optional)">
-            <textarea id="rlCaption" class="form-textarea" rows="2" maxlength="2000" placeholder="Say something about it…"></textarea>
+            {{-- One row of things to do, the way an editor lays them out. --}}
+            <div class="rl-acts">
+                <button type="button" class="rl-act" id="rlAddBtn">
+                    <span>➕</span><i>Add</i>
+                </button>
+                <button type="button" class="rl-act" id="rlLooksBtn">
+                    <span>🎨</span><i>Look</i>
+                </button>
+                <button type="button" class="rl-act" id="rlSayBtn">
+                    <span>💬</span><i>Caption</i>
+                </button>
+            </div>
 
-            <button type="button" class="rl-music" id="rlMusicBtn">
-                <span>🎵</span><span id="rlMusicName">Add music</span>
-            </button>
-            <input type="file" id="rlAudio" accept="audio/*" class="hidden">
+            {{-- Panels, one at a time, under the row that opens them. --}}
+            <div class="rl-panel hidden" id="rlLooksPanel">
+                <div class="rl-looks" id="rlLooks"></div>
+            </div>
+            <div class="rl-panel hidden" id="rlSayPanel">
+                <textarea id="rlCaption" class="form-textarea" rows="2" maxlength="2000" placeholder="Say something about it…"></textarea>
+            </div>
         </div>
+        <input type="file" id="rlAudio" accept="audio/*" class="hidden">
+        <input type="file" id="rlSticker" accept="image/*" class="hidden">
     </div>
 
     <div class="rl-busy hidden" id="rlBusy">
         <div class="rl-spin"></div>
         <p>Preparing your reel…</p>
         <small>Trimming, filling the screen, and making it small enough to travel.</small>
+    </div>
+</div>
+
+{{-- What can be stuck onto a reel. --}}
+<div class="sheet hidden" id="rlAddSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Add to your reel</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-1">
+        <button type="button" class="rl-opt" data-rl-add-text>
+            <span class="rl-opt-ic">🅣</span>
+            <span class="rl-opt-txt"><b>Words</b><i>Pick a font, a colour and a size — then drag them where you want</i></span>
+        </button>
+        <button type="button" class="rl-opt" data-rl-add-image>
+            <span class="rl-opt-ic">🖼️</span>
+            <span class="rl-opt-txt"><b>A picture</b><i>Stick a photo or a logo onto the clip</i></span>
+        </button>
     </div>
 </div>
 
@@ -142,7 +207,7 @@
         overflow: hidden; border: 0; padding: 0; cursor: pointer; background: #111; scroll-snap-align: start;
         transition: transform .28s cubic-bezier(.22,1,.36,1); }
     .rl-tile:hover { transform: translateY(-2px); }
-    .rl-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .rl-tile img, .rl-tile video { width: 100%; height: 100%; object-fit: cover; display: block; }
     .rl-tile-grad { position: absolute; inset: auto 0 0 0; height: 60%;
         background: linear-gradient(to top, rgb(0 0 0 / .78), transparent); }
     .rl-tile-who { position: absolute; left: .4rem; right: .4rem; bottom: .4rem; color: #fff; text-align: left; }
@@ -171,6 +236,9 @@
     .rl-meta-who img { width: 100%; height: 100%; object-fit: cover; }
     .rl-meta p { margin-top: .4rem; font-size: .88rem; line-height: 1.5; }
     .rl-meta small { display: block; margin-top: .3rem; font-size: .72rem; opacity: .75; }
+    .rl-sound { position: absolute; left: .8rem; top: calc(env(safe-area-inset-top) + .7rem); z-index: 3;
+        width: 2.4rem; height: 2.4rem; border-radius: 999px; border: 0; cursor: pointer;
+        background: rgb(0 0 0 / .45); color: #fff; font-size: 1rem; }
     .rl-side { position: absolute; right: .6rem; bottom: calc(2rem + env(safe-area-inset-bottom)); z-index: 2;
         display: flex; flex-direction: column; gap: .9rem; align-items: center; }
     .rl-side button { width: 2.9rem; height: 2.9rem; border-radius: 999px; border: 0; cursor: pointer;
@@ -225,13 +293,84 @@
     .rl-overlay-text { position: absolute; left: 0; right: 0; bottom: 12%; text-align: center; padding: 0 1rem;
         font-weight: 800; font-size: 1rem; color: #fff; pointer-events: none; }
     .rl-overlay-text span { background: rgb(0 0 0 / .45); padding: .25rem .5rem; border-radius: .3rem; }
-    .rl-tools { flex: none; padding: .6rem .7rem .8rem; display: flex; flex-direction: column; gap: .5rem;
-        max-height: 46vh; overflow-y: auto; border-top: 1px solid rgb(255 255 255 / .08); }
+    .rl-tools { flex: none; padding: .55rem .7rem .8rem; display: flex; flex-direction: column; gap: .55rem;
+        max-height: 52vh; overflow-y: auto; border-top: 1px solid rgb(255 255 255 / .08); }
+
+    /* ---- the timeline ---- */
+    .rl-timeline { position: relative; height: 3.1rem; border-radius: .5rem; overflow: hidden;
+        background: rgb(255 255 255 / .06); touch-action: none; }
+    .rl-film { position: absolute; inset: 0; display: flex; }
+    .rl-film img { flex: 1 1 0; min-width: 0; height: 100%; object-fit: cover; opacity: .75; }
+    .rl-film-bare { background: repeating-linear-gradient(90deg, rgb(255 255 255 / .08) 0 8px, transparent 8px 16px); }
+    /* What is kept: bright inside, dimmed either side, a handle at each end. */
+    .rl-window { position: absolute; top: 0; bottom: 0; border: 2px solid #fff; border-radius: .4rem;
+        box-shadow: 0 0 0 9999px rgb(0 0 0 / .55); }
+    .rl-handle { position: absolute; top: 50%; width: 1.35rem; height: 2.4rem; transform: translateY(-50%);
+        background: #fff; border-radius: .35rem; cursor: ew-resize; touch-action: none;
+        box-shadow: 0 2px 8px rgb(0 0 0 / .5); }
+    .rl-handle::after { content: ''; position: absolute; left: 50%; top: 50%; width: 2px; height: 45%;
+        transform: translate(-50%, -50%); background: rgb(0 0 0 / .35); border-radius: 2px; }
+    .rl-handle-a { left: -.7rem; }
+    .rl-handle-b { right: -.7rem; }
+    .rl-playhead { position: absolute; top: 0; bottom: 0; width: 2px; background: #fff; opacity: .8;
+        pointer-events: none; }
+    .rl-timeline-say { display: flex; justify-content: space-between; font-size: .7rem; font-weight: 700;
+        color: rgb(255 255 255 / .6); font-variant-numeric: tabular-nums; }
+
+    /* ---- the music strip ---- */
+    .rl-track { display: flex; align-items: center; gap: .4rem; padding: .4rem .5rem; border-radius: .7rem;
+        border: 1px solid rgb(255 255 255 / .16); background: rgb(255 255 255 / .06); }
+    .rl-track-main { display: flex; align-items: center; gap: .55rem; flex: 1 1 auto; min-width: 0;
+        background: none; border: 0; color: #fff; text-align: left; cursor: pointer; }
+    .rl-track-ic { flex: none; font-size: 1rem; }
+    .rl-track-txt { display: flex; flex-direction: column; min-width: 0; }
+    .rl-track-txt b { font-size: .8rem; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rl-track-txt i { font-style: normal; font-size: .66rem; color: rgb(255 255 255 / .55);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rl-track-play, .rl-track-x { flex: none; width: 1.9rem; height: 1.9rem; border-radius: 999px; border: 0;
+        background: rgb(255 255 255 / .12); color: #fff; cursor: pointer; font-size: .75rem; }
+    .rl-track-play.hidden, .rl-track-x.hidden { display: none; }
+
+    /* ---- the row of tools ---- */
+    .rl-acts { display: flex; gap: .4rem; }
+    .rl-act { flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: .1rem;
+        padding: .45rem .3rem; border-radius: .6rem; border: 1px solid rgb(255 255 255 / .14);
+        background: rgb(255 255 255 / .06); color: #fff; cursor: pointer; }
+    .rl-act span { font-size: 1rem; line-height: 1; }
+    .rl-act i { font-style: normal; font-size: .68rem; font-weight: 700; color: rgb(255 255 255 / .7); }
+    .rl-panel { padding-top: .1rem; }
+    .rl-panel.hidden { display: none; }
+
+    /* ---- what is stuck on the picture ---- */
+    .rl-layer { position: absolute; inset: 0; z-index: 2; touch-action: none; }
+    .rl-ov { position: absolute; cursor: grab; user-select: none; }
+    .rl-ov-text { font-size: 1.15rem; font-weight: 800; text-align: center; max-width: 86%;
+        text-shadow: 0 2px 8px rgb(0 0 0 / .65), 0 0 2px rgb(0 0 0 / .5); }
+    .rl-ov-img img { max-width: 8rem; max-height: 8rem; display: block; }
+    .rl-textedit { position: absolute; left: .6rem; right: .6rem; bottom: .6rem; z-index: 4;
+        padding: .6rem; border-radius: .8rem; background: rgb(17 17 17 / .92);
+        display: flex; flex-direction: column; gap: .45rem; }
+    .rl-textedit[hidden] { display: none; }
+    .rl-textedit input[type=text] { width: 100%; padding: .45rem .6rem; border-radius: .5rem;
+        border: 1px solid rgb(255 255 255 / .2); background: rgb(255 255 255 / .08); color: #fff; }
+    .rl-fonts { display: flex; gap: .3rem; flex-wrap: wrap; }
+    .rl-font { padding: .25rem .55rem; border-radius: 999px; border: 1px solid rgb(255 255 255 / .2);
+        background: transparent; color: #fff; font-size: .74rem; cursor: pointer; }
+    .rl-font.is-on { background: #fff; color: #111; }
+    .rl-inks { display: flex; gap: .35rem; }
+    .rl-ink { width: 1.4rem; height: 1.4rem; border-radius: 999px; border: 2px solid rgb(255 255 255 / .35);
+        cursor: pointer; padding: 0; }
+    .rl-ink.is-on { border-color: #fff; transform: scale(1.12); }
+    .rl-size { display: flex; align-items: center; gap: .5rem; color: rgb(255 255 255 / .7); font-size: .72rem; }
+    .rl-size input { flex: 1; }
+    .rl-textedit-acts { display: flex; gap: .4rem; justify-content: flex-end; }
     .rl-trim { display: flex; align-items: center; gap: .5rem; }
     .rl-trim input[type=range] { flex: 1; }
     .rl-lbl { font-size: .74rem; font-weight: 700; color: rgb(255 255 255 / .6); min-width: 3.2rem; }
     .rl-time { font-size: .74rem; font-weight: 700; min-width: 3rem; text-align: right; font-variant-numeric: tabular-nums; }
-    .rl-looks { display: flex; gap: .4rem; overflow-x: auto; padding-bottom: .2rem; }
+    /* They wrap. Seven filters in a sideways scroller means the last three
+       are a rumour — and it put a scrollbar under them to say so. */
+    .rl-looks { display: flex; gap: .35rem; flex-wrap: wrap; }
     .rl-look { flex: none; padding: .3rem .65rem; border-radius: 999px; border: 1px solid rgb(255 255 255 / .18);
         background: rgb(255 255 255 / .06); color: rgb(255 255 255 / .75); font-size: .74rem;
         font-weight: 700; cursor: pointer; }
@@ -326,7 +465,12 @@
             reels = items;
             rail.innerHTML = items.map((it, i) => `
                 <button type="button" class="rl-tile" data-reel="${i}" aria-label="Play reel by ${esc(it.author.name)}">
-                    ${it.poster ? `<img src="${esc(it.poster)}" alt="" loading="lazy">` : ''}
+                    ${it.poster
+                        ? `<img src="${esc(it.poster)}" alt="" loading="lazy">`
+                        /* No cover on the row — an older reel, or one posted
+                           where the server could not make one. The clip's own
+                           first frame stands in, which beats a black tile. */
+                        : `<video src="${esc(it.video)}#t=0.3" muted playsinline preload="metadata"></video>`}
                     <span class="rl-tile-grad"></span>
                     <span class="rl-tile-who"><b>${esc(it.author.name)}</b><i>${it.seconds}s</i></span>
                 </button>`).join('');
@@ -346,7 +490,11 @@
         const deck = $('rlDeck');
         deck.innerHTML = reels.map((it) => `
             <div class="rl-slide" data-post="${it.id}">
-                <video src="${esc(it.video)}" ${it.poster ? `poster="${esc(it.poster)}"` : ''} playsinline loop preload="metadata"></video>
+                <video src="${esc(it.video)}" ${it.poster ? `poster="${esc(it.poster)}"` : ''}
+                       playsinline loop preload="metadata" muted></video>
+                <button type="button" class="rl-sound" data-rl-sound aria-label="Sound on">
+                    <span class="rl-sound-on" hidden>\ud83d\udd0a</span><span class="rl-sound-off">\ud83d\udd07</span>
+                </button>
                 <div class="rl-side">
                     <button type="button" data-rl-react="${it.id}" aria-label="Like">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4.3 12.2l7.7 7.7 7.7-7.7a4.5 4.5 0 10-6.4-6.4L12 6.9l-1.3-1.1a4.5 4.5 0 10-6.4 6.4z"/></svg>
@@ -361,6 +509,9 @@
                     <button type="button" class="js-bookmark" data-post-id="${it.id}" aria-label="Save">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-4-7 4V5z"/></svg>
                     </button>
+                    ${it.mine ? `<button type="button" data-rl-del="${it.id}" aria-label="Delete this reel">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg>
+                    </button>` : ''}
                 </div>
                 <div class="rl-meta">
                     <span class="rl-meta-who">
@@ -373,10 +524,60 @@
             </div>`).join('');
         $('rlViewer').classList.remove('hidden');
         document.documentElement.classList.add('overlay-open');
+        applySound(deck);
         const slides = deck.querySelectorAll('.rl-slide');
         slides[index]?.scrollIntoView();
         watchSlides(deck);
     }
+
+    /* Sound is off until somebody asks for it — no phone will autoplay a
+       video with sound, and a reel that refuses to start looks broken rather
+       than quiet. Asked once, it stays on for the rest of the session. */
+    let soundOn = false;
+    function applySound(scope) {
+        (scope || document).querySelectorAll('.rl-slide video').forEach((v) => { v.muted = !soundOn; });
+        (scope || document).querySelectorAll('[data-rl-sound]').forEach((b) => {
+            b.querySelector('.rl-sound-on').hidden = !soundOn;
+            b.querySelector('.rl-sound-off').hidden = soundOn;
+        });
+    }
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('[data-rl-sound]')) return;
+        soundOn = !soundOn;
+        applySound();
+        // Turning it on mid-reel should be audible at once, not next slide.
+        const live = document.querySelector('.rl-slide video:not([paused])');
+        live?.play?.().catch(() => {});
+    });
+
+    /* Taking down your own reel, from where you are watching it. */
+    document.addEventListener('click', async (e) => {
+        const btn = e.target.closest('[data-rl-del]');
+        if (!btn || btn.dataset.busy) return;
+        const ok = window.confirmAction
+            ? await window.confirmAction({
+                title: 'Delete this reel?',
+                body: 'It comes off the wall and out of the rail for everyone.',
+                confirmText: 'Delete',
+            })
+            : true;
+        if (!ok) return;
+        btn.dataset.busy = '1';
+        try {
+            const r = await fetch('{{ url('/app/community/wall') }}/' + btn.getAttribute('data-rl-del'), {
+                method: 'DELETE',
+                headers: { 'X-CSRF-TOKEN': csrf(), Accept: 'application/json' },
+                credentials: 'same-origin',
+            });
+            const j = await r.json();
+            if (!j.success) throw new Error(j.message || 'Could not delete that.');
+            window.toast?.('Reel deleted.');
+            closeViewer();
+            loadRail();
+        } catch (err) {
+            window.toast?.(err.message, 'error');
+        } finally { delete btn.dataset.busy; }
+    });
 
     /* Only the reel on screen plays. Anything else is four videos fighting
        over one radio, which on a farm connection means none of them play. */
@@ -428,6 +629,47 @@
 
     /* ---------------------------------------------------------- studio */
     let chosen = null, look = 'none', audioFile = null, audioName = null, media = null;
+    // What the strip is showing, so nothing else has to guess at it.
+    let audioTitle = '', audioUrl = '';
+
+    /* The one place the chosen track is set.
+     *
+     * A fetched track kept being renamed by whatever touched the label next;
+     * this holds the name, the file and the sound to preview together, so
+     * they cannot disagree. */
+    function setTrack({ file = null, name = null, title = '', url = '' } = {}) {
+        audioFile = file;
+        audioName = name;
+        audioTitle = title;
+        audioUrl = url;
+        const on = !!(file || name);
+        $('rlMusicName').textContent = on ? (title || 'Music added') : 'Add music';
+        $('rlMusicSub').textContent = on
+            ? 'Tap to change it'
+            : 'Free to use, or a file from this phone';
+        $('rlMusicPlay').classList.toggle('hidden', !on || !url);
+        $('rlMusicX').classList.toggle('hidden', !on);
+        stopTrack();
+    }
+
+    function stopTrack() {
+        const a = $('rlMusicAudio');
+        if (!a) return;
+        a.pause();
+        $('rlMusicPlay').textContent = '\u25b6';
+    }
+
+    /* Hearing it before it is under a reel: the whole reason to choose one. */
+    $('rlMusicPlay')?.addEventListener('click', () => {
+        const a = $('rlMusicAudio');
+        if (!a || !audioUrl) return;
+        if (a.paused) {
+            if (a.src !== audioUrl) a.src = audioUrl;
+            a.play().then(() => { $('rlMusicPlay').textContent = '\u23f8'; }).catch(() => {});
+        } else { stopTrack(); }
+    });
+    $('rlMusicAudio')?.addEventListener('ended', stopTrack);
+    $('rlMusicX')?.addEventListener('click', (e) => { e.stopPropagation(); setTrack(); });
 
     function studio(on) {
         $('rlStudio').classList.toggle('hidden', !on);
@@ -435,7 +677,10 @@
         if (!on) {
             $('rlPreview').pause();
             $('rlPreview').removeAttribute('src');
-            chosen = null; audioFile = null; audioName = null; look = 'none';
+            chosen = null; look = 'none';
+            overlays = [];
+            setTrack();
+            drawOverlays();
             $('rlPick').classList.remove('hidden');
             $('rlEdit').classList.add('hidden');
             $('rlPost').classList.add('hidden');
@@ -474,18 +719,31 @@
         e.target.value = '';
     }));
 
+    /* ---- the clip, and the window kept from it ---------------------- */
+    let clipDur = 0;            // the whole clip, seconds
+    let trimA = 0, trimB = 15;  // the window, seconds
+
     function takeVideo(file) {
         chosen = file;
         const url = URL.createObjectURL(file);
         const v = $('rlPreview');
         v.src = url;
         v.onloadedmetadata = () => {
-            const dur = Math.max(1, Math.min(v.duration || MAX, 600));
-            $('rlStart').max = String(Math.max(0, dur - 1));
-            $('rlLen').max = String(Math.min(MAX, Math.round(dur)));
-            $('rlLen').value = String(Math.min(15, Math.round(dur)));
-            syncLabels();
+            clipDur = Math.max(1, Math.min(v.duration || MAX, 3600));
+            trimA = 0;
+            trimB = Math.min(MAX, clipDur);
+            drawTrim();
+            filmstrip(v);
+            v.currentTime = 0;
             v.play().catch(() => {});
+        };
+        // The clip loops inside the window, not past the end of it — what you
+        // watch here is what gets posted.
+        v.ontimeupdate = () => {
+            if (!clipDur) return;
+            if (v.currentTime >= trimB - 0.05 || v.currentTime < trimA - 0.05) v.currentTime = trimA;
+            const p = ((v.currentTime - trimA) / Math.max(0.1, trimB - trimA)) * 100;
+            $('rlPlayhead').style.left = Math.max(0, Math.min(100, p)) + '%';
         };
         $('rlPick').classList.add('hidden');
         $('rlEdit').classList.remove('hidden');
@@ -494,15 +752,91 @@
         paintLooks();
     }
 
-    function syncLabels() {
-        $('rlStartLabel').textContent = parseFloat($('rlStart').value).toFixed(1) + 's';
-        $('rlLenLabel').textContent = $('rlLen').value + 's';
-        const v = $('rlPreview');
-        if (v.duration) v.currentTime = parseFloat($('rlStart').value);
+    /* Real frames under the clip, so the handles have something to aim at.
+     * Drawn in the browser from the file already in hand — no upload, no
+     * round trip, and the strip is the clip rather than a grey bar. */
+    async function filmstrip(v) {
+        const film = $('rlFilm');
+        film.innerHTML = '';
+        const shots = 8;
+        const c = document.createElement('canvas');
+        c.width = 90; c.height = 160;
+        const ctx = c.getContext('2d');
+        const grab = document.createElement('video');
+        grab.src = v.src; grab.muted = true; grab.playsInline = true;
+        try {
+            await new Promise((ok, no) => {
+                grab.onloadeddata = ok; grab.onerror = no;
+                setTimeout(no, 4000);
+            });
+            for (let i = 0; i < shots; i++) {
+                const at = (clipDur / shots) * i + 0.05;
+                await new Promise((ok) => { grab.onseeked = ok; grab.currentTime = Math.min(at, clipDur - 0.05); setTimeout(ok, 900); });
+                ctx.drawImage(grab, 0, 0, c.width, c.height);
+                const img = document.createElement('img');
+                img.src = c.toDataURL('image/jpeg', 0.6);
+                film.appendChild(img);
+            }
+        } catch (_) {
+            // No frames to be had: the strip stays a plain bar, and the
+            // handles still work on it.
+            film.classList.add('rl-film-bare');
+        }
     }
-    $('rlStart')?.addEventListener('input', syncLabels);
-    $('rlLen')?.addEventListener('input', syncLabels);
 
+    function drawTrim() {
+        const w = $('rlWindow');
+        const a = (trimA / Math.max(0.1, clipDur)) * 100;
+        const b = (trimB / Math.max(0.1, clipDur)) * 100;
+        w.style.left = a + '%';
+        w.style.width = Math.max(2, b - a) + '%';
+        $('rlTrimSay').textContent = trimA.toFixed(1) + 's \u2192 ' + trimB.toFixed(1) + 's';
+        $('rlTrimLen').textContent = Math.round(trimB - trimA) + 's';
+    }
+
+    /* Dragging an end. Pointer events, so a finger and a mouse are the same
+     * code, and the clip seeks as the handle moves — you choose a moment by
+     * seeing it, not by reading a number. */
+    (function trimHandles() {
+        const bar = $('rlTimeline');
+        if (!bar) return;
+        let dragging = null;
+        const at = (e) => {
+            const r = bar.getBoundingClientRect();
+            return Math.max(0, Math.min(1, (e.clientX - r.left) / Math.max(1, r.width))) * clipDur;
+        };
+        bar.addEventListener('pointerdown', (e) => {
+            const h = e.target.closest('[data-rl-handle]');
+            if (!h || !clipDur) return;
+            dragging = h.getAttribute('data-rl-handle');
+            bar.setPointerCapture(e.pointerId);
+            e.preventDefault();
+        });
+        bar.addEventListener('pointermove', (e) => {
+            if (!dragging) return;
+            const t = at(e);
+            if (dragging === 'a') {
+                trimA = Math.min(t, trimB - 1);
+                // Sixty seconds is the rule, so the far end follows the near
+                // one rather than letting the window grow past it.
+                if (trimB - trimA > MAX) trimB = trimA + MAX;
+                $('rlPreview').currentTime = trimA;
+            } else {
+                trimB = Math.max(t, trimA + 1);
+                if (trimB - trimA > MAX) trimA = trimB - MAX;
+                $('rlPreview').currentTime = Math.max(trimA, trimB - 0.3);
+            }
+            drawTrim();
+        });
+        ['pointerup', 'pointercancel'].forEach((ev) => bar.addEventListener(ev, () => {
+            if (!dragging) return;
+            dragging = null;
+            $('rlPreview').currentTime = trimA;
+            $('rlPreview').play().catch(() => {});
+        }));
+    })();
+
+    /* ---- the looks, and the panels they live in --------------------- */
     function paintLooks() {
         const host = $('rlLooks');
         host.innerHTML = LOOKS.map((l) => `<button type="button" class="rl-look${l === look ? ' is-on' : ''}" data-look="${l}">${l === 'none' ? 'Original' : l[0].toUpperCase() + l.slice(1)}</button>`).join('');
@@ -520,10 +854,133 @@
         $('rlPreview').style.filter = map[look] || 'none';
     });
 
-    $('rlOverlay')?.addEventListener('input', (e) => {
-        const t = e.target.value.trim();
-        $('rlOverlayText').innerHTML = t ? '<span>' + esc(t) + '</span>' : '';
+    function panel(which) {
+        ['rlLooksPanel', 'rlSayPanel'].forEach((id) => {
+            $(id).classList.toggle('hidden', id !== which || !$(id).classList.contains('hidden'));
+        });
+    }
+    $('rlLooksBtn')?.addEventListener('click', () => panel('rlLooksPanel'));
+    $('rlSayBtn')?.addEventListener('click', () => panel('rlSayPanel'));
+
+    /* ---- things stuck on the picture -------------------------------- */
+    const FONTS = [
+        { key: 'sans', name: 'Plain', css: 'system-ui, sans-serif' },
+        { key: 'head', name: 'Heading', css: 'var(--font-heading), sans-serif' },
+        { key: 'serif', name: 'Serif', css: 'Georgia, serif' },
+        { key: 'mono', name: 'Typewriter', css: 'ui-monospace, monospace' },
+    ];
+    const INKS = ['#ffffff', '#111111', '#ffd54a', '#7cf07c', '#8fd0ff', '#ff8fb3'];
+    let overlays = [];   // { kind:'text'|'image', ... }
+
+    $('rlAddBtn')?.addEventListener('click', () => {
+        liftSheets(true);
+        window.openSheet?.('rlAddSheet');
     });
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('[data-rl-add-text]')) {
+            window.closeSheet?.('rlAddSheet');
+            addText();
+            return;
+        }
+        if (e.target.closest('[data-rl-add-image]')) {
+            window.closeSheet?.('rlAddSheet');
+            $('rlSticker').click();
+        }
+    });
+
+    function addText() {
+        const o = { kind: 'text', text: '', font: 'sans', ink: '#ffffff', size: 1, x: 50, y: 78 };
+        overlays.push(o);
+        drawOverlays();
+        openTextEditor(overlays.length - 1);
+    }
+
+    function openTextEditor(i) {
+        const o = overlays[i];
+        if (!o) return;
+        const box = $('rlTextEdit');
+        box.hidden = false;
+        box.dataset.at = String(i);
+        $('rlTextInput').value = o.text;
+        $('rlTextFonts').innerHTML = FONTS.map((f) => `<button type="button" class="rl-font${f.key === o.font ? ' is-on' : ''}" data-font="${f.key}" style="font-family:${f.css}">${f.name}</button>`).join('');
+        $('rlTextInks').innerHTML = INKS.map((c) => `<button type="button" class="rl-ink${c === o.ink ? ' is-on' : ''}" data-ink="${c}" style="background:${c}" aria-label="Colour"></button>`).join('');
+        $('rlTextSize').value = String(o.size);
+        $('rlTextInput').focus();
+    }
+
+    document.addEventListener('input', (e) => {
+        const box = $('rlTextEdit');
+        if (!box || box.hidden) return;
+        const o = overlays[parseInt(box.dataset.at, 10)];
+        if (!o) return;
+        if (e.target.id === 'rlTextInput') o.text = e.target.value;
+        if (e.target.id === 'rlTextSize') o.size = parseFloat(e.target.value);
+        drawOverlays();
+    });
+    document.addEventListener('click', (e) => {
+        const box = $('rlTextEdit');
+        if (!box || box.hidden) return;
+        const o = overlays[parseInt(box.dataset.at, 10)];
+        const f = e.target.closest('[data-font]');
+        const c = e.target.closest('[data-ink]');
+        if (f && o) { o.font = f.dataset.font; openTextEditor(parseInt(box.dataset.at, 10)); drawOverlays(); }
+        if (c && o) { o.ink = c.dataset.ink; openTextEditor(parseInt(box.dataset.at, 10)); drawOverlays(); }
+        if (e.target.closest('#rlTextDone')) { box.hidden = true; }
+        if (e.target.closest('#rlTextDrop')) {
+            overlays.splice(parseInt(box.dataset.at, 10), 1);
+            box.hidden = true;
+            drawOverlays();
+        }
+    });
+
+    $('rlSticker')?.addEventListener('change', (e) => {
+        const f = e.target.files && e.target.files[0];
+        e.target.value = '';
+        if (!f) return;
+        overlays.push({ kind: 'image', file: f, url: URL.createObjectURL(f), x: 50, y: 45, size: 1 });
+        drawOverlays();
+    });
+
+    function drawOverlays() {
+        const layer = $('rlLayer');
+        layer.innerHTML = overlays.map((o, i) => {
+            const at = `left:${o.x}%;top:${o.y}%;`;
+            if (o.kind === 'image') {
+                return `<span class="rl-ov rl-ov-img" data-ov="${i}" style="${at}transform:translate(-50%,-50%) scale(${o.size})"><img src="${esc(o.url)}" alt=""></span>`;
+            }
+            const font = (FONTS.find((f) => f.key === o.font) || FONTS[0]).css;
+            return `<span class="rl-ov rl-ov-text" data-ov="${i}" style="${at}transform:translate(-50%,-50%) scale(${o.size});font-family:${font};color:${esc(o.ink)}">${esc(o.text || 'Your words')}</span>`;
+        }).join('');
+    }
+
+    /* Dragging what has been stuck on, anywhere on the picture. */
+    (function dragOverlays() {
+        const stage = $('rlLayer');
+        if (!stage) return;
+        let held = null;
+        stage.addEventListener('pointerdown', (e) => {
+            const el = e.target.closest('[data-ov]');
+            if (!el) return;
+            held = parseInt(el.getAttribute('data-ov'), 10);
+            stage.setPointerCapture(e.pointerId);
+            e.preventDefault();
+        });
+        stage.addEventListener('pointermove', (e) => {
+            if (held === null) return;
+            const r = stage.getBoundingClientRect();
+            const o = overlays[held];
+            if (!o) return;
+            o.x = Math.max(4, Math.min(96, ((e.clientX - r.left) / r.width) * 100));
+            o.y = Math.max(6, Math.min(94, ((e.clientY - r.top) / r.height) * 100));
+            drawOverlays();
+        });
+        ['pointerup', 'pointercancel'].forEach((ev) => stage.addEventListener(ev, () => { held = null; }));
+        // A tap on words opens them for editing again.
+        stage.addEventListener('click', (e) => {
+            const el = e.target.closest('.rl-ov-text');
+            if (el) openTextEditor(parseInt(el.getAttribute('data-ov'), 10));
+        });
+    })();
 
     /* Lift the sheet layer over the studio while a sheet of its own is open,
        and drop it again when that sheet closes. */
@@ -606,9 +1063,13 @@
             });
             const j = await r.json();
             if (!j.success) throw new Error(j.message || 'That track could not be fetched.');
-            audioFile = null;
-            audioName = j.data.name;
-            $('rlMusicName').textContent = web.getAttribute('data-rl-web-title') || 'Music added';
+            // Kept as fetched: the name the server stored it under, and the
+            // title the farmer picked it by, together.
+            setTrack({
+                name: j.data.name,
+                title: web.getAttribute('data-rl-web-title') || 'Music added',
+                url: '{{ asset('storage/reel-music') }}/' + j.data.name,
+            });
             window.closeSheet?.('rlMusicSheet');
         } catch (err) {
             window.toast?.(err.message, 'error');
@@ -619,24 +1080,44 @@
     document.addEventListener('click', (e) => {
         if (e.target.closest('[data-rl-own]')) { window.closeSheet?.('rlMusicSheet'); $('rlAudio').click(); return; }
         if (e.target.closest('[data-rl-nomusic]')) {
-            audioFile = null; audioName = null;
-            $('rlMusicName').textContent = 'Add music';
+            setTrack();
             window.closeSheet?.('rlMusicSheet');
             return;
         }
         const track = e.target.closest('[data-rl-track]');
         if (track) {
-            audioFile = null;
-            audioName = track.dataset.rlTrack;
-            $('rlMusicName').textContent = track.textContent.trim();
+            setTrack({
+                name: track.dataset.rlTrack,
+                title: (track.querySelector('b')?.textContent || track.textContent).trim(),
+                url: '{{ asset('storage/reel-music') }}/' + track.dataset.rlTrack,
+            });
             window.closeSheet?.('rlMusicSheet');
         }
     });
     $('rlAudio')?.addEventListener('change', (e) => {
-        audioFile = e.target.files && e.target.files[0];
-        audioName = null;
-        if (audioFile) $('rlMusicName').textContent = audioFile.name;
+        const own = e.target.files && e.target.files[0];
+        if (own) setTrack({ file: own, title: own.name, url: URL.createObjectURL(own) });
+        e.target.value = '';
     });
+
+    /* A cover frame, drawn from the preview at the start of the window. */
+    async function coverShot() {
+        const v = $('rlPreview');
+        if (!v || !v.videoWidth) return null;
+        try {
+            const c = document.createElement('canvas');
+            // Portrait, at the shape a reel is posted in.
+            c.width = 720; c.height = 1280;
+            const ctx = c.getContext('2d');
+            // Cover-fit the frame into the portrait box, as the encoder does.
+            const scale = Math.max(c.width / v.videoWidth, c.height / v.videoHeight);
+            const w = v.videoWidth * scale, h = v.videoHeight * scale;
+            ctx.drawImage(v, (c.width - w) / 2, (c.height - h) / 2, w, h);
+            return await new Promise((ok) => c.toBlob(ok, 'image/jpeg', 0.8));
+        } catch (_) {
+            return null;
+        }
+    }
 
     $('rlPost')?.addEventListener('click', async () => {
         if (!chosen) return;
@@ -644,12 +1125,28 @@
         const fd = new FormData();
         fd.append('video', chosen);
         fd.append('caption', $('rlCaption').value.trim());
-        fd.append('overlay', $('rlOverlay').value.trim());
-        fd.append('start', $('rlStart').value);
-        fd.append('duration', $('rlLen').value);
+        fd.append('start', trimA.toFixed(2));
+        fd.append('duration', Math.max(1, Math.round(trimB - trimA)));
         fd.append('look', look);
+        // The words, with their font, colour, size and where they were put.
+        // Sent as description rather than as pixels, so the encoder can burn
+        // them at the video's own resolution instead of the preview's.
+        fd.append('overlays', JSON.stringify(overlays
+            .filter((o) => o.kind === 'text' && o.text.trim() !== '')
+            .map((o) => ({ text: o.text.trim(), font: o.font, ink: o.ink, size: o.size, x: o.x, y: o.y }))));
+        // A stuck-on picture goes as a file, one for now.
+        const sticker = overlays.find((o) => o.kind === 'image' && o.file);
+        if (sticker) {
+            fd.append('sticker', sticker.file);
+            fd.append('stickerAt', JSON.stringify({ x: sticker.x, y: sticker.y, size: sticker.size }));
+        }
         if (audioFile) fd.append('audio', audioFile);
         if (audioName) fd.append('audioName', audioName);
+        // A cover taken here, from the frame the farmer left it on. The server
+        // makes its own when it can; this is what a reel shows when it could
+        // not — and a reel with no picture in the rail is a black tile.
+        const cover = await coverShot();
+        if (cover) fd.append('poster', cover, 'cover.jpg');
         try {
             const r = await fetch(URLS.store, {
                 method: 'POST',

@@ -44,6 +44,14 @@ class ReelController extends Controller
             // What to burn over the picture; kept apart from the caption
             // because the caption is the post's words and this is the video's.
             'overlay' => 'nullable|string|max:120',
+            // What the editor stuck on: words with a font, colour, size and
+            // place. Sent as description, burned at the video's own size.
+            'overlays' => 'nullable|string|max:4000',
+            'sticker' => 'nullable|image|max:8192',
+            'stickerAt' => 'nullable|string|max:200',
+            // A cover taken in the browser, used when the server cannot make
+            // one of its own.
+            'poster' => 'nullable|image|max:8192',
         ]);
 
         try {
@@ -52,11 +60,23 @@ class ReelController extends Controller
                 'duration' => (float) ($data['duration'] ?? ReelEncoder::MAX_SECONDS),
                 'look' => $data['look'] ?? 'none',
                 'caption' => $data['overlay'] ?? '',
+                'overlays' => json_decode((string) ($data['overlays'] ?? '[]'), true) ?: [],
                 'audio' => $request->file('audio'),
                 'audioPath' => $data['audioName'] ?? null,
             ]);
         } catch (\Throwable $e) {
             return $this->json(false, $e->getMessage() ?: 'That video could not be prepared.', [], 422);
+        }
+
+        /* A cover, whichever way one could be had.
+         *
+         * The encoder makes one when ffmpeg is there; the browser sends one
+         * from the frame the farmer left it on. Either beats a black tile in
+         * the rail, which is what a reel with no poster looks like. */
+        $poster = $stored['poster'] ?? null;
+        if (! $poster && $request->hasFile('poster')) {
+            $poster = \App\Support\MediaStore::putFile($request->file('poster'), 'community/reels', (int) Auth::id())
+                ?: null;
         }
 
         $meId = (int) Auth::id();
@@ -65,14 +85,24 @@ class ReelController extends Controller
             'authorUserId' => $meId,
             'body' => trim((string) ($data['caption'] ?? '')),
             'videoPath' => $stored['video'],
-            'videoPoster' => $stored['poster'],
+            'videoPoster' => $poster,
             'isReel' => true,
             'durationSec' => $stored['duration'],
             'audioTitle' => $this->audioLabel($data),
             'deleteStatus' => 1,
         ]);
 
-        return $this->json(true, 'Reel posted.', ['postId' => (int) $post->id]);
+        /* Say when the edits were dropped. Without ffmpeg the clip is kept as
+         * filmed — no trim, no 9:16, no look, no words, no music — and a
+         * farmer who chose all five deserves to hear that rather than
+         * discover it by watching. */
+        return $this->json(
+            true,
+            ! empty($stored['raw'])
+                ? 'Reel posted — but this server could not edit the video, so it went up as filmed.'
+                : 'Reel posted.',
+            ['postId' => (int) $post->id, 'raw' => ! empty($stored['raw'])]
+        );
     }
 
     /** The carousel: newest reels, with what a tile needs to draw itself. */
@@ -99,6 +129,8 @@ class ReelController extends Controller
                 'audio' => $r->audioTitle,
                 'seconds' => (int) $r->durationSec,
                 'comments' => (int) ($r->comments_count ?? 0),
+                // Yours to take down; the viewer draws a bin only for these.
+                'mine' => (int) $r->authorUserId === $meId,
                 'author' => [
                     'id' => (int) $r->authorUserId,
                     'name' => $r->author?->full_name ?: 'A farmer',

@@ -71,11 +71,20 @@ class ReelEncoder
         $start = max(0.0, (float) ($opts['start'] ?? 0));
 
         if (! self::usable($ffmpeg)) {
-            // No encoder here: keep what was filmed rather than refusing it.
+            /* No encoder here: keep what was filmed rather than refusing it —
+             * but say so. Everything the studio offered is dropped on this
+             * path (the trim, the crop to 9:16, the look, the burned words
+             * and the music), and dropping a farmer's music without a word is
+             * what made this feature look broken rather than degraded. */
             Log::warning('ReelEncoder: ffmpeg unavailable, storing the reel as filmed');
             $stored = VideoOptimizer::storeCompressed($file, 'community/reels');
 
-            return ['video' => $stored['video'], 'poster' => $stored['poster'] ?? null, 'duration' => $duration];
+            return [
+                'video' => $stored['video'],
+                'poster' => $stored['poster'] ?? null,
+                'duration' => $duration,
+                'raw' => true,
+            ];
         }
 
         $tmp = sys_get_temp_dir() . DIRECTORY_SEPARATOR;
@@ -99,6 +108,16 @@ class ReelEncoder
             $chain .= ',' . $look;
         }
 
+        /* Everything stuck onto the picture, burned at the video's own size.
+         *
+         * The editor works on a preview a few hundred pixels tall and the
+         * reel is 1080 wide, so positions arrive as percentages and sizes as
+         * multiples — a number that means the same thing at both sizes. */
+        foreach (self::overlayFilters($opts['overlays'] ?? []) as $filter) {
+            $chain .= ',' . $filter;
+        }
+
+        // A single line, the old way, still honoured.
         $caption = trim((string) ($opts['caption'] ?? ''));
         if ($caption !== '') {
             $chain .= ',' . self::captionFilter($caption);
@@ -147,16 +166,28 @@ class ReelEncoder
             @unlink($outFile);
             $stored = VideoOptimizer::storeCompressed($file, 'community/reels');
 
-            return ['video' => $stored['video'], 'poster' => $stored['poster'] ?? null, 'duration' => $duration];
+            return [
+                'video' => $stored['video'],
+                'poster' => $stored['poster'] ?? null,
+                'duration' => $duration,
+                'raw' => true,
+            ];
         }
 
-        // A cover frame taken a beat in, because frame zero is often the lens
-        // still finding focus.
-        $poster = new Process([
-            $ffmpeg, '-y', '-ss', '0.6', '-i', $outFile,
-            '-frames:v', '1', '-q:v', '4', $posterFile,
-        ], null, null, null, 120);
-        $poster->run();
+        /* A cover frame taken a beat in, and frame zero if that beat is past
+         * the end — a three-second clip trimmed to one has no 0.6s to grab
+         * on some inputs, and a reel with no picture in the rail is worse
+         * than a reel whose cover is its first frame. */
+        foreach (['0.6', '0'] as $at) {
+            $poster = new Process([
+                $ffmpeg, '-y', '-ss', $at, '-i', $outFile,
+                '-frames:v', '1', '-q:v', '4', $posterFile,
+            ], null, null, null, 120);
+            $poster->run();
+            if (is_file($posterFile) && filesize($posterFile) > 0) {
+                break;
+            }
+        }
 
         $videoPath = self::put($outFile, 'mp4');
         $posterPath = is_file($posterFile) ? self::put($posterFile, 'jpg') : null;
@@ -168,6 +199,51 @@ class ReelEncoder
         }
 
         return ['video' => $videoPath, 'poster' => $posterPath, 'duration' => $duration];
+    }
+
+    /**
+     * The words a farmer put on the picture, as drawtext filters.
+     *
+     * @param  list<array<string,mixed>>  $overlays
+     * @return list<string>
+     */
+    private static function overlayFilters(array $overlays): array
+    {
+        $out = [];
+        foreach (array_slice($overlays, 0, 6) as $o) {
+            $text = trim((string) ($o['text'] ?? ''));
+            if ($text === '') {
+                continue;
+            }
+            $text = self::escapeDrawText($text);
+
+            // A size of 1 means "the size the editor showed", which is about
+            // 4% of the frame's height; the rest scales from there.
+            $size = max(18, min(160, (int) round(self::OUT_H * 0.042 * (float) ($o['size'] ?? 1))));
+            $x = max(0, min(100, (float) ($o['x'] ?? 50)));
+            $y = max(0, min(100, (float) ($o['y'] ?? 80)));
+            $ink = preg_match('/^#[0-9a-f]{6}$/i', (string) ($o['ink'] ?? '')) ? $o['ink'] : '#ffffff';
+
+            $out[] = "drawtext=text='{$text}'"
+                . ':fontcolor=' . str_replace('#', '0x', strtolower($ink))
+                . ':fontsize=' . $size
+                // A shadow rather than a box: the editor draws a shadow, and
+                // what is posted should look like what was chosen.
+                . ':shadowcolor=black@0.6:shadowx=2:shadowy=2'
+                . ':x=(w*' . ($x / 100) . ')-(text_w/2)'
+                . ':y=(h*' . ($y / 100) . ')-(text_h/2)';
+        }
+
+        return $out;
+    }
+
+    /** drawtext reads colons and backslashes as syntax; a farmer does not. */
+    private static function escapeDrawText(string $text): string
+    {
+        $text = Str::limit($text, 120, '');
+        $text = str_replace(['\\', ':', "'", '%'], ['\\\\', '\\:', "\u{2019}", '\\%'], $text);
+
+        return preg_replace('/[\r\n]+/', ' ', $text);
     }
 
     /**
@@ -242,6 +318,19 @@ class ReelEncoder
             '/usr/bin/ffmpeg',
             '/usr/local/bin/ffmpeg',
         ]);
+        /* PATH first, because that is where a package manager puts it.
+         *
+         * A Nix host keeps ffmpeg in the store and links it onto PATH; none
+         * of the absolute guesses below exist there, so a list of guesses
+         * found nothing and every reel fell back to being stored raw. */
+        foreach (['where ffmpeg', 'which ffmpeg'] as $ask) {
+            $found = @shell_exec($ask . ' 2>' . (DIRECTORY_SEPARATOR === '\\' ? 'NUL' : '/dev/null'));
+            $first = trim(strtok((string) $found, "\r\n"));
+            if ($first !== '' && @is_file($first)) {
+                return $first;
+            }
+        }
+
         foreach ($candidates as $path) {
             if ($path !== '' && @is_file($path)) {
                 return $path;
