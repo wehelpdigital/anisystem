@@ -38,8 +38,14 @@
                 @if ($isFriend)<span class="badge badge-green align-middle">Co-farmer</span>@endif
                 @include('community.partials.dm-btn', ['user' => $author])
             </p>
+            {{-- Where they farm, or — for somebody who has not said — how
+                 long they have been here. Something under the name either
+                 way: the line is what tells a stranger anything at all about
+                 the person, and an empty one tells them nothing twice. --}}
             @if ($place)
                 <p class="text-xs text-gray-400">📍 {{ $place }}</p>
+            @elseif ($author?->created_at)
+                <p class="text-xs text-gray-400">🌱 Member since {{ $author->created_at->timezone('Asia/Manila')->format('M Y') }}</p>
             @endif
         </div>
         {{-- Following is one-sided, so it belongs on the post as well as the

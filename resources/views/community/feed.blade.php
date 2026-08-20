@@ -248,8 +248,13 @@
         </button>
         <div class="min-w-0 grow fp-head-txt">
             <p class="text-sm leading-tight font-semibold text-gray-900">{{ auth()->user()->full_name }}</p>
+            {{-- Where you farm, or — if you have not said — how long you
+                 have been here. The same fallback a post uses, so the box you
+                 write in still matches the post it becomes. --}}
             @if ($mePlace)
                 <p class="text-xs text-gray-400">📍 {{ $mePlace }}</p>
+            @elseif (auth()->user()?->created_at)
+                <p class="text-xs text-gray-400">🌱 Member since {{ auth()->user()->created_at->timezone('Asia/Manila')->format('M Y') }}</p>
             @endif
         </div>
     </div>
