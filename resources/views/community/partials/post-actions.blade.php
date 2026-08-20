@@ -17,16 +17,26 @@
         <h3 class="sheet-title">Comments</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
-    <div class="sheet-body">
+    <div class="sheet-body" id="wcsBody">
+        {{-- The post itself, moved in on open and put back on close — the
+             same thing a discussion's thread modal does, so a reader can see
+             what is being talked about. --}}
+        <div id="wcsPost"></div>
+        <p class="wcs-count" id="wcsCount" hidden></p>
         {{-- .wall-comments is the name the handlers append into. --}}
         <div id="wcsList" class="wall-comments space-y-1.5"></div>
         <p class="wcs-state" id="wcsState">Loading…</p>
         <button type="button" class="btn btn-white btn-sm w-full mt-2 hidden" id="wcsMore">Show older comments</button>
-    </div>
-    {{-- A composer of its own, rather than one borrowed from a card that may
-         not have one. Its post id is set when the sheet opens. --}}
-    <div class="sheet-footer" id="wcsFoot">
-        @include('community.partials.wall-comment-form', ['postId' => ''])
+        {{-- The box to write in, at the end of what you are reading rather
+             than pinned to the floor. Its post id is set when the sheet
+             opens; replying sets its parent. --}}
+        <div id="wcsFoot" class="wcs-write">
+            <p class="reply-lead">
+                <span class="avatar avatar-sm {{ \App\Support\CommunityAvatar::hue(auth()->user()->full_name ?? '?') }}">{{ auth()->user()->initials ?? '?' }}</span>
+                <span><b>Say something</b><i>Answer, or add what worked on your farm — use @ to tag a co-farmer.</i></span>
+            </p>
+            @include('community.partials.wall-comment-form', ['postId' => ''])
+        </div>
     </div>
 </div>
 
@@ -212,6 +222,19 @@
     .wcs-state { padding:1.25rem .5rem; text-align:center; font-size:.85rem; font-weight:600; color:var(--color-gray-400); }
     .wcs-state[hidden] { display:none; }
 
+    /* The sheet reads like a discussion's thread: the post at the top with
+       its own chrome stripped, the answers under it, the box at the end. */
+    #wcsPost .wall-post { border:0; box-shadow:none; margin:0; padding:1.2rem 0 0;
+        background:transparent; border-radius:0; }
+    #wcsPost .wall-post::before { display:none; }        /* the card's edge belongs to the wall */
+    #wcsPost .fp-acts { display:none; }                  /* you are already in the comments */
+    #wcsPost .fp-follow { display:none; }
+    .wcs-count { margin:.9rem 0 .5rem; font-size:.72rem; font-weight:800; letter-spacing:.04em;
+        text-transform:uppercase; color:var(--color-gray-400); }
+    .wcs-count[hidden] { display:none; }
+    .wcs-write { margin-top:1rem; padding-top:.85rem; border-top:1px solid var(--color-gray-100); }
+    html.dark .wcs-write { border-top-color:rgb(255 255 255 / .08); }
+
     html.dark .fp-shared { background:rgb(255 255 255 / .04); border-color:rgb(255 255 255 / .09); }
     html.dark .fp-acts { border-top-color:rgb(255 255 255 / .08); }
 
@@ -359,6 +382,12 @@
             if (!list.children.length) state.textContent = 'No comments yet — be the first.';
             cPage = d.nextPage || cPage + 1;
             more.classList.toggle('hidden', !d.hasMore);
+            // "3 sagot", the way the room labels its answers.
+            const label = $('wcsCount');
+            if (label && typeof d.total === 'number') {
+                label.hidden = d.total < 1;
+                label.textContent = d.total + ' ' + (d.total === 1 ? 'comment' : 'comments');
+            }
             // The card's own number should agree with what the sheet counted.
             const n = document.querySelector('[data-comment-count="' + cPost + '"]');
             if (n && typeof d.total === 'number') n.textContent = d.total;
@@ -369,11 +398,45 @@
     }
 
 
+    /* The post is MOVED into the sheet, not copied — every handler on this
+     * page is delegated off document and reaches for .closest('.wall-post'),
+     * so the same nodes in a new place keep working with nothing rewritten.
+     * A marker holds its place in the wall, and closing puts it back exactly
+     * where it was. (The discussion room does this with its topics.) */
+    let cCard = null, cSlot = null;
+
+    function takePost(card) {
+        if (!card) return;
+        putPostBack();
+        cSlot = document.createComment('wall-post-slot');
+        card.parentNode.insertBefore(cSlot, card);
+        cCard = card;
+        $('wcsPost').appendChild(card);
+        // The name link, not the avatar's — the avatar is an <a> too, and
+        // its text is an initial or nothing at all.
+        const who = card.querySelector('.fp-head-txt a')?.textContent?.trim();
+        const title = document.querySelector('#wallCommentSheet .sheet-title');
+        if (title) title.textContent = who ? who + '’s post' : 'Comments';
+    }
+
+    function putPostBack() {
+        if (!cCard) return;
+        const card = cCard, slot = cSlot;
+        cCard = null; cSlot = null;
+        if (slot && slot.parentNode) { slot.parentNode.insertBefore(card, slot); slot.remove(); }
+        else document.getElementById('plazaFeed')?.appendChild(card);
+    }
+
+    document.addEventListener('sm:sheet-closed', (e) => {
+        if (e.detail && e.detail.id === 'wallCommentSheet') putPostBack();
+    });
+
     document.addEventListener('click', (e) => {
         const btn = e.target.closest('.js-open-comments');
         if (!btn) return;
         cPost = btn.dataset.postId;
         primeComposer();
+        takePost(btn.closest('.wall-post'));
         window.openSheet?.('wallCommentSheet');
         loadComments(true);
         /* Opened to be read, not written in.

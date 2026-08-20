@@ -376,28 +376,6 @@
         const post = postScope(btn);
         const mId = btn.dataset.authorId, mName = btn.dataset.authorName;
 
-        /* Inside the comments sheet, the box at the foot IS the reply box.
-         *
-         * Pushing another composer into the list put two identical rows of
-         * the same controls one above the other. A reply is a comment with
-         * somebody's name on it — so the sheet's own box takes the name and
-         * the parent, and there is only ever one place to type. */
-        const foot = post?.querySelector?.('#wcsFoot .wall-comment-form');
-        if (foot) {
-            foot.setAttribute('data-parent-id', parentId);
-            if (mId && mName && foot.dataset.mentionId !== mId) {
-                foot.querySelectorAll('.reply-mention-pill').forEach((x) => x.remove());
-                foot.dataset.mentionId = mId;
-                foot.dataset.mentionName = mName;
-                foot.insertAdjacentHTML('afterbegin', replyMentionPill(mName));
-            }
-            const zoneOpen = post.querySelector(`.wall-replies[data-parent-id="${parentId}"]`);
-            if (zoneOpen) openZone(zoneOpen, true);
-            const box = foot.querySelector('input[type="text"]');
-            if (box) { box.focus(); box.scrollIntoView({ block: 'nearest' }); }
-            return;
-        }
-
         const zone = post && post.querySelector(`.wall-replies[data-parent-id="${parentId}"]`);
         if (!zone) return;
         // Show what is being replied to before asking for the reply.
@@ -406,14 +384,39 @@
         if (!form) {
             zone.insertAdjacentHTML('beforeend', replyFormHtml(post.getAttribute('data-post-id'), parentId, mId, mName));
             form = zone.querySelector('.wall-reply-form');
+            growIn(form);
         } else if (mId && mName && !form.dataset.mentionId) {
             // Reusing an open reply box → attach the mention pill to it.
             form.dataset.mentionId = mId;
             form.dataset.mentionName = mName;
             form.insertAdjacentHTML('afterbegin', replyMentionPill(mName));
         }
-        form.querySelector('input[type="text"]').focus();
+        // Shown, not typed into, on a phone: the keyboard would cover the
+        // comment being answered.
+        if (!window.matchMedia('(pointer: coarse)').matches) form.querySelector('input[type="text"]').focus();
     });
+
+    /* A field that grows into its place rather than being dropped in at full
+     * height — the same motion the discussion room's replies use. */
+    function growIn(el) {
+        if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        el.style.maxHeight = 'none';
+        const h = el.getBoundingClientRect().height;
+        el.style.overflow = 'hidden';
+        el.style.maxHeight = '0px';
+        el.style.opacity = '0';
+        requestAnimationFrame(() => {
+            el.style.transition = 'max-height .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1)';
+            el.style.maxHeight = h + 'px';
+            el.style.opacity = '1';
+        });
+        const done = () => {
+            el.style.transition = ''; el.style.maxHeight = '';
+            el.style.overflow = ''; el.style.opacity = '';
+        };
+        el.addEventListener('transitionend', (e) => { if (e.propertyName === 'max-height') done(); });
+        setTimeout(done, 460);
+    }
 
     // Remove the "replying to @Name" pill (and drop the pending mention).
     document.addEventListener('click', (e) => {
