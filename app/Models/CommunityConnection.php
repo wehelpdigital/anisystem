@@ -157,6 +157,46 @@ class CommunityConnection extends BaseModel
         return $counts;
     }
 
+    /**
+     * How many co-farmers each of these people has — one query for the page.
+     *
+     * A connection is one row for two people, so both ends are counted and
+     * the pair is only ever counted once from each side.
+     *
+     * @param  list<int>  $userIds
+     * @return array<int,int>
+     */
+    public static function connectionCounts(array $userIds): array
+    {
+        $userIds = array_values(array_unique(array_map('intval', $userIds)));
+        if ($userIds === []) {
+            return [];
+        }
+
+        $counts = array_fill_keys($userIds, 0);
+        $wanted = array_flip($userIds);
+
+        $rows = static::active()
+            ->where('status', 'accepted')
+            ->where(function ($q) use ($userIds) {
+                $q->whereIn('userId', $userIds)->orWhereIn('friendUserId', $userIds);
+            })
+            ->get(['userId', 'friendUserId']);
+
+        foreach ($rows as $c) {
+            $a = (int) $c->userId;
+            $b = (int) $c->friendUserId;
+            if (isset($wanted[$a])) {
+                $counts[$a]++;
+            }
+            if (isset($wanted[$b])) {
+                $counts[$b]++;
+            }
+        }
+
+        return $counts;
+    }
+
     public static function connectedIds(int $userId): array
     {
         return static::active()

@@ -13,14 +13,26 @@
     $afPlace = trim(implode(', ', array_filter([optional($user)->city, optional($user)->province])));
     $afWork = trim((string) (optional($user)->profession ?: optional($user)->headline));
     $afFollowers = (int) ($followers ?? 0);
+    $afMates = (int) ($coFarmers ?? 0);
+    $afMutual = (int) ($mutual ?? 0);
     $afMate = (bool) ($isCoFarmer ?? false);
-    $afAny = $afPlace !== '' || $afWork !== '' || $afFollowers > 0 || $afMate;
+    $afAny = $afPlace !== '' || $afWork !== '' || $afFollowers > 0 || $afMates > 0 || $afMate;
 @endphp
 @if ($afAny)
     <p class="af-line">
         @if ($afMate)<span class="af-mate">🤝 Co-farmer</span>@endif
         @if ($afPlace)<span class="af-fact">📍 {{ $afPlace }}</span>@endif
         @if ($afWork)<span class="af-fact">🧑‍🌾 {{ \Illuminate\Support\Str::limit($afWork, 34) }}</span>@endif
+        @if ($afMates > 0)
+            {{-- Who they work with, and how much of that you already share.
+                 The mutual number is the one that means something to the
+                 reader, so it travels with the total rather than replacing
+                 it. --}}
+            {{-- "farms with 12" rather than "12 co-farmers": the badge to its
+                 left already says co-farmer, and the line should not say the
+                 same word twice about two different things. --}}
+            <span class="af-fact">farms with <b>{{ $afMates }}</b>@if ($afMutual > 0) · <b>{{ $afMutual }}</b> mutual @endif</span>
+        @endif
         @if ($afFollowers > 0)
             <span class="af-fact"><b>{{ $afFollowers }}</b> {{ \Illuminate\Support\Str::plural('follower', $afFollowers) }}</span>
         @endif

@@ -254,6 +254,35 @@
     .msgr-bubble img { max-width:min(100%, 13rem); max-height:11rem; width:auto; object-fit:cover;
         border-radius:.65rem; display:block; cursor:zoom-in; }
     .msgr-caption { margin-top:.35rem; font-size:.88rem; line-height:1.35; }
+
+    /* The introduction, centred in an empty thread. */
+    .msgr-intro { display:flex; flex-direction:column; align-items:center; justify-content:center;
+        text-align:center; gap:.3rem; margin:auto; padding:1.4rem .9rem;
+        overflow:hidden; transition:opacity .3s var(--ease-house, cubic-bezier(.22,1,.36,1)),
+            max-height .3s var(--ease-house, cubic-bezier(.22,1,.36,1)),
+            transform .3s var(--ease-house, cubic-bezier(.22,1,.36,1));
+        animation:msgrIntroIn .34s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes msgrIntroIn { from { opacity:0; transform:translateY(10px) scale(.97); } }
+    .msgr-intro.is-going { opacity:0; max-height:0 !important; transform:scale(.96); padding-top:0; padding-bottom:0; }
+    .msgr-intro-face { width:4.5rem; height:4.5rem; border-radius:999px; overflow:hidden;
+        display:flex; align-items:center; justify-content:center; margin-bottom:.2rem;
+        background:var(--av-bg, var(--color-brand-50)); color:var(--av-fg, var(--color-brand-700));
+        font-weight:800; font-size:1.3rem; box-shadow:0 8px 22px -14px rgb(0 0 0 / .8); }
+    .msgr-intro-face img { width:100%; height:100%; object-fit:cover; }
+    .msgr-intro-name { font-family:var(--font-heading); font-weight:800; font-size:1rem; color:var(--color-gray-900); }
+    .msgr-intro-row { margin-top:.1rem; }
+    .msgr-intro-tie { display:inline-flex; align-items:center; gap:.2rem; padding:.1rem .5rem;
+        border-radius:999px; font-size:.68rem; font-weight:800;
+        border:1px solid var(--color-gray-200); color:var(--color-gray-500); }
+    .msgr-intro-tie.is-on { border-color:var(--color-brand-300); color:var(--color-brand-700); }
+    .msgr-intro-bits { font-size:.75rem; color:var(--color-gray-500); line-height:1.45; }
+    .msgr-intro-bits b { color:var(--color-gray-700); font-weight:800; }
+    .msgr-intro-hint { margin-top:.35rem; font-size:.72rem; color:var(--color-gray-400); }
+    /* The body centres it while it is the only thing in there. */
+    .msgr-window-body:has(.msgr-intro) { display:flex; flex-direction:column; }
+    @media (prefers-reduced-motion: reduce) {
+        .msgr-intro { animation:none; transition:none; }
+    }
     .msgr-bubble video { max-width:100%; max-height:16rem; border-radius:.65rem; margin-top:.15rem; display:block; background:#000; }
     /* A clip mid-upload: a quiet dark tile instead of a player that cannot play yet. */
     .msgr-vid-pending { display:flex; align-items:center; justify-content:center; width:11rem; max-width:100%;
@@ -1021,6 +1050,8 @@
                 head.querySelector('a').textContent = d.data.user.name;
                 bodyEl.innerHTML = '';
                 (d.data.messages || []).forEach((m) => appendBubble(bodyEl, m));
+                // Nothing said yet: say who this is instead.
+                if (!(d.data.messages || []).length) bodyEl.appendChild(introCard(d.data.user));
                 if (!d.data.canMessage) {
                     win.querySelector('.msgr-window-foot-wrap').outerHTML = '<div class="msgr-off">This member has turned off messages.</div>';
                 }
@@ -1035,7 +1066,56 @@
         loadThread(1);
     }
 
+    /* Who you are about to write to.
+     *
+     * Only ever drawn into an empty thread — a conversation with history
+     * answers "is this the right person" by itself. */
+    function introCard(u) {
+        const wrap = document.createElement('div');
+        wrap.className = 'msgr-intro';
+
+        const face = u.avatar
+            ? `<span class="msgr-intro-face"><img src="${esc(u.avatar)}" alt=""></span>`
+            : `<span class="msgr-intro-face av-h${(u.id || 0) % 8}">${esc(u.initials || '?')}</span>`;
+
+        // Where you stand with them, in the words the rest of the app uses.
+        const tie = {
+            connected: '<span class="msgr-intro-tie is-on">🤝 Co-farmers</span>',
+            pending_out: '<span class="msgr-intro-tie">Request sent</span>',
+            pending_in: '<span class="msgr-intro-tie">They asked to connect</span>',
+        }[u.status] || '<span class="msgr-intro-tie">Not co-farmers yet</span>';
+
+        const bits = [];
+        if (u.mutual > 0) bits.push(`<b>${u.mutual}</b> mutual co-farmer${u.mutual > 1 ? 's' : ''}`);
+        if (u.work) bits.push(esc(u.work));
+        if (u.place) bits.push('📍 ' + esc(u.place));
+        else if (u.since) bits.push('🌱 Member since ' + esc(u.since));
+
+        wrap.innerHTML = `${face}
+            <p class="msgr-intro-name">${esc(u.name || 'Member')}</p>
+            <p class="msgr-intro-row">${tie}</p>
+            ${bits.length ? `<p class="msgr-intro-bits">${bits.join(' · ')}</p>` : ''}
+            <p class="msgr-intro-hint">Say hello — this is your first message.</p>`;
+        return wrap;
+    }
+
+    /* And out of the way the moment there is a conversation. */
+    function dropIntro(bodyEl) {
+        const card = bodyEl?.querySelector('.msgr-intro');
+        if (!card || card.dataset.going) return;
+        card.dataset.going = '1';
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { card.remove(); return; }
+        card.style.maxHeight = card.scrollHeight + 'px';
+        requestAnimationFrame(() => card.classList.add('is-going'));
+        let gone = false;
+        const go = () => { if (!gone) { gone = true; card.remove(); } };
+        card.addEventListener('transitionend', go, { once: true });
+        setTimeout(go, 420);
+    }
+
     function appendBubble(bodyEl, m, animate) {
+        // A message means the introduction has done its job.
+        dropIntro(bodyEl);
         const row = document.createElement('div');
         row.className = 'msgr-row ' + (m.mine ? 'me' : 'them');
 

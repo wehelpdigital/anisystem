@@ -243,6 +243,17 @@
         .thread-modal-card { border-radius:1.1rem; max-height:86dvh; }
     }
     .post-thread .replies-label { margin-bottom:.45rem; }
+    /* The conversation arriving, a beat apart. */
+    .thm-in { animation:thmPart .3s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes thmPart { from { opacity:0; transform:translateY(8px); } }
+    @media (prefers-reduced-motion:reduce) { .thm-in { animation:none; } }
+
+    /* What the answer box is for, beside the face. */
+    .reply-lead { display:flex; align-items:center; gap:.5rem; margin-top:.7rem; }
+    .reply-lead b { display:block; font-size:.8rem; font-weight:800; color:var(--color-gray-800); line-height:1.2; }
+    .reply-lead i { display:block; font-style:normal; font-size:.72rem; color:var(--color-gray-400); line-height:1.35; }
+    .group-post .reply-lead { display:none; }
+    .thread-modal-body .group-post .reply-lead { display:flex; }
     @media (max-width:479px) {
         .group-post .react-bar { gap:.3rem; }
         /* One level of nesting is all a phone can indent and still read. */
@@ -833,11 +844,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json();
             if (data.success) {
                 if (parentId) {
-                    // The nested reply lands where the temporary form was.
+                    // The nested reply lands where the temporary form was,
+                    // and the form folds away under it.
                     bumpReplyCount(postId, 1);
                     form.insertAdjacentHTML('beforebegin', data.data.html);
                     form.previousElementSibling?.classList.add('post-enter');
-                    form.remove();
+                    shrinkOut(form);
                 } else {
                     const replies = form.closest('.group-post').querySelector('.post-replies');
                     replies.insertAdjacentHTML('beforeend', data.data.html);
@@ -902,12 +914,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!form) {
             zone.insertAdjacentHTML('beforeend', nestedReplyFormHtml(post.getAttribute('data-post-id'), parentId, mId, mName));
             form = zone.querySelector('form.post-reply-form');
+            growIn(form);
         } else if (mId && mName && !form.dataset.mentionId) {
             form.dataset.mentionId = mId;
             form.dataset.mentionName = mName;
             form.insertAdjacentHTML('afterbegin', groupMentionPill(mName));
         }
-        form.querySelector('input[type="text"]').focus();
+        // Shown, not typed into: on a phone the keyboard would cover the
+        // comment being answered.
+        if (!window.matchMedia('(pointer: coarse)').matches) form.querySelector('input[type="text"]').focus();
     });
 
     // Remove the "replying to @Name" pill (and drop the pending mention).
@@ -919,12 +934,58 @@ document.addEventListener('DOMContentLoaded', () => {
         x.closest('.reply-mention-pill')?.remove();
     });
 
+    /* A field that grows into its place.
+     *
+     * Dropped in at full height it shoves everything under it down in one
+     * frame, which on a phone reads as the thread jumping — and inside a
+     * scrolling sheet it can push what you were reading off the screen. This
+     * opens it from nothing to its own height, so the rest moves with it. */
+    function growIn(el) {
+        if (!el || reduceMotion) return;
+        const h = el.scrollHeight;
+        el.style.overflow = 'hidden';
+        el.style.maxHeight = '0px';
+        el.style.opacity = '0';
+        requestAnimationFrame(() => {
+            el.style.transition = 'max-height .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1)';
+            el.style.maxHeight = h + 'px';
+            el.style.opacity = '1';
+        });
+        const done = () => {
+            el.style.transition = '';
+            el.style.maxHeight = '';
+            el.style.overflow = '';
+            el.style.opacity = '';
+        };
+        el.addEventListener('transitionend', done, { once: true });
+        setTimeout(done, 420);   // a tab that never painted still tidies up
+    }
+
+    /* And the way back out: to nothing, then gone. */
+    function shrinkOut(el, after) {
+        if (!el) return;
+        if (reduceMotion) { el.remove(); after && after(); return; }
+        el.style.overflow = 'hidden';
+        el.style.maxHeight = el.scrollHeight + 'px';
+        requestAnimationFrame(() => {
+            el.style.transition = 'max-height .22s cubic-bezier(.22,1,.36,1), opacity .22s cubic-bezier(.22,1,.36,1)';
+            el.style.maxHeight = '0px';
+            el.style.opacity = '0';
+        });
+        let gone = false;
+        const go = () => { if (gone) return; gone = true; el.remove(); after && after(); };
+        el.addEventListener('transitionend', go, { once: true });
+        setTimeout(go, 320);
+    }
+
     /* Cancel a reply → discard the text and remove the field. */
     document.addEventListener('click', (e) => {
         const btn = e.target.closest('.js-reply-cancel');
         if (!btn) return;
         const form = btn.closest('form.post-reply-form');
-        if (form && form.getAttribute('data-parent-id')) form.remove();
+        // Out the way it came in, so the thread closes over it rather than
+        // snapping shut.
+        if (form && form.getAttribute('data-parent-id')) shrinkOut(form);
     });
 
     /* ---------------- delete: the feed heals ---------------- */
@@ -1236,6 +1297,21 @@ document.addEventListener('DOMContentLoaded', () => {
         // The page behind must not scroll under a full-height sheet.
         document.documentElement.style.overflow = 'hidden';
         threadBody.scrollTop = 0;
+
+        /* The sheet rose, but everything inside it landed at once. The topic
+           comes first, then the answers under it, a beat apart — which is
+           also the order somebody reads them in. */
+        if (!reduceMotion) {
+            const parts = [post, ...post.querySelectorAll('.group-reply')];
+            parts.forEach((el, i) => {
+                el.classList.add('thm-in');
+                el.style.animationDelay = Math.min(i * 45, 320) + 'ms';
+                el.addEventListener('animationend', () => {
+                    el.classList.remove('thm-in');
+                    el.style.animationDelay = '';
+                }, { once: true });
+            });
+        }
     }
 
     function closeThread() {
@@ -1264,19 +1340,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const btn = e.target.closest('.js-view-all-replies, .post-readmore');
         if (!btn) return;
         openThread(btn.closest('.group-post'));
-        /* "Write a comment" lands on the box, not at the top of the thread.
-         *
-         * Scrolled to, not focused, on a phone: taking focus raises the
-         * keyboard over the conversation the reader has just opened, before
-         * they have read a word of it. A mouse has no keyboard to raise, so
-         * there the caret goes straight in. */
-        if (btn.hasAttribute('data-write')) {
-            const box = threadBody.querySelector('.post-reply-form input[type="text"]');
-            if (box) {
-                box.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
-                if (!window.matchMedia('(pointer: coarse)').matches) box.focus({ preventScroll: true });
-            }
-        }
+
     });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && threadPost) closeThread(); });
 

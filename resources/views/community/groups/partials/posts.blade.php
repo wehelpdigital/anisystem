@@ -39,6 +39,8 @@
                     'user' => $post->author,
                     'isCoFarmer' => $post->authorIsCoFarmer ?? false,
                     'followers' => $post->authorFollowers ?? 0,
+                    'coFarmers' => $post->authorCoFarmers ?? 0,
+                    'mutual' => $post->authorMutual ?? 0,
                 ])
             </div>
             @include('community.partials.dm-btn', ['user' => $post->author])
@@ -85,10 +87,6 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8M8 14h5m-8 6l3.2-3H17a3 3 0 003-3V7a3 3 0 00-3-3H7a3 3 0 00-3 3v13z"/></svg>
                 <span><span data-reply-count="{{ $post->id }}">{{ $replyCount }}</span> {{ \Illuminate\Support\Str::plural('comment', $replyCount) }}</span>
             </button>
-            <button type="button" class="topic-act js-view-all-replies" data-post-id="{{ $post->id }}" data-write="1">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.4-9.4a2 2 0 112.8 2.8L11 15l-4 1 1-4 8.6-8.4z"/></svg>
-                <span>Write a comment</span>
-            </button>
             @include('community.partials.views-count', ['kind' => 'topic', 'id' => $post->id, 'count' => $post->viewCount ?? 0])
             @if ((int) $post->userId !== (int) auth()->id())
                 <button type="button" class="topic-act rp-door" data-report="topic:{{ $post->id }}"
@@ -122,8 +120,13 @@
             </div>
         </div>
 
-        <form class="post-reply-form flex flex-wrap items-center gap-2 mt-3" data-post-id="{{ $post->id }}">
+        {{-- What the box is for, beside the face — an unlabelled field at the
+             foot of somebody else's question asks for nothing in particular. --}}
+        <p class="reply-lead">
             <span class="avatar avatar-sm {{ CommunityAvatar::hue(auth()->user()->full_name ?? '?') }}">{{ auth()->user()->initials ?? '?' }}</span>
+            <span><b>Sagutin mo ito</b><i>Share what worked on your farm — use @ to tag a co-farmer.</i></span>
+        </p>
+        <form class="post-reply-form flex flex-wrap items-center gap-2 mt-1" data-post-id="{{ $post->id }}">
             <span class="reply-shell">
                 <input type="text" placeholder="Sumagot ka…" maxlength="4000">
                 <button type="button" class="emoji-btn js-comment-photo" aria-label="Attach a photo" title="Photo">

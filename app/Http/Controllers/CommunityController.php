@@ -177,7 +177,9 @@ class CommunityController extends Controller
             return [];
         }
 
-        $rooms = $this->liveDiscussions($meId, 3);
+        // As many as the plan could want, so it never has to deal the same
+        // room twice on one wall.
+        $rooms = $this->liveDiscussions($meId, 4);
         $articles = \App\Models\AsCommunityBlogPost::where('deleteStatus', 1)
             ->where('isPublished', 1)
             ->withCount(['comments as comment_count'])
@@ -197,11 +199,26 @@ class CommunityController extends Controller
         $a = 0;
 
         while ($at <= $postCount && count($plan) < 4) {
-            if ($kind === 'discussion' && $rooms->isNotEmpty()) {
-                $plan[$at] = ['kind' => 'discussion', 'item' => $rooms[$r % $rooms->count()]];
+            /* Each one only once. Cycling the pool put the same discussion on
+             * the wall twice, which reads as the wall being stuck rather than
+             * as a room worth joining. When a pool runs dry the other kind
+             * carries on alone; when both are dry, so is the plan. */
+            $haveRoom = $r < $rooms->count();
+            $haveArticle = $a < $articles->count();
+            if (! $haveRoom && ! $haveArticle) {
+                break;
+            }
+            if ($kind === 'discussion' && ! $haveRoom) {
+                $kind = 'article';
+            } elseif ($kind === 'article' && ! $haveArticle) {
+                $kind = 'discussion';
+            }
+
+            if ($kind === 'discussion') {
+                $plan[$at] = ['kind' => 'discussion', 'item' => $rooms[$r]];
                 $r++;
-            } elseif ($articles->isNotEmpty()) {
-                $plan[$at] = ['kind' => 'article', 'item' => $articles[$a % $articles->count()]];
+            } else {
+                $plan[$at] = ['kind' => 'article', 'item' => $articles[$a]];
                 $a++;
             }
             // Alternate, unless there is only one kind to give.

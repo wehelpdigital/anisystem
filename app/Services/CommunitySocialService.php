@@ -102,11 +102,15 @@ class CommunitySocialService
 
         $mates = array_flip(\App\Models\CommunityConnection::connectedIds($viewerId));
         $followers = $this->followerCounts($ids);
+        $mateCounts = \App\Models\CommunityConnection::connectionCounts($ids);
+        $mutual = \App\Models\CommunityConnection::mutualCounts($viewerId, $ids);
 
         foreach ($rows as $row) {
             $id = (int) $row->{$authorKey};
             $row->authorIsCoFarmer = isset($mates[$id]);
             $row->authorFollowers = $followers[$id] ?? 0;
+            $row->authorCoFarmers = $mateCounts[$id] ?? 0;
+            $row->authorMutual = $mutual[$id] ?? 0;
         }
     }
 

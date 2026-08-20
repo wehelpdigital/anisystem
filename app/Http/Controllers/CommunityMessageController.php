@@ -119,13 +119,29 @@ class CommunityMessageController extends Controller
             'replyTo' => $this->replySnippet($byId->get($m->replyToId), $meId),
         ], $this->mediaPayload($m->imagePath)))->values();
 
+        /* Who they are, for a window with nothing in it yet.
+         *
+         * Only worked out when the conversation is empty: an open thread
+         * already answers "is this the right person" with its own history. */
+        $intro = [];
+        if ($msgs->isEmpty()) {
+            $mutual = \App\Models\CommunityConnection::mutualCounts($meId, [(int) $other->id]);
+            $intro = [
+                'status' => \App\Models\CommunityConnection::statusFor($meId, (int) $other->id),
+                'mutual' => (int) ($mutual[(int) $other->id] ?? 0),
+                'place' => trim(implode(', ', array_filter([$other->city, $other->province]))),
+                'work' => trim((string) ($other->profession ?: $other->headline)),
+                'since' => $other->created_at?->timezone('Asia/Manila')->format('M Y'),
+            ];
+        }
+
         return response()->json(['success' => true, 'data' => [
-            'user' => [
+            'user' => array_merge([
                 'id' => $other->id,
                 'name' => $other->full_name,
                 'avatar' => $other->avatarPath ? \App\Support\MediaStore::url($other->avatarPath) : null,
                 'initials' => $other->initials,
-            ],
+            ], $intro),
             'canMessage' => (bool) $other->allowMessages || (int) $other->id === $meId,
             'messages' => $msgs,
             // For viewers that refetch the whole thread on a beat (the Collab

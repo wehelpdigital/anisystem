@@ -50,6 +50,8 @@
                 'user' => $author,
                 'isCoFarmer' => $isFriend,
                 'followers' => $post->authorFollowers ?? 0,
+                'coFarmers' => $post->authorCoFarmers ?? 0,
+                'mutual' => $post->authorMutual ?? 0,
                 'fallback' => $author?->created_at
                     ? '🌱 Member since ' . $author->created_at->timezone('Asia/Manila')->format('M Y')
                     : null,

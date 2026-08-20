@@ -54,13 +54,20 @@
                 </div>
             </div>
 
-            {{-- The one fact that makes a stranger worth tapping — and,
-                 when there is none, the same fallback the wall uses rather
-                 than a line saying nothing twice. --}}
+            {{-- What makes a stranger worth tapping: who they farm with, and
+                 how much of that you already share. When there is neither,
+                 the same fallback the wall uses rather than a line saying
+                 nothing twice. --}}
             <p class="mc-mutual">
                 @if ($mutual > 0)
                     <span class="mc-mutual-n">{{ $mutual }}</span>
                     {{ \Illuminate\Support\Str::plural('mutual co-farmer', $mutual) }}
+                    @if (($m->coFarmerCount ?? 0) > 0)
+                        <span class="mc-mutual-none">of {{ $m->coFarmerCount }}</span>
+                    @endif
+                @elseif (($m->coFarmerCount ?? 0) > 0)
+                    <span class="mc-mutual-n">{{ $m->coFarmerCount }}</span>
+                    {{ \Illuminate\Support\Str::plural('co-farmer', $m->coFarmerCount) }}
                 @elseif ($m->created_at)
                     <span class="mc-mutual-none">🌱 Member since {{ $m->created_at->timezone('Asia/Manila')->format('M Y') }}</span>
                 @endif
