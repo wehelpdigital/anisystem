@@ -88,10 +88,12 @@
         .disc-tool { transition:none; }
     }
     .disc-hero-num { display:inline-flex; align-items:center; gap:.25rem; }
-    /* Being in the room is a fact worth seeing, like Joined on the card. */
+    /* Being in the room is worth seeing, but it is a fact about you rather
+       than a button: green words in a green outline, not a filled pill. */
     .disc-kasali { display:inline-flex; align-items:center; gap:.2rem;
-        padding:.1rem .45rem; border-radius:999px; font-size:.68rem; font-weight:800;
-        color:#fff; background:var(--color-brand-600); }
+        padding:.08rem .45rem; border-radius:999px; font-size:.68rem; font-weight:800;
+        color:var(--color-brand-700); background:transparent;
+        border:1px solid var(--color-brand-300); }
     .disc-started { display:flex; align-items:center; gap:.4rem; margin-top:.45rem;
         font-size:.75rem; color:var(--color-gray-500); }
     .disc-started .avatar { width:1.3rem; height:1.3rem; font-size:.55rem; }

@@ -665,7 +665,13 @@
        above and below — two rules the eye reads as "this belongs to the
        page", where four rules and rounded corners read as "this is a box
        sitting on it". */
-    .pymk { margin: 0 calc(var(--plaza-gutter, 1rem) * -1) 1.25rem;
+    /* Two classes on purpose: .reco-edge is written further down this file
+       and would otherwise put the card's corners and side borders back —
+       which is exactly what happened when these rules moved here from the
+       wall's own <style>, where they had been the later ones. A band has two
+       rules, not four; four and rounded corners read as a box sitting on the
+       page rather than part of it. */
+    .pymk.reco-edge { margin: 0 calc(var(--plaza-gutter, 1rem) * -1) 1.25rem;
         padding: .85rem var(--plaza-gutter, 1rem) .75rem;
         border-radius: 0; border-left: 0; border-right: 0; box-shadow: none; }
     /* The rail still runs off the right edge, so the next card peeks. */
