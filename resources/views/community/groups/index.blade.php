@@ -68,21 +68,26 @@
         background:#ef4444; color:#fff; font-size:.625rem; font-weight:800;
         line-height:1; vertical-align:middle; margin-left:.25rem; }
     .gb-well { display:flex; align-items:center; justify-content:center; overflow:hidden;
-        width:100%; height:7rem; border-radius:.75rem; cursor:pointer; text-align:center;
+        width:100%; height:5rem; border-radius:.75rem; cursor:pointer; text-align:center;
         background:var(--color-gray-100); border:1px dashed var(--color-gray-300);
         transition:border-color var(--dur) var(--ease-house), background var(--dur) var(--ease-house); }
     .gb-well:hover { border-color:var(--color-brand-400); background:var(--color-brand-50); }
-    .gb-well i { font-style:normal; font-size:.75rem; font-weight:600; color:var(--color-gray-400); padding:0 .75rem; }
+    .gb-well i { font-style:normal; font-size:.75rem; font-weight:600; color:var(--color-gray-400);
+        padding:0 .75rem 1.25rem; }
     .gb-well img { width:100%; height:100%; object-fit:cover; }
     /* Missing, after the save was refused: the ask, made visible. */
     .gb-well.is-wanted, .gb-face.is-wanted { border-color:#ef4444; border-style:solid; }
 
+    .gb-tip { margin-top:.15rem; line-height:1.35; }
     .gb-req { font-size:.62rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase;
         color:var(--color-brand-700); background:var(--color-brand-50);
         padding:.1rem .4rem; border-radius:999px; margin-left:.25rem; }
     /* The face sits half over the cover above it, the way it will in the
        room — so the sheet shows what is being made, not two form fields. */
-    .gb-face-row { display:flex; align-items:center; gap:.75rem; margin-top:-2.25rem; }
+    /* flex-end, not center: the face hangs up over the cover, and its words
+       belong under the well rather than across the middle of it. */
+    .gb-face-row { display:flex; align-items:flex-end; gap:.75rem; margin-top:-2.25rem; }
+    .gb-face-row > div { padding-bottom:.1rem; }
     .gb-face { position:relative; flex:0 0 auto; width:4.5rem; height:4.5rem; border-radius:1.15rem;
         overflow:hidden; cursor:pointer; display:flex; align-items:center; justify-content:center;
         border:3px solid var(--color-white); background:var(--color-gray-200);
@@ -171,7 +176,7 @@
         <h3 class="sheet-title">New discussion</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
-    <div class="sheet-body space-y-3">
+    <div class="sheet-body space-y-2.5">
         {{-- Both pictures, up front. A room made without them is a coloured
              square with two letters in it, and the one making it is the only
              person who can fix that. --}}
@@ -196,11 +201,11 @@
         <div>
             <label class="form-label" for="groupName">Discussion name</label>
             <input type="text" id="groupName" class="form-input" maxlength="150" placeholder="e.g. Rice Growers of Central Luzon">
-            <p class="form-hint">Tip: pangalanan mo per crop o per lugar — "Palay — Nueva Ecija".</p>
+            <p class="form-hint gb-tip">Tip: pangalanan mo per crop o per lugar — "Palay — Nueva Ecija".</p>
         </div>
         <div>
             <label class="form-label" for="groupDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="groupDesc" class="form-textarea" rows="3" maxlength="500" placeholder="What's this discussion about?"></textarea>
+            <textarea id="groupDesc" class="form-textarea" rows="2" maxlength="500" placeholder="What's this discussion about?"></textarea>
         </div>
         {{-- The three doors, shared by both pictures: whichever well was
              tapped is the one the pick lands in. --}}

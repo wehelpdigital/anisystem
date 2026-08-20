@@ -292,7 +292,19 @@ html.sheet-open #msgrDock {
 .sheet-title { @apply text-lg font-bold text-gray-900; font-family: var(--font-heading); }
 /* min-h-0 lets the body actually scroll inside the flex column instead of
    pushing the footer past the sheet's max-height. */
-.sheet-body { @apply px-5 pt-4 pb-6 overflow-y-auto grow min-h-0; -webkit-overflow-scrolling: touch; }
+/* pt-5: the first label sat hard against the header's rule — the body needs
+   a little more over it than the header has under it, or the sheet reads as
+   though its content is falling out of the heading. */
+.sheet-body { @apply px-5 pt-5 pb-6 overflow-y-auto grow min-h-0; -webkit-overflow-scrolling: touch; }
+/* A sheet that only just overflows should not grow a heavy grey bar down
+   its side; the scroll still works, it simply stops shouting about it. */
+.sheet-body { scrollbar-width: thin; scrollbar-color: rgb(0 0 0 / .18) transparent; }
+.sheet-body::-webkit-scrollbar { width: 6px; }
+.sheet-body::-webkit-scrollbar-track { background: transparent; }
+.sheet-body::-webkit-scrollbar-thumb { background: rgb(0 0 0 / .18); border-radius: 999px; }
+html.dark .sheet-body { scrollbar-color: rgb(255 255 255 / .22) transparent; }
+html.dark .sheet-body::-webkit-scrollbar-thumb { background: rgb(255 255 255 / .22); }
+
 .sheet-footer {
     @apply flex items-center justify-end gap-3 px-5 py-4 border-t border-gray-100 shrink-0 bg-gray-50/60 rounded-b-2xl;
     /* Clear the mobile home indicator so footer buttons are never cut off. */

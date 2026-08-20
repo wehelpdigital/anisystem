@@ -10,15 +10,8 @@
 @push('head')
 @include('community.partials.plaza-css')
 <style>
-    /* WYSIWYG topic editor — formatting toolbar, NO raw-HTML source. */
-    #postBodyEditor { background:#fff; border:1px solid #d1d5db; border-top:0; border-radius:0 0 .6rem .6rem; }
-    /* Height and look come from the shared rules in app.css. */
-    #postBodyEditor .ql-editor.ql-blank::before { font-style:normal; color:#9ca3af; left:.75rem; }
-    .ql-toolbar.ql-snow { border:1px solid #d1d5db; border-radius:.6rem .6rem 0 0; }
-    html.dark #postBodyEditor, html.dark .ql-toolbar.ql-snow { background:#171f10; border-color:#2b3a1c; }
-    html.dark #postBodyEditor .ql-editor { color:#e5e9df; }
-    html.dark .ql-snow .ql-stroke { stroke:#9fb389; }
-    html.dark .ql-snow .ql-fill { fill:#9fb389; }
+    /* The topic box: the wall's field, in this page's words. */
+    .disc-composer-box { min-height:5.5rem; resize:vertical; }
     /* Formatting shows through on rendered topic bodies. */
     .group-post .activity-description-content, .group-post-body { font-size:.875rem; }
     .group-post-body ul { list-style:disc; padding-left:1.25rem; }
@@ -116,7 +109,6 @@
     .disc-composer { padding:.85rem; }
     @media (max-width:479px) {
         .disc-composer .disc-composer-av { display:none; }
-        .disc-composer .ql-toolbar.ql-snow { padding:.25rem; }
     }
     @media (min-width:640px) { .disc-composer { padding:1rem; } }
 
@@ -361,9 +353,11 @@
             <span class="avatar avatar-md disc-composer-av {{ CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} mt-1">{{ auth()->user()->initials ?? '?' }}</span>
             <div class="min-w-0 grow">
                 <input type="text" id="postTitle" class="form-input mb-2" maxlength="191" required placeholder="Topic title *">
-                {{-- WYSIWYG topic body (Quill). Format with the toolbar — bold,
-                     lists, links, quotes — no raw HTML editor. --}}
-                <div id="postBodyEditor" data-placeholder="Magtanong o magbahagi sa usapan… Format mo kung kailangan."></div>
+                {{-- Plain words, like the wall's box. data-mentionable is what
+                     gives it @names — the rich editor could not have them at
+                     all, because the mention script binds to fields. --}}
+                <textarea id="postBody" class="form-textarea disc-composer-box" rows="4" maxlength="4000"
+                          data-mentionable placeholder="Magtanong o magbahagi sa usapan…"></textarea>
                 <div id="attachChipWrap" class="mt-2 hidden">
             <span class="attach-chip">
                 <img src="" alt="" id="attachThumb">
@@ -395,9 +389,7 @@
                 </span>
                 <label class="hidden">
                 </label>
-                {{-- postBodyEditor, not postBody: the second has never existed
-                     on this page, so the picker had nothing to open onto. --}}
-                <button type="button" class="wall-act js-emoji-btn" data-target="postBodyEditor" aria-label="Add an emoji" title="Emoji">
+                <button type="button" class="wall-act js-emoji-btn" data-target="postBody" aria-label="Add an emoji" title="Emoji">
                     <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </button>
             </div>
@@ -662,23 +654,18 @@ document.addEventListener('DOMContentLoaded', () => {
         finally { btn.disabled = false; }
     });
 
-    /* ---------------- composer: WYSIWYG body + photo chip ---------------- */
-    // Minimal toolbar — formatting only, deliberately no code-block / HTML source.
-    let bodyQuill = null;
-    const editorEl = document.getElementById('postBodyEditor');
-    if (editorEl && typeof Quill !== 'undefined') {
-        bodyQuill = new Quill(editorEl, {
-            theme: 'snow',
-            placeholder: editorEl.getAttribute('data-placeholder') || '',
-            // The app's one toolbar (resources/js/app.js) — a post is written
-            // the same way a note is.
-            modules: { toolbar: window.SM_RICH_TOOLBAR },
-        });
-        window.smQuillTouch?.(bodyQuill);
-    }
-    const getBodyHtml = () => bodyQuill ? bodyQuill.root.innerHTML : '';
-    const getBodyText = () => bodyQuill ? bodyQuill.getText().trim() : '';
-    const clearBody = () => { if (bodyQuill) bodyQuill.setContents([]); };
+    /* ---------------- composer: a plain box + photo chip ---------------- */
+    const bodyBox = document.getElementById('postBody');
+    const getBodyHtml = () => (bodyBox ? bodyBox.value : '');
+    const getBodyText = () => (bodyBox ? bodyBox.value.trim() : '');
+    const clearBody = () => { if (bodyBox) { bodyBox.value = ''; bodyBox.style.height = ''; } };
+
+    /* Grows with what is written, up to a point — a four-row box that never
+       changes makes a long question feel like it does not belong here. */
+    bodyBox?.addEventListener('input', () => {
+        bodyBox.style.height = 'auto';
+        bodyBox.style.height = Math.min(bodyBox.scrollHeight, 320) + 'px';
+    });
 
     const imgInput = document.getElementById('postImage');
     const chipWrap = document.getElementById('attachChipWrap');

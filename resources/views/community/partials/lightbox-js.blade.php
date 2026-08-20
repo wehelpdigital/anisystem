@@ -3,7 +3,7 @@
      still works. Self-contained (styles below) — include once per page
      (guarded); safe on pages without plaza-css. --}}
 <style>
-    .post-media img, .post-img, [data-lightbox] img { cursor: zoom-in; }
+    .post-media img, .post-img, [data-lightbox] img, img[data-lightbox] { cursor: zoom-in; }
     .plaza-lightbox { position:fixed; inset:0; z-index:120; background:rgb(10 14 20 / .88);
         display:flex; align-items:center; justify-content:center; padding:2rem;
         opacity:0; transition:opacity .28s cubic-bezier(.22,1,.36,1); }
@@ -111,7 +111,10 @@
     }
     document.addEventListener('click', (e) => {
         if (e.target.closest('.plaza-lightbox')) return;
-        const img = e.target.closest('.post-media img, .post-img, [data-lightbox] img');
+        /* img[data-lightbox] as well as [data-lightbox] img: the messenger and
+           the shared-post quote mark the picture ITSELF, and the descendant
+           form quietly never matched them. */
+        const img = e.target.closest('.post-media img, .post-img, [data-lightbox] img, img[data-lightbox]');
         if (!img) return;
         const link = img.closest('a');
         if (link) e.preventDefault();

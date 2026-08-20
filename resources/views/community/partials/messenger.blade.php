@@ -249,7 +249,11 @@
         display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
     .msgr-attach-name { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600; }
     .msgr-attach-x { border:0; background:transparent; color:#9ca3af; cursor:pointer; font-size:.9rem; margin-left:auto; flex-shrink:0; }
-    .msgr-bubble img { max-width:100%; border-radius:.65rem; margin-top:.15rem; display:block; cursor:pointer; }
+    /* Smaller in the thread: a bubble is a message, not a gallery. The whole
+       picture is one tap away. */
+    .msgr-bubble img { max-width:min(100%, 13rem); max-height:11rem; width:auto; object-fit:cover;
+        border-radius:.65rem; display:block; cursor:zoom-in; }
+    .msgr-caption { margin-top:.35rem; font-size:.88rem; line-height:1.35; }
     .msgr-bubble video { max-width:100%; max-height:16rem; border-radius:.65rem; margin-top:.15rem; display:block; background:#000; }
     /* A clip mid-upload: a quiet dark tile instead of a player that cannot play yet. */
     .msgr-vid-pending { display:flex; align-items:center; justify-content:center; width:11rem; max-width:100%;
@@ -1050,17 +1054,25 @@
             q.textContent = (m.replyTo.mine ? 'You: ' : '') + m.replyTo.body;
             b.appendChild(q);
         }
-        if (m.body) { const t = document.createElement('div'); t.textContent = m.body; b.appendChild(t); }
+        /* Picture first, words under it — a photo message is the photo, and
+           the line beneath is its caption. */
         if (m.image) {
             const img = document.createElement('img');
             img.src = m.image; img.alt = ''; img.loading = 'lazy';
             img.setAttribute('data-lightbox', '');
+            img.title = 'Tap to see it bigger';
             img.addEventListener('load', () => { bodyEl.scrollTop = bodyEl.scrollHeight; });
             b.appendChild(img);
         }
         if (m.video) {
             b.dataset.msgKind = 'video';   // so a reply to it can say "🎬 Video"
             b.appendChild(buildVideo(m, bodyEl));
+        }
+        if (m.body) {
+            const t = document.createElement('div');
+            t.textContent = m.body;
+            if (m.image || m.video) t.className = 'msgr-caption';
+            b.appendChild(t);
         }
         row.appendChild(b);
 
