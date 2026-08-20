@@ -716,14 +716,16 @@
     /* Under the header, across the card. The second line sits tighter to
        the first — they are two halves of one introduction. */
     .feed-post > .af-line, .group-post > .af-line { margin-top: .35rem; }
-    .feed-post > .af-line + .af-line, .group-post > .af-line + .af-line { margin-top: .15rem; }
+    .feed-post > .af-line + .af-line, .group-post > .af-line + .af-line { margin-top: .6rem; }
 
     /* Follow lives in the card's own corner: it is a decision about the
        person, not a word attached to their name. The header keeps a lane
        clear for it so a long name never runs underneath. */
-    .wall-post > .fp-follow { position: absolute; top: .8rem; right: .8rem; z-index: 2; }
-    .wall-post:has(> .fp-follow) header { padding-right: 5.5rem; }
-    .feed-post:has(.status-cloud) > .fp-follow { top: 2.2rem; }
+    /* The corner, and the corner alone. It used to drop to 2.2rem on a card
+       carrying a thought bubble — but the bubble is over the face on the
+       LEFT, so there was never anything on the right for it to avoid. */
+    .wall-post > .fp-follow { position: absolute; top: .7rem; right: .7rem; z-index: 3; }
+    .wall-post:has(> .fp-follow) header { padding-right: 5.75rem; }
 
     /* The eye that counts looks. Sized to sit in a line of small print,
        wherever that line is. */
