@@ -352,6 +352,7 @@
 @include('community.partials.pymk-js')
 @include('community.partials.views-js')
 @include('community.partials.wall-comments-modal')
+@include('community.partials.report-js')
 {{-- Tapping your own photo on the composer asks what is on your mind — the
      same cloud the wall draws over every other member's face. --}}
 @include('community.partials.status-modal')

@@ -90,6 +90,12 @@
                 <span>Write a comment</span>
             </button>
             @include('community.partials.views-count', ['kind' => 'topic', 'id' => $post->id, 'count' => $post->viewCount ?? 0])
+            @if ((int) $post->userId !== (int) auth()->id())
+                <button type="button" class="topic-act rp-door" data-report="topic:{{ $post->id }}"
+                        title="Report this topic" aria-label="Report this topic">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 21V4m0 1h11l-1.5 3L15 11H4"/></svg>
+                </button>
+            @endif
         </div>
 
         <div class="post-thread">

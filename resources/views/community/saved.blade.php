@@ -43,6 +43,7 @@
 
 @include('community.partials.post-actions')
 @include('community.partials.wall-comments-modal')
+@include('community.partials.report-js')
 @endsection
 
 @push('styles')

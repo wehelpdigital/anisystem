@@ -124,6 +124,14 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M21 11L13 4v4C7.5 8.5 4.5 12.5 3.5 19c2.2-3.2 5.2-4.7 9.5-4.7V18l8-7z"/></svg>
             <span class="fp-lbl">Share</span>
         </button>
+        {{-- Somebody else's post can be objected to. Never your own: for
+             that the answer is delete, not report. --}}
+        @unless ($isMine)
+            <button type="button" class="fp-act rp-door" data-report="{{ ($post->isReel ?? false) ? 'story' : 'post' }}:{{ $post->id }}"
+                    title="Report this post" aria-label="Report this post">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 21V4m0 1h11l-1.5 3L15 11H4"/></svg>
+            </button>
+        @endunless
         {{-- How many have looked at it. Not a button: nothing happens when
              you press it, it is the post telling you how far it went. --}}
         <span class="fp-act fp-views" title="Views">

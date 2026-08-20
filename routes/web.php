@@ -413,6 +413,10 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // points at, and what a link to a post can honestly be.
     Route::get('/app/community/post/{id}', [App\Http\Controllers\CommunityController::class, 'post'])->whereNumber('id')->name('community.post.show');
 
+    // "This does not belong here" — taken here, read and acted on in the
+    // mother app, which is where moderation lives.
+    Route::post('/app/community/report', [App\Http\Controllers\CommunityReportController::class, 'store'])->name('community.report');
+
     // --- Community: groups (topics + replies) ---
     Route::get('/app/community/groups', [App\Http\Controllers\CommunityGroupController::class, 'index'])->name('community.groups.index');
     // The list's next page of cards, the way a room pages its posts.
