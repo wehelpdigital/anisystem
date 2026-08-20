@@ -395,7 +395,9 @@
                 </span>
                 <label class="hidden">
                 </label>
-                <button type="button" class="wall-act js-emoji-btn" data-target="postBody" aria-label="Add an emoji" title="Emoji">
+                {{-- postBodyEditor, not postBody: the second has never existed
+                     on this page, so the picker had nothing to open onto. --}}
+                <button type="button" class="wall-act js-emoji-btn" data-target="postBodyEditor" aria-label="Add an emoji" title="Emoji">
                     <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </button>
             </div>

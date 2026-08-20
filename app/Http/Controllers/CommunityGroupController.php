@@ -182,9 +182,23 @@ class CommunityGroupController extends Controller
     private function canEditGroup(CommunityGroup $group): bool
     {
         $user = Auth::user();
+        if ($user === null) {
+            return false;
+        }
 
-        return $user !== null
-            && ((int) $group->createdByUserId === (int) $user->id || $user->isSuperAdmin());
+        /* Never from inside somebody else's farm.
+         *
+         * A worker keeps their own id while they hold a grant, so they could
+         * not match createdByUserId anyway — but the owner asked for this as
+         * a rule, and a rule that holds only by arithmetic is one refactor
+         * away from not holding. Switching back to their own farm gives a
+         * worker their own rooms back.
+         */
+        if (\App\Support\WorkerContext::activeGrant() !== null) {
+            return false;
+        }
+
+        return (int) $group->createdByUserId === (int) $user->id || $user->isSuperAdmin();
     }
 
     /** Rename a discussion, or give it a new face and banner. */

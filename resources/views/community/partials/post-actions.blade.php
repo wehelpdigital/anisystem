@@ -308,10 +308,18 @@
             await post(@json(url('/app/community/groups')) + '/' + btn.dataset.groupId + '/join');
             btn.classList.add('is-on');
             btn.setAttribute('aria-pressed', 'true');
-            // The way in says so too, now that there is a way in.
+            /* The way in changes with the answer.
+             *
+             * The big button IS the join button for a stranger, so once they
+             * are in it becomes the invitation to walk inside — and the next
+             * tap opens the room (the is-on branch above). */
             const card = btn.closest('[data-discussion-card]');
-            const open = card?.querySelector('.fd-open');
-            if (open) open.textContent = 'Open the discussion';
+            card?.querySelectorAll('.fd-open').forEach((el) => {
+                el.textContent = 'Take a look inside';
+                el.classList.remove('btn-primary');
+                el.classList.add('btn-white');
+                el.classList.add('is-on');
+            });
             window.toast?.('Sali ka na sa ' + (btn.dataset.name || 'usapan') + '.');
         } catch (err) { window.toast?.(err.message, 'error'); }
         finally { delete btn.dataset.busy; }

@@ -89,6 +89,9 @@
         box-shadow:0 12px 32px rgb(0 0 0 / .14); overflow-y:auto; max-height:15rem; }
     html.dark .mention-pop { background:#171f10; border-color:#24331a; }
     .mention-pop.hidden { display:none; }
+    .mention-head { padding:.35rem .6rem .15rem; font-size:.62rem; font-weight:800;
+        letter-spacing:.06em; text-transform:uppercase; color:var(--color-gray-400);
+        border-top:1px solid var(--color-gray-100); margin-top:.15rem; }
     .mention-item { display:flex; align-items:center; gap:.5rem; padding:.4rem .6rem; cursor:pointer; }
     .mention-item.is-active, .mention-item:hover { background:var(--color-brand-50); }
     html.dark .mention-item.is-active, html.dark .mention-item:hover { background:rgb(74 124 42 / .2); }
@@ -489,6 +492,21 @@
        only what differs is described here: a cover with the room's own face
        standing on it, and the last thing anybody said in there. */
     .fd-top { position: relative; }
+    /* The card's edge, over the cover.
+       .fp-card::before draws a hairline at the top of every post — but the
+       cover here is a positioned element further down the document, so the
+       photograph painted straight over it. Raised above the picture, given
+       a little more height, and painted in the house green rather than the
+       per-post hue: a three-pixel blue line against a photograph of the sky
+       is a line nobody can see. It drifts on the same gradSweep tide the
+       rest of the community's gradients ride. */
+    /* Two classes, because .fp-hue-N::before is written further down this
+       file at the same specificity and would otherwise keep the per-post
+       colour — which is how this first came out orange. */
+    .fd-card.fp-card::before { z-index: 2; height: 5px;
+        background: linear-gradient(120deg, #2f5219, #6b9f3d 28%, #b8d38e 48%, #4a7c2a 72%, #2f5219);
+        background-size: 220% 100%; animation: gradSweep 12s ease-in-out infinite alternate; }
+    @media (prefers-reduced-motion: reduce) { .fd-card.fp-card::before { animation: none; } }
     .fd-banner { position: relative; height: 8.5rem; overflow: hidden;
         border-top-left-radius: inherit; border-top-right-radius: inherit; }
     .fd-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -496,9 +514,12 @@
        something rather than on whatever the photograph happens to be. */
     .fd-banner::after { content: ''; position: absolute; inset: auto 0 0 0; height: 60%;
         background: linear-gradient(to top, rgb(0 0 0 / .45), transparent); }
+    /* A little more room under the letters than over them: DISCUSSION is
+       all caps with no descenders, so an evenly padded pill reads as though
+       the word is sitting high in it. */
     .fd-kicker { position: absolute; top: .6rem; left: .75rem; z-index: 1;
-        display: inline-flex; align-items: center;
-        padding: .2rem .55rem; border-radius: 999px;
+        display: inline-flex; align-items: center; line-height: 1;
+        padding: .28rem .55rem .34rem; border-radius: 999px;
         background: rgb(255 255 255 / .92); color: var(--color-brand-700);
         font-size: .62rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
         box-shadow: 0 4px 12px -6px rgb(0 0 0 / .5); }

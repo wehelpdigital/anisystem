@@ -79,8 +79,17 @@
         @endif
 
         {{-- The way in, across the card: this is the one thing the card is
-             for, and it was a small button sitting off to one side. --}}
-        <a href="{{ route('community.groups.show', ['id' => $discussion->id]) }}"
-           class="btn btn-white btn-sm fd-open">{{ $discussion->joined ? 'Open the discussion' : 'Take a look inside' }}</a>
+             for, and it was a small button sitting off to one side.
+
+             What it offers depends on where you stand. A stranger is asked
+             to join — the same question, with the same confirmation, that
+             the pill above asks. A member is invited to walk in. --}}
+        @if ($discussion->joined)
+            <a href="{{ route('community.groups.show', ['id' => $discussion->id]) }}"
+               class="btn btn-white btn-sm fd-open">Take a look inside</a>
+        @else
+            <button type="button" class="btn btn-primary btn-sm fd-open js-join-group"
+                    data-group-id="{{ $discussion->id }}" data-name="{{ $discussion->name }}">Join this discussion</button>
+        @endif
     </div>
 </article>

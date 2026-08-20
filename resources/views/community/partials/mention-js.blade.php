@@ -14,6 +14,9 @@
     const QUERY_RE = /(?:^|\s)@([\p{L}0-9_]{0,30})$/u;
 
     let pop = null, field = null, items = [], active = 0, atIndex = -1, timer = null, lastQuery = null;
+    // Where the places start, so the list can say so once instead of badging
+    // every row.
+    let firstPlace = -1;
 
     function ensurePop() {
         if (pop) return pop;
@@ -45,9 +48,12 @@
         if (!items.length) { close(); return; }
         active = Math.max(0, Math.min(active, items.length - 1));
         pop.innerHTML = items.map((it, i) => {
+            // One heading where the places begin, rather than a badge on
+            // every row of them.
+            const head = (i === firstPlace && firstPlace > 0) ? '<p class="mention-head">Places</p>' : '';
             if (it.type === 'location') {
                 const pin = '<span class="avatar mm-loc-pin">📍</span>';
-                return `<div class="mention-item ${i === active ? 'is-active' : ''}" data-index="${i}">
+                return `${head}<div class="mention-item ${i === active ? 'is-active' : ''}" data-index="${i}">
                     ${pin}<span class="mm-name">${esc(it.name)}</span><span class="mm-badge mm-badge-loc">Location</span>
                 </div>`;
             }
@@ -71,8 +77,19 @@
             const d = await r.json();
             const users = (d.data && d.data.items) || [];
             const locs = (d.data && d.data.locations) || [];
-            // Locations first so "@villasis" surfaces the place, then people.
-            items = [...locs, ...users];
+            /* People first.
+             *
+             * Locations used to lead, and a name that shares its first
+             * letters with a few barangays -- "@Demo" against Demoloc,
+             * Demologan, Democracia -- pushed the person off the bottom of
+             * the list entirely. Places are still here, and still findable,
+             * but they are the occasional case; `@` is for people.
+             *
+             * And with people present, only a few places: a full six of them
+             * under one name is the same crowding by another route. */
+            const placeCap = users.length ? 3 : 6;
+            items = [...users, ...locs.slice(0, placeCap)];
+            firstPlace = users.length ? users.length : -1;
             active = 0;
             render();
         } catch (_) { close(); }

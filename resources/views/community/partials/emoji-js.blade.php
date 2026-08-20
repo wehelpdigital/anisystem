@@ -32,19 +32,48 @@
         const btn = e.target.closest('.js-emoji-btn');
         if (btn) {
             if (pop.classList.contains('is-open')) { closePop(); return; }
-            const target = btn.dataset.target
+            let target = btn.dataset.target
                 ? document.getElementById(btn.dataset.target)
                 : (btn.closest('form, .reply-shell, .emoji-scope')?.querySelector('input[type=text], input:not([type]), textarea'));
+            /* A rich editor is a div, not a field.
+             *
+             * The named target may be the editor's MOUNT, with the editable
+             * somewhere inside it; take that instead so the emoji lands in
+             * the words rather than nowhere. */
+            if (target && !('setRangeText' in target)) {
+                target = target.querySelector('[contenteditable="true"]')
+                    || target.querySelector('textarea, input[type=text]')
+                    || target;
+            }
             if (target) openPop(btn, target);
             return;
         }
         if (e.target.closest('.emoji-pop button')) {
             const em = e.target.closest('button').textContent;
             if (popTarget) {
-                const start = popTarget.selectionStart ?? popTarget.value.length;
-                popTarget.setRangeText(em, start, popTarget.selectionEnd ?? start, 'end');
-                popTarget.dispatchEvent(new Event('input'));
-                popTarget.focus();
+                if ('setRangeText' in popTarget) {
+                    const start = popTarget.selectionStart ?? popTarget.value.length;
+                    popTarget.setRangeText(em, start, popTarget.selectionEnd ?? start, 'end');
+                    popTarget.dispatchEvent(new Event('input', { bubbles: true }));
+                    popTarget.focus();
+                } else {
+                    // A contenteditable: put it where the caret is, and at the
+                    // end when the caret is somewhere else on the page.
+                    popTarget.focus();
+                    const sel = window.getSelection();
+                    const inside = sel && sel.rangeCount && popTarget.contains(sel.anchorNode);
+                    if (!inside) {
+                        const end = document.createRange();
+                        end.selectNodeContents(popTarget);
+                        end.collapse(false);
+                        sel.removeAllRanges();
+                        sel.addRange(end);
+                    }
+                    if (!document.execCommand('insertText', false, em)) {
+                        popTarget.appendChild(document.createTextNode(em));
+                    }
+                    popTarget.dispatchEvent(new Event('input', { bubbles: true }));
+                }
             }
             return;
         }
