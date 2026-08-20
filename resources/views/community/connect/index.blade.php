@@ -69,34 +69,15 @@
         background: var(--color-brand-50); color: var(--color-brand-700); }
     .mem-info[hidden] { display: none; }
 
-    /* A member card: cover, face over it, what they last said. */
-    .mc-card { overflow: hidden; }
-    .mc-cover { height: 4.5rem; background: linear-gradient(120deg, #e8efe1, #cfe3b8); }
-    .mc-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .mc-body { padding: 0 .9rem .9rem; }
-    .mc-face { display: block; margin-top: -1.6rem; }
-    .mc-bubble { margin-top: .35rem; font-size: .75rem; color: var(--color-gray-500); }
-    .mc-post { display: block; margin-top: .7rem; padding: .6rem .7rem; border-radius: .75rem;
-        border: 1px solid var(--color-gray-200); background: var(--color-gray-50);
-        transition: border-color .28s cubic-bezier(.22,1,.36,1); }
-    .mc-post:hover { border-color: var(--color-brand-200); }
-    .mc-post-lbl { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .04em;
-        text-transform: uppercase; color: var(--color-gray-400); }
-    .mc-post-body { display: block; margin-top: .25rem; font-size: .82rem; line-height: 1.5; color: var(--color-gray-700); }
-    .mc-post-img { display: block; width: 100%; height: 8rem; object-fit: cover; border-radius: .5rem; margin-top: .45rem; }
-    .mc-post-stats { display: flex; gap: .8rem; margin-top: .45rem; font-size: .72rem; font-weight: 700; color: var(--color-gray-500); }
-    .mc-acts { display: flex; align-items: center; gap: .5rem; margin-top: .7rem; }
-    .mc-acts > * { flex: 1 1 auto; }
+    /* The member card's own look lives in the shared community stylesheet
+       (plaza-css) — three pages draw that card, and only this one used to
+       carry its rules. */
 
     /* Two columns where there is room; one where a card is the screen. */
     @media (min-width: 768px) {
         #membersGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: start; }
         #membersGrid .mc-card { margin-bottom: 0; }
     }
-
-    html.dark .mc-post { background: rgb(255 255 255 / .04); border-color: rgb(255 255 255 / .09); }
-    html.dark .mc-cover { background: linear-gradient(120deg, #1c2416, #26301c); }
-    @media (prefers-reduced-motion: reduce) { .mc-post { transition: none; } }
 </style>
 @endpush
 

@@ -160,47 +160,35 @@ class CommunityConnectController extends Controller
 
         $pageIds = $friends->getCollection()->pluck('id')->all();
 
-        // One newest post per friend on this page. MAX(id) per wall is a
-        // single indexed pass, and newest-by-id matches newest-by-created for
-        // these rows; the threads stay unloaded, so the card's comment strip
-        // uses its fetch-on-tap mode exactly as the feed now does.
-        $latestIds = \App\Models\CommunityWallPost::whereIn('wallUserId', $pageIds ?: [-1])
-            ->where('deleteStatus', 1)
-            ->selectRaw('MAX(id) as id')
-            ->groupBy('wallUserId')
-            ->pluck('id')
-            ->all();
-        $latestPosts = \App\Models\CommunityWallPost::whereIn('id', $latestIds ?: [-1])
-            ->with(['author'])
-            ->withCount('comments')
-            ->get()
-            ->keyBy('wallUserId');
-
-        // Reaction summaries so the inline "Latest" post is react/commentable.
-        \App\Models\CommunityReaction::attach($latestPosts, 'wallpost', $meId);
-
         /* Dressed like a member card, because the owner asked for one layout.
          * A co-farmer is an accepted connection by definition, so the status
-         * needs no query — and the newest post is already in hand above. */
+         * needs no query.
+         *
+         * No newest post any more: the owner asked for it off these cards,
+         * and it was the expensive part — a post per member, its comment
+         * count, its reaction summary, and two more queries per card inside
+         * the card itself. What replaces it is one query for the lot. */
         $social = app(\App\Services\CommunitySocialService::class);
         $followingIds = $social->followingIds($meId);
+        $mutual = \App\Models\CommunityConnection::mutualCounts($meId, $pageIds);
         foreach ($friends as $friend) {
-            $friend->connStatus = 'accepted';
-            $friend->latestPost = $latestPosts->get($friend->id);
+            // 'connected' is the word the card speaks; 'accepted' is the
+            // word the DB row uses, and passing it through meant the card
+            // drew no connection action at all on this page.
+            $friend->connStatus = 'connected';
             $friend->isFollowed = in_array((int) $friend->id, $followingIds, true);
+            $friend->mutualCount = $mutual[(int) $friend->id] ?? 0;
         }
 
         // The scroller asks for cards alone.
         if ($request->boolean('rows')) {
             return response()->view('community.partials.cofarmer-rows', [
                 'friends' => $friends,
-                'latestPosts' => $latestPosts,
             ]);
         }
 
         return view('community.cofarmers', [
             'friends' => $friends,
-            'latestPosts' => $latestPosts,
         ]);
     }
 
@@ -636,37 +624,21 @@ class CommunityConnectController extends Controller
         $hasMore = $rows->count() > self::PER_PAGE;
         $items = $rows->take(self::PER_PAGE)->values();
 
-        /* Each card carries the person's newest post and how it did.
+        /* What each card says about a stranger.
          *
-         * Two queries for the whole page rather than two per member: the
-         * newest post id per author, then those posts with their counts. A
-         * directory of names told a reader nothing about who was worth
-         * following; a directory of last words tells them everything. */
+         * It used to carry their newest post; the owner asked for that off,
+         * and what takes its place is the thing that actually makes somebody
+         * worth tapping: how many co-farmers you already share. One query for
+         * the whole page, where the post cost four and two more per card. */
         $ids = $items->pluck('id')->all();
-        $latest = collect();
-        if ($ids !== []) {
-            $newestIds = \App\Models\CommunityWallPost::active()
-                ->whereIn('authorUserId', $ids)
-                ->selectRaw('MAX(id) as id')
-                ->groupBy('authorUserId')
-                ->pluck('id')
-                ->all();
-            if ($newestIds !== []) {
-                $latest = \App\Models\CommunityWallPost::active()
-                    ->whereIn('id', $newestIds)
-                    ->withCount('comments')
-                    ->get()
-                    ->keyBy('authorUserId');
-            }
-        }
-
         $social = app(\App\Services\CommunitySocialService::class);
         $followingIds = $social->followingIds($viewerId);
+        $mutual = CommunityConnection::mutualCounts($viewerId, $ids);
 
         foreach ($items as $m) {
             $m->connStatus = CommunityConnection::statusFor($viewerId, $m->id);
-            $m->latestPost = $latest->get($m->id);
             $m->isFollowed = in_array((int) $m->id, $followingIds, true);
+            $m->mutualCount = $mutual[(int) $m->id] ?? 0;
         }
 
         return ['items' => $items, 'hasMore' => $hasMore];

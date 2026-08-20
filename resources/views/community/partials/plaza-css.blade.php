@@ -467,7 +467,12 @@
 
     /* --- Read-only "cloud" status floating over a member's avatar, shown
        wherever members appear (wall, members, co-farmers, discussions). --- */
-    /* What the poster had on their mind, above their name.
+    /* NOT IN USE: what the poster had on their mind, above their name.
+       The owner asked for the bubble over the photo instead (the composer's
+       shape), which is what the cards draw now. Kept because it is the
+       fallback shape for any card too tight to hang a cloud over.
+
+       What the poster had on their mind, above their name.
        In the flow rather than floating over the face: floating, it met the
        top of the card — first overlapping the border, then being cut in
        half by the clip that kept the coloured edge inside its corners. Same
@@ -566,6 +571,68 @@
         color: var(--color-gray-400); }
     .fa-card .react-bar { padding: .25rem .6rem 0; }
 
+    /* ---- A member card: cover, the face over it, and why they matter ----
+       Drawn by the directory, by its pager and by My Co-Farmers, so the
+       rules live here rather than in any one of them. */
+    .mc-card { overflow: visible; }
+    .mc-cover { height: 5.5rem; border-radius: 1rem 1rem 0 0; overflow: hidden; }
+    .mc-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* No cover of their own: a colour that is theirs, drifting. Chosen by
+       id, so the same person keeps the same band every time — a random one
+       per render would make a list flicker on every page. */
+    .mc-tint-0 { background: linear-gradient(120deg, #2f5219, #6b9f3d 35%, #b8d38e 55%, #4a7c2a 80%, #2f5219); }
+    .mc-tint-1 { background: linear-gradient(120deg, #1d4ed8, #60a5fa 35%, #bfdbfe 55%, #3b82f6 80%, #1d4ed8); }
+    .mc-tint-2 { background: linear-gradient(120deg, #b45309, #f59e0b 35%, #fde68a 55%, #d97706 80%, #b45309); }
+    .mc-tint-3 { background: linear-gradient(120deg, #0f766e, #14b8a6 35%, #99f6e4 55%, #0d9488 80%, #0f766e); }
+    .mc-tint-4 { background: linear-gradient(120deg, #6d28d9, #a78bfa 35%, #ddd6fe 55%, #7c3aed 80%, #6d28d9); }
+    .mc-tint-5 { background: linear-gradient(120deg, #be185d, #f472b6 35%, #fbcfe8 55%, #db2777 80%, #be185d); }
+    .mc-cover[class*="mc-tint-"] { background-size: 260% 260%; animation: mcDrift 14s ease-in-out infinite alternate; }
+    /* A real cover sits on top of the drift and does not need it running. */
+    .mc-cover:has(img) { animation: none; }
+    @keyframes mcDrift { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+
+    .mc-body { padding: 0 .9rem .9rem; }
+    /* The face hangs over the cover, and the cloud above it hangs over the
+       card — so the head of the card gets the air the cloud needs. */
+    /* The face half on the cover, the name centred against it — the row's
+       own height comes from the face, so a one-line name does not float
+       above a photo twice its height. */
+    .mc-head { display: flex; align-items: center; gap: .75rem; padding-top: .6rem; min-height: 2.6rem; }
+    .mc-face { display: block; margin-top: -2.4rem; flex: none; }
+    .mc-face .avatar { border: 3px solid var(--color-white); box-shadow: 0 8px 20px -14px rgb(0 0 0 / .8); }
+    .mc-who { padding-top: .1rem; }
+    /* A card has more room than an avatar in a list, so the cloud over it
+       may say more before it trails off. */
+    .mc-face .status-cloud { max-width: 13rem; }
+    /* A post card has the same room a member card does, and 9rem cut most
+       of these off after three words. */
+    .feed-post .status-cloud, .group-post .status-cloud { max-width: 13rem; }
+    .mc-name { display: block; font-family: var(--font-heading); font-weight: 800; font-size: .95rem;
+        line-height: 1.25; color: var(--color-gray-900); text-decoration: none;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .mc-name:hover { color: var(--color-brand-700); }
+    .mc-line { margin-top: .15rem; font-size: .75rem; color: var(--color-gray-500);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .mc-where { display: flex; align-items: center; gap: .25rem; color: var(--color-gray-400); }
+    .mc-where svg { width: .8rem; height: .8rem; flex: none; }
+    .mc-mutual { margin-top: .6rem; font-size: .76rem; font-weight: 600; color: var(--color-gray-500); }
+    .mc-mutual-n { display: inline-flex; align-items: center; justify-content: center;
+        min-width: 1.3rem; height: 1.3rem; padding: 0 .35rem; margin-right: .25rem;
+        border-radius: 999px; background: var(--color-brand-50); color: var(--color-brand-700);
+        font-weight: 800; font-size: .72rem; }
+    .mc-mutual-none { color: var(--color-gray-400); font-weight: 500; }
+    /* The two decisions, side by side and the same size — a stretched
+       badge beside a small button reads as one broken row. */
+    .mc-acts { display: flex; align-items: center; gap: .5rem; margin-top: .75rem; }
+    .mc-acts > * { flex: 1 1 0; min-width: 0; }
+    .mc-acts .conn-action { justify-content: center; }
+    .mc-acts .conn-action .btn { flex: 1 1 auto; }
+    .mc-acts .fp-follow { justify-content: center; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .mc-cover[class*="mc-tint-"] { animation: none; }
+    }
+
     /* The eye that counts looks. Sized to sit in a line of small print,
        wherever that line is. */
     .v-eye { display: inline-flex; align-items: center; gap: .2rem; vertical-align: -.1em; }
@@ -656,10 +723,13 @@
        the usual gap it lands on the bottom edge of the card above — which is
        what made a column of posts look like the tags were falling off. Only
        cards that actually carry one pay for the space. */
-    /* The wall's posts float one again, so they need the air back: without
-       it the cloud lands on the card above and on this card's own coloured
-       edge. Only cards that actually carry one pay for the space. */
-    .feed-post:has(.status-cloud), .group-post:has(.status-cloud) { margin-top: 1.25rem; }
+    /* Room for the cloud, INSIDE the card.
+       As margin it was air above the card, so the bubble hung over the top
+       edge and the coloured strip cut it in half — the "glitch pixels" that
+       got it moved away from the photo in the first place. As padding, the
+       head simply starts lower and the bubble has somewhere of its own to
+       be. Only cards that actually carry one pay for it. */
+    .feed-post:has(.status-cloud), .group-post:has(.status-cloud) { padding-top: 2.2rem; }
     /* Chat bubble above the avatar, with a tail pointing down at the photo. */
     .status-cloud {
         position: absolute; left: 0; right: auto; bottom: calc(100% + .3rem);

@@ -22,14 +22,10 @@
              id="post-{{ $post->id }}" data-post-id="{{ $post->id }}"
              data-view="topic:{{ $post->id }}">
         <header class="flex items-start gap-3">
-            {{-- cloud => false: what is on their mind goes above the name,
-                 in the flow. Floating, it hung over the card's top edge and
-                 was cut in half by the coloured strip. --}}
-            @include('community.partials.avatar-status', ['user' => $post->author, 'size' => 'avatar-md', 'cloud' => false])
+            {{-- The cloud over the face, as the wall draws it; the card
+                 pads its head to hold it. --}}
+            @include('community.partials.avatar-status', ['user' => $post->author, 'size' => 'avatar-md'])
             <div class="min-w-0 grow">
-                @if (filled(optional($post->author)->statusBubble))
-                    <span class="fp-mind" title="{{ $post->author->statusBubble }}">💭 {{ \Illuminate\Support\Str::limit($post->author->statusBubble, 48) }}</span>
-                @endif
                 <p class="text-sm leading-tight">
                     @if ($post->author)
                         <a href="{{ route('community.connect.profile', ['userId' => $post->author->id]) }}" class="font-semibold text-gray-900 hover:text-brand-700">{{ $author->full_name }}</a>
