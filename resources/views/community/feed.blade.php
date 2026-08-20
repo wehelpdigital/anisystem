@@ -170,6 +170,12 @@
 @section('content')
 @include('community.partials.nav', ['active' => 'wall'])
 
+{{-- Reels first, straight under the nav.
+     They are the thing with the shortest shelf life on this page — a clip
+     somebody shot this morning — and they are read by scrolling sideways,
+     which only works if the rail is where a thumb already is. --}}
+@include('community.partials.reels')
+
 @php
     // The wall controller does not gather the rail, so the rail gathers
     // itself: your discussions (freshest talk first) and the newest articles
@@ -317,8 +323,6 @@
     </div>
     <p class="pymk-empty hidden" id="pymkEmpty">No suggestions yet — connect with a few co-farmers and this fills up.</p>
 </section>
-
-@include('community.partials.reels')
 
 {{-- The feed: friends and kapit-bahay provinces first --}}
 <div id="feedWrap">

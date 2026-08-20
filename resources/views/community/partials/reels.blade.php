@@ -119,7 +119,11 @@
 
 <style>
     /* ---------------------------------------------------------- the rail */
-    .rl-rail-wrap { margin-bottom: 1.25rem; }
+    /* A band, like the composer and the suggestions under it: the wall is a
+       column of bands and a rail with side gutters between two of them reads
+       as something that fell in from another page. */
+    .rl-rail-wrap { margin: 0 calc(var(--plaza-gutter, 1rem) * -1) 1.25rem;
+        padding: .85rem var(--plaza-gutter, 1rem) .75rem; }
     .rl-rail-wrap[hidden] { display: none; }
     .rl-rail-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: .5rem; }
     .rl-rail-head h2 { font-family: var(--font-heading); font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
@@ -127,7 +131,13 @@
         border: 1px solid var(--color-brand-100); background: var(--color-brand-50); color: var(--color-brand-700);
         font-size: .75rem; font-weight: 800; cursor: pointer; }
     .rl-new svg { width: .9rem; height: .9rem; }
-    .rl-rail { display: flex; gap: .5rem; overflow-x: auto; padding-bottom: .3rem; scroll-snap-type: x proximity; }
+    /* No scrollbar under it — the half-tile showing past the edge says it
+       scrolls, and says it without a grey stripe. The rail runs off the
+       right so that half-tile is there to see. */
+    .rl-rail { display: flex; gap: .5rem; overflow-x: auto; padding-bottom: .1rem;
+        margin-right: calc(var(--plaza-gutter, 1rem) * -1); padding-right: var(--plaza-gutter, 1rem);
+        scroll-snap-type: x proximity; scrollbar-width: none; }
+    .rl-rail::-webkit-scrollbar { display: none; }
     .rl-tile { position: relative; flex: none; width: 7.5rem; aspect-ratio: 9 / 16; border-radius: .85rem;
         overflow: hidden; border: 0; padding: 0; cursor: pointer; background: #111; scroll-snap-align: start;
         transition: transform .28s cubic-bezier(.22,1,.36,1); }
