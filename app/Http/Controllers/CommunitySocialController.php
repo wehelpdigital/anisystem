@@ -117,6 +117,8 @@ class CommunitySocialController extends Controller
             ->orderByDesc('id')
             ->get();
 
+        $this->social->attachAuthorFacts($posts, $meId);
+
         return view('community.saved', [
             'posts' => $posts,
             'savedIds' => $ids,
@@ -170,7 +172,12 @@ class CommunitySocialController extends Controller
          * of a share is the post quoted inside it. */
         $html = $request->input('render') === 'wall'
             ? view('community.connect.partials.wall-posts', ['posts' => collect([$post->load('author', 'sharedPost')])])->render()
-            : view('community.partials.feed-post', ['post' => $post->load('author', 'sharedPost'), 'friendIds' => []])->render();
+            : view('community.partials.feed-post', [
+                // A share lands on the wall as a card like any other, so it
+                // is introduced like any other.
+                'post' => tap($post->load('author', 'sharedPost'), fn ($p) => $this->social->attachAuthorFacts(collect([$p]), (int) Auth::id())),
+                'friendIds' => [],
+            ])->render();
 
         return $this->json(true, 'Shared to your wall.', ['postId' => (int) $post->id, 'html' => $html]);
     }

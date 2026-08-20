@@ -112,7 +112,11 @@ class CommunityWallController extends Controller
         // The dashboard/community feed renders posts with the feed-post partial;
         // the profile wall uses wall-posts. Return whichever the caller wants.
         $html = $request->input('render') === 'feed'
-            ? view('community.partials.feed-post', ['post' => $post->load('author'), 'friendIds' => []])->render()
+            ? view('community.partials.feed-post', [
+                'post' => tap($post->load('author'), fn ($p) => app(\App\Services\CommunitySocialService::class)
+                    ->attachAuthorFacts(collect([$p]), (int) Auth::id())),
+                'friendIds' => [],
+            ])->render()
             : view('community.connect.partials.wall-posts', ['posts' => collect([$post->load('author')])])->render();
 
         return response()->json([

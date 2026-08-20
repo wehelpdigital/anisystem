@@ -34,25 +34,12 @@
                     @endif
                 </p>
                 <p class="text-xs text-gray-400" title="{{ $post->created_at }}">{{ $post->created_at?->diffForHumans() }}</p>
-                {{-- Who is asking. A name on its own tells a reader nothing
-                     about whether the answer under it is worth taking. --}}
-                @php
-                    $aPlace = trim(implode(', ', array_filter([$author->city, $author->province])));
-                    $aWork = trim((string) ($author->profession ?: $author->headline));
-                    $aFollowers = (int) ($post->authorFollowers ?? 0);
-                @endphp
-                @if ($aPlace || $aWork || ($post->authorIsCoFarmer ?? false) || $aFollowers > 0)
-                    <p class="gp-facts">
-                        @if ($post->authorIsCoFarmer ?? false)
-                            <span class="gp-cofarmer">🤝 Co-farmer</span>
-                        @endif
-                        @if ($aPlace)<span class="gp-fact">📍 {{ $aPlace }}</span>@endif
-                        @if ($aWork)<span class="gp-fact">🧑‍🌾 {{ \Illuminate\Support\Str::limit($aWork, 34) }}</span>@endif
-                        @if ($aFollowers > 0)
-                            <span class="gp-fact"><b>{{ $aFollowers }}</b> {{ \Illuminate\Support\Str::plural('follower', $aFollowers) }}</span>
-                        @endif
-                    </p>
-                @endif
+                {{-- Who is asking, in the line the wall draws too. --}}
+                @include('community.partials.author-facts', [
+                    'user' => $post->author,
+                    'isCoFarmer' => $post->authorIsCoFarmer ?? false,
+                    'followers' => $post->authorFollowers ?? 0,
+                ])
             </div>
             @include('community.partials.dm-btn', ['user' => $post->author])
             @if ($canDelete)

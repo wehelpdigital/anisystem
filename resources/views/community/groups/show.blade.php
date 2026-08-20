@@ -17,15 +17,7 @@
         line-height:1.2; color:var(--color-gray-900); }
     .disc-composer-sub { margin-top:.15rem; font-size:.76rem; line-height:1.45; color:var(--color-gray-500); }
 
-    /* Who is asking: where they farm, what they do, whether you already farm
-       together, and how many follow them. */
-    .gp-facts { display:flex; align-items:center; flex-wrap:wrap; gap:.3rem .5rem; margin-top:.2rem;
-        font-size:.7rem; color:var(--color-gray-400); }
-    .gp-fact { display:inline-flex; align-items:center; gap:.2rem; }
-    .gp-fact b { font-weight:700; color:var(--color-gray-600); }
-    .gp-cofarmer { display:inline-flex; align-items:center; gap:.15rem; padding:.05rem .4rem;
-        border-radius:999px; background:var(--color-brand-50); color:var(--color-brand-700);
-        font-size:.62rem; font-weight:800; }
+    /* The facts line's look lives in plaza-css — the wall draws it too. */
     /* Formatting shows through on rendered topic bodies. */
     .group-post .activity-description-content, .group-post-body { font-size:.875rem; }
     .group-post-body ul { list-style:disc; padding-left:1.25rem; }

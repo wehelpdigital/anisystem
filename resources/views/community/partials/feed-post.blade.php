@@ -40,18 +40,20 @@
         <div class="min-w-0 grow fp-head-txt">
             <p class="text-sm leading-tight flex items-center flex-wrap gap-x-1.5 gap-y-0.5">
                 <a href="{{ route('community.connect.profile', ['userId' => $author->id]) }}" class="font-semibold text-gray-900 hover:text-brand-700">{{ $author->full_name }}</a>
-                @if ($isFriend)<span class="badge badge-green align-middle">Co-farmer</span>@endif
                 @include('community.partials.dm-btn', ['user' => $author])
             </p>
-            {{-- Where they farm, or — for somebody who has not said — how
-                 long they have been here. Something under the name either
-                 way: the line is what tells a stranger anything at all about
-                 the person, and an empty one tells them nothing twice. --}}
-            @if ($place)
-                <p class="text-xs text-gray-400">📍 {{ $place }}</p>
-            @elseif ($author?->created_at)
-                <p class="text-xs text-gray-400">🌱 Member since {{ $author->created_at->timezone('Asia/Manila')->format('M Y') }}</p>
-            @endif
+            {{-- Who is speaking. The co-farmer badge moved down here with
+                 the rest of it: it is a fact about the person, like where
+                 they farm and how many follow them, not a decoration on
+                 their name. --}}
+            @include('community.partials.author-facts', [
+                'user' => $author,
+                'isCoFarmer' => $isFriend,
+                'followers' => $post->authorFollowers ?? 0,
+                'fallback' => $author?->created_at
+                    ? '🌱 Member since ' . $author->created_at->timezone('Asia/Manila')->format('M Y')
+                    : null,
+            ])
         </div>
         {{-- Following is one-sided, so it belongs on the post as well as the
              profile: this is where you decide you want more of somebody. --}}

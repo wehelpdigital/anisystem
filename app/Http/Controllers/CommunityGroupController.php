@@ -952,20 +952,10 @@ class CommunityGroupController extends Controller
      */
     private function withAuthorFacts(\Illuminate\Support\Collection $posts): void
     {
-        $authorIds = $posts->pluck('userId')->filter()->map(fn ($id) => (int) $id)->unique()->values()->all();
-        if ($authorIds === []) {
-            return;
-        }
-
-        $meId = (int) Auth::id();
-        $friends = array_flip(\App\Models\CommunityConnection::connectedIds($meId));
-        $followers = app(\App\Services\CommunitySocialService::class)->followerCounts($authorIds);
-
-        foreach ($posts as $post) {
-            $id = (int) $post->userId;
-            $post->authorIsCoFarmer = isset($friends[$id]);
-            $post->authorFollowers = $followers[$id] ?? 0;
-        }
+        // Same two questions the wall asks; a topic just keys its author
+        // under a different name.
+        app(\App\Services\CommunitySocialService::class)
+            ->attachAuthorFacts($posts, (int) Auth::id(), 'userId');
     }
 
     /**

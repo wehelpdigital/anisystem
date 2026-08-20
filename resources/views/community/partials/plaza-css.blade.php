@@ -660,6 +660,17 @@
         .mc-cover[class*="mc-tint-"] { animation: none; }
     }
 
+    /* ---- who is speaking: the small print under a name ----
+       Drawn by the wall's posts and by a discussion's topics, so it lives
+       here rather than in either of them. */
+    .af-line { display: flex; align-items: center; flex-wrap: wrap; gap: .25rem .55rem;
+        margin-top: .2rem; font-size: .72rem; line-height: 1.35; color: var(--color-gray-400); }
+    .af-fact { display: inline-flex; align-items: center; gap: .2rem; }
+    .af-fact b { font-weight: 700; color: var(--color-gray-600); }
+    .af-mate { display: inline-flex; align-items: center; gap: .15rem; padding: .05rem .4rem;
+        border-radius: 999px; background: var(--color-brand-50); color: var(--color-brand-700);
+        font-size: .62rem; font-weight: 800; }
+
     /* The eye that counts looks. Sized to sit in a line of small print,
        wherever that line is. */
     .v-eye { display: inline-flex; align-items: center; gap: .2rem; vertical-align: -.1em; }

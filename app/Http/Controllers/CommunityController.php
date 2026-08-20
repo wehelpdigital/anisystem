@@ -78,6 +78,9 @@ class CommunityController extends Controller
             $posts = $lifted->concat($posts)->values();
         }
         $posts->loadMissing('sharedPost');
+        // Who wrote each one: where they farm, whether you already farm with
+        // them, how many follow them. Two queries for the page.
+        $social->attachAuthorFacts($posts, (int) $me->id);
 
         // Left rail — incoming friend (co-farmer) requests.
         $requestRows = \App\Models\CommunityConnection::active()
@@ -144,6 +147,7 @@ class CommunityController extends Controller
         $one = collect([$post]);
         \App\Models\CommunityReaction::attach($one, 'wallpost', (int) $me->id);
         $social = app(\App\Services\CommunitySocialService::class);
+        $social->attachAuthorFacts($one, (int) $me->id);
 
         return view('community.post', [
             'post' => $one->first(),
@@ -234,6 +238,10 @@ class CommunityController extends Controller
         $hasMore = $rows->count() > 10;
         $items = $rows->take(10)->values();
         \App\Models\CommunityReaction::attach($items, 'wallpost', (int) $me->id);
+
+        // The next page introduces its people exactly as the first one did.
+        app(\App\Services\CommunitySocialService::class)
+            ->attachAuthorFacts($items, (int) Auth::id());
 
         $html = '';
         foreach ($items as $post) {

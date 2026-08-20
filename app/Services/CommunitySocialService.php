@@ -85,6 +85,31 @@ class CommunitySocialService
             ->all();
     }
 
+    /**
+     * Hang "who wrote this" on a page of cards.
+     *
+     * The wall keys its author as authorUserId and a discussion's topics as
+     * userId, which is the only thing that differs — everything else is the
+     * same two questions, asked once for the whole page instead of twice per
+     * card.
+     */
+    public function attachAuthorFacts(\Illuminate\Support\Collection $rows, int $viewerId, string $authorKey = 'authorUserId'): void
+    {
+        $ids = $rows->pluck($authorKey)->filter()->map(fn ($id) => (int) $id)->unique()->values()->all();
+        if ($ids === []) {
+            return;
+        }
+
+        $mates = array_flip(\App\Models\CommunityConnection::connectedIds($viewerId));
+        $followers = $this->followerCounts($ids);
+
+        foreach ($rows as $row) {
+            $id = (int) $row->{$authorKey};
+            $row->authorIsCoFarmer = isset($mates[$id]);
+            $row->authorFollowers = $followers[$id] ?? 0;
+        }
+    }
+
     public function followingCount(int $userId): int
     {
         return CommunityFollow::active()->where('followerUserId', $userId)->count();
