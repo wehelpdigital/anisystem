@@ -42,20 +42,6 @@
                 <a href="{{ route('community.connect.profile', ['userId' => $author->id]) }}" class="font-semibold text-gray-900 hover:text-brand-700">{{ $author->full_name }}</a>
                 @include('community.partials.dm-btn', ['user' => $author])
             </p>
-            {{-- Who is speaking. The co-farmer badge moved down here with
-                 the rest of it: it is a fact about the person, like where
-                 they farm and how many follow them, not a decoration on
-                 their name. --}}
-            @include('community.partials.author-facts', [
-                'user' => $author,
-                'isCoFarmer' => $isFriend,
-                'followers' => $post->authorFollowers ?? 0,
-                'coFarmers' => $post->authorCoFarmers ?? 0,
-                'mutual' => $post->authorMutual ?? 0,
-                'fallback' => $author?->created_at
-                    ? '🌱 Member since ' . $author->created_at->timezone('Asia/Manila')->format('M Y')
-                    : null,
-            ])
         </div>
         {{-- Following is one-sided, so it belongs on the post as well as the
              profile: this is where you decide you want more of somebody. --}}
@@ -67,6 +53,19 @@
             </button>
         @endunless
     </header>
+    {{-- Who is speaking, across the whole card. In the column beside the
+         face it had 278px of a 358px card and the third fact wrapped with
+         the avatar's width sitting empty next to it. --}}
+    @include('community.partials.author-facts', [
+        'user' => $author,
+        'isCoFarmer' => $isFriend,
+        'followers' => $post->authorFollowers ?? 0,
+        'coFarmers' => $post->authorCoFarmers ?? 0,
+        'mutual' => $post->authorMutual ?? 0,
+        'fallback' => $author?->created_at
+            ? '🌱 Member since ' . $author->created_at->timezone('Asia/Manila')->format('M Y')
+            : null,
+    ])
 
     @if ($post->isRestricted ?? false)
         @include('community.partials.restricted', ['reason' => $post->restrictedReason ?? null])

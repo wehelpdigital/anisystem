@@ -16,10 +16,18 @@
     $afMates = (int) ($coFarmers ?? 0);
     $afMutual = (int) ($mutual ?? 0);
     $afMate = (bool) ($isCoFarmer ?? false);
-    $afAny = $afPlace !== '' || $afWork !== '' || $afFollowers > 0 || $afMates > 0 || $afMate;
+    // Your own post: "mutual co-farmers with yourself" is not a number that
+    // means anything, and the badge should say who this is instead.
+    $afMine = optional($user)->id && (int) $user->id === (int) auth()->id();
+    if ($afMine) {
+        $afMutual = 0;
+        $afMate = false;
+    }
+    $afAny = $afMine || $afPlace !== '' || $afWork !== '' || $afFollowers > 0 || $afMates > 0 || $afMate;
 @endphp
 @if ($afAny)
     <p class="af-line">
+        @if ($afMine)<span class="af-mate af-mine">🙋 Your account</span>@endif
         @if ($afMate)<span class="af-mate">🤝 Co-farmer</span>@endif
         @if ($afPlace)<span class="af-fact">📍 {{ $afPlace }}</span>@endif
         @if ($afWork)<span class="af-fact">🧑‍🌾 {{ \Illuminate\Support\Str::limit($afWork, 34) }}</span>@endif

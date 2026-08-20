@@ -34,14 +34,6 @@
                     @endif
                 </p>
                 <p class="text-xs text-gray-400" title="{{ $post->created_at }}">{{ $post->created_at?->diffForHumans() }}</p>
-                {{-- Who is asking, in the line the wall draws too. --}}
-                @include('community.partials.author-facts', [
-                    'user' => $post->author,
-                    'isCoFarmer' => $post->authorIsCoFarmer ?? false,
-                    'followers' => $post->authorFollowers ?? 0,
-                    'coFarmers' => $post->authorCoFarmers ?? 0,
-                    'mutual' => $post->authorMutual ?? 0,
-                ])
             </div>
             @include('community.partials.dm-btn', ['user' => $post->author])
             @if ($canDelete)
@@ -50,6 +42,15 @@
                 </button>
             @endif
         </header>
+        {{-- Who is asking, across the whole card — the same line the wall
+             draws, in the same place relative to the header. --}}
+        @include('community.partials.author-facts', [
+            'user' => $post->author,
+            'isCoFarmer' => $post->authorIsCoFarmer ?? false,
+            'followers' => $post->authorFollowers ?? 0,
+            'coFarmers' => $post->authorCoFarmers ?? 0,
+            'mutual' => $post->authorMutual ?? 0,
+        ])
 
         <div class="mt-2">
             @if ($post->title)

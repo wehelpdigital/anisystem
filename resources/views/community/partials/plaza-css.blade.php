@@ -711,6 +711,10 @@
     .af-mate { display: inline-flex; align-items: center; gap: .15rem; padding: .05rem .4rem;
         border-radius: 999px; background: var(--color-brand-50); color: var(--color-brand-700);
         font-size: .62rem; font-weight: 800; }
+    /* Your own: a statement, not a relationship. */
+    .af-mine { background: var(--color-gray-100); color: var(--color-gray-500); }
+    /* Under the header, across the card. */
+    .feed-post > .af-line, .group-post > .af-line { margin-top: .35rem; }
 
     /* The eye that counts looks. Sized to sit in a line of small print,
        wherever that line is. */
