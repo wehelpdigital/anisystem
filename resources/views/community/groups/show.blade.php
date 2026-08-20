@@ -1264,12 +1264,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const btn = e.target.closest('.js-view-all-replies, .post-readmore');
         if (!btn) return;
         openThread(btn.closest('.group-post'));
-        // "Write a comment" lands on the box, not at the top of the thread.
+        /* "Write a comment" lands on the box, not at the top of the thread.
+         *
+         * Scrolled to, not focused, on a phone: taking focus raises the
+         * keyboard over the conversation the reader has just opened, before
+         * they have read a word of it. A mouse has no keyboard to raise, so
+         * there the caret goes straight in. */
         if (btn.hasAttribute('data-write')) {
             const box = threadBody.querySelector('.post-reply-form input[type="text"]');
             if (box) {
-                box.focus({ preventScroll: true });
                 box.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+                if (!window.matchMedia('(pointer: coarse)').matches) box.focus({ preventScroll: true });
             }
         }
     });
