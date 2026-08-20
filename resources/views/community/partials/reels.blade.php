@@ -15,7 +15,9 @@
 {{-- ------------------------------------------------------------ the rail --}}
 <section class="rl-rail-wrap" id="rlRailWrap" aria-label="Reels" hidden>
     <div class="rl-rail-head">
-        <h2>Reels</h2>
+        <h2>Stories</h2>
+        {{-- Beside the word, not across the row from it: the button makes the
+             thing the word names, and they belong together. --}}
         <button type="button" class="rl-new" id="rlNew">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
             Make one
@@ -25,16 +27,16 @@
 </section>
 
 {{-- ---------------------------------------------------------- the viewer --}}
-<div class="rl-viewer hidden" id="rlViewer" role="dialog" aria-modal="true" aria-label="Reels">
+<div class="rl-viewer hidden" id="rlViewer" role="dialog" aria-modal="true" aria-label="Stories">
     <button type="button" class="rl-x" id="rlClose" aria-label="Close">✕</button>
     <div class="rl-deck" id="rlDeck"></div>
 </div>
 
 {{-- ---------------------------------------------------------- the studio --}}
-<div class="rl-studio hidden" id="rlStudio" role="dialog" aria-modal="true" aria-label="Make a reel">
+<div class="rl-studio hidden" id="rlStudio" role="dialog" aria-modal="true" aria-label="Make a story">
     <div class="rl-bar">
         <button type="button" class="rl-icon" id="rlCancel" aria-label="Cancel">✕</button>
-        <span class="rl-title" id="rlStep">Make a reel</span>
+        <span class="rl-title" id="rlStep">Make a story</span>
         <button type="button" class="btn btn-primary btn-sm hidden" id="rlPost">Post</button>
     </div>
 
@@ -147,7 +149,7 @@
 <div class="sheet hidden" id="rlAddSheet" style="--sheet-width:22rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Add to your reel</h3>
+        <h3 class="sheet-title">Add to your story</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-1">
@@ -190,7 +192,7 @@
     .rl-rail-wrap { margin: 0 calc(var(--plaza-gutter, 1rem) * -1) 1.25rem;
         padding: .85rem var(--plaza-gutter, 1rem) .75rem; }
     .rl-rail-wrap[hidden] { display: none; }
-    .rl-rail-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: .5rem; }
+    .rl-rail-head { display: flex; align-items: center; gap: .55rem; margin-bottom: .5rem; }
     .rl-rail-head h2 { font-family: var(--font-heading); font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
     .rl-new { display: inline-flex; align-items: center; gap: .3rem; padding: .3rem .6rem; border-radius: 999px;
         border: 1px solid var(--color-brand-100); background: var(--color-brand-50); color: var(--color-brand-700);
@@ -476,12 +478,12 @@
                 </button>`).join('');
             if (!items.length) {
                 rail.innerHTML = '<p style="font-size:.8rem;color:var(--color-gray-400);padding:.5rem 0">'
-                    + 'Wala pang reels — ikaw ang mauna.</p>';
+                    + 'Wala pang stories — ikaw ang mauna.</p>';
             }
         } catch (_) {
             // The covers could not be fetched; making one still can be.
             rail.innerHTML = '<p style="font-size:.8rem;color:var(--color-gray-400);padding:.5rem 0">'
-                + 'Reels could not load just now.</p>';
+                + 'Stories could not load just now.</p>';
         }
     }
 
@@ -509,7 +511,7 @@
                     <button type="button" class="js-bookmark" data-post-id="${it.id}" aria-label="Save">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-4-7 4V5z"/></svg>
                     </button>
-                    ${it.mine ? `<button type="button" data-rl-del="${it.id}" aria-label="Delete this reel">
+                    ${it.mine ? `<button type="button" data-rl-del="${it.id}" aria-label="Delete this story">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg>
                     </button>` : ''}
                 </div>
@@ -556,7 +558,7 @@
         if (!btn || btn.dataset.busy) return;
         const ok = window.confirmAction
             ? await window.confirmAction({
-                title: 'Delete this reel?',
+                title: 'Delete this story?',
                 body: 'It comes off the wall and out of the rail for everyone.',
                 confirmText: 'Delete',
             })
@@ -571,7 +573,7 @@
             });
             const j = await r.json();
             if (!j.success) throw new Error(j.message || 'Could not delete that.');
-            window.toast?.('Reel deleted.');
+            window.toast?.('Story deleted.');
             closeViewer();
             loadRail();
         } catch (err) {
@@ -685,7 +687,7 @@
             $('rlEdit').classList.add('hidden');
             $('rlPost').classList.add('hidden');
             $('rlBusy').classList.add('hidden');
-            $('rlStep').textContent = 'Make a reel';
+            $('rlStep').textContent = 'Make a story';
         }
     }
 
@@ -1157,7 +1159,7 @@
             const j = await r.json();
             if (!r.ok || j.success === false) throw new Error(j.message || 'Could not post that.');
             studio(false);
-            window.toast?.('Reel posted.');
+            window.toast?.('Story posted.');
             loadRail();
         } catch (err) {
             $('rlBusy').classList.add('hidden');

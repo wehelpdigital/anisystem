@@ -332,6 +332,7 @@ class CommunityWallController extends Controller
     {
         $offset = ($page - 1) * self::PER_PAGE;
         $rows = CommunityWallPost::active()
+            ->wallOnly()
             ->where('wallUserId', $wallUserId)
             ->with(['author', 'comments.author'])
             ->orderByDesc('id')

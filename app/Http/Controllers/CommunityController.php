@@ -44,7 +44,7 @@ class CommunityController extends Controller
         // costs less than every thread nobody asked for. The 24-row scan
         // (for 10 kept) buys headroom for the deleted-author filter below, the
         // same ratio the old 120-for-40 did.
-        $posts = \App\Models\CommunityWallPost::where('deleteStatus', 1)
+        $posts = \App\Models\CommunityWallPost::where('deleteStatus', 1)->wallOnly()
             ->with(['author'])
             ->withCount('comments')
             ->orderByDesc('created_at')
@@ -142,7 +142,7 @@ class CommunityController extends Controller
         $moreFollowing = $moreSocial->followingIds((int) $me->id);
         $moreSaved = $moreSocial->bookmarkedIds((int) $me->id);
 
-        $rows = \App\Models\CommunityWallPost::where('deleteStatus', 1)
+        $rows = \App\Models\CommunityWallPost::where('deleteStatus', 1)->wallOnly()
             ->where('created_at', '<', $beforeTs)
             ->with(['author'])->withCount('comments')
             ->orderByDesc('created_at')
@@ -186,7 +186,7 @@ class CommunityController extends Controller
         $hasTag = fn ($p) => in_array($tag, \App\Support\CommunityText::hashtags($p->body), true);
 
         // Wall posts are public on profiles — safe to surface here.
-        $wallPosts = \App\Models\CommunityWallPost::where('deleteStatus', 1)
+        $wallPosts = \App\Models\CommunityWallPost::where('deleteStatus', 1)->wallOnly()
             ->where('body', 'like', $like)
             ->with('author')->withCount('comments')
             ->orderByDesc('id')->limit(80)->get()
@@ -261,7 +261,7 @@ class CommunityController extends Controller
         $locLike = '%(loc:' . $slug . ')%';
         $pinLike = '%📍[' . $label . ']%';
         $pinLike2 = '%📍 [' . $label . ']%';
-        $wallPosts = \App\Models\CommunityWallPost::where('deleteStatus', 1)
+        $wallPosts = \App\Models\CommunityWallPost::where('deleteStatus', 1)->wallOnly()
             ->where(function ($q) use ($memberIds, $locLike, $pinLike, $pinLike2) {
                 $q->where('body', 'like', $locLike)
                     ->orWhere('body', 'like', $pinLike)

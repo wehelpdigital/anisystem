@@ -71,7 +71,18 @@
 <style>
     /* One line, always: the row never wraps, and it is the section name that
        gives way (ellipsis) rather than the chat button falling to line two. */
-    .community-nav { display:flex; align-items:center; gap:.5rem; flex-wrap:nowrap; }
+    /* It follows you down the page.
+       These buttons are how you leave the wall, and on a long wall they were
+       four screens behind you. Stuck under the app bar, with the page's own
+       background behind them so the posts do not show through, and bled to
+       the gutters so the bar is a bar rather than a floating strip. */
+    .community-nav { position:sticky; top:3.5rem; z-index:25;
+        margin:0 calc(var(--plaza-gutter, 1rem) * -1) .75rem;
+        padding:.5rem var(--plaza-gutter, 1rem);
+        background:var(--color-gray-50);
+        display:flex; align-items:center; gap:.5rem; flex-wrap:nowrap; }
+    @media (min-width:768px) { .community-nav { top:4rem; } }
+    html.dark .community-nav { background:#14171c; }
     .cn-hamburger { min-width:0; }
     .cn-hamburger svg { flex-shrink:0; }
     .cn-current { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
