@@ -291,13 +291,15 @@
             'followingIds' => $followingIds ?? [],
             'savedIds' => $savedIds ?? [],
         ])
-        {{-- A discussion and an article, dealt in where a reader is already
-             moving rather than stacked at the top where they read as ads. --}}
-        @if ($loop->iteration === 2 && ($injectDiscussion ?? null))
-            @include('community.partials.feed-discussion', ['discussion' => $injectDiscussion])
-        @endif
-        @if ($loop->iteration === 5 && ($injectArticle ?? null))
-            @include('community.partials.feed-article', ['article' => $injectArticle])
+        {{-- Rooms and articles, dealt in where a reader is already moving
+             rather than pinned to fixed seats where they read as ads. The
+             plan comes from the controller: a few of each, alternating,
+             every three to five posts. --}}
+        @php $slot = ($interruptions ?? [])[$loop->iteration] ?? null; @endphp
+        @if ($slot && $slot['kind'] === 'discussion')
+            @include('community.partials.feed-discussion', ['discussion' => $slot['item']])
+        @elseif ($slot)
+            @include('community.partials.feed-article', ['article' => $slot['item']])
         @endif
         {{-- Phones have no rail. Stacking it above the wall would bury the
              feed under four cards before the first post; stacking it below an
@@ -315,10 +317,11 @@
             <p class="text-sm text-gray-500 mt-1">Ikaw ang mauna — share what's happening sa bukid mo.</p>
         </div>
     @endforelse
-    @if ($posts->count() < 2 && ($injectDiscussion ?? null))
+    {{-- A wall too short for the plan to reach still gets one of each. --}}
+    @if (empty($interruptions) && ($injectDiscussion ?? null))
         @include('community.partials.feed-discussion', ['discussion' => $injectDiscussion])
     @endif
-    @if ($posts->count() < 5 && ($injectArticle ?? null))
+    @if (empty($interruptions) && ($injectArticle ?? null))
         @include('community.partials.feed-article', ['article' => $injectArticle])
     @endif
     @if ($posts->count() < 3)

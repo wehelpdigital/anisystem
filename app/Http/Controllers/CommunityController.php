@@ -101,6 +101,9 @@ class CommunityController extends Controller
          * and drawn as posts because that is how they get read: a rail card is
          * furniture, a card in the stream is something you stop at. */
         $discussion = $this->liveDiscussion((int) $me->id);
+        // What gets dealt between the posts, and where — a few of each,
+        // alternating, at positions drawn fresh on every visit.
+        $interruptions = $this->feedInterruptions((int) $me->id, $posts->count());
         $article = \App\Models\AsCommunityBlogPost::where('deleteStatus', 1)
             ->where('isPublished', 1)
             // How much of a conversation there is on it — the card offers to
@@ -117,6 +120,7 @@ class CommunityController extends Controller
             'friendRequests' => $friendRequests,
             'friendRequestCount' => $friendRequestCount,
             'injectDiscussion' => $discussion,
+            'interruptions' => $interruptions,
             'injectArticle' => $article,
             // No sponsor inventory yet — the rail hides while this is empty.
             'sponsors' => collect(),
@@ -155,6 +159,113 @@ class CommunityController extends Controller
             'friendIds' => \App\Models\CommunityConnection::connectedIds((int) $me->id),
             'followingIds' => $social->followingIds((int) $me->id),
         ]);
+    }
+
+    /**
+     * What gets dealt between the posts, and where.
+     *
+     * A plan rather than two fixed seats: rooms and articles alternate, land
+     * every three to five posts, and the positions are drawn fresh each time
+     * so the wall reads differently on every visit. Nothing repeats inside a
+     * page — the pools are only cycled when they run dry.
+     *
+     * @return array<int,array{kind:string,item:mixed}>  position => what
+     */
+    private function feedInterruptions(int $meId, int $postCount, int $startAfter = 0): array
+    {
+        if ($postCount < 1) {
+            return [];
+        }
+
+        $rooms = $this->liveDiscussions($meId, 3);
+        $articles = \App\Models\AsCommunityBlogPost::where('deleteStatus', 1)
+            ->where('isPublished', 1)
+            ->withCount(['comments as comment_count'])
+            ->inRandomOrder()
+            ->limit(3)
+            ->get();
+
+        if ($rooms->isEmpty() && $articles->isEmpty()) {
+            return [];
+        }
+
+        $plan = [];
+        // The first one lands early, but never on top of the composer.
+        $at = random_int(2, 3) + $startAfter;
+        $kind = $rooms->isNotEmpty() ? 'discussion' : 'article';
+        $r = 0;
+        $a = 0;
+
+        while ($at <= $postCount && count($plan) < 4) {
+            if ($kind === 'discussion' && $rooms->isNotEmpty()) {
+                $plan[$at] = ['kind' => 'discussion', 'item' => $rooms[$r % $rooms->count()]];
+                $r++;
+            } elseif ($articles->isNotEmpty()) {
+                $plan[$at] = ['kind' => 'article', 'item' => $articles[$a % $articles->count()]];
+                $a++;
+            }
+            // Alternate, unless there is only one kind to give.
+            if ($rooms->isNotEmpty() && $articles->isNotEmpty()) {
+                $kind = $kind === 'discussion' ? 'article' : 'discussion';
+            }
+            $at += random_int(3, 5);
+        }
+
+        return $plan;
+    }
+
+    /**
+     * A few discussions worth putting in front of somebody — the same rule
+     * as one, asked for several.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    private function liveDiscussions(int $meId, int $take): \Illuminate\Support\Collection
+    {
+        $since = now()->subDays(30);
+
+        $spoken = \App\Models\CommunityGroupPost::active()
+            ->where('created_at', '>=', $since)->distinct()->pluck('groupId');
+        $answered = \App\Models\CommunityGroupReply::active()
+            ->where('as_community_group_replies.created_at', '>=', $since)
+            ->join('as_community_group_posts as t', 't.id', '=', 'as_community_group_replies.postId')
+            ->where('t.deleteStatus', 1)
+            ->distinct()->pluck('t.groupId');
+        $live = $spoken->merge($answered)->map(fn ($id) => (int) $id)->unique()->values();
+
+        $rooms = \App\Models\CommunityGroup::active()
+            ->withCount(['members as member_count', 'posts as post_count'])
+            ->when($live->isNotEmpty(), fn ($q) => $q->whereIn('id', $live->all()))
+            ->inRandomOrder()
+            ->limit($take)
+            ->get();
+
+        if ($rooms->isEmpty()) {
+            return $rooms;
+        }
+
+        $mine = \App\Models\CommunityGroupMember::active()
+            ->where('userId', $meId)
+            ->pluck('groupId')
+            ->map(fn ($id) => (int) $id)
+            ->all();
+        $mineSet = array_flip($mine);
+
+        $topics = \App\Models\CommunityGroupPost::active()
+            ->whereIn('groupId', $rooms->pluck('id')->all())
+            ->withCount(['replies as reply_count'])
+            ->with('author')
+            ->orderByDesc('id')
+            ->get()
+            ->unique('groupId')
+            ->keyBy('groupId');
+
+        foreach ($rooms as $room) {
+            $room->joined = isset($mineSet[(int) $room->id]);
+            $room->latestTopic = $topics->get($room->id);
+        }
+
+        return $rooms;
     }
 
     /**
@@ -243,14 +354,29 @@ class CommunityController extends Controller
         app(\App\Services\CommunitySocialService::class)
             ->attachAuthorFacts($items, (int) Auth::id());
 
+        /* The next page carries on dealing.
+         *
+         * Told how far down the wall it starts, so the first interruption
+         * does not land on the very first post the reader sees after the
+         * seam. */
+        $plan = $this->feedInterruptions((int) Auth::id(), $items->count());
+
         $html = '';
-        foreach ($items as $post) {
+        foreach ($items as $i => $post) {
             $html .= view('community.partials.feed-post', [
                 'post' => $post,
                 'friendIds' => $friendIds,
                 'followingIds' => $moreFollowing,
                 'savedIds' => $moreSaved,
             ])->render();
+
+            $slot = $plan[$i + 1] ?? null;
+            if (! $slot) {
+                continue;
+            }
+            $html .= $slot['kind'] === 'discussion'
+                ? view('community.partials.feed-discussion', ['discussion' => $slot['item']])->render()
+                : view('community.partials.feed-article', ['article' => $slot['item']])->render();
         }
 
         return response()->json(['success' => true, 'data' => [
