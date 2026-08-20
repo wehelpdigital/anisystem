@@ -492,6 +492,12 @@
        only what differs is described here: a cover with the room's own face
        standing on it, and the last thing anybody said in there. */
     .fd-top { position: relative; }
+    /* Joined, in green. On a post the Follow pill goes quiet grey once it is
+       on, because following is a private preference; being in a room is a
+       fact about you that the card is worth showing. */
+    .fd-card .fp-follow.is-on { color: #fff; background: var(--color-brand-600);
+        border-color: var(--color-brand-600); }
+    .fd-card .fp-follow.is-on:hover { background: var(--color-brand-700); }
     /* The card's edge, over the cover.
        .fp-card::before draws a hairline at the top of every post — but the
        cover here is a positioned element further down the document, so the
@@ -519,7 +525,7 @@
        the word is sitting high in it. */
     .fd-kicker { position: absolute; top: .6rem; left: .75rem; z-index: 1;
         display: inline-flex; align-items: center; line-height: 1;
-        padding: .28rem .55rem .34rem; border-radius: 999px;
+        padding: .38rem .6rem .26rem; border-radius: 999px;
         background: rgb(255 255 255 / .92); color: var(--color-brand-700);
         font-size: .62rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
         box-shadow: 0 4px 12px -6px rgb(0 0 0 / .5); }

@@ -316,9 +316,7 @@
             const card = btn.closest('[data-discussion-card]');
             card?.querySelectorAll('.fd-open').forEach((el) => {
                 el.textContent = 'Take a look inside';
-                el.classList.remove('btn-primary');
-                el.classList.add('btn-white');
-                el.classList.add('is-on');
+                el.classList.add('is-on');   // stays green: it is still the way in
             });
             window.toast?.('Sali ka na sa ' + (btn.dataset.name || 'usapan') + '.');
         } catch (err) { window.toast?.(err.message, 'error'); }

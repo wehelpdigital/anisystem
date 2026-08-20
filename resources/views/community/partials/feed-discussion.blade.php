@@ -86,7 +86,7 @@
              the pill above asks. A member is invited to walk in. --}}
         @if ($discussion->joined)
             <a href="{{ route('community.groups.show', ['id' => $discussion->id]) }}"
-               class="btn btn-white btn-sm fd-open">Take a look inside</a>
+               class="btn btn-primary btn-sm fd-open">Take a look inside</a>
         @else
             <button type="button" class="btn btn-primary btn-sm fd-open js-join-group"
                     data-group-id="{{ $discussion->id }}" data-name="{{ $discussion->name }}">Join this discussion</button>
