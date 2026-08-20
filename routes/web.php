@@ -409,6 +409,10 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/community-comment-delete', [App\Http\Controllers\CommunityController::class, 'deleteComment'])->name('community.comment.delete');
     Route::post('/app/community-rate', [App\Http\Controllers\CommunityController::class, 'rate'])->name('community.rate');
 
+    // One post, on a page of its own — what a share's "view original"
+    // points at, and what a link to a post can honestly be.
+    Route::get('/app/community/post/{id}', [App\Http\Controllers\CommunityController::class, 'post'])->whereNumber('id')->name('community.post.show');
+
     // --- Community: groups (topics + replies) ---
     Route::get('/app/community/groups', [App\Http\Controllers\CommunityGroupController::class, 'index'])->name('community.groups.index');
     // The list's next page of cards, the way a room pages its posts.

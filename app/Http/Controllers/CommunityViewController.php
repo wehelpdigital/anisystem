@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AsCommunityBlogPost;
 use App\Models\CommunityGroup;
 use App\Models\CommunityGroupPost;
 use App\Models\CommunityWallPost;
@@ -30,7 +31,7 @@ class CommunityViewController extends Controller
     {
         $data = $request->validate([
             'items' => 'required|array|max:' . self::MAX_PER_CALL,
-            'items.*.kind' => 'required|string|in:post,topic,group',
+            'items.*.kind' => 'required|string|in:post,topic,group,blog',
             'items.*.id' => 'required|integer|min:1',
         ]);
 
@@ -48,6 +49,9 @@ class CommunityViewController extends Controller
         }
         foreach ($byKind->get('group', []) as $id) {
             $counted['group'][] = $this->bump(CommunityGroup::class, $id);
+        }
+        foreach ($byKind->get('blog', []) as $id) {
+            $counted['blog'][] = $this->bump(AsCommunityBlogPost::class, $id);
         }
 
         return response()->json(['success' => true, 'message' => 'Counted.', 'data' => [
@@ -81,7 +85,7 @@ class CommunityViewController extends Controller
     /** What the page should now show, so it does not have to guess. */
     private function readBack($byKind): array
     {
-        $out = ['post' => [], 'topic' => [], 'group' => []];
+        $out = ['post' => [], 'topic' => [], 'group' => [], 'blog' => []];
 
         if ($ids = $byKind->get('post', [])) {
             $out['post'] = CommunityWallPost::query()->whereIn('id', $ids)
@@ -93,6 +97,10 @@ class CommunityViewController extends Controller
         }
         if ($ids = $byKind->get('group', [])) {
             $out['group'] = CommunityGroup::query()->whereIn('id', $ids)
+                ->pluck('viewCount', 'id')->map(fn ($v) => (int) $v)->all();
+        }
+        if ($ids = $byKind->get('blog', [])) {
+            $out['blog'] = AsCommunityBlogPost::query()->whereIn('id', $ids)
                 ->pluck('viewCount', 'id')->map(fn ($v) => (int) $v)->all();
         }
 

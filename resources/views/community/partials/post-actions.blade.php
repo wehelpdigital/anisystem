@@ -196,7 +196,18 @@
     .fp-shared-head b { color:var(--color-gray-800); font-weight:700; }
     .fp-shared-head em { font-style:normal; color:var(--color-gray-400); }
     .fp-shared-body { display:block; margin-top:.4rem; font-size:.85rem; color:var(--color-gray-700); line-height:1.55; }
-    .fp-shared-img { display:block; width:100%; border-radius:.5rem; margin-top:.5rem; }
+    /* The whole picture. object-fit:cover on a fixed box turned a portrait
+       photograph into a letterbox of its middle. */
+    .fp-shared-img { display:block; width:100%; max-height:26rem; object-fit:contain;
+        border-radius:.5rem; margin-top:.5rem; background:var(--color-gray-100); cursor:zoom-in; }
+    .fp-shared-clip { display:block; margin-top:.5rem; font-size:.78rem; font-weight:700;
+        color:var(--color-gray-500); }
+    .fp-shared-head b a { color:inherit; text-decoration:none; }
+    .fp-shared-head b a:hover { color:var(--color-brand-700); }
+    .fp-shared-open { display:inline-flex; align-items:center; gap:.3rem; margin-top:.6rem;
+        font-size:.75rem; font-weight:800; color:var(--color-brand-700); text-decoration:none; }
+    .fp-shared-open::after { content:'\2192'; }
+    .fp-shared-open:hover { color:var(--color-brand-800); text-decoration:underline; }
 
     .wcs-state { padding:1.25rem .5rem; text-align:center; font-size:.85rem; font-weight:600; color:var(--color-gray-400); }
     .wcs-state[hidden] { display:none; }

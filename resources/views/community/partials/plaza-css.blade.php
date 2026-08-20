@@ -534,6 +534,38 @@
     .fd-topic-meta b { color: var(--color-gray-700); font-weight: 700; }
     .fd-open { display: block; width: 100%; margin-top: .75rem; text-align: center; }
 
+    /* ---- An article from the tech blog, on the wall ----
+       Named but never described: these classes had no rules anywhere in the
+       app, so the card was browser defaults in a rounded box. */
+    .fa-cover { position: relative; display: block; width: 100%; aspect-ratio: 4 / 3;
+        overflow: hidden; background: var(--color-gray-100);
+        border-top-left-radius: inherit; border-top-right-radius: inherit; }
+    .fa-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .fa-kicker { position: absolute; top: .6rem; left: .75rem;
+        display: inline-flex; align-items: center; padding: .2rem .55rem; border-radius: 999px;
+        background: rgb(255 255 255 / .92); color: var(--color-brand-700);
+        font-size: .62rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
+        box-shadow: 0 4px 12px -6px rgb(0 0 0 / .5); }
+    /* No cover to sit on: the same pill, in the flow. */
+    .fa-kicker-flat { position: static; box-shadow: none; background: var(--color-brand-50);
+        margin-bottom: .35rem; }
+    .fa-body { padding: 1rem; }
+    .fa-title { display: block; font-family: var(--font-heading); font-weight: 800;
+        font-size: 1.02rem; line-height: 1.3; color: var(--color-gray-900); text-decoration: none; }
+    .fa-title:hover { color: var(--color-brand-700); }
+    .fa-by { margin-top: .2rem; font-size: .72rem; color: var(--color-gray-400); }
+    /* Longer than the old one line, and cut where the card ends rather than
+       where the writer's sentence did. */
+    .fa-excerpt { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;
+        overflow: hidden; margin-top: .55rem; font-size: .85rem; line-height: 1.55;
+        color: var(--color-gray-600); }
+    .fa-read { display: block; width: 100%; margin-top: .85rem; text-align: center; }
+    .fa-foot { display: flex; align-items: center; gap: .5rem; padding: .35rem .6rem .6rem;
+        border-top: 1px solid var(--color-gray-100); }
+    .fa-views { margin-left: auto; padding-right: .5rem; font-size: .72rem; font-weight: 700;
+        color: var(--color-gray-400); }
+    .fa-card .react-bar { padding: .25rem .6rem 0; }
+
     /* The eye that counts looks. Sized to sit in a line of small print,
        wherever that line is. */
     .v-eye { display: inline-flex; align-items: center; gap: .2rem; vertical-align: -.1em; }

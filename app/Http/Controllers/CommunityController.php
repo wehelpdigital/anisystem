@@ -100,6 +100,9 @@ class CommunityController extends Controller
         $discussion = $this->liveDiscussion((int) $me->id);
         $article = \App\Models\AsCommunityBlogPost::where('deleteStatus', 1)
             ->where('isPublished', 1)
+            // How much of a conversation there is on it — the card offers to
+            // join one, and could not say whether there was one to join.
+            ->withCount(['comments as comment_count'])
             ->inRandomOrder()
             ->first();
 
@@ -114,6 +117,39 @@ class CommunityController extends Controller
             'injectArticle' => $article,
             // No sponsor inventory yet — the rail hides while this is empty.
             'sponsors' => collect(),
+        ]);
+    }
+
+    /**
+     * One post, on its own page.
+     *
+     * A share quotes what it carries and offers to show the original; until
+     * now that offer was a wall link with #wallpost-N on the end, which does
+     * nothing unless the post happens to be in the first screenful. This is
+     * the same card the wall draws, so comments, reactions, saving and
+     * sharing all still work on it.
+     */
+    public function post(Request $request, int $id)
+    {
+        $me = Auth::user();
+        $post = \App\Models\CommunityWallPost::active()
+            ->with(['author', 'sharedPost.author'])
+            ->withCount(['comments as comment_count'])
+            ->find($id);
+
+        if (! $post || ! $post->author || (int) $post->author->deleteStatus !== 1) {
+            abort(404);
+        }
+
+        $one = collect([$post]);
+        \App\Models\CommunityReaction::attach($one, 'wallpost', (int) $me->id);
+        $social = app(\App\Services\CommunitySocialService::class);
+
+        return view('community.post', [
+            'post' => $one->first(),
+            'savedIds' => $social->bookmarkedIds((int) $me->id),
+            'friendIds' => \App\Models\CommunityConnection::connectedIds((int) $me->id),
+            'followingIds' => $social->followingIds((int) $me->id),
         ]);
     }
 
