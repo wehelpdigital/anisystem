@@ -25,7 +25,8 @@
      * reader when the wall pages in more. */
     $fpHue = $post->id % 6;
 @endphp
-<article class="card p-4 mb-5 feed-post wall-post fp-card fp-hue-{{ $fpHue }}" id="wallpost-{{ $post->id }}" data-post-id="{{ $post->id }}">
+<article class="card p-4 mb-5 feed-post wall-post fp-card fp-hue-{{ $fpHue }}" id="wallpost-{{ $post->id }}"
+         data-post-id="{{ $post->id }}" data-view="post:{{ $post->id }}">
     <header class="flex items-start gap-3">
         @include('community.partials.avatar-status', ['user' => $author, 'size' => 'avatar-md'])
         {{-- Centred against the face: with a place under it the block is the
@@ -117,6 +118,12 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M21 11L13 4v4C7.5 8.5 4.5 12.5 3.5 19c2.2-3.2 5.2-4.7 9.5-4.7V18l8-7z"/></svg>
             <span class="fp-lbl">Share</span>
         </button>
+        {{-- How many have looked at it. Not a button: nothing happens when
+             you press it, it is the post telling you how far it went. --}}
+        <span class="fp-act fp-views" title="Views">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span class="fp-n" data-view-count="post:{{ $post->id }}">{{ (int) ($post->viewCount ?? 0) }}</span>
+        </span>
         {{-- When it was written, at the end of the row: a fact about the post
              rather than a third thing crowding the name. --}}
         <time class="fp-when" datetime="{{ $post->created_at?->toIso8601String() }}"

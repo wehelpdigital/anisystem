@@ -241,6 +241,9 @@
     .rl-sound { position: absolute; left: .8rem; top: calc(env(safe-area-inset-top) + .7rem); z-index: 3;
         width: 2.4rem; height: 2.4rem; border-radius: 999px; border: 0; cursor: pointer;
         background: rgb(0 0 0 / .45); color: #fff; font-size: 1rem; }
+    .rl-views { display: flex; flex-direction: column; align-items: center; gap: .1rem; color: #fff; }
+    .rl-views svg { width: 1.5rem; height: 1.5rem; }
+    .rl-views b { font-size: .7rem; font-weight: 800; }
     .rl-side { position: absolute; right: .6rem; bottom: calc(2rem + env(safe-area-inset-bottom)); z-index: 2;
         display: flex; flex-direction: column; gap: .9rem; align-items: center; }
     .rl-side button { width: 2.9rem; height: 2.9rem; border-radius: 999px; border: 0; cursor: pointer;
@@ -508,6 +511,10 @@
                     <button type="button" class="js-share" data-post-id="${it.id}" aria-label="Share">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7M16 6l-4-4-4 4M12 2v14"/></svg>
                     </button>
+                    <span class="rl-views" title="Views">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <b data-view-count="post:${it.id}">${it.views}</b>
+                    </span>
                     <button type="button" class="js-bookmark" data-post-id="${it.id}" aria-label="Save">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-4-7 4V5z"/></svg>
                     </button>
@@ -529,6 +536,9 @@
         applySound(deck);
         const slides = deck.querySelectorAll('.rl-slide');
         slides[index]?.scrollIntoView();
+        // Opening one is looking at it; a tile in the rail is not.
+        const first = reels[index];
+        if (first) window.smCountView?.('post', first.id);
         watchSlides(deck);
     }
 
@@ -588,7 +598,11 @@
             entries.forEach((en) => {
                 const v = en.target.querySelector('video');
                 if (!v) return;
-                if (en.isIntersecting && en.intersectionRatio > 0.6) v.play().catch(() => {});
+                if (en.isIntersecting && en.intersectionRatio > 0.6) {
+                    v.play().catch(() => {});
+                    const id = en.target.getAttribute('data-post');
+                    if (id) window.smCountView?.('post', id);
+                }
                 else v.pause();
             });
         }, { root: deck, threshold: [0, 0.6, 1] });

@@ -46,6 +46,7 @@
 @include('community.partials.lightbox-js')
 @include('community.partials.comment-tools-js')
 @include('community.partials.react-js')
+@include('community.partials.views-js')
 @include('community.partials.mention-js')
 @include('community.partials.wall-comment-js')
 @include('community.partials.video-js')

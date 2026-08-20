@@ -131,6 +131,7 @@ class ReelController extends Controller
                 'comments' => (int) ($r->comments_count ?? 0),
                 // Yours to take down; the viewer draws a bin only for these.
                 'mine' => (int) $r->authorUserId === $meId,
+                'views' => (int) ($r->viewCount ?? 0),
                 'author' => [
                     'id' => (int) $r->authorUserId,
                     'name' => $r->author?->full_name ?: 'A farmer',

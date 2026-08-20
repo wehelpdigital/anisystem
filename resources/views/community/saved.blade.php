@@ -55,6 +55,7 @@
 @endpush
 
 @push('scripts')
+@include('community.partials.views-js')
 @include('community.partials.emoji-js')
 @include('community.partials.lightbox-js')
 @include('community.partials.react-js')

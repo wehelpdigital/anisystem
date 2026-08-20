@@ -442,6 +442,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // Openly-licensed music, searched and fetched through us (see the controller).
     Route::get('/app/community/reel-music-search', [App\Http\Controllers\ReelController::class, 'musicSearch'])->name('community.reels.music.search');
     Route::post('/app/community/reel-music-grab', [App\Http\Controllers\ReelController::class, 'musicGrab'])->name('community.reels.music.grab');
+    // How many times a thing has been looked at (see the controller).
+    Route::post('/app/community/views', [App\Http\Controllers\CommunityViewController::class, 'count'])->name('community.views');
     Route::get('/app/community/suggestions', [App\Http\Controllers\CommunitySocialController::class, 'suggestions'])->name('community.suggestions');
     Route::get('/app/community/saved', [App\Http\Controllers\CommunitySocialController::class, 'saved'])->name('community.saved');
     Route::post('/app/community/share/{postId}/wall', [App\Http\Controllers\CommunitySocialController::class, 'shareToWall'])->whereNumber('postId')->name('community.share.wall');

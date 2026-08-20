@@ -149,6 +149,9 @@
     }
 
     /* --- the action row under every post --- */
+    /* Views are told, not pressed: no hover, no pointer, no hand. */
+    .fp-views { cursor:default; }
+    .fp-views:hover { background:transparent; color:var(--color-gray-500); }
     /* The time closes the row, pushed to the far edge. */
     .fp-when { margin-left:auto; flex:none; font-size:.7rem; font-weight:600; color:var(--color-gray-400);
         white-space:nowrap; padding-left:.4rem; }
