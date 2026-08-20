@@ -644,18 +644,20 @@ document.addEventListener('DOMContentLoaded', () => {
         finally { btn.disabled = false; }
     });
     document.getElementById('joinFromGate')?.addEventListener('click', async (e) => {
-        e.currentTarget.disabled = true;
+        const btn = e.currentTarget;   // null once this awaits
+        btn.disabled = true;
         try { await setMembership(true); }
         catch (_) { toast('Network error — try again.', 'error'); }
-        finally { e.currentTarget.disabled = false; }
+        finally { btn.disabled = false; }
     });
     // Joining from the chat tab's gate: the chat itself only arrives on a
     // reload, so say so rather than leaving a dead pane behind.
     document.getElementById('joinFromChat')?.addEventListener('click', async (e) => {
-        e.currentTarget.disabled = true;
+        const btn = e.currentTarget;   // null once this awaits
+        btn.disabled = true;
         try { if (await setMembership(true)) window.location.reload(); }
         catch (_) { toast('Network error — try again.', 'error'); }
-        finally { e.currentTarget.disabled = false; }
+        finally { btn.disabled = false; }
     });
 
     /* ---------------- composer: WYSIWYG body + photo chip ---------------- */
@@ -700,6 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* GIF picker removed — attachments are photo-only now. */
 
     document.getElementById('postSubmit')?.addEventListener('click', async (e) => {
+        const postBtn = e.currentTarget;   // null once this awaits
         const titleVal = document.getElementById('postTitle').value.trim();
         if (!titleVal) { toast('Add a topic title.', 'error'); document.getElementById('postTitle').focus(); return; }
         const text = getBodyText();
@@ -708,7 +711,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fd.append('title', titleVal);
         fd.append('body', getBodyHtml());
         if (imgInput.files && imgInput.files[0]) fd.append('image', imgInput.files[0]);
-        e.currentTarget.disabled = true;
+        postBtn.disabled = true;
         try {
             // The shared video script owns the picked clip; ask it rather than
             // reaching into the input, which a recording never touches.
@@ -727,7 +730,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 toast(data.message);
             } else toast(data.message || 'Could not post.', 'error');
         } catch (_) { toast('Network error — try again.', 'error'); }
-        finally { e.currentTarget.disabled = false; }
+        finally { postBtn.disabled = false; }
     });
 
     /* ---------------- replies (delegated) ----------------

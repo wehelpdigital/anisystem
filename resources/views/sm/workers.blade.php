@@ -452,10 +452,14 @@ const __init = () => {
     });
 
     document.getElementById('wlRevoke')?.addEventListener('click', async (e) => {
+        // Captured before the question is asked: `currentTarget` is null on
+        // the far side of an await, and this used to throw instead of
+        // revoking anything.
+        const btn = e.currentTarget;
         if (!editingWorker || !editingWorker.login || !editingWorker.login.id) return;
         const ok = await confirmAction({ title: 'Revoke access?', message: 'This worker will no longer be able to log in.', confirmText: 'Revoke' });
         if (!ok) return;
-        const btn = e.currentTarget; btn.disabled = true;
+        btn.disabled = true;
         try {
             const res = await api(@json(route('sm.workers.access.revoke')), { method: 'DELETE', body: { id: editingWorker.login.id } });
             toast(res.message);

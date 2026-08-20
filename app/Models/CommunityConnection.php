@@ -111,6 +111,52 @@ class CommunityConnection extends BaseModel
             });
     }
 
+    /**
+     * How many co-farmers the viewer shares with each of these people.
+     *
+     * One query for the whole page: every accepted connection that touches
+     * one of the viewer's own co-farmers, counted per person. The recommender
+     * has a pass of its own because it is still deciding who to show; this is
+     * for lists whose people are already chosen.
+     *
+     * @param  list<int>  $userIds
+     * @return array<int,int>  userId => mutual count
+     */
+    public static function mutualCounts(int $viewerId, array $userIds): array
+    {
+        $userIds = array_values(array_unique(array_map('intval', $userIds)));
+        $friends = static::connectedIds($viewerId);
+        if ($userIds === [] || $friends === []) {
+            return [];
+        }
+
+        $friendSet = array_flip($friends);
+        $wanted = array_flip($userIds);
+        $counts = [];
+
+        $rows = static::active()
+            ->where('status', 'accepted')
+            ->where(function ($q) use ($userIds) {
+                $q->whereIn('userId', $userIds)->orWhereIn('friendUserId', $userIds);
+            })
+            ->get(['userId', 'friendUserId']);
+
+        foreach ($rows as $c) {
+            $a = (int) $c->userId;
+            $b = (int) $c->friendUserId;
+            // A row counts when one end is somebody on the page and the
+            // other end is somebody the viewer already farms with.
+            if (isset($wanted[$a]) && isset($friendSet[$b]) && $b !== $viewerId) {
+                $counts[$a] = ($counts[$a] ?? 0) + 1;
+            }
+            if (isset($wanted[$b]) && isset($friendSet[$a]) && $a !== $viewerId) {
+                $counts[$b] = ($counts[$b] ?? 0) + 1;
+            }
+        }
+
+        return $counts;
+    }
+
     public static function connectedIds(int $userId): array
     {
         return static::active()

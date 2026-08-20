@@ -686,6 +686,14 @@ window.Quill = class SmRichEditor {
     getModule() { return null; }                        // disables smQuillTouch's Quill surgery
     on() { /* the engine handles its own events */ }
     hasFocus() { return this.root.contains(document.activeElement) || document.activeElement === this.root; }
+    /* The one method the shim was missing.
+     *
+     * Four composers ask "did they write anything?" with getText().trim(),
+     * and every one of them threw — inside an async handler, so the failure
+     * was silent and the button simply did nothing. Quill returns plain text
+     * with a trailing newline; the trailing newline is why getLength adds
+     * one, and why every caller trims. */
+    getText() { return (this.root.textContent || '') + '\n'; }
     getLength() { return (this.root.textContent || '').length + 1; }
     getSelection() { return { index: 0, length: 0 }; }  // insertText works at the caret instead
     setSelection() { /* caret already where the user left it */ }

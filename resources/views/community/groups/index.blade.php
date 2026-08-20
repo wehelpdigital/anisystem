@@ -345,6 +345,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('createGroupSave')?.addEventListener('click', async (e) => {
+        // Captured now: `currentTarget` is null once this handler awaits.
+        const saveBtn = e.currentTarget;
         const name = document.getElementById('groupName').value.trim();
         const description = document.getElementById('groupDesc').value.trim();
         if (!name) { toast('Give your discussion a name.', 'error'); return; }
@@ -367,14 +369,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (pic.file) fd.append(key, pic.file);
             else if (pic.path) fd.append(pathKey, pic.path);
         });
-        e.currentTarget.disabled = true;
+        saveBtn.disabled = true;
         try {
             const res = await fetch(@json(route('community.groups.store')), { method: 'POST', headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' }, body: fd });
             const data = await res.json();
             if (data.success) { toast(data.message); window.location = data.data.url; }
             else toast(data.message || 'Could not create discussion.', 'error');
         } catch (_) { toast('Network error — try again.', 'error'); }
-        finally { e.currentTarget.disabled = false; }
+        finally { saveBtn.disabled = false; }
     });
 
     /* ---------------- Join from a card ----------------
