@@ -11,6 +11,14 @@
             <span class="msgr-panel-title">Messages</span>
             <button type="button" class="msgr-x" data-msgr-close-panel aria-label="Close">✕</button>
         </div>
+        {{-- Who you are looking for. Filters the conversations you have, and
+             past two letters asks the community about everyone else — the
+             dock could only ever reopen a chat, never start one. --}}
+        <div class="msgr-find">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-3.5-3.5"/></svg>
+            <input type="search" id="msgrFind" placeholder="Search for a farmer…" autocomplete="off" aria-label="Search for a farmer">
+            <button type="button" class="msgr-find-x hidden" id="msgrFindX" aria-label="Clear">✕</button>
+        </div>
         <div class="msgr-panel-body" id="msgrThreads">
             {{-- Skeleton rows in the shape of the list they become — the JS
                  paints the same ones on every reopen while the fetch is out. --}}
@@ -132,6 +140,22 @@
     /* min-height:0 is what lets a flex child actually scroll instead of
        pushing its parent taller. */
     .msgr-panel-body { flex:1 1 auto; min-height:0; overflow-y:auto; padding-bottom:.75rem; }
+    /* The search box: inside the panel, under its green head. */
+    .msgr-find { flex:none; position:relative; display:flex; align-items:center; gap:.4rem;
+        margin:.5rem .7rem .35rem; padding:.4rem .6rem; border-radius:999px;
+        background:var(--color-gray-100); border:1px solid var(--color-gray-200); }
+    .msgr-find svg { width:1rem; height:1rem; color:var(--color-gray-400); flex:none; }
+    .msgr-find input { flex:1 1 auto; min-width:0; border:0; background:transparent; outline:none;
+        font-size:.85rem; color:var(--color-gray-800); }
+    .msgr-find input::-webkit-search-cancel-button { display:none; }
+    .msgr-find-x { border:0; background:transparent; cursor:pointer; color:var(--color-gray-400);
+        font-size:.8rem; line-height:1; padding:.15rem; }
+    .msgr-find-x:hover { color:var(--color-gray-700); }
+    /* A heading between "the ones you have" and "everyone else". */
+    .msgr-group { padding:.5rem 1rem .25rem; font-size:.66rem; font-weight:800;
+        letter-spacing:.06em; text-transform:uppercase; color:var(--color-gray-400); }
+    .msgr-none { padding:1.25rem 1rem; text-align:center; font-size:.82rem; color:var(--color-gray-400); }
+    html.dark .msgr-find { background:rgb(255 255 255 / .06); border-color:rgb(255 255 255 / .1); }
     .msgr-panel-head { flex:none; }
     /* Skeleton rows in the exact shape of the threads they become; the
        shimmer parks under reduced motion but the shapes still say "loading". */
@@ -481,11 +505,105 @@
         } catch (_) {}
     }
 
+    /* ---------------- searching for somebody ----------------
+       Two answers in one list: the conversations you already have, filtered
+       as you type, and — past two letters — anybody else the community knows,
+       so a chat can be started from here instead of from a profile page. */
+    let findTimer = null, findGen = 0;
+
+    function renderFind(q, people) {
+        const box = document.getElementById('msgrThreads');
+        if (!box) return;
+        const needle = q.toLowerCase();
+        const mine = threadRows.filter((t) => (t.name || '').toLowerCase().includes(needle));
+        const seen = new Set(mine.map((t) => Number(t.userId)));
+        const others = (people || []).filter((u) => !seen.has(Number(u.id)));
+        if (!mine.length && !others.length) {
+            box.innerHTML = `<p class="msgr-none">Nobody here matches “${esc(q)}”.</p>`;
+            return;
+        }
+        box.innerHTML =
+            (mine.length ? '<p class="msgr-group">Your conversations</p>' + mine.map(threadHtml).join('') : '')
+            + (others.length ? '<p class="msgr-group">Other farmers</p>' + others.map(strangerHtml).join('') : '');
+    }
+
+    function onFind() {
+        const input = document.getElementById('msgrFind');
+        const clear = document.getElementById('msgrFindX');
+        if (!input) return;
+        const q = input.value.trim();
+        clear?.classList.toggle('hidden', q === '');
+        clearTimeout(findTimer);
+        if (q === '') {
+            const box = document.getElementById('msgrThreads');
+            if (box) box.innerHTML = threadRows.length ? threadRows.map(threadHtml).join('') : emptyHtml;
+            return;
+        }
+        // What is already here, at once; the rest a moment later.
+        renderFind(q, []);
+        if (q.length < 2) return;
+        const mine = ++findGen;
+        findTimer = setTimeout(async () => {
+            try {
+                const r = await fetch(@json(route('community.mention-search')) + '?q=' + encodeURIComponent(q),
+                    { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
+                const d = await r.json();
+                // A slower answer to an older question must not overwrite a
+                // newer one.
+                if (mine !== findGen) return;
+                renderFind(q, (d.data && d.data.items) || []);
+            } catch (_) { /* what is already listed stays listed */ }
+        }, 220);
+    }
+
+    document.getElementById('msgrFind')?.addEventListener('input', onFind);
+    document.getElementById('msgrFindX')?.addEventListener('click', () => {
+        const input = document.getElementById('msgrFind');
+        if (!input) return;
+        input.value = '';
+        onFind();
+        input.focus();
+    });
+
     // The loading state is the list's own silhouette, not a word — the panel
     // opens onto something that already looks like messages on their way.
     const skeletonRows = () => Array.from({ length: 4 }, () =>
         '<div class="msgr-skel"><span class="msgr-skel-av"></span><span class="msgr-skel-mid"><span class="msgr-skel-line w1"></span><span class="msgr-skel-line w2"></span></span></div>'
     ).join('');
+
+    /* What the panel is showing, kept as data.
+     *
+     * Filtering by name is a filter over this, not another round trip: the
+     * conversations are already here, and a farmer typing four letters
+     * should not wait for the network to see them narrow. */
+    let threadRows = [];
+
+    const avatarHtml = (t) => (t.avatar
+        ? `<span class="avatar overflow-hidden"><img src="${esc(t.avatar)}" class="w-full h-full object-cover" alt=""></span>`
+        : `<span class="avatar av-h${t.userId % 8}">${esc(t.initials || '?')}</span>`);
+
+    const threadHtml = (t) => `<div class="msgr-thread${t.unread ? ' is-unread' : ''}" data-user="${t.userId}" data-name="${esc(t.name)}">
+                    ${avatarHtml(t)}
+                    <span class="msgr-thread-mid">
+                        <span class="msgr-thread-top"><span class="msgr-thread-name">${esc(t.name)}</span><span class="msgr-thread-at">${esc(t.lastAt || '')}</span></span>
+                        <span class="msgr-thread-row2"><span class="msgr-thread-last">${esc(t.lastBody)}</span>${t.unread ? `<span class="msgr-thread-unread">${t.unread > 9 ? '9+' : t.unread}</span>` : ''}</span>
+                    </span>
+                </div>`;
+
+    // Somebody you have never written to: the same row, minus a conversation.
+    const strangerHtml = (u) => `<div class="msgr-thread" data-user="${u.id}" data-name="${esc(u.name)}">
+                    ${avatarHtml({ avatar: u.avatar, initials: u.initials, userId: u.id })}
+                    <span class="msgr-thread-mid">
+                        <span class="msgr-thread-top"><span class="msgr-thread-name">${esc(u.name)}</span></span>
+                        <span class="msgr-thread-row2"><span class="msgr-thread-last">${u.isFriend ? 'Co-farmer' : 'Say hello'}</span></span>
+                    </span>
+                </div>`;
+
+    const emptyHtml = `<div class="msgr-empty">
+                    <svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.9 9.9 0 01-4.29-.94L3 20l1.05-3.15A7.6 7.6 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                    <p class="msgr-empty-t">No messages yet</p>
+                    <p class="msgr-empty-s">Search for a farmer above, or open a co-farmer's profile and tap Message.</p>
+                </div>`;
 
     async function loadThreads() {
         const box = document.getElementById('msgrThreads');
@@ -494,26 +612,12 @@
             const r = await fetch(@json(route('community.messages.threads')), { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
             const d = await r.json();
             setBadge(d.data.unread);
-            const threads = d.data.threads || [];
-            if (!threads.length) {
-                box.innerHTML = `<div class="msgr-empty">
-                    <svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.9 9.9 0 01-4.29-.94L3 20l1.05-3.15A7.6 7.6 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-                    <p class="msgr-empty-t">No messages yet</p>
-                    <p class="msgr-empty-s">Open a co-farmer's profile and tap Message to start a conversation.</p>
-                </div>`;
+            threadRows = d.data.threads || [];
+            if (!threadRows.length) {
+                box.innerHTML = emptyHtml;
                 return;
             }
-            box.innerHTML = threads.map((t) => {
-                const av = t.avatar ? `<span class="avatar overflow-hidden"><img src="${esc(t.avatar)}" class="w-full h-full object-cover" alt=""></span>`
-                    : `<span class="avatar av-h${t.userId % 8}">${esc(t.initials || '?')}</span>`;
-                return `<div class="msgr-thread${t.unread ? ' is-unread' : ''}" data-user="${t.userId}" data-name="${esc(t.name)}">
-                    ${av}
-                    <span class="msgr-thread-mid">
-                        <span class="msgr-thread-top"><span class="msgr-thread-name">${esc(t.name)}</span><span class="msgr-thread-at">${esc(t.lastAt || '')}</span></span>
-                        <span class="msgr-thread-row2"><span class="msgr-thread-last">${esc(t.lastBody)}</span>${t.unread ? `<span class="msgr-thread-unread">${t.unread > 9 ? '9+' : t.unread}</span>` : ''}</span>
-                    </span>
-                </div>`;
-            }).join('');
+            box.innerHTML = threadRows.map(threadHtml).join('');
         } catch (_) {
             // A dead end that offers the way back — the error never has to
             // stick until the next open.
