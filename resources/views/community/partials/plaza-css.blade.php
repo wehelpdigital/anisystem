@@ -312,7 +312,12 @@
     #composerCard.is-entering { animation: postIn .32s var(--ease-house), ringPulse 1.2s var(--ease-house) .2s; }
     @keyframes ringPulse { 0%,100%{box-shadow:var(--shadow-card)} 40%{box-shadow:0 0 0 4px rgb(107 159 61 / .35), var(--shadow-card)} }
     [data-group-member="0"] .post-reply-form { opacity:0; max-height:0; overflow:hidden; margin-top:0; pointer-events:none; }
-    .post-reply-form { transition: opacity var(--dur) var(--ease-house), max-height var(--dur) var(--ease-house); max-height:4rem; }
+    /* 24rem, not 4: this cap exists only to give the gate's collapse
+       somewhere to animate FROM. At 4rem it clipped any form tall enough to
+       wrap — one with a "replying to @Name" pill over it — and since the
+       form's overflow is visible, the clipped part sat on top of whatever
+       came after it. */
+    .post-reply-form { transition: opacity var(--dur) var(--ease-house), max-height var(--dur) var(--ease-house); max-height:24rem; }
 
     /* --- Comment threads (wall + groups): nested replies + photo chips --- */
     .wall-replies, .reply-thread { margin-left:2.1rem; display:flex; flex-direction:column; gap:.375rem; }

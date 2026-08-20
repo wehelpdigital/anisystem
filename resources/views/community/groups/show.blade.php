@@ -942,7 +942,11 @@ document.addEventListener('DOMContentLoaded', () => {
      * opens it from nothing to its own height, so the rest moves with it. */
     function growIn(el) {
         if (!el || reduceMotion) return;
-        const h = el.scrollHeight;
+        /* Measured with the box unconstrained and laid out, or the target is
+           whatever the stylesheet's cap happened to allow — which is how a
+           two-line form ended up animating to a one-line height. */
+        el.style.maxHeight = 'none';
+        const h = el.getBoundingClientRect().height;
         el.style.overflow = 'hidden';
         el.style.maxHeight = '0px';
         el.style.opacity = '0';
@@ -957,8 +961,11 @@ document.addEventListener('DOMContentLoaded', () => {
             el.style.overflow = '';
             el.style.opacity = '';
         };
-        el.addEventListener('transitionend', done, { once: true });
-        setTimeout(done, 420);   // a tab that never painted still tidies up
+        // On max-height alone: opacity finishes at the same moment, and
+        // whichever fired first used to clear the height mid-animation —
+        // the snap the owner saw.
+        el.addEventListener('transitionend', (e) => { if (e.propertyName === 'max-height') done(); });
+        setTimeout(done, 460);   // a tab that never painted still tidies up
     }
 
     /* And the way back out: to nothing, then gone. */

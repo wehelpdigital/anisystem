@@ -23,15 +23,13 @@
         @if ($afMate)<span class="af-mate">🤝 Co-farmer</span>@endif
         @if ($afPlace)<span class="af-fact">📍 {{ $afPlace }}</span>@endif
         @if ($afWork)<span class="af-fact">🧑‍🌾 {{ \Illuminate\Support\Str::limit($afWork, 34) }}</span>@endif
+        {{-- Three counts, each naming what it counts. Nothing clever: a
+             reader should not have to work out what a number is about. --}}
         @if ($afMates > 0)
-            {{-- Who they work with, and how much of that you already share.
-                 The mutual number is the one that means something to the
-                 reader, so it travels with the total rather than replacing
-                 it. --}}
-            {{-- "farms with 12" rather than "12 co-farmers": the badge to its
-                 left already says co-farmer, and the line should not say the
-                 same word twice about two different things. --}}
-            <span class="af-fact">farms with <b>{{ $afMates }}</b>@if ($afMutual > 0) · <b>{{ $afMutual }}</b> mutual @endif</span>
+            <span class="af-fact"><b>{{ $afMates }}</b> {{ \Illuminate\Support\Str::plural('co-farmer', $afMates) }}</span>
+        @endif
+        @if ($afMutual > 0)
+            <span class="af-fact"><b>{{ $afMutual }}</b> mutual {{ \Illuminate\Support\Str::plural('co-farmer', $afMutual) }}</span>
         @endif
         @if ($afFollowers > 0)
             <span class="af-fact"><b>{{ $afFollowers }}</b> {{ \Illuminate\Support\Str::plural('follower', $afFollowers) }}</span>
