@@ -12,6 +12,20 @@
 <style>
     /* The topic box: the wall's field, in this page's words. */
     .disc-composer-box { min-height:5.5rem; resize:vertical; }
+    .disc-composer-head { margin-bottom:.6rem; }
+    .disc-composer-title { font-family:var(--font-heading); font-weight:800; font-size:.98rem;
+        line-height:1.2; color:var(--color-gray-900); }
+    .disc-composer-sub { margin-top:.15rem; font-size:.76rem; line-height:1.45; color:var(--color-gray-500); }
+
+    /* Who is asking: where they farm, what they do, whether you already farm
+       together, and how many follow them. */
+    .gp-facts { display:flex; align-items:center; flex-wrap:wrap; gap:.3rem .5rem; margin-top:.2rem;
+        font-size:.7rem; color:var(--color-gray-400); }
+    .gp-fact { display:inline-flex; align-items:center; gap:.2rem; }
+    .gp-fact b { font-weight:700; color:var(--color-gray-600); }
+    .gp-cofarmer { display:inline-flex; align-items:center; gap:.15rem; padding:.05rem .4rem;
+        border-radius:999px; background:var(--color-brand-50); color:var(--color-brand-700);
+        font-size:.62rem; font-weight:800; }
     /* Formatting shows through on rendered topic bodies. */
     .group-post .activity-description-content, .group-post-body { font-size:.875rem; }
     .group-post-body ul { list-style:disc; padding-left:1.25rem; }
@@ -46,9 +60,38 @@
        an edge that is not there. */
     .disc-hero:not(.has-banner) .disc-face { position:static; width:3.5rem; height:3.5rem;
         box-shadow:none; border-width:0; margin-bottom:.5rem; }
-    .disc-hero-acts { display:flex; align-items:center; gap:.5rem; margin-top:.7rem; }
-    .disc-hero-acts .btn { flex:1 1 auto; }
-    .disc-hero-acts .btn-icon { flex:0 0 auto; width:2.75rem; padding-left:0; padding-right:0; }
+    /* The room is the screen on a phone, like the wall's posts. */
+    .disc-hero { position:relative; }
+    .disc-hero::before { content:''; position:absolute; inset:0 0 auto 0; height:5px; z-index:2;
+        border-top-left-radius:inherit; border-top-right-radius:inherit; pointer-events:none;
+        background:linear-gradient(120deg, #2f5219, #6b9f3d 28%, #b8d38e 48%, #4a7c2a 72%, #2f5219);
+        background-size:220% 100%; animation:gradSweep 12s ease-in-out infinite alternate; }
+    @media (max-width:640px) {
+        .disc-hero, .disc-composer {
+            border-radius:0; border-left:0; border-right:0;
+            margin-left:calc(var(--plaza-gutter, 1rem) * -1);
+            margin-right:calc(var(--plaza-gutter, 1rem) * -1);
+        }
+    }
+
+    /* Two quiet doors under the cover, on the right. */
+    .disc-hero-tools { position:absolute; right:.85rem; display:flex; align-items:center; gap:.4rem; z-index:3; }
+    .disc-hero.has-banner .disc-hero-tools { top:calc(7rem + .5rem); }
+    .disc-hero:not(.has-banner) .disc-hero-tools { top:.85rem; }
+    @media (min-width:640px) { .disc-hero.has-banner .disc-hero-tools { top:calc(9.5rem + .5rem); } }
+    .disc-tool { display:inline-flex; align-items:center; justify-content:center;
+        width:2.1rem; height:2.1rem; border-radius:999px; cursor:pointer;
+        border:1px solid var(--color-gray-200); background:var(--color-white);
+        color:var(--color-gray-500); box-shadow:0 4px 12px -8px rgb(0 0 0 / .6);
+        transition:background var(--dur) var(--ease-house), color var(--dur) var(--ease-house); }
+    .disc-tool svg { width:1rem; height:1rem; }
+    .disc-tool:hover { background:var(--color-gray-100); color:var(--color-gray-800); }
+    .disc-tool-leave:hover { color:#dc2626; border-color:#fca5a5; background:#fef2f2; }
+    .disc-hero-join { display:block; width:100%; margin-top:.7rem; }
+    @media (prefers-reduced-motion: reduce) {
+        .disc-hero::before { animation:none; }
+        .disc-tool { transition:none; }
+    }
     .disc-hero-num { display:inline-flex; align-items:center; gap:.25rem; }
     .eg-pics { display:flex; gap:.6rem; align-items:flex-start; }
     .eg-pic { display:block; cursor:pointer; }
@@ -267,20 +310,32 @@
                 <span id="heroMemberTag" class="{{ $isMember ? '' : 'hidden' }}">✓ Kasali ka</span>
             </p>
         </div>
-        <div class="disc-hero-acts">
-            @unless ($isOwner)
-                <button type="button" id="joinLeaveBtn" class="btn btn-sm {{ $isMember ? 'btn-white' : 'btn-primary' }}"
-                        data-joined="{{ $isMember ? 1 : 0 }}" data-name="{{ $group->name }}">{{ $isMember ? 'Leave this discussion' : 'Join this discussion' }}</button>
-            @else
-                <span class="badge badge-green">Owner</span>
-            @endunless
-            {{-- Whoever started the room keeps it, and so does the house. --}}
+        {{-- The two small doors, under the cover on the right: change the
+             room, or leave it. Both are quiet — the room is the page, and
+             neither of these is what a reader came for. --}}
+        <div class="disc-hero-tools">
             @if ($canEditGroup ?? false)
-                <button type="button" id="editGroupBtn" class="btn btn-white btn-sm btn-icon" title="Edit this discussion" aria-label="Edit this discussion">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.4-9.4a2 2 0 112.8 2.8L11 15l-4 1 1-4 8.6-8.4z"/></svg>
+                <button type="button" id="editGroupBtn" class="disc-tool" title="Edit this discussion" aria-label="Edit this discussion">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.4-9.4a2 2 0 112.8 2.8L11 15l-4 1 1-4 8.6-8.4z"/></svg>
                 </button>
             @endif
+            @if ($isMember && ! $isOwner)
+                <button type="button" id="joinLeaveBtn" class="disc-tool disc-tool-leave"
+                        data-joined="1" data-name="{{ $group->name }}"
+                        title="Leave this discussion" aria-label="Leave this discussion">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            @endif
+            @if ($isOwner)
+                <span class="badge badge-green">Owner</span>
+            @endif
         </div>
+        @unless ($isMember || $isOwner)
+            {{-- For somebody outside the room this is the whole page's offer,
+                 so it keeps its words and its width. --}}
+            <button type="button" id="joinLeaveBtn" class="btn btn-primary btn-sm disc-hero-join"
+                    data-joined="0" data-name="{{ $group->name }}">Join this discussion</button>
+        @endunless
         @if ($group->description)
             {{-- Clamped by default: the description is context, not the room. --}}
             <p class="disc-hero-desc" id="heroDesc">{{ $group->description }}</p>
@@ -349,6 +404,12 @@
     <div id="paneDiscussion" role="tabpanel">
     {{-- Composer (members only) --}}
     <div class="card disc-composer mb-4 plaza-accent {{ $isMember ? '' : 'hidden' }}" id="composerCard" data-video-host>
+        {{-- What the box is for. A room lives or dies on somebody starting
+             one of these, and an unlabelled field asks for nothing. --}}
+        <div class="disc-composer-head">
+            <h3 class="disc-composer-title">Start a topic</h3>
+            <p class="disc-composer-sub">Ask a question or share what worked. Everyone in this discussion gets told about it — use @ to tag a co-farmer.</p>
+        </div>
         <div class="flex items-start gap-3">
             <span class="avatar avatar-md disc-composer-av {{ CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} mt-1">{{ auth()->user()->initials ?? '?' }}</span>
             <div class="min-w-0 grow">
@@ -635,7 +696,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         catch (_) { toast('Network error — try again.', 'error'); }
-        finally { btn.disabled = false; }
+        finally {
+            // It may have been replaced by the X on the way in.
+            if (btn.isConnected) { btn.disabled = false; delete btn.dataset.busy; }
+        }
     });
     document.getElementById('joinFromGate')?.addEventListener('click', async (e) => {
         const btn = e.currentTarget;   // null once this awaits

@@ -135,6 +135,7 @@ class CommunityGroupController extends Controller
 
         $posts = $this->pagePosts($group->id, 1);
         $this->withReactions($posts['items']);
+        $this->withAuthorFacts($posts['items']);
 
         // Being here IS reading it: the room's badge clears on arrival, and
         // only for somebody who actually joined (a visitor has no badge).
@@ -163,6 +164,7 @@ class CommunityGroupController extends Controller
         $page = max(1, (int) $request->query('page', 1));
         $posts = $this->pagePosts($group->id, $page);
         $this->withReactions($posts['items']);
+        $this->withAuthorFacts($posts['items']);
 
         return response()->json([
             'success' => true,
@@ -427,7 +429,13 @@ class CommunityGroupController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Posted.',
-            'data' => ['html' => view('community.groups.partials.posts', ['posts' => collect([$post->load('author')]), 'group' => $group])->render()],
+            'data' => ['html' => view('community.groups.partials.posts', [
+                // The card a farmer sees the moment they post carries the same
+                // facts as every other one; without this it is the only card
+                // in the room with a bare name under it.
+                'posts' => tap(collect([$post->load('author')]), fn ($one) => $this->withAuthorFacts($one)),
+                'group' => $group,
+            ])->render()],
         ]);
     }
 
@@ -933,6 +941,31 @@ class CommunityGroupController extends Controller
             ->where('groupId', $groupId)
             ->where('userId', $userId)
             ->exists();
+    }
+
+    /**
+     * What a card says about the person who wrote it.
+     *
+     * Where they farm and what they do come with the author; whether the
+     * reader already farms with them, and how many follow them, are two
+     * queries for the whole page rather than two per card.
+     */
+    private function withAuthorFacts(\Illuminate\Support\Collection $posts): void
+    {
+        $authorIds = $posts->pluck('userId')->filter()->map(fn ($id) => (int) $id)->unique()->values()->all();
+        if ($authorIds === []) {
+            return;
+        }
+
+        $meId = (int) Auth::id();
+        $friends = array_flip(\App\Models\CommunityConnection::connectedIds($meId));
+        $followers = app(\App\Services\CommunitySocialService::class)->followerCounts($authorIds);
+
+        foreach ($posts as $post) {
+            $id = (int) $post->userId;
+            $post->authorIsCoFarmer = isset($friends[$id]);
+            $post->authorFollowers = $followers[$id] ?? 0;
+        }
     }
 
     /**

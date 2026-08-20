@@ -59,6 +59,32 @@ class CommunitySocialService
         return CommunityFollow::active()->where('followedUserId', $userId)->count();
     }
 
+    /**
+     * How many follow each of these people — one query for the page.
+     *
+     * followerCount() is the single-person question; a list of cards asks it
+     * about everyone at once, and doing that one at a time is a round trip
+     * per line of small print.
+     *
+     * @param  list<int>  $userIds
+     * @return array<int,int>
+     */
+    public function followerCounts(array $userIds): array
+    {
+        $userIds = array_values(array_unique(array_map('intval', $userIds)));
+        if ($userIds === []) {
+            return [];
+        }
+
+        return CommunityFollow::active()
+            ->whereIn('followedUserId', $userIds)
+            ->selectRaw('followedUserId, COUNT(*) as n')
+            ->groupBy('followedUserId')
+            ->pluck('n', 'followedUserId')
+            ->map(fn ($n) => (int) $n)
+            ->all();
+    }
+
     public function followingCount(int $userId): int
     {
         return CommunityFollow::active()->where('followerUserId', $userId)->count();
