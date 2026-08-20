@@ -217,7 +217,6 @@ class CommunityConnectController extends Controller
         return view('community.connect.index', [
             'members' => $result['items'],
             'hasMore' => $result['hasMore'],
-            'recommendations' => CommunityConnection::recommendationsFor((int) Auth::id(), 10),
             'filters' => $filters,
             'provinces' => User::where('deleteStatus', 1)
                 ->whereNotNull('province')->where('province', '!=', '')

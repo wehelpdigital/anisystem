@@ -77,33 +77,7 @@
     #feedComposer { margin-top: 1.35rem; }
 
     /* People you may know — a rail that scrolls sideways on a phone. */
-    /* A band across the wall, not a card on it.
-       It runs to both edges the way the posts do, so the green shows only
-       above and below — two rules the eye reads as "this belongs to the
-       page", where four rules and rounded corners read as "this is a box
-       sitting on it". */
-    .pymk { margin: 0 calc(var(--plaza-gutter, 1rem) * -1) 1.25rem;
-        padding: .85rem var(--plaza-gutter, 1rem) .75rem;
-        border-radius: 0; border-left: 0; border-right: 0; box-shadow: none; }
-    /* The rail still runs off the right edge, so the next card peeks. */
-    .pymk-rail { margin-right: calc(var(--plaza-gutter, 1rem) * -1);
-        padding-right: var(--plaza-gutter, 1rem); }
-    .pymk-head { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; margin-bottom: .5rem; }
-    .pymk-head h2 { font-family: var(--font-heading); font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
-    .pymk-head a { font-size: .78rem; font-weight: 700; color: var(--color-brand-700); }
-    /* Stretch, so a card with a short reason is still as tall as its
-       neighbour; and no scrollbar under it — the half-card showing past the
-       edge says it scrolls, and says it without a grey stripe. */
-    .pymk-rail { display: flex; align-items: stretch; gap: .5rem; overflow-x: auto; padding-bottom: .1rem;
-        scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-    .pymk-rail > * { scroll-snap-align: start; }
-    .pymk-rail::-webkit-scrollbar { display: none; }
-    /* The shape of what is coming, shimmering while it comes. */
-    .pymk-skel { flex: none; width: 9.5rem; height: 11.5rem; border-radius: 1rem;
-        background: linear-gradient(100deg, var(--color-gray-100) 40%, var(--color-gray-200) 50%, var(--color-gray-100) 60%);
-        background-size: 200% 100%; animation: pymkShim 1.2s linear infinite; }
-    @keyframes pymkShim { to { background-position: -200% 0; } }
-    .pymk-empty { font-size: .82rem; color: var(--color-gray-400); padding: .5rem 0; }
+    /* The band's own rules live in plaza-css — the members page draws it too. */
 
     /* On a phone the wall is the screen: a card that keeps side margins and
        rounded corners is a card pretending it is not the whole page. */
@@ -115,8 +89,7 @@
         }
     }
 
-    html.dark .pymk-skel { background: linear-gradient(100deg, #1c2416 40%, #26301c 50%, #1c2416 60%); background-size: 200% 100%; }
-    @media (prefers-reduced-motion: reduce) { .pymk-skel { animation: none; } }
+
 </style>
 @endpush
 <style>
@@ -307,22 +280,7 @@
     <button type="button" id="feedPostSubmit" class="btn btn-primary comp-send">Post</button>
 </div>
 
-{{-- People you may know — above the wall, right after the composer, and
-     fetched rather than rendered: the ranking walks friends-of-friends and
-     the threads you have commented in, which is slower than the wall should
-     ever wait for. Skeleton cards hold the space so nothing jumps. --}}
-<section class="pymk reco-edge" id="pymk" aria-label="People you may know">
-    <div class="pymk-head">
-        <h2>People you may know</h2>
-        <a href="{{ route('community.connect.members') }}">See all</a>
-    </div>
-    <div class="pymk-rail" id="pymkRail">
-        @for ($i = 0; $i < 4; $i++)
-            <div class="pymk-skel" aria-hidden="true"></div>
-        @endfor
-    </div>
-    <p class="pymk-empty hidden" id="pymkEmpty">No suggestions yet — connect with a few co-farmers and this fills up.</p>
-</section>
+@include('community.partials.pymk')
 
 {{-- The feed: friends and kapit-bahay provinces first --}}
 <div id="feedWrap">

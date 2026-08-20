@@ -4,6 +4,9 @@
 @section('page-title', $group->name)
 @section('page-subtitle', 'Discussion')
 @section('back', route('community.groups.index'))
+{{-- A room is a place you are in; the bar underneath is for leaving it. The
+     Collab Room claims the screen the same way. --}}
+@section('body-class', 'hide-tabbar')
 
 @php use App\Support\CommunityAvatar; @endphp
 
@@ -85,6 +88,15 @@
         .disc-tool { transition:none; }
     }
     .disc-hero-num { display:inline-flex; align-items:center; gap:.25rem; }
+    /* Being in the room is a fact worth seeing, like Joined on the card. */
+    .disc-kasali { display:inline-flex; align-items:center; gap:.2rem;
+        padding:.1rem .45rem; border-radius:999px; font-size:.68rem; font-weight:800;
+        color:#fff; background:var(--color-brand-600); }
+    .disc-started { display:flex; align-items:center; gap:.4rem; margin-top:.45rem;
+        font-size:.75rem; color:var(--color-gray-500); }
+    .disc-started .avatar { width:1.3rem; height:1.3rem; font-size:.55rem; }
+    .disc-started a { font-weight:700; color:var(--color-gray-700); text-decoration:none; }
+    .disc-started a:hover { color:var(--color-brand-700); }
     .eg-pics { display:flex; gap:.6rem; align-items:flex-start; }
     .eg-pic { display:block; cursor:pointer; }
     .eg-pic-wide { flex:1; min-width:0; }
@@ -299,7 +311,7 @@
                 {{-- How many have looked in. Counted on arrival, like every
                      other thing in the community that carries an eye. --}}
                 <span class="disc-hero-num">@include('community.partials.views-count', ['kind' => 'group', 'id' => $group->id, 'count' => $group->viewCount ?? 0])</span>
-                <span id="heroMemberTag" class="{{ $isMember ? '' : 'hidden' }}">✓ Kasali ka</span>
+                <span id="heroMemberTag" class="disc-kasali {{ $isMember ? '' : 'hidden' }}">✓ Kasali ka</span>
             </p>
         </div>
         {{-- The two small doors, under the cover on the right: change the
@@ -328,6 +340,14 @@
             <button type="button" id="joinLeaveBtn" class="btn btn-primary btn-sm disc-hero-join"
                     data-joined="0" data-name="{{ $group->name }}">Join this discussion</button>
         @endunless
+        {{-- Whose room this is. A reader deciding whether to trust what is
+             said in here wants to know who keeps it. --}}
+        @if ($group->creator)
+            <p class="disc-started">
+                @include('community.partials.avatar', ['user' => $group->creator, 'size' => 'avatar-sm', 'link' => false])
+                <span>Started by <a href="{{ route('community.connect.profile', ['userId' => $group->creator->id]) }}">{{ $group->creator->full_name }}</a>@if ($group->created_at) · {{ $group->created_at->timezone('Asia/Manila')->format('M Y') }}@endif</span>
+            </p>
+        @endif
         @if ($group->description)
             {{-- Clamped by default: the description is context, not the room. --}}
             <p class="disc-hero-desc" id="heroDesc">{{ $group->description }}</p>

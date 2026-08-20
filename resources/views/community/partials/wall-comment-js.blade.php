@@ -374,11 +374,34 @@
         if (!btn) return;
         const parentId = btn.getAttribute('data-parent-id');
         const post = postScope(btn);
+        const mId = btn.dataset.authorId, mName = btn.dataset.authorName;
+
+        /* Inside the comments sheet, the box at the foot IS the reply box.
+         *
+         * Pushing another composer into the list put two identical rows of
+         * the same controls one above the other. A reply is a comment with
+         * somebody's name on it — so the sheet's own box takes the name and
+         * the parent, and there is only ever one place to type. */
+        const foot = post?.querySelector?.('#wcsFoot .wall-comment-form');
+        if (foot) {
+            foot.setAttribute('data-parent-id', parentId);
+            if (mId && mName && foot.dataset.mentionId !== mId) {
+                foot.querySelectorAll('.reply-mention-pill').forEach((x) => x.remove());
+                foot.dataset.mentionId = mId;
+                foot.dataset.mentionName = mName;
+                foot.insertAdjacentHTML('afterbegin', replyMentionPill(mName));
+            }
+            const zoneOpen = post.querySelector(`.wall-replies[data-parent-id="${parentId}"]`);
+            if (zoneOpen) openZone(zoneOpen, true);
+            const box = foot.querySelector('input[type="text"]');
+            if (box) { box.focus(); box.scrollIntoView({ block: 'nearest' }); }
+            return;
+        }
+
         const zone = post && post.querySelector(`.wall-replies[data-parent-id="${parentId}"]`);
         if (!zone) return;
         // Show what is being replied to before asking for the reply.
         openZone(zone, true);
-        const mId = btn.dataset.authorId, mName = btn.dataset.authorName;
         let form = zone.querySelector('.wall-reply-form');
         if (!form) {
             zone.insertAdjacentHTML('beforeend', replyFormHtml(post.getAttribute('data-post-id'), parentId, mId, mName));
@@ -396,8 +419,15 @@
     document.addEventListener('click', (e) => {
         const x = e.target.closest('.js-reply-mention-x');
         if (!x) return;
-        const form = x.closest('.wall-reply-form');
-        if (form) { delete form.dataset.mentionId; delete form.dataset.mentionName; }
+        const form = x.closest('.wall-reply-form, .wall-comment-form');
+        if (form) {
+            delete form.dataset.mentionId;
+            delete form.dataset.mentionName;
+            // The sheet's box is shared, so dropping the name drops the
+            // thread it was aimed at — otherwise the next comment quietly
+            // lands under somebody else's.
+            form.removeAttribute('data-parent-id');
+        }
         x.closest('.reply-mention-pill')?.remove();
     });
 

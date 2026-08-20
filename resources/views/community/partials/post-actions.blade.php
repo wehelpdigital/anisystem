@@ -376,6 +376,17 @@
         primeComposer();
         window.openSheet?.('wallCommentSheet');
         loadComments(true);
+        /* Opened to be read, not written in.
+         *
+         * A field that takes focus as the sheet arrives raises the phone's
+         * keyboard over half the comments before anybody has read one. The
+         * shared opener blurs once; this repeats it after the sheet has
+         * settled, because the list paints in between. */
+        [60, 260, 520].forEach((ms) => setTimeout(() => {
+            const sheet = $('wallCommentSheet');
+            const active = document.activeElement;
+            if (sheet && active && sheet.contains(active) && active.tagName === 'INPUT') active.blur();
+        }, ms));
     });
 
     /* Point the sheet's own composer at the post being read, and empty it.

@@ -10,7 +10,8 @@
 
 {{-- Who to meet first: friends of friends, farmers nearby, and the people
      whose threads you have already been talking in. --}}
-@include('community.partials.recommended', ['recommendations' => $recommendations])
+{{-- The wall's band, so the same feature looks like the same feature. --}}
+@include('community.partials.pymk')
 
 @php $anyFilter = $filters['q'] !== ''; @endphp
 
@@ -82,6 +83,9 @@
 @endpush
 
 @push('scripts')
+{{-- The band fetches its own people; without this it stays a row of
+     shimmering placeholders forever. --}}
+@include('community.partials.pymk-js')
 @include('community.connect.partials.connect-js')
 @include('community.partials.infinite-js')
 <script>

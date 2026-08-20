@@ -927,7 +927,9 @@ class CommunityGroupController extends Controller
 
     private function group(int $id): CommunityGroup
     {
-        $group = CommunityGroup::active()->where('id', $id)->first();
+        // with('creator'): the room's head says who started it, and asking
+        // for that per render is a query the page can carry once.
+        $group = CommunityGroup::active()->with('creator')->where('id', $id)->first();
         if (! $group) {
             abort(404);
         }

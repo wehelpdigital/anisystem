@@ -660,6 +660,36 @@
         .mc-cover[class*="mc-tint-"] { animation: none; }
     }
 
+    /* A band across the wall, not a card on it.
+       It runs to both edges the way the posts do, so the green shows only
+       above and below — two rules the eye reads as "this belongs to the
+       page", where four rules and rounded corners read as "this is a box
+       sitting on it". */
+    .pymk { margin: 0 calc(var(--plaza-gutter, 1rem) * -1) 1.25rem;
+        padding: .85rem var(--plaza-gutter, 1rem) .75rem;
+        border-radius: 0; border-left: 0; border-right: 0; box-shadow: none; }
+    /* The rail still runs off the right edge, so the next card peeks. */
+    .pymk-rail { margin-right: calc(var(--plaza-gutter, 1rem) * -1);
+        padding-right: var(--plaza-gutter, 1rem); }
+    .pymk-head { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; margin-bottom: .5rem; }
+    .pymk-head h2 { font-family: var(--font-heading); font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
+    .pymk-head a { font-size: .78rem; font-weight: 700; color: var(--color-brand-700); }
+    /* Stretch, so a card with a short reason is still as tall as its
+       neighbour; and no scrollbar under it — the half-card showing past the
+       edge says it scrolls, and says it without a grey stripe. */
+    .pymk-rail { display: flex; align-items: stretch; gap: .5rem; overflow-x: auto; padding-bottom: .1rem;
+        scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .pymk-rail > * { scroll-snap-align: start; }
+    .pymk-rail::-webkit-scrollbar { display: none; }
+    /* The shape of what is coming, shimmering while it comes. */
+    .pymk-skel { flex: none; width: 9.5rem; height: 11.5rem; border-radius: 1rem;
+        background: linear-gradient(100deg, var(--color-gray-100) 40%, var(--color-gray-200) 50%, var(--color-gray-100) 60%);
+        background-size: 200% 100%; animation: pymkShim 1.2s linear infinite; }
+    @keyframes pymkShim { to { background-position: -200% 0; } }
+    .pymk-empty { font-size: .82rem; color: var(--color-gray-400); padding: .5rem 0; }
+    html.dark .pymk-skel { background: linear-gradient(100deg, #1c2416 40%, #26301c 50%, #1c2416 60%); background-size: 200% 100%; }
+    @media (prefers-reduced-motion: reduce) { .pymk-skel { animation: none; } }
+
     /* ---- who is speaking: the small print under a name ----
        Drawn by the wall's posts and by a discussion's topics, so it lives
        here rather than in either of them. */
