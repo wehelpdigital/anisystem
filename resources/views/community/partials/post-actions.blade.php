@@ -18,12 +18,6 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
-        {{-- The picture, when the sheet was opened by tapping one. Contained,
-             not cropped: the crop is what the card shows, and seeing past it
-             is the reason for opening this. --}}
-        <div class="wcs-photo" id="wcsPhoto" hidden>
-            <img id="wcsPhotoImg" src="" alt="">
-        </div>
         {{-- .wall-comments is the name the handlers append into. --}}
         <div id="wcsList" class="wall-comments space-y-1.5"></div>
         <p class="wcs-state" id="wcsState">Loading…</p>
@@ -112,15 +106,6 @@
 </div>
 
 <style>
-    /* The photo above the comments. Dark ground, because a picture with
-       daylight in it needs an edge to sit against, and contained rather than
-       cropped — the crop is what the card already showed. */
-    .wcs-photo { margin: -.25rem 0 .75rem; border-radius: .8rem; overflow: hidden; background: #0b1220; }
-    .wcs-photo[hidden] { display: none; }
-    .wcs-photo img { display: block; width: 100%; max-height: 60vh; object-fit: contain;
-        animation: wcsPhotoIn .28s cubic-bezier(.22,1,.36,1); }
-    @keyframes wcsPhotoIn { from { opacity: 0; transform: scale(.98); } }
-    @media (prefers-reduced-motion: reduce) { .wcs-photo img { animation: none; } }
 
     /* ---- Share this post ----
        Its own clothes: the rows used to borrow a class from the AI module's
@@ -348,43 +333,11 @@
         } finally { cBusy = false; }
     }
 
-    /* One way in, two doors.
-     *
-     * The comment icon opens the sheet with the comments; tapping the photo
-     * opens the same sheet with the picture whole on top of them. Anything
-     * that carries data-post-id and asks to be opened lands here. */
-    function openCommentSheet(postId, photoUrl) {
-        cPost = postId;
-        const shot = $('wcsPhoto'), img = $('wcsPhotoImg');
-        if (shot && img) {
-            if (photoUrl) { img.src = photoUrl; shot.hidden = false; }
-            else { shot.hidden = true; img.removeAttribute('src'); }
-        }
-        return cPost;
-    }
-
-    // A photo on a card: open it whole, where its comments are.
-    document.addEventListener('click', (e) => {
-        const shot = e.target.closest('.js-post-photo');
-        if (!shot) return;
-        openCommentSheet(shot.dataset.postId, shot.dataset.full || shot.querySelector('img')?.src || '');
-        primeComposer();
-        window.openSheet?.('wallCommentSheet');
-        loadComments(true);
-    });
-    // Keyboard: the picture is a button, so it answers like one.
-    document.addEventListener('keydown', (e) => {
-        if (e.key !== 'Enter' && e.key !== ' ') return;
-        const shot = e.target.closest?.('.js-post-photo');
-        if (!shot) return;
-        e.preventDefault();
-        shot.click();
-    });
 
     document.addEventListener('click', (e) => {
         const btn = e.target.closest('.js-open-comments');
         if (!btn) return;
-        openCommentSheet(btn.dataset.postId, null);
+        cPost = btn.dataset.postId;
         primeComposer();
         window.openSheet?.('wallCommentSheet');
         loadComments(true);

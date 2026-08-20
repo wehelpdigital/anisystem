@@ -65,12 +65,10 @@
         @endif
         @if ($post->imagePath)
             {{-- media-skel: shimmer while the photo decodes, vanish if it 404s. --}}
-            {{-- Tapping the picture opens it whole, with the post's comments
-                 under it — the crop above is only what fits the column. --}}
-            <div class="post-media media-skel js-post-photo" role="button" tabindex="0"
-                 data-post-id="{{ $post->id }}"
-                 data-full="{{ \App\Support\MediaStore::url($post->imagePath) }}"
-                 aria-label="Open this photo and its comments">
+            {{-- Tapping the picture opens it whole in the lightbox — the crop
+                 here is only what fits the column. The lightbox binds to the
+                 image itself, so this box carries no handler of its own. --}}
+            <div class="post-media media-skel">
                 <img src="{{ \App\Support\MediaStore::url($post->imagePath) }}" alt="" loading="lazy"
                     onload="this.classList.add('is-loaded')"
                     onerror="this.closest('.media-skel')?.classList.add('is-gone')">

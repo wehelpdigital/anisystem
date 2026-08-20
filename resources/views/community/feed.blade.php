@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+{{-- The wall gets its own ground: the cards are grey and the page was grey
+     too, so a column of bands read as one undifferentiated slab. --}}
+@section('body-class', 'plaza-ground')
+
 @section('title', 'Community')
 @section('page-title', 'Community')
 @section('page-subtitle', 'Kamustahan ng mga magsasaka')
@@ -12,6 +16,15 @@
     /* The composer runs to both edges, like the posts under it and the
        suggestions below them: the wall is a column of bands, and a rounded
        box floating on that column was the odd one out. */
+    /* A dark green ground, so the cards sit ON something.
+       The wall is a column of full-width bands; against the app's usual grey
+       they and the page were the same colour and the edges between them did
+       all the work. Green is the house colour, taken almost to black — dark
+       enough to stay a background, coloured enough that a grey card reads as
+       a card. */
+    body.plaza-ground { background: #eef4e8; }
+    html.dark body.plaza-ground { background: #0b140d; }
+
     .comp-card { margin-left: calc(var(--plaza-gutter, 1rem) * -1);
         margin-right: calc(var(--plaza-gutter, 1rem) * -1);
         padding: .85rem var(--plaza-gutter, 1rem);
