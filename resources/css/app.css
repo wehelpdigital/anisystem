@@ -353,6 +353,25 @@ html.sheet-open #msgrDock {
 .toast-error { @apply bg-red-600; }
 .toast-info { @apply bg-gray-800; }
 
+/* ------------------------------------------------------------------ */
+/* The ground under the page                                           */
+/* ------------------------------------------------------------------ */
+
+/* body carries `min-h-screen` (100vh). On a phone that is the viewport as
+   it would be with the address bar hidden — so as the bar comes and goes
+   with the scroll, the real viewport changes height and the page does not,
+   and the footer appears and disappears at the bottom of a page nothing
+   else is moving on. dvh is the same measurement, taken live. */
+@supports (height: 100dvh) {
+    body.min-h-screen { min-height: 100dvh; }
+}
+
+/* A full-screen editor means the page behind it holds still. Scoped to the
+   editors that really do cover the screen — `overlay-open` is also worn by
+   the notification bell's little dropdown, and freezing a whole page behind
+   a dropdown is not the same thing at all. */
+html.rl-open, html.rl-open body { overflow: hidden; }
+
 /* Mobile bottom tab bar */
 .tabbar {
     @apply fixed bottom-0 inset-x-0 z-30 bg-white border-t border-gray-200 flex md:hidden;

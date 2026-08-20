@@ -603,7 +603,7 @@
                         /* No cover on the row — an older reel, or one posted
                            where the server could not make one. The clip's own
                            first frame stands in, which beats a black tile. */
-                        : `<video src="${esc(it.video)}#t=0.3" muted playsinline preload="metadata"></video>`}
+                        : `<video src="${esc(it.video)}#t=0.3" muted playsinline preload="metadata" data-cv-skip></video>`}
                     <span class="rl-tile-grad"></span>
                     <span class="rl-tile-who"><b>${esc(it.author.name)}</b><i>${it.seconds}s</i></span>
                 </button>`).join('');
@@ -661,6 +661,8 @@
             </div>`).join('');
         $('rlViewer').classList.remove('hidden');
         document.documentElement.classList.add('overlay-open');
+        // A story fills the screen; the wall behind it holds still.
+        document.documentElement.classList.add('rl-open');
         applySound(deck);
         const slides = deck.querySelectorAll('.rl-slide');
         slides[index]?.scrollIntoView();
@@ -744,7 +746,7 @@
         deck.querySelectorAll('video').forEach((v) => v.pause());
         deck.innerHTML = '';
         $('rlViewer').classList.add('hidden');
-        document.documentElement.classList.remove('overlay-open');
+        document.documentElement.classList.remove('overlay-open', 'rl-open');
     }
 
     document.addEventListener('click', (e) => {
@@ -818,6 +820,9 @@
     function studio(on) {
         $('rlStudio').classList.toggle('hidden', !on);
         document.documentElement.classList.toggle('overlay-open', on);
+        // The wall behind a full-screen editor holds still; scrolling it
+        // under the studio is how you close the studio somewhere else.
+        document.documentElement.classList.toggle('rl-open', on);
         if (!on) {
             $('rlPreview').pause();
             $('rlPreview').removeAttribute('src');
