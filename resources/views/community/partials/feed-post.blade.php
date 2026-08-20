@@ -43,16 +43,18 @@
                 @include('community.partials.dm-btn', ['user' => $author])
             </p>
         </div>
-        {{-- Following is one-sided, so it belongs on the post as well as the
-             profile: this is where you decide you want more of somebody. --}}
-        @unless ($isMine)
-            <button type="button" class="fp-follow {{ $following ? 'is-on' : '' }}"
-                    data-follow="{{ $author->id }}" data-name="{{ $author->full_name }}"
-                    aria-pressed="{{ $following ? 'true' : 'false' }}">
-                <span class="on">Following</span><span class="off">+ Follow</span>
-            </button>
-        @endunless
     </header>
+    {{-- Following is one-sided, so it belongs on the post as well as the
+         profile: this is where you decide you want more of somebody. In the
+         card's corner rather than the header's row — a decision about the
+         person, not a word attached to their name. --}}
+    @unless ($isMine)
+        <button type="button" class="fp-follow {{ $following ? 'is-on' : '' }}"
+                data-follow="{{ $author->id }}" data-name="{{ $author->full_name }}"
+                aria-pressed="{{ $following ? 'true' : 'false' }}">
+            <span class="on">Following</span><span class="off">+ Follow</span>
+        </button>
+    @endunless
     {{-- Who is speaking, across the whole card. In the column beside the
          face it had 278px of a 358px card and the third fact wrapped with
          the avatar's width sitting empty next to it. --}}

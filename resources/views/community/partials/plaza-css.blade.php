@@ -713,8 +713,17 @@
         font-size: .62rem; font-weight: 800; }
     /* Your own: a statement, not a relationship. */
     .af-mine { background: var(--color-gray-100); color: var(--color-gray-500); }
-    /* Under the header, across the card. */
+    /* Under the header, across the card. The second line sits tighter to
+       the first — they are two halves of one introduction. */
     .feed-post > .af-line, .group-post > .af-line { margin-top: .35rem; }
+    .feed-post > .af-line + .af-line, .group-post > .af-line + .af-line { margin-top: .15rem; }
+
+    /* Follow lives in the card's own corner: it is a decision about the
+       person, not a word attached to their name. The header keeps a lane
+       clear for it so a long name never runs underneath. */
+    .wall-post > .fp-follow { position: absolute; top: .8rem; right: .8rem; z-index: 2; }
+    .wall-post:has(> .fp-follow) header { padding-right: 5.5rem; }
+    .feed-post:has(.status-cloud) > .fp-follow { top: 2.2rem; }
 
     /* The eye that counts looks. Sized to sit in a line of small print,
        wherever that line is. */
