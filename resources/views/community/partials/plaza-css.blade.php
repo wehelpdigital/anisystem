@@ -569,12 +569,16 @@
     /* ---- An article from the tech blog, on the wall ----
        Named but never described: these classes had no rules anywhere in the
        app, so the card was browser defaults in a rounded box. */
-    .fa-cover { position: relative; display: block; width: 100%; aspect-ratio: 4 / 3;
-        overflow: hidden; background: var(--color-gray-100);
-        border-top-left-radius: inherit; border-top-right-radius: inherit; }
+    /* Inset, not full width: this is a trailer for something that lives on
+       another page, and a photograph running to the card's edges reads as
+       something somebody on this wall shared. */
+    .fa-cover { position: relative; display: block; margin: .85rem .85rem 0;
+        aspect-ratio: 16 / 10; overflow: hidden; border-radius: .8rem;
+        background: var(--color-gray-100); }
     .fa-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .fa-kicker { position: absolute; top: .6rem; left: .75rem;
-        display: inline-flex; align-items: center; padding: .2rem .55rem; border-radius: 999px;
+    .fa-kicker { position: absolute; top: .6rem; left: .6rem;
+        display: inline-flex; align-items: center; line-height: 1;
+        padding: .38rem .6rem .26rem; border-radius: 999px;
         background: rgb(255 255 255 / .92); color: var(--color-brand-700);
         font-size: .62rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
         box-shadow: 0 4px 12px -6px rgb(0 0 0 / .5); }
@@ -592,11 +596,7 @@
         overflow: hidden; margin-top: .55rem; font-size: .85rem; line-height: 1.55;
         color: var(--color-gray-600); }
     .fa-read { display: block; width: 100%; margin-top: .85rem; text-align: center; }
-    .fa-foot { display: flex; align-items: center; gap: .5rem; padding: .35rem .6rem .6rem;
-        border-top: 1px solid var(--color-gray-100); }
-    .fa-views { margin-left: auto; padding-right: .5rem; font-size: .72rem; font-weight: 700;
-        color: var(--color-gray-400); }
-    .fa-card .react-bar { padding: .25rem .6rem 0; }
+    /* .fa-foot and .fa-views are gone with the row they dressed. */
 
     /* ---- A member card: cover, the face over it, and why they matter ----
        Drawn by the directory, by its pager and by My Co-Farmers, so the
