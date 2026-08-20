@@ -93,15 +93,7 @@ class ReelEncoder
         $outFile = $tmp . $stem . '.mp4';
         $posterFile = $tmp . $stem . '.jpg';
 
-        /* The picture chain, in one pass.
-         *
-         * scale+crop rather than pad: a reel with black bars down the sides is
-         * a landscape video pretending, and the format's whole promise is that
-         * it fills the phone. increase+crop keeps the middle, which is where
-         * somebody points a camera. */
-        $chain = 'scale=' . self::OUT_W . ':' . self::OUT_H . ':force_original_aspect_ratio=increase'
-            . ',crop=' . self::OUT_W . ':' . self::OUT_H
-            . ',setsar=1';
+        $chain = self::frameChain($opts['frame'] ?? []);
 
         $look = self::looks()[$opts['look'] ?? 'none'] ?? '';
         if ($look !== '') {
@@ -139,12 +131,56 @@ class ReelEncoder
             $args[] = $audio;
         }
 
-        array_push($args, '-t', (string) $duration, '-vf', $chain);
+        /* The sheet of everything drawn on top, if the studio sent one.
+         *
+         * One transparent picture at the reel's own size, holding the words,
+         * the shapes and the arrows exactly as they were arranged. */
+        $sheet = $opts['overlaySheet'] ?? null;
+        $sheetPath = ($sheet instanceof UploadedFile) ? $sheet->getRealPath() : null;
+        if ($sheetPath !== null) {
+            $args[] = '-i';
+            $args[] = $sheetPath;
+        }
+        $sheetIndex = $audio !== null ? 2 : 1;
 
+        array_push($args, '-t', (string) $duration);
+
+        /* One graph rather than -vf, because there are up to three inputs to
+         * join: the picture, a sheet laid over it, and two sounds mixed. */
+        $graph = '[0:v]' . $chain . '[vbase]';
+        $videoOut = '[vbase]';
+        if ($sheetPath !== null) {
+            $graph .= ';[' . $sheetIndex . ':v]scale=' . self::OUT_W . ':' . self::OUT_H . '[sheet]'
+                . ';[vbase][sheet]overlay=0:0[vout]';
+            $videoOut = '[vout]';
+        }
+
+        /* The sound.
+         *
+         * Music used to replace what the camera heard outright. A farmer
+         * showing a pump running wants both, at a balance they chose — so
+         * the two are mixed, and either can be turned to nothing. */
+        $audioOut = null;
         if ($audio !== null) {
-            // The chosen track replaces whatever the phone's microphone caught:
-            // picking music is saying "not the wind and my own footsteps".
-            array_push($args, '-map', '0:v:0', '-map', '1:a:0', '-shortest');
+            $musicVol = self::volume($opts['musicVolume'] ?? 1.0);
+            $ownVol = self::volume($opts['originalVolume'] ?? 0.0);
+            $keepsOwn = $ownVol > 0.01 && self::hasAudio($ffmpeg, $input);
+            if ($keepsOwn) {
+                $graph .= ';[0:a]volume=' . $ownVol . '[a0]'
+                    . ';[1:a]volume=' . $musicVol . '[a1]'
+                    . ';[a0][a1]amix=inputs=2:duration=first:dropout_transition=0:normalize=0[aout]';
+            } else {
+                $graph .= ';[1:a]volume=' . $musicVol . '[aout]';
+            }
+            $audioOut = '[aout]';
+        }
+
+        array_push($args, '-filter_complex', $graph, '-map', $videoOut);
+        if ($audioOut !== null) {
+            array_push($args, '-map', $audioOut, '-shortest');
+        } else {
+            // Whatever the camera heard, if it heard anything.
+            array_push($args, '-map', '0:a?');
         }
 
         array_push(
@@ -199,6 +235,82 @@ class ReelEncoder
         }
 
         return ['video' => $videoPath, 'poster' => $posterPath, 'duration' => $duration];
+    }
+
+    /**
+     * Where the picture sits inside the reel.
+     *
+     * Untouched, this is what it always was: fill the frame and keep the
+     * middle, because a reel with bars down the side is a landscape video
+     * pretending. Once a farmer has pinched or turned it, the fit becomes
+     * theirs, and whatever is left over is the backdrop they chose.
+     *
+     * @param  array<string,mixed>  $frame
+     */
+    private static function frameChain(array $frame): string
+    {
+        $scale = max(0.3, min(3.0, (float) ($frame['scale'] ?? 1.0)));
+        $rot = fmod((float) ($frame['rotate'] ?? 0.0), 360.0);
+        $bg = preg_match('/^#[0-9a-f]{6}$/i', (string) ($frame['bg'] ?? '')) ? $frame['bg'] : '#000000';
+        $bg = '0x' . ltrim(strtolower($bg), '#');
+
+        if (abs($scale - 1.0) < 0.01 && abs($rot) < 0.5) {
+            return 'scale=' . self::OUT_W . ':' . self::OUT_H . ':force_original_aspect_ratio=increase'
+                . ',crop=' . self::OUT_W . ':' . self::OUT_H
+                . ',setsar=1';
+        }
+
+        $w = (int) round(self::OUT_W * $scale);
+        $h = (int) round(self::OUT_H * $scale);
+
+        $chain = 'scale=' . $w . ':' . $h . ':force_original_aspect_ratio=increase'
+            . ',crop=' . $w . ':' . $h;
+
+        if (abs($rot) >= 0.5) {
+            // The frame keeps its size; the corners the turn opens up take
+            // the backdrop rather than black.
+            $chain .= ',rotate=' . round(deg2rad($rot), 5) . ':fillcolor=' . $bg . '@1';
+        }
+
+        /* Bigger than the reel: crop to it. Smaller: pad out to it. Both, in
+         * one pass, using max() so neither has to know which happened. */
+        $chain .= ',pad=w=max(iw\\,' . self::OUT_W . '):h=max(ih\\,' . self::OUT_H . ')'
+            . ':x=(ow-iw)/2:y=(oh-ih)/2:color=' . $bg
+            . ',crop=' . self::OUT_W . ':' . self::OUT_H
+            . ',setsar=1';
+
+        return $chain;
+    }
+
+    /** A loudness the farmer set, kept inside what ffmpeg will accept. */
+    private static function volume($v): string
+    {
+        return (string) round(max(0.0, min(2.0, (float) $v)), 2);
+    }
+
+    /**
+     * Does the clip carry any sound of its own?
+     *
+     * Asked because mixing against a track that does not exist makes ffmpeg
+     * fail the whole encode, and a farmer who filmed silence should still get
+     * their music.
+     */
+    private static function hasAudio(string $ffmpeg, string $input): bool
+    {
+        $probe = preg_replace('/ffmpeg(\.exe)?$/i', 'ffprobe$1', $ffmpeg);
+        if ($probe !== $ffmpeg && is_file($probe)) {
+            $p = new Process([$probe, '-v', 'error', '-select_streams', 'a:0',
+                '-show_entries', 'stream=codec_type', '-of', 'csv=p=0', $input], null, null, null, 30);
+            $p->run();
+
+            return str_contains($p->getOutput(), 'audio');
+        }
+
+        // No ffprobe beside it: ffmpeg itself will say, on the way past.
+        $p = new Process([$ffmpeg, '-hide_banner', '-i', $input], null, null, null, 30);
+        $p->run();
+
+        return (bool) preg_match('/Stream #\d+:\d+.*: Audio:/', $p->getErrorOutput());
     }
 
     /**

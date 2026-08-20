@@ -27,7 +27,7 @@
 </section>
 
 {{-- ---------------------------------------------------------- the viewer --}}
-<div class="rl-viewer hidden" id="rlViewer" role="dialog" aria-modal="true" aria-label="Stories">
+<div class="rl-viewer hidden" id="rlViewer" role="dialog" aria-modal="true" aria-label="Stories" data-cv-skip>
     <button type="button" class="rl-x" id="rlClose" aria-label="Close">✕</button>
     <div class="rl-deck" id="rlDeck"></div>
 </div>
@@ -65,11 +65,25 @@
          every reel editor uses, because your thumb is at the bottom and your
          eyes are at the top. --}}
     <div class="rl-edit hidden" id="rlEdit">
-        <div class="rl-stage">
-            <video id="rlPreview" playsinline muted loop></video>
-            {{-- What has been stuck on: words and pictures, dragged where
-                 they are wanted. --}}
-            <div class="rl-layer" id="rlLayer"></div>
+        <div class="rl-stage" id="rlStage">
+            {{-- The reel itself: this box IS what gets posted, backdrop
+                 and all, so everything in the editor is measured against it
+                 rather than against the black around it. --}}
+            <div class="rl-reel" id="rlReel">
+                {{-- The picture, as placed: pinched, turned, and cropped by
+                     the reel's own edges. --}}
+                <div class="rl-shot" id="rlShot">
+                    <video id="rlPreview" playsinline muted loop data-cv-skip></video>
+                </div>
+                {{-- What has been stuck on: words, shapes and pictures,
+                     dragged where they are wanted. Outside the transform, so
+                     a tilted picture does not tilt the words with it. --}}
+                <div class="rl-layer" id="rlLayer"></div>
+            </div>
+            {{-- Heard while it is being made. It starts silent because a
+                 browser will not autoplay sound, and a farmer who wants to
+                 hear what they are cutting taps once. --}}
+            <button type="button" class="rl-ear" id="rlEar" aria-pressed="false" aria-label="Sound on">🔇</button>
             {{-- Words are edited over the picture, where you can see them
                  land, rather than in a field somewhere below it. --}}
             <div class="rl-textedit" id="rlTextEdit" hidden>
@@ -93,6 +107,11 @@
                 <div class="rl-film" id="rlFilm"></div>
                 <div class="rl-window" id="rlWindow">
                     <span class="rl-handle rl-handle-a" data-rl-handle="a" role="slider" aria-label="Start"></span>
+                    {{-- The middle is a handle too: dragging it moves the
+                         whole kept part along the clip, keeping its length,
+                         which is how you find the right ten seconds rather
+                         than rebuilding them end by end. --}}
+                    <span class="rl-window-grab" data-rl-handle="mid" aria-label="Move the kept part"></span>
                     <span class="rl-handle rl-handle-b" data-rl-handle="b" role="slider" aria-label="End"></span>
                 </div>
                 <div class="rl-playhead" id="rlPlayhead"></div>
@@ -118,6 +137,12 @@
                 <button type="button" class="rl-act" id="rlAddBtn">
                     <span>➕</span><i>Add</i>
                 </button>
+                <button type="button" class="rl-act" id="rlFrameBtn">
+                    <span>🖼️</span><i>Frame</i>
+                </button>
+                <button type="button" class="rl-act" id="rlSoundBtn">
+                    <span>🎚️</span><i>Sound</i>
+                </button>
                 <button type="button" class="rl-act" id="rlLooksBtn">
                     <span>🎨</span><i>Look</i>
                 </button>
@@ -127,6 +152,40 @@
             </div>
 
             {{-- Panels, one at a time, under the row that opens them. --}}
+            {{-- How the picture sits in the reel, for thumbs that would
+                 rather use a slider and for mice that cannot pinch at all. --}}
+            <div class="rl-panel hidden" id="rlFramePanel">
+                <label class="rl-slider">
+                    <span>Size</span>
+                    <input type="range" id="rlFrameScale" min=".4" max="2" step=".01" value="1">
+                    <b id="rlFrameScaleSay">100%</b>
+                </label>
+                <label class="rl-slider">
+                    <span>Turn</span>
+                    <input type="range" id="rlFrameRot" min="-45" max="45" step="1" value="0">
+                    <b id="rlFrameRotSay">0°</b>
+                </label>
+                <p class="rl-hint">Pinch and twist the picture to place it by hand.</p>
+                <p class="rl-swatch-lbl">Backdrop</p>
+                <div class="rl-swatches" id="rlBackdrops"></div>
+                <button type="button" class="rl-reset" id="rlFrameReset">Put it back</button>
+            </div>
+
+            {{-- Two sounds, and how loud each of them is. --}}
+            <div class="rl-panel hidden" id="rlSoundPanel">
+                <label class="rl-slider">
+                    <span>Music</span>
+                    <input type="range" id="rlVolMusic" min="0" max="1" step=".05" value=".85">
+                    <b id="rlVolMusicSay">85%</b>
+                </label>
+                <label class="rl-slider">
+                    <span>Original</span>
+                    <input type="range" id="rlVolOwn" min="0" max="1" step=".05" value="0">
+                    <b id="rlVolOwnSay">off</b>
+                </label>
+                <p class="rl-hint">Choosing music used to throw away what the camera heard. Now both are kept, at whatever balance you set.</p>
+            </div>
+
             <div class="rl-panel hidden" id="rlLooksPanel">
                 <div class="rl-looks" id="rlLooks"></div>
             </div>
@@ -160,6 +219,22 @@
         <button type="button" class="rl-opt" data-rl-add-image>
             <span class="rl-opt-ic">🖼️</span>
             <span class="rl-opt-txt"><b>A picture</b><i>Stick a photo or a logo onto the clip</i></span>
+        </button>
+        <button type="button" class="rl-opt" data-rl-add="arrow">
+            <span class="rl-opt-ic">➔</span>
+            <span class="rl-opt-txt"><b>An arrow</b><i>Point at the thing you are talking about</i></span>
+        </button>
+        <button type="button" class="rl-opt" data-rl-add="line">
+            <span class="rl-opt-ic">╱</span>
+            <span class="rl-opt-txt"><b>A line</b><i>Underline it, or rule it off</i></span>
+        </button>
+        <button type="button" class="rl-opt" data-rl-add="rect">
+            <span class="rl-opt-ic">▭</span>
+            <span class="rl-opt-txt"><b>A box</b><i>Ring the part that matters</i></span>
+        </button>
+        <button type="button" class="rl-opt" data-rl-add="ellipse">
+            <span class="rl-opt-ic">◯</span>
+            <span class="rl-opt-txt"><b>A circle</b><i>Same, but round</i></span>
         </button>
     </div>
 </div>
@@ -293,8 +368,22 @@
     /* Height governs, width follows. Sized the other way round — 100% width
        at 9:16 — a phone-shaped clip wanted to be taller than the screen, so
        it overflowed the stage and stood on top of the controls below it. */
-    .rl-stage video { height: 100%; width: auto; max-width: 100%; aspect-ratio: 9 / 16;
-        object-fit: cover; background: #000; }
+    /* The reel: a 9:16 box, as tall as the stage allows and no wider than
+       it. Height governs, width follows — sized the other way round, a
+       phone-shaped clip wanted to be taller than the screen and stood on top
+       of the controls below it. */
+    .rl-reel { position: relative; height: 100%; aspect-ratio: 9 / 16; max-width: 100%;
+        overflow: hidden; background: #000; }
+    .rl-shot { position: absolute; inset: 0; transform-origin: 50% 50%;
+        display: flex; align-items: center; justify-content: center; }
+    .rl-stage video { width: 100%; height: 100%; object-fit: cover; background: transparent; display: block; }
+
+    /* Sound, while it is being cut. */
+    .rl-ear { position: absolute; top: .6rem; right: .6rem; z-index: 3;
+        width: 2.2rem; height: 2.2rem; border-radius: 999px; border: 0; cursor: pointer;
+        background: rgb(0 0 0 / .5); color: #fff; font-size: .95rem; line-height: 1;
+        backdrop-filter: blur(4px); }
+    .rl-ear[aria-pressed="true"] { background: rgb(74 124 42 / .9); }
     .rl-overlay-text { position: absolute; left: 0; right: 0; bottom: 12%; text-align: center; padding: 0 1rem;
         font-weight: 800; font-size: 1rem; color: #fff; pointer-events: none; }
     .rl-overlay-text span { background: rgb(0 0 0 / .45); padding: .25rem .5rem; border-radius: .3rem; }
@@ -350,8 +439,47 @@
     .rl-layer { position: absolute; inset: 0; z-index: 2; touch-action: none; }
     .rl-ov { position: absolute; cursor: grab; user-select: none; }
     .rl-ov-text { font-size: 1.15rem; font-weight: 800; text-align: center; max-width: 86%;
+        white-space: pre-wrap;
         text-shadow: 0 2px 8px rgb(0 0 0 / .65), 0 0 2px rgb(0 0 0 / .5); }
     .rl-ov-img img { max-width: 8rem; max-height: 8rem; display: block; }
+    /* Shapes are drawn as SVG, so a line is a line at any size and an arrow
+       keeps its head. */
+    .rl-ov-shape svg { display: block; overflow: visible; }
+
+    /* The chosen thing wears its handles: one to turn and size it, one to
+       take it away. Both are outside the box, so neither covers what it is
+       attached to. */
+    .rl-ov.is-picked { outline: 1.5px dashed rgb(255 255 255 / .85); outline-offset: 4px; }
+    .rl-grip { position: absolute; width: 1.6rem; height: 1.6rem; border-radius: 999px;
+        display: flex; align-items: center; justify-content: center;
+        background: #fff; color: #111; font-size: .72rem; line-height: 1; cursor: pointer;
+        box-shadow: 0 2px 8px rgb(0 0 0 / .45); z-index: 3; touch-action: none; }
+    .rl-grip-turn { right: -.8rem; bottom: -.8rem; cursor: nwse-resize; }
+    .rl-grip-drop { left: -.8rem; top: -.8rem; background: #ef4444; color: #fff; }
+
+    /* ---- sliders and swatches, in the panels under the row ---- */
+    .rl-slider { display: flex; align-items: center; gap: .55rem; padding: .25rem 0; }
+    .rl-slider > span { flex: none; width: 3.6rem; font-size: .74rem; font-weight: 700;
+        color: rgb(255 255 255 / .7); }
+    .rl-slider input[type=range] { flex: 1 1 auto; min-width: 0; accent-color: #86b556; }
+    .rl-slider b { flex: none; width: 2.8rem; text-align: right; font-size: .72rem;
+        font-variant-numeric: tabular-nums; color: rgb(255 255 255 / .85); }
+    .rl-hint { font-size: .68rem; line-height: 1.45; color: rgb(255 255 255 / .45); padding: .15rem 0 .25rem; }
+    .rl-swatch-lbl { font-size: .68rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
+        color: rgb(255 255 255 / .5); padding-top: .25rem; }
+    .rl-swatches { display: flex; flex-wrap: wrap; gap: .4rem; padding: .35rem 0 .15rem; }
+    .rl-swatch { width: 1.8rem; height: 1.8rem; border-radius: .5rem; border: 2px solid transparent;
+        cursor: pointer; padding: 0; }
+    .rl-swatch.is-on { border-color: #fff; box-shadow: 0 0 0 2px rgb(0 0 0 / .5); }
+    .rl-reset { align-self: flex-start; margin-top: .3rem; padding: .3rem .6rem; border-radius: .5rem;
+        border: 1px solid rgb(255 255 255 / .18); background: transparent; color: rgb(255 255 255 / .8);
+        font-size: .72rem; font-weight: 700; cursor: pointer; }
+    .rl-reset:hover { background: rgb(255 255 255 / .08); }
+    .rl-panel { padding-top: .1rem; display: flex; flex-direction: column; }
+
+    /* The middle of the kept window: drag it to move the whole cut. */
+    .rl-window-grab { position: absolute; inset: 0 1.1rem; cursor: grab; touch-action: none; }
+    .rl-window-grab:active { cursor: grabbing; }
     .rl-textedit { position: absolute; left: .6rem; right: .6rem; bottom: .6rem; z-index: 4;
         padding: .6rem; border-radius: .8rem; background: rgb(17 17 17 / .92);
         display: flex; flex-direction: column; gap: .45rem; }
@@ -695,6 +823,11 @@
             $('rlPreview').removeAttribute('src');
             chosen = null; look = 'none';
             overlays = [];
+            picked = null;
+            frame = { scale: 1, rotate: 0, bg: '#000000' };
+            mix = { music: 0.85, own: 0 };
+            earOn(false);
+            paintFrame();
             setTrack();
             drawOverlays();
             $('rlPick').classList.remove('hidden');
@@ -821,10 +954,15 @@
             const r = bar.getBoundingClientRect();
             return Math.max(0, Math.min(1, (e.clientX - r.left) / Math.max(1, r.width))) * clipDur;
         };
+        let grabbedAt = 0, grabbedLen = 0;
         bar.addEventListener('pointerdown', (e) => {
             const h = e.target.closest('[data-rl-handle]');
             if (!h || !clipDur) return;
             dragging = h.getAttribute('data-rl-handle');
+            // Moving the whole window: remember where inside it the finger
+            // landed, so it does not jump to centre under the thumb.
+            grabbedAt = at(e) - trimA;
+            grabbedLen = trimB - trimA;
             bar.setPointerCapture(e.pointerId);
             e.preventDefault();
         });
@@ -836,6 +974,12 @@
                 // Sixty seconds is the rule, so the far end follows the near
                 // one rather than letting the window grow past it.
                 if (trimB - trimA > MAX) trimB = trimA + MAX;
+                $('rlPreview').currentTime = trimA;
+            } else if (dragging === 'mid') {
+                // The cut keeps its length and slides along the clip.
+                const want = Math.max(0, Math.min(clipDur - grabbedLen, t - grabbedAt));
+                trimA = want;
+                trimB = want + grabbedLen;
                 $('rlPreview').currentTime = trimA;
             } else {
                 trimB = Math.max(t, trimA + 1);
@@ -871,22 +1015,97 @@
     });
 
     function panel(which) {
-        ['rlLooksPanel', 'rlSayPanel'].forEach((id) => {
-            $(id).classList.toggle('hidden', id !== which || !$(id).classList.contains('hidden'));
+        ['rlLooksPanel', 'rlSayPanel', 'rlFramePanel', 'rlSoundPanel'].forEach((id) => {
+            const el = $(id);
+            if (el) el.classList.toggle('hidden', id !== which || !el.classList.contains('hidden'));
         });
     }
     $('rlLooksBtn')?.addEventListener('click', () => panel('rlLooksPanel'));
     $('rlSayBtn')?.addEventListener('click', () => panel('rlSayPanel'));
+    $('rlFrameBtn')?.addEventListener('click', () => { paintBackdrops(); paintFrame(); panel('rlFramePanel'); });
+    $('rlSoundBtn')?.addEventListener('click', () => { paintMix(); panel('rlSoundPanel'); });
+
+    /* ---- two sounds, and how loud each is -------------------------- */
+    function paintMix() {
+        const m = $('rlVolMusic'), o = $('rlVolOwn');
+        if (m) m.value = String(mix.music);
+        if (o) o.value = String(mix.own);
+        const ms = $('rlVolMusicSay'), os = $('rlVolOwnSay');
+        if (ms) ms.textContent = mix.music <= 0 ? 'off' : Math.round(mix.music * 100) + '%';
+        if (os) os.textContent = mix.own <= 0 ? 'off' : Math.round(mix.own * 100) + '%';
+        // What is being heard right now follows what is being set.
+        const v = $('rlPreview'), a = $('rlMusicAudio');
+        if (v && !v.muted) v.volume = mix.own;
+        if (a) a.volume = mix.music;
+    }
+    $('rlVolMusic')?.addEventListener('input', (e) => { mix.music = parseFloat(e.target.value); paintMix(); });
+    $('rlVolOwn')?.addEventListener('input', (e) => {
+        mix.own = parseFloat(e.target.value);
+        // Turning the original up is asking to hear it.
+        const v = $('rlPreview');
+        if (v && mix.own > 0 && v.muted) earOn(true);
+        paintMix();
+    });
+
+    /* Hearing the clip while cutting it.
+     *
+     * It starts muted because a browser will not autoplay sound; one tap
+     * turns it on, and the chosen music plays alongside at the balance the
+     * sliders are set to -- which is the only way to judge that balance. */
+    function earOn(on) {
+        const v = $('rlPreview'), a = $('rlMusicAudio'), btn = $('rlEar');
+        if (!v) return;
+        v.muted = !on;
+        v.volume = mix.own;
+        if (btn) {
+            btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+            btn.textContent = on ? '🔊' : '🔇';
+        }
+        if (!a) return;
+        if (on && audioUrl) {
+            if (a.src !== audioUrl) a.src = audioUrl;
+            a.loop = true;
+            a.volume = mix.music;
+            a.play().catch(() => {});
+        } else {
+            a.pause();
+        }
+    }
+    $('rlEar')?.addEventListener('click', () => earOn($('rlPreview')?.muted !== false));
 
     /* ---- things stuck on the picture -------------------------------- */
+    /* Fonts a phone actually has, named for what they look like rather than
+       for what they are called. `draw` is the same stack without the CSS
+       variable, because a canvas cannot read one. */
+    /* Single quotes in `css` on purpose: this string is written into a
+       style="" attribute, and a family name in double quotes ends the
+       attribute early -- which silently dropped the font AND the colour that
+       followed it. `draw` is a JS string for the canvas, where quotes are
+       only quotes. */
     const FONTS = [
-        { key: 'sans', name: 'Plain', css: 'system-ui, sans-serif' },
-        { key: 'head', name: 'Heading', css: 'var(--font-heading), sans-serif' },
-        { key: 'serif', name: 'Serif', css: 'Georgia, serif' },
-        { key: 'mono', name: 'Typewriter', css: 'ui-monospace, monospace' },
+        { key: 'sans', name: 'Plain', css: 'system-ui, sans-serif', draw: '600 %spx system-ui, sans-serif' },
+        { key: 'head', name: 'Heading', css: 'var(--font-heading), sans-serif', draw: '800 %spx "Instrument Sans", system-ui, sans-serif' },
+        { key: 'serif', name: 'Serif', css: "Georgia, 'Times New Roman', serif", draw: '700 %spx Georgia, "Times New Roman", serif' },
+        { key: 'slab', name: 'Poster', css: "Rockwell, 'Courier New', Georgia, serif", draw: '800 %spx Rockwell, "Courier New", Georgia, serif' },
+        { key: 'mono', name: 'Typewriter', css: "ui-monospace, 'Courier New', monospace", draw: '700 %spx "Courier New", ui-monospace, monospace' },
+        { key: 'round', name: 'Soft', css: "'Trebuchet MS', Verdana, sans-serif", draw: '700 %spx "Trebuchet MS", Verdana, sans-serif' },
+        { key: 'wide', name: 'Wide', css: "'Arial Black', Impact, sans-serif", draw: '900 %spx "Arial Black", Impact, sans-serif' },
+        { key: 'script', name: 'Handwriting', css: "'Segoe Script', 'Brush Script MT', cursive", draw: '600 %spx "Segoe Script", "Brush Script MT", cursive' },
     ];
-    const INKS = ['#ffffff', '#111111', '#ffd54a', '#7cf07c', '#8fd0ff', '#ff8fb3'];
-    let overlays = [];   // { kind:'text'|'image', ... }
+    const INKS = ['#ffffff', '#111111', '#ffd54a', '#7cf07c', '#8fd0ff', '#ff8fb3', '#ff5252', '#4a7c2a'];
+    // What the leftover space around a placed picture is filled with.
+    const BACKDROPS = ['#000000', '#ffffff', '#2d5016', '#4a7c2a', '#f5c518', '#1d4ed8', '#7c3aed', '#be185d', '#111827'];
+
+    let overlays = [];   // { kind:'text'|'image'|'shape', ... }
+    let picked = null;   // which one wears the handles
+
+    /* Where the picture sits inside the reel, and what fills the rest.
+     * Sent to the encoder as-is; the preview applies the same numbers as a
+     * CSS transform, so the two cannot drift. */
+    let frame = { scale: 1, rotate: 0, bg: '#000000' };
+    // How loud each sound is. The original starts at nothing, which is what
+    // choosing music has always meant here -- but now it can be turned up.
+    let mix = { music: 0.85, own: 0 };
 
     $('rlAddBtn')?.addEventListener('click', () => {
         liftSheets(true);
@@ -901,22 +1120,45 @@
         if (e.target.closest('[data-rl-add-image]')) {
             window.closeSheet?.('rlAddSheet');
             $('rlSticker').click();
+            return;
+        }
+        const shape = e.target.closest('[data-rl-add]');
+        if (shape) {
+            window.closeSheet?.('rlAddSheet');
+            addShape(shape.getAttribute('data-rl-add'));
         }
     });
 
     function addText() {
-        const o = { kind: 'text', text: '', font: 'sans', ink: '#ffffff', size: 1, x: 50, y: 78 };
+        const o = { kind: 'text', text: '', font: 'sans', ink: '#ffffff', size: 1, rot: 0, x: 50, y: 78 };
         overlays.push(o);
+        picked = overlays.length - 1;
         drawOverlays();
         openTextEditor(overlays.length - 1);
     }
 
+    /* A shape, dropped in the middle for the thumb to take somewhere.
+     *
+     * Arrows and lines start lying flat and get turned by the same handle
+     * that sizes them, which is how you point one at something. */
+    function addShape(shape) {
+        overlays.push({
+            kind: 'shape', shape: shape || 'rect',
+            ink: '#ffd54a', size: 1, rot: shape === 'arrow' ? -20 : 0, x: 50, y: 50,
+        });
+        picked = overlays.length - 1;
+        drawOverlays();
+        openShapeEditor(picked);
+    }
+
     function openTextEditor(i) {
         const o = overlays[i];
-        if (!o) return;
+        if (!o || o.kind !== 'text') return;
         const box = $('rlTextEdit');
         box.hidden = false;
         box.dataset.at = String(i);
+        box.dataset.kind = 'text';
+        $('rlTextInput').classList.remove('hidden');
         $('rlTextInput').value = o.text;
         $('rlTextFonts').innerHTML = FONTS.map((f) => `<button type="button" class="rl-font${f.key === o.font ? ' is-on' : ''}" data-font="${f.key}" style="font-family:${f.css}">${f.name}</button>`).join('');
         $('rlTextInks').innerHTML = INKS.map((c) => `<button type="button" class="rl-ink${c === o.ink ? ' is-on' : ''}" data-ink="${c}" style="background:${c}" aria-label="Colour"></button>`).join('');
@@ -939,8 +1181,9 @@
         const o = overlays[parseInt(box.dataset.at, 10)];
         const f = e.target.closest('[data-font]');
         const c = e.target.closest('[data-ink]');
-        if (f && o) { o.font = f.dataset.font; openTextEditor(parseInt(box.dataset.at, 10)); drawOverlays(); }
-        if (c && o) { o.ink = c.dataset.ink; openTextEditor(parseInt(box.dataset.at, 10)); drawOverlays(); }
+        const reopen = (i) => (box.dataset.kind === 'shape' ? openShapeEditor(i) : openTextEditor(i));
+        if (f && o) { o.font = f.dataset.font; reopen(parseInt(box.dataset.at, 10)); drawOverlays(); }
+        if (c && o) { o.ink = c.dataset.ink; reopen(parseInt(box.dataset.at, 10)); drawOverlays(); }
         if (e.target.closest('#rlTextDone')) { box.hidden = true; }
         if (e.target.closest('#rlTextDrop')) {
             overlays.splice(parseInt(box.dataset.at, 10), 1);
@@ -957,46 +1200,228 @@
         drawOverlays();
     });
 
+    /* The shapes, as SVG.
+     *
+     * Drawn rather than boxed with CSS: a line stays a line at any size, an
+     * arrow keeps its head, and the same path maths draws them again on the
+     * canvas that goes to the encoder. Each is 200x200 in its own units and
+     * scaled by the object's size. */
+    const SHAPE_BOX = 200;
+
+    function shapeSvg(o) {
+        const ink = esc(o.ink);
+        const w = 6;
+        const body = {
+            rect: `<rect x="14" y="44" width="172" height="112" rx="10" fill="none" stroke="${ink}" stroke-width="${w}"/>`,
+            ellipse: `<ellipse cx="100" cy="100" rx="86" ry="58" fill="none" stroke="${ink}" stroke-width="${w}"/>`,
+            line: `<line x1="14" y1="100" x2="186" y2="100" stroke="${ink}" stroke-width="${w}" stroke-linecap="round"/>`,
+            arrow: `<line x1="16" y1="100" x2="160" y2="100" stroke="${ink}" stroke-width="${w}" stroke-linecap="round"/>`
+                + `<path d="M186 100 L150 78 L150 122 Z" fill="${ink}"/>`,
+        }[o.shape] || '';
+        return `<svg viewBox="0 0 ${SHAPE_BOX} ${SHAPE_BOX}" width="${SHAPE_BOX}" height="${SHAPE_BOX}"`
+            + ` style="filter:drop-shadow(0 2px 6px rgb(0 0 0 / .55))">${body}</svg>`;
+    }
+
+    const gripsHtml = () => '<span class="rl-grip rl-grip-drop" data-grip="drop" aria-label="Remove">✕</span>'
+        + '<span class="rl-grip rl-grip-turn" data-grip="turn" aria-label="Turn and size">⤡</span>';
+
     function drawOverlays() {
         const layer = $('rlLayer');
+        if (!layer) return;
         layer.innerHTML = overlays.map((o, i) => {
+            const on = i === picked ? ' is-picked' : '';
+            const grips = i === picked ? gripsHtml() : '';
             const at = `left:${o.x}%;top:${o.y}%;`;
+            const turn = `transform:translate(-50%,-50%) rotate(${o.rot || 0}deg) scale(${o.size});`;
             if (o.kind === 'image') {
-                return `<span class="rl-ov rl-ov-img" data-ov="${i}" style="${at}transform:translate(-50%,-50%) scale(${o.size})"><img src="${esc(o.url)}" alt=""></span>`;
+                return `<span class="rl-ov rl-ov-img${on}" data-ov="${i}" style="${at}${turn}"><img src="${esc(o.url)}" alt="">${grips}</span>`;
+            }
+            if (o.kind === 'shape') {
+                return `<span class="rl-ov rl-ov-shape${on}" data-ov="${i}" style="${at}${turn}">${shapeSvg(o)}${grips}</span>`;
             }
             const font = (FONTS.find((f) => f.key === o.font) || FONTS[0]).css;
-            return `<span class="rl-ov rl-ov-text" data-ov="${i}" style="${at}transform:translate(-50%,-50%) scale(${o.size});font-family:${font};color:${esc(o.ink)}">${esc(o.text || 'Your words')}</span>`;
+            return `<span class="rl-ov rl-ov-text${on}" data-ov="${i}" style="${at}${turn}font-family:${font};color:${esc(o.ink)}">${esc(o.text || 'Your words')}${grips}</span>`;
         }).join('');
     }
 
-    /* Dragging what has been stuck on, anywhere on the picture. */
-    (function dragOverlays() {
-        const stage = $('rlLayer');
-        if (!stage) return;
-        let held = null;
-        stage.addEventListener('pointerdown', (e) => {
+    /* The shape editor: the same strip of colours the words use, and a size
+       slider, because a shape has no text to type. */
+    function openShapeEditor(i) {
+        const o = overlays[i];
+        if (!o || o.kind !== 'shape') return;
+        const box = $('rlTextEdit');
+        box.hidden = false;
+        box.dataset.at = String(i);
+        box.dataset.kind = 'shape';
+        $('rlTextInput').classList.add('hidden');
+        $('rlTextFonts').innerHTML = '';
+        $('rlTextInks').innerHTML = INKS.map((c) => `<button type="button" class="rl-ink${c === o.ink ? ' is-on' : ''}" data-ink="${c}" style="background:${c}" aria-label="Colour"></button>`).join('');
+        $('rlTextSize').value = String(o.size);
+    }
+
+    /* Hands on the objects.
+     *
+     * Three things happen on this layer and they share one pointer: dragging
+     * something to a place, turning and sizing it by its corner handle, and
+     * taking it off. The handles belong to whichever object is chosen, so
+     * nothing is covered by a control for something else. */
+    (function handleOverlays() {
+        const layer = $('rlLayer');
+        if (!layer) return;
+        let mode = null, at = null, from = null;
+
+        const pct = (e) => {
+            const r = layer.getBoundingClientRect();
+            return {
+                x: ((e.clientX - r.left) / Math.max(1, r.width)) * 100,
+                y: ((e.clientY - r.top) / Math.max(1, r.height)) * 100,
+                r,
+            };
+        };
+
+        layer.addEventListener('pointerdown', (e) => {
+            const grip = e.target.closest('[data-grip]');
             const el = e.target.closest('[data-ov]');
-            if (!el) return;
-            held = parseInt(el.getAttribute('data-ov'), 10);
-            stage.setPointerCapture(e.pointerId);
+            if (!el) { picked = null; drawOverlays(); return; }
+            at = parseInt(el.getAttribute('data-ov'), 10);
+            picked = at;
+            const o = overlays[at];
+            if (!o) return;
+            if (grip && grip.getAttribute('data-grip') === 'drop') {
+                overlays.splice(at, 1);
+                picked = null;
+                at = null;
+                $('rlTextEdit').hidden = true;
+                drawOverlays();
+                return;
+            }
+            mode = grip ? 'turn' : 'move';
+            const p = pct(e);
+            /* Turning: the angle and the distance from the object's own
+               middle, remembered, so both follow the finger from wherever it
+               happened to grab. */
+            from = {
+                a: Math.atan2(p.y - o.y, p.x - o.x),
+                d: Math.hypot((p.x - o.x) * p.r.width / 100, (p.y - o.y) * p.r.height / 100),
+                rot: o.rot || 0,
+                size: o.size,
+            };
+            layer.setPointerCapture(e.pointerId);
+            drawOverlays();
             e.preventDefault();
         });
-        stage.addEventListener('pointermove', (e) => {
-            if (held === null) return;
-            const r = stage.getBoundingClientRect();
-            const o = overlays[held];
+
+        layer.addEventListener('pointermove', (e) => {
+            if (mode === null || at === null) return;
+            const o = overlays[at];
             if (!o) return;
-            o.x = Math.max(4, Math.min(96, ((e.clientX - r.left) / r.width) * 100));
-            o.y = Math.max(6, Math.min(94, ((e.clientY - r.top) / r.height) * 100));
+            const p = pct(e);
+            if (mode === 'move') {
+                o.x = Math.max(3, Math.min(97, p.x));
+                o.y = Math.max(4, Math.min(96, p.y));
+            } else {
+                const a = Math.atan2(p.y - o.y, p.x - o.x);
+                const d = Math.hypot((p.x - o.x) * p.r.width / 100, (p.y - o.y) * p.r.height / 100);
+                o.rot = Math.round(from.rot + (a - from.a) * 180 / Math.PI);
+                o.size = Math.max(0.3, Math.min(4, from.size * (d / Math.max(8, from.d))));
+                if ($('rlTextEdit') && !$('rlTextEdit').hidden) $('rlTextSize').value = String(o.size);
+            }
             drawOverlays();
         });
-        ['pointerup', 'pointercancel'].forEach((ev) => stage.addEventListener(ev, () => { held = null; }));
-        // A tap on words opens them for editing again.
-        stage.addEventListener('click', (e) => {
-            const el = e.target.closest('.rl-ov-text');
-            if (el) openTextEditor(parseInt(el.getAttribute('data-ov'), 10));
+
+        ['pointerup', 'pointercancel'].forEach((ev) => layer.addEventListener(ev, () => { mode = null; }));
+
+        // A tap on what is already chosen opens it for editing.
+        layer.addEventListener('click', (e) => {
+            if (e.target.closest('[data-grip]')) return;
+            const el = e.target.closest('[data-ov]');
+            if (!el) return;
+            const i = parseInt(el.getAttribute('data-ov'), 10);
+            const o = overlays[i];
+            if (!o) return;
+            if (o.kind === 'text') openTextEditor(i);
+            else if (o.kind === 'shape') openShapeEditor(i);
         });
     })();
+
+    /* Placing the picture itself.
+     *
+     * Two fingers on the reel pinch it bigger or smaller and twist it round;
+     * the sliders in the Frame panel do the same for a mouse, which has no
+     * second finger. Whatever is left over takes the backdrop colour. */
+    (function placeFrame() {
+        const reel = $('rlReel');
+        if (!reel) return;
+        const touches = new Map();
+        let start = null;
+
+        const spread = () => {
+            const [a, b] = [...touches.values()];
+            return { d: Math.hypot(b.x - a.x, b.y - a.y), a: Math.atan2(b.y - a.y, b.x - a.x) };
+        };
+
+        reel.addEventListener('pointerdown', (e) => {
+            // A finger that came for an object is not placing the picture.
+            if (e.target.closest('[data-ov]')) return;
+            touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
+            if (touches.size === 2) {
+                const g = spread();
+                start = { d: g.d, a: g.a, scale: frame.scale, rot: frame.rotate };
+            }
+        });
+        reel.addEventListener('pointermove', (e) => {
+            if (!touches.has(e.pointerId)) return;
+            touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
+            if (touches.size !== 2 || !start) return;
+            const g = spread();
+            frame.scale = Math.max(0.4, Math.min(2, start.scale * (g.d / Math.max(20, start.d))));
+            frame.rotate = Math.max(-45, Math.min(45, Math.round(start.rot + (g.a - start.a) * 180 / Math.PI)));
+            paintFrame();
+            e.preventDefault();
+        });
+        ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => reel.addEventListener(ev, (e) => {
+            touches.delete(e.pointerId);
+            if (touches.size < 2) start = null;
+        }));
+    })();
+
+    /* The one place the frame is shown, so the preview and what is sent can
+       never disagree. */
+    function paintFrame() {
+        const shot = $('rlShot');
+        if (shot) shot.style.transform = `scale(${frame.scale}) rotate(${frame.rotate}deg)`;
+        const reel = $('rlReel');
+        if (reel) reel.style.background = frame.bg;
+        const sc = $('rlFrameScale'), rt = $('rlFrameRot');
+        if (sc) sc.value = String(frame.scale);
+        if (rt) rt.value = String(frame.rotate);
+        const scSay = $('rlFrameScaleSay'), rtSay = $('rlFrameRotSay');
+        if (scSay) scSay.textContent = Math.round(frame.scale * 100) + '%';
+        if (rtSay) rtSay.textContent = frame.rotate + '\u00b0';
+        const swatches = $('rlBackdrops');
+        if (swatches) {
+            swatches.querySelectorAll('[data-bg]').forEach((b) => {
+                b.classList.toggle('is-on', b.getAttribute('data-bg') === frame.bg);
+            });
+        }
+    }
+
+    function paintBackdrops() {
+        const host = $('rlBackdrops');
+        if (!host || host.childElementCount) return;
+        host.innerHTML = BACKDROPS.map((c) =>
+            `<button type="button" class="rl-swatch" data-bg="${c}" style="background:${c}" aria-label="Backdrop"></button>`).join('');
+    }
+
+    $('rlBackdrops')?.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-bg]');
+        if (!b) return;
+        frame.bg = b.getAttribute('data-bg');
+        paintFrame();
+    });
+    $('rlFrameScale')?.addEventListener('input', (e) => { frame.scale = parseFloat(e.target.value); paintFrame(); });
+    $('rlFrameRot')?.addEventListener('input', (e) => { frame.rotate = parseInt(e.target.value, 10); paintFrame(); });
+    $('rlFrameReset')?.addEventListener('click', () => { frame = { scale: 1, rotate: 0, bg: frame.bg }; paintFrame(); });
 
     /* Lift the sheet layer over the studio while a sheet of its own is open,
        and drop it again when that sheet closes. */
@@ -1116,6 +1541,115 @@
         e.target.value = '';
     });
 
+    /* Everything stuck on, drawn once at the size it will be posted at.
+     *
+     * The reel is 1080x1920; the editor showed it a few hundred pixels tall.
+     * Every object holds its place as a percentage and its size as a
+     * multiple, so both mean the same thing at either size — and this draws
+     * them with the very fonts the farmer picked, turned by the very angles
+     * they turned them to. */
+    const SHEET_W = 1080, SHEET_H = 1920;
+
+    async function overlaySheet() {
+        const live = overlays.filter((o) => o.kind !== 'text' || (o.text || '').trim() !== '');
+        if (!live.length) return null;
+
+        const c = document.createElement('canvas');
+        c.width = SHEET_W; c.height = SHEET_H;
+        const ctx = c.getContext('2d');
+
+        for (const o of live) {
+            ctx.save();
+            ctx.translate((o.x / 100) * SHEET_W, (o.y / 100) * SHEET_H);
+            ctx.rotate(((o.rot || 0) * Math.PI) / 180);
+
+            if (o.kind === 'text') {
+                // 4.2% of the height is what "size 1" looked like on screen.
+                const px = Math.round(SHEET_H * 0.042 * (o.size || 1));
+                const font = FONTS.find((f) => f.key === o.font) || FONTS[0];
+                ctx.font = font.draw.replace('%s', String(px));
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.shadowColor = 'rgba(0,0,0,.65)';
+                ctx.shadowBlur = px * 0.25;
+                ctx.shadowOffsetY = px * 0.04;
+                ctx.fillStyle = o.ink || '#ffffff';
+                // Wrapped the way the box wrapped it: at the reel's width.
+                const lines = wrapLine(ctx, (o.text || '').trim(), SHEET_W * 0.86);
+                const step = px * 1.18;
+                lines.forEach((line, i) => {
+                    ctx.fillText(line, 0, (i - (lines.length - 1) / 2) * step);
+                });
+            } else if (o.kind === 'shape') {
+                drawShape(ctx, o);
+            } else if (o.kind === 'image' && o.url) {
+                const img = await loadImage(o.url);
+                if (img) {
+                    // The same 8rem cap the preview draws it under, in the
+                    // reel's own units.
+                    const cap = SHEET_W * 0.42 * (o.size || 1);
+                    const k = Math.min(cap / img.width, cap / img.height);
+                    ctx.drawImage(img, (-img.width * k) / 2, (-img.height * k) / 2, img.width * k, img.height * k);
+                }
+            }
+            ctx.restore();
+        }
+
+        return await new Promise((ok) => c.toBlob(ok, 'image/png'));
+    }
+
+    function wrapLine(ctx, text, max) {
+        const words = text.split(/\s+/);
+        const out = [];
+        let line = '';
+        words.forEach((w) => {
+            const test = line ? line + ' ' + w : w;
+            if (ctx.measureText(test).width > max && line) { out.push(line); line = w; }
+            else line = test;
+        });
+        if (line) out.push(line);
+        return out.slice(0, 6);
+    }
+
+    function loadImage(url) {
+        return new Promise((ok) => {
+            const img = new Image();
+            img.onload = () => ok(img);
+            img.onerror = () => ok(null);
+            img.src = url;
+        });
+    }
+
+    /* The same shapes the SVG draws, in canvas terms. Kept beside each other
+       on purpose: if one changes, the other is right there. */
+    function drawShape(ctx, o) {
+        const k = (SHEET_W * 0.5 * (o.size || 1)) / SHAPE_BOX;   // box units -> reel pixels
+        ctx.scale(k, k);
+        ctx.translate(-SHAPE_BOX / 2, -SHAPE_BOX / 2);
+        ctx.strokeStyle = o.ink || '#ffd54a';
+        ctx.fillStyle = o.ink || '#ffd54a';
+        ctx.lineWidth = 6;
+        ctx.lineCap = 'round';
+        ctx.shadowColor = 'rgba(0,0,0,.55)';
+        ctx.shadowBlur = 6;
+        ctx.shadowOffsetY = 2;
+        if (o.shape === 'rect') {
+            ctx.beginPath();
+            if (ctx.roundRect) ctx.roundRect(14, 44, 172, 112, 10);
+            else ctx.rect(14, 44, 172, 112);
+            ctx.stroke();
+        } else if (o.shape === 'ellipse') {
+            ctx.beginPath();
+            ctx.ellipse(100, 100, 86, 58, 0, 0, Math.PI * 2);
+            ctx.stroke();
+        } else if (o.shape === 'line') {
+            ctx.beginPath(); ctx.moveTo(14, 100); ctx.lineTo(186, 100); ctx.stroke();
+        } else {
+            ctx.beginPath(); ctx.moveTo(16, 100); ctx.lineTo(160, 100); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(186, 100); ctx.lineTo(150, 78); ctx.lineTo(150, 122); ctx.closePath(); ctx.fill();
+        }
+    }
+
     /* A cover frame, drawn from the preview at the start of the window. */
     async function coverShot() {
         const v = $('rlPreview');
@@ -1144,20 +1678,21 @@
         fd.append('start', trimA.toFixed(2));
         fd.append('duration', Math.max(1, Math.round(trimB - trimA)));
         fd.append('look', look);
-        // The words, with their font, colour, size and where they were put.
-        // Sent as description rather than as pixels, so the encoder can burn
-        // them at the video's own resolution instead of the preview's.
+        // Where the picture was put, and what fills the rest of the reel.
+        fd.append('frame', JSON.stringify(frame));
+        /* Everything stuck on, as one drawn sheet. The words still travel as
+           description too — an encoder that cannot take a sheet can at least
+           burn the text — but the sheet is what gets used when it arrives. */
         fd.append('overlays', JSON.stringify(overlays
-            .filter((o) => o.kind === 'text' && o.text.trim() !== '')
+            .filter((o) => o.kind === 'text' && (o.text || '').trim() !== '')
             .map((o) => ({ text: o.text.trim(), font: o.font, ink: o.ink, size: o.size, x: o.x, y: o.y }))));
-        // A stuck-on picture goes as a file, one for now.
-        const sticker = overlays.find((o) => o.kind === 'image' && o.file);
-        if (sticker) {
-            fd.append('sticker', sticker.file);
-            fd.append('stickerAt', JSON.stringify({ x: sticker.x, y: sticker.y, size: sticker.size }));
-        }
+        const sheet = await overlaySheet();
+        if (sheet) fd.append('overlaySheet', sheet, 'sheet.png');
         if (audioFile) fd.append('audio', audioFile);
         if (audioName) fd.append('audioName', audioName);
+        // How loud each sound is. Music no longer throws the original away.
+        fd.append('musicVolume', String(mix.music));
+        fd.append('originalVolume', String(mix.own));
         // A cover taken here, from the frame the farmer left it on. The server
         // makes its own when it can; this is what a reel shows when it could
         // not — and a reel with no picture in the rail is a black tile.

@@ -49,6 +49,16 @@ class ReelController extends Controller
             'overlays' => 'nullable|string|max:4000',
             'sticker' => 'nullable|image|max:8192',
             'stickerAt' => 'nullable|string|max:200',
+            /* Everything stuck on, as one transparent sheet at the reel's own
+             * size, drawn by the browser that just showed it. What was seen is
+             * what gets burned — the encoder lays it over the frame rather
+             * than trying to draw the same picture a second way. */
+            'overlaySheet' => 'nullable|image|max:8192',
+            // Where the picture sits inside the reel, and what fills the rest.
+            'frame' => 'nullable|string|max:200',
+            // Two sounds now, not one replacing the other.
+            'musicVolume' => 'nullable|numeric|min:0|max:2',
+            'originalVolume' => 'nullable|numeric|min:0|max:2',
             // A cover taken in the browser, used when the server cannot make
             // one of its own.
             'poster' => 'nullable|image|max:8192',
@@ -61,8 +71,12 @@ class ReelController extends Controller
                 'look' => $data['look'] ?? 'none',
                 'caption' => $data['overlay'] ?? '',
                 'overlays' => json_decode((string) ($data['overlays'] ?? '[]'), true) ?: [],
+                'overlaySheet' => $request->file('overlaySheet'),
+                'frame' => json_decode((string) ($data['frame'] ?? '{}'), true) ?: [],
                 'audio' => $request->file('audio'),
                 'audioPath' => $data['audioName'] ?? null,
+                'musicVolume' => (float) ($data['musicVolume'] ?? 1.0),
+                'originalVolume' => (float) ($data['originalVolume'] ?? 0.0),
             ]);
         } catch (\Throwable $e) {
             return $this->json(false, $e->getMessage() ?: 'That video could not be prepared.', [], 422);

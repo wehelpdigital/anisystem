@@ -74,6 +74,11 @@
         // The full-screen player is the app's own; a browser that has taken
         // the video into ITS full screen would fight us for it.
         if (video.closest('.cvw')) return;
+        /* Some videos are not clips in a bubble. The story studio's preview
+           is a surface being edited — wrapping it in a span breaks the frame
+           the editor measures against — and a story already fills the screen,
+           so a button offering to make it bigger is noise. */
+        if (video.hasAttribute('data-cv-skip') || video.closest('[data-cv-skip]')) return;
         video.dataset.cvDressed = '1';
 
         const holder = document.createElement('span');
