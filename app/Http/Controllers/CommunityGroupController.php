@@ -371,9 +371,31 @@ class CommunityGroupController extends Controller
             'deleteStatus' => 1,
         ]);
 
-        // @mention notifications for anyone tagged in the topic body.
+        /* The room hears about a new topic.
+         *
+         * This is the event a discussion exists for and it was the only one
+         * that told nobody: members found out by coming back and looking.
+         * Everyone in the room except whoever wrote it. */
         $actor = Auth::user();
-        $url = route('community.groups.show', ['id' => $group->id]);
+        $said = Str::limit(trim(strip_tags((string) ($post->title ?: $post->body))) ?: 'Started a topic.', 90);
+        $topicUrl = route('community.groups.show', ['id' => $group->id]) . '#post-' . $post->id;
+        $roomMembers = CommunityGroupMember::active()
+            ->where('groupId', $group->id)
+            ->where('userId', '!=', (int) Auth::id())
+            ->pluck('userId');
+        foreach ($roomMembers as $memberId) {
+            $this->notifications->notify(
+                userId: (int) $memberId,
+                type: 'group',
+                title: ($actor->full_name ?: 'A member') . ' posted in ' . $group->name,
+                body: $said,
+                url: $topicUrl,
+                actorUserId: (int) Auth::id(),
+            );
+        }
+
+        // @mention notifications for anyone tagged in the topic body.
+        $url = $topicUrl;
         foreach (\App\Support\CommunityText::mentionedUserIds($post->body) as $mid) {
             if ($mid === (int) Auth::id()) {
                 continue;
@@ -445,7 +467,10 @@ class CommunityGroupController extends Controller
         // author — each once, never the actor.
         $actor = Auth::user();
         $preview = Str::limit(trim(strip_tags((string) $request->input('body'))) ?: 'Shared a photo.', 90);
-        $url = route('community.groups.show', ['id' => $post->groupId]);
+        // The topic, not the room: #post-N is what the card is waiting to be
+        // scrolled to, and being dropped at the top of a busy room is the
+        // same as not being told which topic it was.
+        $url = route('community.groups.show', ['id' => $post->groupId]) . '#post-' . $post->id;
         $targets = [];
         if ($parent && (int) $parent->userId !== (int) Auth::id()) {
             $targets[(int) $parent->userId] = ' replied to your comment';

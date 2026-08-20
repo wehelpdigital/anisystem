@@ -15,10 +15,21 @@
     {{-- The id is what a notification's #post-N lands on. Without it the
          reader is dropped at the top of the group to go and find the thing
          they were told about. --}}
-    <article class="card p-3 sm:p-4 mb-4 sm:mb-5 group-post" id="post-{{ $post->id }}" data-post-id="{{ $post->id }}">
+    {{-- fp-card and a hue per topic: the same coloured edge the wall's posts
+         wear, so a column of topics has a rhythm and the eye can see where
+         one ends and the next begins. --}}
+    <article class="card p-3 sm:p-4 mb-4 sm:mb-5 group-post fp-card fp-hue-{{ $post->id % 6 }}"
+             id="post-{{ $post->id }}" data-post-id="{{ $post->id }}"
+             data-view="topic:{{ $post->id }}">
         <header class="flex items-start gap-3">
-            @include('community.partials.avatar-status', ['user' => $post->author, 'size' => 'avatar-md'])
+            {{-- cloud => false: what is on their mind goes above the name,
+                 in the flow. Floating, it hung over the card's top edge and
+                 was cut in half by the coloured strip. --}}
+            @include('community.partials.avatar-status', ['user' => $post->author, 'size' => 'avatar-md', 'cloud' => false])
             <div class="min-w-0 grow">
+                @if (filled(optional($post->author)->statusBubble))
+                    <span class="fp-mind" title="{{ $post->author->statusBubble }}">💭 {{ \Illuminate\Support\Str::limit($post->author->statusBubble, 48) }}</span>
+                @endif
                 <p class="text-sm leading-tight">
                     @if ($post->author)
                         <a href="{{ route('community.connect.profile', ['userId' => $post->author->id]) }}" class="font-semibold text-gray-900 hover:text-brand-700">{{ $author->full_name }}</a>
@@ -64,6 +75,20 @@
         </div>
 
         @include('community.partials.react-bar', ['type' => 'post', 'id' => $post->id, 'summary' => $pSummary])
+
+        {{-- The way into the conversation, and how much of one there is.
+             Both open the thread; the replies themselves are in there. --}}
+        <div class="topic-acts">
+            <button type="button" class="topic-act js-view-all-replies" data-post-id="{{ $post->id }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8M8 14h5m-8 6l3.2-3H17a3 3 0 003-3V7a3 3 0 00-3-3H7a3 3 0 00-3 3v13z"/></svg>
+                <span><span data-reply-count="{{ $post->id }}">{{ $replyCount }}</span> {{ \Illuminate\Support\Str::plural('comment', $replyCount) }}</span>
+            </button>
+            <button type="button" class="topic-act js-view-all-replies" data-post-id="{{ $post->id }}" data-write="1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.4-9.4a2 2 0 112.8 2.8L11 15l-4 1 1-4 8.6-8.4z"/></svg>
+                <span>Write a comment</span>
+            </button>
+            @include('community.partials.views-count', ['kind' => 'topic', 'id' => $post->id, 'count' => $post->viewCount ?? 0])
+        </div>
 
         <div class="post-thread">
             @php

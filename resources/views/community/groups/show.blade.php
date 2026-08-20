@@ -162,6 +162,37 @@
         -webkit-overflow-scrolling:touch; }
     /* Inside the modal the post is the page: no card chrome, nothing folded. */
     .thread-modal-body .group-post { border:0; box-shadow:none; padding:1.4rem 0 0; margin:0; background:transparent; }
+    .thread-modal-body .group-post::before { display:none; }   /* the edge belongs to the card, not the sheet */
+
+    /* The answers and the box to write one belong to the thread, and the
+       thread is the modal. In the room the topic is a topic: what was
+       said, and how many have answered it. */
+    .group-post .post-thread, .group-post .post-reply-form { display:none; }
+    .thread-modal-body .group-post .post-thread { display:block; }
+    .thread-modal-body .group-post .post-reply-form { display:flex; }
+    .thread-modal-body .topic-acts { display:none; }
+
+    /* The row under a topic: the same shape the wall's posts carry. */
+    .topic-acts { display:flex; align-items:center; gap:.15rem; margin-top:.5rem;
+        padding-top:.5rem; border-top:1px solid var(--color-gray-100); }
+    .topic-act { display:inline-flex; align-items:center; gap:.35rem;
+        border:0; background:transparent; cursor:pointer; padding:.4rem .55rem;
+        border-radius:.6rem; font-size:.78rem; font-weight:700; color:var(--color-gray-500);
+        transition:background var(--dur) var(--ease-house), color var(--dur) var(--ease-house); }
+    .topic-act:hover { background:var(--color-gray-100); color:var(--color-brand-700); }
+    .topic-act svg { width:1.05rem; height:1.05rem; }
+    .topic-acts .v-eye { margin-left:auto; font-size:.75rem; font-weight:700; color:var(--color-gray-400); padding-right:.35rem; }
+    @media (prefers-reduced-motion: reduce) { .topic-act { transition:none; } }
+
+    /* On a phone the room is the screen, the same way the wall is. */
+    @media (max-width: 640px) {
+        .group-post {
+            border-radius:0; border-left:0; border-right:0;
+            margin-left:calc(var(--plaza-gutter, 1rem) * -1);
+            margin-right:calc(var(--plaza-gutter, 1rem) * -1);
+        }
+        .thread-modal-body .group-post { margin-left:0; margin-right:0; }
+    }
     .thread-modal-body .post-replies.is-collapsed > .group-reply { display:block; }
     .thread-modal-body .post-thread-more, .thread-modal-body .post-readmore { display:none; }
     .thread-modal-body .group-post-body.is-clamped { -webkit-line-clamp:unset; display:block; overflow:visible; }
@@ -732,6 +763,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.success) {
                 if (parentId) {
                     // The nested reply lands where the temporary form was.
+                    bumpReplyCount(postId, 1);
                     form.insertAdjacentHTML('beforebegin', data.data.html);
                     form.previousElementSibling?.classList.add('post-enter');
                     form.remove();
@@ -739,6 +771,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const replies = form.closest('.group-post').querySelector('.post-replies');
                     replies.insertAdjacentHTML('beforeend', data.data.html);
                     replies.lastElementChild?.classList.add('post-enter');
+                    bumpReplyCount(postId, 1);
                     input.value = '';
                     if (fileInput) fileInput.value = '';
                     window.plazaSetChip(form, null);
@@ -748,6 +781,17 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (_) { toast('Network error — try again.', 'error'); }
         finally { input.disabled = false; window.plazaCommentFx?.stopSending(sendBtn); }
     });
+
+    /* The card says how many have answered; the thread is where answering
+       happens, so the number has to follow it back out. */
+    function bumpReplyCount(postId, by) {
+        const el = document.querySelector(`[data-reply-count="${postId}"]`);
+        if (!el) return;
+        const n = Math.max(0, parseInt(el.textContent || '0', 10) + by);
+        el.textContent = String(n);
+        const word = el.nextSibling;
+        if (word && word.nodeType === 3) word.textContent = n === 1 ? ' comment' : ' comments';
+    }
 
     /* Reply to a reply: a small form slides into the thread. */
     const SVG_R_PHOTO = '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>';
@@ -1149,6 +1193,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const btn = e.target.closest('.js-view-all-replies, .post-readmore');
         if (!btn) return;
         openThread(btn.closest('.group-post'));
+        // "Write a comment" lands on the box, not at the top of the thread.
+        if (btn.hasAttribute('data-write')) {
+            const box = threadBody.querySelector('.post-reply-form input[type="text"]');
+            if (box) {
+                box.focus({ preventScroll: true });
+                box.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+            }
+        }
     });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && threadPost) closeThread(); });
 
