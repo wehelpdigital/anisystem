@@ -140,6 +140,120 @@ class ReelController extends Controller
         return $this->json(true, 'Music.', ['items' => $items]);
     }
 
+    /**
+     * Search openly-licensed music.
+     *
+     * Openverse indexes CC-licensed audio across sources and answers without
+     * a key or an account, which is what makes it usable here: nobody has to
+     * register the farm with anybody to put a tune under a reel.
+     *
+     * Every track carries its licence and its creator back with it, because
+     * "free" here means "free under a licence", and the two are not the same
+     * thing. What the reel does with that — credit in the caption, or
+     * nothing — is the owner's call, but the app has to say it.
+     */
+    public function musicSearch(Request $request)
+    {
+        $q = trim((string) $request->query('q', ''));
+
+        try {
+            $res = \Illuminate\Support\Facades\Http::timeout(12)
+                ->withHeaders(['User-Agent' => 'AniSystem/1.0 (farm management; reels)'])
+                ->get('https://api.openverse.org/v1/audio/', array_filter([
+                    'q' => $q !== '' ? $q : 'acoustic instrumental',
+                    // Asked for wide and narrowed below. The API's own
+                    // `license` filter is for authenticated callers — sent
+                    // anonymously it answers 401, which is why this search
+                    // reported itself unreachable when it was working fine.
+                    // Twenty is the ceiling for a caller without a key:
+                    // ask for more and the answer is 401, which reads as
+                    // "unreachable" and is really "not allowed that much".
+                    'page_size' => 20,
+                    'peaks' => 'false',
+                ]));
+        } catch (\Throwable $e) {
+            return $this->json(false, 'The music search could not be reached just now.', ['items' => []]);
+        }
+
+        if (! $res->successful()) {
+            return $this->json(false, 'The music search could not be reached just now.', ['items' => []]);
+        }
+
+        // Only what can be used without asking anybody: no non-commercial and
+        // no no-derivatives puzzles for a farmer to solve.
+        $usable = ['cc0', 'by', 'by-sa', 'pdm'];
+
+        $items = collect($res->json('results') ?? [])
+            ->filter(fn ($t) => in_array(strtolower((string) ($t['license'] ?? '')), $usable, true))
+            ->map(function ($t) {
+                // Openverse hands back either a direct file or a page to
+                // fetch it from; only a direct file is any use to an encoder.
+                $url = $t['url'] ?? null;
+
+                return $url ? [
+                    'id' => (string) ($t['id'] ?? ''),
+                    'title' => \Illuminate\Support\Str::limit((string) ($t['title'] ?? 'Untitled'), 60),
+                    'by' => (string) ($t['creator'] ?? 'Unknown'),
+                    'licence' => strtoupper((string) ($t['license'] ?? '')) . ' ' . (string) ($t['license_version'] ?? ''),
+                    'seconds' => (int) round(((int) ($t['duration'] ?? 0)) / 1000),
+                    'url' => $url,
+                    'source' => (string) ($t['source'] ?? 'openverse'),
+                ] : null;
+            })
+            ->filter()
+            ->take(20)
+            ->values()
+            ->all();
+
+        return $this->json(true, 'Music.', ['items' => $items]);
+    }
+
+    /**
+     * Fetch a chosen track and keep it, so the encoder has a local file.
+     *
+     * The browser cannot hand a remote URL to ffmpeg, and ffmpeg should not
+     * be reaching across the internet mid-encode either — a slow host would
+     * hold a farmer's upload open. Pulled once, stored, then used like any
+     * other file.
+     */
+    public function musicGrab(Request $request)
+    {
+        $url = (string) $request->input('url', '');
+        if (! preg_match('~^https://~i', $url)) {
+            return $this->json(false, 'That track cannot be fetched.', [], 422);
+        }
+
+        try {
+            $res = \Illuminate\Support\Facades\Http::timeout(25)
+                ->withHeaders(['User-Agent' => 'AniSystem/1.0 (farm management; reels)'])
+                ->get($url);
+            if (! $res->successful()) {
+                throw new \RuntimeException('http ' . $res->status());
+            }
+            $bytes = $res->body();
+        } catch (\Throwable $e) {
+            return $this->json(false, 'That track could not be fetched.', [], 422);
+        }
+
+        // A tune under a minute of video does not run to tens of megabytes.
+        if (strlen($bytes) > 25 * 1024 * 1024) {
+            return $this->json(false, 'That track is too large.', [], 422);
+        }
+
+        $ext = match (true) {
+            str_contains(strtolower($url), '.wav') => 'wav',
+            str_contains(strtolower($url), '.ogg') => 'ogg',
+            str_contains(strtolower($url), '.m4a') => 'm4a',
+            default => 'mp3',
+        };
+        $name = 'openverse-' . \Illuminate\Support\Str::random(24) . '.' . $ext;
+        $dir = storage_path('app/public/reel-music');
+        File::ensureDirectoryExists($dir);
+        File::put($dir . DIRECTORY_SEPARATOR . $name, $bytes);
+
+        return $this->json(true, 'Track ready.', ['name' => $name]);
+    }
+
     private function audioLabel(array $data): ?string
     {
         if (filled($data['audioName'] ?? null)) {

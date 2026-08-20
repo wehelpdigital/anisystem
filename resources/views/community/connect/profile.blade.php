@@ -310,20 +310,23 @@
         transition:transform .15s var(--ease-house,cubic-bezier(.22,1,.36,1)), box-shadow .15s ease; }
     .status-bubble-text { display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
         font-size:.7rem; font-weight:600; color:#374151; }
+    /* The same tail the wall's cloud wears: a square of the bubble turned on
+       its corner, inheriting fill and border. The border-triangle it replaces
+       carried a drop-shadow filter, and the two together frayed into stray
+       pixels under the bubble. */
     .status-bubble::after { content:''; position:absolute; left:.9rem; bottom:-.3rem;
-        width:0; height:0; border-left:.3rem solid transparent; border-right:.3rem solid transparent;
-        border-top:.32rem solid #fff; filter:drop-shadow(0 2px 1px rgba(0,0,0,.05)); }
+        width:.55rem; height:.55rem; transform:rotate(45deg);
+        background:inherit; border:inherit; border-top:0; border-left:0;
+        border-bottom-right-radius:.12rem; }
     .status-avatar[data-self="1"] .status-bubble { cursor:pointer; }
     .status-avatar[data-self="1"] .status-bubble:hover { transform:translateY(-1px); box-shadow:0 6px 16px rgba(0,0,0,.18); }
     /* Empty own-profile state: a noticeable brand-tinted invite. */
     .status-avatar[data-self="1"] .status-bubble.is-empty { background:var(--color-brand-50);
         border-color:var(--color-brand-300); border-style:dashed; }
     .status-avatar[data-self="1"] .status-bubble.is-empty .status-bubble-text { color:var(--color-brand-700); font-weight:700; }
-    .status-avatar[data-self="1"] .status-bubble.is-empty::after { border-top-color:var(--color-brand-50); }
     .status-avatar[data-self="0"] .status-bubble.is-empty { display:none; }
     html.dark .status-bubble { background:#232a1c; border-color:#3a4a2c; }
     html.dark .status-bubble-text { color:#dbe6cf; }
-    html.dark .status-bubble::after { border-top-color:#232a1c; }
     html.dark .status-avatar[data-self="1"] .status-bubble.is-empty { background:#1c2a12; border-color:#3a5a1c; }
     html.dark .status-avatar[data-self="1"] .status-bubble.is-empty .status-bubble-text { color:#a7d977; }
     html.dark .status-avatar[data-self="1"] .status-bubble.is-empty::after { border-top-color:#1c2a12; }

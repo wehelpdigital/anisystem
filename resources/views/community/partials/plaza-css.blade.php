@@ -587,12 +587,20 @@
     .status-cloud-text { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         text-align: left;
         font-size: .62rem; font-weight: 600; line-height: 1.3; color: #374151; }
-    .status-cloud::after { content: ''; position: absolute; left: .85rem; bottom: -.3rem;
-        width: 0; height: 0; border-left: .3rem solid transparent; border-right: .3rem solid transparent;
-        border-top: .32rem solid #fff; filter: drop-shadow(0 2px 1px rgb(0 0 0 / .06)); }
+    /* The tail: a little square of the bubble, turned on its corner.
+     *
+     * It was a border-triangle carrying a drop-shadow filter, and that pair
+     * frays: the filter haloes the triangle's transparent side borders, and
+     * its flat fill met the bubble's own 1px border in a seam — together,
+     * a scatter of stray pixels under the cloud. This inherits the bubble's
+     * fill and border instead, so it is the same object in every theme and
+     * every variant, and there is no filter to fringe. */
+    .status-cloud::after { content: ''; position: absolute; left: .9rem; bottom: -.3rem;
+        width: .55rem; height: .55rem; transform: rotate(45deg);
+        background: inherit; border: inherit; border-top: 0; border-left: 0;
+        border-bottom-right-radius: .12rem; }
     html.dark .status-cloud { background: #232a1c; border-color: #3a4a2c; }
     html.dark .status-cloud-text { color: #dbe6cf; }
-    html.dark .status-cloud::after { border-top-color: #232a1c; }
 
     /* --- Online presence dot on avatars --- */
     .avatar-online-wrap { position: relative; display: inline-block; line-height: 0; vertical-align: middle; }
@@ -679,7 +687,6 @@
     .comp-me .status-cloud.is-empty { background: var(--color-brand-50);
         border-color: var(--color-brand-300); border-style: dashed; }
     .comp-me .status-cloud.is-empty .status-cloud-text { color: var(--color-brand-700); font-weight: 700; }
-    .comp-me .status-cloud.is-empty::after { border-top-color: var(--color-brand-50); }
     /* Room for the cloud to sit above the avatar without meeting the card. */
     .comp-row { padding-top: 1.35rem; }
     /* A box you can see yourself writing in — and one the invitation fits

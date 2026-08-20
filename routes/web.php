@@ -439,6 +439,9 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/community/reels', [App\Http\Controllers\ReelController::class, 'store'])->name('community.reels.store');
     Route::get('/app/community/reels', [App\Http\Controllers\ReelController::class, 'feed'])->name('community.reels.feed');
     Route::get('/app/community/reel-music', [App\Http\Controllers\ReelController::class, 'music'])->name('community.reels.music');
+    // Openly-licensed music, searched and fetched through us (see the controller).
+    Route::get('/app/community/reel-music-search', [App\Http\Controllers\ReelController::class, 'musicSearch'])->name('community.reels.music.search');
+    Route::post('/app/community/reel-music-grab', [App\Http\Controllers\ReelController::class, 'musicGrab'])->name('community.reels.music.grab');
     Route::get('/app/community/suggestions', [App\Http\Controllers\CommunitySocialController::class, 'suggestions'])->name('community.suggestions');
     Route::get('/app/community/saved', [App\Http\Controllers\CommunitySocialController::class, 'saved'])->name('community.saved');
     Route::post('/app/community/share/{postId}/wall', [App\Http\Controllers\CommunitySocialController::class, 'shareToWall'])->whereNumber('postId')->name('community.share.wall');

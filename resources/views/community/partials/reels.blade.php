@@ -104,8 +104,16 @@
         <h3 class="sheet-title">Music</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
-    <div class="sheet-body space-y-1" id="rlMusicList">
-        <p class="text-sm text-gray-400 text-center py-4">Loading…</p>
+    <div class="sheet-body" id="rlMusicBody">
+        {{-- Openly-licensed music, searched live. The library folder still
+             comes first when the owner has put anything in it. --}}
+        <form class="rl-find" id="rlMusicFind" onsubmit="return false">
+            <input type="search" id="rlMusicQ" class="form-input" placeholder="Search free music — kundiman, acoustic, drums…" autocomplete="off">
+            <button type="submit" class="btn btn-primary btn-sm shrink-0">Search</button>
+        </form>
+        <div id="rlMusicList" class="space-y-1"></div>
+        <p class="rl-find-head">Free to use, from Openverse</p>
+        <div id="rlMusicFound" class="space-y-1"></div>
     </div>
 </div>
 
@@ -162,6 +170,12 @@
     .rl-side b { font-size: .62rem; font-weight: 800; }
 
     /* -------------------------------------------------------- the studio */
+    /* A sheet is born at z-50 and this studio stands at z-335, so the music
+       picker opened underneath it and looked like a button that did nothing.
+       The layer is lifted for exactly as long as the studio is borrowing it
+       — the messenger's own trick, aimed here. */
+    html.rl-picking .sheet-backdrop.is-open { z-index: 336; }
+    html.rl-picking #rlMusicSheet, html.rl-picking #smMediaPickerSheet { z-index: 337; }
     .rl-studio { position: fixed; inset: 0; z-index: 335; display: flex; flex-direction: column;
         background: #0b0f0a; color: #fff;
         padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
@@ -191,9 +205,13 @@
 
     .rl-edit { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
     .rl-edit.hidden { display: none; }
-    .rl-stage { position: relative; flex: 1 1 auto; min-height: 0; display: flex; align-items: center;
-        justify-content: center; background: #000; }
-    .rl-stage video { max-width: 100%; max-height: 100%; aspect-ratio: 9 / 16; object-fit: cover; background: #000; }
+    .rl-stage { position: relative; flex: 1 1 auto; min-height: 0; overflow: hidden; display: flex;
+        align-items: center; justify-content: center; background: #000; }
+    /* Height governs, width follows. Sized the other way round — 100% width
+       at 9:16 — a phone-shaped clip wanted to be taller than the screen, so
+       it overflowed the stage and stood on top of the controls below it. */
+    .rl-stage video { height: 100%; width: auto; max-width: 100%; aspect-ratio: 9 / 16;
+        object-fit: cover; background: #000; }
     .rl-overlay-text { position: absolute; left: 0; right: 0; bottom: 12%; text-align: center; padding: 0 1rem;
         font-weight: 800; font-size: 1rem; color: #fff; pointer-events: none; }
     .rl-overlay-text span { background: rgb(0 0 0 / .45); padding: .25rem .5rem; border-radius: .3rem; }
@@ -208,6 +226,32 @@
         background: rgb(255 255 255 / .06); color: rgb(255 255 255 / .75); font-size: .74rem;
         font-weight: 700; cursor: pointer; }
     .rl-look.is-on { background: #fff; color: #111; border-color: #fff; }
+    /* The music sheet's own rows. They wore .ai-attach-opt, which is declared
+       inside the AI module's page and nowhere else, so here they arrived as
+       bare markup. */
+    .rl-find { display: flex; gap: .5rem; align-items: center; margin-bottom: .6rem; }
+    .rl-find-head { margin: .8rem 0 .35rem; font-size: .68rem; font-weight: 800; letter-spacing: .04em;
+        text-transform: uppercase; color: var(--color-gray-400); }
+    .rl-opt { display: flex; align-items: center; gap: .65rem; width: 100%; text-align: left;
+        padding: .55rem .6rem; border-radius: .7rem; background: var(--color-gray-50);
+        border: 1px solid transparent; cursor: pointer;
+        transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .rl-opt:hover { background: var(--color-white); border-color: var(--color-brand-200); }
+    .rl-opt-ic { flex: none; width: 2.1rem; height: 2.1rem; border-radius: .6rem; display: flex;
+        align-items: center; justify-content: center; background: var(--color-brand-50); font-size: .95rem; }
+    .rl-opt-txt { display: flex; flex-direction: column; min-width: 0; flex: 1 1 auto; }
+    .rl-opt-txt b { font-size: .82rem; font-weight: 700; color: var(--color-gray-900); line-height: 1.25;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rl-opt-txt i { font-style: normal; font-size: .68rem; color: var(--color-gray-500);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rl-opt-lic { flex: none; font-size: .6rem; font-weight: 800; letter-spacing: .02em;
+        padding: .1rem .35rem; border-radius: 999px; background: var(--color-gray-200); color: var(--color-gray-600); }
+    html.dark .rl-opt { background: rgb(255 255 255 / .04); }
+    html.dark .rl-opt:hover { background: rgb(255 255 255 / .08); }
+    html.dark .rl-opt-txt b { color: #e8efe1; }
+    html.dark .rl-opt-lic { background: rgb(255 255 255 / .1); color: #cdd8c0; }
+    @media (prefers-reduced-motion: reduce) { .rl-opt { transition: none; } }
+
     .rl-music { display: flex; align-items: center; gap: .5rem; padding: .55rem .7rem; border-radius: .7rem;
         border: 1px solid rgb(255 255 255 / .16); background: rgb(255 255 255 / .06); color: #fff;
         font-size: .82rem; font-weight: 700; cursor: pointer; }
@@ -243,6 +287,8 @@
         feed: @json(route('community.reels.feed')),
         store: @json(route('community.reels.store')),
         music: @json(route('community.reels.music')),
+        musicSearch: @json(route('community.reels.music.search')),
+        musicGrab: @json(route('community.reels.music.grab')),
     };
     const LOOKS = ['none', 'warm', 'cool', 'bright', 'punch', 'mono', 'faded'];
     const MAX = 60;
@@ -395,6 +441,7 @@
 
     $('rlFromGallery')?.addEventListener('click', () => {
         if (typeof window.smPickMedia !== 'function') { window.toast?.('The gallery is not available here.', 'error'); return; }
+        liftSheets(true);   // the picker is a sheet too, and this studio is above sheets
         window.smPickMedia({
             allSchedules: true,
             kinds: 'video',
@@ -468,7 +515,18 @@
         $('rlOverlayText').innerHTML = t ? '<span>' + esc(t) + '</span>' : '';
     });
 
+    /* Lift the sheet layer over the studio while a sheet of its own is open,
+       and drop it again when that sheet closes. */
+    function liftSheets(on) {
+        document.documentElement.classList.toggle('rl-picking', !!on);
+    }
+    document.addEventListener('sm:sheet-closed', (e) => {
+        const id = e.detail && e.detail.id;
+        if (!id || id === 'rlMusicSheet' || id === 'smMediaPickerSheet') setTimeout(() => liftSheets(false), 0);
+    });
+
     $('rlMusicBtn')?.addEventListener('click', async () => {
+        liftSheets(true);
         window.openSheet?.('rlMusicSheet');
         const list = $('rlMusicList');
         list.innerHTML = '<p class="text-sm text-gray-400 text-center py-4">Loading…</p>';
@@ -477,13 +535,75 @@
             const r = await fetch(URLS.music, { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
             items = ((await r.json()).data || {}).items || [];
         } catch (_) {}
-        list.innerHTML = '<button type="button" class="ai-attach-opt" data-rl-own>'
-            + '<span class="ic">📱</span><span>Sound from this phone<span class="sub">Pick an audio file</span></span></button>'
-            + '<button type="button" class="ai-attach-opt" data-rl-nomusic>'
-            + '<span class="ic">🔇</span><span>Keep the original sound</span></button>'
-            + items.map((m) => `<button type="button" class="ai-attach-opt" data-rl-track="${esc(m.name)}">`
-                + `<span class="ic">🎵</span><span>${esc(m.title)}</span></button>`).join('')
-            + (items.length ? '' : '<p class="text-xs text-gray-400 px-2 py-3">No tracks have been added to the library yet.</p>');
+        list.innerHTML = row('📱', 'Sound from this phone', 'Pick an audio file off this device', 'data-rl-own')
+            + row('🔇', 'Keep the original sound', 'Whatever the camera heard', 'data-rl-nomusic')
+            + items.map((m) => row('🎵', m.title, 'From your library', `data-rl-track="${esc(m.name)}"`)).join('');
+        // And what the world has to offer, on the first open.
+        findMusic('');
+    });
+
+    /* One row shape for every kind of choice in this sheet. */
+    function row(ic, title, sub, attrs, lic) {
+        return `<button type="button" class="rl-opt" ${attrs}>`
+            + `<span class="rl-opt-ic">${ic}</span>`
+            + `<span class="rl-opt-txt"><b>${esc(title)}</b><i>${esc(sub || '')}</i></span>`
+            + (lic ? `<span class="rl-opt-lic">${esc(lic)}</span>` : '')
+            + '</button>';
+    }
+
+    /* Openly-licensed music, searched through our own server (see the
+       controller for why). Every result carries its licence, because free
+       here means "free under a licence" and the two are not the same. */
+    let findingMusic = false;
+    async function findMusic(q) {
+        if (findingMusic) return;
+        findingMusic = true;
+        const found = $('rlMusicFound');
+        if (found) found.innerHTML = '<p class="text-xs text-gray-400 px-1 py-2">Looking…</p>';
+        try {
+            const r = await fetch(URLS.musicSearch + '?q=' + encodeURIComponent(q || ''), {
+                headers: { Accept: 'application/json' }, credentials: 'same-origin',
+            });
+            const d = (await r.json()).data || {};
+            const tracks = d.items || [];
+            if (found) {
+                found.innerHTML = tracks.length
+                    ? tracks.map((t) => row('🎼', t.title,
+                        (t.by ? t.by + ' · ' : '') + (t.seconds ? t.seconds + 's' : ''),
+                        `data-rl-web="${esc(t.url)}" data-rl-web-title="${esc(t.title)}"`, t.licence)).join('')
+                    : '<p class="text-xs text-gray-400 px-1 py-2">Nothing found for that. Try another word.</p>';
+            }
+        } catch (_) {
+            if (found) found.innerHTML = '<p class="text-xs text-gray-400 px-1 py-2">The music search could not be reached.</p>';
+        } finally { findingMusic = false; }
+    }
+    $('rlMusicFind')?.addEventListener('submit', () => findMusic($('rlMusicQ').value.trim()));
+
+    /* A track from the web has to be fetched before it can be encoded; the
+       server keeps it and hands back a name the encoder already understands. */
+    document.addEventListener('click', async (e) => {
+        const web = e.target.closest('[data-rl-web]');
+        if (!web || web.dataset.busy) return;
+        web.dataset.busy = '1';
+        const was = web.innerHTML;
+        web.innerHTML = '<span class="rl-opt-ic">⏳</span><span class="rl-opt-txt"><b>Fetching…</b></span>';
+        try {
+            const r = await fetch(URLS.musicGrab, {
+                method: 'POST',
+                headers: { 'X-CSRF-TOKEN': csrf(), Accept: 'application/json', 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify({ url: web.getAttribute('data-rl-web') }),
+            });
+            const j = await r.json();
+            if (!j.success) throw new Error(j.message || 'That track could not be fetched.');
+            audioFile = null;
+            audioName = j.data.name;
+            $('rlMusicName').textContent = web.getAttribute('data-rl-web-title') || 'Music added';
+            window.closeSheet?.('rlMusicSheet');
+        } catch (err) {
+            window.toast?.(err.message, 'error');
+            web.innerHTML = was;
+        } finally { delete web.dataset.busy; }
     });
 
     document.addEventListener('click', (e) => {
