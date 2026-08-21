@@ -101,7 +101,8 @@
     .team-float { position: fixed; right: 1rem; bottom: 5.5rem; z-index: 61; }
     .team-float.has-ai { bottom: 9.5rem; }
     .team-float.team-float-off { display: none; }
-    @media (min-width: 768px) {
+    /* 1024, where the tab bar goes — below that both buttons clear it. */
+    @media (min-width: 1024px) {
         .team-float { right: 1.25rem; bottom: 1.25rem; }
         .team-float.has-ai { bottom: 5.75rem; }
     }

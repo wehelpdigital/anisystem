@@ -196,7 +196,8 @@
     .ai-float { position: fixed; right: 1rem; bottom: 5.5rem; z-index: 60; }
     /* The activities shell adds this while the AI module itself is showing. */
     .ai-float.ai-float-off { display: none; }
-    @media (min-width: 768px) { .ai-float { bottom: 1.25rem; right: 1.25rem; } }
+    /* 1024, where the tab bar goes — below that the bubble has to clear it. */
+    @media (min-width: 1024px) { .ai-float { bottom: 1.25rem; right: 1.25rem; } }
     .ai-float-fab {
         width: 3.5rem; height: 3.5rem; border-radius: 999px; overflow: hidden;
         display: flex; align-items: center; justify-content: center;

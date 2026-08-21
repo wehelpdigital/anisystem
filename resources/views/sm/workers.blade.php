@@ -255,8 +255,12 @@
         border-top:1px solid var(--color-gray-100); background:var(--color-gray-50); }
     html.dark .wr-foot { background:rgb(255 255 255 / .03); }
     @media (max-width:480px) {
+        /* The three-way answers drop their select onto its own line; a yes/no
+           does not -- letting those wrap put the box on a line of its own,
+           left-aligned under the words, reading as a tick for nothing. */
         .wr-row { flex-wrap:wrap; }
         .wr-pick { width:100%; }
+        .wr-switch { flex-wrap:nowrap; }
     }
 </style>
 @endpush

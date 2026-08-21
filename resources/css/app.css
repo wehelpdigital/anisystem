@@ -427,8 +427,11 @@ html.dark .sheet-body::-webkit-scrollbar-thumb { background: rgb(255 255 255 / .
 html.rl-open, html.rl-open body { overflow: hidden; }
 
 /* Mobile bottom tab bar */
+/* lg, not md: at 768 the top bar's six links leave the page title no room
+   at all (measured: twelve pixels), so a portrait tablet keeps the phone's
+   chrome and the desktop bar waits for the width it needs. */
 .tabbar {
-    @apply fixed bottom-0 inset-x-0 z-30 bg-white border-t border-gray-200 flex md:hidden;
+    @apply fixed bottom-0 inset-x-0 z-30 bg-white border-t border-gray-200 flex lg:hidden;
     padding-bottom: env(safe-area-inset-bottom, 0);
 }
 .tabbar-item {
@@ -445,7 +448,7 @@ html.rl-open, html.rl-open body { overflow: hidden; }
    reserves at the bottom; that, and a little air, is the whole requirement.
    With the tab bar gone the padding goes with it. */
 .footer-safe { padding-bottom: calc(3.5rem + env(safe-area-inset-bottom, 0px) + .75rem); }
-@media (min-width: 768px) { .footer-safe { padding-bottom: 3rem; } }
+@media (min-width: 1024px) { .footer-safe { padding-bottom: 3rem; } }
 
 /* "How to use" — a header button that asks to be noticed exactly once.
    The ripple is a ring that grows and fades out of the button rather than a
@@ -481,7 +484,7 @@ html.dark .help-btn:hover { background: #243019; color: #e6eddd; }
 
 /* Content spacing helper so pages clear the tab bar on mobile */
 .page-safe-bottom { padding-bottom: 5.5rem; }
-@media (min-width: 768px) { .page-safe-bottom { padding-bottom: 2rem; } }
+@media (min-width: 1024px) { .page-safe-bottom { padding-bottom: 2rem; } }
 
 /* A page that IS a workspace has no use for the legal footer under it —
    the Collab Room claims every vertical pixel. */
@@ -489,12 +492,12 @@ body.no-footer footer { display: none; }
 
 /* Pages that need the whole phone screen (the Collab Room) drop the tab bar,
    via `@section('body-class', 'hide-tabbar')`. Desktop is untouched — .tabbar
-   is md:hidden already — but every offset that exists purely to clear the bar
+   is lg:hidden already — but every offset that exists purely to clear the bar
    has to come back down with it, otherwise hiding it just leaves a dead strip
    where it used to be and nothing actually gets bigger. */
 .hide-tabbar .tabbar { display: none; }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
     .hide-tabbar .page-safe-bottom { padding-bottom: 1rem; }
     .hide-tabbar footer, .hide-tabbar .footer-safe { padding-bottom: 1.5rem; }
     .hide-tabbar .ai-float,

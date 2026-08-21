@@ -324,11 +324,21 @@
          than one that is on its own. Done by collapsing the row instead of
          widening the card, because col-span-4 is not a class this build's CSS
          carries and the card would silently fall back to a single column. --}}
-    @php $quickDoors = ($may('camera') ? 1 : 0) + ($may('video') ? 1 : 0); @endphp
-    <div class="grid grid-cols-1 {{ $quickDoors ? 'sm:grid-cols-4' : '' }} gap-3 mb-4">
+    @php
+        $quickDoors = ($may('camera') ? 1 : 0) + ($may('video') ? 1 : 0);
+        // Written out, not composed: Tailwind reads this file to decide what
+        // to emit, so a class name assembled at runtime is a class that does
+        // not exist. Two columns on a tablet, four when there is room.
+        $actSpan = match ($quickDoors) {
+            2 => 'sm:col-span-2 xl:col-span-2',
+            1 => 'sm:col-span-2 xl:col-span-3',
+            default => '',
+        };
+    @endphp
+    <div class="grid grid-cols-1 {{ $quickDoors ? 'sm:grid-cols-2 xl:grid-cols-4' : '' }} gap-3 mb-4">
         {{-- Activities (2/4) --}}
         <a href="{{ route('sm.activities', ['id' => $schedule->id]) }}" data-nav-loader
-            class="cta-tile act-cta {{ $quickDoors ? 'sm:col-span-' . (4 - $quickDoors) : '' }} rounded-2xl p-5 flex items-center gap-4">
+            class="cta-tile act-cta {{ $actSpan }} rounded-2xl p-5 flex items-center gap-4">
             <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             </span>

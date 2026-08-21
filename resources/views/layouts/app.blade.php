@@ -99,7 +99,9 @@
 
                 <div class="flex items-center gap-1 md:gap-5 shrink-0">
                     {{-- Desktop nav --}}
-                    <nav class="hidden md:flex items-center gap-1 text-sm font-semibold">
+                    {{-- lg, not md: six links plus the logo leave a 768px
+                         tablet's page title twelve pixels wide. --}}
+                    <nav class="hidden lg:flex items-center gap-1 text-sm font-semibold">
                         <a href="{{ route('app.dashboard') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('app.dashboard') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Dashboard</a>
                         <a href="{{ route('sm.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('sm.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Schedules</a>
                         {{-- Only where the farm's owner has left it open: a
