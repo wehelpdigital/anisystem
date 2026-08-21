@@ -1121,6 +1121,20 @@ window.smQuillTouch = function smQuillTouch(quill) {
     }
 
     /* ---- where it sits ---- */
+
+    /* Some boxes keep their own tenant in that corner: a reply's ✕ sits
+       there, pinned to the field it closes. The mic stands to its left
+       instead of on top of it — and asks for a wide enough lane that the
+       words stop before both. Returns the room to leave, 0 if the corner is
+       free. */
+    function cornerTaken(el) {
+        const shell = el && el.closest && el.closest('.reply-shell');
+        const held = shell && shell.querySelector(':scope > .js-reply-cancel');
+        // In the flow it is a tool in the row, not a tenant of the corner.
+        if (!held || getComputedStyle(held).position !== 'absolute') return 0;
+        return held.getBoundingClientRect().width + 4;
+    }
+
     function place() {
         if (!target || mic.hidden) return;
         // The field can go while it is being dictated into — a sheet closes,
@@ -1137,7 +1151,7 @@ window.smQuillTouch = function smQuillTouch(quill) {
         const tall = r.height > 60;
         const border = parseFloat(getComputedStyle(target).borderRightWidth) || 0;
         let top = tall ? r.bottom - size - gap : r.top + (r.height - size) / 2;
-        let left = r.right - size - gap - border;
+        let left = r.right - size - gap - border - cornerTaken(target);
         // Never off-screen, and never under the keyboard's own bar.
         top = Math.max(gap, Math.min(top, window.innerHeight - size - gap));
         left = Math.max(gap, Math.min(left, window.innerWidth - size - gap));
@@ -1159,14 +1173,15 @@ window.smQuillTouch = function smQuillTouch(quill) {
     function openGutter(el) {
         closeGutter();
         if (!el) return;
+        const want = GUTTER + cornerTaken(el);
         const now = parseFloat(getComputedStyle(el).paddingRight) || 0;
-        if (now >= GUTTER) return;                 // it already keeps the room
+        if (now >= want) return;                   // it already keeps the room
         gutterHeld = { el, had: el.style.getPropertyValue('padding-right'), prio: el.style.getPropertyPriority('padding-right') };
         /* Set with priority: a field styled by a class that itself shouts
          * (`pr-16!` and friends are all over this codebase) would otherwise
          * beat a plain inline style, and the words would go right back under
          * the button on exactly the screens nobody thought to check. */
-        el.style.setProperty('padding-right', GUTTER + 'px', 'important');
+        el.style.setProperty('padding-right', want + 'px', 'important');
     }
     function closeGutter() {
         if (!gutterHeld) return;

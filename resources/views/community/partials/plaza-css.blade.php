@@ -250,8 +250,6 @@
         .post-reply-form .reply-shell input[type="text"] { flex:1 1 100%; line-height:1.45; padding:.35rem .45rem; }
         .post-reply-form .reply-shell .reply-send { margin-left:auto; }
     }
-    .wall-comment-form .reply-shell .js-reply-cancel { margin-left:auto; }
-    .wall-comment-form .reply-shell .js-reply-cancel ~ .reply-send { margin-left:0; }
     .reply-send { width:2.25rem; height:2.25rem; flex-shrink:0; border:0; border-radius:9999px;
         display:inline-flex; align-items:center; justify-content:center; background:var(--color-brand-600); color:#fff;
         cursor:pointer; transition: background-color var(--dur) var(--ease-house), transform .15s var(--ease-house); }
@@ -701,12 +699,28 @@
     .reply-lead i { display: block; font-style: normal; font-size: .76rem; line-height: 1.4;
         color: var(--color-gray-400); }
 
-    /* A reply box's ✕ belongs in its own corner.
+    /* A reply's ✕ belongs in the corner of the field it cancels.
        In the flow it went wherever the row ended — beside Send on one screen,
-       stranded on a line of its own on another. The box keeps a lane clear on
-       the right so neither the words nor the tools can run under it. */
-    .wall-reply-form { position: relative; padding-right: 1.75rem; }
-    .wall-reply-form > .js-reply-cancel { position: absolute; top: 0; right: 0; margin: 0; }
+       stranded on a line of its own on another. It now sits over the top
+       right of the box itself, and the field's first line is padded so a long
+       reply cannot run beneath it. */
+    .wall-reply-form .reply-shell { position: relative; }
+    .wall-reply-form .reply-shell > .js-reply-cancel { position: absolute; top: .3rem; right: .4rem; z-index: 2;
+        margin: 0; width: 1.4rem; height: 1.4rem; background: var(--color-white);
+        box-shadow: 0 1px 4px rgb(0 0 0 / .14); }
+    .wall-reply-form .reply-shell > .js-reply-cancel svg { width: .8rem; height: .8rem; }
+    html.dark .wall-reply-form .reply-shell > .js-reply-cancel { background: var(--color-gray-100); }
+    /* The lane the ✕ stands in, kept clear of the words behind it. */
+    .wall-reply-form .reply-shell input[type="text"] { padding-right: 2rem; }
+
+    @media (min-width: 641px) {
+        /* A discussion reply keeps one pill on a wide screen, and there the
+           corner is where Send already is. Cancel rides at the end of the row
+           instead — the only place it can go without landing on something. */
+        .post-reply-form .reply-shell > .js-reply-cancel { position: static; width: 1.75rem; height: 1.75rem;
+            background: none; box-shadow: none; }
+        .post-reply-form .reply-shell input[type="text"] { padding-right: .45rem; }
+    }
 
     /* ---- who is speaking: the small print under a name ----
        Drawn by the wall's posts and by a discussion's topics, so it lives
