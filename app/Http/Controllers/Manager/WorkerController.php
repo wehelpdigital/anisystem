@@ -62,13 +62,12 @@ class WorkerController extends BaseScheduleController
                     $g = $grants->first(fn ($x) => mb_strtolower((string) $x->invitedEmail) === mb_strtolower((string) $w->email));
                 }
                 if ($g) {
-                    $grantByWorker[$w->id] = [
-                        'id' => $g->id,
-                        'status' => $g->status,
-                        'scheduleAccess' => $g->scheduleAccess,
-                        'communityAccess' => (bool) $g->communityAccess,
-                        'workerUserId' => $g->workerUserId ? (int) $g->workerUserId : null,
-                    ];
+                    // Everything the sheet can set, so it opens showing what
+                    // is true. It used to carry four of these fields, and the
+                    // note permission was not one of them: the box was always
+                    // drawn unticked, and saving the sheet then took the right
+                    // away from a worker who had it.
+                    $grantByWorker[$w->id] = \App\Support\WorkerGrantState::of($g);
                 }
             }
         }

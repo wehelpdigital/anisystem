@@ -49,8 +49,14 @@ class WorkerAccessController extends Controller
             'scheduleWorkerId' => 'nullable|integer',
             'email'            => 'required|email|max:191',
             'scheduleAccess'   => 'required|in:none,view,edit',
-            'canAddNotes'      => 'nullable|boolean',
             'communityAccess'  => 'nullable|boolean',
+            'notesAccess'      => 'nullable|in:none,view,edit',
+            'reportsAccess'    => 'nullable|in:none,view,edit',
+            'mapsAccess'       => 'nullable|boolean',
+            'drawAccess'       => 'nullable|boolean',
+            'aiAccess'         => 'nullable|boolean',
+            'cameraAccess'     => 'nullable|boolean',
+            'videoAccess'      => 'nullable|boolean',
         ]);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => 'Validation failed.', 'errors' => $validator->errors()], 422);
@@ -73,8 +79,19 @@ class WorkerAccessController extends Controller
             'invitedEmail'     => $email,
             'scheduleWorkerId' => $request->input('scheduleWorkerId'),
             'scheduleAccess'   => $request->input('scheduleAccess'),
-            'canAddNotes'      => $request->boolean('canAddNotes'),
             'communityAccess'  => $request->boolean('communityAccess'),
+            /* The module rights, as the owner set them. canAddNotes is
+             * written from notesAccess rather than read from the form: it is
+             * the same permission under an older name, and two columns that
+             * can disagree is how a setting starts lying. */
+            'notesAccess'      => $request->input('notesAccess', 'view'),
+            'reportsAccess'    => $request->input('reportsAccess', 'view'),
+            'mapsAccess'       => $request->boolean('mapsAccess'),
+            'drawAccess'       => $request->boolean('drawAccess'),
+            'aiAccess'         => $request->boolean('aiAccess'),
+            'cameraAccess'     => $request->boolean('cameraAccess'),
+            'videoAccess'      => $request->boolean('videoAccess'),
+            'canAddNotes'      => $request->input('notesAccess', 'view') === 'edit',
             'deleteStatus'     => 1,
         ]);
 
@@ -141,8 +158,14 @@ class WorkerAccessController extends Controller
             'email'            => 'required|email|max:191',
             'password'         => 'required|string|min:8|max:191',
             'scheduleAccess'   => 'required|in:none,view,edit',
-            'canAddNotes'      => 'nullable|boolean',
             'communityAccess'  => 'nullable|boolean',
+            'notesAccess'      => 'nullable|in:none,view,edit',
+            'reportsAccess'    => 'nullable|in:none,view,edit',
+            'mapsAccess'       => 'nullable|boolean',
+            'drawAccess'       => 'nullable|boolean',
+            'aiAccess'         => 'nullable|boolean',
+            'cameraAccess'     => 'nullable|boolean',
+            'videoAccess'      => 'nullable|boolean',
         ]);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => 'Validation failed.', 'errors' => $validator->errors()], 422);
@@ -160,8 +183,19 @@ class WorkerAccessController extends Controller
             'invitedEmail'     => $email,
             'scheduleWorkerId' => $request->input('scheduleWorkerId'),
             'scheduleAccess'   => $request->input('scheduleAccess'),
-            'canAddNotes'      => $request->boolean('canAddNotes'),
             'communityAccess'  => $request->boolean('communityAccess'),
+            /* The module rights, as the owner set them. canAddNotes is
+             * written from notesAccess rather than read from the form: it is
+             * the same permission under an older name, and two columns that
+             * can disagree is how a setting starts lying. */
+            'notesAccess'      => $request->input('notesAccess', 'view'),
+            'reportsAccess'    => $request->input('reportsAccess', 'view'),
+            'mapsAccess'       => $request->boolean('mapsAccess'),
+            'drawAccess'       => $request->boolean('drawAccess'),
+            'aiAccess'         => $request->boolean('aiAccess'),
+            'cameraAccess'     => $request->boolean('cameraAccess'),
+            'videoAccess'      => $request->boolean('videoAccess'),
+            'canAddNotes'      => $request->input('notesAccess', 'view') === 'edit',
             'deleteStatus'     => 1,
         ]);
 
@@ -223,12 +257,7 @@ class WorkerAccessController extends Controller
     /** Compact grant state for the worker UI. */
     private function grantData(WorkerGrant $grant): array
     {
-        return [
-            'id' => $grant->id,
-            'status' => $grant->status,
-            'scheduleAccess' => $grant->scheduleAccess,
-            'communityAccess' => (bool) $grant->communityAccess,
-            'workerUserId' => $grant->workerUserId ? (int) $grant->workerUserId : null,
+        return \App\Support\WorkerGrantState::of($grant) + [
             'scheduleWorkerId' => $grant->scheduleWorkerId ? (int) $grant->scheduleWorkerId : null,
         ];
     }

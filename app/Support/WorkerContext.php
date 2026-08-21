@@ -15,7 +15,13 @@ use Illuminate\Support\Facades\Auth;
  */
 class WorkerContext
 {
-    /** All active grants for the current user (their farms). */
+    /** All active grants for the current user (their farms).
+     *
+     * Held for the request: a page asks this through activeGrant() once per
+     * module tile, once per toolbar button and once more for the gate on the
+     * way in, and the rows cannot change between two of those asks. */
+    private static array $grantCache = [];
+
     public static function grants()
     {
         $uid = (int) Auth::id();
@@ -23,7 +29,11 @@ class WorkerContext
             return collect();
         }
 
-        return WorkerGrant::active()
+        if (isset(self::$grantCache[$uid])) {
+            return self::$grantCache[$uid];
+        }
+
+        return self::$grantCache[$uid] = WorkerGrant::active()
             ->where('workerUserId', $uid)
             ->where('status', WorkerGrant::STATUS_ACTIVE)
             ->with('boss')
@@ -133,5 +143,45 @@ class WorkerContext
         $grant = self::activeGrant();
 
         return $grant ? $grant->canViewSchedules() : true;
+    }
+
+    /**
+     * What the farm has said about one module for whoever is asking.
+     *
+     * An owner standing on their own farm gets 'edit' for everything — there
+     * is no grant to consult and nothing to withhold from themselves. Keys
+     * are the ones in WorkerGrant::MODULES.
+     */
+    public static function moduleAccess(string $key): string
+    {
+        $grant = self::activeGrant();
+
+        return $grant ? $grant->moduleAccess($key) : 'edit';
+    }
+
+    /** May they open this module at all? */
+    public static function canUseModule(string $key): bool
+    {
+        return self::moduleAccess($key) !== 'none';
+    }
+
+    /** May they add to it, not only look at it? */
+    public static function canWriteModule(string $key): bool
+    {
+        return self::moduleAccess($key) === 'edit';
+    }
+
+    /**
+     * Whether the current worker context may use the community at all.
+     *
+     * The column has existed since worker logins did and was never once
+     * asked, so an owner could turn community access off and watch nothing
+     * happen. Owners are not workers and are never refused.
+     */
+    public static function canUseCommunity(): bool
+    {
+        $grant = self::activeGrant();
+
+        return $grant ? (bool) $grant->communityAccess : true;
     }
 }

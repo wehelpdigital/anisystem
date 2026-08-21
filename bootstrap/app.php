@@ -37,6 +37,10 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\BindSessionToIp::class,
             \App\Http\Middleware\EnforceSingleSession::class,
             \App\Http\Middleware\UpdateLastSeen::class,
+            // Whether the worker in front of us may be at this door at all.
+            // Here rather than in ninety controller actions: that shape has
+            // already cost this app twelve open endpoints once.
+            \App\Http\Middleware\WorkerModuleAccess::class,
         ]);
         $middleware->redirectGuestsTo(fn () => route('login'));
         $middleware->redirectUsersTo(fn () => route('app.dashboard'));

@@ -32,10 +32,27 @@ class AiController extends Controller
     ) {
     }
 
+    /**
+     * Whose plan and whose credits this request rides on.
+     *
+     * A worker the owner has given the Technician to is asking about the
+     * owner's farm; the answer comes off the owner's balance, the same way
+     * the Collab Room has always charged it. Standing on your own farm this
+     * is simply you.
+     */
+    private function aiPayer(): \App\Models\User
+    {
+        $payerId = \App\Support\WorkerContext::effectiveOwnerId();
+
+        return $payerId === (int) Auth::id()
+            ? Auth::user()
+            : (\App\Models\User::find($payerId) ?? Auth::user());
+    }
+
     public function index(Request $request)
     {
         // AI is a Boss/Lifetime feature — Basic can't use it.
-        if (! $request->user()->canUseAi()) {
+        if (! $this->aiPayer()->canUseAi()) {
             return view('ai.locked', ['tier' => $request->user()->planTier()]);
         }
 
@@ -69,11 +86,16 @@ class AiController extends Controller
     /** Ask a question. Charges credits based on the tokens actually used. */
     public function ask(Request $request)
     {
-        if (! $request->user()->canUseAi()) {
-            return $this->json(false, 'AI is available on Boss and Lifetime plans. Upgrade to unlock the AI Technician.', [], 403);
+        $payer = $this->aiPayer();
+        if (! $payer->canUseAi()) {
+            return $this->json(false, (int) $payer->id === (int) Auth::id()
+                ? 'AI is available on Boss and Lifetime plans. Upgrade to unlock the AI Technician.'
+                : 'The AI Technician needs a Boss/Lifetime plan on the farm owner\'s account.', [], 403);
         }
 
         $userId = Auth::id();
+        // Whose balance the question is drawn from — see aiPayer().
+        $payerId = (int) $payer->id;
         $settings = AiSetting::current();
 
         if (! $settings->isUsable()) {
@@ -130,7 +152,7 @@ class AiController extends Controller
         $image = $images ?: null;
 
         // Refuse before spending anything the client does not have.
-        $balance = $this->credits->balance($userId);
+        $balance = $this->credits->balance($payerId);
         // Priced with the plan in it when one is attached — the composer
         // quotes that number, and a wall that disagreed with the quote would
         // refuse a question the farmer was told they could afford.
@@ -138,9 +160,10 @@ class AiController extends Controller
             ? $prompt . $this->planContext($request->input('scheduleId'), $userId)
             : $prompt;
         $estimate = $this->credits->estimate($settings, $priced, count($images));
-        if ($balance < $estimate && ! $this->credits->unlimited((int) \Illuminate\Support\Facades\Auth::id())) {
+        if ($balance < $estimate && ! $this->credits->unlimited($payerId)) {
+            $whose = $payerId === (int) Auth::id() ? 'You have' : 'This farm has';
             return $this->json(false, $balance <= 0
-                ? 'You have no AI Credits left. Top up to keep asking questions.'
+                ? $whose . ' no AI Credits left. Top up to keep asking questions.'
                 : 'You need about ' . ceil($estimate) . ' credits for this question and have ' . rtrim(rtrim(number_format($balance, 2), '0'), '.') . '.',
                 ['balance' => $balance, 'needed' => $estimate, 'outOfCredits' => true], 402);
         }
@@ -209,7 +232,7 @@ class AiController extends Controller
         // balance to zero — the pre-flight check above keeps that within a
         // credit or two of the estimate.
         $newBalance = $this->credits->chargeAllowingNegative(
-            $userId,
+            $payerId,
             $charged,
             'Question in "' . Str::limit($conversation->title, 60) . '"',
             $answer->id
@@ -686,11 +709,9 @@ class AiController extends Controller
         if (! $schedule) {
             abort(404);
         }
-        // The technician is the owner's tool: off a worker's menus, and off
-        // the URL they might still remember.
-        if ($no = $this->workerNoAccess('the AI Technician', route('sm.hub', ['id' => $schedule->id]), 'Back to the season')) {
-            return $no;
-        }
+        // Whether a worker may be here is their owner's answer, given per
+        // person in the Workers module and asked by WorkerModuleAccess for
+        // every ai.* route -- including this one.
 
         $settings = AiSetting::current();
         // A fresh session unless one was asked for by id: opening the module

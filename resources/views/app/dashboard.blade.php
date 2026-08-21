@@ -571,6 +571,7 @@
                 </section>
             @endif
 
+            @if (\App\Support\WorkerContext::canUseCommunity())
             <div>
                 <div class="flex items-center justify-between gap-3 mb-3 px-1">
                     <h2 class="text-base md:text-lg font-bold text-gray-900">🌾 Community Wall</h2>
@@ -662,6 +663,7 @@
                     </div>
                 </a>
             </div>
+            @endif
 
         </div>
 

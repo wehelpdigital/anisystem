@@ -102,7 +102,13 @@
                     <nav class="hidden md:flex items-center gap-1 text-sm font-semibold">
                         <a href="{{ route('app.dashboard') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('app.dashboard') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Dashboard</a>
                         <a href="{{ route('sm.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('sm.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Schedules</a>
+                        {{-- Only where the farm's owner has left it open: a
+                             worker whose grant says no community is refused at
+                             the door, and a link that only refuses is worse
+                             than no link. --}}
+                        @if (\App\Support\WorkerContext::canUseCommunity())
                         <a href="{{ route('community.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('community.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Community</a>
+                        @endif
                         <a href="{{ route('tutorials.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('tutorials.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Tutorials</a>
                         <a href="{{ route('support.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('support.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Support</a>
                         <a href="{{ route('account.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('account.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Account</a>
@@ -512,10 +518,12 @@
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v3m8-3v3M4 8h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1zm4 8h2m4 0h2m-8 4h2m4 0h2"/></svg>
             <span>Schedules</span>
         </a>
+        @if (\App\Support\WorkerContext::canUseCommunity())
         <a href="{{ route('community.index') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('community.*') ? 'is-active' : '' }}">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
             <span>Community</span>
         </a>
+        @endif
         <a href="{{ route('account.index') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('account.*') ? 'is-active' : '' }}">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
             <span>Account</span>

@@ -40,9 +40,7 @@
                     <label class="flex items-center gap-2 text-sm text-gray-700">
                         <input type="checkbox" id="grantCommunity" checked class="rounded"> Allow community access (own profile &amp; posting)
                     </label>
-                    <label class="flex items-center gap-2 text-xs text-gray-600 cursor-pointer select-none">
-                        <input type="checkbox" id="grantNotes" class="rounded"> Can write day notes on the schedules they work
-                    </label>
+                    @include('sm.partials.worker-rights', ['p' => 'grant'])
                     <div class="flex justify-end gap-2">
                         <button type="button" id="grantCancel" class="btn btn-ghost btn-sm">Cancel</button>
                         <button type="button" id="grantSubmit" class="btn btn-primary btn-sm">Send invite</button>
@@ -157,16 +155,12 @@
                 </div>
 
                 {{-- Writing down what happened is not the same act as changing
-                     what is supposed to happen. A worker who can only look at
-                     the plan can still be the right person to record the day,
-                     so that permission stands on its own. --}}
-                <label for="wlNotes" class="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 cursor-pointer select-none">
-                    <input type="checkbox" id="wlNotes" class="w-5 h-5 rounded border-gray-300 mt-0.5 shrink-0">
-                    <span class="min-w-0">
-                        <span class="block text-sm font-semibold text-gray-900">Can write day notes</span>
-                        <span class="block text-xs text-gray-500">Let them add notes, photos and videos to the days they work — without letting them change the plan.</span>
-                    </span>
-                </label>
+                     what is supposed to happen, and the same is true of every
+                     module below: a worker who may only look at the plan can
+                     still be the right person to record the day, or to keep
+                     the maps, and not the right person to spend the farm's AI
+                     credits. Each answer stands on its own. --}}
+                @include('sm.partials.worker-rights', ['p' => 'wl'])
 
                 <label for="wlCommunity" class="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 cursor-pointer select-none">
                     <input type="checkbox" id="wlCommunity" checked class="w-5 h-5 rounded border-gray-300 mt-0.5 shrink-0">
@@ -239,6 +233,34 @@
 </div>
 @endpush
 
+@push('head')
+<style>
+    /* The rights block: a row per module, the same shape whether the answer
+       is a choice of three or a yes/no. */
+    .wr-block { border:1px solid var(--color-gray-200); border-radius:1rem; background:var(--color-white); overflow:hidden; }
+    .wr-head { padding:.6rem .85rem; font-size:.7rem; font-weight:800; letter-spacing:.04em;
+        text-transform:uppercase; color:var(--color-gray-400); border-bottom:1px solid var(--color-gray-100); }
+    .wr-row { display:flex; align-items:center; gap:.7rem; padding:.6rem .85rem;
+        border-bottom:1px solid var(--color-gray-100); margin:0; }
+    .wr-row:last-of-type { border-bottom:0; }
+    .wr-switch { cursor:pointer; user-select:none; }
+    .wr-mark { flex:none; width:2rem; height:2rem; border-radius:.6rem; display:flex;
+        align-items:center; justify-content:center; font-size:1rem; background:var(--color-brand-50); }
+    .wr-what { min-width:0; flex:1 1 auto; }
+    .wr-what b { display:block; font-size:.82rem; font-weight:700; color:var(--color-gray-900); line-height:1.25; }
+    .wr-what i { display:block; font-style:normal; font-size:.7rem; line-height:1.35; color:var(--color-gray-500); }
+    .wr-pick { flex:none; width:11rem; min-height:2.25rem; padding-top:.3rem; padding-bottom:.3rem; font-size:.8rem; }
+    .wr-check { flex:none; width:1.35rem; height:1.35rem; border-radius:.4rem; }
+    .wr-foot { padding:.6rem .85rem; font-size:.7rem; line-height:1.4; color:var(--color-gray-400);
+        border-top:1px solid var(--color-gray-100); background:var(--color-gray-50); }
+    html.dark .wr-foot { background:rgb(255 255 255 / .03); }
+    @media (max-width:480px) {
+        .wr-row { flex-wrap:wrap; }
+        .wr-pick { width:100%; }
+    }
+</style>
+@endpush
+
 @push('scripts')
 @php
     $jsWorkers = $schedule->workers->map(fn ($w) => [
@@ -256,6 +278,37 @@
     ])->values();
 @endphp
 <script>
+/* Read and paint the module switches, by prefix.
+ *
+ * Both forms on this page set the same rights, and a right that is read by
+ * one name and written by another is how a permission ends up not applying.
+ * The keys are the grant's own column names. */
+window.workerRights = (() => {
+    const LEVELS = ['notesAccess', 'reportsAccess'];
+    const SWITCHES = ['mapsAccess', 'drawAccess', 'aiAccess', 'cameraAccess', 'videoAccess'];
+    const id = (p, key) => p + key.charAt(0).toUpperCase() + key.slice(1);
+    return {
+        read(p) {
+            const out = {};
+            LEVELS.forEach((k) => { const el = document.getElementById(id(p, k)); if (el) out[k] = el.value; });
+            SWITCHES.forEach((k) => { const el = document.getElementById(id(p, k)); if (el) out[k] = el.checked ? 1 : 0; });
+            return out;
+        },
+        /* No grant yet means a new worker, and a new worker starts where the
+         * app has always put them: able to read the farm, with the owner's
+         * tools closed until the owner opens them. */
+        paint(p, grant) {
+            LEVELS.forEach((k) => {
+                const el = document.getElementById(id(p, k));
+                if (el) el.value = (grant && grant[k]) || 'view';
+            });
+            SWITCHES.forEach((k) => {
+                const el = document.getElementById(id(p, k));
+                if (el) el.checked = !!(grant && grant[k]);
+            });
+        },
+    };
+})();
 (() => {
 const __init = () => {
     const SCHEDULE_ID = {{ $schedule->id }};
@@ -394,7 +447,7 @@ const __init = () => {
         else statusEl.textContent = 'No login yet.';
         document.getElementById('wlAccess').value = (login && login.scheduleAccess) || 'view';
         document.getElementById('wlCommunity').checked = login ? !!login.communityAccess : true;
-        document.getElementById('wlNotes').checked = login ? !!login.canAddNotes : false;
+        window.workerRights.paint('wl', login);
         document.getElementById('wlRevoke').classList.toggle('hidden', !login);
         document.getElementById('wlPwRow').classList.add('hidden');
         document.getElementById('wlPassword').value = '';
@@ -418,7 +471,7 @@ const __init = () => {
                 email,
                 scheduleAccess: document.getElementById('wlAccess').value,
                 communityAccess: document.getElementById('wlCommunity').checked ? 1 : 0,
-                canAddNotes: document.getElementById('wlNotes').checked ? 1 : 0,
+                ...window.workerRights.read('wl'),
             } });
             toast(res.message);
             applyGrant(res.data && res.data.grant);
@@ -444,7 +497,7 @@ const __init = () => {
                 email, password: pw,
                 scheduleAccess: document.getElementById('wlAccess').value,
                 communityAccess: document.getElementById('wlCommunity').checked ? 1 : 0,
-                canAddNotes: document.getElementById('wlNotes').checked ? 1 : 0,
+                ...window.workerRights.read('wl'),
             } });
             toast(res.message);
             applyGrant(res.data && res.data.grant);
@@ -693,7 +746,7 @@ const __init = () => {
                     email,
                     scheduleAccess: $('grantAccess').value,
                     communityAccess: $('grantCommunity').checked ? 1 : 0,
-                    canAddNotes: $('grantNotes').checked ? 1 : 0,
+                    ...window.workerRights.read('grant'),
                 },
             });
             window.toast && toast(res.message || 'Invite sent.');
