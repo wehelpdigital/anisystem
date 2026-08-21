@@ -31,9 +31,11 @@
              than pinned to the floor. Its post id is set when the sheet
              opens; replying sets its parent. --}}
         <div id="wcsFoot" class="wcs-write">
+            {{-- One quiet line: this box sits at the end of a conversation
+                 the reader is already in, and does not need a title. --}}
             <p class="reply-lead">
                 <span class="avatar avatar-sm {{ \App\Support\CommunityAvatar::hue(auth()->user()->full_name ?? '?') }}">{{ auth()->user()->initials ?? '?' }}</span>
-                <span><b>Say something</b><i>Answer, or add what worked on your farm — use @ to tag a co-farmer.</i></span>
+                <span><i>Add a comment — use @ to tag a co-farmer.</i></span>
             </p>
             @include('community.partials.wall-comment-form', ['postId' => ''])
         </div>

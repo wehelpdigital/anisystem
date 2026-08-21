@@ -248,10 +248,8 @@
     @keyframes thmPart { from { opacity:0; transform:translateY(8px); } }
     @media (prefers-reduced-motion:reduce) { .thm-in { animation:none; } }
 
-    /* What the answer box is for, beside the face. */
-    .reply-lead { display:flex; align-items:center; gap:.5rem; margin-top:.7rem; }
-    .reply-lead b { display:block; font-size:.8rem; font-weight:800; color:var(--color-gray-800); line-height:1.2; }
-    .reply-lead i { display:block; font-style:normal; font-size:.72rem; color:var(--color-gray-400); line-height:1.35; }
+    /* .reply-lead itself is styled in plaza-css — the wall's comment sheet
+       draws it too, and borrowed the markup without the rules. */
     .group-post .reply-lead { display:none; }
     .thread-modal-body .group-post .reply-lead { display:flex; }
     @media (max-width:479px) {

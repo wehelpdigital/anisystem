@@ -701,6 +701,15 @@
     html.dark .pymk-skel { background: linear-gradient(100deg, #1c2416 40%, #26301c 50%, #1c2416 60%); background-size: 200% 100%; }
     @media (prefers-reduced-motion: reduce) { .pymk-skel { animation: none; } }
 
+    /* What the box to answer in is for, beside your face. Small: it is an
+       instruction, not a heading, and it sits under the thing being read. */
+    .reply-lead { display: flex; align-items: center; gap: .45rem; margin-top: .7rem; }
+    .reply-lead .avatar { width: 1.5rem; height: 1.5rem; font-size: .55rem; flex: none; }
+    .reply-lead b { display: block; font-size: .74rem; font-weight: 800; line-height: 1.25;
+        color: var(--color-gray-700); }
+    .reply-lead i { display: block; font-style: normal; font-size: .68rem; line-height: 1.35;
+        color: var(--color-gray-400); }
+
     /* ---- who is speaking: the small print under a name ----
        Drawn by the wall's posts and by a discussion's topics, so it lives
        here rather than in either of them. */
