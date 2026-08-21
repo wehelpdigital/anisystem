@@ -694,10 +694,19 @@
        instruction, not a heading, and it sits under the thing being read. */
     .reply-lead { display: flex; align-items: center; gap: .45rem; margin-top: .7rem; }
     .reply-lead .avatar { width: 1.5rem; height: 1.5rem; font-size: .55rem; flex: none; }
-    .reply-lead b { display: block; font-size: .74rem; font-weight: 800; line-height: 1.25;
+    .reply-lead b { display: block; font-size: .82rem; font-weight: 800; line-height: 1.25;
         color: var(--color-gray-700); }
-    .reply-lead i { display: block; font-style: normal; font-size: .68rem; line-height: 1.35;
+    /* .76rem, the size the topic composer's instruction is: the same kind of
+       sentence, in the same voice, should not be two sizes. */
+    .reply-lead i { display: block; font-style: normal; font-size: .76rem; line-height: 1.4;
         color: var(--color-gray-400); }
+
+    /* A reply box's ✕ belongs in its own corner.
+       In the flow it went wherever the row ended — beside Send on one screen,
+       stranded on a line of its own on another. The box keeps a lane clear on
+       the right so neither the words nor the tools can run under it. */
+    .wall-reply-form { position: relative; padding-right: 1.75rem; }
+    .wall-reply-form > .js-reply-cancel { position: absolute; top: 0; right: 0; margin: 0; }
 
     /* ---- who is speaking: the small print under a name ----
        Drawn by the wall's posts and by a discussion's topics, so it lives
