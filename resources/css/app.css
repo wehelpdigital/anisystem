@@ -64,6 +64,53 @@ h1, h2, h3, h4, h5, h6 {
    for all of them. Nothing in this app uses `hidden` to mean anything else. */
 .hidden { display: none !important; }
 
+/* …and `hidden md:flex` still has to mean "shown from md up".
+   The !important above beat Tailwind's responsive display utilities too, and
+   that is not a subtlety: the app's desktop navigation IS `hidden md:flex`,
+   so from the day this rule landed there was no navigation above 768px. Each
+   pair is restated at two classes, which outranks the blanket rule. */
+@media (min-width: 640px) {
+    .hidden.sm\:inline { display: inline !important; }
+    .hidden.sm\:inline-flex { display: inline-flex !important; }
+    .hidden.sm\:block { display: block !important; }
+    .hidden.sm\:flex { display: flex !important; }
+    .hidden.sm\:grid { display: grid !important; }
+}
+
+@media (min-width: 768px) {
+    .hidden.md\:inline { display: inline !important; }
+    .hidden.md\:inline-flex { display: inline-flex !important; }
+    .hidden.md\:block { display: block !important; }
+    .hidden.md\:flex { display: flex !important; }
+    .hidden.md\:grid { display: grid !important; }
+}
+
+@media (min-width: 1024px) {
+    .hidden.lg\:inline { display: inline !important; }
+    .hidden.lg\:inline-flex { display: inline-flex !important; }
+    .hidden.lg\:block { display: block !important; }
+    .hidden.lg\:flex { display: flex !important; }
+    .hidden.lg\:grid { display: grid !important; }
+}
+
+@media (min-width: 1280px) {
+    .hidden.xl\:inline { display: inline !important; }
+    .hidden.xl\:inline-flex { display: inline-flex !important; }
+    .hidden.xl\:block { display: block !important; }
+    .hidden.xl\:flex { display: flex !important; }
+    .hidden.xl\:grid { display: grid !important; }
+}
+
+/* The other direction — `md:hidden` on something with a component class —
+   has the original problem and no !important to lean on: `.btn` is unlayered
+   and beats the layered utility, which is why two pages carry their own copy
+   of this. Unlayered at (0,1,1): enough to outrank a component class, not
+   enough to outrank an inline style a script may set. */
+@media (min-width: 640px) { html .sm\:hidden { display: none; } }
+@media (min-width: 768px) { html .md\:hidden { display: none; } }
+@media (min-width: 1024px) { html .lg\:hidden { display: none; } }
+@media (min-width: 1280px) { html .xl\:hidden { display: none; } }
+
 /* ------------------------------------------------------------------ */
 /* Shared components (used across public site + client app)            */
 /* ------------------------------------------------------------------ */
@@ -78,11 +125,6 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0.625rem 1.25rem;
     touch-action: manipulation;
 }
-/* .btn is plain CSS emitted after the Tailwind import, so its display would
-   otherwise beat the `hidden` utility — re-assert it. See `hidden` below:
-   this file had begun growing one of these per component, which is the shape
-   a missing rule leaves behind. */
-.btn.hidden { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
     .btn { @apply active:scale-100; }
 }
