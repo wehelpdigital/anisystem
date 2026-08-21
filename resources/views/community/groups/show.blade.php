@@ -135,23 +135,60 @@
         .disc-hero-desc { font-size:.9rem; -webkit-line-clamp:3; }
     }
 
-    /* --- Topics / Group chat: a segmented switch, both halves always visible,
-       with the selected half carried across on the house easing. --- */
-    .disc-seg { position:relative; display:grid; grid-template-columns:1fr 1fr; gap:0; padding:.25rem;
-        margin-bottom:.85rem; background:var(--color-gray-100); border-radius:999px; }
-    html.dark .disc-seg { background:rgb(255 255 255 / .07); }
-    .disc-seg::before { content:''; position:absolute; z-index:0; top:.25rem; bottom:.25rem; left:.25rem;
-        width:calc(50% - .25rem); border-radius:999px; background:var(--color-white, #fff);
-        box-shadow:0 1px 3px rgb(0 0 0 / .12); transition:transform var(--dur) var(--ease-house); }
-    html.dark .disc-seg::before { background:#25301c; }
-    .disc-seg[data-active="chat"]::before { transform:translateX(100%); }
-    .disc-seg-btn { position:relative; z-index:1; border:0; background:transparent; cursor:pointer;
-        min-height:2.4rem; padding:.35rem .5rem; border-radius:999px; font-size:.85rem; font-weight:700;
-        color:var(--color-gray-500); display:flex; align-items:center; justify-content:center; gap:.35rem;
-        transition:color var(--dur) var(--ease-house); }
-    .disc-seg-btn.is-selected { color:var(--color-brand-700); }
-    html.dark .disc-seg-btn.is-selected { color:var(--color-brand-300); }
-    .disc-seg-btn .seg-ico { font-size:.95rem; line-height:1; }
+    /* --- The room's two views, behind one door.
+       A segmented switch said "this screen is special". Every other module in
+       the app changes view through the same hamburger with the current view
+       written beside it, and a discussion is a module. --- */
+    .disc-viewbar { display:flex; align-items:center; gap:.6rem; margin-bottom:.85rem; }
+    .disc-viewbar .rv-chev { transition:transform var(--dur) var(--ease-house); }
+    .disc-viewbar.is-open .rv-chev { transform:rotate(180deg); }
+    .rv-hint { font-size:.72rem; font-weight:600; color:var(--color-gray-400); }
+    @media (max-width:479px) { .rv-hint { display:none; } }
+
+    /* --- Group chat, full screen.
+       A conversation is the whole job while you are in it, so it takes the
+       screen: the room's head, the topics, the footer and the app bar all
+       step aside, the page underneath stops scrolling, and one ✕ brings it
+       all back. --- */
+    html.room-chat-open, html.room-chat-open body { overflow:hidden; }
+    body.room-chat-open footer,
+    body.room-chat-open .plaza-nav,
+    body.room-chat-open .disc-hero,
+    body.room-chat-open .disc-viewbar { display:none; }
+    body.room-chat-open #paneChat {
+        position:fixed; inset:0; z-index:70; margin:0;
+        background:var(--color-white); display:flex; flex-direction:column;
+        animation:chatFullIn .28s cubic-bezier(.22,1,.36,1); }
+    body.room-chat-open #paneChat .chat-shell { flex:1 1 auto; min-height:0; gap:0; height:100%; }
+    body.room-chat-open #paneChat .chat-card,
+    body.room-chat-open #paneChat aside.chat-card {
+        height:100%; max-height:none; border-radius:0; border-left:0; border-right:0;
+        border-top:0; box-shadow:none; }
+    @media (min-width:1024px) {
+        /* The members list keeps its column; it is the one thing on this
+           screen that answers "who is even here". */
+        body.room-chat-open #paneChat aside.chat-card { border-right:0; border-left:1px solid var(--color-gray-200); }
+    }
+    /* The overlay's own head: the room's name and the way back. Drawn only
+       when there is something to come back from. */
+    .chat-full-bar { display:none; align-items:center; gap:.6rem; flex:none;
+        padding:.55rem .75rem; border-bottom:1px solid var(--color-gray-200);
+        background:var(--color-white); }
+    body.room-chat-open .chat-full-bar { display:flex; }
+    .chat-full-x { display:inline-flex; align-items:center; justify-content:center; width:2.15rem; height:2.15rem;
+        border:0; border-radius:999px; background:transparent; color:var(--color-gray-500); cursor:pointer; flex:none;
+        transition:background-color var(--dur) var(--ease-house), color var(--dur) var(--ease-house); }
+    .chat-full-x:hover { background:var(--color-gray-100); color:var(--color-gray-900); }
+    .chat-full-name { font-family:var(--font-heading); font-weight:800; font-size:.95rem;
+        color:var(--color-gray-900); min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .chat-full-sub { margin-left:auto; flex:none; font-size:.72rem; font-weight:700; color:var(--color-gray-400); }
+    /* In full screen the bar says what this is, so the card's own head — a
+       title nobody needs twice and one button — goes, and the button moves up
+       into the bar (see showView). */
+    body.room-chat-open .chat-head { display:none; }
+    .chat-full-bar .btn { flex:none; }
+    @keyframes chatFullIn { from { opacity:0; transform:translateY(1.25%); } to { opacity:1; transform:none; } }
+    @media (prefers-reduced-motion:reduce) { body.room-chat-open #paneChat { animation:none; } }
 
     /* Composer: on a phone the editor gets the whole width — the avatar was
        spending 3rem of a 360px screen to say who is typing. */
@@ -283,7 +320,7 @@
     .disc-spin[hidden], .disc-end[hidden] { display:none; }
 
     @media (prefers-reduced-motion: reduce) {
-        .disc-seg::before, .disc-seg-btn { transition:none; }
+        .disc-viewbar .rv-chev, .chat-full-x { transition:none; }
         /* A loader that stops looks like a page that broke; slow it instead. */
         .disc-spin i { animation-duration:2.6s; }
     }
@@ -414,14 +451,14 @@
     </div>
     @endif
 
-    {{-- Tabs: Discussion topics vs. live group chat --}}
-    <div class="disc-seg" id="groupTabs" data-active="discussion" role="tablist" aria-label="Discussion or group chat">
-        <button type="button" class="disc-seg-btn is-selected" data-tab="discussion" role="tab" aria-selected="true" aria-controls="paneDiscussion">
-            <span class="seg-ico" aria-hidden="true">🗂️</span>Topics
+    {{-- The room's two views, opened the way every module is opened. --}}
+    <div class="disc-viewbar" id="roomViewBar">
+        <button type="button" id="roomViewBtn" class="btn btn-white btn-sm" aria-haspopup="dialog" aria-expanded="false" title="Switch view">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <span id="roomViewLabel">Topics</span>
+            <svg class="w-3.5 h-3.5 rv-chev" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
         </button>
-        <button type="button" class="disc-seg-btn" data-tab="chat" role="tab" aria-selected="false" aria-controls="paneChat">
-            <span class="seg-ico" aria-hidden="true">💬</span>Group Chat
-        </button>
+        <span class="rv-hint" id="roomViewHint">{{ $topicCount }} {{ \Illuminate\Support\Str::plural('topic', $topicCount) }}</span>
     </div>
 
     <div id="paneDiscussion" role="tabpanel">
@@ -524,11 +561,21 @@
 
     {{-- ===================== GROUP CHAT PANE ===================== --}}
     <div id="paneChat" class="hidden" role="tabpanel">
+        {{-- Full screen's own head: which room this is, and the way back to
+             its topics. Drawn for a member and a visitor alike — the way out
+             cannot live inside a card only members are given. --}}
+        <div class="chat-full-bar">
+            <button type="button" id="chatFullBack" class="chat-full-x" aria-label="Back to topics" title="Back to topics">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <span class="chat-full-name">{{ $group->name }}</span>
+            <span class="chat-full-sub">Group chat</span>
+        </div>
         @if ($isMember)
             <div class="chat-shell">
             <div class="card overflow-hidden chat-card" style="display:flex;flex-direction:column;">
-                <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-100 shrink-0">
-                    <span class="font-bold text-gray-900 text-sm">Group chat</span>
+                <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-100 shrink-0 chat-head">
+                    <span class="font-bold text-gray-900 text-sm chat-head-title">Group chat</span>
                     {{-- Mobile members toggle; desktop shows the persistent sidebar instead. --}}
                     <button type="button" id="chatMembersToggle" class="btn btn-white btn-sm ms-auto shrink-0 lg:hidden">
                         👥 <span id="chatOnlineCount">Members</span>
@@ -608,6 +655,38 @@
     </div>
 
 @endsection
+
+{{-- The room's views, in the same sheet every module's switcher opens: a row
+     per view, the current one ticked. --}}
+@push('sheets')
+<div class="sheet hidden" id="roomViewSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">{{ $group->name }}</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full -mr-1" aria-label="Close">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+    </div>
+    <div class="sheet-body space-y-1">
+        @foreach ([
+            ['discussion', 'Topics', 'What the room is talking about.', 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
+            ['chat', 'Group Chat', 'Everyone at once, full screen.', 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.9 9.9 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'],
+        ] as [$key, $label, $blurb, $icon])
+            <button type="button" class="room-view-row w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50"
+                    data-room-view="{{ $key }}">
+                <span class="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg>
+                </span>
+                <span class="grow min-w-0">
+                    <span class="block">{{ $label }}</span>
+                    <span class="block text-xs font-normal text-gray-400">{{ $blurb }}</span>
+                </span>
+                <svg class="w-4 h-4 text-brand-600 room-view-check hidden" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </button>
+        @endforeach
+    </div>
+</div>
+@endpush
 
 @push('scripts')
 {{-- Rooms are looked at too: the same counter the wall uses. --}}
@@ -1136,30 +1215,98 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const paneDiscussion = document.getElementById('paneDiscussion');
     const paneChat = document.getElementById('paneChat');
-    const tabs = document.getElementById('groupTabs');
+    const viewBar = document.getElementById('roomViewBar');
+    const viewLabel = document.getElementById('roomViewLabel');
     let chatStarted = false, lastId = 0, pollTimer = null;
 
-    tabs?.addEventListener('click', (e) => {
-        const btn = e.target.closest('[data-tab]');
-        if (!btn) return;
-        const chat = btn.getAttribute('data-tab') === 'chat';
-        tabs.querySelectorAll('.disc-seg-btn').forEach((c) => {
-            const on = c === btn;
-            c.classList.toggle('is-selected', on);
-            c.setAttribute('aria-selected', on ? 'true' : 'false');
-        });
-        tabs.setAttribute('data-active', chat ? 'chat' : 'discussion');
+    /* Which of the room's two views is showing.
+     *
+     * Chat takes the whole screen: a conversation is the whole job while you
+     * are in it, and the room's head, its topics, the footer and the app bar
+     * have nothing to say meanwhile. The page underneath is locked so the
+     * thing that scrolls is the messages and only the messages. */
+    // Where the chat pane lives in the page, so it can be put back exactly
+    // there when it stops being the whole screen.
+    const chatHome = document.createComment('paneChat');
+    paneChat?.parentNode?.insertBefore(chatHome, paneChat);
+
+    /* The Members button rides up into the full-screen bar and comes back
+     * down after. Moved rather than duplicated: one button, one handler, one
+     * panel it opens — a second copy would only be right half the time. */
+    const membersBtn = document.getElementById('chatMembersToggle');
+    const membersHome = membersBtn ? document.createComment('membersBtn') : null;
+    if (membersBtn && membersHome) membersBtn.parentNode.insertBefore(membersHome, membersBtn);
+    const fullBar = document.querySelector('.chat-full-bar');
+    const fullSub = document.querySelector('.chat-full-sub');
+    function placeMembersBtn(full) {
+        if (!membersBtn || !fullBar || !membersHome) return;
+        if (full) fullBar.insertBefore(membersBtn, fullSub);
+        else membersHome.parentNode?.insertBefore(membersBtn, membersHome);
+    }
+
+    function showView(view) {
+        // A visitor who has not joined sees the "members only" card, and a
+        // card like that has no use for the whole screen.
+        const chat = view === 'chat';
+        const full = chat && isMember;
+        // Out of the page's boxes while it is the screen, back into them
+        // after: fixed positioning answers to a transformed ancestor, and
+        // this page animates its cards.
+        if (full) {
+            if (paneChat.parentElement !== document.body) document.body.appendChild(paneChat);
+        } else if (chatHome.parentNode && paneChat.parentElement === document.body) {
+            chatHome.parentNode.insertBefore(paneChat, chatHome);
+        }
+        placeMembersBtn(full);
         paneChat.classList.toggle('hidden', !chat);
         paneDiscussion.classList.toggle('hidden', chat);
+        viewLabel.textContent = chat ? 'Group Chat' : 'Topics';
+        document.body.classList.toggle('room-chat-open', full);
+        document.documentElement.classList.toggle('room-chat-open', full);
+        document.querySelectorAll('#roomViewSheet .room-view-row').forEach((row) => {
+            row.querySelector('.room-view-check')?.classList.toggle('hidden', row.dataset.roomView !== view);
+        });
         if (chat) {
-            // The chat is a full-height column: park its top under the app bar
-            // so the composer lands above the tab bar instead of below the fold.
-            paneChat.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
             // A guest's pane is the members-only card; the chat endpoints 403
             // for them, so don't ask.
             if (isMember && !chatStarted) startChat();
+            // Newest message in view the moment it opens, not after a scroll.
+            const scroller = document.getElementById('chatScroll');
+            if (scroller) requestAnimationFrame(() => { scroller.scrollTop = scroller.scrollHeight; });
         }
+    }
+
+    document.getElementById('roomViewBtn')?.addEventListener('click', () => {
+        viewBar?.classList.add('is-open');
+        window.openSheet?.('roomViewSheet');
     });
+    document.addEventListener('sm:sheet-closed', () => viewBar?.classList.remove('is-open'));
+
+    document.addEventListener('click', (e) => {
+        const row = e.target.closest('#roomViewSheet .room-view-row');
+        if (!row) return;
+        window.closeSheet?.('roomViewSheet');
+        showView(row.dataset.roomView);
+    });
+
+    // The way out of full screen: the ✕ in the chat's head, or Escape.
+    document.getElementById('chatFullBack')?.addEventListener('click', () => showView('discussion'));
+    document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape' || !document.body.classList.contains('room-chat-open')) return;
+        // Not while something else is on top of the chat — a lightbox, a
+        // sheet, the recorder — those close themselves first.
+        if (document.querySelector('.sheet.is-open, .lightbox:not(.hidden), .thread-modal:not(.hidden)')) return;
+        showView('discussion');
+    });
+
+    // Nothing should be able to leave the lock behind: a link out of the chat
+    // takes the page with it, but a bfcache restore brings the class back.
+    window.addEventListener('pagehide', () => {
+        document.body.classList.remove('room-chat-open');
+        document.documentElement.classList.remove('room-chat-open');
+    });
+
+    showView('discussion');
 
     // Render a chat body: escape, then bold @mentions and 📍locations.
     function renderChatBody(text) {
