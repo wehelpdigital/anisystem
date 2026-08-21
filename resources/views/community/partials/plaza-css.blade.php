@@ -413,7 +413,12 @@
        has to fill it while the picture decodes. */
     .media-skel:not(:has(img.is-loaded)):not(.is-gone) { min-height:6rem; }
     .media-skel:not(:has(img.is-loaded)) img { position:absolute; inset:0; }
-    .media-skel img { opacity:0; transition:opacity .28s ease; }
+    /* The shorthand here used to name only opacity, which does not add a
+       transition -- it replaces the one .post-media gave the picture. So the
+       hover lean-in below jumped straight to 1.04 with nothing in between,
+       on every wall photo and every one the dashboard borrows. Both live in
+       one list now. */
+    .media-skel img { opacity:0; transition:opacity .28s ease, transform .4s cubic-bezier(.22,1,.36,1); }
     .media-skel img.is-loaded { opacity:1; }
     .media-skel::before { content:''; position:absolute; inset:0; border-radius:.75rem; pointer-events:none;
         background:linear-gradient(100deg, rgba(255,255,255,0) 20%, rgba(255,255,255,.55) 50%, rgba(255,255,255,0) 80%), var(--color-gray-100);
@@ -738,6 +743,10 @@
        the first — they are two halves of one introduction. */
     .feed-post > .af-line, .group-post > .af-line { margin-top: .35rem; }
     .feed-post > .af-line + .af-line, .group-post > .af-line + .af-line { margin-top: .6rem; }
+    /* A member card draws the same introduction under the head, where the
+       card's own three lines used to be. */
+    .mc-body > .af-line { margin-top: .55rem; }
+    .mc-body > .af-line + .af-line { margin-top: .35rem; }
 
     /* Follow lives in the card's own corner: it is a decision about the
        person, not a word attached to their name. The header keeps a lane

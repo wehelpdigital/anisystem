@@ -2,10 +2,10 @@
      by My Co-Farmers, so a member looks the same wherever they are met.
 
      What a card says about somebody: their cover, their face, what is on
-     their mind, where they farm, and how many co-farmers you already share —
-     which is the fact that actually decides whether a stranger is worth
-     tapping. It carried their latest post instead, which cost four queries a
-     page plus two more per card and told a reader less.
+     their mind, and then the wall's own introduction — where they farm, what
+     they do, who they farm with, how much of that you share, and how many
+     follow them. It carried their latest post instead, which cost four
+     queries a page plus two more per card and told a reader less.
 
      Expects: $members (each with connStatus, and optionally mutualCount +
      isFollowed, which the two pages attach). --}}
@@ -42,36 +42,23 @@
                 </a>
                 <div class="min-w-0 grow mc-who">
                     <a href="{{ route('community.connect.profile', ['userId' => $m->id]) }}" class="mc-name">{{ $m->full_name }}</a>
-                    @if (filled($m->headline))
-                        <p class="mc-line">{{ $m->headline }}</p>
-                    @endif
-                    @if (filled($m->location))
-                        <p class="mc-line mc-where">
-                            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9.69 18.933C9.89 19.02 10 19 10 19s.11.02.31-.067l.005-.002.018-.008a5.74 5.74 0 00.281-.14 13.73 13.73 0 002.288-1.582C15.02 14.828 17 12.353 17 9A7 7 0 103 9c0 3.353 1.98 5.828 4.098 7.201a13.73 13.73 0 002.29 1.582 5.74 5.74 0 00.28.14l.019.008.005.002zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clip-rule="evenodd"/></svg>
-                            <span class="truncate">{{ $m->location }}</span>
-                        </p>
-                    @endif
                 </div>
             </div>
 
-            {{-- What makes a stranger worth tapping: who they farm with, and
-                 how much of that you already share. When there is neither,
-                 the same fallback the wall uses rather than a line saying
-                 nothing twice. --}}
-            <p class="mc-mutual">
-                @if ($mutual > 0)
-                    <span class="mc-mutual-n">{{ $mutual }}</span>
-                    {{ \Illuminate\Support\Str::plural('mutual co-farmer', $mutual) }}
-                    @if (($m->coFarmerCount ?? 0) > 0)
-                        <span class="mc-mutual-none">of {{ $m->coFarmerCount }}</span>
-                    @endif
-                @elseif (($m->coFarmerCount ?? 0) > 0)
-                    <span class="mc-mutual-n">{{ $m->coFarmerCount }}</span>
-                    {{ \Illuminate\Support\Str::plural('co-farmer', $m->coFarmerCount) }}
-                @elseif ($m->created_at)
-                    <span class="mc-mutual-none">🌱 Member since {{ $m->created_at->timezone('Asia/Manila')->format('M Y') }}</span>
-                @endif
-            </p>
+            {{-- The same introduction the wall gives an author, in the same
+                 two lines: where they farm and what they do, then who they
+                 farm with and how much of that you already share. The card
+                 used to say those things in three shapes of its own. --}}
+            @include('community.partials.author-facts', [
+                'user' => $m,
+                'isCoFarmer' => $m->connStatus === 'connected',
+                'coFarmers' => (int) ($m->coFarmerCount ?? 0),
+                'mutual' => $mutual,
+                'followers' => (int) ($m->followerCount ?? 0),
+                'fallback' => $m->created_at
+                    ? '🌱 Member since ' . $m->created_at->timezone('Asia/Manila')->format('M Y')
+                    : null,
+            ])
 
             <div class="mc-acts">
                 @include('community.connect.partials.action', ['status' => $m->connStatus, 'memberId' => $m->id])

@@ -172,6 +172,9 @@ class CommunityConnectController extends Controller
         $followingIds = $social->followingIds($meId);
         $mutual = \App\Models\CommunityConnection::mutualCounts($meId, $pageIds);
         $mates = \App\Models\CommunityConnection::connectionCounts($pageIds);
+        // The card introduces a member the way the wall introduces an author,
+        // and that introduction counts followers too. One query for the page.
+        $followers = $social->followerCounts($pageIds);
         foreach ($friends as $friend) {
             // 'connected' is the word the card speaks; 'accepted' is the
             // word the DB row uses, and passing it through meant the card
@@ -180,6 +183,7 @@ class CommunityConnectController extends Controller
             $friend->isFollowed = in_array((int) $friend->id, $followingIds, true);
             $friend->mutualCount = $mutual[(int) $friend->id] ?? 0;
             $friend->coFarmerCount = $mates[(int) $friend->id] ?? 0;
+            $friend->followerCount = $followers[(int) $friend->id] ?? 0;
         }
 
         // The scroller asks for cards alone.
@@ -636,12 +640,14 @@ class CommunityConnectController extends Controller
         $followingIds = $social->followingIds($viewerId);
         $mutual = CommunityConnection::mutualCounts($viewerId, $ids);
         $mates = CommunityConnection::connectionCounts($ids);
+        $followers = $social->followerCounts($ids);
 
         foreach ($items as $m) {
             $m->connStatus = CommunityConnection::statusFor($viewerId, $m->id);
             $m->isFollowed = in_array((int) $m->id, $followingIds, true);
             $m->mutualCount = $mutual[(int) $m->id] ?? 0;
             $m->coFarmerCount = $mates[(int) $m->id] ?? 0;
+            $m->followerCount = $followers[(int) $m->id] ?? 0;
         }
 
         return ['items' => $items, 'hasMore' => $hasMore];

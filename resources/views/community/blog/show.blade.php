@@ -14,6 +14,29 @@
     .bc a:hover { background:var(--color-brand-50); }
     .bc .sep { color:var(--color-gray-300); }
     .bc .cur { padding:.3rem .55rem; color:var(--color-gray-500); font-weight:600; max-width:16rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    /* --- The head of an article: the cover, then the headline and who wrote
+       it, in one piece. The cover used to float inset with rounded corners
+       above a bare headline, which on a phone read as a picture that had
+       wandered in from somewhere else. --- */
+    .article-hero { position:relative; margin-bottom:1.15rem; border-radius:1.1rem; overflow:hidden;
+        border:1px solid var(--color-gray-200); background:var(--color-white); box-shadow:var(--shadow-card); }
+    .article-hero-body { padding:1.05rem 1.15rem 1.15rem; }
+    .article-hero .article-cover { margin:0; border-radius:0; }
+    @media (max-width:640px) {
+        .article-hero { border-radius:0; border-left:0; border-right:0;
+            margin-left:calc(var(--plaza-gutter, 1rem) * -1);
+            margin-right:calc(var(--plaza-gutter, 1rem) * -1); }
+        /* The breadcrumb trail wrapped to three lines here and said nothing
+           the app bar's back arrow and title do not. */
+        .bc { display:none; }
+    }
+    /* Who wrote it, with a face: the wall's way of introducing an author. */
+    .article-byline { display:flex; align-items:center; gap:.6rem; margin-top:.85rem;
+        padding-top:.8rem; border-top:1px solid var(--color-gray-100); }
+    html.dark .article-byline { border-top-color:rgb(255 255 255 / .08); }
+    .article-byline .avatar { width:2.1rem; height:2.1rem; font-size:.7rem; flex:none; }
+    .article-byline b { display:block; font-size:.82rem; font-weight:800; color:var(--color-gray-800); line-height:1.25; }
+    .article-byline i { display:block; font-style:normal; font-size:.72rem; color:var(--color-gray-400); }
     .article-cover { position:relative; border-radius:1rem; overflow:hidden; margin-bottom:1rem; background:var(--color-brand-50); }
     .article-cover img { width:100%; height:auto; display:block; max-height:22rem; object-fit:cover;
         opacity:0; transition:opacity .28s ease; }
@@ -28,8 +51,10 @@
     @media (prefers-reduced-motion: reduce) {
         .article-cover:not(:has(img.is-loaded))::before { animation:none; background:rgb(255 255 255 / .25); }
     }
-    .article-title { font-family:var(--font-heading); font-weight:800; font-size:1.6rem; line-height:1.2; color:var(--color-gray-900); }
-    .article-meta { font-size:.8rem; color:var(--color-gray-400); margin:.4rem 0 1rem; display:flex; gap:.8rem; flex-wrap:wrap; }
+    .article-title { font-family:var(--font-heading); font-weight:800; font-size:1.5rem; line-height:1.22; color:var(--color-gray-900); }
+    @media (min-width:640px) { .article-title { font-size:1.7rem; } }
+    /* The sentence the article was filed under, in the reader's own words. */
+    .article-standfirst { margin-top:.45rem; font-size:.92rem; line-height:1.5; color:var(--color-gray-500); }
     .article-body { font-size:.98rem; line-height:1.7; color:var(--color-gray-800); }
     .article-body p { margin:0 0 .9rem; }
     .article-body h3, .article-body h4 { font-family:var(--font-heading); font-weight:700; color:var(--color-gray-900); margin:1.3rem 0 .5rem; }
@@ -50,15 +75,32 @@
         <span class="cur">{{ $post->title }}</span>
     </nav>
 
-    @if ($post->coverUrl())
-        <div class="article-cover"><img src="{{ $post->coverUrl() }}" alt=""
-            onload="this.classList.add('is-loaded')" onerror="this.closest('.article-cover')?.remove()"></div>
-    @endif
-    <h1 class="article-title">{{ $post->title }}</h1>
-    <div class="article-meta">
-        @if ($post->authorName)<span>✍️ {{ $post->authorName }}</span>@endif
-        @if ($post->publishedAt)<span>{{ $post->publishedAt->format('F j, Y') }}</span>@endif
-        <span>👁️ {{ number_format($post->viewCount) }}</span>
+    @php
+        $byline = trim((string) $post->authorName) ?: 'AniSenso Team';
+        $bylineInitials = \Illuminate\Support\Str::of($byline)->explode(' ')
+            ->filter()->take(2)->map(fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)))->implode('');
+    @endphp
+    <div class="article-hero plaza-accent">
+        @if ($post->coverUrl())
+            <div class="article-cover"><img src="{{ $post->coverUrl() }}" alt=""
+                onload="this.classList.add('is-loaded')" onerror="this.closest('.article-cover')?.remove()"></div>
+        @endif
+        <div class="article-hero-body">
+            <h1 class="article-title">{{ $post->title }}</h1>
+            @if ($post->excerpt)
+                <p class="article-standfirst">{{ $post->excerpt }}</p>
+            @endif
+            <div class="article-byline">
+                <span class="avatar {{ \App\Support\CommunityAvatar::hue($byline) }}">{{ $bylineInitials }}</span>
+                <span class="min-w-0">
+                    <b>{{ $byline }}</b>
+                    <i>
+                        @if ($post->publishedAt){{ $post->publishedAt->format('F j, Y') }} · @endif
+                        {{ number_format($post->viewCount) }} {{ \Illuminate\Support\Str::plural('read', $post->viewCount) }}
+                    </i>
+                </span>
+            </div>
+        </div>
     </div>
 
     <div class="article-body">{!! \App\Support\CommunityText::safeHtml($post->body) !!}</div>
