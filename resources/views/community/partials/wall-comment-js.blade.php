@@ -78,7 +78,6 @@
     ];
     const ZONE_SEL = ZONES.map((z) => z.sel).join(',');
     const CHEV = '<svg class="th-chev" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>';
-    const DOTS = '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="19" cy="12" r="1.9"/></svg>';
     const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const kindOf = (zone) => ZONES.find((z) => zone.matches(z.sel));
     let observer = null;
@@ -209,64 +208,17 @@
         syncToggle(zone);
     }
 
-    /* ---- One ⋯ instead of an action row that wraps ---------------------
-       A comment's row already carries four reaction pills; Reply and Delete
-       beside them pushed the reactions onto a second line on a phone.
-       Reacting is the frequent tap, so it keeps the row and the two rare
-       actions move into a sheet. The buttons themselves are only hidden by
-       CSS — everything that reacts to them is bound by delegation and still
-       fires when the sheet clicks them. ---- */
-    function condense(comment) {
+    /* A comment's actions are shown, not folded away.
+       They used to collapse into a ⋯ on a phone so four reaction pills could
+       hold one line; a discussion's replies never did that, and Reply is not
+       a rare action. The row wraps if it must. */
+    function markActions(comment) {
         const btn = comment.querySelector('.js-wall-reply, .js-comment-delete');
         // querySelector reaches into nested replies too; only this comment's
         // own row belongs to this comment.
         if (!btn || btn.closest('.wall-comment') !== comment) return;
-        const row = btn.parentElement;
-        row.classList.add('wc-actions');
-        if (row.querySelector(':scope > .js-comment-more')) return;
-        const more = document.createElement('button');
-        more.type = 'button';
-        more.className = 'wc-more js-comment-more';
-        more.setAttribute('aria-label', 'More actions');
-        more.setAttribute('aria-haspopup', 'dialog');
-        more.innerHTML = DOTS;
-        row.appendChild(more);
+        btn.parentElement.classList.add('wc-actions');
     }
-
-    function openActionSheet(reply, del) {
-        let el = document.getElementById('wc-action-sheet');
-        if (!el) {
-            el = document.createElement('div');
-            el.id = 'wc-action-sheet';
-            el.className = 'sheet hidden';
-            el.style.setProperty('--sheet-width', '22rem');
-            document.body.appendChild(el);
-        }
-        const ICON_REPLY = '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a6 6 0 016 6v2M3 10l5-5M3 10l5 5"/></svg>';
-        const ICON_DEL = '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg>';
-        el.innerHTML = '<div class="sheet-handle"></div><div class="sheet-body pt-4">'
-            + (reply ? '<button type="button" class="wc-menu-item" data-do="reply">' + ICON_REPLY + 'Reply</button>' : '')
-            + (del ? '<button type="button" class="wc-menu-item is-danger" data-do="delete">' + ICON_DEL + 'Delete</button>' : '')
-            + '<button type="button" class="wc-menu-item is-quiet" data-sheet-close>Cancel</button></div>';
-        el.querySelectorAll('[data-do]').forEach((b) => {
-            b.addEventListener('click', () => {
-                const target = b.dataset.do === 'reply' ? reply : del;
-                window.closeSheet('wc-action-sheet');
-                // Wait out the sheet's own 250ms close before the reply field
-                // asks for the keyboard, or Delete puts up its confirmation —
-                // two sheets overlapping leaves the backdrop half-dressed.
-                setTimeout(() => target && target.click(), 300);
-            });
-        });
-        window.openSheet('wc-action-sheet');
-    }
-
-    document.addEventListener('click', (e) => {
-        const more = e.target.closest('.js-comment-more');
-        if (!more) return;
-        const row = more.parentElement;
-        openActionSheet(row.querySelector(':scope > .js-wall-reply'), row.querySelector(':scope > .js-comment-delete'));
-    });
 
     document.addEventListener('click', (e) => {
         const toggle = e.target.closest('.js-thread-toggle');
@@ -280,7 +232,7 @@
     function scan(root) {
         const at = root || document;
         at.querySelectorAll(ZONE_SEL).forEach(foldZone);
-        at.querySelectorAll('.wall-comment').forEach(condense);
+        at.querySelectorAll('.wall-comment').forEach(markActions);
         // Our own reshuffling is not news; dropping it keeps the observer from
         // calling us straight back into another pass.
         observer?.takeRecords();

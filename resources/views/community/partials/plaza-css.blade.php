@@ -358,21 +358,11 @@
        pushed the reactions onto a line of their own on a phone. Reacting is
        the frequent tap, so it keeps the row; the two rare actions move into a
        sheet opened from the corner. --- */
-    .wc-more { display:none; width:1.75rem; height:1.75rem; border:0; border-radius:9999px; background:transparent;
-        align-items:center; justify-content:center; color:var(--color-gray-400); cursor:pointer; flex-shrink:0;
-        transition: background-color .15s var(--ease-house), color .15s var(--ease-house); }
-    .wc-more:hover { background:var(--color-gray-100); color:var(--color-gray-700); }
-    @media (max-width: 640px) {
-        .wc-actions { width:100%; align-items:flex-start; }
-        .wc-actions > .js-wall-reply, .wc-actions > .js-comment-delete { display:none; }
-        .wc-more { display:inline-flex; margin-left:auto; }
-    }
-    .wc-menu-item { display:flex; align-items:center; gap:.7rem; width:100%; padding:.8rem .5rem; border:0;
-        background:transparent; border-radius:.6rem; font-size:.95rem; font-weight:700; text-align:left;
-        color:var(--color-gray-800); cursor:pointer; transition: background-color .15s var(--ease-house); }
-    .wc-menu-item:hover { background:var(--color-gray-50); }
-    .wc-menu-item.is-danger { color:#dc2626; }
-    .wc-menu-item.is-quiet { color:var(--color-gray-500); font-weight:600; justify-content:center; }
+    /* Shown, and wrapping if it must — the way a discussion's replies do.
+       Reply used to disappear behind a ⋯ below 640px. */
+    .wc-actions { display:flex; align-items:center; flex-wrap:wrap; gap:.2rem .5rem; }
+
+    /* The ⋯ action sheet's rows went with the ⋯ itself. */
 
     /* --- Generic centered modal (comments "view all", etc.) --- */
     .plaza-modal { position:fixed; inset:0; z-index:120; display:flex; align-items:flex-end; justify-content:center;
@@ -451,7 +441,6 @@
     .react-btn, .reply-link, .thread-toggle { position:relative; }
     @media (pointer: coarse) {
         .wall-act { min-width:2.75rem; min-height:2.75rem; justify-content:center; }
-        .wc-more { width:2.75rem; height:2.75rem; }
         .emoji-btn, .reply-send { width:2.75rem; height:2.75rem; }
         .react-btn::after { content:''; position:absolute; inset:-.45rem 0; }
         .reply-link::after, .thread-toggle::after { content:''; position:absolute; inset:-.55rem -.25rem; }
@@ -979,6 +968,6 @@
         .react-btn.just-reacted .e, .react-count.tick, #composerCard.is-entering, #loadMoreBtn .dot { animation:none !important; }
         .react-btn, .group-join-btn, .btn-open, .reply-shell, .reply-send, .emoji-btn, .emoji-pop, .plaza-clamp-body,
         #postsWrap, .write-fab, .post-reply-form, #joinPrompt, .group-post.is-removing,
-        .thread-fold, .thread-toggle .th-chev, .wc-more, .wc-menu-item { transition:none !important; }
+        .thread-fold, .thread-toggle .th-chev { transition:none !important; }
     }
 </style>
