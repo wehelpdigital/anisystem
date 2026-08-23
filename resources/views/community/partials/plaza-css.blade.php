@@ -951,9 +951,9 @@
      * rather than a line of text sitting on the baseline: it wants a little
      * more room over it than under the words at the other end. A phone's
      * cards are tighter all round, so theirs is less. */
-    .feed-post:has(.status-cloud), .group-post:has(.status-cloud) { padding-top: 2.95rem; }
+    .feed-post:has(.status-cloud), .group-post:has(.status-cloud) { padding-top: 2.75rem; }
     @media (max-width: 639px) {
-        .group-post:has(.status-cloud) { padding-top: 2.7rem; }
+        .group-post:has(.status-cloud) { padding-top: 2.5rem; }
     }
     /* And the other end of the same sum: the topic card gives back the .4rem
        its buttons carry, exactly as the wall's posts do. */
