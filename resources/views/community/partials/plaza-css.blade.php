@@ -870,7 +870,10 @@
      * and the arrows say the rest are there. */
     .pymk-wrap { position: relative; }
     .pymk-rail { display: grid; grid-auto-flow: column;
-        grid-auto-columns: calc((100% - 1rem) / 3); gap: .5rem; }
+        /* Two whole cards and the edge of a third. Three to a screen made
+           each one a face and an abbreviation; two and nothing else made a
+           strip that gave no sign it went on. The sliver is the sign. */
+        grid-auto-columns: 41%; gap: .5rem; }
     .pymk-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
         width: 2rem; height: 2rem; border-radius: 999px; border: 1px solid var(--color-gray-200);
         display: flex; align-items: center; justify-content: center; cursor: pointer;
@@ -879,8 +882,12 @@
         transition: opacity .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
     .pymk-arrow:hover { opacity: 1; background: var(--color-gray-50); }
     .pymk-arrow svg { width: 1rem; height: 1rem; }
-    .pymk-arrow.is-prev { left: -.35rem; }
-    .pymk-arrow.is-next { right: -.35rem; }
+    /* Inside the rail's own width, floating over the cards. Hung outside it
+       they were cut in half by the band that folds the whole strip away —
+       that fold measures a height, and a height cannot be measured without
+       clipping what hangs off the sides. */
+    .pymk-arrow.is-prev { left: .3rem; }
+    .pymk-arrow.is-next { right: .3rem; }
     /* Nowhere to go, no button: an arrow at the end of a list is a promise
        the list cannot keep. */
     .pymk-arrow[hidden] { display: none; }

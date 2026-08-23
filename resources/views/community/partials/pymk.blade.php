@@ -86,7 +86,14 @@
     }
     window.__pymkArrows = arrows;
 
-    const step = () => Math.max(120, rail.clientWidth);
+    /* A tap moves two cards, not a screenful: the rail shows two and the
+       edge of a third, so scrolling by its own width would land mid-card and
+       leave the snap to tidy it up. */
+    const step = () => {
+        const first = rail.firstElementChild;
+        if (!first) return Math.max(120, rail.clientWidth);
+        return (first.getBoundingClientRect().width + 8) * 2;
+    };
     prev.addEventListener('click', () => { rail.scrollLeft -= step(); setTimeout(arrows, 380); });
     next.addEventListener('click', () => { rail.scrollLeft += step(); setTimeout(arrows, 380); });
     rail.addEventListener('scroll', () => { clearTimeout(arrows.t); arrows.t = setTimeout(arrows, 90); }, { passive: true });
