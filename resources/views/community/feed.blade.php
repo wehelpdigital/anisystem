@@ -23,6 +23,26 @@
        enough to stay a background, coloured enough that a grey card reads as
        a card. */
 
+    /* The bar the wall opens with: what you came to do, then a word about
+       where you are. */
+    .wall-bar { display: flex; align-items: center; gap: .5rem; margin-bottom: .85rem; }
+    .wb-act { display: inline-flex; align-items: center; gap: .35rem; flex-shrink: 0; }
+    .wb-hint { margin-left: auto; font-size: .72rem; font-weight: 600; color: var(--color-gray-400); }
+    @media (max-width: 599px) { .wb-hint { display: none; } }
+    @media (max-width: 389px) { .wb-act-lbl { display: none; } }
+    .wb-filter { display: inline-flex; align-items: center; gap: .35rem; flex-shrink: 0;
+        max-width: 11rem; padding: .25rem .55rem; border-radius: 999px;
+        font-size: .72rem; font-weight: 800;
+        background: var(--color-brand-50); color: var(--color-brand-700);
+        border: 1px solid var(--color-brand-200); }
+    .wb-filter b { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .wb-filter.hidden { display: none; }
+    html.dark .wb-filter { background: rgb(61 104 35 / .25); border-color: #3f5626; color: #bfe19a; }
+    /* In a sheet the composer is not a band across the page: the sheet owns
+       its edges and its padding, and the head still needs the room the status
+       cloud hangs in. */
+    .comp-sheeted { position: relative; padding-top: 1.4rem; }
+
     .comp-card { margin-left: calc(var(--plaza-gutter, 1rem) * -1);
         margin-right: calc(var(--plaza-gutter, 1rem) * -1);
         padding: .85rem var(--plaza-gutter, 1rem);
@@ -141,12 +161,6 @@
 @section('content')
 @include('community.partials.nav', ['active' => 'wall'])
 
-{{-- Reels first, straight under the nav.
-     They are the thing with the shortest shelf life on this page — a clip
-     somebody shot this morning — and they are read by scrolling sideways,
-     which only works if the rail is where a thumb already is. --}}
-@include('community.partials.reels')
-
 @php
     // The wall controller does not gather the rail, so the rail gathers
     // itself: your discussions (freshest talk first) and the newest articles
@@ -198,10 +212,35 @@
         <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
     </a>
 @endif
-{{-- Share to your own wall, straight from the feed — the same shape the
-     homepage composer has: your face, what's on your mind floating above it,
-     and a field with room to write in. --}}
-<div class="card comp-card mb-4 plaza-accent" id="feedComposer" data-video-host>
+{{-- What you came to do, as two buttons rather than a box you scroll past.
+     The wall is the posts; writing one and looking for one are errands, and
+     both open from the bottom over what you were reading — the same shape
+     the discussion room uses. --}}
+<div class="wall-bar" id="wallBar">
+    <button type="button" id="wallWriteBtn" class="btn btn-primary btn-sm wb-act">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
+        <span class="wb-act-lbl">Write a post</span>
+    </button>
+    <button type="button" id="wallSearchBtn" class="btn btn-white btn-sm wb-act" title="Search the wall" aria-label="Search the wall">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+    </button>
+    {{-- A filter is a thing that is ON, and it has to say so where it can be
+         seen once the sheet is shut. --}}
+    <button type="button" class="wb-filter hidden" id="wallFilterChip" title="Clear the search">
+        <b></b>
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <span class="wb-hint" id="wallBarHint">Ano'ng balita sa bukid?</span>
+</div>
+
+<div class="sheet hidden" id="wallComposerSheet" style="--sheet-width:36rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Write a post</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body" style="padding-bottom:1.1rem">
+<div class="comp-sheeted" id="feedComposer" data-video-host>
     {{-- The same head a post has: the cloud above the face, the name beside
          it, the place under the name — so the box you write in looks like
          the post it becomes. The one difference is that this cloud is yours,
@@ -277,6 +316,25 @@
 
     <button type="button" id="feedPostSubmit" class="btn btn-primary comp-send">Post</button>
 </div>
+    </div>
+</div>
+
+<div class="sheet hidden" id="wallSearchSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Search the wall</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body" style="padding-bottom:1.1rem">
+        @include('community.partials.live-search', [
+            'id' => 'wallFind',
+            'placeholder' => 'Search posts…',
+            'label' => 'Search the wall — words or who wrote them',
+        ])
+        <button type="button" class="btn btn-primary w-full" data-sheet-close>Show the posts</button>
+    </div>
+</div>
+
 
 @include('community.partials.pymk')
 
@@ -394,16 +452,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const moreBtn = document.getElementById('feedLoadMore');
     const spin = document.getElementById('feedSpin');
     const endNote = document.getElementById('feedEnd');
+    const findEl = document.getElementById('wallFind');
+    const findNote = document.getElementById('wallFindNote');
+    const filterChip = document.getElementById('wallFilterChip');
     let loading = false;
     let done = false;                 // the wall ended; stop asking, for good
+    let query = '';
 
+    /* Hidden, not removed: a search is another first page, and a button that
+       was deleted when the wall ran out has nothing to come back to when the
+       answer runs longer than a screen. */
     function finish() {
         // Out of posts: no button, no loader, one line saying so.
         done = true;
-        if (moreBtn) moreBtn.remove();
+        if (moreBtn) { moreBtn.hidden = true; moreBtn.disabled = true; }
         if (spin) spin.hidden = true;
         if (endNote) endNote.hidden = false;
     }
+
+    const feedUrl = (before) => @json(route('community.feed-more'))
+        + '?before=' + encodeURIComponent(before || '')
+        + (query ? '&q=' + encodeURIComponent(query) : '');
 
     async function loadMore() {
         if (!moreBtn || done || loading || moreBtn.disabled) return;
@@ -414,7 +483,7 @@ document.addEventListener('DOMContentLoaded', () => {
         moreBtn.hidden = true;
         if (spin) spin.hidden = false;
         try {
-            const res = await fetch(@json(route('community.feed-more')) + '?before=' + encodeURIComponent(before), { headers: { Accept: 'application/json' } });
+            const res = await fetch(feedUrl(before), { headers: { Accept: 'application/json' } });
             const data = await res.json();
             const tmp = document.createElement('div');
             tmp.innerHTML = data.data.html;
@@ -505,6 +574,81 @@ document.addEventListener('DOMContentLoaded', () => {
         showShot(null);
     });
 
+    /* ---------------- the two doors on the bar ----------------
+       Both are sheets, so both come up from the bottom over the wall rather
+       than pushing it down the page. */
+    document.getElementById('wallWriteBtn')?.addEventListener('click', () => {
+        window.openSheet?.('wallComposerSheet');
+        window.smFocus?.(document.getElementById('feedPostBody'), { delay: 140 });
+    });
+    document.getElementById('wallSearchBtn')?.addEventListener('click', () => {
+        window.openSheet?.('wallSearchSheet');
+        window.smFocus?.(findEl, { delay: 140, always: true });
+    });
+    filterChip?.addEventListener('click', () => {
+        if (!findEl) return;
+        findEl.value = '';
+        findEl.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+
+    /* What came back, said twice: in the sheet where it was asked for, and on
+       the bar, which is what stays on screen once the sheet is shut. */
+    function sayFound(count, hasMore) {
+        if (findNote) {
+            if (!query) { findNote.hidden = true; findNote.textContent = ''; }
+            else {
+                findNote.hidden = false;
+                findNote.innerHTML = count
+                    ? (hasMore ? 'First ' : '') + count + ' ' + (count === 1 ? 'post' : 'posts') + ' matching <b></b>.'
+                    : 'Walang tugma sa <b></b>.';
+                // Typed words go in as text, never as markup.
+                findNote.querySelector('b').textContent = '\u201c' + query + '\u201d';
+            }
+        }
+        if (filterChip) {
+            filterChip.classList.toggle('hidden', !query);
+            if (query) filterChip.querySelector('b').textContent = '\u201c' + query + '\u201d';
+        }
+    }
+
+    async function searchWall(q) {
+        const wrap = document.getElementById('feedWrap');
+        if (!wrap) return;
+        query = q;
+        loading = true;
+        try {
+            // No cursor: this is the top of the answer, not a continuation.
+            const res = await fetch(feedUrl(''), { headers: { Accept: 'application/json' } });
+            const data = await res.json();
+            if (!data.success) throw new Error('search failed');
+            const d = data.data || {};
+            wrap.innerHTML = d.html || '';
+            const count = wrap.querySelectorAll('.feed-post').length;
+            if (!count) {
+                wrap.innerHTML = '<div class="card p-8 text-center" id="wallNone">'
+                    + '<div class="empty-tile">\uD83D\uDD0E</div>'
+                    + '<p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Walang tugma</p>'
+                    + '<p class="text-sm text-gray-500 mt-1">No post here says that \u2014 in the words or in who wrote them.</p></div>';
+            }
+            done = !(d.hasMore && d.before);
+            if (spin) spin.hidden = true;
+            if (endNote) endNote.hidden = true;
+            if (moreBtn) {
+                moreBtn.setAttribute('data-before', d.before || '');
+                moreBtn.hidden = done;
+                moreBtn.disabled = false;
+                moreBtn.textContent = 'Load more posts';
+            }
+            sayFound(count, !!d.hasMore);
+        } catch (_) {
+            toast('Could not search just now.', 'error');
+        } finally {
+            loading = false;
+            setTimeout(nearTail, 0);
+        }
+    }
+    if (findEl) window.plazaLiveSearch?.(findEl, searchWall);
+
     document.getElementById('feedPostSubmit')?.addEventListener('click', async (e) => {
         const host = document.getElementById('feedComposer');
         const body = document.getElementById('feedPostBody').value.trim();
@@ -542,6 +686,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fileInput) fileInput.value = '';
             chip?.classList.add('hidden');
             if (window.plazaClearVideo) window.plazaClearVideo(host);
+            window.closeSheet?.('wallComposerSheet');
             toast('Shared sa wall mo! 🌾');
         } catch (_) { toast('Network error — try again.', 'error'); }
         finally { btn.disabled = false; btn.textContent = prev; }

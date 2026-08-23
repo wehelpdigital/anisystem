@@ -361,8 +361,24 @@ class CommunityController extends Controller
         $moreFollowing = $moreSocial->followingIds((int) $me->id);
         $moreSaved = $moreSocial->bookmarkedIds((int) $me->id);
 
+        /* The same road serves the wall's search: page one with words on it.
+         *
+         * A post is what somebody wrote and who wrote it — both are searched,
+         * because "what did Nena say about tungro" is one question and a
+         * reader does not know which half they remember. % and _ are
+         * wildcards down in SQL and letters up here. */
+        $q = \Illuminate\Support\Str::limit(trim((string) $request->query('q', '')), 120, '');
         $rows = \App\Models\CommunityWallPost::where('deleteStatus', 1)->wallOnly()
             ->quieterThan($beforeTs)
+            ->when($q !== '', function ($sql) use ($q) {
+                $like = '%' . addcslashes($q, '%_\\') . '%';
+                $sql->where(function ($w) use ($like) {
+                    $w->where('body', 'like', $like)
+                        ->orWhereHas('author', fn ($a) => $a
+                            ->where('firstName', 'like', $like)
+                            ->orWhere('lastName', 'like', $like));
+                });
+            })
             ->with(['author'])->withCount('comments')
             ->withLastActivity()
             ->orderByDesc('lastActivityAt')
@@ -383,7 +399,9 @@ class CommunityController extends Controller
          * Told how far down the wall it starts, so the first interruption
          * does not land on the very first post the reader sees after the
          * seam. */
-        $plan = $this->feedInterruptions((int) Auth::id(), $items->count());
+        // A search returns answers, not a magazine: the rooms and articles
+        // dealt into an idle scroll are not what was asked for.
+        $plan = $q === '' ? $this->feedInterruptions((int) Auth::id(), $items->count()) : [];
 
         $html = '';
         foreach ($items as $i => $post) {
@@ -406,6 +424,8 @@ class CommunityController extends Controller
         return response()->json(['success' => true, 'data' => [
             'html' => $html,
             'hasMore' => $hasMore,
+            'count' => $items->count(),
+            'q' => $q,
             // The cursor is the thing the order is on, or the next page
             // would start from a different measure than the one it continues.
             'before' => $items->last()
