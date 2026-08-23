@@ -46,8 +46,8 @@
        The pull is the page's padding less the banner's own overhang — the
        cover is dragged up out of the card it sits in, and taking the whole
        padding as well tucked the top of the picture behind the app bar. */
-    #groupRoot { margin-top:-.2rem; }
-    @media (min-width:768px) { #groupRoot { margin-top:-.9rem; } }
+    #groupRoot { margin-top:-1rem; }
+    @media (min-width:768px) { #groupRoot { margin-top:-2rem; } }
     .disc-hero { padding:.85rem; margin-bottom:.75rem; border-radius:1.1rem; }
     /* The head of the room. Cover, then the face half on it, then the name
        and the numbers across the whole card. */
@@ -69,7 +69,10 @@
         box-shadow:none; border-width:0; margin-bottom:.5rem; }
     /* The room is the screen on a phone, like the wall's posts. */
     .disc-hero { position:relative; }
-    .disc-hero::before { content:''; position:absolute; inset:0 0 auto 0; height:5px; z-index:2;
+    /* The house colours across the top of the room, in the room's own weight:
+       a hairline read as an accident on a card this size, and the band now
+       stands where the empty strip used to be. */
+    .disc-hero::before { content:''; position:absolute; inset:0 0 auto 0; height:.75rem; z-index:2;
         border-top-left-radius:inherit; border-top-right-radius:inherit; pointer-events:none;
         background:linear-gradient(120deg, #2f5219, #6b9f3d 28%, #b8d38e 48%, #4a7c2a 72%, #2f5219);
         background-size:220% 100%; animation:gradSweep 12s ease-in-out infinite alternate; }
@@ -127,6 +130,11 @@
     /* The banner bleeds to the card's edge and takes the top two corners with
        it; the padding below is the card's own again. */
     .disc-hero.has-banner { padding-top:0; }
+    /* The card has no top padding when it carries a banner, so the banner has
+       nothing to climb out of — and the negative margin was hoisting the
+       picture clean off the top of its own card, which is the blank strip
+       that kept appearing above it. It bleeds sideways only. */
+    .disc-hero.has-banner .disc-banner { margin-top:0; }
     .disc-banner { margin:-.85rem -.85rem .75rem; height:7rem; overflow:hidden;
         border-top-left-radius:1.1rem; border-top-right-radius:1.1rem; background:var(--color-gray-100); }
     .disc-banner img { width:100%; height:100%; object-fit:cover; display:block; }

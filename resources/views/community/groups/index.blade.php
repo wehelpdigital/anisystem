@@ -27,19 +27,24 @@
      * was a full-sized one carrying three words; shrunk to a plus and a word
      * — and to a plus alone on the narrowest screens — it sits beside the
      * heading the way the bars in the rest of the community do. */
-    .disc-head { display:flex; align-items:center; gap:.6rem; margin-bottom:.85rem; }
-    .disc-head-copy { min-width:0; flex:1 1 auto; }
-    .disc-head-title { font-family:var(--font-heading); font-size:1.05rem; font-weight:800; line-height:1.25;
+    /* The title and the two buttons on one line, the description under both.
+       The buttons belong to the heading, not to the paragraph, so they sit on
+       its line and centre against it — hung off the whole block they floated
+       between two lines of type and pointed at neither. */
+    .disc-head { margin-bottom:.85rem; }
+    .disc-head-row { display:flex; align-items:center; gap:.6rem; }
+    .disc-head-title { flex:1 1 auto; min-width:0;
+        font-family:var(--font-heading); font-size:1.05rem; font-weight:800; line-height:1.25;
         color:var(--color-gray-900); }
-    .disc-head-sub { font-size:.8rem; line-height:1.4; color:var(--color-gray-500); margin-top:.15rem; }
+    .disc-head-sub { font-size:.78rem; line-height:1.4; color:var(--color-gray-500); margin-top:.2rem; }
     .disc-head-acts { display:flex; align-items:center; gap:.4rem; flex:0 0 auto; }
     .dh-act { display:inline-flex; align-items:center; gap:.3rem; flex:0 0 auto;
         padding:.32rem .6rem; font-size:.75rem; font-weight:800; border-radius:.6rem; }
     .dh-act svg { width:.95rem; height:.95rem; }
-    @media (max-width:479px) {
-        .disc-head-sub { display:none; }
-        .dh-act-lbl { display:none; }
-    }
+    /* The description stays at every width — it is one short line, and it is
+       what tells a newcomer what the page is for. The button's word is what
+       gives way on the narrowest screens. */
+    @media (max-width:419px) { .dh-act-lbl { display:none; } }
     .dh-filter { display:inline-flex; align-items:center; gap:.35rem; flex:0 0 auto;
         max-width:9rem; padding:.22rem .5rem; border-radius:999px;
         font-size:.7rem; font-weight:800;
@@ -187,11 +192,9 @@
 @include('community.partials.nav', ['active' => 'groups'])
 
 <div class="disc-head">
-    <div class="disc-head-copy">
+    <div class="disc-head-row">
         <h2 class="disc-head-title">Sali ka sa usapan</h2>
-        <p class="disc-head-sub">Post questions, share what works.</p>
-    </div>
-    <div class="disc-head-acts">
+        <div class="disc-head-acts">
         {{-- A filter is a thing that is ON, and it says so where it can be
              seen once the sheet is shut. --}}
         <button type="button" class="dh-filter hidden" id="discFilterChip" title="Clear the search">
@@ -203,9 +206,11 @@
             <span class="dh-act-lbl">New</span>
         </button>
         <button type="button" id="discSearchBtn" class="btn btn-white dh-act" title="Search discussions" aria-label="Search discussions">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-        </button>
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+            </button>
+        </div>
     </div>
+    <p class="disc-head-sub">Post questions, share what works — every room here is a conversation somebody started.</p>
 </div>
 
 {{-- An empty room and an empty answer are different things: a search that

@@ -118,7 +118,10 @@
     .group-hero::before { content:''; position:absolute; inset:0; pointer-events:none;
         background:linear-gradient(150deg, var(--av-bg) 0%, transparent 70%); opacity:.9;
         background-size:220% 220%; animation:gradSweep 14s ease-in-out infinite alternate; }
-    html.dark .group-hero::before { opacity:.3; }
+    /* The room's band is a band now, not a hairline laid over a photograph:
+       at .3 it was a smudge on the picture, which is what a hairline wanted
+       and a band does not. */
+    html.dark .group-hero::before { opacity:.9; }
     .group-hero > * { position:relative; }
     @media (prefers-reduced-motion: reduce) { .group-cap, .group-hero::before { animation:none; } }
 
