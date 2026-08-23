@@ -1,6 +1,18 @@
 {{-- "Ang Plaza" — shared community design system (avatars, reactions, emoji
      popover, join morph, composer shells, liveliness). Include once per page. --}}
 <style>
+    /* --- The community's own ground ---
+     *
+     * The wall painted the page under it a soft field green and every other
+     * room in the community stood on the app's plain grey, so walking from
+     * the wall to the discussions, to the members, to the blog was walking
+     * off one floor onto another. One colour, kept here because every one of
+     * those pages already draws its furniture from this file. Each page says
+     * it is standing on it through the layout's body-class section, which is
+     * how the wall has always asked for this colour. */
+    body.plaza-ground { background: #eef4e8; }
+    html.dark body.plaza-ground { background: #0b140d; }
+
     :root { --ease-house: cubic-bezier(.22,1,.36,1); --dur: .28s; }
 
     /* Collapsed discussion replies: keep only the latest 3 until "View all". */

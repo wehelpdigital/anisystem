@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Discussions — Community')
+@section('body-class', 'plaza-ground')
 @section('page-title', 'Community')
 @section('page-subtitle', 'Talk crops with other farmers')
 @section('back', route('community.index'))

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'My Co-Farmers — Community')
+@section('body-class', 'plaza-ground')
 @section('page-title', 'Community')
 @section('page-subtitle', 'Your co-farmers and their latest')
 

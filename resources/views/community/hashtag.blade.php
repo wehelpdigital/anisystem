@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', '#' . $tag . ' — Community')
+@section('body-class', 'plaza-ground')
 @section('page-title', 'Community')
 @section('page-subtitle', 'Posts tagged #' . $tag)
 

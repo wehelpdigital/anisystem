@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', $member->full_name . ' — Community')
+@section('body-class', 'plaza-ground')
 @section('page-title', 'Community')
 @section('page-subtitle', $member->full_name)
 @section('back', route('community.connect.members'))

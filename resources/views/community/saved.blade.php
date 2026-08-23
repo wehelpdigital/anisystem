@@ -8,6 +8,7 @@
 @extends('layouts.app')
 
 @section('title', 'Saved posts')
+@section('body-class', 'plaza-ground')
 @section('page-title', 'Saved posts')
 @section('back', route('community.index'))
 

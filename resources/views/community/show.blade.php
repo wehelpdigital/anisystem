@@ -3,6 +3,7 @@
 @inject('community', 'App\Services\CommunityService')
 
 @section('title', $plan->title . ' — Community')
+@section('body-class', 'plaza-ground')
 @section('page-title', $isOwner ? 'Your shared plan' : 'Shared plan')
 @section('page-subtitle', $plan->title)
 @section('back', route('community.index'))

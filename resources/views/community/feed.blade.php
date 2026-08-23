@@ -22,8 +22,6 @@
        all the work. Green is the house colour, taken almost to black — dark
        enough to stay a background, coloured enough that a grey card reads as
        a card. */
-    body.plaza-ground { background: #eef4e8; }
-    html.dark body.plaza-ground { background: #0b140d; }
 
     .comp-card { margin-left: calc(var(--plaza-gutter, 1rem) * -1);
         margin-right: calc(var(--plaza-gutter, 1rem) * -1);

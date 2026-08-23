@@ -89,6 +89,12 @@
         padding:.5rem var(--plaza-gutter, 1rem);
         background:var(--color-gray-50);
         display:flex; align-items:center; gap:.5rem; flex-wrap:nowrap; }
+    /* The bar is opaque so the posts do not show through it while it is
+       stuck — which means it has to be the same colour as what it is stuck
+       to, or it reads as a foreign strip laid over the page. It takes the
+       community's own ground. */
+    body.plaza-ground .community-nav { background:#eef4e8; }
+    html.dark body.plaza-ground .community-nav { background:#0b140d; }
     @media (min-width:768px) { .community-nav { top:4rem; margin-top:-2rem; } }
     html.dark .community-nav { background:#14171c; }
     .cn-hamburger { min-width:0; }

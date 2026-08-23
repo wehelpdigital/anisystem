@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Requests — Community')
+@section('body-class', 'plaza-ground')
 @section('page-title', 'Community')
 @section('page-subtitle', 'Members who want to connect')
 @section('back', route('community.connect.members'))

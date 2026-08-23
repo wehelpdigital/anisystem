@@ -12,6 +12,7 @@
 @extends('layouts.app')
 
 @section('title', 'Post')
+@section('body-class', 'plaza-ground')
 @section('page-title', 'Post')
 @section('back', route('community.index'))
 

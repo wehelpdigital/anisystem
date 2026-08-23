@@ -6,7 +6,7 @@
 @section('back', route('community.groups.index'))
 {{-- A room is a place you are in; the bar underneath is for leaving it. The
      Collab Room claims the screen the same way. --}}
-@section('body-class', 'hide-tabbar')
+@section('body-class', 'plaza-ground hide-tabbar')
 
 @php use App\Support\CommunityAvatar; @endphp
 
