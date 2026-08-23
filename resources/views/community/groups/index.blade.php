@@ -96,7 +96,17 @@
     /* One action per card: Join until you are in, Open once you are. They
        swap in place, so the card never grows or shifts under the thumb. */
     .disc-act { margin-top:auto; }
-    .disc-act .btn { width:100%; }
+    /* The one button on a room's card, alive the way the tip of the day is:
+       a green that drifts across it on the app's shared tide (gradSweep,
+       layout) rather than a flat fill. The oversize is what gives the
+       gradient room to move; the fill under it stays put so the button never
+       loses its colour mid-sweep. */
+    .disc-act .btn { width:100%; border:0; color:#fff;
+        background-image:linear-gradient(120deg, #2f5219, #4a7c2a 28%, #6b9f3d 52%, #4a7c2a 76%, #2f5219);
+        background-size:220% 100%;
+        animation:gradSweep 10s ease-in-out infinite alternate; }
+    .disc-act .btn:hover { filter:brightness(1.06); }
+    @media (prefers-reduced-motion: reduce) { .disc-act .btn { animation:none; } }
     .disc-act .is-off { display:none; }
     .disc-join { transition:opacity var(--dur) var(--ease-house), transform var(--dur) var(--ease-house); }
     .disc-join.is-going { opacity:0; transform:scale(.96); pointer-events:none; }
