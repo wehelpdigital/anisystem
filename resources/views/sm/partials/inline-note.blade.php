@@ -25,7 +25,7 @@
     // the lie the drag grip was.
     $noteTitle = $noteMayDrag
         ? 'Drag the grip to move · tap the pencil to edit'
-        : ((\App\Support\WorkerContext::canEdit() || \App\Support\WorkerContext::canAddNotes())
+        : ((\App\Support\WorkerContext::canWriteModule('notes'))
             ? 'Tap the pencil to edit'
             : 'You are not allowed to write notes on this schedule');
 @endphp

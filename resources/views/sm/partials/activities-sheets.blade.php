@@ -9,7 +9,9 @@
     // to hold here too — otherwise locking the desktop row just moves the 403
     // one tap further in. Same treatment: shown, disabled, greyed.
     $mayEdit = \App\Support\WorkerContext::canEdit();
-    $mayNote = $mayEdit || \App\Support\WorkerContext::canAddNotes();
+    // Notes answer for themselves; editing the plan is not permission to
+    // write in the notebook.
+    $mayNote = \App\Support\WorkerContext::canWriteModule('notes');
     // A separate question from the two above, and asked of every tier: the
     // owner closed the camera, the recorder, the drawing board, the maps and
     // the technician to workers outright, not to the ones who may not write.

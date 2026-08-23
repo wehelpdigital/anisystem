@@ -7,7 +7,12 @@
      * touch the plan — so this is its own question, not a reading of edit
      * rights. A worker without it gets the buttons REMOVED, which is the
      * house rule for a door the owner closed; the endpoints refuse it too. */
-    $mayNote = \App\Support\WorkerContext::canEdit() || \App\Support\WorkerContext::canAddNotes();
+    // The notes module's OWN level decides, not the plan's. Being allowed
+    // to change the plan is a different permission from being allowed to
+    // write in the notebook, and reading them as an either/or handed a
+    // schedule-editing worker the New note button their owner had just set
+    // to view-only. An owner has no grant and gets 'edit' for everything.
+    $mayNote = \App\Support\WorkerContext::canWriteModule('notes');
 @endphp
 
 @section('title', 'Notes — ' . $schedule->title)

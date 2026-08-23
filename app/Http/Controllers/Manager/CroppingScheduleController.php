@@ -522,17 +522,16 @@ class CroppingScheduleController extends Controller
             'lots',
             'workers',
             'activities',    // relation is already active-version + non-draft scoped
-            'attachments',
-            'criticalRules',
+            // The documentation module is one list of typed entries now, so
+            // the tile counts THAT list. It used to add up the three tables
+            // the module was built from before it was unified — a season with
+            // five old critical rules said "5 documents" and then opened on
+            // "No documents yet", because the number and the page were
+            // reading different shelves.
+            'docEntries',
         ]);
-        $schedule->load('protocol');
 
-        $hasProtocol = $schedule->protocol
-            && ($schedule->protocol->protocolContent || $schedule->protocol->protocolFile);
-
-        $documentationCount = (int) $schedule->attachments_count
-            + (int) $schedule->critical_rules_count
-            + ($hasProtocol ? 1 : 0);
+        $documentationCount = (int) $schedule->doc_entries_count;
 
         $postHarvestCount = \App\Models\AsSchedulePostHarvest::active()
             ->where('croppingScheduleId', $schedule->id)

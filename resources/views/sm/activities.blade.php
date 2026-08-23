@@ -2194,7 +2194,7 @@
     // CAN_EDIT / MAY_NOTE in partials/activities-js.blade.php. A drag has no
     // button to grey out, so the affordance itself has to come and go.
     $boardMayEdit = \App\Support\WorkerContext::canEdit();
-    $boardMayNote = $boardMayEdit || \App\Support\WorkerContext::canAddNotes();
+    $boardMayNote = \App\Support\WorkerContext::canWriteModule('notes');
     // Dragging is its own question now. An editing worker may still change a
     // day through the sheets, where the change is deliberate and named; what
     // they may not do is rearrange the season with a thumb. Twin of MAY_DRAG /

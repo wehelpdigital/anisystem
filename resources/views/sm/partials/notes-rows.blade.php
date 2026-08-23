@@ -102,7 +102,7 @@
                     <p class="text-xs text-gray-400 mt-0.5 js-time">{{ $n->updated_at?->diffForHumans() }}</p>
                 </div>
             </div>
-            @php $mayNote = \App\Support\WorkerContext::canEdit() || \App\Support\WorkerContext::canAddNotes(); @endphp
+            @php $mayNote = \App\Support\WorkerContext::canWriteModule('notes'); @endphp
             <div class="flex gap-1 shrink-0 note-acts">
                 @if ($mayNote)
                 <button type="button" class="btn btn-sm btn-ghost js-edit" aria-label="Edit note">
