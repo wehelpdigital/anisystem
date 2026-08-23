@@ -21,17 +21,33 @@
        the two-column look the owner has now flagged twice. The heading takes
        its own line, the button takes a full one under it, and they share a
        row from 30rem up where both fit without either bending. */
-    .disc-head { display:flex; flex-direction:column; align-items:stretch; gap:.6rem; margin-bottom:1rem; }
-    .disc-head-copy { min-width:0; }
+    /* Two small buttons beside the words, at every width.
+     *
+     * The button used to take a whole line of its own on a phone because it
+     * was a full-sized one carrying three words; shrunk to a plus and a word
+     * — and to a plus alone on the narrowest screens — it sits beside the
+     * heading the way the bars in the rest of the community do. */
+    .disc-head { display:flex; align-items:center; gap:.6rem; margin-bottom:.85rem; }
+    .disc-head-copy { min-width:0; flex:1 1 auto; }
     .disc-head-title { font-family:var(--font-heading); font-size:1.05rem; font-weight:800; line-height:1.25;
         color:var(--color-gray-900); }
     .disc-head-sub { font-size:.8rem; line-height:1.4; color:var(--color-gray-500); margin-top:.15rem; }
-    .disc-head-btn { width:100%; justify-content:center; }
-    @media (min-width:30rem) {
-        .disc-head { flex-direction:row; align-items:center; gap:.75rem; }
-        .disc-head-copy { flex:1 1 auto; }
-        .disc-head-btn { width:auto; flex:0 0 auto; margin-left:auto; }
+    .disc-head-acts { display:flex; align-items:center; gap:.4rem; flex:0 0 auto; }
+    .dh-act { display:inline-flex; align-items:center; gap:.3rem; flex:0 0 auto;
+        padding:.32rem .6rem; font-size:.75rem; font-weight:800; border-radius:.6rem; }
+    .dh-act svg { width:.95rem; height:.95rem; }
+    @media (max-width:479px) {
+        .disc-head-sub { display:none; }
+        .dh-act-lbl { display:none; }
     }
+    .dh-filter { display:inline-flex; align-items:center; gap:.35rem; flex:0 0 auto;
+        max-width:9rem; padding:.22rem .5rem; border-radius:999px;
+        font-size:.7rem; font-weight:800;
+        background:var(--color-brand-50); color:var(--color-brand-700);
+        border:1px solid var(--color-brand-200); }
+    .dh-filter b { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .dh-filter.hidden { display:none; }
+    html.dark .dh-filter { background:rgb(61 104 35 / .25); border-color:#3f5626; color:#bfe19a; }
 
     /* --- A discussion is a band, not a tile ---
        This page IS the list of rooms, so each one runs the full width of the
@@ -175,10 +191,21 @@
         <h2 class="disc-head-title">Sali ka sa usapan</h2>
         <p class="disc-head-sub">Post questions, share what works.</p>
     </div>
-    <button type="button" id="createGroupBtn" class="btn btn-primary btn-sm disc-head-btn">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
-        New Discussion
-    </button>
+    <div class="disc-head-acts">
+        {{-- A filter is a thing that is ON, and it says so where it can be
+             seen once the sheet is shut. --}}
+        <button type="button" class="dh-filter hidden" id="discFilterChip" title="Clear the search">
+            <b></b>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+        <button type="button" id="createGroupBtn" class="btn btn-primary dh-act">
+            <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
+            <span class="dh-act-lbl">New</span>
+        </button>
+        <button type="button" id="discSearchBtn" class="btn btn-white dh-act" title="Search discussions" aria-label="Search discussions">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+        </button>
+    </div>
 </div>
 
 {{-- An empty room and an empty answer are different things: a search that
@@ -193,13 +220,6 @@
         </div>
     </div>
 @else
-    @include('community.partials.live-search', [
-        'id' => 'discFind',
-        'value' => $q ?? '',
-        'placeholder' => 'Search discussions…',
-        'label' => 'Search discussions',
-    ])
-
     <div class="disc-grid stagger-children" id="groupsGrid">
         @include('community.groups.partials.cards', ['groups' => $groups])
     </div>
@@ -216,6 +236,25 @@
         <p class="disc-end" id="discEnd" hidden>🌾 Iyan na ang lahat ng usapan.</p>
     </div>
 @endif
+
+{{-- The field, behind the magnifier: it filters the list as you type, and
+     closing the sheet leaves the answer on screen. --}}
+<div class="sheet hidden" id="discSearchSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Search discussions</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body" style="padding-bottom:1.1rem">
+        @include('community.partials.live-search', [
+            'id' => 'discFind',
+            'value' => $q ?? '',
+            'placeholder' => 'Search discussions…',
+            'label' => 'Search discussions — name or what it is about',
+        ])
+        <button type="button" class="btn btn-primary w-full" data-sheet-close>Show the discussions</button>
+    </div>
+</div>
 
 {{-- Create group sheet --}}
 <div class="sheet hidden" id="createGroupSheet" style="--sheet-width:28rem">
@@ -613,6 +652,13 @@ document.addEventListener('DOMContentLoaded', () => {
        the tail, the "nothing matched" card, the line under the field — is put
        back to a first page here, because that is exactly what arrived. */
     function say(count, hasMore) {
+        // Said in the sheet where it was asked for, and on the head, which is
+        // what stays on screen once the sheet is shut.
+        const chip = document.getElementById('discFilterChip');
+        if (chip) {
+            chip.classList.toggle('hidden', !query);
+            if (query) chip.querySelector('b').textContent = '“' + query + '”';
+        }
         if (!findNote) return;
         if (!query) { findNote.hidden = true; findNote.textContent = ''; return; }
         findNote.hidden = false;
@@ -664,6 +710,17 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(nearTail, 0);
         }
     }
+
+    const filterChip = document.getElementById('discFilterChip');
+    document.getElementById('discSearchBtn')?.addEventListener('click', () => {
+        window.openSheet?.('discSearchSheet');
+        window.smFocus?.(findEl, { delay: 140, always: true });
+    });
+    filterChip?.addEventListener('click', () => {
+        if (!findEl) return;
+        findEl.value = '';
+        findEl.dispatchEvent(new Event('input', { bubbles: true }));
+    });
 
     if (findEl) {
         window.plazaLiveSearch?.(findEl, search);

@@ -36,10 +36,18 @@
 
     /* --- The room's head: a place banner, not a wall of text. The name, who
        is in it, and the one thing you can do about that, in one row. --- */
-    /* The section bar is sticky and wears the page's own background, so the
-       room began flush against it. A little air above the banner tells the
-       eye where the bar ends and the room starts. */
-    #groupRoot { padding-top:.6rem; }
+    /* The room opens on its own cover.
+     *
+     * With the section bar gone the page's opening padding was the only
+     * thing above the picture — a band of ground between the app bar and the
+     * room, which is the same hole the bar itself used to leave. The room
+     * takes that padding back, so the cover meets the app bar.
+     *
+       The pull is the page's padding less the banner's own overhang — the
+       cover is dragged up out of the card it sits in, and taking the whole
+       padding as well tucked the top of the picture behind the app bar. */
+    #groupRoot { margin-top:-.2rem; }
+    @media (min-width:768px) { #groupRoot { margin-top:-.9rem; } }
     .disc-hero { padding:.85rem; margin-bottom:.75rem; border-radius:1.1rem; }
     /* The head of the room. Cover, then the face half on it, then the name
        and the numbers across the whole card. */
@@ -349,7 +357,11 @@
 @endpush
 
 @section('content')
-@include('community.partials.nav', ['active' => 'groups'])
+{{-- No section bar in a room.
+     Discussions / Saved / Chat are the ways OUT of the community's rooms,
+     and inside one they read as a second set of tabs belonging to the room
+     itself — which is what was confusing. The back arrow in the app bar is
+     the way out of here; the bar is waiting on the page it goes back to. --}}
 <div data-group-member="{{ $isMember ? 1 : 0 }}" id="groupRoot" data-group-id="{{ $group->id }}"
      data-view="group:{{ $group->id }}">
 
