@@ -37,20 +37,25 @@ class CommunityGroupController extends Controller
     public function index(Request $request)
     {
         $userId = Auth::id();
-        $page = $this->pageGroups($userId, 1);
+        // A search survives a reload and a shared link: the same list the
+        // typing produces is the one ?q= draws on its own.
+        $q = self::term($request);
+        $page = $this->pageGroups($userId, 1, $q);
 
         return view('community.groups.index', [
             'groups' => $page['items'],
             'hasMore' => $page['hasMore'],
             'myGroupIds' => $page['myGroupIds'],
+            'q' => $q,
         ]);
     }
 
-    /** JSON page of discussion cards for "load more". */
+    /** JSON page of discussion cards for "load more" and for the search. */
     public function groupsPage(Request $request)
     {
         $page = max(1, (int) $request->query('page', 1));
-        $data = $this->pageGroups(Auth::id(), $page);
+        $q = self::term($request);
+        $data = $this->pageGroups(Auth::id(), $page, $q);
 
         return response()->json([
             'success' => true,
@@ -58,8 +63,32 @@ class CommunityGroupController extends Controller
                 'html' => view('community.groups.partials.cards', ['groups' => $data['items']])->render(),
                 'hasMore' => $data['hasMore'],
                 'nextPage' => $page + 1,
+                'count' => $data['items']->count(),
+                'q' => $q,
             ],
         ]);
+    }
+
+    /**
+     * What was typed, trimmed and bounded.
+     *
+     * Length is capped because a LIKE over a whole paragraph is a scan
+     * nobody asked for, and the words that follow it never narrow anything.
+     */
+    private static function term(Request $request): string
+    {
+        return \Illuminate\Support\Str::limit(trim((string) $request->query('q', '')), 120, '');
+    }
+
+    /**
+     * The typed words as a LIKE pattern.
+     *
+     * % and _ are wildcards down in SQL and letters up here: a farmer asking
+     * about "50% urea" means fifty per cent, not "anything at all".
+     */
+    private static function like(string $q): string
+    {
+        return '%' . addcslashes($q, '%_\\') . '%';
     }
 
     /**
@@ -90,10 +119,18 @@ class CommunityGroupController extends Controller
      *
      * @return array{items:\Illuminate\Support\Collection, hasMore:bool, myGroupIds:array<int,int>}
      */
-    private function pageGroups(int $userId, int $page): array
+    private function pageGroups(int $userId, int $page, string $q = ''): array
     {
         $per = self::GROUPS_PER_PAGE;
         $rows = CommunityGroup::active()
+            // What a discussion is called, and what it says it is about.
+            ->when($q !== '', function ($sql) use ($q) {
+                $like = self::like($q);
+                $sql->where(function ($w) use ($like) {
+                    $w->where('name', 'like', $like)
+                        ->orWhere('description', 'like', $like);
+                });
+            })
             ->withCount([
                 'members as member_count',
                 'posts as post_count',
@@ -157,12 +194,12 @@ class CommunityGroupController extends Controller
         ]);
     }
 
-    /** JSON page of posts for "load more". */
+    /** JSON page of posts for "load more" and for the room's own search. */
     public function posts(Request $request, int $id)
     {
         $group = $this->group($id);
         $page = max(1, (int) $request->query('page', 1));
-        $posts = $this->pagePosts($group->id, $page);
+        $posts = $this->pagePosts($group->id, $page, self::term($request));
         $this->withReactions($posts['items']);
         $this->withAuthorFacts($posts['items']);
 
@@ -172,6 +209,7 @@ class CommunityGroupController extends Controller
                 'html' => view('community.groups.partials.posts', ['posts' => $posts['items'], 'group' => $group])->render(),
                 'hasMore' => $posts['hasMore'],
                 'nextPage' => $page + 1,
+                'count' => $posts['items']->count(),
             ],
         ]);
     }
@@ -985,11 +1023,22 @@ class CommunityGroupController extends Controller
      *
      * @return array{items:\Illuminate\Support\Collection, hasMore:bool}
      */
-    private function pagePosts(int $groupId, int $page): array
+    private function pagePosts(int $groupId, int $page, string $q = ''): array
     {
         $offset = ($page - 1) * self::POSTS_PER_PAGE;
         $rows = CommunityGroupPost::active()
             ->where('groupId', $groupId)
+            // A room is searched to find where something was SAID, which is
+            // as often in an answer as in the question — so a topic whose
+            // replies carry the words is a match too.
+            ->when($q !== '', function ($sql) use ($q) {
+                $like = self::like($q);
+                $sql->where(function ($w) use ($like) {
+                    $w->where('title', 'like', $like)
+                        ->orWhere('body', 'like', $like)
+                        ->orWhereHas('replies', fn ($r) => $r->where('body', 'like', $like));
+                });
+            })
             ->with(['author', 'replies.author'])
             ->select('as_community_group_posts.*')
             ->selectRaw('GREATEST(

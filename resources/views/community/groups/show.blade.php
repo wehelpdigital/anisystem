@@ -534,6 +534,16 @@
     @endunless
 
     {{-- Posts --}}
+    {{-- A room with nothing in it has nothing to search; the field arrives
+         with the first topic. --}}
+    @if ($posts->isNotEmpty())
+        @include('community.partials.live-search', [
+            'id' => 'topicFind',
+            'placeholder' => 'Search this discussion — topics and replies…',
+            'label' => 'Search this discussion',
+        ])
+    @endif
+
     <div id="postsWrap">
         @if ($posts->isEmpty())
             <div class="card p-8 text-center" id="postsEmpty">
@@ -544,6 +554,12 @@
         @else
             @include('community.groups.partials.posts', ['posts' => $posts, 'group' => $group])
         @endif
+    </div>
+
+    <div class="card p-8 text-center" id="topicNone" hidden>
+        <div class="empty-tile">🔎</div>
+        <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Walang tugma</p>
+        <p class="text-sm text-gray-500 mt-1">No topic here says that — in the question or in the answers under it.</p>
     </div>
 
     @if ($posts->isNotEmpty())
@@ -1136,12 +1152,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const moreBtn = document.getElementById('loadMoreBtn');
     const spin = document.getElementById('postsSpin');
     const endNote = document.getElementById('postsEnd');
+    const tail = document.getElementById('postsTail');
+    const findEl = document.getElementById('topicFind');
+    const findNote = document.getElementById('topicFindNote');
+    const noneCard = document.getElementById('topicNone');
     let loading = false;
     let done = !moreBtn || moreBtn.hidden;
+    let query = '';
 
+    /* Hidden, not removed: a search is another first page, and a button that
+       was deleted when the room ran out has nothing to come back to when the
+       answer is longer than one screen. */
     function finishPosts() {
         done = true;
-        moreBtn?.remove();
+        if (moreBtn) { moreBtn.hidden = true; moreBtn.disabled = true; }
         if (spin) spin.hidden = true;
         if (endNote) endNote.hidden = false;
     }
@@ -1154,7 +1178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         moreBtn.hidden = true;
         if (spin) spin.hidden = false;
         try {
-            const res = await fetch(`/app/community/groups/${groupId}/posts?page=${page}`, { headers: { Accept: 'application/json' } });
+            const res = await fetch(postsUrl(page), { headers: { Accept: 'application/json' } });
             const data = await res.json();
             if (!data.success) throw new Error('load failed');
             wrap.insertAdjacentHTML('beforeend', data.data.html);
@@ -1196,6 +1220,58 @@ document.addEventListener('DOMContentLoaded', () => {
         lastLook = now;
         nearTail();
     }
+    const postsUrl = (page) => `/app/community/groups/${groupId}/posts?page=${page}`
+        + (query ? '&q=' + encodeURIComponent(query) : '');
+
+    /* ---------------- searching the room ----------------
+       The same endpoint the pagination uses, asked for page one with the
+       words on it — so a match found on the fourth page is on the first one
+       here. The server looks in the replies too: a room is searched to find
+       where something was said, and that is as often an answer as a question. */
+    function say(count, hasMore) {
+        if (!findNote) return;
+        if (!query) { findNote.hidden = true; findNote.textContent = ''; return; }
+        findNote.hidden = false;
+        if (!count) findNote.innerHTML = 'Walang tugma sa <b></b>.';
+        else findNote.innerHTML = (hasMore ? 'First ' : '') + count + ' '
+            + (count === 1 ? 'topic' : 'topics') + ' matching <b></b>.';
+        // Typed words go in as text, never as markup.
+        findNote.querySelector('b').textContent = '“' + query + '”';
+    }
+
+    async function search(q) {
+        const host = document.getElementById('postsWrap');
+        if (!host) return;
+        query = q;
+        loading = true;
+        try {
+            const res = await fetch(postsUrl(1), { headers: { Accept: 'application/json' } });
+            const data = await res.json();
+            if (!data.success) throw new Error('search failed');
+            host.innerHTML = data.data.html || '';
+            const count = host.children.length;
+            if (noneCard) noneCard.hidden = count > 0;
+            done = !data.data.hasMore;
+            if (spin) spin.hidden = true;
+            if (endNote) endNote.hidden = true;
+            if (moreBtn) {
+                moreBtn.setAttribute('data-next', data.data.nextPage || 2);
+                moreBtn.hidden = !data.data.hasMore;
+                moreBtn.disabled = false;
+                moreBtn.textContent = 'Show older topics';
+            }
+            if (tail) tail.hidden = !data.data.hasMore;
+            say(count, !!data.data.hasMore);
+        } catch (_) {
+            toast('Could not search just now.', 'error');
+        } finally {
+            loading = false;
+            setTimeout(nearTail, 0);
+        }
+    }
+
+    if (findEl) window.plazaLiveSearch?.(findEl, search);
+
     moreBtn?.addEventListener('click', loadMore);
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });

@@ -148,7 +148,9 @@
     </button>
 </div>
 
-@if ($groups->isEmpty())
+{{-- An empty room and an empty answer are different things: a search that
+     matched nothing keeps its field, or there is no way back to the list. --}}
+@if ($groups->isEmpty() && ($q ?? '') === '')
     <div class="card">
         <div class="card-body text-center py-14">
             <div class="empty-tile">👥</div>
@@ -158,8 +160,21 @@
         </div>
     </div>
 @else
+    @include('community.partials.live-search', [
+        'id' => 'discFind',
+        'value' => $q ?? '',
+        'placeholder' => 'Search discussions — name or what it is about…',
+        'label' => 'Search discussions',
+    ])
+
     <div class="grid gap-3 sm:grid-cols-2 stagger-children" id="groupsGrid">
         @include('community.groups.partials.cards', ['groups' => $groups])
+    </div>
+
+    <div class="card p-8 text-center" id="discNone" @unless ($groups->isEmpty()) hidden @endunless>
+        <div class="empty-tile">🔎</div>
+        <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Walang tugma</p>
+        <p class="text-sm text-gray-500 mt-1">No discussion matches that. Try one word instead of a phrase.</p>
     </div>
 
     <div class="disc-tail" id="discTail" @unless ($hasMore) hidden @endunless>
@@ -453,17 +468,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const moreBtn = document.getElementById('discMore');
     const spin = document.getElementById('discSpin');
     const endNote = document.getElementById('discEnd');
+    const findEl = document.getElementById('discFind');
+    const noneCard = document.getElementById('discNone');
+    const findNote = document.getElementById('discFindNote');
     let nextPage = 2;
     let loading = false;
     let done = false;
     let autoPull = true;
+    let query = (findEl?.value || '').trim();
 
+    /* Hidden, not removed. A search is another first page, and a button that
+       was deleted when the unfiltered list ran out has nothing to come back
+       to when the answer is longer than one screen. */
     function finish() {
         done = true;
-        moreBtn?.remove();
+        if (moreBtn) { moreBtn.hidden = true; moreBtn.disabled = true; }
         if (spin) spin.hidden = true;
         if (endNote) endNote.hidden = false;
     }
+
+    const pageUrl = (page) => PAGE_URL + '?page=' + page
+        + (query ? '&q=' + encodeURIComponent(query) : '');
 
     function land(el, i) {
         grid.appendChild(el);
@@ -482,7 +507,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (moreBtn) { moreBtn.disabled = true; moreBtn.hidden = true; }
         if (spin) spin.hidden = false;
         try {
-            const res = await fetch(PAGE_URL + '?page=' + nextPage, {
+            const res = await fetch(pageUrl(nextPage), {
                 headers: { Accept: 'application/json' },
                 credentials: 'same-origin',
             });
@@ -549,12 +574,73 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(() => { /* leave the page as it was rather than break it */ });
     });
 
-    if (tail && !tail.hidden) {
-        moreBtn?.addEventListener('click', () => { autoPull = true; loadPage(); });
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onScroll, { passive: true });
-        nearTail();   // a short list can end with the tail already in view
+    /* ---------------- Search ----------------
+       The same endpoint the pagination uses, asked for page one with the
+       words on it. Everything the reader can see about the list — the cards,
+       the tail, the "nothing matched" card, the line under the field — is put
+       back to a first page here, because that is exactly what arrived. */
+    function say(count, hasMore) {
+        if (!findNote) return;
+        if (!query) { findNote.hidden = true; findNote.textContent = ''; return; }
+        findNote.hidden = false;
+        if (!count) { findNote.innerHTML = 'Walang tugma sa <b></b>.'; }
+        else { findNote.innerHTML = (hasMore ? 'First ' : '') + count + ' '
+            + (count === 1 ? 'discussion' : 'discussions') + ' matching <b></b>.'; }
+        // The words go in as text, never as markup — they came from a keyboard.
+        findNote.querySelector('b').textContent = '“' + query + '”';
     }
+
+    async function search(q) {
+        if (!grid) return;
+        query = q;
+        // A shared link, a reload and a back button should all show what is
+        // on the screen right now.
+        try {
+            const url = new URL(window.location.href);
+            if (q) url.searchParams.set('q', q); else url.searchParams.delete('q');
+            history.replaceState(null, '', url);
+        } catch (_) { /* an address bar that will not be written is not a failure */ }
+
+        loading = true;
+        try {
+            const res = await fetch(pageUrl(1), {
+                headers: { Accept: 'application/json' },
+                credentials: 'same-origin',
+            });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const data = (await res.json()).data || {};
+            grid.innerHTML = data.html || '';
+            const count = grid.children.length;
+            if (noneCard) noneCard.hidden = count > 0;
+            nextPage = data.nextPage || 2;
+            done = !data.hasMore;
+            autoPull = true;
+            if (spin) spin.hidden = true;
+            if (endNote) endNote.hidden = true;
+            if (moreBtn) {
+                moreBtn.hidden = !data.hasMore;
+                moreBtn.disabled = false;
+                moreBtn.textContent = 'Show more discussions';
+            }
+            if (tail) tail.hidden = !data.hasMore;
+            say(count, !!data.hasMore);
+        } catch (_) {
+            if (window.toast) toast('Could not search just now.', 'error');
+        } finally {
+            loading = false;
+            setTimeout(nearTail, 0);
+        }
+    }
+
+    if (findEl) {
+        window.plazaLiveSearch?.(findEl, search);
+        if (query) say(grid ? grid.children.length : 0, !!(tail && !tail.hidden));
+    }
+
+    moreBtn?.addEventListener('click', () => { autoPull = true; loadPage(); });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    if (tail && !tail.hidden) nearTail();   // a short list can end with the tail already in view
 });
 </script>
 @endpush
