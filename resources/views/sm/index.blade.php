@@ -131,6 +131,37 @@
            a tinted icon you recognise before you read, a name, and a line
            saying why you would tap it. Across a phone in a single strip
            there was room for none of that. ---- */
+        /* --- Global and Quick Tools: one heading over the four doors ---
+           Folds with a grid row rather than max-height, so the panel is
+           exactly as tall as what is in it and the animation has a real end
+           to reach. */
+        .qa-panel { border: 1px solid var(--color-gray-200); border-radius: 1rem;
+            background: var(--color-white); overflow: hidden; }
+        .qa-panel-head { display: flex; align-items: center; gap: .7rem; width: 100%;
+            text-align: left; padding: .7rem .8rem; cursor: pointer; background: none; border: 0; }
+        .qa-panel-head:hover { background: var(--color-gray-50); }
+        .qa-panel-ico { width: 2.4rem; height: 2.4rem; border-radius: .7rem; flex: none;
+            display: inline-flex; align-items: center; justify-content: center;
+            background: var(--color-brand-50); color: var(--color-brand-700); }
+        .qa-panel-ico svg { width: 1.25rem; height: 1.25rem; }
+        .qa-panel-txt { min-width: 0; flex: 1 1 auto; }
+        .qa-panel-txt b { display: block; font-size: .875rem; font-weight: 700; color: var(--color-gray-900); }
+        .qa-panel-txt i { display: block; font-style: normal; font-size: .75rem; color: var(--color-gray-500);
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .qa-panel-chev { width: 1.1rem; height: 1.1rem; flex: none; color: var(--color-gray-400);
+            transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        .qa-panel.is-folded .qa-panel-chev { transform: rotate(-90deg); }
+        .qa-panel-fold { display: grid; grid-template-rows: 1fr;
+            transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+        .qa-panel.is-folded .qa-panel-fold { grid-template-rows: 0fr; }
+        .qa-panel-fold > div { overflow: hidden; min-height: 0; }
+        .qa-panel .qa-stack { padding: 0 .55rem .55rem; }
+        /* Inside the panel the tiles are rows of a list, not cards on a page. */
+        .qa-panel .qa-tile { border-color: var(--color-gray-100); }
+        @media (prefers-reduced-motion: reduce) {
+            .qa-panel-fold, .qa-panel-chev { transition: none; }
+        }
+
         .qa-stack { display: grid; gap: .5rem; }
         .qa-tile { display: flex; align-items: center; gap: .7rem; width: 100%; text-align: left;
             padding: .7rem .8rem; border-radius: .9rem; cursor: pointer; text-decoration: none;
@@ -569,6 +600,22 @@
              them said what the thing was for. Given a row each they can be
              what the Hub's tiles are: an icon you recognise, a name, and a
              line saying why you would tap it. --}}
+        {{-- Folded behind one heading: this page is a list of seasons, and
+             four full-width doors above it pushed the list off a phone
+             screen. The choice is remembered per farm, because whether these
+             are useful depends on how somebody works, not on which visit it
+             is. --}}
+        <section class="qa-panel" id="globalTools">
+            <button type="button" class="qa-panel-head" id="globalToolsHead" aria-expanded="true" aria-controls="globalToolsBody">
+                <span class="qa-panel-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 4a2 2 0 012 2v1.2a6.9 6.9 0 011.7.7l.85-.85a2 2 0 012.83 0l.7.7a2 2 0 010 2.83l-.85.85c.31.53.55 1.1.7 1.7H20a2 2 0 012 2v1a2 2 0 01-2 2h-1.2M4 13a2 2 0 01-2-2v-1a2 2 0 012-2h1.2c.15-.6.39-1.17.7-1.7"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 15a3 3 0 100-6 3 3 0 000 6zM7 20l5-5 5 5"/></svg></span>
+                <span class="qa-panel-txt">
+                    <b>Global and Quick Tools</b>
+                    <i>Notes and pictures across every season, and the two ways to add one now.</i>
+                </span>
+                <svg class="qa-panel-chev" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="qa-panel-fold" id="globalToolsBody">
+              <div>
         <div class="qa-stack">
             <a href="{{ route('notes.hub') }}" class="qa-tile qa-notes">
                 <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span>
@@ -608,6 +655,9 @@
                 </button>
             @endif
         </div>
+              </div>
+            </div>
+        </section>
 
         {{-- Search runs as you type (see the script below); the button-less form
              still submits on Enter as a no-JS fallback. --}}
@@ -871,6 +921,35 @@
 
     @include('sm.partials.quick-capture', ['allSchedules' => $allSchedules])
     @include('sm.partials.quick-record', ['allSchedules' => $allSchedules])
+    {{-- Whether the tools panel is open. Kept per farm beside the folds this
+         page already remembers, so a worker standing in somebody else's farm
+         does not inherit the owner's choice. --}}
+    <script>
+    (function globalToolsFold() {
+        const panel = document.getElementById('globalTools');
+        const head = document.getElementById('globalToolsHead');
+        if (!panel || !head) return;
+
+        const KEY = 'smToolsFolded:' + @json(\App\Support\WorkerContext::effectiveOwnerId());
+        const paint = (folded) => {
+            panel.classList.toggle('is-folded', folded);
+            head.setAttribute('aria-expanded', folded ? 'false' : 'true');
+        };
+
+        // Painted before the first frame where possible; the class only
+        // changes a grid row, so there is nothing to flash.
+        let folded = false;
+        try { folded = localStorage.getItem(KEY) === '1'; } catch (_) {}
+        paint(folded);
+
+        head.addEventListener('click', () => {
+            folded = !panel.classList.contains('is-folded');
+            paint(folded);
+            try { localStorage.setItem(KEY, folded ? '1' : '0'); } catch (_) {}
+        });
+    })();
+    </script>
+
     {{-- Quick Record borrows the shared recorder, so the page needs it. --}}
     @include('community.partials.video-js')
 @endsection
