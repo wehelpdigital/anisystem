@@ -552,11 +552,19 @@
         </div>
     @endif
 
-    @if ($isMember)
-        <button type="button" class="write-fab is-hidden" id="writeFab" aria-label="Write a post">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+    {{-- A room can run to thousands of pixels, and the two places anyone
+         wants are its ends. The composer is already at the top of the page
+         and one tap away up there, so the corner is better spent on the
+         journey than on a second Write button. Drawn for a visitor too:
+         reading a long room is not a member's privilege. --}}
+    <div class="disc-jumps is-hidden" id="discJumps" aria-hidden="true">
+        <button type="button" id="discJumpTop" aria-label="Jump to the top">
+            <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
         </button>
-    @endif
+        <button type="button" id="discJumpBottom" aria-label="Jump to the bottom">
+            <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+    </div>
     </div>{{-- /paneDiscussion --}}
 
     {{-- ===================== GROUP CHAT PANE ===================== --}}
@@ -756,7 +764,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 composer.classList.add('is-entering');
                 composer.addEventListener('animationend', () => composer.classList.remove('is-entering'), { once: true });
             }
-            document.getElementById('writeFab')?.classList.remove('is-hidden');
         } else {
             composer.classList.add('hidden');
         }
@@ -1186,19 +1193,33 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', onScroll, { passive: true });
     nearTail();   // a short room can end with the tail already in view
 
-    /* ---------------- write-FAB: shows when the composer scrolls away ---------------- */
-    const fab = document.getElementById('writeFab');
-    const composerCard = document.getElementById('composerCard');
-    if (fab && composerCard && 'IntersectionObserver' in window) {
-        new IntersectionObserver(([entry]) => {
-            fab.classList.toggle('is-hidden', entry.isIntersecting || composerCard.classList.contains('hidden'));
-        }, { threshold: 0 }).observe(composerCard);
-        fab.addEventListener('click', () => {
-            composerCard.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
-            // The composer's first field is the title — the old `body` var died
-            // when the body became a Quill editor, and focusing an undefined
-            // threw before the keyboard could come up.
-            window.smFocus?.(document.getElementById('postTitle'), { delay: reduceMotion ? 0 : 350 });
+    /* ---------------- jump to either end of the room ----------------
+     * Off the screen until the page has actually been scrolled, so a short
+     * room never carries buttons it has no use for. The same threshold in
+     * both directions: past a screenful there is somewhere to go back to. */
+    const jumps = document.getElementById('discJumps');
+    if (jumps) {
+        const behavior = reduceMotion ? 'auto' : 'smooth';
+        const paintJumps = () => {
+            // The chat pane takes the whole screen and scrolls itself; the
+            // topics' buttons have no business floating over it.
+            const chatting = document.documentElement.classList.contains('room-chat-open');
+            const far = window.scrollY > Math.min(360, window.innerHeight * 0.6);
+            jumps.classList.toggle('is-hidden', chatting || !far);
+            jumps.setAttribute('aria-hidden', jumps.classList.contains('is-hidden') ? 'true' : 'false');
+        };
+        window.addEventListener('scroll', paintJumps, { passive: true });
+        window.addEventListener('resize', paintJumps, { passive: true });
+        document.addEventListener('click', () => setTimeout(paintJumps, 60));
+        paintJumps();
+
+        document.getElementById('discJumpTop')?.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior });
+        });
+        document.getElementById('discJumpBottom')?.addEventListener('click', () => {
+            // The document's own end, so "older topics" loaded since still
+            // count as further down.
+            window.scrollTo({ top: document.documentElement.scrollHeight, behavior });
         });
     }
 });

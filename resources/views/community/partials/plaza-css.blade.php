@@ -301,17 +301,24 @@
         margin:0 .1rem; animation: dotBounce .9s var(--ease-house) infinite; }
     #loadMoreBtn .dot:nth-child(2) { animation-delay:.12s; } #loadMoreBtn .dot:nth-child(3) { animation-delay:.24s; }
     @keyframes dotBounce { 0%,100%{transform:none; opacity:.5} 40%{transform:translateY(-4px); opacity:1} }
-    .write-fab { position:fixed; right:1rem; bottom:4.75rem; z-index:30; width:3.25rem; height:3.25rem; border:0;
-        border-radius:9999px; background:var(--color-brand-600); color:#fff; display:inline-flex;
-        align-items:center; justify-content:center; box-shadow:var(--shadow-card-lg); cursor:pointer;
+    /* Both ends of a long room, in the corner the write button used to hold.
+       Same shape as the board's own jump stack, so the two read as one app. */
+    .disc-jumps { position:fixed; right:1rem; bottom:4.75rem; z-index:30;
+        display:flex; flex-direction:column; gap:.45rem;
         transition: opacity var(--dur) var(--ease-house), transform var(--dur) var(--ease-house); }
-    .write-fab.is-hidden { opacity:0; transform:scale(.6); pointer-events:none; }
+    .disc-jumps button { width:2.6rem; height:2.6rem; border-radius:9999px; border:1px solid var(--color-gray-200);
+        background:var(--color-white); color:var(--color-gray-600); display:inline-flex;
+        align-items:center; justify-content:center; box-shadow:var(--shadow-card-lg); cursor:pointer; }
+    .disc-jumps button svg { width:1.2rem; height:1.2rem; }
+    .disc-jumps button:active { transform:scale(.92); }
+    .disc-jumps.is-hidden { opacity:0; transform:translateY(.5rem); pointer-events:none; }
     /* On phones the messenger launcher owns the same corner (its dock rides at
-       4.5rem above the tab bar) — the write FAB steps up one storey so both
-       stay tappable instead of stacking on the same spot. */
+       4.5rem above the tab bar) — the stack steps up one storey so both stay
+       tappable instead of sitting on the same spot. */
     @media (max-width:767px) {
-        .write-fab { bottom:calc(8.5rem + env(safe-area-inset-bottom, 0px)); }
+        .disc-jumps { bottom:calc(8.5rem + env(safe-area-inset-bottom, 0px)); }
     }
+    @media (prefers-reduced-motion: reduce) { .disc-jumps { transition:none; } }
 
     /* --- Join gate: invitation card, live melt, animated reply-form gate --- */
     #joinPrompt { border:1.5px dashed var(--color-brand-300); background:var(--color-brand-50); border-radius:1rem;
@@ -1011,7 +1018,7 @@
         .post-enter, .post-enter::after, .attach-chip, .group-joined-tag:not(.hidden), .wall-reply-form,
         .react-btn.just-reacted .e, .react-count.tick, #composerCard.is-entering, #loadMoreBtn .dot { animation:none !important; }
         .react-btn, .group-join-btn, .btn-open, .reply-shell, .reply-send, .emoji-btn, .emoji-pop, .plaza-clamp-body,
-        #postsWrap, .write-fab, .post-reply-form, #joinPrompt, .group-post.is-removing,
+        #postsWrap, .disc-jumps, .post-reply-form, #joinPrompt, .group-post.is-removing,
         .thread-fold, .thread-toggle .th-chev { transition:none !important; }
     }
 </style>
