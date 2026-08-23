@@ -79,7 +79,10 @@
         @if ($ytVid)
             @include('community.partials.youtube-card', ['vid' => $ytVid])
         @endif
-        @if ($post->imagePath)
+        @php $fpShots = $post->shots(); @endphp
+        @if (count($fpShots) > 1)
+            @include('community.partials.post-gallery', ['shots' => $fpShots])
+        @elseif ($post->imagePath)
             {{-- media-skel: shimmer while the photo decodes, vanish if it 404s. --}}
             {{-- Tapping the picture opens it whole in the lightbox — the crop
                  here is only what fits the column. The lightbox binds to the

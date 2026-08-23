@@ -13,21 +13,51 @@ use Illuminate\Support\Facades\Auth;
  */
 class CommunityBlogController extends Controller
 {
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
+        /* An article is its title, the line under it, the words in it and
+         * whoever wrote it — all four are searched, because a reader looking
+         * for "the one about mechanisation" does not know which of them they
+         * remember it from. % and _ are wildcards down in SQL and letters up
+         * here: somebody asking about "50% urea" means fifty per cent. */
+        $q = \Illuminate\Support\Str::limit(trim((string) $request->query('q', '')), 120, '');
+
         $posts = AsCommunityBlogPost::active()
             ->published()
+            ->when($q !== '', function ($sql) use ($q) {
+                $like = '%' . addcslashes($q, '%_\\') . '%';
+                $sql->where(function ($w) use ($like) {
+                    $w->where('title', 'like', $like)
+                        ->orWhere('excerpt', 'like', $like)
+                        ->orWhere('body', 'like', $like)
+                        ->orWhere('authorName', 'like', $like);
+                });
+            })
             ->withCount('comments')
             ->orderByDesc('publishedAt')
             ->orderByDesc('id')
-            ->paginate(12);
+            ->paginate(12)
+            ->withQueryString();
 
         // Opening the blog is reading it — the badge counts what was
         // published while nobody was looking, not what remains unopened.
         app(\App\Services\CommunityUnreadService::class)
             ->markRead(\App\Services\CommunityUnreadService::KIND_BLOG);
 
-        return view('community.blog.index', ['posts' => $posts]);
+        /* The live search asks for the cards alone: the page it is standing
+         * on is already drawn, and everything else in this answer — the
+         * name plate, the nav, the scripts — it already has. */
+        if ($request->boolean('rows')) {
+            return response()->json(['success' => true, 'data' => [
+                'html' => view('community.blog.partials.cards', ['posts' => $posts])->render(),
+                'count' => $posts->count(),
+                'total' => $posts->total(),
+                'hasMore' => $posts->hasMorePages(),
+                'q' => $q,
+            ]]);
+        }
+
+        return view('community.blog.index', ['posts' => $posts, 'q' => $q]);
     }
 
     public function show(int $id)

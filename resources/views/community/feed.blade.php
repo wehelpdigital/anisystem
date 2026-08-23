@@ -23,6 +23,21 @@
        enough to stay a background, coloured enough that a grey card reads as
        a card. */
 
+    /* The pictures waiting to go up, as pictures. A strip of thumbnails
+       rather than a list of file names: the photo that has been through the
+       editor has a name nobody would recognise, and the one picked from a
+       season has a name about a field. */
+    .comp-shots { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.6rem; }
+    .comp-shots.hidden { display:none; }
+    .comp-shot-one { position:relative; width:4.5rem; height:4.5rem; border-radius:.6rem;
+        overflow:hidden; background:var(--color-gray-100); flex:none; }
+    .comp-shot-one img { width:100%; height:100%; object-fit:cover; display:block; }
+    .comp-shot-one button { position:absolute; top:.15rem; right:.15rem; width:1.35rem; height:1.35rem;
+        border:0; border-radius:999px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+        background:rgb(17 24 39 / .62); color:#fff; font-size:.7rem; line-height:1; }
+    .comp-shot-one button:hover { background:rgb(185 28 28 / .9); }
+    html.dark .comp-shot-one { background:rgb(255 255 255 / .06); }
+
     /* The bar the wall opens with: what you came to do, then a word about
        where you are. */
     .wall-bar { display: flex; align-items: center; gap: .5rem; margin-bottom: .85rem; }
@@ -281,14 +296,10 @@
         placeholder="Kamusta ang bukid, {{ auth()->user()->firstName }}? Type @ to mention a co-farmer, # to tag a topic."></textarea>
     <div id="feedPreview" class="cp-preview" style="display:none"><span class="cp-label">Preview</span><div class="cp-body"></div></div>
 
-    {{-- What is coming with the post, shown as itself. The photo has usually
-         just been through the editor, so its file name is one the editor
-         invented about a file nobody has seen. --}}
-    <div class="comp-shot hidden" id="feedChip">
-        <img id="feedChipThumb" src="" alt="">
-        <span class="comp-shot-txt"><b>Photo ready</b><i id="feedChipName"></i></span>
-        <button type="button" id="feedChipClear" class="comp-shot-x" aria-label="Remove photo">✕</button>
-    </div>
+    {{-- What is coming with the post, shown as itself: the pictures, not
+         their file names. A photo that has been through the editor is written
+         back under a name the editor invented about a file nobody has seen. --}}
+    <div class="comp-shots hidden" id="feedShots"></div>
     <span class="js-video-chip mt-2 items-center gap-2 text-xs font-semibold text-gray-600" style="display:none"><span class="js-video-name"></span><button type="button" class="js-video-clear text-red-600 font-bold">Remove</button></span>
 
     {{-- The ways to add to it, said out loud. Four unlabelled icons in a row
@@ -297,10 +308,14 @@
     <div class="comp-add comp-add-box">
         <span class="comp-add-lbl">Add to your post</span>
         <div class="comp-add-row">
-            <label class="wall-act cursor-pointer" title="Add a photo" aria-label="Add a photo">
+            {{-- One door to three ways in — this device, the camera, or the
+                 pictures the app already keeps for you. --}}
+            <button type="button" class="wall-act" id="feedPhotoBtn" title="Add photos" aria-label="Add photos">
                 <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                <input type="file" id="feedImage" accept="image/*" class="hidden">
-            </label>
+            </button>
+            <input type="file" id="feedImage" accept="image/jpeg,image/png,image/webp" class="hidden" multiple>
+            {{-- capture= asks the phone for its camera rather than its files. --}}
+            <input type="file" id="feedCamera" accept="image/*" capture="environment" class="hidden">
             <button type="button" class="wall-act js-video-attach" title="Upload a video" aria-label="Upload a video">
                 <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
             </button>
@@ -316,6 +331,37 @@
 
     <button type="button" id="feedPostSubmit" class="btn btn-primary comp-send">Post</button>
 </div>
+    </div>
+</div>
+
+{{-- Where a picture comes from. The same three the rest of the app offers,
+     and the gallery is the one that is not obvious: every photo the farm has
+     kept across its seasons, which is where the useful ones already are. --}}
+<div class="sheet hidden" id="wallPhotoSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Add photos</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body" style="padding-bottom:1.1rem">
+        <div class="plaza-srcs">
+            <button type="button" class="plaza-src" id="feedSrcUpload">
+                <span class="plaza-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 17v1.5A2.5 2.5 0 006.5 21h11a2.5 2.5 0 002.5-2.5V17"/></svg></span>
+                <span class="plaza-src-t"><b>Upload from this device</b><small>Pick one photo or several at once.</small></span>
+                <svg class="plaza-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button type="button" class="plaza-src" id="feedSrcCamera">
+                <span class="plaza-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8a2 2 0 012-2h1.4l1-1.6h7.2l1 1.6H18a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V8z"/><circle cx="12" cy="13" r="3.4"/></svg></span>
+                <span class="plaza-src-t"><b>Take a photo now</b><small>Open the camera and shoot what you see.</small></span>
+                <svg class="plaza-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button type="button" class="plaza-src" id="feedSrcGallery">
+                <span class="plaza-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h4l2 2h6a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M7 15l3-3.5 2.4 2.8L15 11l3 4"/></svg></span>
+                <span class="plaza-src-t"><b>From my gallery</b><small>Photos your seasons already keep.</small></span>
+                <svg class="plaza-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
+            </button>
+        </div>
+        <p class="text-xs text-gray-400 mt-3">Up to 8 photos in one post.</p>
     </div>
 </div>
 
@@ -536,42 +582,87 @@ document.addEventListener('DOMContentLoaded', () => {
     // A short wall can end with the tail already in view on first paint.
     nearTail();
 
-    /* ---- Composer -------------------------------------------------------- */
+    /* ---- Composer: the pictures --------------------------------------------
+     *
+     * A post used to carry one photo, held in the file input itself. Several
+     * cannot live there — a picture picked from a season is a path and never
+     * was a file — so the composer keeps its own list and the input is only
+     * a way of adding to it. Each entry is {file} or {path, url}; the strip
+     * below the field draws them, and the send builds images[] and
+     * galleryPaths[] out of the same list.
+     */
+    const MAX_SHOTS = 8;
     const fileInput = document.getElementById('feedImage');
-    const chip = document.getElementById('feedChip');
+    const camInput = document.getElementById('feedCamera');
+    const shotsRow = document.getElementById('feedShots');
+    const shots = [];
+
+    function paintShots() {
+        if (!shotsRow) return;
+        shotsRow.classList.toggle('hidden', shots.length === 0);
+        shotsRow.innerHTML = shots.map((s, i) =>
+            '<span class="comp-shot-one"><img src="' + s.url + '" alt="">'
+            + '<button type="button" data-shot="' + i + '" aria-label="Remove photo">✕</button></span>').join('');
+    }
+    shotsRow?.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-shot]');
+        if (!btn) return;
+        const i = Number(btn.dataset.shot);
+        const gone = shots.splice(i, 1)[0];
+        // Object URLs are ours to release; a long session leaks them otherwise.
+        if (gone && gone.file) { try { URL.revokeObjectURL(gone.url); } catch (_) {} }
+        paintShots();
+    });
+    function addFile(f) {
+        if (!f) return;
+        if (shots.length >= MAX_SHOTS) { toast('That is eight photos — the most a post carries.', 'error'); return; }
+        shots.push({ file: f, url: URL.createObjectURL(f) });
+    }
+    function addPick(item) {
+        if (!item || !item.path) return;
+        if (shots.length >= MAX_SHOTS) { toast('That is eight photos — the most a post carries.', 'error'); return; }
+        if (shots.some((s) => s.path === item.path)) return;   // the same picture twice is once
+        shots.push({ path: item.path, url: item.url || '' });
+    }
 
     fileInput?.addEventListener('change', async () => {
-        // The photo goes through the editor before it is a photo you are
-        // posting: filters, a word, an arrow at the thing you mean. The
-        // result is written back into the input, so the send path below is
-        // untouched. Backing out clears the pick.
-        if (fileInput.files[0] && window.smEditInto) await window.smEditInto(fileInput);
-        const f = fileInput.files[0];
-        chip.classList.toggle('hidden', !f);
-        showShot(f);
-    });
-    /* The picture, not its file name.
-     *
-     * A photo that has been through the editor is written back as a name the
-     * editor made up ("a1b2c3d4.webp"), which tells the person nothing about
-     * a file they have never seen. The object URL is released when the chip
-     * is cleared or replaced, so a long session does not leak them. */
-    let shotUrl = null;
-    function showShot(f) {
-        const img = document.getElementById('feedChipThumb');
-        const name = document.getElementById('feedChipName');
-        if (shotUrl) { try { URL.revokeObjectURL(shotUrl); } catch (_) {} shotUrl = null; }
-        if (!f) { img.removeAttribute('src'); name.textContent = ''; return; }
-        shotUrl = URL.createObjectURL(f);
-        img.src = shotUrl;
-        // Its size is the honest thing to say about a file nobody named.
-        const kb = Math.max(1, Math.round(f.size / 1024));
-        name.textContent = kb > 1024 ? (kb / 1024).toFixed(1) + ' MB' : kb + ' KB';
-    }
-    document.getElementById('feedChipClear')?.addEventListener('click', () => {
+        const picked = [...(fileInput.files || [])];
+        /* One photo still goes through the editor — filters, a word, an arrow
+         * at the thing you mean. Several do not: five photos would be five
+         * trips through it, which is not what "add photos" asked for. */
+        if (picked.length === 1 && window.smEditInto) {
+            await window.smEditInto(fileInput);
+            addFile((fileInput.files || [])[0]);
+        } else {
+            picked.forEach(addFile);
+        }
         fileInput.value = '';
-        chip.classList.add('hidden');
-        showShot(null);
+        paintShots();
+    });
+    camInput?.addEventListener('change', () => {
+        const f = (camInput.files || [])[0];
+        addFile(f);
+        camInput.value = '';
+        paintShots();
+    });
+
+    /* The three ways in. */
+    document.getElementById('feedPhotoBtn')?.addEventListener('click', () => window.openSheet?.('wallPhotoSheet'));
+    document.getElementById('feedSrcUpload')?.addEventListener('click', () => {
+        window.closeSheet?.('wallPhotoSheet');
+        fileInput?.click();
+    });
+    document.getElementById('feedSrcCamera')?.addEventListener('click', () => {
+        window.closeSheet?.('wallPhotoSheet');
+        camInput?.click();
+    });
+    document.getElementById('feedSrcGallery')?.addEventListener('click', () => {
+        window.closeSheet?.('wallPhotoSheet');
+        if (typeof window.smPickMedia !== 'function') { toast('The gallery is not available here.', 'error'); return; }
+        window.smPickMedia({
+            allSchedules: true, kinds: 'image', title: 'From your gallery',
+            onPick: (item) => { addPick(item); paintShots(); },
+        });
     });
 
     /* ---------------- the two doors on the bar ----------------
@@ -652,18 +743,21 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('feedPostSubmit')?.addEventListener('click', async (e) => {
         const host = document.getElementById('feedComposer');
         const body = document.getElementById('feedPostBody').value.trim();
-        const img = fileInput?.files[0];
         const vid = window.plazaVideoFile ? window.plazaVideoFile(host) : null;
-        if (!body && !img && !vid) { toast('Write something or add a photo/video.', 'error'); return; }
+        if (!body && !shots.length && !vid) { toast('Write something or add a photo/video.', 'error'); return; }
         const fd = new FormData();
         if (body) fd.append('body', body);
-        if (img) fd.append('image', img);
+        // Files go up; a picture the app already keeps travels as its path.
+        shots.forEach((s) => {
+            if (s.file) fd.append('images[]', s.file);
+            else if (s.path) fd.append('galleryPaths[]', s.path);
+        });
         if (vid) fd.append('video', vid);
         fd.append('render', 'feed'); // return a feed-post card to prepend
         const btn = e.currentTarget;
         const prev = btn.textContent;
         btn.disabled = true;
-        btn.textContent = vid ? 'Uploading…' : 'Posting…';
+        btn.textContent = (vid || shots.length > 2) ? 'Uploading…' : 'Posting…';
         try {
             const res = await fetch(@json(route('community.wall.post', ['userId' => auth()->id()])), {
                 method: 'POST',
@@ -684,7 +778,9 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('feedPostBody').value = '';
             document.getElementById('feedPostBody').dispatchEvent(new Event('input', { bubbles: true }));
             if (fileInput) fileInput.value = '';
-            chip?.classList.add('hidden');
+            shots.forEach((s) => { if (s.file) { try { URL.revokeObjectURL(s.url); } catch (_) {} } });
+            shots.length = 0;
+            paintShots();
             if (window.plazaClearVideo) window.plazaClearVideo(host);
             window.closeSheet?.('wallComposerSheet');
             toast('Shared sa wall mo! 🌾');

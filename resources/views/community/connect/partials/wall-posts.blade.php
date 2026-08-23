@@ -33,7 +33,10 @@
                     @include('community.partials.youtube-card', ['vid' => $ytVid])
                 @endif
             @endif
-            @if ($post->imagePath)
+            @php $wpShots = $post->shots(); @endphp
+            @if (count($wpShots) > 1)
+                @include('community.partials.post-gallery', ['shots' => $wpShots])
+            @elseif ($post->imagePath)
                 {{-- media-skel: shimmer while it decodes, vanish if it 404s. --}}
                 <div class="post-media media-skel">
                     <img src="{{ \App\Support\MediaStore::url($post->imagePath) }}" alt="Photo" loading="lazy" class="post-img"

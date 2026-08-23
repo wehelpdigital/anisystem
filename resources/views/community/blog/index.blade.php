@@ -87,7 +87,89 @@
     .blog-hero { border-radius:0; border-left:0; border-right:0;
         margin-left:calc(var(--plaza-gutter, 1rem) * -1);
         margin-right:calc(var(--plaza-gutter, 1rem) * -1); }
+    .blog-bar { display:flex; align-items:center; gap:.5rem; margin-bottom:.85rem; }
+    .bb-act { display:inline-flex; align-items:center; gap:.35rem; flex-shrink:0; }
+    .bb-hint { margin-left:auto; font-size:.72rem; font-weight:600; color:var(--color-gray-400); }
+    @media (max-width:479px) { .bb-hint { display:none; } }
+    .bb-filter { display:inline-flex; align-items:center; gap:.35rem; flex-shrink:0;
+        max-width:11rem; padding:.25rem .55rem; border-radius:999px;
+        font-size:.72rem; font-weight:800;
+        background:var(--color-brand-50); color:var(--color-brand-700);
+        border:1px solid var(--color-brand-200); }
+    .bb-filter b { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .bb-filter.hidden { display:none; }
+    html.dark .bb-filter { background:rgb(61 104 35 / .25); border-color:#3f5626; color:#bfe19a; }
 </style>
+@endpush
+
+@push('scripts')
+<script>
+(() => {
+    const grid = document.getElementById('blogGrid');
+    const findEl = document.getElementById('blogFind');
+    if (!grid || !findEl) return;
+    const note = document.getElementById('blogFindNote');
+    const none = document.getElementById('blogNone');
+    const pager = document.getElementById('blogPager');
+    const chip = document.getElementById('blogFilterChip');
+    const URL_BASE = @json(route('community.blog'));
+    let query = findEl.value.trim();
+
+    function say(count, total) {
+        if (note) {
+            if (!query) { note.hidden = true; note.textContent = ''; }
+            else {
+                note.hidden = false;
+                note.innerHTML = count
+                    ? total + ' ' + (total === 1 ? 'article' : 'articles') + ' matching <b></b>.'
+                    : 'Walang tugma sa <b></b>.';
+                // Typed words go in as text, never as markup.
+                note.querySelector('b').textContent = '\u201c' + query + '\u201d';
+            }
+        }
+        if (chip) {
+            chip.classList.toggle('hidden', !query);
+            if (query) chip.querySelector('b').textContent = '\u201c' + query + '\u201d';
+        }
+    }
+
+    async function search(q) {
+        query = q;
+        try {
+            const url = new window.URL(window.location.href);
+            if (q) url.searchParams.set('q', q); else url.searchParams.delete('q');
+            url.searchParams.delete('page');
+            history.replaceState(null, '', url);
+        } catch (_) { /* an address bar that will not be written is not a failure */ }
+        try {
+            const res = await fetch(URL_BASE + '?rows=1' + (q ? '&q=' + encodeURIComponent(q) : ''), {
+                headers: { Accept: 'application/json' }, credentials: 'same-origin',
+            });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const d = (await res.json()).data || {};
+            grid.innerHTML = d.html || '';
+            const count = grid.children.length;
+            if (none) none.hidden = count > 0;
+            // A filtered answer of one page has nothing to page through.
+            if (pager) pager.hidden = !d.hasMore;
+            say(count, d.total || 0);
+        } catch (_) {
+            window.toast?.('Could not search just now.', 'error');
+        }
+    }
+
+    window.plazaLiveSearch?.(findEl, search);
+    document.getElementById('blogSearchBtn')?.addEventListener('click', () => {
+        window.openSheet?.('blogSearchSheet');
+        window.smFocus?.(findEl, { delay: 140, always: true });
+    });
+    chip?.addEventListener('click', () => {
+        findEl.value = '';
+        findEl.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    if (query) say(grid.children.length, grid.children.length);
+})();
+</script>
 @endpush
 
 @section('content')
@@ -111,36 +193,55 @@
     @endif
 </div>
 
-@if ($posts->isEmpty())
+{{-- Looking for one particular article is an errand, so it opens the way
+     every other errand in the community does — from the bottom, over what
+     you were reading. --}}
+<div class="blog-bar">
+    <button type="button" id="blogSearchBtn" class="btn btn-white btn-sm bb-act" title="Search the blog" aria-label="Search the blog">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+        <span class="bb-act-lbl">Search</span>
+    </button>
+    <button type="button" class="bb-filter hidden" id="blogFilterChip" title="Clear the search">
+        <b></b>
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <span class="bb-hint" id="blogBarHint">{{ $posts->total() }} {{ \Illuminate\Support\Str::plural('article', $posts->total()) }}</span>
+</div>
+
+<div class="sheet hidden" id="blogSearchSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Search the blog</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body" style="padding-bottom:1.1rem">
+        @include('community.partials.live-search', [
+            'id' => 'blogFind',
+            'value' => $q ?? '',
+            'placeholder' => 'Search articles…',
+            'label' => 'Search the blog — title, words or author',
+        ])
+        <button type="button" class="btn btn-primary w-full" data-sheet-close>Show the articles</button>
+    </div>
+</div>
+
+@if ($posts->isEmpty() && ($q ?? '') === '')
     <div class="card p-8 text-center">
         <div class="empty-tile">📰</div>
         <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">No articles yet</p>
         <p class="text-sm text-gray-500 mt-1">The team hasn't published anything yet — check back soon.</p>
     </div>
 @else
-    <div class="blog-grid">
-        @foreach ($posts as $post)
-            <a href="{{ route('community.blog.show', ['id' => $post->id]) }}" class="blog-card bl-hue-{{ $post->id % 6 }}">
-                <div class="blog-cover">
-                    @if ($post->coverUrl())
-                        <img src="{{ $post->coverUrl() }}" alt="" loading="lazy"
-                            onload="this.classList.add('is-loaded')" onerror="this.remove()">
-                    @else
-                        <div class="blog-cover-fallback">🌾</div>
-                    @endif
-                </div>
-                <div class="blog-body">
-                    <span class="blog-title">{{ $post->title }}</span>
-                    @if ($post->excerpt)<span class="blog-excerpt">{{ \Illuminate\Support\Str::limit($post->excerpt, 120) }}</span>@endif
-                    <span class="blog-meta">
-                        @if ($post->authorName)<span>✍️ {{ $post->authorName }}</span>@endif
-                        @if ($post->publishedAt)<span>{{ $post->publishedAt->format('M j, Y') }}</span>@endif
-                        <span>💬 {{ $post->comments_count }}</span>
-                    </span>
-                </div>
-            </a>
-        @endforeach
+    <div class="blog-grid" id="blogGrid">
+        @include('community.blog.partials.cards', ['posts' => $posts])
     </div>
-    <div class="mt-6">{{ $posts->links('community.partials.blog-pagination') }}</div>
+
+    <div class="card p-8 text-center" id="blogNone" hidden>
+        <div class="empty-tile">🔎</div>
+        <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Walang tugma</p>
+        <p class="text-sm text-gray-500 mt-1">No article says that — in its title, its words, or who wrote it.</p>
+    </div>
+
+    <div class="mt-6" id="blogPager">{{ $posts->links('community.partials.blog-pagination') }}</div>
 @endif
 @endsection

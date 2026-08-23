@@ -50,15 +50,40 @@ class CommunityWallController extends Controller
         }
 
         $request->validate([
-            'body' => 'required_without_all:image,video|nullable|string|max:5000',
+            'body' => 'required_without_all:image,images,galleryPaths,video|nullable|string|max:5000',
+            // One photo (what every older caller sends) or several.
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'images' => 'nullable|array|max:8',
+            'images.*' => 'image|mimes:jpg,jpeg,png,webp|max:8192',
+            // Pictures the app already keeps, pointed at rather than sent.
+            'galleryPaths' => 'nullable|array|max:8',
+            'galleryPaths.*' => 'string|max:500',
             'video' => 'nullable|file|max:307200', // 300 MB; VideoOptimizer enforces the mime
         ]);
 
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $this->storeImage($request->file('image'), 'community-wall/' . $wallOwner->id);
+        /* The pictures, in the order they were added.
+         *
+         * Uploads are stored; a gallery pick is a path the browser handed
+         * back, so it goes through GalleryPick before anything trusts it —
+         * that is the check that keeps a typed path from reaching somebody
+         * else's folder. A picture that fails it is refused out loud rather
+         * than quietly posting fewer photos than the farmer attached. */
+        $shots = [];
+        foreach (array_merge(
+            $request->hasFile('image') ? [$request->file('image')] : [],
+            array_values((array) $request->file('images', []))
+        ) as $file) {
+            $shots[] = $this->storeImage($file, 'community-wall/' . $wallOwner->id);
         }
+        foreach (array_values((array) $request->input('galleryPaths', [])) as $picked) {
+            $ok = \App\Support\GalleryPick::path((string) $picked);
+            if ($ok === null) {
+                return response()->json(['success' => false, 'message' => 'One of the pictures could not be read. Remove it and try again.'], 422);
+            }
+            $shots[] = $ok;
+        }
+        $shots = array_slice(array_values(array_unique($shots)), 0, 8);
+        $imagePath = $shots[0] ?? null;
 
         $videoPath = $videoPoster = null;
         if ($request->hasFile('video')) {
@@ -75,7 +100,13 @@ class CommunityWallController extends Controller
             'wallUserId' => $wallOwner->id,
             'authorUserId' => Auth::id(),
             'body' => $request->input('body') ?: '',
+            // The first picture where every older renderer looks, the whole
+            // list where the new one does. Schema-guarded, so a deploy that
+            // has not run the migration yet posts the first photo instead of
+            // answering with a column-not-found 500.
             'imagePath' => $imagePath,
+        ] + (count($shots) > 1 && \Illuminate\Support\Facades\Schema::hasColumn((new CommunityWallPost)->getTable(), 'imagePaths')
+            ? ['imagePaths' => $shots] : []) + [
             'videoPath' => $videoPath,
             'videoPoster' => $videoPoster,
             'deleteStatus' => 1,

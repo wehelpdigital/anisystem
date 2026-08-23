@@ -6,9 +6,30 @@ class CommunityWallPost extends BaseModel
 {
     protected $table = 'as_community_wall_posts';
 
-    protected $fillable = ['wallUserId', 'authorUserId', 'body', 'sharedPostId', 'publicToken', 'imagePath', 'videoPath', 'videoPoster', 'isReel', 'durationSec', 'audioTitle', 'isRestricted', 'restrictedReason', 'deleteStatus'];
+    protected $fillable = ['wallUserId', 'authorUserId', 'body', 'sharedPostId', 'publicToken', 'imagePath', 'imagePaths', 'videoPath', 'videoPoster', 'isReel', 'durationSec', 'audioTitle', 'isRestricted', 'restrictedReason', 'deleteStatus'];
 
-    protected $casts = ['isRestricted' => 'boolean', 'isReel' => 'boolean'];
+    protected $casts = ['isRestricted' => 'boolean', 'isReel' => 'boolean', 'imagePaths' => 'array'];
+
+    /**
+     * Every picture on this post.
+     *
+     * imagePath is the first one and always has been; imagePaths is the whole
+     * list, and only a post with several carries it. Asked here rather than
+     * in each of the three places that draw a post, so none of them has to
+     * know which column a photo came from — or to notice that a deploy whose
+     * release step skipped the migration has only the old one.
+     *
+     * @return array<int, string>
+     */
+    public function shots(): array
+    {
+        $many = array_values(array_filter((array) ($this->imagePaths ?? [])));
+        if ($many) {
+            return $many;
+        }
+
+        return $this->imagePath ? [$this->imagePath] : [];
+    }
 
     /**
      * The post this one is sharing, if any — loaded with its own author so a

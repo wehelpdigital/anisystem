@@ -1,6 +1,55 @@
 {{-- "Ang Plaza" — shared community design system (avatars, reactions, emoji
      popover, join morph, composer shells, liveliness). Include once per page. --}}
 <style>
+    /* --- Where a thing comes from ---
+     * A row per way in, each with a sentence saying what it is. The schedule
+     * side of the app draws the same shape in its own words (.cph-src); this
+     * is the community's copy, because a page here carries neither that
+     * file's styles nor its assumptions.
+     */
+    .plaza-srcs { display:flex; flex-direction:column; gap:.5rem; }
+    .plaza-src { display:flex; align-items:center; gap:.7rem; width:100%; text-align:left;
+        padding:.7rem .8rem; border-radius:.85rem; border:1px solid var(--color-gray-200);
+        background:var(--color-white); cursor:pointer;
+        transition:background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), transform .1s ease; }
+    .plaza-src:hover { border-color:var(--color-brand-300); background:var(--color-brand-50); }
+    .plaza-src:active { transform:scale(.985); }
+    .plaza-src-ic { flex:0 0 auto; width:2.4rem; height:2.4rem; border-radius:.7rem;
+        display:inline-flex; align-items:center; justify-content:center;
+        background:var(--color-brand-100); color:var(--color-brand-800); }
+    .plaza-src-ic svg { width:1.25rem; height:1.25rem; }
+    .plaza-src-t { flex:1 1 auto; min-width:0; }
+    .plaza-src-t b { display:block; font-size:.84rem; font-weight:800; color:var(--color-gray-800); }
+    .plaza-src-t small { display:block; font-size:.7rem; color:var(--color-gray-400); margin-top:.05rem; }
+    .plaza-src-go { width:1rem; height:1rem; flex:0 0 auto; color:var(--color-gray-300); }
+    @media (prefers-reduced-motion: reduce) { .plaza-src { transition:none; } }
+    html.dark .plaza-src { background:#1c2416; border-color:#2b3a1c; }
+    html.dark .plaza-src-t b { color:#e8efe1; }
+
+    /* --- Several pictures on one post ---
+     *
+     * A farmer's answer is rarely one photograph: the leaf, the whole hill,
+     * and the bag of whatever they sprayed. Stacked at full width that is a
+     * screen and a half of scrolling before the next post, so they are laid
+     * out small in columns — masonry, so a tall photo and a wide one both
+     * keep their own shape rather than being cropped square. Every one of
+     * them opens whole in the lightbox, which binds to [data-lightbox] img
+     * and so needs nothing here but the attribute.
+     */
+    .post-shots { margin-top:.6rem; column-count:2; column-gap:.35rem; }
+    @media (min-width:640px) { .post-shots { column-count:3; } }
+    .post-shots img { display:block; width:100%; margin:0 0 .35rem; border-radius:.55rem;
+        break-inside:avoid; cursor:zoom-in; background:var(--color-gray-100);
+        /* A portrait photo is three times the height of a landscape one, and
+           one of those in a column of two runs the post off the screen. The
+           thumbnail is capped and cropped; the lightbox still opens the whole
+           picture, which is what the crop is borrowing against. */
+        max-height:15rem; object-fit:cover;
+        transition:filter .28s cubic-bezier(.22,1,.36,1); }
+    .post-shots img:hover { filter:brightness(1.06); }
+    @media (prefers-reduced-motion: reduce) { .post-shots img { transition:none; } }
+    html.dark .post-shots img { background:rgb(255 255 255 / .06); }
+
     /* --- The community's own ground ---
      *
      * The wall painted the page under it a soft field green and every other
