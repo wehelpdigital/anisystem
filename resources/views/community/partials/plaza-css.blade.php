@@ -692,6 +692,14 @@
     .mc-mutual-none { color: var(--color-gray-400); font-weight: 500; }
     /* The two decisions, side by side and the same size — a stretched
        badge beside a small button reads as one broken row. */
+    /* The head is a row of three: face, who they are, and the one gesture
+       that costs nothing. align-items:start so a two-line name does not drag
+       the button down the card with it. */
+    .mc-head { align-items: flex-start; }
+    .mc-line { display: block; font-size: .72rem; color: var(--color-gray-500); line-height: 1.3;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .mc-follow { flex: none; margin-top: .1rem; }
+    .mc-bits { margin-top: .1rem; }
     .mc-acts { display: flex; align-items: center; gap: .5rem; margin-top: .75rem; }
     .mc-acts > * { flex: 1 1 0; min-width: 0; }
     .mc-acts .conn-action { justify-content: center; }

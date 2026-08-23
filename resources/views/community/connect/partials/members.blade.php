@@ -42,17 +42,33 @@
                 </a>
                 <div class="min-w-0 grow mc-who">
                     <a href="{{ route('community.connect.profile', ['userId' => $m->id]) }}" class="mc-name">{{ $m->full_name }}</a>
+                    @if (filled($m->headline))
+                        <span class="mc-line">{{ \Illuminate\Support\Str::limit($m->headline, 46) }}</span>
+                    @endif
                 </div>
+                {{-- Following is the light gesture — no permission, no waiting
+                     — so it sits in the corner the eye lands on first, beside
+                     the name it applies to. Adding a co-farmer is a request
+                     someone has to answer, and stays at the foot of the card
+                     with the rest of the deliberate things. --}}
+                <button type="button" class="fp-follow mc-follow {{ ($m->isFollowed ?? false) ? 'is-on' : '' }}"
+                        data-follow="{{ $m->id }}" data-name="{{ $m->full_name }}"
+                        aria-pressed="{{ ($m->isFollowed ?? false) ? 'true' : 'false' }}">
+                    <span class="on">Following</span><span class="off">+ Follow</span>
+                </button>
             </div>
 
             {{-- The same introduction the wall gives an author, in the same
                  two lines: where they farm and what they do, then who they
                  farm with and how much of that you already share. The card
                  used to say those things in three shapes of its own. --}}
+            {{-- Here the reader is meeting a stranger, so the co-farmer count
+                 that matters is the one they SHARE. Their own total is worth
+                 saying only when there is no shared number to say instead. --}}
             @include('community.partials.author-facts', [
                 'user' => $m,
                 'isCoFarmer' => $m->connStatus === 'connected',
-                'coFarmers' => (int) ($m->coFarmerCount ?? 0),
+                'coFarmers' => $mutual > 0 ? 0 : (int) ($m->coFarmerCount ?? 0),
                 'mutual' => $mutual,
                 'followers' => (int) ($m->followerCount ?? 0),
                 'fallback' => $m->created_at
@@ -60,13 +76,26 @@
                     : null,
             ])
 
+            {{-- What else this account has told us about itself. Nothing is
+                 invented and nothing empty is drawn: a stranger with three
+                 filled fields gets three chips, one gets one. --}}
+            @php
+                $mcBits = collect([
+                    filled($m->cropsGrown) ? '🌾 ' . \Illuminate\Support\Str::limit($m->cropsGrown, 40) : null,
+                    (int) $m->yearsFarming > 0
+                        ? '⏳ ' . (int) $m->yearsFarming . ' ' . \Illuminate\Support\Str::plural('year', (int) $m->yearsFarming) . ' farming'
+                        : null,
+                    filled($m->farmSize) ? '📏 ' . \Illuminate\Support\Str::limit($m->farmSize, 24) : null,
+                ])->filter()->values();
+            @endphp
+            @if ($mcBits->isNotEmpty())
+                <p class="af-line mc-bits">
+                    @foreach ($mcBits as $bit)<span class="af-fact">{{ $bit }}</span>@endforeach
+                </p>
+            @endif
+
             <div class="mc-acts">
                 @include('community.connect.partials.action', ['status' => $m->connStatus, 'memberId' => $m->id])
-                <button type="button" class="fp-follow {{ ($m->isFollowed ?? false) ? 'is-on' : '' }}"
-                        data-follow="{{ $m->id }}" data-name="{{ $m->full_name }}"
-                        aria-pressed="{{ ($m->isFollowed ?? false) ? 'true' : 'false' }}">
-                    <span class="on">Following</span><span class="off">+ Follow</span>
-                </button>
             </div>
         </div>
     </div>

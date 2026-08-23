@@ -587,6 +587,10 @@ class CommunityConnectController extends Controller
 
         $query = User::where('deleteStatus', 1)
             ->whereNotIn('id', $exclude ?: [0])
+            // The AI Technician holds an account so it can sign its answers
+            // in a discussion. It is not somebody to meet, follow or farm
+            // with, so it does not stand in the directory.
+            ->where('email', '!=', User::ASSISTANT_EMAIL)
             /* One field, everything behind it.
              *
              * The page used to carry a search plus a province menu plus a crop
