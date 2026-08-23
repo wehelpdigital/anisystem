@@ -42,4 +42,40 @@ class CommunityWallPost extends BaseModel
     {
         return $this->hasMany(CommunityWallComment::class, 'wallPostId')->where('as_community_wall_comments.deleteStatus', 1);
     }
+
+    /**
+     * When anything last happened to this post: it was written, somebody
+     * answered it, or somebody reacted to it.
+     *
+     * Written once, here, because the wall both ORDERS by it and PAGES on it
+     * — and MySQL will not take a select alias in a WHERE, so the same
+     * expression has to appear twice in the same query. Two expressions that
+     * have to agree and live apart do not stay agreed.
+     */
+    public static function lastActivitySql(): string
+    {
+        return 'GREATEST(
+            as_community_wall_posts.created_at,
+            COALESCE((SELECT MAX(c.created_at) FROM as_community_wall_comments c
+                       WHERE c.wallPostId = as_community_wall_posts.id
+                         AND c.deleteStatus = 1), as_community_wall_posts.created_at),
+            COALESCE((SELECT MAX(r.created_at) FROM as_community_reactions r
+                       WHERE r.targetId = as_community_wall_posts.id
+                         AND r.targetType = \'wallpost\'), as_community_wall_posts.created_at)
+        )';
+    }
+
+    /** Carry that moment on every row, under a name the query can order by. */
+    public function scopeWithLastActivity($query)
+    {
+        return $query
+            ->select('as_community_wall_posts.*')
+            ->selectRaw(self::lastActivitySql() . ' as lastActivityAt');
+    }
+
+    /** The pager's cursor: everything quieter than the last row shown. */
+    public function scopeQuieterThan($query, $moment)
+    {
+        return $query->whereRaw(self::lastActivitySql() . ' < ?', [$moment]);
+    }
 }

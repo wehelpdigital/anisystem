@@ -69,9 +69,26 @@ class AsCroppingSchedule extends BaseModel
     /**
      * AniSystem client scoping — clients only ever see their own schedules.
      */
+    /**
+     * The seasons this request may see of one client's farm.
+     *
+     * The narrowing lives here rather than in the two dozen callers because
+     * it is the same question every one of them is asking, and because the
+     * ones that resolve a single season by id are the authorisation gate: a
+     * worker who is not on a season should not be able to open it by typing
+     * its number, and that is the same sentence as not listing it.
+     */
     public function scopeForClient($q, $userId)
     {
-        return $q->where('anisystemUserId', $userId);
+        $q->where('anisystemUserId', $userId);
+
+        $only = \App\Support\WorkerContext::visibleScheduleIdsFor((int) $userId);
+        if ($only !== null) {
+            // [] is an answer: on none of them, so nothing matches.
+            $q->whereIn('as_cropping_schedules.id', $only ?: [-1]);
+        }
+
+        return $q;
     }
 
     /** The AniSystem client who owns this schedule. */

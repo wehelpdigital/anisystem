@@ -334,7 +334,11 @@
 @if ($posts->isNotEmpty())
     <div class="feed-tail" id="feedTail">
         <button type="button" id="feedLoadMore" class="btn btn-white btn-sm" data-infinite
-                data-before="{{ optional($posts->last()->created_at)->toIso8601String() }}">Load more posts</button>
+                {{-- The cursor has to be the same measure the wall is ordered
+                     by, or the next page starts somewhere else entirely. A
+                     lifted post carries no computed moment; its own time is
+                     the honest answer for it. --}}
+                data-before="{{ \Illuminate\Support\Carbon::parse($posts->last()->lastActivityAt ?: $posts->last()->created_at)->toIso8601String() }}">Load more posts</button>
         <div class="feed-spin" id="feedSpin" role="status" aria-label="Loading older posts" hidden><i></i><i></i><i></i></div>
         <p class="wall-end" id="feedEnd" hidden>🌾 Nasa dulo ka na — that's the whole wall for now.</p>
     </div>

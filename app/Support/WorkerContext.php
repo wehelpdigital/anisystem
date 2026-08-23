@@ -114,6 +114,71 @@ class WorkerContext
         return $grant ? (int) $grant->bossUserId : (int) Auth::id();
     }
 
+    /**
+     * Which of a farm's seasons this request is allowed to see, or null for
+     * "all of them".
+     *
+     * A grant is an invitation to a JOB, not to a farm: the boss adds a
+     * worker to one season's roster and invites that row. Standing in the
+     * farm was letting them read every other season in it — the neighbouring
+     * crop, its costs, its workers — which nobody ever agreed to.
+     *
+     * Three ways a season counts as theirs:
+     *   • the roster row their invitation names;
+     *   • any other roster row of the same farm carrying their address,
+     *     because that is the same person written down again;
+     *   • all of them, when a grant names no roster row at all — those
+     *     invitations were made farm-wide and are honoured as they were made.
+     *
+     * Returns null for an owner, for a farm that is not the one on screen,
+     * and for a farm-wide grant. An empty array means "they are on none of
+     * them", which is a real answer and not the same as null.
+     */
+    public static function visibleScheduleIdsFor(int $ownerId): ?array
+    {
+        static $cache = [];
+
+        $grant = self::activeGrant();
+        if (! $grant || (int) $grant->bossUserId !== $ownerId) {
+            return null;   // an owner, or a farm this session is not standing in
+        }
+
+        $key = $ownerId . ':' . (int) Auth::id();
+        if (array_key_exists($key, $cache)) {
+            return $cache[$key];
+        }
+
+        $mine = self::grants()->where('bossUserId', $ownerId);
+
+        // An invitation with no roster row behind it was never about one
+        // season, so it keeps the whole farm.
+        if ($mine->contains(fn ($g) => blank($g->scheduleWorkerId))) {
+            return $cache[$key] = null;
+        }
+
+        $rosterIds = $mine->pluck('scheduleWorkerId')->filter()->all();
+        $ids = \App\Models\AsScheduleWorker::query()
+            ->whereIn('id', $rosterIds ?: [-1])
+            ->pluck('croppingScheduleId');
+
+        // The same person, written onto another season's roster by the same
+        // boss. Matched on the address the invitation was sent to, which is
+        // the only thing the two rows are guaranteed to share.
+        $email = trim((string) (Auth::user()->email ?? ''));
+        if ($email !== '') {
+            $ids = $ids->concat(
+                \App\Models\AsScheduleWorker::query()
+                    ->whereRaw('LOWER(email) = ?', [mb_strtolower($email)])
+                    ->whereIn('croppingScheduleId', \App\Models\AsCroppingSchedule::active()
+                        ->where('anisystemUserId', $ownerId)
+                        ->select('id'))
+                    ->pluck('croppingScheduleId')
+            );
+        }
+
+        return $cache[$key] = $ids->map(fn ($id) => (int) $id)->unique()->values()->all();
+    }
+
     /** Whether the current worker context may write to schedules. */
     public static function canEdit(): bool
     {

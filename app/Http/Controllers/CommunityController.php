@@ -47,15 +47,21 @@ class CommunityController extends Controller
         $posts = \App\Models\CommunityWallPost::where('deleteStatus', 1)->wallOnly()
             ->with(['author'])
             ->withCount('comments')
-            ->orderByDesc('created_at')
+            ->withLastActivity()
+            ->orderByDesc('lastActivityAt')
             ->limit(24)
             ->get()
             ->filter(fn ($p) => $p->author && (int) $p->author->deleteStatus === 1);
 
-        // Newest first, always — a fresh post lands on top (the composer reloads
-        // onto page 1), and the wall reads chronologically. feedMore() continues
-        // older posts beneath, in the same order.
-        $posts = $posts->sortByDesc(fn ($p) => [$p->created_at->timestamp, $p->id])->values()->take(10);
+        // Liveliest first: a fresh post lands on top (the composer reloads onto
+        // page 1), and so does an old one somebody just answered or reacted
+        // to — a wall is about what is happening, and a thread three people
+        // are in this morning is happening more than yesterday's silence.
+        // feedMore() continues quieter posts beneath, in the same order.
+        $posts = $posts->sortByDesc(fn ($p) => [
+            \Illuminate\Support\Carbon::parse($p->lastActivityAt ?: $p->created_at)->timestamp,
+            $p->id,
+        ])->values()->take(10);
 
         \App\Models\CommunityReaction::attach($posts, 'wallpost', (int) $me->id);
         // No comment reactions to attach: the threads are not loaded any more,
@@ -356,9 +362,10 @@ class CommunityController extends Controller
         $moreSaved = $moreSocial->bookmarkedIds((int) $me->id);
 
         $rows = \App\Models\CommunityWallPost::where('deleteStatus', 1)->wallOnly()
-            ->where('created_at', '<', $beforeTs)
+            ->quieterThan($beforeTs)
             ->with(['author'])->withCount('comments')
-            ->orderByDesc('created_at')
+            ->withLastActivity()
+            ->orderByDesc('lastActivityAt')
             ->limit(11)->get()
             ->filter(fn ($p) => $p->author && (int) $p->author->deleteStatus === 1)
             ->values();
@@ -399,7 +406,11 @@ class CommunityController extends Controller
         return response()->json(['success' => true, 'data' => [
             'html' => $html,
             'hasMore' => $hasMore,
-            'before' => optional($items->last()?->created_at)->toIso8601String(),
+            // The cursor is the thing the order is on, or the next page
+            // would start from a different measure than the one it continues.
+            'before' => $items->last()
+                ? \Illuminate\Support\Carbon::parse($items->last()->lastActivityAt ?: $items->last()->created_at)->toIso8601String()
+                : null,
         ]]);
     }
 

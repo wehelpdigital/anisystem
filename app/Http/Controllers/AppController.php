@@ -26,31 +26,56 @@ class AppController extends Controller
 
         $scheduleCount = $schedulesQ()->count();
 
-        // A schedule counts as "active" when it has at least one activity dated
-        // within 6 months of today (either side). The dashboard only lists these
-        // — schedules with no near-term activity are hidden here.
+        // This shelf is about the season being farmed now, so it is scoped to
+        // the calendar year rather than to a rolling window: a plan belongs
+        // here when it has an activity dated in this year. A plan made this
+        // year that has not been filled in yet counts too — it is the one
+        // most likely to be opened next, and hiding a season the day it is
+        // created reads as if it failed to save.
         $scheduleIds = $schedulesQ()->pluck('id')->all();
         $activeVersionIds = \App\Models\AsScheduleActivityVersion::active()
             ->whereIn('croppingScheduleId', $scheduleIds ?: [-1])
             ->where('isActive', 1)
             ->pluck('id')->all();
         $today = \Illuminate\Support\Carbon::today('Asia/Manila');
-        $activeScheduleIds = \App\Models\AsScheduleActivity::active()
+        $year = (int) $today->year;
+
+        $thisYearIds = \App\Models\AsScheduleActivity::active()
             ->whereIn('versionId', $activeVersionIds ?: [-1])
             ->where('isDraft', 0)
             ->where('isHidden', 0)
             ->whereNotNull('targetDate')
-            ->whereBetween('targetDate', [
-                $today->copy()->subMonths(6)->toDateString(),
-                $today->copy()->addMonths(6)->toDateString(),
-            ])
+            ->whereBetween('targetDate', [$year . '-01-01', $year . '-12-31'])
             ->distinct()
             ->pluck('croppingScheduleId')
             ->all();
 
+        $bareThisYearIds = $schedulesQ()
+            ->whereYear('created_at', $year)
+            ->whereNotIn('id', $thisYearIds ?: [-1])
+            ->whereDoesntHave('activities')
+            ->pluck('id')
+            ->all();
+
+        $activeScheduleIds = array_values(array_unique(array_merge($thisYearIds, $bareThisYearIds)));
+
+        // Most recently worked on, first.
+        //
+        // A season's own row barely changes — a title, a status — while the
+        // work happens in its activities, so ordering by the schedule's
+        // updated_at put a plan edited all morning below one renamed in
+        // March. The shelf reads the later of the two.
         $latestSchedules = $schedulesQ()
             ->whereIn('id', $activeScheduleIds ?: [-1])
-            ->orderByDesc('created_at')
+            ->select('as_cropping_schedules.*')
+            ->selectRaw('GREATEST(
+                as_cropping_schedules.updated_at,
+                COALESCE((SELECT MAX(a.updated_at)
+                            FROM as_schedule_activities a
+                           WHERE a.croppingScheduleId = as_cropping_schedules.id
+                             AND a.deleteStatus = 1), as_cropping_schedules.updated_at)
+            ) as lastTouchedAt')
+            ->orderByDesc('lastTouchedAt')
             ->limit(4)
             ->get();
 
@@ -181,6 +206,7 @@ class AppController extends Controller
             'user' => $user,
             'subscription' => $subscription,
             'scheduleCount' => $scheduleCount,
+            'shelfYear' => $year,
             'latestSchedules' => $latestSchedules,
             'scheduleHasLocation' => $scheduleHasLocation,
             'aiBalance' => $aiBalance,

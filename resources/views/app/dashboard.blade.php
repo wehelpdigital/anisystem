@@ -375,9 +375,10 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 21h16"/>
                     </svg>
                     @if ($scheduleCount > 0)
-                        <h3 class="text-lg font-bold text-gray-900">No active schedules</h3>
+                        <h3 class="text-lg font-bold text-gray-900">Nothing planned for {{ $shelfYear }}</h3>
                         <p class="text-sm text-gray-500 mt-1 max-w-sm mx-auto">
-                            None of your schedules have activities within 6 months of today. Open all schedules to review or update them.
+                            This shelf shows the seasons with activities dated in {{ $shelfYear }}. Your other
+                            schedules are all still there — open them to review, or start this year's.
                         </p>
                         <div class="flex flex-wrap items-center justify-center gap-2 mt-5">
                             <a href="{{ route('sm.index') }}" class="btn btn-white btn-lg">View all schedules</a>
@@ -524,7 +525,27 @@
 
                             <div class="flex items-center justify-between gap-3 mt-auto pt-1">
                                 <div class="min-w-0 flex items-center gap-2 flex-wrap">
-                                    <p class="text-xs text-gray-500 shrink-0">Created {{ $schedule->created_at?->format('M j, Y') }}</p>
+                                    {{-- The shelf is ordered by this, so the card says it:
+                                         "why is that one on top" should be answerable
+                                         without opening either. Falls back to the day it
+                                         was made, for a season nobody has touched since. --}}
+                                    @php
+                                        $touched = $schedule->lastTouchedAt
+                                            ? \Illuminate\Support\Carbon::parse($schedule->lastTouchedAt)
+                                            : $schedule->updated_at;
+                                        // abs(): this Carbon returns a SIGNED difference, and
+                                        // a season made in May came back as -147699 minutes,
+                                        // which is under two and made every card say "Created".
+                                        $madeToday = $touched && $schedule->created_at
+                                            && abs($touched->diffInMinutes($schedule->created_at)) < 2;
+                                    @endphp
+                                    <p class="text-xs text-gray-500 shrink-0">
+                                        @if ($touched && ! $madeToday)
+                                            Updated {{ $touched->timezone('Asia/Manila')->diffForHumans() }}
+                                        @else
+                                            Created {{ $schedule->created_at?->format('M j, Y') }}
+                                        @endif
+                                    </p>
                                     <span class="badge {{ $sBadge }} shrink-0">{{ $sLabel }}</span>
                                 </div>
                                 <a href="{{ route('sm.hub', ['id' => $schedule->id]) }}" class="btn btn-outline btn-sm shrink-0">Open</a>
