@@ -68,8 +68,15 @@ class CommunityWallPost extends BaseModel
     /** Carry that moment on every row, under a name the query can order by. */
     public function scopeWithLastActivity($query)
     {
+        /* addSelect, not select.
+         *
+         * select() REPLACES the column list, and every caller here asks for
+         * the comment count before asking for the ordering — so this line
+         * quietly threw that subquery away and the whole wall said "0
+         * Comments" over threads ten deep. The number only appeared once the
+         * sheet had been opened and counted them itself. */
         return $query
-            ->select('as_community_wall_posts.*')
+            ->addSelect('as_community_wall_posts.*')
             ->selectRaw(self::lastActivitySql() . ' as lastActivityAt');
     }
 

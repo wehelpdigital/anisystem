@@ -264,6 +264,26 @@
      * handler below works in both places without being written twice. */
     const postScope = (el) => el.closest('.wall-post') || el.closest('[data-comment-scope]');
 
+    /* The number on the card, kept honest without a reload.
+     *
+     * The count is the door to the conversation, and a comment that did not
+     * move it reads as one that was not saved — the wall said "2 Comments"
+     * over three of them until the page was loaded again. Every copy of the
+     * post on screen is moved (the wall's card and the one the sheet borrows
+     * are the same node, but a shared post carries the original too), and the
+     * word beside it has to agree: one Comment, two Comments.
+     */
+    window.plazaBumpComments = function (postId, by) {
+        document.querySelectorAll(`[data-comment-count="${postId}"]`).forEach((n) => {
+            const next = Math.max(0, (parseInt(n.textContent, 10) || 0) + by);
+            n.textContent = String(next);
+            const label = n.nextElementSibling;
+            if (label && label.classList.contains('fp-lbl')) {
+                label.textContent = next === 1 ? 'Comment' : 'Comments';
+            }
+        });
+    };
+
     // Comment + reply submit (multipart — comments/replies can carry a photo).
     document.addEventListener('submit', async (e) => {
         const form = e.target.closest('.wall-comment-form');
@@ -300,6 +320,9 @@
             const res = await fetch(`/app/community/wall/${postId}/comment`, { method: 'POST', headers: { 'X-CSRF-TOKEN': csrf(), Accept: 'application/json' }, body: fd });
             const data = await res.json();
             if (data.success) {
+                // An answer is a comment too: the card counts every row on the
+                // post, which is what the sheet's own total says as well.
+                window.plazaBumpComments?.(postId, 1);
                 if (parentId) {
                     // Answering a thread is asking to see it: fold it open
                     // first, or the reply lands under a "Show all 6 replies".

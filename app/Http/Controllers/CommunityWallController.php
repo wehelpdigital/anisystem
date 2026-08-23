@@ -263,7 +263,13 @@ class CommunityWallController extends Controller
         $page = max(1, (int) $request->query('page', 1));
 
         $base = CommunityWallComment::active()->where('wallPostId', $post->id)->whereNull('parentId');
-        $total = (clone $base)->count();
+        /* Every comment on the post, answers included — the number the card
+         * has always shown, because comment_count counts the same rows.
+         * Counting only the top level here meant the card's number CHANGED
+         * when the sheet opened: eight comments became three, and neither
+         * number was wrong, they were answers to different questions. Paging
+         * still walks the top level; it is threads that are paged. */
+        $total = CommunityWallComment::active()->where('wallPostId', $post->id)->count();
         $top = $base->orderBy('id')->skip(($page - 1) * $perPage)->take($perPage + 1)->get();
         $hasMore = $top->count() > $perPage;
         $top = $top->take($perPage)->values();
