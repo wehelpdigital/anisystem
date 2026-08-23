@@ -33,6 +33,12 @@ class NotificationService
             return null;
         }
 
+        // Callers hand us route(), which is an absolute address to whatever
+        // machine is running — and this app writes to the same database from
+        // a laptop, from Railway and from the mother site. Keep the place,
+        // drop the machine (see localUrl).
+        $url = self::localUrl($url);
+
         if ($dedupeWindowHours !== null) {
             $exists = AnisystemNotification::active()
                 ->forUser($userId)
@@ -59,6 +65,47 @@ class NotificationService
         $this->push($note);
 
         return $note;
+    }
+
+    /**
+     * A notification's address, with the machine taken off it.
+     *
+     * route() builds an absolute URL from whoever is generating it, and one
+     * database is shared by every copy of this app: a bell rung from a
+     * laptop wrote http://anisystem.test/app/… into a row that a farmer
+     * then tapped on the live site, and the mother site writes rows of its
+     * own with whatever it thinks our address is. None of those hosts is
+     * knowable at write time — but the path is the same everywhere, and a
+     * path resolves against the site the reader is actually on.
+     *
+     * So the host comes off, always. A notification points at a place in
+     * this app — that is what the bell is for — and every row in the table
+     * says so: /app/… for the modules, /account/… for the subscription.
+     * (An outward link, if one is ever wanted, must not come through here.)
+     */
+    public static function localUrl(?string $url): ?string
+    {
+        $url = trim((string) $url);
+        if ($url === '') {
+            return null;
+        }
+        // A path already, or a scheme with no host to lose (mailto:, tel:).
+        if (! preg_match('#^https?://#i', $url)) {
+            return $url;
+        }
+
+        $parts = parse_url($url);
+        if ($parts === false) {
+            return $url;
+        }
+        $path = (string) ($parts['path'] ?? '/');
+        if ($path === '') {
+            $path = '/';
+        }
+
+        return $path
+            . (isset($parts['query']) ? '?' . $parts['query'] : '')
+            . (isset($parts['fragment']) ? '#' . $parts['fragment'] : '');
     }
 
     /**

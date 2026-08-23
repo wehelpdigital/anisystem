@@ -41,7 +41,10 @@ class SendDemoNotification extends Command
                 'title' => 'Welcome to notifications',
                 'body' => 'This is what a notification looks like. Real ones land here too: '
                     . 'expiring plans, comments on a shared season, and requests to connect.',
-                'url' => $schedule ? route('sm.hub', ['id' => $schedule->id]) : null,
+                // A console run builds its URLs from APP_URL, which on a
+                // laptop is a laptop. The bell wants the place, not the
+                // machine (NotificationService::localUrl).
+                'url' => $schedule ? \App\Services\NotificationService::localUrl(route('sm.hub', ['id' => $schedule->id])) : null,
                 'croppingScheduleId' => $schedule?->id,
                 'deleteStatus' => 1,
             ]);
@@ -51,7 +54,7 @@ class SendDemoNotification extends Command
                 'type' => 'demo',
                 'title' => $schedule ? ('Something to check in ' . $schedule->title) : 'Something to check',
                 'body' => 'Tap a notification to go straight to what it is about.',
-                'url' => $schedule ? route('sm.activities', ['id' => $schedule->id]) : null,
+                'url' => $schedule ? \App\Services\NotificationService::localUrl(route('sm.activities', ['id' => $schedule->id])) : null,
                 'croppingScheduleId' => $schedule?->id,
                 'deleteStatus' => 1,
             ]);

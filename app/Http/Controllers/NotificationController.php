@@ -32,7 +32,11 @@ class NotificationController extends Controller
                 'type' => $n->type,
                 'title' => \App\Support\CommunityText::plain($n->title, 120),
                 'body' => \App\Support\CommunityText::plain($n->body, 160),
-                'url' => $n->url,
+                // Rows already in the table — and rows the mother site writes
+                // — carry whichever host wrote them, which on the live site is
+                // a link to somebody's laptop. Served as a path, it lands on
+                // the site the reader is already on.
+                'url' => \App\Services\NotificationService::localUrl($n->url),
                 'isRead' => $n->readAt !== null,
                 'ago' => $n->created_at?->diffForHumans(),
             ]);
