@@ -8,14 +8,43 @@
 @push('head')
 @include('community.partials.plaza-css')
 <style>
-    .blog-grid { display:grid; grid-template-columns:1fr; gap:1rem; }
-    @media (min-width:640px) { .blog-grid { grid-template-columns:repeat(2,1fr); } }
-    @media (min-width:1024px) { .blog-grid { grid-template-columns:repeat(3,1fr); } }
-    .blog-card { display:flex; flex-direction:column; overflow:hidden; border-radius:1rem; border:1px solid var(--color-gray-100);
+    /* --- An article is a band, not a tile ---
+       Three to a row on a desktop and one to a row on a phone meant the same
+       page had two personalities, and a 16:9 cover across a full-width tile
+       is half a screen of photograph before a word of the article. One column
+       of bands, each with its own colour along the top and the bottom — the
+       shape the discussions and the wall already read in — and from 640px up
+       the cover steps aside to the left so the words start at the top. */
+    .blog-grid { display:grid; grid-template-columns:1fr; gap:.85rem; }
+    .blog-card { position:relative; display:flex; flex-direction:column; overflow:hidden;
+        border-radius:0; border-left:0; border-right:0;
+        border-top:1px solid var(--color-gray-100); border-bottom:1px solid var(--color-gray-100);
+        margin-left:calc(var(--plaza-gutter, 1rem) * -1);
+        margin-right:calc(var(--plaza-gutter, 1rem) * -1);
         background:var(--color-white); box-shadow:var(--shadow-card); text-decoration:none;
-        transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
-    .blog-card:hover { transform:translateY(-2px); box-shadow:0 10px 30px -12px rgb(0 0 0 / .25); }
-    .blog-cover { position:relative; aspect-ratio:16/9; background:linear-gradient(120deg,var(--color-brand-100),var(--color-brand-50)); overflow:hidden; }
+        --bl-a:#4a7c2a; --bl-b:#8fc267;
+        transition:box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    /* Above the cover, which starts at the very edge of the band. */
+    .blog-card::before, .blog-card::after { content:''; position:absolute; inset:0 0 auto 0; height:3px;
+        z-index:3; pointer-events:none;
+        background:linear-gradient(90deg, var(--bl-a), var(--bl-b) 55%, transparent); }
+    .blog-card::after { inset:auto 0 0 0;
+        background:linear-gradient(270deg, var(--bl-a), var(--bl-b) 55%, transparent); }
+    /* Each article keeps its colour by id, so it is the same one every visit. */
+    .bl-hue-1 { --bl-a:#1d4ed8; --bl-b:#7aa5f5; }
+    .bl-hue-2 { --bl-a:#b45309; --bl-b:#ecc06a; }
+    .bl-hue-3 { --bl-a:#0f766e; --bl-b:#6cc9bf; }
+    .bl-hue-4 { --bl-a:#7c3aed; --bl-b:#b393f5; }
+    .bl-hue-5 { --bl-a:#be185d; --bl-b:#f090b8; }
+    /* A band that lifts on hover lifts the page with it; it deepens instead. */
+    .blog-card:hover { box-shadow:0 10px 30px -12px rgb(0 0 0 / .25); }
+    .blog-cover { position:relative; height:9.5rem; background:linear-gradient(120deg,var(--color-brand-100),var(--color-brand-50)); overflow:hidden; }
+    @media (min-width:640px) {
+        .blog-card { flex-direction:row; align-items:stretch; }
+        .blog-cover { flex:none; width:16rem; height:auto; min-height:8.5rem; }
+        .blog-body { flex:1 1 auto; justify-content:center; padding:1rem 1.25rem; }
+        .blog-title { font-size:1.05rem; }
+    }
     /* Covers fade up out of a shimmer instead of popping in — the gallery's
        loading language. A 404 just leaves the quiet brand gradient. */
     .blog-cover img { width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .28s ease; }
@@ -53,11 +82,11 @@
     .blog-hero-facts { display:flex; flex-wrap:wrap; gap:.15rem .9rem; padding:0 1.15rem 1rem;
         font-size:.72rem; font-weight:700; color:var(--color-gray-400); }
     .blog-hero-facts b { color:var(--color-gray-600); font-weight:800; }
-    @media (max-width:640px) {
-        .blog-hero { border-radius:0; border-left:0; border-right:0;
-            margin-left:calc(var(--plaza-gutter, 1rem) * -1);
-            margin-right:calc(var(--plaza-gutter, 1rem) * -1); }
-    }
+    /* The plate is the first band of the run, so it is edge to edge like the
+       rest of them rather than a rounded card sitting on top of a column. */
+    .blog-hero { border-radius:0; border-left:0; border-right:0;
+        margin-left:calc(var(--plaza-gutter, 1rem) * -1);
+        margin-right:calc(var(--plaza-gutter, 1rem) * -1); }
 </style>
 @endpush
 
@@ -91,7 +120,7 @@
 @else
     <div class="blog-grid">
         @foreach ($posts as $post)
-            <a href="{{ route('community.blog.show', ['id' => $post->id]) }}" class="blog-card">
+            <a href="{{ route('community.blog.show', ['id' => $post->id]) }}" class="blog-card bl-hue-{{ $post->id % 6 }}">
                 <div class="blog-cover">
                     @if ($post->coverUrl())
                         <img src="{{ $post->coverUrl() }}" alt="" loading="lazy"
