@@ -940,17 +940,20 @@
        head simply starts lower and the bubble has somewhere of its own to
        be. Only cards that actually carry one pay for it. */
     /* How much room: enough that the air above the bubble is the air under
-       the last line.
+       the last line, and then a little more.
      *
      * 2.2rem put the bubble 10px under the top edge while the acts row ended
      * 16px above the bottom one (the card's own padding plus the .4rem every
      * button in that row carries under its words) — which is a card that
      * sits high in its own frame. The bubble hangs a fixed distance under
-     * the padding, so the padding is the dial: ±2.6rem leaves the same 16px
-     * above it. A phone's cards are tighter all round, so theirs is less. */
-    .feed-post:has(.status-cloud), .group-post:has(.status-cloud) { padding-top: 2.6rem; }
+     * the padding, so the padding is the dial. Matching the two exactly still
+     * read as tight, because the bubble is a thing that floats on the edge
+     * rather than a line of text sitting on the baseline: it wants a little
+     * more room over it than under the words at the other end. A phone's
+     * cards are tighter all round, so theirs is less. */
+    .feed-post:has(.status-cloud), .group-post:has(.status-cloud) { padding-top: 2.95rem; }
     @media (max-width: 639px) {
-        .group-post:has(.status-cloud) { padding-top: 2.35rem; }
+        .group-post:has(.status-cloud) { padding-top: 2.7rem; }
     }
     /* And the other end of the same sum: the topic card gives back the .4rem
        its buttons carry, exactly as the wall's posts do. */
