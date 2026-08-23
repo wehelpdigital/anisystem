@@ -636,7 +636,16 @@
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
-            @if ($allSchedules->isNotEmpty())
+            @php
+                /* The camera and the recorder are modules the owner grants,
+                   and the Hub has always drawn these two tiles only for
+                   somebody who holds them. This list did not, so a worker
+                   with no recorder still had a Quick Record button here — a
+                   door with nothing behind it. */
+                $qMayCamera = \App\Support\WorkerContext::canUseModule('camera');
+                $qMayVideo = \App\Support\WorkerContext::canUseModule('video');
+            @endphp
+            @if ($allSchedules->isNotEmpty() && $qMayCamera)
                 <button type="button" id="quickCaptureBtn" class="qa-tile qa-cap">
                     <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
                     <span class="qa-txt">
@@ -645,6 +654,8 @@
                     </span>
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>
+            @endif
+            @if ($allSchedules->isNotEmpty() && $qMayVideo)
                 <button type="button" id="quickRecordBtn" class="qa-tile qa-rec">
                     <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg></span>
                     <span class="qa-txt">
@@ -919,8 +930,12 @@
     </a>
     @endif
 
-    @include('sm.partials.quick-capture', ['allSchedules' => $allSchedules])
-    @include('sm.partials.quick-record', ['allSchedules' => $allSchedules])
+    @if (\App\Support\WorkerContext::canUseModule('camera'))
+        @include('sm.partials.quick-capture', ['allSchedules' => $allSchedules])
+    @endif
+    @if (\App\Support\WorkerContext::canUseModule('video'))
+        @include('sm.partials.quick-record', ['allSchedules' => $allSchedules])
+    @endif
     {{-- Whether the tools panel is open. Kept per farm beside the folds this
          page already remembers, so a worker standing in somebody else's farm
          does not inherit the owner's choice. --}}

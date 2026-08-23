@@ -208,19 +208,36 @@
                      a note title and THEN discovering the album asks for its
                      own name anyway. --}}
                 <div>
+                    @php
+                        /* Only the shelves this account may actually put a
+                           photo on. A worker whose owner set Notes to view-only
+                           cannot write one, and one without the AI Technician
+                           cannot ask it anything — a tab that ends in a refusal
+                           is worse than no tab. The Gallery is always there:
+                           it is where a picture lives.
+
+                           The first tab standing is the one that opens, so the
+                           strip never starts on a destination that is gone. */
+                        $qcMayNote = \App\Support\WorkerContext::canWriteModule('notes');
+                        $qcMayAi = \App\Support\WorkerContext::canUseModule('ai');
+                    @endphp
                     <div class="qc-tabs" role="tablist" aria-label="Where to save">
+                        @if ($qcMayNote)
                         <label class="qc-tab is-on" data-qc-target-row role="tab">
                             <input type="radio" name="qcTarget" value="note" checked>
                             <span>Notes</span>
                         </label>
-                        <label class="qc-tab" data-qc-target-row role="tab">
-                            <input type="radio" name="qcTarget" value="gallery">
+                        @endif
+                        <label class="qc-tab {{ $qcMayNote ? '' : 'is-on' }}" data-qc-target-row role="tab">
+                            <input type="radio" name="qcTarget" value="gallery" @checked(! $qcMayNote)>
                             <span>Gallery</span>
                         </label>
+                        @if ($qcMayAi)
                         <label class="qc-tab" data-qc-target-row role="tab">
                             <input type="radio" name="qcTarget" value="ai">
                             <span>Ask AI</span>
                         </label>
+                        @endif
                     </div>
                     <p class="qc-tabhint" id="qcTabHint"></p>
                     <p id="qcClipHint" class="hidden text-xs text-gray-500 mt-1">A clip can only go to an album — notes and the AI Technician read photos.</p>
@@ -623,6 +640,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    /* Where this capture is going.
+     *
+     * Falling back to 'note' was safe while every capture had a Notes tab; a
+     * worker who may not write notes has none, and a fallback to a tab that
+     * is not on the screen would file their photo somewhere they cannot
+     * reach. The first destination still standing is the honest default. */
+    function currentTarget() {
+        const chosen = modal.querySelector('input[name=qcTarget]:checked');
+        if (chosen) return chosen.value;
+        const first = modal.querySelector('input[name=qcTarget]:not(:disabled)');
+
+        return first ? first.value : 'gallery';
+    }
+
     /* Choose a destination and make the paint agree. The rows are labels
        around radios, so checking one without repainting leaves two of them
        looking chosen. */
@@ -714,7 +745,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!items.length) { toast('Capture a photo first.', 'error'); showStep('capture'); return; }
         if (!scheduleChosen()) return;
         const scheduleId = $('qcSchedule').value;
-        const target = modal.querySelector('input[name=qcTarget]:checked')?.value || 'note';
+        const target = currentTarget();
         if (target === 'gallery') {
             if (namesMissing()) return;
             if (!$('qcAlbum').value && !$('qcAlbumTitle').value.trim()) {
@@ -802,7 +833,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ---- Gallery: the album picker, filled from the chosen schedule ---- */
     function currentTarget() {
-        return modal.querySelector('input[name=qcTarget]:checked')?.value || 'note';
+        return currentTarget();
     }
 
     function syncTarget() {

@@ -58,7 +58,13 @@
 
             <div>
                 <span class="form-label">Where should it go?</span>
+                @php
+                    // The same rule the capture sheet follows: a worker who may
+                    // only read the notebook is not offered it as a shelf.
+                    $qrMayNote = \App\Support\WorkerContext::canWriteModule('notes');
+                @endphp
                 <div class="grid gap-2 mt-1.5">
+                    @if ($qrMayNote)
                     <label class="qr-target is-on">
                         <input type="radio" name="qrTarget" value="note" checked>
                         <span>
@@ -66,8 +72,9 @@
                             <span class="block text-xs text-gray-500">Keep it in this schedule's notebook.</span>
                         </span>
                     </label>
-                    <label class="qr-target">
-                        <input type="radio" name="qrTarget" value="gallery">
+                    @endif
+                    <label class="qr-target {{ $qrMayNote ? '' : 'is-on' }}">
+                        <input type="radio" name="qrTarget" value="gallery" @checked(! $qrMayNote)>
                         <span>
                             <span class="block font-semibold text-gray-900">Save to an album</span>
                             <span class="block text-xs text-gray-500">Put it in the Gallery, beside the photos.</span>
@@ -318,7 +325,9 @@
         form.append('scheduleId', $('qrSchedule').value);
         form.append('title', title);
         form.append('note', $('qrNote').value.trim());
-        const target = modal.querySelector('input[name=qrTarget]:checked')?.value || 'note';
+        const target = modal.querySelector('input[name=qrTarget]:checked')?.value
+            || modal.querySelector('input[name=qrTarget]')?.value
+            || 'gallery';
         form.append('target', target);
         if (target === 'gallery') {
             form.append('albumId', $('qrAlbum').value || '');
