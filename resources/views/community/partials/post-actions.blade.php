@@ -169,6 +169,12 @@
         white-space:nowrap; padding-left:.4rem; }
     .fp-acts { display:flex; align-items:center; gap:.35rem; margin-top:.6rem;
         padding-top:.55rem; border-top:1px solid var(--color-gray-100); }
+    /* A post ends on this row, and every button in it carries .4rem of its own
+       padding under the words. With a uniform 1rem all round, that padding
+       stacked on the card's and the bottom of every post read as a deeper
+       margin than the top. The card gives the .4rem back, so the air above
+       the first line and under the last one is the same air. */
+    .feed-post:has(.fp-acts), .wall-post:has(.fp-acts) { padding-bottom:.6rem; }
     .fp-act { display:inline-flex; align-items:center; gap:.35rem; padding:.4rem .6rem;
         border-radius:.6rem; font-size:.78rem; font-weight:700; color:var(--color-gray-500);
         background:none; border:none; cursor:pointer;

@@ -8,7 +8,9 @@
 @php use App\Support\CommunityAvatar; @endphp
 @foreach ($groups as $g)
     @php $hue = CommunityAvatar::hue($g->name); @endphp
-    <div class="card card-hover disc-card flex flex-col" data-group-card="{{ $g->id }}"
+    {{-- Its own colour along the top and bottom, by id: the same room wears
+         the same colour on every visit, and 0 keeps the house green. --}}
+    <div class="card card-hover disc-card dc-hue-{{ $g->id % 6 }} flex flex-col" data-group-card="{{ $g->id }}"
          data-view="group:{{ $g->id }}">
         {{-- The room's cover, with its face standing on the edge of it. A
              coloured stripe said nothing about the room; this says where you

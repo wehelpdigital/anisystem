@@ -50,9 +50,21 @@
         --dc-a: #4a7c2a; --dc-b: #8fc267; }
     .disc-card::before, .disc-card::after { content: ''; position: absolute; inset: 0 0 auto 0;
         height: 3px; pointer-events: none;
+        /* Above the cover photo, which starts at the very top of the band and
+           is inside a positioned wrapper — without this the top strip was
+           painted underneath it and only the bottom one was ever seen. */
+        z-index: 3;
         background: linear-gradient(90deg, var(--dc-a), var(--dc-b) 55%, transparent); }
     .disc-card::after { inset: auto 0 0 0;
         background: linear-gradient(270deg, var(--dc-a), var(--dc-b) 55%, transparent); }
+    /* Each room in its own colour, kept by its id so it is the same colour
+       every time you come back — the wall picks its posts' hues the same way,
+       and a list that changed colour on every load would only be noise. */
+    .dc-hue-1 { --dc-a: #1d4ed8; --dc-b: #7aa5f5; }
+    .dc-hue-2 { --dc-a: #b45309; --dc-b: #ecc06a; }
+    .dc-hue-3 { --dc-a: #0f766e; --dc-b: #6cc9bf; }
+    .dc-hue-4 { --dc-a: #7c3aed; --dc-b: #b393f5; }
+    .dc-hue-5 { --dc-a: #be185d; --dc-b: #f090b8; }
     /* A hover that lifts a full-width band lifts the whole page with it. */
     .disc-card.card-hover:hover { transform: none; }
     .dc-top { position: relative; }
