@@ -31,8 +31,34 @@ class NotesHubController extends Controller
     public function index(Request $request)
     {
         $userId = (int) Auth::id();
-        $scheduleIds = AsCroppingSchedule::active()->forClient($userId)->pluck('id', 'id');
-        $titles = AsCroppingSchedule::active()->forClient($userId)->pluck('title', 'id');
+
+        /* Two kinds of note meet on this page, and they answer to different
+         * people.
+         *
+         * A global note is the writer's own — a phone number, a price, a
+         * thing to remember — and belongs to nobody's farm. A worker keeps
+         * writing those whatever their boss has granted them.
+         *
+         * Everything else on this shelf belongs to a season: the notebook,
+         * the day notes, the notes the board files (the AI technician's
+         * answers among them). Those are the farm's, and this page was
+         * showing them without ever asking the farm — it gathered from
+         * Auth::id(), so a worker standing in their boss's farm was shown
+         * their OWN seasons instead, and a worker with no Notes right at all
+         * was shown a whole notebook they cannot open anywhere else.
+         *
+         * So: the seasons of the farm this session is standing in, narrowed
+         * to the ones this worker is actually on (forClient does that), and
+         * only if the owner has given them Notes at either level.
+         */
+        $ownerId = \App\Support\WorkerContext::effectiveOwnerId();
+        $mayFarmNotes = \App\Support\WorkerContext::canUseModule('notes');
+
+        $seasons = $mayFarmNotes
+            ? AsCroppingSchedule::active()->forClient($ownerId)->pluck('title', 'id')
+            : collect();
+        $scheduleIds = $seasons->keys()->all();
+        $titles = $seasons;
 
         $items = collect();
 
@@ -42,7 +68,7 @@ class NotesHubController extends Controller
         }
 
         // Per-schedule notebook notes.
-        foreach (AsScheduleNote::active()->whereIn('croppingScheduleId', $scheduleIds->keys())->where('croppingScheduleId', '!=', self::GLOBAL_SCHEDULE_ID)->orderByDesc('id')->get() as $n) {
+        foreach (AsScheduleNote::active()->whereIn('croppingScheduleId', $scheduleIds)->where('croppingScheduleId', '!=', self::GLOBAL_SCHEDULE_ID)->orderByDesc('id')->get() as $n) {
             $items->push($this->row(
                 $n->id, 'schedule', $n->title, $n->body, $n->imagePath,
                 $titles[$n->croppingScheduleId] ?? 'Schedule',
@@ -52,7 +78,7 @@ class NotesHubController extends Controller
         }
 
         // Per-day activity notes.
-        foreach (AsScheduleDateNote::active()->whereIn('croppingScheduleId', $scheduleIds->keys())->orderByDesc('id')->get() as $n) {
+        foreach (AsScheduleDateNote::active()->whereIn('croppingScheduleId', $scheduleIds)->orderByDesc('id')->get() as $n) {
             $date = $n->noteDate?->format('M j, Y');
             $items->push($this->row(
                 $n->id, 'day', ($titles[$n->croppingScheduleId] ?? 'Schedule') . ' — ' . $date, $n->noteContent, null,
@@ -68,7 +94,7 @@ class NotesHubController extends Controller
         // than one, so a farm's whole working record — every photo taken in a
         // field, every clip of a broken pump — lived in a table this hub had
         // never heard of. "All my notes" listed everything except the notes.
-        foreach (\App\Models\AsInlineNote::active()->whereIn('croppingScheduleId', $scheduleIds->keys())->orderByDesc('id')->get() as $n) {
+        foreach (\App\Models\AsInlineNote::active()->whereIn('croppingScheduleId', $scheduleIds)->orderByDesc('id')->get() as $n) {
             $date = $n->noteDate?->format('M j, Y');
             $items->push($this->row(
                 $n->id,

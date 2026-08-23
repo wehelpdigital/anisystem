@@ -41,8 +41,18 @@ class WorkerModuleAccess
         // ---- the plan's own modules -------------------------------------
         ['sm.notes',        'notes'],
         ['sm.notes.*',      'notes'],
-        ['notes.hub',       'notes'],
-        ['notes.hub.*',     'notes'],
+        /* Global Notes is not the farm's notebook.
+         *
+         * The page holds the writer's own free-standing notes, and the store
+         * and delete endpoints touch nothing else: both are pinned to
+         * croppingScheduleId = 0 and to the caller's own userId. Gating them
+         * on the farm's Notes right took a worker's own notebook away
+         * because their boss had not lent them his. What the page shows OF
+         * the farm is decided in NotesHubController::index, which asks for
+         * the Notes right there.
+         *
+         * The media endpoints under this name keep their own rules below —
+         * a drawing needs the Drawing module, a photo the camera. */
         // A day's note, an inline note, a note appended to an activity: all
         // the same permission wearing three route names.
         ['sm.activities.date-note.*',        'notes:edit'],
