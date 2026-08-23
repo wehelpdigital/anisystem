@@ -28,7 +28,7 @@
                          scanning a thread should be able to tell an answer
                          from the AI apart from a neighbour's without reading
                          the words first. --}}
-                    <p class="text-xs font-semibold text-gray-900">@if ($reply->author)<a href="{{ route('community.connect.profile', ['userId' => $reply->author->id]) }}" class="{{ $rIsAi ? 'author-ai' : 'hover:text-brand-700' }}"@if ($rIsAi) title="Answered by the AI Technician"@endif>{{ $rAuthor->full_name }}</a>@else{{ 'Member' }}@endif
+                    <p class="text-xs font-semibold text-gray-900">@if ($rIsAi)<span class="author-ai" title="Answered by the AI Technician">{{ $rAuthor->full_name }}</span>@elseif ($reply->author)<a href="{{ route('community.connect.profile', ['userId' => $reply->author->id]) }}" class="hover:text-brand-700">{{ $rAuthor->full_name }}</a>@else{{ 'Member' }}@endif
                         <span class="text-gray-400 font-normal" title="{{ $reply->created_at }}">· {{ $reply->created_at?->diffForHumans(null, true) }}</span></p>
                     @if ($reply->isRestricted ?? false)
                         @include('community.partials.restricted', ['reason' => $reply->restrictedReason ?? null])

@@ -14,10 +14,16 @@
             <p class="text-sm text-gray-500">
                 <span id="lotCount" class="font-bold text-gray-900">0</span> <span id="lotCountLabel">lots</span> on this schedule
             </p>
-            <button type="button" class="btn btn-primary w-full sm:w-auto shrink-0" data-add-lot>
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
-                Add Lot
-            </button>
+            {{-- A lot is a piece of the farm itself, not a day's work on it:
+                 adding one is the owner's to do. A worker sees the lots and
+                 no button that would only be refused — the same way the
+                 Workers module and "+ Version" are not drawn for them. --}}
+            @unless (\App\Support\WorkerContext::inWorkerContext())
+                <button type="button" class="btn btn-primary w-full sm:w-auto shrink-0" data-add-lot>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
+                    Add Lot
+                </button>
+            @endunless
         </div>
 
         {{-- Full-width responsive grid — one card per lot. The empty state below
@@ -30,8 +36,12 @@
                     <svg class="w-7 h-7 text-brand-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
                 </div>
                 <h2 class="font-bold text-gray-900 mb-1">No lots yet</h2>
-                <p class="text-sm text-gray-500 mb-4">Lots are the field areas this schedule covers. Activities attach to them.</p>
-                <button type="button" class="btn btn-primary" data-add-lot>Add your first lot</button>
+                @if (\App\Support\WorkerContext::inWorkerContext())
+                    <p class="text-sm text-gray-500">Lots are the field areas this schedule covers. The farm owner adds them.</p>
+                @else
+                    <p class="text-sm text-gray-500 mb-4">Lots are the field areas this schedule covers. Activities attach to them.</p>
+                    <button type="button" class="btn btn-primary" data-add-lot>Add your first lot</button>
+                @endif
             </div>
         </div>
 
@@ -334,14 +344,20 @@ const __init = () => {
                     ${lot.notes ? `<p class="text-xs text-gray-500 line-clamp-2">${escapeHtml(lot.notes)}</p>` : ''}
                 </div>
 
+                ${MAY_EDIT_LOTS ? `
                 <div class="flex items-center gap-1.5 pt-3 border-t border-gray-100">
                     <button type="button" class="btn btn-white btn-sm" data-edit-lot="${lot.id}">Edit</button>
                     <button type="button" class="btn btn-ghost btn-sm px-2.5! text-red-500 hover:bg-red-50! ml-auto" data-delete-lot="${lot.id}" aria-label="Delete lot">
                         <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16m-10 4v6m4-6v6"/></svg>
                     </button>
-                </div>
+                </div>` : ''}
             </div>`;
     }
+
+    /* A lot is a piece of the farm itself. Editing or removing one is the
+       owner's, the same as adding: a worker who cannot add a lot has no
+       business being offered a Delete beside every one of them. */
+    const MAY_EDIT_LOTS = @json(! \App\Support\WorkerContext::inWorkerContext());
 
     function renderList() {
         list.innerHTML = '';

@@ -4,7 +4,11 @@
      optional $link (default true). --}}
 @php
     $sz = $size ?? 'avatar-md';
-    $doLink = ($link ?? true) && $user;
+    // The assistant's account exists so its answers have a name and a face,
+    // not so anyone can go and look at it: there is no wall to read, nobody
+    // to follow, and nothing there but the answers already on this page.
+    // Gated here, so every screen that draws a member gets it for free.
+    $doLink = ($link ?? true) && $user && ! $user->is_assistant;
     $hue = \App\Support\CommunityAvatar::hue(optional($user)->full_name ?: '?');
     $photo = optional($user)->avatarPath;
     $tag = $doLink ? 'a' : 'span';

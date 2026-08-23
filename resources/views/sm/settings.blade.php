@@ -24,7 +24,21 @@
 @section('content')
     @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'settings'])
 
+    @php
+        // What this season is called, what it is, and who gets told about it
+        // each morning: the owner's answers. A worker reads them — the fields
+        // are theirs to see, because they explain the board — and is offered
+        // nothing that would only be refused on the way back.
+        $setWorker = \App\Support\WorkerContext::inWorkerContext();
+    @endphp
+
     <div class="max-w-3xl space-y-4">
+
+        @if ($setWorker)
+            <p class="card card-body text-sm text-gray-500">
+                👁️ These are the farm owner's settings. You can read them here; changing them is theirs to do.
+            </p>
+        @endif
 
         {{-- Two things live here now, and they are not the same job: what this
              schedule IS, and who hears about it each morning. --}}
@@ -44,17 +58,21 @@
 
                 <div>
                     <label for="settingsTitle" class="form-label">Title <span class="text-red-500">*</span></label>
-                    <input type="text" id="settingsTitle" maxlength="255" class="form-input" value="{{ $schedule->title }}">
+                    {{-- Readable, not editable: a field that takes typing and
+                         then has nowhere to send it is a small lie. --}}
+                    <input type="text" id="settingsTitle" maxlength="255" class="form-input" value="{{ $schedule->title }}" @readonly($setWorker)>
                 </div>
 
                 <div>
                     <label for="settingsDescription" class="form-label">Description</label>
-                    <textarea id="settingsDescription" rows="3" maxlength="5000" class="form-textarea">{{ $schedule->description }}</textarea>
+                    <textarea id="settingsDescription" rows="3" maxlength="5000" class="form-textarea" @readonly($setWorker)>{{ $schedule->description }}</textarea>
                 </div>
 
+                @unless ($setWorker)
                 <div class="flex justify-end">
                     <button type="button" id="saveBasicBtn" class="btn btn-primary w-full sm:w-auto">Save Basic Info</button>
                 </div>
+                @endunless
             </div>
         </div>
 
@@ -72,7 +90,7 @@
                     </div>
 
                     <label class="flex items-start gap-3 cursor-pointer select-none">
-                        <input type="checkbox" id="notifyWorkersDaily" class="mt-1 w-5 h-5 rounded"
+                        <input type="checkbox" id="notifyWorkersDaily" @disabled($setWorker) class="mt-1 w-5 h-5 rounded"
                                @checked($schedule->notifyWorkersDaily)>
                         <span class="text-sm text-gray-700">
                             <strong class="text-gray-900">Email the workers</strong><br>
@@ -82,7 +100,7 @@
                     </label>
 
                     <label class="flex items-start gap-3 cursor-pointer select-none">
-                        <input type="checkbox" id="notifyOwnerDaily" class="mt-1 w-5 h-5 rounded"
+                        <input type="checkbox" id="notifyOwnerDaily" @disabled($setWorker) class="mt-1 w-5 h-5 rounded"
                                @checked($schedule->notifyOwnerDaily)>
                         <span class="text-sm text-gray-700">
                             <strong class="text-gray-900">Email me</strong><br>
@@ -92,7 +110,7 @@
 
                     <div>
                         <label class="form-label" for="notifyHour">Send at</label>
-                        <select id="notifyHour" class="form-select" style="max-width:12rem">
+                        <select id="notifyHour" class="form-select" style="max-width:12rem" @disabled($setWorker)>
                             @for ($h = 0; $h < 24; $h++)
                                 <option value="{{ $h }}" @selected((int) $schedule->notifyHour === $h)>
                                     {{ \Carbon\Carbon::createFromTime($h)->format('g:00 A') }}
@@ -108,7 +126,9 @@
                     </div>
 
                     <div class="flex flex-wrap gap-2">
+                        @unless ($setWorker)
                         <button type="button" class="btn btn-primary" id="saveNotifyBtn">Save notifications</button>
+                        @endunless
                         <button type="button" class="btn btn-white" id="testNotifyBtn">Send me one now</button>
                     </div>
                 </div>
