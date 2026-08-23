@@ -36,19 +36,40 @@
      * them opens whole in the lightbox, which binds to [data-lightbox] img
      * and so needs nothing here but the attribute.
      */
-    .post-shots { margin-top:.6rem; column-count:2; column-gap:.35rem; }
-    @media (min-width:640px) { .post-shots { column-count:3; } }
-    .post-shots img { display:block; width:100%; margin:0 0 .35rem; border-radius:.55rem;
-        break-inside:avoid; cursor:zoom-in; background:var(--color-gray-100);
-        /* A portrait photo is three times the height of a landscape one, and
-           one of those in a column of two runs the post off the screen. The
-           thumbnail is capped and cropped; the lightbox still opens the whole
-           picture, which is what the crop is borrowing against. */
-        max-height:15rem; object-fit:cover;
-        transition:filter .28s cubic-bezier(.22,1,.36,1); }
-    .post-shots img:hover { filter:brightness(1.06); }
-    @media (prefers-reduced-motion: reduce) { .post-shots img { transition:none; } }
-    html.dark .post-shots img { background:rgb(255 255 255 / .06); }
+    /* One at a time, the way a phone reads a set of photographs — a wall of
+       thumbnails made a post into a page and cropped every one of them into a
+       square that answered nothing. The track snaps, so a swipe lands on a
+       picture rather than between two. */
+    .post-carousel { position:relative; margin-top:.6rem; }
+    .pc-track { display:grid; grid-auto-flow:column; grid-auto-columns:100%;
+        overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth;
+        scrollbar-width:none; border-radius:.7rem; touch-action:pan-x pan-y; }
+    .pc-track::-webkit-scrollbar { display:none; }
+    .pc-track img { display:block; width:100%; aspect-ratio:4 / 3; object-fit:cover;
+        /* start, not centre: with columns exactly a screenful wide the two
+           rest in the same place, but centre leaves a hair of the next
+           picture showing at the edge on a fractional width. */
+        scroll-snap-align:start; scroll-snap-stop:always; cursor:zoom-in;
+        background:var(--color-gray-100); border-radius:.7rem; }
+    html.dark .pc-track img { background:rgb(255 255 255 / .06); }
+    /* Where you are in the set, said twice: a number for the reader who wants
+       to know how many, and dots for the one who only wants to feel it. */
+    .pc-count { position:absolute; top:.5rem; right:.5rem; pointer-events:none;
+        padding:.1rem .45rem; border-radius:999px; font-size:.68rem; font-weight:800;
+        color:#fff; background:rgb(17 24 39 / .55); backdrop-filter:blur(2px); }
+    .pc-count b { font-weight:800; }
+    .pc-dots { display:flex; justify-content:center; align-items:center; gap:.28rem; margin-top:.45rem; }
+    .pc-dot { width:.36rem; height:.36rem; border-radius:999px; background:var(--color-gray-300);
+        transition:width .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+    .pc-dot.is-on { width:1.05rem; background:var(--color-brand-600); }
+    html.dark .pc-dot { background:rgb(255 255 255 / .22); }
+    html.dark .pc-dot.is-on { background:var(--color-brand-400); }
+    @media (prefers-reduced-motion: reduce) {
+        .pc-dot { transition:none; }
+        /* No smooth scroll either: the jump is the honest version of a
+           movement somebody has asked not to see. */
+        .pc-track { scroll-behavior:auto; }
+    }
 
     /* --- The community's own ground ---
      *
@@ -894,7 +915,7 @@
     .pymk-rail > * { scroll-snap-align: start; }
     .pymk-rail::-webkit-scrollbar { display: none; }
     /* The shape of what is coming, shimmering while it comes. */
-    .pymk-skel { width: auto; min-width: 0; height: 11.5rem; border-radius: 1rem;
+    .pymk-skel { width: auto; min-width: 0; height: 12.5rem; border-radius: .9rem;
         background: linear-gradient(100deg, var(--color-gray-100) 40%, var(--color-gray-200) 50%, var(--color-gray-100) 60%);
         background-size: 200% 100%; animation: pymkShim 1.2s linear infinite; }
     @keyframes pymkShim { to { background-position: -200% 0; } }
@@ -1047,22 +1068,38 @@
        row rather than as a broken fence. */
     /* The card fills the column the rail deals it — three to a screen —
        rather than carrying a width of its own. */
-    .reco-card { width: auto; min-width: 0; padding: .7rem .55rem .6rem; border-radius: 1rem;
-        display: flex; flex-direction: column; align-items: stretch; text-align: center; }
+    .reco-card { width: auto; min-width: 0; padding: 0 .5rem .6rem; border-radius: .9rem;
+        display: flex; flex-direction: column; align-items: stretch; text-align: center;
+        overflow: hidden; border: 1px solid var(--color-gray-100);
+        transition: box-shadow .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .reco-card:hover { border-color: var(--color-brand-200); box-shadow: 0 10px 26px -18px rgb(0 0 0 / .6); }
+    @media (prefers-reduced-motion: reduce) { .reco-card { transition: none; } }
+    /* The strip runs to the card's own edges and the face stands on it. */
+    .reco-top { display: block; height: 2.3rem; margin: 0 -.5rem .0; }
     .reco-who { display: block; min-width: 0; }
-    .reco-face { display: flex; justify-content: center; }
-    .reco-face .avatar { width: 3.25rem; height: 3.25rem; font-size: 1rem; }
-    .reco-name { display: block; margin-top: .45rem; font-size: .82rem; font-weight: 700; line-height: 1.25;
+    .reco-face { display: flex; justify-content: center; margin-top: -1.5rem; }
+    .reco-face .avatar { width: 3rem; height: 3rem; font-size: .95rem;
+        border: 2.5px solid var(--color-white); box-shadow: 0 6px 16px -10px rgb(0 0 0 / .8); }
+    .reco-name { display: block; margin-top: .4rem; font-size: .8rem; font-weight: 800; line-height: 1.25;
         color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    /* Two lines of reason, always: one line and two lines would otherwise
-       make neighbouring cards different heights. */
-    .reco-why { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-        margin-top: .15rem; font-size: .68rem; font-weight: 600; line-height: 1.45;
+    /* One line of reason. Two lines were held open so neighbouring cards
+       ended level; the row is a grid now and they end level anyway. */
+    .reco-why { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        margin-top: .1rem; font-size: .68rem; font-weight: 600; line-height: 1.45;
         color: var(--color-brand-700); }
+    html.dark .reco-card { border-color: #2b3a1c; }
+    html.dark .reco-face .avatar { border-color: #151b12; }
     html.dark .reco-name { color: #e8efe1; }
     html.dark .reco-why { color: #a5c97e; }
-    /* The buttons: same width, same height, at the foot of every card. */
-    .reco-acts { margin-top: auto; padding-top: .5rem; display: grid; gap: .35rem; }
+    /* The buttons: same width, same height, at the foot of every card.
+       Connect is the errand; Follow is the lighter gesture under it and
+       wears no fill, so one card does not read as two decisions. */
+    .reco-acts { margin-top: auto; padding-top: .5rem; display: grid; gap: .3rem; }
+    .reco-acts .reco-follow { background: transparent; border-color: transparent;
+        color: var(--color-brand-700); }
+    .reco-acts .reco-follow:hover { background: var(--color-brand-50); }
+    .reco-acts .reco-follow.is-on { background: transparent; border-color: transparent;
+        color: var(--color-gray-500); }
     .reco-acts .conn-action { display: grid; gap: .35rem; }
     .reco-acts .conn-action .conn-btn,
     .reco-acts .reco-follow { width: 100%; min-height: 1.95rem; padding: .25rem .5rem;

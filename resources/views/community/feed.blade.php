@@ -662,8 +662,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('feedSrcGallery')?.addEventListener('click', () => {
         window.closeSheet?.('wallPhotoSheet');
         if (typeof window.smPickMedia !== 'function') { toast('The gallery is not available here.', 'error'); return; }
+        /* Tap to collect, then one button to bring them all: a post takes
+           eight photographs and picking them one sheet-open at a time was
+           eight sheet-opens. The picker has always had this mode — the AI
+           technician's question uses it — and the room left for them is
+           whatever the post has not already taken. */
         window.smPickMedia({
             allSchedules: true, kinds: 'image', title: 'From your gallery',
+            multiple: true,
+            max: Math.max(1, MAX_SHOTS - shots.length),
             onPick: (item) => { addPick(item); paintShots(); },
         });
     });
