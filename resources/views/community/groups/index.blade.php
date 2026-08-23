@@ -28,9 +28,9 @@
      * — and to a plus alone on the narrowest screens — it sits beside the
      * heading the way the bars in the rest of the community do. */
     /* The heading, the line that says what the page is, and under both the
-       two things you can do about it — in the same buttons the section bar
-       above them uses, because they are the same kind of thing: a control you
-       press, not a label on the heading. */
+       two things you can do about it — the shape the section bar above them
+       uses, in the house green, because they are the same kind of thing: a
+       control you press, not a label on the heading. */
     .disc-head { margin-bottom:.85rem; }
     .disc-head-title { font-family:var(--font-heading); font-size:1.05rem; font-weight:800; line-height:1.25;
         color:var(--color-gray-900); }
@@ -186,11 +186,11 @@
     <h2 class="disc-head-title">Sali ka sa usapan</h2>
     <p class="disc-head-sub">Post questions, share what works — every room here is a conversation somebody started.</p>
     <div class="disc-head-acts">
-        <button type="button" id="createGroupBtn" class="btn btn-white btn-sm">
+        <button type="button" id="createGroupBtn" class="btn btn-primary btn-sm">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
             New discussion
         </button>
-        <button type="button" id="discSearchBtn" class="btn btn-white btn-sm" title="Search discussions" aria-label="Search discussions">
+        <button type="button" id="discSearchBtn" class="btn btn-primary btn-sm" title="Search discussions" aria-label="Search discussions">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
             Search
         </button>

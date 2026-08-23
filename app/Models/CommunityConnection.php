@@ -237,7 +237,15 @@ class CommunityConnection extends BaseModel
          * in the requests card, not here. Pending both ways, declined and
          * blocked all count: this strip is for strangers. */
         $known = static::spokenFor($viewerId);
-        $excludeSet = array_flip(array_merge([$viewerId], $friends, $known));
+        /* And the AI technician.
+         *
+         * It has an account so its answers have a name and a face, not so
+         * anybody can be introduced to it: there is no request to send and
+         * nothing on the other end to accept one. The members list already
+         * leaves it out; this strip was still offering it as somebody you
+         * might know. */
+        $assistant = (int) (User::where('email', User::ASSISTANT_EMAIL)->value('id') ?? 0);
+        $excludeSet = array_flip(array_merge([$viewerId, $assistant], $friends, $known));
 
         // Mutual counts: one pass over accepted connections that touch a friend.
         $mutual = [];
