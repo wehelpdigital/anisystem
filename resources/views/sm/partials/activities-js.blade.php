@@ -408,8 +408,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const pill = group.querySelector('.date-header-stage');
         if (!pill) return;
         const dateKey = (group.getAttribute('data-date') || '').trim();
+        const header = group.querySelector('.date-header');
         const rows = dayStageRows(dateKey, group);
-        if (!rows.length) { pill.hidden = true; pill.textContent = ''; return; }
+        if (!rows.length) {
+            pill.hidden = true; pill.textContent = '';
+            syncRowBreak(header);
+            return;
+        }
 
         // One lot: name the stage. Several: say how many, because a header is
         // not the place to list four different answers. A bare icon was tried
@@ -426,6 +431,8 @@ document.addEventListener('DOMContentLoaded', () => {
         pill.title = detail;
         pill.setAttribute('aria-label', 'Growth stage — ' + detail);
         pill.setAttribute('data-date', dateKey);
+        // Now that it is showing, the second line is wanted.
+        syncRowBreak(header);
     }
 
     /** The stage of every lot with a crop on a given day. */
@@ -1375,14 +1382,11 @@ document.addEventListener('DOMContentLoaded', () => {
             pill.textContent = '';
         }
 
-        // The forecast and the cost share a second line. CSS order puts them
-        // after everything else; this is the break that makes "after" mean
-        // "next line" — added only when there is something down there, so a
-        // day with neither does not grow an empty row.
-        const header = group.querySelector('.date-header');
-        if (!header) return;
-        const wx = header.querySelector('.date-header-weather, .wx-mini-btn');
-        ensureRowBreak(header, !!wx || total > 0);
+        // The forecast, the cost and the growth stage share a second line.
+        // CSS order puts them after everything else; the break is what makes
+        // "after" mean "next line" — and the header itself is asked what is
+        // down there, so no one painter has to know about the others.
+        syncRowBreak(group.querySelector('.date-header'));
     }
     /* A number nobody can check is a number nobody trusts. Tapping it shows
        the same arithmetic in longhand: one line per activity with who is on
@@ -1474,6 +1478,23 @@ document.addEventListener('DOMContentLoaded', () => {
     /* The zero-height item that starts the header's second row. Both the
        forecast and the day's cost need it there before they can be measured
        or placed, so it has one owner and is safe to ask for twice. */
+    /* Which of the three second-line facts are actually showing decides
+       whether the break belongs there at all. Asked of the header rather
+       than told by whichever painter ran last: a day with a growth stage
+       and no forecast used to keep the pill up on the control line, where
+       the date is the only thing that can give way — so a long stage name
+       ("Reproductive · booting") ate the date down to an ellipsis. The
+       stage is a fact about the day, like the other two; it belongs on
+       their line. */
+    function syncRowBreak(header) {
+        if (!header) return;
+        const wx = header.querySelector('.date-header-weather, .wx-mini-btn');
+        const cash = header.querySelector('.date-header-cash:not([hidden])');
+        const stage = header.querySelector('.date-header-stage:not([hidden])');
+        ensureRowBreak(header, !!(wx || cash || stage));
+    }
+    window.__syncRowBreak = syncRowBreak;
+
     function ensureRowBreak(header, want) {
         if (!header) return;
         let brk = header.querySelector('.dh-rowbreak');

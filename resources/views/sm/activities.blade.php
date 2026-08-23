@@ -651,8 +651,16 @@
                push anything off the line, and simply grows into whatever the
                buttons leave, ellipsizing when that is little. */
             .date-header-date {
-                flex: 1 1 0; min-width: 0;
+                flex: 1 1 0;
                 white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+                /* A floor under the date. It still claims no width of its own
+                   and still ellipsizes when the line is genuinely full, but it
+                   can no longer be squeezed to "Mar…" by a pill that could
+                   just as well have wrapped: in a wrapping flex row, an item
+                   that will not shrink past its floor sends whatever comes
+                   after it to the next line instead, which is the trade the
+                   day header wants. */
+                min-width: 6.5rem;
             }
             /* One and two digits cost the same, so the line does not reflow
                when a day ticks over from 9 to 10 activities. */
