@@ -42,8 +42,16 @@
     /* ---- the greeting and the account's numbers, in the same calm
        language as the schedules shelf: a white card, one green hairline,
        the hour drawn rather than shouted. ---- */
-    .dash-hero { display: flex; align-items: center; gap: .85rem; flex-wrap: wrap;
-        padding: 1.05rem 1.25rem; border-radius: 1.1rem; position: relative; overflow: hidden;
+    /* A column for the hour, a column for the words.
+     *
+     * As a wrapping flex row the badge took a whole line of its own on a
+     * phone, with the greeting under it and the plan chip adrift on a third
+     * line at the far right — three ragged rows for two facts. A grid keeps
+     * the badge beside what it belongs to at every width, and lets the chip
+     * fall in under the words rather than off to the side of nothing. */
+    .dash-hero { display: grid; grid-template-columns: auto minmax(0, 1fr);
+        align-items: center; gap: .55rem .95rem;
+        padding: 1.25rem 1.35rem; border-radius: 1.1rem; position: relative; overflow: hidden;
         background: var(--color-white); border: 1px solid var(--color-gray-200); }
     .dash-hero::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
         background: linear-gradient(90deg, #6b9f3d, #b8d38e 55%, transparent);
@@ -52,9 +60,11 @@
         background-size: 220% 100%;
         animation: gradSweep 12s ease-in-out infinite alternate; }
     @media (prefers-reduced-motion: reduce) { .dash-hero::before { animation: none; } }
-    .dash-hero-mark { width: 3rem; height: 3rem; border-radius: 999px; flex-shrink: 0;
+    .dash-hero-mark { grid-column: 1; grid-row: 1 / -1; align-self: center;
+        width: 3rem; height: 3rem; border-radius: 999px; flex-shrink: 0;
         display: inline-flex; align-items: center; justify-content: center; }
     .dash-hero-mark svg { width: 1.55rem; height: 1.55rem; }
+    .dash-hero-body { grid-column: 2; min-width: 0; }
     .tod-morning { background: linear-gradient(135deg, #fff7e0, #fbe6ae); color: #d97706; }
     .tod-afternoon { background: linear-gradient(135deg, #e8f4fd, #cde7fa); color: #0284c7; }
     .tod-evening { background: linear-gradient(135deg, #e9e7fb, #d5d2f2); color: #6d28d9; }
@@ -66,13 +76,17 @@
         color: var(--color-gray-900); line-height: 1.2; letter-spacing: -.01em; }
     .dash-hero-p { font-size: .82rem; color: var(--color-gray-500); margin-top: .2rem; }
     /* Enough air that the greeting reads as a welcome rather than a header. */
-    .dash-hero { padding: 1.25rem 1.35rem; }
     .dash-hero-mark { width: 3.35rem; height: 3.35rem; }
     .dash-hero-mark svg { width: 1.7rem; height: 1.7rem; }
     .dash-hero-warn { display: inline-flex; align-items: center; gap: .3rem; margin-top: .35rem;
         font-size: .78rem; font-weight: 700; color: #b45309; }
     .dash-hero-warn svg { width: .85rem; height: .85rem; }
-    .dash-hero-state { flex-shrink: 0; margin-left: auto; }
+    /* Under the words on a phone, beside them once there is room. */
+    .dash-hero-state { grid-column: 2; justify-self: start; }
+    @media (min-width: 640px) {
+        .dash-hero { grid-template-columns: auto minmax(0, 1fr) auto; }
+        .dash-hero-state { grid-column: 3; grid-row: 1 / -1; justify-self: end; align-self: center; }
+    }
     .dash-chip { display: inline-flex; align-items: center; gap: .35rem; padding: .35rem .75rem;
         border-radius: 999px; font-size: .74rem; font-weight: 700;
         background: var(--color-gray-50); border: 1px solid var(--color-gray-200); color: var(--color-gray-600); }
@@ -314,7 +328,7 @@
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
             @endif
         </span>
-        <div class="min-w-0 grow">
+        <div class="dash-hero-body">
             <h2 class="dash-hero-h">{{ $__greet }}, {{ \Illuminate\Support\Str::title($user->firstName ?: 'kaibigan') }}</h2>
             <p class="dash-hero-p">{{ now('Asia/Manila')->format('l, F j') }} — {{ $scheduleCount === 0 ? 'no seasons planned yet.' : $scheduleCount . ' ' . \Illuminate\Support\Str::plural('season', $scheduleCount) . ' on the shelf.' }}</p>
             @if ($expiringSoon)
@@ -355,6 +369,16 @@
             <i>Days left</i>
         </div>
     </div>
+
+    {{-- The AI technician's one thing worth knowing today. It sat at the
+         bottom of the schedules page, where a page of seasons is what people
+         scroll past it to reach; here it is read on the way in. --}}
+    @include('sm.partials.tip-of-day', [
+        'tip' => $tip ?? null,
+        'aiHref' => (($canUseAi ?? false) && $latestSchedules->isNotEmpty())
+            ? route('sm.ai', ['id' => $latestSchedules->first()->id])
+            : null,
+    ])
 
     {{-- My Cropping Schedules (top — the primary workspace) --}}
     <div>
@@ -556,7 +580,10 @@
                     </div>
                 @endforeach
             </div>
-            <a href="{{ route('sm.create') }}" class="btn btn-primary btn-lg w-full mt-4">+ New Cropping Schedule</a>
+            {{-- Starting a season belongs on the schedules page, which has
+                 its own floating button for it and is one tap away. Here it
+                 was a full-width green bar under every visit, for the one
+                 errand nobody opens the dashboard to do. --}}
         @endif
     </div>
 

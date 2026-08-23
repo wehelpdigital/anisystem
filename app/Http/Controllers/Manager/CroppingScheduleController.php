@@ -172,11 +172,6 @@ class CroppingScheduleController extends Controller
             ->orderBy('title')
             ->get(['id', 'title']);
 
-        // One thing worth knowing, chosen for whatever the grower's own crops
-        // are doing today. The newest schedule stands in for "my farm right
-        // now" — it is the one they are most likely working on.
-        $tip = \App\Support\FarmTips::forToday((int) \Illuminate\Support\Facades\Auth::id(), $schedules->first());
-
         // The one line worth reading before the list: how much there is, and
         // how much of it is live. Counted across every schedule, not just the
         // page being shown.
@@ -218,7 +213,7 @@ class CroppingScheduleController extends Controller
         $grant = \App\Support\WorkerContext::activeGrant();
         $boss = $grant?->boss;
 
-        return view('sm.index', compact('schedules', 'allSchedules', 'tip', 'summary', 'cards', 'todayHref', 'sorts', 'sort') + [
+        return view('sm.index', compact('schedules', 'allSchedules', 'summary', 'cards', 'todayHref', 'sorts', 'sort') + [
             'isWorkerHere' => $grant !== null,
             'workerBossName' => $boss ? trim(($boss->firstName ?? '') . ' ' . ($boss->lastName ?? '')) : null,
             'hats' => \App\Support\UserHats::for(Auth::user()),

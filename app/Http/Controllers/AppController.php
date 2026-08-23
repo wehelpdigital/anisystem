@@ -202,8 +202,15 @@ class AppController extends Controller
             ->limit(3)
             ->get();
 
+        // One thing worth knowing, chosen for whatever this grower's own crops
+        // are doing today — held steady until tomorrow. It reads at the top of
+        // the dashboard now, above the schedules: the first screen of the app
+        // is where advice is actually read.
+        $tip = \App\Support\FarmTips::forToday((int) $user->id, $latestSchedules->first());
+
         return view('app.dashboard', [
             'user' => $user,
+            'tip' => $tip,
             'subscription' => $subscription,
             'scheduleCount' => $scheduleCount,
             'shelfYear' => $year,

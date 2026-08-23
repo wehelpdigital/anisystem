@@ -85,6 +85,9 @@
         .sch-hero-emoji { width: 3rem; height: 3rem; border-radius: 999px; flex-shrink: 0;
             display: inline-flex; align-items: center; justify-content: center; }
         .sch-hero-emoji svg { width: 1.55rem; height: 1.55rem; }
+        /* The shelf's own badge: field green, like the page it heads. */
+        .sch-hero-emoji.is-plan { background: linear-gradient(135deg, #eef6e4, #d5e8bd); color: #4a7c2a; }
+        html.dark .sch-hero-emoji.is-plan { background: rgb(255 255 255 / .07); color: #a8cc7e; }
         .tod-morning { background: linear-gradient(135deg, #fff7e0, #fbe6ae); color: #d97706; }
         .tod-afternoon { background: linear-gradient(135deg, #e8f4fd, #cde7fa); color: #0284c7; }
         .tod-evening { background: linear-gradient(135deg, #e9e7fb, #d5d2f2); color: #6d28d9; }
@@ -545,10 +548,10 @@
 
     <div class="sch-hero">
         @php
-            $__h = (int) now()->format('G');
-            [$__greet, $__tod] = $__h < 12
-                ? ['Good morning', 'tod-morning']
-                : ($__h < 18 ? ['Good afternoon', 'tod-afternoon'] : ['Good evening', 'tod-evening']);
+            // No hour in the greeting any more. This page is a list of
+            // schedules, and "Good evening" was a second thing to read before
+            // the one thing anybody opened it for — the line underneath still
+            // says what day it is and what the day holds.
             // Built here rather than inline: a trailing full stop after an
             // @endif is not a directive Blade recognises, and the if never
             // closes.
@@ -563,20 +566,18 @@
             }
         @endphp
         <div class="sch-hero-left">
-            <span class="sch-hero-emoji {{ $__tod }}" aria-hidden="true">
-                @if ($__tod === 'tod-morning')
-                    {{-- Sunrise: half a sun lifting over the ground line. --}}
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v2M5.3 6.7l1.4 1.4M18.7 6.7l-1.4 1.4M8 15a4 4 0 118 0M2 15h2m16 0h2M3 19h18"/></svg>
-                @elseif ($__tod === 'tod-afternoon')
-                    {{-- Full sun, high. --}}
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4l1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4m11.4-11.4l1.4-1.4"/></svg>
-                @else
-                    {{-- The moon the app already draws elsewhere. --}}
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-                @endif
+            {{-- A season on a calendar, because that is what this page is a
+                 list of. The sun and the moon belonged to a greeting that has
+                 gone, and an hour of the day is not what the shelf is about. --}}
+            <span class="sch-hero-emoji is-plan" aria-hidden="true">
+                <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 7.5A1.5 1.5 0 015.5 6h13A1.5 1.5 0 0120 7.5v11a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 18.5v-11z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 4v4M16 4v4M4 10.5h16"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 17.6v-2.9m0 0c0-1.5 1.05-2.7 2.75-2.7.1 1.45-.8 2.7-2.75 2.7zm0 0c0-1.5-1.05-2.7-2.75-2.7-.1 1.45.8 2.7 2.75 2.7z"/>
+                </svg>
             </span>
             <div class="min-w-0">
-                <h1 class="sch-hero-h">{{ $__greet }}, {{ \Illuminate\Support\Str::title(auth()->user()->firstName ?: 'farmer') }}</h1>
+                <h1 class="sch-hero-h">Here are your cropping schedules for today</h1>
                 <p class="sch-hero-p">{!! $__say !!}</p>
                 @if (($todayHref ?? null) && $summary['today'] > 0)
                     <a href="{{ $todayHref }}" class="sch-hero-cta">
@@ -915,10 +916,9 @@
     @endif
     </div>{{-- /#scheduleResults --}}
 
-    {{-- The tip reads last on purpose: it is worth knowing, but it is not
-         what anyone opened this page for, and at the top it pushed the
-         schedules themselves below the fold on a phone. --}}
-    @include('sm.partials.tip-of-day', ['tip' => $tip ?? null, 'aiHref' => ($schedules->first() ? route('sm.ai', ['id' => $schedules->first()->id]) : null)])
+    {{-- The tip of the day has moved to the dashboard, above the schedules
+         there: it is the first thing worth reading when the app opens, and it
+         was read by nobody at the bottom of this list. --}}
 
     {{-- One floating button, for the one thing this page exists to start —
          and nothing a worker can start, so it is not drawn for them. --}}
