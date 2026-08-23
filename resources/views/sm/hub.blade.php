@@ -39,8 +39,11 @@
     $doorOpen = [
         'workers' => ! $isWorker,
         'notes' => $mayNotes,
-        'documentation' => $mayNotes,
-        'post-harvest' => $mayNotes,
+        // What the season is documented as, and what came off it at the end,
+        // are the owner's record of their own farm — not a shelf a worker
+        // reads or writes. No tier of grant opens these.
+        'documentation' => ! $isWorker,
+        'post-harvest' => ! $isWorker,
         'maps' => $may('maps'),
         'draw' => $may('draw'),
         'ai' => $may('ai'),

@@ -20,7 +20,7 @@
     // shell, so a chip left standing here is the door the hub tile and the
     // modules sheet already dropped — and both of these now answer 404.
     if (\App\Support\WorkerContext::activeGrant()) {
-        unset($modules['workers'], $modules['ai']);
+        unset($modules['workers'], $modules['ai'], $modules['documentation'], $modules['post-harvest']);
     }
 @endphp
 

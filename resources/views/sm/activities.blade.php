@@ -2717,8 +2717,10 @@
         @if (! $isWorker)
         workers:       { label: 'Workers',       url: @json(route('sm.workers',       ['id' => $schedule->id])) },
         @endif
+        @if (! $isWorker)
         documentation: { label: 'Documentation', url: @json(route('sm.documentation', ['id' => $schedule->id])) },
         'post-harvest': { label: 'Post-harvest', url: @json(route('sm.post-harvest',  ['id' => $schedule->id])) },
+        @endif
         @if ($may('notes'))
         notes:         { label: 'Notes',         url: @json(route('sm.notes',        ['id' => $schedule->id])) },
         @endif

@@ -70,6 +70,17 @@ class WorkerModuleAccess
         ['sm.ai',      'ai'],
         ['sm.ai.*',    'ai'],
 
+        // ---- the owner's own record of the farm --------------------------
+        // The documentation a season carries and what came off it at the end
+        // are the owner's, at every tier: no grant opens them, so the doors
+        // are not drawn and the addresses answer the same way.
+        ['sm.documentation',   'owner'],
+        ['sm.doc-entries.*',   'owner'],
+        ['sm.doc-tags.*',      'owner'],
+        ['sm.protocol.*',      'owner'],
+        ['sm.post-harvest',    'owner'],
+        ['sm.post-harvest.*',  'owner'],
+
         ['sm.reports',           'reports'],
         ['sm.labor.report',      'reports'],
         ['sm.revenue-report',    'reports'],
