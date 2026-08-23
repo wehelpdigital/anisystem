@@ -27,20 +27,36 @@
      * was a full-sized one carrying three words; shrunk to a plus and a word
      * — and to a plus alone on the narrowest screens — it sits beside the
      * heading the way the bars in the rest of the community do. */
-    /* The title and the two buttons on one line, the description under both.
-       The buttons belong to the heading, not to the paragraph, so they sit on
-       its line and centre against it — hung off the whole block they floated
-       between two lines of type and pointed at neither. */
+    /* The heading, then the two things you can do about it, then the line
+       that says what the page is.
+       They read as tags rather than as buttons: a full-weight button beside a
+       heading competes with it for the eye, and these two are the heading's
+       own asides — start one, or find one. So they follow the words rather
+       than sitting out at the far edge pointing at nothing. */
     .disc-head { margin-bottom:.85rem; }
-    .disc-head-row { display:flex; align-items:center; gap:.6rem; }
-    .disc-head-title { flex:1 1 auto; min-width:0;
+    .disc-head-row { display:flex; align-items:center; gap:.45rem; flex-wrap:wrap; }
+    .disc-head-title { flex:0 1 auto; min-width:0;
         font-family:var(--font-heading); font-size:1.05rem; font-weight:800; line-height:1.25;
         color:var(--color-gray-900); }
     .disc-head-sub { font-size:.78rem; line-height:1.4; color:var(--color-gray-500); margin-top:.2rem; }
-    .disc-head-acts { display:flex; align-items:center; gap:.4rem; flex:0 0 auto; }
-    .dh-act { display:inline-flex; align-items:center; gap:.3rem; flex:0 0 auto;
-        padding:.32rem .6rem; font-size:.75rem; font-weight:800; border-radius:.6rem; }
-    .dh-act svg { width:.95rem; height:.95rem; }
+    .disc-head-acts { display:inline-flex; align-items:center; gap:.35rem; flex:0 0 auto; }
+    .dh-act { display:inline-flex; align-items:center; gap:.25rem; flex:0 0 auto;
+        padding:.2rem .55rem; border-radius:999px; cursor:pointer;
+        font-size:.7rem; font-weight:800; line-height:1.5;
+        color:var(--color-gray-600); background:var(--color-gray-100);
+        border:1px solid transparent;
+        transition:background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .dh-act:hover { background:var(--color-gray-200); color:var(--color-gray-800); }
+    .dh-act svg { width:.85rem; height:.85rem; }
+    /* Starting one is the page's own errand, so it wears the house colour —
+       still a tag, not a button. */
+    .dh-act.is-lead { color:var(--color-brand-700); background:var(--color-brand-50);
+        border-color:var(--color-brand-200); }
+    .dh-act.is-lead:hover { background:var(--color-brand-100); color:var(--color-brand-800); }
+    @media (prefers-reduced-motion: reduce) { .dh-act { transition:none; } }
+    html.dark .dh-act { background:rgb(255 255 255 / .06); color:#cdd8c0; }
+    html.dark .dh-act:hover { background:rgb(255 255 255 / .1); }
+    html.dark .dh-act.is-lead { background:rgb(61 104 35 / .25); border-color:#3f5626; color:#bfe19a; }
     /* The description stays at every width — it is one short line, and it is
        what tells a newcomer what the page is for. The button's word is what
        gives way on the narrowest screens. */
@@ -201,11 +217,11 @@
             <b></b>
             <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
-        <button type="button" id="createGroupBtn" class="btn btn-primary dh-act">
+        <button type="button" id="createGroupBtn" class="dh-act is-lead">
             <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
             <span class="dh-act-lbl">New</span>
         </button>
-        <button type="button" id="discSearchBtn" class="btn btn-white dh-act" title="Search discussions" aria-label="Search discussions">
+        <button type="button" id="discSearchBtn" class="dh-act" title="Search discussions" aria-label="Search discussions">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
             </button>
         </div>
