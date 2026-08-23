@@ -841,18 +841,12 @@
         margin: 0 calc(var(--plaza-gutter, 1rem) * -1) 1.25rem;
         padding: .85rem var(--plaza-gutter, 1rem) .75rem;
         border-radius: 0; border-left: 0; border-right: 0; box-shadow: none;
-        /* A wash of the house green rather than a flat panel: it fades out
-           downward, so the band belongs to the page under it instead of
-           sitting on top of it as a box — and it drifts, on the same slow
-           tide the covers and the heroes ride, so the band is alive without
-           ever asking to be looked at. */
-        background: linear-gradient(135deg, rgb(107 159 61 / .04), rgb(107 159 61 / .2) 35%,
-            rgb(184 211 142 / .12) 55%, rgb(74 124 42 / .18) 80%, rgb(107 159 61 / .04));
-        background-size: 260% 260%;
-        animation: mcDrift 16s ease-in-out infinite alternate; }
-    html.dark .pymk.reco-edge { background: linear-gradient(135deg, rgb(107 159 61 / .06), rgb(107 159 61 / .26) 35%,
-        rgb(184 211 142 / .1) 55%, rgb(74 124 42 / .22) 80%, rgb(107 159 61 / .06));
-        background-size: 260% 260%; }
+        /* No wash. The cards carry the colour — each one a strip of the
+           person's own — and a tint behind them made the strip a second
+           green competing with the first. The two rules top and bottom are
+           what say "this is a band"; the page shows through between them. */
+        background: none; }
+    html.dark .pymk.reco-edge { background: none; }
     /* Its own colours along the top and the bottom, the way every band in the
        community carries them. */
     .pymk.reco-edge::before, .pymk.reco-edge::after { content: ''; position: absolute; inset: 0 0 auto 0;
@@ -860,7 +854,6 @@
         background: linear-gradient(90deg, #2f5219, #6b9f3d 35%, #b8d38e 60%, transparent); }
     .pymk.reco-edge::after { inset: auto 0 0 0;
         background: linear-gradient(270deg, #2f5219, #6b9f3d 35%, #b8d38e 60%, transparent); }
-    @media (prefers-reduced-motion: reduce) { .pymk.reco-edge { animation: none; } }
 
     /* Three whole faces, and a way to the next three.
      *
@@ -874,26 +867,10 @@
            each one a face and an abbreviation; two and nothing else made a
            strip that gave no sign it went on. The sliver is the sign. */
         grid-auto-columns: 41%; gap: .5rem; }
-    .pymk-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
-        width: 2rem; height: 2rem; border-radius: 999px; border: 1px solid var(--color-gray-200);
-        display: flex; align-items: center; justify-content: center; cursor: pointer;
-        background: var(--color-white); color: var(--color-gray-700); opacity: .9;
-        box-shadow: 0 6px 18px -8px rgb(0 0 0 / .5);
-        transition: opacity .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
-    .pymk-arrow:hover { opacity: 1; background: var(--color-gray-50); }
-    .pymk-arrow svg { width: 1rem; height: 1rem; }
-    /* Inside the rail's own width, floating over the cards. Hung outside it
-       they were cut in half by the band that folds the whole strip away —
-       that fold measures a height, and a height cannot be measured without
-       clipping what hangs off the sides. */
-    .pymk-arrow.is-prev { left: .3rem; }
-    .pymk-arrow.is-next { right: .3rem; }
-    /* Nowhere to go, no button: an arrow at the end of a list is a promise
-       the list cannot keep. */
-    .pymk-arrow[hidden] { display: none; }
-    html.dark .pymk-arrow { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
-    html.dark .pymk-arrow:hover { background: #24301c; }
-    @media (prefers-reduced-motion: reduce) { .pymk-arrow { transition: none; } }
+    /* No arrows. The rail shows two cards and the edge of a third, which is
+       the whole of what an arrow was there to say, and a thumb does the rest
+       — buttons floating over two faces were two more things on a card that
+       already carries two. */
     /* The heading is the handle now, so it is a button the whole width of
        the band — a chevron on its own would be a target the size of a
        fingernail. */
@@ -1098,15 +1075,24 @@
     html.dark .reco-face .avatar { border-color: #151b12; }
     html.dark .reco-name { color: #e8efe1; }
     html.dark .reco-why { color: #a5c97e; }
-    /* The buttons: same width, same height, at the foot of every card.
-       Connect is the errand; Follow is the lighter gesture under it and
-       wears no fill, so one card does not read as two decisions. */
+    /* The buttons: same width, same height, at the foot of every card, and
+       both of them a line with nothing inside it — the shape the wall's own
+       New post wears. Green is the errand the card is for; grey is the
+       lighter gesture under it, so one card does not read as two decisions
+       shouting at each other. */
     .reco-acts { margin-top: auto; padding-top: .5rem; display: grid; gap: .3rem; }
-    .reco-acts .reco-follow { background: transparent; border-color: transparent;
-        color: var(--color-brand-700); }
-    .reco-acts .reco-follow:hover { background: var(--color-brand-50); }
-    .reco-acts .reco-follow.is-on { background: transparent; border-color: transparent;
+    .reco-acts .conn-btn { background: transparent; border: 1.5px solid var(--color-brand-600);
+        color: var(--color-brand-700); box-shadow: none; }
+    .reco-acts .conn-btn:hover { background: var(--color-brand-50); }
+    .reco-acts .reco-follow { background: transparent; border: 1.5px solid var(--color-gray-300);
+        color: var(--color-gray-600); }
+    .reco-acts .reco-follow:hover { background: var(--color-gray-100); color: var(--color-gray-800); }
+    .reco-acts .reco-follow.is-on { background: transparent; border-color: var(--color-gray-300);
         color: var(--color-gray-500); }
+    html.dark .reco-acts .conn-btn { border-color: #3f5626; color: #bfe19a; }
+    html.dark .reco-acts .conn-btn:hover { background: rgb(61 104 35 / .25); }
+    html.dark .reco-acts .reco-follow { border-color: #2b3a1c; color: #a8bd93; }
+    html.dark .reco-acts .reco-follow:hover { background: rgb(255 255 255 / .06); color: #cdd8c0; }
     .reco-acts .conn-action { display: grid; gap: .35rem; }
     .reco-acts .conn-action .conn-btn,
     .reco-acts .reco-follow { width: 100%; min-height: 1.95rem; padding: .25rem .5rem;

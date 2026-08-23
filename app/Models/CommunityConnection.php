@@ -104,11 +104,62 @@ class CommunityConnection extends BaseModel
                  * a claim of any connection. Nothing at all when they have
                  * not: better a card with one line than an invented reason. */
                 $where = trim((string) ($u->city ?: $u->province));
+                // Blank here is filled in by sayRoomsInCommon, one query for
+                // the whole page.
                 $u->recoReason = $where !== '' ? 'In ' . $where : '';
                 $u->connStatus = static::statusFor($viewerId, (int) $u->id);
 
                 return $u;
             });
+
+        return static::sayRoomsInCommon($viewerId, $topUp);
+    }
+
+    /**
+     * For whoever still has nothing under their name: the discussions you are
+     * both in — "In Mais and Palay".
+     *
+     * One query for the page, and only for the cards that are still blank: a
+     * member who has said where they farm has already said the useful thing.
+     *
+     * @param  \Illuminate\Support\Collection<int, User>  $people
+     * @return \Illuminate\Support\Collection<int, User>
+     */
+    private static function sayRoomsInCommon(int $viewerId, \Illuminate\Support\Collection $people): \Illuminate\Support\Collection
+    {
+        $blank = $people->filter(fn ($u) => trim((string) ($u->recoReason ?? '')) === '')
+            ->pluck('id')->all();
+        if (! $blank) {
+            return $people;
+        }
+
+        $mine = CommunityGroupMember::active()->where('userId', $viewerId)->pluck('groupId')->all();
+        if (! $mine) {
+            return $people;
+        }
+
+        $rows = CommunityGroupMember::active()
+            ->whereIn('as_community_group_members.groupId', $mine)
+            ->whereIn('as_community_group_members.userId', $blank)
+            ->join('as_community_groups as g', 'g.id', '=', 'as_community_group_members.groupId')
+            // A room that has been taken down is not a room you are both in.
+            ->where('g.deleteStatus', 1)
+            ->get(['as_community_group_members.userId as uid', 'g.name as room']);
+
+        $shared = [];
+        foreach ($rows as $r) {
+            $shared[(int) $r->uid][] = (string) $r->room;
+        }
+        foreach ($people as $u) {
+            $rooms = $shared[(int) $u->id] ?? [];
+            if (! $rooms || trim((string) ($u->recoReason ?? '')) !== '') {
+                continue;
+            }
+            // Two names is a sentence; four is a list nobody reads.
+            $u->recoReason = 'In ' . implode(' and ', array_slice(array_unique($rooms), 0, 2));
+        }
+
+        return $people;
     }
 
     /**
@@ -335,27 +386,33 @@ class CommunityConnection extends BaseModel
                 continue;
             }
 
-            $reasons = [];
-            if ($m > 0) {
-                $reasons[] = $m . ' mutual co-farmer' . ($m > 1 ? 's' : '');
-            }
-            if ($met > 0) {
-                $reasons[] = 'You both commented on the same post';
-            }
-            if ($sameCity && $u->city) {
-                $reasons[] = 'Also in ' . $u->city;
-            } elseif ($sameProvince && $u->province) {
-                $reasons[] = 'Also in ' . $u->province;
+            /* One line under the name, and where somebody farms is the first
+             * thing worth saying about them — it is true whether or not you
+             * have anything in common, and it is what a farmer asks first.
+             * Only when they have not said do we fall back to what you share:
+             * the co-farmers you have both got, or having been in the same
+             * conversation. The rooms you are both in are filled in below,
+             * for whoever still has nothing to say. */
+            $where = trim((string) ($u->city ?: $u->province));
+            if ($where !== '') {
+                $reason = 'In ' . $where;
+            } elseif ($m > 0) {
+                $reason = $m . ' common co-farmer' . ($m > 1 ? 's' : '');
+            } elseif ($met > 0) {
+                $reason = 'You both commented on the same post';
+            } else {
+                $reason = '';
             }
 
             $u->recoMutual = $m;
             $u->recoScore = $score;
-            $u->recoReason = implode(' · ', $reasons);
+            $u->recoReason = $reason;
             $u->connStatus = static::statusFor($viewerId, $id);
             $out->push($u);
         }
 
         $out = $out->sortByDesc('recoScore')->take($limit)->values();
+        $out = static::sayRoomsInCommon($viewerId, $out);
 
         /* Top up with strangers when the reasons run out.
          *
