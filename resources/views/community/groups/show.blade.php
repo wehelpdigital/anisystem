@@ -168,10 +168,9 @@
     .rv-hint { font-size:.72rem; font-weight:600; color:var(--color-gray-400); margin-left:auto; }
     .rv-act { display:inline-flex; align-items:center; gap:.35rem; flex-shrink:0; }
     /* The count goes first when the row gets tight — it is the least of the
-       three — and only on the narrowest phones does the button give up its
-       words for a tooltip nobody on a phone can read. */
+       three. The buttons keep their words at every width: a tooltip is not
+       something a phone can show, so an icon alone is a guess. */
     @media (max-width:599px) { .rv-hint { display:none; } }
-    @media (max-width:389px) { .rv-act-lbl { display:none; } }
     .rv-filter { display:inline-flex; align-items:center; gap:.35rem; flex-shrink:0;
         max-width:11rem; padding:.25rem .55rem; border-radius:999px;
         font-size:.72rem; font-weight:800;
@@ -502,11 +501,12 @@
         @if ($isMember)
         <button type="button" id="startTopicBtn" class="btn btn-outline btn-sm rv-act" title="Start a topic">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
-            <span class="rv-act-lbl">Start a topic</span>
+            <span class="rv-act-lbl">New topic</span>
         </button>
         @endif
-        <button type="button" id="topicSearchBtn" class="btn btn-outline btn-sm rv-act" title="Search this discussion" aria-label="Search this discussion">
+        <button type="button" id="topicSearchBtn" class="btn btn-outline btn-sm rv-act" title="Search this discussion">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+            <span class="rv-act-lbl">Search</span>
         </button>
         {{-- A filter is a thing that is ON; the bar says so, and says it in
              the one place that stays on screen while the sheet is closed. --}}

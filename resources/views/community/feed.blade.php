@@ -44,7 +44,9 @@
     .wb-act { display: inline-flex; align-items: center; gap: .35rem; flex-shrink: 0; }
     .wb-hint { margin-left: auto; font-size: .72rem; font-weight: 600; color: var(--color-gray-400); }
     @media (max-width: 599px) { .wb-hint { display: none; } }
-    @media (max-width: 389px) { .wb-act-lbl { display: none; } }
+    /* The words stay. A magnifier alone is a guess, and this bar is two
+       buttons on a line with room for both — the count beside them is what
+       gives way when the line is tight. */
     .wb-filter { display: inline-flex; align-items: center; gap: .35rem; flex-shrink: 0;
         max-width: 11rem; padding: .25rem .55rem; border-radius: 999px;
         font-size: .72rem; font-weight: 800;
@@ -234,10 +236,11 @@
 <div class="wall-bar" id="wallBar">
     <button type="button" id="wallWriteBtn" class="btn btn-outline btn-sm wb-act">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
-        <span class="wb-act-lbl">Write a post</span>
+        <span class="wb-act-lbl">New post</span>
     </button>
-    <button type="button" id="wallSearchBtn" class="btn btn-outline btn-sm wb-act" title="Search the wall" aria-label="Search the wall">
+    <button type="button" id="wallSearchBtn" class="btn btn-outline btn-sm wb-act" title="Search the wall">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+        <span class="wb-act-lbl">Search</span>
     </button>
     {{-- A filter is a thing that is ON, and it has to say so where it can be
          seen once the sheet is shut. --}}

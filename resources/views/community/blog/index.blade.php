@@ -91,6 +91,7 @@
     .bb-act { display:inline-flex; align-items:center; gap:.35rem; flex-shrink:0; }
     .bb-hint { margin-left:auto; font-size:.72rem; font-weight:600; color:var(--color-gray-400); }
     @media (max-width:479px) { .bb-hint { display:none; } }
+    /* The button keeps its word at every width — see the wall and the room. */
     .bb-filter { display:inline-flex; align-items:center; gap:.35rem; flex-shrink:0;
         max-width:11rem; padding:.25rem .55rem; border-radius:999px;
         font-size:.72rem; font-weight:800;
