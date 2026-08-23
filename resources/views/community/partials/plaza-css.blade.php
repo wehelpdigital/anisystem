@@ -839,7 +839,10 @@
        page rather than part of it. */
     .pymk.reco-edge { position: relative;
         margin: 0 calc(var(--plaza-gutter, 1rem) * -1) 1.25rem;
-        padding: .85rem var(--plaza-gutter, 1rem) .75rem;
+        /* A shade more under the cards than over the heading: the heading's
+           own line-height already holds air above its letters, so equal
+           padding read as a band sitting low in its own frame. */
+        padding: .85rem var(--plaza-gutter, 1rem) 1.05rem;
         border-radius: 0; border-left: 0; border-right: 0; box-shadow: none;
         /* No wash. The cards carry the colour — each one a strip of the
            person's own — and a tint behind them made the strip a second
@@ -1058,8 +1061,19 @@
         transition: box-shadow .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
     .reco-card:hover { border-color: var(--color-brand-200); box-shadow: 0 10px 26px -18px rgb(0 0 0 / .6); }
     @media (prefers-reduced-motion: reduce) { .reco-card { transition: none; } }
-    /* The strip runs to the card's own edges and the face stands on it. */
-    .reco-top { display: block; height: 2.3rem; margin: 0 -.5rem .0; }
+    /* The strip runs to the card's own edges and the face stands on it.
+       A cover of their own if they have set one; otherwise the house green,
+       deep and slowly turning — the same tide everything else here rides,
+       and a colour that says "this app" rather than a random tint that says
+       nothing. */
+    .reco-top { display: block; height: 2.3rem; margin: 0 -.5rem .0; overflow: hidden;
+        background: linear-gradient(120deg, #16220f, #2f5219 32%, #3d6823 52%, #24380f 76%, #16220f);
+        background-size: 260% 260%;
+        animation: mcDrift 15s ease-in-out infinite alternate; }
+    .reco-top img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* A cover photo is the cover; nothing needs to drift under it. */
+    .reco-top:has(img) { animation: none; }
+    @media (prefers-reduced-motion: reduce) { .reco-top { animation: none; } }
     .reco-who { display: block; min-width: 0; }
     .reco-face { display: flex; justify-content: center; margin-top: -1.5rem; }
     .reco-face .avatar { width: 3rem; height: 3rem; font-size: .95rem;

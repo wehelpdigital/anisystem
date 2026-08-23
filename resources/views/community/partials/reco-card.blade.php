@@ -3,17 +3,19 @@
      $following — the strip knows, older callers do not. --}}
 {{-- Width, spacing and button shape all come from .reco-card in plaza-css,
      so this card looks the same wherever it is dealt out. --}}
-@php
-    /* Their own colour, hashed from the name — the member card picks its
-       band the same way, so the same person is the same colour wherever they
-       are met. Not from the id: these run in steps of six. */
-    $rcHue = crc32(mb_strtolower(trim((string) $u->full_name))) % 6;
-@endphp
 <div class="reco-card card" data-member-card="{{ $u->id }}">
-    {{-- A strip of their colour with the face standing on it: a card that
-         looks like the person it is about, rather than a name over two
-         buttons. --}}
-    <span class="reco-top mc-tint-{{ $rcHue }}" aria-hidden="true"></span>
+    {{-- Their cover with the face standing on it, or — until they have set
+         one — the house green, turning slowly. A card that looks like the
+         person it is about, rather than a name over two buttons. --}}
+    <span class="reco-top" aria-hidden="true">
+        @if ($u->coverPath)
+            {{-- A cover whose file has gone leaves the browser's broken-image
+                 glyph across the top of the card; taking it out leaves the
+                 green, which is what a member without one gets anyway. --}}
+            <img src="{{ \App\Support\MediaStore::url($u->coverPath) }}" alt="" loading="lazy"
+                 onerror="this.remove()">
+        @endif
+    </span>
     <a href="{{ route('community.connect.profile', ['userId' => $u->id]) }}" class="reco-who">
         <span class="reco-face">@include('community.partials.avatar', ['user' => $u, 'size' => 'avatar-md', 'link' => false, 'showOnline' => true])</span>
         <span class="reco-name">{{ $u->full_name }}</span>
