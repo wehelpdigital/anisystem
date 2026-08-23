@@ -1683,7 +1683,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const wrap = document.createElement('div');
         wrap.innerHTML = `<div class="date-group date-color-${colorIdx}${allHidden ? ' all-hidden' : ''}${OPEN_DAYS.has(dateKey) ? '' : ' is-folded'}" data-date="${esc(dateKey)}">
-            <div class="date-header"${(dateObj && MAY_DRAG) ? ' draggable="true" title="Drag this header to move the whole day to another date"' : ''}>
+            <div class="date-header" style="--sw-t:${9 + (beat(dateKey) % 7)}s;--sw-d:-${beat(dateKey) % 11}s"${(dateObj && MAY_DRAG) ? ' draggable="true" title="Drag this header to move the whole day to another date"' : ''}>
                 <svg class="date-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 ${headerDate}
                 <span class="date-header-count">${count}<span class="dh-word"> ${count === 1 ? 'activity' : 'activities'}</span></span>
@@ -1701,6 +1701,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const exBlock = el.querySelector('.day-expense-block');
         if (exBlock && typeof renderExpenseBlock === 'function') renderExpenseBlock(exBlock);
         return el;
+    }
+
+    /* The same number the server takes from a date, so a day drawn here and
+       a day drawn there keep the same rhythm: a small string hash, which is
+       all crc32 is being used for on the other side. */
+    function beat(key) {
+        let n = 0;
+        const s = String(key || '');
+        for (let i = 0; i < s.length; i++) n = (n * 31 + s.charCodeAt(i)) >>> 0;
+        return n;
     }
 
     // Accordion: days start folded; the set of opened days persists per

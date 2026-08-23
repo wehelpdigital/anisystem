@@ -897,7 +897,10 @@
                         </div>
 
                         <div class="flex items-center gap-2 mt-3 sch-acts">
-                            <a href="{{ route('sm.hub', ['id' => $s->id]) }}" class="btn btn-primary flex-1">Open</a>
+                            {{-- Its own clock and starting point, from its own
+                                 id, so a shelf of these never sweeps as one. --}}
+                            <a href="{{ route('sm.hub', ['id' => $s->id]) }}" class="btn btn-primary flex-1 sweep-fill sweep-green"
+                               style="--sw-t:{{ 9 + ($s->id % 7) }}s;--sw-d:-{{ $s->id % 11 }}s">Open</a>
                             {{-- A worker duplicates only with the edit right; deleting a whole
                                  season is the owner's alone — an edit grant lets you
                                  tend the farm, not remove it. --}}
@@ -938,7 +941,7 @@
          and nothing a worker can start, so it is not drawn for them. --}}
     @if (! $isWorkerHere)
     <a href="{{ route('sm.create') }}"
-        class="md:hidden fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full btn-primary shadow-lg flex items-center justify-center"
+        class="md:hidden fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full btn-primary shadow-lg flex items-center justify-center sweep-fill sweep-green"
         aria-label="New cropping schedule">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
     </a>

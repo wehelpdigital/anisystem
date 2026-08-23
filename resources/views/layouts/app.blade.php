@@ -567,6 +567,37 @@
             from { background-position: 0% 0%; }
             to   { background-position: 100% 100%; }
         }
+
+        /* --- A filled thing that drifts ---
+         *
+         * The same tide as everything else, said once so four buttons on
+         * three pages cannot drift apart in the code while drifting together
+         * on the screen. The colour is three stops the caller sets; the
+         * clock and the starting point are two more, so a column of these
+         * never marches (a negative delay starts a button mid-sweep).
+         */
+        .sweep-fill {
+            background-image: linear-gradient(120deg,
+                var(--sw-1), var(--sw-2) 28%, var(--sw-3) 52%, var(--sw-2) 76%, var(--sw-1));
+            background-size: 220% 100%;
+            animation: gradSweep var(--sw-t, 10s) ease-in-out infinite alternate;
+            animation-delay: var(--sw-d, 0s);
+            border: 0;
+        }
+        .sweep-fill:hover { filter: brightness(1.06); }
+        .sweep-green { --sw-1: #2f5219; --sw-2: #4a7c2a; --sw-3: #6b9f3d; color: #fff; }
+        .sweep-amber { --sw-1: #a16207; --sw-2: #d97706; --sw-3: #f0a92a; color: #1a1a1a; }
+        @media (prefers-reduced-motion: reduce) { .sweep-fill { animation: none; } }
+
+        /* --- The page's own ground, by day ---
+         *
+         * White under white cards gives the eye no edge to hold, and a screen
+         * read in a field at noon is the worst place to ask it to find one.
+         * A soft grey puts the cards a step in front of the page without
+         * taking any contrast off the words on them. Night keeps its own
+         * ground, and so does the community, whose green is deliberate.
+         */
+        html:not(.dark) body:not(.plaza-ground) { background-color: #f1f3f5; }
     </style>
     <div id="navLoader" class="nav-loader" hidden aria-hidden="true">
         <div class="nav-loader-spin"></div>

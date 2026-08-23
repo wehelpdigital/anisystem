@@ -132,7 +132,13 @@
                 {{-- "Mark completed" sounded like ticking a task off. What the
                      button does is close the season and lock it, and the way
                      back is Reopen — so it says that. --}}
-                <button type="button" id="statusToggleBtn" data-locked="{{ $schedule->isLocked() ? 1 : 0 }}" class="btn btn-sm {{ $schedule->isLocked() ? 'btn-white' : 'btn-accent' }}">
+                {{-- Closing a season drifts like every other filled button in
+                     the app — in the green this one has always been, whatever
+                     the utility that paints it is called. Reopening stays a
+                     plain white button: undoing is not an event. --}}
+                <button type="button" id="statusToggleBtn" data-locked="{{ $schedule->isLocked() ? 1 : 0 }}"
+                        class="btn btn-sm {{ $schedule->isLocked() ? 'btn-white' : 'btn-accent sweep-fill sweep-green' }}"
+                        style="--sw-t:{{ 9 + ($schedule->id % 7) }}s;--sw-d:-{{ $schedule->id % 11 }}s">
                     {{ $schedule->isLocked() ? 'Reopen this season' : 'Close this season' }}
                 </button>
             </div>
@@ -208,10 +214,14 @@
             border-top: 1px solid var(--color-gray-100, #f3f4f6); }
         /* The one button on this card, and it closes a season — it should read
            as deliberate in both themes rather than blending into the strip. */
+        /* background-COLOR, not the shorthand: the shorthand resets
+           background-image, and this button carries a drifting gradient over
+           its fill (sweep-fill, in the layout). The colour underneath still
+           does its job for anything that is not sweeping. */
         .sched-foot .btn-primary, .sched-foot .btn-accent {
-            background: #4a7c2a; border-color: #4a7c2a; color: #fff;
+            background-color: #4a7c2a; border-color: #4a7c2a; color: #fff;
         }
-        .sched-foot .btn-primary:hover, .sched-foot .btn-accent:hover { background: #3d6823; border-color: #3d6823; }
+        .sched-foot .btn-primary:hover, .sched-foot .btn-accent:hover { background-color: #3d6823; border-color: #3d6823; }
 
         html.dark .sched-head { background: #151b12; border-color: #2b3a1c; }
         html.dark .sched-title { color: #e8efe1; }
@@ -222,7 +232,9 @@
         html.dark .sched-pen { background: rgb(107 159 61 / .2); color: #a8cc7e; }
         html.dark .sched-pen:hover { background: #4a7c2a; color: #fff; }
         html.dark .sched-foot .btn-primary, html.dark .sched-foot .btn-accent {
-            background: #6b9f3d; border-color: #6b9f3d; color: #10160c;
+            /* White, now the fill is a gradient: dark ink was legible on one
+               flat bright green and is not on the deep end of a sweep. */
+            background-color: #6b9f3d; border-color: #6b9f3d; color: #fff;
         }
         html.dark .sched-foot .btn-primary:hover, html.dark .sched-foot .btn-accent:hover {
             background: #86b556; border-color: #86b556;

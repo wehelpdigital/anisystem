@@ -123,7 +123,12 @@
                 color-mix(in srgb, var(--date-color, #4A90E2) calc(var(--tl-header-tint) + 8%), var(--tl-surface)) 50%,
                 color-mix(in srgb, var(--date-color, #4A90E2) var(--tl-header-tint), var(--tl-surface)));
             background-size: 220% 100%;
-            animation: gradSweep 11s ease-in-out infinite alternate;
+            /* Its own clock and its own point in the sweep (both set on the
+               element, from the date it stands for): a board of days that
+               all slid together read as one animation playing on twelve
+               headers rather than twelve days that happen to be alive. */
+            animation: gradSweep var(--sw-t, 11s) ease-in-out infinite alternate;
+            animation-delay: var(--sw-d, 0s);
         }
         @media (prefers-reduced-motion: reduce) {
             .date-group, .date-header { animation: none; }
@@ -2510,7 +2515,13 @@
                     </div>
                 @endif
                 <div class="date-group date-color-{{ $item['color'] }} {{ $allHidden ? 'all-hidden' : '' }} is-folded" data-date="{{ $dateKey }}">
-                    <div class="date-header"@if ($dateCarbon && $boardMayDrag) draggable="true" title="Drag this header to move the whole day to another date"@endif>
+                    @php
+                        // A number from the date itself, so a day keeps the
+                        // same rhythm on every visit and its neighbours do not
+                        // share it.
+                        $dhBeat = crc32((string) $dateKey);
+                    @endphp
+                    <div class="date-header" style="--sw-t:{{ 9 + ($dhBeat % 7) }}s;--sw-d:-{{ $dhBeat % 11 }}s"@if ($dateCarbon && $boardMayDrag) draggable="true" title="Drag this header to move the whole day to another date"@endif>
                         <svg class="date-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                         @if ($dateCarbon)
                             <span class="date-header-day">{{ $dateCarbon->format('D') }}</span>
