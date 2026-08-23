@@ -27,7 +27,7 @@
 <div id="aiFloat" class="ai-float{{ request('module') === 'ai' ? ' ai-float-off' : '' }}">
     <button type="button" id="aiFloatFab" class="ai-float-fab" aria-label="Ask the AI Technician" title="Ask the AI Technician">
         @if ($aiFloatAvatar)
-            <img src="{{ $aiFloatAvatar }}" alt="">
+            <img data-ai-face src="{{ $aiFloatAvatar }}" alt="">
         @else
             <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
         @endif
@@ -37,7 +37,7 @@
         <div class="ai-float-head">
             <span class="ai-float-avatar">
                 <span class="ai-float-face">
-                    @if ($aiFloatAvatar)<img src="{{ $aiFloatAvatar }}" alt="">@else<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7z"/></svg>@endif
+                    @if ($aiFloatAvatar)<img data-ai-face src="{{ $aiFloatAvatar }}" alt="">@else<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7z"/></svg>@endif
                 </span>
             </span>
             <div class="min-w-0 grow">
@@ -94,7 +94,7 @@
         <div class="ai-float-thread" id="aiFloatThread">
             <div class="ai-float-welcome" id="aiFloatWelcome">
                 <span class="ai-float-hero">
-                    @if ($aiFloatAvatar)<img src="{{ $aiFloatAvatar }}" alt="">@else<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>@endif
+                    @if ($aiFloatAvatar)<img data-ai-face src="{{ $aiFloatAvatar }}" alt="">@else<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>@endif
                 </span>
                 <p class="font-semibold text-gray-800 mt-2">Ask about {{ \Illuminate\Support\Str::limit($schedule->cropType ?: 'this crop', 24) }}</p>
                 <p class="text-sm text-gray-500 mt-1">Fertiliser rates, pests, water, timing — or snap a leaf.</p>
@@ -490,7 +490,7 @@
         };
         const MAX_SHOTS = 6;
 
-        const face = (me) => me ? escapeHtml(MY) : (AVATAR ? `<img src="${escapeHtml(AVATAR)}" alt="">` : BOT);
+        const face = (me) => me ? escapeHtml(MY) : (AVATAR ? `<img data-ai-face src="${escapeHtml(AVATAR)}" alt="">` : BOT);
         const scrollDown = () => { thread.scrollTop = thread.scrollHeight; };
         const nowStamp = () => new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
 

@@ -5,7 +5,7 @@
 <div class="ai-hello" id="aiWelcome">
     <span class="aimsg-face mx-auto">
         @if ($settings->avatarPath)
-            <img src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="">
+            <img data-ai-face src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="">
         @else
             <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
         @endif

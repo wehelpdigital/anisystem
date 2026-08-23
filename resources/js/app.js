@@ -46,6 +46,41 @@ Alpine.start();
 })();
 
 /* ------------------------------------------------------------------ */
+/* A picture that will not load                                         */
+/*                                                                      */
+/* Two of these travel between apps: the assistant's avatar, set in the */
+/* mother app, and a member's photo, which may live on the other app's  */
+/* disk. Either can outlive its file. The browser's answer is a broken- */
+/* image glyph, which reads as a broken SCREEN; this puts back what the */
+/* markup would have drawn if there had never been a picture at all.    */
+/*                                                                      */
+/* Capture phase: an image's error event does not bubble.               */
+/* ------------------------------------------------------------------ */
+const AI_FACE_SVG =
+    '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">' +
+    '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>';
+
+document.addEventListener('error', (e) => {
+    const img = e.target;
+    if (!img || img.tagName !== 'IMG') return;
+
+    if (img.hasAttribute('data-ai-face')) {
+        const holder = img.parentElement;
+        img.remove();
+        // The glyph goes where the picture was, at the size that slot draws.
+        if (holder && !holder.querySelector('svg')) holder.insertAdjacentHTML('beforeend', AI_FACE_SVG);
+        return;
+    }
+
+    if (img.hasAttribute('data-avatar-fallback')) {
+        const holder = img.parentElement;
+        const initials = img.getAttribute('data-initials') || '?';
+        img.remove();
+        if (holder && !holder.textContent.trim()) holder.textContent = initials;
+    }
+}, true);
+
+/* ------------------------------------------------------------------ */
 /* Client-app motion helpers                                            */
 /* - Auto-animate items inserted into [data-animate-list] containers    */
 /*   (new lot/worker/material/activity, duplicate, etc.).               */

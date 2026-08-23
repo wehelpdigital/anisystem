@@ -14,7 +14,11 @@
 <{{ $tag }} @if($doLink) href="{{ route('community.connect.profile', ['userId' => $user->id]) }}" @endif
     class="avatar {{ $sz }} {{ $hue }} overflow-hidden" title="{{ optional($user)->full_name }}{{ $onlineDot ? ' · Online' : '' }}">
     @if ($photo)
-        <img src="{{ \App\Support\MediaStore::url($photo) }}" alt="{{ optional($user)->full_name }}" class="w-full h-full object-cover">
+        {{-- data-initials: a photo whose file is gone leaves a broken-image
+             glyph, which reads as a broken screen rather than a member with
+             no picture. app.js swaps the letters back in. --}}
+        <img data-avatar-fallback data-initials="{{ optional($user)->initials ?: '?' }}"
+             src="{{ \App\Support\MediaStore::url($photo) }}" alt="{{ optional($user)->full_name }}" class="w-full h-full object-cover">
     @else
         {{ optional($user)->initials ?: '?' }}
     @endif

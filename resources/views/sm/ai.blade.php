@@ -379,7 +379,7 @@
                     @if ($m->role === 'user')
                         {{ auth()->user()->initials }}
                     @elseif ($settings->avatarPath)
-                        <img src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="">
+                        <img data-ai-face src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="">
                     @else
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
                     @endif
@@ -410,7 +410,7 @@
             <div class="ai-hello" id="aiWelcome">
                 <span class="aimsg-face mx-auto">
                     @if ($settings->avatarPath)
-                        <img src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="">
+                        <img data-ai-face src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="">
                     @else
                         <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
                     @endif
@@ -672,7 +672,7 @@
         class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full text-gray-500 hover:bg-gray-100 transition overflow-hidden"
         title="AI Technician options" aria-label="AI Technician options" aria-haspopup="dialog">
     @if ($settings->avatarPath)
-        <img src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="" class="w-7 h-7 md:w-8 md:h-8 rounded-full object-cover">
+        <img data-ai-face src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="" class="w-7 h-7 md:w-8 md:h-8 rounded-full object-cover">
     @else
         <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
     @endif
@@ -734,7 +734,7 @@ const __init = () => {
 
     const byId = (id) => document.getElementById(id);
     const thread = byId('aiThread');
-    const face = (me) => me ? escapeHtml(MY) : (AVATAR ? `<img src="${escapeHtml(AVATAR)}" alt="">` : BOT);
+    const face = (me) => me ? escapeHtml(MY) : (AVATAR ? `<img data-ai-face src="${escapeHtml(AVATAR)}" alt="">` : BOT);
     const nowStamp = () => new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
 
     /** Light markdown -> safe HTML (escape-first allow-list). */
