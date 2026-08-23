@@ -179,7 +179,19 @@
     /* This <style> loads after Tailwind, so the flex above beats `.hidden` and
        an EMPTY chip (just its ✕) would show beside the send button. Re-assert. */
     .attach-chip.hidden { display:none !important; }
-    .attach-chip img { width:3rem; height:3rem; object-fit:cover; border-radius:.5rem; }
+    .attach-chip img, .attach-chip video { width:3rem; height:3rem; object-fit:cover; border-radius:.5rem; }
+    /* Beside a reply box the chip is smaller than beside a composer, and so
+       is what it holds. A tap on it is a tap on the ✕ nine times in ten, so
+       the thumbnail keeps out of the way of the button. */
+    /* Not a button: it says when, it does not go anywhere. */
+    .topic-act.topic-last { cursor:default; pointer-events:none; opacity:.85; }
+    .topic-act.topic-last svg { width:.95rem; height:.95rem; }
+
+    .js-comment-chip .js-chip-thumb, .js-video-chip .js-chip-thumb {
+        width:2.25rem; height:2.25rem; object-fit:cover; border-radius:.45rem;
+        background:var(--color-gray-100); flex:0 0 auto; pointer-events:none;
+    }
+    .js-chip-name.hidden { display:none; }
     html.dark .attach-chip img { box-shadow: inset 0 0 0 1px rgb(255 255 255 / .1); }
     /* A photo is the width of the post, always.
        As an inline-block sized to the file, a portrait shot sat in a narrow

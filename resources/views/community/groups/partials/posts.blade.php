@@ -88,6 +88,17 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8M8 14h5m-8 6l3.2-3H17a3 3 0 003-3V7a3 3 0 00-3-3H7a3 3 0 00-3 3v13z"/></svg>
                 <span><span data-reply-count="{{ $post->id }}">{{ $replyCount }}</span> {{ \Illuminate\Support\Str::plural('comment', $replyCount) }}</span>
             </button>
+            {{-- The list is ordered by the last word spoken, so a topic from
+                 three weeks ago can sit on top. Without this the card only
+                 says when it was WRITTEN, and the order looks arbitrary.
+                 Read off the replies already loaded — no second query. --}}
+            @php $lastReplyAt = $post->replies->max('created_at'); @endphp
+            @if ($lastReplyAt)
+                <span class="topic-act topic-last" title="Last answered {{ $lastReplyAt }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l2.5 2.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span>{{ $lastReplyAt->diffForHumans(null, true) }}</span>
+                </span>
+            @endif
             @include('community.partials.views-count', ['kind' => 'topic', 'id' => $post->id, 'count' => $post->viewCount ?? 0])
             @if ((int) $post->userId !== (int) auth()->id())
                 <button type="button" class="topic-act rp-door" data-report="topic:{{ $post->id }}"

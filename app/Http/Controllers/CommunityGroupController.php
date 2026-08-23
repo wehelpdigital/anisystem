@@ -961,6 +961,19 @@ class CommunityGroupController extends Controller
     }
 
     /**
+     * One page of a room's topics, the liveliest first.
+     *
+     * Newest-first by id put a question nobody answered above one three
+     * people were still arguing about, which is the wrong way round for a
+     * room: what a reader wants is where the talking is. A topic's moment is
+     * therefore the later of when it was written and when it was last
+     * answered — GREATEST over its own timestamp and its newest live reply.
+     *
+     * The subquery is correlated per row, which a page of ten topics can
+     * afford; ordering by a joined MAX would fight the eager loads above it.
+     * Ties (a topic with no replies, written in the same second as another)
+     * fall back to id, so paging never shows the same row twice.
+     *
      * @return array{items:\Illuminate\Support\Collection, hasMore:bool}
      */
     private function pagePosts(int $groupId, int $page): array
@@ -969,6 +982,15 @@ class CommunityGroupController extends Controller
         $rows = CommunityGroupPost::active()
             ->where('groupId', $groupId)
             ->with(['author', 'replies.author'])
+            ->select('as_community_group_posts.*')
+            ->selectRaw('GREATEST(
+                as_community_group_posts.created_at,
+                COALESCE((SELECT MAX(r.created_at)
+                            FROM as_community_group_replies r
+                           WHERE r.postId = as_community_group_posts.id
+                             AND r.deleteStatus = 1), as_community_group_posts.created_at)
+            ) as lastActivityAt')
+            ->orderByDesc('lastActivityAt')
             ->orderByDesc('id')
             ->skip($offset)
             ->take(self::POSTS_PER_PAGE + 1)

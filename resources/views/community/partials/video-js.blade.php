@@ -24,8 +24,31 @@
         if (!chip) return;
         // Inline display avoids a hidden/flex utility clash and needs no rebuild.
         chip.style.display = file ? 'inline-flex' : 'none';
+
+        // A frame of the clip, the way a photo shows itself. The browser
+        // paints one as soon as it has the metadata; muted+playsinline keeps
+        // it from being treated as media that wants to play.
+        const old = chip.querySelector('.js-chip-thumb');
+        if (old) {
+            if (old.dataset.objectUrl) URL.revokeObjectURL(old.dataset.objectUrl);
+            old.remove();
+        }
+        if (file) {
+            const v = document.createElement('video');
+            v.className = 'js-chip-thumb';
+            v.muted = true;
+            v.playsInline = true;
+            v.preload = 'metadata';
+            const url = URL.createObjectURL(file);
+            v.dataset.objectUrl = url;
+            v.src = url;
+            chip.insertBefore(v, chip.firstChild);
+        }
+
         const name = chip.querySelector('.js-video-name');
-        if (name) name.textContent = file ? ('🎬 ' + (file.name || 'video') + ' · ' + fmtMB(file.size)) : '';
+        // The size still matters on an upload; the name no longer does, now
+        // that the clip is showing itself.
+        if (name) name.textContent = file ? fmtMB(file.size) : '';
     }
     // Put a File/Blob into the host's real file input so submit handlers are uniform.
     function assignFile(host, file) {

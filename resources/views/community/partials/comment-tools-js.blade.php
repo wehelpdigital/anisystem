@@ -1,7 +1,7 @@
 {{-- Photo attach on comment/reply forms: .js-comment-photo opens the file
-     picker, the picked .js-comment-file shows as a removable .js-comment-chip.
-     Guarded singleton shared by the wall and group pages; exposes
-     window.plazaSetChip(form, name). --}}
+     picker, the picked .js-comment-file shows as a removable .js-comment-chip
+     carrying a thumbnail of the picture. Guarded singleton shared by the wall
+     and group pages; exposes window.plazaSetChip(form, fileOrName). --}}
 <script>
 (function () {
     if (window.__plazaCommentToolsBound) return;
@@ -24,11 +24,53 @@
         input.focus();
     };
 
-    window.plazaSetChip = function (form, name) {
+    /**
+     * Show what is attached, not what it is called.
+     *
+     * "IMG_20260823_141233.jpg" tells a farmer nothing about the photo they
+     * just picked; a thumbnail tells them whether it is the right one. Takes
+     * the File itself (a bare name still works, for callers that only have
+     * one) and draws the picture where the filename used to be. The chip's
+     * markup is left alone everywhere: the thumbnail is made here, so the
+     * four forms that carry a chip — wall, dashboard, group topic, group
+     * reply — all gain it without being edited.
+     */
+    window.plazaSetChip = function (form, file) {
         const chip = form && form.querySelector('.js-comment-chip');
         if (!chip) return;
-        chip.classList.toggle('hidden', !name);
-        chip.querySelector('.js-chip-name').textContent = name || '';
+
+        const nameEl = chip.querySelector('.js-chip-name');
+        const old = chip.querySelector('.js-chip-thumb');
+        // An object URL holds the file in memory until it is let go.
+        if (old) {
+            if (old.dataset.objectUrl) URL.revokeObjectURL(old.dataset.objectUrl);
+            old.remove();
+        }
+
+        const isFile = file && typeof file === 'object' && typeof file.name === 'string';
+        const label = isFile ? file.name : (file || null);
+        chip.classList.toggle('hidden', !label);
+        if (!label) {
+            if (nameEl) { nameEl.textContent = ''; nameEl.classList.remove('hidden'); }
+            return;
+        }
+
+        if (isFile && /^image\//.test(file.type || '')) {
+            const img = document.createElement('img');
+            img.className = 'js-chip-thumb';
+            img.alt = '';
+            img.title = label;              // the name is still there, on hover
+            const url = URL.createObjectURL(file);
+            img.dataset.objectUrl = url;
+            img.src = url;
+            chip.insertBefore(img, chip.firstChild);
+            // The picture is the label now.
+            if (nameEl) { nameEl.textContent = ''; nameEl.classList.add('hidden'); }
+            return;
+        }
+
+        // Anything that is not an image keeps its name.
+        if (nameEl) { nameEl.textContent = label; nameEl.classList.remove('hidden'); }
     };
 
     // Shared "sending…" spinner + "just posted" entrance animation, so every
@@ -94,7 +136,8 @@
     });
     document.addEventListener('change', (e) => {
         if (!e.target.classList || !e.target.classList.contains('js-comment-file')) return;
-        window.plazaSetChip(e.target.closest('form'), e.target.files[0] ? e.target.files[0].name : null);
+        // The file itself, so the chip can show the picture rather than name it.
+        window.plazaSetChip(e.target.closest('form'), e.target.files[0] || null);
     });
 })();
 </script>
