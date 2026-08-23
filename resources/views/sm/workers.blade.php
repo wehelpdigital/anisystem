@@ -28,18 +28,10 @@
                             <label class="form-label" for="grantEmail">Worker email</label>
                             <input type="email" id="grantEmail" class="form-input" placeholder="worker@email.com">
                         </div>
-                        <div>
-                            <label class="form-label" for="grantAccess">Schedule access</label>
-                            <select id="grantAccess" class="form-select">
-                                <option value="view">View only</option>
-                                <option value="edit">Can edit</option>
-                                <option value="none">No schedule access</option>
-                            </select>
-                        </div>
                     </div>
-                    <label class="flex items-center gap-2 text-sm text-gray-700">
-                        <input type="checkbox" id="grantCommunity" checked class="rounded"> Allow community access (own profile &amp; posting)
-                    </label>
+                    {{-- Schedule access and community both live in the rights
+                         panel now: they are the same kind of answer as the
+                         eight below them and were asked in two other shapes. --}}
                     @include('sm.partials.worker-rights', ['p' => 'grant'])
                     <div class="flex justify-end gap-2">
                         <button type="button" id="grantCancel" class="btn btn-ghost btn-sm">Cancel</button>
@@ -145,15 +137,6 @@
                     </div>
                 </div>
 
-                <div>
-                    <label class="form-label" for="wlAccess">Schedule access</label>
-                    <select id="wlAccess" class="form-select">
-                        <option value="view">View only</option>
-                        <option value="edit">Can edit</option>
-                        <option value="none">No schedule access</option>
-                    </select>
-                </div>
-
                 {{-- Writing down what happened is not the same act as changing
                      what is supposed to happen, and the same is true of every
                      module below: a worker who may only look at the plan can
@@ -162,13 +145,7 @@
                      credits. Each answer stands on its own. --}}
                 @include('sm.partials.worker-rights', ['p' => 'wl'])
 
-                <label for="wlCommunity" class="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 cursor-pointer select-none">
-                    <input type="checkbox" id="wlCommunity" checked class="w-5 h-5 rounded border-gray-300 mt-0.5 shrink-0">
-                    <span class="min-w-0">
-                        <span class="block text-sm font-semibold text-gray-900">Community access</span>
-                        <span class="block text-xs text-gray-500">Let them use their own profile and post in the community.</span>
-                    </span>
-                </label>
+{{-- Community access is a row in the rights panel above. --}}
 
                 <div class="flex flex-wrap items-center gap-2">
                     <button type="button" id="wlSendLink" class="btn btn-white btn-sm">✉️ Send registration link</button>
@@ -249,8 +226,44 @@
     .wr-what { min-width:0; flex:1 1 auto; }
     .wr-what b { display:block; font-size:.82rem; font-weight:700; color:var(--color-gray-900); line-height:1.25; }
     .wr-what i { display:block; font-style:normal; font-size:.7rem; line-height:1.35; color:var(--color-gray-500); }
-    .wr-pick { flex:none; width:11rem; min-height:2.25rem; padding-top:.3rem; padding-bottom:.3rem; font-size:.8rem; }
-    .wr-check { flex:none; width:1.35rem; height:1.35rem; border-radius:.4rem; }
+
+    /* --- The answer on the right, in two shapes ---
+       A switch for the things you have or do not, a three-way segment for the
+       things you can read or also write. Both are the same height and sit in
+       the same place, so a column of eight reads as one list rather than as
+       four controls that happen to be stacked. */
+    .wr-seg { flex:none; display:inline-flex; padding:2px; gap:2px; border-radius:.65rem;
+        background:var(--color-gray-100); border:1px solid var(--color-gray-200); }
+    .wr-seg button { min-width:3.1rem; padding:.28rem .45rem; border:0; border-radius:.5rem;
+        font-size:.7rem; font-weight:700; color:var(--color-gray-500); background:transparent;
+        cursor:pointer; transition:background .28s var(--ease-house), color .28s var(--ease-house); }
+    .wr-seg button:hover { color:var(--color-gray-700); }
+    .wr-seg button.is-on { background:var(--color-white); color:var(--color-brand-700);
+        box-shadow:0 1px 3px rgb(0 0 0 / .12); }
+    .wr-seg button[data-wr-val="none"].is-on { color:var(--color-gray-600); }
+    html.dark .wr-seg { background:rgb(255 255 255 / .06); border-color:rgb(255 255 255 / .12); }
+    html.dark .wr-seg button.is-on { background:rgb(255 255 255 / .14); color:var(--color-brand-200); }
+
+    /* A row that is switched off says so quietly rather than looking broken. */
+    .wr-row.is-off .wr-mark, .wr-row.is-off .wr-what { opacity:.55; }
+
+    /* The switch: a real checkbox, moved off screen, wearing this. */
+    .wr-check { position:absolute; opacity:0; width:0; height:0; }
+    .wr-toggle { flex:none; position:relative; width:2.6rem; height:1.5rem; border-radius:999px;
+        background:var(--color-gray-200); border:1px solid var(--color-gray-300);
+        transition:background .28s var(--ease-house), border-color .28s var(--ease-house); }
+    .wr-toggle::after { content:''; position:absolute; top:2px; left:2px; width:1.1rem; height:1.1rem;
+        border-radius:999px; background:var(--color-white); box-shadow:0 1px 3px rgb(0 0 0 / .25);
+        transition:transform .28s var(--ease-house); }
+    .wr-check:checked + .wr-toggle { background:var(--color-brand-500); border-color:var(--color-brand-500); }
+    .wr-check:checked + .wr-toggle::after { transform:translateX(1.1rem); }
+    .wr-check:focus-visible + .wr-toggle { outline:2px solid var(--color-brand-500); outline-offset:2px; }
+    .wr-switch:has(.wr-check:not(:checked)) .wr-mark,
+    .wr-switch:has(.wr-check:not(:checked)) .wr-what { opacity:.55; }
+    html.dark .wr-toggle { background:rgb(255 255 255 / .12); border-color:rgb(255 255 255 / .16); }
+    @media (prefers-reduced-motion: reduce) {
+        .wr-seg button, .wr-toggle, .wr-toggle::after { transition:none; }
+    }
     .wr-foot { padding:.6rem .85rem; font-size:.7rem; line-height:1.4; color:var(--color-gray-400);
         border-top:1px solid var(--color-gray-100); background:var(--color-gray-50); }
     html.dark .wr-foot { background:rgb(255 255 255 / .03); }
@@ -258,9 +271,11 @@
         /* The three-way answers drop their select onto its own line; a yes/no
            does not -- letting those wrap put the box on a line of its own,
            left-aligned under the words, reading as a tick for nothing. */
-        .wr-row { flex-wrap:wrap; }
-        .wr-pick { width:100%; }
-        .wr-switch { flex-wrap:nowrap; }
+        /* The answer stays on the row on a phone too: wrapping it under the
+           name made a list of eight twice as tall and no clearer. */
+        .wr-row { flex-wrap:nowrap; }
+        .wr-seg button { min-width:2.6rem; padding-left:.3rem; padding-right:.3rem; }
+        .wr-what i { display:none; }
     }
 </style>
 @endpush
@@ -304,7 +319,11 @@ window.workerRights = (() => {
         paint(p, grant) {
             LEVELS.forEach((k) => {
                 const el = document.getElementById(id(p, k));
-                if (el) el.value = (grant && grant[k]) || 'view';
+                if (!el) return;
+                el.value = (grant && grant[k]) || 'view';
+                // The level is a hidden input under a segmented control; the
+                // buttons learn what it says from this.
+                el.dispatchEvent(new Event('change', { bubbles: true }));
             });
             SWITCHES.forEach((k) => {
                 const el = document.getElementById(id(p, k));
@@ -449,7 +468,9 @@ const __init = () => {
         if (login && login.status === 'active') statusEl.textContent = 'Active — this worker can log in.';
         else if (login && login.status === 'pending') statusEl.textContent = 'Invite sent — waiting for them to set a password.';
         else statusEl.textContent = 'No login yet.';
-        document.getElementById('wlAccess').value = (login && login.scheduleAccess) || 'view';
+        const wlAccess = document.getElementById('wlAccess');
+        wlAccess.value = (login && login.scheduleAccess) || 'view';
+        wlAccess.dispatchEvent(new Event('change', { bubbles: true }));
         document.getElementById('wlCommunity').checked = login ? !!login.communityAccess : true;
         window.workerRights.paint('wl', login);
         document.getElementById('wlRevoke').classList.toggle('hidden', !login);
