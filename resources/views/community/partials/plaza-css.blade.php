@@ -952,8 +952,11 @@
      * more room over it than under the words at the other end. A phone's
      * cards are tighter all round, so theirs is less. */
     .feed-post:has(.status-cloud), .group-post:has(.status-cloud) { padding-top: 2.75rem; }
+    /* The wall's posts follow the room's cards to the pixel: a phone shows
+       the same bubble in both places, and one of them sitting lower than the
+       other is the kind of difference you cannot name but can see. */
     @media (max-width: 639px) {
-        .group-post:has(.status-cloud) { padding-top: 2.5rem; }
+        .feed-post:has(.status-cloud), .group-post:has(.status-cloud) { padding-top: 2.5rem; }
     }
     /* And the other end of the same sum: the topic card gives back the .4rem
        its buttons carry, exactly as the wall's posts do. */
