@@ -122,6 +122,11 @@ class CommunitySocialController extends Controller
         return view('community.saved', [
             'posts' => $posts,
             'savedIds' => $ids,
+            // Who you already follow and already farm with. Without these the
+            // card has no way to know, and every author on the page was
+            // offered a Follow button the reader had already pressed.
+            'followingIds' => $this->social->followingIds($meId),
+            'friendIds' => \App\Models\CommunityConnection::connectedIds($meId),
         ]);
     }
 

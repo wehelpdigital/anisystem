@@ -24,8 +24,8 @@
     @forelse ($posts as $post)
         @include('community.partials.feed-post', [
             'post' => $post,
-            'friendIds' => [],
-            'followingIds' => [],
+            'friendIds' => $friendIds,
+            'followingIds' => $followingIds,
             'savedIds' => $savedIds,
         ])
     @empty
