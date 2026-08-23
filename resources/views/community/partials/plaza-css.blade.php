@@ -344,6 +344,14 @@
     @media (max-width:767px) {
         .disc-jumps { bottom:calc(8.5rem + env(safe-area-inset-bottom, 0px)); }
     }
+    /* — unless the messenger has a seat in the page's own nav, which is every
+       community page, discussions included. There its floating launcher is
+       hidden (see the rule that keys on #msgrSeat), so the corner is empty and
+       the jumps were hovering a storey above nothing. They take the floor. */
+    html:has(#msgrSeat) .disc-jumps { bottom:1rem; }
+    @media (max-width:767px) {
+        html:has(#msgrSeat) .disc-jumps { bottom:calc(4.5rem + env(safe-area-inset-bottom, 0px)); }
+    }
     @media (prefers-reduced-motion: reduce) { .disc-jumps { transition:none; } }
 
     /* --- Join gate: invitation card, live melt, animated reply-form gate --- */
@@ -931,7 +939,25 @@
        got it moved away from the photo in the first place. As padding, the
        head simply starts lower and the bubble has somewhere of its own to
        be. Only cards that actually carry one pay for it. */
-    .feed-post:has(.status-cloud), .group-post:has(.status-cloud) { padding-top: 2.2rem; }
+    /* How much room: enough that the air above the bubble is the air under
+       the last line.
+     *
+     * 2.2rem put the bubble 10px under the top edge while the acts row ended
+     * 16px above the bottom one (the card's own padding plus the .4rem every
+     * button in that row carries under its words) — which is a card that
+     * sits high in its own frame. The bubble hangs a fixed distance under
+     * the padding, so the padding is the dial: ±2.6rem leaves the same 16px
+     * above it. A phone's cards are tighter all round, so theirs is less. */
+    .feed-post:has(.status-cloud), .group-post:has(.status-cloud) { padding-top: 2.6rem; }
+    @media (max-width: 639px) {
+        .group-post:has(.status-cloud) { padding-top: 2.35rem; }
+    }
+    /* And the other end of the same sum: the topic card gives back the .4rem
+       its buttons carry, exactly as the wall's posts do. */
+    .group-post:has(.topic-acts) { padding-bottom:.35rem; }
+    @media (min-width: 640px) {
+        .group-post:has(.topic-acts) { padding-bottom:.6rem; }
+    }
     /* Chat bubble above the avatar, with a tail pointing down at the photo. */
     .status-cloud {
         position: absolute; left: 0; right: auto; bottom: calc(100% + .3rem);
