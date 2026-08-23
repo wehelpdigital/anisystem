@@ -32,11 +32,31 @@
         .disc-head-btn { width:auto; flex:0 0 auto; margin-left:auto; }
     }
 
-    /* The cover and the face. A coloured stripe told a reader nothing about
-       the room; a picture of it tells them whether they want to walk in. */
-    .disc-card { overflow: visible; }
+    /* --- A discussion is a band, not a tile ---
+       This page IS the list of rooms, so each one runs the full width of the
+       screen with its own colour drawn along the top and the bottom — the
+       shape the wall's posts already have, and the shape the owner asked for
+       here. The bottom strip is the mirror of the top: it fades from the
+       other side, so a run of rooms reads as bands rather than as boxes that
+       lost their corners.
+
+       The card surface is the app's own, which in the dark is the dark green
+       every other surface wears. */
+    .disc-grid { display: grid; gap: .85rem; }
+    .disc-card { overflow: visible; position: relative; border-radius: 0;
+        border-left: 0; border-right: 0;
+        margin-left: calc(var(--plaza-gutter, 1rem) * -1);
+        margin-right: calc(var(--plaza-gutter, 1rem) * -1);
+        --dc-a: #4a7c2a; --dc-b: #8fc267; }
+    .disc-card::before, .disc-card::after { content: ''; position: absolute; inset: 0 0 auto 0;
+        height: 3px; pointer-events: none;
+        background: linear-gradient(90deg, var(--dc-a), var(--dc-b) 55%, transparent); }
+    .disc-card::after { inset: auto 0 0 0;
+        background: linear-gradient(270deg, var(--dc-a), var(--dc-b) 55%, transparent); }
+    /* A hover that lifts a full-width band lifts the whole page with it. */
+    .disc-card.card-hover:hover { transform: none; }
     .dc-top { position: relative; }
-    .dc-cover { height: 6.5rem; overflow: hidden; border-radius: 1rem 1rem 0 0; }
+    .dc-cover { height: 6.5rem; overflow: hidden; border-radius: 0; }
     .dc-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .dc-face { position: absolute; left: .9rem; bottom: -1.35rem;
         display: flex; align-items: center; justify-content: center;
@@ -167,7 +187,7 @@
         'label' => 'Search discussions',
     ])
 
-    <div class="grid gap-3 sm:grid-cols-2 stagger-children" id="groupsGrid">
+    <div class="disc-grid stagger-children" id="groupsGrid">
         @include('community.groups.partials.cards', ['groups' => $groups])
     </div>
 

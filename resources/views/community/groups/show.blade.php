@@ -66,7 +66,10 @@
         background:linear-gradient(120deg, #2f5219, #6b9f3d 28%, #b8d38e 48%, #4a7c2a 72%, #2f5219);
         background-size:220% 100%; animation:gradSweep 12s ease-in-out infinite alternate; }
     @media (max-width:640px) {
-        .disc-hero, .disc-composer {
+        /* The composer used to be on the page and bled to both edges with the
+           hero. It lives in a sheet now, which owns its own edges — the
+           negative margins would have hung it outside them. */
+        .disc-hero {
             border-radius:0; border-left:0; border-right:0;
             margin-left:calc(var(--plaza-gutter, 1rem) * -1);
             margin-right:calc(var(--plaza-gutter, 1rem) * -1);
@@ -146,8 +149,21 @@
     .disc-viewbar { display:flex; align-items:center; gap:.6rem; margin-bottom:.85rem; }
     .disc-viewbar .rv-chev { transition:transform var(--dur) var(--ease-house); }
     .disc-viewbar.is-open .rv-chev { transform:rotate(180deg); }
-    .rv-hint { font-size:.72rem; font-weight:600; color:var(--color-gray-400); }
-    @media (max-width:479px) { .rv-hint { display:none; } }
+    .rv-hint { font-size:.72rem; font-weight:600; color:var(--color-gray-400); margin-left:auto; }
+    .rv-act { display:inline-flex; align-items:center; gap:.35rem; flex-shrink:0; }
+    /* The count goes first when the row gets tight — it is the least of the
+       three — and only on the narrowest phones does the button give up its
+       words for a tooltip nobody on a phone can read. */
+    @media (max-width:599px) { .rv-hint { display:none; } }
+    @media (max-width:389px) { .rv-act-lbl { display:none; } }
+    .rv-filter { display:inline-flex; align-items:center; gap:.35rem; flex-shrink:0;
+        max-width:11rem; padding:.25rem .55rem; border-radius:999px;
+        font-size:.72rem; font-weight:800;
+        background:var(--color-brand-50); color:var(--color-brand-700);
+        border:1px solid var(--color-brand-200); }
+    .rv-filter b { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .rv-filter.hidden { display:none; }
+    html.dark .rv-filter { background:rgb(61 104 35 / .25); border-color:#3f5626; color:#bfe19a; }
 
     /* --- Group chat, full screen.
        A conversation is the whole job while you are in it, so it takes the
@@ -196,11 +212,12 @@
 
     /* Composer: on a phone the editor gets the whole width — the avatar was
        spending 3rem of a 360px screen to say who is typing. */
-    .disc-composer { padding:.85rem; }
+    /* No padding of its own inside a sheet: the sheet body has it already. */
+    .disc-composer { padding:0; }
     @media (max-width:479px) {
         .disc-composer .disc-composer-av { display:none; }
     }
-    @media (min-width:640px) { .disc-composer { padding:1rem; } }
+
 
     /* Topics: the replies sit below a divider, and nothing is glued to it. */
     .post-thread { margin-top:.9rem; padding-top:.85rem; border-top:1px solid var(--color-gray-100); }
@@ -462,67 +479,93 @@
             <span id="roomViewLabel">Topics</span>
             <svg class="w-3.5 h-3.5 rv-chev" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
         </button>
+        @if ($isMember)
+        <button type="button" id="startTopicBtn" class="btn btn-primary btn-sm rv-act" title="Start a topic">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
+            <span class="rv-act-lbl">Start a topic</span>
+        </button>
+        @endif
+        <button type="button" id="topicSearchBtn" class="btn btn-white btn-sm rv-act" title="Search this discussion" aria-label="Search this discussion">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+        </button>
+        {{-- A filter is a thing that is ON; the bar says so, and says it in
+             the one place that stays on screen while the sheet is closed. --}}
+        <button type="button" class="rv-filter hidden" id="topicFilterChip" title="Clear the search">
+            <b></b>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
         <span class="rv-hint" id="roomViewHint">{{ $topicCount }} {{ \Illuminate\Support\Str::plural('topic', $topicCount) }}</span>
     </div>
 
     <div id="paneDiscussion" role="tabpanel">
-    {{-- Composer (members only) --}}
-    <div class="card disc-composer mb-4 plaza-accent {{ $isMember ? '' : 'hidden' }}" id="composerCard" data-video-host>
-        {{-- What the box is for. A room lives or dies on somebody starting
-             one of these, and an unlabelled field asks for nothing. --}}
-        <div class="disc-composer-head">
-            <h3 class="disc-composer-title">Start a topic</h3>
-            <p class="disc-composer-sub">Ask a question or share what worked. Everyone in this discussion gets told about it — use @ to tag a co-farmer.</p>
+    {{-- Starting a topic is a thing you do, not a box you scroll past.
+         It opens from the bottom over the room you were reading, the way
+         every other errand in this app opens — and the room itself is the
+         topics, which is what the page should be showing. --}}
+    @if ($isMember)
+    <div class="sheet hidden" id="topicComposerSheet" style="--sheet-width:36rem">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+            <h3 class="sheet-title">Start a topic</h3>
+            <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
         </div>
-        <div class="flex items-start gap-3">
-            <span class="avatar avatar-md disc-composer-av {{ CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} mt-1">{{ auth()->user()->initials ?? '?' }}</span>
-            <div class="min-w-0 grow">
-                <input type="text" id="postTitle" class="form-input mb-2" maxlength="191" required placeholder="Topic title *">
-                {{-- Plain words, like the wall's box. data-mentionable is what
-                     gives it @names — the rich editor could not have them at
-                     all, because the mention script binds to fields. --}}
-                <textarea id="postBody" class="form-textarea disc-composer-box" rows="4" maxlength="4000"
-                          data-mentionable placeholder="Magtanong o magbahagi sa usapan…"></textarea>
-                <div id="attachChipWrap" class="mt-2 hidden">
-            <span class="attach-chip">
-                <img src="" alt="" id="attachThumb">
-                <span class="min-w-0">
-                    <span class="block text-xs font-semibold text-gray-700 truncate" id="attachName"></span>
-                    <span class="text-[0.625rem] font-bold text-gray-400" id="postImageLabel">Photo</span>
+        <div class="sheet-body" style="padding-bottom:1.1rem">
+            <div class="disc-composer" id="composerCard" data-video-host>
+                {{-- What the box is for: an unlabelled field asks for nothing,
+                     and the sheet's own title says only where you are. --}}
+                <p class="disc-composer-sub">Ask a question or share what worked. Everyone in this discussion gets told about it — use @ to tag a co-farmer.</p>
+            <div class="flex items-start gap-3">
+                <span class="avatar avatar-md disc-composer-av {{ CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} mt-1">{{ auth()->user()->initials ?? '?' }}</span>
+                <div class="min-w-0 grow">
+                    <input type="text" id="postTitle" class="form-input mb-2" maxlength="191" required placeholder="Topic title *">
+                    {{-- Plain words, like the wall's box. data-mentionable is what
+                         gives it @names — the rich editor could not have them at
+                         all, because the mention script binds to fields. --}}
+                    <textarea id="postBody" class="form-textarea disc-composer-box" rows="4" maxlength="4000"
+                              data-mentionable placeholder="Magtanong o magbahagi sa usapan…"></textarea>
+                    <div id="attachChipWrap" class="mt-2 hidden">
+                <span class="attach-chip">
+                    <img src="" alt="" id="attachThumb">
+                    <span class="min-w-0">
+                        <span class="block text-xs font-semibold text-gray-700 truncate" id="attachName"></span>
+                        <span class="text-[0.625rem] font-bold text-gray-400" id="postImageLabel">Photo</span>
+                    </span>
+                    <button type="button" id="attachRemove" class="btn-ghost rounded-full w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-500 shrink-0" aria-label="Remove attachment">✕</button>
                 </span>
-                <button type="button" id="attachRemove" class="btn-ghost rounded-full w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-500 shrink-0" aria-label="Remove attachment">✕</button>
-            </span>
+            </div>
+            <div class="flex items-center justify-between gap-2 mt-2">
+                <div class="flex items-center gap-1">
+                    <label class="wall-act cursor-pointer" title="Add a photo" aria-label="Add a photo">
+                        <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        <input type="file" id="postImage" accept="image/jpeg,image/png,image/webp" class="hidden">
+                    </label>
+                    {{-- Upload a clip, or film one on the spot: the same pair the
+                         wall composer carries, driven by the same shared script. --}}
+                    <button type="button" class="wall-act js-video-attach" title="Upload a video" aria-label="Upload a video">
+                        <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                    </button>
+                    <button type="button" class="wall-act js-video-record" title="Record a video" aria-label="Record a video">
+                        <svg class="w-5 h-5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="currentColor"/></svg>
+                    </button>
+                    <input type="file" class="js-video-file hidden" accept="video/*">
+                    <span class="js-video-chip items-center gap-2 text-xs font-semibold text-gray-600" style="display:none">
+                        <span class="js-video-name"></span>
+                        <button type="button" class="js-video-clear text-red-600 font-bold">Remove</button>
+                    </span>
+                    <label class="hidden">
+                    </label>
+                    <button type="button" class="wall-act js-emoji-btn" data-target="postBody" aria-label="Add an emoji" title="Emoji">
+                        <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </button>
+                </div>
+                <button type="button" id="postSubmit" class="btn btn-primary btn-sm">Post</button>
+                </div>
+                </div>
+            </div>
         </div>
-        <div class="flex items-center justify-between gap-2 mt-2">
-            <div class="flex items-center gap-1">
-                <label class="wall-act cursor-pointer" title="Add a photo" aria-label="Add a photo">
-                    <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    <input type="file" id="postImage" accept="image/jpeg,image/png,image/webp" class="hidden">
-                </label>
-                {{-- Upload a clip, or film one on the spot: the same pair the
-                     wall composer carries, driven by the same shared script. --}}
-                <button type="button" class="wall-act js-video-attach" title="Upload a video" aria-label="Upload a video">
-                    <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                </button>
-                <button type="button" class="wall-act js-video-record" title="Record a video" aria-label="Record a video">
-                    <svg class="w-5 h-5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="currentColor"/></svg>
-                </button>
-                <input type="file" class="js-video-file hidden" accept="video/*">
-                <span class="js-video-chip items-center gap-2 text-xs font-semibold text-gray-600" style="display:none">
-                    <span class="js-video-name"></span>
-                    <button type="button" class="js-video-clear text-red-600 font-bold">Remove</button>
-                </span>
-                <label class="hidden">
-                </label>
-                <button type="button" class="wall-act js-emoji-btn" data-target="postBody" aria-label="Add an emoji" title="Emoji">
-                    <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                </button>
-            </div>
-            <button type="button" id="postSubmit" class="btn btn-primary btn-sm">Post</button>
-            </div>
-            </div>
         </div>
     </div>
+    @endif
 
     @unless ($isMember)
         <div class="card p-5 mb-4 text-center" id="joinPrompt">
@@ -534,14 +577,25 @@
     @endunless
 
     {{-- Posts --}}
-    {{-- A room with nothing in it has nothing to search; the field arrives
-         with the first topic. --}}
+    {{-- The same field, behind the bar's magnifier: it filters the room
+         as you type, and closing the sheet leaves the answer on screen.
+         A room with nothing in it has nothing to search. --}}
     @if ($posts->isNotEmpty())
-        @include('community.partials.live-search', [
-            'id' => 'topicFind',
-            'placeholder' => 'Search topics…',
-            'label' => 'Search this discussion',
-        ])
+    <div class="sheet hidden" id="topicSearchSheet" style="--sheet-width:30rem">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+            <h3 class="sheet-title">Search this discussion</h3>
+            <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+        </div>
+        <div class="sheet-body" style="padding-bottom:1.1rem">
+            @include('community.partials.live-search', [
+                'id' => 'topicFind',
+                'placeholder' => 'Search topics…',
+                'label' => 'Search this discussion',
+            ])
+            <button type="button" class="btn btn-primary w-full" data-sheet-close>Show the topics</button>
+        </div>
+    </div>
     @endif
 
     <div id="postsWrap">
@@ -910,6 +964,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('postTitle').value = '';
                 clearBody();
                 clearAttach();
+                window.closeSheet?.('topicComposerSheet');
                 toast(data.message);
             } else toast(data.message || 'Could not post.', 'error');
         } catch (_) { toast('Network error — try again.', 'error'); }
@@ -1239,6 +1294,14 @@ document.addEventListener('DOMContentLoaded', () => {
         findNote.querySelector('b').textContent = '“' + query + '”';
     }
 
+    /* What the bar shows while the sheet is shut. */
+    function sayOnBar() {
+        const chip = document.getElementById('topicFilterChip');
+        if (!chip) return;
+        chip.classList.toggle('hidden', !query);
+        if (query) chip.querySelector('b').textContent = '“' + query + '”';
+    }
+
     async function search(q) {
         const host = document.getElementById('postsWrap');
         if (!host) return;
@@ -1262,6 +1325,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (tail) tail.hidden = !data.data.hasMore;
             say(count, !!data.data.hasMore);
+            sayOnBar();
         } catch (_) {
             toast('Could not search just now.', 'error');
         } finally {
@@ -1271,6 +1335,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (findEl) window.plazaLiveSearch?.(findEl, search);
+
+    /* The two doors on the bar. Both are sheets, so both come up from the
+       bottom over the room rather than pushing it down the page. */
+    document.getElementById('startTopicBtn')?.addEventListener('click', () => {
+        window.openSheet?.('topicComposerSheet');
+        window.smFocus?.(document.getElementById('postTitle'), { delay: 140 });
+    });
+    document.getElementById('topicSearchBtn')?.addEventListener('click', () => {
+        window.openSheet?.('topicSearchSheet');
+        window.smFocus?.(document.getElementById('topicFind'), { delay: 140, always: true });
+    });
+    // Tapping the chip is how a search is called off from the room.
+    document.getElementById('topicFilterChip')?.addEventListener('click', () => {
+        if (!findEl) return;
+        findEl.value = '';
+        findEl.dispatchEvent(new Event('input', { bubbles: true }));
+    });
 
     moreBtn?.addEventListener('click', loadMore);
     window.addEventListener('scroll', onScroll, { passive: true });
