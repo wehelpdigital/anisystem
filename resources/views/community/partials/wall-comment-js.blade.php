@@ -275,7 +275,9 @@
         const body = input.value.trim();
         const file = fileInput && fileInput.files[0];
         const video = videoInput && videoInput.files[0];
-        if (!body && !file && !video) { say('Write something or add a photo/video.', 'error'); return; }
+        // A picture chosen from what is already here travels as its path.
+        const pick = form.dataset.pickPath || '';
+        if (!body && !file && !video && !pick) { say('Write something or add a photo/video.', 'error'); return; }
         const postId = form.getAttribute('data-post-id');
         const parentId = form.getAttribute('data-parent-id');
         // Prepend the @mention token when this reply is tagging someone, so the
@@ -288,6 +290,7 @@
         const fd = new FormData();
         if (sendBody) fd.append('body', sendBody);
         if (file) fd.append('image', file);
+        else if (pick) fd.append('galleryPath', pick);
         if (video) fd.append('video', video);
         if (parentId) fd.append('parentId', parentId);
         const sendBtn = form.querySelector('button[type="submit"]');
@@ -312,6 +315,7 @@
                     animateIn(zone.lastElementChild);
                     input.value = '';
                     if (fileInput) fileInput.value = '';
+                    delete form.dataset.pickPath;
                     if (window.plazaSetChip) window.plazaSetChip(form, null);
                     if (window.plazaClearVideo) window.plazaClearVideo(form);
                 }

@@ -301,6 +301,26 @@
         margin:0 .1rem; animation: dotBounce .9s var(--ease-house) infinite; }
     #loadMoreBtn .dot:nth-child(2) { animation-delay:.12s; } #loadMoreBtn .dot:nth-child(3) { animation-delay:.24s; }
     @keyframes dotBounce { 0%,100%{transform:none; opacity:.5} 40%{transform:translateY(-4px); opacity:1} }
+    /* --- Where a picture comes from ---
+       A four-row sheet hung off the photo button. Fixed rather than absolute:
+       a comment form sits inside cards that clip, and a menu that is clipped
+       by its own thread is a menu nobody can use. */
+    .attach-menu { position:fixed; z-index:90; min-width:15rem; padding:.3rem;
+        background:var(--color-white); border:1px solid var(--color-gray-200);
+        border-radius:.9rem; box-shadow:var(--shadow-card-lg);
+        opacity:0; transform:translateY(.35rem);
+        transition:opacity var(--dur) var(--ease-house), transform var(--dur) var(--ease-house); }
+    .attach-menu.is-in { opacity:1; transform:none; }
+    .attach-menu-row { display:flex; align-items:center; gap:.6rem; width:100%; text-align:left;
+        padding:.5rem .6rem; border-radius:.65rem; background:none; border:0; cursor:pointer; }
+    .attach-menu-row:hover { background:var(--color-gray-50); }
+    .attach-menu-row svg { width:1.15rem; height:1.15rem; flex:none; color:var(--color-brand-600); }
+    .attach-menu-row b { display:block; font-size:.8125rem; font-weight:600; color:var(--color-gray-900); }
+    .attach-menu-row i { display:block; font-style:normal; font-size:.6875rem; color:var(--color-gray-500); }
+    html.dark .attach-menu { background:#1b1f27; border-color:#2b3138; }
+    html.dark .attach-menu-row:hover { background:#232833; }
+    @media (prefers-reduced-motion: reduce) { .attach-menu { transition:none; } }
+
     /* The assistant's own colour. Not a badge: the name IS the signal, and a
        thread reads faster when the only thing that changed is its colour. */
     .author-ai { color:var(--color-brand-700); }

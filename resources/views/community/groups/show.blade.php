@@ -911,7 +911,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const fileInput = form.querySelector('.js-comment-file');
         const text = input.value.trim();
         const file = fileInput && fileInput.files[0];
-        if (!text && !file) { toast('Write something or add a photo.', 'error'); return; }
+        // ...or a picture already kept here, pointed at rather than sent.
+        const pick = form.dataset.pickPath || '';
+        if (!text && !file && !pick) { toast('Write something or add a photo.', 'error'); return; }
         const postId = form.getAttribute('data-post-id');
         const parentId = form.getAttribute('data-parent-id');
         // Prepend the @mention token when replying tags someone (pill shown).
@@ -923,6 +925,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const fd = new FormData();
         if (sendBody) fd.append('body', sendBody);
         if (file) fd.append('image', file);
+        else if (pick) fd.append('galleryPath', pick);
         if (parentId) fd.append('parentId', parentId);
         const sendBtn = form.querySelector('button[type="submit"]');
         input.disabled = true;
@@ -945,6 +948,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     bumpReplyCount(postId, 1);
                     input.value = '';
                     if (fileInput) fileInput.value = '';
+                    delete form.dataset.pickPath;
                     window.plazaSetChip(form, null);
                     input.focus();
                 }

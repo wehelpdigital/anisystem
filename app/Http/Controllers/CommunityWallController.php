@@ -133,9 +133,11 @@ class CommunityWallController extends Controller
             return response()->json(['success' => false, 'message' => 'Post not found.'], 404);
         }
         $request->validate([
-            'body' => 'required_without_all:image,video|nullable|string|max:2000',
+            'body' => 'required_without_all:image,video,galleryPath|nullable|string|max:2000',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
             'video' => 'nullable|file|max:307200', // 300 MB; VideoOptimizer enforces the mime
+            // A picture already kept here, pointed at rather than uploaded.
+            'galleryPath' => 'nullable|string|max:500',
             'parentId' => 'nullable|integer',
         ]);
 
@@ -158,6 +160,15 @@ class CommunityWallController extends Controller
         $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $this->storeImage($request->file('image'), 'community-wall/' . $post->wallUserId);
+        } elseif ($request->filled('galleryPath')) {
+            // A picture they pointed at rather than uploaded — from their own
+            // photos or from a season's gallery. The same file is referenced,
+            // not copied, and GalleryPick is what decides a string from a
+            // browser is a path at all.
+            $imagePath = \App\Support\GalleryPick::path((string) $request->input('galleryPath'));
+            if ($imagePath === null) {
+                return response()->json(['success' => false, 'message' => 'That picture could not be attached.'], 422);
+            }
         }
 
         $videoPath = $videoPoster = null;

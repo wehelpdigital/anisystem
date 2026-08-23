@@ -456,6 +456,9 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // How many times a thing has been looked at (see the controller).
     Route::post('/app/community/views', [App\Http\Controllers\CommunityViewController::class, 'count'])->name('community.views');
     Route::get('/app/community/suggestions', [App\Http\Controllers\CommunitySocialController::class, 'suggestions'])->name('community.suggestions');
+    // The pictures this account already has here, for any composer that
+    // wants to point at one instead of uploading it again.
+    Route::get('/app/community/my-photos', [App\Http\Controllers\CommunityMyPhotosController::class, 'index'])->name('community.my-photos');
     Route::get('/app/community/saved', [App\Http\Controllers\CommunitySocialController::class, 'saved'])->name('community.saved');
     Route::post('/app/community/share/{postId}/wall', [App\Http\Controllers\CommunitySocialController::class, 'shareToWall'])->whereNumber('postId')->name('community.share.wall');
     Route::post('/app/community/share/{postId}/message', [App\Http\Controllers\CommunitySocialController::class, 'shareToMessage'])->whereNumber('postId')->name('community.share.message');

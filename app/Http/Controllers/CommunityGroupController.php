@@ -450,8 +450,10 @@ class CommunityGroupController extends Controller
         }
 
         $request->validate([
-            'body' => 'required_without:image|nullable|string|max:4000',
+            'body' => 'required_without_all:image,galleryPath|nullable|string|max:4000',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:8192',
+            // A picture already kept here, pointed at rather than uploaded.
+            'galleryPath' => 'nullable|string|max:500',
             'parentId' => 'nullable|integer',
         ]);
 
@@ -474,6 +476,13 @@ class CommunityGroupController extends Controller
         $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $this->storeImage($request->file('image'), 'community-groups/' . $post->groupId);
+        } elseif ($request->filled('galleryPath')) {
+            // Same three sources the wall offers: camera, phone, or something
+            // already kept here. A pick is a reference to the stored file.
+            $imagePath = GalleryPick::path((string) $request->input('galleryPath'));
+            if ($imagePath === null) {
+                return response()->json(['success' => false, 'message' => 'That picture could not be attached.'], 422);
+            }
         }
 
         $reply = CommunityGroupReply::create([

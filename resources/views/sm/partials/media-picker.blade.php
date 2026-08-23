@@ -170,14 +170,19 @@
         const grid = $('smMediaPickerGrid');
         if (items.length === 0) grid.innerHTML = skeletons(8);
         const all = !!cfg.allSchedules;
+        // A caller may point the sheet at a different list entirely — the
+        // member's own community photos use this. Everything else about the
+        // sheet is the same: the same tiles, the same pick contract, one
+        // implementation of "choose a picture that already exists".
+        const src = cfg.endpoint || (all ? URL_ALL : URL_BASE);
         const params = new URLSearchParams({ page: String(page + 1) });
-        if (all) params.set('json', '1');
-        else params.set('scheduleId', String(cfg.scheduleId || ''));
+        if (all && !cfg.endpoint) params.set('json', '1');
+        else if (!cfg.endpoint) params.set('scheduleId', String(cfg.scheduleId || ''));
         if (cfg.kinds) params.set('kinds', cfg.kinds);
         const q = ($('smMediaPickerSearch').value || '').trim();
         if (q) params.set('q', q);
         try {
-            const res = await window.api((all ? URL_ALL : URL_BASE) + '?' + params.toString());
+            const res = await window.api(src + '?' + params.toString());
             if (myGen !== gen) return;               // superseded while flying
             const fresh = (res.data && res.data.items) || [];
             more = !!(res.data && res.data.more);
@@ -282,7 +287,7 @@
         // Without the route registered there is nothing at the other end, and a
         // raw 404 in the sheet reads as "this season has no photos" rather than
         // "nobody wired this up". Say which.
-        if (!WIRED && !cfg.allSchedules) {
+        if (!WIRED && !cfg.allSchedules && !cfg.endpoint) {
             state.textContent = 'The gallery is not connected on this install yet.';
             return;
         }
