@@ -77,11 +77,19 @@
        background behind them so the posts do not show through, and bled to
        the gutters so the bar is a bar rather than a floating strip. */
     .community-nav { position:sticky; top:3.5rem; z-index:25;
-        margin:0 calc(var(--plaza-gutter, 1rem) * -1) .75rem;
+        /* Flush under the app bar, not floating a page-margin below it.
+           The page opens with padding (py-4, py-8 from md up) and the bar was
+           sitting under all of it: a band of empty background between two
+           bars, which is what a bar is supposed to prevent. The negative top
+           margin is exactly that padding, so the two meet — and when the bar
+           finally sticks, nothing moves, because it is already where it
+           sticks to. Under it, a hair of air rather than a gap: the block
+           below brings its own. */
+        margin:-1rem calc(var(--plaza-gutter, 1rem) * -1) .35rem;
         padding:.5rem var(--plaza-gutter, 1rem);
         background:var(--color-gray-50);
         display:flex; align-items:center; gap:.5rem; flex-wrap:nowrap; }
-    @media (min-width:768px) { .community-nav { top:4rem; } }
+    @media (min-width:768px) { .community-nav { top:4rem; margin-top:-2rem; } }
     html.dark .community-nav { background:#14171c; }
     .cn-hamburger { min-width:0; }
     .cn-hamburger svg { flex-shrink:0; }
@@ -138,7 +146,7 @@
         .cn-row.is-current { animation:none; }
     }
 </style>
-<div class="community-nav mb-4">
+<div class="community-nav">
     <button type="button" class="btn btn-white btn-sm cn-hamburger" data-sheet-open="communitySectionsSheet"
             aria-haspopup="dialog" title="Community sections">
         {{-- The section you are in wears its own mark, so the button says
