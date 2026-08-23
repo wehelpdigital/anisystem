@@ -39,10 +39,13 @@
                     <span class="badge badge-green group-joined-tag align-middle {{ $g->joined ? '' : 'hidden' }}" data-group-id="{{ $g->id }}">Joined</span>
                 </h3>
             </a>
+            {{-- No reserved height any more. Two lines were held open under
+                 every name so a grid of tiles would keep its rows level; the
+                 rooms are bands now, one to a line, and that reservation was
+                 only a hole between a one-line description and the numbers
+                 under it. The space is the description's own. --}}
             @if ($g->description)
-                <p class="text-sm text-gray-500 mt-1 line-clamp-2 min-h-[2.5rem]">{{ $g->description }}</p>
-            @else
-                <p class="mt-1 min-h-[2.5rem]"></p>
+                <p class="text-sm text-gray-500 mt-1 line-clamp-2">{{ $g->description }}</p>
             @endif
             <div class="flex items-center flex-wrap gap-x-3 gap-y-1 text-xs text-gray-500 font-semibold mt-2 mb-3">
                 <span>🧑‍🌾 {{ $g->member_count }} {{ \Illuminate\Support\Str::plural('member', $g->member_count) }}</span>
