@@ -254,14 +254,62 @@
         $('camFlip').classList.toggle('hidden', !sharing);
     }
 
+    /* ---- Flipping while you are sharing --------------------------------
+     * Turning the camera off and straight back on is not a flip. The track
+     * is still the one already opened on this device, and re-enabling
+     * re-publishes THAT — the new facingMode was only ever honoured the
+     * next time sharing started from nothing, which is exactly what people
+     * hit: stop, share again, and only then does the back camera appear.
+     *
+     * restartTrack() re-opens the device under new constraints and keeps the
+     * publication, so the tiles never blink and the room sees the change at
+     * once. And facingMode is a phone's word: a laptop with two cameras has
+     * no front and back, so where there is a device list, it is walked. */
+    function localCameraTrack(live) {
+        let found = null;
+        live.localParticipant.trackPublications.forEach((pub) => {
+            if (found || !pub.track || pub.track.kind !== 'video') return;
+            const src = pub.source || pub.track.source;
+            if (!src || src === 'camera') found = pub.track;
+        });
+        return found;
+    }
+
+    async function nextCameraId(track) {
+        if (!navigator.mediaDevices?.enumerateDevices) return null;
+        try {
+            const cams = (await navigator.mediaDevices.enumerateDevices())
+                .filter((d) => d.kind === 'videoinput' && d.deviceId);
+            if (cams.length < 2) return null;
+            const now = track?.mediaStreamTrack?.getSettings?.().deviceId;
+            const at = cams.findIndex((d) => d.deviceId === now);
+            return cams[(at + 1) % cams.length].deviceId;
+        } catch (_) { return null; }
+    }
+
     $('camFlip').addEventListener('click', async () => {
         const live = window.smCall?.room();
-        if (!live || !sharing) return;
-        facing = facing === 'environment' ? 'user' : 'environment';
+        const btn = $('camFlip');
+        if (!live || !sharing || btn.disabled) return;
+        // Re-opening a camera takes a moment; a second tap mid-swap asks the
+        // device for two things at once and it answers with neither.
+        btn.disabled = true;
+        const next = facing === 'environment' ? 'user' : 'environment';
+        const track = localCameraTrack(live);
         try {
-            await live.localParticipant.setCameraEnabled(false);
-            await live.localParticipant.setCameraEnabled(true, { facingMode: facing });
+            if (track && typeof track.restartTrack === 'function') {
+                const id = await nextCameraId(track);
+                await track.restartTrack(id ? { deviceId: { exact: id } } : { facingMode: next });
+            } else {
+                // Nothing live to restart: the old road, with a breath in
+                // between so the device is free before it is asked again.
+                await live.localParticipant.setCameraEnabled(false);
+                await new Promise((r) => setTimeout(r, 150));
+                await live.localParticipant.setCameraEnabled(true, { facingMode: next });
+            }
+            facing = next;
         } catch (_) { window.toast?.('That camera is not available.', 'error'); }
+        btn.disabled = false;
         paint();
     });
 

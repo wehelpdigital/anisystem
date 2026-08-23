@@ -13,56 +13,58 @@
 @include('sm.partials.media-picker', ['schedule' => $schedule])
 
 <div class="cph-wrap" id="cphWrap">
-    {{-- The three ways to a photo, as one slim row of chips. Always visible,
-         because "change the photo" and "put up the first one" are the same
-         three buttons — a full-screen card for them left the tab mostly
-         furniture, which is what was complained about. --}}
+    {{-- One door in, and it says what it does.
+
+         Gallery / Upload / Camera stood here as three chips of equal weight,
+         which asked somebody to pick a source before they had picked a photo,
+         and gave each way one word to explain itself. One button opens all
+         three now, in a sheet with room for a sentence each. --}}
     <div class="cph-srcrow">
-        <span class="cph-srclbl">Photo</span>
-        <button type="button" class="cph-chip" id="cphPickBtn">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/></svg>
-            Gallery
+        <button type="button" class="cph-add" id="cphAddBtn">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8a2 2 0 012-2h1.4l1-1.6h7.2l1 1.6H18a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V8z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 9.6v5M9.5 12.1h5"/></svg>
+            <span id="cphAddLabel">Add photo</span>
         </button>
-        <button type="button" class="cph-chip" id="cphUploadBtn">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0L7 9m5-5l5 5M5 20h14"/></svg>
-            Upload
-        </button>
-        <button type="button" class="cph-chip" id="cphCameraBtn">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8a2 2 0 012-2h1l1.4-2h7.2L17 6h1a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V8z"/><circle cx="12" cy="13" r="3.5"/></svg>
-            Camera
-        </button>
+        <span class="cph-srchint">Everyone in the room draws on the same picture.</span>
     </div>
 
     {{-- The photo, and the pens over it. --}}
     <div class="cph-stage" id="cphStage">
         <div class="cph-bar" id="cphBar" hidden>
-            {{-- Row one: what you draw with. --}}
+            {{-- Row one: what you draw with, as one segmented control
+                 rather than eight loose keys. --}}
             <div class="cph-row">
-                <button type="button" class="cph-tool is-active" data-cph-tool="pen" title="Pen"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z"/></svg></button>
-                <button type="button" class="cph-tool" data-cph-tool="line" title="Line"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 19L19 5"/></svg></button>
-                <button type="button" class="cph-tool" data-cph-tool="arrow" title="Arrow"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 19L19 5m0 0h-7m7 0v7"/></svg></button>
-                <button type="button" class="cph-tool" data-cph-tool="rect" title="Box"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg></button>
-                <button type="button" class="cph-tool" data-cph-tool="circle" title="Circle"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg></button>
-                <button type="button" class="cph-tool" data-cph-tool="text" title="Text"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 6h14M12 6v13"/></svg></button>
-                <button type="button" class="cph-tool" data-cph-tool="eraser" title="Eraser (strokes only — the photo is safe)"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 20h10M6.5 14.5l8-8a2 2 0 012.8 0l2.2 2.2a2 2 0 010 2.8l-8 8H8l-3.5-3.5a1.5 1.5 0 010-2.1l2-2z"/></svg></button>
-                <button type="button" class="cph-tool" data-cph-tool="move" title="Move and zoom the photo"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v20M2 12h20M12 2l-3 3m3-3l3 3M12 22l-3-3m3 3l3-3M2 12l3-3m-3 3l3 3M22 12l-3-3m3 3l-3 3"/></svg></button>
+                <div class="cph-group">
+                    <button type="button" class="cph-tool is-active" data-cph-tool="pen" title="Pen"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z"/></svg></button>
+                    <button type="button" class="cph-tool" data-cph-tool="line" title="Line"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 19L19 5"/></svg></button>
+                    <button type="button" class="cph-tool" data-cph-tool="arrow" title="Arrow"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 19L19 5m0 0h-7m7 0v7"/></svg></button>
+                    <button type="button" class="cph-tool" data-cph-tool="rect" title="Box"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg></button>
+                    <button type="button" class="cph-tool" data-cph-tool="circle" title="Circle"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg></button>
+                    <button type="button" class="cph-tool" data-cph-tool="text" title="Text"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 6h14M12 6v13"/></svg></button>
+                    <button type="button" class="cph-tool" data-cph-tool="eraser" title="Eraser (strokes only — the photo is safe)"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 20h10M6.5 14.5l8-8a2 2 0 012.8 0l2.2 2.2a2 2 0 010 2.8l-8 8H8l-3.5-3.5a1.5 1.5 0 010-2.1l2-2z"/></svg></button>
+                    <button type="button" class="cph-tool" data-cph-tool="move" title="Move and zoom the photo"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v20M2 12h20M12 2l-3 3m3-3l3 3M12 22l-3-3m3 3l3-3M2 12l3-3m-3 3l3 3M22 12l-3-3m3 3l-3 3"/></svg></button>
+                </div>
             </div>
-            {{-- Row two: what you do about it. Redo used to wrap down here on
-                 its own on a phone; now the split is on purpose. --}}
+            {{-- Row two: what you do about it, in groups — how the pen
+                 looks, taking a mark back, and what becomes of the whole
+                 picture. The last two sit apart from the pens on purpose:
+                 clearing everybody’s marks is not a pen stroke. --}}
             <div class="cph-row">
-                <button type="button" class="cph-tool" id="cphColor" title="Colour"><span class="cph-color-dot" id="cphColorDot"></span></button>
-                <button type="button" class="cph-tool" id="cphSize" title="Line thickness"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="1" d="M4 6h16"/><path stroke-linecap="round" stroke-width="2.5" d="M4 12h16"/><path stroke-linecap="round" stroke-width="4.5" d="M4 18.5h16"/></svg></button>
-                <span class="cph-div"></span>
-                <button type="button" class="cph-tool" id="cphUndo" title="Take back my last stroke"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg></button>
-                <button type="button" class="cph-tool" id="cphRedo" title="Put it back" disabled><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg></button>
+                <div class="cph-group">
+                    <button type="button" class="cph-tool" id="cphColor" title="Colour"><span class="cph-color-dot" id="cphColorDot"></span></button>
+                    <button type="button" class="cph-tool" id="cphSize" title="Line thickness"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="1" d="M4 6h16"/><path stroke-linecap="round" stroke-width="2.5" d="M4 12h16"/><path stroke-linecap="round" stroke-width="4.5" d="M4 18.5h16"/></svg></button>
+                </div>
+                <div class="cph-group">
+                    <button type="button" class="cph-tool" id="cphUndo" title="Take back my last stroke"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg></button>
+                    <button type="button" class="cph-tool" id="cphRedo" title="Put it back" disabled><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg></button>
+                </div>
                 <button type="button" class="cph-tool cph-danger" id="cphClear" title="Clear all strokes for the team"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg></button>
-                <button type="button" class="cph-tool cph-saveic" id="cphSaveBtn" title="Keep this image" aria-label="Keep this image"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg></button>
+                <button type="button" class="cph-tool cph-saveic" id="cphSaveBtn" title="Keep this image" aria-label="Keep this image"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg><span>Save</span></button>
             </div>
         </div>
         <div class="cph-box" id="cphBox">
             <div class="cph-none" id="cphNone">
                 <svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/><circle cx="9" cy="9" r="1.2"/></svg>
-                <span>No photo up yet — pick, upload, or take one, and the whole team draws on it together.</span>
+                <span>No photo up yet — tap <b>Add photo</b>, and the whole team draws on it together.</span>
             </div>
             <img id="cphImg" alt="" draggable="false" hidden>
             <canvas id="cphCanvas" style="visibility:hidden"></canvas>
@@ -72,6 +74,40 @@
     <input type="file" id="cphUploadInput" accept="image/jpeg,image/png,image/webp" hidden>
     {{-- capture= asks the phone for its camera rather than its files. --}}
     <input type="file" id="cphCameraInput" accept="image/*" capture="environment" hidden>
+</div>
+
+{{-- The three ways to a photo. A sheet rather than three chips: each way
+     gets a line saying what it actually does, and the one this account cannot
+     use is not drawn — a worker whose owner withheld the camera is not
+     offered it here either, because this is that owner's season.
+
+     Ordered as people reach for them: what the farm already has, then this
+     device, then the camera. --}}
+<div class="sheet hidden" id="cphSourceSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header"><h3 class="sheet-title">Add a photo</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button></div>
+    <div class="sheet-body" style="padding-bottom:1.1rem">
+        <div class="cph-srcs">
+            <button type="button" class="cph-src" id="cphPickBtn">
+                <span class="cph-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h4l2 2h6a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M7 15l3-3.5 2.4 2.8L15 11l3 4"/></svg></span>
+                <span class="cph-src-t"><b>From the gallery</b><small>A picture this schedule already keeps.</small></span>
+                <svg class="cph-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button type="button" class="cph-src" id="cphUploadBtn">
+                <span class="cph-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 17v1.5A2.5 2.5 0 006.5 21h11a2.5 2.5 0 002.5-2.5V17"/></svg></span>
+                <span class="cph-src-t"><b>Upload from this device</b><small>Choose a file on your phone or computer.</small></span>
+                <svg class="cph-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
+            </button>
+            @if (\App\Support\WorkerContext::canUseModule('camera'))
+            <button type="button" class="cph-src" id="cphCameraBtn">
+                <span class="cph-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8a2 2 0 012-2h1.4l1-1.6h7.2l1 1.6H18a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V8z"/><circle cx="12" cy="13" r="3.4"/></svg></span>
+                <span class="cph-src-t"><b>Take a photo now</b><small>Open the camera and put up what you see.</small></span>
+                <svg class="cph-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
+            </button>
+            @endif
+        </div>
+    </div>
 </div>
 
 {{-- Colour picker: same swatches the whiteboard offers. --}}
@@ -137,19 +173,37 @@
 
 <style>
     .cph-wrap { display: flex; flex-direction: column; min-height: 0; height: 100%; gap: .4rem; }
-    /* One slim row: a word and three tag-sized buttons. */
-    .cph-srcrow { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
-    .cph-srclbl { font-size: .72rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
-        color: var(--color-gray-400); margin-right: .1rem; }
-    .cph-chip { display: inline-flex; align-items: center; gap: .3rem; padding: .32rem .6rem;
-        border-radius: 999px; font-size: .74rem; font-weight: 700;
-        color: var(--color-gray-700); background: var(--color-gray-100);
+    /* One button, and a line of words beside it. */
+    .cph-srcrow { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+    .cph-add { display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .85rem;
+        border-radius: 999px; font-size: .8rem; font-weight: 800; color: #fff; background: #4a7c2a;
+        box-shadow: 0 6px 16px rgb(74 124 42 / .26);
         transition: background .28s cubic-bezier(.22,1,.36,1), transform .1s ease; }
-    .cph-chip:hover { background: var(--color-brand-50); color: #3d6823; }
-    .cph-chip:active { transform: scale(.95); }
-    .cph-chip svg { width: .95rem; height: .95rem; }
-    @media (prefers-reduced-motion: reduce) { .cph-chip { transition: none; } }
-    html.dark .cph-chip { background: #1c2416; color: #cdd8c0; }
+    .cph-add:hover { background: #3d6823; }
+    .cph-add:active { transform: scale(.96); }
+    .cph-add svg { width: 1.05rem; height: 1.05rem; }
+    .cph-srchint { font-size: .72rem; color: var(--color-gray-400); }
+    @media (max-width: 560px) { .cph-srchint { display: none; } }
+
+    /* The three ways, in the sheet. */
+    .cph-srcs { display: flex; flex-direction: column; gap: .5rem; }
+    .cph-src { display: flex; align-items: center; gap: .7rem; width: 100%; text-align: left;
+        padding: .7rem .8rem; border-radius: .85rem; border: 1px solid var(--color-gray-200);
+        background: var(--color-white);
+        transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), transform .1s ease; }
+    .cph-src:hover { border-color: var(--color-brand-300); background: var(--color-brand-50); }
+    .cph-src:active { transform: scale(.985); }
+    .cph-src-ic { flex-shrink: 0; width: 2.4rem; height: 2.4rem; border-radius: .7rem;
+        display: inline-flex; align-items: center; justify-content: center;
+        background: var(--color-brand-100); color: var(--color-brand-800); }
+    .cph-src-ic svg { width: 1.25rem; height: 1.25rem; }
+    .cph-src-t { flex: 1; min-width: 0; }
+    .cph-src-t b { display: block; font-size: .84rem; font-weight: 800; color: var(--color-gray-800); }
+    .cph-src-t small { display: block; font-size: .7rem; color: var(--color-gray-400); margin-top: .05rem; }
+    .cph-src-go { width: 1rem; height: 1rem; flex-shrink: 0; color: var(--color-gray-300); }
+    @media (prefers-reduced-motion: reduce) { .cph-add, .cph-src { transition: none; } }
+    html.dark .cph-src { background: #1c2416; border-color: #2b3a1c; }
+    html.dark .cph-src-t b { color: #e8efe1; }
 
     /* Before a photo: a quiet dashed square with a line of words. Pure CSS and
        inline SVG — never an <img> with nothing behind it, which renders as the
@@ -161,10 +215,16 @@
     .cph-none[hidden] { display: none; }
 
     .cph-stage { flex: 1; display: flex; flex-direction: column; min-height: 0; gap: .4rem; }
-    .cph-bar { display: flex; flex-direction: column; gap: .25rem; }
+    /* The bar is one card holding two rows, not two rows of loose keys
+       floating on the page above the picture. */
+    .cph-bar { display: flex; flex-direction: column; gap: .3rem; padding: .35rem;
+        border-radius: .85rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-200); }
     .cph-bar[hidden] { display: none; }
-    .cph-row { display: flex; align-items: center; gap: .25rem; flex-wrap: wrap; }
-    .cph-row .cph-saveic { margin-left: auto; background: #4a7c2a; color: #fff; }
+    .cph-row { display: flex; align-items: center; gap: .35rem; flex-wrap: wrap; }
+    .cph-group { display: inline-flex; align-items: center; gap: .1rem; padding: .15rem;
+        border-radius: .75rem; background: var(--color-white); box-shadow: inset 0 0 0 1px var(--color-gray-200); }
+    .cph-row .cph-saveic { margin-left: auto; width: auto; padding: 0 .7rem; gap: .35rem;
+        font-size: .76rem; font-weight: 800; background: #4a7c2a; color: #fff; }
     .cph-row .cph-saveic:hover { background: #3d6823; color: #fff; }
     .cph-saveic.is-gone { display: none; }
     /* The move tool holds the photo, not a pen. */
@@ -179,9 +239,13 @@
     .cph-tool:active { transform: scale(.92); }
     .cph-tool.is-active { background: var(--color-brand-100); color: var(--color-brand-800); }
     .cph-tool:disabled { opacity: .35; pointer-events: none; }
-    .cph-danger { color: #dc2626; }
-    .cph-danger:hover { background: #fee2e2; color: #b91c1c; }
-    .cph-div { width: 1px; height: 1.3rem; background: var(--color-gray-200); margin: 0 .1rem; flex-shrink: 0; }
+    /* Inside a group the keys share one surface; only the chosen one is lit. */
+    .cph-group .cph-tool { background: transparent; }
+    .cph-group .cph-tool:hover { background: var(--color-gray-100); }
+    .cph-group .cph-tool.is-active { background: var(--color-brand-100); color: var(--color-brand-800); }
+    /* Clearing everybody's marks says so at rest, not only under the cursor. */
+    .cph-danger { color: #b91c1c; background: #fee2e2; }
+    .cph-danger:hover { background: #fecaca; color: #991b1b; }
     .cph-color-dot { width: 1.05rem; height: 1.05rem; border-radius: 999px; background: #f5c518;
         border: 2px solid rgb(255 255 255 / .9); box-shadow: 0 0 0 1px rgb(0 0 0 / .12); }
 
@@ -220,6 +284,9 @@
 
     html.dark .cph-source { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
     html.dark .cph-tool { background: #1c2416; color: #cdd8c0; }
+    html.dark .cph-bar { background: #151b12; border-color: #2b3a1c; }
+    html.dark .cph-group { background: #10140c; box-shadow: inset 0 0 0 1px #2b3a1c; }
+    html.dark .cph-group .cph-tool { background: transparent; }
     html.dark .cph-empty-title { color: #e8efe1; }
     html.dark .cph-dest { border-color: #2b3a1c; }
     html.dark .cph-dest b { color: #e8efe1; }
@@ -398,6 +465,8 @@
         // broken-picture glyph, which reads as a bug rather than an absence.
         $id('cphBar').hidden = !on;
         $id('cphNone').hidden = on;
+        // The one button carries both errands, so it has to say which it is.
+        $id('cphAddLabel').textContent = on ? 'Change photo' : 'Add photo';
         $id('cphBox').classList.toggle('has-photo', on);
         img().hidden = !on;
         $id('cphCanvas').style.visibility = on ? '' : 'hidden';
@@ -667,7 +736,12 @@
             api(`${U.push}?scheduleId=${SID}`, { method: 'POST', body: { type: 'clear' } }).catch(() => {});
             myOrder.length = 0; redoStack = []; $id('cphRedo').disabled = true;
         });
+        /* The button opens the sheet; the sheet's rows do what the three
+           chips used to. Each closes it first, so the picker — a sheet of
+           its own — never opens underneath this one. */
+        $id('cphAddBtn').addEventListener('click', () => window.openSheet?.('cphSourceSheet'));
         $id('cphPickBtn').addEventListener('click', () => {
+            window.closeSheet?.('cphSourceSheet');
             if (typeof window.smPickMedia !== 'function') { if (window.toast) toast('The gallery picker is not available here.', 'error'); return; }
             window.smPickMedia({
                 scheduleId: SID, kinds: 'image', title: 'Choose the photo to draw on',
@@ -677,8 +751,15 @@
                 },
             });
         });
-        $id('cphUploadBtn').addEventListener('click', () => $id('cphUploadInput').click());
-        $id('cphCameraBtn').addEventListener('click', () => $id('cphCameraInput').click());
+        $id('cphUploadBtn').addEventListener('click', () => {
+            window.closeSheet?.('cphSourceSheet');
+            $id('cphUploadInput').click();
+        });
+        // Optional: an account without the camera module has no such row.
+        $id('cphCameraBtn')?.addEventListener('click', () => {
+            window.closeSheet?.('cphSourceSheet');
+            $id('cphCameraInput').click();
+        });
         ['cphUploadInput', 'cphCameraInput'].forEach((idn) => {
             $id(idn).addEventListener('change', (e) => {
                 const f = e.target.files && e.target.files[0];

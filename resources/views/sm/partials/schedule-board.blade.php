@@ -74,8 +74,9 @@
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 14l4-4-4-4"/><path stroke-linecap="round" stroke-linejoin="round" d="M19 10h-8a5 5 0 000 10h3"/></svg>
         </button>
         @if (\App\Support\WorkerContext::canEdit())
-        <button type="button" id="sbClear" class="sb-btn sb-btn-danger" title="Clear board" aria-label="Clear board">
+        <button type="button" id="sbClear" class="sb-btn sb-btn-wide sb-btn-danger" title="Clear the drawing for everyone" aria-label="Clear the drawing">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg>
+            <span class="sb-btn-txt">Clear</span>
         </button>
         @endif
         <button type="button" id="sbChatToggle" class="sb-btn is-active" title="Show or hide team chat" aria-label="Toggle team chat">
@@ -153,7 +154,20 @@
     .sb-btn { display: inline-flex; align-items: center; justify-content: center; width: 2.15rem; height: 2.15rem; border-radius: .6rem; color: var(--color-gray-600); background: var(--color-gray-100); flex-shrink: 0; }
     .sb-btn:hover { background: var(--color-gray-200); color: var(--color-gray-800); }
     .sb-btn.is-active { background: var(--color-brand-600); color: #fff; }
-    .sb-btn-danger:hover { background: #fee2e2; color: #b91c1c; }
+    /* Clearing the drawing was a bin among fourteen other icons, which is
+       the same as not being there: it says its own name now, and wears its
+       colour at rest rather than only under a cursor a phone does not have.
+       The word folds away on a narrow screen; the red stays. */
+    .sb-btn-danger { color: #b91c1c; background: #fee2e2; }
+    .sb-btn-danger:hover { background: #fecaca; color: #991b1b; }
+    .sb-btn-wide { width: auto; gap: .35rem; padding: 0 .65rem; }
+    .sb-btn-txt { font-size: .75rem; font-weight: 800; }
+    /* Only the narrowest phones give up the word: the bar wraps anyway, and
+       a row that wraps is cheaper than a button nobody can find. */
+    @media (max-width: 359px) {
+        .sb-btn-wide { width: 2.15rem; padding: 0; }
+        .sb-btn-txt { display: none; }
+    }
     /* Nothing to redo keeps its place in the row, greyed — a button that comes
        and goes makes the whole toolbar jump while you are drawing. */
     .sb-btn:disabled { opacity: .38; }
