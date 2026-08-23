@@ -816,17 +816,56 @@
        wall's own <style>, where they had been the later ones. A band has two
        rules, not four; four and rounded corners read as a box sitting on the
        page rather than part of it. */
-    .pymk.reco-edge { margin: 0 calc(var(--plaza-gutter, 1rem) * -1) 1.25rem;
+    .pymk.reco-edge { position: relative;
+        margin: 0 calc(var(--plaza-gutter, 1rem) * -1) 1.25rem;
         padding: .85rem var(--plaza-gutter, 1rem) .75rem;
         border-radius: 0; border-left: 0; border-right: 0; box-shadow: none;
         /* A wash of the house green rather than a flat panel: it fades out
            downward, so the band belongs to the page under it instead of
-           sitting on top of it as a box. */
-        background: linear-gradient(180deg, rgb(107 159 61 / .16), rgb(107 159 61 / .02)); }
-    html.dark .pymk.reco-edge { background: linear-gradient(180deg, rgb(107 159 61 / .2), rgb(107 159 61 / .03)); }
-    /* The rail still runs off the right edge, so the next card peeks. */
-    .pymk-rail { margin-right: calc(var(--plaza-gutter, 1rem) * -1);
-        padding-right: var(--plaza-gutter, 1rem); }
+           sitting on top of it as a box — and it drifts, on the same slow
+           tide the covers and the heroes ride, so the band is alive without
+           ever asking to be looked at. */
+        background: linear-gradient(135deg, rgb(107 159 61 / .04), rgb(107 159 61 / .2) 35%,
+            rgb(184 211 142 / .12) 55%, rgb(74 124 42 / .18) 80%, rgb(107 159 61 / .04));
+        background-size: 260% 260%;
+        animation: mcDrift 16s ease-in-out infinite alternate; }
+    html.dark .pymk.reco-edge { background: linear-gradient(135deg, rgb(107 159 61 / .06), rgb(107 159 61 / .26) 35%,
+        rgb(184 211 142 / .1) 55%, rgb(74 124 42 / .22) 80%, rgb(107 159 61 / .06));
+        background-size: 260% 260%; }
+    /* Its own colours along the top and the bottom, the way every band in the
+       community carries them. */
+    .pymk.reco-edge::before, .pymk.reco-edge::after { content: ''; position: absolute; inset: 0 0 auto 0;
+        height: 3px; pointer-events: none; z-index: 1;
+        background: linear-gradient(90deg, #2f5219, #6b9f3d 35%, #b8d38e 60%, transparent); }
+    .pymk.reco-edge::after { inset: auto 0 0 0;
+        background: linear-gradient(270deg, #2f5219, #6b9f3d 35%, #b8d38e 60%, transparent); }
+    @media (prefers-reduced-motion: reduce) { .pymk.reco-edge { animation: none; } }
+
+    /* Three whole faces, and a way to the next three.
+     *
+     * The rail used to run off the right edge so a fourth card peeked — the
+     * only hint that the row scrolled. A cut-off card is a card nobody can
+     * read, so the row now holds exactly three across whatever width it has,
+     * and the arrows say the rest are there. */
+    .pymk-wrap { position: relative; }
+    .pymk-rail { display: grid; grid-auto-flow: column;
+        grid-auto-columns: calc((100% - 1rem) / 3); gap: .5rem; }
+    .pymk-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+        width: 2rem; height: 2rem; border-radius: 999px; border: 1px solid var(--color-gray-200);
+        display: flex; align-items: center; justify-content: center; cursor: pointer;
+        background: var(--color-white); color: var(--color-gray-700); opacity: .9;
+        box-shadow: 0 6px 18px -8px rgb(0 0 0 / .5);
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+    .pymk-arrow:hover { opacity: 1; background: var(--color-gray-50); }
+    .pymk-arrow svg { width: 1rem; height: 1rem; }
+    .pymk-arrow.is-prev { left: -.35rem; }
+    .pymk-arrow.is-next { right: -.35rem; }
+    /* Nowhere to go, no button: an arrow at the end of a list is a promise
+       the list cannot keep. */
+    .pymk-arrow[hidden] { display: none; }
+    html.dark .pymk-arrow { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
+    html.dark .pymk-arrow:hover { background: #24301c; }
+    @media (prefers-reduced-motion: reduce) { .pymk-arrow { transition: none; } }
     /* The heading is the handle now, so it is a button the whole width of
        the band — a chevron on its own would be a target the size of a
        fingernail. */
@@ -849,12 +888,13 @@
     /* Stretch, so a card with a short reason is still as tall as its
        neighbour; and no scrollbar under it — the half-card showing past the
        edge says it scrolls, and says it without a grey stripe. */
-    .pymk-rail { display: flex; align-items: stretch; gap: .5rem; overflow-x: auto; padding-bottom: .1rem;
-        scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .pymk-rail { align-items: stretch; overflow-x: auto; padding-bottom: .1rem;
+        scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+        scroll-behavior: smooth; }
     .pymk-rail > * { scroll-snap-align: start; }
     .pymk-rail::-webkit-scrollbar { display: none; }
     /* The shape of what is coming, shimmering while it comes. */
-    .pymk-skel { flex: none; width: 9.5rem; height: 11.5rem; border-radius: 1rem;
+    .pymk-skel { width: auto; min-width: 0; height: 11.5rem; border-radius: 1rem;
         background: linear-gradient(100deg, var(--color-gray-100) 40%, var(--color-gray-200) 50%, var(--color-gray-100) 60%);
         background-size: 200% 100%; animation: pymkShim 1.2s linear infinite; }
     @keyframes pymkShim { to { background-position: -200% 0; } }
@@ -1005,9 +1045,10 @@
        edge of a phone — which is the only thing that tells anybody the row
        scrolls — and every card the same height, so a row of them reads as a
        row rather than as a broken fence. */
-    .reco-card { flex: none; width: 9.5rem; padding: .7rem .55rem .6rem; border-radius: 1rem;
+    /* The card fills the column the rail deals it — three to a screen —
+       rather than carrying a width of its own. */
+    .reco-card { width: auto; min-width: 0; padding: .7rem .55rem .6rem; border-radius: 1rem;
         display: flex; flex-direction: column; align-items: stretch; text-align: center; }
-    @media (min-width: 480px) { .reco-card { width: 10.5rem; } }
     .reco-who { display: block; min-width: 0; }
     .reco-face { display: flex; justify-content: center; }
     .reco-face .avatar { width: 3.25rem; height: 3.25rem; font-size: 1rem; }

@@ -41,20 +41,21 @@
             <p class="text-sm leading-tight flex items-center flex-wrap gap-x-1.5 gap-y-0.5">
                 @if ($author->is_assistant)<span class="font-semibold author-ai">{{ $author->full_name }}</span>@else<a href="{{ route('community.connect.profile', ['userId' => $author->id]) }}" class="font-semibold text-gray-900 hover:text-brand-700">{{ $author->full_name }}</a>@endif
                 @include('community.partials.dm-btn', ['user' => $author])
+                {{-- Following is one-sided, so it belongs on the post as well
+                     as the profile: this is where you decide you want more of
+                     somebody. It sits with the name and the way to write to
+                     them — the three things you can do about a person, in one
+                     place, rather than one of them alone in a corner. --}}
+                @unless ($isMine)
+                    <button type="button" class="fp-follow {{ $following ? 'is-on' : '' }}"
+                            data-follow="{{ $author->id }}" data-name="{{ $author->full_name }}"
+                            aria-pressed="{{ $following ? 'true' : 'false' }}">
+                        <span class="on">Following</span><span class="off">+ Follow</span>
+                    </button>
+                @endunless
             </p>
         </div>
     </header>
-    {{-- Following is one-sided, so it belongs on the post as well as the
-         profile: this is where you decide you want more of somebody. In the
-         card's corner rather than the header's row — a decision about the
-         person, not a word attached to their name. --}}
-    @unless ($isMine)
-        <button type="button" class="fp-follow {{ $following ? 'is-on' : '' }}"
-                data-follow="{{ $author->id }}" data-name="{{ $author->full_name }}"
-                aria-pressed="{{ $following ? 'true' : 'false' }}">
-            <span class="on">Following</span><span class="off">+ Follow</span>
-        </button>
-    @endunless
     {{-- Who is speaking, across the whole card. In the column beside the
          face it had 278px of a 358px card and the third fact wrapped with
          the avatar's width sitting empty next to it. --}}
