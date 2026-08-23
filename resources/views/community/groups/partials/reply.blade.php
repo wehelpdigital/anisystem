@@ -23,7 +23,12 @@
                 </div>
             @else
                 <div class="bg-gray-50 rounded-xl rounded-tl-md px-3 py-2">
-                    <p class="text-xs font-semibold text-gray-900">@if ($reply->author)<a href="{{ route('community.connect.profile', ['userId' => $reply->author->id]) }}" class="hover:text-brand-700">{{ $rAuthor->full_name }}</a>@else{{ 'Member' }}@endif
+                    @php $rIsAi = (bool) optional($reply->author)->is_assistant; @endphp
+                    {{-- The assistant's answers are named in green: a reader
+                         scanning a thread should be able to tell an answer
+                         from the AI apart from a neighbour's without reading
+                         the words first. --}}
+                    <p class="text-xs font-semibold text-gray-900">@if ($reply->author)<a href="{{ route('community.connect.profile', ['userId' => $reply->author->id]) }}" class="{{ $rIsAi ? 'author-ai' : 'hover:text-brand-700' }}"@if ($rIsAi) title="Answered by the AI Technician"@endif>{{ $rAuthor->full_name }}</a>@else{{ 'Member' }}@endif
                         <span class="text-gray-400 font-normal" title="{{ $reply->created_at }}">· {{ $reply->created_at?->diffForHumans(null, true) }}</span></p>
                     @if ($reply->isRestricted ?? false)
                         @include('community.partials.restricted', ['reason' => $reply->restrictedReason ?? null])

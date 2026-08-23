@@ -301,6 +301,12 @@
         margin:0 .1rem; animation: dotBounce .9s var(--ease-house) infinite; }
     #loadMoreBtn .dot:nth-child(2) { animation-delay:.12s; } #loadMoreBtn .dot:nth-child(3) { animation-delay:.24s; }
     @keyframes dotBounce { 0%,100%{transform:none; opacity:.5} 40%{transform:translateY(-4px); opacity:1} }
+    /* The assistant's own colour. Not a badge: the name IS the signal, and a
+       thread reads faster when the only thing that changed is its colour. */
+    .author-ai { color:var(--color-brand-700); }
+    html.dark .author-ai { color:var(--color-brand-300); }
+    .author-ai:hover { text-decoration:underline; }
+
     /* Both ends of a long room, in the corner the write button used to hold.
        Same shape as the board's own jump stack, so the two read as one app. */
     .disc-jumps { position:fixed; right:1rem; bottom:4.75rem; z-index:30;

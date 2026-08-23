@@ -10,6 +10,17 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    /**
+     * The account the AI Technician answers community questions under.
+     *
+     * A sentinel address rather than a flag column: the mother app creates
+     * this row by email when it first posts an answer, and both apps look it
+     * up the same way. Screens ask so they can mark it — a farmer reading a
+     * discussion should know at a glance which answer came from the assistant
+     * and which came from a neighbour.
+     */
+    public const ASSISTANT_EMAIL = 'ai-technician@anisenso.system';
+
     protected $table = 'anisystem_users';
 
     protected $fillable = [
@@ -89,6 +100,11 @@ class User extends Authenticatable
     public function getInitialsAttribute(): string
     {
         return strtoupper(mb_substr((string) $this->firstName, 0, 1).mb_substr((string) $this->lastName, 0, 1));
+    }
+
+    public function getIsAssistantAttribute(): bool
+    {
+        return strcasecmp((string) $this->email, self::ASSISTANT_EMAIL) === 0;
     }
 
     /** "Town, Province" — or whichever half is filled. Empty string if neither. */

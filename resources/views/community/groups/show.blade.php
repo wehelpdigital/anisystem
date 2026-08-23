@@ -36,6 +36,10 @@
 
     /* --- The room's head: a place banner, not a wall of text. The name, who
        is in it, and the one thing you can do about that, in one row. --- */
+    /* The section bar is sticky and wears the page's own background, so the
+       room began flush against it. A little air above the banner tells the
+       eye where the bar ends and the room starts. */
+    #groupRoot { padding-top:.6rem; }
     .disc-hero { padding:.85rem; margin-bottom:.75rem; border-radius:1.1rem; }
     /* The head of the room. Cover, then the face half on it, then the name
        and the numbers across the whole card. */
