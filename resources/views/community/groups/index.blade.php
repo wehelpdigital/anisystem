@@ -104,7 +104,11 @@
     .disc-act .btn { width:100%; border:0; color:#fff;
         background-image:linear-gradient(120deg, #2f5219, #4a7c2a 28%, #6b9f3d 52%, #4a7c2a 76%, #2f5219);
         background-size:220% 100%;
-        animation:gradSweep 10s ease-in-out infinite alternate; }
+        /* Same tide, different clocks: a column of buttons sweeping in
+           lockstep reads as one animation on six cards rather than six cards
+           that happen to be alive. */
+        animation:gradSweep var(--sw-t, 10s) ease-in-out infinite alternate;
+        animation-delay:var(--sw-d, 0s); }
     .disc-act .btn:hover { filter:brightness(1.06); }
     @media (prefers-reduced-motion: reduce) { .disc-act .btn { animation:none; } }
     .disc-act .is-off { display:none; }

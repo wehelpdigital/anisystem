@@ -57,7 +57,9 @@
             </div>
             {{-- "Open" is a promise you can only keep for a member; for
                  everyone else the honest word is Join. --}}
-            <div class="disc-act">
+            {{-- Its own clock and its own point in the sweep, from the room's
+                 id — so a column of these never marches. --}}
+            <div class="disc-act" style="--sw-t:{{ 8 + ($g->id % 7) }}s;--sw-d:-{{ $g->id % 11 }}s">
                 <a href="{{ route('community.groups.show', ['id' => $g->id]) }}"
                    class="btn btn-primary disc-open {{ $g->joined ? '' : 'is-off' }}">Open</a>
                 <button type="button" class="btn btn-primary disc-join {{ $g->joined ? 'is-off' : '' }}"

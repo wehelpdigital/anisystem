@@ -329,15 +329,25 @@
            !important because every status (and its night twin, at higher
            specificity) paints via the `background` shorthand, which quietly
            resets background-size to auto. */
+        /* Earth, not weather.
+         *
+         * The three status tints were three different colours doing the job
+         * the dot and the word beside them already do, and a shelf of them
+         * read as a paint chart. One ground for every season — tilled soil,
+         * light enough to keep dark type on it — and the status stays where
+         * it was said: in the dot and in the word.
+         *
+         * Each cover drifts on its own clock (--sw-t) from its own point in
+         * the cycle (--sw-d, a negative delay, so it starts mid-sweep). A
+         * shelf where every gradient slid the same way at the same moment
+         * read as one animation playing on six cards. */
         .se-cover { background-size: 220% 100% !important;
-            animation: gradSweep 13s ease-in-out infinite alternate; }
+            animation: gradSweep var(--sw-t, 13s) ease-in-out infinite alternate;
+            animation-delay: var(--sw-d, 0s); }
         @media (prefers-reduced-motion: reduce) { .se-cover { animation: none; } }
-        .se-cover-active    { background: linear-gradient(120deg, #eef6e6, #d9e9c8); }
-        .se-cover-setup     { background: linear-gradient(120deg, #fdf6e6, #f5e6c4); }
-        .se-cover-generated { background: linear-gradient(120deg, #eef0fb, #dde2f5); }
-        .se-cover-completed { background: linear-gradient(120deg, #edf3f9, #d9e6f2); }
-        .se-cover-draft     { background: linear-gradient(120deg, #f4f5f4, #e7eae6); }
-        .se-cover-archived  { background: linear-gradient(120deg, #e5e7eb, #d2d6dc); }
+        .se-cover-active, .se-cover-setup, .se-cover-generated,
+        .se-cover-completed, .se-cover-draft, .se-cover-archived {
+            background: linear-gradient(120deg, #f4e9dc, #dfc9ac 42%, #cbb08c 68%, #ecdfcd); }
         /* A faint horizon line so the tint reads as ground, not just paint. */
         .se-cover::after { content: ''; position: absolute; inset: auto 0 0 0; height: 1.4rem;
             background: linear-gradient(180deg, transparent, rgb(0 0 0 / .05)); pointer-events: none; }
@@ -363,11 +373,12 @@
         .se-dot-generated { background: #6366f1; }
         .se-dot-completed { background: #2563eb; }
         .se-dot-archived { background: #374151; }
-        html.dark .se-cover-active    { background: linear-gradient(120deg, #1e2817, #26331b); }
-        html.dark .se-cover-setup     { background: linear-gradient(120deg, #2a2414, #332b16); }
-        html.dark .se-cover-generated { background: linear-gradient(120deg, #1d2030, #232741); }
-        html.dark .se-cover-completed { background: linear-gradient(120deg, #17222d, #1b2a3a); }
-        html.dark .se-cover-draft, html.dark .se-cover-archived { background: linear-gradient(120deg, #1a1e18, #232823); }
+        /* The same ground after dark: turned earth rather than five colours
+           of night. The status still speaks in the dot and the word. */
+        html.dark .se-cover-active, html.dark .se-cover-setup,
+        html.dark .se-cover-generated, html.dark .se-cover-completed,
+        html.dark .se-cover-draft, html.dark .se-cover-archived {
+            background: linear-gradient(120deg, #2a2018, #3a2c1e 42%, #4a3826 68%, #2f241a); }
         html.dark .se-status { background: rgb(0 0 0 / .45); color: #d5dfc9; }
 
         .se-desc { font-size: .8rem; color: var(--color-gray-500);
@@ -790,6 +801,9 @@
                          handle: tapping it folds the card away, so a farm with
                          twenty seasons can be a list of twenty names again. --}}
                     <div class="se-cover se-cover-{{ $s->status }}" data-se-fold role="button" tabindex="0"
+                         {{-- Its own clock and its own starting point, from its
+                              own id: the same tide, out of step. --}}
+                         style="--sw-t:{{ 10 + ($s->id % 7) }}s;--sw-d:-{{ $s->id % 11 }}s"
                          aria-expanded="true" aria-label="Fold or unfold {{ $s->title }}">
                         <span class="se-crops" aria-hidden="true">{{ count($card['icons']) ? implode('', $card['icons']) : '🌱' }}</span>
                         <h2 class="se-title" title="{{ $s->title }}">{{ $s->title }}</h2>
