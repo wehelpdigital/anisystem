@@ -98,7 +98,7 @@ class AiClient
                 'model' => $s->effectiveModel(),
                 'max_tokens' => (int) $s->maxOutputTokens,
                 'temperature' => (float) $s->temperature,
-                'system' => $s->systemPrompt,
+                'system' => $s->instructions(),
                 'messages' => $messages,
             ]);
 
@@ -124,7 +124,7 @@ class AiClient
     /** @param  array<int, array{mime:string,data:string}>  $images */
     private function askOpenAi(AiSetting $s, string $key, array $history, string $prompt, array $images): array
     {
-        $messages = [['role' => 'system', 'content' => $s->systemPrompt]];
+        $messages = [['role' => 'system', 'content' => $s->instructions()]];
         foreach ($history as $turn) {
             $messages[] = ['role' => $turn['role'], 'content' => $turn['text']];
         }
@@ -187,7 +187,7 @@ class AiClient
         $res = Http::timeout(self::TIMEOUT)
             ->withHeaders(['x-goog-api-key' => $key])
             ->post($url, [
-                'systemInstruction' => ['parts' => [['text' => $s->systemPrompt]]],
+                'systemInstruction' => ['parts' => [['text' => $s->instructions()]]],
                 'contents' => $contents,
                 'generationConfig' => [
                     /* Thinking models charge their reasoning against this cap,

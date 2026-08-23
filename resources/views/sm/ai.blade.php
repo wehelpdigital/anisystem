@@ -299,22 +299,27 @@
             </button>
         </div>
         @forelse ($conversations as $c)
-            <div class="ai-session-row {{ $conversation && $conversation->id === $c->id ? 'is-active' : '' }}" data-convo-row="{{ $c->id }}">
-                <a href="{{ route('sm.ai', ['id' => $schedule->id, 'c' => $c->id]) }}" class="t js-ai-convo" data-c="{{ $c->id }}">
-                    <span data-session-title>{{ $c->title }}</span>
-                    <span class="meta">{{ $c->updated_at?->diffForHumans() }}</span>
-                    @if ($c->link_label)<span class="meta" style="color:var(--color-brand-600)">{{ $c->link_label }}</span>@endif
-                </a>
-                <button type="button" class="ai-session-act js-side-rename" data-id="{{ $c->id }}" title="Rename chat" aria-label="Rename chat">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                </button>
-                <button type="button" class="ai-session-act js-ai-del" data-id="{{ $c->id }}" title="Delete chat" aria-label="Delete chat">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                </button>
-            </div>
+            @include('sm.partials.ai-session-row', [
+                'id' => $c->id,
+                'href' => route('sm.ai', ['id' => $schedule->id, 'c' => $c->id]),
+                'title' => $c->title,
+                'when' => $c->updated_at?->diffForHumans(),
+                'link' => $c->link_label,
+                'active' => $conversation && $conversation->id === $c->id,
+            ])
         @empty
-            <p class="text-xs text-gray-400 px-1 py-2">No chats yet — ask your first question and it names itself.</p>
+            <p class="text-xs text-gray-400 px-1 py-2" data-sessions-empty>No chats yet — ask your first question and it names itself.</p>
         @endforelse
+        {{-- The row the page clones when an answer starts a new chat. Same
+             partial as the rows above, so the two can never drift. --}}
+        <template id="aiSessionRowTpl">@include('sm.partials.ai-session-row', [
+            'id' => '__ID__',
+            'href' => route('sm.ai', ['id' => $schedule->id]) . '&c=__ID__',
+            'title' => '',
+            'when' => 'just now',
+            'link' => null,
+            'active' => false,
+        ])</template>
     </aside>
 
 <div class="aichat">
@@ -377,7 +382,7 @@
             <div class="aimsg {{ $m->role === 'user' ? 'me' : '' }}">
                 <span class="aimsg-face">
                     @if ($m->role === 'user')
-                        {{ auth()->user()->initials }}
+                        {!! \App\Support\ChatFace::mine() !!}
                     @elseif ($settings->avatarPath)
                         <img data-ai-face src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="">
                     @else
@@ -565,27 +570,32 @@
         <h3 class="sheet-title">Past questions</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
-    <div class="sheet-body space-y-1">
+    <div class="sheet-body space-y-1" id="aiHistorySheetBody">
         <button type="button" class="w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-brand-700 hover:bg-gray-50" id="aiNewFromSheet">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
             Start a new question
         </button>
         @foreach ($conversations as $c)
-            <div class="flex items-center gap-1">
-                <a href="{{ route('sm.ai', ['id' => $schedule->id, 'c' => $c->id]) }}"
-                   class="grow min-w-0 rounded-xl px-3 py-3 font-semibold text-gray-700 hover:bg-gray-50 {{ $conversation && $conversation->id === $c->id ? 'bg-brand-50 text-brand-700' : '' }} js-ai-convo" data-c="{{ $c->id }}">
-                    <span class="block truncate">{{ $c->title }}</span>
-                    <span class="block text-xs font-normal text-gray-400">{{ $c->updated_at?->diffForHumans() }}</span>
-                    @if ($c->link_label)<span class="block text-xs font-normal text-brand-600">{{ $c->link_label }}</span>@endif
-                </a>
-                <button type="button" class="icon-btn text-red-600 shrink-0 js-ai-del" data-id="{{ $c->id }}" aria-label="Delete conversation">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                </button>
-            </div>
+            @include('sm.partials.ai-session-sheet-row', [
+                'id' => $c->id,
+                'href' => route('sm.ai', ['id' => $schedule->id, 'c' => $c->id]),
+                'title' => $c->title,
+                'when' => $c->updated_at?->diffForHumans(),
+                'link' => $c->link_label,
+                'active' => $conversation && $conversation->id === $c->id,
+            ])
         @endforeach
         @if ($conversations->isEmpty())
-            <p class="text-sm text-gray-500 text-center py-6">No questions yet for this plan.</p>
+            <p class="text-sm text-gray-500 text-center py-6" data-sessions-empty>No questions yet for this plan.</p>
         @endif
+        <template id="aiSessionSheetRowTpl">@include('sm.partials.ai-session-sheet-row', [
+            'id' => '__ID__',
+            'href' => route('sm.ai', ['id' => $schedule->id]) . '&c=__ID__',
+            'title' => '',
+            'when' => 'just now',
+            'link' => null,
+            'active' => false,
+        ])</template>
     </div>
 </div>
 
@@ -700,7 +710,7 @@ const __init = () => {
     const COIN = '<svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>';
     const buyCard = (msg) => `<div class="ai-buyc"><span class="ico">${COIN}</span><div><h3>You're out of AI Credits</h3><p>${escapeHtml(msg)}</p><a class="btn btn-accent btn-sm mt-2" href="${escapeHtml(URLS.credits)}">Purchase AI credits</a></div></div>`;
     const AVATAR = @json($settings->avatarPath ? \App\Support\MediaStore::url($settings->avatarPath) : null);
-    const MY = @json(auth()->user()->initials);
+    const MY_FACE = @json(\App\Support\ChatFace::mine());
     const BOT = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>';
 
     const UNLIMITED = @json((bool) $aiUnlimited);
@@ -734,7 +744,7 @@ const __init = () => {
 
     const byId = (id) => document.getElementById(id);
     const thread = byId('aiThread');
-    const face = (me) => me ? escapeHtml(MY) : (AVATAR ? `<img data-ai-face src="${escapeHtml(AVATAR)}" alt="">` : BOT);
+    const face = (me) => me ? MY_FACE : (AVATAR ? `<img data-ai-face src="${escapeHtml(AVATAR)}" alt="">` : BOT);
     const nowStamp = () => new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
 
     /** Light markdown -> safe HTML (escape-first allow-list). */
@@ -914,6 +924,7 @@ const __init = () => {
         try {
             const res = await api(URLS.ask, { method: 'POST', body: { message, conversationId, imagePaths: myPaths, imageScheduleIds: myScheds, scheduleId: SCHEDULE_ID } });
             conversationId = res.data.conversationId;
+            noteSession(res.data);
             // Chips leave the moment the send is known good - before any
             // templating that could throw and strand them in the composer.
             clearPhotos();
@@ -933,6 +944,56 @@ const __init = () => {
         } finally { busy = false; setSending(false); input.focus(); }
     }
     byId('aiSendBtn')?.addEventListener('click', send);
+
+    /* The chat is a session the moment it is answered.
+     *
+     * The server has already written the row — it is what the answer is
+     * attached to — but the two lists on this page were drawn when the page
+     * was, so a chat you had just started was nowhere until a reload, and
+     * "get back to it" meant knowing it was there. Both lists learn about it
+     * from the answer itself: the row it clones is the same partial the page
+     * rendered, so nothing can drift.
+     */
+    function noteSession(data) {
+        const id = data && data.conversationId;
+        if (!id) return;
+        const title = data.conversationTitle || 'New question';
+
+        [['aiSessions', 'aiSessionRowTpl', '[data-convo-row]'],
+         ['aiHistorySheetBody', 'aiSessionSheetRowTpl', '[data-convo-sheet-row]']].forEach(([hostId, tplId, sel]) => {
+            const host = byId(hostId);
+            const tpl = byId(tplId);
+            if (!host || !tpl) return;
+
+            let row = host.querySelector(`${sel.slice(0, -1)}="${id}"]`);
+            if (!row) {
+                host.querySelector('[data-sessions-empty]')?.remove();
+                const frag = document.createElement('div');
+                frag.innerHTML = tpl.innerHTML.split('__ID__').join(String(id));
+                row = frag.firstElementChild;
+                // Under the list's own head (the rail's title row, the sheet's
+                // "start a new question"), which is where the newest belongs.
+                const first = host.querySelector(sel);
+                if (first) host.insertBefore(row, first);
+                else host.appendChild(row);
+                window.animateIn?.(row);
+            }
+            const t = row.querySelector('[data-session-title]');
+            if (t) t.textContent = title;
+            const w = row.querySelector('[data-session-when]');
+            if (w) w.textContent = 'just now';
+            // Only one chat is the one on screen.
+            host.querySelectorAll(sel).forEach((r) => {
+                const on = r === row;
+                r.classList.toggle('is-active', on && r.hasAttribute('data-convo-row'));
+                const link = r.querySelector('.js-ai-convo');
+                if (link && r.hasAttribute('data-convo-sheet-row')) {
+                    link.classList.toggle('bg-brand-50', on);
+                    link.classList.toggle('text-brand-700', on);
+                }
+            });
+        });
+    }
 
     /* Link this chat to a day or an activity of the schedule. */
     byId('aiLinkBtn')?.addEventListener('click', () => openSheet('aiLinkSheet'));

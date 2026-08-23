@@ -256,7 +256,8 @@
     .sai-msg.is-new { animation: saiRise .24s cubic-bezier(.22,1,.36,1) both; }
     .sai-msg.me { flex-direction: row-reverse; }
     @keyframes saiRise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-    .sai-face { width: 1.8rem; height: 1.8rem; border-radius: 999px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: .62rem; font-weight: 800; background: var(--color-brand-50); color: var(--color-brand-700); }
+    .sai-face { width: 1.8rem; height: 1.8rem; border-radius: 999px; flex-shrink: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: .62rem; font-weight: 800; background: var(--color-brand-50); color: var(--color-brand-700); }
+    .sai-face img { width: 100%; height: 100%; object-fit: cover; }
     .sai-face.bot { background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; }
     .sai-col { max-width: 82%; display: flex; flex-direction: column; }
     .sai-msg.me .sai-col { align-items: flex-end; }
@@ -360,7 +361,7 @@
 
         const SCHEDULE_ID = @json($schedule->id);
         const ME = @json((int) auth()->id());
-        const MY_INITIALS = @json(auth()->user()->initials ?? '');
+        const MY_FACE = @json(\App\Support\ChatFace::mine());
         const U = {
             messages: @json(route('sm.ai.group.messages')),
             ask: @json(route('sm.ai.group.ask')),
@@ -396,7 +397,7 @@
         }
         const faceHtml = (m) => m.role === 'assistant'
             ? '<span class="sai-face bot">AI</span>'
-            : `<span class="sai-face">${esc(m.mine ? MY_INITIALS : (m.initials || '·'))}</span>`;
+            : `<span class="sai-face">${m.mine ? MY_FACE : esc(m.initials || '·')}</span>`;
 
         // Ghost bubbles shown while a session loads (matches the server-rendered
         // skeleton the tab opens with).

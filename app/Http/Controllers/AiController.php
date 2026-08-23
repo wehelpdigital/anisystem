@@ -247,6 +247,9 @@ class AiController extends Controller
         return $this->json(true, 'Answered.', [
             'conversationId' => $conversation->id,
             'conversationTitle' => $conversation->fresh()->title,
+            // First answer in this session: the page adds it to its list of
+            // chats there and then, rather than at the next page load.
+            'conversationIsNew' => $conversation->messages()->count() <= 2,
             'answer' => [
                 'id' => $answer->id,
                 'content' => $result['text'],
@@ -676,19 +679,27 @@ class AiController extends Controller
             }
         }
 
-        $latest = $base()->orderByDesc('updated_at')->first();
-        if ($latest) {
-            return $latest;
-        }
-
-        return $createIfMissing
-            ? AiConversation::create([
+        /* No chat named, and something is about to be written: this is a new
+         * session.
+         *
+         * Adopting the newest thread instead is what glued every chat this
+         * account had ever had into one. Open the floating technician, ask
+         * one thing, and the answer arrived on the end of a conversation
+         * from last week -- with last week's turns briefed to the model, so
+         * it answered about a plan nobody had mentioned. Each opening is its
+         * own session; the last one is not lost, it is in the list. */
+        if ($createIfMissing) {
+            return AiConversation::create([
                 'userId' => $userId,
                 'croppingScheduleId' => $scheduleId ?: null,
                 'title' => 'New question',
                 'deleteStatus' => 1,
-            ])
-            : null;
+            ]);
+        }
+
+        // Only a reader gets here -- a transcript or a save asked for without
+        // an id -- and for those the newest thread is the one meant.
+        return $base()->orderByDesc('updated_at')->first();
     }
 
     /**
