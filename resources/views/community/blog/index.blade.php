@@ -197,7 +197,7 @@
      every other errand in the community does — from the bottom, over what
      you were reading. --}}
 <div class="blog-bar">
-    <button type="button" id="blogSearchBtn" class="btn btn-white btn-sm bb-act" title="Search the blog" aria-label="Search the blog">
+    <button type="button" id="blogSearchBtn" class="btn btn-outline btn-sm bb-act" title="Search the blog" aria-label="Search the blog">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
         <span class="bb-act-lbl">Search</span>
     </button>

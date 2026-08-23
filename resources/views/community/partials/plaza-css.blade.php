@@ -715,8 +715,31 @@
     /* ---- A member card: cover, the face over it, and why they matter ----
        Drawn by the directory, by its pager and by My Co-Farmers, so the
        rules live here rather than in any one of them. */
-    .mc-card { overflow: visible; }
-    .mc-cover { height: 5.5rem; border-radius: 1rem 1rem 0 0; overflow: hidden; }
+    /* --- A member is a band ---
+       The same shape the wall's posts, the rooms and the blog now read in:
+       full width, square where the screen cuts it, its own colour along the
+       top and the bottom. A person is not a tile in a catalogue.
+       The strip colours come from the same six the cover drifts through, so
+       a member's band and their cover are the same person's colour. */
+    .mc-card { overflow: visible; position: relative; border-radius: 0;
+        border-left: 0; border-right: 0;
+        margin-left: calc(var(--plaza-gutter, 1rem) * -1);
+        margin-right: calc(var(--plaza-gutter, 1rem) * -1);
+        --mc-a: #2f5219; --mc-b: #b8d38e; }
+    .mc-card::before, .mc-card::after { content: ''; position: absolute; inset: 0 0 auto 0;
+        height: 3px; z-index: 3; pointer-events: none;
+        background: linear-gradient(90deg, var(--mc-a), var(--mc-b) 55%, transparent); }
+    .mc-card::after { inset: auto 0 0 0;
+        background: linear-gradient(270deg, var(--mc-a), var(--mc-b) 55%, transparent); }
+    .mc-hue-0 { --mc-a: #2f5219; --mc-b: #b8d38e; }
+    .mc-hue-1 { --mc-a: #1d4ed8; --mc-b: #bfdbfe; }
+    .mc-hue-2 { --mc-a: #b45309; --mc-b: #fde68a; }
+    .mc-hue-3 { --mc-a: #0f766e; --mc-b: #99f6e4; }
+    .mc-hue-4 { --mc-a: #6d28d9; --mc-b: #ddd6fe; }
+    .mc-hue-5 { --mc-a: #be185d; --mc-b: #fbcfe8; }
+    /* A band that lifts on hover lifts the page with it. */
+    .mc-card.card-hover:hover { transform: none; }
+    .mc-cover { height: 5.5rem; border-radius: 0; overflow: hidden; }
     .mc-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
     /* No cover of their own: a colour that is theirs, drifting. Chosen by
        id, so the same person keeps the same band every time — a random one
@@ -795,13 +818,34 @@
        page rather than part of it. */
     .pymk.reco-edge { margin: 0 calc(var(--plaza-gutter, 1rem) * -1) 1.25rem;
         padding: .85rem var(--plaza-gutter, 1rem) .75rem;
-        border-radius: 0; border-left: 0; border-right: 0; box-shadow: none; }
+        border-radius: 0; border-left: 0; border-right: 0; box-shadow: none;
+        /* A wash of the house green rather than a flat panel: it fades out
+           downward, so the band belongs to the page under it instead of
+           sitting on top of it as a box. */
+        background: linear-gradient(180deg, rgb(107 159 61 / .16), rgb(107 159 61 / .02)); }
+    html.dark .pymk.reco-edge { background: linear-gradient(180deg, rgb(107 159 61 / .2), rgb(107 159 61 / .03)); }
     /* The rail still runs off the right edge, so the next card peeks. */
     .pymk-rail { margin-right: calc(var(--plaza-gutter, 1rem) * -1);
         padding-right: var(--plaza-gutter, 1rem); }
-    .pymk-head { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; margin-bottom: .5rem; }
+    /* The heading is the handle now, so it is a button the whole width of
+       the band — a chevron on its own would be a target the size of a
+       fingernail. */
+    .pymk-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+        width: 100%; margin-bottom: .5rem; padding: 0; background: none; border: 0; cursor: pointer;
+        text-align: left; }
     .pymk-head h2 { font-family: var(--font-heading); font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
-    .pymk-head a { font-size: .78rem; font-weight: 700; color: var(--color-brand-700); }
+    .pymk-chev { width: 1.1rem; height: 1.1rem; flex: none; color: var(--color-gray-400);
+        transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .pymk.is-folded .pymk-chev { transform: rotate(-90deg); }
+    /* Folded: the body is measured away rather than switched off, so the
+       rail slides shut instead of vanishing under the heading. */
+    .pymk-body { max-height: 22rem; overflow: hidden;
+        transition: max-height .32s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+    .pymk.is-folded .pymk-body { max-height: 0; opacity: 0; }
+    .pymk.is-folded { padding-bottom: .35rem; }
+    @media (prefers-reduced-motion: reduce) {
+        .pymk-chev, .pymk-body { transition: none; }
+    }
     /* Stretch, so a card with a short reason is still as tall as its
        neighbour; and no scrollbar under it — the half-card showing past the
        edge says it scrolls, and says it without a grey stripe. */

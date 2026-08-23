@@ -38,7 +38,7 @@
         <input type="search" name="q" value="{{ $filters['q'] }}" class="form-input pl-11! w-full"
                placeholder="Search members — name, place, crop…" autocomplete="off">
     </div>
-    <button type="submit" class="btn btn-primary btn-sm shrink-0">Search</button>
+    <button type="submit" class="btn btn-outline btn-sm shrink-0">Search</button>
     @if ($anyFilter)<a href="{{ route('community.connect.members') }}" class="btn btn-white btn-sm shrink-0">Clear</a>@endif
     {{-- Brought back by the (i), which only exists while the panel is away. --}}
     <button type="button" class="btn btn-white btn-sm shrink-0 hidden" id="memInfoOpen" aria-label="About this page" title="About this page">i</button>
@@ -75,11 +75,9 @@
        (plaza-css) — three pages draw that card, and only this one used to
        carry its rules. */
 
-    /* Two columns where there is room; one where a card is the screen. */
-    @media (min-width: 768px) {
-        #membersGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: start; }
-        #membersGrid .mc-card { margin-bottom: 0; }
-    }
+    /* One column at every width now: a member card is a band that runs the
+       full width of the page, and two bands side by side are two half-bands
+       — which is the tile this shape was chosen to stop being. */
 </style>
 @endpush
 

@@ -21,7 +21,7 @@
         $mcHue = crc32(mb_strtolower(trim((string) $m->full_name))) % 6;
         $mutual = (int) ($m->mutualCount ?? 0);
     @endphp
-    <div class="card card-hover mb-4 mc-card" data-member-card="{{ $m->id }}">
+    <div class="card card-hover mb-4 mc-card mc-hue-{{ $mcHue }}" data-member-card="{{ $m->id }}">
         {{-- The cover runs to the card's edge; the face overlaps it, the way a
              profile does, so a card reads as a person rather than a row. --}}
         <div class="mc-cover mc-tint-{{ $mcHue }}">

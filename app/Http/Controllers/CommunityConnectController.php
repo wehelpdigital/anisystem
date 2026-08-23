@@ -152,8 +152,24 @@ class CommunityConnectController extends Controller
         // and every comment thread — and picked one per friend in PHP. A
         // well-connected member's "friends" page was reading a large slice of
         // the whole wall table to show twelve cards.
+        /* A name, a place, or what they do — the same three the members
+         * directory searches on, because a farmer looking for somebody they
+         * already farm with remembers whichever of them they remember. % and
+         * _ are wildcards in SQL and letters here. */
+        $q = \Illuminate\Support\Str::limit(trim((string) $request->query('q', '')), 120, '');
+
         $friends = \App\Models\User::whereIn('id', $ids)
             ->where('deleteStatus', 1)
+            ->when($q !== '', function ($sql) use ($q) {
+                $like = '%' . addcslashes($q, '%_\\') . '%';
+                $sql->where(function ($w) use ($like) {
+                    $w->where('firstName', 'like', $like)
+                        ->orWhere('lastName', 'like', $like)
+                        ->orWhere('city', 'like', $like)
+                        ->orWhere('province', 'like', $like)
+                        ->orWhere('profession', 'like', $like);
+                });
+            })
             ->orderBy('firstName')
             ->paginate(12)
             ->withQueryString();
@@ -195,6 +211,7 @@ class CommunityConnectController extends Controller
 
         return view('community.cofarmers', [
             'friends' => $friends,
+            'q' => $q,
         ]);
     }
 

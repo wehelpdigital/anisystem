@@ -232,11 +232,11 @@
      both open from the bottom over what you were reading — the same shape
      the discussion room uses. --}}
 <div class="wall-bar" id="wallBar">
-    <button type="button" id="wallWriteBtn" class="btn btn-primary btn-sm wb-act">
+    <button type="button" id="wallWriteBtn" class="btn btn-outline btn-sm wb-act">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
         <span class="wb-act-lbl">Write a post</span>
     </button>
-    <button type="button" id="wallSearchBtn" class="btn btn-white btn-sm wb-act" title="Search the wall" aria-label="Search the wall">
+    <button type="button" id="wallSearchBtn" class="btn btn-outline btn-sm wb-act" title="Search the wall" aria-label="Search the wall">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
     </button>
     {{-- A filter is a thing that is ON, and it has to say so where it can be
