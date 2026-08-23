@@ -539,7 +539,7 @@
     @if ($posts->isNotEmpty())
         @include('community.partials.live-search', [
             'id' => 'topicFind',
-            'placeholder' => 'Search this discussion — topics and replies…',
+            'placeholder' => 'Search topics…',
             'label' => 'Search this discussion',
         ])
     @endif

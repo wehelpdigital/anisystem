@@ -163,7 +163,7 @@
     @include('community.partials.live-search', [
         'id' => 'discFind',
         'value' => $q ?? '',
-        'placeholder' => 'Search discussions — name or what it is about…',
+        'placeholder' => 'Search discussions…',
         'label' => 'Search discussions',
     ])
 
