@@ -823,15 +823,40 @@
     /* No overflow:hidden here — the status cloud floats above the card and
        clipping the card clipped the cloud in half. The strip takes the card's
        own top corners instead, which is all the clipping it needed. */
-    .fp-card { position: relative; }
+    /* The hue is a pair of colours held on the card, so anything that wants
+       to paint in a post's own colour — the top strip, and now the bottom
+       one under a topic — reads them from one place. */
+    .fp-card { position: relative; --fp-a: #4a7c2a; --fp-b: #8fc267; }
     .fp-card::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px; pointer-events: none;
         border-top-left-radius: inherit; border-top-right-radius: inherit;
-        background: linear-gradient(90deg, #4a7c2a, #8fc267 55%, transparent); }
-    .fp-hue-1::before { background: linear-gradient(90deg, #1d4ed8, #7aa5f5 55%, transparent); }
-    .fp-hue-2::before { background: linear-gradient(90deg, #b45309, #ecc06a 55%, transparent); }
-    .fp-hue-3::before { background: linear-gradient(90deg, #0f766e, #6cc9bf 55%, transparent); }
-    .fp-hue-4::before { background: linear-gradient(90deg, #7c3aed, #b393f5 55%, transparent); }
-    .fp-hue-5::before { background: linear-gradient(90deg, #be185d, #f090b8 55%, transparent); }
+        background: linear-gradient(90deg, var(--fp-a), var(--fp-b) 55%, transparent); }
+    .fp-hue-1 { --fp-a: #1d4ed8; --fp-b: #7aa5f5; }
+    .fp-hue-2 { --fp-a: #b45309; --fp-b: #ecc06a; }
+    .fp-hue-3 { --fp-a: #0f766e; --fp-b: #6cc9bf; }
+    .fp-hue-4 { --fp-a: #7c3aed; --fp-b: #b393f5; }
+    .fp-hue-5 { --fp-a: #be185d; --fp-b: #f090b8; }
+
+    /* --- A topic is a band, not a card ---
+       In a discussion the page IS the list of topics, so each one runs the
+       full width of the screen the way every other mobile surface in this app
+       does, with its own colour drawn along the top and the bottom. The
+       bottom strip is the mirror of the top: it fades from the other side, so
+       a run of topics reads as bands rather than as boxes that lost their
+       corners. */
+    .group-post.fp-card::after { content: ''; position: absolute; inset: auto 0 0 0; height: 3px;
+        pointer-events: none; border-bottom-left-radius: inherit; border-bottom-right-radius: inherit;
+        background: linear-gradient(270deg, var(--fp-a), var(--fp-b) 55%, transparent); }
+
+    @media (max-width: 639px) {
+        /* Out to the gutters the page holds it in by, and square where the
+           screen cuts it. The gutter is the same variable the sticky section
+           bar bleeds itself with. */
+        #postsWrap .group-post {
+            margin-left: calc(var(--plaza-gutter, 1rem) * -1);
+            margin-right: calc(var(--plaza-gutter, 1rem) * -1);
+            border-left: 0; border-right: 0; border-radius: 0;
+        }
+    }
 
     /* The strip's own edge: the house green, drifting.
 
