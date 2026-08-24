@@ -288,7 +288,14 @@ html.sheet-open .team-float,
    open chat window sat lit over the sheet it was dimming behind — including
    the messenger's own Forward sheet, which is unusable while the dock that
    opened it paints on top. */
-html.sheet-open #msgrDock {
+html.sheet-open #msgrDock,
+/* And the same for a modal that is not a sheet. A discussion's thread opens
+   in one of its own, at z-60 — under the dock, which went on floating in
+   front of the answer being written. Modal means modal whatever it is
+   built out of. */
+html.modal-open .ai-float,
+html.modal-open .team-float,
+html.modal-open #msgrDock {
     opacity: 0;
     pointer-events: none;
     transition: opacity .28s cubic-bezier(.22, 1, .36, 1);
@@ -296,7 +303,10 @@ html.sheet-open #msgrDock {
 @media (prefers-reduced-motion: reduce) {
     html.sheet-open .ai-float,
     html.sheet-open .team-float,
-    html.sheet-open #msgrDock { transition: none; }
+    html.sheet-open #msgrDock,
+    html.modal-open .ai-float,
+    html.modal-open .team-float,
+    html.modal-open #msgrDock { transition: none; }
 }
 
 .sheet.is-open {

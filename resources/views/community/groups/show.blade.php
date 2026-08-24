@@ -1675,8 +1675,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.thread-modal-title').textContent =
             (t && t.textContent.trim()) ? t.textContent.trim().slice(0, 80) : 'Thread';
         threadModal.classList.remove('hidden');
-        // The page behind must not scroll under a full-height sheet.
+        // The page behind must not scroll under a full-height sheet, and its
+        // floating chat bubble must not go on floating in front of it: this
+        // is a modal, and the class is what every floating thing watches.
         document.documentElement.style.overflow = 'hidden';
+        document.documentElement.classList.add('modal-open');
         threadBody.scrollTop = 0;
 
         /* The sheet rose, but everything inside it landed at once. The topic
@@ -1704,6 +1707,7 @@ document.addEventListener('DOMContentLoaded', () => {
             threadModal.classList.remove('is-closing');
             threadModal.classList.add('hidden');
             document.documentElement.style.overflow = '';
+            document.documentElement.classList.remove('modal-open');
             if (window.plazaReturnTo) window.plazaReturnTo(slot, post, document.getElementById('postsWrap'));
             else if (slot && slot.parentNode) { slot.parentNode.insertBefore(post, slot); slot.remove(); }
             else document.getElementById('postsWrap')?.appendChild(post);
