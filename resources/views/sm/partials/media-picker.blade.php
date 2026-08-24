@@ -84,7 +84,7 @@
         color: #fff; font-size: .62rem; font-weight: 800; letter-spacing: .02em; }
     /* The words sat against the tile's own edge on three sides. A name long
        enough to be trimmed put its ellipsis on the border. */
-    .smp-meta { padding: .5rem .7rem .65rem; }
+    .smp-meta { padding: .55rem .9rem .7rem; }
     .smp-name { display: block; font-size: .7rem; font-weight: 700; color: var(--tl-text, #374151);
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .smp-sub { display: block; font-size: .62rem; color: var(--tl-text-faint, #9ca3af);

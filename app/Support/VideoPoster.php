@@ -119,10 +119,20 @@ class VideoPoster
                 }
                 foreach (['1', '0'] as $seek) {
                     $p = new Process([
-                        $bin, '-y', '-ss', $seek, '-i', $source,
-                        '-frames:v', '1', '-vf', 'scale=640:-2', '-q:v', '4', $out,
+                        $bin, '-y',
+                        // Enough of the file to know what it is, and no more.
+                        // Without these, a phone's 190 MB recording is read
+                        // for minutes before a single frame comes out.
+                        '-probesize', '8M', '-analyzeduration', '8M',
+                        '-ss', $seek, '-i', $source,
+                        // -update says "one file, overwritten", which is what
+                        // a single frame is. Without it some builds only warn
+                        // about the missing %03d in the name and others refuse
+                        // outright — and a refusal here is a picker with no
+                        // pictures in it.
+                        '-frames:v', '1', '-update', '1', '-vf', 'scale=640:-2', '-q:v', '4', $out,
                     ]);
-                    $p->setTimeout(60);
+                    $p->setTimeout(150);
                     $p->run();
                     if ($p->isSuccessful() && is_file($out) && filesize($out) > 0) {
                         return file_get_contents($out) ?: null;
@@ -148,7 +158,11 @@ class VideoPoster
      */
     private static function pull(string $url): ?string
     {
-        $cap = 80 * 1024 * 1024;
+        // The same ceiling the app puts on an upload: a clip it was willing
+        // to keep is a clip it should be willing to cut one frame out of.
+        // Phone recordings really are this big — the one that started this
+        // was 187 MB.
+        $cap = 300 * 1024 * 1024;
         $tmp = tempnam(sys_get_temp_dir(), 'vclip');
         try {
             $in = @fopen($url, 'rb');

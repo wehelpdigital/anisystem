@@ -132,6 +132,15 @@ class MediaPickerController extends BaseScheduleController
             return $this->jsonFail('That is not a clip this app keeps.', 422);
         }
 
+        /* Finish even if the phone stops waiting.
+         *
+         * Cutting a frame out of a 190 MB recording takes as long as it
+         * takes, and a browser or a proxy may give up first. The frame is
+         * kept when it is made, so an abandoned request is not wasted work:
+         * the next time anybody opens this picker it is already there. */
+        @ignore_user_abort(true);
+        @set_time_limit(180);
+
         $poster = \App\Support\VideoPoster::ensure($path);
 
         return $this->jsonOk('Frame ready.', ['data' => [
