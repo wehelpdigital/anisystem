@@ -139,6 +139,32 @@
      */
     const MAX_SHOTS = 8;
     const trayOf = (form) => form && form.querySelector('.js-comment-shots');
+
+    /* The tray, and the door that opens on more than one picture, are this
+     * tool's business rather than the markup's.
+     *
+     * Four templates print a wall comment box — the card, the sheet, the
+     * modal, and the reply the script builds — and a page can be holding an
+     * older copy of any of them: a phone that loaded the wall before the
+     * deploy, a tab left open since yesterday. Such a box offered one picture
+     * at a time no matter what the rest of this file could do. Asked for at
+     * the moment the button is tapped, so a box that arrived without them
+     * gets them then and there. Only the wall's boxes: a discussion's still
+     * takes one picture, and its send knows nothing about a tray.
+     */
+    function ensureMulti(form) {
+        if (!form || typeof form.matches !== 'function' || !form.matches('.wall-comment-form')) return null;
+        const file = form.querySelector('.js-comment-file');
+        if (file && !file.multiple) file.multiple = true;
+        let tray = form.querySelector('.js-comment-shots');
+        if (!tray) {
+            tray = document.createElement('span');
+            tray.className = 'comment-shots js-comment-shots hidden';
+            const chip = form.querySelector('.js-comment-chip');
+            if (chip) chip.before(tray); else form.appendChild(tray);
+        }
+        return tray;
+    }
     window.plazaCommentShots = (form) => (form && form.__shots) || [];
 
     function paintShots(form) {
@@ -331,6 +357,7 @@
         const photoBtn = e.target.closest('.js-comment-photo');
         if (photoBtn) {
             const form = photoBtn.closest('form');
+            ensureMulti(form);   // whatever markup this box was printed from
             // A second tap on the same button closes it rather than redrawing.
             const open = [...document.querySelectorAll('.attach-menu')].some((m) => m.__form === form);
             closeSourceMenu();
@@ -370,7 +397,7 @@
     document.addEventListener('change', (e) => {
         if (!e.target.classList || !e.target.classList.contains('js-comment-file')) return;
         const form = e.target.closest('form');
-        if (trayOf(form)) {
+        if (ensureMulti(form) || trayOf(form)) {
             // Several at once is the point: each one joins the tray, and the
             // input is emptied so picking the same file again still counts.
             let added = false;
