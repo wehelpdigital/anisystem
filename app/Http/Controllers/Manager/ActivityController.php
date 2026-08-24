@@ -2347,6 +2347,66 @@ class ActivityController extends BaseScheduleController
     }
 
     /**
+     * The order of one day's extra expenses, as the board now shows them.
+     *
+     * A whole day in one call rather than a save per row: dragging one row
+     * moves every row below it, and five saves for one gesture is five
+     * chances to end up with an order nobody asked for.
+     */
+    public function reorderDayExpenses(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+
+        $validator = Validator::make($request->all(), [
+            'expenseDate' => 'required|date',
+            'ids'         => 'required|array|max:200',
+            'ids.*'       => 'integer',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
+
+        $versionId = $this->activeVersionIdFor($schedule->id);
+        if (!$versionId) {
+            return $this->jsonFail('No active version found for this schedule.', 422);
+        }
+
+        $date = $request->input('expenseDate');
+        // Only rows that are actually this schedule's, this version's and this
+        // day's move — an id from somewhere else is simply not found.
+        $rows = AsScheduleDayExpense::active()
+            ->forSchedule($schedule->id)
+            ->forVersion($versionId)
+            ->whereDate('expenseDate', $date)
+            ->get()
+            ->keyBy('id');
+
+        $order = 0;
+        foreach ((array) $request->input('ids', []) as $id) {
+            $row = $rows->get((int) $id);
+            if ($row) {
+                $row->update(['sortOrder' => ++$order]);
+            }
+        }
+
+        $fresh = AsScheduleDayExpense::active()
+            ->forSchedule($schedule->id)
+            ->forVersion($versionId)
+            ->whereDate('expenseDate', $date)
+            ->orderBy('sortOrder')->orderBy('id')
+            ->get();
+
+        // The board is redrawn from this, so it is the same shape every other
+        // expense answer hands back.
+        $this->broadcastBoard($schedule, 'reload', ['expenseDate' => $date], $versionId);
+
+        return $this->jsonOk('Order saved.', [
+            'data'  => $this->serializeExpenses($fresh),
+            'total' => (float) $fresh->sum('amount'),
+        ]);
+    }
+
+    /**
      * Create or update one extra expense (amount + note) for a date. Pass an
      * `expenseId` to edit an existing row, omit it to add a new one.
      */

@@ -1043,6 +1043,15 @@
         /* ---- Per-day extra expenses strip ------------------------------- */
         /* A row you can pick up: the cursor says so, and the row fades while
            it is in the air the way a card and a note do. */
+        /* Money in wears the card money out wears, in its own colour: the
+           head is green rather than amber, because one is the day taking and
+           the other is the day giving. */
+        .dx-card-in .dx-head { color: #3d6823; }
+        .dx-card-in .dx-total { color: #3d6823; }
+        .dx-card-in .dx-amt { color: #3d6823; }
+        html.dark .dx-card-in .dx-head,
+        html.dark .dx-card-in .dx-total,
+        html.dark .dx-card-in .dx-amt { color: #a8cc7e; }
         .dx-row[draggable="true"] { cursor: grab; }
         .dx-row[draggable="true"]:active { cursor: grabbing; }
         .dx-row.dragging { opacity: .45; }

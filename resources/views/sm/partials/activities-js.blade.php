@@ -174,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dayExpenseList:   (d) => `{{ route('sm.activities.day-expense.list') }}?id=${SCHEDULE_ID}&expenseDate=${encodeURIComponent(d)}`,
         dayExpenseSave:   ()  => `{{ route('sm.activities.day-expense.save') }}?scheduleId=${SCHEDULE_ID}`,
         dayExpenseDelete: ()  => `{{ route('sm.activities.day-expense.delete') }}?scheduleId=${SCHEDULE_ID}`,
+        dayExpenseOrder:  ()  => `{{ route('sm.activities.day-expense.reorder') }}?scheduleId=${SCHEDULE_ID}`,
         markerSave:       ()  => `{{ route('sm.markers.save') }}?scheduleId=${SCHEDULE_ID}`,
         markerDelete:     (id) => `{{ route('sm.markers.destroy') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
         versionStore:     ()  => `{{ route('sm.activity-versions.store') }}?scheduleId=${SCHEDULE_ID}`,
@@ -4559,8 +4560,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const rows = res.data || [];
             if (!rows.length) { host.innerHTML = ''; host.hidden = true; return; }
             host.hidden = false;
-            host.innerHTML = `<span class="day-income-total">${peso(res.total)} in</span>`
-                + rows.map((r) => `<span class="day-income-chip">${esc(r.title || 'Income')} &middot; ${peso(r.amount)}</span>`).join('');
+            /* The same card the expenses draw, in the other direction.
+             *
+             * Money in was a row of tags and money out was a card with a head,
+             * a total and a line per entry — two shapes for one idea, and the
+             * lighter one read as a label rather than as something you could
+             * open. The pencil and the cross open the same income sheet the
+             * head's coin does. */
+            const lines = rows.map((r) => `<div class="dx-row" data-income-id="${r.id}" data-date="${esc(date)}">
+                <span class="dx-amt">${peso(r.amount)}</span>
+                <span class="dx-note">${r.title ? esc(r.title) : '<span style="opacity:.55">Income</span>'}${r.note ? ' \u00b7 ' + esc(r.note) : ''}</span>
+                <span class="dx-actions">
+                    <button type="button" class="dx-btn dx-edit${LOCK_EDIT_CLS}" data-income-open="${esc(date)}"${LOCK_EDIT} title="${esc(editTitle('Edit income'))}">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    </button>
+                </span>
+            </div>`).join('');
+            host.innerHTML = `<div class="dx-card dx-card-in">
+                <div class="dx-head"><span>\uD83D\uDCB0 Extra income</span><span class="dx-total">${peso(res.total)}</span></div>
+                <div class="dx-list">${lines}</div>
+            </div>`;
         } catch (_) { /* leave whatever is there */ }
     }
     window.renderDayIncome = renderDayIncome;
@@ -6055,6 +6074,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    /* The order of one day's expenses, as the strip now stands.
+     *
+     * Sent after the DOM has already been rearranged, so the board never
+     * waits on the network to show what a finger just did; a refusal says so
+     * and the next render puts the saved order back. */
+    async function saveExpenseOrder(dateKey) {
+        if (!mayEditBoard()) return;
+        const host = $qs(`#activitiesList .day-expense-block[data-date="${dateKey}"] .dx-list`);
+        if (!host) return;
+        const ids = $qsa('[data-expense-id]', host).map((el) => Number(el.getAttribute('data-expense-id')));
+        if (ids.length < 2) return;
+        // Keep the local copy in the order the eye is looking at, or the next
+        // render of this day would undo the gesture.
+        const rows = DAY_EXPENSES[dateKey] || [];
+        DAY_EXPENSES[dateKey] = ids.map((id) => rows.find((r) => Number(r.id) === id)).filter(Boolean);
+        try {
+            await api(U.dayExpenseOrder(), { method: 'POST', body: { expenseDate: dateKey, ids } });
+        } catch (err) {
+            toast(err.message, 'error');
+        }
+    }
+
+    /** Drop `row` next to `over`, above or below by which half was hit. */
+    function placeExpenseRow(row, over, y) {
+        if (!row || !over || row === over) return false;
+        const box = over.getBoundingClientRect();
+        const below = y > box.top + box.height / 2;
+        over.parentNode.insertBefore(row, below ? over.nextSibling : over);
+        return true;
+    }
+
     async function deleteExpense(dateKey, expenseId) {
         if (!mayEditBoard()) return;
         if (!expenseId) return;
@@ -6085,6 +6135,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (edit) { openExpenseSheet(edit.getAttribute('data-date') || '', edit.getAttribute('data-expense-edit')); return; }
         const del = e.target.closest('[data-expense-del]');
         if (del) { deleteExpense(del.getAttribute('data-date') || '', del.getAttribute('data-expense-del')); return; }
+        // The income card's own pencil: the sheet lists that day's entries and
+        // edits any of them, so it is the one door for all of it.
+        const inc = e.target.closest('[data-income-open]');
+        if (inc) { e.preventDefault(); openDayIncome(inc.getAttribute('data-income-open') || ''); return; }
     });
 
     $id('dayExpenseSaveBtn')?.addEventListener('click', async (e) => {
@@ -7270,6 +7324,21 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // An expense dropped on another expense in the same day: reorder.
+        if (dragExpense) {
+            const overRow = e.target.closest && e.target.closest('.dx-row[data-expense-id]');
+            const sameDay = overRow && (overRow.getAttribute('data-date') || '').trim() === dragExpense.date;
+            if (sameDay) {
+                const moving = $qs(`.dx-row[data-expense-id="${dragExpense.id}"]`);
+                const date = dragExpense.date;
+                dragExpense = null;
+                e.preventDefault();
+                $qsa('.dx-row.dragging').forEach((el) => el.classList.remove('dragging'));
+                if (placeExpenseRow(moving, overRow, e.clientY)) saveExpenseOrder(date);
+                return;
+            }
+        }
+
         // Note / marker move drop.
         if (dragNoteDate || dragMarkerDate || dragExpense) {
             const targetGroup = e.target.closest && e.target.closest('.date-group');
@@ -7541,7 +7610,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (td.active) {
             const target = document.elementFromPoint(td.lastX, td.lastY);
             const rest = target?.closest?.('.rest-day-marker');
-            if (td.header) {
+            if (td.dx) {
+                /* Two drops, one gesture: onto another row of the same day it
+                 * changes the order; onto any other day it moves there. A
+                 * finger that lands on nothing puts the row back. */
+                td.dx.classList.remove('dragging');
+                clearDropHighlights();
+                const overRow = target?.closest?.('.dx-row[data-expense-id]');
+                const group = target?.closest?.('.date-group');
+                const to = (group?.getAttribute('data-date') || '').trim();
+                const id = td.dx.getAttribute('data-expense-id');
+                if (!commit) { /* cancelled */ }
+                else if (overRow && (overRow.getAttribute('data-date') || '').trim() === td.dxDate) {
+                    if (placeExpenseRow(td.dx, overRow, td.lastY)) saveExpenseOrder(td.dxDate);
+                } else if (to && to !== '__no-date__' && to !== td.dxDate) {
+                    moveExpenseToDate({ id, date: td.dxDate }, to);
+                }
+            } else if (td.header) {
                 const group = target?.closest?.('.date-group');
                 const to = (group?.getAttribute('data-date') || rest?.getAttribute('data-date') || '').trim();
                 td.header.classList.remove('dragging');
@@ -7593,18 +7678,21 @@ document.addEventListener('DOMContentLoaded', () => {
         // and whoever reconnects that should get the notes question with it
         // rather than the plan's.
         if (td.note ? !MAY_DRAG_NOTE : !MAY_DRAG) return;
+        if (td.dx && !mayEditBoard()) return;   // the day's money is the plan's
         td.active = true;
         document.body.classList.add('is-touch-dragging');
         navigator.vibrate?.(15);
 
-        const el = td.header || td.note || td.card;
+        const el = td.header || td.note || td.dx || td.card;
         td.ghost = buildDragGhost(el);
         const rect = el.getBoundingClientRect();
         td.offsetX = td.lastX - rect.left;
         td.offsetY = td.lastY - rect.top;
         positionGhost(td.lastX, td.lastY);
 
-        if (td.header) {
+        if (td.dx) {
+            td.dx.classList.add('dragging');
+        } else if (td.header) {
             td.header.classList.add('dragging');
             dragGroupDate = td.groupDate;
         } else if (td.note) {
@@ -7634,14 +7722,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (t.target.closest?.('button, a, input, select, textarea, [contenteditable], .sheet')) return;
 
         const header = t.target.closest?.('.date-header[draggable="true"]');
-        const card = header ? null : t.target.closest?.('.activity-card[data-id]');
-        if (!header && !card) return;
+        // An extra expense is picked up the same way a card is: HTML5 drag
+        // events never fire on a phone, so without this arm the strip could
+        // only be dragged with a mouse — which is not what a farmer has.
+        const dx = header ? null : t.target.closest?.('.dx-row[data-expense-id]');
+        const card = (header || dx) ? null : t.target.closest?.('.activity-card[data-id]');
+        if (!header && !card && !dx) return;
 
         const groupDate = header ? (header.closest('.date-group')?.getAttribute('data-date') || '').trim() : '';
         if (header && (!groupDate || groupDate === '__no-date__')) return;
 
         touchDrag = {
-            card, header, groupDate, active: false, raf: null,
+            card, header, dx, dxDate: dx ? (dx.getAttribute('data-date') || '').trim() : '',
+            groupDate, active: false, raf: null,
             startX: t.clientX, startY: t.clientY, lastX: t.clientX, lastY: t.clientY,
             offsetX: 0, offsetY: 0, ghost: null,
         };
@@ -7674,6 +7767,21 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!to || to === '__no-date__' || to === touchDrag.groupDate) return;
             if (rest) rest.classList.add('drag-over');
             else group.classList.add('drag-over-group');
+            return;
+        }
+
+        /* An expense in the air: the day it would land on lights up, and over
+         * its own day's rows the row itself follows the finger, so the order
+         * is seen before it is let go rather than after. */
+        if (touchDrag.dx) {
+            const overRow = target?.closest?.('.dx-row[data-expense-id]');
+            if (overRow && (overRow.getAttribute('data-date') || '').trim() === touchDrag.dxDate) {
+                placeExpenseRow(touchDrag.dx, overRow, t.clientY);
+                return;
+            }
+            const group = target?.closest?.('.date-group');
+            const to = (group?.getAttribute('data-date') || '').trim();
+            if (to && to !== '__no-date__' && to !== touchDrag.dxDate) group.classList.add('drag-over-group');
             return;
         }
 
