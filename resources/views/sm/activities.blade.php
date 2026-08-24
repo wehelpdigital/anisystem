@@ -1059,7 +1059,10 @@
         .day-expense-block:empty { display: none; }
         /* What the day earned, under what it cost — green against the
            expenses' red so the two never get read for each other. */
-        .day-income-block { margin: .35rem .7rem 0; display: flex; flex-wrap: wrap; gap: .3rem; align-items: center; }
+        /* A card, not a row of chips: display:flex was left from the tag strip
+           this used to be, and it shrank the card to the width of its words
+           while the expenses card beside it ran the whole way across. */
+        .day-income-block { margin: .55rem .7rem 0; }
         .day-income-block:empty, .day-income-block[hidden] { display: none; }
         .day-income-total { font-size: .7rem; font-weight: 800; color: var(--color-brand-700);
             background: var(--color-brand-50); border-radius: 999px; padding: .1rem .5rem; }

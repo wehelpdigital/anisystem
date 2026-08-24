@@ -4475,7 +4475,8 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('dayIncomeSheetTitle').textContent = 'Add income';
     }
 
-    async function openDayIncome(date) {
+    /** Open the day's income sheet; with an id, on that entry. */
+    async function openDayIncome(date, incomeId) {
         incomeDate = date;
         $id('dayIncomeDate').value = date;
         $id('dayIncomeForDate').textContent = prettyDateFull(date);
@@ -4493,7 +4494,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const res = await api(`${U.dayIncomeList()}&incomeDate=${encodeURIComponent(date)}`);
             incomeRows = res.data || [];
             paintIncomeList();
+            // Asked for one entry in particular: fill the form with it, the
+            // same way tapping it in the list below does.
+            if (incomeId) {
+                const r = incomeRows.find((x) => String(x.id) === String(incomeId));
+                if (r) fillIncomeForm(r);
+            }
         } catch (_) { /* an empty list is a fine starting point */ }
+    }
+
+    /** Put one entry into the sheet's fields, ready to be corrected. */
+    function fillIncomeForm(r) {
+        $id('dayIncomeId').value = r.id;
+        $id('dayIncomeAmount').value = r.amount;
+        $id('dayIncomeTitle').value = r.title || '';
+        $id('dayIncomeNote').value = r.note || '';
+        $id('dayIncomeDeleteBtn').classList.remove('hidden');
+        $id('dayIncomeSheetTitle').textContent = 'Edit income';
     }
 
     document.addEventListener('click', (e) => {
@@ -4501,12 +4518,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!row) return;
         const r = incomeRows.find((x) => String(x.id) === row.getAttribute('data-income-edit'));
         if (!r) return;
-        $id('dayIncomeId').value = r.id;
-        $id('dayIncomeAmount').value = r.amount;
-        $id('dayIncomeTitle').value = r.title || '';
-        $id('dayIncomeNote').value = r.note || '';
-        $id('dayIncomeDeleteBtn').classList.remove('hidden');
-        $id('dayIncomeSheetTitle').textContent = 'Edit income';
+        fillIncomeForm(r);
     });
 
     $id('dayIncomeSaveBtn')?.addEventListener('click', async (e) => {
@@ -4571,7 +4583,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="dx-amt">${peso(r.amount)}</span>
                 <span class="dx-note">${r.title ? esc(r.title) : '<span style="opacity:.55">Income</span>'}${r.note ? ' \u00b7 ' + esc(r.note) : ''}</span>
                 <span class="dx-actions">
-                    <button type="button" class="dx-btn dx-edit${LOCK_EDIT_CLS}" data-income-open="${esc(date)}"${LOCK_EDIT} title="${esc(editTitle('Edit income'))}">
+                    <button type="button" class="dx-btn dx-edit${LOCK_EDIT_CLS}" data-income-open="${esc(date)}" data-income-id="${r.id}"${LOCK_EDIT} title="${esc(editTitle('Edit income'))}">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     </button>
                 </span>
@@ -6138,7 +6150,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // The income card's own pencil: the sheet lists that day's entries and
         // edits any of them, so it is the one door for all of it.
         const inc = e.target.closest('[data-income-open]');
-        if (inc) { e.preventDefault(); openDayIncome(inc.getAttribute('data-income-open') || ''); return; }
+        if (inc) {
+            e.preventDefault();
+            // The pencil is on one entry, so the sheet opens ON that entry —
+            // it used to open the day's blank "add" form, which reads as a
+            // sheet that failed to load.
+            openDayIncome(inc.getAttribute('data-income-open') || '', inc.getAttribute('data-income-id') || '');
+            return;
+        }
     });
 
     $id('dayExpenseSaveBtn')?.addEventListener('click', async (e) => {
