@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use App\Support\VideoPoster;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -103,6 +104,17 @@ class VideoOptimizer
                 if (is_resource($ps)) {
                     fclose($ps);
                 }
+            }
+
+            /* Written down as well as handed back.
+             *
+             * Every video this app stores comes through here, and some of the
+             * callers keep only the clip — a note's attachment, a gallery
+             * upload — so the frame that was just made would be lost to
+             * everything that later wants a thumbnail for it. One row here and
+             * it is found by anything that asks, forever. */
+            if ($posterPath) {
+                VideoPoster::remember($videoPath, $posterPath);
             }
 
             return ['video' => $videoPath, 'poster' => $posterPath];

@@ -28,6 +28,16 @@
     <div class="sheet-handle"></div>
     <div class="sheet-header">
         <h3 class="sheet-title" id="smMediaPickerTitle">Choose from the gallery</h3>
+        @auth
+            @if (auth()->user()->isSuperAdmin())
+                {{-- The frames that could not be cut where they were asked for
+                     can be cut here, a handful at a time. An admin's button
+                     because it is the server's work, not a member's. --}}
+                <button type="button" id="smMediaPickerFrames" class="btn btn-white btn-sm hidden ms-auto me-1">
+                    Make thumbnails
+                </button>
+            @endif
+        @endauth
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
@@ -284,6 +294,44 @@
         });
     }
 
+    /* The admin's way to cut what this browser could not.
+     *
+     * A clip served from another host cannot be read back off a canvas, and a
+     * server without ffmpeg cannot cut anything at all — so when tiles are
+     * still showing clapperboards, an admin can ask the server to walk them.
+     * It works in handfuls and is safe to press again: what is already cut is
+     * skipped, so pressing until it says nothing is missing is the procedure.
+     */
+    const BACKFILL_URL = @json(\Illuminate\Support\Facades\Route::has('sm.media-picker.poster-backfill') ? route('sm.media-picker.poster-backfill') : url('/app/sm-media-posters-backfill'));
+    function sayFrames() {
+        const btn = $('smMediaPickerFrames');
+        if (!btn) return;
+        // Only when something is actually missing a picture.
+        const missing = document.querySelectorAll('#smMediaPickerGrid .smp-tile:not(:has(img)) .smp-blank').length;
+        btn.classList.toggle('hidden', missing === 0);
+        btn.dataset.missing = String(missing);
+    }
+    document.getElementById('smMediaPickerFrames')?.addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+        const was = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Cutting…';
+        try {
+            const res = await window.api(BACKFILL_URL, { method: 'POST', body: { limit: 5 } });
+            const line = (res && res.data && res.data.output || '').split(String.fromCharCode(10)).filter(Boolean).pop();
+            window.toast?.(line || 'Done.');
+            gen++;                       // whatever was on screen is stale now
+            page = 0; items.length = 0; more = false;
+            $('smMediaPickerGrid').innerHTML = '';
+            await loadPage();
+        } catch (err) {
+            window.toast?.(err.message || 'Could not cut the frames.', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = was;
+        }
+    });
+
     let framesRunning = false;
     async function fillFrames() {
         if (framesRunning) return;
@@ -324,6 +372,7 @@
             }
         } finally {
             framesRunning = false;
+            sayFrames();
         }
     }
 

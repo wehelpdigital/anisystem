@@ -71,6 +71,28 @@ class VideoPoster
      * it. Kept where every other picture is kept, so it is served the same
      * way and swept up by the same housekeeping.
      */
+    /**
+     * Record a frame that already exists beside its clip.
+     *
+     * Some tables keep the poster next to the video and some throw it away
+     * after storing; either way it is the same picture, and writing it down
+     * here is what stops anything asking for it to be cut again.
+     */
+    public static function remember(string $video, ?string $poster): void
+    {
+        $video = trim($video);
+        $poster = trim((string) $poster);
+        if ($video === '' || $poster === '' || ! Schema::hasTable(self::TABLE)) {
+            return;
+        }
+
+        DB::table(self::TABLE)->updateOrInsert(
+            ['videoKey' => sha1($video)],
+            ['videoPath' => mb_substr($video, 0, 500), 'posterPath' => mb_substr($poster, 0, 500),
+             'created_at' => now(), 'updated_at' => now()]
+        );
+    }
+
     public static function keep(string $video, string $binary): ?string
     {
         $path = MediaStore::putBinary($binary, 'video-posters', 'jpg', null, 'poster-');
