@@ -38,8 +38,15 @@
                                  when tapped. Smaller, because a comment is. --}}
                             @include('community.partials.post-gallery', ['shots' => $cShots, 'mini' => true])
                         @elseif (count($cShots) === 1)
-                            <img src="{{ \App\Support\MediaStore::url($cShots[0]) }}"
-                                 alt="Comment photo" loading="lazy" class="post-img rounded-lg mt-1 max-h-48 w-auto">
+                            {{-- The same masked frame a discussion's answer
+                                 uses: a picture that is not the frame's shape
+                                 is closely cropped rather than left floating
+                                 in a box of its own colour, and the whole of
+                                 it is one tap away in the lightbox. --}}
+                            <span class="post-media reply-media">
+                                <img src="{{ \App\Support\MediaStore::url($cShots[0]) }}"
+                                     alt="Comment photo" loading="lazy">
+                            </span>
                         @endif
                         @if ($comment->videoPath ?? null)
                             @include('community.partials.video-embed', ['src' => $comment->videoPath, 'poster' => $comment->videoPoster ?? null])

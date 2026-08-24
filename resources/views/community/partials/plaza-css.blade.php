@@ -523,7 +523,16 @@
     .reply-link { border:none; background:transparent; font-size:.7rem; font-weight:700;
         color:var(--color-gray-400); cursor:pointer; padding:.2rem .4rem; border-radius:.5rem; }
     .reply-link:hover { color:var(--color-brand-700); }
-    .reply-media img { max-height:12rem; }
+    /* Short frame, whole picture inside it.
+     *
+     * The cap was on the PICTURE while its frame kept the 4:3 shape it was
+     * given, so a photo that did not happen to be 4:3 was drawn short inside
+     * a taller box and the rest of the box showed through underneath — which
+     * reads exactly like a picture cut off at the bottom. Capping the frame
+     * instead lets the picture fill it edge to edge: a deliberate close crop,
+     * which is what the lean-in on hover and the lightbox on tap are for. */
+    .reply-media { max-height:12rem; }
+    .reply-media img { max-height:none; }
 
     /* --- Long threads fold: the first two entries stay, the rest slide behind
        a toggle. grid-template-rows 0fr → 1fr animates to the content's real
