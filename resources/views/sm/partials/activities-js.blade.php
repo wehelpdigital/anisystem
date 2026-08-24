@@ -6880,6 +6880,20 @@ document.addEventListener('DOMContentLoaded', () => {
      * duration; all groups renumber sequenceOrder = idx * 10; one POST.
      * ================================================================ */
 
+    /* Take the fade off everything on the board.
+     *
+     * A dragged card is faded by a class, and the class was taken off again
+     * by asking dragend's own target for it. That target is the card — until
+     * the drop rebuilds the board: reorderAndRenumberActivities() empties
+     * #activitiesList and re-appends the very node being dragged, and a
+     * source node detached mid-drag can cost the browser its dragend target.
+     * Nothing then removed the class, and the card sat there see-through
+     * until the next reload. Sweeping the board asks no such favour.
+     */
+    function clearDragFades() {
+        $qsa('#activitiesList .dragging').forEach((el) => el.classList.remove('dragging'));
+    }
+
     let dragSourceCard = null;
     let dragOrigin = null;
     let dragBoardSnapshot = null;
@@ -7408,6 +7422,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })();
 
     document.addEventListener('dragstart', (e) => {
+        clearDragFades();   // whatever the last drag left behind
         // Dragging a date header moves that whole day's activities.
         const header = e.target.closest && e.target.closest('.date-header[draggable="true"]');
         if (header) {
@@ -7477,7 +7492,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (inl.classList.contains('is-editing') || (e.target.closest && e.target.closest('.inline-note-del'))) { e.preventDefault(); return; }
             if (!MAY_DRAG_NOTE) { e.preventDefault(); return; }   // its slot is a saved field like any other
             dragInlineEl = inl;
-            setTimeout(() => inl.classList.add('dragging'), 0);
+            setTimeout(() => { if (dragInlineEl === inl) inl.classList.add('dragging'); }, 0);
             if (e.dataTransfer) { e.dataTransfer.effectAllowed = 'move'; try { e.dataTransfer.setData('text/plain', 'inline:' + inl.getAttribute('data-inline-note')); } catch (_) { /* noop */ } }
             return;
         }
@@ -7507,17 +7522,16 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (_) { /* noop */ }
             setTimeout(() => ghost.remove(), 0);
         }
-        // Fade the original only after the drag image has been captured.
-        setTimeout(() => card.classList.add('dragging'), 0);
+        // Fade the original only after the drag image has been captured — and
+        // only if the drag is still going, or a gesture that died in the same
+        // tick would leave the fade on with nothing to take it off.
+        setTimeout(() => { if (dragSourceCard === card) card.classList.add('dragging'); }, 0);
     });
 
-    document.addEventListener('dragend', (e) => {
-        const card = e.target.closest && e.target.closest('.activity-card');
-        card?.classList.remove('dragging');
-        $qsa('.date-header.dragging').forEach((el) => el.classList.remove('dragging'));
+    document.addEventListener('dragend', () => {
+        clearDragFades();
         $qsa('.date-activities.drag-over, .rest-day-marker.drag-over, .date-group.drag-over-group')
             .forEach((el) => el.classList.remove('drag-over', 'drag-over-group'));
-        $qsa('.date-note-block.dragging, .progress-marker.dragging, .inline-note.dragging, .dx-row.dragging').forEach((el) => el.classList.remove('dragging'));
         dragSourceCard = null;
         dragOrigin = null;
         dragGroupDate = null;
@@ -7749,13 +7763,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!dragSourceCard) return;
         const container = e.target.closest && e.target.closest('.date-activities');
+        const rest = container ? null : (e.target.closest && e.target.closest('.rest-day-marker'));
+        // Un-fade before the board is rebuilt under it: the rebuild is what
+        // can cost dragend its target, so the class must already be gone.
+        if (container || rest) clearDragFades();
         if (container) {
             e.preventDefault();
             container.classList.remove('drag-over');
             handleDropIntoContainer(container);
             return;
         }
-        const rest = e.target.closest && e.target.closest('.rest-day-marker');
         if (rest) {
             e.preventDefault();
             rest.classList.remove('drag-over');
