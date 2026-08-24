@@ -1,5 +1,6 @@
 {{-- A positioned sticky note sitting among a day's activity cards. Drag the
-     grip to move; the pencil opens the modal editor; ✕ deletes. Expects: $note. --}}
+     six dots on the right to move it; the three dots beside them open what can
+     be done to it. Expects: $note. --}}
 @php
     $noteMedia = collect(is_array($note->media) ? $note->media : [])
         ->map(fn ($m) => empty($m['path']) ? null : [
@@ -24,9 +25,9 @@
     // a note that says "tap the pencil" to somebody the pencil will refuse is
     // the lie the drag grip was.
     $noteTitle = $noteMayDrag
-        ? 'Drag the grip to move · tap the pencil to edit'
+        ? 'Drag the grip to move · tap the dots for options'
         : ((\App\Support\WorkerContext::canWriteModule('notes'))
-            ? 'Tap the pencil to edit'
+            ? 'Tap the dots for options'
             : 'You are not allowed to write notes on this schedule');
 @endphp
 <div class="inline-note" data-inline-note="{{ $note->id }}" data-date="{{ $note->noteDate->format('Y-m-d') }}"
@@ -59,10 +60,9 @@
          pump is about the pump, and the photo is evidence you open when you
          want it. Mirrors buildInlineNote() in the JS renderer. --}}
     <div class="inline-note-media">@include('sm.partials.note-attachments', ['media' => $noteMedia])</div>
-    <button type="button" class="inline-note-edit" title="Edit note" aria-label="Edit note">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-    </button>
-    <button type="button" class="inline-note-del" title="Delete note" aria-label="Delete note">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg>
+    {{-- One door for editing and deleting, the way an expense row has one.
+         Twin of NOTE_KEBAB in the JS renderer. --}}
+    <button type="button" class="note-kebab" title="Note options" aria-label="Note options">
+        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg>
     </button>
 </div>

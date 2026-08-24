@@ -532,26 +532,72 @@
             cursor: pointer; position: relative; transition: box-shadow .15s ease, border-color .15s ease;
         }
         .date-note-block:hover { border-color: #f5c518; box-shadow: 0 1px 6px rgb(0 0 0 / .06); }
-        /* Edit + delete buttons — reveal on hover (desktop), always shown on
-           touch. Delete = red trash, edit = green pencil, on a white chip. */
-        /* Clears the edit button's far edge (right 2.6rem + 1.9rem wide) plus a
-           gap. Unconditional on purpose: the buttons are absolutely positioned
-           over this text, and tying the reservation to a media query means the
-           two drift apart the moment either is touched. */
-        .date-note-inner { padding-right: 4.9rem; }
-        .date-note-edit, .date-note-del {
-            position: absolute; top: .3rem; width: 1.9rem; height: 1.9rem; border-radius: 999px;
+        /* One gutter, for one button. It used to be two — a pencil and a bin,
+           each on its own white chip — and they took nearly five rem off the
+           width of every note's first line. */
+        .date-note-inner { padding-right: 2.3rem; }
+
+        /* ---- The note's three dots ----
+           The same door an expense row has, in the same corner, so the two
+           things a day carries are operated the same way. Always visible:
+           there is no hover on a phone, and a control you can only find by
+           hovering is one half the users never find. */
+        .note-kebab {
+            position: absolute; top: .25rem; right: .25rem;
+            width: 1.75rem; height: 1.75rem; border-radius: .45rem;
             display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
-            background: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .2); opacity: 0;
-            transition: opacity .15s ease, background .15s ease, transform .1s ease;
+            color: #b45309; background: transparent;
+            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), transform .1s ease;
         }
-        .date-note-del { right: .35rem; color: #dc2626; }
-        .date-note-edit { right: 2.6rem; color: var(--color-brand-700); }
-        .date-note-edit svg, .date-note-del svg { width: 1.1rem; height: 1.1rem; }
-        .date-note-block:hover .date-note-edit, .date-note-block:hover .date-note-del { opacity: 1; }
-        .date-note-del:hover { background: #fee2e2; }
-        .date-note-edit:hover { background: #eef7e8; }
-        .date-note-del:active, .date-note-edit:active { transform: scale(.9); }
+        .note-kebab svg { width: 1.05rem; height: 1.05rem; }
+        .note-kebab:hover { background: #fdf0d0; }
+        .note-kebab:active { transform: scale(.92); }
+        .note-kebab.is-locked, .note-kebab:disabled { opacity: .45; cursor: not-allowed; }
+        html.dark .note-kebab { color: #eec155; }
+        html.dark .note-kebab:hover { background: #3a3018; }
+        @media (hover: none), (pointer: coarse) {
+            .note-kebab { width: 2.2rem; height: 2.2rem; }
+            .note-kebab svg { width: 1.2rem; height: 1.2rem; }
+        }
+        @media (prefers-reduced-motion: reduce) { .note-kebab { transition: none; } }
+
+        /* ---- A note that has more to say ----
+           Clamped to a few lines so a day with four notes still fits on a
+           screen, and opened in place rather than in a sheet: reading a note
+           should not mean leaving the board. --note-clamp is the resting
+           height in rem; --note-full is measured by the JS when it decides a
+           note needs the button at all, which is what makes the growth a
+           movement instead of a jump. */
+        .inline-note, .date-note-block { --note-clamp: 5.5; }
+        @media (hover: none), (pointer: coarse) { .inline-note, .date-note-block { --note-clamp: 3.2; } }
+        .inline-note .inline-note-body, .date-note-block .date-note-inner {
+            transition: max-height .28s cubic-bezier(.22,1,.36,1);
+        }
+        .inline-note.is-clamped .inline-note-body,
+        .date-note-block.is-clamped .date-note-inner {
+            max-height: calc(var(--note-clamp) * 1rem); overflow: hidden;
+            -webkit-mask-image: linear-gradient(#000 62%, transparent);
+            mask-image: linear-gradient(#000 62%, transparent);
+        }
+        .inline-note.is-clamped.is-open .inline-note-body,
+        .date-note-block.is-clamped.is-open .date-note-inner {
+            max-height: var(--note-full, 60rem);
+            -webkit-mask-image: none; mask-image: none;
+        }
+        .note-more {
+            display: inline-flex; align-items: center; gap: .2rem; margin-top: .25rem;
+            font-size: .7rem; font-weight: 800; letter-spacing: .01em; color: #b45309;
+            cursor: pointer; background: transparent; border-radius: .3rem;
+            transition: color .28s cubic-bezier(.22,1,.36,1);
+        }
+        .note-more::after { content: '\25be'; font-size: .75rem; line-height: 1; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        .is-open > .note-more::after { transform: rotate(180deg); }
+        .note-more:hover { color: #92400e; }
+        html.dark .note-more { color: #eec155; }
+        @media (prefers-reduced-motion: reduce) {
+            .inline-note .inline-note-body, .date-note-block .date-note-inner,
+            .note-more, .note-more::after { transition: none; }
+        }
 
         /* Desktop keeps the full date, the word "activities" and the arrow
            badge; the folded range is a phone-only spelling. */
@@ -634,12 +680,6 @@
             .date-header-date.has-range .dh-rangeshort { display: inline; white-space: nowrap; }
             .date-header-range { display: none; }
 
-            /* The note text reserved 2.2rem on the right, but the edit button
-               starts at 2.6rem — so both buttons sat on top of the words. Clear
-               the pair properly, and keep them visible: there is no hover on a
-               phone, so a reveal-on-hover control is one you can never see. */
-            .date-note-edit, .date-note-del { opacity: 1; }
-
             /* The header is wrap-enabled for desktop, where there is room for
                the weather chips. On a phone that wrap is what threw the + and
                the kebab onto a second line: keep one row and let the chips —
@@ -702,30 +742,11 @@
             .date-header-range { flex: 0 1 auto; min-width: 0; overflow: hidden; }
         }
 
-        /* Touch has no hover, so a reveal-on-hover control is one you can never
-           see — show the day-note pair outright. The room they need is already
-           reserved unconditionally above. */
         @media (hover: none), (pointer: coarse) {
-            .date-note-edit, .date-note-del { opacity: 1; }
-
-            /* Notes read as one line here, like the cards around them, so a day
-               with several notes still fits on a screen. Tapping one opens it
-               in full — see openNoteInfo. */
-            /* Clamped, not nowrap: a note's text sits inside <p> elements, and
-               text-overflow cannot trim a block child — the ellipsis had
-               nothing to act on, so the note simply kept its full height. A
-               line clamp counts rendered lines, so it works through them. */
-            .inline-note .inline-note-body,
-            .date-note-block .date-note-inner {
-                display: -webkit-box; -webkit-box-orient: vertical;
-                -webkit-line-clamp: 1; overflow: hidden; white-space: normal;
-            }
-            /* Keep the children inline so the clamp measures one flowing line
-               rather than one line per paragraph. */
-            .inline-note .inline-note-body > *,
-            .date-note-block .date-note-inner > * { display: inline; margin: 0; }
-            .inline-note .inline-note-body img,
-            .date-note-block .date-note-inner img { display: none; }
+            /* Notes used to read as exactly one line here, and the only way
+               to see the rest was to open a sheet. They keep a few lines now
+               and grow a "Show more" when there is more — see .is-clamped
+               above — so a long note is read where it lies. */
 
             /* Card head on one row: done, type icon, lot, kebab — with the
                title and its badges on full-width rows underneath.
@@ -901,17 +922,9 @@
         .date-note-block.dragging, .progress-marker.dragging { opacity: .45; }
         .progress-marker[draggable="true"] { cursor: grab; }
         html.dark .date-note-block:hover { border-color: #eec155; }
-        html.dark .date-note-edit, html.dark .date-note-del { background: #232b1a; }
-        html.dark .date-note-del { color: #f87171; }
-        html.dark .date-note-edit { color: #9fd979; }
         @media (hover: none), (pointer: coarse) {
-            .date-note-edit, .date-note-del { opacity: 1; width: 2.4rem; height: 2.4rem; }
-            /* Clears the edit button's far edge: right 3rem + 2.4rem wide, plus
-               a gap. It was 2.8rem, which did not even reach the button's near
-               edge — so on a phone the note text ran underneath both buttons. */
-            .date-note-inner { padding-right: 5.7rem; }
-            .date-note-edit { right: 3rem; }
-            .date-note-edit svg, .date-note-del svg { width: 1.35rem; height: 1.35rem; }
+            /* A finger's kebab is wider, so the gutter it needs is too. */
+            .date-note-inner { padding-right: 2.7rem; }
         }
         @media (prefers-reduced-motion: reduce) { .date-note-block { transition: none; } }
 
@@ -929,10 +942,10 @@
         /* ---- Inline sticky notes: multiple per day, dropped between cards ---- */
         .inline-note {
             position: relative; background: var(--tl-note-bg); border: 1px dashed var(--tl-note-border);
-            /* Right padding clears the edit button at its largest — touch sizes
-               it 2.5rem wide at right 3.2rem — so the text never runs under it
-               on any device. 3.5rem only cleared the desktop pair. */
-            border-radius: .6rem; padding: .5rem 6.1rem .5rem 1.85rem; font-size: .82rem; color: var(--tl-note-text);
+            /* The right gutter holds both of the note's handles now — the six
+               dots you carry it by and the three you open its menu with — and
+               the left edge is given back to the words. */
+            border-radius: .6rem; padding: .5rem 4.1rem .5rem .75rem; font-size: .82rem; color: var(--tl-note-text);
             word-break: break-word; cursor: grab;
             user-select: none; -webkit-user-select: none;
             transition: box-shadow .15s ease, border-color .15s ease;
@@ -940,12 +953,15 @@
         .inline-note:hover { border-color: #f5c518; box-shadow: 0 1px 6px rgb(0 0 0 / .06); }
         .inline-note.is-editing { cursor: text; user-select: text; -webkit-user-select: text; border-style: solid; border-color: #f5c518; background: var(--tl-surface); color: var(--tl-text); }
         /* Grip: the clear drag affordance (whole note is still draggable). */
-        .inline-note-grip { position: absolute; left: .05rem; top: 50%; transform: translateY(-50%); display: inline-flex; align-items: center; justify-content: center; padding: .3rem; color: var(--tl-note-border); cursor: grab; touch-action: none; }
+        /* On the right, beside the three dots — the same corner an expense row
+           wears its six in, so "carry me" is in one place on this board. */
+        .inline-note-grip { position: absolute; right: 2.05rem; top: .3rem; display: inline-flex; align-items: center; justify-content: center; padding: .3rem; color: var(--tl-note-border); cursor: grab; touch-action: none; }
         .inline-note-grip:active { cursor: grabbing; }
         /* A finger needs more than the six dots to aim at — the note's left
            padding already reserves this room, so nothing shifts. */
         @media (hover: none), (pointer: coarse) {
-            .inline-note-grip { padding: .5rem .4rem; }
+            .inline-note-grip { padding: .45rem .35rem; right: 2.4rem; top: .2rem; }
+            .inline-note { padding-right: 5rem; }
         }
         .inline-note:hover .inline-note-grip { color: #d9a441; }
         .inline-note.is-editing .inline-note-grip { display: none; }
@@ -1000,44 +1016,12 @@
         .date-note-block .date-note-media .nm { position: relative; border-radius: .45rem; overflow: hidden; background: #000; aspect-ratio: 1; }
         .date-note-block .date-note-media .nm img, .date-note-block .date-note-media .nm video { width: 100%; height: 100%; object-fit: cover; display: block; }
         .date-note-block img { max-width: 100%; max-height: 10rem; border-radius: .4rem; }
-        /* Edit + delete: ALWAYS visible (also on touch), clearly coloured on a
-           solid white chip so they stand out on the yellow note. Delete = red
-           trash, edit = green pencil. Bigger tap targets on phones. */
-        .inline-note-del, .inline-note-edit {
-            position: absolute; top: .3rem; width: 2rem; height: 2rem; border-radius: 999px;
-            display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
-            background: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .2); opacity: 1;
-            transition: background .15s ease, transform .1s ease;
-        }
-        .inline-note-del { right: .35rem; color: #dc2626; }
-        .inline-note-edit { right: 2.65rem; color: var(--color-brand-700); }
-        .inline-note-del svg, .inline-note-edit svg { width: 1.15rem; height: 1.15rem; }
-        .inline-note-del:active, .inline-note-edit:active { transform: scale(.9); }
-        .inline-note-del:hover { background: #fee2e2; }
-        .inline-note-edit:hover { background: #eef7e8; }
-        html.dark .inline-note-del, html.dark .inline-note-edit { background: #232b1a; box-shadow: 0 1px 3px rgb(0 0 0 / .4); }
-        html.dark .inline-note-del { color: #f87171; }
-        html.dark .inline-note-edit { color: #9fd979; }
-        /* Phones: bigger tap targets. */
+        /* A short note is still a comfortable thing to aim at. */
         @media (hover: none), (pointer: coarse) {
-            .inline-note-del, .inline-note-edit { width: 2.5rem; height: 2.5rem; }
-            .inline-note-edit { right: 3.2rem; }
-            .inline-note-del svg, .inline-note-edit svg { width: 1.4rem; height: 1.4rem; }
-            /* The note body clamps to one line on phones, so the box is now
-               shorter than these buttons — pinned to top:.3rem they hung out
-               below it. Centre on the box instead, which fits any height, and
-               keep the press feedback inside the same transform so :active
-               does not undo the centring. The min-height keeps a short note
-               tall enough to be a comfortable tap target at all. */
             .inline-note, .date-note-block { min-height: 3.1rem; }
-            .inline-note-del, .inline-note-edit,
-            .date-note-edit, .date-note-del { top: 50%; transform: translateY(-50%); }
-            .inline-note-del:active, .inline-note-edit:active,
-            .date-note-del:active, .date-note-edit:active { transform: translateY(-50%) scale(.9); }
         }
-        /* While saving/moving, the spinner owns the top-right corner (the action
-           buttons are non-interactive during the move anyway) — no overlap. */
-        .inline-note.is-moving .inline-note-del, .inline-note.is-moving .inline-note-edit { display: none; }
+        /* While saving/moving, the spinner owns the top-right corner. */
+        .inline-note.is-moving .note-kebab, .inline-note.is-moving .inline-note-grip { display: none; }
         .inline-note.note-landed { animation: noteLandIn .34s cubic-bezier(.22,1,.36,1); }
 
         /* ---- Per-day extra expenses strip ------------------------------- */
@@ -2756,7 +2740,7 @@
                                     'strokes' => ($m['type'] ?? '') === 'drawing' ? ($m['strokes'] ?? null) : null,
                                 ])->filter()->values();
                         @endphp
-                        <div class="date-note-block" data-date="{{ $dateKey }}" data-content="{{ $noteRow?->noteContent }}" data-media="{{ $dnMedia->toJson() }}" title="{{ $boardMayDragNote ? 'Drag to place it between activities · click to edit' : ($boardMayNote ? 'Click to edit this note' : $whyNoNote) }}" @if(!$noteRow) style="display:none;" @endif><div class="date-note-inner rich-text">{!! $noteRow?->noteContent !!}</div>@if ($dnMedia->count())<div class="date-note-media">@include('sm.partials.note-attachments', ['media' => $dnMedia])</div>@endif<button type="button" class="date-note-edit" title="Edit note" aria-label="Edit note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button type="button" class="date-note-del" title="Delete note" aria-label="Delete note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg></button></div>
+                        <div class="date-note-block" data-date="{{ $dateKey }}" data-content="{{ $noteRow?->noteContent }}" data-media="{{ $dnMedia->toJson() }}" title="{{ $boardMayDragNote ? 'Drag to place it between activities · tap the dots for options' : ($boardMayNote ? 'Tap the dots for options' : $whyNoNote) }}" @if(!$noteRow) style="display:none;" @endif><div class="date-note-inner rich-text">{!! $noteRow?->noteContent !!}</div>@if ($dnMedia->count())<div class="date-note-media">@include('sm.partials.note-attachments', ['media' => $dnMedia])</div>@endif<button type="button" class="note-kebab" title="Note options" aria-label="Note options"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg></button></div>
                         <div class="day-expense-block" data-date="{{ $dateKey }}" data-block-sort="{{ ($expenseSortByDate[$dateKey] ?? null) === null ? '' : $expenseSortByDate[$dateKey] }}"></div>
                         {{-- The income strip's own place. It was only ever
                              created by the board's JS renderer, so on a
@@ -2862,6 +2846,28 @@
             <span>Move to another day<span class="dxm-sub">It keeps its amount and note</span></span>
         </button>
         <button type="button" class="dxm-item dxm-danger" data-dxm="delete">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg>
+            <span>Delete<span class="dxm-sub">You will be asked to confirm</span></span>
+        </button>
+    </div>
+</div>
+
+{{-- What can be done to a note. The same shape the expense row's menu has,
+     because it is the same act: one line saying which note this is about,
+     then the two things there are to do to it. --}}
+<div class="sheet hidden" id="noteMenuSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Note</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="dxm-what" id="noteMenuWhat"></div>
+        <button type="button" class="dxm-item" data-nm="edit">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+            <span>Edit<span class="dxm-sub">Open the note and change what it says</span></span>
+        </button>
+        <button type="button" class="dxm-item dxm-danger" data-nm="delete">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg>
             <span>Delete<span class="dxm-sub">You will be asked to confirm</span></span>
         </button>

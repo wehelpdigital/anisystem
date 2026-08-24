@@ -1731,7 +1731,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Twin of the date-note-block markup in activities.blade.php.
         const noteChips = noteChipsHtml ? `<div class="date-note-media">${noteChipsHtml}</div>` : '';
         const noteBlock = isNoDate ? ''
-            : `<div class="date-note-block" data-date="${esc(dateKey)}" data-content="${esc(noteContent || '')}" data-media="${esc(JSON.stringify(noteMediaArr))}" title="${esc(noteTitle('Drag to place it between activities · click to edit'))}"${hasNote ? '' : ' style="display:none;"'}><div class="date-note-inner rich-text">${noteContent || ''}</div>${noteChips}${DATE_NOTE_EDIT}${DATE_NOTE_DEL}</div>`;
+            : `<div class="date-note-block" data-date="${esc(dateKey)}" data-content="${esc(noteContent || '')}" data-media="${esc(JSON.stringify(noteMediaArr))}" title="${esc(noteTitle('Drag to place it between activities · tap the dots for options'))}"${hasNote ? '' : ' style="display:none;"'}><div class="date-note-inner rich-text">${noteContent || ''}</div>${noteChips}${NOTE_KEBAB}</div>`;
         const expenseBlock = isNoDate ? ''
             : `<div class="day-expense-block" data-date="${esc(dateKey)}" data-block-sort="${esc(blockSortAttr(dateKey, 'expense'))}"></div>`
               + `<div class="day-income-block" data-date="${esc(dateKey)}" data-block-sort="${esc(blockSortAttr(dateKey, 'income'))}" hidden></div>`;
@@ -1827,7 +1827,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Writing on the day itself — which is exactly what "notes only" buys.
     // The inline notes belong here too: their ✕ and pencil write the same
     // rows the per-day note's do.
-    const NOTE_CONTROLS = '.date-note-btn, .date-note-edit, .date-note-del, .inline-note-edit, .inline-note-del';
+    const NOTE_CONTROLS = '.date-note-btn, .note-kebab';
     /* Not every write lives on the board. The version strip sits in
        #actHeaderBar and the drafts rows are injected into a sheet, so a sweep
        that starts at #activitiesList walks straight past both — which is
@@ -1878,7 +1878,7 @@ document.addEventListener('DOMContentLoaded', () => {
             $qsa('.inline-note-grip', list).forEach((el) => el.remove());
             $qsa('.inline-note[title], .date-note-block[title]', list).forEach((el) => {
                 if (/^Drag/.test(el.getAttribute('title') || '')) {
-                    el.setAttribute('title', MAY_NOTE ? 'Click to edit this note' : WHY_NO_NOTE);
+                    el.setAttribute('title', MAY_NOTE ? 'Tap the dots for options' : WHY_NO_NOTE);
                 }
             });
         }
@@ -5846,14 +5846,9 @@ document.addEventListener('DOMContentLoaded', () => {
             addInlineNote(btn.getAttribute('data-date') || '');
             return;
         }
-        // Explicit edit / delete buttons on the per-day note block.
-        const dnEdit = e.target.closest('.date-note-edit');
-        if (dnEdit) { e.preventDefault(); e.stopPropagation(); const b = dnEdit.closest('.date-note-block'); if (b) openDateNoteEditor(b.getAttribute('data-date') || ''); return; }
-        const dnDel = e.target.closest('.date-note-del');
-        if (dnDel) { e.preventDefault(); e.stopPropagation(); const b = dnDel.closest('.date-note-block'); if (b) confirmDeleteDateNote(b.getAttribute('data-date') || ''); return; }
         // Click the note body to edit it in the modal editor.
         const block = e.target.closest('.date-note-block[data-date]');
-        if (block && block.style.display !== 'none' && !e.target.closest('a, .na, .nm, .date-note-edit, .date-note-del')) {
+        if (block && block.style.display !== 'none' && !e.target.closest('a, .na, .nm, .note-kebab, .note-more')) {
             e.preventDefault();
             const dk = block.getAttribute('data-date') || '';
             // Same rule as the inline note: on a phone the body is clamped to
@@ -7209,10 +7204,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const NOTES_DRAW_URL = @json(route('notes.hub.draw'));
     const INLINE_GRIP = '<span class="inline-note-grip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></span>';
     const INLINE_TAG = '<span class="inline-note-tag" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 3h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2zM9 8h6M9 12h6M9 16h3"/></svg>Note</span>';
-    const INLINE_EDIT = '<button type="button" class="inline-note-edit" title="Edit note" aria-label="Edit note"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>';
-    const INLINE_DEL = '<button type="button" class="inline-note-del" title="Delete note" aria-label="Delete note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg></button>';
-    const DATE_NOTE_EDIT = '<button type="button" class="date-note-edit" title="Edit note" aria-label="Edit note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>';
-    const DATE_NOTE_DEL = '<button type="button" class="date-note-del" title="Delete note" aria-label="Delete note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg></button>';
+    /* One door, three dots — the same one an expense row has.
+     * A pencil and a bin sitting on every note was two permanent buttons on
+     * something whose whole job is to be read, and on a phone they were big
+     * enough to crowd the words they belonged to. What can be done to a note
+     * lives behind the dots now, in a sheet that says which note it means. */
+    const NOTE_KEBAB = '<button type="button" class="note-kebab" title="Note options" aria-label="Note options"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg></button>';
 
     function inlineMediaCells(mediaArr) {
         return window.noteMediaCells ? window.noteMediaCells(mediaArr) : '';
@@ -7239,6 +7236,8 @@ document.addEventListener('DOMContentLoaded', () => {
         el.setAttribute('data-media', JSON.stringify(mediaArr || []));
         el.setAttribute('data-title', title || '');
         paintInlineNoteTags(el);
+        // New words, new height: the clamp is measured again rather than kept.
+        if (typeof paintNoteClamp === 'function') paintNoteClamp(el);
     }
 
     /** Remember what a note points at, and show it. */
@@ -7275,12 +7274,12 @@ document.addEventListener('DOMContentLoaded', () => {
         el.setAttribute('data-sort-key', '0');
         el.setAttribute('data-media', JSON.stringify(mediaArr || []));
         el.setAttribute('data-title', title || '');
-        el.setAttribute('title', MAY_DRAG_NOTE ? 'Drag the grip to move · tap the pencil to edit' : 'Tap the pencil to edit');
+        el.setAttribute('title', MAY_DRAG_NOTE ? 'Drag the grip to move · tap the dots for options' : 'Tap the pencil to edit');
         el.innerHTML = (MAY_DRAG_NOTE ? INLINE_GRIP : '') + INLINE_TAG
             + inlineTitleHtml(title)
             + '<div class="inline-note-body">' + (bodyHtml || '') + '</div>'
             + '<div class="inline-note-media">' + inlineAttachments(mediaArr) + '</div>'
-            + INLINE_EDIT + INLINE_DEL;
+            + NOTE_KEBAB;
         return el;
     }
 
@@ -7480,6 +7479,121 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /* ---------------- The note's own menu ----------------
+     * Both kinds of note answer to the same three dots: the sticky notes that
+     * sit between cards, and the one note a day can carry at its top. The
+     * sheet names the note it is about — its title, or its first words — so
+     * nobody edits the wrong one on a day that has four.
+     */
+    let noteMenuEl = null;
+
+    /** The words a note can be recognised by, without its markup. */
+    function noteGistOf(el) {
+        const title = (el.getAttribute('data-title') || '').trim();
+        if (title) return title;
+        const body = $qs('.inline-note-body, .date-note-inner', el);
+        const words = ((body && body.textContent) || '').replace(/\s+/g, ' ').trim();
+        return words ? (words.length > 70 ? words.slice(0, 70) + '…' : words) : 'This note';
+    }
+
+    function openNoteMenu(el) {
+        if (!el) return;
+        noteMenuEl = el;
+        const isDate = el.matches('.date-note-block');
+        const date = (el.getAttribute('data-date') || '').trim();
+        $id('noteMenuWhat').innerHTML =
+            `<span class="dxm-amt">${esc(noteGistOf(el))}</span>`
+            + (date && date !== '__no-date__' ? `<span class="dxm-day">${esc(prettyDateFull(date))}</span>` : '')
+            + (isDate ? '<span class="dxm-note">The day\'s own note</span>' : '');
+        openSheet('noteMenuSheet');
+    }
+
+    document.addEventListener('click', (e) => {
+        const kebab = e.target.closest && e.target.closest('.note-kebab');
+        if (!kebab || kebab.disabled) return;
+        e.preventDefault();
+        e.stopPropagation();
+        openNoteMenu(kebab.closest('.inline-note, .date-note-block'));
+    });
+
+    document.addEventListener('click', (e) => {
+        const item = e.target.closest && e.target.closest('#noteMenuSheet [data-nm]');
+        if (!item || !noteMenuEl) return;
+        const el = noteMenuEl;
+        const what = item.getAttribute('data-nm');
+        const date = (el.getAttribute('data-date') || '').trim();
+        closeSheet('noteMenuSheet');
+        // After the sheet is out of the way, so a confirmation is not asked
+        // underneath one.
+        setTimeout(() => {
+            if (what === 'edit') {
+                if (!mayWriteNotes()) return;
+                el.matches('.date-note-block') ? openDateNoteEditor(date) : openInlineNoteEditor(el);
+                return;
+            }
+            if (what === 'delete') {
+                el.matches('.date-note-block') ? confirmDeleteDateNote(date) : deleteInlineNote(el, false);
+            }
+        }, 220);
+    });
+
+    /* ---------------- Reading a long note where it sits ----------------
+     * A note is clamped to a few lines so a day with four of them still fits
+     * on a screen, and the ones that have more to say grow a "Show more".
+     * Only those: the button is added by measuring, so a two-line note never
+     * offers to expand into itself.
+     */
+    const NOTE_MORE = '<button type="button" class="note-more" aria-expanded="false">Show more</button>';
+
+    function noteBodyOf(el) { return $qs('.inline-note-body, .date-note-inner', el); }
+
+    function paintNoteClamp(el) {
+        const body = noteBodyOf(el);
+        if (!el || !body || el.classList.contains('is-editing')) return;
+        const open = el.classList.contains('is-open');
+        el.classList.remove('is-clamped');
+        el.style.removeProperty('--note-full');
+        $qs('.note-more', el)?.remove();
+        // Measured with the clamp off, so the answer is the note's real height.
+        const room = parseFloat(getComputedStyle(el).getPropertyValue('--note-clamp')) || 0;
+        const full = body.scrollHeight;
+        if (!room || full <= room * 16 + 6) { el.classList.remove('is-open'); return; }
+        el.classList.add('is-clamped');
+        el.style.setProperty('--note-full', full + 'px');
+        body.insertAdjacentHTML('afterend', NOTE_MORE);
+        if (open) {
+            el.classList.add('is-open');
+            const btn = $qs('.note-more', el);
+            if (btn) { btn.textContent = 'Show less'; btn.setAttribute('aria-expanded', 'true'); }
+        }
+    }
+
+    function paintNoteClamps(root) {
+        $qsa('.inline-note, .date-note-block', root || $id('activitiesList') || document).forEach(paintNoteClamp);
+    }
+    document.addEventListener('activities:rendered', () => paintNoteClamps());
+    window.addEventListener('resize', () => paintNoteClamps(), { passive: true });
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => paintNoteClamps(), { once: true });
+    else paintNoteClamps();
+
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest && e.target.closest('.note-more');
+        if (!btn) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const el = btn.closest('.inline-note, .date-note-block');
+        if (!el) return;
+        const open = el.classList.toggle('is-open');
+        // Re-measured on the way open: a note whose pictures have only just
+        // loaded is taller than it was when the board was drawn.
+        if (open) {
+            const body = noteBodyOf(el);
+            if (body) el.style.setProperty('--note-full', body.scrollHeight + 'px');
+        }
+        btn.textContent = open ? 'Show less' : 'Show more';
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
     // Header +note button.
     function addInlineNote(date) {
         date = (date || '').trim();
@@ -7488,12 +7602,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener('click', (e) => {
-        const del = e.target.closest && e.target.closest('.inline-note-del');
-        if (del) { e.preventDefault(); const note = del.closest('.inline-note'); if (note) deleteInlineNote(note, false); return; }
-        const edit = e.target.closest && e.target.closest('.inline-note-edit');
-        if (edit) { e.preventDefault(); const note = edit.closest('.inline-note'); if (note) openInlineNoteEditor(note); return; }
         const note = e.target.closest && e.target.closest('.inline-note');
-        if (note && !e.target.closest('.inline-note-grip, .na, .nm, a')) {
+        if (note && !e.target.closest('.inline-note-grip, .note-kebab, .note-more, .na, .nm, a')) {
             // Clamped to one line on a phone, so a tap means "let me read it".
             // Editing is a button away, here and in the sheet's footer — and
             // that footer button goes away for someone who may not write.
@@ -7534,7 +7644,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         document.addEventListener('pointerdown', (e) => {
             if (e.button != null && e.button !== 0) return;
-            if (e.target.closest && e.target.closest('.inline-note-del, .inline-note-edit, .date-note-edit, .date-note-del, .na, .nm, a')) return;
+            if (e.target.closest && e.target.closest('.note-kebab, .note-more, .na, .nm, a')) return;
             const inlineNote = e.target.closest && e.target.closest('.inline-note[data-inline-note]');
             const dateNote = inlineNote ? null : (e.target.closest && e.target.closest('.date-note-block[data-date]'));
             const note = inlineNote || dateNote;
@@ -7746,7 +7856,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Dragging an inline sticky note to another slot/day.
         const inl = e.target.closest && e.target.closest('.inline-note[data-inline-note]');
         if (inl) {
-            if (inl.classList.contains('is-editing') || (e.target.closest && e.target.closest('.inline-note-del'))) { e.preventDefault(); return; }
+            if (inl.classList.contains('is-editing') || (e.target.closest && e.target.closest('.note-kebab, .note-more'))) { e.preventDefault(); return; }
             if (!MAY_DRAG_NOTE) { e.preventDefault(); return; }   // its slot is a saved field like any other
             dragInlineEl = inl;
             setTimeout(() => { if (dragInlineEl === inl) inl.classList.add('dragging'); }, 0);
