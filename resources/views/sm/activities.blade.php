@@ -1059,7 +1059,18 @@
         /* The strip a day puts up while something is being dragged over it:
            the real card's shape, drawn faint, so an empty day still shows
            where the expense would land. */
-        .dx-card-ghost { opacity: .55; border-style: dashed; }
+        /* Faint, dashed, and — whatever happens to the animation — VISIBLE:
+           the resting state is the lit one, so a keyframe that never runs
+           leaves the placeholder showing rather than at nought opacity. */
+        .dx-card-ghost { opacity: .62; border-style: dashed;
+            animation: dxGhostIn .28s cubic-bezier(.22, 1, .36, 1); }
+        @keyframes dxGhostIn {
+            from { transform: translateY(-6px) scale(.98); }
+            to   { transform: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .dx-card-ghost { animation: none; }
+        }
         /* A card whose rows have all travelled elsewhere is not a card. */
         .dx-card:has(.dx-list:empty) { display: none; }
         .dx-row[draggable="true"] { cursor: grab; }

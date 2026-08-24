@@ -6134,16 +6134,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* Where a dragged expense would live on the day under the cursor.
      *
-     * A day that already has a strip has a list to slide into. A day with no
-     * expenses at all has nothing — and dropping onto a day that shows no
-     * sign of accepting anything is a leap of faith — so one is put up for
-     * the length of the drag, marked as a ghost: the same card, drawn faint,
-     * holding the row you are carrying. It is thrown away when the drag ends,
-     * whichever way it ends, because a real one is rendered from the answer.
+     * Two things have to be true before a placeholder can be seen, and only
+     * one of them was.
+     *
+     * A day with no expenses has no strip to slide into, so one is put up for
+     * the length of the drag — the same card, drawn faint and dashed, holding
+     * the row being carried and totalling it. It is thrown away when the drag
+     * ends, whichever way it ends, because a real one is rendered from the
+     * answer.
+     *
+     * And a day on this board starts FOLDED. A strip built inside a folded
+     * day is built inside a nought-height box: the placeholder existed, was
+     * correct, and could not be seen, which is the same as not being there.
+     * So the day springs open under the dragged row exactly as it springs
+     * open under a dragged card — and stays open, because after the drop
+     * that is the day you are looking at.
+     *
+     * The strip is found INSIDE the group the cursor is over rather than by
+     * asking the document for that date, so nothing depends on a day
+     * appearing exactly once.
      */
-    function dxListFor(dateKey) {
-        const block = $qs(`#activitiesList .day-expense-block[data-date="${dateKey}"]`);
+    function dxOpenGroup(group) {
+        if (!group || !group.classList.contains('is-folded')) return;
+        group.classList.remove('is-folded');
+        const d = (group.getAttribute('data-date') || '').trim();
+        if (d) { OPEN_DAYS.add(d); saveOpenDays(); }
+    }
+
+    function dxListFor(group) {
+        if (!group) return null;
+        const dateKey = (group.getAttribute('data-date') || '').trim();
+        if (!dateKey || dateKey === '__no-date__') return null;
+        dxOpenGroup(group);
+        const block = $qs('.day-expense-block', group);
         if (!block) return null;
+        clearDxGhosts(block);   // a ghost the cursor has left is litter
         const list = $qs('.dx-list', block);
         if (list) return list;
         block.hidden = false;
@@ -6154,6 +6179,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return $qs('.dx-list', block);
     }
 
+    /** A borrowed strip totals the one row it is holding. */
+    function paintGhostTotal(row) {
+        const card = row && row.closest('.dx-card-ghost');
+        if (!card) return;
+        const amt = $qs('.dx-amt', row);
+        const total = $qs('.dx-total', card);
+        if (amt && total) total.textContent = amt.textContent;
+    }
+
     /** The ids of the strip a row is sitting in, top to bottom. */
     function dxOrderIn(row) {
         const list = row && row.closest('.dx-list');
@@ -6161,9 +6195,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return $qsa('[data-expense-id]', list).map((el) => el.getAttribute('data-expense-id'));
     }
 
-    function clearDxGhosts() {
+    function clearDxGhosts(keepBlock) {
         $qsa('#activitiesList .dx-card-ghost').forEach((card) => {
             const block = card.closest('.day-expense-block');
+            if (keepBlock && block === keepBlock) return;
             card.remove();
             // A block that only ever held the ghost goes back to being empty,
             // which is what its own renderer would leave behind.
@@ -7359,14 +7394,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
                 overGroup.classList.add('drag-over-group');
-                // Carry the row into that day's strip — putting one up if the
-                // day has none — so the answer to "where will this go?" is the
-                // row itself, sitting where it would sit.
-                const list = dxListFor(overDate);
+                // Carry the row into that day's strip — putting one up, and
+                // opening the day, if it has none — so the answer to "where
+                // will this go?" is the row itself, sitting where it would sit.
+                const list = dxListFor(overGroup);
                 if (list && moving.parentNode !== list) {
                     list.appendChild(moving);
                     moving.setAttribute('data-date', overDate);
                 }
+                paintGhostTotal(moving);
             }
             return;
         }
@@ -7945,11 +7981,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const to = (group?.getAttribute('data-date') || '').trim();
             if (to && to !== '__no-date__') {
                 group.classList.add('drag-over-group');
-                const list = dxListFor(to);
+                const list = dxListFor(group);
                 if (list && touchDrag.dx.parentNode !== list) {
                     list.appendChild(touchDrag.dx);
                     touchDrag.dx.setAttribute('data-date', to);
                 }
+                paintGhostTotal(touchDrag.dx);
             }
             return;
         }
