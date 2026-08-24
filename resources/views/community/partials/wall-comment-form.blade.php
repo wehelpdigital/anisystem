@@ -5,7 +5,13 @@
         <button type="button" class="emoji-btn js-comment-photo" aria-label="Attach a photo" title="Photo">
             <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
         </button>
-        <input type="file" class="js-comment-file hidden" accept="image/*" multiple>
+        {{-- The composer's own accept list, not "image/*".
+             On a phone those two are not the same door: image/* hands the tap
+             to the chooser, which can land on an app that returns one picture
+             however many you tick, while a list of real types opens the photo
+             picker that honours "several". The server takes exactly these
+             three anyway, so the narrower list is also the truer one. --}}
+        <input type="file" class="js-comment-file hidden" accept="image/jpeg,image/png,image/webp" multiple>
         <button type="button" class="emoji-btn js-video-attach" aria-label="Upload a video" title="Video">
             <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
         </button>

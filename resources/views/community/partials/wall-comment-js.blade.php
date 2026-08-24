@@ -44,7 +44,7 @@
             <span class="reply-shell">
                 <input type="text" placeholder="Reply…" maxlength="2000">
                 <button type="button" class="emoji-btn js-comment-photo" aria-label="Attach a photo" title="Photo">${SVG_PHOTO}</button>
-                <input type="file" class="js-comment-file hidden" accept="image/*" multiple>
+                <input type="file" class="js-comment-file hidden" accept="image/jpeg,image/png,image/webp" multiple>
                 <button type="button" class="emoji-btn js-video-attach" aria-label="Upload a video" title="Video">${SVG_VIDEO}</button>
                 <button type="button" class="emoji-btn js-video-record" aria-label="Record a video" title="Record">${SVG_REC}</button>
                 <input type="file" class="js-video-file hidden" accept="video/*">

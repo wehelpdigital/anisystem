@@ -206,6 +206,9 @@
         if (!form || typeof form.matches !== 'function' || !form.matches('.wall-comment-form')) return null;
         const file = form.querySelector('.js-comment-file');
         if (file && !file.multiple) file.multiple = true;
+        // Same door the composer opens: on a phone, "image/*" can be handed
+        // to an app that returns one picture no matter how many are ticked.
+        if (file) file.accept = 'image/jpeg,image/png,image/webp';
         let tray = form.querySelector('.js-comment-shots');
         if (!tray) {
             tray = document.createElement('span');
@@ -287,11 +290,18 @@
         // gone, because re-attaching a picture that is already on the wall is
         // not what an answer is for, and four doors to say "add a photo" is
         // three too many to read on a phone.
+        /* Once something is attached the doors change their wording: a phone
+         * picker that only ever hands back one picture is still a way to
+         * attach five, one tap at a time, and the menu should say so rather
+         * than leave it to be discovered. */
+        const already = (window.plazaCommentShots ? window.plazaCommentShots(form).length : 0);
         const rows = [
-            ['camera', 'Take a photo', 'Use the camera now'],
-            ['upload', 'Upload from phone', 'One picture or several at once'],
+            ['camera', already ? 'Take another photo' : 'Take a photo', 'Use the camera now'],
+            ['upload', already ? 'Add more from phone' : 'Upload from phone',
+             already ? (already + ' attached · pick one or several more') : 'One picture or several at once'],
         ];
-        if (CAN_GALLERY) rows.push(['season', 'From my gallery', 'Photos your seasons already keep']);
+        if (CAN_GALLERY) rows.push(['season', already ? 'Add more from my gallery' : 'From my gallery',
+                                    'Photos your seasons already keep']);
 
         const menu = document.createElement('div');
         menu.className = 'attach-menu';
