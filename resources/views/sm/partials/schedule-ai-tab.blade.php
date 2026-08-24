@@ -247,9 +247,9 @@
     .sai-intro-badge { width: 3rem; height: 3rem; border-radius: 999px; margin: 0 auto .7rem; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 6px 18px rgb(61 104 35 / .3); }
     .sai-intro h4 { font-family: var(--font-heading); font-weight: 800; font-size: 1rem; color: var(--color-gray-900); margin-bottom: .35rem; }
     .sai-intro p { font-size: .85rem; line-height: 1.55; }
-    .sai-intro .sai-chips { display: flex; flex-wrap: wrap; gap: .35rem; justify-content: center; margin-top: .9rem; }
-    .sai-chip { padding: .3rem .6rem; border-radius: 999px; background: var(--color-gray-100); color: var(--color-gray-700); font-size: .74rem; font-weight: 700; transition: background .15s ease; }
-    .sai-chip:hover { background: var(--color-brand-50); color: var(--color-brand-700); }
+    /* (The intro's chip rules lived here. They dressed a .sai-chip as a pill
+       — the same class the photo tile below re-dresses as a square — and the
+       chips they were written for are gone.) */
     /* Only NEW messages animate in — a session's history arrives settled, it
        does not cascade on open. */
     .sai-msg { display: flex; gap: .45rem; margin-bottom: .6rem; align-items: flex-end; }
@@ -416,16 +416,15 @@
             el.innerHTML = `
                 <div class="sai-intro-badge">🤖</div>
                 <h4>Hi team — I'm your AI Technician</h4>
-                <p>Ask me anything about this cropping plan: pests &amp; diseases, fertilizer rates and timing, irrigation, planting and harvest windows, or troubleshooting a problem. Everyone on the team sees the questions and answers, and you can save a whole session to your schedule notes.</p>
-                <div class="sai-chips">
-                    <button type="button" class="sai-chip" data-ask="What pests should I watch for at this crop stage?">Pests to watch</button>
-                    <button type="button" class="sai-chip" data-ask="Suggest a fertilizer schedule for this crop.">Fertilizer plan</button>
-                    <button type="button" class="sai-chip" data-ask="How much should I irrigate this week?">Irrigation</button>
-                </div>`;
+                <p>Ask me anything about this cropping plan: pests &amp; diseases, fertilizer rates and timing, irrigation, planting and harvest windows, or troubleshooting a problem. Everyone on the team sees the questions and answers, and you can save a whole session to your schedule notes.</p>`;
+            /* The three suggestion chips are gone. They were pills in the
+             * stylesheet at the top of this file and squares by the time the
+             * browser had read the bottom of it: .sai-chip is also the class
+             * on an attached photo's 3rem tile, and the later rule wins — so
+             * the intro ended with three blank rounded boxes under the words.
+             * Asked for and removed rather than renamed: the box below says
+             * what to type, and the words above say what it is for. */
             thread.appendChild(el);
-            el.querySelectorAll('.sai-chip').forEach((c) => c.addEventListener('click', () => {
-                $('saiText').value = c.getAttribute('data-ask'); send();
-            }));
         }
         const clearIntro = () => $('saiIntro')?.remove();
 

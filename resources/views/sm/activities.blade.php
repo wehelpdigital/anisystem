@@ -1626,6 +1626,16 @@
         /* Injected modules keep their own chip nav in the markup — the toolbar
            hamburger replaces it, so hide it inside the shell. */
         #moduleHost .module-chip-nav { display: none; }
+
+        /* The AI module is a chat, and a chat wants the screen.
+           The shell's toolbar row — Modules, Activities, Tools, the bell — is
+           fifty-three pixels of chrome above a conversation that has its own
+           composer pinned to the bottom, and on a phone that was the
+           difference between seeing the box you type in and not. It steps
+           aside while the technician is showing; the masthead's arrow becomes
+           the way back to the board (see aiBackArrow in the shell script), so
+           nothing is stranded. */
+        html.sm-ai-open div.sticky:has(#actToolbar) { display: none; }
         /* Opacity only, for the same reason <main> fades without moving: a
            transform here — even the identity matrix `animation-fill-mode: both`
            leaves behind when the fade is over — makes the pane the containing
@@ -3194,6 +3204,8 @@
         document.getElementById('moduleBackBtn')?.classList.toggle('hidden', key === 'activities');
         // The AI module IS the technician chat — hide the floating one there.
         document.getElementById('aiFloat')?.classList.toggle('ai-float-off', key === 'ai');
+        // ...and it takes the toolbar's row, so the arrow has to lead home.
+        aiBackArrow(key === 'ai');
         // On phones the fab hides only while the ACTIVITIES module is showing
         // (its Tools menu takes over). The other modules keep the bubble —
         // their Tools hamburger is hidden with the rest of the activities
@@ -3222,6 +3234,24 @@
         }
     }
 
+    /* While the technician is showing, the masthead's back arrow means "back
+     * to the board" rather than "back to the hub": the toolbar that used to
+     * carry that button is hidden, and a screen you can only leave by going
+     * up two levels is a trap. Its own href is put back on the way out. */
+    function aiBackArrow(on) {
+        const a = document.getElementById('appBackLink');
+        if (!a) return;
+        if (on) {
+            if (!a.dataset.hubHref) a.dataset.hubHref = a.getAttribute('href') || '';
+            a.setAttribute('href', shellUrl('activities'));
+            a.setAttribute('aria-label', 'Back to activities');
+            a.title = 'Back to activities';
+        } else if (a.dataset.hubHref) {
+            a.setAttribute('href', a.dataset.hubHref);
+            a.setAttribute('aria-label', 'Back');
+            a.removeAttribute('title');
+        }
+    }
     document.getElementById('modulesBtn')?.addEventListener('click', () => openSheet('modulesSheet'));
     document.addEventListener('click', (e) => {
         const row = e.target.closest('#modulesSheet .module-nav-row');
@@ -3265,7 +3295,15 @@
        unwind, and only then out to wherever the page says it came from
        (which, for a hub tile that deep-linked into a module, is the hub). */
     document.getElementById('appBackLink')?.addEventListener('click', (e) => {
-        if (pushDepth > 0) { e.preventDefault(); history.back(); }
+        if (pushDepth > 0) { e.preventDefault(); history.back(); return; }
+        /* Deep-linked straight into the technician (a hub tile, a shared
+         * link): there is no stack to unwind, and the toolbar that carries
+         * "Activities" is hidden while the chat has the screen — so the
+         * chevron means the board here rather than the hub two levels up. */
+        if (document.documentElement.classList.contains('sm-ai-open')) {
+            e.preventDefault();
+            showModule('activities');
+        }
     });
     window.smShowModule = showModule;
 
