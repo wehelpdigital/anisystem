@@ -54,6 +54,10 @@
     html.dark .pc-track img { background:rgb(255 255 255 / .06); }
     /* Where you are in the set, said twice: a number for the reader who wants
        to know how many, and dots for the one who only wants to feel it. */
+    /* A card standing in for one that is being read in a sheet or a modal:
+       it holds the space and takes no taps. */
+    .is-stand-in { pointer-events:none; user-select:none; }
+
     /* What is attached to a comment before it is sent: small squares, each
        with its own way out. The composer's tray in miniature. */
     .comment-shots { display:flex; flex-wrap:wrap; gap:.3rem; flex:1 1 100%; margin-top:.15rem; }

@@ -137,6 +137,56 @@
      * tray in it (the discussion boxes) is left exactly as it was: one
      * picture, one chip.
      */
+    /* ---------------- a post that is being read elsewhere ----------------
+     *
+     * Opening a thread lifts the post out of the list and puts it inside the
+     * modal, which is what lets it keep every handler, every reaction and
+     * every reply it already had — they are the same nodes, not copies of
+     * them. What it also did was take the post out of the page: the list
+     * closed up behind it, everything below jumped up, and jumped back when
+     * the modal shut. Opening something to read it should not rearrange what
+     * is behind it.
+     *
+     * A stand-in takes its place: the same card, exactly as tall, deaf to the
+     * pointer and invisible to every query — its ids and data hooks are
+     * stripped, so a count being bumped or a reply being filed still finds
+     * the real card, wherever it is. The real one comes back into its place
+     * when the modal closes and the stand-in goes.
+     */
+    window.plazaStandIn = function (node) {
+        if (!node || !node.cloneNode) return null;
+        const ghost = node.cloneNode(true);
+        ghost.classList.add('is-stand-in');
+        ghost.setAttribute('aria-hidden', 'true');
+        // Nothing in here may answer to a name the real card is known by.
+        const strip = (el) => {
+            el.removeAttribute('id');
+            ['data-post-id', 'data-comment-id', 'data-reply-count', 'data-comment-count',
+             'data-inline-note', 'data-parent-id'].forEach((a) => el.removeAttribute(a));
+        };
+        strip(ghost);
+        ghost.querySelectorAll('[id], [data-post-id], [data-comment-id], [data-reply-count], [data-comment-count], [data-parent-id]').forEach(strip);
+        // A copied video must not start a second download of the same film.
+        ghost.querySelectorAll('video').forEach((v) => {
+            v.removeAttribute('autoplay');
+            v.preload = 'none';
+            try { v.pause(); } catch (_) { /* not playing */ }
+        });
+        node.parentNode?.insertBefore(ghost, node);
+        return ghost;
+    };
+
+    /** Put the real card back where its stand-in has been keeping the space. */
+    window.plazaReturnTo = function (ghost, node, fallback) {
+        if (!node) return;
+        if (ghost && ghost.parentNode) {
+            ghost.parentNode.insertBefore(node, ghost);
+            ghost.remove();
+            return;
+        }
+        (fallback || document.body).appendChild(node);
+    };
+
     const MAX_SHOTS = 8;
     const trayOf = (form) => form && form.querySelector('.js-comment-shots');
 

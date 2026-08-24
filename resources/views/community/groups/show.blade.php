@@ -250,6 +250,9 @@
     /* ---- The thread modal ---- */
     .thread-modal { position:fixed; inset:0; z-index:60; display:flex; align-items:flex-end; justify-content:center; }
     .thread-modal.hidden { display:none; }
+    /* The card standing in for one that is being read in the modal: it is
+       there to hold the space and nothing else. */
+    .is-stand-in { pointer-events:none; user-select:none; }
     /* Out of the way while something it asked for has the screen — the
        gallery picker. Not closed: the topic and the half-written answer are
        still inside it, waiting to come back. */
@@ -1650,8 +1653,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openThread(post) {
         if (!post || !threadModal || threadPost) return;
-        threadSlot = document.createComment('thread-slot');
-        post.parentNode.insertBefore(threadSlot, post);
+        // A stand-in holds the post's place in the list while the real one is
+        // being read in the modal, so nothing behind the modal moves.
+        threadSlot = window.plazaStandIn
+            ? window.plazaStandIn(post)
+            : (function () { const c = document.createComment('thread-slot'); post.parentNode.insertBefore(c, post); return c; })();
         threadPost = post;
         threadBody.appendChild(post);
         const t = post.querySelector('h3');
@@ -1687,7 +1693,8 @@ document.addEventListener('DOMContentLoaded', () => {
             threadModal.classList.remove('is-closing');
             threadModal.classList.add('hidden');
             document.documentElement.style.overflow = '';
-            if (slot && slot.parentNode) { slot.parentNode.insertBefore(post, slot); slot.remove(); }
+            if (window.plazaReturnTo) window.plazaReturnTo(slot, post, document.getElementById('postsWrap'));
+            else if (slot && slot.parentNode) { slot.parentNode.insertBefore(post, slot); slot.remove(); }
             else document.getElementById('postsWrap')?.appendChild(post);
         };
         // Wait out the close animation, but never hang on a browser that

@@ -416,8 +416,12 @@
     function takePost(card) {
         if (!card) return;
         putPostBack();
-        cSlot = document.createComment('wall-post-slot');
-        card.parentNode.insertBefore(cSlot, card);
+        // Same as the discussion's thread: a stand-in keeps the post's place
+        // in the wall, so the feed does not close up behind the sheet and
+        // spring back open when it shuts.
+        cSlot = window.plazaStandIn
+            ? window.plazaStandIn(card)
+            : (function () { const c = document.createComment('wall-post-slot'); card.parentNode.insertBefore(c, card); return c; })();
         cCard = card;
         $('wcsPost').appendChild(card);
         // The name link, not the avatar's — the avatar is an <a> too, and
@@ -431,7 +435,8 @@
         if (!cCard) return;
         const card = cCard, slot = cSlot;
         cCard = null; cSlot = null;
-        if (slot && slot.parentNode) { slot.parentNode.insertBefore(card, slot); slot.remove(); }
+        if (window.plazaReturnTo) window.plazaReturnTo(slot, card, document.getElementById('plazaFeed'));
+        else if (slot && slot.parentNode) { slot.parentNode.insertBefore(card, slot); slot.remove(); }
         else document.getElementById('plazaFeed')?.appendChild(card);
     }
 
