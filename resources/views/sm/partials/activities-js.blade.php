@@ -6345,6 +6345,39 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    /* Re-read every strip's place from where it now sits, and keep it.
+     *
+     * A drop renumbers the day's cards from scratch (0, 10, 20…), so a strip
+     * holding an old number can land somewhere else entirely once the board
+     * is rebuilt from those numbers — the card you carefully dropped under it
+     * ends up above it. Called while the strips are still standing where the
+     * drop left them, so the number is read off the picture the eye just saw.
+     * The day's inline notes have always done exactly this.
+     */
+    function syncBlockSortsIn(container) {
+        if (!container || !mayEditBoard()) return;
+        const date = (container.getAttribute('data-date') || '').trim();
+        if (!date || date === '__no-date__') return;
+        $qsa('.day-expense-block, .day-income-block', container).forEach((block) => {
+            if (!$qs('.dx-row', block)) return;   // an empty strip has no place to keep
+            const kind = block.classList.contains('day-income-block') ? 'income' : 'expense';
+            const fresh = blockKeyFor(block);
+            if (fresh === knownBlockSort(date, kind)) return;
+            rememberBlockSort(date, kind, fresh);
+            block.setAttribute('data-block-sort', String(fresh));
+            saveBlockSort(kind, date, fresh);
+        });
+    }
+
+    /** Tell the server where a strip sits now. Quietly: nothing moved. */
+    async function saveBlockSort(kind, date, sort) {
+        try {
+            await api(U.dayMoneyBlockMove(), { method: 'POST', body: {
+                kind, fromDate: date, toDate: date, blockSort: sort,
+            } });
+        } catch (_) { /* the next drop will try again */ }
+    }
+
     /** The number a strip should carry, read off the neighbours it now has. */
     function blockKeyFor(block) {
         const orderOf = (n) => {
@@ -7777,11 +7810,22 @@ document.addEventListener('DOMContentLoaded', () => {
         dragInlineEl = null;
     });
 
+    /* What the dragged card would be dropped above.
+     *
+     * Every item the day holds, not only the cards. Once a money strip could
+     * be carried in among the activities, a card hovering over one was
+     * measured against the next card BELOW it — so the card jumped past the
+     * strip and there was no way to put it between the strip and its
+     * neighbour. Anything with a height in this list is something you can
+     * aim above or below.
+     */
     function dragoverPosition(container, cursorY) {
-        const cards = $qsa('.activity-card[data-id]', container).filter((c) => c !== dragSourceCard);
-        for (const card of cards) {
-            const rect = card.getBoundingClientRect();
-            if (cursorY < rect.top + rect.height / 2) return card;
+        const items = $qsa('.activity-card[data-id], .inline-note, .day-expense-block, .day-income-block', container)
+            .filter((el) => el !== dragSourceCard && !el.matches('.day-expense-block:empty, .day-income-block:empty'));
+        for (const el of items) {
+            const rect = el.getBoundingClientRect();
+            if (!rect.height) continue;   // a hidden strip is not a place
+            if (cursorY < rect.top + rect.height / 2) return el;
         }
         return null;
     }
@@ -8094,6 +8138,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
+        // The strips are still where the drop left them; the cards have just
+        // been renumbered around them. Read their places before the rebuild
+        // puts everything back by the numbers.
+        containers.forEach((cont) => syncBlockSortsIn(cont));
+
         reorderAndRenumberActivities(true);   // optimistic rebuild, animated
 
         const snapshot = dragBoardSnapshot;
@@ -8150,6 +8199,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     el.setAttribute('data-sequence-order', idx * 10);
                 });
+                // The day the card left was renumbered too; its strip's place
+                // is read off where it is standing, before the rebuild.
+                syncBlockSortsIn(dragOrigin.parent);
             }
         }
 
