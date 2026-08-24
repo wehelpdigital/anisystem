@@ -6,7 +6,8 @@ class CommunityGroupReply extends BaseModel
 {
     protected $table = 'as_community_group_replies';
 
-    protected $fillable = ['postId', 'parentId', 'userId', 'body', 'imagePath', 'imagePaths', 'isDeleted', 'deleteStatus'];
+    protected $fillable = ['postId', 'parentId', 'userId', 'body', 'imagePath', 'imagePaths',
+        'videoPath', 'videoPoster', 'isDeleted', 'deleteStatus'];
 
     protected $casts = ['isDeleted' => 'boolean', 'isRestricted' => 'boolean', 'imagePaths' => 'array'];
 

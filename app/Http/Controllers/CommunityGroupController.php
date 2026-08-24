@@ -488,7 +488,7 @@ class CommunityGroupController extends Controller
         }
 
         $request->validate([
-            'body' => 'required_without_all:image,images,galleryPath,galleryPaths|nullable|string|max:4000',
+            'body' => 'required_without_all:image,images,galleryPath,galleryPaths,video,galleryVideoPath|nullable|string|max:4000',
             // One picture (what every older caller sends) or several.
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:8192',
             'images' => 'nullable|array|max:8',
@@ -497,6 +497,10 @@ class CommunityGroupController extends Controller
             'galleryPath' => 'nullable|string|max:500',
             'galleryPaths' => 'nullable|array|max:8',
             'galleryPaths.*' => 'string|max:500',
+            // A clip: filmed here, chosen off the phone, or pointed at in the
+            // gallery. VideoOptimizer decides what a file really is.
+            'video' => 'nullable|file|max:307200',
+            'galleryVideoPath' => 'nullable|string|max:500',
             'parentId' => 'nullable|integer',
         ]);
 
@@ -544,6 +548,34 @@ class CommunityGroupController extends Controller
         $shots = array_slice(array_values(array_unique($shots)), 0, 8);
         $imagePath = $shots[0] ?? null;
 
+        /* The clip.
+         *
+         * An upload is compressed and given a poster frame the way a topic's
+         * is. One picked out of the gallery is a file this app already keeps:
+         * it is referenced where it lies, so nothing is copied and nothing is
+         * re-encoded — which also means it has no poster of its own, and the
+         * player shows its first frame instead. */
+        $videoPath = $videoPoster = null;
+        if ($request->hasFile('video')) {
+            try {
+                $stored = \App\Support\VideoOptimizer::storeCompressed(
+                    $request->file('video'),
+                    'community-groups/' . $post->groupId . '/videos'
+                );
+                $videoPath = $stored['video'];
+                $videoPoster = $stored['poster'] ?? null;
+            } catch (\Throwable $e) {
+                return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
+            }
+        } elseif ($request->filled('galleryVideoPath')) {
+            // Video extensions, not the picture ones it checks by default —
+            // an .mp4 handed to the default list is refused for being an .mp4.
+            $videoPath = GalleryPick::path((string) $request->input('galleryVideoPath'), GalleryPick::VIDEO_EXTS);
+            if ($videoPath === null) {
+                return response()->json(['success' => false, 'message' => 'That video could not be attached.'], 422);
+            }
+        }
+
         $reply = CommunityGroupReply::create([
             'postId' => $post->id,
             'parentId' => $parent?->id,
@@ -555,7 +587,9 @@ class CommunityGroupController extends Controller
             // instead of answering with a 500.
             'imagePath' => $imagePath,
         ] + (count($shots) > 1 && \Illuminate\Support\Facades\Schema::hasColumn((new CommunityGroupReply)->getTable(), 'imagePaths')
-            ? ['imagePaths' => $shots] : []) + [
+            ? ['imagePaths' => $shots] : [])
+          + ($videoPath && \Illuminate\Support\Facades\Schema::hasColumn((new CommunityGroupReply)->getTable(), 'videoPath')
+            ? ['videoPath' => $videoPath, 'videoPoster' => $videoPoster] : []) + [
             'deleteStatus' => 1,
         ]);
 

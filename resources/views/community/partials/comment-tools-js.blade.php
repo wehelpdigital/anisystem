@@ -285,12 +285,63 @@
             ->exists()
     );
 
+    const VID_ICON = {
+        vupload: 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z',
+        vseason: 'M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM10 10.5v5l4.5-2.5-4.5-2.5z',
+    };
+
     const SRC_ICON = {
         camera: 'M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9zM15 13a3 3 0 11-6 0 3 3 0 016 0z',
         upload: 'M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0-12l-4 4m4-4l4 4',
         mine: 'M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4z',
         season: 'M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM8 14l2.5-3 2 2.5L15 10l3 4',
     };
+
+    /* Where a clip comes from.
+     *
+     * The same two-door shape the pictures use, minus the camera: filming is
+     * its own button beside this one, because a phone that is already looking
+     * at the thing should not have to read a menu first.
+     */
+    function videoMenu(form) {
+        const rows = [['vupload', 'Upload from phone', 'Choose a clip on this device']];
+        if (CAN_GALLERY) rows.push(['vseason', 'From my gallery', 'Clips your seasons already keep']);
+        return buildMenu(form, rows, VID_ICON, '.js-comment-video');
+    }
+
+    /* One menu builder for both kinds.
+     *
+     * Hung on the body, not on the form: a comment box can live inside a
+     * thread modal that carries a transform, and `position: fixed` inside a
+     * transformed ancestor is measured from that ancestor rather than from
+     * the screen — the menu landed hundreds of pixels below the fold. The
+     * form it belongs to travels on the element instead. It is positioned
+     * against the button that opened it and flips up when there is no room
+     * below, clamped so the flip cannot put it off the top of the screen.
+     */
+    function buildMenu(form, rows, icons, anchorSel) {
+        const menu = document.createElement('div');
+        menu.className = 'attach-menu';
+        menu.innerHTML = rows.map(([key, label, hint]) => `
+            <button type="button" class="attach-menu-row" data-attach-src="${key}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="${icons[key]}"/></svg>
+                <span><b>${label}</b><i>${hint}</i></span>
+            </button>`).join('');
+        menu.__form = form;
+        document.body.appendChild(menu);
+        requestAnimationFrame(() => {
+            const btn = form.querySelector(anchorSel);
+            if (!btn) return;
+            const b = btn.getBoundingClientRect();
+            const m = menu.getBoundingClientRect();
+            const up = b.bottom + m.height + 12 > window.innerHeight;
+            menu.style.left = Math.max(8, Math.min(b.left, window.innerWidth - m.width - 8)) + 'px';
+            const top = up ? b.top - m.height - 6 : b.bottom + 6;
+            menu.style.top = Math.max(8, Math.min(top, window.innerHeight - m.height - 8)) + 'px';
+            menu.classList.add('is-in');
+        });
+        return menu;
+    }
 
     function sourceMenu(form) {
         // The same three the composer offers, in the same words. "My photos"
@@ -311,36 +362,7 @@
         if (CAN_GALLERY) rows.push(['season', already ? 'Add more from my gallery' : 'From my gallery',
                                     'Photos your seasons already keep']);
 
-        const menu = document.createElement('div');
-        menu.className = 'attach-menu';
-        menu.innerHTML = rows.map(([key, label, hint]) => `
-            <button type="button" class="attach-menu-row" data-attach-src="${key}">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="${SRC_ICON[key]}"/></svg>
-                <span><b>${label}</b><i>${hint}</i></span>
-            </button>`).join('');
-        // Hung on the body, not on the form: a comment box can live inside a
-        // thread modal that carries a transform, and `position: fixed` inside
-        // a transformed ancestor is measured from that ancestor rather than
-        // from the screen — the menu landed hundreds of pixels below the fold.
-        // The form it belongs to travels on the element instead.
-        menu.__form = form;
-        document.body.appendChild(menu);
-        // Positioned against the button that opened it, and flipped up when
-        // there is no room below — a comment box often sits near the fold.
-        requestAnimationFrame(() => {
-            const btn = form.querySelector('.js-comment-photo');
-            if (!btn) return;
-            const b = btn.getBoundingClientRect();
-            const m = menu.getBoundingClientRect();
-            const up = b.bottom + m.height + 12 > window.innerHeight;
-            menu.style.left = Math.max(8, Math.min(b.left, window.innerWidth - m.width - 8)) + 'px';
-            // Clamped: near the foot of a long thread the flip can put it
-            // off the top of the screen entirely.
-            const top = up ? b.top - m.height - 6 : b.bottom + 6;
-            menu.style.top = Math.max(8, Math.min(top, window.innerHeight - m.height - 8)) + 'px';
-            menu.classList.add('is-in');
-        });
-        return menu;
+        return buildMenu(form, rows, SRC_ICON, '.js-comment-photo');
     }
 
     function closeSourceMenu() {
@@ -493,7 +515,57 @@
         return comeBack;
     }
 
+    /** Show a picked clip on the form's own video chip. */
+    function setPickedVideoChip(form, item) {
+        const chip = form.querySelector('.js-video-chip');
+        if (!chip) return;
+        chip.style.display = 'inline-flex';
+        chip.querySelector('.js-chip-thumb')?.remove();
+        if (item && item.url) {
+            const v = document.createElement('video');
+            v.className = 'js-chip-thumb';
+            v.muted = true; v.playsInline = true; v.preload = 'metadata';
+            v.src = item.url;
+            chip.insertBefore(v, chip.firstChild);
+        }
+        const name = chip.querySelector('.js-video-name');
+        if (name) name.textContent = (item && item.title) || 'Video';
+    }
+
+    /* A clip out of the gallery. The picker takes the screen the same way it
+     * does for a picture — whatever asked for it steps aside — and what
+     * comes back is a path, not a file: nothing is uploaded or re-encoded,
+     * the answer points at the clip where it already lies. */
+    function pickExistingVideo(form) {
+        if (typeof window.smPickMedia !== 'function') {
+            window.toast?.('The picker is not available on this page.', 'error');
+            return;
+        }
+        stepAsideFor(form);
+        window.smPickMedia({
+            allSchedules: true,
+            kinds: 'video',
+            title: 'A clip from my gallery',
+            onPick: (item) => {
+                if (!item || !item.path) return;
+                // A pick and an upload are one slot: taking one drops the other.
+                window.plazaClearVideo?.(form);
+                form.dataset.pickVideoPath = item.path;
+                setPickedVideoChip(form, item);
+            },
+        });
+    }
+
     document.addEventListener('click', (e) => {
+        const vidBtn = e.target.closest('.js-comment-video');
+        if (vidBtn) {
+            const form = vidBtn.closest('form');
+            const open = [...document.querySelectorAll('.attach-menu')].some((m) => m.__form === form);
+            closeSourceMenu();
+            if (!open) videoMenu(form);
+            return;
+        }
+
         const photoBtn = e.target.closest('.js-comment-photo');
         if (photoBtn) {
             const form = photoBtn.closest('form');
@@ -513,12 +585,22 @@
             closeSourceMenu();
             if (how === 'camera') cameraInput(form).click();
             else if (how === 'upload') form.querySelector('.js-comment-file')?.click();
+            else if (how === 'vupload') form.querySelector('.js-video-file')?.click();
+            else if (how === 'vseason') pickExistingVideo(form);
             else pickExisting(form);
             return;
         }
 
         // Any other tap puts the menu away.
         if (!e.target.closest('.attach-menu')) closeSourceMenu();
+
+        // The clip's own ✕ clears the input; a picked one is only a path, so
+        // it has to be forgotten here as well.
+        const vidClear = e.target.closest('.js-video-clear');
+        if (vidClear) {
+            const form = vidClear.closest('form');
+            if (form) delete form.dataset.pickVideoPath;
+        }
 
         const clearBtn = e.target.closest('.js-chip-clear');
         if (clearBtn) {

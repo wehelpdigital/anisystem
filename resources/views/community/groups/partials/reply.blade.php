@@ -45,6 +45,9 @@
                         @elseif ($reply->imagePath)
                             <span class="post-media reply-media"><img src="{{ \App\Support\MediaStore::url($reply->imagePath) }}" alt="Reply photo" loading="lazy">@if ($rIsGif)<span class="gif-badge">GIF</span>@endif</span>
                         @endif
+                        @if ($reply->videoPath ?? null)
+                            @include('community.partials.video-embed', ['src' => $reply->videoPath, 'poster' => $reply->videoPoster ?? null])
+                        @endif
                     @endif
                 </div>
                 <div class="react-bar react-bar-mini">

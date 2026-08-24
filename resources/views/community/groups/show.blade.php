@@ -1024,7 +1024,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const file = shots.length ? null : (fileInput && fileInput.files[0]);
         // ...or a picture already kept here, pointed at rather than sent.
         const pick = shots.length ? '' : (form.dataset.pickPath || '');
-        if (!text && !shots.length && !file && !pick) { toast('Write something or add a photo.', 'error'); return; }
+        const hasVideo = !!((window.plazaVideoFile && window.plazaVideoFile(form)) || form.dataset.pickVideoPath);
+        if (!text && !shots.length && !file && !pick && !hasVideo) { toast('Write something or add a photo or video.', 'error'); return; }
         const postId = form.getAttribute('data-post-id');
         const parentId = form.getAttribute('data-parent-id');
         // Prepend the @mention token when replying tags someone (pill shown).
@@ -1041,6 +1042,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         if (file) fd.append('image', file);
         else if (pick) fd.append('galleryPath', pick);
+        // A clip: filmed or chosen off the phone, or one already kept here.
+        const vid = window.plazaVideoFile ? window.plazaVideoFile(form) : null;
+        const vidPick = form.dataset.pickVideoPath || '';
+        if (vid) fd.append('video', vid);
+        else if (vidPick) fd.append('galleryVideoPath', vidPick);
         if (parentId) fd.append('parentId', parentId);
         const sendBtn = form.querySelector('button[type="submit"]');
         input.disabled = true;
@@ -1066,6 +1072,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     delete form.dataset.pickPath;
                     window.plazaClearShots?.(form);
                     window.plazaSetChip(form, null);
+                    window.plazaClearVideo?.(form);
+                    delete form.dataset.pickVideoPath;
                     input.focus();
                 }
             } else toast(data.message, 'error');
@@ -1089,6 +1097,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const SVG_R_SMILE = '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
     const SVG_R_SEND = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>';
     const SVG_R_X = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>';
+    // The clip doors, the same three the box under a topic carries.
+    const SVG_R_VIDBITS = '<button type="button" class="emoji-btn js-comment-video" aria-label="Attach a video" title="Video"><svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg></button><button type="button" class="emoji-btn js-video-record" aria-label="Record a video" title="Record"><svg class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="currentColor"/></svg></button><input type="file" class="js-video-file hidden" accept="video/*">';
+    const SVG_R_VIDCHIP = '<span class="js-video-chip attach-chip items-center gap-1 text-xs font-semibold text-gray-600" style="display:none"><span class="js-video-name"></span><button type="button" class="js-video-clear text-red-600 font-bold" aria-label="Remove video">✕</button></span>';
     const gEsc = (s) => (window.escapeHtml ? window.escapeHtml(s) : String(s == null ? '' : s));
     function groupMentionPill(name) {
         return `<span class="reply-mention-pill inline-flex items-center gap-1 text-[0.688rem] font-semibold text-brand-700 bg-brand-50 border border-brand-100 rounded-full pl-2 pr-1 py-0.5 shrink-0" title="This reply notifies @${gEsc(name)}">@${gEsc(name)}<button type="button" class="js-reply-mention-x w-4 h-4 flex items-center justify-center rounded-full text-brand-400 hover:text-red-500 hover:bg-white leading-none" aria-label="Remove mention">×</button></span>`;
@@ -1099,14 +1110,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return `<form class="post-reply-form wall-reply-form flex flex-wrap items-center gap-2 mt-2 mb-3" data-post-id="${postId}" data-parent-id="${parentId}"${attrs}>
             ${hasMention ? groupMentionPill(mentionName) : ''}
             <span class="reply-shell">
-                <input type="text" placeholder="Sumagot…" maxlength="4000">
+                <input type="text" placeholder="Sumagot… use @ to tag a co-farmer" maxlength="4000">
                 <button type="button" class="emoji-btn js-comment-photo" aria-label="Attach a photo" title="Photo">${SVG_R_PHOTO}</button>
                 <input type="file" class="js-comment-file hidden" accept="image/jpeg,image/png,image/webp,image/gif" multiple>
+                ${SVG_R_VIDBITS}
                 <button type="button" class="emoji-btn js-emoji-btn" aria-label="Add an emoji" title="Emoji">${SVG_R_SMILE}</button>
                 <button type="submit" class="reply-send" aria-label="Reply">${SVG_R_SEND}</button>
                 <button type="button" class="js-reply-cancel btn-ghost rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 shrink-0" aria-label="Cancel reply" title="Cancel">${SVG_R_X}</button>
             </span>
             <span class="comment-shots js-comment-shots hidden"></span>
+            ${SVG_R_VIDCHIP}
             <span class="attach-chip hidden js-comment-chip"><span class="js-chip-name"></span><button type="button" class="js-chip-clear" aria-label="Remove photo">✕</button></span>
         </form>`;
     }
