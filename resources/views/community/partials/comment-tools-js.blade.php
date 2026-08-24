@@ -187,7 +187,13 @@
         (fallback || document.body).appendChild(node);
     };
 
-    const MAX_SHOTS = 8;
+    const MAX_SHOTS = 8;     // pictures
+    const MAX_CLIPS = 3;     // films — heavier by two orders of magnitude
+    const countOf = (form, kind) => window.plazaCommentShots(form).filter((s) => (s.kind || 'image') === kind).length;
+    /* A tenth of a second in is where a clip is asked to paint itself; a
+     * browser will not decode a frame for a video it has only been asked the
+     * length of. */
+    const frameUrl = (u) => (!u || String(u).includes('#t=')) ? u : (u + '#t=0.1');
     const trayOf = (form) => form && form.querySelector('.js-comment-shots');
 
     /* The tray, and the door that opens on more than one picture, are this
@@ -233,9 +239,16 @@
         if (!tray) return;
         const shots = window.plazaCommentShots(form);
         tray.classList.toggle('hidden', shots.length === 0);
-        tray.innerHTML = shots.map((sh, i) =>
-            '<span class="comment-shot"><img src="' + sh.url + '" alt="">'
-            + '<button type="button" data-shot="' + i + '" aria-label="Remove photo">\u2715</button></span>').join('');
+        // A clip shows a frame of itself with a film mark on it, so a tray of
+        // four thumbnails says which of them will move.
+        tray.innerHTML = shots.map((sh, i) => {
+            const clip = (sh.kind || 'image') === 'video';
+            const inner = clip
+                ? '<video src="' + frameUrl(sh.url) + '" muted playsinline preload="metadata" onerror="this.remove()"></video><i class="cs-play">\u25B6</i>'
+                : '<img src="' + sh.url + '" alt="">';
+            return '<span class="comment-shot' + (clip ? ' is-clip' : '') + '">' + inner
+                + '<button type="button" data-shot="' + i + '" aria-label="Remove">\u2715</button></span>';
+        }).join('');
     }
 
     window.plazaClearShots = function (form) {
@@ -247,8 +260,12 @@
 
     function addShot(form, shot) {
         if (!form.__shots) form.__shots = [];
-        if (form.__shots.length >= MAX_SHOTS) {
-            window.toast?.('That is eight pictures — the most a comment carries.', 'error');
+        const kind = shot.kind || 'image';
+        const cap = kind === 'video' ? MAX_CLIPS : MAX_SHOTS;
+        if (countOf(form, kind) >= cap) {
+            window.toast?.(kind === 'video'
+                ? 'Three clips is the most one answer carries.'
+                : 'That is eight pictures — the most a comment carries.', 'error');
             return false;
         }
         if (shot.path && form.__shots.some((s) => s.path === shot.path)) return false;   // twice is once
@@ -304,9 +321,33 @@
      * at the thing should not have to read a menu first.
      */
     function videoMenu(form) {
-        const rows = [['vupload', 'Upload from phone', 'Choose a clip on this device']];
-        if (CAN_GALLERY) rows.push(['vseason', 'From my gallery', 'Clips your seasons already keep']);
+        const already = countOf(form, 'video');
+        const rows = [['vupload', already ? 'Add another clip' : 'Upload from phone',
+                       already ? (already + ' attached \u00b7 pick one or more') : 'One clip or several at once']];
+        if (CAN_GALLERY) rows.push(['vseason', already ? 'Add more from my gallery' : 'From my gallery',
+                                    'Clips your seasons already keep']);
         return buildMenu(form, rows, VID_ICON, '.js-comment-video');
+    }
+
+    /** The input clips are chosen with — made on demand, and takes several. */
+    function videoPickInput(form) {
+        let el = form.querySelector('.js-video-pick');
+        if (el) return el;
+        el = document.createElement('input');
+        el.type = 'file';
+        el.className = 'js-video-pick hidden';
+        el.accept = 'video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp';
+        el.multiple = true;
+        el.addEventListener('change', () => {
+            let added = false;
+            [...(el.files || [])].forEach((f) => {
+                if (addShot(form, { file: f, url: URL.createObjectURL(f), kind: 'video' })) added = true;
+            });
+            el.value = '';
+            if (added) paintShots(form);
+        });
+        form.appendChild(el);
+        return el;
     }
 
     /* One menu builder for both kinds.
@@ -541,13 +582,22 @@
             window.toast?.('The picker is not available on this page.', 'error');
             return;
         }
+        const tray = trayOf(form);
         stepAsideFor(form);
         window.smPickMedia({
             allSchedules: true,
             kinds: 'video',
             title: 'A clip from my gallery',
+            // Tap to collect, one button to bring them all — the same mode the
+            // pictures use. A box with no tray still takes one.
+            multiple: !!tray,
+            max: tray ? Math.max(1, MAX_CLIPS - countOf(form, 'video')) : 1,
             onPick: (item) => {
                 if (!item || !item.path) return;
+                if (tray) {
+                    if (addShot(form, { path: item.path, url: item.url || '', kind: 'video' })) paintShots(form);
+                    return;
+                }
                 // A pick and an upload are one slot: taking one drops the other.
                 window.plazaClearVideo?.(form);
                 form.dataset.pickVideoPath = item.path;
@@ -585,7 +635,12 @@
             closeSourceMenu();
             if (how === 'camera') cameraInput(form).click();
             else if (how === 'upload') form.querySelector('.js-comment-file')?.click();
-            else if (how === 'vupload') form.querySelector('.js-video-file')?.click();
+            else if (how === 'vupload') {
+                // A tray takes several clips through its own input; a box
+                // without one keeps the single-file door it always had.
+                if (trayOf(form)) videoPickInput(form).click();
+                else form.querySelector('.js-video-file')?.click();
+            }
             else if (how === 'vseason') pickExistingVideo(form);
             else pickExisting(form);
             return;
@@ -616,6 +671,20 @@
     window.addEventListener('resize', closeSourceMenu);
     // A menu positioned against a button cannot follow it up the page.
     window.addEventListener('scroll', closeSourceMenu, { passive: true });
+    /* A clip filmed on the spot. The recorder writes into .js-video-file
+     * because that is where every older submit looks; a box with a tray takes
+     * it out of there and puts it with the rest, so one answer can hold a
+     * filmed clip and a chosen one at once. */
+    document.addEventListener('change', (e) => {
+        if (!e.target.classList || !e.target.classList.contains('js-video-file')) return;
+        const form = e.target.closest('form');
+        if (!trayOf(form)) return;
+        const f = e.target.files && e.target.files[0];
+        if (!f) return;
+        if (addShot(form, { file: f, url: URL.createObjectURL(f), kind: 'video' })) paintShots(form);
+        window.plazaClearVideo?.(form);
+    });
+
     document.addEventListener('change', (e) => {
         if (!e.target.classList || !e.target.classList.contains('js-comment-file')) return;
         const form = e.target.closest('form');

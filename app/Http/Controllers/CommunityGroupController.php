@@ -488,7 +488,7 @@ class CommunityGroupController extends Controller
         }
 
         $request->validate([
-            'body' => 'required_without_all:image,images,galleryPath,galleryPaths,video,galleryVideoPath|nullable|string|max:4000',
+            'body' => 'required_without_all:image,images,galleryPath,galleryPaths,video,videos,galleryVideoPath,galleryVideoPaths|nullable|string|max:4000',
             // One picture (what every older caller sends) or several.
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:8192',
             'images' => 'nullable|array|max:8',
@@ -500,7 +500,11 @@ class CommunityGroupController extends Controller
             // A clip: filmed here, chosen off the phone, or pointed at in the
             // gallery. VideoOptimizer decides what a file really is.
             'video' => 'nullable|file|max:307200',
+            'videos' => 'nullable|array|max:3',
+            'videos.*' => 'file|max:307200',
             'galleryVideoPath' => 'nullable|string|max:500',
+            'galleryVideoPaths' => 'nullable|array|max:3',
+            'galleryVideoPaths.*' => 'string|max:500',
             'parentId' => 'nullable|integer',
         ]);
 
@@ -555,26 +559,49 @@ class CommunityGroupController extends Controller
          * it is referenced where it lies, so nothing is copied and nothing is
          * re-encoded — which also means it has no poster of its own, and the
          * player shows its first frame instead. */
-        $videoPath = $videoPoster = null;
-        if ($request->hasFile('video')) {
+        /* The clips, in the order they were added, up to three.
+         *
+         * An upload is compressed and given a poster frame the way a topic's
+         * is. One picked out of the gallery is a file this app already keeps:
+         * it is referenced where it lies, so nothing is copied and nothing is
+         * re-encoded — which also means it has no poster of its own, and the
+         * player shows its first frame instead. */
+        $clips = [];
+        foreach (array_merge(
+            $request->hasFile('video') ? [$request->file('video')] : [],
+            array_values((array) $request->file('videos', []))
+        ) as $file) {
             try {
                 $stored = \App\Support\VideoOptimizer::storeCompressed(
-                    $request->file('video'),
+                    $file,
                     'community-groups/' . $post->groupId . '/videos'
                 );
-                $videoPath = $stored['video'];
-                $videoPoster = $stored['poster'] ?? null;
+                $clips[] = ['video' => $stored['video'], 'poster' => $stored['poster'] ?? null];
             } catch (\Throwable $e) {
                 return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
             }
-        } elseif ($request->filled('galleryVideoPath')) {
+        }
+        foreach (array_merge(
+            $request->filled('galleryVideoPath') ? [(string) $request->input('galleryVideoPath')] : [],
+            array_values((array) $request->input('galleryVideoPaths', []))
+        ) as $picked) {
             // Video extensions, not the picture ones it checks by default —
             // an .mp4 handed to the default list is refused for being an .mp4.
-            $videoPath = GalleryPick::path((string) $request->input('galleryVideoPath'), GalleryPick::VIDEO_EXTS);
-            if ($videoPath === null) {
-                return response()->json(['success' => false, 'message' => 'That video could not be attached.'], 422);
+            $ok = GalleryPick::path((string) $picked, GalleryPick::VIDEO_EXTS);
+            if ($ok === null) {
+                return response()->json(['success' => false, 'message' => 'One of the clips could not be attached. Remove it and try again.'], 422);
             }
+            $clips[] = ['video' => $ok, 'poster' => null];
         }
+        $seen = [];
+        $clips = array_values(array_filter($clips, function ($c) use (&$seen) {
+            if (isset($seen[$c['video']])) { return false; }
+            $seen[$c['video']] = true;
+            return true;
+        }));
+        $clips = array_slice($clips, 0, 3);
+        $videoPath = $clips[0]['video'] ?? null;
+        $videoPoster = $clips[0]['poster'] ?? null;
 
         $reply = CommunityGroupReply::create([
             'postId' => $post->id,
@@ -589,7 +616,9 @@ class CommunityGroupController extends Controller
         ] + (count($shots) > 1 && \Illuminate\Support\Facades\Schema::hasColumn((new CommunityGroupReply)->getTable(), 'imagePaths')
             ? ['imagePaths' => $shots] : [])
           + ($videoPath && \Illuminate\Support\Facades\Schema::hasColumn((new CommunityGroupReply)->getTable(), 'videoPath')
-            ? ['videoPath' => $videoPath, 'videoPoster' => $videoPoster] : []) + [
+            ? ['videoPath' => $videoPath, 'videoPoster' => $videoPoster] : [])
+          + (count($clips) > 1 && \Illuminate\Support\Facades\Schema::hasColumn((new CommunityGroupReply)->getTable(), 'videoPaths')
+            ? ['videoPaths' => $clips] : []) + [
             'deleteStatus' => 1,
         ]);
 

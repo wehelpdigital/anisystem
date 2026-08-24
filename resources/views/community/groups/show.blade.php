@@ -1024,7 +1024,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const file = shots.length ? null : (fileInput && fileInput.files[0]);
         // ...or a picture already kept here, pointed at rather than sent.
         const pick = shots.length ? '' : (form.dataset.pickPath || '');
-        const hasVideo = !!((window.plazaVideoFile && window.plazaVideoFile(form)) || form.dataset.pickVideoPath);
+        const hasVideo = !!((window.plazaVideoFile && window.plazaVideoFile(form)) || form.dataset.pickVideoPath
+            || shots.some((sh) => (sh.kind || 'image') === 'video'));
         if (!text && !shots.length && !file && !pick && !hasVideo) { toast('Write something or add a photo or video.', 'error'); return; }
         const postId = form.getAttribute('data-post-id');
         const parentId = form.getAttribute('data-parent-id');
@@ -1036,9 +1037,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const sendBody = (token + text).trim();
         const fd = new FormData();
         if (sendBody) fd.append('body', sendBody);
+        // The tray holds both kinds; each goes to its own field.
         shots.forEach((sh) => {
-            if (sh.file) fd.append('images[]', sh.file);
-            else if (sh.path) fd.append('galleryPaths[]', sh.path);
+            const clip = (sh.kind || 'image') === 'video';
+            if (sh.file) fd.append(clip ? 'videos[]' : 'images[]', sh.file);
+            else if (sh.path) fd.append(clip ? 'galleryVideoPaths[]' : 'galleryPaths[]', sh.path);
         });
         if (file) fd.append('image', file);
         else if (pick) fd.append('galleryPath', pick);

@@ -72,8 +72,14 @@
     .post-reply-form:has(.attach-chip:not(.hidden)) { padding-bottom:.55rem; }
     .comment-shots.hidden { display:none; }
     .comment-shot { position:relative; display:inline-flex; }
-    .comment-shot img { width:2.75rem; height:2.75rem; object-fit:cover; border-radius:.45rem;
-        border:1px solid var(--color-gray-200); background:var(--color-gray-100); }
+    .comment-shot img, .comment-shot video { width:2.75rem; height:2.75rem; object-fit:cover;
+        border-radius:.45rem; border:1px solid var(--color-gray-200); background:var(--color-gray-100);
+        display:block; }
+    /* A clip in the tray wears a play mark, so a wall of thumbnails says
+       which of them will move when it is sent. */
+    .comment-shot.is-clip .cs-play { position:absolute; inset:0; display:flex; align-items:center;
+        justify-content:center; font-size:.7rem; font-style:normal; color:#fff;
+        text-shadow:0 1px 3px rgb(0 0 0 / .6); pointer-events:none; }
     html.dark .comment-shot img { border-color:rgb(255 255 255 / .12); background:rgb(255 255 255 / .06); }
     .comment-shot button { position:absolute; top:-.3rem; right:-.3rem; width:1.05rem; height:1.05rem;
         display:flex; align-items:center; justify-content:center; border-radius:999px;

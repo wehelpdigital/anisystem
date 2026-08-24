@@ -54,7 +54,10 @@
      * it opens perfectly and cannot be seen, which is how this was reported.
      */
     #smMediaPickerSheet { z-index: 150; }
-    .smp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: .5rem; }
+    /* Big enough to see what it is. At 6.5rem a tile was a stamp: on a phone
+       three of them across, each one too small to tell one rice field from
+       another. Two across on a phone, three or four on a wider screen. */
+    .smp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: .6rem; }
     .smp-grid:empty { display: none; }
     .smp-tile { position: relative; display: block; width: 100%; text-align: left; padding: 0;
         border: 1px solid var(--tl-border, #e5e7eb); border-radius: .7rem; overflow: hidden;
@@ -79,7 +82,8 @@
     .smp-badge { position: absolute; left: .3rem; top: .3rem; display: inline-flex; align-items: center;
         gap: .15rem; padding: .1rem .35rem; border-radius: 999px; background: rgb(17 24 39 / .72);
         color: #fff; font-size: .62rem; font-weight: 800; letter-spacing: .02em; }
-    .smp-meta { padding: .3rem .4rem .4rem; }
+    /* The words sat against the tile's own edge on three sides. */
+    .smp-meta { padding: .45rem .55rem .55rem; }
     .smp-name { display: block; font-size: .7rem; font-weight: 700; color: var(--tl-text, #374151);
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .smp-sub { display: block; font-size: .62rem; color: var(--tl-text-faint, #9ca3af);
@@ -149,7 +153,11 @@
         const btn = $('smMediaPickerAttach');
         if (!btn) return;
         btn.disabled = picked.size === 0;
-        btn.textContent = picked.size > 1 ? `Attach ${picked.size} photos` : 'Attach';
+        // What is being collected, in its own word: a picker showing films
+        // offering to "Attach 2 photos" is the wrong noun in the one place
+        // the reader is counting.
+        const word = (cfg && cfg.kinds === 'video') ? 'clips' : 'photos';
+        btn.textContent = picked.size > 1 ? `Attach ${picked.size} ${word}` : 'Attach';
     }
 
     const LABELS = { image: 'Photo', video: 'Clip', drawing: 'Drawing', map: 'Map' };
@@ -173,13 +181,22 @@
     // picture — which is an <img> pointed at a film, and that is the broken
     // glyph this used to show.
     const VID_FILE = /\.(mp4|mov|webm|mkv|3gp|m4v)(\?|#|$)/i;
+    /* A clip with no poster has to paint its own first frame, and a browser
+     * will not go and fetch one for a video it has only been asked to know
+     * the length of. Asking for the tenth of a second mark makes it decode
+     * that much and show it — the trick every video thumbnail on the web is
+     * made of. Harmless where the frame would have appeared anyway. */
+    const clipFrameUrl = (url) => {
+        const u = String(url || '');
+        return (!u || u.includes('#t=')) ? u : (u + '#t=0.1');
+    };
     const isClip = (m) => m.type === 'video' || m.kind === 'video' || VID_FILE.test(String(m.url || ''));
 
     const tileHtml = (m, i) => {
         const clip = isClip(m);
         const blank = `<span class="smp-blank">${clip ? '🎬' : '🖼️'}</span>`;
         const inner = clip
-            ? `<video class="smp-vid" src="${esc(m.url)}"${m.posterUrl ? ` poster="${esc(m.posterUrl)}"` : ''} muted playsinline preload="metadata" onerror="this.remove()"></video>`
+            ? `<video class="smp-vid" src="${esc(clipFrameUrl(m.url))}"${m.posterUrl ? ` poster="${esc(m.posterUrl)}"` : ''} muted playsinline preload="metadata" onerror="this.remove()"></video>`
             : (m.url ? `<img src="${esc(m.posterUrl || m.url)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : '');
         return `<button type="button" class="smp-tile" role="option" data-pick="${i}">
             <span class="smp-shot">${blank}${inner}<span class="smp-badge">${esc(LABELS[m.kind] || 'File')}</span></span>

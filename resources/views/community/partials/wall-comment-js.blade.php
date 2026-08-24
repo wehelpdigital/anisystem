@@ -315,6 +315,7 @@
         const fd = new FormData();
         if (sendBody) fd.append('body', sendBody);
         shots.forEach((sh) => {
+            if ((sh.kind || 'image') === 'video') return;   // this wall takes one clip, by its own field
             if (sh.file) fd.append('images[]', sh.file);
             else if (sh.path) fd.append('galleryPaths[]', sh.path);
         });
