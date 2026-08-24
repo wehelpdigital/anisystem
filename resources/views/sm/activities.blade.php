@@ -1052,6 +1052,16 @@
         html.dark .dx-card-in .dx-head,
         html.dark .dx-card-in .dx-total,
         html.dark .dx-card-in .dx-amt { color: #a8cc7e; }
+        /* Nothing here is text to select. A long press that starts choosing
+           words is a drag that never began, and on a phone that is most of
+           them — the same guard the cards carry. */
+        .dx-row { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+        /* The strip a day puts up while something is being dragged over it:
+           the real card's shape, drawn faint, so an empty day still shows
+           where the expense would land. */
+        .dx-card-ghost { opacity: .55; border-style: dashed; }
+        /* A card whose rows have all travelled elsewhere is not a card. */
+        .dx-card:has(.dx-list:empty) { display: none; }
         .dx-row[draggable="true"] { cursor: grab; }
         .dx-row[draggable="true"]:active { cursor: grabbing; }
         /* In the air: the row stays in the list at the place it would land,
@@ -2662,7 +2672,6 @@
                              had nowhere to be drawn: the server said "saved",
                              the day showed nothing, and only a redraw of that
                              day ever brought it out. --}}
-                        <div class="day-income-block" data-date="{{ $dateKey }}" hidden></div>
                         <div class="day-income-block" data-date="{{ $dateKey }}" hidden></div>
                     @endif
                     @php

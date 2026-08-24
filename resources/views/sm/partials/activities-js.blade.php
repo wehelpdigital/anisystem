@@ -6061,7 +6061,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * landed on, plus the cash pill in each header, which is counted from
      * these rows.
      */
-    async function moveExpenseToDate(src, toDate) {
+    async function moveExpenseToDate(src, toDate, orderIds) {
         if (!mayEditBoard() || !src || !src.id) return;
         const fromDate = src.date;
         if (!fromDate || fromDate === toDate) return;
@@ -6082,12 +6082,28 @@ document.addEventListener('DOMContentLoaded', () => {
             // next reload.
             DAY_EXPENSES[toDate] = (res && res.data) || [];
             DAY_EXPENSES[fromDate] = (DAY_EXPENSES[fromDate] || []).filter((r) => String(r.id) !== String(src.id));
+            /* The day it landed on answers in its own stored order, which
+             * knows nothing about where the row was let go. `orderIds` is the
+             * strip as the eye last saw it, so the row stays between the two
+             * rows it was dropped between instead of jumping to the end. */
+            if (orderIds && orderIds.length > 1) {
+                const rows = DAY_EXPENSES[toDate];
+                const seen = new Set();
+                const ordered = [];
+                orderIds.forEach((id) => {
+                    const r = rows.find((x) => String(x.id) === String(id));
+                    if (r && !seen.has(r.id)) { seen.add(r.id); ordered.push(r); }
+                });
+                rows.forEach((r) => { if (!seen.has(r.id)) ordered.push(r); });
+                DAY_EXPENSES[toDate] = ordered;
+            }
             renderExpenseBlockFor(fromDate);
             renderExpenseBlockFor(toDate);
             if (typeof paintDayCash === 'function') {
                 $qsa(`#activitiesList .date-group[data-date="${fromDate}"], #activitiesList .date-group[data-date="${toDate}"]`)
                     .forEach((g) => paintDayCash(g));
             }
+            if (orderIds && orderIds.length > 1) saveExpenseOrder(toDate);
             toast('Expense moved to ' + prettyDateFull(toDate) + '.');
         } catch (err) {
             toast(err.message, 'error');
@@ -6114,6 +6130,56 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             toast(err.message, 'error');
         }
+    }
+
+    /* Where a dragged expense would live on the day under the cursor.
+     *
+     * A day that already has a strip has a list to slide into. A day with no
+     * expenses at all has nothing — and dropping onto a day that shows no
+     * sign of accepting anything is a leap of faith — so one is put up for
+     * the length of the drag, marked as a ghost: the same card, drawn faint,
+     * holding the row you are carrying. It is thrown away when the drag ends,
+     * whichever way it ends, because a real one is rendered from the answer.
+     */
+    function dxListFor(dateKey) {
+        const block = $qs(`#activitiesList .day-expense-block[data-date="${dateKey}"]`);
+        if (!block) return null;
+        const list = $qs('.dx-list', block);
+        if (list) return list;
+        block.hidden = false;
+        block.innerHTML = `<div class="dx-card dx-card-ghost">
+            <div class="dx-head"><span>\uD83D\uDCB8 Extra expenses</span><span class="dx-total"></span></div>
+            <div class="dx-list"></div>
+        </div>`;
+        return $qs('.dx-list', block);
+    }
+
+    /** The ids of the strip a row is sitting in, top to bottom. */
+    function dxOrderIn(row) {
+        const list = row && row.closest('.dx-list');
+        if (!list) return null;
+        return $qsa('[data-expense-id]', list).map((el) => el.getAttribute('data-expense-id'));
+    }
+
+    function clearDxGhosts() {
+        $qsa('#activitiesList .dx-card-ghost').forEach((card) => {
+            const block = card.closest('.day-expense-block');
+            card.remove();
+            // A block that only ever held the ghost goes back to being empty,
+            // which is what its own renderer would leave behind.
+            if (block && !$qs('.dx-card', block)) block.innerHTML = '';
+        });
+    }
+
+    /** Put the row back where it was picked up from. */
+    function restoreDraggedExpense(row) {
+        if (!row || !dxOrigin || !dxOrigin.parent) return;
+        if (dxOrigin.next && dxOrigin.next.parentNode === dxOrigin.parent) {
+            dxOrigin.parent.insertBefore(row, dxOrigin.next);
+        } else {
+            dxOrigin.parent.appendChild(row);
+        }
+        row.setAttribute('data-date', dxOrigin.date);
     }
 
     /** Drop `row` next to `over`, above or below by which half was hit. */
@@ -6609,6 +6675,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let dragGroupDate = null; // set while dragging a date header (whole-day move)
     let dragNoteDate = null;   // set while dragging a date-note block to another day
     let dragExpense = null;    // {id, date} while an extra expense is in the air
+    let dxOrigin = null;       // where that row sat before it was picked up
     let dragMarkerDate = null; // set while dragging a resume-here marker to another day
 
     // Spinner + dim on the block whose save is in flight; a landing animation
@@ -7170,6 +7237,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 id: dxRow.getAttribute('data-expense-id'),
                 date: (dxRow.getAttribute('data-date') || '').trim(),
             };
+            dxOrigin = { parent: dxRow.parentNode, next: dxRow.nextElementSibling, date: dragExpense.date };
             dxRow.classList.add('dragging');
             if (e.dataTransfer) {
                 e.dataTransfer.effectAllowed = 'move';
@@ -7242,7 +7310,13 @@ document.addEventListener('DOMContentLoaded', () => {
         dragOrigin = null;
         dragGroupDate = null;
         dragNoteDate = null;
+        if (dragExpense) {
+            // Ended without a drop we understood: undo the travelling.
+            restoreDraggedExpense($qs(`.dx-row[data-expense-id="${dragExpense.id}"]`));
+            clearDxGhosts();
+        }
         dragExpense = null;
+        dxOrigin = null;
         dragMarkerDate = null;
         dragInlineEl = null;
     });
@@ -7267,7 +7341,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dragExpense) {
             const overRow = e.target.closest && e.target.closest('.dx-row[data-expense-id]');
             const moving = $qs(`.dx-row[data-expense-id="${dragExpense.id}"]`);
-            if (overRow && moving && (overRow.getAttribute('data-date') || '').trim() === dragExpense.date) {
+            // Against the day the row is in NOW, not the one it started in:
+            // once it has travelled, ordering it is ordering it there.
+            const here = (moving?.getAttribute('data-date') || '').trim();
+            if (overRow && moving && overRow !== moving
+                && (overRow.getAttribute('data-date') || '').trim() === here) {
                 e.preventDefault();
                 if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
                 $qsa('.date-group.drag-over-group').forEach((el) => el.classList.remove('drag-over-group'));
@@ -7277,10 +7355,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const overGroup = e.target.closest && e.target.closest('.date-group');
             const overDate = (overGroup?.getAttribute('data-date') || '').trim();
             $qsa('.date-group.drag-over-group').forEach((el) => el.classList.remove('drag-over-group'));
-            if (overGroup && overDate && overDate !== '__no-date__' && overDate !== dragExpense.date) {
+            if (overGroup && overDate && overDate !== '__no-date__' && moving) {
                 e.preventDefault();
                 if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
                 overGroup.classList.add('drag-over-group');
+                // Carry the row into that day's strip — putting one up if the
+                // day has none — so the answer to "where will this go?" is the
+                // row itself, sitting where it would sit.
+                const list = dxListFor(overDate);
+                if (list && moving.parentNode !== list) {
+                    list.appendChild(moving);
+                    moving.setAttribute('data-date', overDate);
+                }
             }
             return;
         }
@@ -7379,34 +7465,48 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // An expense dropped on another expense in the same day: reorder.
+        /* An expense being put down.
+         *
+         * The row has been travelling with the cursor, so where it is IS the
+         * answer: the day it sits in now, and the place it sits in that day.
+         * Landing in its own day is a reorder; landing anywhere else is a
+         * move. */
         if (dragExpense) {
-            const overRow = e.target.closest && e.target.closest('.dx-row[data-expense-id]');
-            const sameDay = overRow && (overRow.getAttribute('data-date') || '').trim() === dragExpense.date;
-            if (sameDay) {
-                const moving = $qs(`.dx-row[data-expense-id="${dragExpense.id}"]`);
-                const date = dragExpense.date;
-                dragExpense = null;
-                e.preventDefault();
-                $qsa('.dx-row.dragging').forEach((el) => el.classList.remove('dragging'));
-                if (placeExpenseRow(moving, overRow, e.clientY)) saveExpenseOrder(date);
-                return;
+            const moving = $qs(`.dx-row[data-expense-id="${dragExpense.id}"]`);
+            const landedOn = (moving?.closest('.date-group')?.getAttribute('data-date') || '').trim();
+            const from = dragExpense.date;
+            const id = dragExpense.id;
+            dragExpense = null;
+            e.preventDefault();
+            $qsa('.dx-row.dragging').forEach((el) => el.classList.remove('dragging'));
+            $qsa('.date-group.drag-over-group').forEach((el) => el.classList.remove('drag-over-group'));
+            if (!landedOn || landedOn === '__no-date__') {
+                restoreDraggedExpense(moving);
+                clearDxGhosts();
+            } else if (landedOn === from) {
+                clearDxGhosts();
+                saveExpenseOrder(from);
+            } else {
+                const order = dxOrderIn(moving);
+                clearDxGhosts();
+                moveExpenseToDate({ id, date: from }, landedOn, order);
             }
+            dxOrigin = null;
+            return;
         }
 
         // Note / marker move drop.
-        if (dragNoteDate || dragMarkerDate || dragExpense) {
+        if (dragNoteDate || dragMarkerDate) {
             const targetGroup = e.target.closest && e.target.closest('.date-group');
             const targetDate = (targetGroup?.getAttribute('data-date') || '').trim();
-            const noteSrc = dragNoteDate, markerSrc = dragMarkerDate, expSrc = dragExpense;
-            dragNoteDate = null; dragMarkerDate = null; dragExpense = null;
+            const noteSrc = dragNoteDate, markerSrc = dragMarkerDate;
+            dragNoteDate = null; dragMarkerDate = null;
             $qsa('.date-group.drag-over-group').forEach((el) => el.classList.remove('drag-over-group'));
             $qsa('.date-note-block.dragging, .progress-marker.dragging, .dx-row.dragging').forEach((el) => el.classList.remove('dragging'));
             if (!targetDate || targetDate === '__no-date__') return;
             e.preventDefault();
             if (noteSrc) moveNoteToDate(noteSrc, targetDate);
             else if (markerSrc) moveMarkerToDate(markerSrc, targetDate);
-            else if (expSrc) moveExpenseToDate(expSrc, targetDate);
             return;
         }
 
@@ -7666,21 +7766,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const target = document.elementFromPoint(td.lastX, td.lastY);
             const rest = target?.closest?.('.rest-day-marker');
             if (td.dx) {
-                /* Two drops, one gesture: onto another row of the same day it
-                 * changes the order; onto any other day it moves there. A
-                 * finger that lands on nothing puts the row back. */
+                /* The row has travelled with the finger, so where it sits is
+                 * the answer: its own day again is a reorder, another day is a
+                 * move, and a finger lifted off the board puts it back. */
                 td.dx.classList.remove('dragging');
                 clearDropHighlights();
-                const overRow = target?.closest?.('.dx-row[data-expense-id]');
-                const group = target?.closest?.('.date-group');
-                const to = (group?.getAttribute('data-date') || '').trim();
+                const landedOn = (td.dx.closest('.date-group')?.getAttribute('data-date') || '').trim();
                 const id = td.dx.getAttribute('data-expense-id');
-                if (!commit) { /* cancelled */ }
-                else if (overRow && (overRow.getAttribute('data-date') || '').trim() === td.dxDate) {
-                    if (placeExpenseRow(td.dx, overRow, td.lastY)) saveExpenseOrder(td.dxDate);
-                } else if (to && to !== '__no-date__' && to !== td.dxDate) {
-                    moveExpenseToDate({ id, date: td.dxDate }, to);
+                if (!commit || !landedOn || landedOn === '__no-date__') {
+                    restoreDraggedExpense(td.dx);
+                    clearDxGhosts();
+                } else if (landedOn === td.dxDate) {
+                    clearDxGhosts();
+                    saveExpenseOrder(td.dxDate);
+                } else {
+                    const order = dxOrderIn(td.dx);
+                    clearDxGhosts();
+                    moveExpenseToDate({ id, date: td.dxDate }, landedOn, order);
                 }
+                dxOrigin = null;
             } else if (td.header) {
                 const group = target?.closest?.('.date-group');
                 const to = (group?.getAttribute('data-date') || rest?.getAttribute('data-date') || '').trim();
@@ -7747,6 +7851,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (td.dx) {
             td.dx.classList.add('dragging');
+            dxOrigin = { parent: td.dx.parentNode, next: td.dx.nextElementSibling, date: td.dxDate };
         } else if (td.header) {
             td.header.classList.add('dragging');
             dragGroupDate = td.groupDate;
@@ -7830,13 +7935,22 @@ document.addEventListener('DOMContentLoaded', () => {
          * is seen before it is let go rather than after. */
         if (touchDrag.dx) {
             const overRow = target?.closest?.('.dx-row[data-expense-id]');
-            if (overRow && (overRow.getAttribute('data-date') || '').trim() === touchDrag.dxDate) {
+            const here = (touchDrag.dx.getAttribute('data-date') || '').trim();
+            if (overRow && overRow !== touchDrag.dx
+                && (overRow.getAttribute('data-date') || '').trim() === here) {
                 placeExpenseRow(touchDrag.dx, overRow, t.clientY);
                 return;
             }
             const group = target?.closest?.('.date-group');
             const to = (group?.getAttribute('data-date') || '').trim();
-            if (to && to !== '__no-date__' && to !== touchDrag.dxDate) group.classList.add('drag-over-group');
+            if (to && to !== '__no-date__') {
+                group.classList.add('drag-over-group');
+                const list = dxListFor(to);
+                if (list && touchDrag.dx.parentNode !== list) {
+                    list.appendChild(touchDrag.dx);
+                    touchDrag.dx.setAttribute('data-date', to);
+                }
+            }
             return;
         }
 
