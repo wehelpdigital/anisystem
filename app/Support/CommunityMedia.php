@@ -111,6 +111,34 @@ class CommunityMedia
         }
 
         $out = array_values(array_filter($out));
+
+        /* One tile per film.
+         *
+         * The same clip can be referenced from several places at once —
+         * answer somebody with a video out of your gallery twice and it is
+         * two postings of one file, not two films. A shelf of your videos
+         * showing it three times is a shelf that has confused "what I have
+         * filmed" with "what I have said".
+         *
+         * Which posting represents it: a profile upload if there is one,
+         * because that is the copy its owner can delete and losing that
+         * control to a deduplication would be a bad trade. Otherwise the most
+         * recent, so the tile sits where the shelf's own order expects it.
+         */
+        usort($out, function ($a, $b) {
+            if ($a['deletable'] !== $b['deletable']) {
+                return $a['deletable'] ? -1 : 1;
+            }
+
+            return $b['ts'] <=> $a['ts'];
+        });
+
+        $byPath = [];
+        foreach ($out as $row) {
+            $byPath[$row['path']] ??= $row;
+        }
+
+        $out = array_values($byPath);
         usort($out, fn ($a, $b) => $b['ts'] <=> $a['ts']);
 
         return $out;

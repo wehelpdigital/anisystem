@@ -240,10 +240,18 @@ class GalleryHubController extends Controller
          * viewer's own, because this shelf is theirs. */
         $me = (int) \Illuminate\Support\Facades\Auth::id();
         if ($me && ($kinds === [] || $this->wanted('video', $kinds))) {
+            // A clip answered with out of the gallery is the gallery's clip
+            // being pointed at, not a second film: the season's own walk has
+            // already put it on this shelf.
+            $already = array_flip(array_filter(array_column($out, 'path')));
             foreach (\App\Support\CommunityMedia::videosFor($me, true) as $m) {
+                if (isset($already[$m['path']])) {
+                    continue;
+                }
                 if ($q !== '' && stripos(($m['title'] ?? '') . ' ' . ($m['source'] ?? ''), $q) === false) {
                     continue;
                 }
+                $already[$m['path']] = true;
                 $out[] = [
                     'kind' => 'video',
                     'type' => 'video',
