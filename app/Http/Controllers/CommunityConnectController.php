@@ -381,35 +381,28 @@ class CommunityConnectController extends Controller
     }
 
     /** Album videos + wall videos the member shared, normalised + newest first. */
+    /**
+     * Every clip this member has shared, wherever they shared it.
+     *
+     * It used to be the profile's own uploads plus their wall posts, which
+     * left out a video put in a comment, a discussion topic or an answer —
+     * most of what people actually film. CommunityMedia is that whole list,
+     * read here and by the gallery, so the two cannot drift apart.
+     *
+     * The tiles want the same four things they always wanted; a frame is
+     * looked up for a clip that never carried one.
+     */
     private function collectProfileVideos(int $memberId, bool $isSelf): \Illuminate\Support\Collection
     {
-        $items = collect();
-
-        foreach (CommunityProfileVideo::active()->where('userId', $memberId)->get() as $v) {
-            $items->push([
-                'url' => \App\Support\MediaStore::url($v->videoPath),
-                'poster' => $v->posterPath ? \App\Support\MediaStore::url($v->posterPath) : null,
-                'deletable' => $isSelf,
-                'deleteId' => $v->id,
-                'ts' => optional($v->created_at)->timestamp ?? $v->id,
-            ]);
-        }
-
-        $wallVideos = \App\Models\CommunityWallPost::where('authorUserId', $memberId)
-            ->where('deleteStatus', 1)
-            ->whereNotNull('videoPath')->where('videoPath', '!=', '')
-            ->get();
-        foreach ($wallVideos as $wv) {
-            $items->push([
-                'url' => \App\Support\MediaStore::url($wv->videoPath),
-                'poster' => $wv->videoPoster ? \App\Support\MediaStore::url($wv->videoPoster) : null,
-                'deletable' => false,
-                'deleteId' => null,
-                'ts' => optional($wv->created_at)->timestamp ?? 0,
-            ]);
-        }
-
-        return $items->sortByDesc('ts')->values();
+        return collect(\App\Support\CommunityMedia::videosFor($memberId, $isSelf))
+            ->map(fn ($m) => [
+                'url'       => $m['url'],
+                'poster'    => $m['posterUrl'],
+                'deletable' => (bool) $m['deletable'],
+                'deleteId'  => $m['deleteId'],
+                'ts'        => $m['ts'],
+            ])
+            ->values();
     }
 
     /** Upload one or more photos to the signed-in member's own profile album. */

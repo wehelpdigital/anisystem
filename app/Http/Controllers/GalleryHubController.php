@@ -232,6 +232,36 @@ class GalleryHubController extends Controller
             }
         }
 
+        /* And what this member has filmed on the community side.
+         *
+         * A clip shared on the wall, under somebody's post, as a discussion
+         * topic or in an answer is a film of this farm like any other — it
+         * was simply kept somewhere the gallery never looked. Only the
+         * viewer's own, because this shelf is theirs. */
+        $me = (int) \Illuminate\Support\Facades\Auth::id();
+        if ($me && ($kinds === [] || $this->wanted('video', $kinds))) {
+            foreach (\App\Support\CommunityMedia::videosFor($me, true) as $m) {
+                if ($q !== '' && stripos(($m['title'] ?? '') . ' ' . ($m['source'] ?? ''), $q) === false) {
+                    continue;
+                }
+                $out[] = [
+                    'kind' => 'video',
+                    'type' => 'video',
+                    'path' => $m['path'],
+                    'poster' => $m['poster'],
+                    'url' => $m['url'],
+                    'posterUrl' => $m['posterUrl'],
+                    'title' => $m['title'],
+                    'source' => $m['source'],
+                    'href' => $m['href'],
+                    'when' => $m['when'],
+                    'scheduleId' => 0,
+                    'scheduleTitle' => 'Community',
+                    'sortKey' => (int) $m['ts'],
+                ];
+            }
+        }
+
         // Newest first across every season, which is the order a person
         // actually remembers things in.
         usort($out, fn ($a, $b) => $b['sortKey'] <=> $a['sortKey']);
