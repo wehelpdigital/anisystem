@@ -97,7 +97,7 @@
        than a picture, and a player must not be cropped to a square. */
     .pc-clips .pc-track > .pc-slide { scroll-snap-align:start; scroll-snap-stop:always;
         display:flex; align-items:center; min-width:0; }
-    .pc-clips .pc-track .post-video { margin-top:0; width:100%; }
+    .pc-clips .pc-track .post-video { margin-top:0; }
     /* Counted on the left: a posted clip wears the player's own fullscreen
        button in its top-right corner, and two badges in one corner is one
        badge nobody can read. */
@@ -108,7 +108,16 @@
        a player whose controls sit on its bottom edge. */
     .group-reply .post-video, .wall-comment .post-video, .cp-comment .post-video,
     .group-reply .post-carousel, .wall-comment .post-carousel, .cp-comment .post-carousel { margin-bottom:.5rem; }
-    .post-video { padding-bottom:.3rem; }
+    /* A player shaped by its film: auto both ways so the browser keeps the
+       clip's ratio, a ceiling on height so a portrait clip does not take the
+       whole screen, and a box that shrinks to what is inside it — which is
+       what stops any black showing at all. */
+    .post-video { display:inline-block; max-width:100%; line-height:0; padding-bottom:.3rem; }
+    .post-video .post-video-el { display:block; width:auto; height:auto;
+        max-width:100%; max-height:24rem; background:#000; }
+    /* In a slider the slide is the full width; the film sits in the middle of
+       it at its own size. */
+    .pc-clips .pc-track .post-video { display:block; width:auto; margin-inline:auto; }
 
     .pc-count { position:absolute; top:.5rem; right:.5rem; pointer-events:none;
         padding:.1rem .45rem; border-radius:999px; font-size:.68rem; font-weight:800;
