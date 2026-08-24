@@ -59,8 +59,20 @@ class VideoPoster
             return null;
         }
 
-        // Kept where every other picture is kept, so it is served the same way
-        // and swept up by the same housekeeping.
+        return self::keep($video, $binary);
+    }
+
+    /**
+     * Keep a frame somebody else cut.
+     *
+     * A browser that can play the clip can also draw a frame of it, and a
+     * server with no ffmpeg cannot. So the picture is taken where it can be
+     * taken and kept here — once — for every phone that could not have made
+     * it. Kept where every other picture is kept, so it is served the same
+     * way and swept up by the same housekeeping.
+     */
+    public static function keep(string $video, string $binary): ?string
+    {
         $path = MediaStore::putBinary($binary, 'video-posters', 'jpg', null, 'poster-');
         if (! $path) {
             return null;

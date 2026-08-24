@@ -143,7 +143,63 @@ class MediaPickerController extends BaseScheduleController
 
         $poster = \App\Support\VideoPoster::ensure($path);
 
+        /* Why, when the answer is no.
+         *
+         * A picker showing clapperboards looks the same whether this server
+         * has no ffmpeg, cannot reach the clip, or simply failed on it — and
+         * they are three different things to fix. The reason travels with the
+         * answer so the next report of "no thumbnails" comes with its cause
+         * attached.
+         */
+        $why = null;
+        if (! $poster) {
+            $why = \App\Support\VideoOptimizer::usableBinary() ? 'no-frame' : 'no-ffmpeg';
+        }
+
         return $this->jsonOk('Frame ready.', ['data' => [
+            'poster'    => $poster,
+            'posterUrl' => $poster ? \App\Support\MediaStore::url($poster) : null,
+            'why'       => $why,
+        ]]);
+    }
+
+    /**
+     * A frame the browser cut, kept for everyone who cannot cut one.
+     *
+     * The picker falls back to drawing a frame itself when this server says
+     * it has no way to — no ffmpeg, or a clip it cannot read — and hands the
+     * picture back here so the next phone, which may refuse to decode a
+     * 190 MB film for a thumbnail, is simply shown a picture.
+     */
+    public function posterSave(Request $request)
+    {
+        $path = \App\Support\GalleryPick::path(
+            (string) $request->input('path'),
+            \App\Support\GalleryPick::VIDEO_EXTS
+        );
+        if ($path === null) {
+            return $this->jsonFail('That is not a clip this app keeps.', 422);
+        }
+        // Already answered by somebody faster: keep the first one.
+        if ($already = \App\Support\VideoPoster::stored($path)) {
+            return $this->jsonOk('Frame kept.', ['data' => [
+                'poster' => $already, 'posterUrl' => \App\Support\MediaStore::url($already),
+            ]]);
+        }
+
+        $data = (string) $request->input('image', '');
+        if (! preg_match('~^data:image/(jpeg|png|webp);base64,~', $data)) {
+            return $this->jsonFail('That is not a picture.', 422);
+        }
+        $binary = base64_decode(substr($data, strpos($data, ',') + 1), true);
+        // A frame is a small thing; anything past this is not one.
+        if ($binary === false || strlen($binary) < 512 || strlen($binary) > 3 * 1024 * 1024) {
+            return $this->jsonFail('That picture could not be read.', 422);
+        }
+
+        $poster = \App\Support\VideoPoster::keep($path, $binary);
+
+        return $this->jsonOk('Frame kept.', ['data' => [
             'poster'    => $poster,
             'posterUrl' => $poster ? \App\Support\MediaStore::url($poster) : null,
         ]]);

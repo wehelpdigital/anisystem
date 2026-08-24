@@ -82,9 +82,18 @@
     .smp-badge { position: absolute; left: .3rem; top: .3rem; display: inline-flex; align-items: center;
         gap: .15rem; padding: .1rem .35rem; border-radius: 999px; background: rgb(17 24 39 / .72);
         color: #fff; font-size: .62rem; font-weight: 800; letter-spacing: .02em; }
-    /* The words sat against the tile's own edge on three sides. A name long
-       enough to be trimmed put its ellipsis on the border. */
-    .smp-meta { padding: .55rem .9rem .7rem; }
+    /* The words sat against the tile's own edge on three sides, and no amount
+       of padding moved them.
+     *
+       This is a <span> holding two block-level lines. Padding on an inline box
+       is drawn at the start and end of the LINE, not around block children
+       laid out inside it — those belong to the nearest block container, which
+       is the tile, so they lined up with the tile's own edge no matter what
+       was asked for here. Measured at one pixel from the border while this
+       rule said fourteen.
+     *
+       A block box has no such argument with its padding. */
+    .smp-meta { display: block; padding: .55rem .9rem .7rem; }
     .smp-name { display: block; font-size: .7rem; font-weight: 700; color: var(--tl-text, #374151);
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .smp-sub { display: block; font-size: .62rem; color: var(--tl-text-faint, #9ca3af);
@@ -163,6 +172,7 @@
 
     const LABELS = { image: 'Photo', video: 'Clip', drawing: 'Drawing', map: 'Map' };
     const POSTER_URL = @json(\Illuminate\Support\Facades\Route::has('sm.media-picker.poster') ? route('sm.media-picker.poster') : url('/app/sm-media-poster'));
+    const POSTER_SAVE_URL = @json(\Illuminate\Support\Facades\Route::has('sm.media-picker.poster-save') ? route('sm.media-picker.poster-save') : url('/app/sm-media-poster-save'));
 
     /* What a tile shows.
      *
@@ -215,7 +225,7 @@
         const wants = (clip && !m.posterUrl && m.path) ? ` data-needs-frame="${esc(m.path)}"` : '';
         return `<button type="button" class="smp-tile" role="option" data-pick="${i}"${wants}>
             <span class="smp-shot">${blank}${inner}<span class="smp-badge">${esc(LABELS[m.kind] || 'File')}</span></span>
-            <span class="smp-meta">
+            <span class="smp-meta" style="display:block;padding:.55rem .9rem .7rem">
                 <span class="smp-name">${esc(m.title)}</span>
                 <span class="smp-sub">${esc(m.source)}${m.when ? ' · ' + esc(m.when) : ''}</span>
             </span>
@@ -233,6 +243,47 @@
      * Sequential on purpose, and abandoned the moment the grid is rebuilt
      * under it (a search, a new page): the tiles it was filling are gone.
      */
+    /* A frame drawn here, when the server has no way to draw one.
+     *
+     * The browser that is showing the picker can usually play the clip, and
+     * anything that can play it can paint a frame of it onto a canvas. That
+     * picture is worth keeping: the phone that cannot decode a 190 MB film
+     * for a thumbnail is a different phone from this one, and it should be
+     * shown a picture rather than a clapperboard.
+     *
+     * A clip served from another host taints the canvas and cannot be read
+     * back — that is the browser's rule and there is no way round it here —
+     * so this quietly gives up and the clapperboard stays.
+     */
+    function grabFrame(url) {
+        return new Promise((resolve) => {
+            let done = false;
+            const finish = (v) => { if (!done) { done = true; resolve(v); } };
+            const v = document.createElement('video');
+            v.muted = true; v.playsInline = true; v.preload = 'metadata';
+            v.crossOrigin = 'anonymous';                 // same-origin clips are unaffected
+            v.src = clipFrameUrl(url);
+            const bail = () => { try { v.src = ''; } catch (_) {} finish(null); };
+            v.addEventListener('error', bail, { once: true });
+            setTimeout(bail, 12000);                     // a slow clip is not worth a stall
+            v.addEventListener('loadeddata', () => {
+                try {
+                    const w = 640;
+                    const h = Math.max(1, Math.round((v.videoHeight || 360) * w / (v.videoWidth || 640)));
+                    const c = document.createElement('canvas');
+                    c.width = w; c.height = h;
+                    c.getContext('2d').drawImage(v, 0, 0, w, h);
+                    const data = c.toDataURL('image/jpeg', 0.8);
+                    finish(data && data.length > 2048 ? data : null);
+                } catch (_) {
+                    finish(null);                        // tainted canvas, or no frame yet
+                } finally {
+                    try { v.src = ''; } catch (_) {}
+                }
+            }, { once: true });
+        });
+    }
+
     let framesRunning = false;
     async function fillFrames() {
         if (framesRunning) return;
@@ -246,7 +297,18 @@
                 tile.removeAttribute('data-needs-frame');   // asked; never twice
                 try {
                     const res = await window.api(POSTER_URL, { method: 'POST', body: { path } });
-                    const url = res && res.data && res.data.posterUrl;
+                    let url = res && res.data && res.data.posterUrl;
+                    if (!url) {
+                        // The server could not. This browser might: draw one
+                        // and hand it in, so the next phone is shown a picture.
+                        const item = (grid.__shown || []).find((m) => m.path === path);
+                        const shot = item && await grabFrame(item.url);
+                        if (shot) {
+                            const saved = await window.api(POSTER_SAVE_URL, { method: 'POST', body: { path, image: shot } })
+                                .catch(() => null);
+                            url = (saved && saved.data && saved.data.posterUrl) || shot;
+                        }
+                    }
                     if (url && gen === mine) {
                         // The picture replaces the stand-in entirely, so what
                         // is on screen no longer depends on the phone being
