@@ -63,8 +63,15 @@
             box-shadow .28s cubic-bezier(.22,1,.36,1); }
     .smp-tile:hover, .smp-tile:focus-visible { transform: translateY(-2px); border-color: #a8cc7e;
         box-shadow: 0 8px 20px -12px rgb(0 0 0 / .45); }
-    .smp-shot { position: relative; aspect-ratio: 1; background: var(--color-gray-100, #f3f4f6); }
-    .smp-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* The thumbnail is a square whatever is in it — a picture, a clip's own
+       first frame, or nothing that would load. A span is inline, so
+       aspect-ratio was being ignored and the box took its height from the
+       picture inside it; a tile whose media was missing collapsed to a line
+       of text with the badge sitting on top of it. */
+    .smp-shot { position: relative; display: block; aspect-ratio: 1; overflow: hidden;
+        background: var(--color-gray-100, #f3f4f6); }
+    .smp-shot img, .smp-shot .smp-vid { position: absolute; inset: 0; z-index: 1;
+        width: 100%; height: 100%; object-fit: cover; display: block; background: transparent; }
     /* A clip with no poster frame is still a clip: say so rather than show a
        grey square that looks like a failed photo. */
     .smp-shot .smp-blank { position: absolute; inset: 0; display: flex; align-items: center;
@@ -147,13 +154,35 @@
 
     const LABELS = { image: 'Photo', video: 'Clip', drawing: 'Drawing', map: 'Map' };
 
+    /* What a tile shows.
+     *
+     * A clip is drawn as the clip: a muted <video> asked for its metadata,
+     * which paints its own first frame. It used to be drawn as an <img>
+     * pointed at the poster the record claims to have — and a poster that
+     * was never made, or was made on another machine, is a broken-image glyph
+     * in a picker. A video element with a missing poster simply shows the
+     * frame instead, and one that cannot load anything at all leaves the
+     * clapperboard behind it showing.
+     *
+     * The clapperboard sits under every tile rather than instead of one, so
+     * a picture whose file has gone the same way falls back to it too: the
+     * img takes itself out and what is underneath is already right.
+     */
+    // A clip by its file, not only by its label. A record whose kind is
+    // anything but "video" while its file is an .mp4 was being drawn as a
+    // picture — which is an <img> pointed at a film, and that is the broken
+    // glyph this used to show.
+    const VID_FILE = /\.(mp4|mov|webm|mkv|3gp|m4v)(\?|#|$)/i;
+    const isClip = (m) => m.type === 'video' || m.kind === 'video' || VID_FILE.test(String(m.url || ''));
+
     const tileHtml = (m, i) => {
-        const shot = m.posterUrl || (m.type === 'image' ? m.url : null);
-        const inner = shot
-            ? `<img src="${esc(shot)}" alt="" loading="lazy" decoding="async">`
-            : '<span class="smp-blank">🎬</span>';
+        const clip = isClip(m);
+        const blank = `<span class="smp-blank">${clip ? '🎬' : '🖼️'}</span>`;
+        const inner = clip
+            ? `<video class="smp-vid" src="${esc(m.url)}"${m.posterUrl ? ` poster="${esc(m.posterUrl)}"` : ''} muted playsinline preload="metadata" onerror="this.remove()"></video>`
+            : (m.url ? `<img src="${esc(m.posterUrl || m.url)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : '');
         return `<button type="button" class="smp-tile" role="option" data-pick="${i}">
-            <span class="smp-shot">${inner}<span class="smp-badge">${esc(LABELS[m.kind] || 'File')}</span></span>
+            <span class="smp-shot">${blank}${inner}<span class="smp-badge">${esc(LABELS[m.kind] || 'File')}</span></span>
             <span class="smp-meta">
                 <span class="smp-name">${esc(m.title)}</span>
                 <span class="smp-sub">${esc(m.source)}${m.when ? ' · ' + esc(m.when) : ''}</span>
