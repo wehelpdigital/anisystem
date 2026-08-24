@@ -22,7 +22,11 @@
         @media (min-width: 1024px) { .ai-shell { grid-template-columns: 17rem minmax(0, 1fr); } }
         .ai-sessions { display: none; }
         @media (min-width: 1024px) {
-            .ai-sessions { display: flex; flex-direction: column; gap: .3rem; height: calc(100dvh - 11rem); min-height: min(26rem, 60dvh);
+            /* The rail is the other half of the same row, so it is measured
+               the same way — it was the taller of the two and the page's real
+               height came from it, which is why sizing the chat alone changed
+               nothing at all. */
+            .ai-sessions { display: flex; flex-direction: column; gap: .3rem; height: calc(100dvh - 10.6rem - 7.1rem); min-height: min(26rem, 60dvh);
                 overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--color-gray-300) transparent;
                 border: 1px solid var(--color-gray-100); border-radius: 1rem; background: var(--color-white);
                 padding: .6rem; box-shadow: var(--shadow-card); }
@@ -40,9 +44,19 @@
         .ai-session-rename { width: 100%; font-size: .85rem; padding: .2rem .4rem; border-radius: .45rem;
             border: 1px solid var(--color-brand-400); background: var(--color-white); color: var(--color-gray-900); outline: none; }
 
-        .aichat { display: flex; flex-direction: column; height: calc(100dvh - 11rem); min-height: min(26rem, 60dvh); width: 100%; }
+        /* Two numbers, named: what the page itself takes (app bar, main's
+           paddings, the gap the footer holds itself away by) and what the
+           footer takes. It was one number that guessed — and the guess was a
+           hundred pixels short of the footer, so on a desktop the page opened
+           with a scrollbar before a word was said. The footer is shorter where
+           its links sit on fewer rows, and gone on a phone. */
+        .aichat { --ai-chrome: 10.6rem; --ai-foot: 7.1rem;
+            display: flex; flex-direction: column;
+            height: calc(100dvh - var(--ai-chrome) - var(--ai-foot));
+            min-height: min(26rem, 60dvh); width: 100%; }
+        @media (max-width: 1023px) { .aichat { --ai-foot: 5.6rem; } }
         /* Mobile: clear the fixed bottom tab bar so the composer + hint stay visible. */
-        @media (max-width: 767px) { .aichat { height: calc(100dvh - 13.5rem); min-height: min(22rem, 55dvh); } }
+        @media (max-width: 767px) { .aichat { --ai-chrome: 13.5rem; --ai-foot: 0rem; min-height: min(22rem, 55dvh); } }
         /* Inside the shell the page bobbed a little: the pane's height was a
            guess and the footer sat underneath. While the AI module is the one
            showing, the document locks, the footer steps aside, and the pane
@@ -50,14 +64,17 @@
            top padding + the toolbar row). Tuned by measurement. */
         html.sm-ai-open body { overflow: hidden; }
         html.sm-ai-open footer { display: none; }
-        html.sm-ai-open .aichat { height: calc(100dvh - 9.4rem); min-height: 0; }
-        @media (min-width: 768px) { html.sm-ai-open .aichat { height: calc(100dvh - 10.4rem); } }
+        html.sm-ai-open .aichat { --ai-chrome: 9.4rem; --ai-foot: 0rem; min-height: 0; }
+        @media (min-width: 768px) { html.sm-ai-open .aichat { --ai-chrome: 10.4rem; } }
         /* Full-page mode only (the body class never reaches the shell's
            partial): the chat runs to the viewport's true bottom — measured,
            the composer sat 87px adrift. 8.1rem = app bar + main's top
            padding + this page's own crumb row. */
         @media (max-width: 767px) {
-            body.hide-tabbar .aichat { height: calc(100dvh - 8.1rem); margin-bottom: -1rem; }
+            /* The chip row above this page is gone, so the chat takes the
+               pixels it used to cost: 5.4rem is the app bar and main's top
+               padding, measured. */
+            body.hide-tabbar .aichat { --ai-chrome: 5.4rem; --ai-foot: 0rem; margin-bottom: -1rem; }
             body.hide-tabbar .aichat-composer { padding-bottom: calc(.3rem + env(safe-area-inset-bottom)); }
             body.hide-tabbar footer { display: none; }
         }
@@ -106,22 +123,28 @@
         }
 
         /* ===== Welcome hero ===== */
-        .ai-hello { text-align: center; padding: 2rem 1.25rem 1.25rem; border-radius: 1.5rem; background: radial-gradient(120% 90% at 50% 0%, var(--color-brand-50) 0%, transparent 70%); }
-        .ai-hello .aimsg-face { width: 3.5rem; height: 3.5rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-200), 0 10px 24px -8px rgb(74 124 42 / .45); animation: aiFloatIdle 5s ease-in-out infinite; }
-        .ai-hello h2 { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; margin-top: 1rem; color: var(--color-gray-900); }
-        .ai-hello .sub { font-size: .85rem; color: var(--color-gray-500); margin-top: .4rem; max-width: 26rem; margin-inline: auto; line-height: 1.6; }
-        .ai-caps { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem; margin-top: .9rem; }
-        .ai-cap { display: inline-flex; align-items: center; gap: .35rem; padding: .25rem .6rem; border-radius: 999px; font-size: .74rem; font-weight: 700; color: var(--color-brand-700); background: var(--color-brand-50); border: 1px solid var(--color-brand-100); }
-        .ai-overline { font-size: .7rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--color-gray-400); margin: 1.6rem 0 .6rem; }
+        /* The size the floating technician's welcome is.
+
+           This one was a poster: a 3.5rem face, a heading at 1.15rem that
+           wrapped onto two lines, a paragraph, a row of capability chips and
+           an overline — and a chat that opened with a scrollbar because the
+           greeting alone was taller than the screen. The panel that hangs off
+           the floating button says the same thing in a third of the height,
+           and people like it, so this is that: a 3rem face, a line of type at
+           the panel's size, one grey sentence, and the questions. */
+        .ai-hello { margin-block: auto; text-align: center; padding: 1rem .75rem .5rem; border-radius: 1.5rem; background: radial-gradient(120% 90% at 50% 0%, var(--color-brand-50) 0%, transparent 70%); }
+        .ai-hello .aimsg-face { width: 3rem; height: 3rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-200), 0 10px 24px -8px rgb(74 124 42 / .45); animation: aiFloatIdle 5s ease-in-out infinite; }
+        .ai-hello h2 { font-size: .95rem; font-weight: 700; margin-top: .5rem; color: var(--color-gray-800); }
+        .ai-hello .sub { font-size: .8rem; color: var(--color-gray-500); margin-top: .15rem; max-width: 22rem; margin-inline: auto; line-height: 1.45; }
         @keyframes aiFloatIdle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
         /* ===== Suggestion cards ===== */
-        .aisuggest { display: flex; align-items: center; gap: .75rem; width: 100%; min-height: 3rem; padding: .6rem .85rem; text-align: left; border: 1px solid var(--color-gray-200); border-radius: 1rem; background: var(--color-white); box-shadow: var(--shadow-card); font-size: .85rem; font-weight: 700; color: var(--color-gray-800); cursor: pointer; transition: transform .18s cubic-bezier(.22,1,.36,1), border-color .18s ease, box-shadow .18s ease; animation: aiRise .3s ease both; }
+        .aisuggest { display: flex; align-items: center; gap: .55rem; width: 100%; min-height: 2.4rem; padding: .5rem .7rem; text-align: left; border: 1px solid var(--color-gray-200); border-radius: .9rem; background: var(--color-white); box-shadow: var(--shadow-card); font-size: .85rem; font-weight: 700; color: var(--color-gray-800); cursor: pointer; transition: transform .18s cubic-bezier(.22,1,.36,1), border-color .18s ease, box-shadow .18s ease; animation: aiRise .3s ease both; }
         .aisuggest:nth-child(2) { animation-delay: .06s; }
         .aisuggest:nth-child(3) { animation-delay: .12s; }
         .aisuggest:hover { transform: translateY(-1px); border-color: var(--color-brand-300); box-shadow: var(--shadow-card-lg); }
         .aisuggest:active { transform: scale(.98); }
-        .aisuggest .ic { width: 2.25rem; height: 2.25rem; border-radius: .75rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--color-brand-50); color: var(--color-brand-700); }
+        .aisuggest .ic { width: 1.85rem; height: 1.85rem; border-radius: .6rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--color-brand-50); color: var(--color-brand-700); }
         .aisuggest .t { flex: 1 1 auto; min-width: 0; }
         .aisuggest .go { margin-left: auto; flex-shrink: 0; color: var(--color-gray-400); transition: transform .18s ease, color .18s ease; }
         .aisuggest:hover .go { transform: translateX(3px); color: var(--color-brand-600); }
@@ -287,7 +310,14 @@
     $aiPerPhoto = (float) ($settings->creditsPerImage ?? 0);
     $aiPerPhotoTxt = rtrim(rtrim(number_format($aiPerPhoto, 2), '0'), '.');
 @endphp
-@include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'ai'])
+{{-- No module chips over the chat.
+
+     Every other module page wears the row of chips, and inside the Activities
+     shell it is hidden already (#moduleHost .module-chip-nav) because the
+     shell has its own toolbar. This page is a chat wherever it is opened: the
+     row cost it a third of the first screen and the thread opened scrolled.
+     The way back to the other modules is the arrow in the masthead, which
+     goes to the hub. --}}
 
 <div class="ai-shell">
     {{-- Chat sessions rail (desktop; phones use the history sheet) --}}
@@ -420,37 +450,24 @@
                         <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
                     @endif
                 </span>
-                <h2>Magandang araw! Ask me about {{ \Illuminate\Support\Str::limit($schedule->cropType ?: 'this crop', 24) }}</h2>
-                <p class="sub">Fertiliser rates, pests, water, timing, harvest. Snap a leaf and I'll take a look.</p>
-                <div class="ai-caps">
-                    <span class="ai-cap">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 21c.5-4.5 2.5-15 16-17-.5 13.5-8 16-12 16-1.33 0-2.67 0-4 1zm0 0c2-6 5-10 10-12"/></svg>
-                        Leaf check
-                    </span>
-                    <span class="ai-cap">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3s6 6.5 6 11a6 6 0 11-12 0c0-4.5 6-11 6-11z"/></svg>
-                        Water &amp; fertiliser
-                    </span>
-                    <span class="ai-cap">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                        Timing
-                    </span>
-                </div>
-                <p class="ai-overline">Try one of these</p>
-                <div class="grid gap-2.5 max-w-md mx-auto">
-                    <button type="button" class="aisuggest js-suggest">
+                {{-- The panel's words, not a poster's: what it is for, one
+                     grey line about it, and the questions. --}}
+                <h2>Ask about {{ \Illuminate\Support\Str::limit($schedule->cropType ?: 'this crop', 24) }}</h2>
+                <p class="sub">Fertiliser, pests, water, timing — or snap a leaf.</p>
+                <div class="grid gap-2 max-w-md mx-auto mt-3">
+                    <button type="button" class="aisuggest js-suggest" data-q="My leaves are yellowing at the tips — what should I check?">
                         <span class="ic" aria-hidden="true"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 21c.5-4.5 2.5-15 16-17-.5 13.5-8 16-12 16-1.33 0-2.67 0-4 1zm0 0c2-6 5-10 10-12"/></svg></span>
-                        <span class="t">My leaves are yellowing at the tips — what should I check?</span>
+                        <span class="t">Yellowing leaf tips</span>
                         <svg class="go w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                     </button>
-                    <button type="button" class="aisuggest js-suggest">
+                    <button type="button" class="aisuggest js-suggest" data-q="How much urea per hectare for the first top dressing?">
                         <span class="ic" aria-hidden="true"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg></span>
-                        <span class="t">How much urea per hectare for the first top dressing?</span>
+                        <span class="t">Urea for the first top dressing</span>
                         <svg class="go w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                     </button>
-                    <button type="button" class="aisuggest js-suggest">
+                    <button type="button" class="aisuggest js-suggest" data-q="When should I stop irrigating before harvest?">
                         <span class="ic" aria-hidden="true"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3s6 6.5 6 11a6 6 0 11-12 0c0-4.5 6-11 6-11z"/></svg></span>
-                        <span class="t">When should I stop irrigating before harvest?</span>
+                        <span class="t">When to stop irrigating</span>
                         <svg class="go w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                     </button>
                 </div>
@@ -817,7 +834,9 @@ const __init = () => {
     input?.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && !e.shiftKey && window.matchMedia('(min-width: 768px)').matches) { e.preventDefault(); send(); }
     });
-    document.querySelectorAll('.js-suggest').forEach((b) => b.addEventListener('click', () => { input.value = (b.querySelector('.t')?.textContent || b.textContent).trim(); input.dispatchEvent(new Event('input')); input.focus(); }));
+    /* The button reads short so three of them fit above the composer; the
+     * question it fills in is the long, specific one that gets a good answer. */
+    document.querySelectorAll('.js-suggest').forEach((b) => b.addEventListener('click', () => { input.value = (b.dataset.q || b.querySelector('.t')?.textContent || b.textContent).trim(); input.dispatchEvent(new Event('input')); input.focus(); }));
 
     /* ---- Photos: chips under the composer, one per attachment ---- */
     const chips = byId('aiPhotoChips');
