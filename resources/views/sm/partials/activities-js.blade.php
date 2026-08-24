@@ -4591,8 +4591,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="dx-amt">${peso(r.amount)}</span>
                 <span class="dx-note">${r.title ? esc(r.title) : '<span style="opacity:.55">Income</span>'}${r.note ? ' \u00b7 ' + esc(r.note) : ''}</span>
                 <span class="dx-actions">
-                    <button type="button" class="dx-btn dx-edit${LOCK_EDIT_CLS}" data-income-open="${esc(date)}" data-income-id="${r.id}"${LOCK_EDIT} title="${esc(editTitle('Edit income'))}">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    <button type="button" class="dx-btn dx-kebab${LOCK_EDIT_CLS}" data-dx-menu="income" data-dx-id="${r.id}" data-date="${esc(date)}"${LOCK_EDIT} title="${esc(editTitle('Income options'))}" aria-label="Income options">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg>
                     </button>
                 </span>
             </div>`).join('');
@@ -6006,11 +6006,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="dx-amt">₱${esc(fmtMoney(r.amount))}</span>
             <span class="dx-note">${r.note ? esc(r.note) : '<span style="opacity:.55">No note</span>'}</span>
             <span class="dx-actions">
-                <button type="button" class="dx-btn dx-edit${LOCK_EDIT_CLS}" data-expense-edit="${r.id}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Edit expense'))}">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                </button>
-                <button type="button" class="dx-btn dx-del${LOCK_EDIT_CLS}" data-expense-del="${r.id}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Delete expense'))}">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                <button type="button" class="dx-btn dx-kebab${LOCK_EDIT_CLS}" data-dx-menu="expense" data-dx-id="${r.id}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Expense options'))}" aria-label="Expense options">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg>
                 </button>
             </span>
         </div>`).join('');
@@ -6246,6 +6243,141 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    /* ---- One menu for a money row --------------------------------------
+     *
+     * A pencil and a cross on a row this size are two small targets and one
+     * missing verb: moving an entry to another day was a drag and nothing
+     * else, which a phone can do but only after finding out it can. The
+     * kebab holds all three — edit, move, delete — and says which entry it
+     * is talking about, so nothing has to be aimed at twice.
+     */
+    let dxMenuCtx = null;
+
+    function openDxMenu(kind, id, dateKey, rowEl) {
+        if (!mayEditBoard() || !id || !dateKey) return;
+        dxMenuCtx = { kind, id: String(id), date: dateKey };
+        const amt = rowEl ? ($qs('.dx-amt', rowEl)?.textContent || '') : '';
+        const note = rowEl ? ($qs('.dx-note', rowEl)?.textContent || '') : '';
+        $id('dxMenuTitle').textContent = kind === 'income' ? 'Extra income' : 'Extra expense';
+        $id('dxMenuWhat').innerHTML =
+            `<span class="dxm-amt">${esc(amt.trim())}</span>`
+            + `<span class="dxm-note">${esc(note.trim())}</span>`
+            + `<span class="dxm-day">${esc(prettyDateFull(dateKey))}</span>`;
+        openSheet('dxMenuSheet');
+    }
+
+    /** Every day this board can show, in order — the days a row can go to. */
+    function boardDays() {
+        const out = [];
+        $qsa('#activitiesList .date-group[data-date], #activitiesList .rest-day-marker[data-date]')
+            .forEach((el) => {
+                const d = (el.getAttribute('data-date') || '').trim();
+                if (d && d !== '__no-date__' && out.indexOf(d) === -1) out.push(d);
+            });
+        return out.sort();
+    }
+
+    function openDxMove() {
+        if (!dxMenuCtx) return;
+        const { date } = dxMenuCtx;
+        const body = $id('dxMoveBody');
+        $id('dxMoveSubtitle').textContent = (dxMenuCtx.kind === 'income' ? 'Income' : 'Expense')
+            + ' currently on ' + prettyDateFull(date);
+        const days = boardDays();
+        body.innerHTML = days.map((d) => {
+            const cur = d === date;
+            // "Thu, Mar 5, 2026" → the weekday in its own column, the date after it.
+            const dow = prettyDateFull(d).split(',')[0];
+            return `<button type="button" class="dxm-day-btn${cur ? ' is-current' : ''}"${cur ? ' disabled' : ''} data-dxm-date="${esc(d)}">
+                <span class="dxm-dow">${esc(dow)}</span>
+                <span class="min-w-0">${esc(prettyDate(d))}</span>
+                ${cur ? '<span class="dxm-tag">Now here</span>' : ''}
+            </button>`;
+        }).join('') || '<p class="text-sm text-gray-500">This board has no other days yet.</p>';
+        openSheet('dxMoveSheet');
+        // Land the list on the day it is leaving, not on the first of the season.
+        setTimeout(() => $qs('.dxm-day-btn.is-current', body)?.scrollIntoView({ block: 'center' }), 60);
+    }
+
+    /** Delete one income entry from the strip, asking first. */
+    async function deleteIncomeRow(dateKey, id) {
+        if (!mayEditBoard() || !id) return;
+        const ok = window.confirmAction
+            ? await confirmAction({ title: 'Delete this income?', message: 'It will no longer count towards the day.', confirmText: 'Delete', danger: true })
+            : confirm('Delete this income entry?');
+        if (!ok) return;
+        try {
+            await api(U.dayIncomeDelete(id), { method: 'DELETE', body: { incomeId: id } });
+            renderDayIncome(dateKey);
+            repaintDayCash(dateKey);
+            toast('Income deleted.');
+        } catch (err) { toast(err.message, 'error'); }
+    }
+
+    /* Carry one income entry to another day.
+     *
+     * The same trick the expenses use: the save endpoint takes a date for a
+     * row it already knows by id, so a move is that save with the day changed
+     * — no second endpoint to write and defend. */
+    async function moveIncomeToDate(id, fromDate, toDate) {
+        if (!mayEditBoard() || !id || !toDate || fromDate === toDate) return;
+        try {
+            const list = await api(`${U.dayIncomeList()}&incomeDate=${encodeURIComponent(fromDate)}`);
+            const r = (list.data || []).find((x) => String(x.id) === String(id));
+            if (!r) { toast('That income is no longer on this day.', 'error'); return; }
+            await api(U.dayIncomeSave(), { method: 'POST', body: {
+                incomeId: id,
+                incomeDate: toDate,
+                amount: Number(r.amount) || 0,
+                title: r.title || '',
+                note: r.note || '',
+            } });
+            renderDayIncome(fromDate);
+            renderDayIncome(toDate);
+            repaintDayCash(fromDate);
+            repaintDayCash(toDate);
+            toast('Income moved to ' + prettyDateFull(toDate) + '.');
+        } catch (err) { toast(err.message, 'error'); }
+    }
+
+    /** The header pill that counts a day's money, redrawn. */
+    function repaintDayCash(dateKey) {
+        if (typeof paintDayCash !== 'function') return;
+        $qsa(`#activitiesList .date-group[data-date="${dateKey}"]`).forEach((g) => paintDayCash(g));
+    }
+
+    document.addEventListener('click', (e) => {
+        const act = e.target.closest('[data-dxm]');
+        if (act && dxMenuCtx) {
+            e.preventDefault();
+            const { kind, id, date } = dxMenuCtx;
+            const what = act.getAttribute('data-dxm');
+            // One sheet on screen at a time: the day list replaces the menu
+            // rather than stacking on it, which showed two headers at once.
+            closeSheet('dxMenuSheet');
+            if (what === 'move') { openDxMove(); return; }
+            if (what === 'edit') {
+                if (kind === 'income') openDayIncome(date, id);
+                else openExpenseSheet(date, id);
+            } else if (what === 'delete') {
+                if (kind === 'income') deleteIncomeRow(date, id);
+                else deleteExpense(date, id);
+            }
+            return;
+        }
+        const day = e.target.closest('[data-dxm-date]');
+        if (day && dxMenuCtx) {
+            e.preventDefault();
+            const to = day.getAttribute('data-dxm-date');
+            const { kind, id, date } = dxMenuCtx;
+            closeSheet('dxMoveSheet');
+            closeSheet('dxMenuSheet');
+            if (kind === 'income') moveIncomeToDate(id, date, to);
+            else moveExpenseToDate({ id, date }, to);
+            return;
+        }
+    });
+
     // Delegated: add/edit/delete buttons live inside dynamically-rendered strips.
     document.addEventListener('click', (e) => {
         const hdrExp = e.target.closest('.day-expense-btn');
@@ -6256,15 +6388,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (edit) { openExpenseSheet(edit.getAttribute('data-date') || '', edit.getAttribute('data-expense-edit')); return; }
         const del = e.target.closest('[data-expense-del]');
         if (del) { deleteExpense(del.getAttribute('data-date') || '', del.getAttribute('data-expense-del')); return; }
-        // The income card's own pencil: the sheet lists that day's entries and
-        // edits any of them, so it is the one door for all of it.
-        const inc = e.target.closest('[data-income-open]');
-        if (inc) {
+        // Either strip's kebab: one door for editing, moving and deleting.
+        const kebab = e.target.closest('[data-dx-menu]');
+        if (kebab) {
             e.preventDefault();
-            // The pencil is on one entry, so the sheet opens ON that entry —
-            // it used to open the day's blank "add" form, which reads as a
-            // sheet that failed to load.
-            openDayIncome(inc.getAttribute('data-income-open') || '', inc.getAttribute('data-income-id') || '');
+            openDxMenu(kebab.getAttribute('data-dx-menu'), kebab.getAttribute('data-dx-id'),
+                       (kebab.getAttribute('data-date') || '').trim(), kebab.closest('.dx-row'));
             return;
         }
     });
@@ -7921,7 +8050,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // An extra expense is picked up the same way a card is: HTML5 drag
         // events never fire on a phone, so without this arm the strip could
         // only be dragged with a mouse — which is not what a farmer has.
-        const dx = header ? null : t.target.closest?.('.dx-row[data-expense-id]');
+        // A long press on the row's own kebab is aiming at the menu, not at a
+        // handle — the mouse path already refuses to drag from a button.
+        const dx = (header || t.target.closest?.('button, a')) ? null : t.target.closest?.('.dx-row[data-expense-id]');
         const card = (header || dx) ? null : t.target.closest?.('.activity-card[data-id]');
         if (!header && !card && !dx) return;
 

@@ -1104,9 +1104,27 @@
         .dx-head .dx-total { margin-left: auto; font-variant-numeric: tabular-nums; }
         .dx-list { display: flex; flex-direction: column; }
         .dx-row {
-            display: flex; align-items: center; gap: .5rem; padding: .4rem .6rem;
+            position: relative;
+            display: flex; align-items: center; gap: .5rem;
+            /* The right gutter belongs to the grip, and every row keeps it —
+               income rows have no dots, but their kebab has to line up with
+               the expense card's directly above it. */
+            padding: .4rem 1.55rem .4rem .6rem;
             border-top: 1px dashed #fed7aa; font-size: .8rem; color: #7c2d12;
         }
+        /* A row that can be carried says so with the same six dots a card
+           wears, in the same corner, drawn in CSS and deaf to the pointer so
+           every touch still reaches the drag listeners. The row keeps a
+           gutter for them so a long note cannot run underneath. */
+        .dx-row[draggable="true"]::after {
+            content: ''; position: absolute; right: .55rem; top: .55rem;
+            width: 2px; height: 2px; border-radius: 50%;
+            pointer-events: none; opacity: .5; background: currentColor;
+            box-shadow: 4px 0 0 currentColor,
+                        0 5px 0 currentColor, 4px 5px 0 currentColor,
+                        0 10px 0 currentColor, 4px 10px 0 currentColor;
+        }
+        .dx-row.dragging::after { display: none; }
         .dx-row .dx-amt { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
         .dx-row .dx-note { color: #9a3412; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .dx-row .dx-actions { margin-left: auto; display: flex; gap: .1rem; flex-shrink: 0; }
@@ -1116,6 +1134,51 @@
         }
         .dx-row .dx-btn:hover { background: #ffedd5; }
         .dx-row .dx-btn.dx-del:hover { background: #fee2e2; color: #dc2626; }
+        /* The row's menu: one line saying which entry is being talked about,
+           then the three things that can be done to it. */
+        .dxm-what {
+            display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap;
+            padding: .55rem .7rem; margin-bottom: .85rem; border-radius: .6rem;
+            background: var(--tl-hover, var(--color-gray-100));
+        }
+        .dxm-what .dxm-amt { font-weight: 800; font-variant-numeric: tabular-nums; }
+        .dxm-what .dxm-note { color: var(--tl-text-soft, var(--color-gray-600)); min-width: 0; }
+        .dxm-what .dxm-day { margin-left: auto; font-size: .74rem; color: var(--tl-text-faint, #9ca3af); }
+        .dxm-item {
+            display: flex; align-items: center; gap: .7rem; width: 100%;
+            padding: .7rem .75rem; border: 1px solid var(--tl-border); border-radius: .65rem;
+            font-size: .88rem; font-weight: 600; text-align: left; color: inherit;
+            transition: border-color .18s ease, background .18s ease, transform .18s cubic-bezier(.22,1,.36,1);
+        }
+        .dxm-item + .dxm-item { margin-top: .5rem; }
+        .dxm-item:hover { border-color: var(--color-brand-400); background: var(--tl-hover, var(--color-gray-50)); }
+        .dxm-item:active { transform: scale(.99); }
+        .dxm-item svg { width: 1.05rem; height: 1.05rem; flex-shrink: 0; color: var(--tl-text-faint, #9ca3af); }
+        .dxm-item .dxm-sub { display: block; font-size: .72rem; font-weight: 500; color: var(--tl-text-faint, #9ca3af); }
+        .dxm-danger { color: #b91c1c; }
+        .dxm-danger svg { color: #dc2626; }
+        .dxm-danger:hover { border-color: #fca5a5; background: #fef2f2; }
+        html.dark .dxm-danger { color: #f47c7c; }
+        html.dark .dxm-danger:hover { border-color: #7f2f2f; background: #3d1c1f; }
+        @media (prefers-reduced-motion: reduce) { .dxm-item { transition: none; } }
+        /* The day list behind "Move to another day". */
+        .dxm-day-btn {
+            display: flex; align-items: center; gap: .6rem; width: 100%;
+            padding: .55rem .7rem; border: 1px solid var(--tl-border); border-radius: .55rem;
+            font-size: .84rem; text-align: left; color: inherit;
+            transition: border-color .18s ease, background .18s ease;
+        }
+        .dxm-day-btn + .dxm-day-btn { margin-top: .35rem; }
+        .dxm-day-btn:hover { border-color: var(--color-brand-400); background: var(--tl-hover, var(--color-gray-50)); }
+        .dxm-day-btn .dxm-dow { font-weight: 800; width: 2.4rem; flex-shrink: 0; }
+        .dxm-day-btn .dxm-tag {
+            margin-left: auto; font-size: .68rem; font-weight: 700; padding: .1rem .45rem;
+            border-radius: 999px; background: var(--tl-hover, var(--color-gray-100));
+            color: var(--tl-text-faint, #9ca3af);
+        }
+        .dxm-day-btn.is-current { opacity: .6; cursor: default; }
+        .dxm-day-btn.is-current:hover { border-color: var(--tl-border); background: transparent; }
+
         .dx-add {
             display: inline-flex; align-items: center; gap: .35rem; padding: .4rem .6rem; width: 100%;
             border-top: 1px dashed #fed7aa; font-size: .76rem; font-weight: 700; color: #c2410c;
@@ -2764,6 +2827,41 @@
         </div>
     </div>
 </div>
+<div class="sheet hidden" id="dxMenuSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="dxMenuTitle">Extra expense</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="dxm-what" id="dxMenuWhat"></div>
+        <button type="button" class="dxm-item" data-dxm="edit">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+            <span>Edit<span class="dxm-sub">Change the amount or the note</span></span>
+        </button>
+        <button type="button" class="dxm-item" data-dxm="move">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M3 11h18M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <span>Move to another day<span class="dxm-sub">It keeps its amount and note</span></span>
+        </button>
+        <button type="button" class="dxm-item dxm-danger" data-dxm="delete">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg>
+            <span>Delete<span class="dxm-sub">You will be asked to confirm</span></span>
+        </button>
+    </div>
+</div>
+
+<div class="sheet hidden" id="dxMoveSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <div class="min-w-0">
+            <h3 class="sheet-title">Move to another day</h3>
+            <p class="text-xs text-gray-500 mt-0.5" id="dxMoveSubtitle"></p>
+        </div>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body" id="dxMoveBody"></div>
+</div>
+
 @include('sm.partials.draw-canvas')
 @include('sm.partials.note-editor')
 @include('sm.partials.note-lightbox')
