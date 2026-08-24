@@ -781,11 +781,14 @@ class CommunityGroupController extends Controller
         }
 
         $url = match ($type) {
-            'post' => route('community.groups.show', ['groupId' => $target->groupId]) . '#post-' . $target->id,
+            // The route's parameter is `id`; naming it groupId threw on every
+            // reaction inside a discussion — the URL could not be built, so
+            // the whole request 500'd before the reaction was even reported.
+            'post' => route('community.groups.show', ['id' => $target->groupId]) . '#post-' . $target->id,
             'reply' => (function () use ($target) {
                 $post = CommunityGroupPost::active()->find($target->postId);
                 return $post
-                    ? route('community.groups.show', ['groupId' => $post->groupId]) . '#post-' . $post->id
+                    ? route('community.groups.show', ['id' => $post->groupId]) . '#post-' . $post->id
                     : route('community.index');
             })(),
             // `wallpost-<id>` is the id feed-post.blade.php actually renders;
