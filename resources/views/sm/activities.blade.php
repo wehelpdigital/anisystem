@@ -1041,6 +1041,11 @@
         .inline-note.note-landed { animation: noteLandIn .34s cubic-bezier(.22,1,.36,1); }
 
         /* ---- Per-day extra expenses strip ------------------------------- */
+        /* A row you can pick up: the cursor says so, and the row fades while
+           it is in the air the way a card and a note do. */
+        .dx-row[draggable="true"] { cursor: grab; }
+        .dx-row[draggable="true"]:active { cursor: grabbing; }
+        .dx-row.dragging { opacity: .45; }
         .day-expense-block { margin: .55rem .7rem 0; }
         .day-expense-block:empty { display: none; }
         /* What the day earned, under what it cost — green against the
@@ -2634,6 +2639,13 @@
                         @endphp
                         <div class="date-note-block" data-date="{{ $dateKey }}" data-content="{{ $noteRow?->noteContent }}" data-media="{{ $dnMedia->toJson() }}" title="{{ $boardMayDragNote ? 'Drag to place it between activities · click to edit' : ($boardMayNote ? 'Click to edit this note' : $whyNoNote) }}" @if(!$noteRow) style="display:none;" @endif><div class="date-note-inner rich-text">{!! $noteRow?->noteContent !!}</div>@if ($dnMedia->count())<div class="date-note-media">@include('sm.partials.note-attachments', ['media' => $dnMedia])</div>@endif<button type="button" class="date-note-edit" title="Edit note" aria-label="Edit note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button type="button" class="date-note-del" title="Delete note" aria-label="Delete note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg></button></div>
                         <div class="day-expense-block" data-date="{{ $dateKey }}"></div>
+                        {{-- The income strip's own place. It was only ever
+                             created by the board's JS renderer, so on a
+                             freshly loaded page an income saved with the sheet
+                             had nowhere to be drawn: the server said "saved",
+                             the day showed nothing, and only a redraw of that
+                             day ever brought it out. --}}
+                        <div class="day-income-block" data-date="{{ $dateKey }}" hidden></div>
                         <div class="day-income-block" data-date="{{ $dateKey }}" hidden></div>
                     @endif
                     @php

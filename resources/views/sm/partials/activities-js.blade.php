@@ -5959,7 +5959,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // lists what's already logged (edit/delete inline).
         if (!rows.length) { block.innerHTML = ''; return; }
         const total = rows.reduce((s, r) => s + Number(r.amount || 0), 0);
-        const items = rows.map((r) => `<div class="dx-row" data-expense-id="${r.id}">
+        // Draggable, like the day's note: an expense written on the wrong day
+        // was a delete and a retype, and the amount had to be remembered in
+        // between. A locked board hands out no handles.
+        const grab = MAY_DRAG ? ' draggable="true"' : '';
+        const items = rows.map((r) => `<div class="dx-row" data-expense-id="${r.id}" data-date="${esc(dateKey)}"${grab} title="${esc(MAY_DRAG ? 'Drag to another day' : '')}">
             <span class="dx-amt">₱${esc(fmtMoney(r.amount))}</span>
             <span class="dx-note">${r.note ? esc(r.note) : '<span style="opacity:.55">No note</span>'}</span>
             <span class="dx-actions">
@@ -6007,6 +6011,48 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('dayExpenseDeleteBtn').classList.toggle('hidden', !existing);
         openSheet('dayExpenseSheet');
         window.smFocus($id('dayExpenseAmount'), { delay: 250 });
+    }
+
+    /* Carry one expense to another day.
+     *
+     * The save endpoint already takes a date for a row it is given by id, so
+     * moving is that save with the day changed and everything else left
+     * alone — no new address to defend, and an edit made while offline still
+     * loses nothing. Both days are redrawn: the one it left and the one it
+     * landed on, plus the cash pill in each header, which is counted from
+     * these rows.
+     */
+    async function moveExpenseToDate(src, toDate) {
+        if (!mayEditBoard() || !src || !src.id) return;
+        const fromDate = src.date;
+        if (!fromDate || fromDate === toDate) return;
+        const row = (DAY_EXPENSES[fromDate] || []).find((r) => String(r.id) === String(src.id));
+        if (!row) return;
+        try {
+            const res = await api(U.dayExpenseSave(), {
+                method: 'POST',
+                body: {
+                    expenseId: src.id,
+                    expenseDate: toDate,
+                    amount: Number(row.amount) || 0,
+                    note: row.note || '',
+                },
+            });
+            // The answer is the day it landed on; the day it left has to be
+            // told separately, or the amount shows in both places until the
+            // next reload.
+            DAY_EXPENSES[toDate] = (res && res.data) || [];
+            DAY_EXPENSES[fromDate] = (DAY_EXPENSES[fromDate] || []).filter((r) => String(r.id) !== String(src.id));
+            renderExpenseBlockFor(fromDate);
+            renderExpenseBlockFor(toDate);
+            if (typeof paintDayCash === 'function') {
+                $qsa(`#activitiesList .date-group[data-date="${fromDate}"], #activitiesList .date-group[data-date="${toDate}"]`)
+                    .forEach((g) => paintDayCash(g));
+            }
+            toast('Expense moved to ' + prettyDateFull(toDate) + '.');
+        } catch (err) {
+            toast(err.message, 'error');
+        }
     }
 
     async function deleteExpense(dateKey, expenseId) {
@@ -6481,6 +6527,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let dragBoardSnapshot = null;
     let dragGroupDate = null; // set while dragging a date header (whole-day move)
     let dragNoteDate = null;   // set while dragging a date-note block to another day
+    let dragExpense = null;    // {id, date} while an extra expense is in the air
     let dragMarkerDate = null; // set while dragging a resume-here marker to another day
 
     // Spinner + dim on the block whose save is in flight; a landing animation
@@ -7032,6 +7079,24 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Dragging one extra expense onto another day moves it there.
+        const dxRow = e.target.closest && e.target.closest('.dx-row[data-expense-id]');
+        if (dxRow) {
+            // Its own pencil and cross are not handles.
+            if (e.target.closest('button, a')) { e.preventDefault(); return; }
+            if (!MAY_DRAG) { e.preventDefault(); return; }
+            dragExpense = {
+                id: dxRow.getAttribute('data-expense-id'),
+                date: (dxRow.getAttribute('data-date') || '').trim(),
+            };
+            dxRow.classList.add('dragging');
+            if (e.dataTransfer) {
+                e.dataTransfer.effectAllowed = 'move';
+                try { e.dataTransfer.setData('text/plain', 'expense:' + dragExpense.id); } catch (_) { /* noop */ }
+            }
+            return;
+        }
+
         // Dragging a resume-here marker moves it to another day.
         const mk = e.target.closest && e.target.closest('.progress-marker[data-date]');
         if (mk) {
@@ -7091,11 +7156,12 @@ document.addEventListener('DOMContentLoaded', () => {
         $qsa('.date-header.dragging').forEach((el) => el.classList.remove('dragging'));
         $qsa('.date-activities.drag-over, .rest-day-marker.drag-over, .date-group.drag-over-group')
             .forEach((el) => el.classList.remove('drag-over', 'drag-over-group'));
-        $qsa('.date-note-block.dragging, .progress-marker.dragging, .inline-note.dragging').forEach((el) => el.classList.remove('dragging'));
+        $qsa('.date-note-block.dragging, .progress-marker.dragging, .inline-note.dragging, .dx-row.dragging').forEach((el) => el.classList.remove('dragging'));
         dragSourceCard = null;
         dragOrigin = null;
         dragGroupDate = null;
         dragNoteDate = null;
+        dragExpense = null;
         dragMarkerDate = null;
         dragInlineEl = null;
     });
@@ -7126,7 +7192,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Note / marker move: highlight the target day.
-        if (dragNoteDate || dragMarkerDate) {
+        if (dragNoteDate || dragMarkerDate || dragExpense) {
             const targetGroup = e.target.closest && e.target.closest('.date-group');
             const targetDate = (targetGroup?.getAttribute('data-date') || '').trim();
             const src = dragNoteDate || dragMarkerDate;
@@ -7205,17 +7271,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Note / marker move drop.
-        if (dragNoteDate || dragMarkerDate) {
+        if (dragNoteDate || dragMarkerDate || dragExpense) {
             const targetGroup = e.target.closest && e.target.closest('.date-group');
             const targetDate = (targetGroup?.getAttribute('data-date') || '').trim();
-            const noteSrc = dragNoteDate, markerSrc = dragMarkerDate;
-            dragNoteDate = null; dragMarkerDate = null;
+            const noteSrc = dragNoteDate, markerSrc = dragMarkerDate, expSrc = dragExpense;
+            dragNoteDate = null; dragMarkerDate = null; dragExpense = null;
             $qsa('.date-group.drag-over-group').forEach((el) => el.classList.remove('drag-over-group'));
-            $qsa('.date-note-block.dragging, .progress-marker.dragging').forEach((el) => el.classList.remove('dragging'));
+            $qsa('.date-note-block.dragging, .progress-marker.dragging, .dx-row.dragging').forEach((el) => el.classList.remove('dragging'));
             if (!targetDate || targetDate === '__no-date__') return;
             e.preventDefault();
             if (noteSrc) moveNoteToDate(noteSrc, targetDate);
             else if (markerSrc) moveMarkerToDate(markerSrc, targetDate);
+            else if (expSrc) moveExpenseToDate(expSrc, targetDate);
             return;
         }
 
