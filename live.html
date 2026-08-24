@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    
+    <style>html { touch-action: manipulation; }</style>
+    <script>
+        document.addEventListener('gesturestart', function (e) { e.preventDefault(); });
+        document.addEventListener('gesturechange', function (e) { e.preventDefault(); });
+    </script>
+    <meta name="csrf-token" content="MaLrodJMp9M23GaKNVSVa3YPNaHcoPT9JgamTt3X">
+    
+    <script>
+        document.documentElement.classList.add('js');
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                if (!window.__revealBooted) {
+                    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
+                }
+            }, 600);
+        });
+    </script>
+    <title>Log In — AniSystem by AniSenso</title>
+    <meta name="description" content="AniSystem — the cropping schedule manager for Filipino farmers by AniSenso. Plan lots, workers, materials, activities and irrigation in one mobile-friendly web app.">
+    <link rel="icon" type="image/svg+xml" href="https://anisystem-production.up.railway.app/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+            <script data-theme-prepaint>
+            (() => {
+                try {
+                    if (/(?:^|;\s*)anisystem-theme=dark(?:;|$)/.test(document.cookie)) {
+                        document.documentElement.classList.add('dark');
+                    }
+                } catch (_) {}
+            })();
+        </script>
+        <link rel="preload" as="style" href="https://anisystem-production.up.railway.app/build/assets/app-MfSofR26.css" /><link rel="modulepreload" as="script" href="https://anisystem-production.up.railway.app/build/assets/app-zDjzW1eV.js" /><link rel="stylesheet" href="https://anisystem-production.up.railway.app/build/assets/app-MfSofR26.css" /><script type="module" src="https://anisystem-production.up.railway.app/build/assets/app-zDjzW1eV.js"></script>    <style>
+    /* The spinner grows out of the label instead of popping in, so the text
+       sliding left reads as one motion. The negative end-margin cancels .btn's
+       own gap while the spinner is collapsed, leaving the idle button pixel
+       identical to before. */
+    #loginSubmit .login-spin {
+        flex: none;
+        width: 0;
+        height: 1.25rem;
+        opacity: 0;
+        margin-inline-end: -0.5rem;
+        transition: width .28s cubic-bezier(.22,1,.36,1),
+                    opacity .28s cubic-bezier(.22,1,.36,1),
+                    margin-inline-end .28s cubic-bezier(.22,1,.36,1);
+    }
+    #loginSubmit.is-busy .login-spin {
+        width: 1.25rem;
+        opacity: 1;
+        margin-inline-end: 0;
+        animation: loginSpin .9s linear infinite;
+    }
+    @keyframes loginSpin { to { transform: rotate(360deg); } }
+    /* Busy is not the same as unavailable, so the button keeps its full weight
+       while it works — .btn's disabled fade would leave the spinner at roughly
+       a quarter alpha on yellow. The disabled attribute itself stays: that is
+       what actually blocks a second submit. */
+    #loginSubmit.is-busy:disabled { opacity: 1; color: #1a1a1a; }
+    /* Reduced motion drops the grow-in travel but only slows the spin — a
+       frozen spinner reads as a hung request rather than a working one. */
+    @media (prefers-reduced-motion: reduce) {
+        #loginSubmit .login-spin { transition: none; }
+        #loginSubmit.is-busy .login-spin { animation-duration: 2.4s; }
+    }
+</style>
+</head>
+<body class="min-h-screen flex flex-col bg-white">
+
+    
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100" x-data="{ open: false }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <a href="https://anisystem-production.up.railway.app" class="flex items-center shrink-0">
+                    <img src="https://anisystem-production.up.railway.app/images/logo.png" alt="AniSystem by AniSenso" class="h-10 md:h-12 w-auto">
+                </a>
+
+                <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-gray-700">
+                    <a href="https://anisystem-production.up.railway.app" class="hover:text-brand-600 ">Home</a>
+                    <a href="https://anisystem-production.up.railway.app/about" class="hover:text-brand-600 ">About</a>
+                    <a href="https://anisystem-production.up.railway.app/tutorial" class="hover:text-brand-600 ">Tutorial</a>
+                    <a href="https://anisystem-production.up.railway.app/contact" class="hover:text-brand-600 ">Contact Us</a>
+                </nav>
+
+                <div class="hidden md:flex items-center gap-3">
+                                            <a href="https://anisystem-production.up.railway.app/login" class="btn btn-outline btn-sm">Log In</a>
+                        <a href="https://anisystem-production.up.railway.app/signup" class="btn btn-accent btn-sm">Get Started</a>
+                                    </div>
+
+                <button type="button" class="md:hidden p-2 -mr-2 text-gray-700" @click="open = !open" aria-label="Menu">
+                    <svg x-show="!open" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+                    <svg x-show="open" x-cloak class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+                </button>
+            </div>
+        </div>
+
+        
+        <div x-show="open" x-cloak x-transition.opacity class="md:hidden border-t border-gray-100 bg-white px-4 pb-5 pt-3 space-y-1">
+                            <a href="https://anisystem-production.up.railway.app" class="block rounded-xl px-4 py-3 text-base font-semibold text-gray-700 hover:bg-gray-50">Home</a>
+                            <a href="https://anisystem-production.up.railway.app/about" class="block rounded-xl px-4 py-3 text-base font-semibold text-gray-700 hover:bg-gray-50">About</a>
+                            <a href="https://anisystem-production.up.railway.app/tutorial" class="block rounded-xl px-4 py-3 text-base font-semibold text-gray-700 hover:bg-gray-50">Tutorial</a>
+                            <a href="https://anisystem-production.up.railway.app/contact" class="block rounded-xl px-4 py-3 text-base font-semibold text-gray-700 hover:bg-gray-50">Contact Us</a>
+                        <div class="pt-3 flex flex-col gap-2">
+                                    <a href="https://anisystem-production.up.railway.app/login" class="btn btn-outline w-full">Log In</a>
+                    <a href="https://anisystem-production.up.railway.app/signup" class="btn btn-accent w-full">Get Started</a>
+                            </div>
+        </div>
+    </header>
+
+    <main class="grow">
+        <div class="bg-gray-50 py-10 md:py-16 px-4 min-h-[70vh] flex items-start justify-center">
+    <div class="w-full max-w-md">
+        <div class="text-center mb-6">
+            <img src="https://anisystem-production.up.railway.app/images/logo.png" alt="AniSystem" class="h-12 w-auto mx-auto mb-4">
+            <h1 class="text-2xl font-bold text-gray-900">Welcome back</h1>
+            <p class="text-sm text-gray-500 mt-1">Log in to manage your cropping schedules.</p>
+        </div>
+
+        <div class="card card-body">
+            <form id="loginForm" method="POST" action="https://anisystem-production.up.railway.app/login" class="space-y-4" novalidate>
+                <input type="hidden" name="_token" value="MaLrodJMp9M23GaKNVSVa3YPNaHcoPT9JgamTt3X" autocomplete="off">
+                <div>
+                    <label for="email" class="form-label">Email address</label>
+                    <input id="email" name="email" type="email" value=""
+                        class="form-input" placeholder="you@example.com" required autofocus autocomplete="email">
+                                    </div>
+
+                <div>
+                    <div class="flex items-center justify-between mb-1.5">
+                        <label for="password" class="form-label mb-0">Password</label>
+                        <a href="https://anisystem-production.up.railway.app/forgot-password" class="text-xs font-semibold text-brand-700 hover:underline">Forgot password?</a>
+                    </div>
+                    <input id="password" name="password" type="password"
+                        class="form-input" placeholder="••••••••" required autocomplete="current-password">
+                                    </div>
+
+                <label class="flex items-center gap-2.5 text-sm text-gray-700 select-none cursor-pointer py-1">
+                    <input type="checkbox" name="remember" value="1" 
+                        class="w-5 h-5 rounded border-gray-300 text-brand-600 focus:ring-brand-500">
+                    Keep me logged in
+                </label>
+
+                <button type="submit" id="loginSubmit" class="btn btn-accent btn-lg w-full">
+                    <svg class="login-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
+                    <span data-login-label>Log In</span>
+                </button>
+            </form>
+        </div>
+
+        <p class="text-center text-sm text-gray-600 mt-6">
+            No account yet?
+            <a href="https://anisystem-production.up.railway.app/signup" class="font-bold text-brand-700 hover:underline">Create one for free</a>
+        </p>
+
+                    
+            <div class="mt-6 rounded-2xl border border-dashed border-brand-300 bg-brand-50/70 p-4"
+                 x-data="{ fill(email, password) {
+                     document.getElementById('email').value = email;
+                     document.getElementById('password').value = password;
+                     document.getElementById('password').focus();
+                 } }">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="badge badge-yellow">Test logins</span>
+                    <span class="text-xs text-gray-500">Local preview only</span>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between gap-3">
+                        <div class="min-w-0">
+                            <p class="text-sm font-semibold text-gray-800">Member</p>
+                            <p class="text-xs text-gray-500 truncate">demo@anisystem.test · demo1234</p>
+                        </div>
+                        <button type="button" @click="fill('demo@anisystem.test', 'demo1234')" class="btn btn-outline btn-sm shrink-0">Fill</button>
+                    </div>
+                    <div class="flex items-center justify-between gap-3">
+                        <div class="min-w-0">
+                            <p class="text-sm font-semibold text-gray-800">Super admin <span class="font-normal text-gray-400">· mother site</span></p>
+                            <p class="text-xs text-gray-500 truncate">admin@themesbrand.com · 12345678</p>
+                        </div>
+                        <button type="button" @click="fill('admin@themesbrand.com', '12345678')" class="btn btn-outline btn-sm shrink-0">Fill</button>
+                    </div>
+                    
+                    <div class="flex items-center justify-between gap-3">
+                        <div class="min-w-0">
+                            <p class="text-sm font-semibold text-gray-800">Kathleen <span class="font-normal text-gray-400">· admin + farm owner</span></p>
+                            <p class="text-xs text-gray-500 truncate">kathleen.madriaga@gmail.com · type the password</p>
+                        </div>
+                        <button type="button" @click="fill('kathleen.madriaga@gmail.com', '')" class="btn btn-outline btn-sm shrink-0">Fill</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+</div>
+    </main>
+
+    
+    <footer class="bg-gray-900 text-gray-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 grid gap-10 md:grid-cols-3">
+            <div>
+                <img src="https://anisystem-production.up.railway.app/images/logo.png" alt="AniSystem by AniSenso" class="h-10 w-auto mb-4">
+                <p class="text-sm leading-relaxed text-gray-400">
+                    AniSystem is the cropping schedule manager by AniSenso — empowering Filipino farmers with
+                    education, technology, and quality products for a sustainable agricultural future.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Quick Links</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="https://anisystem-production.up.railway.app/about" class="hover:text-accent-500">About AniSystem</a></li>
+                    <li><a href="https://anisystem-production.up.railway.app/tutorial" class="hover:text-accent-500">Tutorial</a></li>
+                    <li><a href="https://anisystem-production.up.railway.app/contact" class="hover:text-accent-500">Contact Us</a></li>
+                    <li><a href="https://anisystem-production.up.railway.app/signup" class="hover:text-accent-500">Create an Account</a></li>
+                    <li><a href="https://anisystem-production.up.railway.app/login" class="hover:text-accent-500">Log In</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Contact</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li>support@anisenso.com</li>
+                    <li>Philippines</li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 text-xs text-gray-500 flex flex-col sm:flex-row justify-between gap-2">
+                <span>© 2026 AniSystem · An AniSenso product</span>
+                <span>Helping Filipino farmers reach maximum yield and income</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    (() => {
+        const form = document.getElementById('loginForm');
+        const btn = document.getElementById('loginSubmit');
+        if (!form || !btn) return;
+        const label = btn.querySelector('[data-login-label]');
+
+        form.addEventListener('submit', (e) => {
+            // A second Enter or tap while the POST is in flight would log the
+            // attempt twice and eat a slot of the login throttle, so the flag
+            // is checked before anything else — it beats the disabled
+            // attribute, which cannot land until after this handler returns.
+            if (btn.dataset.busy === '1') { e.preventDefault(); return; }
+            btn.dataset.busy = '1';
+            btn.classList.add('is-busy');
+            btn.setAttribute('aria-busy', 'true');
+            if (label) label.textContent = 'Signing in…';
+            // Deferred: a submit button disabled inside its own submit handler
+            // can cancel the very submission it is reporting on.
+            setTimeout(() => { btn.disabled = true; }, 0);
+        });
+
+        // Back-button restores the page mid-spin from the bfcache, disabled
+        // button and all; without this the form is dead on arrival.
+        window.addEventListener('pageshow', (e) => {
+            if (!e.persisted) return;
+            delete btn.dataset.busy;
+            btn.disabled = false;
+            btn.classList.remove('is-busy');
+            btn.removeAttribute('aria-busy');
+            if (label) label.textContent = 'Log In';
+        });
+    })();
+</script>
+    <script>
+                    </script>
+</body>
+</html>

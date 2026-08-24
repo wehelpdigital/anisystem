@@ -746,9 +746,13 @@
     /* Two classes, because .fp-hue-N::before is written further down this
        file at the same specificity and would otherwise keep the per-post
        colour — which is how this first came out orange. */
-    .fd-card.fp-card::before { z-index: 2; height: 5px;
-        background: linear-gradient(120deg, #2f5219, #6b9f3d 28%, #b8d38e 48%, #4a7c2a 72%, #2f5219);
-        background-size: 220% 100%; animation: gradSweep 12s ease-in-out infinite alternate; }
+    .fd-card.fp-card::before { z-index: 2;
+        background-image: linear-gradient(120deg, #2f5219, #6b9f3d 28%, #b8d38e 48%, #4a7c2a 72%, #2f5219);
+        background-size: 220% 5px; animation: fpStripSweep 12s ease-in-out infinite alternate; }
+    /* Its own tide, because the shared one drifts on both axes: with a strip
+       five pixels tall in a box the height of a card, a vertical drift would
+       walk the green from the top of the post to the bottom of it. */
+    @keyframes fpStripSweep { from { background-position: 0% top; } to { background-position: 100% top; } }
     @media (prefers-reduced-motion: reduce) { .fd-card.fp-card::before { animation: none; } }
     .fd-banner { position: relative; height: 8.5rem; overflow: hidden;
         border-top-left-radius: inherit; border-top-right-radius: inherit; }
@@ -1101,9 +1105,19 @@
        to paint in a post's own colour — the top strip, and now the bottom
        one under a topic — reads them from one place. */
     .fp-card { position: relative; --fp-a: #4a7c2a; --fp-b: #8fc267; }
-    .fp-card::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px; pointer-events: none;
-        border-top-left-radius: inherit; border-top-right-radius: inherit;
-        background: linear-gradient(90deg, var(--fp-a), var(--fp-b) 55%, transparent); }
+    /* The strip is the card's whole shape with only its top few pixels
+       painted — not a three-pixel bar wearing the card's corner radius.
+       A browser shrinks a radius that cannot fit the box it is on, so an
+       18px corner asked of a 3px-tall bar came back as a 3px corner: a
+       square-ish stub laid across the card's own curve, poking out past it
+       at both top corners. Given the full height, the radius fits, the
+       background is clipped by it, and the strip ends exactly where the
+       card's edge turns. Everything below the top few pixels is transparent
+       and unclickable, so it covers nothing. */
+    .fp-card::before { content: ''; position: absolute; inset: 0; pointer-events: none;
+        border-radius: inherit;
+        background-image: linear-gradient(90deg, var(--fp-a), var(--fp-b) 55%, transparent);
+        background-repeat: no-repeat; background-size: 100% 3px; background-position: left top; }
     .fp-hue-1 { --fp-a: #1d4ed8; --fp-b: #7aa5f5; }
     .fp-hue-2 { --fp-a: #b45309; --fp-b: #ecc06a; }
     .fp-hue-3 { --fp-a: #0f766e; --fp-b: #6cc9bf; }
@@ -1117,9 +1131,10 @@
        bottom strip is the mirror of the top: it fades from the other side, so
        a run of topics reads as bands rather than as boxes that lost their
        corners. */
-    .group-post.fp-card::after { content: ''; position: absolute; inset: auto 0 0 0; height: 3px;
-        pointer-events: none; border-bottom-left-radius: inherit; border-bottom-right-radius: inherit;
-        background: linear-gradient(270deg, var(--fp-a), var(--fp-b) 55%, transparent); }
+    .group-post.fp-card::after { content: ''; position: absolute; inset: 0;
+        pointer-events: none; border-radius: inherit;
+        background-image: linear-gradient(270deg, var(--fp-a), var(--fp-b) 55%, transparent);
+        background-repeat: no-repeat; background-size: 100% 3px; background-position: left bottom; }
 
     @media (max-width: 639px) {
         /* Out to the gutters the page holds it in by, and square where the
