@@ -309,6 +309,17 @@ html.modal-open #msgrDock {
     html.modal-open #msgrDock { transition: none; }
 }
 
+/* The question that stops everything else.
+ *
+ * A confirm is asked from inside whatever is already open — a discussion's
+ * thread modal at z-60, the messenger dock at z-90, the gallery picker at
+ * z-150 — and a sheet sits at z-50. So "Delete this comment?" opened behind
+ * the comment it was asking about. It is the last thing asked, so it goes on
+ * top of all of them, and the shared backdrop is lifted with it or the dimming
+ * would sit above the very thing it is dimming for. */
+#confirm-sheet { z-index: 200; }
+html:has(#confirm-sheet.is-open) .sheet-backdrop { z-index: 199; }
+
 .sheet.is-open {
     transform: translateY(0);
     visibility: visible;
