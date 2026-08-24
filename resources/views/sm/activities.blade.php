@@ -521,21 +521,23 @@
 
         /* A note pinned to a day says what it is before it says anything
            else. */
-        .inline-note-title { font-size: .82rem; font-weight: 800; color: var(--color-gray-900);
-            line-height: 1.3; margin-bottom: .15rem; }
+        .inline-note-title { font-size: .78rem; font-weight: 800; color: var(--color-gray-900);
+            line-height: 1.35; margin-bottom: .15rem; }
         html.dark .inline-note-title { color: #e8efe1; }
         .inline-note .note-atts { margin-top: .4rem; }
 
+        /* Sized against the expense strip below it: .4rem/.6rem of padding
+           and .8rem type, so the two things a day carries under its header
+           read as the same kind of thing rather than one being half again as
+           big as the other. The right gutter belongs to the note, not to the
+           words inside it — the head line has to clear the menu too. */
         .date-note-block {
             margin: .55rem .7rem 0; background: var(--tl-note-bg); border: 1px solid var(--tl-note-border); border-radius: .6rem;
-            padding: .5rem .7rem; font-size: .8rem; color: var(--tl-note-text); white-space: pre-wrap;
+            padding: .4rem 2.1rem .4rem .6rem; font-size: .8rem; color: var(--tl-note-text); white-space: pre-wrap;
             cursor: pointer; position: relative; transition: box-shadow .15s ease, border-color .15s ease;
         }
         .date-note-block:hover { border-color: #f5c518; box-shadow: 0 1px 6px rgb(0 0 0 / .06); }
-        /* One gutter, for one button. It used to be two — a pencil and a bin,
-           each on its own white chip — and they took nearly five rem off the
-           width of every note's first line. */
-        .date-note-inner { padding-right: 2.3rem; }
+        /* The words themselves need no gutter now: the note keeps one. */
 
         /* ---- The note's three dots ----
            The same door an expense row has, in the same corner, so the two
@@ -547,21 +549,21 @@
            thing furthest out. .date-note-block has no grip, so its menu keeps
            the corner to itself (see below). */
         .note-kebab {
-            position: absolute; top: .25rem; right: .25rem;
-            width: 1.75rem; height: 1.75rem; border-radius: .45rem;
+            position: absolute; top: .2rem; right: .2rem;
+            width: 1.5rem; height: 1.5rem; border-radius: .4rem;
             display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
             color: #b45309; background: transparent;
             transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), transform .1s ease;
         }
-        .note-kebab svg { width: 1.05rem; height: 1.05rem; }
+        .note-kebab svg { width: .9rem; height: .9rem; }
         .note-kebab:hover { background: #fdf0d0; }
         .note-kebab:active { transform: scale(.92); }
         .note-kebab.is-locked, .note-kebab:disabled { opacity: .45; cursor: not-allowed; }
         html.dark .note-kebab { color: #eec155; }
         html.dark .note-kebab:hover { background: #3a3018; }
         @media (hover: none), (pointer: coarse) {
-            .note-kebab { width: 2.2rem; height: 2.2rem; }
-            .note-kebab svg { width: 1.2rem; height: 1.2rem; }
+            .note-kebab { width: 1.85rem; height: 1.85rem; }
+            .note-kebab svg { width: 1.05rem; height: 1.05rem; }
         }
         @media (prefers-reduced-motion: reduce) { .note-kebab { transition: none; } }
 
@@ -578,30 +580,30 @@
            (dressNote), so nothing here can be seen before it runs — and if
            it never runs there is no .note-fold at all and the note simply
            shows itself. */
-        .note-head { display: flex; align-items: center; gap: .4rem; min-width: 0; }
+        .note-head { display: flex; align-items: center; gap: .3rem; min-width: 0; }
         .note-head .inline-note-tag { margin-bottom: 0; flex: none; }
         .note-head .inline-note-title,
         .note-gist {
             min-width: 0; flex: 1 1 auto; margin-bottom: 0;
             overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
-        .note-gist { font-size: .8rem; font-weight: 600; color: var(--tl-note-text); }
+        .note-gist { font-size: .78rem; font-weight: 600; color: var(--tl-note-text); }
         .date-note-block .note-gist { color: var(--tl-note-text); }
         .note-fold-btn {
-            flex: none; width: 1.7rem; height: 1.7rem; border-radius: .45rem;
+            flex: none; width: 1.5rem; height: 1.5rem; border-radius: .4rem;
             display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
             color: #b45309; background: transparent;
             transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1);
         }
-        .note-fold-btn svg { width: 1.05rem; height: 1.05rem;
+        .note-fold-btn svg { width: .9rem; height: .9rem;
             transition: transform .28s cubic-bezier(.22,1,.36,1); }
         .is-open > .note-head .note-fold-btn svg { transform: rotate(180deg); }
         .note-fold-btn:hover { background: #fdf0d0; }
         html.dark .note-fold-btn { color: #eec155; }
         html.dark .note-fold-btn:hover { background: #3a3018; }
         @media (hover: none), (pointer: coarse) {
-            .note-fold-btn { width: 2.1rem; height: 2.1rem; }
-            .note-fold-btn svg { width: 1.2rem; height: 1.2rem; }
+            .note-fold-btn { width: 1.85rem; height: 1.85rem; }
+            .note-fold-btn svg { width: 1.05rem; height: 1.05rem; }
         }
 
         /* The fold itself. Nought to the height the words need and back, on
@@ -938,7 +940,7 @@
         html.dark .date-note-block:hover { border-color: #eec155; }
         @media (hover: none), (pointer: coarse) {
             /* A finger's kebab is wider, so the gutter it needs is too. */
-            .date-note-inner { padding-right: 2.7rem; }
+            .date-note-block { padding-right: 2.5rem; }
         }
         @media (prefers-reduced-motion: reduce) { .date-note-block { transition: none; } }
 
@@ -959,7 +961,7 @@
             /* The right gutter holds both of the note's handles now — the six
                dots you carry it by and the three you open its menu with — and
                the left edge is given back to the words. */
-            border-radius: .6rem; padding: .5rem 4.1rem .5rem .75rem; font-size: .82rem; color: var(--tl-note-text);
+            border-radius: .6rem; padding: .4rem 3.4rem .4rem .6rem; font-size: .8rem; color: var(--tl-note-text);
             word-break: break-word; cursor: grab;
             user-select: none; -webkit-user-select: none;
             transition: box-shadow .15s ease, border-color .15s ease;
@@ -969,15 +971,16 @@
         /* Grip: the clear drag affordance (whole note is still draggable). */
         /* On the right, beside the three dots — the same corner an expense row
            wears its six in, so "carry me" is in one place on this board. */
-        .inline-note .note-kebab { right: 2.15rem; }
-        .inline-note-grip { position: absolute; right: .5rem; top: .3rem; display: inline-flex; align-items: center; justify-content: center; padding: .3rem; color: var(--tl-note-border); cursor: grab; touch-action: none; }
+        .inline-note .note-kebab { right: 1.78rem; }
+        .inline-note-grip { position: absolute; right: .28rem; top: .28rem; display: inline-flex; align-items: center; justify-content: center; padding: .22rem; color: var(--tl-note-border); cursor: grab; touch-action: none; }
+        .inline-note-grip svg { width: .8rem; height: .8rem; }
         .inline-note-grip:active { cursor: grabbing; }
         /* A finger needs more than the six dots to aim at — the note's left
            padding already reserves this room, so nothing shifts. */
         @media (hover: none), (pointer: coarse) {
-            .inline-note-grip { padding: .45rem .35rem; right: .45rem; top: .2rem; }
-            .inline-note .note-kebab { right: 2.6rem; }
-            .inline-note { padding-right: 5rem; }
+            .inline-note-grip { padding: .35rem .3rem; right: .25rem; top: .15rem; }
+            .inline-note .note-kebab { right: 2rem; }
+            .inline-note { padding-right: 4.2rem; }
         }
         .inline-note:hover .inline-note-grip { color: #d9a441; }
         .inline-note.is-editing .inline-note-grip { display: none; }
@@ -988,10 +991,10 @@
         /* Small "Note" title so the sticky note announces itself as a note. */
         .inline-note-tag {
             display: inline-flex; align-items: center; gap: .2rem; line-height: 1;
-            font-size: .58rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+            font-size: .55rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
             color: #b45309; opacity: .8; margin-bottom: .15rem; user-select: none;
         }
-        .inline-note-tag svg { width: .72rem; height: .72rem; }
+        .inline-note-tag svg { width: .66rem; height: .66rem; }
         html.dark .inline-note-tag { color: #e0b457; }
         .inline-note-body { min-height: 1em; white-space: pre-wrap; }
         /* Keep the note compact — drawings/images never blow up its height. */
@@ -1034,7 +1037,7 @@
         .date-note-block img { max-width: 100%; max-height: 10rem; border-radius: .4rem; }
         /* A short note is still a comfortable thing to aim at. */
         @media (hover: none), (pointer: coarse) {
-            .inline-note, .date-note-block { min-height: 3.1rem; }
+            .inline-note, .date-note-block { min-height: 2.5rem; }
         }
         /* While saving/moving, the spinner owns the top-right corner. */
         .inline-note.is-moving .note-kebab, .inline-note.is-moving .inline-note-grip { display: none; }
