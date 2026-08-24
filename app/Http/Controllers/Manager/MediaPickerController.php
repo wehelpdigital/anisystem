@@ -124,8 +124,29 @@ class MediaPickerController extends BaseScheduleController
      */
     public function poster(Request $request)
     {
+        $asked = trim((string) $request->input('path'));
+
+        /* A frame already made is handed straight back.
+         *
+         * The full check below asks whether the clip is readable from HERE,
+         * which is the right question before cutting anything and the wrong
+         * one for a picture that was cut long ago: a clip whose file has
+         * since moved still has a thumbnail, and showing it beats showing a
+         * clapperboard. The lookup key had to be a path this app trusted once
+         * to be in that table at all, and nothing but a name is read from it.
+         */
+        if ($asked !== '' && ! str_contains($asked, '..') && ! str_contains($asked, '://')) {
+            if ($known = \App\Support\VideoPoster::stored($asked)) {
+                return $this->jsonOk('Frame ready.', ['data' => [
+                    'poster'    => $known,
+                    'posterUrl' => \App\Support\MediaStore::url($known),
+                    'why'       => null,
+                ]]);
+            }
+        }
+
         $path = \App\Support\GalleryPick::path(
-            (string) $request->input('path'),
+            $asked,
             \App\Support\GalleryPick::VIDEO_EXTS
         );
         if ($path === null) {
@@ -202,34 +223,6 @@ class MediaPickerController extends BaseScheduleController
         return $this->jsonOk('Frame kept.', ['data' => [
             'poster'    => $poster,
             'posterUrl' => $poster ? \App\Support\MediaStore::url($poster) : null,
-        ]]);
-    }
-
-    /**
-     * Cut the frames that are missing, a handful at a time, from a phone.
-     *
-     * The same walk the clips:thumbnails command makes — the command is the
-     * right tool where there is a shell, and there is not always a shell.
-     * Capped per call so the request finishes, and safe to run again: what is
-     * already cut is skipped, so tapping it until it says nothing is missing
-     * is the whole procedure.
-     */
-    public function backfillPosters(Request $request)
-    {
-        $user = \Illuminate\Support\Facades\Auth::user();
-        if (! $user || ! $user->isSuperAdmin()) {
-            return $this->jsonFail('Only an admin can run this.', 403);
-        }
-
-        @ignore_user_abort(true);
-        @set_time_limit(300);
-
-        $limit = max(1, min(10, (int) $request->input('limit', 5)));
-        $exit = \Illuminate\Support\Facades\Artisan::call('clips:thumbnails', ['--limit' => $limit]);
-
-        return $this->jsonOk('Done.', ['data' => [
-            'ok'     => $exit === 0,
-            'output' => trim(\Illuminate\Support\Facades\Artisan::output()),
         ]]);
     }
 

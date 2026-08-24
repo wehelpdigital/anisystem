@@ -28,16 +28,6 @@
     <div class="sheet-handle"></div>
     <div class="sheet-header">
         <h3 class="sheet-title" id="smMediaPickerTitle">Choose from the gallery</h3>
-        @auth
-            @if (auth()->user()->isSuperAdmin())
-                {{-- The frames that could not be cut where they were asked for
-                     can be cut here, a handful at a time. An admin's button
-                     because it is the server's work, not a member's. --}}
-                <button type="button" id="smMediaPickerFrames" class="btn btn-white btn-sm hidden ms-auto me-1">
-                    Make thumbnails
-                </button>
-            @endif
-        @endauth
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
@@ -89,7 +79,8 @@
        grey square that looks like a failed photo. */
     .smp-shot .smp-blank { position: absolute; inset: 0; display: flex; align-items: center;
         justify-content: center; font-size: 1.4rem; color: var(--tl-text-faint, #9ca3af); }
-    .smp-badge { position: absolute; left: .3rem; top: .3rem; display: inline-flex; align-items: center;
+    /* Above the picture, which carries a stacking order of its own. */
+    .smp-badge { z-index: 2; position: absolute; left: .3rem; top: .3rem; display: inline-flex; align-items: center;
         gap: .15rem; padding: .1rem .35rem; border-radius: 999px; background: rgb(17 24 39 / .72);
         color: #fff; font-size: .62rem; font-weight: 800; letter-spacing: .02em; }
     /* The words sat against the tile's own edge on three sides, and no amount
@@ -226,11 +217,19 @@
          * everywhere. The video element is only the stand-in for a clip whose
          * frame has not been cut yet, and it is replaced by the picture the
          * moment the server hands one over. */
-        const inner = clip
-            ? (m.posterUrl
-                ? `<img src="${esc(m.posterUrl)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">`
-                : `<video class="smp-vid" src="${esc(clipFrameUrl(m.url))}" muted playsinline preload="metadata" onerror="this.remove()"></video>`)
-            : (m.url ? `<img src="${esc(m.posterUrl || m.url)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : '');
+        /* A picture or nothing.
+         *
+         * A tile used to hold a <video> as a stand-in for a clip with no
+         * frame, hoping the browser would paint one. Two things wrong with
+         * that: the phones that most need a thumbnail are the ones that
+         * refuse to decode a film for one, and every <video> on a community
+         * page gets wrapped by the chat's own player chrome — a fullscreen
+         * button appeared in the corner of a picker tile. The frame is
+         * fetched instead (see fillFrames), drawn off-screen when it has to
+         * be, and arrives here as a picture. Until then: the clapperboard. */
+        const inner = (clip ? m.posterUrl : (m.posterUrl || m.url))
+            ? `<img src="${esc(clip ? m.posterUrl : (m.posterUrl || m.url))}" alt="" loading="lazy" decoding="async" onerror="this.remove()">`
+            : '';
         // A clip with no frame of its own asks for one after it is on screen.
         const wants = (clip && !m.posterUrl && m.path) ? ` data-needs-frame="${esc(m.path)}"` : '';
         return `<button type="button" class="smp-tile" role="option" data-pick="${i}"${wants}>
@@ -294,44 +293,6 @@
         });
     }
 
-    /* The admin's way to cut what this browser could not.
-     *
-     * A clip served from another host cannot be read back off a canvas, and a
-     * server without ffmpeg cannot cut anything at all — so when tiles are
-     * still showing clapperboards, an admin can ask the server to walk them.
-     * It works in handfuls and is safe to press again: what is already cut is
-     * skipped, so pressing until it says nothing is missing is the procedure.
-     */
-    const BACKFILL_URL = @json(\Illuminate\Support\Facades\Route::has('sm.media-picker.poster-backfill') ? route('sm.media-picker.poster-backfill') : url('/app/sm-media-posters-backfill'));
-    function sayFrames() {
-        const btn = $('smMediaPickerFrames');
-        if (!btn) return;
-        // Only when something is actually missing a picture.
-        const missing = document.querySelectorAll('#smMediaPickerGrid .smp-tile:not(:has(img)) .smp-blank').length;
-        btn.classList.toggle('hidden', missing === 0);
-        btn.dataset.missing = String(missing);
-    }
-    document.getElementById('smMediaPickerFrames')?.addEventListener('click', async (e) => {
-        const btn = e.currentTarget;
-        const was = btn.textContent;
-        btn.disabled = true;
-        btn.textContent = 'Cutting…';
-        try {
-            const res = await window.api(BACKFILL_URL, { method: 'POST', body: { limit: 5 } });
-            const line = (res && res.data && res.data.output || '').split(String.fromCharCode(10)).filter(Boolean).pop();
-            window.toast?.(line || 'Done.');
-            gen++;                       // whatever was on screen is stale now
-            page = 0; items.length = 0; more = false;
-            $('smMediaPickerGrid').innerHTML = '';
-            await loadPage();
-        } catch (err) {
-            window.toast?.(err.message || 'Could not cut the frames.', 'error');
-        } finally {
-            btn.disabled = false;
-            btn.textContent = was;
-        }
-    });
-
     let framesRunning = false;
     async function fillFrames() {
         if (framesRunning) return;
@@ -362,7 +323,6 @@
                         // is on screen no longer depends on the phone being
                         // willing to decode a film for a thumbnail.
                         const shot = tile.querySelector('.smp-shot');
-                        tile.querySelector('video')?.remove();
                         const img = document.createElement('img');
                         img.src = url; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async';
                         img.onerror = () => img.remove();
@@ -372,7 +332,6 @@
             }
         } finally {
             framesRunning = false;
-            sayFrames();
         }
     }
 
