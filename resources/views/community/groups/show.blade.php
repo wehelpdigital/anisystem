@@ -250,6 +250,12 @@
     /* ---- The thread modal ---- */
     .thread-modal { position:fixed; inset:0; z-index:60; display:flex; align-items:flex-end; justify-content:center; }
     .thread-modal.hidden { display:none; }
+    /* Out of the way while something it asked for has the screen — the
+       gallery picker. Not closed: the topic and the half-written answer are
+       still inside it, waiting to come back. */
+    .thread-modal.is-stepped-aside { opacity:0; visibility:hidden; pointer-events:none;
+        transition:opacity .22s cubic-bezier(.22,1,.36,1), visibility 0s linear .22s; }
+    @media (prefers-reduced-motion: reduce) { .thread-modal.is-stepped-aside { transition:none; } }
     .thread-modal-back { position:absolute; inset:0; background:rgb(17 24 39 / .5); backdrop-filter:blur(2px);
         animation:thmFade .28s cubic-bezier(.22,1,.36,1); }
     .thread-modal-card { position:relative; display:flex; flex-direction:column; width:100%; max-width:42rem;

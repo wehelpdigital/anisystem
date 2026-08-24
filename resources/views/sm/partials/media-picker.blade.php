@@ -45,6 +45,15 @@
 </div>
 
 <style>
+    /* Above anything that can ask for it.
+     *
+     * A sheet sits at z-50, but the picker is opened from inside things that
+     * sit higher: a discussion's thread modal (60), the messenger dock (90),
+     * the community's own modals (120). Whichever asked for it, the gallery
+     * is the thing being answered right now, so it goes on top — otherwise
+     * it opens perfectly and cannot be seen, which is how this was reported.
+     */
+    #smMediaPickerSheet { z-index: 150; }
     .smp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: .5rem; }
     .smp-grid:empty { display: none; }
     .smp-tile { position: relative; display: block; width: 100%; text-align: left; padding: 0;

@@ -330,19 +330,39 @@
      * typed, the pictures already collected still in the tray.
      */
     function stepAsideFor(form) {
-        const host = form && form.closest ? form.closest('.sheet') : null;
-        const id = host && host.id;
-        if (!id || typeof window.closeSheet !== 'function') return () => {};
-        window.plazaSheetHold = true;              // do not unmake the sheet
-        window.closeSheet(id);
+        if (!form || !form.closest) return () => {};
+        /* Whatever this box is written in, out of the way.
+         *
+         * Two kinds of host, because the app has two kinds of overlay. A
+         * sheet is closed and opened again through the house's own doors. A
+         * discussion's thread modal is not a sheet and carries its own open
+         * and close — closing it would hand the topic back to the list and
+         * throw away the answer being written — so it is put out of sight
+         * instead, which is the same thing to look at and nothing at all to
+         * the modal.
+         */
+        const sheet = form.closest('.sheet');
+        const modal = sheet ? null : form.closest('.thread-modal, .plaza-modal');
+        const id = sheet && sheet.id;
+        if ((!id || typeof window.closeSheet !== 'function') && !modal) return () => {};
+        if (id) {
+            window.plazaSheetHold = true;          // do not unmake the sheet
+            window.closeSheet(id);
+        } else {
+            modal.classList.add('is-stepped-aside');
+        }
         let back = false;
         const restore = () => {
             if (back) return;
             back = true;
-            window.openSheet?.(id);
-            // Released after the sheet is up: the flag is what tells its own
-            // close handler that this was a step aside and not a goodbye.
-            setTimeout(() => { window.plazaSheetHold = false; }, 60);
+            if (id) {
+                window.openSheet?.(id);
+                // Released after the sheet is up: the flag is what tells its
+                // own close handler that this was a step aside, not a goodbye.
+                setTimeout(() => { window.plazaSheetHold = false; }, 60);
+            } else {
+                modal.classList.remove('is-stepped-aside');
+            }
         };
         // The picker closes on a pick and on a cancel alike; either way this
         // is the moment to come back. In its many-at-once mode the close runs
