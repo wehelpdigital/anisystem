@@ -522,13 +522,13 @@
        4.5rem above the tab bar) — the stack steps up one storey so both stay
        tappable instead of sitting on the same spot. */
     @media (max-width:767px) {
-        .disc-jumps { bottom:calc(4.5rem + 3.6rem + env(safe-area-inset-bottom, 0px)); }
+        .disc-jumps { bottom:calc(3.5rem + 3.6rem + env(safe-area-inset-bottom, 0px)); }
     }
     /* Where the messenger sits in the page's own nav there is no floating
        launcher to clear, so the jumps drop to the floor themselves. */
     html:has(#msgrSeat) .disc-jumps { bottom:1rem; }
     @media (max-width:767px) {
-        html:has(#msgrSeat) .disc-jumps { bottom:calc(4.5rem + env(safe-area-inset-bottom, 0px)); }
+        html:has(#msgrSeat) .disc-jumps { bottom:calc(3.5rem + env(safe-area-inset-bottom, 0px)); }
     }
     @media (prefers-reduced-motion: reduce) { .disc-jumps { transition:none; } }
 

@@ -56,7 +56,11 @@
 <style>
     #msgrDock { position:fixed; right:1rem; bottom:1rem; z-index:90; display:flex; align-items:flex-end; gap:.75rem; }
     /* Clear the mobile bottom tab bar (visible < md) so the launcher doesn't sit on the Account button. */
-    @media (max-width:767px) { #msgrDock { bottom:calc(4.5rem + env(safe-area-inset-bottom, 0px)); } }
+    /* Down onto the footer's own band: the tab bar is 3.5rem tall, so this
+       rests the launcher exactly on its top edge instead of floating a
+       finger's width above it. Not lower than that — the bar's last item is
+       a link, and a button parked on top of it is a link nobody can press. */
+    @media (max-width:767px) { #msgrDock { bottom:calc(3.5rem + env(safe-area-inset-bottom, 0px)); } }
     /* The white ring is what keeps the launcher legible when a green CTA sits
        right behind it — a green-on-green shadow alone just blended in. */
     /* The same circle the discussion's jump buttons are.
