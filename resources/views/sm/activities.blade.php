@@ -1082,6 +1082,10 @@
         .dx-row.dragging { opacity: .38; outline: 1.5px dashed var(--color-brand-400);
             outline-offset: -2px; border-radius: .45rem; }
         .day-expense-block { margin: .55rem .7rem 0; }
+        /* Carried in among the activities, a strip drops the outer margins the
+           day gave it and sits in the cards' own column. */
+        .date-activities > .day-expense-block,
+        .date-activities > .day-income-block { margin: .5rem 0; }
         .day-expense-block:empty { display: none; }
         /* What the day earned, under what it cost — green against the
            expenses' red so the two never get read for each other. */
@@ -1102,6 +1106,20 @@
             font-size: .74rem; font-weight: 700; color: #9a3412; letter-spacing: .01em;
         }
         .dx-head .dx-total { margin-left: auto; font-variant-numeric: tabular-nums; }
+        /* The head is the strip's handle: six dots at its right, the same six
+           a card and a row wear, and the whole card travels with it. */
+        .dx-head[draggable="true"] { cursor: grab; }
+        .dx-head[draggable="true"]:active { cursor: grabbing; }
+        /* The head's dots sit in the same column the rows' dots do, so the
+           strip reads as one thing you can pick up rather than three. */
+        .dx-head { position: relative; padding-right: 1.55rem; }
+        .dx-head .dx-grip { position: absolute; right: .3rem; top: 50%; transform: translateY(-50%);
+            display: inline-flex; opacity: .5; }
+        .dx-head .dx-grip svg { width: .9rem; height: .9rem; }
+        .dx-card.dragging { opacity: .4; }
+        .dx-card.dragging .dx-grip { visibility: hidden; }
+        /* A strip in the air, and a day ready to take it. */
+        .date-activities.drag-over-block { outline: 2px dashed var(--color-brand-400); outline-offset: 3px; border-radius: .6rem; }
         .dx-list { display: flex; flex-direction: column; }
         .dx-row {
             position: relative;
@@ -2739,14 +2757,14 @@
                                 ])->filter()->values();
                         @endphp
                         <div class="date-note-block" data-date="{{ $dateKey }}" data-content="{{ $noteRow?->noteContent }}" data-media="{{ $dnMedia->toJson() }}" title="{{ $boardMayDragNote ? 'Drag to place it between activities · click to edit' : ($boardMayNote ? 'Click to edit this note' : $whyNoNote) }}" @if(!$noteRow) style="display:none;" @endif><div class="date-note-inner rich-text">{!! $noteRow?->noteContent !!}</div>@if ($dnMedia->count())<div class="date-note-media">@include('sm.partials.note-attachments', ['media' => $dnMedia])</div>@endif<button type="button" class="date-note-edit" title="Edit note" aria-label="Edit note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button type="button" class="date-note-del" title="Delete note" aria-label="Delete note"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg></button></div>
-                        <div class="day-expense-block" data-date="{{ $dateKey }}"></div>
+                        <div class="day-expense-block" data-date="{{ $dateKey }}" data-block-sort="{{ ($expenseSortByDate[$dateKey] ?? null) === null ? '' : $expenseSortByDate[$dateKey] }}"></div>
                         {{-- The income strip's own place. It was only ever
                              created by the board's JS renderer, so on a
                              freshly loaded page an income saved with the sheet
                              had nowhere to be drawn: the server said "saved",
                              the day showed nothing, and only a redraw of that
                              day ever brought it out. --}}
-                        <div class="day-income-block" data-date="{{ $dateKey }}" hidden></div>
+                        <div class="day-income-block" data-date="{{ $dateKey }}" data-block-sort="{{ ($incomeSortByDate[$dateKey] ?? null) === null ? '' : $incomeSortByDate[$dateKey] }}" hidden></div>
                     @endif
                     @php
                         // Interleave positioned inline notes with the day's cards by order.

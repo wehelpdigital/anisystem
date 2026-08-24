@@ -51,6 +51,7 @@ class ActivityController extends BaseScheduleController
             'activities.items.service',
             'dateNotes',
             'dayExpenses',
+            'dayIncomes',
             'progressMarkers',
             'defaultGroupings.lots',
         ]);
@@ -63,6 +64,13 @@ class ActivityController extends BaseScheduleController
         $dateNotesByDate = $schedule->dateNotes->keyBy(fn ($n) => $n->noteDate->format('Y-m-d'));
         $markersByDate = $schedule->progressMarkers->keyBy(fn ($m) => $m->markerDate->format('Y-m-d'));
         $expensesByDate = $schedule->dayExpenses->groupBy(fn ($e) => $e->expenseDate->format('Y-m-d'));
+        /* Where each day's two strips sit. The income strip's CONTENTS are
+         * fetched by the board a day at a time, but its place has to be known
+         * before the day is drawn or the strip would jump after the load. */
+        $expenseSortByDate = $expensesByDate->map(fn ($grp) => $grp->first()?->blockSort);
+        $incomeSortByDate = $schedule->dayIncomes
+            ->groupBy(fn ($i) => $i->incomeDate->format('Y-m-d'))
+            ->map(fn ($grp) => $grp->first()?->blockSort);
 
         $activeVersion = $schedule->versions->firstWhere('isActive', true)
             ?? $schedule->versions->firstWhere('isOriginal', true)
@@ -104,6 +112,8 @@ class ActivityController extends BaseScheduleController
                 ->pluck('activityTitle', 'id')->all(),
             'inlineNotesByDate' => $inlineNotesByDate,
             'expensesByDate'    => $expensesByDate,
+            'expenseSortByDate' => $expenseSortByDate,
+            'incomeSortByDate'  => $incomeSortByDate,
             'markersByDate'     => $markersByDate,
             'activeVersion'     => $activeVersion,
             'activityTypes'   => AsScheduleActivity::ACTIVITY_TYPES,
@@ -2208,6 +2218,101 @@ class ActivityController extends BaseScheduleController
     }
 
     /**
+     * Carry a whole day's money strip somewhere else.
+     *
+     * Two things at once, because to a farmer they are one gesture: the rows
+     * of `fromDate` become rows of `toDate` (if those differ), and the strip
+     * on `toDate` is told where it sits among that day's activities. A strip
+     * dropped onto a day that already has one joins it — one day, one strip
+     * per kind, and its place is the place it was just dropped in.
+     *
+     * `blockSort` shares the scale the cards and inline notes use, so null
+     * means "back at the top", which is where a strip has always been.
+     */
+    public function moveDayMoneyBlock(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+
+        $validator = Validator::make($request->all(), [
+            'kind'      => 'required|in:expense,income',
+            'fromDate'  => 'required|date',
+            'toDate'    => 'required|date',
+            'blockSort' => 'nullable|integer|min:-100000|max:100000',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
+
+        $versionId = $this->activeVersionIdFor($schedule->id);
+        if (!$versionId) {
+            return $this->jsonFail('No active version found for this schedule.', 422);
+        }
+
+        $kind = $request->input('kind');
+        $income = $kind === 'income';
+        $model = $income ? \App\Models\AsScheduleDayIncome::class : AsScheduleDayExpense::class;
+        $dateCol = $income ? 'incomeDate' : 'expenseDate';
+        $from = $request->input('fromDate');
+        $to = $request->input('toDate');
+        $sort = $request->input('blockSort');
+        $sort = $sort === null || $sort === '' ? null : (int) $sort;
+
+        $rows = $model::active()
+            ->forSchedule($schedule->id)
+            ->forVersion($versionId)
+            ->whereDate($dateCol, $from)
+            ->orderBy('sortOrder')->orderBy('id')
+            ->get();
+        if ($rows->isEmpty()) {
+            return $this->jsonFail('That day has nothing to move.', 404);
+        }
+
+        if ($from !== $to) {
+            // The day it lands on may already have rows; the arrivals queue up
+            // after them rather than interleaving by an order that was written
+            // for a different day.
+            $tail = (int) $model::active()
+                ->forSchedule($schedule->id)
+                ->forVersion($versionId)
+                ->whereDate($dateCol, $to)
+                ->max('sortOrder');
+            foreach ($rows as $row) {
+                $row->update([$dateCol => $to, 'sortOrder' => ++$tail]);
+            }
+        }
+
+        // Every row of the landing day carries the strip's place, the ones
+        // that were already there included — a strip is one thing.
+        $model::active()
+            ->forSchedule($schedule->id)
+            ->forVersion($versionId)
+            ->whereDate($dateCol, $to)
+            ->update(['blockSort' => $sort]);
+
+        $freshFor = fn ($date) => $model::active()
+            ->forSchedule($schedule->id)
+            ->forVersion($versionId)
+            ->whereDate($dateCol, $date)
+            ->orderBy('sortOrder')->orderBy('id')
+            ->get();
+
+        $toRows = $freshFor($to);
+        $fromRows = $from === $to ? $toRows : $freshFor($from);
+
+        $this->broadcastBoard($schedule, 'reload', [$dateCol => $to], $versionId);
+
+        return $this->jsonOk($from === $to ? 'Strip moved.' : 'Moved to ' . $to, [
+            'kind'      => $kind,
+            'fromDate'  => $from,
+            'toDate'    => $to,
+            'blockSort' => $sort,
+            'from'      => $income ? $this->serializeIncomes($fromRows) : $this->serializeExpenses($fromRows),
+            'to'        => $income ? $this->serializeIncomes($toRows) : $this->serializeExpenses($toRows),
+            'total'     => (float) $toRows->sum('amount'),
+        ]);
+    }
+
+    /**
      * The order of one day's income entries, as the board now shows them.
      *
      * The twin of reorderDayExpenses, and for the same reason: dragging one
@@ -2375,6 +2480,7 @@ class ActivityController extends BaseScheduleController
             'title' => $r->title,
             'note' => $r->note,
             'date' => $r->incomeDate?->format('Y-m-d'),
+            'blockSort' => $r->blockSort === null ? null : (int) $r->blockSort,
         ])->all();
     }
 
@@ -2582,6 +2688,7 @@ class ActivityController extends BaseScheduleController
             'expenseDate' => $e->expenseDate->format('Y-m-d'),
             'amount'      => (float) $e->amount,
             'note'        => $e->note,
+            'blockSort'   => $e->blockSort === null ? null : (int) $e->blockSort,
         ])->values()->all();
     }
 

@@ -238,6 +238,26 @@ class AsCroppingSchedule extends BaseModel
     }
 
     /**
+     * The other half of a day's money: what it brought in. Scoped to the
+     * active version the same way its twin is.
+     */
+    public function dayIncomes()
+    {
+        return $this->hasMany(AsScheduleDayIncome::class, 'croppingScheduleId')
+            ->where('as_schedule_day_incomes.deleteStatus', 1)
+            ->whereIn('as_schedule_day_incomes.versionId', function ($sub) {
+                $sub->select('id')
+                    ->from('as_schedule_activity_versions')
+                    ->whereColumn('as_schedule_activity_versions.croppingScheduleId', 'as_schedule_day_incomes.croppingScheduleId')
+                    ->where('as_schedule_activity_versions.isActive', 1)
+                    ->where('as_schedule_activity_versions.deleteStatus', 1);
+            })
+            ->orderBy('incomeDate', 'asc')
+            ->orderBy('sortOrder', 'asc')
+            ->orderBy('id', 'asc');
+    }
+
+    /**
      * Ad-hoc extra expenses logged against a date (fuel, rentals, snacks...).
      * Scoped to the active version via the same correlated-subquery trick as
      * dateNotes()/progressMarkers() so each fork carries its own expenses.

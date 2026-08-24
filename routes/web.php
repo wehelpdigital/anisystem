@@ -519,6 +519,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-activities-day-expense-delete', [App\Http\Controllers\Manager\ActivityController::class, 'deleteDayExpense'])->name('sm.activities.day-expense.delete');
     Route::post('/app/sm-activities-day-expense-reorder', [App\Http\Controllers\Manager\ActivityController::class, 'reorderDayExpenses'])->name('sm.activities.day-expense.reorder');
     Route::post('/app/sm-activities-day-income-reorder', [App\Http\Controllers\Manager\ActivityController::class, 'reorderDayIncomes'])->name('sm.activities.day-income.reorder');
+    Route::post('/app/sm-activities-day-money-block-move', [App\Http\Controllers\Manager\ActivityController::class, 'moveDayMoneyBlock'])->name('sm.activities.day-money.block-move');
 
     // --- Progress markers ---
     Route::post('/app/sm-markers-save', [App\Http\Controllers\Manager\MarkerController::class, 'save'])->name('sm.markers.save');

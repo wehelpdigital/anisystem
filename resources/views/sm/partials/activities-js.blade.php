@@ -176,6 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dayExpenseDelete: ()  => `{{ route('sm.activities.day-expense.delete') }}?scheduleId=${SCHEDULE_ID}`,
         dayExpenseOrder:  ()  => `{{ route('sm.activities.day-expense.reorder') }}?scheduleId=${SCHEDULE_ID}`,
         dayIncomeOrder:   ()  => `{{ route('sm.activities.day-income.reorder') }}?scheduleId=${SCHEDULE_ID}`,
+        dayMoneyBlockMove: () => `{{ route('sm.activities.day-money.block-move') }}?scheduleId=${SCHEDULE_ID}`,
         markerSave:       ()  => `{{ route('sm.markers.save') }}?scheduleId=${SCHEDULE_ID}`,
         markerDelete:     (id) => `{{ route('sm.markers.destroy') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
         versionStore:     ()  => `{{ route('sm.activity-versions.store') }}?scheduleId=${SCHEDULE_ID}`,
@@ -1732,8 +1733,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const noteBlock = isNoDate ? ''
             : `<div class="date-note-block" data-date="${esc(dateKey)}" data-content="${esc(noteContent || '')}" data-media="${esc(JSON.stringify(noteMediaArr))}" title="${esc(noteTitle('Drag to place it between activities · click to edit'))}"${hasNote ? '' : ' style="display:none;"'}><div class="date-note-inner rich-text">${noteContent || ''}</div>${noteChips}${DATE_NOTE_EDIT}${DATE_NOTE_DEL}</div>`;
         const expenseBlock = isNoDate ? ''
-            : `<div class="day-expense-block" data-date="${esc(dateKey)}"></div>`
-              + `<div class="day-income-block" data-date="${esc(dateKey)}" hidden></div>`;
+            : `<div class="day-expense-block" data-date="${esc(dateKey)}" data-block-sort="${esc(blockSortAttr(dateKey, 'expense'))}"></div>`
+              + `<div class="day-income-block" data-date="${esc(dateKey)}" data-block-sort="${esc(blockSortAttr(dateKey, 'income'))}" hidden></div>`;
 
         const wrap = document.createElement('div');
         wrap.innerHTML = `<div class="date-group date-color-${colorIdx}${allHidden ? ' all-hidden' : ''}${OPEN_DAYS.has(dateKey) ? '' : ' is-folded'}" data-date="${esc(dateKey)}">
@@ -1754,6 +1755,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const el = wrap.firstElementChild;
         const exBlock = el.querySelector('.day-expense-block');
         if (exBlock && typeof renderExpenseBlock === 'function') renderExpenseBlock(exBlock);
+        // The income strip: painted straight into this not-yet-attached group
+        // from the copy in hand, and only asked for when there is none. Before
+        // this, reordering a day's cards made that day's income disappear
+        // until the next reload.
+        const inBlock = el.querySelector('.day-income-block');
+        if (!isNoDate && inBlock && !paintIncomeInto(inBlock, dateKey)) {
+            setTimeout(() => renderDayIncome(dateKey), 0);
+        }
         return el;
     }
 
@@ -2122,6 +2131,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function reorderAndRenumberActivities(animate) {
         if (animate) flipReorder(reorderAndRenumberActivitiesCore);
         else reorderAndRenumberActivitiesCore();
+        // The groups were rebuilt from the cards; the strips have to be shown
+        // back to their places among them.
+        if (typeof placeMoneyBlocks === 'function') placeMoneyBlocks();
         refreshHiddenActivityCount();
         if (hasActiveFilters()) applyActivityFilter();
         else announceBoardChange();
@@ -4573,39 +4585,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* The day's own strip, under the expenses one, so a day that earned
        something says so without opening anything. */
+    /* What each day earned, as last heard from the server.
+     *
+     * The expenses have had a local copy since the beginning; the income
+     * strip asked every time it was drawn, which was fine while it was only
+     * ever drawn into a day that was already on screen. The board rebuilds
+     * its day groups from the cards after any reorder, and a strip drawn into
+     * a group that is not attached yet is drawn into nothing — so a day's
+     * income vanished the moment its cards were touched. A copy in hand can
+     * be painted into the new group as it is built. */
+    const DAY_INCOMES = {};
+
+    function paintIncomeInto(host, date) {
+        if (!host) return false;
+        const cached = DAY_INCOMES[date];
+        if (!cached) return false;
+        paintIncomeCard(host, date, cached.rows, cached.total);
+        return true;
+    }
+
     async function renderDayIncome(date) {
         const host = $qs(`#activitiesList .day-income-block[data-date="${date}"]`);
         if (!host) return;
         try {
             const res = await api(`${U.dayIncomeList()}&incomeDate=${encodeURIComponent(date)}`);
             const rows = res.data || [];
-            if (!rows.length) { host.innerHTML = ''; host.hidden = true; return; }
-            host.hidden = false;
-            /* The same card the expenses draw, in the other direction.
-             *
-             * Money in was a row of tags and money out was a card with a head,
-             * a total and a line per entry — two shapes for one idea, and the
-             * lighter one read as a label rather than as something you could
-             * open. The pencil and the cross open the same income sheet the
-             * head's coin does. */
-            // Draggable like the expenses: money in and money out are the
-            // same kind of thing written in two colours, so a row landing on
-            // the wrong day is fixed the same way in both.
-            const grab = MAY_DRAG ? ' draggable="true"' : '';
-            const lines = rows.map((r) => `<div class="dx-row" data-income-id="${r.id}" data-date="${esc(date)}"${grab} title="${esc(MAY_DRAG ? 'Drag to another day' : '')}">
-                <span class="dx-amt">${peso(r.amount)}</span>
-                <span class="dx-note">${r.title ? esc(r.title) : '<span style="opacity:.55">Income</span>'}${r.note ? ' \u00b7 ' + esc(r.note) : ''}</span>
-                <span class="dx-actions">
-                    <button type="button" class="dx-btn dx-kebab${LOCK_EDIT_CLS}" data-dx-menu="income" data-dx-id="${r.id}" data-date="${esc(date)}"${LOCK_EDIT} title="${esc(editTitle('Income options'))}" aria-label="Income options">
-                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg>
-                    </button>
-                </span>
-            </div>`).join('');
-            host.innerHTML = `<div class="dx-card dx-card-in">
-                <div class="dx-head"><span>\uD83D\uDCB0 Extra income</span><span class="dx-total">${peso(res.total)}</span></div>
-                <div class="dx-list">${lines}</div>
-            </div>`;
+            DAY_INCOMES[date] = { rows, total: res.total };
+            paintIncomeCard(host, date, rows, res.total);
         } catch (_) { /* leave whatever is there */ }
+    }
+
+    function paintIncomeCard(host, date, rows, total) {
+        if (!rows.length) { host.innerHTML = ''; host.hidden = true; return; }
+        host.hidden = false;
+        /* The same card the expenses draw, in the other direction.
+         *
+         * Money in was a row of tags and money out was a card with a head,
+         * a total and a line per entry — two shapes for one idea, and the
+         * lighter one read as a label rather than as something you could
+         * open. The pencil and the cross open the same income sheet the
+         * head's coin does. */
+        // Draggable like the expenses: money in and money out are the
+        // same kind of thing written in two colours, so a row landing on
+        // the wrong day is fixed the same way in both.
+        const grab = MAY_DRAG ? ' draggable="true"' : '';
+        const lines = rows.map((r) => `<div class="dx-row" data-income-id="${r.id}" data-date="${esc(date)}"${grab} title="${esc(MAY_DRAG ? 'Drag to another day' : '')}">
+            <span class="dx-amt">${peso(r.amount)}</span>
+            <span class="dx-note">${r.title ? esc(r.title) : '<span style="opacity:.55">Income</span>'}${r.note ? ' \u00b7 ' + esc(r.note) : ''}</span>
+            <span class="dx-actions">
+                <button type="button" class="dx-btn dx-kebab${LOCK_EDIT_CLS}" data-dx-menu="income" data-dx-id="${r.id}" data-date="${esc(date)}"${LOCK_EDIT} title="${esc(editTitle('Income options'))}" aria-label="Income options">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg>
+                </button>
+            </span>
+        </div>`).join('');
+        host.innerHTML = `<div class="dx-card dx-card-in">
+            <div class="dx-head"${DX_HEAD_DRAG}><span>\uD83D\uDCB0 Extra income</span><span class="dx-total">${peso(total)}</span>${DX_HEAD_GRIP}</div>
+            <div class="dx-list">${lines}</div>
+        </div>`;
     }
     window.renderDayIncome = renderDayIncome;
 
@@ -5987,6 +6023,40 @@ document.addEventListener('DOMContentLoaded', () => {
         ? window.DAY_EXPENSES : {};
     window.DAY_EXPENSES = DAY_EXPENSES;
 
+    const DX_KIND = {
+        expense: { attr: 'data-expense-id', block: 'day-expense-block',
+                   card: 'dx-card', head: '\uD83D\uDCB8 Extra expenses' },
+        income:  { attr: 'data-income-id',  block: 'day-income-block',
+                   card: 'dx-card dx-card-in', head: '\uD83D\uDCB0 Extra income' },
+    };
+    const DX_ROW_SEL = '.dx-row[data-expense-id], .dx-row[data-income-id]';
+    const DX_BLOCK_SEL = '.day-expense-block, .day-income-block';
+    /* Where each day's strips sit, remembered off the DOM.
+     *
+     * The board rebuilds itself from the cards after every reorder — the day
+     * groups are thrown away and built again — so a strip's place cannot live
+     * only in the markup it is written into. Keyed 'YYYY-MM-DD|kind'. */
+    const BLOCK_SORTS = {};
+    function rememberBlockSort(date, kind, val) {
+        BLOCK_SORTS[date + '|' + kind] = (val === null || val === undefined || val === '') ? null : Number(val);
+    }
+    function knownBlockSort(date, kind) {
+        const v = BLOCK_SORTS[date + '|' + kind];
+        return v === undefined ? null : v;
+    }
+    function blockSortAttr(date, kind) {
+        const v = knownBlockSort(date, kind);
+        return v === null ? '' : String(v);
+    }
+    // The strip's head carries the handle only when the board may be dragged.
+    const DX_HEAD_DRAG = MAY_DRAG ? ' draggable="true" title="Drag to another day, or in between the activities"' : '';
+    const DX_HEAD_GRIP = MAY_DRAG ? '<span class="dx-grip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></span>' : '';
+    function dxKindOf(row) { return row && row.hasAttribute('data-income-id') ? 'income' : 'expense'; }
+    function dxIdOf(row) {
+        return row ? (row.getAttribute('data-income-id') || row.getAttribute('data-expense-id') || '') : '';
+    }
+    function dxRowEl(kind, id) { return $qs(`.dx-row[${DX_KIND[kind].attr}="${id}"]`); }
+
     function _expenseRowsFor(dateKey) {
         const rows = DAY_EXPENSES[dateKey];
         return Array.isArray(rows) ? rows : [];
@@ -6020,7 +6090,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </span>
         </div>`).join('');
         block.innerHTML = `<div class="dx-card">
-            <div class="dx-head"><span>💸 Extra expenses</span><span class="dx-total">₱${esc(fmtMoney(total))}</span></div>
+            <div class="dx-head"${DX_HEAD_DRAG}><span>💸 Extra expenses</span><span class="dx-total">₱${esc(fmtMoney(total))}</span>${DX_HEAD_GRIP}</div>
             <div class="dx-list">${items}</div>
         </div>`;
     }
@@ -6031,10 +6101,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function hydrateAllExpenseBlocks() {
+        $qsa('#activitiesList [data-block-sort]').forEach((el) => {
+            const d = (el.getAttribute('data-date') || '').trim();
+            if (d) rememberBlockSort(d, el.classList.contains('day-income-block') ? 'income' : 'expense',
+                                     el.getAttribute('data-block-sort'));
+        });
         $qsa('#activitiesList .day-expense-block').forEach(renderExpenseBlock);
         $qsa('#activitiesList .day-income-block[data-date]').forEach((el) => {
             if (typeof window.renderDayIncome === 'function') window.renderDayIncome(el.getAttribute('data-date'));
         });
+        placeMoneyBlocks();
     }
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', hydrateAllExpenseBlocks, { once: true });
@@ -6152,18 +6228,6 @@ document.addEventListener('DOMContentLoaded', () => {
      * by, the block it lives in and the colour of its card differ. Naming
      * that difference once is what let the income strip have all of it.
      */
-    const DX_KIND = {
-        expense: { attr: 'data-expense-id', block: 'day-expense-block',
-                   card: 'dx-card', head: '\uD83D\uDCB8 Extra expenses' },
-        income:  { attr: 'data-income-id',  block: 'day-income-block',
-                   card: 'dx-card dx-card-in', head: '\uD83D\uDCB0 Extra income' },
-    };
-    const DX_ROW_SEL = '.dx-row[data-expense-id], .dx-row[data-income-id]';
-    function dxKindOf(row) { return row && row.hasAttribute('data-income-id') ? 'income' : 'expense'; }
-    function dxIdOf(row) {
-        return row ? (row.getAttribute('data-income-id') || row.getAttribute('data-expense-id') || '') : '';
-    }
-    function dxRowEl(kind, id) { return $qs(`.dx-row[${DX_KIND[kind].attr}="${id}"]`); }
 
     /* Where a dragged money row would live on the day under the cursor.
      *
@@ -6211,6 +6275,136 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="dx-list"></div>
         </div>`;
         return $qs('.dx-list', block);
+    }
+
+    /* ---- A strip has a place, and the place is remembered ----------------
+     *
+     * A day's money used to be pinned above its cards, so there was nothing
+     * to remember. Now it can be put down between two activities, and the
+     * number that says where lives on every row of that day (blockSort) —
+     * on the same scale a card's sequenceOrder and a note's sortKey use, so
+     * "between these two" is just a number between theirs. Empty means the
+     * old place: the top of the day, above everything.
+     */
+    function blockSortOf(block) {
+        const raw = (block?.getAttribute('data-block-sort') || '').trim();
+        return raw === '' ? null : (parseInt(raw, 10) || 0);
+    }
+
+    /** Move every positioned strip into its day, at its number. */
+    function placeMoneyBlocks(root) {
+        $qsa(DX_BLOCK_SEL, root || document.getElementById('activitiesList') || document).forEach((block) => {
+            const sort = blockSortOf(block);
+            const group = block.closest('.date-group');
+            const holder = group ? $qs('.date-activities', group) : null;
+            if (!holder) return;
+            if (sort === null) {
+                /* Back to the top of the day: directly above the list of
+                 * activities, which is where an unplaced strip has always sat.
+                 * The anchor is the list itself rather than "the first block
+                 * in here" — that can resolve to the very block being moved,
+                 * and a node inserted before itself never goes anywhere. The
+                 * two strips keep their order because they are walked in the
+                 * order the page wrote them. */
+                const inner = $qs('.date-body-inner', group);
+                if (inner && block.parentNode !== inner) inner.insertBefore(block, holder);
+                return;
+            }
+            const before = $qsa('.activity-card[data-id], .inline-note, .day-expense-block, .day-income-block', holder)
+                .filter((el) => el !== block)
+                .find((el) => {
+                    const n = el.matches('.activity-card[data-id]') ? parseInt(el.getAttribute('data-sequence-order') || '0', 10)
+                        : el.matches('.inline-note') ? parseInt(el.getAttribute('data-sort-key') || '0', 10)
+                        : blockSortOf(el);
+                    return n !== null && n > sort;
+                });
+            if (before) holder.insertBefore(block, before);
+            else holder.appendChild(block);
+        });
+    }
+    window.placeMoneyBlocks = placeMoneyBlocks;
+
+    /** Which item a strip would be dropped above, by the cursor's height. */
+    function blockDropPosition(container, cursorY) {
+        const items = $qsa('.activity-card[data-id], .inline-note, .day-expense-block, .day-income-block', container)
+            .filter((el) => !dragBlock || el !== dragBlock.block);
+        for (const it of items) {
+            const r = it.getBoundingClientRect();
+            if (cursorY < r.top + r.height / 2) return it;
+        }
+        return null;
+    }
+
+    /** Put a strip back where it was picked up from. */
+    function returnBlockHome(block) {
+        if (!block || !blockOrigin || !blockOrigin.parent) return;
+        if (blockOrigin.next && blockOrigin.next.parentNode === blockOrigin.parent) {
+            blockOrigin.parent.insertBefore(block, blockOrigin.next);
+        } else {
+            blockOrigin.parent.appendChild(block);
+        }
+    }
+
+    /** The number a strip should carry, read off the neighbours it now has. */
+    function blockKeyFor(block) {
+        const orderOf = (n) => {
+            if (!n || !n.matches) return null;
+            if (n.matches('.activity-card[data-id]')) return parseInt(n.getAttribute('data-sequence-order') || '0', 10);
+            if (n.matches('.inline-note')) return parseInt(n.getAttribute('data-sort-key') || '0', 10);
+            if (n.matches(DX_BLOCK_SEL)) return blockSortOf(n);
+            return null;
+        };
+        let prev = block.previousElementSibling, next = block.nextElementSibling;
+        while (prev && orderOf(prev) === null) prev = prev.previousElementSibling;
+        while (next && orderOf(next) === null) next = next.nextElementSibling;
+        const p = orderOf(prev), n = orderOf(next);
+        if (p === null && n === null) return 0;
+        if (p === null) return n - 5;
+        if (n === null) return p + 5;
+        return Math.floor((p + n) / 2);
+    }
+
+    /* Carry a whole strip: to another day, to another place in this one, or
+     * both at once. The server moves the rows and stamps the place on them;
+     * the answer redraws both days. */
+    async function moveMoneyBlock(kind, fromDate, toDate, blockSort) {
+        if (!mayEditBoard()) return;
+        try {
+            const res = await api(U.dayMoneyBlockMove(), { method: 'POST', body: {
+                kind, fromDate, toDate,
+                blockSort: blockSort === null ? null : Number(blockSort),
+            } });
+            if (kind === 'expense') {
+                DAY_EXPENSES[toDate] = (res && res.to) || [];
+                if (fromDate !== toDate) DAY_EXPENSES[fromDate] = (res && res.from) || [];
+                renderExpenseBlockFor(toDate);
+                if (fromDate !== toDate) renderExpenseBlockFor(fromDate);
+            } else {
+                renderDayIncome(toDate);
+                if (fromDate !== toDate) renderDayIncome(fromDate);
+            }
+            const stamp = (dateKey, val) => {
+                rememberBlockSort(dateKey, kind, val);
+                const sel = kind === 'income' ? '.day-income-block' : '.day-expense-block';
+                $qsa(`#activitiesList ${sel}[data-date="${dateKey}"]`).forEach((el) => {
+                    el.setAttribute('data-block-sort', val === null || val === undefined ? '' : String(val));
+                });
+            };
+            stamp(toDate, res ? res.blockSort : null);
+            if (fromDate !== toDate) stamp(fromDate, null);
+            placeMoneyBlocks();
+            repaintDayCash(fromDate);
+            repaintDayCash(toDate);
+            toast(fromDate === toDate
+                ? (kind === 'income' ? 'Income strip moved.' : 'Expense strip moved.')
+                : ((kind === 'income' ? 'Income' : 'Expenses') + ' moved to ' + prettyDateFull(toDate) + '.'));
+        } catch (err) {
+            toast(err.message, 'error');
+            // The board guessed; the server said no. Put the guess back.
+            if (kind === 'expense') { renderExpenseBlockFor(fromDate); renderExpenseBlockFor(toDate); }
+            else { renderDayIncome(fromDate); renderDayIncome(toDate); }
+            placeMoneyBlocks();
+        }
     }
 
     /** A borrowed strip totals the one row it is holding. */
@@ -6900,6 +7094,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let dragGroupDate = null; // set while dragging a date header (whole-day move)
     let dragNoteDate = null;   // set while dragging a date-note block to another day
     let dragDx = null;         // {kind, id, date} while a money row is in the air
+    let dragBlock = null;      // {kind, date, block} while a whole strip is
+    let blockOrigin = null;    // where that strip sat before it was picked up
     let dxOrigin = null;       // where that row sat before it was picked up
     let dragMarkerDate = null; // set while dragging a resume-here marker to another day
 
@@ -7453,6 +7649,34 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        /* Dragging a whole strip by its head.
+         *
+         * The rows inside it are handles of their own; the head is the handle
+         * for all of them at once, which is the difference between "this
+         * expense belongs on Tuesday" and "everything I spent that day
+         * belongs on Tuesday". It can also be put down between two activities
+         * — the day's money is part of the day's story, and the story has an
+         * order. */
+        const dxHead = e.target.closest && e.target.closest('.dx-head[draggable="true"]');
+        if (dxHead) {
+            if (!MAY_DRAG) { e.preventDefault(); return; }
+            const block = dxHead.closest(DX_BLOCK_SEL);
+            const card = dxHead.closest('.dx-card');
+            if (!block || !card) { e.preventDefault(); return; }
+            dragBlock = {
+                kind: block.classList.contains('day-income-block') ? 'income' : 'expense',
+                date: (block.getAttribute('data-date') || '').trim(),
+                block,
+            };
+            blockOrigin = { parent: block.parentNode, next: block.nextElementSibling };
+            setTimeout(() => { if (dragBlock && dragBlock.block === block) card.classList.add('dragging'); }, 0);
+            if (e.dataTransfer) {
+                e.dataTransfer.effectAllowed = 'move';
+                try { e.dataTransfer.setData('text/plain', 'block:' + dragBlock.kind); } catch (_) { /* noop */ }
+            }
+            return;
+        }
+
         // Dragging one money row — expense or income — onto another day.
         const dxRow = e.target.closest && e.target.closest(DX_ROW_SEL);
         if (dxRow) {
@@ -7536,6 +7760,12 @@ document.addEventListener('DOMContentLoaded', () => {
         dragOrigin = null;
         dragGroupDate = null;
         dragNoteDate = null;
+        if (dragBlock) {
+            returnBlockHome(dragBlock.block);
+            dragBlock = null;
+            blockOrigin = null;
+        }
+        $qsa('.date-activities.drag-over-block').forEach((el) => el.classList.remove('drag-over-block'));
         if (dragDx) {
             // Ended without a drop we understood: undo the travelling.
             restoreDraggedRow(dxRowEl(dragDx.kind, dragDx.id));
@@ -7557,6 +7787,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener('dragover', (e) => {
+        /* A whole strip in the air: it travels among the day's cards, so where
+         * it will land is where it already is. A folded day springs open under
+         * it, the same courtesy a card and a row get. */
+        if (dragBlock) {
+            const foldedGroup = e.target.closest && e.target.closest('.date-group.is-folded');
+            if (foldedGroup) dxOpenGroup(foldedGroup);
+            const container = e.target.closest && e.target.closest('.date-activities');
+            if (container) {
+                const cDate = (container.getAttribute('data-date') || '').trim();
+                if (cDate && cDate !== '__no-date__') {
+                    e.preventDefault();
+                    if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+                    $qsa('.date-activities.drag-over-block').forEach((el) => el.classList.remove('drag-over-block'));
+                    container.classList.add('drag-over-block');
+                    const before = blockDropPosition(container, e.clientY);
+                    if (before) { if (before !== dragBlock.block) container.insertBefore(dragBlock.block, before); }
+                    else if (container.lastElementChild !== dragBlock.block) container.appendChild(dragBlock.block);
+                }
+            }
+            return;
+        }
+
         /* An expense in the air.
          *
          * Over its own day's rows the row itself moves as the cursor passes,
@@ -7696,6 +7948,26 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!targetDate || targetDate === '__no-date__' || targetDate === sourceDate) return;
             e.preventDefault();
             moveGroupToDate(sourceDate, targetDate);
+            return;
+        }
+
+        // A whole strip put down: where it sits is where it goes.
+        if (dragBlock) {
+            e.preventDefault();
+            const { kind, date, block } = dragBlock;
+            dragBlock = null;
+            clearDragFades();
+            $qsa('.date-activities.drag-over-block').forEach((el) => el.classList.remove('drag-over-block'));
+            const container = block.closest('.date-activities');
+            const toDate = (container?.getAttribute('data-date') || '').trim();
+            if (!container || !toDate || toDate === '__no-date__') {
+                returnBlockHome(block);
+            } else {
+                const key = blockKeyFor(block);
+                if (toDate !== date) returnBlockHome(block);   // its own day keeps its own host
+                moveMoneyBlock(kind, date, toDate, key);
+            }
+            blockOrigin = null;
             return;
         }
 
@@ -8002,7 +8274,22 @@ document.addEventListener('DOMContentLoaded', () => {
         if (td.active) {
             const target = document.elementFromPoint(td.lastX, td.lastY);
             const rest = target?.closest?.('.rest-day-marker');
-            if (td.dx) {
+            if (td.blockEl) {
+                $qs('.dx-card', td.blockEl)?.classList.remove('dragging');
+                clearDropHighlights();
+                $qsa('.date-activities.drag-over-block').forEach((el) => el.classList.remove('drag-over-block'));
+                const container = td.blockEl.closest('.date-activities');
+                const toDate = (container?.getAttribute('data-date') || '').trim();
+                if (!commit || !container || !toDate || toDate === '__no-date__') {
+                    returnBlockHome(td.blockEl);
+                } else {
+                    const key = blockKeyFor(td.blockEl);
+                    if (toDate !== td.blockDate) returnBlockHome(td.blockEl);
+                    moveMoneyBlock(td.blockKind, td.blockDate, toDate, key);
+                }
+                dragBlock = null;
+                blockOrigin = null;
+            } else if (td.dx) {
                 /* The row has travelled with the finger, so where it sits is
                  * the answer: its own day again is a reorder, another day is a
                  * move, and a finger lifted off the board puts it back. */
@@ -8080,14 +8367,18 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('is-touch-dragging');
         navigator.vibrate?.(15);
 
-        const el = td.header || td.note || td.dx || td.card;
+        const el = td.header || td.note || td.dx || td.blockEl || td.card;
         td.ghost = buildDragGhost(el);
         const rect = el.getBoundingClientRect();
         td.offsetX = td.lastX - rect.left;
         td.offsetY = td.lastY - rect.top;
         positionGhost(td.lastX, td.lastY);
 
-        if (td.dx) {
+        if (td.blockEl) {
+            $qs('.dx-card', td.blockEl)?.classList.add('dragging');
+            dragBlock = { kind: td.blockKind, date: td.blockDate, block: td.blockEl };
+            blockOrigin = { parent: td.blockEl.parentNode, next: td.blockEl.nextElementSibling };
+        } else if (td.dx) {
             td.dx.classList.add('dragging');
             dxOrigin = { parent: td.dx.parentNode, next: td.dx.nextElementSibling, date: td.dxDate };
         } else if (td.header) {
@@ -8125,15 +8416,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // only be dragged with a mouse — which is not what a farmer has.
         // A long press on the row's own kebab is aiming at the menu, not at a
         // handle — the mouse path already refuses to drag from a button.
-        const dx = (header || t.target.closest?.('button, a')) ? null : t.target.closest?.(DX_ROW_SEL);
+        const dxHead = header ? null : t.target.closest?.('.dx-head[draggable="true"]');
+        const dx = (header || dxHead || t.target.closest?.('button, a')) ? null : t.target.closest?.(DX_ROW_SEL);
         const card = (header || dx) ? null : t.target.closest?.('.activity-card[data-id]');
-        if (!header && !card && !dx) return;
+        if (!header && !card && !dx && !dxHead) return;
 
         const groupDate = header ? (header.closest('.date-group')?.getAttribute('data-date') || '').trim() : '';
         if (header && (!groupDate || groupDate === '__no-date__')) return;
 
         touchDrag = {
-            card, header, dx, dxKind: dx ? dxKindOf(dx) : '',
+            card, header, dxHead,
+            blockEl: dxHead ? dxHead.closest(DX_BLOCK_SEL) : null,
+            blockKind: dxHead ? (dxHead.closest(DX_BLOCK_SEL)?.classList.contains('day-income-block') ? 'income' : 'expense') : '',
+            blockDate: dxHead ? (dxHead.closest(DX_BLOCK_SEL)?.getAttribute('data-date') || '').trim() : '',
+            dx, dxKind: dx ? dxKindOf(dx) : '',
             dxDate: dx ? (dx.getAttribute('data-date') || '').trim() : '',
             groupDate, active: false, raf: null,
             startX: t.clientX, startY: t.clientY, lastX: t.clientX, lastY: t.clientY,
@@ -8174,6 +8470,20 @@ document.addEventListener('DOMContentLoaded', () => {
         /* An expense in the air: the day it would land on lights up, and over
          * its own day's rows the row itself follows the finger, so the order
          * is seen before it is let go rather than after. */
+        if (touchDrag.blockEl) {
+            const folded = target?.closest?.('.date-group.is-folded');
+            if (folded) dxOpenGroup(folded);
+            const container = target?.closest?.('.date-activities');
+            const cDate = (container?.getAttribute('data-date') || '').trim();
+            if (container && cDate && cDate !== '__no-date__') {
+                container.classList.add('drag-over-block');
+                const before = blockDropPosition(container, t.clientY);
+                if (before) { if (before !== touchDrag.blockEl) container.insertBefore(touchDrag.blockEl, before); }
+                else if (container.lastElementChild !== touchDrag.blockEl) container.appendChild(touchDrag.blockEl);
+            }
+            return;
+        }
+
         if (touchDrag.dx) {
             const overRow = target?.closest?.(DX_ROW_SEL);
             if (overRow && overRow !== touchDrag.dx && dxKindOf(overRow) === touchDrag.dxKind) {

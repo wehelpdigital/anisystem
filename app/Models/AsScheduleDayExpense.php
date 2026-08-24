@@ -16,6 +16,9 @@ class AsScheduleDayExpense extends BaseModel
         // exactly that one away again.
         'sourceRef',
         'sortOrder',
+        // Where this row's whole strip sits among the day's activities; every
+        // row of one day carries the same number, null means "at the top".
+        'blockSort',
         'deleteStatus',
     ];
 
@@ -23,6 +26,7 @@ class AsScheduleDayExpense extends BaseModel
         'expenseDate'  => 'date:Y-m-d',
         'amount'       => 'decimal:2',
         'sortOrder'    => 'integer',
+        'blockSort'    => 'integer',
         'deleteStatus' => 'integer',
     ];
 
