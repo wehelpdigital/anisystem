@@ -229,6 +229,10 @@
 
     .wcs-state { padding:1.25rem .5rem; text-align:center; font-size:.85rem; font-weight:600; color:var(--color-gray-400); }
     .wcs-state[hidden] { display:none; }
+    /* It leaves rather than blinking out. */
+    .wcs-state { transition:opacity .22s cubic-bezier(.22,1,.36,1); }
+    .wcs-state.wcs-state-gone { opacity:0; }
+    @media (prefers-reduced-motion: reduce) { .wcs-state { transition:none; } }
 
     /* The sheet reads like a discussion's thread: the post at the top with
        its own chrome stripped, the answers under it, the box at the end. */

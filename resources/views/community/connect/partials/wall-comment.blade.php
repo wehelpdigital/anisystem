@@ -48,9 +48,8 @@
                                      alt="Comment photo" loading="lazy">
                             </span>
                         @endif
-                        @if ($comment->videoPath ?? null)
-                            @include('community.partials.video-embed', ['src' => $comment->videoPath, 'poster' => $comment->videoPoster ?? null])
-                        @endif
+                        @php $cClips = method_exists($comment, 'clips') ? $comment->clips() : array_filter([['video' => $comment->videoPath ?? null, 'poster' => $comment->videoPoster ?? null]], fn ($c) => ! empty($c['video'])); @endphp
+                        @include('community.partials.clip-carousel', ['clips' => $cClips, 'mini' => true])
                     @endif
                 </div>
                 <div class="flex items-center gap-2 mt-0.5 ml-1">

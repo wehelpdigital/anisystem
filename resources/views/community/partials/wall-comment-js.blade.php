@@ -45,7 +45,7 @@
                 <input type="text" placeholder="Reply…" maxlength="2000">
                 <button type="button" class="emoji-btn js-comment-photo" aria-label="Attach a photo" title="Photo">${SVG_PHOTO}</button>
                 <input type="file" class="js-comment-file hidden" accept="image/jpeg,image/png,image/webp" multiple>
-                <button type="button" class="emoji-btn js-video-attach" aria-label="Upload a video" title="Video">${SVG_VIDEO}</button>
+                <button type="button" class="emoji-btn js-comment-video" aria-label="Attach a video" title="Video">${SVG_VIDEO}</button>
                 <button type="button" class="emoji-btn js-video-record" aria-label="Record a video" title="Record">${SVG_REC}</button>
                 <input type="file" class="js-video-file hidden" accept="video/*">
                 <button type="button" class="emoji-btn js-emoji-btn" aria-label="Add an emoji" title="Emoji">${SVG_SMILE}</button>
@@ -285,6 +285,28 @@
         });
     };
 
+    /* The empty line stands down.
+     *
+     * "No comments yet — be the first" is written when a post's comments are
+     * fetched and nothing else ever touched it, so it sat there over the
+     * comment somebody had just written. It fades out rather than blinking
+     * away, and the sheet's own tally starts counting.
+     */
+    function firstOneArrived(zone) {
+        const scope = zone.closest('.sheet, [data-comment-scope]') || document;
+        const state = scope.querySelector('.wcs-state');
+        if (state && !state.hidden) {
+            state.classList.add('wcs-state-gone');
+            setTimeout(() => { state.hidden = true; state.classList.remove('wcs-state-gone'); }, 260);
+        }
+        const label = scope.querySelector('.wcs-count');
+        if (label) {
+            const now = (parseInt((label.textContent || '').replace(/\D+/g, ''), 10) || 0) + 1;
+            label.hidden = false;
+            label.textContent = now + (now === 1 ? ' comment' : ' comments');
+        }
+    }
+
     // Comment + reply submit (multipart — comments/replies can carry a photo).
     document.addEventListener('submit', async (e) => {
         const form = e.target.closest('.wall-comment-form');
@@ -302,7 +324,7 @@
         const shots = (window.plazaCommentShots ? window.plazaCommentShots(form) : []);
         const file = shots.length ? null : (fileInput && fileInput.files[0]);
         const pick = shots.length ? '' : (form.dataset.pickPath || '');
-        if (!body && !shots.length && !file && !video && !pick) { say('Write something or add a photo/video.', 'error'); return; }
+        if (!body && !shots.length && !file && !video && !pick) { say('Write something or add a photo or video.', 'error'); return; }
         const postId = form.getAttribute('data-post-id');
         const parentId = form.getAttribute('data-parent-id');
         // Prepend the @mention token when this reply is tagging someone, so the
@@ -314,10 +336,12 @@
         const sendBody = (token + body).trim();
         const fd = new FormData();
         if (sendBody) fd.append('body', sendBody);
+        // Both kinds, each to its own field — the wall takes three clips now,
+        // the same as an answer in a discussion.
         shots.forEach((sh) => {
-            if ((sh.kind || 'image') === 'video') return;   // this wall takes one clip, by its own field
-            if (sh.file) fd.append('images[]', sh.file);
-            else if (sh.path) fd.append('galleryPaths[]', sh.path);
+            const clip = (sh.kind || 'image') === 'video';
+            if (sh.file) fd.append(clip ? 'videos[]' : 'images[]', sh.file);
+            else if (sh.path) fd.append(clip ? 'galleryVideoPaths[]' : 'galleryPaths[]', sh.path);
         });
         if (file) fd.append('image', file);
         else if (pick) fd.append('galleryPath', pick);
@@ -346,6 +370,8 @@
                     openZone(zone, false);
                     zone.insertAdjacentHTML('beforeend', data.data.html);
                     animateIn(zone.lastElementChild);
+                    // "No comments yet — be the first" is answered now.
+                    firstOneArrived(zone);
                     input.value = '';
                     if (fileInput) fileInput.value = '';
                     delete form.dataset.pickPath;
