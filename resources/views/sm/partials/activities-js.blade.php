@@ -4183,6 +4183,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // (.na) stay — opening a photo or a map is reading, not editing.
         clone.querySelectorAll('button:not(.na), [data-sheet-open], .inline-note-grip').forEach((n) => n.remove());
         clone.classList.remove('is-editing');
+        /* A folded note read in the sheet is the whole note: the fold is a
+         * way of holding a board together, not a way of hiding words. */
+        clone.classList.add('is-open');
+        clone.querySelectorAll('.note-fold').forEach((f) => { f.style.maxHeight = 'none'; });
+        clone.querySelectorAll('.note-gist').forEach((g) => g.remove());
         body.innerHTML = '';
         body.appendChild(clone);
         openSheet('activityInfoSheet');
@@ -5719,6 +5724,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 mediaBox.remove();
             }
             block.style.display = has ? '' : 'none';
+            // Its head says what it now says, and its fold holds the new words.
+            if (typeof dressNote === 'function') dressNote(block);
         }
     }
 
@@ -5848,7 +5855,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         // Click the note body to edit it in the modal editor.
         const block = e.target.closest('.date-note-block[data-date]');
-        if (block && block.style.display !== 'none' && !e.target.closest('a, .na, .nm, .note-kebab, .note-more')) {
+        if (block && block.style.display !== 'none' && !e.target.closest('a, .na, .nm, .note-kebab, .note-fold-btn')) {
             e.preventDefault();
             const dk = block.getAttribute('data-date') || '';
             // Same rule as the inline note: on a phone the body is clamped to
@@ -7236,8 +7243,8 @@ document.addEventListener('DOMContentLoaded', () => {
         el.setAttribute('data-media', JSON.stringify(mediaArr || []));
         el.setAttribute('data-title', title || '');
         paintInlineNoteTags(el);
-        // New words, new height: the clamp is measured again rather than kept.
-        if (typeof paintNoteClamp === 'function') paintNoteClamp(el);
+        // New words, new name: the head is built again rather than kept.
+        if (typeof dressNote === 'function') dressNote(el);
     }
 
     /** Remember what a note points at, and show it. */
@@ -7537,61 +7544,192 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 220);
     });
 
-    /* ---------------- Reading a long note where it sits ----------------
-     * A note is clamped to a few lines so a day with four of them still fits
-     * on a screen, and the ones that have more to say grow a "Show more".
-     * Only those: the button is added by measuring, so a two-line note never
-     * offers to expand into itself.
+    /* ---------------- A note is a title, and the note is behind it ----------
+     *
+     * A day can carry four notes, and four notes' worth of words is the whole
+     * screen before a single activity. So a note shows its name with a
+     * chevron beside it and keeps the rest folded away — no faded tail, no
+     * "Show more" at the bottom, just the one line you scan a day by.
+     *
+     * The fold is built here rather than in the four renderers that draw a
+     * note (two Blade, two JS), so the head cannot come out differently
+     * depending on who drew it. Idempotent on purpose: it runs again after
+     * every board rebuild and every edit, and finds its own work already
+     * done.
      */
-    const NOTE_MORE = '<button type="button" class="note-more" aria-expanded="false">Show more</button>';
+    const NOTE_CHEVRON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>';
 
     function noteBodyOf(el) { return $qs('.inline-note-body, .date-note-inner', el); }
 
-    function paintNoteClamp(el) {
+    /** What this note is called on the board — its own name, or its opening. */
+    function noteHeadText(el) {
+        const title = (el.getAttribute('data-title') || '').trim();
+        if (title) return title;
         const body = noteBodyOf(el);
-        if (!el || !body || el.classList.contains('is-editing')) return;
-        const open = el.classList.contains('is-open');
-        el.classList.remove('is-clamped');
-        el.style.removeProperty('--note-full');
-        $qs('.note-more', el)?.remove();
-        // Measured with the clamp off, so the answer is the note's real height.
-        const room = parseFloat(getComputedStyle(el).getPropertyValue('--note-clamp')) || 0;
-        const full = body.scrollHeight;
-        if (!room || full <= room * 16 + 6) { el.classList.remove('is-open'); return; }
-        el.classList.add('is-clamped');
-        el.style.setProperty('--note-full', full + 'px');
-        body.insertAdjacentHTML('afterend', NOTE_MORE);
+        const words = ((body && body.textContent) || '').replace(/\s+/g, ' ').trim();
+        if (words) return words.length > 90 ? words.slice(0, 90) + '\u2026' : words;
+        return $qs('.na, .nm', el) ? 'Attachment' : 'Note';
+    }
+
+    /* Which notes are open, kept per schedule so two seasons do not share an
+     * answer. A note left open stays open across a rebuild, a reload and
+     * tomorrow; storage that refuses to write (private mode) simply means the
+     * board opens folded, which is the state it defaults to anyway. */
+    const NOTE_OPEN_KEY = 'as-notes-open:' + SCHEDULE_ID;
+    let noteOpenSet = null;
+    function openNotes() {
+        if (noteOpenSet) return noteOpenSet;
+        noteOpenSet = new Set();
+        try {
+            const raw = localStorage.getItem(NOTE_OPEN_KEY);
+            if (raw) JSON.parse(raw).forEach((k) => noteOpenSet.add(String(k)));
+        } catch (_) { /* no storage, no memory */ }
+        return noteOpenSet;
+    }
+    function noteKeyOf(el) {
+        const id = el.getAttribute('data-inline-note');
+        if (id) return 'n' + id;
+        const date = (el.getAttribute('data-date') || '').trim();
+        return date ? 'd' + date : '';
+    }
+    function rememberNote(key, open) {
+        if (!key) return;
+        const set = openNotes();
+        open ? set.add(key) : set.delete(key);
+        try { localStorage.setItem(NOTE_OPEN_KEY, JSON.stringify([...set])); } catch (_) { /* noop */ }
+    }
+
+    /** Build (or refresh) one note's head and fold. */
+    function dressNote(el) {
+        if (!el || el.classList.contains('is-editing')) return;
+        const body = noteBodyOf(el);
+        if (!body) return;
+
+        let head = el.querySelector(':scope > .note-head');
+        if (!head) {
+            head = document.createElement('div');
+            head.className = 'note-head';
+            el.insertBefore(head, el.firstChild);
+        }
+        let fold = el.querySelector(':scope > .note-fold');
+        if (!fold) {
+            fold = document.createElement('div');
+            fold.className = 'note-fold';
+            el.appendChild(fold);
+        }
+        /* Everything that is not the head, the two handles or the fold itself
+         * belongs inside the fold — including anything a later edit added
+         * beside the body, which is why this sweep runs every time. */
+        [...el.children].forEach((c) => {
+            if (c === head || c === fold) return;
+            if (c.matches('.note-kebab, .inline-note-grip')) return;
+            fold.appendChild(c);
+        });
+
+        // The tag ("NOTE") and the title belong on the head line.
+        const tag = fold.querySelector(':scope > .inline-note-tag');
+        if (tag) head.appendChild(tag);
+        const title = fold.querySelector(':scope > .inline-note-title');
+        if (title) head.appendChild(title);
+
+        /* A note with no title of its own is named by its opening words. It
+         * is hidden while the note is open, where the words say it better. */
+        let gist = head.querySelector('.note-gist');
+        if (title) {
+            gist?.remove();
+        } else {
+            if (!gist) {
+                gist = document.createElement('span');
+                gist.className = 'note-gist';
+                head.appendChild(gist);
+            }
+            gist.textContent = noteHeadText(el);
+        }
+
+        let btn = head.querySelector('.note-fold-btn');
+        if (!btn) {
+            btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'note-fold-btn';
+            btn.innerHTML = NOTE_CHEVRON;
+            head.appendChild(btn);
+        }
+        head.appendChild(btn);   // always last on the line
+        const open = openNotes().has(noteKeyOf(el));
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.setAttribute('aria-label', open ? 'Fold this note away' : 'Read this note');
+        btn.title = open ? 'Fold this note away' : 'Read this note';
+        setNoteFold(el, open, false);
+    }
+
+    function dressNotes(root) {
+        $qsa('.inline-note, .date-note-block', root || $id('activitiesList') || document).forEach(dressNote);
+    }
+    document.addEventListener('activities:rendered', () => dressNotes());
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => dressNotes(), { once: true });
+    else dressNotes();
+
+    /**
+     * Open or fold one note.
+     *
+     * Animated, it travels between nought and the height the words actually
+     * need, measured at the moment it is asked for — a note whose pictures
+     * have only just arrived is taller than it was when the board was drawn.
+     * Once open the ceiling is lifted entirely, so a note that grows later
+     * (an image decoding, a phone rotating) is not cut off by a stale number.
+     */
+    function setNoteFold(el, open, animate) {
+        const fold = el.querySelector(':scope > .note-fold');
+        if (!fold) return;
+        el.classList.toggle('is-open', open);
+        if (!animate) {
+            fold.style.maxHeight = open ? 'none' : '0px';
+            return;
+        }
+        /* The reflow between the two writes is what makes this a movement.
+         * A transition needs a committed starting value, and two assignments
+         * in one frame are one assignment as far as the browser is concerned
+         * — reading offsetHeight forces the first to land. (A rAF would do it
+         * too, but only once the tab is painting: on a phone waking up, or a
+         * background tab, that frame can be a long time coming and the fold
+         * would snap instead.) */
+        const from = fold.scrollHeight;
         if (open) {
-            el.classList.add('is-open');
-            const btn = $qs('.note-more', el);
-            if (btn) { btn.textContent = 'Show less'; btn.setAttribute('aria-expanded', 'true'); }
+            fold.style.maxHeight = '0px';
+            void fold.offsetHeight;
+            fold.style.maxHeight = from + 'px';
+            /* Once open the ceiling comes off, so a picture that decodes late
+             * is not cut off by a number measured before it arrived. The timer
+             * is the belt: with reduced motion there is no transition and so
+             * no transitionend to listen for. */
+            const lift = () => { if (el.classList.contains('is-open')) fold.style.maxHeight = 'none'; };
+            const done = (e) => {
+                if (e.propertyName !== 'max-height') return;
+                fold.removeEventListener('transitionend', done);
+                lift();
+            };
+            fold.addEventListener('transitionend', done);
+            setTimeout(lift, 420);
+        } else {
+            fold.style.maxHeight = from + 'px';
+            void fold.offsetHeight;
+            fold.style.maxHeight = '0px';
         }
     }
 
-    function paintNoteClamps(root) {
-        $qsa('.inline-note, .date-note-block', root || $id('activitiesList') || document).forEach(paintNoteClamp);
-    }
-    document.addEventListener('activities:rendered', () => paintNoteClamps());
-    window.addEventListener('resize', () => paintNoteClamps(), { passive: true });
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => paintNoteClamps(), { once: true });
-    else paintNoteClamps();
-
     document.addEventListener('click', (e) => {
-        const btn = e.target.closest && e.target.closest('.note-more');
+        const btn = e.target.closest && e.target.closest('.note-fold-btn');
         if (!btn) return;
         e.preventDefault();
         e.stopPropagation();
         const el = btn.closest('.inline-note, .date-note-block');
         if (!el) return;
-        const open = el.classList.toggle('is-open');
-        // Re-measured on the way open: a note whose pictures have only just
-        // loaded is taller than it was when the board was drawn.
-        if (open) {
-            const body = noteBodyOf(el);
-            if (body) el.style.setProperty('--note-full', body.scrollHeight + 'px');
-        }
-        btn.textContent = open ? 'Show less' : 'Show more';
+        const open = !el.classList.contains('is-open');
+        setNoteFold(el, open, true);
+        rememberNote(noteKeyOf(el), open);
         btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.setAttribute('aria-label', open ? 'Fold this note away' : 'Read this note');
+        btn.title = open ? 'Fold this note away' : 'Read this note';
     });
 
     // Header +note button.
@@ -7603,7 +7741,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('click', (e) => {
         const note = e.target.closest && e.target.closest('.inline-note');
-        if (note && !e.target.closest('.inline-note-grip, .note-kebab, .note-more, .na, .nm, a')) {
+        if (note && !e.target.closest('.inline-note-grip, .note-kebab, .note-fold-btn, .na, .nm, a')) {
             // Clamped to one line on a phone, so a tap means "let me read it".
             // Editing is a button away, here and in the sheet's footer — and
             // that footer button goes away for someone who may not write.
@@ -7644,7 +7782,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         document.addEventListener('pointerdown', (e) => {
             if (e.button != null && e.button !== 0) return;
-            if (e.target.closest && e.target.closest('.note-kebab, .note-more, .na, .nm, a')) return;
+            if (e.target.closest && e.target.closest('.note-kebab, .note-fold-btn, .na, .nm, a')) return;
             const inlineNote = e.target.closest && e.target.closest('.inline-note[data-inline-note]');
             const dateNote = inlineNote ? null : (e.target.closest && e.target.closest('.date-note-block[data-date]'));
             const note = inlineNote || dateNote;
@@ -7856,7 +7994,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Dragging an inline sticky note to another slot/day.
         const inl = e.target.closest && e.target.closest('.inline-note[data-inline-note]');
         if (inl) {
-            if (inl.classList.contains('is-editing') || (e.target.closest && e.target.closest('.note-kebab, .note-more'))) { e.preventDefault(); return; }
+            if (inl.classList.contains('is-editing') || (e.target.closest && e.target.closest('.note-kebab, .note-fold-btn'))) { e.preventDefault(); return; }
             if (!MAY_DRAG_NOTE) { e.preventDefault(); return; }   // its slot is a saved field like any other
             dragInlineEl = inl;
             setTimeout(() => { if (dragInlineEl === inl) inl.classList.add('dragging'); }, 0);

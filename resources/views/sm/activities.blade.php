@@ -542,6 +542,10 @@
            things a day carries are operated the same way. Always visible:
            there is no hover on a phone, and a control you can only find by
            hovering is one half the users never find. */
+        /* The six dots take the outside edge and the three dots sit inside
+           them — the order an expense row wears, so "carry me" is always the
+           thing furthest out. .date-note-block has no grip, so its menu keeps
+           the corner to itself (see below). */
         .note-kebab {
             position: absolute; top: .25rem; right: .25rem;
             width: 1.75rem; height: 1.75rem; border-radius: .45rem;
@@ -561,42 +565,54 @@
         }
         @media (prefers-reduced-motion: reduce) { .note-kebab { transition: none; } }
 
-        /* ---- A note that has more to say ----
-           Clamped to a few lines so a day with four notes still fits on a
-           screen, and opened in place rather than in a sheet: reading a note
-           should not mean leaving the board. --note-clamp is the resting
-           height in rem; --note-full is measured by the JS when it decides a
-           note needs the button at all, which is what makes the growth a
-           movement instead of a jump. */
-        .inline-note, .date-note-block { --note-clamp: 5.5; }
-        @media (hover: none), (pointer: coarse) { .inline-note, .date-note-block { --note-clamp: 3.2; } }
-        .inline-note .inline-note-body, .date-note-block .date-note-inner {
-            transition: max-height .28s cubic-bezier(.22,1,.36,1);
+        /* ---- A note is its name until you ask for the rest ----
+
+           A day carries up to four notes, and four notes' worth of words is
+           the whole screen before a single activity. So a note shows one line
+           — its title, or its opening words — with a chevron beside it, and
+           the words live behind that. No faded tail and no "Show more" at the
+           bottom: the head IS the control, and it is the same line whether
+           the note is two words or twenty lines long.
+
+           The head, the fold and the chevron are built by the board's JS
+           (dressNote), so nothing here can be seen before it runs — and if
+           it never runs there is no .note-fold at all and the note simply
+           shows itself. */
+        .note-head { display: flex; align-items: center; gap: .4rem; min-width: 0; }
+        .note-head .inline-note-tag { margin-bottom: 0; flex: none; }
+        .note-head .inline-note-title,
+        .note-gist {
+            min-width: 0; flex: 1 1 auto; margin-bottom: 0;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
-        .inline-note.is-clamped .inline-note-body,
-        .date-note-block.is-clamped .date-note-inner {
-            max-height: calc(var(--note-clamp) * 1rem); overflow: hidden;
-            -webkit-mask-image: linear-gradient(#000 62%, transparent);
-            mask-image: linear-gradient(#000 62%, transparent);
+        .note-gist { font-size: .8rem; font-weight: 600; color: var(--tl-note-text); }
+        .date-note-block .note-gist { color: var(--tl-note-text); }
+        .note-fold-btn {
+            flex: none; width: 1.7rem; height: 1.7rem; border-radius: .45rem;
+            display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+            color: #b45309; background: transparent;
+            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1);
         }
-        .inline-note.is-clamped.is-open .inline-note-body,
-        .date-note-block.is-clamped.is-open .date-note-inner {
-            max-height: var(--note-full, 60rem);
-            -webkit-mask-image: none; mask-image: none;
+        .note-fold-btn svg { width: 1.05rem; height: 1.05rem;
+            transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        .is-open > .note-head .note-fold-btn svg { transform: rotate(180deg); }
+        .note-fold-btn:hover { background: #fdf0d0; }
+        html.dark .note-fold-btn { color: #eec155; }
+        html.dark .note-fold-btn:hover { background: #3a3018; }
+        @media (hover: none), (pointer: coarse) {
+            .note-fold-btn { width: 2.1rem; height: 2.1rem; }
+            .note-fold-btn svg { width: 1.2rem; height: 1.2rem; }
         }
-        .note-more {
-            display: inline-flex; align-items: center; gap: .2rem; margin-top: .25rem;
-            font-size: .7rem; font-weight: 800; letter-spacing: .01em; color: #b45309;
-            cursor: pointer; background: transparent; border-radius: .3rem;
-            transition: color .28s cubic-bezier(.22,1,.36,1);
-        }
-        .note-more::after { content: '\25be'; font-size: .75rem; line-height: 1; transition: transform .28s cubic-bezier(.22,1,.36,1); }
-        .is-open > .note-more::after { transform: rotate(180deg); }
-        .note-more:hover { color: #92400e; }
-        html.dark .note-more { color: #eec155; }
+
+        /* The fold itself. Nought to the height the words need and back, on
+           the house easing; the JS lifts the ceiling entirely once it is open
+           so a picture that decodes late is not cut off by a stale number. */
+        .note-fold { overflow: hidden; max-height: 0; opacity: 0;
+            transition: max-height .28s cubic-bezier(.22,1,.36,1), opacity .22s ease; }
+        .is-open > .note-fold { opacity: 1; }
+        .is-open > .note-head + .note-fold { margin-top: .35rem; }
         @media (prefers-reduced-motion: reduce) {
-            .inline-note .inline-note-body, .date-note-block .date-note-inner,
-            .note-more, .note-more::after { transition: none; }
+            .note-fold, .note-fold-btn, .note-fold-btn svg { transition: none; }
         }
 
         /* Desktop keeps the full date, the word "activities" and the arrow
@@ -743,10 +759,8 @@
         }
 
         @media (hover: none), (pointer: coarse) {
-            /* Notes used to read as exactly one line here, and the only way
-               to see the rest was to open a sheet. They keep a few lines now
-               and grow a "Show more" when there is more — see .is-clamped
-               above — so a long note is read where it lies. */
+            /* Notes read as one line here and everywhere else now — their
+               title, with the words behind a chevron. See .note-head above. */
 
             /* Card head on one row: done, type icon, lot, kebab — with the
                title and its badges on full-width rows underneath.
@@ -955,12 +969,14 @@
         /* Grip: the clear drag affordance (whole note is still draggable). */
         /* On the right, beside the three dots — the same corner an expense row
            wears its six in, so "carry me" is in one place on this board. */
-        .inline-note-grip { position: absolute; right: 2.05rem; top: .3rem; display: inline-flex; align-items: center; justify-content: center; padding: .3rem; color: var(--tl-note-border); cursor: grab; touch-action: none; }
+        .inline-note .note-kebab { right: 2.15rem; }
+        .inline-note-grip { position: absolute; right: .5rem; top: .3rem; display: inline-flex; align-items: center; justify-content: center; padding: .3rem; color: var(--tl-note-border); cursor: grab; touch-action: none; }
         .inline-note-grip:active { cursor: grabbing; }
         /* A finger needs more than the six dots to aim at — the note's left
            padding already reserves this room, so nothing shifts. */
         @media (hover: none), (pointer: coarse) {
-            .inline-note-grip { padding: .45rem .35rem; right: 2.4rem; top: .2rem; }
+            .inline-note-grip { padding: .45rem .35rem; right: .45rem; top: .2rem; }
+            .inline-note .note-kebab { right: 2.6rem; }
             .inline-note { padding-right: 5rem; }
         }
         .inline-note:hover .inline-note-grip { color: #d9a441; }

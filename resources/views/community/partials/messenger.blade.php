@@ -4,8 +4,13 @@
 
      The launcher floats bottom-right, except where the page offers it a chair:
      the community nav renders #msgrSeat and the launcher moves into that row
-     instead (see the seating step in the script below). --}}
-<div id="msgrDock" aria-live="polite">
+     instead (see the seating step in the script below).
+
+     `$launcher = false` keeps the dock without the floating button — the
+     homepage asked for its corner back, and the Message buttons on the cards
+     there still need somewhere for a chat window to open. --}}
+@php $msgrLauncher = $launcher ?? true; @endphp
+<div id="msgrDock" aria-live="polite" @unless ($msgrLauncher) class="no-launcher" @endunless>
     <div class="msgr-panel hidden" id="msgrPanel">
         <div class="msgr-panel-head">
             <span class="msgr-panel-title">Messages</span>
@@ -55,6 +60,11 @@
 
 <style>
     #msgrDock { position:fixed; right:1rem; bottom:1rem; z-index:90; display:flex; align-items:flex-end; gap:.75rem; }
+    /* A dock with no button of its own: chat windows still open here (from a
+       card's Message icon, or from a notification), and the corner is empty
+       until one does. */
+    #msgrDock.no-launcher .msgr-launcher { display:none; }
+    #msgrDock.no-launcher:not(:has(.msgr-window)):not(:has(.msgr-panel:not(.hidden))) { pointer-events:none; }
     /* Clear the mobile bottom tab bar (visible < md) so the launcher doesn't sit on the Account button. */
     /* Down onto the footer's own band: the tab bar is 3.5rem tall, so this
        rests the launcher exactly on its top edge instead of floating a

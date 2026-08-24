@@ -633,10 +633,16 @@
     {{-- Messenger dock — community pages + the dashboard (which shows the
          co-farmer feed with its Message buttons). Kept off the schedule pages
          so it stays clear of the AI float. Needs plaza-css tokens, which both
-         the community pages and the dashboard include. --}}
+         the community pages and the dashboard include.
+
+         On the homepage the dock comes without its floating button: that
+         corner belongs to the farm, and Messages is one tap away in the
+         community. The dock itself stays, because the Message icon on every
+         card there opens a chat window inside it. --}}
     @auth
-        @if (request()->is('app') || request()->is('app/community') || request()->is('app/community/*') || request()->routeIs('app.dashboard'))
-            @include('community.partials.messenger')
+        @php $msgrHome = request()->is('app') || request()->routeIs('app.dashboard'); @endphp
+        @if ($msgrHome || request()->is('app/community') || request()->is('app/community/*'))
+            @include('community.partials.messenger', ['launcher' => ! $msgrHome])
             {{-- Emoji picker + photo lightbox for the dock (guarded singletons —
                  safe even when the page already includes them). --}}
             @include('community.partials.emoji-js')
