@@ -435,8 +435,12 @@
         else document.getElementById('plazaFeed')?.appendChild(card);
     }
 
+    /* Closing the sheet hands the post back to the wall it was lifted from
+     * — unless it is being closed to make room for something the sheet
+     * itself asked for. The gallery picker steps in front of it and puts it
+     * back afterwards, and the post has to still be in it when it returns. */
     document.addEventListener('sm:sheet-closed', (e) => {
-        if (e.detail && e.detail.id === 'wallCommentSheet') putPostBack();
+        if (e.detail && e.detail.id === 'wallCommentSheet' && ! window.plazaSheetHold) putPostBack();
     });
 
     document.addEventListener('click', (e) => {

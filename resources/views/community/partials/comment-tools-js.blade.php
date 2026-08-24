@@ -318,6 +318,53 @@
     /* A picture that is already here. The season picker sheet does the
      * listing for both sources — it takes a URL, so "my photos" is the same
      * sheet pointed somewhere else. */
+    /* One thing on the screen at a time.
+     *
+     * A comment box usually lives inside a sheet — the post's comments open
+     * as one — and the gallery is a sheet too. Two of them at once is a
+     * picture picker fighting for the same bottom of the same phone with the
+     * box that asked for it, and on a small screen the one underneath is
+     * simply lost. So the box's sheet steps aside while you choose, and comes
+     * back when the picker closes, whether you took a photo or changed your
+     * mind. It comes back as it was: the post still in it, the words still
+     * typed, the pictures already collected still in the tray.
+     */
+    function stepAsideFor(form) {
+        const host = form && form.closest ? form.closest('.sheet') : null;
+        const id = host && host.id;
+        if (!id || typeof window.closeSheet !== 'function') return () => {};
+        window.plazaSheetHold = true;              // do not unmake the sheet
+        window.closeSheet(id);
+        let back = false;
+        const restore = () => {
+            if (back) return;
+            back = true;
+            window.openSheet?.(id);
+            // Released after the sheet is up: the flag is what tells its own
+            // close handler that this was a step aside and not a goodbye.
+            setTimeout(() => { window.plazaSheetHold = false; }, 60);
+        };
+        // The picker closes on a pick and on a cancel alike; either way this
+        // is the moment to come back. In its many-at-once mode the close runs
+        // before the picks are handed over, so the tray is filled by the time
+        // the sheet is up again.
+        const onClosed = (ev) => {
+            if (!ev.detail || ev.detail.id !== 'smMediaPickerSheet') return;
+            document.removeEventListener('sm:sheet-closed', onClosed);
+            setTimeout(restore, 80);
+        };
+        document.addEventListener('sm:sheet-closed', onClosed);
+        // A picker that never opened must not leave the box shut.
+        setTimeout(() => {
+            const p = document.getElementById('smMediaPickerSheet');
+            if (!p || p.classList.contains('hidden')) {
+                document.removeEventListener('sm:sheet-closed', onClosed);
+                restore();
+            }
+        }, 1500);
+        return restore;
+    }
+
     function pickExisting(form) {
         if (typeof window.smPickMedia !== 'function') {
             window.toast?.('The picker is not available on this page.', 'error');
@@ -325,6 +372,10 @@
         }
         const tray = trayOf(form);
         const room = tray ? Math.max(1, MAX_SHOTS - window.plazaCommentShots(form).length) : 1;
+        const comeBack = stepAsideFor(form);
+        // Straight away, in the same tick the box steps aside: the backdrop
+        // never gets as far as fading, so the two sheets read as one movement
+        // rather than a flash of the wall in between.
         window.smPickMedia({
             allSchedules: true,
             kinds: 'image',
@@ -351,6 +402,7 @@
                 });
             },
         });
+        return comeBack;
     }
 
     document.addEventListener('click', (e) => {
