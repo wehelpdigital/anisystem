@@ -59,7 +59,12 @@
     @media (max-width:767px) { #msgrDock { bottom:calc(4.5rem + env(safe-area-inset-bottom, 0px)); } }
     /* The white ring is what keeps the launcher legible when a green CTA sits
        right behind it — a green-on-green shadow alone just blended in. */
-    .msgr-launcher { position:relative; width:3.25rem; height:3.25rem; border-radius:9999px; border:0;
+    /* The same circle the discussion's jump buttons are.
+     *
+     * At 3.25rem against their 2.6rem it read as a different class of thing
+     * sitting in the same corner — two floating controls, one of them
+     * shouting. A stack of buttons is a stack when they are the same size. */
+    .msgr-launcher { position:relative; width:2.6rem; height:2.6rem; border-radius:9999px; border:0;
         background:var(--color-brand-600); color:#fff; cursor:pointer;
         box-shadow:0 0 0 2px #fff, 0 0 0 4px rgb(61 104 35 / .22), 0 10px 26px rgb(0 0 0 / .32);
         display:flex; align-items:center; justify-content:center; transition:transform .15s ease, background .2s ease, box-shadow .2s ease; }
@@ -67,6 +72,8 @@
         box-shadow:0 0 0 2px #fff, 0 0 0 4px rgb(61 104 35 / .3), 0 12px 30px rgb(0 0 0 / .38); }
     html.dark .msgr-launcher { box-shadow:0 0 0 2px #151b12, 0 0 0 4px rgb(255 255 255 / .16), 0 10px 26px rgb(0 0 0 / .6); }
     html.dark .msgr-launcher:hover { box-shadow:0 0 0 2px #151b12, 0 0 0 4px rgb(255 255 255 / .24), 0 12px 30px rgb(0 0 0 / .65); }
+    /* The icon comes down with the button it lives in. */
+    .msgr-launcher svg { width:1.2rem; height:1.2rem; }
     .msgr-launcher:active { transform:scale(.94); }
     .msgr-launcher-word { display:none; }
     .msgr-badge { position:absolute; top:-2px; right:-2px; min-width:1.15rem; height:1.15rem; padding:0 .3rem;

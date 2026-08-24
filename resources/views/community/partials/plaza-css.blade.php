@@ -470,7 +470,13 @@
 
     /* Both ends of a long room, in the corner the write button used to hold.
        Same shape as the board's own jump stack, so the two read as one app. */
-    .disc-jumps { position:fixed; right:1rem; bottom:4.75rem; z-index:30;
+    /* The jumps take the floor.
+     *
+     * They were the upper storey, riding above the chat launcher, which put
+     * the control you reach for while reading furthest from your thumb. They
+     * sit at the bottom now — as low as the tab bar allows on a phone — and
+     * the launcher steps up above them (see the rule further down). */
+    .disc-jumps { position:fixed; right:1rem; bottom:1rem; z-index:30;
         display:flex; flex-direction:column; gap:.45rem;
         transition: opacity var(--dur) var(--ease-house), transform var(--dur) var(--ease-house); }
     .disc-jumps button { width:2.6rem; height:2.6rem; border-radius:9999px; border:1px solid var(--color-gray-200);
@@ -483,15 +489,16 @@
        4.5rem above the tab bar) — the stack steps up one storey so both stay
        tappable instead of sitting on the same spot. */
     @media (max-width:767px) {
-        .disc-jumps { bottom:calc(8.5rem + env(safe-area-inset-bottom, 0px)); }
+        .disc-jumps { bottom:calc(4.5rem + env(safe-area-inset-bottom, 0px)); }
     }
-    /* — unless the messenger has a seat in the page's own nav, which is every
-       community page, discussions included. There its floating launcher is
-       hidden (see the rule that keys on #msgrSeat), so the corner is empty and
-       the jumps were hovering a storey above nothing. They take the floor. */
-    html:has(#msgrSeat) .disc-jumps { bottom:1rem; }
+    /* And the launcher clears them: two buttons and the gap between them,
+       plus a breath. Only on a page that has jumps at all — everywhere else
+       the dock keeps the corner to itself. Not tied to whether they are
+       showing: a chat button that hops up and down as you scroll is worse
+       than one that sits an inch higher. */
+    html:not(:has(#msgrSeat)):has(.disc-jumps) #msgrDock { bottom:calc(1rem + 6.15rem); }
     @media (max-width:767px) {
-        html:has(#msgrSeat) .disc-jumps { bottom:calc(4.5rem + env(safe-area-inset-bottom, 0px)); }
+        html:not(:has(#msgrSeat)):has(.disc-jumps) #msgrDock { bottom:calc(4.5rem + 6.15rem + env(safe-area-inset-bottom, 0px)); }
     }
     @media (prefers-reduced-motion: reduce) { .disc-jumps { transition:none; } }
 
