@@ -285,7 +285,13 @@
         -webkit-overflow-scrolling:touch; }
     /* Inside the modal the post is the page: no card chrome, nothing folded. */
     .thread-modal-body .group-post { border:0; box-shadow:none; padding:1.4rem 0 0; margin:0; background:transparent; }
-    .thread-modal-body .group-post::before { display:none; }   /* the edge belongs to the card, not the sheet */
+    /* Neither edge belongs in here. The coloured strips are what make a
+       topic read as a band in the list; inside the modal the topic is the
+       whole page, and the bottom one landed directly under the box you write
+       an answer in — a line across the foot of a text field, which reads as
+       part of the field rather than as the end of a card. */
+    .thread-modal-body .group-post::before,
+    .thread-modal-body .group-post::after { display:none; }
 
     /* The answers and the box to write one belong to the thread, and the
        thread is the modal. In the room the topic is a topic: what was
