@@ -46,9 +46,7 @@
                             <span class="post-media reply-media"><img src="{{ \App\Support\MediaStore::url($reply->imagePath) }}" alt="Reply photo" loading="lazy">@if ($rIsGif)<span class="gif-badge">GIF</span>@endif</span>
                         @endif
                         @php $rClips = method_exists($reply, 'clips') ? $reply->clips() : array_filter([['video' => $reply->videoPath ?? null, 'poster' => $reply->videoPoster ?? null]], fn ($c) => ! empty($c['video'])); @endphp
-                        @foreach ($rClips as $rClip)
-                            @include('community.partials.video-embed', ['src' => $rClip['video'], 'poster' => $rClip['poster'] ?? null])
-                        @endforeach
+                        @include('community.partials.clip-carousel', ['clips' => $rClips, 'mini' => true])
                     @endif
                 </div>
                 <div class="react-bar react-bar-mini">

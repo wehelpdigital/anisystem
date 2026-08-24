@@ -93,6 +93,23 @@
     .post-carousel.pc-mini { max-width:20rem; margin-top:.35rem; }
     .pc-mini .pc-track img { aspect-ratio:3 / 2; }
     .pc-mini .pc-dots { margin-top:.3rem; }
+    /* A slider of clips: same track, but each slide holds a player rather
+       than a picture, and a player must not be cropped to a square. */
+    .pc-clips .pc-track > .pc-slide { scroll-snap-align:start; scroll-snap-stop:always;
+        display:flex; align-items:center; min-width:0; }
+    .pc-clips .pc-track .post-video { margin-top:0; width:100%; }
+    /* Counted on the left: a posted clip wears the player's own fullscreen
+       button in its top-right corner, and two badges in one corner is one
+       badge nobody can read. */
+    .pc-clips .pc-count { top:.65rem; left:.65rem; right:auto; }
+
+    /* Room under a clip inside a comment. The bubble gives its words eight
+       pixels of floor, which is fine under a line of text and pinched under
+       a player whose controls sit on its bottom edge. */
+    .group-reply .post-video, .wall-comment .post-video, .cp-comment .post-video,
+    .group-reply .post-carousel, .wall-comment .post-carousel, .cp-comment .post-carousel { margin-bottom:.5rem; }
+    .post-video { padding-bottom:.3rem; }
+
     .pc-count { position:absolute; top:.5rem; right:.5rem; pointer-events:none;
         padding:.1rem .45rem; border-radius:999px; font-size:.68rem; font-weight:800;
         color:#fff; background:rgb(17 24 39 / .55); backdrop-filter:blur(2px); }

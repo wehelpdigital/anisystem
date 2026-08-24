@@ -102,6 +102,9 @@
         setInterval(() => {
             live.forEach((box) => {
                 if (box.__held && box.__held()) return;
+                // A slider of films stays where it was put: sliding away from
+                // a clip somebody is watching is worse than not sliding.
+                if (box.hasAttribute('data-noauto')) return;
                 const track = box.querySelector('.pc-track');
                 if (!track || track.children.length < 2) return;
                 const w = Math.max(1, track.clientWidth);
