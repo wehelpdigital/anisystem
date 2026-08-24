@@ -128,7 +128,15 @@
      * Until the metadata lands the box guesses widescreen; the still is drawn
      * inside it rather than deciding it, so a poster of the wrong shape can
      * no longer set the frame. */
-    .post-video .post-video-el { display:block; background:#000; object-fit:contain;
+    /* The still fills the frame the film asked for.
+     *
+     * The box is the film's shape; a poster of a slightly different shape
+     * left black down the sides of the resting player. Cover trims the still
+     * instead — it is a frame of the film, so trimming it shows less of the
+     * same picture rather than a different one, and nothing is stretched
+     * because cover keeps the still's own proportions. When the film plays,
+     * its shape and the box's are the same, so cover does nothing at all. */
+    .post-video .post-video-el { display:block; background:#000; object-fit:cover;
         aspect-ratio:var(--vr, 1.7778); width:100%; height:auto;
         max-width:min(100%, calc(24rem * var(--vr, 1.7778))); }
     /* In a slider the slide is the full width; the film sits in the middle of
