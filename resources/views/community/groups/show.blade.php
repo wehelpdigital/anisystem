@@ -1010,10 +1010,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const input = form.querySelector('input[type="text"]');
         const fileInput = form.querySelector('.js-comment-file');
         const text = input.value.trim();
-        const file = fileInput && fileInput.files[0];
+        /* Every picture on this answer, in the order they were added: files
+         * to upload and pictures already here, kept in one list by the attach
+         * tools. The single file and single pick are still read, for a box
+         * printed before the tray existed. */
+        const shots = (window.plazaCommentShots ? window.plazaCommentShots(form) : []);
+        const file = shots.length ? null : (fileInput && fileInput.files[0]);
         // ...or a picture already kept here, pointed at rather than sent.
-        const pick = form.dataset.pickPath || '';
-        if (!text && !file && !pick) { toast('Write something or add a photo.', 'error'); return; }
+        const pick = shots.length ? '' : (form.dataset.pickPath || '');
+        if (!text && !shots.length && !file && !pick) { toast('Write something or add a photo.', 'error'); return; }
         const postId = form.getAttribute('data-post-id');
         const parentId = form.getAttribute('data-parent-id');
         // Prepend the @mention token when replying tags someone (pill shown).
@@ -1024,6 +1029,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const sendBody = (token + text).trim();
         const fd = new FormData();
         if (sendBody) fd.append('body', sendBody);
+        shots.forEach((sh) => {
+            if (sh.file) fd.append('images[]', sh.file);
+            else if (sh.path) fd.append('galleryPaths[]', sh.path);
+        });
         if (file) fd.append('image', file);
         else if (pick) fd.append('galleryPath', pick);
         if (parentId) fd.append('parentId', parentId);
@@ -1049,6 +1058,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     input.value = '';
                     if (fileInput) fileInput.value = '';
                     delete form.dataset.pickPath;
+                    window.plazaClearShots?.(form);
                     window.plazaSetChip(form, null);
                     input.focus();
                 }
@@ -1085,11 +1095,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="reply-shell">
                 <input type="text" placeholder="Sumagot…" maxlength="4000">
                 <button type="button" class="emoji-btn js-comment-photo" aria-label="Attach a photo" title="Photo">${SVG_R_PHOTO}</button>
-                <input type="file" class="js-comment-file hidden" accept="image/*">
+                <input type="file" class="js-comment-file hidden" accept="image/jpeg,image/png,image/webp,image/gif" multiple>
                 <button type="button" class="emoji-btn js-emoji-btn" aria-label="Add an emoji" title="Emoji">${SVG_R_SMILE}</button>
                 <button type="submit" class="reply-send" aria-label="Reply">${SVG_R_SEND}</button>
                 <button type="button" class="js-reply-cancel btn-ghost rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 shrink-0" aria-label="Cancel reply" title="Cancel">${SVG_R_X}</button>
             </span>
+            <span class="comment-shots js-comment-shots hidden"></span>
             <span class="attach-chip hidden js-comment-chip"><span class="js-chip-name"></span><button type="button" class="js-chip-clear" aria-label="Remove photo">✕</button></span>
         </form>`;
     }

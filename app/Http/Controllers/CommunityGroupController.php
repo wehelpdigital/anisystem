@@ -488,10 +488,15 @@ class CommunityGroupController extends Controller
         }
 
         $request->validate([
-            'body' => 'required_without_all:image,galleryPath|nullable|string|max:4000',
+            'body' => 'required_without_all:image,images,galleryPath,galleryPaths|nullable|string|max:4000',
+            // One picture (what every older caller sends) or several.
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:8192',
-            // A picture already kept here, pointed at rather than uploaded.
+            'images' => 'nullable|array|max:8',
+            'images.*' => 'image|mimes:jpg,jpeg,png,webp,gif|max:8192',
+            // Pictures already kept here, pointed at rather than uploaded.
             'galleryPath' => 'nullable|string|max:500',
+            'galleryPaths' => 'nullable|array|max:8',
+            'galleryPaths.*' => 'string|max:500',
             'parentId' => 'nullable|integer',
         ]);
 
@@ -511,24 +516,46 @@ class CommunityGroupController extends Controller
             }
         }
 
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $this->storeImage($request->file('image'), 'community-groups/' . $post->groupId);
-        } elseif ($request->filled('galleryPath')) {
-            // Same three sources the wall offers: camera, phone, or something
-            // already kept here. A pick is a reference to the stored file.
-            $imagePath = GalleryPick::path((string) $request->input('galleryPath'));
-            if ($imagePath === null) {
-                return response()->json(['success' => false, 'message' => 'That picture could not be attached.'], 422);
-            }
+        /* The pictures, in the order they were added.
+         *
+         * Same three sources the wall offers — camera, phone, or something
+         * already kept here — and now as many as eight of them. Uploads are
+         * stored; a pick is a reference to a stored file, and GalleryPick is
+         * what decides a string from a browser is a path at all. One that
+         * fails is refused out loud rather than quietly attaching fewer
+         * pictures than were chosen. */
+        $shots = [];
+        foreach (array_merge(
+            $request->hasFile('image') ? [$request->file('image')] : [],
+            array_values((array) $request->file('images', []))
+        ) as $file) {
+            $shots[] = $this->storeImage($file, 'community-groups/' . $post->groupId);
         }
+        foreach (array_merge(
+            $request->filled('galleryPath') ? [(string) $request->input('galleryPath')] : [],
+            array_values((array) $request->input('galleryPaths', []))
+        ) as $picked) {
+            $ok = GalleryPick::path((string) $picked);
+            if ($ok === null) {
+                return response()->json(['success' => false, 'message' => 'One of the pictures could not be attached. Remove it and try again.'], 422);
+            }
+            $shots[] = $ok;
+        }
+        $shots = array_slice(array_values(array_unique($shots)), 0, 8);
+        $imagePath = $shots[0] ?? null;
 
         $reply = CommunityGroupReply::create([
             'postId' => $post->id,
             'parentId' => $parent?->id,
             'userId' => Auth::id(),
             'body' => $request->input('body') ?: '',
+            // The first picture where every older renderer looks, the whole
+            // set where the new one does — and only when the column is there,
+            // so a deploy that has not migrated keeps the first picture
+            // instead of answering with a 500.
             'imagePath' => $imagePath,
+        ] + (count($shots) > 1 && \Illuminate\Support\Facades\Schema::hasColumn((new CommunityGroupReply)->getTable(), 'imagePaths')
+            ? ['imagePaths' => $shots] : []) + [
             'deleteStatus' => 1,
         ]);
 

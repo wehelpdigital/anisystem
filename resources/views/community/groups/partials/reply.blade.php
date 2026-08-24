@@ -36,7 +36,13 @@
                         @if ($reply->body)
                             <p class="text-sm text-gray-700 whitespace-pre-line break-words">{!! \App\Support\CommunityText::render($reply->body) !!}</p>
                         @endif
-                        @if ($reply->imagePath)
+                        @php $rShots = method_exists($reply, 'shots') ? $reply->shots() : array_filter([$reply->imagePath]); @endphp
+                        @if (count($rShots) > 1)
+                            {{-- Several pictures answer the way several on a
+                                 post do: one at a time, slowly, pushable by a
+                                 thumb, whole in the lightbox when tapped. --}}
+                            @include('community.partials.post-gallery', ['shots' => $rShots, 'mini' => true])
+                        @elseif ($reply->imagePath)
                             <span class="post-media reply-media"><img src="{{ \App\Support\MediaStore::url($reply->imagePath) }}" alt="Reply photo" loading="lazy">@if ($rIsGif)<span class="gif-badge">GIF</span>@endif</span>
                         @endif
                     @endif
