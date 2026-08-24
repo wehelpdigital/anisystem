@@ -98,16 +98,35 @@ class VideoPoster
         }
 
         $out = tempnam(sys_get_temp_dir(), 'vposter') . '.jpg';
+        $pulled = null;
         try {
-            foreach (['1', '0'] as $seek) {
-                $p = new Process([
-                    $bin, '-y', '-ss', $seek, '-i', $input,
-                    '-frames:v', '1', '-vf', 'scale=640:-2', '-q:v', '4', $out,
-                ]);
-                $p->setTimeout(45);
-                $p->run();
-                if ($p->isSuccessful() && is_file($out) && filesize($out) > 0) {
-                    return file_get_contents($out) ?: null;
+            foreach ([$input, null] as $round) {
+                // Second time round: the clip is fetched here first. ffmpeg
+                // reading straight off a URL is the cheap way and usually
+                // works; a server whose ffmpeg was built without https, or
+                // that cannot reach the file store itself, needs the bytes
+                // put in front of it.
+                $source = $round;
+                if ($source === null) {
+                    if (! str_contains($input, '://')) {
+                        break;                       // it was already a file
+                    }
+                    $pulled = self::pull($input);
+                    if ($pulled === null) {
+                        break;
+                    }
+                    $source = $pulled;
+                }
+                foreach (['1', '0'] as $seek) {
+                    $p = new Process([
+                        $bin, '-y', '-ss', $seek, '-i', $source,
+                        '-frames:v', '1', '-vf', 'scale=640:-2', '-q:v', '4', $out,
+                    ]);
+                    $p->setTimeout(60);
+                    $p->run();
+                    if ($p->isSuccessful() && is_file($out) && filesize($out) > 0) {
+                        return file_get_contents($out) ?: null;
+                    }
                 }
             }
             Log::info('VideoPoster: no frame could be cut', ['video' => $video]);
@@ -115,6 +134,52 @@ class VideoPoster
             return null;
         } finally {
             @unlink($out);
+            if ($pulled) {
+                @unlink($pulled);
+            }
+        }
+    }
+
+    /**
+     * The clip itself, brought here, when ffmpeg cannot fetch it.
+     *
+     * Capped: a poster frame is not worth pulling a feature film through a
+     * web server. Null when the file is too big or will not come.
+     */
+    private static function pull(string $url): ?string
+    {
+        $cap = 80 * 1024 * 1024;
+        $tmp = tempnam(sys_get_temp_dir(), 'vclip');
+        try {
+            $in = @fopen($url, 'rb');
+            if (! $in) {
+                return null;
+            }
+            $outFh = fopen($tmp, 'wb');
+            $size = 0;
+            while (! feof($in)) {
+                $chunk = fread($in, 1 << 20);
+                if ($chunk === false) {
+                    break;
+                }
+                $size += strlen($chunk);
+                if ($size > $cap) {
+                    fclose($in);
+                    fclose($outFh);
+                    @unlink($tmp);
+
+                    return null;
+                }
+                fwrite($outFh, $chunk);
+            }
+            fclose($in);
+            fclose($outFh);
+
+            return $size > 0 ? $tmp : null;
+        } catch (\Throwable $e) {
+            @unlink($tmp);
+
+            return null;
         }
     }
 

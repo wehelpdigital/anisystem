@@ -197,8 +197,19 @@
     const tileHtml = (m, i) => {
         const clip = isClip(m);
         const blank = `<span class="smp-blank">${clip ? '🎬' : '🖼️'}</span>`;
+        /* A picture wherever there is one to show.
+         *
+         * A clip that already has a frame stored is drawn as that picture,
+         * not as a video element: a phone decides for itself whether to
+         * decode a film it has only been asked to measure — iOS on a mobile
+         * connection routinely refuses — and a picture is a picture
+         * everywhere. The video element is only the stand-in for a clip whose
+         * frame has not been cut yet, and it is replaced by the picture the
+         * moment the server hands one over. */
         const inner = clip
-            ? `<video class="smp-vid" src="${esc(clipFrameUrl(m.url))}"${m.posterUrl ? ` poster="${esc(m.posterUrl)}"` : ''} muted playsinline preload="metadata" onerror="this.remove()"></video>`
+            ? (m.posterUrl
+                ? `<img src="${esc(m.posterUrl)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">`
+                : `<video class="smp-vid" src="${esc(clipFrameUrl(m.url))}" muted playsinline preload="metadata" onerror="this.remove()"></video>`)
             : (m.url ? `<img src="${esc(m.posterUrl || m.url)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : '');
         // A clip with no frame of its own asks for one after it is on screen.
         const wants = (clip && !m.posterUrl && m.path) ? ` data-needs-frame="${esc(m.path)}"` : '';
@@ -237,13 +248,15 @@
                     const res = await window.api(POSTER_URL, { method: 'POST', body: { path } });
                     const url = res && res.data && res.data.posterUrl;
                     if (url && gen === mine) {
-                        const v = tile.querySelector('video');
-                        if (v) v.poster = url;
-                        else {
-                            const img = document.createElement('img');
-                            img.src = url; img.alt = ''; img.loading = 'lazy';
-                            tile.querySelector('.smp-shot')?.appendChild(img);
-                        }
+                        // The picture replaces the stand-in entirely, so what
+                        // is on screen no longer depends on the phone being
+                        // willing to decode a film for a thumbnail.
+                        const shot = tile.querySelector('.smp-shot');
+                        tile.querySelector('video')?.remove();
+                        const img = document.createElement('img');
+                        img.src = url; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async';
+                        img.onerror = () => img.remove();
+                        shot?.appendChild(img);
                     }
                 } catch (_) { /* the clapperboard stays; it is not wrong */ }
             }
