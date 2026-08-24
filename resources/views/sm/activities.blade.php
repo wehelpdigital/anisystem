@@ -144,6 +144,14 @@
            zero-height item that fills the row: with a wrapping flex header,
            that is what forces the two after it onto the next line. */
         .dh-rowbreak { order: 90; flex-basis: 100%; height: 0; margin: 0; }
+        /* The reminders pill goes down with them.
+         *
+         * It is a fact about the day, like the forecast and the cost — not a
+         * control — and on the control line it was the item that pushed the
+         * kebab onto a line of its own: a whole row of the board spent on one
+         * button, with the growth stage then pushed to a third. Down here it
+         * costs nothing: that line is already there for the others. */
+        .day-warn-btn { order: 91; }
         .date-header-weather, .wx-mini-btn { order: 91; }
         .date-header-cash { order: 92; display: inline-flex; align-items: center; gap: .28rem;
             font-size: .69rem; font-weight: 800; color: var(--color-amber-800, #92400e);
@@ -658,14 +666,16 @@
             .date-header-date {
                 flex: 1 1 0;
                 white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-                /* A floor under the date. It still claims no width of its own
-                   and still ellipsizes when the line is genuinely full, but it
-                   can no longer be squeezed to "Mar…" by a pill that could
-                   just as well have wrapped: in a wrapping flex row, an item
-                   that will not shrink past its floor sends whatever comes
-                   after it to the next line instead, which is the trade the
-                   day header wants. */
-                min-width: 6.5rem;
+                /* A floor under the date, but a low one.
+                 *
+                 * The floor exists so a pill cannot squeeze the date to
+                 * "Mar…"; the pill it was defending against (the growth
+                 * stage) now lives on the second line, and at 6.5rem the
+                 * floor was instead pushing the kebab down to a line of its
+                 * own — a whole row of nothing for one button, with half the
+                 * first line still empty. The controls come first: they are
+                 * the row, and the date fills what they leave. */
+                min-width: 4.5rem;
             }
             /* One and two digits cost the same, so the line does not reflow
                when a day ticks over from 9 to 10 activities. */

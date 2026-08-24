@@ -433,6 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pill.setAttribute('data-date', dateKey);
         // Now that it is showing, the second line is wanted.
         syncRowBreak(header);
+        fitDayStage(pill, rows.length);
     }
 
     /** The stage of every lot with a crop on a given day. */
@@ -1478,6 +1479,56 @@ document.addEventListener('DOMContentLoaded', () => {
     /* The zero-height item that starts the header's second row. Both the
        forecast and the day's cost need it there before they can be measured
        or placed, so it has one owner and is safe to ask for twice. */
+    /* Two lines, and no more.
+     *
+     * The day's facts — the growth stage, the forecast, the day's cost —
+     * share the second line. A stage with a long name ("Reproductive ·
+     * booting") pushed the cost onto a third, which is a row of the board
+     * spent on saying one thing twice. When the line will not hold the name,
+     * the pill says how many lots instead: the number is the part nobody can
+     * read off the board, and the name is one tap away in the sheet the pill
+     * opens.
+     *
+     * Measured rather than guessed at a character count: the same name fits
+     * on a tablet and does not on a phone, and neither does it fit or not
+     * according to how long the weather chip happens to be that morning.
+     */
+    function fitDayStage(pill, lots) {
+        const header = pill.closest('.date-header');
+        if (!header || pill.hidden) return;
+
+        const facts = () => [pill, header.querySelector('.day-warn-btn'),
+            header.querySelector('.date-header-weather, .wx-mini-btn'),
+            header.querySelector('.date-header-cash:not([hidden])')].filter(Boolean);
+
+        /* One line, or two?
+         *
+         * By the middle of each pill, not by its top: the header centres what
+         * it holds, so a tall chip and a short one on the SAME line start at
+         * different heights and comparing tops would call every row wrapped. */
+        const middle = (el) => el.offsetTop + el.offsetHeight / 2;
+        const wrapped = () => {
+            const rows = facts();
+            if (rows.length < 2) return false;
+            const m = middle(rows[0]);
+            return rows.some((el) => Math.abs(middle(el) - m) > 8);
+        };
+
+        const settle = () => {
+            if (!wrapped()) return;
+            const short = lots + ' lot' + (lots === 1 ? '' : 's');
+            const word = pill.querySelector('span:last-child');
+            if (!word || word.textContent === short) return;
+            word.textContent = short;
+        };
+        /* Measured twice: once now, because reading offsetTop has already
+         * forced the layout the pill was just written into, and once on the
+         * next frame, for the case where the thing beside it (a forecast
+         * strip, the day's cost) has not landed yet. */
+        settle();
+        requestAnimationFrame(settle);
+    }
+
     /* Which of the three second-line facts are actually showing decides
        whether the break belongs there at all. Asked of the header rather
        than told by whichever painter ran last: a day with a growth stage
@@ -1491,7 +1542,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const wx = header.querySelector('.date-header-weather, .wx-mini-btn');
         const cash = header.querySelector('.date-header-cash:not([hidden])');
         const stage = header.querySelector('.date-header-stage:not([hidden])');
-        ensureRowBreak(header, !!(wx || cash || stage));
+        const warn = header.querySelector('.day-warn-btn');
+        ensureRowBreak(header, !!(wx || cash || stage || warn));
     }
     window.__syncRowBreak = syncRowBreak;
 
