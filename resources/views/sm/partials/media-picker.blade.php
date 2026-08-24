@@ -82,8 +82,9 @@
     .smp-badge { position: absolute; left: .3rem; top: .3rem; display: inline-flex; align-items: center;
         gap: .15rem; padding: .1rem .35rem; border-radius: 999px; background: rgb(17 24 39 / .72);
         color: #fff; font-size: .62rem; font-weight: 800; letter-spacing: .02em; }
-    /* The words sat against the tile's own edge on three sides. */
-    .smp-meta { padding: .45rem .55rem .55rem; }
+    /* The words sat against the tile's own edge on three sides. A name long
+       enough to be trimmed put its ellipsis on the border. */
+    .smp-meta { padding: .5rem .7rem .65rem; }
     .smp-name { display: block; font-size: .7rem; font-weight: 700; color: var(--tl-text, #374151);
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .smp-sub { display: block; font-size: .62rem; color: var(--tl-text-faint, #9ca3af);
@@ -161,6 +162,7 @@
     }
 
     const LABELS = { image: 'Photo', video: 'Clip', drawing: 'Drawing', map: 'Map' };
+    const POSTER_URL = @json(\Illuminate\Support\Facades\Route::has('sm.media-picker.poster') ? route('sm.media-picker.poster') : url('/app/sm-media-poster'));
 
     /* What a tile shows.
      *
@@ -198,7 +200,9 @@
         const inner = clip
             ? `<video class="smp-vid" src="${esc(clipFrameUrl(m.url))}"${m.posterUrl ? ` poster="${esc(m.posterUrl)}"` : ''} muted playsinline preload="metadata" onerror="this.remove()"></video>`
             : (m.url ? `<img src="${esc(m.posterUrl || m.url)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : '');
-        return `<button type="button" class="smp-tile" role="option" data-pick="${i}">
+        // A clip with no frame of its own asks for one after it is on screen.
+        const wants = (clip && !m.posterUrl && m.path) ? ` data-needs-frame="${esc(m.path)}"` : '';
+        return `<button type="button" class="smp-tile" role="option" data-pick="${i}"${wants}>
             <span class="smp-shot">${blank}${inner}<span class="smp-badge">${esc(LABELS[m.kind] || 'File')}</span></span>
             <span class="smp-meta">
                 <span class="smp-name">${esc(m.title)}</span>
@@ -206,6 +210,47 @@
             </span>
         </button>`;
     };
+
+    /* Frames for the clips that have none.
+     *
+     * One at a time and only for what is on screen: cutting a frame is a
+     * second of somebody's server, and a picker that fired twenty at once
+     * would be a picker that took twenty seconds to become useful. The answer
+     * is kept on the far side, so the same clip is only ever cut once — the
+     * second time this asks, it comes back at the speed of a lookup.
+     *
+     * Sequential on purpose, and abandoned the moment the grid is rebuilt
+     * under it (a search, a new page): the tiles it was filling are gone.
+     */
+    let framesRunning = false;
+    async function fillFrames() {
+        if (framesRunning) return;
+        framesRunning = true;
+        const mine = gen;
+        try {
+            while (gen === mine) {
+                const tile = document.querySelector('#smMediaPickerGrid .smp-tile[data-needs-frame]');
+                if (!tile) return;
+                const path = tile.getAttribute('data-needs-frame');
+                tile.removeAttribute('data-needs-frame');   // asked; never twice
+                try {
+                    const res = await window.api(POSTER_URL, { method: 'POST', body: { path } });
+                    const url = res && res.data && res.data.posterUrl;
+                    if (url && gen === mine) {
+                        const v = tile.querySelector('video');
+                        if (v) v.poster = url;
+                        else {
+                            const img = document.createElement('img');
+                            img.src = url; img.alt = ''; img.loading = 'lazy';
+                            tile.querySelector('.smp-shot')?.appendChild(img);
+                        }
+                    }
+                } catch (_) { /* the clapperboard stays; it is not wrong */ }
+            }
+        } finally {
+            framesRunning = false;
+        }
+    }
 
     const skeletons = (n) => Array.from({ length: n }, () => '<span class="smp-skel"></span>').join('');
 
@@ -250,6 +295,8 @@
             items.push(...fresh);
             grid.__shown = items;
             sayState();
+            // The clips that arrived without a frame ask for one now.
+            fillFrames();
         } catch (err) {
             if (myGen !== gen) return;
             more = false;

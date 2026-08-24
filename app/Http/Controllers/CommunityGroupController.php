@@ -591,7 +591,9 @@ class CommunityGroupController extends Controller
             if ($ok === null) {
                 return response()->json(['success' => false, 'message' => 'One of the clips could not be attached. Remove it and try again.'], 422);
             }
-            $clips[] = ['video' => $ok, 'poster' => null];
+            // Cut its frame now if nobody has: the answer will be read long
+            // after this, by people whose phones will not make one for them.
+            $clips[] = ['video' => $ok, 'poster' => \App\Support\VideoPoster::ensure($ok)];
         }
         $seen = [];
         $clips = array_values(array_filter($clips, function ($c) use (&$seen) {

@@ -280,6 +280,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // What this season already has, for any composer asking for an attachment.
     // Read-only, so it rides the same GET gate every other listing does.
     Route::get('/app/sm-media-picker', [App\Http\Controllers\Manager\MediaPickerController::class, 'index'])->name('sm.media-picker');
+    Route::post('/app/sm-media-poster', [App\Http\Controllers\Manager\MediaPickerController::class, 'poster'])->name('sm.media-picker.poster');
 
     Route::get('/app/sm-gallery', [App\Http\Controllers\Manager\GalleryController::class, 'page'])->name('sm.gallery');
     Route::post('/app/sm-gallery-album', [App\Http\Controllers\Manager\GalleryController::class, 'albumSave'])->name('sm.gallery.album.save');

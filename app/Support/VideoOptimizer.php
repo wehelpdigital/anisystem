@@ -117,6 +117,20 @@ class VideoOptimizer
      * common install locations, then falls back to a bare "ffmpeg" (PATH lookup).
      * The web server's PATH often differs from a shell's, so a full path is safest.
      */
+    /**
+     * The ffmpeg this server actually has, or null.
+     *
+     * Public because cutting a poster frame out of a clip that was stored
+     * long ago is the same tool doing the same job — see VideoPoster — and
+     * two answers to "where is ffmpeg" is one too many.
+     */
+    public static function usableBinary(): ?string
+    {
+        $bin = self::binary();
+
+        return self::usable($bin) ? $bin : null;
+    }
+
     /** Is this ffmpeg actually there and runnable? Asked once per request. */
     private static function usable(string $bin): bool
     {

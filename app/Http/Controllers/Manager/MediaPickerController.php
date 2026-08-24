@@ -114,6 +114,32 @@ class MediaPickerController extends BaseScheduleController
      * path, so stripping the right prefix is an exact inverse rather than a
      * guess — and anything matching neither is left out by the caller.
      */
+    /**
+     * The frame for one clip, cut and kept if it has never been cut.
+     *
+     * The list cannot do this for every film it returns — ffmpeg per row
+     * would make opening the picker a wait — so the sheet asks tile by tile,
+     * and only for the clips that have no frame of their own. The second time
+     * anybody asks about the same clip it is a row in a table.
+     */
+    public function poster(Request $request)
+    {
+        $path = \App\Support\GalleryPick::path(
+            (string) $request->input('path'),
+            \App\Support\GalleryPick::VIDEO_EXTS
+        );
+        if ($path === null) {
+            return $this->jsonFail('That is not a clip this app keeps.', 422);
+        }
+
+        $poster = \App\Support\VideoPoster::ensure($path);
+
+        return $this->jsonOk('Frame ready.', ['data' => [
+            'poster'    => $poster,
+            'posterUrl' => $poster ? \App\Support\MediaStore::url($poster) : null,
+        ]]);
+    }
+
     private function pathFor(?string $url): ?string
     {
         // One truth, shared with the AI's gallery references — the list this
