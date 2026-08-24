@@ -13,11 +13,59 @@
     if (window.__plazaVideoBound) return;
     window.__plazaVideoBound = true;
 
-    const MAX = 300 * 1024 * 1024; // 300 MB
+    /* A minute, not a number of megabytes.
+     *
+     * Length is what somebody filming can judge before they press record, and
+     * a minute of anything a phone shoots compresses small. The size ceiling
+     * used to be the gate and it turned away clips that were merely long-ish
+     * in high quality while waving through a slow, huge minute. It is asked
+     * here so the answer arrives before an upload rather than after one. */
+    const MAX_SECONDS = 60;
+    const SLACK = 0.75;      // a clip that rounds to a minute is a minute
     const VID_RE = /\.(mp4|mov|webm|mkv|avi|3gp|m4v)$/i;
     const say = (m, t) => { if (typeof window.toast === 'function') window.toast(m, t); };
     const hostOf = (el) => el && el.closest('form, [data-video-host]');
     const fmtMB = (b) => (b / 1048576).toFixed(b > 10485760 ? 0 : 1) + ' MB';
+
+    /**
+     * How long a clip runs, without uploading it.
+     *
+     * Null when the browser will not say — an unusual container, a codec it
+     * cannot open — and null means "let it go up": the server measures it
+     * again with ffmpeg, which reads formats a browser does not.
+     */
+    function secondsOf(file) {
+        return new Promise((resolve) => {
+            let done = false;
+            const finish = (v) => { if (!done) { done = true; resolve(v); } };
+            const url = URL.createObjectURL(file);
+            const v = document.createElement('video');
+            v.preload = 'metadata';
+            v.muted = true;
+            v.onloadedmetadata = () => {
+                const d = v.duration;
+                URL.revokeObjectURL(url);
+                finish(Number.isFinite(d) && d > 0 ? d : null);
+            };
+            v.onerror = () => { URL.revokeObjectURL(url); finish(null); };
+            setTimeout(() => { URL.revokeObjectURL(url); finish(null); }, 8000);
+            v.src = url;
+        });
+    }
+
+    /** True when the clip is too long, having said so. */
+    async function tooLong(file) {
+        const secs = await secondsOf(file);
+        if (secs === null || secs <= MAX_SECONDS + SLACK) {
+            return false;
+        }
+        const mins = Math.floor(secs / 60), rest = Math.round(secs % 60);
+        const said = mins ? (mins + ' minute' + (mins > 1 ? 's' : '') + (rest ? ' ' + rest + ' seconds' : ''))
+                          : (Math.round(secs) + ' seconds');
+        say('That clip is ' + said + ' long. Clips can be up to one minute — trim it and try again.', 'error');
+
+        return true;
+    }
 
     function setChip(host, file) {
         const chip = host && host.querySelector('.js-video-chip');
@@ -54,13 +102,6 @@
     function assignFile(host, file) {
         const input = host && host.querySelector('.js-video-file');
         if (!input) return false;
-        if (file.size > MAX) {
-            // Much likelier now the camera app does the filming: a phone
-            // shooting 4K makes a minute look like a third of a gigabyte. Say
-            // what to do about it rather than just refusing.
-            say('That video is larger than 300 MB — film a shorter clip, or lower the video quality in your camera app.', 'error');
-            return false;
-        }
         try { const dt = new DataTransfer(); dt.items.add(file); input.files = dt.files; }
         catch (_) { return false; }
         // Every road through here is the recorder (camera app or the modal);
@@ -112,8 +153,12 @@
         if (!/^video\//.test(file.type) && !VID_RE.test(file.name)) {
             say('Please choose a video file.', 'error'); e.target.value = ''; setChip(host, null); return;
         }
-        if (file.size > MAX) { say('Video is larger than 300 MB.', 'error'); e.target.value = ''; setChip(host, null); return; }
-        setChip(host, file);
+        // Measured before it is carried anywhere. The input is emptied on a
+        // refusal so the next choice is a fresh one.
+        tooLong(file).then((no) => {
+            if (no) { e.target.value = ''; setChip(host, null); return; }
+            setChip(host, file);
+        });
     });
 
     /* ---------------- Which recorder ----------------------------------
@@ -169,6 +214,7 @@
 
     /* ---------------- Recorder modal (the fallback) ---------------- */
     let modal, stream, recorder, chunks, timerId, startedAt, targetHost, recordedBlob;
+    let capId = null;   // the take stops itself at a minute
 
     function pickMime() {
         const opts = ['video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm', 'video/mp4'];
@@ -237,18 +283,30 @@
         recorder.ondataavailable = (ev) => { if (ev.data && ev.data.size) chunks.push(ev.data); };
         recorder.onstop = () => {
             clearInterval(timerId);
+            clearTimeout(capId);
             recordedBlob = new Blob(chunks, { type: (recorder.mimeType || 'video/webm') });
             const prev = modal.querySelector('.pvm-preview');
             prev.srcObject = null; prev.muted = false;
             prev.src = URL.createObjectURL(recordedBlob); prev.controls = true;
             btn.textContent = '● Re-record';
             const use = modal.querySelector('.pvm-use');
-            use.classList.toggle('hidden', recordedBlob.size === 0 || recordedBlob.size > MAX);
-            if (recordedBlob.size > MAX) say('That recording is over 300 MB — record a shorter clip.', 'error');
+            use.classList.toggle('hidden', recordedBlob.size === 0);
         };
         recorder.start();
         startedAt = Date.now();
         timerId = setInterval(tick, 500);
+        /* A minute, and it stops itself.
+         *
+         * Filming here cannot run past what the app will take: better the
+         * recorder ends the take at the limit than a farmer films two minutes
+         * of a field and is told afterwards. */
+        clearTimeout(capId);
+        capId = setTimeout(() => {
+            if (recorder && recorder.state === 'recording') {
+                recorder.stop();
+                say('A minute is the most a clip can be — that is what was kept.');
+            }
+        }, MAX_SECONDS * 1000);
         btn.textContent = '■ Stop';
         modal.querySelector('.pvm-use').classList.add('hidden');
         const prev = modal.querySelector('.pvm-preview');

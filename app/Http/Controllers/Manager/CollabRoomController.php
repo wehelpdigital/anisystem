@@ -81,7 +81,7 @@ class CollabRoomController extends BaseScheduleController
             'description' => 'nullable|string|max:2000',
             'kind' => 'nullable|in:camera,call',
             'seconds' => 'nullable|integer|min:0',
-            'clip' => 'required|file|max:307200',
+            'clip' => 'required|file|max:2097152',
         ], [
             'title.required' => 'Give the recording a title.',
             'clip.max' => 'That recording is larger than 300 MB.',

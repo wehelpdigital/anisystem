@@ -142,7 +142,7 @@ class QuickCaptureController extends BaseScheduleController
             'albumTitle' => 'nullable|string|max:191',
             // 300MB, the same ceiling the shared recorder enforces before it
             // will hand a clip over.
-            'clip' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-m4v|max:307200',
+            'clip' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-m4v|max:2097152',
         ], [
             'clip.required' => 'Record something first.',
             'clip.max' => 'That clip is larger than 300 MB — record a shorter one.',
@@ -317,7 +317,7 @@ class QuickCaptureController extends BaseScheduleController
             'images.*' => 'image|mimes:jpg,jpeg,png,webp|max:8192',
             // The same 300MB ceiling and mime list the recorder enforces.
             'clips' => 'array|max:4|required_without:images',
-            'clips.*' => 'file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-m4v|max:307200',
+            'clips.*' => 'file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-m4v|max:2097152',
             'titles' => 'nullable|array',
             'titles.*' => 'nullable|string|max:191',
             'descriptions' => 'nullable|array',

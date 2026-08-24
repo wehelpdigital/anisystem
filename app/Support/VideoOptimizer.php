@@ -17,6 +17,21 @@ use Symfony\Component\Process\Process;
 class VideoOptimizer
 {
     /** Largest input we accept, in bytes (300 MB). */
+    /**
+     * How long a clip may be, and how large one may end up.
+     *
+     * Length is the rule people can actually hold in their heads — "a minute"
+     * — and it is the rule that matters, because a minute of anything a phone
+     * shoots compresses to a few tens of megabytes. Size is only a backstop
+     * on what comes OUT, in case a camera hands over something extraordinary.
+     * What goes IN is not judged by its size at all: a farmer filming a
+     * broken pump should not have to think about codecs first.
+     */
+    public const MAX_SECONDS = 60;
+
+    public const MAX_OUT_BYTES = 200 * 1024 * 1024;
+
+    /** Kept for callers that still read it; nothing here refuses on it. */
     public const MAX_BYTES = 300 * 1024 * 1024;
 
     /**
@@ -26,9 +41,6 @@ class VideoOptimizer
      */
     public static function storeCompressed(UploadedFile $file, string $dir): array
     {
-        if ($file->getSize() > self::MAX_BYTES) {
-            throw new \RuntimeException('Video is larger than 300 MB.');
-        }
         if (! str_starts_with((string) $file->getMimeType(), 'video/')) {
             throw new \RuntimeException('That file is not a video.');
         }
@@ -49,6 +61,21 @@ class VideoOptimizer
         }
 
         $input = $file->getRealPath();
+
+        /* Too long is refused before a second of it is encoded.
+         *
+         * Asked of the file itself rather than trusted from the browser, and
+         * a file whose length cannot be read is let through: an unreadable
+         * header is ffmpeg's problem a moment later, not a reason to turn
+         * somebody away. */
+        $seconds = self::seconds($ffmpeg, $input);
+        if ($seconds !== null && $seconds > self::MAX_SECONDS + 0.75) {
+            throw new \RuntimeException(sprintf(
+                'That clip is %s long. Clips can be up to one minute — trim it and try again.',
+                self::spell($seconds)
+            ));
+        }
+
         $outVideo = tempnam(sys_get_temp_dir(), 'vid') . '.mp4';
         $outPoster = tempnam(sys_get_temp_dir(), 'pos') . '.webp';
 
@@ -56,16 +83,25 @@ class VideoOptimizer
             // Cap to 720p, force even dimensions (yuv420p needs them), H.264 CRF 28.
             $scale = "scale='min(1280,iw)':'min(720,ih)':force_original_aspect_ratio=decrease,"
                 . 'scale=trunc(iw/2)*2:trunc(ih/2)*2';
-            $encode = new Process([
-                $ffmpeg, '-y', '-i', $input,
-                '-vf', $scale,
-                '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '28',
-                '-c:a', 'aac', '-b:a', '96k',
-                '-movflags', '+faststart', '-pix_fmt', 'yuv420p',
-                $outVideo,
-            ]);
-            $encode->setTimeout(600);
+            $encode = self::encode($ffmpeg, $input, $outVideo, $scale, '28');
             $encode->run();
+
+            /* A minute of phone video lands in the tens of megabytes at CRF 28,
+             * so this second pass is for the extraordinary: a camera shooting
+             * something this one has not met. Half the frame size and a
+             * coarser quality, once, rather than refusing the clip. */
+            if ($encode->isSuccessful() && is_file($outVideo) && filesize($outVideo) > self::MAX_OUT_BYTES) {
+                Log::info('VideoOptimizer: first pass over the ceiling, trying smaller', [
+                    'bytes' => filesize($outVideo),
+                ]);
+                $smaller = "scale='min(854,iw)':'min(480,ih)':force_original_aspect_ratio=decrease,"
+                    . 'scale=trunc(iw/2)*2:trunc(ih/2)*2';
+                $again = self::encode($ffmpeg, $input, $outVideo, $smaller, '32');
+                $again->run();
+                if ($again->isSuccessful() && is_file($outVideo) && filesize($outVideo) > 0) {
+                    $encode = $again;
+                }
+            }
 
             if (! $encode->isSuccessful() || ! is_file($outVideo) || filesize($outVideo) === 0) {
                 // Surface the real reason in the log so this is debuggable.
@@ -129,6 +165,66 @@ class VideoOptimizer
      * common install locations, then falls back to a bare "ffmpeg" (PATH lookup).
      * The web server's PATH often differs from a shell's, so a full path is safest.
      */
+    /** One encode, at the frame size and quality asked for. */
+    private static function encode(string $ffmpeg, string $input, string $out, string $scale, string $crf): Process
+    {
+        $p = new Process([
+            $ffmpeg, '-y', '-i', $input,
+            '-vf', $scale,
+            '-c:v', 'libx264', '-preset', 'veryfast', '-crf', $crf,
+            '-c:a', 'aac', '-b:a', '96k',
+            '-movflags', '+faststart', '-pix_fmt', 'yuv420p',
+            $out,
+        ]);
+        $p->setTimeout(600);
+
+        return $p;
+    }
+
+    /**
+     * How long the clip runs, in seconds, or null if the file will not say.
+     *
+     * ffprobe where there is one — it answers with a number and nothing else
+     * — and ffmpeg's own report of the file where there is not, which every
+     * install of ffmpeg can do.
+     */
+    private static function seconds(string $ffmpeg, string $input): ?float
+    {
+        $probe = preg_replace('~ffmpeg(\.exe)?$~i', 'ffprobe$1', $ffmpeg);
+        if ($probe !== $ffmpeg && (@is_file($probe) || $probe === 'ffprobe')) {
+            $p = new Process([$probe, '-v', 'error', '-show_entries', 'format=duration',
+                '-of', 'default=noprint_wrappers=1:nokey=1', $input]);
+            $p->setTimeout(30);
+            $p->run();
+            $out = trim($p->getOutput());
+            if ($p->isSuccessful() && is_numeric($out)) {
+                return (float) $out;
+            }
+        }
+
+        $p = new Process([$ffmpeg, '-i', $input]);
+        $p->setTimeout(30);
+        $p->run();   // ffmpeg exits non-zero with no output file; the report is what we want
+        if (preg_match('~Duration:\s+(\d+):(\d+):(\d+(?:\.\d+)?)~', $p->getErrorOutput(), $m)) {
+            return ((int) $m[1]) * 3600 + ((int) $m[2]) * 60 + (float) $m[3];
+        }
+
+        return null;
+    }
+
+    /** "1 minute 12 seconds", for a message somebody has to read. */
+    private static function spell(float $seconds): string
+    {
+        $s = (int) round($seconds);
+        if ($s < 60) {
+            return $s . ' seconds';
+        }
+        $m = intdiv($s, 60);
+        $rest = $s % 60;
+
+        return $m . ' minute' . ($m > 1 ? 's' : '') . ($rest ? ' ' . $rest . ' seconds' : '');
+    }
+
     /**
      * The ffmpeg this server actually has, or null.
      *

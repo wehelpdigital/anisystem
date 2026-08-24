@@ -58,7 +58,7 @@ class CommunityWallController extends Controller
             // Pictures the app already keeps, pointed at rather than sent.
             'galleryPaths' => 'nullable|array|max:8',
             'galleryPaths.*' => 'string|max:500',
-            'video' => 'nullable|file|max:307200', // 300 MB; VideoOptimizer enforces the mime
+            'video' => 'nullable|file|max:2097152', // the ceiling is length, not size: VideoOptimizer refuses a clip over a minute
         ]);
 
         /* The pictures, in the order they were added.
@@ -169,7 +169,7 @@ class CommunityWallController extends Controller
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
             'images' => 'nullable|array|max:8',
             'images.*' => 'image|mimes:jpg,jpeg,png,webp|max:8192',
-            'video' => 'nullable|file|max:307200', // 300 MB; VideoOptimizer enforces the mime
+            'video' => 'nullable|file|max:2097152', // the ceiling is length, not size: VideoOptimizer refuses a clip over a minute
             // Pictures already kept here, pointed at rather than uploaded.
             'galleryPath' => 'nullable|string|max:500',
             'galleryPaths' => 'nullable|array|max:8',

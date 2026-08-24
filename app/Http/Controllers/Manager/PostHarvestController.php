@@ -182,7 +182,7 @@ class PostHarvestController extends BaseScheduleController
             // and nothing the attach bar routes to this endpoint is turned
             // away as "not a supported video" for want of a mimetype. x-m4v
             // was the other half of that gap.
-            'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-m4v,video/x-msvideo|max:307200',
+            'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-m4v,video/x-msvideo|max:2097152',
         ], [
             'video.required' => 'Pick a video first.',
             'video.max' => 'Video is too large — max 300 MB.',

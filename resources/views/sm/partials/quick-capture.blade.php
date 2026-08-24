@@ -832,10 +832,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ---- Gallery: the album picker, filled from the chosen schedule ---- */
-    function currentTarget() {
-        return currentTarget();
-    }
-
     function syncTarget() {
         const t = currentTarget();
         const gallery = t === 'gallery';

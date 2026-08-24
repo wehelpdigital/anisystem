@@ -384,7 +384,7 @@ class CommunityGroupController extends Controller
             // A topic can carry a clip, uploaded or filmed on the spot — the
             // wall has always allowed it and a discussion is where a farmer
             // most wants to SHOW the problem. VideoOptimizer enforces the mime.
-            'video' => 'nullable|file|max:307200',
+            'video' => 'nullable|file|max:2097152',
         ]);
         // The body arrives as WYSIWYG HTML — sanitize to a safe subset on store.
         $safeBody = \App\Support\CommunityText::safeHtml($request->input('body'));
@@ -499,9 +499,9 @@ class CommunityGroupController extends Controller
             'galleryPaths.*' => 'string|max:500',
             // A clip: filmed here, chosen off the phone, or pointed at in the
             // gallery. VideoOptimizer decides what a file really is.
-            'video' => 'nullable|file|max:307200',
+            'video' => 'nullable|file|max:2097152',
             'videos' => 'nullable|array|max:3',
-            'videos.*' => 'file|max:307200',
+            'videos.*' => 'file|max:2097152',
             'galleryVideoPath' => 'nullable|string|max:500',
             'galleryVideoPaths' => 'nullable|array|max:3',
             'galleryVideoPaths.*' => 'string|max:500',
@@ -1013,7 +1013,7 @@ class CommunityGroupController extends Controller
         $data = $request->validate([
             'body' => 'nullable|string|max:5000',
             'image' => 'nullable|image|max:8192',
-            'video' => 'nullable|file|max:307200', // 300 MB; VideoOptimizer enforces the mime
+            'video' => 'nullable|file|max:2097152', // the ceiling is length, not size: VideoOptimizer refuses a clip over a minute
         ]);
         $body = trim((string) ($data['body'] ?? ''));
         $imagePath = $request->hasFile('image')

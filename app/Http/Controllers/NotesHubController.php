@@ -200,7 +200,7 @@ class NotesHubController extends Controller
     public function videoUpload(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-msvideo|max:307200',
+            'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-msvideo|max:2097152',
         ]);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => 'Pick a video (max 300 MB).', 'errors' => $validator->errors()], 422);

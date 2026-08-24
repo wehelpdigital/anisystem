@@ -238,7 +238,7 @@ class CommunityMessageController extends Controller
             'image' => 'nullable|image|max:8192',
             // 300 MB ceiling and the mime list every clip path enforces;
             // VideoOptimizer re-encodes to a streamable size on the way in.
-            'video' => 'nullable|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-m4v|max:307200',
+            'video' => 'nullable|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-m4v|max:2097152',
             // A stored path picked from the season gallery — a reference,
             // not a copy (validated in galleryShare()).
             'galleryPath' => 'nullable|string|max:500',

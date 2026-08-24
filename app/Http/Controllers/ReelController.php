@@ -33,7 +33,7 @@ class ReelController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'video' => 'required|file|max:307200',
+            'video' => 'required|file|max:2097152',
             'caption' => 'nullable|string|max:2000',
             'start' => 'nullable|numeric|min:0',
             'duration' => 'nullable|numeric|min:1|max:' . ReelEncoder::MAX_SECONDS,

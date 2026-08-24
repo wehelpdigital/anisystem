@@ -165,7 +165,7 @@ class NoteController extends BaseScheduleController
         $schedule = $this->scheduleForNote($request);
 
         $validator = Validator::make($request->all(), [
-            'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-msvideo|max:307200',
+            'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-msvideo|max:2097152',
             // A recording arrives with its name and story already asked for
             // (the post-recording sheet); a picked file sends none of these.
             'title' => 'nullable|string|max:191',

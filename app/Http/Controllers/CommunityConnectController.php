@@ -455,7 +455,7 @@ class CommunityConnectController extends Controller
     public function uploadVideo(Request $request)
     {
         $request->validate([
-            'video' => 'required|file|mimes:mp4,mov,webm,mkv,avi,3gp,m4v|max:307200',
+            'video' => 'required|file|mimes:mp4,mov,webm,mkv,avi,3gp,m4v|max:2097152',
         ]);
 
         try {
