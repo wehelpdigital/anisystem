@@ -175,6 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dayExpenseSave:   ()  => `{{ route('sm.activities.day-expense.save') }}?scheduleId=${SCHEDULE_ID}`,
         dayExpenseDelete: ()  => `{{ route('sm.activities.day-expense.delete') }}?scheduleId=${SCHEDULE_ID}`,
         dayExpenseOrder:  ()  => `{{ route('sm.activities.day-expense.reorder') }}?scheduleId=${SCHEDULE_ID}`,
+        dayIncomeOrder:   ()  => `{{ route('sm.activities.day-income.reorder') }}?scheduleId=${SCHEDULE_ID}`,
         markerSave:       ()  => `{{ route('sm.markers.save') }}?scheduleId=${SCHEDULE_ID}`,
         markerDelete:     (id) => `{{ route('sm.markers.destroy') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
         versionStore:     ()  => `{{ route('sm.activity-versions.store') }}?scheduleId=${SCHEDULE_ID}`,
@@ -4587,7 +4588,11 @@ document.addEventListener('DOMContentLoaded', () => {
              * lighter one read as a label rather than as something you could
              * open. The pencil and the cross open the same income sheet the
              * head's coin does. */
-            const lines = rows.map((r) => `<div class="dx-row" data-income-id="${r.id}" data-date="${esc(date)}">
+            // Draggable like the expenses: money in and money out are the
+            // same kind of thing written in two colours, so a row landing on
+            // the wrong day is fixed the same way in both.
+            const grab = MAY_DRAG ? ' draggable="true"' : '';
+            const lines = rows.map((r) => `<div class="dx-row" data-income-id="${r.id}" data-date="${esc(date)}"${grab} title="${esc(MAY_DRAG ? 'Drag to another day' : '')}">
                 <span class="dx-amt">${peso(r.amount)}</span>
                 <span class="dx-note">${r.title ? esc(r.title) : '<span style="opacity:.55">Income</span>'}${r.note ? ' \u00b7 ' + esc(r.note) : ''}</span>
                 <span class="dx-actions">
@@ -5996,7 +6001,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const rows = _expenseRowsFor(dateKey);
         // Adding is done from the day-header coin icon now — the strip only
         // lists what's already logged (edit/delete inline).
-        if (!rows.length) { block.innerHTML = ''; return; }
+        if (!rows.length) { block.innerHTML = ''; block.hidden = true; return; }
+        // A day whose strip was taken away — by a ghost being cleared, or by
+        // its last row being moved off — has to be able to show one again.
+        block.hidden = false;
         const total = rows.reduce((s, r) => s + Number(r.amount || 0), 0);
         // Draggable, like the day's note: an expense written on the wrong day
         // was a delete and a retype, and the amount had to be remembered in
@@ -6100,7 +6108,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 $qsa(`#activitiesList .date-group[data-date="${fromDate}"], #activitiesList .date-group[data-date="${toDate}"]`)
                     .forEach((g) => paintDayCash(g));
             }
-            if (orderIds && orderIds.length > 1) saveExpenseOrder(toDate);
+            if (orderIds && orderIds.length > 1) saveDxOrder('expense', toDate);
             toast('Expense moved to ' + prettyDateFull(toDate) + '.');
         } catch (err) {
             toast(err.message, 'error');
@@ -6112,24 +6120,52 @@ document.addEventListener('DOMContentLoaded', () => {
      * Sent after the DOM has already been rearranged, so the board never
      * waits on the network to show what a finger just did; a refusal says so
      * and the next render puts the saved order back. */
-    async function saveExpenseOrder(dateKey) {
+    async function saveDxOrder(kind, dateKey) {
         if (!mayEditBoard()) return;
-        const host = $qs(`#activitiesList .day-expense-block[data-date="${dateKey}"] .dx-list`);
+        const spec = DX_KIND[kind] || DX_KIND.expense;
+        const host = $qs(`#activitiesList .${spec.block}[data-date="${dateKey}"] .dx-list`);
         if (!host) return;
-        const ids = $qsa('[data-expense-id]', host).map((el) => Number(el.getAttribute('data-expense-id')));
+        const ids = $qsa(`[${spec.attr}]`, host).map((el) => Number(el.getAttribute(spec.attr)));
         if (ids.length < 2) return;
         // Keep the local copy in the order the eye is looking at, or the next
-        // render of this day would undo the gesture.
-        const rows = DAY_EXPENSES[dateKey] || [];
-        DAY_EXPENSES[dateKey] = ids.map((id) => rows.find((r) => Number(r.id) === id)).filter(Boolean);
+        // render of this day would undo the gesture. (Income keeps no local
+        // copy — its strip is drawn from the answer each time.)
+        if (kind === 'expense') {
+            const rows = DAY_EXPENSES[dateKey] || [];
+            DAY_EXPENSES[dateKey] = ids.map((id) => rows.find((r) => Number(r.id) === id)).filter(Boolean);
+        }
         try {
-            await api(U.dayExpenseOrder(), { method: 'POST', body: { expenseDate: dateKey, ids } });
+            await api(kind === 'income' ? U.dayIncomeOrder() : U.dayExpenseOrder(), {
+                method: 'POST',
+                body: kind === 'income' ? { incomeDate: dateKey, ids } : { expenseDate: dateKey, ids },
+            });
         } catch (err) {
             toast(err.message, 'error');
         }
     }
 
-    /* Where a dragged expense would live on the day under the cursor.
+    /* What tells the two strips apart.
+     *
+     * Everything below this line used to say "expense" and mean "a money row
+     * on a day". The drag, the placeholder, the reorder and the move are the
+     * same gesture over the same shape; only the attribute the row is keyed
+     * by, the block it lives in and the colour of its card differ. Naming
+     * that difference once is what let the income strip have all of it.
+     */
+    const DX_KIND = {
+        expense: { attr: 'data-expense-id', block: 'day-expense-block',
+                   card: 'dx-card', head: '\uD83D\uDCB8 Extra expenses' },
+        income:  { attr: 'data-income-id',  block: 'day-income-block',
+                   card: 'dx-card dx-card-in', head: '\uD83D\uDCB0 Extra income' },
+    };
+    const DX_ROW_SEL = '.dx-row[data-expense-id], .dx-row[data-income-id]';
+    function dxKindOf(row) { return row && row.hasAttribute('data-income-id') ? 'income' : 'expense'; }
+    function dxIdOf(row) {
+        return row ? (row.getAttribute('data-income-id') || row.getAttribute('data-expense-id') || '') : '';
+    }
+    function dxRowEl(kind, id) { return $qs(`.dx-row[${DX_KIND[kind].attr}="${id}"]`); }
+
+    /* Where a dragged money row would live on the day under the cursor.
      *
      * Two things have to be true before a placeholder can be seen, and only
      * one of them was.
@@ -6158,19 +6194,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (d) { OPEN_DAYS.add(d); saveOpenDays(); }
     }
 
-    function dxListFor(group) {
+    function dxListFor(group, kind) {
         if (!group) return null;
+        const spec = DX_KIND[kind] || DX_KIND.expense;
         const dateKey = (group.getAttribute('data-date') || '').trim();
         if (!dateKey || dateKey === '__no-date__') return null;
         dxOpenGroup(group);
-        const block = $qs('.day-expense-block', group);
+        const block = $qs('.' + spec.block, group);
         if (!block) return null;
         clearDxGhosts(block);   // a ghost the cursor has left is litter
         const list = $qs('.dx-list', block);
         if (list) return list;
         block.hidden = false;
-        block.innerHTML = `<div class="dx-card dx-card-ghost">
-            <div class="dx-head"><span>\uD83D\uDCB8 Extra expenses</span><span class="dx-total"></span></div>
+        block.innerHTML = `<div class="${spec.card} dx-card-ghost">
+            <div class="dx-head"><span>${spec.head}</span><span class="dx-total"></span></div>
             <div class="dx-list"></div>
         </div>`;
         return $qs('.dx-list', block);
@@ -6189,22 +6226,23 @@ document.addEventListener('DOMContentLoaded', () => {
     function dxOrderIn(row) {
         const list = row && row.closest('.dx-list');
         if (!list) return null;
-        return $qsa('[data-expense-id]', list).map((el) => el.getAttribute('data-expense-id'));
+        const attr = DX_KIND[dxKindOf(row)].attr;
+        return $qsa(`[${attr}]`, list).map((el) => el.getAttribute(attr));
     }
 
     function clearDxGhosts(keepBlock) {
         $qsa('#activitiesList .dx-card-ghost').forEach((card) => {
-            const block = card.closest('.day-expense-block');
+            const block = card.closest('.day-expense-block, .day-income-block');
             if (keepBlock && block === keepBlock) return;
             card.remove();
             // A block that only ever held the ghost goes back to being empty,
             // which is what its own renderer would leave behind.
-            if (block && !$qs('.dx-card', block)) block.innerHTML = '';
+            if (block && !$qs('.dx-card', block)) { block.innerHTML = ''; block.hidden = true; }
         });
     }
 
     /** Put the row back where it was picked up from. */
-    function restoreDraggedExpense(row) {
+    function restoreDraggedRow(row) {
         if (!row || !dxOrigin || !dxOrigin.parent) return;
         if (dxOrigin.next && dxOrigin.next.parentNode === dxOrigin.parent) {
             dxOrigin.parent.insertBefore(row, dxOrigin.next);
@@ -6215,7 +6253,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /** Drop `row` next to `over`, above or below by which half was hit. */
-    function placeExpenseRow(row, over, y) {
+    function placeDxRow(row, over, y) {
         if (!row || !over || row === over) return false;
         const box = over.getBoundingClientRect();
         const below = y > box.top + box.height / 2;
@@ -6319,7 +6357,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * The same trick the expenses use: the save endpoint takes a date for a
      * row it already knows by id, so a move is that save with the day changed
      * — no second endpoint to write and defend. */
-    async function moveIncomeToDate(id, fromDate, toDate) {
+    async function moveIncomeToDate(id, fromDate, toDate, orderIds) {
         if (!mayEditBoard() || !id || !toDate || fromDate === toDate) return;
         try {
             const list = await api(`${U.dayIncomeList()}&incomeDate=${encodeURIComponent(fromDate)}`);
@@ -6332,6 +6370,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 title: r.title || '',
                 note: r.note || '',
             } });
+            /* The new day answers in its own stored order, which knows nothing
+             * about where the row was let go. Told first, then drawn — the
+             * strip is rendered from the server each time, so an order sent
+             * after the redraw would arrive too late to be seen. */
+            if (orderIds && orderIds.length > 1) {
+                try {
+                    await api(U.dayIncomeOrder(), { method: 'POST', body: { incomeDate: toDate, ids: orderIds.map(Number) } });
+                } catch (_) { /* the move stands even if the order does not */ }
+            }
             renderDayIncome(fromDate);
             renderDayIncome(toDate);
             repaintDayCash(fromDate);
@@ -6838,7 +6885,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let dragBoardSnapshot = null;
     let dragGroupDate = null; // set while dragging a date header (whole-day move)
     let dragNoteDate = null;   // set while dragging a date-note block to another day
-    let dragExpense = null;    // {id, date} while an extra expense is in the air
+    let dragDx = null;         // {kind, id, date} while a money row is in the air
     let dxOrigin = null;       // where that row sat before it was picked up
     let dragMarkerDate = null; // set while dragging a resume-here marker to another day
 
@@ -7391,21 +7438,22 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Dragging one extra expense onto another day moves it there.
-        const dxRow = e.target.closest && e.target.closest('.dx-row[data-expense-id]');
+        // Dragging one money row — expense or income — onto another day.
+        const dxRow = e.target.closest && e.target.closest(DX_ROW_SEL);
         if (dxRow) {
-            // Its own pencil and cross are not handles.
+            // Its own kebab is not a handle.
             if (e.target.closest('button, a')) { e.preventDefault(); return; }
             if (!MAY_DRAG) { e.preventDefault(); return; }
-            dragExpense = {
-                id: dxRow.getAttribute('data-expense-id'),
+            dragDx = {
+                kind: dxKindOf(dxRow),
+                id: dxIdOf(dxRow),
                 date: (dxRow.getAttribute('data-date') || '').trim(),
             };
-            dxOrigin = { parent: dxRow.parentNode, next: dxRow.nextElementSibling, date: dragExpense.date };
+            dxOrigin = { parent: dxRow.parentNode, next: dxRow.nextElementSibling, date: dragDx.date };
             dxRow.classList.add('dragging');
             if (e.dataTransfer) {
                 e.dataTransfer.effectAllowed = 'move';
-                try { e.dataTransfer.setData('text/plain', 'expense:' + dragExpense.id); } catch (_) { /* noop */ }
+                try { e.dataTransfer.setData('text/plain', dragDx.kind + ':' + dragDx.id); } catch (_) { /* noop */ }
             }
             return;
         }
@@ -7474,12 +7522,12 @@ document.addEventListener('DOMContentLoaded', () => {
         dragOrigin = null;
         dragGroupDate = null;
         dragNoteDate = null;
-        if (dragExpense) {
+        if (dragDx) {
             // Ended without a drop we understood: undo the travelling.
-            restoreDraggedExpense($qs(`.dx-row[data-expense-id="${dragExpense.id}"]`));
+            restoreDraggedRow(dxRowEl(dragDx.kind, dragDx.id));
             clearDxGhosts();
         }
-        dragExpense = null;
+        dragDx = null;
         dxOrigin = null;
         dragMarkerDate = null;
         dragInlineEl = null;
@@ -7502,18 +7550,25 @@ document.addEventListener('DOMContentLoaded', () => {
          * — the same thing an activity card does, and for the same reason:
          * an insertion you cannot see is an insertion you have to undo. Over
          * another day, that day lights up. */
-        if (dragExpense) {
-            const overRow = e.target.closest && e.target.closest('.dx-row[data-expense-id]');
-            const moving = $qs(`.dx-row[data-expense-id="${dragExpense.id}"]`);
-            // Against the day the row is in NOW, not the one it started in:
-            // once it has travelled, ordering it is ordering it there.
-            const here = (moving?.getAttribute('data-date') || '').trim();
-            if (overRow && moving && overRow !== moving
-                && (overRow.getAttribute('data-date') || '').trim() === here) {
+        if (dragDx) {
+            const overRow = e.target.closest && e.target.closest(DX_ROW_SEL);
+            const moving = dxRowEl(dragDx.kind, dragDx.id);
+            /* Over a row of its own kind, wherever that row lives.
+             *
+             * Insert-above-or-below and travel-to-another-day are one move:
+             * placing the row next to a row of another day IS putting it in
+             * that day. Asking first whether the two shared a day meant the
+             * first hover over a new day could only append to the end and a
+             * later hover had to correct it. An income does not sort itself
+             * into the expenses, though — the kinds stay apart. */
+            if (overRow && moving && overRow !== moving && dxKindOf(overRow) === dragDx.kind) {
                 e.preventDefault();
                 if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+                placeDxRow(moving, overRow, e.clientY);
+                moving.setAttribute('data-date', (overRow.getAttribute('data-date') || '').trim());
+                clearDxGhosts(moving.closest('.day-expense-block, .day-income-block'));
                 $qsa('.date-group.drag-over-group').forEach((el) => el.classList.remove('drag-over-group'));
-                placeExpenseRow(moving, overRow, e.clientY);
+                moving.closest('.date-group')?.classList.add('drag-over-group');
                 return;
             }
             const overGroup = e.target.closest && e.target.closest('.date-group');
@@ -7526,7 +7581,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Carry the row into that day's strip — putting one up, and
                 // opening the day, if it has none — so the answer to "where
                 // will this go?" is the row itself, sitting where it would sit.
-                const list = dxListFor(overGroup);
+                const list = dxListFor(overGroup, dragDx.kind);
                 if (list && moving.parentNode !== list) {
                     list.appendChild(moving);
                     moving.setAttribute('data-date', overDate);
@@ -7552,7 +7607,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Note / marker move: highlight the target day.
-        if (dragNoteDate || dragMarkerDate || dragExpense) {
+        if (dragNoteDate || dragMarkerDate || dragDx) {
             const targetGroup = e.target.closest && e.target.closest('.date-group');
             const targetDate = (targetGroup?.getAttribute('data-date') || '').trim();
             const src = dragNoteDate || dragMarkerDate;
@@ -7636,25 +7691,25 @@ document.addEventListener('DOMContentLoaded', () => {
          * answer: the day it sits in now, and the place it sits in that day.
          * Landing in its own day is a reorder; landing anywhere else is a
          * move. */
-        if (dragExpense) {
-            const moving = $qs(`.dx-row[data-expense-id="${dragExpense.id}"]`);
+        if (dragDx) {
+            const moving = dxRowEl(dragDx.kind, dragDx.id);
             const landedOn = (moving?.closest('.date-group')?.getAttribute('data-date') || '').trim();
-            const from = dragExpense.date;
-            const id = dragExpense.id;
-            dragExpense = null;
+            const { kind, id, date: from } = dragDx;
+            dragDx = null;
             e.preventDefault();
             $qsa('.dx-row.dragging').forEach((el) => el.classList.remove('dragging'));
             $qsa('.date-group.drag-over-group').forEach((el) => el.classList.remove('drag-over-group'));
             if (!landedOn || landedOn === '__no-date__') {
-                restoreDraggedExpense(moving);
+                restoreDraggedRow(moving);
                 clearDxGhosts();
             } else if (landedOn === from) {
                 clearDxGhosts();
-                saveExpenseOrder(from);
+                saveDxOrder(kind, from);
             } else {
                 const order = dxOrderIn(moving);
                 clearDxGhosts();
-                moveExpenseToDate({ id, date: from }, landedOn, order);
+                if (kind === 'income') moveIncomeToDate(id, from, landedOn, order);
+                else moveExpenseToDate({ id, date: from }, landedOn, order);
             }
             dxOrigin = null;
             return;
@@ -7937,17 +7992,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 td.dx.classList.remove('dragging');
                 clearDropHighlights();
                 const landedOn = (td.dx.closest('.date-group')?.getAttribute('data-date') || '').trim();
-                const id = td.dx.getAttribute('data-expense-id');
+                const id = dxIdOf(td.dx);
                 if (!commit || !landedOn || landedOn === '__no-date__') {
-                    restoreDraggedExpense(td.dx);
+                    restoreDraggedRow(td.dx);
                     clearDxGhosts();
                 } else if (landedOn === td.dxDate) {
                     clearDxGhosts();
-                    saveExpenseOrder(td.dxDate);
+                    saveDxOrder(td.dxKind, td.dxDate);
                 } else {
                     const order = dxOrderIn(td.dx);
                     clearDxGhosts();
-                    moveExpenseToDate({ id, date: td.dxDate }, landedOn, order);
+                    if (td.dxKind === 'income') moveIncomeToDate(id, td.dxDate, landedOn, order);
+                    else moveExpenseToDate({ id, date: td.dxDate }, landedOn, order);
                 }
                 dxOrigin = null;
             } else if (td.header) {
@@ -8052,7 +8108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // only be dragged with a mouse — which is not what a farmer has.
         // A long press on the row's own kebab is aiming at the menu, not at a
         // handle — the mouse path already refuses to drag from a button.
-        const dx = (header || t.target.closest?.('button, a')) ? null : t.target.closest?.('.dx-row[data-expense-id]');
+        const dx = (header || t.target.closest?.('button, a')) ? null : t.target.closest?.(DX_ROW_SEL);
         const card = (header || dx) ? null : t.target.closest?.('.activity-card[data-id]');
         if (!header && !card && !dx) return;
 
@@ -8060,7 +8116,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (header && (!groupDate || groupDate === '__no-date__')) return;
 
         touchDrag = {
-            card, header, dx, dxDate: dx ? (dx.getAttribute('data-date') || '').trim() : '',
+            card, header, dx, dxKind: dx ? dxKindOf(dx) : '',
+            dxDate: dx ? (dx.getAttribute('data-date') || '').trim() : '',
             groupDate, active: false, raf: null,
             startX: t.clientX, startY: t.clientY, lastX: t.clientX, lastY: t.clientY,
             offsetX: 0, offsetY: 0, ghost: null,
@@ -8101,18 +8158,19 @@ document.addEventListener('DOMContentLoaded', () => {
          * its own day's rows the row itself follows the finger, so the order
          * is seen before it is let go rather than after. */
         if (touchDrag.dx) {
-            const overRow = target?.closest?.('.dx-row[data-expense-id]');
-            const here = (touchDrag.dx.getAttribute('data-date') || '').trim();
-            if (overRow && overRow !== touchDrag.dx
-                && (overRow.getAttribute('data-date') || '').trim() === here) {
-                placeExpenseRow(touchDrag.dx, overRow, t.clientY);
+            const overRow = target?.closest?.(DX_ROW_SEL);
+            if (overRow && overRow !== touchDrag.dx && dxKindOf(overRow) === touchDrag.dxKind) {
+                placeDxRow(touchDrag.dx, overRow, t.clientY);
+                touchDrag.dx.setAttribute('data-date', (overRow.getAttribute('data-date') || '').trim());
+                clearDxGhosts(touchDrag.dx.closest('.day-expense-block, .day-income-block'));
+                touchDrag.dx.closest('.date-group')?.classList.add('drag-over-group');
                 return;
             }
             const group = target?.closest?.('.date-group');
             const to = (group?.getAttribute('data-date') || '').trim();
             if (to && to !== '__no-date__') {
                 group.classList.add('drag-over-group');
-                const list = dxListFor(group);
+                const list = dxListFor(group, touchDrag.dxKind);
                 if (list && touchDrag.dx.parentNode !== list) {
                     list.appendChild(touchDrag.dx);
                     touchDrag.dx.setAttribute('data-date', to);

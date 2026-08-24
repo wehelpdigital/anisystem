@@ -2207,6 +2207,64 @@ class ActivityController extends BaseScheduleController
         ]);
     }
 
+    /**
+     * The order of one day's income entries, as the board now shows them.
+     *
+     * The twin of reorderDayExpenses, and for the same reason: dragging one
+     * row moves every row under it, so the day is renumbered in one call
+     * rather than a save per row.
+     */
+    public function reorderDayIncomes(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+
+        $validator = Validator::make($request->all(), [
+            'incomeDate' => 'required|date',
+            'ids'        => 'required|array|max:200',
+            'ids.*'      => 'integer',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
+
+        $versionId = $this->activeVersionIdFor($schedule->id);
+        if (!$versionId) {
+            return $this->jsonFail('No active version found for this schedule.', 422);
+        }
+
+        $date = $request->input('incomeDate');
+        // Only this schedule's, this version's, this day's rows move; an id
+        // from anywhere else is simply not found.
+        $rows = \App\Models\AsScheduleDayIncome::active()
+            ->forSchedule($schedule->id)
+            ->forVersion($versionId)
+            ->whereDate('incomeDate', $date)
+            ->get()
+            ->keyBy('id');
+
+        $order = 0;
+        foreach ((array) $request->input('ids', []) as $id) {
+            $row = $rows->get((int) $id);
+            if ($row) {
+                $row->update(['sortOrder' => ++$order]);
+            }
+        }
+
+        $fresh = \App\Models\AsScheduleDayIncome::active()
+            ->forSchedule($schedule->id)
+            ->forVersion($versionId)
+            ->whereDate('incomeDate', $date)
+            ->orderBy('sortOrder')->orderBy('id')
+            ->get();
+
+        $this->broadcastBoard($schedule, 'reload', ['incomeDate' => $date], $versionId);
+
+        return $this->jsonOk('Order saved.', [
+            'data'  => $this->serializeIncomes($fresh),
+            'total' => (float) $fresh->sum('amount'),
+        ]);
+    }
+
     /** Create or update one income entry; pass incomeId to edit. */
     public function saveDayIncome(Request $request)
     {
