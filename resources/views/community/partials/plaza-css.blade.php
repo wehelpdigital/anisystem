@@ -495,13 +495,13 @@
 
     /* Both ends of a long room, in the corner the write button used to hold.
        Same shape as the board's own jump stack, so the two read as one app. */
-    /* The jumps take the floor.
+    /* The chat button keeps the floor; the jumps stack on top of it.
      *
-     * They were the upper storey, riding above the chat launcher, which put
-     * the control you reach for while reading furthest from your thumb. They
-     * sit at the bottom now — as low as the tab bar allows on a phone — and
-     * the launcher steps up above them (see the rule further down). */
-    .disc-jumps { position:fixed; right:1rem; bottom:1rem; z-index:30;
+     * Both are the same circle now, so the stack reads as one column — and
+     * the corner nearest the thumb belongs to the button that is on every
+     * page, not to the pair that only appear while a discussion is being
+     * scrolled. The jumps clear the launcher by its own height and a gap. */
+    .disc-jumps { position:fixed; right:1rem; bottom:calc(1rem + 3.6rem); z-index:30;
         display:flex; flex-direction:column; gap:.45rem;
         transition: opacity var(--dur) var(--ease-house), transform var(--dur) var(--ease-house); }
     .disc-jumps button { width:2.6rem; height:2.6rem; border-radius:9999px; border:1px solid var(--color-gray-200);
@@ -514,16 +514,13 @@
        4.5rem above the tab bar) — the stack steps up one storey so both stay
        tappable instead of sitting on the same spot. */
     @media (max-width:767px) {
-        .disc-jumps { bottom:calc(4.5rem + env(safe-area-inset-bottom, 0px)); }
+        .disc-jumps { bottom:calc(4.5rem + 3.6rem + env(safe-area-inset-bottom, 0px)); }
     }
-    /* And the launcher clears them: two buttons and the gap between them,
-       plus a breath. Only on a page that has jumps at all — everywhere else
-       the dock keeps the corner to itself. Not tied to whether they are
-       showing: a chat button that hops up and down as you scroll is worse
-       than one that sits an inch higher. */
-    html:not(:has(#msgrSeat)):has(.disc-jumps) #msgrDock { bottom:calc(1rem + 6.15rem); }
+    /* Where the messenger sits in the page's own nav there is no floating
+       launcher to clear, so the jumps drop to the floor themselves. */
+    html:has(#msgrSeat) .disc-jumps { bottom:1rem; }
     @media (max-width:767px) {
-        html:not(:has(#msgrSeat)):has(.disc-jumps) #msgrDock { bottom:calc(4.5rem + 6.15rem + env(safe-area-inset-bottom, 0px)); }
+        html:has(#msgrSeat) .disc-jumps { bottom:calc(4.5rem + env(safe-area-inset-bottom, 0px)); }
     }
     @media (prefers-reduced-motion: reduce) { .disc-jumps { transition:none; } }
 
