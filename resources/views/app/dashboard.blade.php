@@ -285,6 +285,14 @@
     }
     @media (prefers-reduced-motion: reduce) { .dash-stat { transition: none; } }
     {{-- .wall-act composer buttons live in plaza-css (shared). --}}
+    /* The bar over the homepage wall: what you came to do, then a word about
+       where you are. The same shape the community wall opens with — said
+       again here rather than shared, because it is four declarations and the
+       wall keeps its copy in its own page. */
+    .wall-bar { display: flex; align-items: center; gap: .5rem; margin-bottom: .85rem; }
+    .wb-act { display: inline-flex; align-items: center; gap: .35rem; flex-shrink: 0; }
+    .wb-hint { margin-left: auto; font-size: .72rem; font-weight: 600; color: var(--color-gray-400); }
+    @media (max-width: 599px) { .wb-hint { display: none; } }
 </style>
 @endpush
 
@@ -626,71 +634,20 @@
                     <a href="{{ route('community.index') }}" class="text-sm font-bold text-brand-700 hover:underline shrink-0">See more</a>
                 </div>
 
-                {{-- Post to your wall — appears here, in /app/community and on your
-                     profile wall (they're one wall). Supports photo + video. --}}
-                <div id="dashComposer" data-video-host class="card mb-5">
-                    <div class="card-body dash-comp">
-                        <div class="flex items-start gap-2.5 dash-comp-row">
-                            {{-- Your photo, and the one thing people expect to
-                                 be able to change by tapping it: what is on
-                                 your mind. The bubble is already shown beside
-                                 your name across the community — this is the
-                                 place people actually look for it. --}}
-                            <button type="button" id="dashMe" class="dash-me status-cloud-wrap shrink-0" title="Set what's on your mind" data-status-bubble>
-                                {{-- The same cloud the community draws over a
-                                     member's photo: above the avatar, tail
-                                     pointing down at it. One shape for one
-                                     idea, wherever it appears. --}}
-                                <span class="status-cloud dash-me-cloud{{ filled(auth()->user()?->statusBubble) ? '' : ' is-empty' }}" id="dashMeBubble">
-                                    <span class="status-cloud-text" data-status-text data-empty-label="💭 What's on your mind?">{{ auth()->user()?->statusBubble ?: "💭 What's on your mind?" }}</span>
-                                </span>
-                                <span class="avatar avatar-md {{ \App\Support\CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} overflow-hidden"
-                                      data-me-avatar data-initials="{{ auth()->user()->initials ?? '?' }}">
-                                    @if (auth()->user()?->avatarPath)
-                                        <img src="{{ \App\Support\MediaStore::url(auth()->user()->avatarPath) }}" alt="" class="w-full h-full object-cover">
-                                    @else
-                                        {{ auth()->user()->initials ?? '?' }}
-                                    @endif
-                                </span>
-                            </button>
-                            <div class="min-w-0 grow">
-                                {{-- Room to actually write in, in a size that
-                                     fits more words on a phone: the old box
-                                     was two lines of large type. --}}
-                                <textarea id="dashPostBody" data-mentionable data-preview="#dashPreview" rows="4" maxlength="5000" class="form-textarea w-full dash-comp-box" placeholder="Share something with your co-farmers — a question, a photo of the field, what the weather did…"></textarea>
-                                <div id="dashPreview" class="cp-preview" style="display:none"><span class="cp-label">Preview</span><div class="cp-body"></div></div>
+                {{-- One button, not a box you scroll past.
 
-                                <div id="dashImageChip" class="hidden mt-2 items-center gap-2 text-xs font-semibold text-gray-600">
-                                    <img src="" id="dashImageThumb" class="w-10 h-10 rounded-lg object-cover" alt="">
-                                    <button type="button" id="dashImageClear" class="text-red-600 font-bold">Remove photo</button>
-                                </div>
-                                <span class="js-video-chip mt-2 items-center gap-2 text-xs font-semibold text-gray-600" style="display:none">
-                                    <span class="js-video-name"></span>
-                                    <button type="button" class="js-video-clear text-red-600 font-bold">Remove</button>
-                                </span>
-
-                                <div class="flex items-center justify-between gap-2 mt-2 flex-wrap">
-                                    <div class="flex items-center gap-1 flex-wrap">
-                                        <label class="wall-act cursor-pointer" title="Add a photo" aria-label="Add a photo">
-                                            <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                            <input type="file" id="dashImage" accept="image/*" class="hidden">
-                                        </label>
-                                        <button type="button" class="wall-act js-video-attach" title="Upload a video" aria-label="Upload a video">
-                                            <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                                        </button>
-                                        <button type="button" class="wall-act js-video-record" title="Record a video" aria-label="Record a video">
-                                            <svg class="w-5 h-5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="currentColor"/></svg>
-                                        </button>
-                                        <input type="file" class="js-video-file hidden" accept="video/*">
-                                        <button type="button" class="wall-act js-emoji-btn" data-target="dashPostBody" title="Add an emoji" aria-label="Add an emoji">
-                                            <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                        </button>
-                                    </div>
-                                    <button type="button" id="dashPostBtn" class="btn btn-primary btn-sm shrink-0">Post</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                     The composer used to sit open at the top of the homepage
+                     wall, four lines of empty textarea between the reader and
+                     the posts they came for. It is the same composer — the
+                     same ids, the same photo/video/emoji doors — in a sheet
+                     that comes up over the page, which is exactly how the
+                     community wall asks the same question. --}}
+                <div class="wall-bar" id="dashWallBar">
+                    <button type="button" id="dashWriteBtn" class="btn btn-outline btn-sm wb-act">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
+                        <span class="wb-act-lbl">New post</span>
+                    </button>
+                    <span class="wb-hint">Ano'ng balita sa bukid?</span>
                 </div>
 
                 <div id="dashWallFeed" data-animate-list>
@@ -997,6 +954,14 @@
     // Grow the textarea with content.
     body?.addEventListener('input', () => { body.style.height = 'auto'; body.style.height = Math.min(body.scrollHeight, 200) + 'px'; });
 
+    /* The door. The composer lives in a sheet now, so writing a post starts
+       with saying you want to — and the cursor is in the box by the time the
+       sheet has finished coming up. */
+    document.getElementById('dashWriteBtn')?.addEventListener('click', () => {
+        window.openSheet?.('dashComposerSheet');
+        window.smFocus?.(body, { delay: 140 });
+    });
+
     btn?.addEventListener('click', async () => {
         const text = body.value.trim();
         const img = imageInput.files[0];
@@ -1023,6 +988,7 @@
             body.value = ''; body.style.height = 'auto';
             imageInput.value = ''; imgChip.style.display = 'none';
             window.plazaClearVideo && window.plazaClearVideo(host);
+            window.closeSheet?.('dashComposerSheet');
             toast('Posted to your wall.');
         } catch (_) { toast('Network error — try again.', 'error'); }
         finally { btn.disabled = false; btn.innerHTML = prev; }
@@ -1085,4 +1051,84 @@
     load();
 })();
 </script>
+@endpush
+
+
+@push('sheets')
+{{-- The homepage's composer, in the same sheet the community wall's lives in.
+     Moved here rather than rewritten: the ids the dashboard's JS binds to are
+     exactly the ones it had when it sat open on the page. --}}
+<div class="sheet hidden" id="dashComposerSheet" style="--sheet-width:36rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Write a post</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body" style="padding-bottom:1.1rem">
+                <div id="dashComposer" data-video-host>
+                    <div class="card-body dash-comp">
+                        <div class="flex items-start gap-2.5 dash-comp-row">
+                            {{-- Your photo, and the one thing people expect to
+                                 be able to change by tapping it: what is on
+                                 your mind. The bubble is already shown beside
+                                 your name across the community — this is the
+                                 place people actually look for it. --}}
+                            <button type="button" id="dashMe" class="dash-me status-cloud-wrap shrink-0" title="Set what's on your mind" data-status-bubble>
+                                {{-- The same cloud the community draws over a
+                                     member's photo: above the avatar, tail
+                                     pointing down at it. One shape for one
+                                     idea, wherever it appears. --}}
+                                <span class="status-cloud dash-me-cloud{{ filled(auth()->user()?->statusBubble) ? '' : ' is-empty' }}" id="dashMeBubble">
+                                    <span class="status-cloud-text" data-status-text data-empty-label="💭 What's on your mind?">{{ auth()->user()?->statusBubble ?: "💭 What's on your mind?" }}</span>
+                                </span>
+                                <span class="avatar avatar-md {{ \App\Support\CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} overflow-hidden"
+                                      data-me-avatar data-initials="{{ auth()->user()->initials ?? '?' }}">
+                                    @if (auth()->user()?->avatarPath)
+                                        <img src="{{ \App\Support\MediaStore::url(auth()->user()->avatarPath) }}" alt="" class="w-full h-full object-cover">
+                                    @else
+                                        {{ auth()->user()->initials ?? '?' }}
+                                    @endif
+                                </span>
+                            </button>
+                            <div class="min-w-0 grow">
+                                {{-- Room to actually write in, in a size that
+                                     fits more words on a phone: the old box
+                                     was two lines of large type. --}}
+                                <textarea id="dashPostBody" data-mentionable data-preview="#dashPreview" rows="4" maxlength="5000" class="form-textarea w-full dash-comp-box" placeholder="Share something with your co-farmers — a question, a photo of the field, what the weather did…"></textarea>
+                                <div id="dashPreview" class="cp-preview" style="display:none"><span class="cp-label">Preview</span><div class="cp-body"></div></div>
+
+                                <div id="dashImageChip" class="hidden mt-2 items-center gap-2 text-xs font-semibold text-gray-600">
+                                    <img src="" id="dashImageThumb" class="w-10 h-10 rounded-lg object-cover" alt="">
+                                    <button type="button" id="dashImageClear" class="text-red-600 font-bold">Remove photo</button>
+                                </div>
+                                <span class="js-video-chip mt-2 items-center gap-2 text-xs font-semibold text-gray-600" style="display:none">
+                                    <span class="js-video-name"></span>
+                                    <button type="button" class="js-video-clear text-red-600 font-bold">Remove</button>
+                                </span>
+
+                                <div class="flex items-center justify-between gap-2 mt-2 flex-wrap">
+                                    <div class="flex items-center gap-1 flex-wrap">
+                                        <label class="wall-act cursor-pointer" title="Add a photo" aria-label="Add a photo">
+                                            <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                            <input type="file" id="dashImage" accept="image/*" class="hidden">
+                                        </label>
+                                        <button type="button" class="wall-act js-video-attach" title="Upload a video" aria-label="Upload a video">
+                                            <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                        </button>
+                                        <button type="button" class="wall-act js-video-record" title="Record a video" aria-label="Record a video">
+                                            <svg class="w-5 h-5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="currentColor"/></svg>
+                                        </button>
+                                        <input type="file" class="js-video-file hidden" accept="video/*">
+                                        <button type="button" class="wall-act js-emoji-btn" data-target="dashPostBody" title="Add an emoji" aria-label="Add an emoji">
+                                            <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                        </button>
+                                    </div>
+                                    <button type="button" id="dashPostBtn" class="btn btn-primary btn-sm shrink-0">Post</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+</div>
 @endpush

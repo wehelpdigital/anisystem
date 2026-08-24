@@ -637,12 +637,43 @@
        the cloud hangs above the card by design. The line takes the card's own
        top corners instead, which is all it ever needed. */
     .plaza-accent { position:relative; }
-    .plaza-accent::before { content:''; position:absolute; inset:0 0 auto 0; height:3px;
-        border-top-left-radius:inherit; border-top-right-radius:inherit;
-        background:linear-gradient(90deg, #3d6823, #6b9f3d 45%, #a8cc7e 75%, transparent);
-        background-size:220% 100%; animation:gradSweep 12s ease-in-out infinite alternate; }
+    /* The card's whole shape with only its top three pixels painted, for the
+       same reason .fp-card::before is: a browser shrinks a corner radius that
+       cannot fit its box, so a 3px bar wearing a 16px radius came back with a
+       3px corner laid across the card's own curve. */
+    .plaza-accent::before { content:''; position:absolute; inset:0; border-radius:inherit;
+        pointer-events:none;
+        background-image:linear-gradient(90deg, #3d6823, #6b9f3d 45%, #a8cc7e 75%, transparent);
+        background-repeat:no-repeat; background-size:220% 3px; background-position:left top;
+        animation:fpStripSweep 12s ease-in-out infinite alternate; }
     html.dark .plaza-accent::before { opacity:.8; }
     @media (prefers-reduced-motion: reduce) { .plaza-accent::before { animation:none; } }
+
+    /* ---- The invitation at the foot of a card ----
+
+       "Join this discussion", "Take a look inside", "Read more": one button
+       across the card, and the one thing each card is for.
+
+       They were `display: block`, which threw away the flex centring .btn
+       gives its label — so the words sat against the top padding of a
+       2.25rem box with the slack underneath them, reading as a button whose
+       text had slipped. Flex puts them back in the middle of it.
+
+       The green is the one the discussions' own cards wear: a gradient that
+       drifts on the app's shared tide rather than a flat fill. The oversize
+       is what gives it room to move; the delay lets a column of them breathe
+       out of step instead of pulsing in lockstep. */
+    .fd-open, .fa-read {
+        display: flex; align-items: center; justify-content: center;
+        width: 100%; text-align: center; min-height: 2.5rem; padding-block: .55rem;
+        border: 0; color: #fff;
+        background-image: linear-gradient(120deg, #2f5219, #4a7c2a 28%, #6b9f3d 52%, #4a7c2a 76%, #2f5219);
+        background-size: 220% 100%;
+        animation: gradSweep var(--sw-t, 11s) ease-in-out infinite alternate;
+        animation-delay: var(--sw-d, 0s);
+    }
+    .fd-open:hover, .fa-read:hover { filter: brightness(1.06); color: #fff; }
+    @media (prefers-reduced-motion: reduce) { .fd-open, .fa-read { animation: none; } }
 
     /* --- Post-photo skeleton: while a wall/feed picture decodes, its box
        shimmers instead of the layout jumping open around a half-arrived
@@ -805,7 +836,7 @@
         margin-top: .4rem; font-size: .7rem; color: var(--color-gray-500); }
     .fd-topic-meta .avatar { width: 1.15rem; height: 1.15rem; font-size: .5rem; }
     .fd-topic-meta b { color: var(--color-gray-700); font-weight: 700; }
-    .fd-open { display: block; width: 100%; margin-top: .75rem; text-align: center; }
+    .fd-open { margin-top: .9rem; }
 
     /* ---- An article from the tech blog, on the wall ----
        Named but never described: these classes had no rules anywhere in the
@@ -836,7 +867,7 @@
     .fa-excerpt { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;
         overflow: hidden; margin-top: .55rem; font-size: .85rem; line-height: 1.55;
         color: var(--color-gray-600); }
-    .fa-read { display: block; width: 100%; margin-top: .85rem; text-align: center; }
+    .fa-read { margin-top: .95rem; }
     /* .fa-foot and .fa-views are gone with the row they dressed. */
 
     /* ---- A member card: cover, the face over it, and why they matter ----

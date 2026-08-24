@@ -185,6 +185,13 @@ class AppController extends Controller
         \App\Models\CommunityReaction::attach($connectedWall, 'wallpost', $meId);
         \App\Models\CommunityReaction::attach($connectedWall->flatMap->comments, 'wallcomment', $meId);
 
+        /* The same introduction the community wall gives each author: where
+         * they farm, what they do, who they farm with and how many follow
+         * them. The card has always been able to draw it — nobody was
+         * handing it the facts here, so the identical post said less on the
+         * homepage than it did one page over. */
+        $social->attachAuthorFacts($connectedWall, $meId);
+
         // AI — my most recent chats.
         $recentChats = \App\Models\AiConversation::where('userId', $meId)
             ->where('deleteStatus', 1)
