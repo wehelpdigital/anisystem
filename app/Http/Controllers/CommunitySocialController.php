@@ -22,6 +22,9 @@ use Illuminate\Support\Str;
  */
 class CommunitySocialController extends Controller
 {
+    /** How many kept posts arrive at once, first page and every page after. */
+    private const SAVED_PER_PAGE = 10;
+
     public function __construct(
         private readonly CommunitySocialService $social,
         private readonly NotificationService $notifications,
@@ -110,24 +113,112 @@ class CommunitySocialController extends Controller
         $meId = (int) Auth::id();
         $ids = $this->social->bookmarkedIds($meId);
 
-        $posts = $ids === [] ? collect() : CommunityWallPost::active()
-            ->whereIn('id', $ids)
-            ->with(['author', 'sharedPost'])
-            ->withCount(['comments as comment_count'])
-            ->orderByDesc('id')
-            ->get();
-
-        $this->social->attachAuthorFacts($posts, $meId);
+        /* A page at a time now, not the lot.
+         *
+         * Somebody who has kept posts for a season has hundreds, each of them
+         * a card with photographs in it, and the page was rendering every one
+         * before the first was on screen. The rest arrive as the reader gets
+         * near the bottom. */
+        $page = $this->savedPage($ids, $meId, null, '');
 
         return view('community.saved', [
-            'posts' => $posts,
+            'posts' => $page['posts'],
             'savedIds' => $ids,
+            'hasMore' => $page['hasMore'],
+            'before' => $page['before'],
+            'savedTotal' => count($ids),
             // Who you already follow and already farm with. Without these the
             // card has no way to know, and every author on the page was
             // offered a Follow button the reader had already pressed.
             'followingIds' => $this->social->followingIds($meId),
             'friendIds' => \App\Models\CommunityConnection::connectedIds($meId),
         ]);
+    }
+
+    /**
+     * The next page of kept posts, and the answer to a search through them.
+     *
+     * One road for both, the way the wall does it: a search is page one with
+     * words on it, so the reader can keep scrolling through what matched.
+     */
+    public function savedMore(Request $request)
+    {
+        $meId = (int) Auth::id();
+        $ids = $this->social->bookmarkedIds($meId);
+        $before = $request->query('before');
+        $q = Str::limit(trim((string) $request->query('q', '')), 120, '');
+
+        $page = $this->savedPage($ids, $meId, is_numeric($before) ? (int) $before : null, $q);
+
+        $followingIds = $this->social->followingIds($meId);
+        $friendIds = \App\Models\CommunityConnection::connectedIds($meId);
+
+        $html = '';
+        foreach ($page['posts'] as $post) {
+            $html .= view('community.partials.feed-post', [
+                'post' => $post,
+                'friendIds' => $friendIds,
+                'followingIds' => $followingIds,
+                'savedIds' => $ids,
+                // Every card here carries the way back to where it lives.
+                'permalink' => true,
+            ])->render();
+        }
+
+        return $this->json(true, '', [
+            'html' => $html,
+            'hasMore' => $page['hasMore'],
+            'count' => $page['posts']->count(),
+            'before' => $page['before'],
+            'q' => $q,
+        ]);
+    }
+
+    /**
+     * One page of kept posts, oldest cursor last.
+     *
+     * The cursor is the post's own id because that is what the list is
+     * ordered by; searching looks at what was written and at who wrote it,
+     * since "the one Nena posted about tungro" is one memory, not two.
+     *
+     * @param  array<int, int>  $ids  every post this member has kept
+     * @return array{posts: \Illuminate\Support\Collection, hasMore: bool, before: ?int}
+     */
+    private function savedPage(array $ids, int $meId, ?int $before, string $q): array
+    {
+        if ($ids === []) {
+            return ['posts' => collect(), 'hasMore' => false, 'before' => null];
+        }
+
+        $rows = CommunityWallPost::active()
+            ->whereIn('id', $ids)
+            ->when($before !== null, fn ($sql) => $sql->where('id', '<', $before))
+            ->when($q !== '', function ($sql) use ($q) {
+                $like = '%' . addcslashes($q, '%_\\') . '%';
+                $sql->where(function ($w) use ($like) {
+                    $w->where('body', 'like', $like)
+                        ->orWhereHas('author', fn ($a) => $a
+                            ->where('firstName', 'like', $like)
+                            ->orWhere('lastName', 'like', $like));
+                });
+            })
+            ->with(['author', 'sharedPost'])
+            ->withCount(['comments as comment_count'])
+            ->orderByDesc('id')
+            ->limit(self::SAVED_PER_PAGE + 1)
+            ->get();
+
+        $hasMore = $rows->count() > self::SAVED_PER_PAGE;
+        $posts = $rows->take(self::SAVED_PER_PAGE)->values();
+
+        \App\Models\CommunityReaction::attach($posts, 'wallpost', $meId);
+        $this->social->attachAuthorFacts($posts, $meId);
+
+        return [
+            'posts' => $posts,
+            'hasMore' => $hasMore,
+            'before' => $posts->last() ? (int) $posts->last()->id : null,
+        ];
     }
 
     /**

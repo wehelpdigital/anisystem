@@ -4,7 +4,9 @@
 
      Expects: $post (with author, comments_count, reactionSummary). Optional:
      $friendIds, $followingIds, $savedIds — each defaulted, because older
-     callers do not know about following or bookmarks and must keep working. --}}
+     callers do not know about following or bookmarks and must keep working;
+     $permalink, which adds a link back to the post's own page for lists that
+     have lifted it out of the wall it belongs to. --}}
 @php
     $author = $post->author;
     $meId = (int) auth()->id();
@@ -139,6 +141,16 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 21V4m0 1h11l-1.5 3L15 11H4"/></svg>
             </button>
         @endunless
+        {{-- The way back to where the post lives.
+             Only where a card has been lifted out of its wall — the saved
+             list — because everywhere else you are already there. --}}
+        @if ($permalink ?? false)
+            <a class="fp-act fp-open" href="{{ route('community.post.show', ['id' => $post->id]) }}"
+               title="Open this post on the wall">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5h5v5m0-5l-7 7M18 13v5a1 1 0 01-1 1H6a1 1 0 01-1-1V7a1 1 0 011-1h5"/></svg>
+                <span class="fp-lbl">See the post</span>
+            </a>
+        @endif
         {{-- How many have looked at it. Not a button: nothing happens when
              you press it, it is the post telling you how far it went. --}}
         <span class="fp-act fp-views" title="Views">

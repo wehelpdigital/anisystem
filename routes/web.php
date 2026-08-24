@@ -462,6 +462,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // wants to point at one instead of uploading it again.
     Route::get('/app/community/my-photos', [App\Http\Controllers\CommunityMyPhotosController::class, 'index'])->name('community.my-photos');
     Route::get('/app/community/saved', [App\Http\Controllers\CommunitySocialController::class, 'saved'])->name('community.saved');
+    Route::get('/app/community/saved-more', [App\Http\Controllers\CommunitySocialController::class, 'savedMore'])->name('community.saved-more');
     Route::post('/app/community/share/{postId}/wall', [App\Http\Controllers\CommunitySocialController::class, 'shareToWall'])->whereNumber('postId')->name('community.share.wall');
     Route::post('/app/community/share/{postId}/message', [App\Http\Controllers\CommunitySocialController::class, 'shareToMessage'])->whereNumber('postId')->name('community.share.message');
     Route::post('/app/community/share/{postId}/link', [App\Http\Controllers\CommunitySocialController::class, 'publicLink'])->whereNumber('postId')->name('community.share.link');
