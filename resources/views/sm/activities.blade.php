@@ -1054,7 +1054,12 @@
         html.dark .dx-card-in .dx-amt { color: #a8cc7e; }
         .dx-row[draggable="true"] { cursor: grab; }
         .dx-row[draggable="true"]:active { cursor: grabbing; }
-        .dx-row.dragging { opacity: .45; }
+        /* In the air: the row stays in the list at the place it would land,
+           faded to a ghost of itself, so the gap under the cursor is the
+           answer to "where is this going?" — the same language a dragged
+           activity card speaks. */
+        .dx-row.dragging { opacity: .38; outline: 1.5px dashed var(--color-brand-400);
+            outline-offset: -2px; border-radius: .45rem; }
         .day-expense-block { margin: .55rem .7rem 0; }
         .day-expense-block:empty { display: none; }
         /* What the day earned, under what it cost — green against the

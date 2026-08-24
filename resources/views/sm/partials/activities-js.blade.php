@@ -4467,6 +4467,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function resetIncomeForm() {
+        $id('dayIncomeList')?.classList.remove('hidden');
         $id('dayIncomeId').value = '';
         $id('dayIncomeAmount').value = '';
         $id('dayIncomeTitle').value = '';
@@ -4511,6 +4512,9 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('dayIncomeNote').value = r.note || '';
         $id('dayIncomeDeleteBtn').classList.remove('hidden');
         $id('dayIncomeSheetTitle').textContent = 'Edit income';
+        // Editing one entry is about that entry. The day's other entries are
+        // a way IN to this form, not something to read while you are in it.
+        $id('dayIncomeList')?.classList.add('hidden');
     }
 
     document.addEventListener('click', (e) => {
@@ -4539,6 +4543,10 @@ document.addEventListener('DOMContentLoaded', () => {
             resetIncomeForm();
             paintIncomeList();
             renderDayIncome(incomeDate);
+            // Saved is done: the sheet goes, the way the expense sheet's does.
+            // It used to stay open on a form it had just emptied, which reads
+            // as a save that did not take.
+            closeSheet('dayIncomeSheet');
             toast(res.message || 'Income saved.');
         } catch (err) { toast(err.message, 'error'); }
         btn.disabled = false;
@@ -7249,6 +7257,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener('dragover', (e) => {
+        /* An expense in the air.
+         *
+         * Over its own day's rows the row itself moves as the cursor passes,
+         * so the gap it will drop into is visible before the mouse is let go
+         * — the same thing an activity card does, and for the same reason:
+         * an insertion you cannot see is an insertion you have to undo. Over
+         * another day, that day lights up. */
+        if (dragExpense) {
+            const overRow = e.target.closest && e.target.closest('.dx-row[data-expense-id]');
+            const moving = $qs(`.dx-row[data-expense-id="${dragExpense.id}"]`);
+            if (overRow && moving && (overRow.getAttribute('data-date') || '').trim() === dragExpense.date) {
+                e.preventDefault();
+                if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+                $qsa('.date-group.drag-over-group').forEach((el) => el.classList.remove('drag-over-group'));
+                placeExpenseRow(moving, overRow, e.clientY);
+                return;
+            }
+            const overGroup = e.target.closest && e.target.closest('.date-group');
+            const overDate = (overGroup?.getAttribute('data-date') || '').trim();
+            $qsa('.date-group.drag-over-group').forEach((el) => el.classList.remove('drag-over-group'));
+            if (overGroup && overDate && overDate !== '__no-date__' && overDate !== dragExpense.date) {
+                e.preventDefault();
+                if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+                overGroup.classList.add('drag-over-group');
+            }
+            return;
+        }
+
         // Whole-day move: highlight the day (or empty day) being hovered.
         if (dragGroupDate) {
             const targetGroup = e.target.closest && e.target.closest('.date-group');
