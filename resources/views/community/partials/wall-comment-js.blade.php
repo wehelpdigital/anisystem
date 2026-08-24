@@ -44,7 +44,7 @@
             <span class="reply-shell">
                 <input type="text" placeholder="Reply…" maxlength="2000">
                 <button type="button" class="emoji-btn js-comment-photo" aria-label="Attach a photo" title="Photo">${SVG_PHOTO}</button>
-                <input type="file" class="js-comment-file hidden" accept="image/*">
+                <input type="file" class="js-comment-file hidden" accept="image/*" multiple>
                 <button type="button" class="emoji-btn js-video-attach" aria-label="Upload a video" title="Video">${SVG_VIDEO}</button>
                 <button type="button" class="emoji-btn js-video-record" aria-label="Record a video" title="Record">${SVG_REC}</button>
                 <input type="file" class="js-video-file hidden" accept="video/*">
@@ -52,6 +52,7 @@
                 <button type="submit" class="reply-send" aria-label="Send">${SVG_SEND}</button>
                 <button type="button" class="js-reply-cancel btn-ghost rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 shrink-0" aria-label="Cancel reply" title="Cancel">${SVG_X}</button>
             </span>
+            <span class="comment-shots js-comment-shots hidden"></span>
             <span class="attach-chip hidden js-comment-chip"><span class="js-chip-name"></span><button type="button" class="js-chip-clear" aria-label="Remove photo">✕</button></span>
             <span class="js-video-chip attach-chip items-center gap-1 text-xs font-semibold text-gray-600" style="display:none"><span class="js-video-name"></span><button type="button" class="js-video-clear text-red-600 font-bold" aria-label="Remove video">✕</button></span>
         </form>`;
@@ -293,11 +294,15 @@
         const fileInput = form.querySelector('.js-comment-file');
         const videoInput = form.querySelector('.js-video-file');
         const body = input.value.trim();
-        const file = fileInput && fileInput.files[0];
         const video = videoInput && videoInput.files[0];
-        // A picture chosen from what is already here travels as its path.
-        const pick = form.dataset.pickPath || '';
-        if (!body && !file && !video && !pick) { say('Write something or add a photo/video.', 'error'); return; }
+        /* Every picture on this comment, in the order they were added: files
+         * to upload and pictures already here, kept in one list by the attach
+         * tools. The old single file and single pick are still read, for a
+         * form that has no tray (the group boxes). */
+        const shots = (window.plazaCommentShots ? window.plazaCommentShots(form) : []);
+        const file = shots.length ? null : (fileInput && fileInput.files[0]);
+        const pick = shots.length ? '' : (form.dataset.pickPath || '');
+        if (!body && !shots.length && !file && !video && !pick) { say('Write something or add a photo/video.', 'error'); return; }
         const postId = form.getAttribute('data-post-id');
         const parentId = form.getAttribute('data-parent-id');
         // Prepend the @mention token when this reply is tagging someone, so the
@@ -309,6 +314,10 @@
         const sendBody = (token + body).trim();
         const fd = new FormData();
         if (sendBody) fd.append('body', sendBody);
+        shots.forEach((sh) => {
+            if (sh.file) fd.append('images[]', sh.file);
+            else if (sh.path) fd.append('galleryPaths[]', sh.path);
+        });
         if (file) fd.append('image', file);
         else if (pick) fd.append('galleryPath', pick);
         if (video) fd.append('video', video);
@@ -339,6 +348,7 @@
                     input.value = '';
                     if (fileInput) fileInput.value = '';
                     delete form.dataset.pickPath;
+                    if (window.plazaClearShots) window.plazaClearShots(form);
                     if (window.plazaSetChip) window.plazaSetChip(form, null);
                     if (window.plazaClearVideo) window.plazaClearVideo(form);
                 }

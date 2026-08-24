@@ -126,6 +126,60 @@
             node.addEventListener('animationend', () => node.classList.remove('plaza-comment-enter'), { once: true });
         },
     };
+    /* ---------------- what is attached, all of it ----------------
+     *
+     * A comment used to carry one picture, so one chip said which. An answer
+     * is often the same thing said three times over — the leaf, the leaf up
+     * close, the row it came from — and that was costing three comments.
+     *
+     * The list lives on the form element, so every comment box on the page
+     * keeps its own and nothing has to be looked up by id. A form with no
+     * tray in it (the discussion boxes) is left exactly as it was: one
+     * picture, one chip.
+     */
+    const MAX_SHOTS = 8;
+    const trayOf = (form) => form && form.querySelector('.js-comment-shots');
+    window.plazaCommentShots = (form) => (form && form.__shots) || [];
+
+    function paintShots(form) {
+        const tray = trayOf(form);
+        if (!tray) return;
+        const shots = window.plazaCommentShots(form);
+        tray.classList.toggle('hidden', shots.length === 0);
+        tray.innerHTML = shots.map((sh, i) =>
+            '<span class="comment-shot"><img src="' + sh.url + '" alt="">'
+            + '<button type="button" data-shot="' + i + '" aria-label="Remove photo">\u2715</button></span>').join('');
+    }
+
+    window.plazaClearShots = function (form) {
+        const shots = window.plazaCommentShots(form);
+        shots.forEach((sh) => { if (sh.file) { try { URL.revokeObjectURL(sh.url); } catch (_) {} } });
+        if (form) form.__shots = [];
+        paintShots(form);
+    };
+
+    function addShot(form, shot) {
+        if (!form.__shots) form.__shots = [];
+        if (form.__shots.length >= MAX_SHOTS) {
+            window.toast?.('That is eight pictures — the most a comment carries.', 'error');
+            return false;
+        }
+        if (shot.path && form.__shots.some((s) => s.path === shot.path)) return false;   // twice is once
+        form.__shots.push(shot);
+        return true;
+    }
+
+    // A tap on a thumbnail's ✕ takes that one picture out.
+    document.addEventListener('click', (e) => {
+        const x = e.target.closest('.js-comment-shots [data-shot]');
+        if (!x) return;
+        const form = x.closest('form');
+        const shots = window.plazaCommentShots(form);
+        const gone = shots.splice(Number(x.dataset.shot), 1)[0];
+        if (gone && gone.file) { try { URL.revokeObjectURL(gone.url); } catch (_) {} }
+        paintShots(form);
+    });
+
     /* ---------------- where a picture comes from ----------------
      * The button used to open a file dialog and nothing else, which on a
      * phone means "your camera roll" and on a laptop means "your downloads
@@ -152,12 +206,16 @@
     };
 
     function sourceMenu(form) {
+        // The same three the composer offers, in the same words. "My photos"
+        // — pictures already posted to the wall — used to be a fourth: it is
+        // gone, because re-attaching a picture that is already on the wall is
+        // not what an answer is for, and four doors to say "add a photo" is
+        // three too many to read on a phone.
         const rows = [
             ['camera', 'Take a photo', 'Use the camera now'],
-            ['upload', 'Upload from phone', 'Choose a file on this device'],
-            ['mine', 'My photos', 'Pictures you already posted here'],
+            ['upload', 'Upload from phone', 'One picture or several at once'],
         ];
-        if (CAN_GALLERY) rows.push(['season', 'Crop schedule gallery', 'Photos, drawings and maps from your seasons']);
+        if (CAN_GALLERY) rows.push(['season', 'From my gallery', 'Photos your seasons already keep']);
 
         const menu = document.createElement('div');
         menu.className = 'attach-menu';
@@ -210,6 +268,12 @@
         el.addEventListener('change', () => {
             const file = el.files && el.files[0];
             if (!file) return;
+            if (trayOf(form)) {
+                // A tray keeps its own list; the file input is only a door.
+                if (addShot(form, { file, url: URL.createObjectURL(file) })) paintShots(form);
+                el.value = '';
+                return;
+            }
             const real = form.querySelector('.js-comment-file');
             try {
                 const dt = new DataTransfer();
@@ -228,17 +292,26 @@
     /* A picture that is already here. The season picker sheet does the
      * listing for both sources — it takes a URL, so "my photos" is the same
      * sheet pointed somewhere else. */
-    function pickExisting(form, mine) {
+    function pickExisting(form) {
         if (typeof window.smPickMedia !== 'function') {
             window.toast?.('The picker is not available on this page.', 'error');
             return;
         }
+        const tray = trayOf(form);
+        const room = tray ? Math.max(1, MAX_SHOTS - window.plazaCommentShots(form).length) : 1;
         window.smPickMedia({
-            endpoint: mine ? @json(route('community.my-photos')) : null,
-            allSchedules: ! mine,
+            allSchedules: true,
             kinds: 'image',
-            title: mine ? 'Your photos' : 'From your seasons',
+            title: 'From my gallery',
+            // Tap to collect, then one button to bring them all — the same
+            // mode the composer uses. A box with no tray still takes one.
+            multiple: !!tray,
+            max: room,
             onPick: (item) => {
+                if (tray) {
+                    if (addShot(form, { path: item.path || '', url: item.url || '' })) paintShots(form);
+                    return;
+                }
                 const real = form.querySelector('.js-comment-file');
                 if (real) real.value = '';               // a pick replaces a file
                 form.dataset.pickPath = item.path || '';
@@ -273,7 +346,7 @@
             closeSourceMenu();
             if (how === 'camera') cameraInput(form).click();
             else if (how === 'upload') form.querySelector('.js-comment-file')?.click();
-            else pickExisting(form, how === 'mine');
+            else pickExisting(form);
             return;
         }
 
@@ -286,6 +359,7 @@
             const fileInput = form.querySelector('.js-comment-file');
             if (fileInput) fileInput.value = '';
             delete form.dataset.pickPath;
+            window.plazaClearShots?.(form);
             window.plazaSetChip(form, null);
         }
     });
@@ -295,8 +369,18 @@
     window.addEventListener('scroll', closeSourceMenu, { passive: true });
     document.addEventListener('change', (e) => {
         if (!e.target.classList || !e.target.classList.contains('js-comment-file')) return;
+        const form = e.target.closest('form');
+        if (trayOf(form)) {
+            // Several at once is the point: each one joins the tray, and the
+            // input is emptied so picking the same file again still counts.
+            let added = false;
+            [...(e.target.files || [])].forEach((f) => { if (addShot(form, { file: f, url: URL.createObjectURL(f) })) added = true; });
+            e.target.value = '';
+            if (added) paintShots(form);
+            return;
+        }
         // The file itself, so the chip can show the picture rather than name it.
-        window.plazaSetChip(e.target.closest('form'), e.target.files[0] || null);
+        window.plazaSetChip(form, e.target.files[0] || null);
     });
 })();
 </script>

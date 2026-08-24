@@ -15,7 +15,7 @@
      Expects: $shots (an array of stored paths). --}}
 @php $pgShots = array_values(array_filter((array) ($shots ?? []))); @endphp
 @if (count($pgShots) > 1)
-    <div class="post-carousel" data-shots data-lightbox>
+    <div class="post-carousel{{ ($mini ?? false) ? ' pc-mini' : '' }}" data-shots data-lightbox>
         <div class="pc-track">
             @foreach ($pgShots as $pgPath)
                 <img src="{{ \App\Support\MediaStore::url($pgPath) }}" alt="" loading="lazy"

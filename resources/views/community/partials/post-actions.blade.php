@@ -477,6 +477,8 @@
             const t = form.querySelector('input[type="text"]');
             if (t) { t.value = ''; t.disabled = false; }
             form.querySelectorAll('input[type="file"]').forEach((f) => { f.value = ''; });
+            // The tray of attached pictures belongs to the post being read.
+            window.plazaClearShots?.(form);
             window.plazaSetChip?.(form, null);
             window.plazaClearVideo?.(form);
         }

@@ -164,11 +164,16 @@ class CommunityWallController extends Controller
             return response()->json(['success' => false, 'message' => 'Post not found.'], 404);
         }
         $request->validate([
-            'body' => 'required_without_all:image,video,galleryPath|nullable|string|max:2000',
+            'body' => 'required_without_all:image,images,video,galleryPath,galleryPaths|nullable|string|max:2000',
+            // One picture (what every older caller sends) or several.
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'images' => 'nullable|array|max:8',
+            'images.*' => 'image|mimes:jpg,jpeg,png,webp|max:8192',
             'video' => 'nullable|file|max:307200', // 300 MB; VideoOptimizer enforces the mime
-            // A picture already kept here, pointed at rather than uploaded.
+            // Pictures already kept here, pointed at rather than uploaded.
             'galleryPath' => 'nullable|string|max:500',
+            'galleryPaths' => 'nullable|array|max:8',
+            'galleryPaths.*' => 'string|max:500',
             'parentId' => 'nullable|integer',
         ]);
 
@@ -188,19 +193,31 @@ class CommunityWallController extends Controller
             }
         }
 
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $this->storeImage($request->file('image'), 'community-wall/' . $post->wallUserId);
-        } elseif ($request->filled('galleryPath')) {
-            // A picture they pointed at rather than uploaded — from their own
-            // photos or from a season's gallery. The same file is referenced,
-            // not copied, and GalleryPick is what decides a string from a
-            // browser is a path at all.
-            $imagePath = \App\Support\GalleryPick::path((string) $request->input('galleryPath'));
-            if ($imagePath === null) {
-                return response()->json(['success' => false, 'message' => 'That picture could not be attached.'], 422);
-            }
+        /* The pictures, in the order they were added — the same walk a post
+         * makes. Uploads are stored; a picture pointed at rather than
+         * uploaded (from a season's gallery) goes through GalleryPick first,
+         * which is what decides a string from a browser is a path at all. One
+         * that fails is refused out loud rather than quietly attaching fewer
+         * pictures than the farmer picked. */
+        $shots = [];
+        foreach (array_merge(
+            $request->hasFile('image') ? [$request->file('image')] : [],
+            array_values((array) $request->file('images', []))
+        ) as $file) {
+            $shots[] = $this->storeImage($file, 'community-wall/' . $post->wallUserId);
         }
+        foreach (array_merge(
+            $request->filled('galleryPath') ? [(string) $request->input('galleryPath')] : [],
+            array_values((array) $request->input('galleryPaths', []))
+        ) as $picked) {
+            $ok = \App\Support\GalleryPick::path((string) $picked);
+            if ($ok === null) {
+                return response()->json(['success' => false, 'message' => 'One of the pictures could not be attached. Remove it and try again.'], 422);
+            }
+            $shots[] = $ok;
+        }
+        $shots = array_slice(array_values(array_unique($shots)), 0, 8);
+        $imagePath = $shots[0] ?? null;
 
         $videoPath = $videoPoster = null;
         if ($request->hasFile('video')) {
@@ -220,7 +237,13 @@ class CommunityWallController extends Controller
             'videoPath' => $videoPath,
             'videoPoster' => $videoPoster,
             'body' => $request->input('body') ?: '',
+            // The first picture where every older renderer looks, the whole
+            // set where the new one does — and only when the column is
+            // actually there, so a deploy that has not migrated yet keeps the
+            // first picture instead of answering with a 500.
             'imagePath' => $imagePath,
+        ] + (count($shots) > 1 && \Illuminate\Support\Facades\Schema::hasColumn((new CommunityWallComment)->getTable(), 'imagePaths')
+            ? ['imagePaths' => $shots] : []) + [
             'deleteStatus' => 1,
         ]);
 
@@ -346,11 +369,15 @@ class CommunityWallController extends Controller
             return response()->json(['success' => false, 'message' => 'You can only delete your own comment.'], 403);
         }
         try {
-            Storage::disk('public')->delete(array_filter([$comment->imagePath, $comment->videoPath, $comment->videoPoster]));
+            Storage::disk('public')->delete(array_filter(array_merge(
+                $comment->shots(),
+                [$comment->videoPath, $comment->videoPoster]
+            )));
         } catch (\Throwable $e) {
             // Non-fatal — orphan files can be janitor-cleaned.
         }
-        $comment->update(['isDeleted' => true, 'body' => '', 'imagePath' => null, 'videoPath' => null, 'videoPoster' => null]);
+        $comment->update(['isDeleted' => true, 'body' => '', 'imagePath' => null, 'videoPath' => null, 'videoPoster' => null]
+            + (\Illuminate\Support\Facades\Schema::hasColumn($comment->getTable(), 'imagePaths') ? ['imagePaths' => null] : []));
 
         return response()->json(['success' => true, 'message' => 'Comment deleted.']);
     }

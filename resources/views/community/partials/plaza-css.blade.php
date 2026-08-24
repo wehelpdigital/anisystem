@@ -54,6 +54,26 @@
     html.dark .pc-track img { background:rgb(255 255 255 / .06); }
     /* Where you are in the set, said twice: a number for the reader who wants
        to know how many, and dots for the one who only wants to feel it. */
+    /* What is attached to a comment before it is sent: small squares, each
+       with its own way out. The composer's tray in miniature. */
+    .comment-shots { display:flex; flex-wrap:wrap; gap:.3rem; flex:1 1 100%; margin-top:.15rem; }
+    .comment-shots.hidden { display:none; }
+    .comment-shot { position:relative; display:inline-flex; }
+    .comment-shot img { width:2.75rem; height:2.75rem; object-fit:cover; border-radius:.45rem;
+        border:1px solid var(--color-gray-200); background:var(--color-gray-100); }
+    html.dark .comment-shot img { border-color:rgb(255 255 255 / .12); background:rgb(255 255 255 / .06); }
+    .comment-shot button { position:absolute; top:-.3rem; right:-.3rem; width:1.05rem; height:1.05rem;
+        display:flex; align-items:center; justify-content:center; border-radius:999px;
+        font-size:.6rem; font-weight:800; line-height:1; color:#fff; background:rgb(17 24 39 / .78);
+        transition:background .18s ease, transform .18s cubic-bezier(.22,1,.36,1); }
+    .comment-shot button:hover { background:#dc2626; transform:scale(1.08); }
+    @media (prefers-reduced-motion: reduce) { .comment-shot button { transition:none; } }
+
+    /* The same carousel under a comment, at a comment's size: an answer
+       should not out-shout the thing it is answering. */
+    .post-carousel.pc-mini { max-width:20rem; margin-top:.35rem; }
+    .pc-mini .pc-track img { aspect-ratio:3 / 2; }
+    .pc-mini .pc-dots { margin-top:.3rem; }
     .pc-count { position:absolute; top:.5rem; right:.5rem; pointer-events:none;
         padding:.1rem .45rem; border-radius:999px; font-size:.68rem; font-weight:800;
         color:#fff; background:rgb(17 24 39 / .55); backdrop-filter:blur(2px); }

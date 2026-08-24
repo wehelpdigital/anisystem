@@ -30,8 +30,15 @@
                         @if ($comment->body)
                             <p class="text-sm text-gray-700 whitespace-pre-line break-words">{!! \App\Support\CommunityText::render($comment->body) !!}</p>
                         @endif
-                        @if ($comment->imagePath)
-                            <img src="{{ \App\Support\MediaStore::url($comment->imagePath) }}"
+                        @php $cShots = method_exists($comment, 'shots') ? $comment->shots() : array_filter([$comment->imagePath]); @endphp
+                        @if (count($cShots) > 1)
+                            {{-- Several pictures answer the way several
+                                 pictures on a post do: one at a time, slowly,
+                                 pushable by a thumb, and whole in the lightbox
+                                 when tapped. Smaller, because a comment is. --}}
+                            @include('community.partials.post-gallery', ['shots' => $cShots, 'mini' => true])
+                        @elseif (count($cShots) === 1)
+                            <img src="{{ \App\Support\MediaStore::url($cShots[0]) }}"
                                  alt="Comment photo" loading="lazy" class="post-img rounded-lg mt-1 max-h-48 w-auto">
                         @endif
                         @if ($comment->videoPath ?? null)
