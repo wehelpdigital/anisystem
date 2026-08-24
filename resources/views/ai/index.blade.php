@@ -65,14 +65,29 @@
         /* --- Chat column: a full-height flex column so the composer is truly
                pinned and the thread scrolls inside (dvh keeps the phone URL
                bar honest). --- */
-        .aichat { display: flex; flex-direction: column; height: calc(100dvh - 12.5rem); min-height: min(26rem, 60dvh); width: 100%; }
+        /* Two numbers, named: what the page itself takes (app bar and main's
+           paddings) and what the footer takes. The column is the rest.
+
+           It used to be one number, 12.5rem, which was the page's chrome plus
+           a guess — and the guess was a hundred pixels short of the footer, so
+           a chat with nothing in it yet opened with a scrollbar. The footer is
+           shorter where its links sit on fewer rows, and gone entirely on a
+           phone, which is why it is its own variable.
+
+           12.1rem = the app bar (65px), main's paddings (56 + 32) and the
+           gap the footer holds itself away by (40). */
+        .aichat { --ai-chrome: 12.1rem; --ai-foot: 7.1rem;
+            display: flex; flex-direction: column;
+            height: calc(100dvh - var(--ai-chrome) - var(--ai-foot));
+            min-height: min(26rem, 60dvh); width: 100%; }
+        @media (max-width: 1023px) { .aichat { --ai-foot: 5.6rem; } }
         /* On a phone this page IS the chat: the tab bar is hidden (body
            class), the footer steps aside, main's paddings are cancelled, and
            the column runs to the true bottom of the viewport — measured, so
            the composer sits ON the footer line instead of floating 115px
            above it. 6.3rem = app bar + main's top padding + one crumb line. */
         @media (max-width: 767px) {
-            .aichat { height: calc(100dvh - 6.3rem); min-height: min(22rem, 55dvh); margin-bottom: -1rem; }
+            .aichat { --ai-chrome: 6.3rem; --ai-foot: 0rem; min-height: min(22rem, 55dvh); margin-bottom: -1rem; }
             .aichat-composer { padding-bottom: calc(.3rem + env(safe-area-inset-bottom)); }
             footer { display: none; }
         }
@@ -118,22 +133,31 @@
         }
 
         /* --- Welcome hero --- */
-        .ai-hello { text-align: center; padding: 2rem 1.25rem 1.25rem; border-radius: 1.5rem; background: radial-gradient(120% 90% at 50% 0%, var(--color-brand-50) 0%, transparent 70%); }
-        .ai-hello .aimsg-face { width: 3.5rem; height: 3.5rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-200), 0 10px 24px -8px rgb(74 124 42 / .45); animation: aiFloatIdle 5s ease-in-out infinite; }
-        .ai-hello h2 { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; margin-top: 1rem; color: var(--color-gray-900); }
-        .ai-hello .sub { font-size: .85rem; color: var(--color-gray-500); margin-top: .4rem; max-width: 26rem; margin-inline: auto; line-height: 1.6; }
-        .ai-caps { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem; margin-top: .9rem; }
-        .ai-cap { display: inline-flex; align-items: center; gap: .35rem; padding: .25rem .6rem; border-radius: 999px; font-size: .74rem; font-weight: 700; color: var(--color-brand-700); background: var(--color-brand-50); border: 1px solid var(--color-brand-100); }
-        .ai-overline { font-size: .7rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--color-gray-400); margin: 1.6rem 0 .6rem; }
+        /* Sized to open on one screenful.
+           Everything here — the padding, the face, the type — came down a step
+           because the empty state was taller than a phone and the chat began
+           with a scrollbar: the first thing the assistant did was ask you to
+           scroll. It is the same greeting, said in half the height. */
+        /* Centred in whatever height the thread has: with the panel this
+           short there is room left over, and an empty chat reads better with
+           the greeting in the middle of it than pinned to the ceiling. */
+        .ai-hello { margin-block: auto; text-align: center; padding: 1rem 1.25rem .75rem; border-radius: 1.5rem; background: radial-gradient(120% 90% at 50% 0%, var(--color-brand-50) 0%, transparent 70%); }
+        .ai-hello .aimsg-face { width: 2.75rem; height: 2.75rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-200), 0 10px 24px -8px rgb(74 124 42 / .45); animation: aiFloatIdle 5s ease-in-out infinite; }
+        .ai-hello h2 { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; margin-top: .6rem; color: var(--color-gray-900); }
+        .ai-hello .sub { font-size: .8rem; color: var(--color-gray-500); margin-top: .25rem; max-width: 24rem; margin-inline: auto; line-height: 1.45; }
+        .ai-caps { display: flex; flex-wrap: wrap; justify-content: center; gap: .35rem; margin-top: .6rem; }
+        .ai-cap { display: inline-flex; align-items: center; gap: .3rem; padding: .2rem .55rem; border-radius: 999px; font-size: .72rem; font-weight: 700; color: var(--color-brand-700); background: var(--color-brand-50); border: 1px solid var(--color-brand-100); }
+        .ai-cap svg { width: .85rem; height: .85rem; }
+        .ai-overline { font-size: .68rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--color-gray-400); margin: .9rem 0 .45rem; }
         @keyframes aiFloatIdle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
         /* --- Suggestion cards --- */
-        .aisuggest { display: flex; align-items: center; gap: .75rem; width: 100%; min-height: 3rem; padding: .6rem .85rem; text-align: left; border: 1px solid var(--color-gray-200); border-radius: 1rem; background: var(--color-white); box-shadow: var(--shadow-card); font-size: .85rem; font-weight: 700; color: var(--color-gray-800); cursor: pointer; transition: transform .18s cubic-bezier(.22,1,.36,1), border-color .18s ease, box-shadow .18s ease; animation: aiRise .3s ease both; }
+        .aisuggest { display: flex; align-items: center; gap: .6rem; width: 100%; min-height: 2.5rem; padding: .45rem .7rem; text-align: left; border: 1px solid var(--color-gray-200); border-radius: 1rem; background: var(--color-white); box-shadow: var(--shadow-card); font-size: .85rem; font-weight: 700; color: var(--color-gray-800); cursor: pointer; transition: transform .18s cubic-bezier(.22,1,.36,1), border-color .18s ease, box-shadow .18s ease; animation: aiRise .3s ease both; }
         .aisuggest:nth-child(2) { animation-delay: .06s; }
         .aisuggest:nth-child(3) { animation-delay: .12s; }
         .aisuggest:hover { transform: translateY(-1px); border-color: var(--color-brand-300); box-shadow: var(--shadow-card-lg); }
         .aisuggest:active { transform: scale(.98); }
-        .aisuggest .ic { width: 2.25rem; height: 2.25rem; border-radius: .75rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--color-brand-50); color: var(--color-brand-700); }
+        .aisuggest .ic { width: 1.9rem; height: 1.9rem; border-radius: .65rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--color-brand-50); color: var(--color-brand-700); }
         .aisuggest .t { flex: 1 1 auto; min-width: 0; }
         .aisuggest .go { margin-left: auto; flex-shrink: 0; color: var(--color-gray-400); transition: transform .18s ease, color .18s ease; }
         .aisuggest:hover .go { transform: translateX(3px); color: var(--color-brand-600); }
@@ -196,6 +220,18 @@
         #aiSendBtn:active:not(:disabled) { transform: scale(.95); }
         #aiSendBtn:disabled { opacity: .55; }
         .ai-hint { text-align: center; font-size: .72rem; font-weight: 600; color: var(--color-gray-500); margin-top: .4rem; }
+        /* On a narrow phone the row was two buttons, a word, an arrow — and
+           whatever was left for the question, which came to about ninety
+           pixels: not enough for the placeholder, which wrapped onto a second
+           line the one-row box then cut in half. The word goes (the arrow
+           says the same thing), the attach buttons come in a little, and the
+           box keeps its own line. */
+        @media (max-width: 480px) {
+            .ai-send-label { display: none; }
+            #aiSendBtn { padding: 0 .85rem; }
+            .ai-cam { width: 2.5rem; height: 2.5rem; border-radius: .85rem; }
+            #aiInput { padding-left: .35rem; padding-right: .35rem; }
+        }
         /* The attached plan, above the box. Reads as a thing carried with
            the question, like a photo chip, because that is what it is. */
         .ai-planchip { display: flex; align-items: center; gap: .5rem; margin: 0 0 .4rem; padding: .4rem .55rem;
@@ -298,21 +334,15 @@
 
 @section('content')
 
-{{-- Dynamic breadcrumbs — the last crumb tracks the open chat and updates
-     without a reload when you start a new question. --}}
-{{-- On phones the middle crumb is the masthead's own name repeated one line
-     above it, and the wrap it forced pushed the chat below the fold — so the
-     trail stays one line and the name crumb waits for a wider screen. --}}
-<nav class="flex items-center gap-1.5 text-xs font-semibold text-gray-400 mb-3 min-w-0" aria-label="Breadcrumb">
-    <a href="{{ route('app.dashboard') }}" class="hover:text-brand-700 transition inline-flex items-center gap-1 shrink-0">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-8 9 8M5 10v10a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V10"/></svg>
-        Dashboard
-    </a>
-    <span class="text-gray-300 hidden sm:inline">/</span>
-    <a href="{{ route('ai.index') }}" class="hover:text-brand-700 transition hidden sm:inline truncate">{{ $settings->assistantName }}</a>
-    <span class="text-gray-300">/</span>
-    <span id="aiCrumbCurrent" class="text-gray-700 truncate max-w-[45vw] sm:max-w-xs">{{ $conversation && $messages->isNotEmpty() ? \Illuminate\Support\Str::limit($conversation->title, 40) : 'New question' }}</span>
-</nav>
+{{-- The trail is gone from the page.
+     This is a chat, and a chat wants the whole screen: the row of crumbs sat
+     under a masthead that already says where you are, repeated the assistant's
+     name a line below the name, and took the last thirty pixels the composer
+     needed to sit still. The current-chat crumb lives on as a hidden node so
+     setCrumb() keeps a home and the open chat's title is still announced to a
+     screen reader when it changes. --}}
+<span id="aiCrumbCurrent" aria-live="polite"
+      style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0">{{ $conversation && $messages->isNotEmpty() ? \Illuminate\Support\Str::limit($conversation->title, 40) : 'New question' }}</span>
 
 <div class="ai-layout">
 
@@ -437,7 +467,7 @@
             <input type="file" id="aiPhotoFiles" accept="image/*" multiple class="hidden">
             <input type="file" id="aiPhotoCam" accept="image/*" capture="environment" class="hidden">
             <textarea id="aiInput" class="form-textarea border-0! shadow-none! focus:ring-0! p-2 grow bg-transparent!" rows="1"
-                      maxlength="4000" placeholder="Ask about your crop…"
+                      maxlength="4000" placeholder="Ask about your crop"
                       {{ $settings->isUsable() ? '' : 'disabled' }}></textarea>
             <button type="button" id="aiSendBtn" {{ $settings->isUsable() ? '' : 'disabled' }} aria-label="Send">
                 <span class="ai-send-label">Ask</span>
@@ -719,7 +749,10 @@ const __init = () => {
     document.addEventListener('click', (e) => {
         const btn = e.target.closest('.js-suggest');
         if (!btn || !input) return;
-        input.value = (btn.querySelector('.t')?.textContent || btn.textContent).trim();
+        /* The button reads short so three of them fit on a phone without a
+         * scrollbar; the question it fills in is the long, specific one that
+         * gets a good answer. data-q where there is one, the label otherwise. */
+        input.value = (btn.dataset.q || btn.querySelector('.t')?.textContent || btn.textContent).trim();
         input.dispatchEvent(new Event('input'));
         input.focus();
     });
