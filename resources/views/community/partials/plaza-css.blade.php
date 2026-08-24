@@ -112,9 +112,25 @@
        clip's ratio, a ceiling on height so a portrait clip does not take the
        whole screen, and a box that shrinks to what is inside it — which is
        what stops any black showing at all. */
-    .post-video { display:inline-block; max-width:100%; line-height:0; padding-bottom:.3rem; }
-    .post-video .post-video-el { display:block; width:auto; height:auto;
-        max-width:100%; max-height:24rem; background:#000; }
+    /* A block, so a width of 100% inside it means the room on the page — an
+       inline-block would have asked the film how wide to be and the film
+       would have asked back. */
+    .post-video { display:block; max-width:100%; line-height:0; padding-bottom:.3rem; }
+    /* Sized by the film's own ratio, in both directions.
+     *
+     * --vr is the film's width over its height, set from its metadata before
+     * anybody presses play. Width is the room available; height follows the
+     * ratio. The ceiling is applied as a WIDTH — 24rem times the ratio —
+     * because a max-height would clamp the height and leave the width where
+     * it was, which is the letterbox this was meant to end: a portrait clip
+     * comes out 13.5rem by 24rem and the box hugs it.
+     *
+     * Until the metadata lands the box guesses widescreen; the still is drawn
+     * inside it rather than deciding it, so a poster of the wrong shape can
+     * no longer set the frame. */
+    .post-video .post-video-el { display:block; background:#000; object-fit:contain;
+        aspect-ratio:var(--vr, 1.7778); width:100%; height:auto;
+        max-width:min(100%, calc(24rem * var(--vr, 1.7778))); }
     /* In a slider the slide is the full width; the film sits in the middle of
        it at its own size. */
     .pc-clips .pc-track .post-video { display:block; width:auto; margin-inline:auto; }
