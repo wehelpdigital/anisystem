@@ -60,7 +60,16 @@
 
     /* What is attached to a comment before it is sent: small squares, each
        with its own way out. The composer's tray in miniature. */
-    .comment-shots { display:flex; flex-wrap:wrap; gap:.3rem; flex:1 1 100%; margin-top:.15rem; }
+    .comment-shots { display:flex; flex-wrap:wrap; gap:.3rem; flex:1 1 100%; margin-top:.3rem; }
+    /* Room under whatever is attached.
+       A comment box is the last thing in its card, and the card's bottom edge
+       is a gradient line — so the thumbnails sat directly on it, looking
+       stuck to it rather than inside the box. The room appears only when
+       something is attached, so an empty box keeps its own tight shape. */
+    .wall-comment-form:has(.js-comment-shots:not(.hidden)),
+    .post-reply-form:has(.js-comment-shots:not(.hidden)),
+    .wall-comment-form:has(.attach-chip:not(.hidden)),
+    .post-reply-form:has(.attach-chip:not(.hidden)) { padding-bottom:.55rem; }
     .comment-shots.hidden { display:none; }
     .comment-shot { position:relative; display:inline-flex; }
     .comment-shot img { width:2.75rem; height:2.75rem; object-fit:cover; border-radius:.45rem;
