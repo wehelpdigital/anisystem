@@ -137,8 +137,10 @@
 
     {{-- ---------------- Guide ---------------- --}}
     <div data-rk-panel="guide" class="hidden" id="guide">
+        {{-- The endpoints come from the ladder itself, so a renamed title can
+             never leave this sentence telling an old story. --}}
         <p class="rk-guide-intro">A hundred levels, ten titles — every tenth level hands you a new name
-            to wear, from Beginner Farmer to Farm Immortal. Each level costs more than the one before it.</p>
+            to wear, from {{ $titles[1]['name'] }} to {{ $titles[10]['name'] }}. Each level costs more than the one before it.</p>
         @foreach ($titles as $arcN => $title)
             @php
                 $lo = ($arcN - 1) * 10 + 1;
