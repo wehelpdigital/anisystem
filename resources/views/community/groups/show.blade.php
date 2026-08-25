@@ -297,6 +297,13 @@
        thread is the modal. In the room the topic is a topic: what was
        said, and how many have answered it. */
     .group-post .post-thread, .group-post .post-reply-form { display:none; }
+    /* The composer's tool row: the answer box's pill, worn without the text
+       field — the textarea above is the field here. */
+    .topic-attach-form { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; margin-top:.5rem; }
+    .topic-tools { display:inline-flex; align-items:center; gap:.25rem;
+        border:1.5px solid var(--color-gray-200); border-radius:9999px;
+        background:var(--color-gray-50); padding:.2rem .35rem; }
+    html.dark .topic-tools { background:var(--color-gray-100); }
     .thread-modal-body .group-post .post-thread { display:block; }
     .thread-modal-body .group-post .post-reply-form { display:flex; }
     .thread-modal-body .topic-acts { display:none; }
@@ -558,43 +565,38 @@
                          all, because the mention script binds to fields. --}}
                     <textarea id="postBody" class="form-textarea disc-composer-box" rows="4" maxlength="4000"
                               data-mentionable placeholder="Magtanong o magbahagi sa usapan…"></textarea>
-                    <div id="attachChipWrap" class="mt-2 hidden">
-                <span class="attach-chip">
-                    <img src="" alt="" id="attachThumb">
-                    <span class="min-w-0">
-                        <span class="block text-xs font-semibold text-gray-700 truncate" id="attachName"></span>
-                        <span class="text-[0.625rem] font-bold text-gray-400" id="postImageLabel">Photo</span>
-                    </span>
-                    <button type="button" id="attachRemove" class="btn-ghost rounded-full w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-500 shrink-0" aria-label="Remove attachment">✕</button>
-                </span>
+                    {{-- The same tool row an answer carries, speaking the
+                         same script: the photo icon opens its three sources
+                         (upload / camera / gallery), the video icon its two
+                         (upload / from the gallery), the red dot records, and
+                         everything chosen lands in one tray — up to eight
+                         pictures and three clips. A form of its own so the
+                         shared tools can find their footing, but one that
+                         never submits: the Post button owns sending. --}}
+                    <form class="topic-attach-form" data-video-host onsubmit="return false">
+                        <span class="topic-tools">
+                            <button type="button" class="emoji-btn js-comment-photo" aria-label="Attach a photo" title="Photo">
+                                <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            </button>
+                            <input type="file" class="js-comment-file hidden" accept="image/jpeg,image/png,image/webp,image/gif" multiple>
+                            <button type="button" class="emoji-btn js-comment-video" aria-label="Attach a video" title="Video">
+                                <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                            </button>
+                            <button type="button" class="emoji-btn js-video-record" aria-label="Record a video" title="Record">
+                                <svg class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="currentColor"/></svg>
+                            </button>
+                            <input type="file" class="js-video-file hidden" accept="video/*">
+                            <button type="button" class="emoji-btn js-emoji-btn" data-target="postBody" aria-label="Add an emoji" title="Emoji">
+                                <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </button>
+                        </span>
+                        <span class="comment-shots js-comment-shots hidden"></span>
+                        <span class="js-video-chip attach-chip items-center gap-1 text-xs font-semibold text-gray-600" style="display:none"><span class="js-video-name"></span><button type="button" class="js-video-clear text-red-600 font-bold" aria-label="Remove video">✕</button></span>
+                        <span class="attach-chip hidden js-comment-chip"><span class="js-chip-name"></span><button type="button" class="js-chip-clear" aria-label="Remove photo">✕</button></span>
+                    </form>
+            <div class="flex items-center justify-end gap-2 mt-2">
+                                <button type="button" id="postSubmit" class="btn btn-primary btn-sm">Post</button>
             </div>
-            <div class="flex items-center justify-between gap-2 mt-2">
-                <div class="flex items-center gap-1">
-                    <label class="wall-act cursor-pointer" title="Add a photo" aria-label="Add a photo">
-                        <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                        <input type="file" id="postImage" accept="image/jpeg,image/png,image/webp" class="hidden">
-                    </label>
-                    {{-- Upload a clip, or film one on the spot: the same pair the
-                         wall composer carries, driven by the same shared script. --}}
-                    <button type="button" class="wall-act js-video-attach" title="Upload a video" aria-label="Upload a video">
-                        <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                    </button>
-                    <button type="button" class="wall-act js-video-record" title="Record a video" aria-label="Record a video">
-                        <svg class="w-5 h-5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="currentColor"/></svg>
-                    </button>
-                    <input type="file" class="js-video-file hidden" accept="video/*">
-                    <span class="js-video-chip items-center gap-2 text-xs font-semibold text-gray-600" style="display:none">
-                        <span class="js-video-name"></span>
-                        <button type="button" class="js-video-clear text-red-600 font-bold">Remove</button>
-                    </span>
-                    <label class="hidden">
-                    </label>
-                    <button type="button" class="wall-act js-emoji-btn" data-target="postBody" aria-label="Add an emoji" title="Emoji">
-                        <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    </button>
-                </div>
-                <button type="button" id="postSubmit" class="btn btn-primary btn-sm">Post</button>
-                </div>
                 </div>
             </div>
         </div>
@@ -950,28 +952,20 @@ document.addEventListener('DOMContentLoaded', () => {
         bodyBox.style.height = Math.min(bodyBox.scrollHeight, 320) + 'px';
     });
 
-    const imgInput = document.getElementById('postImage');
-    const chipWrap = document.getElementById('attachChipWrap');
-    let gifPick = null;   // { url, preview } from the Giphy picker
-
-    function showChip(src, name, isGif) {
-        document.getElementById('attachThumb').src = src;
-        document.getElementById('attachName').textContent = name;
-        document.getElementById('postImageLabel').textContent = isGif ? 'GIF' : 'Photo';
-        chipWrap.classList.remove('hidden');
-    }
+    /* The attachments live in the shared tray now (comment-tools-js): the
+     * same icons, menus and limits the answer boxes have, keyed on the small
+     * form under the body field. Clearing after a post is handing the tray
+     * and the clip slot back to the tools that own them. */
+    const attachForm = document.querySelector('#topicComposerSheet .topic-attach-form');
     function clearAttach() {
-        imgInput.value = ''; gifPick = null;
-        chipWrap.classList.add('hidden');
+        if (!attachForm) return;
+        window.plazaClearShots?.(attachForm);
+        window.plazaClearVideo?.(attachForm);
+        delete attachForm.dataset.pickPath;
+        delete attachForm.dataset.pickVideoPath;
+        attachForm.querySelectorAll('input[type="file"]').forEach((f) => { f.value = ''; });
+        attachForm.querySelector('.js-comment-chip')?.classList.add('hidden');
     }
-    imgInput?.addEventListener('change', () => {
-        if (!imgInput.files[0]) return;
-        gifPick = null;
-        showChip(URL.createObjectURL(imgInput.files[0]), imgInput.files[0].name, false);
-    });
-    document.getElementById('attachRemove')?.addEventListener('click', clearAttach);
-
-    /* GIF picker removed — attachments are photo-only now. */
 
     document.getElementById('postSubmit')?.addEventListener('click', async (e) => {
         const postBtn = e.currentTarget;   // null once this awaits
@@ -982,14 +976,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const fd = new FormData();
         fd.append('title', titleVal);
         fd.append('body', getBodyHtml());
-        if (imgInput.files && imgInput.files[0]) fd.append('image', imgInput.files[0]);
+        /* Everything in the tray, each kind to its own field — the same
+         * split the answer's send makes. The single-file and single-pick
+         * doors are still read for a box that predates the tray. */
+        const shots = (attachForm && window.plazaCommentShots) ? window.plazaCommentShots(attachForm) : [];
+        shots.forEach((sh) => {
+            const clip = (sh.kind || 'image') === 'video';
+            if (sh.file) fd.append(clip ? 'videos[]' : 'images[]', sh.file);
+            else if (sh.path) fd.append(clip ? 'galleryVideoPaths[]' : 'galleryPaths[]', sh.path);
+        });
+        if (!shots.length) {
+            const one = attachForm?.querySelector('.js-comment-file')?.files?.[0];
+            if (one) fd.append('image', one);
+            else if (attachForm?.dataset.pickPath) fd.append('galleryPath', attachForm.dataset.pickPath);
+        }
         postBtn.disabled = true;
         try {
             // The shared video script owns the picked clip; ask it rather than
             // reaching into the input, which a recording never touches.
-            const host = document.getElementById('composerCard');
-            const clip = window.plazaVideoFile ? window.plazaVideoFile(host) : null;
+            const clip = (attachForm && window.plazaVideoFile) ? window.plazaVideoFile(attachForm) : null;
             if (clip) fd.append('video', clip);
+            else if (attachForm?.dataset.pickVideoPath) fd.append('galleryVideoPath', attachForm.dataset.pickVideoPath);
             const res = await fetch(`/app/community/groups/${groupId}/post`, { method: 'POST', headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' }, body: fd });
             const data = await res.json();
             if (data.success) {

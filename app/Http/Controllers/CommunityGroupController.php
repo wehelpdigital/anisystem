@@ -380,11 +380,24 @@ class CommunityGroupController extends Controller
         $request->validate([
             'title' => 'required|string|max:191',
             'body' => 'required|string|max:20000',
+            // The same doors an answer has: one picture or several, uploaded
+            // or already kept here; one clip or several, filmed, chosen off
+            // the phone, or pointed at in the gallery.
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:8192',
+            'images' => 'nullable|array|max:8',
+            'images.*' => 'image|mimes:jpg,jpeg,png,webp,gif|max:8192',
+            'galleryPath' => 'nullable|string|max:500',
+            'galleryPaths' => 'nullable|array|max:8',
+            'galleryPaths.*' => 'string|max:500',
             // A topic can carry a clip, uploaded or filmed on the spot — the
             // wall has always allowed it and a discussion is where a farmer
             // most wants to SHOW the problem. VideoOptimizer enforces the mime.
             'video' => 'nullable|file|max:2097152',
+            'videos' => 'nullable|array|max:3',
+            'videos.*' => 'file|max:2097152',
+            'galleryVideoPath' => 'nullable|string|max:500',
+            'galleryVideoPaths' => 'nullable|array|max:3',
+            'galleryVideoPaths.*' => 'string|max:500',
         ]);
         // The body arrives as WYSIWYG HTML — sanitize to a safe subset on store.
         $safeBody = \App\Support\CommunityText::safeHtml($request->input('body'));
@@ -392,36 +405,87 @@ class CommunityGroupController extends Controller
             return response()->json(['success' => false, 'message' => 'Write something first.'], 422);
         }
 
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $this->storeImage($request->file('image'), 'community-groups/' . $group->id);
+        /* The pictures, in the order they were added — the same walk the
+         * reply endpoint makes. Uploads are stored; a pick is a reference to
+         * a file this app already keeps, and GalleryPick is what decides a
+         * string from a browser is a path at all. One that fails is refused
+         * out loud rather than quietly attaching fewer than were chosen. */
+        $shots = [];
+        foreach (array_merge(
+            $request->hasFile('image') ? [$request->file('image')] : [],
+            array_values((array) $request->file('images', []))
+        ) as $file) {
+            $shots[] = $this->storeImage($file, 'community-groups/' . $group->id);
         }
+        foreach (array_merge(
+            $request->filled('galleryPath') ? [(string) $request->input('galleryPath')] : [],
+            array_values((array) $request->input('galleryPaths', []))
+        ) as $picked) {
+            $ok = GalleryPick::path((string) $picked);
+            if ($ok === null) {
+                return response()->json(['success' => false, 'message' => 'One of the pictures could not be attached. Remove it and try again.'], 422);
+            }
+            $shots[] = $ok;
+        }
+        $shots = array_slice(array_values(array_unique($shots)), 0, 8);
+        $imagePath = $shots[0] ?? null;
 
-        $videoPath = null;
-        $videoPoster = null;
-        if ($request->hasFile('video')) {
+        /* The clips, up to three. An upload is compressed and given a poster
+         * frame; one picked out of the gallery is referenced where it lies
+         * and has a frame cut for it if nobody has yet. */
+        $clips = [];
+        foreach (array_merge(
+            $request->hasFile('video') ? [$request->file('video')] : [],
+            array_values((array) $request->file('videos', []))
+        ) as $file) {
             try {
                 $stored = \App\Support\VideoOptimizer::storeCompressed(
-                    $request->file('video'),
+                    $file,
                     'community-groups/' . $group->id . '/videos'
                 );
-                $videoPath = $stored['video'];
-                $videoPoster = $stored['poster'] ?? null;
+                $clips[] = ['video' => $stored['video'], 'poster' => $stored['poster'] ?? null];
             } catch (\Throwable $e) {
                 // The clip is the reason the post exists often enough that
                 // saving it without one would be the wrong kind of helpful.
                 return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
             }
         }
+        foreach (array_merge(
+            $request->filled('galleryVideoPath') ? [(string) $request->input('galleryVideoPath')] : [],
+            array_values((array) $request->input('galleryVideoPaths', []))
+        ) as $picked) {
+            $ok = GalleryPick::path((string) $picked, GalleryPick::VIDEO_EXTS);
+            if ($ok === null) {
+                return response()->json(['success' => false, 'message' => 'One of the clips could not be attached. Remove it and try again.'], 422);
+            }
+            $clips[] = ['video' => $ok, 'poster' => \App\Support\VideoPoster::ensure($ok)];
+        }
+        $seenClips = [];
+        $clips = array_values(array_filter($clips, function ($c) use (&$seenClips) {
+            if (isset($seenClips[$c['video']])) { return false; }
+            $seenClips[$c['video']] = true;
+            return true;
+        }));
+        $clips = array_slice($clips, 0, 3);
+        $videoPath = $clips[0]['video'] ?? null;
+        $videoPoster = $clips[0]['poster'] ?? null;
 
         $post = CommunityGroupPost::create([
             'groupId' => $group->id,
             'userId' => Auth::id(),
             'title' => $request->input('title') ?: null,
             'body' => $safeBody,
+            // The first of each where every older renderer looks, the whole
+            // set where the new one does — and only when the column is there,
+            // so a deploy that has not migrated keeps the first instead of
+            // answering with a 500.
             'imagePath' => $imagePath,
             'videoPath' => $videoPath,
             'videoPoster' => $videoPoster,
+        ] + (count($shots) > 1 && \Illuminate\Support\Facades\Schema::hasColumn((new CommunityGroupPost)->getTable(), 'imagePaths')
+            ? ['imagePaths' => $shots] : [])
+          + (count($clips) > 1 && \Illuminate\Support\Facades\Schema::hasColumn((new CommunityGroupPost)->getTable(), 'videoPaths')
+            ? ['videoPaths' => $clips] : []) + [
             'deleteStatus' => 1,
         ]);
 

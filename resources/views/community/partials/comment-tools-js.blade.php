@@ -212,14 +212,14 @@
         // The wall's boxes and a discussion's answer boxes, which are the two
         // that carry a tray and a send that knows what to do with one.
         if (!form || typeof form.matches !== 'function'
-            || !form.matches('.wall-comment-form, .post-reply-form')) return null;
+            || !form.matches('.wall-comment-form, .post-reply-form, .topic-attach-form')) return null;
         const file = form.querySelector('.js-comment-file');
         if (file && !file.multiple) file.multiple = true;
         // Same door the composer opens: on a phone, "image/*" can be handed
         // to an app that returns one picture no matter how many are ticked.
         // A discussion takes GIFs as well; the wall does not.
         if (file) {
-            file.accept = form.matches('.post-reply-form')
+            file.accept = form.matches('.post-reply-form, .topic-attach-form')
                 ? 'image/jpeg,image/png,image/webp,image/gif'
                 : 'image/jpeg,image/png,image/webp';
         }

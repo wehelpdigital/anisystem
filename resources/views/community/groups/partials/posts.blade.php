@@ -65,7 +65,11 @@
                 @if ($ytVid)
                     @include('community.partials.youtube-card', ['vid' => $ytVid])
                 @endif
-                @if ($post->imagePath)
+                @php $pShots = method_exists($post, 'shots') ? $post->shots() : array_filter([$post->imagePath]); @endphp
+                @if (count($pShots) > 1)
+                    {{-- Several pictures come round on the wall's carousel. --}}
+                    @include('community.partials.post-gallery', ['shots' => $pShots])
+                @elseif ($post->imagePath)
                     {{-- media-skel: shimmer while it decodes, vanish if it 404s. --}}
                     <div class="post-media media-skel">
                         <img src="{{ \App\Support\MediaStore::url($post->imagePath) }}" alt="Attachment" loading="lazy"
@@ -74,9 +78,8 @@
                         @if ($isGif)<span class="gif-badge">GIF</span>@endif
                     </div>
                 @endif
-                @if ($post->videoPath ?? null)
-                    @include('community.partials.video-embed', ['src' => $post->videoPath, 'poster' => $post->videoPoster ?? null])
-                @endif
+                @php $pClips = method_exists($post, 'clips') ? $post->clips() : array_filter([['video' => $post->videoPath ?? null, 'poster' => $post->videoPoster ?? null]], fn ($c) => ! empty($c['video'])); @endphp
+                @include('community.partials.clip-carousel', ['clips' => $pClips])
             @endif
         </div>
 
