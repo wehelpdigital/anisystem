@@ -109,9 +109,9 @@ class CommunityRank
      * a member would actually say out loud about themselves.
      */
     public const TITLES = [
-        1 => ['emoji' => '🌱', 'name' => 'Beginner Farmer'],
-        2 => ['emoji' => '🥾', 'name' => 'Mud Walker'],
-        3 => ['emoji' => '🧑‍🌾', 'name' => 'True Farmer'],
+        1 => ['emoji' => '🌱', 'name' => 'New Member'],
+        2 => ['emoji' => '🌿', 'name' => 'Rising Farmer'],
+        3 => ['emoji' => '🧑‍🌾', 'name' => 'Green Thumb'],
         4 => ['emoji' => '🐝', 'name' => 'Community Bee'],
         5 => ['emoji' => '🌾', 'name' => 'Harvest Hero'],
         6 => ['emoji' => '⚔️', 'name' => 'Community Knight'],
