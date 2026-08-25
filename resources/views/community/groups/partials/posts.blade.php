@@ -28,7 +28,8 @@
             <div class="min-w-0 grow">
                 <p class="text-sm leading-tight">
                     @if ($post->author)
-                        @if ($author->is_assistant)<span class="font-semibold author-ai">{{ $author->full_name }}</span>@else<a href="{{ route('community.connect.profile', ['userId' => $post->author->id]) }}" class="font-semibold text-gray-900 hover:text-brand-700">{{ $author->full_name }}</a>@endif
+                        @if ($author->is_assistant)<span class="font-semibold author-ai">{{ $author->full_name }}</span>@else<a href="{{ route('community.connect.profile', ['userId' => $post->author->id]) }}" class="font-semibold text-gray-900 hover:text-brand-700">{{ $author->full_name }}</a>
+                    @include('community.partials.rank-badge', ['rankUser' => $post->author])@endif
                     @else
                         <span class="font-semibold text-gray-900">Member</span>
                     @endif

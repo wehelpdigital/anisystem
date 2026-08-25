@@ -43,6 +43,10 @@
             <p class="text-sm leading-tight flex items-center flex-wrap gap-x-1.5 gap-y-0.5">
                 @if ($author->is_assistant)<span class="font-semibold author-ai">{{ $author->full_name }}</span>@else<a href="{{ route('community.connect.profile', ['userId' => $author->id]) }}" class="font-semibold text-gray-900 hover:text-brand-700">{{ $author->full_name }}</a>@endif
                 @include('community.partials.dm-btn', ['user' => $author])
+                {{-- The rank they have climbed to, before the follow button:
+                     who somebody IS on the ladder comes before what you might
+                     do about them. --}}
+                @include('community.partials.rank-badge', ['rankUser' => $author])
                 {{-- Following is one-sided, so it belongs on the post as well
                      as the profile: this is where you decide you want more of
                      somebody. It sits with the name and the way to write to

@@ -26,7 +26,14 @@
             'url' => route('community.groups.index'),
             'icon' => 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.9 9.9 0 01-4.29-.94L3 20l1.05-3.15A7.6 7.6 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z',
         ],
-        'blog' => [
+        'ranking' => [
+        'label' => 'Community Ranking', 'short' => 'Ranking',
+        'url' => route('community.ranking'),
+        // A rosette: the ladder is for bragging, and the icon should look
+        // like something you win.
+        'icon' => 'M12 15a6 6 0 100-12 6 6 0 000 12zm0 0v6m0-6l-3.5 5M12 15l3.5 5M10 9l1.5 1.5L15 7',
+    ],
+    'blog' => [
             'label' => 'Tech Blog', 'short' => 'Blog',
             'url' => route('community.blog'),
             'icon' => 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h9l7 7v7a2 2 0 01-2 2zM7 9h5M7 13h9M7 17h9',

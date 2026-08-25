@@ -1453,4 +1453,47 @@
         #postsWrap, .disc-jumps, .post-reply-form, #joinPrompt, .group-post.is-removing,
         .thread-fold, .thread-toggle .th-chev { transition:none !important; }
     }
+
+    /* ---- The rank badge ----
+       Fifty ranks, ten arcs, one chip. The arc gives the colour — a seed is
+       barely there, a farmer is the house green, a legend is gold that
+       drifts on the shared tide — so a glance up a comment thread reads as a
+       gradient of standing without a word. Small on purpose: it lives beside
+       names, and a badge that outshines the name has the relationship
+       backwards. */
+    .rankb { display:inline-flex; align-items:center; gap:.22rem; max-width:9.5rem;
+        padding:.08rem .42rem .08rem .3rem; border-radius:999px; border:1px solid transparent;
+        font-size:.62rem; font-weight:800; letter-spacing:.01em; line-height:1.25;
+        text-decoration:none; vertical-align:middle; white-space:nowrap;
+        transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .rankb:hover { transform:translateY(-1px); box-shadow:0 3px 8px -4px rgb(0 0 0 / .35); }
+    .rankb-e { font-size:.72rem; line-height:1; }
+    .rankb-t { min-width:0; overflow:hidden; text-overflow:ellipsis; }
+    .rankb-big { font-size:.74rem; padding:.2rem .6rem .2rem .45rem; max-width:14rem; }
+    .rankb-big .rankb-e { font-size:.95rem; }
+    /* The ten arcs, seed to legend. */
+    .rankb-a1 { background:#f1f3ee; border-color:#dde3d6; color:#5b6652; }
+    .rankb-a2 { background:#eaf3e0; border-color:#d3e4bf; color:#4a6b2a; }
+    .rankb-a3 { background:#dff0cf; border-color:#bfdc9e; color:#3d6823; }
+    .rankb-a4 { background:#d3ecc0; border-color:#a9d383; color:#2f5219; }
+    .rankb-a5 { background:#fdeaf1; border-color:#f6c6d8; color:#a2355f; }
+    .rankb-a6 { background:#fdf3d8; border-color:#f2dc9d; color:#8a6100; }
+    .rankb-a7 { background:#f4ead9; border-color:#e2cba2; color:#7c5215; }
+    .rankb-a8 { background:#e2f1f0; border-color:#b8dcd9; color:#0f6b64; }
+    .rankb-a9 { background:#efe9fb; border-color:#d5c6f2; color:#6534b8; }
+    /* The legend arc glows: gold that drifts on the app's shared tide. */
+    .rankb-a10 { color:#5c4300; border-color:#e3c25a;
+        background-image:linear-gradient(110deg, #fdeeb8, #f7d878 30%, #fdf3cf 55%, #f2ce6a 80%, #fdeeb8);
+        background-size:220% 100%; animation:gradSweep 10s ease-in-out infinite alternate; }
+    html.dark .rankb-a1 { background:#232a1e; border-color:#39422f; color:#a9b59c; }
+    html.dark .rankb-a2 { background:#25301a; border-color:#3c4d27; color:#b4cf94; }
+    html.dark .rankb-a3 { background:#283a17; border-color:#456327; color:#bfe19a; }
+    html.dark .rankb-a4 { background:#2c4318; border-color:#4d7328; color:#cfe8b0; }
+    html.dark .rankb-a5 { background:#3c2230; border-color:#6d3a54; color:#f0a9c8; }
+    html.dark .rankb-a6 { background:#3a3018; border-color:#6a5522; color:#eec155; }
+    html.dark .rankb-a7 { background:#362b1b; border-color:#5f4b2c; color:#dbb377; }
+    html.dark .rankb-a8 { background:#173230; border-color:#265a55; color:#7fd0c8; }
+    html.dark .rankb-a9 { background:#2b2140; border-color:#4b3a72; color:#c3aaf0; }
+    html.dark .rankb-a10 { color:#3a2b00; }
+    @media (prefers-reduced-motion: reduce) { .rankb { transition:none; } .rankb-a10 { animation:none; } }
 </style>

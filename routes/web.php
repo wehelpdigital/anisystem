@@ -461,6 +461,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // The pictures this account already has here, for any composer that
     // wants to point at one instead of uploading it again.
     Route::get('/app/community/my-photos', [App\Http\Controllers\CommunityMyPhotosController::class, 'index'])->name('community.my-photos');
+    Route::get('/app/community/ranking', [App\Http\Controllers\CommunityRankingController::class, 'index'])->name('community.ranking');
     Route::get('/app/community/saved', [App\Http\Controllers\CommunitySocialController::class, 'saved'])->name('community.saved');
     Route::get('/app/community/saved-more', [App\Http\Controllers\CommunitySocialController::class, 'savedMore'])->name('community.saved-more');
     Route::post('/app/community/share/{postId}/wall', [App\Http\Controllers\CommunitySocialController::class, 'shareToWall'])->whereNumber('postId')->name('community.share.wall');

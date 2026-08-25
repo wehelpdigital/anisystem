@@ -42,7 +42,8 @@
                           @if ($isSelf) role="button" tabindex="0" title="Set your status" data-status-bubble @endif><span class="status-bubble-text" @if ($isSelf) data-status-text @endif>{{ $member->statusBubble ?: ($isSelf ? "💭 What's on your mind?" : '') }}</span></span>
                 </span>
                 <div class="pf-name">
-                    <h2>{{ $member->full_name }}</h2>
+                    <h2>{{ $member->full_name }}
+                        @include('community.partials.rank-badge', ['rankUser' => $member, 'rankBig' => true])</h2>
                     @if (filled($member->headline))
                         <p class="pf-headline">{{ $member->headline }}</p>
                     @endif

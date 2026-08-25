@@ -25,9 +25,35 @@ class UpdateLastSeen
             if ($seen === null || $seen->lt(now()->subSeconds(60))) {
                 User::where('id', $user->id)->update(['lastSeenAt' => now()]);
                 $user->lastSeenAt = now();
+                $this->markTheDay((int) $user->id);
             }
         }
 
         return $next($request);
+    }
+
+    /**
+     * One diary row per member per day — the community ladder pays for
+     * showing up, and this is where showing up is witnessed.
+     *
+     * Piggybacked on the last-seen throttle above (at most once a minute),
+     * then guarded by a cache flag so the insert itself runs once a day; the
+     * unique index makes a lost cache harmless. Failure is swallowed: a
+     * missing table (migrations lagging) must never cost a page.
+     */
+    private function markTheDay(int $userId): void
+    {
+        $day = now()->toDateString();
+        try {
+            if (! \Illuminate\Support\Facades\Cache::add('as-member-day:' . $userId . ':' . $day, 1, now()->endOfDay())) {
+                return;
+            }
+            \Illuminate\Support\Facades\DB::table('as_member_days')->insertOrIgnore([
+                'userId' => $userId,
+                'day' => $day,
+            ]);
+        } catch (\Throwable $e) {
+            // The diary is a nicety; the request is the point.
+        }
     }
 }
