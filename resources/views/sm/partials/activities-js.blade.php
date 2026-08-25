@@ -9222,12 +9222,28 @@ document.addEventListener('DOMContentLoaded', () => {
     function _findGroup(dateIso) {
         return $qs(`#activitiesList .date-group[data-date="${dateIso}"]`);
     }
-    function _nearestUpcomingGroup(todayIso) {
+    /* A day the jump can land on: on the board, not filtered away, and with
+     * at least one activity still showing. Hiding a lot collapses every day
+     * that only had that lot's work (display:none), and scrollIntoView on a
+     * hidden element is a silent no-op — which is exactly how the today
+     * button "did nothing" while a lot filter was on. */
+    function _groupHasWork(g) {
+        return !!g && !g.classList.contains('group-collapsed')
+            && $qsa('.activity-card[data-id]:not(.filter-hidden)', g).length > 0;
+    }
+    /* The closest day that is showing work, in EITHER direction — a season
+     * that has ended still has a board worth landing on. Upcoming wins a
+     * dead-even tie: tomorrow beats yesterday. */
+    function _nearestWorkingGroup(todayIso) {
+        const todayMs = new Date(todayIso + 'T00:00:00').getTime();
         let best = null;
+        let bestScore = Infinity;
         $qsa('#activitiesList .date-group[data-date]').forEach((g) => {
             const d = g.getAttribute('data-date');
-            if (!d || d === '__no-date__' || d < todayIso) return;
-            if (!best || d < best.getAttribute('data-date')) best = g;
+            if (!d || d === '__no-date__' || !_groupHasWork(g)) return;
+            const dist = Math.abs(new Date(d + 'T00:00:00').getTime() - todayMs);
+            const score = dist + (d < todayIso ? 1 : 0);   // the tie-break
+            if (score < bestScore) { bestScore = score; best = g; }
         });
         return best;
     }
@@ -9284,15 +9300,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const { today, tomorrow } = _ttDates();
         const todayGroup = _findGroup(today);
         const tomorrowGroup = _findGroup(tomorrow);
-        const target = todayGroup || tomorrowGroup || _nearestUpcomingGroup(today);
-        if (!target) { toast('No upcoming activities to jump to.', 'error'); return; }
-        // Defer so a just-triggered view switch has rendered the list.
-        // The day landed on is opened too, not just today and tomorrow: when
-        // neither has work the jump goes to the next scheduled day, and
-        // arriving at a folded header shows nothing of what is there.
-        const toOpen = [...new Set([todayGroup, tomorrowGroup, target].filter(Boolean))];
+        /* Land where there is something to SEE: today if it is showing work,
+         * else tomorrow, else the closest day that is — in either direction,
+         * honouring whatever filters are on. Only when the whole board is
+         * empty of visible work does it settle for today's empty date (a
+         * fresh season made of nothing but + Add days still deserves a
+         * landing), and only with nowhere at all does it give up. */
+        const target = [todayGroup, tomorrowGroup].find(_groupHasWork)
+            || _nearestWorkingGroup(today)
+            || todayGroup || tomorrowGroup;
+        if (!target) { toast('No activities to jump to.', 'error'); return; }
+        // Defer so a just-triggered view switch has rendered the list. The
+        // day landed on is opened too, not just today and tomorrow: arriving
+        // at a folded header shows nothing of what is there.
+        const toOpen = [...new Set([todayGroup, tomorrowGroup, target].filter(Boolean))]
+            .filter((g) => !g.classList.contains('group-collapsed'));
         setTimeout(() => _jumpToDay(target, toOpen), 60);
-        toast(todayGroup || tomorrowGroup ? 'Jumped to today' : 'Jumped to the next scheduled day');
+        const landed = (target.getAttribute('data-date') || '').trim();
+        toast(target === todayGroup || target === tomorrowGroup ? 'Jumped to today'
+            : (landed > today ? 'Jumped to the next day with work' : 'Jumped to the last day with work'));
     });
     window.smTodayTomorrowActive = () => false;
 
