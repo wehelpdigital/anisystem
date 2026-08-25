@@ -838,6 +838,30 @@ const __init = () => {
      * question it fills in is the long, specific one that gets a good answer. */
     document.querySelectorAll('.js-suggest').forEach((b) => b.addEventListener('click', () => { input.value = (b.dataset.q || b.querySelector('.t')?.textContent || b.textContent).trim(); input.dispatchEvent(new Event('input')); input.focus(); }));
 
+    /* A question carried in from somewhere else — the tip of the day's "ask
+     * about this", say. Typed into the box and left there: sending is the
+     * reader's move, and a question that sends itself spends credits nobody
+     * agreed to spend. */
+    (function askFromQuery() {
+        let q = '';
+        try { q = new URLSearchParams(location.search).get('q') || ''; } catch (_) { return; }
+        if (!q || !input) return;
+        input.value = q;
+        input.dispatchEvent(new Event('input'));
+        // Read from the top: the reader is checking what is about to be asked,
+        // not carrying on from the end of it. Said twice, because the box is
+        // still being laid out the first time.
+        input.scrollTop = 0;
+        setTimeout(() => { input.dispatchEvent(new Event('input')); input.scrollTop = 0; }, 200);
+        window.smFocus?.(input, { delay: 240 });
+        // Focus scrolls a textarea to its caret, which is at the end of what
+        // was just put in it — so the top is put back afterwards. The caret
+        // stays where it is: the first keystroke brings the view back down to
+        // it, which is what somebody carrying on typing expects.
+        setTimeout(() => { input.scrollTop = 0; }, 340);
+    })();
+
+
     /* ---- Photos: chips under the composer, one per attachment ---- */
     const chips = byId('aiPhotoChips');
     const CHIP_SPIN = '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="animation:ai-spin .7s linear infinite"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.6" stroke-opacity=".3"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>';

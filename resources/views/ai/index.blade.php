@@ -737,6 +737,30 @@ const __init = () => {
         input.style.height = Math.min(input.scrollHeight, 144) + 'px';
         sayEstimate();
     });
+
+    /* A question carried in from somewhere else — the tip of the day's "ask
+     * about this", say. Typed into the box and left there: sending is the
+     * reader's move, and a question that sends itself spends credits nobody
+     * agreed to spend. */
+    (function askFromQuery() {
+        let q = '';
+        try { q = new URLSearchParams(location.search).get('q') || ''; } catch (_) { return; }
+        if (!q || !input) return;
+        input.value = q;
+        input.dispatchEvent(new Event('input'));
+        // Read from the top: the reader is checking what is about to be asked,
+        // not carrying on from the end of it. Said twice, because the box is
+        // still being laid out the first time.
+        input.scrollTop = 0;
+        setTimeout(() => { input.dispatchEvent(new Event('input')); input.scrollTop = 0; }, 200);
+        window.smFocus?.(input, { delay: 240 });
+        // Focus scrolls a textarea to its caret, which is at the end of what
+        // was just put in it — so the top is put back afterwards. The caret
+        // stays where it is: the first keystroke brings the view back down to
+        // it, which is what somebody carrying on typing expects.
+        setTimeout(() => { input.scrollTop = 0; }, 340);
+    })();
+
     input?.addEventListener('keydown', (e) => {
         // Enter sends on a desktop keyboard; Shift+Enter always adds a line.
         if (e.key === 'Enter' && !e.shiftKey && window.matchMedia('(min-width: 768px)').matches) {

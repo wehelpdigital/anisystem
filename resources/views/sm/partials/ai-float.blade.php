@@ -792,6 +792,35 @@
             window.toast?.('Photo attached — what would you like to ask about it?');
         };
 
+        /* "Ask the technician about this", from something the page is already
+         * saying — today's tip, for one.
+         *
+         * The question is typed for you and left there: pressing send is the
+         * reader's decision, and a question that goes off on its own spends
+         * credits nobody asked to spend. Returns false when there is no panel
+         * on this page, so the caller can fall back to the AI page. */
+        window.smAskAiText = function (text) {
+            const box = $('aiFloatText');
+            if (!box) return false;
+            /* The panel opens BEFORE the words go in. A textarea that is still
+             * display:none measures nothing, so growing it there leaves a
+             * three-line question showing its last four words in a one-line
+             * box — which is exactly what it did. */
+            openPanel(true);
+            box.value = String(text || '');
+            const settle = () => {
+                // The composer grows with the text and re-prices the question.
+                box.dispatchEvent(new Event('input', { bubbles: true }));
+                // Read from the top: the reader is checking what will be asked,
+                // not carrying on from the end of it.
+                box.scrollTop = 0;
+            };
+            settle();
+            setTimeout(settle, 220);   // again once the panel has finished opening
+            window.smFocus?.(box, { delay: 260 });
+            return true;
+        };
+
         async function send() {
             if (busy) return;
             if (uploadsBusy > 0) { toast('Wait a moment — a photo is still uploading.', 'error'); return; }

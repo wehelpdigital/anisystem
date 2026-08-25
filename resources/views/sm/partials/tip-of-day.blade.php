@@ -27,7 +27,10 @@
          through to the technician does not: sm.ai answers a worker with a 404,
          and a link that lands there teaches them the tip is broken too. --}}
     @if (! empty($aiHref) && ! \App\Support\WorkerContext::activeGrant())
-        <a class="tod-ask" href="{{ $aiHref }}">
+        {{-- The question the tip would have you ask, written out so the
+             technician opens with it already in the box. --}}
+        @php $todAsk = 'About today\'s tip: "' . $tip['text'] . '" — what should I do about this on my farm?'; @endphp
+        <a class="tod-ask" href="{{ $aiHref }}" data-ai-ask="{{ $todAsk }}">
             Ask the AI technician about this
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
@@ -73,4 +76,30 @@
         .tod, .tod-glow, .tod-bulb { animation: none; }
     }
 </style>
+
+@once
+<script>
+/* Where the tip's question goes.
+ *
+ * On a page that carries the floating technician (the schedule hub, the
+ * board) it opens that panel with the question typed in and waiting — the
+ * same box the floating button opens, so the reader stays where they are.
+ * Where there is no panel (the homepage) the link does what it always did
+ * and goes to the AI page, carrying the question in ?q= so it is typed there
+ * instead. Either way nothing is sent: asking is still the reader's move. */
+document.addEventListener('click', (e) => {
+    const link = e.target.closest && e.target.closest('.tod-ask[data-ai-ask]');
+    if (!link) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return;   // a new tab is a new tab
+    const q = link.getAttribute('data-ai-ask') || '';
+    if (typeof window.smAskAiText === 'function' && window.smAskAiText(q)) {
+        e.preventDefault();
+        return;
+    }
+    const url = new URL(link.href, location.origin);
+    url.searchParams.set('q', q);
+    link.setAttribute('href', url.toString());
+});
+</script>
+@endonce
 @endif
