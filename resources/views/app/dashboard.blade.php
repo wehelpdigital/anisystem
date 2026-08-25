@@ -1009,15 +1009,67 @@
     const POST_URL = @json(route('community.wall.post', ['userId' => auth()->id()]));
     const csrf = () => document.querySelector('meta[name=csrf-token]')?.content || '';
 
-    // Photo chip
+    const camInput = document.getElementById('dashCamera');
+    let galleryPick = null;   // { path, url } — a picture the app already keeps
+
+    /* One chip serves all three doors; taking a new picture through any of
+     * them drops whatever the others held, because this composer carries
+     * one photo. */
+    function showChip(src) {
+        document.getElementById('dashImageThumb').src = src;
+        imgChip.style.display = 'flex';
+    }
+    function clearPhoto() {
+        imageInput.value = '';
+        if (camInput) camInput.value = '';
+        galleryPick = null;
+        imgChip.style.display = 'none';
+    }
+
+    // Door one: this device (through the photo editor, as the wall goes).
     imageInput?.addEventListener('change', async () => {
-        // Same stop as the community composer: edit first, then it is a post.
         if (imageInput.files[0] && window.smEditInto) await window.smEditInto(imageInput);
         const f = imageInput.files[0];
-        if (f) { document.getElementById('dashImageThumb').src = URL.createObjectURL(f); imgChip.style.display = 'flex'; }
-        else imgChip.style.display = 'none';
+        if (!f) { clearPhoto(); return; }
+        galleryPick = null; if (camInput) camInput.value = '';
+        showChip(URL.createObjectURL(f));
     });
-    document.getElementById('dashImageClear')?.addEventListener('click', () => { imageInput.value = ''; imgChip.style.display = 'none'; });
+    // Door two: the camera, straight in.
+    camInput?.addEventListener('change', () => {
+        const f = camInput.files[0];
+        if (!f) return;
+        galleryPick = null; imageInput.value = '';
+        showChip(URL.createObjectURL(f));
+    });
+    document.getElementById('dashImageClear')?.addEventListener('click', clearPhoto);
+
+    /* The chooser: the wall's three doors, in the same order. */
+    document.getElementById('dashPhotoBtn')?.addEventListener('click', () => window.openSheet?.('dashPhotoSheet'));
+    document.getElementById('dashSrcUpload')?.addEventListener('click', () => {
+        window.closeSheet?.('dashPhotoSheet');
+        imageInput?.click();
+    });
+    document.getElementById('dashSrcCamera')?.addEventListener('click', () => {
+        window.closeSheet?.('dashPhotoSheet');
+        camInput?.click();
+    });
+    document.getElementById('dashSrcGallery')?.addEventListener('click', () => {
+        window.closeSheet?.('dashPhotoSheet');
+        if (typeof window.smPickMedia !== 'function') { toast('The gallery is not available here.', 'error'); return; }
+        // The picker overlays every sheet (its own layer sits above them),
+        // so the composer stays where it is and is simply there again when
+        // the picker goes — the same arrangement the wall's composer uses.
+        window.smPickMedia({
+            allSchedules: true, kinds: 'image', title: 'From your gallery',
+            onPick: (item) => {
+                if (item && item.path) {
+                    galleryPick = { path: item.path, url: item.url || '' };
+                    imageInput.value = ''; if (camInput) camInput.value = '';
+                    showChip(item.url || '');
+                }
+            },
+        });
+    });
 
     // Grow the textarea with content.
     body?.addEventListener('input', () => { body.style.height = 'auto'; body.style.height = Math.min(body.scrollHeight, 200) + 'px'; });
@@ -1032,9 +1084,9 @@
 
     btn?.addEventListener('click', async () => {
         const text = body.value.trim();
-        const img = imageInput.files[0];
+        const img = imageInput.files[0] || (camInput && camInput.files[0]);
         const vid = window.plazaVideoFile ? window.plazaVideoFile(host) : null;
-        if (!text && !img && !vid) { toast('Write something or add a photo/video.', 'error'); return; }
+        if (!text && !img && !galleryPick && !vid) { toast('Write something or add a photo/video.', 'error'); return; }
         const prev = btn.innerHTML;
         btn.disabled = true;
         btn.textContent = vid ? 'Uploading…' : 'Posting…';
@@ -1042,6 +1094,7 @@
             const fd = new FormData();
             if (text) fd.append('body', text);
             if (img) fd.append('image', img);
+            else if (galleryPick) fd.append('galleryPaths[]', galleryPick.path);
             if (vid) fd.append('video', vid);
             fd.append('render', 'feed');
             const res = await fetch(POST_URL, { method: 'POST', headers: { 'X-CSRF-TOKEN': csrf(), Accept: 'application/json' }, body: fd });
@@ -1054,7 +1107,7 @@
             }
             if (empty) empty.classList.add('hidden');
             body.value = ''; body.style.height = 'auto';
-            imageInput.value = ''; imgChip.style.display = 'none';
+            clearPhoto();
             window.plazaClearVideo && window.plazaClearVideo(host);
             window.closeSheet?.('dashComposerSheet');
             toast('Posted to your wall.');
@@ -1176,10 +1229,15 @@
             <div class="comp-add comp-add-box">
                 <span class="comp-add-lbl">Add to your post</span>
                 <div class="comp-add-row">
-                    <label class="wall-act cursor-pointer" title="Add a photo" aria-label="Add a photo">
+                    {{-- One door to three ways in — this device, the camera,
+                         or the pictures the app already keeps, exactly as the
+                         wall's composer offers them. --}}
+                    <button type="button" class="wall-act" id="dashPhotoBtn" title="Add a photo" aria-label="Add a photo">
                         <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                        <input type="file" id="dashImage" accept="image/*" class="hidden">
-                    </label>
+                    </button>
+                    <input type="file" id="dashImage" accept="image/jpeg,image/png,image/webp" class="hidden">
+                    {{-- capture= asks the phone for its camera rather than its files. --}}
+                    <input type="file" id="dashCamera" accept="image/*" capture="environment" class="hidden">
                     <button type="button" class="wall-act js-video-attach" title="Upload a video" aria-label="Upload a video">
                         <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                     </button>
@@ -1194,6 +1252,35 @@
             </div>
 
             <button type="button" id="dashPostBtn" class="btn btn-primary comp-send">Post</button>
+        </div>
+    </div>
+</div>
+
+{{-- Where a picture comes from — the same three doors the wall's composer
+     opens, in the same words. --}}
+<div class="sheet hidden" id="dashPhotoSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Add a photo</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body" style="padding-bottom:1.1rem">
+        <div class="plaza-srcs">
+            <button type="button" class="plaza-src" id="dashSrcUpload">
+                <span class="plaza-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 17v1.5A2.5 2.5 0 006.5 21h11a2.5 2.5 0 002.5-2.5V17"/></svg></span>
+                <span class="plaza-src-t"><b>Upload from this device</b><small>Pick a photo off this phone or computer.</small></span>
+                <svg class="plaza-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button type="button" class="plaza-src" id="dashSrcCamera">
+                <span class="plaza-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8a2 2 0 012-2h1.4l1-1.6h7.2l1 1.6H18a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V8z"/><circle cx="12" cy="13" r="3.4"/></svg></span>
+                <span class="plaza-src-t"><b>Take a photo now</b><small>Open the camera and shoot what you see.</small></span>
+                <svg class="plaza-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button type="button" class="plaza-src" id="dashSrcGallery">
+                <span class="plaza-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h4l2 2h6a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M7 15l3-3.5 2.4 2.8L15 11l3 4"/></svg></span>
+                <span class="plaza-src-t"><b>From my gallery</b><small>Photos your seasons already keep.</small></span>
+                <svg class="plaza-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
+            </button>
         </div>
     </div>
 </div>
