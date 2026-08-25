@@ -1425,7 +1425,16 @@
     .comp-bar { display: flex; align-items: center; justify-content: space-between; gap: .5rem; flex-wrap: wrap; }
     /* Post is the decision, and it takes the foot of the card across its
        whole width — nothing on that line to weigh it against. */
-    .comp-send { display: block; width: 100%; margin-top: .7rem; }
+    /* The same living green every big community button wears — the
+       invitations at the foot of a card, the discussions' own buttons —
+       drifting on the shared tide rather than sitting flat. */
+    .comp-send { display: flex; align-items: center; justify-content: center;
+        width: 100%; margin-top: .7rem; border: 0; color: #fff;
+        background-image: linear-gradient(120deg, #2f5219, #4a7c2a 28%, #6b9f3d 52%, #4a7c2a 76%, #2f5219);
+        background-size: 220% 100%;
+        animation: gradSweep var(--sw-t, 11s) ease-in-out infinite alternate; }
+    .comp-send:hover { filter: brightness(1.06); color: #fff; }
+    @media (prefers-reduced-motion: reduce) { .comp-send { animation: none; } }
     @media (prefers-reduced-motion: reduce) { .comp-me .status-cloud { transition: none; } }
 
     /* --- Rail cards (your discussions, what's new in the blog) --- */

@@ -254,8 +254,9 @@
         <h3 class="sheet-title">Write a post</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
-    {{-- Just enough top padding for the thought bubble's overhang. --}}
-    <div class="sheet-body" style="padding-top:.55rem;padding-bottom:1.1rem">
+    {{-- Enough top padding for the thought bubble's overhang, plus a
+         breath so it does not read as touching the header rule. --}}
+    <div class="sheet-body" style="padding-top:1rem;padding-bottom:1.1rem">
 <div class="comp-sheeted" id="feedComposer" data-video-host>
     {{-- The same head a post has: the cloud above the face, the name beside
          it, the place under the name — so the box you write in looks like
