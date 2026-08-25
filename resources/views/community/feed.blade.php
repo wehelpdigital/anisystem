@@ -68,6 +68,9 @@
        beside it. The cloud hangs above the face and out of the card, which is
        why the card buys room for it (see #feedComposer below). */
     .comp-top { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: .7rem; }
+    /* The name block centres on the face; the face keeps flex-start so the
+       cloud's overhang is measured from the top as it always was. */
+    .comp-top > .min-w-0 { align-self: center; }
     /* The attached photo, shown as itself. */
     .comp-shot { display: flex; align-items: center; gap: .6rem; margin-top: .6rem; padding: .45rem .5rem;
         border-radius: .7rem; background: var(--color-gray-100); }

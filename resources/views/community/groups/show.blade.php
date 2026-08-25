@@ -303,6 +303,7 @@
     /* The wall composer's own bar, borrowed line for line (feed.blade.php
        keeps the original) so the two sheets read as one form. */
     .comp-top { display:flex; align-items:flex-start; gap:.75rem; margin-bottom:.7rem; }
+    .comp-top > .min-w-0 { align-self: center; }
     .comp-add { display:flex; align-items:center; gap:.6rem; flex-wrap:wrap; }
     .comp-add-box { padding:.35rem .5rem .35rem .7rem; border-radius:.8rem;
         border:1px solid var(--color-gray-200); background:var(--color-gray-50); }

@@ -82,10 +82,17 @@
         font-size: .78rem; font-weight: 700; color: #b45309; }
     .dash-hero-warn svg { width: .85rem; height: .85rem; }
     /* Under the words on a phone, beside them once there is room. */
-    .dash-hero-state { grid-column: 2; justify-self: start; }
+    .dash-hero-state { grid-column: 2; justify-self: start;
+        display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+    /* The rank chip, dressed to the dash-chip's measurements so the pair
+       reads as one row of facts. The arc colours stay. */
+    .dash-hero-state .rankb { padding: .35rem .75rem; font-size: .74rem; max-width: 14rem;
+        line-height: 1.5; /* the dash-chip's, so the pair stands one height */ }
+    .dash-hero-state .rankb .rankb-e { font-size: .85rem; }
     @media (min-width: 640px) {
         .dash-hero { grid-template-columns: auto minmax(0, 1fr) auto; }
-        .dash-hero-state { grid-column: 3; grid-row: 1 / -1; justify-self: end; align-self: center; }
+        .dash-hero-state { grid-column: 3; grid-row: 1 / -1; justify-self: end; align-self: center;
+            flex-direction: column; align-items: flex-end; }
     }
     .dash-chip { display: inline-flex; align-items: center; gap: .35rem; padding: .35rem .75rem;
         border-radius: 999px; font-size: .74rem; font-weight: 700;
@@ -288,6 +295,9 @@
     /* The wall composer's own bar, borrowed line for line (feed.blade.php
        keeps the original) so the two sheets read as one form. */
     .comp-top { display:flex; align-items:flex-start; gap:.75rem; margin-bottom:.7rem; }
+    /* Two lines of text against a taller face read as hanging from its
+       crown; centred, the pair sits level. */
+    .comp-top > .min-w-0 { align-self: center; }
     .comp-add { margin-top:.55rem; display:flex; align-items:center; gap:.6rem; flex-wrap:wrap; }
     .comp-add-box { padding:.35rem .5rem .35rem .7rem; border-radius:.8rem;
         border:1px solid var(--color-gray-200); background:var(--color-gray-50); }
@@ -348,11 +358,7 @@
             @endif
         </span>
         <div class="dash-hero-body">
-            <h2 class="dash-hero-h">{{ $__greet }}, {{ \Illuminate\Support\Str::title($user->firstName ?: 'kaibigan') }}
-                {{-- Your standing in the community, worn where the day starts.
-                     The chip is the same one every card draws, and it links to
-                     the ladder so climbing is one tap from the greeting. --}}
-                @include('community.partials.rank-badge', ['rankUser' => $user])</h2>
+            <h2 class="dash-hero-h">{{ $__greet }}, {{ \Illuminate\Support\Str::title($user->firstName ?: 'kaibigan') }}</h2>
             <p class="dash-hero-p">{{ now('Asia/Manila')->format('l, F j') }} — {{ $scheduleCount === 0 ? 'no seasons planned yet.' : $scheduleCount . ' ' . \Illuminate\Support\Str::plural('season', $scheduleCount) . ' on the shelf.' }}</p>
             @if ($expiringSoon)
                 <a href="{{ route('purchase.plans') }}" class="dash-hero-warn">
@@ -362,6 +368,11 @@
             @endif
         </div>
         <div class="dash-hero-state">
+            {{-- Your standing in the community, sized like the chip beside
+                 it: the same pill, the same type, one of the facts about
+                 this account rather than a decoration on the name. It links
+                 to the ladder so climbing is one tap from the greeting. --}}
+            @include('community.partials.rank-badge', ['rankUser' => $user, 'rankChipLike' => true])
             @if ($isSuperAdmin)
                 <span class="dash-chip is-ok">🛡️ Admin access</span>
             @elseif ($isActive)
