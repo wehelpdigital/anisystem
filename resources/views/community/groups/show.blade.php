@@ -551,11 +551,12 @@
             <h3 class="sheet-title">Start a topic</h3>
             <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
         </div>
-        <div class="sheet-body" style="padding-bottom:1.1rem">
+        {{-- Tight under its own title: the header already says what this is,
+             and the paragraph that used to sit here pushed the first field a
+             hundred pixels down a phone. What it said that mattered — the @
+             tagging — lives in the placeholder now. --}}
+        <div class="sheet-body" style="padding-top:.35rem;padding-bottom:1.1rem">
             <div class="disc-composer" id="composerCard" data-video-host>
-                {{-- What the box is for: an unlabelled field asks for nothing,
-                     and the sheet's own title says only where you are. --}}
-                <p class="disc-composer-sub">Ask a question or share what worked. Everyone in this discussion gets told about it — use @ to tag a co-farmer.</p>
             <div class="flex items-start gap-3">
                 <span class="avatar avatar-md disc-composer-av {{ CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} mt-1">{{ auth()->user()->initials ?? '?' }}</span>
                 <div class="min-w-0 grow">
@@ -564,7 +565,7 @@
                          gives it @names — the rich editor could not have them at
                          all, because the mention script binds to fields. --}}
                     <textarea id="postBody" class="form-textarea disc-composer-box" rows="4" maxlength="4000"
-                              data-mentionable placeholder="Magtanong o magbahagi sa usapan…"></textarea>
+                              data-mentionable placeholder="Magtanong o magbahagi — use @ to tag a co-farmer"></textarea>
                     {{-- The same tool row an answer carries, speaking the
                          same script: the photo icon opens its three sources
                          (upload / camera / gallery), the video icon its two
