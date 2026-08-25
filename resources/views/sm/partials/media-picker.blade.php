@@ -116,6 +116,18 @@
         display: flex; align-items: center; justify-content: center; }
     html.dark .smp-tile { background: #1c2416; border-color: #2b3a1c; }
     html.dark .smp-shot { background: #151b12; }
+    /* While a clip's frame is being asked for or cut, its tile wears a
+       small turning ring over the clapperboard. */
+    .smp-tile[data-needs-frame] .smp-shot::after, .smp-tile.is-cutting .smp-shot::after {
+        content: ''; position: absolute; top: 50%; left: 50%; width: 1.3rem; height: 1.3rem;
+        margin: -0.65rem 0 0 -0.65rem; border-radius: 999px; z-index: 3; pointer-events: none;
+        border: 2.5px solid rgb(255 255 255 / .45); border-top-color: #fff;
+        filter: drop-shadow(0 1px 3px rgb(0 0 0 / .45));
+        animation: smpCutSpin .8s linear infinite; }
+    @keyframes smpCutSpin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) {
+        .smp-tile[data-needs-frame] .smp-shot::after, .smp-tile.is-cutting .smp-shot::after { animation-duration: 2.4s; }
+    }
     html.dark .smp-name { color: #e5e9f5; }
     @media (prefers-reduced-motion: reduce) { .smp-tile { transition: none; } .smp-tile:hover { transform: none; }
         .smp-skel { animation: none; } }
@@ -304,6 +316,7 @@
                 if (!tile) return;
                 const path = tile.getAttribute('data-needs-frame');
                 tile.removeAttribute('data-needs-frame');   // asked; never twice
+                tile.classList.add('is-cutting');           // the ring turns while the frame is cut
                 try {
                     const res = await window.api(POSTER_URL, { method: 'POST', body: { path } });
                     let url = res && res.data && res.data.posterUrl;
@@ -329,6 +342,7 @@
                         shot?.appendChild(img);
                     }
                 } catch (_) { /* the clapperboard stays; it is not wrong */ }
+                finally { tile.classList.remove('is-cutting'); }
             }
         } finally {
             framesRunning = false;

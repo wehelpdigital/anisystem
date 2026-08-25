@@ -125,12 +125,22 @@ class GalleryHubController extends Controller
             $pictures = $a->images
                 ->map(fn ($i) => [
                     'id' => (int) $i->id,
+                    'path' => (string) $i->path,
                     'url' => MediaStore::url($i->path),
                     'caption' => $i->caption,
                     'video' => (bool) preg_match('/\.(mp4|mov|webm|m4v|3gp)$/i', (string) $i->path),
                 ])
                 ->values()
                 ->all();
+            // Frames already cut are worn immediately; the rest are asked
+            // for by the page, one at a time, and remembered.
+            $clipPosters = \App\Support\VideoPoster::urlsFor(
+                array_column(array_filter($pictures, fn ($x) => $x['video']), 'path')
+            );
+            foreach ($pictures as &$px) {
+                $px['posterUrl'] = $px['video'] ? ($clipPosters[$px['path']] ?? null) : null;
+            }
+            unset($px);
 
             $out[] = [
                 'id' => (int) $a->id,

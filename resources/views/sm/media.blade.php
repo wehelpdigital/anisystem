@@ -108,7 +108,12 @@
                 @foreach ($rows as $m)
                     <div class="mb-cell" data-lb-type="{{ $m['kind'] }}" data-lb-url="{{ $m['url'] }}" data-lb-poster="{{ $m['posterUrl'] ?? '' }}"
                         data-find="{{ mb_strtolower($m['title'] . ' ' . $m['source'] . ' ' . ($m['when'] ?? '')) }}">
-                        <div class="mb-shot">
+                        {{-- A clip with no frame asks for one while the page
+                             is open (clip-frames-js): a ring turns on the
+                             tile until the picture lands, and the frame is
+                             remembered so it is never cut twice. --}}
+                        <div class="mb-shot"
+                             @if ($m['kind'] === 'video' && empty($m['posterUrl']) && ! empty($m['path'])) data-needs-frame="{{ $m['path'] }}" data-clip-url="{{ $m['url'] }}" @endif>
                             @if ($m['kind'] === 'video')
                                 @if (! empty($m['posterUrl']))
                                     <img src="{{ $m['posterUrl'] }}" alt="" loading="lazy" onload="this.classList.add('is-loaded')" onerror="this.closest('.mb-shot')?.classList.add('is-gone'); this.remove();">
@@ -146,6 +151,7 @@
 {{-- The shell already carries the lightbox; standalone needs its own. --}}
 @if (! request()->boolean('partial'))
     @include('sm.partials.note-lightbox')
+@include('sm.partials.clip-frames-js')
 @endif
 @endsection
 

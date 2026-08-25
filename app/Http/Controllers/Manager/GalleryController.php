@@ -33,9 +33,31 @@ class GalleryController extends BaseScheduleController
 
         $teamBox = \App\Support\SeasonTeamBox::for($schedule);
 
+        /* Frames already cut are worn immediately: one registry query for
+         * every clip on the shelf, so a frame cut in the picker yesterday
+         * shows here today without being cut again. */
+        $albums = $this->albumsFor($schedule);
+        $clipPaths = [];
+        foreach ($albums as $al) {
+            foreach (($al['images'] ?? []) as $img) {
+                if (($img['kind'] ?? '') === 'video') {
+                    $clipPaths[] = $img['path'];
+                }
+            }
+        }
+        $knownPosters = \App\Support\VideoPoster::urlsFor($clipPaths);
+        foreach ($albums as &$al) {
+            foreach ($al['images'] as &$img) {
+                $img['posterUrl'] = (($img['kind'] ?? '') === 'video')
+                    ? ($knownPosters[$img['path']] ?? null) : null;
+            }
+            unset($img);
+        }
+        unset($al);
+
         return view('sm.gallery', [
             'schedule' => $schedule,
-            'albums' => $this->albumsFor($schedule),
+            'albums' => $albums,
             'everything' => $everything,
             'teamBox' => $teamBox,
             'counts' => [
@@ -66,6 +88,7 @@ class GalleryController extends BaseScheduleController
                 // while sitting perfectly safe on disk.
                 'images' => $a->images->map(fn ($i) => [
                     'id' => $i->id,
+                    'path' => (string) $i->path,
                     'url' => MediaStore::url($i->path),
                     // What the capture called this one picture, and what it
                     // said about it. Both were asked for, written, and then

@@ -143,6 +143,7 @@
 @if (! request()->boolean('partial'))
     @include('sm.partials.note-lightbox')
 @endif
+@include('sm.partials.clip-frames-js')
 @endsection
 
 @push('sheets')
@@ -238,10 +239,14 @@
                 // and a <video> has no alt, so its name has to be said another
                 // way or the tile is announced as nothing at all.
                 const shot = im.kind === 'video'
-                    ? `<video src="${esc(im.url)}#t=0.1" preload="metadata" playsinline muted
-                        aria-label="${esc(name || 'Clip in this album')}"
-                        onloadeddata="this.classList.add('is-loaded')"
-                        onerror="this.closest('.ga-cell')?.classList.add('is-gone'); this.remove();"></video>
+                    ? `${im.posterUrl
+                          ? `<img src="${esc(im.posterUrl)}" alt="${esc(name || 'Clip in this album')}" loading="lazy"
+                              onload="this.classList.add('is-loaded')"
+                              onerror="this.closest('.ga-cell')?.classList.add('is-gone'); this.remove();">`
+                          : `<video src="${esc(im.url)}#t=0.1" preload="metadata" playsinline muted
+                              aria-label="${esc(name || 'Clip in this album')}"
+                              onloadeddata="this.classList.add('is-loaded')"
+                              onerror="this.closest('.ga-cell')?.classList.add('is-gone'); this.remove();"></video>`}
                        <span class="ga-vid" aria-hidden="true">▶</span>`
                     : `<img src="${esc(im.url)}" alt="${esc(name)}" loading="lazy"
                         onload="this.classList.add('is-loaded')"
@@ -253,7 +258,7 @@
                     : '';
                 const tip = [name, about].filter(Boolean).join(' — ');
                 return `
-                <div class="ga-cell" data-image="${im.id}" data-lb-type="${im.kind === 'video' ? 'video' : 'image'}" data-lb-url="${esc(im.url)}"
+                <div class="ga-cell" data-image="${im.id}" data-lb-type="${im.kind === 'video' ? 'video' : 'image'}" data-lb-url="${esc(im.url)}"${(im.kind === 'video' && !im.posterUrl && im.path) ? ` data-needs-frame="${esc(im.path)}" data-clip-url="${esc(im.url)}" data-frame-replace="video"` : ''}
                      data-lb-image="${im.id}" data-lb-caption="${esc(name)}" data-lb-desc="${esc(about)}"${tip ? ` title="${esc(tip)}"` : ''}>
                     ${shot}
                     ${im.team ? '<span class="ga-teamchip" title="Drawn together in the Collab Room">Team</span>' : ''}
@@ -522,8 +527,15 @@
             // No poster — which is what a clip stored on a server without
             // ffmpeg looks like — so show the video's own first frame rather
             // than an empty black box.
+            /* A bare clip asks for its frame while the page is open
+             * (clip-frames-js): the tile wears a turning ring, the frame
+             * lands as a picture, and the registry remembers it — the same
+             * clip is never cut twice. The coaxed <video> stays underneath
+             * for the moment before, and is replaced. */
+            const wants = (kind === 'video' && !m.posterUrl && m.path)
+                ? ` data-needs-frame="${esc(m.path)}" data-clip-url="${esc(m.url)}" data-frame-replace="video"` : '';
             const shot = kind === 'video'
-                ? `<div class="ga-shot">${m.posterUrl
+                ? `<div class="ga-shot"${wants}>${m.posterUrl
                         ? `<img src="${esc(m.posterUrl)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')"
                              onerror="this.closest('.ga-shot')?.classList.add('ga-noshot')">`
                         : `<video src="${esc(m.url)}#t=0.1" preload="metadata" playsinline muted
@@ -606,6 +618,7 @@
                 // shelf would drop every picture already decoded and start
                 // them loading again.
                 sentinel.insertAdjacentHTML('beforebegin', next.map(render || itemHtml).join(''));
+                window.smClipFrames?.();   // the page that just arrived may hold bare clips
                 return state.drawn < state.items.length;
             };
 
@@ -620,6 +633,8 @@
             }, { root: null, rootMargin: '600px 0px' });   // ask early, so it never stalls
 
             if (!more()) { sentinel.remove(); } else { state.io.observe(sentinel); }
+            // Any clip drawn frameless asks for its frame now.
+            window.smClipFrames?.();
         }
 
         function paintAll() {

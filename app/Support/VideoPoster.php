@@ -44,6 +44,36 @@ class VideoPoster
      * a caller shows its own placeholder then, which is what it was showing
      * before it asked.
      */
+    /**
+     * Poster URLs for many clips in one query: [path => posterUrl].
+     *
+     * The registry keeps every frame ever cut; a gallery page with forty
+     * clips should ask once, not forty times. Paths with no stored frame
+     * are simply absent from the answer.
+     *
+     * @param  array<int, string>  $videos
+     * @return array<string, string>
+     */
+    public static function urlsFor(array $videos): array
+    {
+        $videos = array_values(array_unique(array_filter(array_map('strval', $videos))));
+        if ($videos === [] || ! Schema::hasTable(self::TABLE)) {
+            return [];
+        }
+        $byKey = [];
+        foreach ($videos as $v) {
+            $byKey[sha1($v)] = $v;
+        }
+        $out = [];
+        foreach (DB::table(self::TABLE)->whereIn('videoKey', array_keys($byKey))->get() as $row) {
+            if ($row->posterPath && isset($byKey[$row->videoKey])) {
+                $out[$byKey[$row->videoKey]] = \App\Support\MediaStore::url($row->posterPath);
+            }
+        }
+
+        return $out;
+    }
+
     public static function ensure(?string $video): ?string
     {
         $video = trim((string) $video);

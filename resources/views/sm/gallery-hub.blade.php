@@ -139,12 +139,21 @@
                             @foreach ($a['pictures'] as $im)
                                 <div class="ga-cell" data-lb-type="{{ $im['video'] ? 'video' : 'image' }}"
                                      data-lb-url="{{ $im['url'] }}" data-lb-caption="{{ $im['caption'] }}"
+                                     @if ($im['video'] && empty($im['posterUrl']) && ! empty($im['path'])) data-needs-frame="{{ $im['path'] }}" data-clip-url="{{ $im['url'] }}" data-frame-replace="video" @endif
                                      @if (filled($im['caption'])) title="{{ $im['caption'] }}" @endif>
                                     @if ($im['video'])
-                                        <video src="{{ $im['url'] }}#t=0.1" preload="metadata" playsinline muted
-                                               aria-label="{{ $im['caption'] ?: 'Clip in this album' }}"
-                                               onloadeddata="this.classList.add('is-loaded')"
-                                               onerror="this.closest('.ga-cell')?.classList.add('is-gone'); this.remove();"></video>
+                                        @if (! empty($im['posterUrl']))
+                                            {{-- The frame the registry already keeps: a picture,
+                                                 not a film the phone must decode for one. --}}
+                                            <img src="{{ $im['posterUrl'] }}" alt="{{ $im['caption'] ?: 'Clip in this album' }}" loading="lazy"
+                                                 onload="this.classList.add('is-loaded')"
+                                                 onerror="this.closest('.ga-cell')?.classList.add('is-gone'); this.remove();">
+                                        @else
+                                            <video src="{{ $im['url'] }}#t=0.1" preload="metadata" playsinline muted
+                                                   aria-label="{{ $im['caption'] ?: 'Clip in this album' }}"
+                                                   onloadeddata="this.classList.add('is-loaded')"
+                                                   onerror="this.closest('.ga-cell')?.classList.add('is-gone'); this.remove();"></video>
+                                        @endif
                                         <span class="ga-vid" aria-hidden="true">▶</span>
                                     @else
                                         <img src="{{ $im['url'] }}" alt="{{ $im['caption'] }}" loading="lazy"
@@ -180,7 +189,8 @@
                         $clipSrc = $row['url'] . ($row['posterUrl'] ? '' : '#t=0.1');
                     @endphp
                     <{{ $goes ? 'a' : 'div' }} class="tb-card" @if ($goes) href="{{ $row['href'] }}" @endif>
-                        <span class="tb-shot">
+                        <span class="tb-shot"
+                              @if ($row['video'] && empty($row['posterUrl']) && ! empty($row['path'])) data-needs-frame="{{ $row['path'] }}" data-clip-url="{{ $row['url'] }}" data-frame-mode="poster" @endif>
                             <span class="tb-kind">{{ $row['kind'] }}</span>
                             @if ($row['video'])
                                 <video src="{{ $clipSrc }}"
@@ -233,6 +243,7 @@
         @endif
     @endif
 </div>
+@include('sm.partials.clip-frames-js')
 @endsection
 
 @push('scripts')
@@ -291,9 +302,12 @@
                 const shot = it.posterUrl || (it.type === 'image' ? it.url : null);
                 const wrap = document.createElement('div');
                 wrap.className = 'ga-wrap';
+                const wants = (!shot && it.type === 'video' && it.path)
+                    ? ' data-needs-frame="' + it.path.replace(/"/g, '&quot;') + '" data-clip-url="' + (it.url || '') + '"'
+                    : '';
                 wrap.innerHTML = '<a class="ga-item" href="' + (it.url || '#') + '"'
                     + (it.type === 'image' ? ' data-lightbox' : ' target="_blank" rel="noopener"') + '>'
-                    + '<span class="ga-shot">'
+                    + '<span class="ga-shot"' + wants + '>'
                     + (shot ? '<img src="' + shot + '" alt="" loading="lazy" onload="this.classList.add(\'is-loaded\')">' : '')
                     + '<span class="ga-kind is-' + (it.kind || 'image') + '">' + (it.kind || 'file') + '</span></span>'
                     + '<span class="ga-info"><span class="ga-it">' + (it.title || 'Untitled') + '</span>'
@@ -301,6 +315,8 @@
                 grid.appendChild(wrap);
             });
             more.dataset.page = String(d.nextPage || (parseInt(more.dataset.page, 10) + 1));
+            // Any clip that arrived frameless asks for its frame now.
+            window.smClipFrames?.();
             if (spin) spin.hidden = true;
             busy = false;
             if (!d.hasMore) { done = true; more.remove(); if (end) end.hidden = false; return; }

@@ -66,6 +66,10 @@ class SeasonMedia
 
             $out[] = [
                 'kind' => $type,
+                // The stored path itself rides along: a clip with no frame is
+                // asked for one by path, and only a row that knows its path
+                // can ask.
+                'path' => $path,
                 'source' => $source,
                 'title' => $title !== '' ? $title : 'Untitled',
                 'url' => MediaStore::url($path),
@@ -211,7 +215,29 @@ class SeasonMedia
         // picture had loaded. Six hundred newest is more than the shelves can
         // usefully show; anything older is still reachable where it lives —
         // its note, its album, its module.
-        return array_slice($out, 0, 600);
+        $out = array_slice($out, 0, 600);
+
+        /* Frames already cut are worn immediately. The picker and the
+         * galleries save every frame they cut into VideoPoster's registry;
+         * without this look-up a clip whose frame was cut yesterday came
+         * back to the gallery as a clapperboard and was cut again. One
+         * query for the lot, after the slice so it never pays for rows the
+         * page will not show. */
+        $bare = array_values(array_unique(array_map(
+            fn ($m) => $m['path'],
+            array_filter($out, fn ($m) => $m['kind'] === 'video' && empty($m['posterUrl']))
+        )));
+        if ($bare !== []) {
+            $known = VideoPoster::urlsFor($bare);
+            foreach ($out as &$m) {
+                if ($m['kind'] === 'video' && empty($m['posterUrl']) && isset($known[$m['path']])) {
+                    $m['posterUrl'] = $known[$m['path']];
+                }
+            }
+            unset($m);
+        }
+
+        return $out;
     }
 
     /**
