@@ -336,6 +336,7 @@
 @endpush
 
 @include('community.connect.partials.connect-js')
+@include('community.partials.avatar-zoom')
 @push('scripts')
 @include('community.partials.emoji-js')
 <script>

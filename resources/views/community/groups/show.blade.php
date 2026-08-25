@@ -833,6 +833,7 @@
 {{-- Rooms are looked at too: the same counter the wall uses. --}}
 @include('community.partials.views-js')
 @include('community.partials.report-js')
+@include('community.partials.avatar-zoom')
 @include('community.partials.emoji-js')
 @include('community.partials.lightbox-js')
 @include('community.partials.comment-tools-js')
