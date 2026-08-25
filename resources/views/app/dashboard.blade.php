@@ -217,7 +217,11 @@
        and rounded into its top corners. */
     .ds-head { position: relative; display: flex; align-items: center; gap: .5rem;
         width: calc(100% + 2rem); text-align: left; border: none; cursor: pointer;
-        margin: -1rem -1rem 0; padding: .6rem 1rem;
+        margin: -1rem -1rem 0; padding: .55rem 1rem;
+        /* The schedules page's covers stand 58px tall (their status pill sets
+           it); this head holds no pill, so the height is named instead —
+           a folded season then closes to the same 60px on both shelves. */
+        min-height: 3.625rem;
         /* The card is rounded-2xl (1rem); minus its 1px border. */
         border-radius: calc(1rem - 1px) calc(1rem - 1px) 0 0;
         background: linear-gradient(120deg, #f4e9dc, #dfc9ac 42%, #cbb08c 68%, #ecdfcd);
@@ -694,7 +698,7 @@
             @if (\App\Support\WorkerContext::canUseCommunity())
             <div>
                 <div class="flex items-center justify-between gap-3 mb-3 px-1">
-                    <h2 class="text-base md:text-lg font-bold text-gray-900">🌾 Community Wall</h2>
+                    <h2 class="text-base md:text-lg font-bold text-gray-900">🏘️ Community Wall</h2>
                     <a href="{{ route('community.index') }}" class="text-sm font-bold text-brand-700 hover:underline shrink-0">See more</a>
                 </div>
 
