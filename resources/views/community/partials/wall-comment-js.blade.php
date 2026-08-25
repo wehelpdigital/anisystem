@@ -467,7 +467,29 @@
         try {
             const res = await fetch(`/app/community/wall/${btn.getAttribute('data-post-id')}`, { method: 'DELETE', headers: jsonHeaders() });
             const data = await res.json();
-            if (data.success) { btn.closest('.wall-post').remove(); say(data.message); }
+            if (data.success) {
+                const card = btn.closest('.wall-post');
+                /* If the comments sheet borrowed the card, closing hands it
+                 * back to its slot in the wall first — removing it from
+                 * inside the sheet would leave the put-back on close to
+                 * resurrect it. */
+                if (card && card.closest('#wallCommentSheet') && window.closeSheet) window.closeSheet('wallCommentSheet');
+                if (card) {
+                    // The height must be pinned before it can fold to zero.
+                    card.style.maxHeight = card.offsetHeight + 'px';
+                    void card.offsetHeight;
+                    card.classList.add('is-leaving');
+                    setTimeout(() => {
+                        card.remove();
+                        /* A permalink page whose post is gone has nothing
+                         * left to show — hand the reader back to the wall. */
+                        if (location.pathname.startsWith('/app/community/post')) {
+                            location.href = '/app/community';
+                        }
+                    }, 460);
+                }
+                say(data.message);
+            }
             else say(data.message, 'error');
         } catch (_) { say('Network error — try again.', 'error'); }
     });

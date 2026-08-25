@@ -1149,6 +1149,28 @@
        to paint in a post's own colour — the top strip, and now the bottom
        one under a topic — reads them from one place. */
     .fp-card { position: relative; --fp-a: #4a7c2a; --fp-b: #8fc267; }
+    /* Your own post's way out: a quiet trash can in the corner. Muted until
+       looked at — it must not compete with the post it can remove. */
+    .fp-del { position: absolute; top: .6rem; right: .6rem; z-index: 5;
+        width: 2.1rem; height: 2.1rem; display: inline-flex; align-items: center; justify-content: center;
+        border: 0; border-radius: 999px; background: transparent; color: #b6c0b0; cursor: pointer;
+        transition: color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1),
+            transform .28s cubic-bezier(.22,1,.36,1); }
+    .fp-del svg { width: 1.05rem; height: 1.05rem; }
+    .fp-del:hover, .fp-del:focus-visible { color: #dc2626; background: rgb(220 38 38 / .09); transform: scale(1.1); }
+    html.dark .fp-del { color: #5d6858; }
+    html.dark .fp-del:hover, html.dark .fp-del:focus-visible { color: #f87171; background: rgb(248 113 113 / .13); }
+    /* A deleted post leaves the way a card should: folding shut so the
+       column closes over the gap, not blinking out of it. The height it
+       folds from is set inline by the handler just before this class lands. */
+    .wall-post.is-leaving { overflow: hidden; pointer-events: none;
+        opacity: 0; transform: translateY(-.4rem) scale(.98);
+        max-height: 0 !important; margin-top: 0 !important; margin-bottom: 0 !important;
+        padding-top: 0 !important; padding-bottom: 0 !important;
+        transition: max-height .42s cubic-bezier(.22,1,.36,1), opacity .28s ease,
+            transform .42s cubic-bezier(.22,1,.36,1), margin .42s cubic-bezier(.22,1,.36,1),
+            padding .42s cubic-bezier(.22,1,.36,1); }
+    @media (prefers-reduced-motion: reduce) { .wall-post.is-leaving { transition-duration: .01s; } }
     /* The strip is the card's whole shape with only its top few pixels
        painted — not a three-pixel bar wearing the card's corner radius.
        A browser shrinks a radius that cannot fit the box it is on, so an

@@ -29,6 +29,17 @@
 @endphp
 <article class="card p-4 mb-5 feed-post wall-post fp-card fp-hue-{{ $fpHue }}" id="wallpost-{{ $post->id }}"
          data-post-id="{{ $post->id }}" data-view="post:{{ $post->id }}">
+    {{-- Your own post can be taken down, from the corner where nothing of
+         yours ever renders (Follow and the DM door both hide on your own
+         card). Somebody else's post offers Report in the action row instead
+         — the two are never both drawn. The class is the one the delegated
+         handler already listens for; it asks before it acts. --}}
+    @if ($isMine)
+        <button type="button" class="wall-delete-btn fp-del" data-post-id="{{ $post->id }}"
+                title="Delete this post" aria-label="Delete this post">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.9 12.1a2 2 0 01-2 1.9H7.9a2 2 0 01-2-1.9L5 7m3 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-11 0h16"/></svg>
+        </button>
+    @endif
     <header class="flex items-start gap-3">
         {{-- What is on their mind, in the cloud over the face — the same
              place the composer at the top of the wall puts it. The card
