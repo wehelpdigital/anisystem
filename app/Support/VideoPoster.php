@@ -125,6 +125,15 @@ class VideoPoster
 
     public static function keep(string $video, string $binary): ?string
     {
+        /* A blank frame is worse than none. Chrome sometimes paints black
+         * when a huge clip's first frame has not composited by loadeddata,
+         * and a black picture kept here is kept forever — "cut once" turns
+         * a decode hiccup into a permanent thumbnail of nothing. Refused,
+         * the clip stays cuttable and the next attempt gets it right. */
+        if (self::looksBlank($binary)) {
+            return null;
+        }
+
         $path = MediaStore::putBinary($binary, 'video-posters', 'jpg', null, 'poster-');
         if (! $path) {
             return null;
@@ -181,7 +190,13 @@ class VideoPoster
                     }
                     $source = $pulled;
                 }
-                foreach (['1', '0'] as $seek) {
+                // Walked until a frame with something in it: plenty of phone
+                // clips fade in from black, and a black rectangle kept as the
+                // thumbnail reads as "no thumbnail". The first frame cut is
+                // held as the fallback — for a clip that really is black all
+                // the way through, its own black frame is the honest answer.
+                $fallback = null;
+                foreach (['1', '3', '8', '0'] as $seek) {
                     $p = new Process([
                         $bin, '-y',
                         // Enough of the file to know what it is, and no more.
@@ -199,8 +214,15 @@ class VideoPoster
                     $p->setTimeout(150);
                     $p->run();
                     if ($p->isSuccessful() && is_file($out) && filesize($out) > 0) {
-                        return file_get_contents($out) ?: null;
+                        $bytes = file_get_contents($out) ?: null;
+                        if ($bytes !== null && ! self::looksBlank($bytes)) {
+                            return $bytes;
+                        }
+                        $fallback ??= $bytes;
                     }
+                }
+                if ($fallback !== null) {
+                    return $fallback;
                 }
             }
             Log::info('VideoPoster: no frame could be cut', ['video' => $video]);
@@ -212,6 +234,44 @@ class VideoPoster
                 @unlink($pulled);
             }
         }
+    }
+
+    /**
+     * Does this picture show anything at all?
+     *
+     * A 10x10 grid of samples and the spread between the darkest and the
+     * brightest: a real frame of anything has more than ~14 points of range,
+     * a black (or white, or solid-colour) rectangle has none. Answered "no"
+     * when GD is missing or the bytes will not decode — a guard that cannot
+     * look must not veto.
+     */
+    private static function looksBlank(string $binary): bool
+    {
+        if (! function_exists('imagecreatefromstring')) {
+            return false;
+        }
+        $im = @imagecreatefromstring($binary);
+        if (! $im) {
+            return false;
+        }
+        $w = imagesx($im);
+        $h = imagesy($im);
+        if ($w < 2 || $h < 2) {
+            return true;
+        }
+        $min = 255.0;
+        $max = 0.0;
+        for ($i = 0; $i < 10; $i++) {
+            for ($j = 0; $j < 10; $j++) {
+                $c = imagecolorat($im, (int) ($w * $i / 10), (int) ($h * $j / 10));
+                $l = ((($c >> 16) & 255) * 3 + (($c >> 8) & 255) * 6 + ($c & 255)) / 10;
+                $min = min($min, $l);
+                $max = max($max, $l);
+            }
+        }
+        imagedestroy($im);
+
+        return ($max - $min) < 14;
     }
 
     /**

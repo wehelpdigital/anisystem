@@ -283,29 +283,62 @@
          * often loads fine when simply asked for as media. So the polite ask,
          * and on refusal the plain one; if the plain frame then taints the
          * canvas, toDataURL throws and this gives up as before. */
+        /* And never a blank one. Chrome can paint black when a big clip's
+         * first frame has not composited by loadeddata, and phone clips fade
+         * in from black anyway — so each draw is checked for actual content
+         * (sampled luminance spread) and a blank one walks forward through
+         * the clip before answering. All blank → null, because a black
+         * rectangle kept as a frame is kept forever. */
+        const blank = (ctx, w, h) => {
+            try {
+                const d = ctx.getImageData(0, 0, w, h).data;
+                let mn = 255, mx = 0;
+                const step = Math.max(1, Math.floor(d.length / 4 / 400)) * 4;
+                for (let i = 0; i < d.length; i += step) {
+                    const l = (d[i] * 3 + d[i + 1] * 6 + d[i + 2]) / 10;
+                    if (l < mn) mn = l;
+                    if (l > mx) mx = l;
+                }
+                return (mx - mn) < 14;
+            } catch (_) { return false; }                // tainted: toDataURL will say so
+        };
         const attempt = (cors) => new Promise((resolve) => {
             let done = false;
-            const finish = (v) => { if (!done) { done = true; resolve(v); } };
             const v = document.createElement('video');
+            const finish = (val) => { if (!done) { done = true; try { v.src = ''; } catch (_) {} resolve(val); } };
             v.muted = true; v.playsInline = true; v.preload = 'metadata';
             if (cors) v.crossOrigin = 'anonymous';       // same-origin clips are unaffected
             v.src = clipFrameUrl(url);
-            const bail = () => { try { v.src = ''; } catch (_) {} finish(null); };
-            v.addEventListener('error', bail, { once: true });
-            setTimeout(bail, 12000);                     // a slow clip is not worth a stall
-            v.addEventListener('loadeddata', () => {
+            v.addEventListener('error', () => finish(null), { once: true });
+            setTimeout(() => finish(null), 20000);       // a slow clip is not worth a stall
+            const seek = (t) => new Promise((r) => {
+                v.addEventListener('seeked', () => r(), { once: true });
+                setTimeout(r, 4000);
+                try { v.currentTime = t; } catch (_) { r(); }
+            });
+            v.addEventListener('loadeddata', async () => {
                 try {
                     const w = 640;
                     const h = Math.max(1, Math.round((v.videoHeight || 360) * w / (v.videoWidth || 640)));
                     const c = document.createElement('canvas');
                     c.width = w; c.height = h;
-                    c.getContext('2d').drawImage(v, 0, 0, w, h);
+                    const ctx = c.getContext('2d');
+                    const dur = Number.isFinite(v.duration) ? v.duration : 0;
+                    let good = false;
+                    for (const t of [null, 1, 3, 8]) {
+                        if (t !== null) {
+                            if (dur && t >= dur - 0.2) break;
+                            await seek(t);
+                            if (done) return;
+                        }
+                        ctx.drawImage(v, 0, 0, w, h);
+                        if (!blank(ctx, w, h)) { good = true; break; }
+                    }
+                    if (!good) { finish(null); return; }
                     const data = c.toDataURL('image/jpeg', 0.8);
                     finish(data && data.length > 2048 ? data : null);
                 } catch (_) {
                     finish(null);                        // tainted canvas, or no frame yet
-                } finally {
-                    try { v.src = ''; } catch (_) {}
                 }
             }, { once: true });
         });
