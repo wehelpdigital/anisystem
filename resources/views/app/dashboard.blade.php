@@ -223,14 +223,20 @@
         background: linear-gradient(120deg, #f4e9dc, #dfc9ac 42%, #cbb08c 68%, #ecdfcd);
         background-size: 220% 100%;
         animation: gradSweep var(--sw-t, 13s) ease-in-out infinite alternate;
-        animation-delay: var(--sw-d, 0s); }
+        animation-delay: var(--sw-d, 0s);
+        transition: margin-bottom .28s cubic-bezier(.22,1,.36,1), border-radius .28s cubic-bezier(.22,1,.36,1); }
+    /* Folded, the cover IS the card: it swallows the body's bottom padding
+       too and rounds all four corners, instead of leaving a strip of bare
+       card under the soil. */
+    .ds-card.is-folded .ds-head { margin-bottom: -1rem; border-radius: calc(1rem - 1px); }
+    .ds-card.is-folded .ds-head::after { display: none; }
     /* The faint horizon line that makes the tint read as ground. */
     .ds-head::after { content: ''; position: absolute; inset: auto 0 0 0; height: 1rem;
         background: linear-gradient(180deg, transparent, rgb(0 0 0 / .05)); pointer-events: none; }
     html.dark .ds-head {
         background: linear-gradient(120deg, #2a2018, #3a2c1e 42%, #4a3826 68%, #2f241a);
         background-size: 220% 100%; }
-    @media (prefers-reduced-motion: reduce) { .ds-head { animation: none; } }
+    @media (prefers-reduced-motion: reduce) { .ds-head { animation: none; transition: none; } }
     .ds-head h3 { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         position: relative; z-index: 1; text-shadow: 0 1px 0 rgb(255 255 255 / .5); }
     html.dark .ds-head h3 { text-shadow: none; }
