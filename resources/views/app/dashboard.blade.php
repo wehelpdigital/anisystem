@@ -373,8 +373,10 @@
                  this account rather than a decoration on the name. It links
                  to the ladder so climbing is one tap from the greeting. --}}
             @include('community.partials.rank-badge', ['rankUser' => $user, 'rankChipLike' => true])
+            {{-- No chip for a super admin: admin power lives in the mother
+                 site, and in here an admin is just another member. The
+                 subscription facts still speak for everyone else. --}}
             @if ($isSuperAdmin)
-                <span class="dash-chip is-ok">🛡️ Admin access</span>
             @elseif ($isActive)
                 <span class="dash-chip {{ $expiringSoon ? 'is-warn' : 'is-ok' }}">
                     {{ $daysRemaining }} {{ \Illuminate\Support\Str::plural('day', (int) $daysRemaining) }} left
