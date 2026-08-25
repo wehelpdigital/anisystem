@@ -81,7 +81,17 @@ class AppController extends Controller
 
         // Which of the shown schedules have a lot with a geocodeable address —
         // so the dashboard knows whether to show a weather widget or a prompt.
-        $latestSchedules->load(['lots' => fn ($q) => $q->select('id', 'croppingScheduleId', 'locTown', 'locProvince')]);
+        $latestSchedules->load(['lots' => fn ($q) => $q->select('id', 'croppingScheduleId', 'locTown', 'locProvince', 'crop')]);
+        /* The crops growing on each season, as the schedules page draws them
+         * on its covers: one icon per distinct crop, at most three. */
+        $scheduleCrops = $latestSchedules->mapWithKeys(function ($s) {
+            $icons = [];
+            foreach ($s->lots as $lot) {
+                $icons[\App\Support\CropStages::icon($lot->crop)] = true;
+            }
+
+            return [$s->id => array_slice(array_keys($icons), 0, 3)];
+        });
         $scheduleHasLocation = $latestSchedules->mapWithKeys(fn ($s) => [
             $s->id => $s->lots->contains(fn ($l) => filled($l->geocode_query)),
         ])->all();
@@ -222,6 +232,7 @@ class AppController extends Controller
             'scheduleCount' => $scheduleCount,
             'shelfYear' => $year,
             'latestSchedules' => $latestSchedules,
+            'scheduleCrops' => $scheduleCrops,
             'scheduleHasLocation' => $scheduleHasLocation,
             'aiBalance' => $aiBalance,
             'latestBlog' => $latestBlog,

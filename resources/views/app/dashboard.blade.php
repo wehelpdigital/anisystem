@@ -237,6 +237,10 @@
         background: linear-gradient(120deg, #2a2018, #3a2c1e 42%, #4a3826 68%, #2f241a);
         background-size: 220% 100%; }
     @media (prefers-reduced-motion: reduce) { .ds-head { animation: none; transition: none; } }
+    /* se-crops' measurements, so the same season shows the same face. */
+    .ds-crops { font-size: 1.7rem; line-height: 1; letter-spacing: .1em; position: relative; z-index: 1;
+        flex-shrink: 0; filter: drop-shadow(0 2px 3px rgb(0 0 0 / .12)); }
+    @media (max-width: 767px) { .ds-crops { font-size: 1.45rem; } }
     .ds-head h3 { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         position: relative; z-index: 1; text-shadow: 0 1px 0 rgb(255 255 255 / .5); }
     html.dark .ds-head h3 { text-shadow: none; }
@@ -446,7 +450,7 @@
     {{-- My Cropping Schedules (top — the primary workspace) --}}
     <div>
         <div class="flex items-center justify-between gap-3 mb-3 px-1">
-            <h2 class="text-base md:text-lg font-bold text-gray-900">🌾 My Cropping Schedules</h2>
+            <h2 class="text-base md:text-lg font-bold text-gray-900">📅 My Cropping Schedules</h2>
             @if ($latestSchedules->isNotEmpty())
                 <a href="{{ route('sm.index') }}" class="text-sm font-bold text-brand-700 hover:underline shrink-0">View all</a>
             @endif
@@ -496,6 +500,10 @@
                         <div class="card-body !p-4 flex flex-col gap-3 h-full min-w-0">
                             <button type="button" class="ds-head" data-ds-fold aria-expanded="true"
                                     aria-label="Fold or unfold {{ $schedule->title }}">
+                                {{-- The crops growing on this season, exactly as
+                                     the schedules page stands them on its
+                                     covers. --}}
+                                <span class="ds-crops" aria-hidden="true">{{ count($scheduleCrops[$schedule->id] ?? []) ? implode('', $scheduleCrops[$schedule->id]) : '🌱' }}</span>
                                 <h3 class="font-bold text-gray-900 leading-snug min-w-0">{{ $schedule->title }}</h3>
                                 <span class="ds-chev" aria-hidden="true">
                                     <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
