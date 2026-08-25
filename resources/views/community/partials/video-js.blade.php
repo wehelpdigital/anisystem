@@ -13,6 +13,46 @@
     if (window.__plazaVideoBound) return;
     window.__plazaVideoBound = true;
 
+    /* ---- A film that leaves the eye stops talking -------------------------
+     *
+     * Slide a carousel to the next clip, scroll a playing post off the
+     * screen, open a sheet over it — the moment a player is (mostly) not
+     * visible, it pauses. One observer serves every video on the page,
+     * wherever it came from: the wall's posts, a comment's clips, a topic,
+     * a reply, pieces that arrive later over the wire. Intersection is
+     * measured against every clipping ancestor, which is what makes the
+     * carousel case free: a slide scrolled out of its own track reports
+     * zero without anybody doing arithmetic.
+     *
+     * A live camera preview (srcObject) is exempt — pausing one freezes the
+     * recorder's mirror, and the recording it belongs to is not a film
+     * being watched. */
+    (function pauseOffscreen() {
+        if (!('IntersectionObserver' in window)) return;
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((en) => {
+                const v = en.target;
+                if (en.intersectionRatio >= 0.25) return;   // still mostly in view
+                if (v.srcObject || v.paused || v.ended) return;
+                try { v.pause(); } catch (_) { /* already unplayable */ }
+            });
+        }, { threshold: [0, 0.25] });
+        const watch = (root) => {
+            if (root.nodeType !== 1) return;
+            if (root.tagName === 'VIDEO') io.observe(root);
+            root.querySelectorAll?.('video').forEach((v) => io.observe(v));
+        };
+        const start = () => {
+            watch(document.documentElement);
+            // Videos keep arriving — load-more pages, fresh comments, a
+            // carousel built after a post — and each one is watched on entry.
+            new MutationObserver((muts) => muts.forEach((m) => m.addedNodes.forEach(watch)))
+                .observe(document.body, { childList: true, subtree: true });
+        };
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
+        else start();
+    })();
+
     /* A minute, not a number of megabytes.
      *
      * Length is what somebody filming can judge before they press record, and
