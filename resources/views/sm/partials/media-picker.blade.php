@@ -277,12 +277,18 @@
      * so this quietly gives up and the clapperboard stays.
      */
     function grabFrame(url) {
-        return new Promise((resolve) => {
+        /* Twice if it has to: first asking politely for CORS, because only a
+         * CORS-clean video can be read back off a canvas — but a host that
+         * never heard of CORS fails that load outright, and the same clip
+         * often loads fine when simply asked for as media. So the polite ask,
+         * and on refusal the plain one; if the plain frame then taints the
+         * canvas, toDataURL throws and this gives up as before. */
+        const attempt = (cors) => new Promise((resolve) => {
             let done = false;
             const finish = (v) => { if (!done) { done = true; resolve(v); } };
             const v = document.createElement('video');
             v.muted = true; v.playsInline = true; v.preload = 'metadata';
-            v.crossOrigin = 'anonymous';                 // same-origin clips are unaffected
+            if (cors) v.crossOrigin = 'anonymous';       // same-origin clips are unaffected
             v.src = clipFrameUrl(url);
             const bail = () => { try { v.src = ''; } catch (_) {} finish(null); };
             v.addEventListener('error', bail, { once: true });
@@ -303,6 +309,8 @@
                 }
             }, { once: true });
         });
+
+        return attempt(true).then((shot) => shot || attempt(false));
     }
 
     let framesRunning = false;
@@ -318,12 +326,21 @@
                 tile.removeAttribute('data-needs-frame');   // asked; never twice
                 tile.classList.add('is-cutting');           // the ring turns while the frame is cut
                 try {
-                    const res = await window.api(POSTER_URL, { method: 'POST', body: { path } });
+                    /* The server leg fails on its own. api() throws on any
+                     * unhappy answer — a clip the server cannot reach, an
+                     * expired token, a hiccup — and one throw here used to
+                     * skip the browser leg entirely: the one place that could
+                     * still paint a frame never got to try. */
+                    const res = await window.api(POSTER_URL, { method: 'POST', body: { path } }).catch(() => null);
                     let url = res && res.data && res.data.posterUrl;
                     if (!url) {
                         // The server could not. This browser might: draw one
                         // and hand it in, so the next phone is shown a picture.
-                        const item = (grid.__shown || []).find((m) => m.path === path);
+                        // (items, not grid.__shown: grid was loadPage's local,
+                        // and reading it from here threw — which the per-tile
+                        // catch swallowed, so on any server without ffmpeg the
+                        // browser leg quietly never ran at all.)
+                        const item = items.find((m) => m.path === path);
                         const shot = item && await grabFrame(item.url);
                         if (shot) {
                             const saved = await window.api(POSTER_SAVE_URL, { method: 'POST', body: { path, image: shot } })

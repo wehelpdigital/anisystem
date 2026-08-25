@@ -52,42 +52,59 @@ class CommunityMedia
             );
         }
 
+        /* A post can carry several clips now (videoPaths), and a post that
+         * does may leave the old single column empty. Asking only videoPath
+         * made every multi-clip post invisible on this shelf — a member who
+         * filmed three clips into one post had filmed nothing, as far as
+         * their own gallery could tell. Each model's clips() already speaks
+         * both spellings; the query just has to let those rows through. */
+        $carriesClips = function ($q) {
+            $q->whereNotNull('videoPath')->where('videoPath', '!=', '');
+            $q->orWhereNotNull('videoPaths');
+        };
+
         foreach (CommunityWallPost::where('authorUserId', $userId)->where('deleteStatus', 1)
-            ->whereNotNull('videoPath')->where('videoPath', '!=', '')->get() as $p) {
-            $out[] = self::row(
-                $p->videoPath,
-                $p->videoPoster,
-                'Wall post',
-                'On a wall',
-                $p->created_at,
-                self::profileHref((int) $p->wallUserId) . '#wallpost-' . $p->id
-            );
+            ->where($carriesClips)->get() as $p) {
+            foreach ($p->clips() as $clip) {
+                $out[] = self::row(
+                    $clip['video'] ?? null,
+                    $clip['poster'] ?? null,
+                    'Wall post',
+                    'On a wall',
+                    $p->created_at,
+                    self::profileHref((int) $p->wallUserId) . '#wallpost-' . $p->id
+                );
+            }
         }
 
         foreach (CommunityWallComment::where('userId', $userId)->where('deleteStatus', 1)
-            ->whereNotNull('videoPath')->where('videoPath', '!=', '')->get() as $c) {
+            ->where($carriesClips)->get() as $c) {
             $post = CommunityWallPost::where('id', $c->wallPostId)->first();
-            $out[] = self::row(
-                $c->videoPath,
-                $c->videoPoster,
-                'Comment',
-                'Under a post',
-                $c->created_at,
-                $post ? self::profileHref((int) $post->wallUserId) . '#wallpost-' . $post->id : null
-            );
+            foreach ($c->clips() as $clip) {
+                $out[] = self::row(
+                    $clip['video'] ?? null,
+                    $clip['poster'] ?? null,
+                    'Comment',
+                    'Under a post',
+                    $c->created_at,
+                    $post ? self::profileHref((int) $post->wallUserId) . '#wallpost-' . $post->id : null
+                );
+            }
         }
 
         $groupNames = [];
         foreach (CommunityGroupPost::where('userId', $userId)->where('deleteStatus', 1)
-            ->whereNotNull('videoPath')->where('videoPath', '!=', '')->get() as $gp) {
-            $out[] = self::row(
-                $gp->videoPath,
-                $gp->videoPoster,
-                'Discussion topic',
-                self::groupName((int) $gp->groupId, $groupNames),
-                $gp->created_at,
-                self::groupHref((int) $gp->groupId, (int) $gp->id)
-            );
+            ->where($carriesClips)->get() as $gp) {
+            foreach ($gp->clips() as $clip) {
+                $out[] = self::row(
+                    $clip['video'] ?? null,
+                    $clip['poster'] ?? null,
+                    'Discussion topic',
+                    self::groupName((int) $gp->groupId, $groupNames),
+                    $gp->created_at,
+                    self::groupHref((int) $gp->groupId, (int) $gp->id)
+                );
+            }
         }
 
         foreach (CommunityGroupReply::where('userId', $userId)->where('deleteStatus', 1)

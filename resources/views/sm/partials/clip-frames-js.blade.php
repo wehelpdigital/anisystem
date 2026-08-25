@@ -47,12 +47,15 @@
      * canvas walk the picker uses; a clip on a foreign host taints the
      * canvas and this quietly gives up. */
     function grabFrame(url) {
-        return new Promise((resolve) => {
+        /* Twice if it has to: with CORS first (only a CORS-clean video can be
+         * read back off a canvas), and plainly when that load is refused —
+         * a tainted plain frame throws at toDataURL and gives up as before. */
+        const attempt = (cors) => new Promise((resolve) => {
             let done = false;
             const finish = (v) => { if (!done) { done = true; resolve(v); } };
             const v = document.createElement('video');
             v.muted = true; v.playsInline = true; v.preload = 'metadata';
-            v.crossOrigin = 'anonymous';
+            if (cors) v.crossOrigin = 'anonymous';
             v.src = url + (url.includes('#') ? '' : '#t=0.1');
             const bail = () => { try { v.src = ''; } catch (_) {} finish(null); };
             v.addEventListener('error', bail, { once: true });
@@ -70,6 +73,8 @@
                 finally { try { v.src = ''; } catch (_) {} }
             }, { once: true });
         });
+
+        return attempt(true).then((shot) => shot || attempt(false));
     }
 
     const post = (url, body) => fetch(url, {
