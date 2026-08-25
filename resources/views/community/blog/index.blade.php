@@ -162,7 +162,8 @@
     window.plazaLiveSearch?.(findEl, search);
     document.getElementById('blogSearchBtn')?.addEventListener('click', () => {
         window.openSheet?.('blogSearchSheet');
-        window.smFocus?.(findEl, { delay: 140, always: true });
+        // No `always`: the phone keypad should wait for a tap on the field.
+        window.smFocus?.(findEl, { delay: 140 });
     });
     chip?.addEventListener('click', () => {
         findEl.value = '';

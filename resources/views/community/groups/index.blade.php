@@ -309,8 +309,9 @@
         <input type="file" id="groupPicCam" accept="image/*" capture="environment" class="hidden">
     </div>
     <div class="sheet-footer">
-        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
-        <button type="button" class="btn btn-primary" id="createGroupSave">Create discussion</button>
+        {{-- One button. The ✕ in the header is the way out, and a Cancel
+             beside Create was two ways of saying no to one of saying yes. --}}
+        <button type="button" class="btn btn-primary comp-send" id="createGroupSave" style="margin-top:0">Create discussion</button>
     </div>
 </div>
 {{-- Where a picture comes from. The same three the AI composer, the
@@ -723,7 +724,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterChip = document.getElementById('discFilterChip');
     document.getElementById('discSearchBtn')?.addEventListener('click', () => {
         window.openSheet?.('discSearchSheet');
-        window.smFocus?.(findEl, { delay: 140, always: true });
+        // No `always`: the phone keypad should wait for a tap on the field.
+        window.smFocus?.(findEl, { delay: 140 });
     });
     filterChip?.addEventListener('click', () => {
         if (!findEl) return;

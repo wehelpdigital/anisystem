@@ -237,7 +237,8 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ---- the search ---- */
     document.getElementById('savedSearchBtn')?.addEventListener('click', () => {
         window.openSheet?.('savedSearchSheet');
-        window.smFocus?.(findEl, { delay: 140, always: true });
+        // No `always`: the phone keypad should wait for a tap on the field.
+        window.smFocus?.(findEl, { delay: 140 });
     });
     filterChip?.addEventListener('click', () => {
         if (!findEl) return;

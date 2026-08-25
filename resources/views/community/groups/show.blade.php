@@ -299,11 +299,18 @@
     .group-post .post-thread, .group-post .post-reply-form { display:none; }
     /* The composer's tool row: the answer box's pill, worn without the text
        field — the textarea above is the field here. */
-    .topic-attach-form { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; margin-top:.5rem; }
-    .topic-tools { display:inline-flex; align-items:center; gap:.25rem;
-        border:1.5px solid var(--color-gray-200); border-radius:9999px;
-        background:var(--color-gray-50); padding:.2rem .35rem; }
-    html.dark .topic-tools { background:var(--color-gray-100); }
+    .topic-attach-form { display:block; margin-top:.55rem; }
+    /* The wall composer's own bar, borrowed line for line (feed.blade.php
+       keeps the original) so the two sheets read as one form. */
+    .comp-top { display:flex; align-items:flex-start; gap:.75rem; margin-bottom:.7rem; }
+    .comp-add { display:flex; align-items:center; gap:.6rem; flex-wrap:wrap; }
+    .comp-add-box { padding:.35rem .5rem .35rem .7rem; border-radius:.8rem;
+        border:1px solid var(--color-gray-200); background:var(--color-gray-50); }
+    html.dark .comp-add-box { border-color:rgb(255 255 255 / .08); background:rgb(255 255 255 / .03); }
+    .comp-add-lbl { font-size:.72rem; font-weight:800; color:var(--color-gray-500); }
+    .comp-add-row { display:flex; align-items:center; gap:.35rem; flex-wrap:wrap; margin-left:auto; }
+    .comp-add-row .wall-act { width:2.15rem; height:2.15rem; border-radius:.6rem;
+        display:inline-flex; align-items:center; justify-content:center; }
     .thread-modal-body .group-post .post-thread { display:block; }
     .thread-modal-body .group-post .post-reply-form { display:flex; }
     .thread-modal-body .topic-acts { display:none; }
@@ -555,52 +562,65 @@
              and the paragraph that used to sit here pushed the first field a
              hundred pixels down a phone. What it said that mattered — the @
              tagging — lives in the placeholder now. --}}
-        <div class="sheet-body" style="padding-top:.35rem;padding-bottom:1.1rem">
+        <div class="sheet-body" style="padding-top:1rem;padding-bottom:1.1rem">
             <div class="disc-composer" id="composerCard" data-video-host>
-            <div class="flex items-start gap-3">
-                <span class="avatar avatar-md disc-composer-av {{ CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} mt-1">{{ auth()->user()->initials ?? '?' }}</span>
-                <div class="min-w-0 grow">
-                    <input type="text" id="postTitle" class="form-input mb-2" maxlength="191" required placeholder="Topic title *">
-                    {{-- Plain words, like the wall's box. data-mentionable is what
-                         gives it @names — the rich editor could not have them at
-                         all, because the mention script binds to fields. --}}
-                    <textarea id="postBody" class="form-textarea disc-composer-box" rows="4" maxlength="4000"
-                              data-mentionable placeholder="Magtanong o magbahagi — use @ to tag a co-farmer"></textarea>
-                    {{-- The same tool row an answer carries, speaking the
-                         same script: the photo icon opens its three sources
-                         (upload / camera / gallery), the video icon its two
-                         (upload / from the gallery), the red dot records, and
-                         everything chosen lands in one tray — up to eight
-                         pictures and three clips. A form of its own so the
-                         shared tools can find their footing, but one that
-                         never submits: the Post button owns sending. --}}
-                    <form class="topic-attach-form" data-video-host onsubmit="return false">
-                        <span class="topic-tools">
-                            <button type="button" class="emoji-btn js-comment-photo" aria-label="Attach a photo" title="Photo">
-                                <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                {{-- The wall's head, worn here: the face and the name above
+                     the fields, so the box you write in looks like the topic
+                     it becomes — and like the wall's Write-a-post box, which
+                     is the same act one page over. --}}
+                <div class="comp-top">
+                    <span class="avatar avatar-md {{ CommunityAvatar::hue(auth()->user()->full_name ?? '?') }} overflow-hidden shrink-0">
+                        @if (auth()->user()?->avatarPath)
+                            <img src="{{ \App\Support\MediaStore::url(auth()->user()->avatarPath) }}" alt="" class="w-full h-full object-cover">
+                        @else
+                            {{ auth()->user()->initials ?? '?' }}
+                        @endif
+                    </span>
+                    <div class="min-w-0 grow">
+                        <p class="text-sm leading-tight font-semibold text-gray-900">{{ auth()->user()->full_name }}</p>
+                        <p class="text-xs text-gray-400">Posting in {{ $group->name }}</p>
+                    </div>
+                </div>
+                <input type="text" id="postTitle" class="form-input mb-2" maxlength="191" required placeholder="Topic title *">
+                {{-- Plain words, like the wall's box. data-mentionable is what
+                     gives it @names — the rich editor could not have them at
+                     all, because the mention script binds to fields. --}}
+                <textarea id="postBody" class="form-textarea w-full disc-composer-box" rows="4" maxlength="4000"
+                          data-mentionable placeholder="Magtanong o magbahagi — use @ to tag a co-farmer"></textarea>
+                {{-- The wall's "Add to your post" bar, speaking the answer
+                     box's script: the photo icon opens its three sources
+                     (upload / camera / gallery), the video icon its two
+                     (upload / from the gallery), the red dot records, and
+                     everything chosen lands in one tray — up to eight
+                     pictures and three clips. A form of its own so the shared
+                     tools can find their footing, but one that never
+                     submits: the Post button owns sending. --}}
+                <form class="topic-attach-form" data-video-host onsubmit="return false">
+                    <div class="comp-add comp-add-box">
+                        <span class="comp-add-lbl">Add to your topic</span>
+                        <div class="comp-add-row">
+                            <button type="button" class="wall-act js-comment-photo" aria-label="Attach a photo" title="Photo">
+                                <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                             </button>
                             <input type="file" class="js-comment-file hidden" accept="image/jpeg,image/png,image/webp,image/gif" multiple>
-                            <button type="button" class="emoji-btn js-comment-video" aria-label="Attach a video" title="Video">
-                                <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                            <button type="button" class="wall-act js-comment-video" aria-label="Attach a video" title="Video">
+                                <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                             </button>
-                            <button type="button" class="emoji-btn js-video-record" aria-label="Record a video" title="Record">
-                                <svg class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="currentColor"/></svg>
+                            <button type="button" class="wall-act js-video-record" aria-label="Record a video" title="Record">
+                                <svg class="w-5 h-5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="currentColor"/></svg>
                             </button>
                             <input type="file" class="js-video-file hidden" accept="video/*">
-                            <button type="button" class="emoji-btn js-emoji-btn" data-target="postBody" aria-label="Add an emoji" title="Emoji">
-                                <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <button type="button" class="wall-act js-emoji-btn" data-target="postBody" aria-label="Add an emoji" title="Emoji">
+                                <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             </button>
-                        </span>
-                        <span class="comment-shots js-comment-shots hidden"></span>
-                        <span class="js-video-chip attach-chip items-center gap-1 text-xs font-semibold text-gray-600" style="display:none"><span class="js-video-name"></span><button type="button" class="js-video-clear text-red-600 font-bold" aria-label="Remove video">✕</button></span>
-                        <span class="attach-chip hidden js-comment-chip"><span class="js-chip-name"></span><button type="button" class="js-chip-clear" aria-label="Remove photo">✕</button></span>
-                    </form>
-            <div class="flex items-center justify-end gap-2 mt-2">
-                                <button type="button" id="postSubmit" class="btn btn-primary btn-sm">Post</button>
+                        </div>
+                    </div>
+                    <span class="comment-shots js-comment-shots hidden"></span>
+                    <span class="js-video-chip attach-chip items-center gap-1 text-xs font-semibold text-gray-600" style="display:none"><span class="js-video-name"></span><button type="button" class="js-video-clear text-red-600 font-bold" aria-label="Remove video">✕</button></span>
+                    <span class="attach-chip hidden js-comment-chip"><span class="js-chip-name"></span><button type="button" class="js-chip-clear" aria-label="Remove photo">✕</button></span>
+                </form>
+                <button type="button" id="postSubmit" class="btn btn-primary comp-send">Post</button>
             </div>
-                </div>
-            </div>
-        </div>
         </div>
     </div>
     @endif
@@ -1414,7 +1434,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.getElementById('topicSearchBtn')?.addEventListener('click', () => {
         window.openSheet?.('topicSearchSheet');
-        window.smFocus?.(document.getElementById('topicFind'), { delay: 140, always: true });
+        // No `always`: on a phone, focusing here throws the keypad over the
+        // sheet before the reader has seen it. A desktop still gets the caret.
+        window.smFocus?.(document.getElementById('topicFind'), { delay: 140 });
     });
     // Tapping the chip is how a search is called off from the room.
     document.getElementById('topicFilterChip')?.addEventListener('click', () => {
