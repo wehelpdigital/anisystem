@@ -105,7 +105,16 @@
             </div>
         @endif
         @php $fpClips = method_exists($post, 'clips') ? $post->clips() : array_filter([['video' => $post->videoPath ?? null, 'poster' => $post->videoPoster ?? null]], fn ($c) => ! empty($c['video'])); @endphp
-        @include('community.partials.clip-carousel', ['clips' => $fpClips])
+        @if (count($fpClips))
+            {{-- A POSTED film fills the card (see .post-films in plaza-css):
+                 landscape at its own shape, portrait as a full-width square
+                 covered from the centre. Comments keep their smaller
+                 sized-to-the-film players; this wrapper is what tells the
+                 two apart. --}}
+            <div class="post-films">
+                @include('community.partials.clip-carousel', ['clips' => $fpClips])
+            </div>
+        @endif
 
         {{-- A share carries the original rather than copying it. Drawn by
              the shared partial, so the profile wall shows the same thing. --}}

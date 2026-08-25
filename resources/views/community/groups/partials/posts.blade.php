@@ -79,7 +79,11 @@
                     </div>
                 @endif
                 @php $pClips = method_exists($post, 'clips') ? $post->clips() : array_filter([['video' => $post->videoPath ?? null, 'poster' => $post->videoPoster ?? null]], fn ($c) => ! empty($c['video'])); @endphp
-                @include('community.partials.clip-carousel', ['clips' => $pClips])
+                @if (count($pClips))
+                    <div class="post-films">
+                        @include('community.partials.clip-carousel', ['clips' => $pClips])
+                    </div>
+                @endif
             @endif
         </div>
 

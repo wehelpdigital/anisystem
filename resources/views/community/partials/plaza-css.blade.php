@@ -141,6 +141,19 @@
         max-width:min(100%, calc(24rem * var(--vr, 1.7778))); }
     /* In a slider the slide is the full width; the film sits in the middle of
        it at its own size. */
+    /* ---- A POSTED film fills the card ----
+       On a post the frame is the card's width, always: a landscape film at
+       its own shape, a portrait one as a full-width square with the film
+       covered from the centre — cover crops the sides of the frame that do
+       not fit, so nothing letterboxes and nothing stretches. Comments keep
+       the smaller sized-to-the-film players; the .post-films wrapper is the
+       whole difference. max() needs a browser that can do arithmetic inside
+       aspect-ratio; one that cannot keeps the film's own shape from the
+       line above. */
+    .post-films .post-video-el { max-width:100%;
+        aspect-ratio:max(var(--vr, 1.7778), 1); }
+    .post-films .post-video,
+    .post-films .pc-clips .pc-track .post-video { width:100%; }
     .pc-clips .pc-track .post-video { display:block; width:auto; margin-inline:auto; }
 
     .pc-count { position:absolute; top:.5rem; right:.5rem; pointer-events:none;
