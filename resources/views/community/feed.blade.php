@@ -103,13 +103,10 @@
     @media (prefers-reduced-motion: reduce) { .comp-add-row .wall-act { transition: none; } }
     .comp-hint { font-size: .72rem; color: var(--color-gray-400); margin-top: .35rem; }
     .comp-hint b { color: var(--color-gray-500); font-weight: 800; }
-    /* A thought bubble floats above the avatar and out of the card, so a card
-       that has one needs the room; one that does not would just look adrift. */
-    /* The same trade a post carrying a cloud makes: the card keeps its own
-       padding, the cloud rides ITS top edge rather than being tucked inside,
-       and the margin above is what keeps it off the card before. Padding here
-       instead would sit the cloud lower than every cloud under it. */
-    #feedComposer { margin-top: 1.35rem; }
+    /* The composer lives in a sheet now, and the margin that used to sit
+       here was for the card it once followed on the page: under a sheet
+       header it only doubled the header's own padding into a dead band. The
+       cloud's hanging room is .comp-sheeted's padding-top, which stays. */
 
     /* People you may know — a rail that scrolls sideways on a phone. */
     /* The band's own rules live in plaza-css — the members page draws it too. */
@@ -257,7 +254,8 @@
         <h3 class="sheet-title">Write a post</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
-    <div class="sheet-body" style="padding-bottom:1.1rem">
+    {{-- Just enough top padding for the thought bubble's overhang. --}}
+    <div class="sheet-body" style="padding-top:.55rem;padding-bottom:1.1rem">
 <div class="comp-sheeted" id="feedComposer" data-video-host>
     {{-- The same head a post has: the cloud above the face, the name beside
          it, the place under the name — so the box you write in looks like
