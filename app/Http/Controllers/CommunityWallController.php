@@ -50,7 +50,7 @@ class CommunityWallController extends Controller
         }
 
         $request->validate([
-            'body' => 'required_without_all:image,images,galleryPaths,video|nullable|string|max:5000',
+            'body' => 'required_without_all:image,images,galleryPaths,video,videos,galleryVideoPaths|nullable|string|max:5000',
             // One photo (what every older caller sends) or several.
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
             'images' => 'nullable|array|max:8',
@@ -59,6 +59,11 @@ class CommunityWallController extends Controller
             'galleryPaths' => 'nullable|array|max:8',
             'galleryPaths.*' => 'string|max:500',
             'video' => 'nullable|file|max:2097152', // the ceiling is length, not size: VideoOptimizer refuses a clip over a minute
+            'videos' => 'nullable|array|max:3',
+            'videos.*' => 'file|max:2097152',
+            'galleryVideoPath' => 'nullable|string|max:500',
+            'galleryVideoPaths' => 'nullable|array|max:3',
+            'galleryVideoPaths.*' => 'string|max:500',
         ]);
 
         /* The pictures, in the order they were added.
@@ -85,16 +90,41 @@ class CommunityWallController extends Controller
         $shots = array_slice(array_values(array_unique($shots)), 0, 8);
         $imagePath = $shots[0] ?? null;
 
-        $videoPath = $videoPoster = null;
-        if ($request->hasFile('video')) {
+        /* The clips, up to three — the same walk a comment's endpoint makes.
+         * An upload is compressed and given a poster; one picked out of the
+         * gallery is referenced where it lies and has a frame cut for it if
+         * nobody has yet. */
+        $clips = [];
+        foreach (array_merge(
+            $request->hasFile('video') ? [$request->file('video')] : [],
+            array_values((array) $request->file('videos', []))
+        ) as $file) {
             try {
-                $vid = $this->storeVideo($request->file('video'), 'community-wall/' . $wallOwner->id);
-                $videoPath = $vid['video'];
-                $videoPoster = $vid['poster'];
+                $vid = $this->storeVideo($file, 'community-wall/' . $wallOwner->id);
+                $clips[] = ['video' => $vid['video'], 'poster' => $vid['poster'] ?? null];
             } catch (\Throwable $e) {
                 return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
             }
         }
+        foreach (array_merge(
+            $request->filled('galleryVideoPath') ? [(string) $request->input('galleryVideoPath')] : [],
+            array_values((array) $request->input('galleryVideoPaths', []))
+        ) as $picked) {
+            $ok = \App\Support\GalleryPick::path((string) $picked, \App\Support\GalleryPick::VIDEO_EXTS);
+            if ($ok === null) {
+                return response()->json(['success' => false, 'message' => 'One of the clips could not be attached. Remove it and try again.'], 422);
+            }
+            $clips[] = ['video' => $ok, 'poster' => \App\Support\VideoPoster::ensure($ok)];
+        }
+        $seenClips = [];
+        $clips = array_values(array_filter($clips, function ($c) use (&$seenClips) {
+            if (isset($seenClips[$c['video']])) { return false; }
+            $seenClips[$c['video']] = true;
+            return true;
+        }));
+        $clips = array_slice($clips, 0, 3);
+        $videoPath = $clips[0]['video'] ?? null;
+        $videoPoster = $clips[0]['poster'] ?? null;
 
         $post = CommunityWallPost::create([
             'wallUserId' => $wallOwner->id,
@@ -106,7 +136,9 @@ class CommunityWallController extends Controller
             // answering with a column-not-found 500.
             'imagePath' => $imagePath,
         ] + (count($shots) > 1 && \Illuminate\Support\Facades\Schema::hasColumn((new CommunityWallPost)->getTable(), 'imagePaths')
-            ? ['imagePaths' => $shots] : []) + [
+            ? ['imagePaths' => $shots] : [])
+          + (count($clips) > 1 && \Illuminate\Support\Facades\Schema::hasColumn((new CommunityWallPost)->getTable(), 'videoPaths')
+            ? ['videoPaths' => $clips] : []) + [
             'videoPath' => $videoPath,
             'videoPoster' => $videoPoster,
             'deleteStatus' => 1,

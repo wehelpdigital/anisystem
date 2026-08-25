@@ -37,6 +37,13 @@
         background:rgb(17 24 39 / .62); color:#fff; font-size:.7rem; line-height:1; }
     .comp-shot-one button:hover { background:rgb(185 28 28 / .9); }
     html.dark .comp-shot-one { background:rgb(255 255 255 / .06); }
+    /* A clip's tile: the shot tile gone dark, wearing the clapperboard. */
+    .comp-shot-one.is-clip { background:#10131a; }
+    .comp-shot-one.is-clip::after { content:'\1F3AC'; position:absolute; inset:0; display:flex;
+        align-items:center; justify-content:center; font-size:1.15rem; pointer-events:none;
+        text-shadow:0 1px 4px rgb(0 0 0 / .6); }
+    .comp-shot-one.is-clip img { opacity:.85; }
+
 
     /* The bar the wall opens with: what you came to do, then a word about
        where you are. */
@@ -305,6 +312,7 @@
          their file names. A photo that has been through the editor is written
          back under a name the editor invented about a file nobody has seen. --}}
     <div class="comp-shots hidden" id="feedShots"></div>
+    <div class="comp-shots hidden" id="feedClips"></div>
     <span class="js-video-chip mt-2 items-center gap-2 text-xs font-semibold text-gray-600" style="display:none"><span class="js-video-name"></span><button type="button" class="js-video-clear text-red-600 font-bold">Remove</button></span>
 
     {{-- The ways to add to it, said out loud. Four unlabelled icons in a row
@@ -321,9 +329,12 @@
             <input type="file" id="feedImage" accept="image/jpeg,image/png,image/webp" class="hidden" multiple>
             {{-- capture= asks the phone for its camera rather than its files. --}}
             <input type="file" id="feedCamera" accept="image/*" capture="environment" class="hidden">
-            <button type="button" class="wall-act js-video-attach" title="Upload a video" aria-label="Upload a video">
+            {{-- Two doors behind one icon — upload or the gallery — the same
+                 pair a comment's video button offers. --}}
+            <button type="button" class="wall-act" id="feedVideoBtn" title="Add a video" aria-label="Add a video">
                 <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
             </button>
+            <input type="file" id="feedVideoFiles" accept="video/*" class="hidden" multiple>
             <button type="button" class="wall-act js-video-record" title="Record a video" aria-label="Record a video">
                 <svg class="w-5 h-5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="currentColor"/></svg>
             </button>
@@ -387,6 +398,31 @@
 </div>
 
 
+
+{{-- Where a clip comes from — the comment box's two doors, in a sheet.
+     Filming stays its own button beside the icon, because a phone already
+     looking at the thing should not have to read a menu first. --}}
+<div class="sheet hidden" id="wallVideoSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Add a video</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body" style="padding-bottom:1.1rem">
+        <div class="plaza-srcs">
+            <button type="button" class="plaza-src" id="feedVSrcUpload">
+                <span class="plaza-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 17v1.5A2.5 2.5 0 006.5 21h11a2.5 2.5 0 002.5-2.5V17"/></svg></span>
+                <span class="plaza-src-t"><b>Upload from phone</b><small>One clip or several at once — up to a minute each.</small></span>
+                <svg class="plaza-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button type="button" class="plaza-src" id="feedVSrcGallery">
+                <span class="plaza-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M10 10.5v5l4.5-2.5-4.5-2.5z"/></svg></span>
+                <span class="plaza-src-t"><b>From my gallery</b><small>Clips your seasons already keep.</small></span>
+                <svg class="plaza-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
 @include('community.partials.pymk')
 
 {{-- The feed: friends and kapit-bahay provinces first --}}
@@ -677,6 +713,71 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    /* ---- Clips: the comment box's model, worn by the composer -------------
+     * One list holds every clip — files to upload and gallery references —
+     * capped at three alongside whatever the record button holds. Tiles sit
+     * in their own strip with a ✕ apiece. */
+    const MAX_CLIPS = 3;
+    const clips = [];
+    const clipsRow = document.getElementById('feedClips');
+    /* The record button's slot lives on the composer element; asked for by
+     * id, because this block runs before the submit handler names it. */
+    const clipTally = () => {
+        const h = document.getElementById('feedComposer');
+        return clips.length + ((h && window.plazaVideoFile && window.plazaVideoFile(h)) ? 1 : 0);
+    };
+    function paintClips() {
+        if (!clipsRow) return;
+        clipsRow.classList.toggle('hidden', clips.length === 0);
+        clipsRow.innerHTML = clips.map((c, i) =>
+            '<span class="comp-shot-one is-clip">' + (c.url ? '<img src="' + c.url + '" alt="">' : '')
+            + '<button type="button" data-clip="' + i + '" aria-label="Remove video">✕</button></span>').join('');
+    }
+    clipsRow?.addEventListener('click', (e) => {
+        const rm = e.target.closest('[data-clip]');
+        if (!rm) return;
+        const gone = clips.splice(Number(rm.dataset.clip), 1)[0];
+        if (gone && gone.file) { try { URL.revokeObjectURL(gone.url); } catch (_) {} }
+        paintClips();
+    });
+    function addClipFile(f) {
+        if (!f) return;
+        if (clipTally() >= MAX_CLIPS) { toast('That is three clips — the most a post carries.', 'error'); return; }
+        clips.push({ file: f, url: '' });
+    }
+    function addClipPick(item) {
+        if (!item || !item.path) return;
+        if (clipTally() >= MAX_CLIPS) { toast('That is three clips — the most a post carries.', 'error'); return; }
+        if (clips.some((c) => c.path === item.path)) return;
+        clips.push({ path: item.path, url: item.posterUrl || item.url || '' });
+    }
+    function clearClips() {
+        clips.length = 0;
+        const vf = document.getElementById('feedVideoFiles');
+        if (vf) vf.value = '';
+        paintClips();
+    }
+    document.getElementById('feedVideoBtn')?.addEventListener('click', () => window.openSheet?.('wallVideoSheet'));
+    document.getElementById('feedVSrcUpload')?.addEventListener('click', () => {
+        window.closeSheet?.('wallVideoSheet');
+        document.getElementById('feedVideoFiles')?.click();
+    });
+    document.getElementById('feedVideoFiles')?.addEventListener('change', (e) => {
+        [...(e.target.files || [])].forEach(addClipFile);
+        e.target.value = '';
+        paintClips();
+    });
+    document.getElementById('feedVSrcGallery')?.addEventListener('click', () => {
+        window.closeSheet?.('wallVideoSheet');
+        if (typeof window.smPickMedia !== 'function') { toast('The gallery is not available here.', 'error'); return; }
+        window.smPickMedia({
+            allSchedules: true, kinds: 'video', title: 'A clip from my gallery',
+            multiple: true,
+            max: Math.max(1, MAX_CLIPS - clipTally()),
+            onPick: (item) => { addClipPick(item); paintClips(); },
+        });
+    });
+
     /* ---------------- the two doors on the bar ----------------
        Both are sheets, so both come up from the bottom over the wall rather
        than pushing it down the page. */
@@ -757,7 +858,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const host = document.getElementById('feedComposer');
         const body = document.getElementById('feedPostBody').value.trim();
         const vid = window.plazaVideoFile ? window.plazaVideoFile(host) : null;
-        if (!body && !shots.length && !vid) { toast('Write something or add a photo/video.', 'error'); return; }
+        if (!body && !shots.length && !clips.length && !vid) { toast('Write something or add a photo/video.', 'error'); return; }
         const fd = new FormData();
         if (body) fd.append('body', body);
         // Files go up; a picture the app already keeps travels as its path.
@@ -766,6 +867,11 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (s.path) fd.append('galleryPaths[]', s.path);
         });
         if (vid) fd.append('video', vid);
+        // The clip list splits the way a comment's does: files up, picks by path.
+        clips.forEach((c) => {
+            if (c.file) fd.append('videos[]', c.file);
+            else if (c.path) fd.append('galleryVideoPaths[]', c.path);
+        });
         fd.append('render', 'feed'); // return a feed-post card to prepend
         const btn = e.currentTarget;
         const prev = btn.textContent;
@@ -795,6 +901,7 @@ document.addEventListener('DOMContentLoaded', () => {
             shots.length = 0;
             paintShots();
             if (window.plazaClearVideo) window.plazaClearVideo(host);
+            clearClips();
             window.closeSheet?.('wallComposerSheet');
             toast('Shared sa wall mo! 🌾');
         } catch (_) { toast('Network error — try again.', 'error'); }

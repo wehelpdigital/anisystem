@@ -6,9 +6,9 @@ class CommunityWallPost extends BaseModel
 {
     protected $table = 'as_community_wall_posts';
 
-    protected $fillable = ['wallUserId', 'authorUserId', 'body', 'sharedPostId', 'publicToken', 'imagePath', 'imagePaths', 'videoPath', 'videoPoster', 'isReel', 'durationSec', 'audioTitle', 'isRestricted', 'restrictedReason', 'deleteStatus'];
+    protected $fillable = ['wallUserId', 'authorUserId', 'body', 'sharedPostId', 'publicToken', 'imagePath', 'imagePaths', 'videoPath', 'videoPoster', 'videoPaths', 'isReel', 'durationSec', 'audioTitle', 'isRestricted', 'restrictedReason', 'deleteStatus'];
 
-    protected $casts = ['isRestricted' => 'boolean', 'isReel' => 'boolean', 'imagePaths' => 'array'];
+    protected $casts = ['isRestricted' => 'boolean', 'isReel' => 'boolean', 'imagePaths' => 'array', 'videoPaths' => 'array'];
 
     /**
      * Every picture on this post.
@@ -52,6 +52,21 @@ class CommunityWallPost extends BaseModel
     public function sharedPost()
     {
         return $this->belongsTo(self::class, 'sharedPostId')->with('author');
+    }
+
+    /**
+     * Every clip on this post, first one first — the same helper comments,
+     * replies and topics carry, so one renderer shape serves all. Each entry
+     * is ['video' => path, 'poster' => path|null].
+     */
+    public function clips(): array
+    {
+        $many = array_values(array_filter((array) ($this->videoPaths ?? []), fn ($c) => ! empty($c['video'])));
+        if ($many) {
+            return $many;
+        }
+
+        return $this->videoPath ? [['video' => $this->videoPath, 'poster' => $this->videoPoster]] : [];
     }
 
     public function author()

@@ -104,9 +104,8 @@
                 </span>
             </div>
         @endif
-        @if ($post->videoPath ?? null)
-            @include('community.partials.video-embed', ['src' => $post->videoPath, 'poster' => $post->videoPoster ?? null])
-        @endif
+        @php $fpClips = method_exists($post, 'clips') ? $post->clips() : array_filter([['video' => $post->videoPath ?? null, 'poster' => $post->videoPoster ?? null]], fn ($c) => ! empty($c['video'])); @endphp
+        @include('community.partials.clip-carousel', ['clips' => $fpClips])
 
         {{-- A share carries the original rather than copying it. Drawn by
              the shared partial, so the profile wall shows the same thing. --}}
