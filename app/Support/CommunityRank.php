@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 /**
- * The community's ladder: fifty farming ranks, climbed on points.
+ * The community's ladder: a hundred levels, ten titles, climbed on points.
  *
  * Nothing here writes anything. Points are COMPUTED from what members have
  * already done — posts, comments, discussions, reactions, followers,
@@ -21,10 +21,11 @@ use Illuminate\Support\Facades\Log;
  * from the same map, so a page of twenty authors costs one cache read, not
  * twenty computations.
  *
- * The ladder steepens on purpose. The first promotion lands with one post;
- * the fiftieth is a season of seasons. That is the shape every ladder people
- * actually climb has (Discourse's trust levels, reputation systems): early
- * ranks greet you, late ranks mean something.
+ * The ladder steepens on purpose. Level 2 lands with one post; level 100 is
+ * years of seasons. That is the shape every ladder people actually climb has
+ * (Discourse's trust levels, reputation systems): early levels greet you,
+ * late levels mean something. The titles ride the levels a decade at a time,
+ * so the number is the grind and the word is the brag.
  */
 class CommunityRank
 {
@@ -99,91 +100,56 @@ class CommunityRank
             'how' => 'Each day you open the app counts once — counted from today onward.'],
     ];
 
-    /** The ten arcs the fifty ranks climb through; each colours its chips. */
-    public const ARCS = [
-        1 => 'Binhi — The Seed',
-        2 => 'Tanim — The Planting',
-        3 => 'Lagô — The Growing',
-        4 => 'Magsasaka — The Farmer',
-        5 => 'Bulaklak — The Flowering',
-        6 => 'Ani — The Harvest',
-        7 => 'Kamalig — The Granary',
-        8 => 'Kapitbahayan — The Neighbourhood',
-        9 => 'Dalubhasa — The Mastery',
-        10 => 'Alamat — The Legend',
+    /**
+     * The ten titles, one per decade of levels.
+     *
+     * A hundred levels would mean a hundred names, and nobody remembers a
+     * hundred names — so the LEVEL is the number you grind and the TITLE is
+     * the word you wear, changing only at each tenth level, always something
+     * a member would actually say out loud about themselves.
+     */
+    public const TITLES = [
+        1 => ['emoji' => '🌱', 'name' => 'Beginner Farmer'],
+        2 => ['emoji' => '🥾', 'name' => 'Mud Walker'],
+        3 => ['emoji' => '🧑‍🌾', 'name' => 'True Farmer'],
+        4 => ['emoji' => '🐝', 'name' => 'Community Bee'],
+        5 => ['emoji' => '🌾', 'name' => 'Harvest Hero'],
+        6 => ['emoji' => '⚔️', 'name' => 'Community Knight'],
+        7 => ['emoji' => '🛡️', 'name' => 'Field Guardian'],
+        8 => ['emoji' => '👑', 'name' => 'Harvest Royalty'],
+        9 => ['emoji' => '🌟', 'name' => 'Living Legend'],
+        10 => ['emoji' => '🐉', 'name' => 'Farm Immortal'],
     ];
 
+    /** The top of the ladder. */
+    public const MAX_LEVEL = 100;
+
     /**
-     * Fifty ranks, ten arcs of five, each step steeper than the last.
+     * What each level costs, level 1 to 100.
      *
-     * The names walk a farming life: a seed soaked and sprouted, hands in the
-     * mud, a crop grown, flowered, harvested, stored, traded; then the farmer
-     * becomes a neighbour, a teacher, a master, and at last a legend of the
-     * fields. Thresholds roughly ×1.12–1.5 per step — the second rank is one
-     * post away, the fiftieth is years of showing up.
+     * One curve instead of a hundred hand-picked numbers: 10 x (level-1)^2.1,
+     * rounded to numbers a person can hold. Level 2 is one post away; level
+     * 10 is a thousand points; level 100 is around 156,000 — every step
+     * asks more than the one before it, which is what makes the number worth
+     * saying.
+     *
+     * @return array<int, int> index 0 = level 1's floor (always 0)
      */
-    public const TIERS = [
-        // Arc I — Binhi (The Seed)
-        ['min' => 0, 'emoji' => '🌰', 'name' => 'Binhi', 'en' => 'Seed'],
-        ['min' => 10, 'emoji' => '💧', 'name' => 'Binhing Basâ', 'en' => 'Soaked Seed'],
-        ['min' => 25, 'emoji' => '🌱', 'name' => 'Sibol', 'en' => 'First Sprout'],
-        ['min' => 45, 'emoji' => '🪴', 'name' => 'Punla', 'en' => 'Seedling'],
-        ['min' => 70, 'emoji' => '🌿', 'name' => 'Ugat na Malalim', 'en' => 'Deep Roots'],
-        // Arc II — Tanim (The Planting)
-        ['min' => 100, 'emoji' => '🧤', 'name' => 'Bagong Kamay', 'en' => 'New Hands'],
-        ['min' => 140, 'emoji' => '🥾', 'name' => 'Paa sa Putik', 'en' => 'Feet in the Mud'],
-        ['min' => 190, 'emoji' => '🌾', 'name' => 'Magtatanim', 'en' => 'Planter'],
-        ['min' => 250, 'emoji' => '💦', 'name' => 'Magdidilig', 'en' => 'Waterer'],
-        ['min' => 320, 'emoji' => '🌤️', 'name' => 'Bantay-Punla', 'en' => 'Seedling Keeper'],
-        // Arc III — Lagô (The Growing)
-        ['min' => 400, 'emoji' => '🍃', 'name' => 'Unang Dahon', 'en' => 'First Leaf'],
-        ['min' => 500, 'emoji' => '🌿', 'name' => 'Suwi', 'en' => 'Tiller'],
-        ['min' => 620, 'emoji' => '📏', 'name' => 'Taas-Tuhod', 'en' => 'Knee-High'],
-        ['min' => 760, 'emoji' => '🐛', 'name' => 'Tagahuli ng Peste', 'en' => 'Pest Catcher'],
-        ['min' => 920, 'emoji' => '🟢', 'name' => 'Luntiang Bukid', 'en' => 'Green Field'],
-        // Arc IV — Magsasaka (The Farmer)
-        ['min' => 1100, 'emoji' => '🧑‍🌾', 'name' => 'Magsasaka', 'en' => 'Farmer'],
-        ['min' => 1300, 'emoji' => '🐃', 'name' => 'Mag-aararo', 'en' => 'Plower'],
-        ['min' => 1550, 'emoji' => '🧪', 'name' => 'Tagapag-abono', 'en' => 'Fertilizer Hand'],
-        ['min' => 1850, 'emoji' => '🚿', 'name' => 'Tagapatubig', 'en' => 'Irrigator'],
-        ['min' => 2200, 'emoji' => '🌦️', 'name' => 'Kaibigan ng Ulan', 'en' => 'Friend of the Rain'],
-        // Arc V — Bulaklak (The Flowering)
-        ['min' => 2600, 'emoji' => '🌸', 'name' => 'Namumulaklak', 'en' => 'In Bloom'],
-        ['min' => 3050, 'emoji' => '🐝', 'name' => 'Kasama ng Bubuyog', 'en' => 'Keeper of Bees'],
-        ['min' => 3550, 'emoji' => '🌾', 'name' => 'Nagbubutil', 'en' => 'Setting Grain'],
-        ['min' => 4100, 'emoji' => '🌕', 'name' => 'Hinog sa Araw', 'en' => 'Sun-Ripened'],
-        ['min' => 4700, 'emoji' => '✨', 'name' => 'Gintong Uhay', 'en' => 'Golden Panicle'],
-        // Arc VI — Ani (The Harvest)
-        ['min' => 5400, 'emoji' => '🔪', 'name' => 'Gumagapas', 'en' => 'Reaper'],
-        ['min' => 6200, 'emoji' => '🧺', 'name' => 'Mang-aani', 'en' => 'Harvester'],
-        ['min' => 7100, 'emoji' => '🌾', 'name' => 'Maggigiik', 'en' => 'Thresher'],
-        ['min' => 8100, 'emoji' => '☀️', 'name' => 'Tagabilad', 'en' => 'Grain Dryer'],
-        ['min' => 9200, 'emoji' => '🏆', 'name' => 'Masaganang Ani', 'en' => 'Bountiful Harvest'],
-        // Arc VII — Kamalig (The Granary)
-        ['min' => 10500, 'emoji' => '🛖', 'name' => 'Katiwala ng Kamalig', 'en' => 'Granary Steward'],
-        ['min' => 12000, 'emoji' => '⚖️', 'name' => 'Mangangalakal', 'en' => 'Trader'],
-        ['min' => 13700, 'emoji' => '🛒', 'name' => 'Bida ng Palengke', 'en' => 'Star of the Market'],
-        ['min' => 15600, 'emoji' => '💰', 'name' => 'Masaganang Bukid', 'en' => 'Prosperous Farm'],
-        ['min' => 17700, 'emoji' => '🌟', 'name' => 'Bantog na Magsasaka', 'en' => 'Renowned Farmer'],
-        // Arc VIII — Kapitbahayan (The Neighbourhood)
-        ['min' => 20000, 'emoji' => '🤝', 'name' => 'Kapit-Bukid', 'en' => 'Farm Neighbour'],
-        ['min' => 22600, 'emoji' => '🗣️', 'name' => 'Tagapayo', 'en' => 'Adviser'],
-        ['min' => 25500, 'emoji' => '📚', 'name' => 'Guro ng Bukid', 'en' => 'Teacher of the Field'],
-        ['min' => 28700, 'emoji' => '🏡', 'name' => 'Haligi ng Barangay', 'en' => 'Pillar of the Barangay'],
-        ['min' => 32200, 'emoji' => '🕊️', 'name' => 'Kagalang-galang', 'en' => 'The Respected'],
-        // Arc IX — Dalubhasa (The Mastery)
-        ['min' => 36000, 'emoji' => '🎓', 'name' => 'Dalubhasa', 'en' => 'Expert'],
-        ['min' => 40200, 'emoji' => '🧭', 'name' => 'Maestro ng Palayan', 'en' => 'Master of the Paddies'],
-        ['min' => 44800, 'emoji' => '🔥', 'name' => 'Panday ng Ani', 'en' => 'Smith of the Harvest'],
-        ['min' => 49800, 'emoji' => '🌋', 'name' => 'Di-Natitinag', 'en' => 'The Unshaken'],
-        ['min' => 55200, 'emoji' => '🦅', 'name' => 'Agila ng Bukid', 'en' => 'Eagle of the Field'],
-        // Arc X — Alamat (The Legend)
-        ['min' => 61000, 'emoji' => '🌙', 'name' => 'Diwa ng Bukid', 'en' => 'Spirit of the Field'],
-        ['min' => 67500, 'emoji' => '⭐', 'name' => 'Bituin ng Ani', 'en' => 'Star of the Harvest'],
-        ['min' => 74500, 'emoji' => '👑', 'name' => 'Lakan ng Lupa', 'en' => 'Lord of the Land'],
-        ['min' => 82000, 'emoji' => '🐉', 'name' => 'Alamat ng Ani', 'en' => 'Legend of the Harvest'],
-        ['min' => 90000, 'emoji' => '🏵️', 'name' => 'Datu ng Bukid', 'en' => 'Datu of the Fields'],
-    ];
+    public static function thresholds(): array
+    {
+        static $t = null;
+        if ($t !== null) {
+            return $t;
+        }
+        $t = [0];
+        for ($n = 2; $n <= self::MAX_LEVEL; $n++) {
+            $raw = 10 * (($n - 1) ** 2.1);
+            $step = $raw < 1000 ? 5 : ($raw < 10000 ? 50 : 100);
+            $t[] = (int) (round($raw / $step) * $step);
+        }
+
+        return $t;
+    }
 
     /** In-request memo of the cached scoreboard. */
     private static ?array $map = null;
@@ -219,38 +185,55 @@ class CommunityRank
     }
 
     /**
-     * The rank a number of points has climbed to.
+     * The level a number of points has climbed to, and the title it wears.
      *
-     * @return array{n: int, min: int, emoji: string, name: string, en: string, arc: int}
+     * @return array{n: int, min: int, emoji: string, name: string, arc: int}
      */
     public static function rankOf(int $points): array
     {
-        $hit = 0;
-        foreach (self::TIERS as $i => $tier) {
-            if ($points >= $tier['min']) {
-                $hit = $i;
+        $t = self::thresholds();
+        $level = 1;
+        foreach ($t as $i => $min) {
+            if ($points >= $min) {
+                $level = $i + 1;
             } else {
                 break;
             }
         }
+        $arc = (int) ceil($level / 10);
 
-        return self::TIERS[$hit] + ['n' => $hit + 1, 'arc' => intdiv($hit, 5) + 1];
+        return self::TITLES[$arc] + ['n' => $level, 'min' => $t[$level - 1], 'arc' => $arc];
     }
 
-    /** One member's rank, straight off the scoreboard. */
+    /** One member's level, straight off the scoreboard. */
     public static function rankFor(int $userId): array
     {
         return self::rankOf(self::pointsFor($userId));
     }
 
-    /** The rank after this one, or null at the top of the ladder. */
+    /** The level after this one, or null at the top of the ladder. */
     public static function next(array $rank): ?array
     {
-        $i = $rank['n'];   // n is 1-based; TIERS is 0-based, so n IS the next index
+        $t = self::thresholds();
+        $n = $rank['n'];   // n is 1-based; $t[$n] is the NEXT level's floor
+        if (! isset($t[$n])) {
+            return null;
+        }
+        $arc = (int) ceil(($n + 1) / 10);
 
-        return isset(self::TIERS[$i])
-            ? self::TIERS[$i] + ['n' => $i + 1, 'arc' => intdiv($i, 5) + 1]
-            : null;
+        return self::TITLES[$arc] + ['n' => $n + 1, 'min' => $t[$n], 'arc' => $arc];
+    }
+
+    /** The next TITLE above this rank — the decade line — or null at the top. */
+    public static function nextTitle(array $rank): ?array
+    {
+        if ($rank['arc'] >= 10) {
+            return null;
+        }
+        $arc = $rank['arc'] + 1;
+        $level = ($arc - 1) * 10 + 1;
+
+        return self::TITLES[$arc] + ['n' => $level, 'min' => self::thresholds()[$level - 1], 'arc' => $arc];
     }
 
     /**

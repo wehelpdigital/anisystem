@@ -1,6 +1,7 @@
 {{-- The community's ladder.
 
-     Fifty farming ranks climbed on points, told in three tabs: who stands
+     A hundred levels climbed on points, a new title every tenth, told in
+     three tabs: who stands
      where (Rankings), what earns points and how many you have banked from
      each (Tasks), and the whole ladder with every threshold (Guide).
 
@@ -10,8 +11,8 @@
      progress bar fills, and a member who has climbed since their last visit
      gets told so.
 
-     Expects: $rows, $myPoints, $myRank, $myNext, $myProgress, $myPosition,
-     $breakdown, $actions, $tiers, $arcs. --}}
+     Expects: $rows, $myPoints, $myRank, $myNext, $myNextTitle, $myProgress,
+     $myPosition, $breakdown, $actions, $titles, $levels, $maxLevel. --}}
 @extends('layouts.app')
 
 @section('title', 'Community Ranking')
@@ -30,9 +31,10 @@
     <div class="rk-me card" id="rkMe" data-rank-n="{{ $myRank['n'] }}" data-rank-name="{{ $myRank['name'] }}">
         <div class="rk-me-badge rankb rankb-big rankb-a{{ $myRank['arc'] }}" id="rkMeBadge">
             <span class="rankb-e">{{ $myRank['emoji'] }}</span>
+            <span class="rankb-lv">Lv {{ $myRank['n'] }}</span>
             <span class="rankb-t">{{ $myRank['name'] }}</span>
         </div>
-        <p class="rk-me-en">{{ $myRank['en'] }} · Rank {{ $myRank['n'] }} of {{ count($tiers) }}</p>
+        <p class="rk-me-en">Level {{ $myRank['n'] }} of {{ $maxLevel }}</p>
         <p class="rk-me-pts"><b id="rkMePts" data-count="{{ $myPoints }}">0</b> <span>points</span>
             @if ($myPosition > 0)
                 <span class="rk-me-pos">#{{ $myPosition }} on the board</span>
@@ -42,10 +44,12 @@
             <div class="rk-bar" role="progressbar" aria-valuemin="{{ $myRank['min'] }}" aria-valuemax="{{ $myNext['min'] }}" aria-valuenow="{{ $myPoints }}">
                 <span id="rkBarFill" data-to="{{ round($myProgress * 100, 1) }}"></span>
             </div>
-            <p class="rk-me-next">{{ number_format($myNext['min'] - $myPoints) }} pts to
-                <b>{{ $myNext['emoji'] }} {{ $myNext['name'] }}</b></p>
+            <p class="rk-me-next">{{ number_format($myNext['min'] - $myPoints) }} pts to <b>Level {{ $myNext['n'] }}</b></p>
+            @if ($myNextTitle)
+                <p class="rk-me-title">Next title: <b>{{ $myNextTitle['emoji'] }} {{ $myNextTitle['name'] }}</b> at Level {{ $myNextTitle['n'] }} ({{ number_format($myNextTitle['min']) }} pts)</p>
+            @endif
         @else
-            <p class="rk-me-next">🏵️ Nasa tuktok ka na — the ladder has nothing above you.</p>
+            <p class="rk-me-next">🐉 Nasa tuktok ka na — the ladder has nothing above you.</p>
         @endif
     </div>
 
@@ -68,7 +72,7 @@
                         <span class="rk-medal">{{ ['🥇', '🥈', '🥉'][$p] }}</span>
                         @include('community.partials.avatar', ['user' => $r['user'], 'size' => 'avatar-md'])
                         <a class="rk-step-name" href="{{ route('community.connect.profile', ['userId' => $r['user']->id]) }}">{{ $r['user']->full_name }}</a>
-                        <span class="rankb rankb-a{{ $r['rank']['arc'] }}"><span class="rankb-e">{{ $r['rank']['emoji'] }}</span><span class="rankb-t">{{ $r['rank']['name'] }}</span></span>
+                        <span class="rankb rankb-a{{ $r['rank']['arc'] }}"><span class="rankb-e">{{ $r['rank']['emoji'] }}</span><span class="rankb-lv">Lv {{ $r['rank']['n'] }}</span><span class="rankb-t">{{ $r['rank']['name'] }}</span></span>
                         <b class="rk-step-pts">{{ number_format($r['points']) }}</b>
                         <span class="rk-block"></span>
                     </div>
@@ -84,7 +88,7 @@
                     @include('community.partials.avatar', ['user' => $r['user'], 'size' => 'avatar-sm'])
                     <span class="rk-row-mid">
                         <a class="rk-row-name" href="{{ route('community.connect.profile', ['userId' => $r['user']->id]) }}">{{ $r['user']->full_name }}</a>
-                        <span class="rankb rankb-a{{ $r['rank']['arc'] }}"><span class="rankb-e">{{ $r['rank']['emoji'] }}</span><span class="rankb-t">{{ $r['rank']['name'] }}</span></span>
+                        <span class="rankb rankb-a{{ $r['rank']['arc'] }}"><span class="rankb-e">{{ $r['rank']['emoji'] }}</span><span class="rankb-lv">Lv {{ $r['rank']['n'] }}</span><span class="rankb-t">{{ $r['rank']['name'] }}</span></span>
                     </span>
                     @if ((int) $r['user']->id === (int) auth()->id())<span class="rk-you">Ikaw</span>@endif
                     <b class="rk-row-pts">{{ number_format($r['points']) }}</b>
@@ -133,24 +137,31 @@
 
     {{-- ---------------- Guide ---------------- --}}
     <div data-rk-panel="guide" class="hidden" id="guide">
-        <p class="rk-guide-intro">Fifty ranks, ten arcs — a farming life from a seed in the palm to a
-            legend of the fields. Every rank is steeper than the one before it.</p>
-        @foreach ($arcs as $arcN => $arcName)
-            <div class="rk-arc card rk-arc-{{ $arcN }}" data-animate-rows>
-                <h3 class="rk-arc-h"><span class="rk-arc-n">{{ ['I','II','III','IV','V','VI','VII','VIII','IX','X'][$arcN - 1] }}</span> {{ $arcName }}</h3>
-                @foreach (array_slice($tiers, ($arcN - 1) * 5, 5) as $j => $tier)
-                    @php $n = ($arcN - 1) * 5 + $j + 1; @endphp
-                    <div class="rk-tier {{ $n === $myRank['n'] ? 'is-you' : ($myPoints >= $tier['min'] ? 'is-passed' : '') }}" style="--i: {{ $j }}">
-                        <span class="rk-tier-n">{{ $n }}</span>
-                        <span class="rk-tier-e">{{ $tier['emoji'] }}</span>
-                        <span class="rk-tier-mid">
-                            <b>{{ $tier['name'] }}</b>
-                            <i>{{ $tier['en'] }}</i>
+        <p class="rk-guide-intro">A hundred levels, ten titles — every tenth level hands you a new name
+            to wear, from Beginner Farmer to Farm Immortal. Each level costs more than the one before it.</p>
+        @foreach ($titles as $arcN => $title)
+            @php
+                $lo = ($arcN - 1) * 10 + 1;
+                $hi = $arcN * 10;
+                $mine = $myRank['arc'] === $arcN;
+            @endphp
+            <div class="rk-arc card rk-arc-{{ $arcN }} {{ $mine ? 'is-mine' : '' }}" data-animate-rows>
+                <h3 class="rk-arc-h">
+                    <span class="rk-arc-e">{{ $title['emoji'] }}</span>
+                    <span class="rk-arc-mid">
+                        <b>{{ $title['name'] }}</b>
+                        <i>Levels {{ $lo }}–{{ $hi }} · from {{ $levels[$lo - 1] === 0 ? 'the start' : number_format($levels[$lo - 1]) . ' pts' }}</i>
+                    </span>
+                    @if ($mine)<span class="rk-you">Ikaw</span>@endif
+                </h3>
+                <div class="rk-lvls">
+                    @for ($n = $lo; $n <= $hi; $n++)
+                        <span class="rk-lvl {{ $n === $myRank['n'] ? 'is-you' : ($myPoints >= $levels[$n - 1] ? 'is-passed' : '') }}" style="--i: {{ $n - $lo }}">
+                            <b>Lv {{ $n }}</b>
+                            <i>{{ $levels[$n - 1] === 0 ? 'Start' : number_format($levels[$n - 1]) }}</i>
                         </span>
-                        @if ($n === $myRank['n'])<span class="rk-you">Ikaw</span>@endif
-                        <span class="rk-tier-min">{{ $tier['min'] === 0 ? 'Start' : number_format($tier['min']) . ' pts' }}</span>
-                    </div>
-                @endforeach
+                    @endfor
+                </div>
             </div>
         @endforeach
     </div>
@@ -179,6 +190,8 @@
         transition: width 1.1s cubic-bezier(.22,1,.36,1) .35s; }
     .rk-me-next { margin-top: .45rem; font-size: .74rem; font-weight: 600; color: var(--color-gray-500); }
     .rk-me-next b { color: var(--color-gray-800); }
+    .rk-me-title { margin-top: .2rem; font-size: .7rem; font-weight: 600; color: var(--color-gray-400); }
+    .rk-me-title b { color: var(--color-gray-600); }
     /* The climb, celebrated: only when JS finds a higher rank than last visit. */
     .rk-me.is-up .rk-me-badge { animation: rkClimb 1s cubic-bezier(.22,1,.36,1) .2s both; }
     @keyframes rkClimb { 0% { opacity: 0; transform: translateY(1.4rem) scale(.6); }
@@ -221,7 +234,7 @@
     /* ---- The board ---- */
     .rk-board { padding: .35rem; margin-bottom: .5rem; }
     .rk-row { display: flex; align-items: center; gap: .6rem; padding: .5rem .6rem; border-radius: .7rem; }
-    [data-animate-rows] .rk-row, [data-animate-rows] .rk-task, [data-animate-rows] .rk-tier {
+    [data-animate-rows] .rk-row, [data-animate-rows] .rk-task {
         animation: rkRise .4s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--i, 0) * 45ms); }
     @keyframes rkRise { from { opacity: 0; transform: translateY(.55rem); } }
     .rk-row:nth-child(even) { background: color-mix(in srgb, var(--color-gray-100) 55%, transparent); }
@@ -259,40 +272,44 @@
 
     /* ---- Guide ---- */
     .rk-guide-intro { font-size: .82rem; color: var(--color-gray-600); line-height: 1.55; margin-bottom: .9rem; }
-    .rk-arc { padding: .8rem .85rem .5rem; margin-bottom: .85rem; }
-    .rk-arc-h { font-size: .8rem; font-weight: 800; color: var(--color-gray-800); margin-bottom: .35rem;
-        display: flex; align-items: center; gap: .5rem; }
-    .rk-arc-n { flex: none; width: 1.7rem; height: 1.7rem; border-radius: .5rem; display: inline-flex;
-        align-items: center; justify-content: center; background: var(--color-gray-100);
-        font-size: .72rem; color: var(--color-gray-500); }
-    .rk-arc-10 .rk-arc-n { background: #fdf3d8; color: #8a6100; }
-    .rk-tier { display: flex; align-items: center; gap: .55rem; padding: .45rem .35rem; border-radius: .6rem; }
-    .rk-tier + .rk-tier { border-top: 1px solid var(--color-gray-100); }
-    .rk-tier-n { flex: none; width: 1.6rem; text-align: center; font-size: .72rem; font-weight: 800;
-        color: var(--color-gray-400); font-variant-numeric: tabular-nums; }
-    .rk-tier-e { flex: none; font-size: 1.05rem; }
-    .rk-tier-mid { min-width: 0; flex: 1 1 auto; }
-    .rk-tier-mid b { display: block; font-size: .82rem; font-weight: 800; color: var(--color-gray-900); }
-    .rk-tier-mid i { font-style: normal; font-size: .68rem; color: var(--color-gray-500); }
-    .rk-tier-min { flex: none; font-size: .72rem; font-weight: 700; color: var(--color-gray-500);
-        font-variant-numeric: tabular-nums; }
-    .rk-tier.is-passed .rk-tier-min::after { content: ' ✓'; color: var(--color-brand-600); }
-    .rk-tier.is-you { background: var(--color-brand-50); box-shadow: inset 0 0 0 1.5px var(--color-brand-300); border-top-color: transparent; }
-    .rk-tier.is-you + .rk-tier { border-top-color: transparent; }
-    .rk-tier.is-you .rk-you { animation: rkPulse 2.4s ease-in-out infinite; }
-    @keyframes rkPulse { 0%, 100% { box-shadow: 0 0 0 0 rgb(107 159 61 / .45); } 50% { box-shadow: 0 0 0 .45rem rgb(107 159 61 / 0); } }
+    .rk-arc { padding: .8rem .85rem .85rem; margin-bottom: .85rem; }
+    .rk-arc.is-mine { box-shadow: inset 0 0 0 1.5px var(--color-brand-300), var(--shadow-card); }
+    .rk-arc-h { display: flex; align-items: center; gap: .6rem; margin-bottom: .55rem; }
+    .rk-arc-e { flex: none; width: 2.2rem; height: 2.2rem; border-radius: .65rem; display: inline-flex;
+        align-items: center; justify-content: center; background: var(--color-gray-100); font-size: 1.15rem; }
+    .rk-arc-10 .rk-arc-e { background: #fdf3d8; }
+    .rk-arc-mid { min-width: 0; flex: 1 1 auto; }
+    .rk-arc-mid b { display: block; font-size: .9rem; font-weight: 800; color: var(--color-gray-900);
+        font-family: var(--font-heading); }
+    .rk-arc-mid i { font-style: normal; font-size: .7rem; font-weight: 600; color: var(--color-gray-500); }
+    /* Ten levels to a title, five to a row: the decade reads as one card. */
+    .rk-lvls { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .35rem; }
+    .rk-lvl { display: flex; flex-direction: column; align-items: center; padding: .35rem .1rem;
+        border-radius: .55rem; background: color-mix(in srgb, var(--color-gray-100) 65%, transparent); }
+    [data-animate-rows] .rk-lvl { animation: rkRise .4s cubic-bezier(.22,1,.36,1) both;
+        animation-delay: calc(var(--i, 0) * 35ms); }
+    .rk-lvl b { font-size: .7rem; font-weight: 800; color: var(--color-gray-700); font-variant-numeric: tabular-nums; }
+    .rk-lvl i { font-style: normal; font-size: .62rem; color: var(--color-gray-400); font-variant-numeric: tabular-nums; }
+    .rk-lvl.is-passed { background: var(--color-brand-50); }
+    .rk-lvl.is-passed b { color: var(--color-brand-700); }
+    .rk-lvl.is-passed i::after { content: ' ✓'; color: var(--color-brand-600); }
+    .rk-lvl.is-you { background: var(--color-brand-600); animation: rkPulse 2.4s ease-in-out infinite; }
+    .rk-lvl.is-you b, .rk-lvl.is-you i { color: #fff; }
+    @keyframes rkPulse { 0%, 100% { box-shadow: 0 0 0 0 rgb(107 159 61 / .45); } 50% { box-shadow: 0 0 0 .4rem rgb(107 159 61 / 0); } }
 
-    html.dark .rk-row:nth-child(even) { background: rgb(255 255 255 / .03); }
-    html.dark .rk-row.is-me, html.dark .rk-tier.is-you { background: rgb(61 104 35 / .25); }
-    html.dark .rk-task-e, html.dark .rk-arc-n { background: rgb(255 255 255 / .07); }
-    html.dark .rk-task + .rk-task, html.dark .rk-tier + .rk-tier { border-top-color: rgb(255 255 255 / .06); }
+        html.dark .rk-row:nth-child(even) { background: rgb(255 255 255 / .03); }
+    html.dark .rk-row.is-me { background: rgb(61 104 35 / .25); }
+    html.dark .rk-task-e, html.dark .rk-arc-e, html.dark .rk-lvl { background: rgb(255 255 255 / .07); }
+    html.dark .rk-lvl.is-passed { background: rgb(61 104 35 / .3); }
+    html.dark .rk-lvl.is-you { background: var(--color-brand-600); }
+    html.dark .rk-task + .rk-task { border-top-color: rgb(255 255 255 / .06); }
     html.dark .rk-task-tally b { color: #e8efe1; }
     html.dark .rk-task-tally:not(.has-some) b { color: #4a5540; }
 
     @media (prefers-reduced-motion: reduce) {
         .rk-me, .rk-me-badge, .rk-me.is-up .rk-me-badge, .rk-medal, .rk-block,
-        [data-animate-rows] .rk-row, [data-animate-rows] .rk-task, [data-animate-rows] .rk-tier,
-        [data-rk-panel]:not(.hidden), .rk-tier.is-you .rk-you { animation: none; }
+        [data-animate-rows] .rk-row, [data-animate-rows] .rk-task, [data-animate-rows] .rk-lvl,
+        [data-rk-panel]:not(.hidden), .rk-lvl.is-you { animation: none; }
         .rk-bar span { transition: none; }
     }
 </style>
@@ -337,7 +354,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const seen = parseInt(localStorage.getItem('as-rank-seen') || '0', 10);
         if (seen && now > seen && !still) {
             me.classList.add('is-up');
-            window.smToast?.('Umakyat ka! You are now ' + me.getAttribute('data-rank-name') + ' 🎉');
+            // A new decade is a new NAME; inside a decade the number is the news.
+            const title = me.getAttribute('data-rank-name');
+            const newTitle = Math.ceil(now / 10) > Math.ceil(seen / 10);
+            window.smToast?.(newTitle
+                ? 'Bagong titulo! You are now a ' + title + ' — Level ' + now + ' 🎉'
+                : 'Level up! Level ' + now + ' na 🎉');
         }
         localStorage.setItem('as-rank-seen', String(now));
     } catch (_) { /* no storage, no ceremony */ }
@@ -370,7 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ---- inside the guide, start the reader at their own rank ---- */
     if (want === 'guide') {
-        setTimeout(() => document.querySelector('.rk-tier.is-you')?.scrollIntoView({ block: 'center', behavior: still ? 'auto' : 'smooth' }), 350);
+        setTimeout(() => document.querySelector('.rk-lvl.is-you')?.scrollIntoView({ block: 'center', behavior: still ? 'auto' : 'smooth' }), 350);
     }
 });
 </script>

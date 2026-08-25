@@ -1461,14 +1461,17 @@
        gradient of standing without a word. Small on purpose: it lives beside
        names, and a badge that outshines the name has the relationship
        backwards. */
-    .rankb { display:inline-flex; align-items:center; gap:.22rem; max-width:9.5rem;
+    .rankb { display:inline-flex; align-items:center; gap:.24rem; max-width:11.5rem;
         padding:.08rem .42rem .08rem .3rem; border-radius:999px; border:1px solid transparent;
         font-size:.62rem; font-weight:800; letter-spacing:.01em; line-height:1.25;
         text-decoration:none; vertical-align:middle; white-space:nowrap;
         transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
     .rankb:hover { transform:translateY(-1px); box-shadow:0 3px 8px -4px rgb(0 0 0 / .35); }
     .rankb-e { font-size:.72rem; line-height:1; }
-    .rankb-t { min-width:0; overflow:hidden; text-overflow:ellipsis; }
+    /* The number never truncates; the title gives way first. */
+    .rankb-lv { flex:none; font-variant-numeric:tabular-nums; }
+    .rankb-t { min-width:0; overflow:hidden; text-overflow:ellipsis; opacity:.85; font-weight:700; }
+    .rankb-t::before { content:'· '; }
     .rankb-big { font-size:.74rem; padding:.2rem .6rem .2rem .45rem; max-width:14rem; }
     .rankb-big .rankb-e { font-size:.95rem; }
     /* The ten arcs, seed to legend. */

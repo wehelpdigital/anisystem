@@ -37,12 +37,14 @@ class CommunityRankingController extends Controller
             'myPoints' => $points,
             'myRank' => $rank,
             'myNext' => $next,
+            'myNextTitle' => CommunityRank::nextTitle($rank),
             'myProgress' => $progress,
             'myPosition' => CommunityRank::positionOf($meId),
             'breakdown' => CommunityRank::breakdown($meId),
             'actions' => CommunityRank::ACTIONS,
-            'tiers' => CommunityRank::TIERS,
-            'arcs' => CommunityRank::ARCS,
+            'titles' => CommunityRank::TITLES,
+            'levels' => CommunityRank::thresholds(),
+            'maxLevel' => CommunityRank::MAX_LEVEL,
         ]);
     }
 }
