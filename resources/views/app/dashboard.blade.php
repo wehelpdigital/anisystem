@@ -210,12 +210,33 @@
        goes. The transition is armed only while a fold is happening —
        grid-template-rows: 1fr resolves against content, so a permanently
        transitioned row re-animates on every relayout the card has. */
-    .ds-head { display: flex; align-items: center; gap: .5rem; width: 100%; text-align: left;
-        background: none; border: none; padding: 0; cursor: pointer; }
-    .ds-head h3 { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    /* The schedules page's tilled-soil cover, worn here too: the same
+       ground, the same slow drift on the shared gradSweep tide, each card
+       on its own clock — so a season looks like the same season on both
+       shelves. Bled to the card's edges (the body wears 1rem of padding)
+       and rounded into its top corners. */
+    .ds-head { position: relative; display: flex; align-items: center; gap: .5rem;
+        width: calc(100% + 2rem); text-align: left; border: none; cursor: pointer;
+        margin: -1rem -1rem 0; padding: .6rem 1rem;
+        /* The card is rounded-2xl (1rem); minus its 1px border. */
+        border-radius: calc(1rem - 1px) calc(1rem - 1px) 0 0;
+        background: linear-gradient(120deg, #f4e9dc, #dfc9ac 42%, #cbb08c 68%, #ecdfcd);
+        background-size: 220% 100%;
+        animation: gradSweep var(--sw-t, 13s) ease-in-out infinite alternate;
+        animation-delay: var(--sw-d, 0s); }
+    /* The faint horizon line that makes the tint read as ground. */
+    .ds-head::after { content: ''; position: absolute; inset: auto 0 0 0; height: 1rem;
+        background: linear-gradient(180deg, transparent, rgb(0 0 0 / .05)); pointer-events: none; }
+    html.dark .ds-head {
+        background: linear-gradient(120deg, #2a2018, #3a2c1e 42%, #4a3826 68%, #2f241a);
+        background-size: 220% 100%; }
+    @media (prefers-reduced-motion: reduce) { .ds-head { animation: none; } }
+    .ds-head h3 { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        position: relative; z-index: 1; text-shadow: 0 1px 0 rgb(255 255 255 / .5); }
+    html.dark .ds-head h3 { text-shadow: none; }
     .ds-chev { flex: none; width: 1.4rem; height: 1.4rem; border-radius: 999px;
-        display: flex; align-items: center; justify-content: center;
-        color: var(--color-gray-400); background: var(--color-gray-100);
+        display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;
+        color: var(--color-gray-500); background: rgb(255 255 255 / .75);
         transition: transform .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
     .ds-chev svg { width: .8rem; height: .8rem; }
     .ds-head:hover .ds-chev { color: #3d6823; }
@@ -226,7 +247,7 @@
        padding it lives inside the fold, so the closing row clips it — and the
        fold animation carries it, instead of the gap snapping away after. */
     .ds-card .card-body { gap: 0; }
-    .ds-body { padding-top: .75rem; }
+    .ds-body { padding-top: .85rem; }
     .ds-fold-wrap { display: grid; grid-template-rows: 1fr; min-height: 0; }
     .ds-card.is-folding .ds-fold-wrap { transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
     .ds-card.is-folded .ds-fold-wrap { grid-template-rows: 0fr; }
@@ -237,7 +258,7 @@
     .ds-card.is-folded .ds-body { padding-top: 0; }
     .ds-fold-wrap > * { min-height: 0; overflow: hidden; }
     .ds-card.is-folded { align-self: start; }
-    html.dark .ds-chev { background: rgb(255 255 255 / .07); color: #9fb08e; }
+    html.dark .ds-chev { background: rgb(0 0 0 / .45); color: #d5dfc9; }
     @media (prefers-reduced-motion: reduce) {
         .ds-chev, .ds-card.is-folding .ds-fold-wrap { transition: none; }
     }
@@ -464,7 +485,8 @@
                     {{-- Folds the same way the schedules page folds, and
                          remembers it in the same place, so a season you put
                          away stays away wherever you meet it. --}}
-                    <div class="card card-hover min-w-0 ds-card" data-schedule-card="{{ $schedule->id }}">
+                    <div class="card card-hover min-w-0 ds-card" data-schedule-card="{{ $schedule->id }}"
+                         style="--sw-t:{{ 10 + ($schedule->id % 7) }}s;--sw-d:-{{ $schedule->id % 11 }}s">
                         <div class="card-body !p-4 flex flex-col gap-3 h-full min-w-0">
                             <button type="button" class="ds-head" data-ds-fold aria-expanded="true"
                                     aria-label="Fold or unfold {{ $schedule->title }}">
