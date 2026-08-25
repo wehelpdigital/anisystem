@@ -275,7 +275,8 @@ input[type="file"].form-input::-webkit-file-upload-button { margin-right: .75rem
        animation finishes. */
     visibility: hidden;
     pointer-events: none;
-    transition: transform 0.3s ease-out, visibility 0s linear 0.3s;
+    transition: transform 0.3s ease-out, visibility 0s linear 0.3s,
+        background-color 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
 /* While a sheet is open the page's floating widgets step aside. They are
    stacked above sheets (the AI float is z-60 against the sheet's z-50), so a
@@ -324,7 +325,8 @@ html:has(#confirm-sheet.is-open) .sheet-backdrop { z-index: 199; }
     transform: translateY(0);
     visibility: visible;
     pointer-events: auto;
-    transition: transform 0.3s ease-out, visibility 0s;
+    transition: transform 0.3s ease-out, visibility 0s,
+        background-color 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
 @media (min-width: 640px) {
     .sheet {
@@ -334,12 +336,14 @@ html:has(#confirm-sheet.is-open) .sheet-backdrop { z-index: 199; }
         opacity: 0;
         width: min(94vw, var(--sheet-width, 40rem));
         max-height: min(85vh, 48rem);
-        transition: opacity 0.18s ease-out, transform 0.18s ease-out, visibility 0s linear 0.18s;
+        transition: opacity 0.18s ease-out, transform 0.18s ease-out, visibility 0s linear 0.18s,
+            background-color 0.28s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .sheet.is-open {
         transform: translate(-50%, -50%) scale(1);
         opacity: 1;
-        transition: opacity 0.18s ease-out, transform 0.18s ease-out, visibility 0s;
+        transition: opacity 0.18s ease-out, transform 0.18s ease-out, visibility 0s,
+            background-color 0.28s cubic-bezier(0.22, 1, 0.36, 1);
     }
 }
 /* Note editors size to their CONTENT (free height) — a compact bottom sheet on
@@ -349,6 +353,27 @@ html:has(#confirm-sheet.is-open) .sheet-backdrop { z-index: 199; }
 @media (min-width: 640px) {
     .sheet.sheet-full { max-height: 92vh; }
 }
+
+/* The sheet standing on another sheet.
+
+   Two open sheets were white on white — the gallery picker over the composer
+   read as one tall card. The top one wears a touch of the brand's green in
+   its surface and a deeper drop, and a second dimmer (below, stacked by the
+   sheet machinery in app.js) settles over everything beneath it. Both ease
+   in and out on the house timing; the background-color leg was added to the
+   sheet transitions above for exactly this. */
+.sheet.sheet-above {
+    background-color: #f0f7e9;
+    box-shadow: 0 22px 70px rgb(15 30 6 / 0.4), 0 0 0 1px rgb(74 124 42 / 0.12);
+}
+html.dark .sheet.sheet-above {
+    background-color: #202a1b;
+    box-shadow: 0 22px 70px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(143 194 103 / 0.14);
+}
+/* The dimmer between two sheets: a shade lighter than the base backdrop, so
+   a stack never adds up to pitch black, with the same fade and blur. */
+.sheet-backdrop-stack { background-color: rgb(15 23 8 / 0.42); }
+html.dark .sheet-backdrop-stack { background-color: rgb(0 0 0 / 0.5); }
 
 .sheet-handle { @apply mx-auto mt-3 mb-1 h-1.5 w-12 rounded-full bg-gray-300 sm:hidden; }
 .sheet-header { @apply flex items-center justify-between gap-3 px-5 pt-3 pb-3 border-b border-gray-100 shrink-0; }

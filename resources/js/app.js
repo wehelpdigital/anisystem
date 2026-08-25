@@ -416,6 +416,47 @@ function ensureBackdrop() {
     return backdropEl;
 }
 
+/* A second sheet over a first was white on white: the gallery picker opened
+ * over the composer and the two read as one card. Whenever the stack is two
+ * deep, a second dimmer rises just under the topmost sheet — same fade as
+ * the base backdrop — and the top sheet wears its own tint (.sheet-above),
+ * so what can be touched is unmistakably in front of what cannot. */
+let stackBackdropEl = null;
+function ensureStackBackdrop() {
+    if (!stackBackdropEl) {
+        stackBackdropEl = document.createElement('div');
+        stackBackdropEl.className = 'sheet-backdrop sheet-backdrop-stack hidden';
+        stackBackdropEl.addEventListener('click', () => {
+            const top = openSheets[openSheets.length - 1];
+            if (top && top.dataset.static !== 'true') window.closeSheet(top.id);
+        });
+        document.body.appendChild(stackBackdropEl);
+    }
+    return stackBackdropEl;
+}
+
+function layerSheets() {
+    const bd = ensureStackBackdrop();
+    openSheets.forEach((s, i) => {
+        s.classList.toggle('sheet-above', openSheets.length >= 2 && i === openSheets.length - 1);
+    });
+    if (openSheets.length >= 2) {
+        const top = openSheets[openSheets.length - 1];
+        // The top sheet's own z-index, seated just before it in the DOM:
+        // above every earlier sheet whatever ad-hoc z each one carries
+        // (plain sheets are 50, the picker 150, the confirm 200), and under
+        // the top one by document order alone.
+        const z = getComputedStyle(top).zIndex;
+        bd.style.zIndex = z === 'auto' ? '50' : z;
+        top.parentNode.insertBefore(bd, top);
+        bd.classList.remove('hidden');
+        requestAnimationFrame(() => bd.classList.add('is-open'));
+    } else {
+        bd.classList.remove('is-open');
+        setTimeout(() => { if (openSheets.length < 2) bd.classList.add('hidden'); }, 250);
+    }
+}
+
 window.openSheet = function openSheet(id) {
     const el = document.getElementById(id);
     if (!el) return;
@@ -427,6 +468,7 @@ window.openSheet = function openSheet(id) {
         el.classList.add('is-open');
     });
     openSheets.push(el);
+    layerSheets();
     document.documentElement.style.overflow = 'hidden';
     // Floating widgets (the AI technician, the team chat) sit above sheets in
     // the stack, so their bubbles landed on top of a sheet's Cancel/Save row.
@@ -457,8 +499,10 @@ window.closeSheet = function closeSheet(id) {
     document.dispatchEvent(new CustomEvent('sm:sheet-closed', { detail: { id } }));
     window.unregisterOverlay('sheet:' + id);
     el.classList.remove('is-open');
+    el.classList.remove('sheet-above');
     const idx = openSheets.indexOf(el);
     if (idx >= 0) openSheets.splice(idx, 1);
+    layerSheets();
     if (openSheets.length === 0) {
         ensureBackdrop().classList.remove('is-open');
         document.documentElement.style.overflow = '';
