@@ -327,8 +327,19 @@
     }
     @media (prefers-reduced-motion: reduce) { .dash-stat { transition: none; } }
     {{-- .wall-act composer buttons live in plaza-css (shared). --}}
-    /* The wall composer's own bar, borrowed line for line (feed.blade.php
-       keeps the original) so the two sheets read as one form. */
+    /* The wall composer's own bar and shot tiles, borrowed line for line
+       (feed.blade.php keeps the originals) so the two sheets read as one
+       form. */
+    .comp-shots { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.6rem; }
+    .comp-shots.hidden { display:none; }
+    .comp-shot-one { position:relative; width:4.5rem; height:4.5rem; border-radius:.6rem;
+        overflow:hidden; background:var(--color-gray-100); flex:none; }
+    .comp-shot-one img { width:100%; height:100%; object-fit:cover; display:block; }
+    .comp-shot-one button { position:absolute; top:.15rem; right:.15rem; width:1.35rem; height:1.35rem;
+        border:0; border-radius:999px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+        background:rgb(17 24 39 / .62); color:#fff; font-size:.7rem; line-height:1; }
+    .comp-shot-one button:hover { background:rgb(185 28 28 / .9); }
+    html.dark .comp-shot-one { background:rgb(255 255 255 / .06); }
     .comp-top { display:flex; align-items:flex-start; gap:.75rem; margin-bottom:.7rem; }
     /* Two lines of text against a taller face read as hanging from its
        crown; centred, the pair sits level. */
@@ -1005,45 +1016,74 @@
     const feed = document.getElementById('dashWallFeed');
     const empty = document.getElementById('dashWallEmpty');
     const imageInput = document.getElementById('dashImage');
-    const imgChip = document.getElementById('dashImageChip');
     const POST_URL = @json(route('community.wall.post', ['userId' => auth()->id()]));
     const csrf = () => document.querySelector('meta[name=csrf-token]')?.content || '';
 
     const camInput = document.getElementById('dashCamera');
-    let galleryPick = null;   // { path, url } — a picture the app already keeps
+    const shotsRow = document.getElementById('dashShots');
 
-    /* One chip serves all three doors; taking a new picture through any of
-     * them drops whatever the others held, because this composer carries
-     * one photo. */
-    function showChip(src) {
-        document.getElementById('dashImageThumb').src = src;
-        imgChip.style.display = 'flex';
+    /* The wall composer's own model: one list holds every picture — files
+     * to upload and pictures already kept here — and each door only adds to
+     * it. Eight at most, the same ceiling the wall keeps. */
+    const MAX_SHOTS = 8;
+    const shots = [];
+
+    function paintShots() {
+        if (!shotsRow) return;
+        shotsRow.classList.toggle('hidden', shots.length === 0);
+        shotsRow.innerHTML = shots.map((sh, i) =>
+            '<span class="comp-shot-one"><img src="' + sh.url + '" alt="">'
+            + '<button type="button" data-shot="' + i + '" aria-label="Remove photo">✕</button></span>').join('');
+    }
+    shotsRow?.addEventListener('click', (e) => {
+        const rm = e.target.closest('[data-shot]');
+        if (!rm) return;
+        const gone = shots.splice(Number(rm.dataset.shot), 1)[0];
+        // Object URLs are ours to release; a long session leaks them otherwise.
+        if (gone && gone.file) { try { URL.revokeObjectURL(gone.url); } catch (_) {} }
+        paintShots();
+    });
+    function addFile(f) {
+        if (!f) return;
+        if (shots.length >= MAX_SHOTS) { toast('That is eight photos — the most a post carries.', 'error'); return; }
+        shots.push({ file: f, url: URL.createObjectURL(f) });
+    }
+    function addPick(item) {
+        if (!item || !item.path) return;
+        if (shots.length >= MAX_SHOTS) { toast('That is eight photos — the most a post carries.', 'error'); return; }
+        if (shots.some((sh) => sh.path === item.path)) return;   // the same picture twice is once
+        shots.push({ path: item.path, url: item.url || '' });
     }
     function clearPhoto() {
+        shots.forEach((sh) => { if (sh.file) { try { URL.revokeObjectURL(sh.url); } catch (_) {} } });
+        shots.length = 0;
         imageInput.value = '';
         if (camInput) camInput.value = '';
-        galleryPick = null;
-        imgChip.style.display = 'none';
+        paintShots();
     }
 
-    // Door one: this device (through the photo editor, as the wall goes).
+    // Door one: this device. One photo still goes through the editor —
+    // filters, a word, an arrow at the thing you mean. Several do not: five
+    // photos would be five trips through it.
     imageInput?.addEventListener('change', async () => {
-        if (imageInput.files[0] && window.smEditInto) await window.smEditInto(imageInput);
-        const f = imageInput.files[0];
-        if (!f) { clearPhoto(); return; }
-        galleryPick = null; if (camInput) camInput.value = '';
-        showChip(URL.createObjectURL(f));
+        const picked = [...(imageInput.files || [])];
+        if (picked.length === 1 && window.smEditInto) {
+            await window.smEditInto(imageInput);
+            addFile((imageInput.files || [])[0]);
+        } else {
+            picked.forEach(addFile);
+        }
+        imageInput.value = '';
+        paintShots();
     });
     // Door two: the camera, straight in.
     camInput?.addEventListener('change', () => {
-        const f = camInput.files[0];
-        if (!f) return;
-        galleryPick = null; imageInput.value = '';
-        showChip(URL.createObjectURL(f));
+        addFile((camInput.files || [])[0]);
+        camInput.value = '';
+        paintShots();
     });
-    document.getElementById('dashImageClear')?.addEventListener('click', clearPhoto);
 
-    /* The chooser: the wall's three doors, in the same order. */
+        /* The chooser: the wall's three doors, in the same order. */
     document.getElementById('dashPhotoBtn')?.addEventListener('click', () => window.openSheet?.('dashPhotoSheet'));
     document.getElementById('dashSrcUpload')?.addEventListener('click', () => {
         window.closeSheet?.('dashPhotoSheet');
@@ -1059,15 +1099,13 @@
         // The picker overlays every sheet (its own layer sits above them),
         // so the composer stays where it is and is simply there again when
         // the picker goes — the same arrangement the wall's composer uses.
+        /* Tap to collect, then one button to bring them all — the picker's
+         * multi mode, with room for whatever the post has not already taken. */
         window.smPickMedia({
             allSchedules: true, kinds: 'image', title: 'From your gallery',
-            onPick: (item) => {
-                if (item && item.path) {
-                    galleryPick = { path: item.path, url: item.url || '' };
-                    imageInput.value = ''; if (camInput) camInput.value = '';
-                    showChip(item.url || '');
-                }
-            },
+            multiple: true,
+            max: Math.max(1, MAX_SHOTS - shots.length),
+            onPick: (item) => { addPick(item); paintShots(); },
         });
     });
 
@@ -1084,17 +1122,19 @@
 
     btn?.addEventListener('click', async () => {
         const text = body.value.trim();
-        const img = imageInput.files[0] || (camInput && camInput.files[0]);
         const vid = window.plazaVideoFile ? window.plazaVideoFile(host) : null;
-        if (!text && !img && !galleryPick && !vid) { toast('Write something or add a photo/video.', 'error'); return; }
+        if (!text && !shots.length && !vid) { toast('Write something or add a photo/video.', 'error'); return; }
         const prev = btn.innerHTML;
         btn.disabled = true;
-        btn.textContent = vid ? 'Uploading…' : 'Posting…';
+        btn.textContent = (vid || shots.length > 2) ? 'Uploading…' : 'Posting…';
         try {
             const fd = new FormData();
             if (text) fd.append('body', text);
-            if (img) fd.append('image', img);
-            else if (galleryPick) fd.append('galleryPaths[]', galleryPick.path);
+            // Files go up; a picture the app already keeps travels as its path.
+            shots.forEach((sh) => {
+                if (sh.file) fd.append('images[]', sh.file);
+                else if (sh.path) fd.append('galleryPaths[]', sh.path);
+            });
             if (vid) fd.append('video', vid);
             fd.append('render', 'feed');
             const res = await fetch(POST_URL, { method: 'POST', headers: { 'X-CSRF-TOKEN': csrf(), Accept: 'application/json' }, body: fd });
@@ -1216,10 +1256,9 @@
             <textarea id="dashPostBody" data-mentionable data-preview="#dashPreview" rows="4" maxlength="5000" class="form-textarea w-full dash-comp-box" placeholder="Share something with your co-farmers — a question, a photo of the field, what the weather did…"></textarea>
             <div id="dashPreview" class="cp-preview" style="display:none"><span class="cp-label">Preview</span><div class="cp-body"></div></div>
 
-            <div id="dashImageChip" class="hidden mt-2 items-center gap-2 text-xs font-semibold text-gray-600">
-                <img src="" id="dashImageThumb" class="w-10 h-10 rounded-lg object-cover" alt="">
-                <button type="button" id="dashImageClear" class="text-red-600 font-bold">Remove photo</button>
-            </div>
+            {{-- What is coming with the post, shown as itself — the wall's
+                 strip of tiles, one ✕ apiece. --}}
+            <div class="comp-shots hidden" id="dashShots"></div>
             <span class="js-video-chip mt-2 items-center gap-2 text-xs font-semibold text-gray-600" style="display:none">
                 <span class="js-video-name"></span>
                 <button type="button" class="js-video-clear text-red-600 font-bold">Remove</button>
@@ -1235,7 +1274,7 @@
                     <button type="button" class="wall-act" id="dashPhotoBtn" title="Add a photo" aria-label="Add a photo">
                         <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     </button>
-                    <input type="file" id="dashImage" accept="image/jpeg,image/png,image/webp" class="hidden">
+                    <input type="file" id="dashImage" accept="image/jpeg,image/png,image/webp" class="hidden" multiple>
                     {{-- capture= asks the phone for its camera rather than its files. --}}
                     <input type="file" id="dashCamera" accept="image/*" capture="environment" class="hidden">
                     <button type="button" class="wall-act js-video-attach" title="Upload a video" aria-label="Upload a video">
