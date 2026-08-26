@@ -83,7 +83,11 @@
            pictures and sat in the round badge like a photo in a porthole.
            The stroke icons match every other icon in the app. */
         .sch-hero-emoji { width: 3rem; height: 3rem; border-radius: 999px; flex-shrink: 0;
-            display: inline-flex; align-items: center; justify-content: center; }
+            display: inline-flex; align-items: center; justify-content: center;
+            /* The badge floats — the same slow bob the dashboard's sun rides. */
+            animation: heroBob 3.8s ease-in-out infinite alternate; }
+        @keyframes heroBob { from { transform: translateY(2px); } to { transform: translateY(-3px); } }
+        @media (prefers-reduced-motion: reduce) { .sch-hero-emoji { animation: none; } }
         .sch-hero-emoji svg { width: 1.55rem; height: 1.55rem; }
         /* The shelf's own badge: field green, like the page it heads. */
         .sch-hero-emoji.is-plan { background: linear-gradient(135deg, #eef6e4, #d5e8bd); color: #4a7c2a; }

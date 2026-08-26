@@ -78,6 +78,11 @@
     /* Enough air that the greeting reads as a welcome rather than a header. */
     .dash-hero-mark { width: 3.35rem; height: 3.35rem; }
     .dash-hero-mark svg { width: 1.7rem; height: 1.7rem; }
+    /* The hour's badge floats — a slow bob, the way the sun hangs in the
+       sky rather than sits on a shelf. */
+    .dash-hero-mark { animation: heroBob 3.8s ease-in-out infinite alternate; }
+    @keyframes heroBob { from { transform: translateY(2px); } to { transform: translateY(-3px); } }
+    @media (prefers-reduced-motion: reduce) { .dash-hero-mark { animation: none; } }
     .dash-hero-warn { display: inline-flex; align-items: center; gap: .3rem; margin-top: .35rem;
         font-size: .78rem; font-weight: 700; color: #b45309; }
     .dash-hero-warn svg { width: .85rem; height: .85rem; }
