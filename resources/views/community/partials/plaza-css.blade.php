@@ -926,12 +926,10 @@
     /* No cover of their own: a colour that is theirs, drifting. Chosen by
        id, so the same person keeps the same band every time — a random one
        per render would make a list flicker on every page. */
-    .mc-tint-0 { background: linear-gradient(120deg, #2f5219, #6b9f3d 35%, #b8d38e 55%, #4a7c2a 80%, #2f5219); }
-    .mc-tint-1 { background: linear-gradient(120deg, #1d4ed8, #60a5fa 35%, #bfdbfe 55%, #3b82f6 80%, #1d4ed8); }
-    .mc-tint-2 { background: linear-gradient(120deg, #b45309, #f59e0b 35%, #fde68a 55%, #d97706 80%, #b45309); }
-    .mc-tint-3 { background: linear-gradient(120deg, #0f766e, #14b8a6 35%, #99f6e4 55%, #0d9488 80%, #0f766e); }
-    .mc-tint-4 { background: linear-gradient(120deg, #6d28d9, #a78bfa 35%, #ddd6fe 55%, #7c3aed 80%, #6d28d9); }
-    .mc-tint-5 { background: linear-gradient(120deg, #be185d, #f472b6 35%, #fbcfe8 55%, #db2777 80%, #be185d); }
+    /* No cover of their own: the house's dark green, drifting. One colour
+       for everyone — the rainbow of per-member tints read as six different
+       kinds of card when they were all the same kind of member. */
+    .mc-tint-green { background: linear-gradient(120deg, #14260b, #2f5219 30%, #4a7c2a 52%, #223d0e 74%, #14260b); }
     .mc-cover[class*="mc-tint-"] { background-size: 260% 260%; animation: mcDrift 14s ease-in-out infinite alternate; }
     /* A real cover sits on top of the drift and does not need it running. */
     .mc-cover:has(img) { animation: none; }

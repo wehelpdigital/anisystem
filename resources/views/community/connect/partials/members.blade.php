@@ -24,7 +24,7 @@
     <div class="card card-hover mb-4 mc-card mc-hue-{{ $mcHue }}" data-member-card="{{ $m->id }}">
         {{-- The cover runs to the card's edge; the face overlaps it, the way a
              profile does, so a card reads as a person rather than a row. --}}
-        <div class="mc-cover mc-tint-{{ $mcHue }}">
+        <div class="mc-cover mc-tint-green">
             @if ($m->coverPath)
                 {{-- A cover whose file has gone leaves a broken-image glyph
                      across the top of the card; the band's own colour is a
