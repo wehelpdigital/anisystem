@@ -33,6 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const MAPS_URL = @json(route('sm.maps', ['id' => $schedule->id]));
     const MAP_SAVES_URL = @json(route('sm.map.saves')) + '?scheduleId=' + @json($schedule->id);
     const DAY_TYPE_DEFAULT = @json($schedule->dayType ?: 'DAS');
+    // The farm's own day, settled by the server. The board's first paint is
+    // Blade's and every later render is this file's; both must ring the same
+    // card, and a phone set to another timezone must not move which day that
+    // is (see .date-group.is-today).
+    const TODAY_KEY = @json(now('Asia/Manila')->toDateString());
     const STORAGE_BASE = @json(asset('storage'));
 
     const ACTIVITY_TYPE_LABELS = @json($activityTypes);
@@ -1737,7 +1742,10 @@ document.addEventListener('DOMContentLoaded', () => {
               + `<div class="day-income-block" data-date="${esc(dateKey)}" data-block-sort="${esc(blockSortAttr(dateKey, 'income'))}" hidden></div>`;
 
         const wrap = document.createElement('div');
-        wrap.innerHTML = `<div class="date-group date-color-${colorIdx}${allHidden ? ' all-hidden' : ''}${OPEN_DAYS.has(dateKey) ? '' : ' is-folded'}" data-date="${esc(dateKey)}">
+        // Today's card wears a ring that breathes, so the eye finds the day
+        // it is standing in without reading down the dates.
+        const isToday = dateKey === TODAY_KEY;
+        wrap.innerHTML = `<div class="date-group date-color-${colorIdx}${allHidden ? ' all-hidden' : ''}${isToday ? ' is-today' : ''}${OPEN_DAYS.has(dateKey) ? '' : ' is-folded'}" data-date="${esc(dateKey)}">
             <div class="date-header" style="--sw-t:${9 + (beat(dateKey) % 7)}s;--sw-d:-${beat(dateKey) % 11}s"${(dateObj && MAY_DRAG) ? ' draggable="true" title="Drag this header to move the whole day to another date"' : ''}>
                 <svg class="date-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 ${headerDate}

@@ -113,6 +113,38 @@
             content-visibility: auto;
             contain-intrinsic-size: auto 400px;
         }
+        /* Today's card, ringed by a ripple that breathes out of its border
+           and fades — so the day you are standing in is found at a glance
+           rather than read for. gradSweep is restated because a second
+           animation on the same element replaces the first, and the day's
+           side colour would stop drifting with it. The card's own shadow
+           rides along in every frame for the same reason: box-shadow is one
+           property, and a keyframe that names only the ring would drop it. */
+        .date-group.is-today {
+            animation: gradSweep 12s ease-in-out infinite alternate,
+                       dayTodayRipple 2.6s cubic-bezier(.22, 1, .36, 1) infinite;
+        }
+        @keyframes dayTodayRipple {
+            0%   { box-shadow: var(--shadow-card), 0 0 0 0 rgb(74 124 42 / .5); }
+            70%  { box-shadow: var(--shadow-card), 0 0 0 .8rem rgb(74 124 42 / 0); }
+            100% { box-shadow: var(--shadow-card), 0 0 0 0 rgb(74 124 42 / 0); }
+        }
+        html.dark .date-group.is-today {
+            animation: gradSweep 12s ease-in-out infinite alternate,
+                       dayTodayRippleDark 2.6s cubic-bezier(.22, 1, .36, 1) infinite;
+        }
+        @keyframes dayTodayRippleDark {
+            0%   { box-shadow: var(--shadow-card), 0 0 0 0 rgb(143 194 103 / .55); }
+            70%  { box-shadow: var(--shadow-card), 0 0 0 .8rem rgb(143 194 103 / 0); }
+            100% { box-shadow: var(--shadow-card), 0 0 0 0 rgb(143 194 103 / 0); }
+        }
+        /* Still, but still marked: the ring stays as a quiet standing rim. */
+        @media (prefers-reduced-motion: reduce) {
+            .date-group.is-today, html.dark .date-group.is-today {
+                animation: none;
+                box-shadow: var(--shadow-card), 0 0 0 2px rgb(74 124 42 / .45);
+            }
+        }
         .date-header {
             display: flex; align-items: center; gap: .4rem; flex-wrap: wrap;
             padding: .55rem .8rem; border-radius: calc(1rem - 2px) calc(1rem - 2px) 0 0;
@@ -2745,6 +2777,12 @@
                         && $activitiesForDate->every(fn ($_a) => (bool) $_a->isHidden);
                     $noteRow = $dateKey !== '__no-date__' ? $dateNotesByDate->get($dateKey) : null;
                     $existingMarker = $dateKey !== '__no-date__' ? $markersByDate->get($dateKey) : null;
+                    // Today's card wears a ring that breathes (see
+                    // .date-group.is-today), so the day you are standing in is
+                    // found at a glance rather than read for. The farm's own
+                    // day, not the browser's: a phone in another timezone
+                    // would otherwise ring the wrong card.
+                    $isTodayGroup = $dateKey === now('Asia/Manila')->toDateString();
                 @endphp
                 @if ($allHidden)
                     <div class="rest-day-marker rest-day-substitute" data-date="{{ $dateKey }}">
@@ -2756,7 +2794,7 @@
                         <button type="button" class="btn btn-white btn-sm rest-day-add-btn shrink-0" data-date="{{ $dateKey }}">+ Add</button>
                     </div>
                 @endif
-                <div class="date-group date-color-{{ $item['color'] }} {{ $allHidden ? 'all-hidden' : '' }} is-folded" data-date="{{ $dateKey }}">
+                <div class="date-group date-color-{{ $item['color'] }} {{ $allHidden ? 'all-hidden' : '' }}{{ $isTodayGroup ? ' is-today' : '' }} is-folded" data-date="{{ $dateKey }}">
                     @php
                         // A number from the date itself, so a day keeps the
                         // same rhythm on every visit and its neighbours do not
