@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', $member->full_name . ' — Community')
-@section('body-class', 'plaza-ground')
+@section('body-class', 'plaza-ground pf-full')
 @section('page-title', 'Community')
 @section('page-subtitle', $member->full_name)
 @section('back', route('community.connect.members'))
@@ -34,6 +34,26 @@
         @endif
 
         <div class="pf-body">
+            {{-- Message and Follow, as quiet icon circles in the corner under
+                 the cover: the two light gestures step aside so the head is
+                 the person, not a row of buttons. --}}
+            @unless ($isSelf)
+                <div class="pf-quick">
+                    @if ($member->allowMessages)
+                        <button type="button" class="pf-qbtn pf-qbtn-msg js-open-dm" data-dm-user="{{ $member->id }}" data-dm-name="{{ $member->full_name }}"
+                                title="Message {{ $member->firstName }}" aria-label="Message {{ $member->full_name }}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h8m-8-4h5m-6 12V6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H8l-3 4z"/></svg>
+                        </button>
+                    @endif
+                    <button type="button" class="fp-follow pf-qbtn {{ $isFollowed ? 'is-on' : '' }}"
+                            data-follow="{{ $member->id }}" data-name="{{ $member->full_name }}"
+                            aria-pressed="{{ $isFollowed ? 'true' : 'false' }}"
+                            title="{{ $isFollowed ? 'Following' : 'Follow' }} {{ $member->firstName }}" aria-label="Follow {{ $member->full_name }}">
+                        <span class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18 9v6m3-3h-6M13 7a4 4 0 11-8 0 4 4 0 018 0zM3 21v-1a6 6 0 016-6h0a6 6 0 016 6v1"/></svg></span>
+                        <span class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 11l2 2 4-4M13 7a4 4 0 11-8 0 4 4 0 018 0zM3 21v-1a6 6 0 016-6h0a6 6 0 016 6v1"/></svg></span>
+                    </button>
+                </div>
+            @endunless
             <div class="pf-id">
                 <span class="status-avatar pf-face" data-self="{{ $isSelf ? 1 : 0 }}">
                     @include('community.partials.avatar', ['user' => $member, 'size' => 'avatar-lg', 'link' => false, 'showOnline' => true])
@@ -74,26 +94,39 @@
                 <p class="pf-bio">{{ $member->bio }}</p>
             @endif
 
-            {{-- Message leads: it is the thing a visitor most often came for. --}}
-            <div class="pf-acts">
-                @if ($isSelf)
-                    <a href="{{ route('account.index') }}" class="btn btn-white btn-sm">✏️ Edit profile</a>
-                @else
-                    @if ($member->allowMessages)
-                        <button type="button" class="btn btn-primary btn-sm conn-grad js-open-dm" data-dm-user="{{ $member->id }}" data-dm-name="{{ $member->full_name }}">
-                            💬 Message
-                        </button>
+            {{-- Message and Follow live in the corner now (see .pf-quick);
+                 what stays down here is the deliberate connection act — and
+                 an incoming request gets its own card below instead. --}}
+            @if ($isSelf || $status !== 'pending_in')
+                <div class="pf-acts">
+                    @if ($isSelf)
+                        <a href="{{ route('account.index') }}" class="btn btn-white btn-sm">✏️ Edit profile</a>
+                    @else
+                        @include('community.connect.partials.action', ['status' => $status, 'memberId' => $member->id])
                     @endif
-                    <button type="button" class="fp-follow {{ $isFollowed ? 'is-on' : '' }}"
-                            data-follow="{{ $member->id }}" data-name="{{ $member->full_name }}"
-                            aria-pressed="{{ $isFollowed ? 'true' : 'false' }}">
-                        <span class="on">Following</span><span class="off">+ Follow</span>
-                    </button>
-                    @include('community.connect.partials.action', ['status' => $status, 'memberId' => $member->id])
-                @endif
-            </div>
+                </div>
+            @endif
         </div>
     </div>
+
+    {{-- The knock on the door, given the room it deserves: a request is the
+         one thing on this page waiting on YOUR answer, so it stands as its
+         own card with the question written out and both answers in hand. --}}
+    @if (! $isSelf && $status === 'pending_in')
+        <div class="card pf-request mb-4">
+            <div class="pf-request-head">
+                <span class="pf-request-ico" aria-hidden="true">🤝</span>
+                <div class="pf-request-txt">
+                    <b>{{ $member->firstName }} wants to be your co-farmer</b>
+                    <span>{{ $member->full_name }} sent you a co-farmer request. Accepting connects your farms — you will see each other's news and can reach each other any time.</span>
+                </div>
+            </div>
+            <span class="conn-action pf-request-acts" data-member-id="{{ $member->id }}" data-status="pending_in">
+                <button type="button" class="btn btn-primary conn-btn conn-grad" data-action="accept">Accept</button>
+                <button type="button" class="btn btn-white conn-btn" data-action="decline">Not now</button>
+            </span>
+        </div>
+    @endif
 
     {{-- About: labelled rows, not a paragraph of emoji chips.
 
@@ -234,7 +267,7 @@
     .pf-head { padding:0; overflow:hidden; }
     .pf-cover { height:7rem; background-size:cover; background-repeat:no-repeat; background-color:var(--color-gray-100); }
     @media (min-width:640px) { .pf-cover { height:11rem; } }
-    .pf-body { padding:0 1rem 1rem; }
+    .pf-body { padding:0 1rem 1rem; position:relative; }
     /* The face sits on the cover's edge — half over, half under — and the
        name stands UNDER it, centred, the way the ranking page and every
        member card introduce a person. Side by side, the name printed over
@@ -260,11 +293,56 @@
     .pf-name { min-width:0; padding-bottom:.15rem; }
     .pf-name h2 { font-family:var(--font-heading); font-size:1.15rem; font-weight:800; line-height:1.2;
         color:var(--color-gray-900); overflow-wrap:anywhere; }
-    .pf-rank { margin-top:.3rem; }
+    /* Each line of the introduction breathes: name, then the rank it earned,
+       then what they say they do, then where — none of them crowding. */
+    .pf-name { margin-top:.55rem; }
+    .pf-rank { margin-top:.55rem; }
     .pf-rank .rankb { pointer-events:none; }
-    .pf-headline { font-size:.82rem; font-weight:600; color:var(--color-gray-600); margin-top:.3rem; }
-    .pf-loc { display:flex; align-items:center; justify-content:center; gap:.25rem; font-size:.78rem; color:var(--color-gray-500); margin-top:.2rem; }
-    .pf-loc svg { width:.85rem; height:.85rem; color:var(--color-gray-400); flex:none; }
+    .pf-headline { font-size:.82rem; font-weight:600; color:var(--color-gray-600); margin-top:.55rem; }
+    .pf-loc { display:flex; align-items:center; justify-content:center; gap:.3rem; font-size:.78rem; color:var(--color-gray-500); margin-top:.5rem; }
+    .pf-loc svg { width:.85rem; height:.85rem; color:#e11d48; flex:none; }
+
+    /* The two light gestures, as icon circles under the cover's corner. */
+    .pf-quick { position:absolute; top:.7rem; right:.85rem; display:flex; gap:.45rem; z-index:3; }
+    .pf-qbtn { width:2.4rem; height:2.4rem; padding:0; border-radius:999px; flex:none;
+        display:inline-flex; align-items:center; justify-content:center; cursor:pointer;
+        border:1px solid var(--color-gray-200); background:var(--color-white); color:var(--color-gray-600);
+        box-shadow:0 3px 10px rgb(0 0 0 / .08);
+        transition:transform .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1),
+            color .28s cubic-bezier(.22,1,.36,1); }
+    .pf-qbtn svg { width:1.15rem; height:1.15rem; }
+    .pf-qbtn:hover { transform:scale(1.08); }
+    .pf-qbtn-msg { border:0; color:#fff;
+        background-image:linear-gradient(120deg, #2f5219, #4a7c2a 60%, #3d6823); }
+    .pf-qbtn.fp-follow { padding:0; }
+    .pf-qbtn.fp-follow .on, .pf-qbtn.fp-follow .off { display:none; line-height:0; }
+    .pf-qbtn.fp-follow:not(.is-on) .off { display:inline-flex; }
+    .pf-qbtn.fp-follow.is-on { background:var(--color-brand-600); border-color:var(--color-brand-600); color:#fff; }
+    .pf-qbtn.fp-follow.is-on .on { display:inline-flex; }
+    html.dark .pf-qbtn { background:#26301c; border-color:#3a4a2c; color:#cdd8c2; }
+    html.dark .pf-qbtn-msg { border:0; color:#fff; }
+
+    /* The knock on the door. */
+    .pf-request { padding:1rem; border:1.5px solid rgb(107 159 61 / .4);
+        background:linear-gradient(115deg, #f4faee, #e6f2d9 55%, #f7fbf2); }
+    html.dark .pf-request { border-color:rgb(143 194 103 / .3);
+        background:linear-gradient(115deg, #1c2415, #243019 55%, #1a2113); }
+    .pf-request-head { display:flex; align-items:flex-start; gap:.75rem; }
+    .pf-request-ico { flex:none; width:2.6rem; height:2.6rem; border-radius:.8rem; font-size:1.3rem;
+        display:inline-flex; align-items:center; justify-content:center;
+        background:rgb(255 255 255 / .8); box-shadow:0 2px 8px rgb(47 82 25 / .15); }
+    html.dark .pf-request-ico { background:rgb(0 0 0 / .3); }
+    .pf-request-txt b { display:block; font-family:var(--font-heading); font-size:.95rem; font-weight:800;
+        color:var(--color-gray-900); }
+    .pf-request-txt span { display:block; font-size:.8rem; color:var(--color-gray-600); line-height:1.5; margin-top:.25rem; }
+    .pf-request-acts { display:flex; gap:.5rem; margin-top:.85rem; }
+    .pf-request-acts .btn { flex:1 1 0; justify-content:center; }
+
+    /* This page is a visit, not a hallway — the bottom tab bar steps away
+       and the back arrow is the way home. */
+    body.pf-full .tabbar { display:none; }
+    body.pf-full { padding-bottom:0; }
+    body.pf-full main { padding-bottom:1.5rem; }
 
     /* Five numbers: a centred row that scrolls, never a grid that wraps. */
     .pf-stats { display:flex; gap:.9rem; margin-top:.85rem; padding-bottom:.15rem;
