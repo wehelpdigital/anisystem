@@ -1660,7 +1660,16 @@
             opacity: .72;
             box-shadow: 0 18px 40px rgba(15, 23, 42, .3);
             transform-origin: top left; will-change: transform;
+            /* The ghost is PLACED, never animated between places: it is a
+               clone of a card whose own transform transition rode along, and
+               the first layout flush caught it parked at the screen's corner
+               — so pressing a card flew a copy in from nowhere. It fades in
+               under the finger instead. */
+            transition: none !important;
+            animation: dgLift .18s cubic-bezier(.22, 1, .36, 1);
         }
+        @keyframes dgLift { from { opacity: 0; } to { opacity: .72; } }
+        @media (prefers-reduced-motion: reduce) { .drag-ghost { animation: none; } }
         /* No text selection or long-press callout while a touch drag is live. */
         body.is-touch-dragging {
             user-select: none; -webkit-user-select: none;
