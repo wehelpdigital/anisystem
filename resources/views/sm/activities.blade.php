@@ -140,8 +140,12 @@
                .0005 ten milliseconds in — so the ring did not swell, it
                struck at full strength and was gone, which reads as a blink
                rather than water. An even clock lets it be seen crossing. */
+            /* Six seconds, of which the ring itself uses the first two and a
+               bit: it crosses slowly, and then the water is still for three
+               before the next one. A ripple that restarts the moment it ends
+               is a pulse; the pause is what makes it a ripple. */
             animation: gradSweep 12s ease-in-out infinite alternate,
-                       dayTodayRipple 3s linear infinite;
+                       dayTodayRipple 6s linear infinite;
         }
         @keyframes dayTodayRipple {
             /* Born out of nothing at the border... */
@@ -150,16 +154,17 @@
                      0 0 0 0 transparent,
                      0 0 0 0 transparent; }
             /* ...gathering just clear of it... */
-            14% { box-shadow: var(--shadow-card),
-                      0 0 0 .07rem var(--rip-1),
-                      0 0 0 .13rem var(--rip-2),
-                      0 0 0 .2rem var(--rip-3); }
-            /* ...then widening away until there is nothing left of it. */
-            70% { box-shadow: var(--shadow-card),
+            8% { box-shadow: var(--shadow-card),
+                     0 0 0 .07rem var(--rip-1),
+                     0 0 0 .13rem var(--rip-2),
+                     0 0 0 .2rem var(--rip-3); }
+            /* ...widening away until there is nothing left of it... */
+            45% { box-shadow: var(--shadow-card),
                       0 0 0 .42rem transparent,
                       0 0 0 .68rem transparent,
                       0 0 0 .95rem transparent; }
-            100% { box-shadow: var(--shadow-card),
+            /* ...and then the long still stretch before the next one. */
+            46%, 100% { box-shadow: var(--shadow-card),
                        0 0 0 0 transparent,
                        0 0 0 0 transparent,
                        0 0 0 0 transparent; }
