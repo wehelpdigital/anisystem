@@ -605,6 +605,44 @@
     <div class="sheet-body" id="versionsSheetList" style="padding-bottom:1rem"></div>
 </div>
 
+{{-- What the bolt opens: the writes done in a hurry, in the field, with one
+     hand. Every row forwards to a real toolbar button, exactly as the Tools
+     menu's rows do — this is a shorter way to four of them, not a second set
+     of handlers. A worker who has had the camera or the video closed to them
+     is not offered it here either: the button it would forward to is not
+     drawn, and a row that does nothing reads as a broken menu. --}}
+<div class="sheet hidden" id="quickBoltSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Quick actions</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full -mr-1" aria-label="Close">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+    </div>
+    <div class="sheet-body space-y-1">
+        @php
+            $boltRows = [];
+            if (\App\Support\WorkerContext::canUseModule('camera')) {
+                $boltRows[] = ['captureTodayPhotoBtn', 'Capture a photo', 'M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9zm12 4a3 3 0 11-6 0 3 3 0 016 0z'];
+            }
+            if (\App\Support\WorkerContext::canUseModule('video')) {
+                $boltRows[] = ['recordTodayVideoBtn', 'Record a video', 'M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z'];
+            }
+            $boltRows[] = ['openNotesBtn', 'Notes', 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'];
+            $boltRows[] = ['quickShareBtn', 'Quick Share', 'M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z'];
+        @endphp
+        @foreach ($boltRows as [$target, $label, $icon])
+            <button type="button" class="activity-action-row w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:pointer-events-none"
+                    data-forward="{{ $target }}">
+                <span class="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg>
+                </span>
+                <span class="grow">{{ $label }}</span>
+            </button>
+        @endforeach
+    </div>
+</div>
+
 <div class="sheet hidden" id="activityActionsSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">

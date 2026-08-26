@@ -1452,14 +1452,21 @@
                Everything drawn as a bare icon keeps its own square instead.
                A stretched icon is a wide empty plate with one small mark
                adrift in the middle of it, which is not a button. */
+            /* And neither row is allowed to spill onto a second line: the
+               squares hold their size, and the word-carrying buttons give up
+               width — down to nothing, hiding their label — until everything
+               fits. A control that has wrapped out of sight is worse than a
+               narrow one. */
+            #actToolbar, #actHeaderBar { flex-wrap: nowrap; }
             #actToolbar > .btn { flex: 0 0 auto; justify-content: center; }
             #actToolbar > #modulesBtn,
-            #actToolbar > #activityActionsBtn { flex: 1 1 auto; }
+            #actToolbar > #activityActionsBtn { flex: 1 1 auto; min-width: 0; overflow: hidden; }
             #actHeaderBar > .btn,
             #actHeaderBar > .icon-btn,
             #actHeaderBar > #addActivityWrap { flex: 0 0 auto; }
             #actHeaderBar > .btn, #actHeaderBar > .icon-btn { justify-content: center; }
-            #actHeaderBar > #versionsSheetBtn { flex: 1 1 auto; }
+            #actHeaderBar > #versionsSheetBtn { flex: 1 1 auto; min-width: 0; overflow: hidden; }
+            #versionsSheetBtn > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
             #addActivityWrap .btn { justify-content: center; }
             /* The eye carries no word at any width it is drawn at, so it is
                square for its whole life. 2.25rem is .btn-sm's own height. */
@@ -2324,6 +2331,15 @@
             <span class="hidden sm:inline">Search</span>
             <span id="toolbarFilterCount" class="absolute -top-0.5 -right-0.5 hidden min-w-5 h-5 px-1 rounded-full bg-brand-600 text-white text-[0.625rem] font-bold items-center justify-center">0</span>
         </button>
+        {{-- The bolt: the writes that are quick — a photo of what you are
+             standing in front of, a clip, the plan out to somebody. They all
+             live in the Tools menu too, several taps down a long list; this
+             is the short way to the ones done in a hurry, in the field, with
+             one hand. Its sheet forwards to the very same buttons. --}}
+        <button type="button" id="quickBoltBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
+                title="Quick actions" aria-label="Quick actions">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </button>
         <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative toolbar-in-menu" data-activities-only disabled title="Nothing to undo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
             <span class="hidden sm:inline">Undo</span>
@@ -2562,6 +2578,16 @@
         </button>
         @endif
     </div>
+    {{-- The technician, on the board rather than behind the Tools menu. Its
+         bubble is hidden on phones (it covered the board), so this is how it
+         opens there; it forwards to the bubble's own launcher, which keeps a
+         single open/close path. Drawn only where there is one to open. --}}
+    @if (\App\Models\AiSetting::current()?->isUsable() && ! $isWorker)
+        <button type="button" id="aiTechBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
+                title="Ask the AI technician" aria-label="Ask the AI technician">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
+        </button>
+    @endif
 </div>
 
 
@@ -3472,12 +3498,25 @@
         document.addEventListener('activities:rendered', syncActionsSheet);
         syncActionsSheet();
 
+        // The bolt opens the short list of the writes done in a hurry. Its
+        // rows are the same .activity-action-row, so the forwarding below
+        // carries them too.
+        document.getElementById('quickBoltBtn')
+            ?.addEventListener('click', () => openSheet('quickBoltSheet'));
+        // The technician's own launcher, reached from the board rather than
+        // from three taps down the Tools menu.
+        document.getElementById('aiTechBtn')
+            ?.addEventListener('click', () => document.getElementById('aiFloatFab')?.click());
+
         document.addEventListener('click', (e) => {
             const row = e.target.closest('.activity-action-row');
             if (!row || row.disabled) return;
             const target = document.getElementById(row.dataset.forward);
             if (!target) return;
-            closeSheet('activityActionsSheet');
+            // Whichever sheet the row was standing in — the Tools menu or the
+            // bolt's — rather than the one that used to be the only one.
+            const sheet = row.closest('.sheet');
+            if (sheet && sheet.id) closeSheet(sheet.id);
             // Let the sheet finish closing before the next action fires.
             setTimeout(() => target.click(), 240);
         });
