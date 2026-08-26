@@ -44,12 +44,11 @@
                     <span class="mc-name-row">
                         <a href="{{ route('community.connect.profile', ['userId' => $m->id]) }}" class="mc-name">{{ $m->full_name }}</a>
                         {{-- The rank they have climbed to, exactly where the
-                             wall puts it: beside the name it belongs to. --}}
+                             wall puts it: beside the name it belongs to.
+                             Nothing under it — the name and the level ARE
+                             the head; everything else lives in the facts. --}}
                         @include('community.partials.rank-badge', ['rankUser' => $m])
                     </span>
-                    @if (filled($m->headline))
-                        <span class="mc-line">{{ \Illuminate\Support\Str::limit($m->headline, 46) }}</span>
-                    @endif
                 </div>
                 {{-- Following is the light gesture — no permission, no waiting
                      — so it sits in the corner the eye lands on first, beside
@@ -67,13 +66,13 @@
                  two lines: where they farm and what they do, then who they
                  farm with and how much of that you already share. The card
                  used to say those things in three shapes of its own. --}}
-            {{-- Here the reader is meeting a stranger, so the co-farmer count
-                 that matters is the one they SHARE. Their own total is worth
-                 saying only when there is no shared number to say instead. --}}
+            {{-- Both numbers, side by side: how many they farm with, and how
+                 many of those you already share — each names itself, so the
+                 pair reads as two facts rather than one repeated. --}}
             @include('community.partials.author-facts', [
                 'user' => $m,
                 'isCoFarmer' => $m->connStatus === 'connected',
-                'coFarmers' => $mutual > 0 ? 0 : (int) ($m->coFarmerCount ?? 0),
+                'coFarmers' => (int) ($m->coFarmerCount ?? 0),
                 'mutual' => $mutual,
                 'followers' => (int) ($m->followerCount ?? 0),
                 'fallback' => $m->created_at
