@@ -22,17 +22,11 @@
         $mutual = (int) ($m->mutualCount ?? 0);
     @endphp
     <div class="card card-hover mb-4 mc-card mc-hue-{{ $mcHue }}" data-member-card="{{ $m->id }}">
-        {{-- The cover runs to the card's edge; the face overlaps it, the way a
-             profile does, so a card reads as a person rather than a row. --}}
-        <div class="mc-cover mc-tint-green">
-            @if ($m->coverPath)
-                {{-- A cover whose file has gone leaves a broken-image glyph
-                     across the top of the card; the band's own colour is a
-                     better answer than that. --}}
-                <img src="{{ \App\Support\MediaStore::url($m->coverPath) }}" alt="" loading="lazy"
-                     onerror="this.remove()">
-            @endif
-        </div>
+        {{-- No cover band: the face itself stands over the card's top edge —
+             the same overlap it had over the cover — with the thought cloud
+             above it. The card's top margin (see .mc-card) is the air both
+             of them stand in, the same for every card so the column keeps
+             one rhythm. --}}
         <div class="mc-body">
             <div class="mc-head">
                 {{-- What is on their mind sits above the photo, in the cloud

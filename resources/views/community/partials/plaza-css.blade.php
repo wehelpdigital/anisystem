@@ -910,10 +910,12 @@
     .mc-hue-5 { --mc-a: #be185d; --mc-b: #fbcfe8; }
     /* A band that lifts on hover lifts the page with it. */
     .mc-card.card-hover:hover { transform: none; }
-    /* Tall enough to actually be a cover — the 5.5rem sliver read as a
-       coloured rule, not a photograph of somebody's farm. */
-    .mc-cover { height: 8.75rem; border-radius: 0; overflow: hidden; }
-    .mc-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* No cover band any more: the card starts at its own top edge, and the
+       face stands over it. Every card claims the same air above itself —
+       enough for the face's outstanding half AND the cloud over it — so the
+       column keeps one rhythm whether or not a member has said anything.
+       (Adjacent card margins collapse; this top margin IS the gap.) */
+    .mc-card { margin-top: 4.1rem; }
     .mc-name-row { display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; min-width: 0; }
     /* Connect and Accept wear the composers' living green: the one deliberate
        act on the card, dressed like every other primary act in the plaza. */
@@ -926,14 +928,6 @@
     /* No cover of their own: a colour that is theirs, drifting. Chosen by
        id, so the same person keeps the same band every time — a random one
        per render would make a list flicker on every page. */
-    /* No cover of their own: the house's dark green, drifting. One colour
-       for everyone — the rainbow of per-member tints read as six different
-       kinds of card when they were all the same kind of member. */
-    .mc-tint-green { background: linear-gradient(120deg, #14260b, #2f5219 30%, #4a7c2a 52%, #223d0e 74%, #14260b); }
-    .mc-cover[class*="mc-tint-"] { background-size: 260% 260%; animation: mcDrift 14s ease-in-out infinite alternate; }
-    /* A real cover sits on top of the drift and does not need it running. */
-    .mc-cover:has(img) { animation: none; }
-    @keyframes mcDrift { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
 
     .mc-body { padding: 0 .9rem .9rem; }
     /* The face hangs over the cover, and the cloud above it hangs over the
@@ -988,7 +982,7 @@
     .mc-acts .fp-follow { justify-content: center; }
 
     @media (prefers-reduced-motion: reduce) {
-        .mc-cover[class*="mc-tint-"] { animation: none; }
+        .reco-top { animation: none; }
     }
 
     /* A band across the wall, not a card on it.
@@ -1268,6 +1262,7 @@
         background: linear-gradient(120deg, #16220f, #2f5219 32%, #3d6823 52%, #24380f 76%, #16220f);
         background-size: 260% 260%;
         animation: mcDrift 15s ease-in-out infinite alternate; }
+    @keyframes mcDrift { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
     .reco-top img { width: 100%; height: 100%; object-fit: cover; display: block; }
     /* A cover photo is the cover; nothing needs to drift under it. */
     .reco-top:has(img) { animation: none; }
