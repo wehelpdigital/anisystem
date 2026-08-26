@@ -80,6 +80,9 @@
                 'coFarmers' => (int) ($m->coFarmerCount ?? 0),
                 'mutual' => $mutual,
                 'followers' => (int) ($m->followerCount ?? 0),
+                // A card with one lone number joins it to the line above
+                // rather than opening a second row for it.
+                'mergeSingleCount' => true,
                 'fallback' => $m->created_at
                     ? '🌱 Member since ' . $m->created_at->timezone('Asia/Manila')->format('M Y')
                     : null,

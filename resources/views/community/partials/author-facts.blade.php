@@ -24,6 +24,18 @@
         $afMate = false;
     }
     $afAny = $afMine || $afPlace !== '' || $afWork !== '' || $afFollowers > 0 || $afMates > 0 || $afMate;
+    /* One chip does not deserve a line of its own.
+     *
+     * A member with nothing but "1 follower" was given a whole second row
+     * for it, which reads as a paragraph break between two half-empty
+     * lines. When exactly one chip would be drawn — and there is a line
+     * above for it to join — it goes up there beside the place and the
+     * work instead. Opt-in, because the wall's posts want their standing
+     * on its own line whatever it says. */
+    $afChips = ($afMine ? 1 : 0) + ($afMate ? 1 : 0) + ($afMates > 0 ? 1 : 0)
+        + ($afMutual > 0 ? 1 : 0) + ($afFollowers > 0 ? 1 : 0);
+    $afMerge = ($mergeSingleCount ?? false) && $afChips === 1 && ($afPlace !== '' || $afWork !== '');
+    $afCountVars = compact('user', 'afMine', 'afMate', 'afMates', 'afMutual', 'afFollowers');
 @endphp
 @if ($afAny)
     {{-- Where they farm and what they do: what the person IS. --}}
@@ -31,28 +43,16 @@
         <p class="af-line">
             @if ($afPlace)<span class="af-fact">📍 {{ $afPlace }}</span>@endif
             @if ($afWork)<span class="af-fact">🧑‍🌾 {{ \Illuminate\Support\Str::limit($afWork, 34) }}</span>@endif
+            {{-- A lone chip rides up here rather than opening a second row. --}}
+            @if ($afMerge)@include('community.partials.author-counts', $afCountVars)@endif
         </p>
     @endif
     {{-- Then their standing: who they farm with, and how many listen. Each
          count names what it counts — a reader should not have to work out
          what a number is about. --}}
-    @if ($afMine || $afMate || $afMates > 0 || $afMutual > 0 || $afFollowers > 0)
+    @if (! $afMerge && $afChips > 0)
         <p class="af-line af-counts">
-            @if ($afMine)<span class="af-mate af-mine">🙋 Your account</span>@endif
-            @if ($afMate)<span class="af-mate">🤝 Co-farmer</span>@endif
-            @if ($afMates > 0)
-                <span class="af-fact"><b>{{ $afMates }}</b> {{ \Illuminate\Support\Str::plural('co-farmer', $afMates) }}</span>
-            @endif
-            @if ($afMutual > 0)
-                {{-- The number is a door: tap it and the shared faces slide
-                     up (community.partials.mutual-js, included by the pages
-                     that draw cards). --}}
-                <button type="button" class="af-fact js-mutual" data-mutual-user="{{ $user->id }}"
-                        data-mutual-name="{{ $user->firstName }}"><b>{{ $afMutual }}</b> mutual {{ \Illuminate\Support\Str::plural('co-farmer', $afMutual) }}</button>
-            @endif
-            @if ($afFollowers > 0)
-                <span class="af-fact"><b>{{ $afFollowers }}</b> {{ \Illuminate\Support\Str::plural('follower', $afFollowers) }}</span>
-            @endif
+            @include('community.partials.author-counts', $afCountVars)
         </p>
     @endif
 @elseif (filled($fallback ?? null))
