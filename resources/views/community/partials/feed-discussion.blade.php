@@ -25,7 +25,15 @@
             @endif
             <span class="fd-kicker">Discussion</span>
         </div>
-        <a href="{{ route('community.groups.show', ['id' => $discussion->id]) }}" class="fd-face {{ $hue }}">
+        {{-- A real photo opens the photo viewer with the room's facts (see
+             community.partials.avatar-zoom); a monogram stays a plain door. --}}
+        <a href="{{ route('community.groups.show', ['id' => $discussion->id]) }}" class="fd-face {{ $hue }}"
+            @if ($discussion->coverImagePath)
+                data-gz-name="{{ $discussion->name }}"
+                @if (filled($discussion->description)) data-gz-desc="{{ \Illuminate\Support\Str::limit($discussion->description, 120) }}" @endif
+                data-gz-members="{{ $discussion->member_count }}" data-gz-topics="{{ $discussion->post_count }}"
+                data-gz-url="{{ route('community.groups.show', ['id' => $discussion->id]) }}"
+            @endif>
             @if ($discussion->coverImagePath)
                 <img src="{{ \App\Support\MediaStore::url($discussion->coverImagePath) }}" alt="">
             @else

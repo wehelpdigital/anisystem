@@ -11,7 +11,15 @@
     </div>
     @forelse ($groups as $g)
         <a href="{{ route('community.groups.show', ['id' => $g->id]) }}" class="rail-row">
-            <span class="avatar avatar-md avatar-sq overflow-hidden {{ CommunityAvatar::hue($g->name) }}">@if ($g->coverImagePath)<img src="{{ \App\Support\MediaStore::url($g->coverImagePath) }}" alt="" class="w-full h-full object-cover">@else{{ CommunityAvatar::monogram($g->name) }}@endif</span>
+            {{-- data-gz-*: a tapped photo opens the photo viewer with the
+                 room's facts instead of following the row's link. --}}
+            <span class="avatar avatar-md avatar-sq overflow-hidden {{ CommunityAvatar::hue($g->name) }}"
+                @if ($g->coverImagePath)
+                    data-gz-name="{{ $g->name }}"
+                    @if (filled($g->description ?? null)) data-gz-desc="{{ \Illuminate\Support\Str::limit($g->description, 120) }}" @endif
+                    data-gz-members="{{ $g->member_count }}"
+                    data-gz-url="{{ route('community.groups.show', ['id' => $g->id]) }}"
+                @endif>@if ($g->coverImagePath)<img src="{{ \App\Support\MediaStore::url($g->coverImagePath) }}" alt="" class="w-full h-full object-cover">@else{{ CommunityAvatar::monogram($g->name) }}@endif</span>
             <span class="min-w-0 grow">
                 <span class="block text-sm font-semibold text-gray-900 truncate">{{ $g->name }}</span>
                 {{-- What a member actually wants from this row: is there

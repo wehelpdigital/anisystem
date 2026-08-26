@@ -411,14 +411,27 @@
         @if ($group->bannerImagePath)
             <div class="disc-banner">
                 <img src="{{ \App\Support\MediaStore::url($group->bannerImagePath) }}" alt="" loading="lazy">
-                <span class="disc-face {{ CommunityAvatar::hue($group->name) }}">
+                {{-- data-gz-*: a tapped photo opens the photo viewer with the
+                     room's facts. No data-gz-url — the viewer offers no door
+                     to the page you are already on. --}}
+                <span class="disc-face {{ CommunityAvatar::hue($group->name) }}"
+                    @if ($group->coverImagePath)
+                        data-gz-name="{{ $group->name }}"
+                        @if (filled($group->description)) data-gz-desc="{{ \Illuminate\Support\Str::limit($group->description, 120) }}" @endif
+                        data-gz-members="{{ $memberCount }}" data-gz-topics="{{ $topicCount }}"
+                    @endif>
                     @if ($group->coverImagePath)<img src="{{ \App\Support\MediaStore::url($group->coverImagePath) }}" alt="">@else{{ CommunityAvatar::monogram($group->name) }}@endif
                 </span>
             </div>
         @endif
         <div class="disc-hero-row">
             @unless ($group->bannerImagePath)
-                <span class="disc-face {{ CommunityAvatar::hue($group->name) }}">
+                <span class="disc-face {{ CommunityAvatar::hue($group->name) }}"
+                    @if ($group->coverImagePath)
+                        data-gz-name="{{ $group->name }}"
+                        @if (filled($group->description)) data-gz-desc="{{ \Illuminate\Support\Str::limit($group->description, 120) }}" @endif
+                        data-gz-members="{{ $memberCount }}" data-gz-topics="{{ $topicCount }}"
+                    @endif>
                     @if ($group->coverImagePath)<img src="{{ \App\Support\MediaStore::url($group->coverImagePath) }}" alt="">@else{{ CommunityAvatar::monogram($group->name) }}@endif
                 </span>
             @endunless
