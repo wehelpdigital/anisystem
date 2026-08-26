@@ -29,19 +29,18 @@
 
 {{-- The same bar every list in the community carries: what the page is, and
      the one thing you can do about it. --}}
-<div class="cf-head">
-    <h2 class="cf-head-title">My co-farmers</h2>
-    <p class="cf-head-sub">The people you already farm with — their place, their crops, and the way to reach them.</p>
-    <div class="cf-head-acts">
-        <button type="button" id="cfSearchBtn" class="btn btn-outline btn-sm" title="Search your co-farmers" aria-label="Search your co-farmers">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-            Search
-        </button>
-        <button type="button" class="cf-filter hidden" id="cfFilterChip" title="Clear the search">
-            <b></b>
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
-        </button>
-    </div>
+{{-- The same band the members page opens with — nothing above the people.
+     The nav pill already says where you are; a heading block on top of it
+     was the one thing keeping the two pages from reading as one design. --}}
+<div class="cf-head cf-head-acts" style="margin-top:0">
+    <button type="button" id="cfSearchBtn" class="btn btn-outline btn-sm" title="Search your co-farmers" aria-label="Search your co-farmers">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+        Search
+    </button>
+    <button type="button" class="cf-filter hidden" id="cfFilterChip" title="Clear the search">
+        <b></b>
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
 </div>
 
 <div class="sheet hidden" id="cfSearchSheet" style="--sheet-width:30rem">
