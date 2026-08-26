@@ -41,7 +41,12 @@
                     @include('community.partials.avatar-status', ['user' => $m, 'size' => 'avatar-lg', 'link' => false])
                 </a>
                 <div class="min-w-0 grow mc-who">
-                    <a href="{{ route('community.connect.profile', ['userId' => $m->id]) }}" class="mc-name">{{ $m->full_name }}</a>
+                    <span class="mc-name-row">
+                        <a href="{{ route('community.connect.profile', ['userId' => $m->id]) }}" class="mc-name">{{ $m->full_name }}</a>
+                        {{-- The rank they have climbed to, exactly where the
+                             wall puts it: beside the name it belongs to. --}}
+                        @include('community.partials.rank-badge', ['rankUser' => $m])
+                    </span>
                     @if (filled($m->headline))
                         <span class="mc-line">{{ \Illuminate\Support\Str::limit($m->headline, 46) }}</span>
                     @endif

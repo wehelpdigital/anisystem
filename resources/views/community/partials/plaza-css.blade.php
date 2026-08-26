@@ -910,8 +910,19 @@
     .mc-hue-5 { --mc-a: #be185d; --mc-b: #fbcfe8; }
     /* A band that lifts on hover lifts the page with it. */
     .mc-card.card-hover:hover { transform: none; }
-    .mc-cover { height: 5.5rem; border-radius: 0; overflow: hidden; }
+    /* Tall enough to actually be a cover — the 5.5rem sliver read as a
+       coloured rule, not a photograph of somebody's farm. */
+    .mc-cover { height: 8.75rem; border-radius: 0; overflow: hidden; }
     .mc-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .mc-name-row { display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; min-width: 0; }
+    /* Connect and Accept wear the composers' living green: the one deliberate
+       act on the card, dressed like every other primary act in the plaza. */
+    .conn-btn.conn-grad { border: 0; color: #fff;
+        background-image: linear-gradient(120deg, #2f5219, #4a7c2a 28%, #6b9f3d 52%, #4a7c2a 76%, #2f5219);
+        background-size: 220% 100%;
+        animation: gradSweep var(--sw-t, 11s) ease-in-out infinite alternate; }
+    .conn-btn.conn-grad:hover { filter: brightness(1.06); color: #fff; }
+    @media (prefers-reduced-motion: reduce) { .conn-btn.conn-grad { animation: none; } }
     /* No cover of their own: a colour that is theirs, drifting. Chosen by
        id, so the same person keeps the same band every time — a random one
        per render would make a list flicker on every page. */
