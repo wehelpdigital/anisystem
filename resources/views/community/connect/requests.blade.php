@@ -31,20 +31,16 @@
     .rq-loc { display:flex; align-items:center; gap:.25rem; font-size:.72rem; color:var(--color-gray-500);
         margin-top:.15rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .rq-loc svg { width:.8rem; height:.8rem; flex:none; color:#e11d48; }
-    /* The two answers, each breathing its own ripple — Accept in the brand
-       green, Decline a quiet grey, out of step so they read as two asks. */
+    /* Accept breathes its ripple; Decline sits still. Two pulsing buttons
+       read as two invitations, and turning somebody away is not something
+       to be invited to do. */
     .rq-card [data-action="accept"] { animation:rqRippleGo 2.2s cubic-bezier(.22,1,.36,1) infinite; }
-    .rq-card [data-action="decline"] { animation:rqRippleNo 2.2s cubic-bezier(.22,1,.36,1) 1.1s infinite; }
     @keyframes rqRippleGo {
         0% { box-shadow:0 0 0 0 rgb(74 124 42 / .45); }
         60% { box-shadow:0 0 0 .55rem rgb(74 124 42 / 0); }
         100% { box-shadow:0 0 0 0 rgb(74 124 42 / 0); } }
-    @keyframes rqRippleNo {
-        0% { box-shadow:0 0 0 0 rgb(107 114 128 / .3); }
-        60% { box-shadow:0 0 0 .45rem rgb(107 114 128 / 0); }
-        100% { box-shadow:0 0 0 0 rgb(107 114 128 / 0); } }
     @media (prefers-reduced-motion: reduce) {
-        .rq-card [data-action="accept"], .rq-card [data-action="decline"] { animation:none; }
+        .rq-card [data-action="accept"] { animation:none; }
     }
 </style>
 @endpush
