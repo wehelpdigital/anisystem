@@ -184,8 +184,24 @@
            look is inherited; what is here is the frame around them and the
            quieting of everything that would otherwise invite a tap. */
         .mirror-panel { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 340;
-            display: flex; flex-direction: column; background: var(--tl-bg, #f1f3f5); }
+            display: flex; flex-direction: column; background: var(--tl-bg, #f1f3f5);
+            opacity: 0; transition: opacity .28s cubic-bezier(.22, 1, .36, 1); }
+        .mirror-panel.is-open { opacity: 1; }
+        /* The frame rises the last few pixels as it fades in, so the screen
+           arrives rather than appears. */
+        .mirror-panel .mir-bar, .mirror-panel .mir-find, .mirror-panel .mir-body {
+            transform: translateY(.6rem);
+            transition: transform .34s cubic-bezier(.22, 1, .36, 1); }
+        .mirror-panel.is-open .mir-bar,
+        .mirror-panel.is-open .mir-find,
+        .mirror-panel.is-open .mir-body { transform: none; }
+        .mirror-panel .mir-find { transition-delay: .04s; }
+        .mirror-panel .mir-body { transition-delay: .08s; }
         .mirror-panel[hidden] { display: none; }
+        @media (prefers-reduced-motion: reduce) {
+            .mirror-panel, .mirror-panel .mir-bar, .mirror-panel .mir-find, .mirror-panel .mir-body {
+                transition-duration: .01s; }
+        }
         html.dark .mirror-panel { background: #0f1319; }
         .mir-bar { flex: none; display: flex; align-items: center; gap: .75rem;
             padding: max(.7rem, env(safe-area-inset-top)) .9rem .7rem;
@@ -226,13 +242,60 @@
         .mir-body .date-header { cursor: default; }
         .mir-body [draggable] { -webkit-user-drag: none; }
         .mir-body input, .mir-body button, .mir-body a, .mir-body label { pointer-events: none; }
-        /* A day that has nothing left after a search folds away entirely. */
+        /* ---- the board's filters stop at the mirror's edge ----
+           Show hidden, hide done days, hide empty dates, only day zero: those
+           are settings on how you are LOOKING at the board, and several of
+           them are written as rules on <body>, which reaches in here too. The
+           mirror is not the board and does not inherit its squint — it shows
+           the plan whole, whatever is switched on out there. (The classes are
+           also stripped from the copies in JS; this is the brace.) */
+        .mir-body .activity-card.is-hidden,
+        .mir-body .activity-card.filter-hidden { display: block !important;
+            opacity: 1 !important; filter: none !important; }
+        .mir-body .date-group.all-hidden,
+        .mir-body .date-group.done-day-away,
+        .mir-body .date-group.group-collapsed,
+        .mir-body .date-group.dz-away { display: block !important; }
+        .mir-body .rest-day-marker { max-height: none !important; opacity: 1 !important; }
+
+        /* A day that has nothing left after a search folds away entirely.
+           Last, so it beats the un-hiding above — a search is the mirror's
+           own filter, not the board's. */
         .mir-body .date-group.mir-away, .mir-body .activity-card.mir-away { display: none !important; }
         /* Nothing folds in here, so nothing wears a fold's chevron — and an
            open note drops the one-line preview its head carries, which was
            printing the first few words directly above the whole note. */
         .mir-body .activity-card::before { display: none; }
         .mir-body .date-note-block.is-open > .note-head { display: none; }
+
+        /* ---- sifting ----
+           A filter that snaps is a different screen; a filter that settles is
+           the same screen answering. The list dips as the search is applied
+           and comes back with what matched. */
+        /* Both transitions in one declaration, and at the panel's own
+           specificity. Written as a bare `.mir-body` rule it lost the whole
+           property to the transform rule above — same element, higher
+           specificity — and the dip snapped instead of fading. */
+        .mirror-panel .mir-body {
+            transition: transform .34s cubic-bezier(.22, 1, .36, 1), opacity .16s ease; }
+        .mir-body.is-sifting { opacity: .35; }
+        .mir-sift-in { animation: mirSiftIn .32s cubic-bezier(.22, 1, .36, 1) both; }
+        @keyframes mirSiftIn { from { opacity: 0; transform: translateY(.35rem); } }
+        /* ---- the loader ----
+           Copying a long season takes a moment, and a screen that opens empty
+           reads as broken. */
+        .mir-load { flex: 1 1 auto; display: none; align-items: center; justify-content: center; gap: .4rem; }
+        .mir-load.is-on { display: flex; }
+        .mir-load i { display: block; width: .5rem; height: .5rem; border-radius: 999px;
+            background: var(--color-brand-500, #4a7c2a); animation: mirDot 1s cubic-bezier(.22,1,.36,1) infinite; }
+        .mir-load i:nth-child(2) { animation-delay: .12s; }
+        .mir-load i:nth-child(3) { animation-delay: .24s; }
+        @keyframes mirDot { 0%, 100% { opacity: .25; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-.3rem); } }
+        @media (prefers-reduced-motion: reduce) {
+            .mir-body, .mir-sift-in { transition: none; animation: none; }
+            /* Slowed, not stopped: a loader that holds still looks broken. */
+            .mir-load i { animation-duration: 2.4s; }
+        }
 
         .date-header {
             /* column-gap and row-gap apart, on purpose. The header wraps, and
@@ -3543,6 +3606,7 @@
         if (!panel || !openBtn) return;
         const body = document.getElementById('mirrorBody');
         const none = document.getElementById('mirrorNone');
+        const load = document.getElementById('mirrorLoad');
         const count = document.getElementById('mirrorCount');
         const qInput = document.getElementById('mirrorQuery');
         const dInput = document.getElementById('mirrorDate');
@@ -3562,19 +3626,28 @@
             const groups = document.querySelectorAll('#activitiesList .date-group[data-date]');
             groups.forEach((g) => {
                 const copy = g.cloneNode(true);
-                // Open, unhidden, unfiltered: the mirror shows the plan as it
-                // IS, not as the board is currently set to look at it.
-                copy.classList.remove('is-folded', 'all-hidden', 'group-collapsed', 'tt-highlight', 'is-today');
+                /* Open, unhidden, unfiltered. Show hidden, hide done days,
+                 * hide empty dates, only-day-zero — those are settings on how
+                 * you are LOOKING at the board, and the mirror does not
+                 * inherit the squint. Whatever is switched on out there, the
+                 * plan comes through here whole. */
+                copy.classList.remove('is-folded', 'all-hidden', 'group-collapsed',
+                    'done-day-away', 'dz-away', 'filters-active', 'tt-highlight', 'is-today');
                 copy.removeAttribute('style');
                 copy.querySelectorAll(STRIP).forEach((el) => el.remove());
                 copy.querySelectorAll('[draggable]').forEach((el) => el.removeAttribute('draggable'));
                 // A hidden activity is exactly what somebody checking their
                 // work needs to see, so the board's own hiding comes off —
                 // and its fold with it: a mirror that has to be unfolded is
-                // the errand this screen exists to save.
+                // the errand this screen exists to save. The card keeps its
+                // "Hidden" badge, which says the same thing without hiding.
                 copy.querySelectorAll('.activity-card').forEach((c) => {
-                    c.classList.remove('filter-hidden', 'dz-away', 'act-collapsed');
+                    c.classList.remove('filter-hidden', 'dz-away', 'act-collapsed', 'is-hidden');
                     c.style.removeProperty('display');
+                });
+                copy.querySelectorAll('.rest-day-marker').forEach((r) => {
+                    r.classList.remove('filters-active');
+                    r.removeAttribute('style');
                 });
                 /* Notes open, but only the ones that exist. The board hides an
                  * empty note block with an inline display:none, and stripping
@@ -3641,17 +3714,60 @@
                 : 'Every activity, for reading only';
         }
 
+        /* A filter that snaps is a different screen; one that settles is the
+         * same screen answering. The list dips, the matching is done while it
+         * is dim, and what survived comes back up. Typing is given a beat to
+         * finish first — re-sifting on every keystroke of "herbicide" is nine
+         * passes over the board for one question. */
+        let siftTimer = null;
+        function sift() {
+            clearTimeout(siftTimer);
+            body.classList.add('is-sifting');
+            siftTimer = setTimeout(() => {
+                apply();
+                body.classList.remove('is-sifting');
+                // Only the days still standing are asked to arrive; the
+                // animation is re-armed by taking the class off first.
+                body.querySelectorAll('.date-group:not(.mir-away)').forEach((g) => {
+                    g.classList.remove('mir-sift-in');
+                    void g.offsetWidth;
+                    g.classList.add('mir-sift-in');
+                });
+            }, 160);
+        }
+
+        /* The screen arrives before the plan does. Showing the frame first and
+         * copying a frame later is what keeps the opening smooth: a long
+         * season is hundreds of nodes to clone, and doing it in the same beat
+         * as the tap stalls the animation before it starts. The dots hold the
+         * space while it happens. */
         function open() {
-            build();
+            if (!panel.hidden) return;
+            body.innerHTML = '';
+            load.classList.add('is-on');
+            none.classList.add('hidden');
             panel.hidden = false;
             panel.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
+            requestAnimationFrame(() => {
+                panel.classList.add('is-open');
+                // Two frames on: the fade is under way and the paint is free.
+                requestAnimationFrame(() => setTimeout(() => {
+                    build();
+                    load.classList.remove('is-on');
+                }, 90));
+            });
         }
         function close() {
-            panel.hidden = true;
-            panel.setAttribute('aria-hidden', 'true');
+            if (panel.hidden) return;
+            panel.classList.remove('is-open');
             document.body.style.removeProperty('overflow');
-            body.innerHTML = '';        // copies are cheap; stale ones are not
+            // Let the fade finish before the screen is taken away.
+            setTimeout(() => {
+                panel.hidden = true;
+                panel.setAttribute('aria-hidden', 'true');
+                body.innerHTML = '';    // copies are cheap; stale ones are not
+            }, 280);
         }
 
         openBtn.addEventListener('click', open);
@@ -3669,12 +3785,12 @@
                 if (mode === 'all') { qInput.value = ''; dInput.value = ''; }
                 if (mode === 'text') qInput.placeholder = 'Search activities, lots or items…';
                 if (mode === 'day') qInput.placeholder = 'Day number — 12, DAS+12, DAT-3…';
-                apply();
+                sift();
                 if (mode === 'text' || mode === 'day') window.smFocus?.(qInput, { delay: 60 });
             });
         });
-        qInput.addEventListener('input', apply);
-        dInput.addEventListener('change', apply);
+        qInput.addEventListener('input', sift);
+        dInput.addEventListener('change', sift);
 
         /* The third guard. Capture runs before the click can bubble back to
          * the document handlers that run the board, so stopping it here means

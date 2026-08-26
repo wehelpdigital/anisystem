@@ -642,6 +642,9 @@
                placeholder="Search activities, lots or items…" autocomplete="off">
         <input type="date" id="mirrorDate" class="form-input mir-input hidden">
     </div>
+    {{-- Copying a long season takes a moment; an empty screen reads as
+         broken, so the wait says it is working. --}}
+    <div class="mir-load" id="mirrorLoad" role="status" aria-label="Reading the plan"><i></i><i></i><i></i></div>
     <div class="mir-body" id="mirrorBody"></div>
     <p class="mir-none hidden" id="mirrorNone">Nothing matches that.</p>
 </div>
