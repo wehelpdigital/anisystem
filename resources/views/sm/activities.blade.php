@@ -113,48 +113,66 @@
             content-visibility: auto;
             contain-intrinsic-size: auto 400px;
         }
-        /* Today's card, ringed by a ripple that breathes out of its border
-           and fades — so the day you are standing in is found at a glance
-           rather than read for. gradSweep is restated because a second
-           animation on the same element replaces the first, and the day's
-           side colour would stop drifting with it. The card's own shadow
-           rides along in every frame for the same reason: box-shadow is one
-           property, and a keyframe that names only the ring would drop it. */
+        /* Today's card, rung like a stone dropped in water: two rings leave
+           the border one after the other, each widening as it thins away.
+           They are the day's OWN colour — the same hue its header wears — so
+           the mark says "this day" in the language the board already speaks,
+           rather than importing a green that belongs to nothing here.
+
+           Written as one box-shadow of two rings rather than two animations,
+           because box-shadow is a single property: one animation owns it,
+           and the second ring has to travel in the same keyframes. The card's
+           own drop shadow rides along in every frame for that same reason —
+           a frame naming only the rings would quietly delete it. gradSweep is
+           restated for the matching reason on the animation property: a
+           second animation replaces the first, and the day's side colour
+           would stop drifting. */
         .date-group.is-today {
+            --rip: color-mix(in srgb, var(--date-color, #4A90E2) 55%, transparent);
+            --rip-soft: color-mix(in srgb, var(--date-color, #4A90E2) 30%, transparent);
             animation: gradSweep 12s ease-in-out infinite alternate,
-                       dayTodayRipple 2.6s cubic-bezier(.22, 1, .36, 1) infinite;
+                       dayTodayRipple 3.2s cubic-bezier(.22, 1, .36, 1) infinite;
         }
         @keyframes dayTodayRipple {
-            0%   { box-shadow: var(--shadow-card), 0 0 0 0 rgb(74 124 42 / .5); }
-            70%  { box-shadow: var(--shadow-card), 0 0 0 .8rem rgb(74 124 42 / 0); }
-            100% { box-shadow: var(--shadow-card), 0 0 0 0 rgb(74 124 42 / 0); }
+            0% { box-shadow: var(--shadow-card),
+                     0 0 0 0 var(--rip),
+                     0 0 0 0 var(--rip-soft); }
+            /* The first ring has gone; the second is only now leaving. */
+            45% { box-shadow: var(--shadow-card),
+                      0 0 0 .55rem transparent,
+                      0 0 0 .28rem var(--rip-soft); }
+            100% { box-shadow: var(--shadow-card),
+                       0 0 0 .55rem transparent,
+                       0 0 0 1.15rem transparent; }
         }
-        html.dark .date-group.is-today {
-            animation: gradSweep 12s ease-in-out infinite alternate,
-                       dayTodayRippleDark 2.6s cubic-bezier(.22, 1, .36, 1) infinite;
-        }
-        @keyframes dayTodayRippleDark {
-            0%   { box-shadow: var(--shadow-card), 0 0 0 0 rgb(143 194 103 / .55); }
-            70%  { box-shadow: var(--shadow-card), 0 0 0 .8rem rgb(143 194 103 / 0); }
-            100% { box-shadow: var(--shadow-card), 0 0 0 0 rgb(143 194 103 / 0); }
-        }
-        /* Still, but still marked: the ring stays as a quiet standing rim. */
+        /* Still, but still marked: the rings settle into a quiet standing
+           rim, in the day's colour like the rest of it. */
         @media (prefers-reduced-motion: reduce) {
-            .date-group.is-today, html.dark .date-group.is-today {
+            .date-group.is-today {
                 animation: none;
-                box-shadow: var(--shadow-card), 0 0 0 2px rgb(74 124 42 / .45);
+                box-shadow: var(--shadow-card),
+                    0 0 0 2px color-mix(in srgb, var(--date-color, #4A90E2) 45%, transparent);
             }
         }
         .date-header {
-            display: flex; align-items: center; gap: .4rem; flex-wrap: wrap;
+            /* column-gap and row-gap apart, on purpose. The header wraps, and
+               .dh-rowbreak below is a zero-height item that takes a gap on
+               each side of itself — so one shared gap spent twice as much
+               room between the date line and the facts under it as it did
+               between two buttons. Half the row gap, exactly the same look
+               along the line. */
+            display: flex; align-items: center; column-gap: .4rem; row-gap: .2rem; flex-wrap: wrap;
             padding: .55rem .8rem; border-radius: calc(1rem - 2px) calc(1rem - 2px) 0 0;
-            /* The old flat tint, now the middle of a shallow swell in the
-               day's own hue, drifting on the same shared tide. */
-            background: linear-gradient(100deg,
+            /* A swell in the day's own hue rather than a flat tint: four
+               stops, deep-shallow-deep, drifting across an oversize box on
+               the shared tide. The oversize is what gives it room to move —
+               a gradient sized to its box has nowhere to go. */
+            background: linear-gradient(115deg,
                 color-mix(in srgb, var(--date-color, #4A90E2) var(--tl-header-tint), var(--tl-surface)),
-                color-mix(in srgb, var(--date-color, #4A90E2) calc(var(--tl-header-tint) + 8%), var(--tl-surface)) 50%,
-                color-mix(in srgb, var(--date-color, #4A90E2) var(--tl-header-tint), var(--tl-surface)));
-            background-size: 220% 100%;
+                color-mix(in srgb, var(--date-color, #4A90E2) calc(var(--tl-header-tint) + 15%), var(--tl-surface)) 32%,
+                color-mix(in srgb, var(--date-color, #4A90E2) calc(var(--tl-header-tint) + 2%), var(--tl-surface)) 64%,
+                color-mix(in srgb, var(--date-color, #4A90E2) calc(var(--tl-header-tint) + 17%), var(--tl-surface)));
+            background-size: 260% 100%;
             /* Its own clock and its own point in the sweep (both set on the
                element, from the date it stands for): a board of days that
                all slid together read as one animation playing on twelve
