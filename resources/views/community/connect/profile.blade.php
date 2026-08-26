@@ -21,6 +21,25 @@
          the decision this page exists to support. Everything descriptive
          moved out into the About panel below; it used to sit here as loose
          chips and pushed the buttons off a phone's first screen. --}}
+    {{-- The knock on the door, FIRST — above the profile itself: a request
+         is the one thing here waiting on YOUR answer, so it meets you before
+         the cover does. --}}
+    @if (! $isSelf && $status === 'pending_in')
+        <div class="card pf-request mb-4">
+            <div class="pf-request-head">
+                <span class="pf-request-ico" aria-hidden="true">🤝</span>
+                <div class="pf-request-txt">
+                    <b>{{ $member->firstName }} wants to be your co-farmer</b>
+                    <span>{{ $member->full_name }} sent you a co-farmer request. Accepting connects your farms — you will see each other's news and can reach each other any time.</span>
+                </div>
+            </div>
+            <span class="conn-action pf-request-acts" data-member-id="{{ $member->id }}" data-status="pending_in">
+                <button type="button" class="btn btn-primary conn-btn conn-grad" data-action="accept">Accept</button>
+                <button type="button" class="btn btn-white conn-btn" data-action="decline">Not now</button>
+            </span>
+        </div>
+    @endif
+
     <div class="card pf-head mb-4">
         @if (filled($member->coverPath))
             {{-- The band the owner dragged into place, not the middle the
@@ -34,23 +53,14 @@
         @endif
 
         <div class="pf-body">
-            {{-- Message and Follow, as quiet icon circles in the corner under
-                 the cover: the two light gestures step aside so the head is
-                 the person, not a row of buttons. --}}
+            {{-- Follow, the wall's own green pill, in flow at the card's top
+                 right — fully below the cover, never over it. --}}
             @unless ($isSelf)
                 <div class="pf-quick">
-                    @if ($member->allowMessages)
-                        <button type="button" class="pf-qbtn pf-qbtn-msg js-open-dm" data-dm-user="{{ $member->id }}" data-dm-name="{{ $member->full_name }}"
-                                title="Message {{ $member->firstName }}" aria-label="Message {{ $member->full_name }}">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h8m-8-4h5m-6 12V6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H8l-3 4z"/></svg>
-                        </button>
-                    @endif
-                    <button type="button" class="fp-follow pf-qbtn {{ $isFollowed ? 'is-on' : '' }}"
+                    <button type="button" class="fp-follow {{ $isFollowed ? 'is-on' : '' }}"
                             data-follow="{{ $member->id }}" data-name="{{ $member->full_name }}"
-                            aria-pressed="{{ $isFollowed ? 'true' : 'false' }}"
-                            title="{{ $isFollowed ? 'Following' : 'Follow' }} {{ $member->firstName }}" aria-label="Follow {{ $member->full_name }}">
-                        <span class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18 9v6m3-3h-6M13 7a4 4 0 11-8 0 4 4 0 018 0zM3 21v-1a6 6 0 016-6h0a6 6 0 016 6v1"/></svg></span>
-                        <span class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 11l2 2 4-4M13 7a4 4 0 11-8 0 4 4 0 018 0zM3 21v-1a6 6 0 016-6h0a6 6 0 016 6v1"/></svg></span>
+                            aria-pressed="{{ $isFollowed ? 'true' : 'false' }}">
+                        <span class="on">Following</span><span class="off">+ Follow</span>
                     </button>
                 </div>
             @endunless
@@ -94,6 +104,15 @@
                 <p class="pf-bio">{{ $member->bio }}</p>
             @endif
 
+            {{-- The whole reason most visits happen, wearing the composers'
+                 living green across the card's full width. --}}
+            @if (! $isSelf && $member->allowMessages)
+                <button type="button" class="btn btn-primary comp-send pf-msg js-open-dm"
+                        data-dm-user="{{ $member->id }}" data-dm-name="{{ $member->full_name }}">
+                    💬 Message {{ $member->firstName }}
+                </button>
+            @endif
+
             {{-- Message and Follow live in the corner now (see .pf-quick);
                  what stays down here is the deliberate connection act — and
                  an incoming request gets its own card below instead. --}}
@@ -109,24 +128,6 @@
         </div>
     </div>
 
-    {{-- The knock on the door, given the room it deserves: a request is the
-         one thing on this page waiting on YOUR answer, so it stands as its
-         own card with the question written out and both answers in hand. --}}
-    @if (! $isSelf && $status === 'pending_in')
-        <div class="card pf-request mb-4">
-            <div class="pf-request-head">
-                <span class="pf-request-ico" aria-hidden="true">🤝</span>
-                <div class="pf-request-txt">
-                    <b>{{ $member->firstName }} wants to be your co-farmer</b>
-                    <span>{{ $member->full_name }} sent you a co-farmer request. Accepting connects your farms — you will see each other's news and can reach each other any time.</span>
-                </div>
-            </div>
-            <span class="conn-action pf-request-acts" data-member-id="{{ $member->id }}" data-status="pending_in">
-                <button type="button" class="btn btn-primary conn-btn conn-grad" data-action="accept">Accept</button>
-                <button type="button" class="btn btn-white conn-btn" data-action="decline">Not now</button>
-            </span>
-        </div>
-    @endif
 
     {{-- About: labelled rows, not a paragraph of emoji chips.
 
@@ -313,25 +314,15 @@
     .pf-loc { display:flex; align-items:center; justify-content:center; gap:.3rem; font-size:.78rem; color:var(--color-gray-500); margin-top:.5rem; }
     .pf-loc svg { width:.85rem; height:.85rem; color:#e11d48; flex:none; }
 
-    /* The two light gestures, as icon circles under the cover's corner. */
-    .pf-quick { position:absolute; top:.7rem; right:.85rem; display:flex; gap:.45rem; z-index:3; }
-    .pf-qbtn { width:2.4rem; height:2.4rem; padding:0; border-radius:999px; flex:none;
-        display:inline-flex; align-items:center; justify-content:center; cursor:pointer;
-        border:1px solid var(--color-gray-200); background:var(--color-white); color:var(--color-gray-600);
-        box-shadow:0 3px 10px rgb(0 0 0 / .08);
-        transition:transform .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1),
-            color .28s cubic-bezier(.22,1,.36,1); }
-    .pf-qbtn svg { width:1.15rem; height:1.15rem; }
-    .pf-qbtn:hover { transform:scale(1.08); }
-    .pf-qbtn-msg { border:0; color:#fff;
-        background-image:linear-gradient(120deg, #2f5219, #4a7c2a 60%, #3d6823); }
-    .pf-qbtn.fp-follow { padding:0; }
-    .pf-qbtn.fp-follow .on, .pf-qbtn.fp-follow .off { display:none; line-height:0; }
-    .pf-qbtn.fp-follow:not(.is-on) .off { display:inline-flex; }
-    .pf-qbtn.fp-follow.is-on { background:var(--color-brand-600); border-color:var(--color-brand-600); color:#fff; }
-    .pf-qbtn.fp-follow.is-on .on { display:inline-flex; }
-    html.dark .pf-qbtn { background:#26301c; border-color:#3a4a2c; color:#cdd8c2; }
-    html.dark .pf-qbtn-msg { border:0; color:#fff; }
+    /* Follow — the wall's own green pill — pinned to the card's top right
+       JUST under the cover (the cover's height is fixed, so "just under"
+       can be said exactly), overlapping nothing. */
+    .pf-head { position:relative; }
+    .pf-quick { position:absolute; right:.9rem; top:calc(7rem + .6rem); z-index:3; }
+    @media (min-width:640px) { .pf-quick { top:calc(11rem + .6rem); } }
+    /* The full-width Message: comp-send brings the moving gradient; this
+       only rounds it into the card's own corners and gives it air. */
+    .pf-msg { margin-top:.9rem; border-radius:.85rem; }
 
     /* The knock on the door. */
     .pf-request { padding:1rem; border:1.5px solid rgb(107 159 61 / .4);
