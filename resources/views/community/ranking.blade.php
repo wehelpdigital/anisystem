@@ -146,20 +146,15 @@
             <div class="rk-group card" data-animate-rows>
                 <h3 class="rk-group-h">{{ $groupName }}</h3>
                 @foreach ($groupActions as $key => $a)
-                    @php $n = (int) ($breakdown[$key] ?? 0); @endphp
                     <div class="rk-task" style="--i: {{ $loop->parent->index * 4 + $loop->index }}">
                         <span class="rk-task-e">{{ $a['emoji'] }}</span>
                         <span class="rk-task-mid">
                             <span class="rk-task-l">{{ $a['label'] }}</span>
                             <span class="rk-task-how">{{ $a['how'] }}</span>
                         </span>
+                        {{-- Just what the task pays — the running arithmetic
+                             lives on the Rankings tab, not here. --}}
                         <span class="rk-task-pts">+{{ $a['pts'] }} pts</span>
-                        {{-- What this task has banked for you, as one plain
-                             number — the arithmetic stays backstage. --}}
-                        <span class="rk-task-tally {{ $n > 0 ? 'has-some' : '' }}">
-                            <b data-count="{{ $n * $a['pts'] }}">{{ number_format($n * $a['pts']) }}</b>
-                            <i>collected</i>
-                        </span>
                     </div>
                 @endforeach
             </div>
@@ -342,20 +337,25 @@
     .rk-group { padding: .8rem .85rem .5rem; margin-bottom: .85rem; }
     .rk-group-h { font-size: .72rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase;
         color: var(--color-gray-400); margin-bottom: .35rem; }
-    .rk-task { display: flex; align-items: center; gap: .6rem; padding: .5rem 0; }
-    .rk-task + .rk-task { border-top: 1px solid var(--color-gray-100); }
-    .rk-task-e { flex: none; width: 2rem; height: 2rem; border-radius: .6rem; display: inline-flex;
+    /* One question per row — do this, earn that — striped like a ledger:
+       every second row wears a wash of the house's dark green, so the eye
+       walks the table without losing its line. */
+    .rk-task { display: flex; align-items: center; gap: .65rem; padding: .6rem .6rem;
+        border-radius: .7rem; }
+    .rk-task:nth-of-type(even) { background: rgb(47 82 25 / .08); }
+    .rk-task-e { flex: none; width: 2.1rem; height: 2.1rem; border-radius: .65rem; display: inline-flex;
         align-items: center; justify-content: center; background: var(--color-gray-100); font-size: 1rem; }
+    .rk-task:nth-of-type(even) .rk-task-e { background: rgb(255 255 255 / .75); }
     .rk-task-mid { min-width: 0; flex: 1 1 auto; }
     .rk-task-l { display: block; font-size: .82rem; font-weight: 700; color: var(--color-gray-900); }
     .rk-task-how { display: block; font-size: .7rem; color: var(--color-gray-500); line-height: 1.4; margin-top: .1rem; }
-    .rk-task-pts { flex: none; padding: .12rem .45rem; border-radius: 999px; background: var(--color-brand-50);
-        color: var(--color-brand-700); font-size: .68rem; font-weight: 800; }
-    .rk-task-tally { flex: none; text-align: right; min-width: 3.4rem; }
-    .rk-task-tally b { display: block; font-size: .85rem; font-weight: 800; color: var(--color-gray-300);
-        font-variant-numeric: tabular-nums; }
-    .rk-task-tally.has-some b { color: var(--color-gray-900); }
-    .rk-task-tally i { font-style: normal; font-size: .64rem; color: var(--color-gray-400); }
+    /* The one number the row exists to say, worn as a solid dark-green pill. */
+    .rk-task-pts { flex: none; padding: .3rem .65rem; border-radius: 999px; color: #fff;
+        background: linear-gradient(120deg, #2f5219, #4a7c2a 60%, #3d6823);
+        font-size: .72rem; font-weight: 800; white-space: nowrap;
+        box-shadow: 0 2px 6px rgb(47 82 25 / .3); font-variant-numeric: tabular-nums; }
+    html.dark .rk-task:nth-of-type(even) { background: rgb(143 194 103 / .08); }
+    html.dark .rk-task:nth-of-type(even) .rk-task-e { background: rgb(0 0 0 / .3); }
 
     /* ---- Guide ---- */
     .rk-guide-intro { font-size: .82rem; color: var(--color-gray-600); line-height: 1.55; margin-bottom: .9rem; }
@@ -416,9 +416,6 @@
     html.dark .rk-task-e, html.dark .rk-arc-e, html.dark .rk-lvl { background: rgb(255 255 255 / .07); }
     html.dark .rk-lvl.is-passed { background: rgb(61 104 35 / .3); }
     html.dark .rk-lvl.is-you { background: var(--color-brand-600); }
-    html.dark .rk-task + .rk-task { border-top-color: rgb(255 255 255 / .06); }
-    html.dark .rk-task-tally b { color: #e8efe1; }
-    html.dark .rk-task-tally:not(.has-some) b { color: #4a5540; }
 
     @media (prefers-reduced-motion: reduce) {
         .rk-me, .rk-me-badge, .rk-me-face, .rk-me.is-up .rk-me-badge, .rk-medal, .rk-block,
@@ -490,11 +487,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('[data-rk-panel]').forEach((p) => {
             p.classList.toggle('hidden', p.getAttribute('data-rk-panel') !== tab);
         });
-        // The tasks tab's tallies count up the first time it is seen.
-        if (tab === 'tasks' && !show.counted) {
-            show.counted = true;
-            document.querySelectorAll('[data-rk-panel="tasks"] [data-count]').forEach(countUp);
-        }
+        // (The tasks tab carries no running numbers any more — each row just
+        // says what it pays.)
     };
     document.getElementById('rkTabs')?.addEventListener('click', (e) => {
         const btn = e.target.closest('.rk-tab');
