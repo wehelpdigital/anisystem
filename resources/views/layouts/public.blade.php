@@ -58,6 +58,9 @@
 </head>
 <body class="min-h-screen flex flex-col bg-white">
 
+    {{-- Shown whole or not at all, the same as inside the app. --}}
+    @include('partials.boot-veil')
+
     {{-- Header --}}
     <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100" x-data="{ open: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
