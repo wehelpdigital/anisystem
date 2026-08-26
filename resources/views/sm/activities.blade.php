@@ -113,37 +113,56 @@
             content-visibility: auto;
             contain-intrinsic-size: auto 400px;
         }
-        /* Today's card, rung like a stone dropped in water: two rings leave
-           the border one after the other, each widening as it thins away.
-           They are the day's OWN colour — the same hue its header wears — so
-           the mark says "this day" in the language the board already speaks,
-           rather than importing a green that belongs to nothing here.
+        /* Today's card, ringed by a halo that swells out of its border and
+           fades. It is the day's OWN colour — the same hue its header wears —
+           so the mark says "this day" in the language the board already
+           speaks, rather than importing a green that belongs to nothing here,
+           and it grades from deep at the border to nothing at its edge.
 
-           Written as one box-shadow of two rings rather than two animations,
-           because box-shadow is a single property: one animation owns it,
-           and the second ring has to travel in the same keyframes. The card's
-           own drop shadow rides along in every frame for that same reason —
-           a frame naming only the rings would quietly delete it. gradSweep is
-           restated for the matching reason on the animation property: a
-           second animation replaces the first, and the day's side colour
-           would stop drifting. */
+           All of it travels in one box-shadow, because box-shadow is a single
+           property: one animation owns it, so every ring has to move in the
+           same keyframes. The card's own drop shadow rides along in each
+           frame for that same reason — a frame naming only the rings would
+           quietly delete it. gradSweep is restated on the animation property
+           for the matching reason: a second animation replaces the first, and
+           the day's side colour would stop drifting with it. */
         .date-group.is-today {
-            --rip: color-mix(in srgb, var(--date-color, #4A90E2) 55%, transparent);
-            --rip-soft: color-mix(in srgb, var(--date-color, #4A90E2) 30%, transparent);
+            /* Three mixes of the day's own hue — deep at the border, thinning
+               outward — so the ring is a gradient across its own thickness
+               rather than one flat tone. Stacked as three shadows because a
+               box-shadow ring cannot itself hold a gradient; the widths are
+               staggered, so what expands is a graded halo. */
+            --rip-1: color-mix(in srgb, var(--date-color, #4A90E2) 30%, transparent);
+            --rip-2: color-mix(in srgb, var(--date-color, #4A90E2) 17%, transparent);
+            --rip-3: color-mix(in srgb, var(--date-color, #4A90E2) 8%, transparent);
+            /* linear, NOT the house curve. cubic-bezier(.22,1,.36,1) reaches
+               full in the first hundredth of its run — measured at alpha
+               .0005 ten milliseconds in — so the ring did not swell, it
+               struck at full strength and was gone, which reads as a blink
+               rather than water. An even clock lets it be seen crossing. */
             animation: gradSweep 12s ease-in-out infinite alternate,
-                       dayTodayRipple 3.2s cubic-bezier(.22, 1, .36, 1) infinite;
+                       dayTodayRipple 3s linear infinite;
         }
         @keyframes dayTodayRipple {
+            /* Born out of nothing at the border... */
             0% { box-shadow: var(--shadow-card),
-                     0 0 0 0 var(--rip),
-                     0 0 0 0 var(--rip-soft); }
-            /* The first ring has gone; the second is only now leaving. */
-            45% { box-shadow: var(--shadow-card),
-                      0 0 0 .55rem transparent,
-                      0 0 0 .28rem var(--rip-soft); }
+                     0 0 0 0 transparent,
+                     0 0 0 0 transparent,
+                     0 0 0 0 transparent; }
+            /* ...gathering just clear of it... */
+            14% { box-shadow: var(--shadow-card),
+                      0 0 0 .07rem var(--rip-1),
+                      0 0 0 .13rem var(--rip-2),
+                      0 0 0 .2rem var(--rip-3); }
+            /* ...then widening away until there is nothing left of it. */
+            70% { box-shadow: var(--shadow-card),
+                      0 0 0 .42rem transparent,
+                      0 0 0 .68rem transparent,
+                      0 0 0 .95rem transparent; }
             100% { box-shadow: var(--shadow-card),
-                       0 0 0 .55rem transparent,
-                       0 0 0 1.15rem transparent; }
+                       0 0 0 0 transparent,
+                       0 0 0 0 transparent,
+                       0 0 0 0 transparent; }
         }
         /* Still, but still marked: the rings settle into a quiet standing
            rim, in the day's colour like the rest of it. */
