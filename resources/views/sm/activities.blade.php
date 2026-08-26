@@ -1446,25 +1446,33 @@
             /* And if a row ever does outgrow the screen, it wraps rather than
                hiding controls off-edge. */
             #actHeaderBar { flex-wrap: wrap; row-gap: .35rem; }
-            /* The controls share the whole line instead of packing left with
-               a dead stretch after the last one: every button grows the same
-               amount, so the row reads as one fitted bar edge to edge. The
-               eye and Search moved to the toolbar row, which fills the same
-               way for the same reason. */
+            /* Both rows still span the line rather than packing left with a
+               dead stretch after the last button — but the stretching is done
+               by the three that carry a word: the two menus and Versions.
+               Everything drawn as a bare icon keeps its own square instead.
+               A stretched icon is a wide empty plate with one small mark
+               adrift in the middle of it, which is not a button. */
+            #actToolbar > .btn { flex: 0 0 auto; justify-content: center; }
+            #actToolbar > #modulesBtn,
+            #actToolbar > #activityActionsBtn { flex: 1 1 auto; }
             #actHeaderBar > .btn,
             #actHeaderBar > .icon-btn,
-            #actHeaderBar > #addActivityWrap { flex: 1 1 auto; }
+            #actHeaderBar > #addActivityWrap { flex: 0 0 auto; }
             #actHeaderBar > .btn, #actHeaderBar > .icon-btn { justify-content: center; }
-            #actToolbar > .btn { flex: 1 1 auto; justify-content: center; }
-            #addActivityWrap .btn { width: 100%; justify-content: center; }
+            #actHeaderBar > #versionsSheetBtn { flex: 1 1 auto; }
+            #addActivityWrap .btn { justify-content: center; }
+            /* The eye carries no word at any width it is drawn at, so it is
+               square for its whole life. 2.25rem is .btn-sm's own height. */
+            #actToolbar > #viewFilterBtn { width: 2.25rem; padding-left: 0; padding-right: 0; }
         }
-        /* Today, while it is a lone arrow: stretched across a share of the
-           line it read as a wide empty slab with a mark in the middle of it,
-           and a square is what an icon on its own wants (2.25rem is .btn-sm's
-           own height). Keyed to 639px, not 767px, because its word comes back
-           at sm — squaring it up there would crop the label. */
+        /* The rest keep their words from sm up, and are squares only while
+           they have none. Two ids apiece so the narrow-phone padding trim
+           below cannot put the air back. */
         @media (max-width: 639px) {
-            #actHeaderBar > #todayTomorrowBtn { flex: 0 0 auto; width: 2.25rem;
+            #actToolbar > #readinessBtn,
+            #actToolbar > #searchToolbarBtn,
+            #actHeaderBar > #todayTomorrowBtn,
+            #actHeaderBar > #addActivityWrap > .btn { width: 2.25rem;
                 padding-left: 0; padding-right: 0; }
         }
         /* The narrowest phones: the toolbar line carries six controls now
