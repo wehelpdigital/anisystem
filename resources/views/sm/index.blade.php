@@ -286,13 +286,16 @@
         /* After the status, not over it. Pinned to the corner it landed on
            top of the pill, which is the one thing on the cover that already
            had that corner. It is a flex item now, so the row makes room. */
+        /* A bare arrow, like the home page's fold chevrons: the white disc
+           it used to sit in read as a white blob on the cover's light wash,
+           and the arrow inside it washed out with it. */
         .se-chev { position: relative; z-index: 1; flex: none; width: 1.5rem; height: 1.5rem;
-            display: flex; align-items: center; justify-content: center; border-radius: 999px;
-            color: var(--color-gray-500); background: rgb(255 255 255 / .7); backdrop-filter: blur(2px);
-            transition: transform .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
-        .se-cover:hover .se-chev { background: rgb(255 255 255 / .95); color: #3d6823; }
-        .se-chev svg { width: .8rem; height: .8rem; }
-        html.dark .se-chev { background: rgb(0 0 0 / .45); color: #d5dfc9; }
+            display: flex; align-items: center; justify-content: center;
+            color: #4b5563;
+            transition: transform .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+        .se-cover:hover .se-chev { color: #3d6823; }
+        .se-chev svg { width: .9rem; height: .9rem; }
+        html.dark .se-chev { color: #d5dfc9; }
         .se-card.is-folded .se-chev { transform: rotate(-90deg); }
         /* Height animates, so folding reads as the card closing rather than
            the card vanishing. grid-template-rows does it without anyone
