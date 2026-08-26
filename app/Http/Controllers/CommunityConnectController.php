@@ -298,6 +298,31 @@ class CommunityConnectController extends Controller
         return response()->json(['success' => true, 'data' => ['count' => $users->count(), 'html' => $html]]);
     }
 
+    /**
+     * The three numbers the photo viewer says under a face: how many follow
+     * this member, how many farm with them, and how many of those the
+     * VIEWER shares. One call when the viewer opens the photo.
+     */
+    public function glance(Request $request)
+    {
+        $id = (int) $request->query('userId');
+        $meId = (int) Auth::id();
+        if ($id <= 0) {
+            return response()->json(['success' => true, 'data' => []]);
+        }
+
+        $social = app(\App\Services\CommunitySocialService::class);
+
+        return response()->json(['success' => true, 'data' => [
+            'followers' => $social->followerCount($id),
+            'coFarmers' => count(CommunityConnection::connectedIds($id)),
+            'mutual' => $id === $meId ? 0 : count(array_intersect(
+                CommunityConnection::connectedIds($meId),
+                CommunityConnection::connectedIds($id)
+            )),
+        ]]);
+    }
+
     /** Incoming friend requests waiting on the viewer, a page at a time. */
     public function requests(Request $request)
     {

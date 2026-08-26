@@ -28,8 +28,8 @@
 <{{ $tag }} @if($doLink) href="{{ route('community.connect.profile', ['userId' => $user->id]) }}" @endif
     class="avatar {{ $sz }} {{ $hue }} overflow-hidden" title="{{ optional($user)->full_name }}{{ $onlineDot ? ' · Online' : '' }}"
     @if ($photo && $user && ! $user->is_assistant)
+        data-z-id="{{ $user->id }}"
         @if ($zPlace) data-z-place="{{ $zPlace }}" @endif
-        @if (filled($user->profession)) data-z-prof="{{ \Illuminate\Support\Str::limit($user->profession, 40) }}" @endif
         @if (filled($user->statusBubble)) data-z-bubble="{{ \Illuminate\Support\Str::limit($user->statusBubble, 60) }}" @endif
         @if ($zRank) data-z-rank="{{ $zRank['emoji'] }} Lv {{ $zRank['n'] }} · {{ $zRank['name'] }}" data-z-arc="{{ $zRank['arc'] }}" @endif
     @endif>

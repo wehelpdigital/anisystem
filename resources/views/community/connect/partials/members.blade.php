@@ -94,7 +94,6 @@
                     (int) $m->yearsFarming > 0
                         ? '⏳ ' . (int) $m->yearsFarming . ' ' . \Illuminate\Support\Str::plural('year', (int) $m->yearsFarming) . ' farming'
                         : null,
-                    filled($m->farmSize) ? '📏 ' . \Illuminate\Support\Str::limit($m->farmSize, 24) : null,
                 ])->filter()->values();
             @endphp
             @if ($mcBits->isNotEmpty())

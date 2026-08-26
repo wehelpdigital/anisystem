@@ -925,13 +925,15 @@
         animation: gradSweep var(--sw-t, 11s) ease-in-out infinite alternate; }
     .conn-btn.conn-grad:hover { filter: brightness(1.06); color: #fff; }
     @media (prefers-reduced-motion: reduce) { .conn-btn.conn-grad { animation: none; } }
-    /* The quiet ✕ beside Follow on a co-farmer's card. */
-    .mc-x { flex: none; }
-    .mc-x-btn { width: 1.9rem; height: 1.9rem; border: 0; border-radius: 999px; cursor: pointer;
+    /* The quiet ✕ beside Follow on a co-farmer's card — its centre on the
+       Follow pill's centre line (the pill self-aligns to the head's top,
+       so this does too, nudged up to split the height difference). */
+    .mc-x { flex: none; align-self: flex-start; margin-top: -5px; }
+    .mc-x-btn { width: 2.3rem; height: 2.3rem; border: 0; border-radius: 999px; cursor: pointer;
         display: inline-flex; align-items: center; justify-content: center;
         background: transparent; color: var(--color-gray-300);
         transition: color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
-    .mc-x-btn svg { width: .85rem; height: .85rem; }
+    .mc-x-btn svg { width: 1.05rem; height: 1.05rem; }
     .mc-x-btn:hover { color: #dc2626; background: rgb(220 38 38 / .08); }
     html.dark .mc-x-btn { color: #5d6858; }
     html.dark .mc-x-btn:hover { color: #f87171; background: rgb(248 113 113 / .12); }

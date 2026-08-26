@@ -468,6 +468,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/community/share/{postId}/message', [App\Http\Controllers\CommunitySocialController::class, 'shareToMessage'])->whereNumber('postId')->name('community.share.message');
     Route::post('/app/community/share/{postId}/link', [App\Http\Controllers\CommunitySocialController::class, 'publicLink'])->whereNumber('postId')->name('community.share.link');
     Route::get('/app/community/mutual', [App\Http\Controllers\CommunityConnectController::class, 'mutualWith'])->name('community.mutual');
+    Route::get('/app/community/glance', [App\Http\Controllers\CommunityConnectController::class, 'glance'])->name('community.glance');
     Route::get('/app/community/members/{userId}', [App\Http\Controllers\CommunityConnectController::class, 'profile'])->whereNumber('userId')->name('community.connect.profile');
     Route::post('/app/community/profile/photos', [App\Http\Controllers\CommunityConnectController::class, 'uploadPhotos'])->name('community.profile.photos.store');
     Route::delete('/app/community/profile/photos/{photoId}', [App\Http\Controllers\CommunityConnectController::class, 'deletePhoto'])->whereNumber('photoId')->name('community.profile.photos.delete');
