@@ -178,6 +178,62 @@
                     0 0 0 2px color-mix(in srgb, var(--date-color, #4A90E2) 45%, transparent);
             }
         }
+        /* ---- THE MIRROR ------------------------------------------------
+           A full screen of the plan, for reading. It borrows the board's own
+           cards (see the mirror block in activities-js), so nearly all of the
+           look is inherited; what is here is the frame around them and the
+           quieting of everything that would otherwise invite a tap. */
+        .mirror-panel { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 340;
+            display: flex; flex-direction: column; background: var(--tl-bg, #f1f3f5); }
+        .mirror-panel[hidden] { display: none; }
+        html.dark .mirror-panel { background: #0f1319; }
+        .mir-bar { flex: none; display: flex; align-items: center; gap: .75rem;
+            padding: max(.7rem, env(safe-area-inset-top)) .9rem .7rem;
+            background: var(--tl-surface, #fff); border-bottom: 1px solid var(--tl-border, #e5e7eb); }
+        .mir-title { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800;
+            line-height: 1.2; color: var(--tl-text, #111827); }
+        .mir-sub { font-size: .72rem; color: var(--tl-text-faint, #6b7280); margin-top: .1rem; }
+        .mir-x { flex: none; margin-left: auto; width: 2.4rem; height: 2.4rem; border: 0;
+            border-radius: 999px; background: transparent; color: var(--tl-text-faint, #6b7280);
+            display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+        .mir-x svg { width: 1.2rem; height: 1.2rem; }
+        .mir-x:hover { background: var(--tl-hover, rgb(0 0 0 / .06)); }
+        .mir-find { flex: none; display: flex; flex-direction: column; gap: .5rem;
+            padding: .6rem .9rem; background: var(--tl-surface, #fff);
+            border-bottom: 1px solid var(--tl-border, #e5e7eb); }
+        .mir-modes { display: flex; gap: .3rem; }
+        .mir-mode { flex: 1 1 0; padding: .35rem .3rem; border-radius: .6rem; cursor: pointer;
+            border: 1px solid var(--tl-border, #e5e7eb); background: transparent;
+            font-size: .74rem; font-weight: 700; color: var(--tl-text-soft, #4b5563);
+            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1),
+                border-color .28s cubic-bezier(.22,1,.36,1); }
+        .mir-mode.is-on { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
+        @media (prefers-reduced-motion: reduce) { .mir-mode { transition: none; } }
+        .mir-input.hidden { display: none; }
+        .mir-body { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch;
+            padding: .8rem .9rem calc(1.5rem + env(safe-area-inset-bottom)); }
+        .mir-none { padding: 2.5rem 1rem; text-align: center; font-size: .85rem;
+            color: var(--tl-text-faint, #6b7280); }
+        .mir-none.hidden { display: none; }
+        /* Nothing in here is a control, so nothing in here behaves like one:
+           no lift on hover, no hand cursor, no drag. The done tick keeps its
+           colour — it is the answer the mirror exists to give — but stops
+           being a button. */
+        .mir-body .date-group { margin-bottom: .9rem; animation: none; }
+        .mir-body .activity-card { cursor: default; }
+        .mir-body .activity-card:hover { transform: none; box-shadow: var(--shadow-card); }
+        .mir-body .done-check { pointer-events: none; opacity: 1; }
+        .mir-body .date-header { cursor: default; }
+        .mir-body [draggable] { -webkit-user-drag: none; }
+        .mir-body input, .mir-body button, .mir-body a, .mir-body label { pointer-events: none; }
+        /* A day that has nothing left after a search folds away entirely. */
+        .mir-body .date-group.mir-away, .mir-body .activity-card.mir-away { display: none !important; }
+        /* Nothing folds in here, so nothing wears a fold's chevron — and an
+           open note drops the one-line preview its head carries, which was
+           printing the first few words directly above the whole note. */
+        .mir-body .activity-card::before { display: none; }
+        .mir-body .date-note-block.is-open > .note-head { display: none; }
+
         .date-header {
             /* column-gap and row-gap apart, on purpose. The header wraps, and
                .dh-rowbreak below is a zero-height item that takes a gap on
@@ -2429,14 +2485,15 @@
             <span class="hidden sm:inline">Search</span>
             <span id="toolbarFilterCount" class="absolute -top-0.5 -right-0.5 hidden min-w-5 h-5 px-1 rounded-full bg-brand-600 text-white text-[0.625rem] font-bold items-center justify-center">0</span>
         </button>
-        {{-- The bolt: the writes that are quick — a photo of what you are
-             standing in front of, a clip, the plan out to somebody. They all
-             live in the Tools menu too, several taps down a long list; this
-             is the short way to the ones done in a hurry, in the field, with
-             one hand. Its sheet forwards to the very same buttons. --}}
-        <button type="button" id="quickBoltBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
-                title="Quick actions" aria-label="Quick actions">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        {{-- The mirror: the whole plan held up to be read, and nothing else.
+             Every day, every activity, hidden ones included, done ones
+             marked — with no button on any of it. The board you work on has
+             to be re-filtered and un-hidden to answer "is that done?", and
+             then put back; this answers it without touching the board at
+             all. --}}
+        <button type="button" id="mirrorBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
+                title="Mirror — read the whole plan" aria-label="Mirror: read the whole plan">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><ellipse cx="12" cy="9" rx="6.5" ry="7.5"/><path stroke-linecap="round" d="M12 16.5V21m-3 0h6"/><path stroke-linecap="round" opacity=".55" d="M9.4 5.6a4.6 5.4 0 00-1.6 3.6"/></svg>
         </button>
         <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative toolbar-in-menu" data-activities-only disabled title="Nothing to undo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
@@ -3463,6 +3520,171 @@
             a.removeAttribute('title');
         }
     }
+    /* ---- THE MIRROR ----------------------------------------------------
+     * The whole plan, held up to be read: every day, every activity, the
+     * hidden ones too, the done ones ticked — and not one thing that can be
+     * changed. It exists because the working board answers "is that done?"
+     * badly: you re-filter, un-hide, unfold, look, then put all three back.
+     *
+     * It is built by copying the board's own days rather than fetching the
+     * plan again, so what it shows IS what the board holds — the same lot
+     * tags, the same day numbers, the same money, with no second renderer to
+     * drift out of step. The copy is then made inert three times over:
+     *   1. everything that acts is deleted out of it,
+     *   2. the CSS refuses pointer events to what is left,
+     *   3. a capture-phase listener stops any click that still happens from
+     *      ever reaching the board's delegated handlers underneath.
+     * The panel also lives OUTSIDE #activitiesList, which is what every one
+     * of those handlers scopes its queries to — so the copies are invisible
+     * to them by construction. */
+    (() => {
+        const panel = document.getElementById('mirrorPanel');
+        const openBtn = document.getElementById('mirrorBtn');
+        if (!panel || !openBtn) return;
+        const body = document.getElementById('mirrorBody');
+        const none = document.getElementById('mirrorNone');
+        const count = document.getElementById('mirrorCount');
+        const qInput = document.getElementById('mirrorQuery');
+        const dInput = document.getElementById('mirrorDate');
+        let mode = 'all';
+
+        // Anything that acts, in a place meant only for reading.
+        const STRIP = [
+            '.date-header-btn', '.day-menu-btn', '.date-chevron', '.date-header-stage',
+            '.date-header-weather', '.wx-mini-btn', '.rest-day-add-btn',
+            '.icon-btn', '.card-menu-btn', '.note-kebab', '.add-note-activity-btn',
+            '.note-fold-btn', '.expense-row-menu', '.income-row-menu', '.money-row-menu',
+            '.act-fab-add', '.group-add-activity-btn',
+        ].join(',');
+
+        function build() {
+            body.innerHTML = '';
+            const groups = document.querySelectorAll('#activitiesList .date-group[data-date]');
+            groups.forEach((g) => {
+                const copy = g.cloneNode(true);
+                // Open, unhidden, unfiltered: the mirror shows the plan as it
+                // IS, not as the board is currently set to look at it.
+                copy.classList.remove('is-folded', 'all-hidden', 'group-collapsed', 'tt-highlight', 'is-today');
+                copy.removeAttribute('style');
+                copy.querySelectorAll(STRIP).forEach((el) => el.remove());
+                copy.querySelectorAll('[draggable]').forEach((el) => el.removeAttribute('draggable'));
+                // A hidden activity is exactly what somebody checking their
+                // work needs to see, so the board's own hiding comes off —
+                // and its fold with it: a mirror that has to be unfolded is
+                // the errand this screen exists to save.
+                copy.querySelectorAll('.activity-card').forEach((c) => {
+                    c.classList.remove('filter-hidden', 'dz-away', 'act-collapsed');
+                    c.style.removeProperty('display');
+                });
+                /* Notes open, but only the ones that exist. The board hides an
+                 * empty note block with an inline display:none, and stripping
+                 * that put an empty "Note" placeholder on every dayless day —
+                 * so the hiding stays and only the fold is undone. */
+                copy.querySelectorAll('.date-note-block').forEach((n) => {
+                    if (n.style.display === 'none') return;
+                    n.classList.add('is-open');
+                    n.querySelectorAll('.note-fold').forEach((f) => { f.style.maxHeight = 'none'; });
+                });
+                body.appendChild(copy);
+            });
+            apply();
+        }
+
+        /* What a day is asked, and what an activity is asked. A day matches on
+         * its date; an activity on the text the board already indexed it by
+         * (data-search) or on the day number printed in its lot meta. */
+        function matches(group, card, q) {
+            if (mode === 'all' || !q) return true;
+            if (mode === 'date') return (group.getAttribute('data-date') || '') === q;
+            if (mode === 'text') return ((card.getAttribute('data-search') || '').toLowerCase()).includes(q);
+            if (mode === 'day') {
+                /* The board writes these with a sign — "DAS-2", "DAS0",
+                 * "DAS+1" — because before and after the seeding are
+                 * different days. So each tag is indexed twice: once as it
+                 * reads, once with the sign taken out. "DAS+12" then answers
+                 * to "das+12" and to "das12", and a bare "12" finds either
+                 * side, which is what somebody who only remembers the number
+                 * means. */
+                const want = q.replace(/[\s·]/g, '');
+                const meta = [...card.querySelectorAll('.lot-meta-tag')].map((t) => {
+                    const raw = (t.textContent || '').toLowerCase().replace(/[\s·]/g, '');
+                    return raw + ' ' + raw.replace(/[+-]/g, '');
+                }).join(' ');
+                return meta.includes(want);
+            }
+            return true;
+        }
+
+        function apply() {
+            const raw = mode === 'date' ? (dInput.value || '') : (qInput.value || '').trim().toLowerCase();
+            let days = 0;
+            let acts = 0;
+            body.querySelectorAll('.date-group').forEach((g) => {
+                const cards = [...g.querySelectorAll('.activity-card')];
+                let shown = 0;
+                cards.forEach((c) => {
+                    const ok = matches(g, c, raw);
+                    c.classList.toggle('mir-away', !ok);
+                    if (ok) shown++;
+                });
+                // A date search keeps its day even when the day holds nothing:
+                // "that date is empty" is the answer, not a blank screen.
+                const keep = mode === 'date' && raw
+                    ? (g.getAttribute('data-date') || '') === raw
+                    : shown > 0;
+                g.classList.toggle('mir-away', !keep);
+                if (keep) { days++; acts += shown; }
+            });
+            none.classList.toggle('hidden', days > 0);
+            count.textContent = raw
+                ? `${acts} ${acts === 1 ? 'activity' : 'activities'} on ${days} ${days === 1 ? 'day' : 'days'}`
+                : 'Every activity, for reading only';
+        }
+
+        function open() {
+            build();
+            panel.hidden = false;
+            panel.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+        function close() {
+            panel.hidden = true;
+            panel.setAttribute('aria-hidden', 'true');
+            document.body.style.removeProperty('overflow');
+            body.innerHTML = '';        // copies are cheap; stale ones are not
+        }
+
+        openBtn.addEventListener('click', open);
+        document.getElementById('mirrorCloseBtn')?.addEventListener('click', close);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !panel.hidden) close();
+        });
+
+        panel.querySelectorAll('.mir-mode').forEach((b) => {
+            b.addEventListener('click', () => {
+                mode = b.getAttribute('data-mir-mode');
+                panel.querySelectorAll('.mir-mode').forEach((x) => x.classList.toggle('is-on', x === b));
+                qInput.classList.toggle('hidden', mode === 'all' || mode === 'date');
+                dInput.classList.toggle('hidden', mode !== 'date');
+                if (mode === 'all') { qInput.value = ''; dInput.value = ''; }
+                if (mode === 'text') qInput.placeholder = 'Search activities, lots or items…';
+                if (mode === 'day') qInput.placeholder = 'Day number — 12, DAS+12, DAT-3…';
+                apply();
+                if (mode === 'text' || mode === 'day') window.smFocus?.(qInput, { delay: 60 });
+            });
+        });
+        qInput.addEventListener('input', apply);
+        dInput.addEventListener('change', apply);
+
+        /* The third guard. Capture runs before the click can bubble back to
+         * the document handlers that run the board, so stopping it here means
+         * a stray tap on a copied card cannot open, tick, drag or delete the
+         * real one it was copied from. */
+        ['click', 'pointerdown', 'dragstart', 'submit'].forEach((type) => {
+            body.addEventListener(type, (e) => { e.stopPropagation(); e.preventDefault(); }, true);
+        });
+    })();
+
     document.getElementById('modulesBtn')?.addEventListener('click', () => openSheet('modulesSheet'));
     document.addEventListener('click', (e) => {
         const row = e.target.closest('#modulesSheet .module-nav-row');
@@ -3614,11 +3836,6 @@
         document.addEventListener('activities:rendered', syncActionsSheet);
         syncActionsSheet();
 
-        // The bolt opens the short list of the writes done in a hurry. Its
-        // rows are the same .activity-action-row, so the forwarding below
-        // carries them too.
-        document.getElementById('quickBoltBtn')
-            ?.addEventListener('click', () => openSheet('quickBoltSheet'));
         // The technician's own launcher, reached from the board rather than
         // from three taps down the Tools menu.
         document.getElementById('aiTechBtn')
