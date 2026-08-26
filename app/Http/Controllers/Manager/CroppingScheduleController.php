@@ -78,7 +78,7 @@ class CroppingScheduleController extends Controller
          */
         $sorts = [
             'updated' => ['label' => 'Last updated', 'column' => 'updated_at',
-                'why' => 'What you changed most recently comes first.'],
+                'why' => 'Whatever you touched last — the season or its tasks — comes first.'],
             'active'  => ['label' => 'Recently worked', 'column' => 'last_touched_at',
                 'why' => 'By the last task edited on the season, not the season itself.'],
             'created' => ['label' => 'Newest first', 'column' => 'created_at',
@@ -91,6 +91,12 @@ class CroppingScheduleController extends Controller
 
         if ($sort === 'title') {
             $query->orderBy('title');
+        } elseif ($sort === 'updated') {
+            // "Last updated" reads the later of the season row and its newest
+            // activity — renaming a plan and reworking its tasks both count
+            // as touching the season, so whichever happened last leads (the
+            // dashboard's shelf already reads it this way).
+            $query->orderByRaw('GREATEST(COALESCE(last_touched_at, created_at), COALESCE(updated_at, created_at)) DESC');
         } else {
             // A season with no activities has no last-touched date; it sorts
             // to the end rather than to the top, which is where a NULL would
