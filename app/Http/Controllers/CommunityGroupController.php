@@ -572,6 +572,11 @@ class CommunityGroupController extends Controller
             'parentId' => 'nullable|integer',
         ]);
 
+        // Repeats are refused before they are kept — same guard as the wall.
+        if ($why = \App\Support\CommunitySpam::repeats((int) Auth::id(), $request->input('body'), 'as_community_group_replies')) {
+            return response()->json(['success' => false, 'message' => $why], 422);
+        }
+
         // Replying to a reply: threads stay two levels deep, so it re-attaches
         // to the thread's top reply.
         $parent = null;

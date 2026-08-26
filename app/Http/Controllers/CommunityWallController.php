@@ -214,6 +214,12 @@ class CommunityWallController extends Controller
             'parentId' => 'nullable|integer',
         ]);
 
+        // Repeats are refused before they are kept: points made comments
+        // farmable, and the cheapest farm is pasting yesterday's words.
+        if ($why = \App\Support\CommunitySpam::repeats((int) Auth::id(), $request->input('body'), 'as_community_wall_comments')) {
+            return response()->json(['success' => false, 'message' => $why], 422);
+        }
+
         // Replying to a comment: threads stay two levels deep, so replying to
         // a reply re-attaches to the thread's top comment.
         $parent = null;
