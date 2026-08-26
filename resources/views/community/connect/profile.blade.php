@@ -74,6 +74,17 @@
                         <button type="button" class="pf-connected conn-btn" data-action="disconnect"
                                 title="Remove {{ $member->firstName }} as a co-farmer">🤝 Connected</button>
                     </span>
+                @elseif (in_array($status, ['none', 'pending_out'], true))
+                    {{-- Not tied yet: Connect stands where Connected will,
+                         wearing the toolbar's green outline (a page-scoped
+                         restyle, so connect-js re-renders keep the look). --}}
+                    <span class="conn-action pf-connect-wrap" data-member-id="{{ $member->id }}" data-status="{{ $status }}">
+                        @if ($status === 'none')
+                            <button type="button" class="btn btn-primary btn-sm conn-btn" data-action="connect">Connect</button>
+                        @else
+                            <button type="button" class="btn btn-white btn-sm conn-btn" data-action="disconnect">Requested</button>
+                        @endif
+                    </span>
                 @endif
                 <div class="pf-quick">
                     <button type="button" class="fp-follow {{ $isFollowed ? 'is-on' : '' }}"
@@ -120,8 +131,10 @@
                 <span class="pf-stat"><b>{{ $followingCount }}</b><i>following</i></span>
                 <span class="pf-stat"><b>{{ $connectionCount }}</b><i>{{ \Illuminate\Support\Str::plural('co-farmer', $connectionCount) }}</i></span>
                 @if (! $isSelf && ($mutualCount ?? 0) > 0)
+                    {{-- Just "mutual": the long word was what clipped this
+                         row off the screen's right edge. --}}
                     <button type="button" class="pf-stat js-mutual" data-mutual-user="{{ $member->id }}" data-mutual-name="{{ $member->firstName }}">
-                        <b>{{ $mutualCount }}</b><i>mutual {{ \Illuminate\Support\Str::plural('co-farmer', $mutualCount) }}</i>
+                        <b>{{ $mutualCount }}</b><i>mutual</i>
                     </button>
                 @endif
             </div>
@@ -154,19 +167,12 @@
                 </button>
             @endif
 
-            {{-- Message and Follow live in the corner now (see .pf-quick);
-                 what stays down here is the deliberate connection act — and
-                 an incoming request gets its own card below instead. --}}
-            {{-- Connected lives in the top-left tag now, and a request has
-                 its own card — the foot holds only Connect / Requested / the
-                 owner's own edit door. --}}
-            @if ($isSelf || ! in_array($status, ['pending_in', 'connected'], true))
+            {{-- Every connection act lives in the corners now — Connect and
+                 Connected both at the top right, a request in its own card —
+                 so the foot holds only the owner's own edit door. --}}
+            @if ($isSelf)
                 <div class="pf-acts">
-                    @if ($isSelf)
-                        <a href="{{ route('account.index', ['from' => 'community']) }}" class="btn btn-white btn-sm">✏️ Edit profile</a>
-                    @else
-                        @include('community.connect.partials.action', ['status' => $status, 'memberId' => $member->id])
-                    @endif
+                    <a href="{{ route('account.index', ['from' => 'community']) }}" class="btn btn-white btn-sm">✏️ Edit profile</a>
                 </div>
             @endif
         </div>
@@ -381,6 +387,18 @@
     /* The tag on the opposite corner: the tie, wearing the wall pill's
        green — and the door out of it, which asks first. */
     .pf-connected-wrap { position:absolute; right:.9rem; top:.6rem; z-index:3; }
+    /* Connect stands in Connected's corner until the tie exists, wearing the
+       toolbar's Search outline — 2px of brand green on white, exactly what
+       .btn-outline draws. Written as CSS rather than that class because
+       connect-js re-renders the button as .btn-primary, and a look that
+       survives only until the first tap is no look at all. */
+    .pf-connect-wrap { position:absolute; right:.9rem; top:.6rem; z-index:3; }
+    .pf-connect-wrap .conn-btn[data-action="connect"] { background:var(--color-white);
+        background-image:none; animation:none; color:var(--color-brand-700);
+        border:2px solid var(--color-brand-600); }
+    .pf-connect-wrap .conn-btn[data-action="connect"]:hover { background:var(--color-brand-50); }
+    html.dark .pf-connect-wrap .conn-btn[data-action="connect"] { background:transparent;
+        color:#bfe19a; border-color:#6b9f3d; }
     .pf-connected { border:1px solid var(--color-brand-200); background:var(--color-brand-50);
         color:var(--color-brand-700); border-radius:999px; padding:.25rem .6rem;
         font-size:.74rem; font-weight:800; cursor:pointer;

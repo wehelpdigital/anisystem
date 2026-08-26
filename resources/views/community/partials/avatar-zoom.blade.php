@@ -135,6 +135,9 @@
         // a room announces itself with data-gz-name wherever it is drawn.
         const face = e.target.closest('.avatar, [data-gz-name]');
         if (!face) return;
+        // A face inside a mutual-co-farmers opener belongs to THAT gesture:
+        // the fanned strip on a profile opens the shared list, not the photo.
+        if (face.closest('.js-mutual[data-mutual-user]')) return;
         const isRoom = face.hasAttribute('data-gz-name');
         const img = face.querySelector('img');
         if (!img || !img.getAttribute('src')) return;   // letters stay letters
