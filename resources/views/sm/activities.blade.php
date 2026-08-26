@@ -264,6 +264,20 @@
         .mir-mode.is-on { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
         @media (prefers-reduced-motion: reduce) { .mir-mode { transition: none; } }
         .mir-input.hidden { display: none; }
+        .mir-range { display: flex; align-items: center; gap: .45rem; }
+        .mir-range .form-input { flex: 1 1 0; min-width: 0; }
+        .mir-range-to { flex: none; font-size: .74rem; font-weight: 700;
+            color: var(--tl-text-faint, #6b7280); }
+        /* Lots as tags: few enough to show at once, and more than one can be
+           asked about together. */
+        .mir-lots { display: flex; flex-wrap: wrap; gap: .3rem; }
+        .mir-lot { padding: .28rem .6rem; border-radius: 999px; cursor: pointer;
+            border: 1px solid var(--tl-border, #e5e7eb); background: transparent;
+            font-size: .74rem; font-weight: 700; color: var(--tl-text-soft, #4b5563);
+            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1),
+                border-color .28s cubic-bezier(.22,1,.36,1); }
+        .mir-lot.is-on { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
+        @media (prefers-reduced-motion: reduce) { .mir-lot { transition: none; } }
         .mir-body { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch;
             padding: .8rem .9rem calc(1.5rem + env(safe-area-inset-bottom)); }
         .mir-none { padding: 2.5rem 1rem; text-align: center; font-size: .85rem;
@@ -3647,8 +3661,11 @@
         const load = document.getElementById('mirrorLoad');
         const count = document.getElementById('mirrorCount');
         const qInput = document.getElementById('mirrorQuery');
-        const dInput = document.getElementById('mirrorDate');
-        const lotSel = document.getElementById('mirrorLot');
+        const range = document.getElementById('mirrorRange');
+        const fromInput = document.getElementById('mirrorFrom');
+        const toInput = document.getElementById('mirrorTo');
+        const lotWrap = document.getElementById('mirrorLots');
+        const lotsOn = new Set();
         const find = document.getElementById('mirrorFind');
         const findSay = document.getElementById('mirrorFindSay');
         const findN = document.getElementById('mirrorFindN');
@@ -3680,15 +3697,31 @@
                 const name = (t.textContent || '').trim();
                 if (id && name && !seen.has(id)) seen.set(id, name);
             });
-            const keep = lotSel.value;
-            lotSel.innerHTML = '<option value="">Every lot</option>';
+            lotsOn.clear();
+            lotWrap.innerHTML = '';
             [...seen.entries()].sort((a, b) => a[1].localeCompare(b[1])).forEach(([id, name]) => {
-                const o = document.createElement('option');
-                o.value = id;
-                o.textContent = name;
-                lotSel.appendChild(o);
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'mir-lot';
+                b.dataset.lot = id;
+                b.textContent = name;
+                b.setAttribute('aria-pressed', 'false');
+                b.addEventListener('click', () => {
+                    // Each tag is its own yes/no, so two lots can be asked
+                    // about at once; none chosen means every lot.
+                    const on = !lotsOn.has(id);
+                    if (on) lotsOn.add(id); else lotsOn.delete(id);
+                    b.classList.toggle('is-on', on);
+                    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+                    sift();
+                });
+                lotWrap.appendChild(b);
             });
-            if (keep && seen.has(keep)) lotSel.value = keep;
+            lotWrap.classList.toggle('hidden', seen.size === 0);
+        }
+
+        function lotNames() {
+            return [...lotWrap.querySelectorAll('.mir-lot.is-on')].map((b) => b.textContent);
         }
 
         function build() {
@@ -3704,8 +3737,14 @@
                  * you are LOOKING at the board, and the mirror does not
                  * inherit the squint. Whatever is switched on out there, the
                  * plan comes through here whole. */
-                copy.classList.remove('is-folded', 'all-hidden', 'group-collapsed',
+                copy.classList.remove('all-hidden', 'group-collapsed',
                     'done-day-away', 'dz-away', 'filters-active', 'tt-highlight', 'is-today');
+                /* Every day starts shut. Seventy days opened at once is a
+                 * scroll with no landmarks in it; closed, the whole season
+                 * is one screen of dates you can run an eye down, and the
+                 * one you want opens with a tap. A search opens what it
+                 * finds (see apply). */
+                copy.classList.add('is-folded');
                 copy.removeAttribute('style');
                 copy.querySelectorAll(STRIP).forEach((el) => el.remove());
                 copy.querySelectorAll('[draggable]').forEach((el) => el.removeAttribute('draggable'));
@@ -3739,9 +3778,22 @@
         /* What a day is asked, and what an activity is asked. A day matches on
          * its date; an activity on the text the board already indexed it by
          * (data-search) or on the day number printed in its lot meta. */
+        function inRange(group) {
+            const d = group.getAttribute('data-date') || '';
+            const a = fromInput.value || '';
+            const b = toInput.value || '';
+            if (!a && !b) return true;
+            if (!d || d === '__no-date__') return false;
+            // Either end may be left open: a start alone reads "from then on",
+            // an end alone "up to then". ISO dates compare as strings.
+            if (a && d < a) return false;
+            if (b && d > b) return false;
+            return true;
+        }
+
         function matches(group, card, q) {
+            if (mode === 'date') return inRange(group);
             if (mode === 'all' || !q) return true;
-            if (mode === 'date') return (group.getAttribute('data-date') || '') === q;
             if (mode === 'text') return ((card.getAttribute('data-search') || '').toLowerCase()).includes(q);
             if (mode === 'day') {
                 /* The board writes these with a sign — "DAS-2", "DAS0",
@@ -3762,44 +3814,53 @@
         }
 
         function apply() {
-            const raw = mode === 'date' ? (dInput.value || '') : (qInput.value || '').trim().toLowerCase();
-            const lot = lotSel.value;
+            const raw = mode === 'date'
+                ? [fromInput.value, toInput.value].filter(Boolean).join(' → ')
+                : (qInput.value || '').trim().toLowerCase();
+            const asking = !!raw || lotsOn.size > 0;
             let days = 0;
             let acts = 0;
             body.querySelectorAll('.date-group').forEach((g) => {
                 const cards = [...g.querySelectorAll('.activity-card')];
                 let shown = 0;
                 cards.forEach((c) => {
-                    // The lot narrows whatever else is being asked rather than
+                    // The lots narrow whatever else is being asked rather than
                     // replacing it: "herbicide, on Apartado 1" is one question.
-                    const onLot = !lot || !!c.querySelector(`.lot-tag[data-lot-id="${lot}"]`);
+                    const onLot = lotsOn.size === 0
+                        || [...lotsOn].some((id) => c.querySelector(`.lot-tag[data-lot-id="${id}"]`));
                     const ok = onLot && matches(g, c, raw);
                     c.classList.toggle('mir-away', !ok);
                     if (ok) shown++;
                 });
-                // A date search keeps its day even when the day holds nothing:
-                // "that date is empty" is the answer, not a blank screen.
-                const keep = mode === 'date' && raw && !lot
-                    ? (g.getAttribute('data-date') || '') === raw
+                // A date range keeps its days even where they hold nothing:
+                // "that week is empty" is the answer, not a blank screen.
+                const keep = mode === 'date' && raw && lotsOn.size === 0
+                    ? inRange(g)
                     : shown > 0;
                 g.classList.toggle('mir-away', !keep);
+                /* Everything opens shut, so a question has to open what it
+                 * found — a day whose header alone is showing has not
+                 * answered anything. Asking nothing shuts them again, which
+                 * is the state the screen opens in. */
+                if (asking) g.classList.toggle('is-folded', !(keep && shown > 0));
+                else g.classList.add('is-folded');
                 if (keep) { days++; acts += shown; }
             });
             none.classList.toggle('hidden', days > 0);
-            const asking = !!raw || !!lot;
             count.textContent = asking
                 ? `${acts} ${acts === 1 ? 'activity' : 'activities'} on ${days} ${days === 1 ? 'day' : 'days'}`
                 : 'Every activity, for reading only';
-            sayFilters(raw, lot);
+            sayFilters(raw);
             syncFoldBtn();
         }
 
         /* What the shut card says it is asking. A filter you cannot see is a
          * filter you forget you set, and then the plan looks wrong. */
-        function sayFilters(raw, lot) {
+        function sayFilters(raw) {
             const bits = [];
-            if (raw) bits.push((mode === 'date' ? 'Date: ' : mode === 'day' ? 'Day ' : '') + raw);
-            if (lot) bits.push(lotSel.options[lotSel.selectedIndex]?.textContent || 'a lot');
+            if (raw) bits.push((mode === 'day' ? 'Day ' : '') + raw);
+            const names = lotNames();
+            if (names.length) bits.push(names.join(', '));
             findN.textContent = String(bits.length);
             findN.classList.toggle('hidden', bits.length === 0);
             findSay.textContent = bits.length ? bits.join(' · ') : 'Search & filters';
@@ -3881,8 +3942,8 @@
                 mode = b.getAttribute('data-mir-mode');
                 panel.querySelectorAll('.mir-mode').forEach((x) => x.classList.toggle('is-on', x === b));
                 qInput.classList.toggle('hidden', mode === 'all' || mode === 'date');
-                dInput.classList.toggle('hidden', mode !== 'date');
-                if (mode === 'all') { qInput.value = ''; dInput.value = ''; }
+                range.classList.toggle('hidden', mode !== 'date');
+                if (mode === 'all') { qInput.value = ''; fromInput.value = ''; toInput.value = ''; }
                 if (mode === 'text') qInput.placeholder = 'Search activities, lots or items…';
                 if (mode === 'day') qInput.placeholder = 'Day number — 12, DAS+12, DAT-3…';
                 sift();
@@ -3890,8 +3951,8 @@
             });
         });
         qInput.addEventListener('input', sift);
-        dInput.addEventListener('change', sift);
-        lotSel.addEventListener('change', sift);
+        fromInput.addEventListener('change', sift);
+        toInput.addEventListener('change', sift);
 
         // The card itself folds, so the answer gets the screen once the
         // question has been asked.
@@ -3938,21 +3999,24 @@
              * up. scrollIntoView is told the element rather than a number, so
              * it is the one thing that cannot be made stale by the layout it
              * causes — measured at 0px off, and still 0 once settled. */
-            target.scrollIntoView({ block: 'start' });
-            body.scrollTop = Math.max(0, body.scrollTop - 8);
-            // One more look, in case a day rendering below shifted the ground.
+            /* Travelled, not teleported: the list runs to the day so the eye
+             * keeps its place in the season rather than being cut to a screen
+             * that looks like any other. Smooth is affordable now that the
+             * days arrive shut — a folded list is short and its heights hold
+             * still while the scroll is in flight. */
+            const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            target.scrollIntoView({ block: 'start', behavior: smooth ? 'smooth' : 'auto' });
+            // One more look once it has come to rest, in case the ground moved.
             setTimeout(() => {
                 const br = body.getBoundingClientRect();
                 const tr = target.getBoundingClientRect();
-                if (Math.abs(tr.top - br.top) > 12) {
-                    target.scrollIntoView({ block: 'start' });
-                    body.scrollTop = Math.max(0, body.scrollTop - 8);
-                }
+                if (Math.abs(tr.top - br.top) > 12) target.scrollIntoView({ block: 'start' });
+                body.scrollTop = Math.max(0, body.scrollTop - 8);
                 // A brief rise so the eye knows which one it was brought to.
                 target.classList.remove('mir-sift-in');
                 void target.offsetWidth;
                 target.classList.add('mir-sift-in');
-            }, 220);
+            }, smooth ? 620 : 60);
         });
 
         /* The third guard, and the mirror's own hands.

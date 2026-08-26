@@ -621,7 +621,7 @@
 <div class="mirror-panel" id="mirrorPanel" hidden aria-hidden="true">
     <div class="mir-bar">
         <div class="min-w-0">
-            <h2 class="mir-title">Mirror</h2>
+            <h2 class="mir-title">Mirror view</h2>
             <p class="mir-sub" id="mirrorCount">Every activity, for reading only</p>
         </div>
         <button type="button" class="mir-x" id="mirrorCloseBtn" aria-label="Close the mirror">
@@ -654,11 +654,21 @@
                 </div>
                 <input type="search" id="mirrorQuery" class="form-input mir-input hidden"
                        placeholder="Search activities, lots or items…" autocomplete="off">
-                <input type="date" id="mirrorDate" class="form-input mir-input hidden">
-                {{-- The lot narrows whatever else is being asked rather than
-                     replacing it: "herbicide, on Apartado 1" is one question,
-                     not two. Filled from the board's own lot tags. --}}
-                <select id="mirrorLot" class="form-select mir-input"><option value="">Every lot</option></select>
+                {{-- A range rather than a single day: "that week" and "since
+                     transplanting" are the questions actually asked of a
+                     plan. Either end may be left open — a start alone means
+                     "from then on", an end alone "up to then". --}}
+                <div class="mir-range mir-input hidden" id="mirrorRange">
+                    <input type="date" id="mirrorFrom" class="form-input" aria-label="From date">
+                    <span class="mir-range-to">to</span>
+                    <input type="date" id="mirrorTo" class="form-input" aria-label="To date">
+                </div>
+                {{-- Lots as tags, not a dropdown: they are few, they are worth
+                     seeing all at once, and more than one can be asked about
+                     together. They narrow whatever else is being asked rather
+                     than replacing it — "herbicide, on Apartado 1" is one
+                     question, not two. Filled from the board's own lot tags. --}}
+                <div class="mir-lots" id="mirrorLots" role="group" aria-label="Lots"></div>
                 <div class="mir-tools">
                     <button type="button" class="mir-tool" id="mirrorTodayBtn">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
