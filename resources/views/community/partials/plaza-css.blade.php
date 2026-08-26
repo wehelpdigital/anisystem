@@ -1172,17 +1172,28 @@
        to paint in a post's own colour — the top strip, and now the bottom
        one under a topic — reads them from one place. */
     .fp-card { position: relative; --fp-a: #4a7c2a; --fp-b: #8fc267; }
-    /* Your own post's way out: a quiet trash can in the corner. Muted until
-       looked at — it must not compete with the post it can remove. */
-    .fp-del { position: absolute; top: .6rem; right: .6rem; z-index: 5;
+    /* The card's corner: what you can do to the post itself, as against
+       what you can say about it (that lives in the action row). The trash
+       can, and — on a card lifted out of its wall — the door back to it. */
+    .fp-corner { position: absolute; top: .6rem; right: .6rem; z-index: 5;
+        display: flex; align-items: center; gap: .1rem; }
+    /* Both muted until looked at: neither must compete with the post. */
+    .fp-del, .fp-open { flex: none;
         width: 2.1rem; height: 2.1rem; display: inline-flex; align-items: center; justify-content: center;
         border: 0; border-radius: 999px; background: transparent; color: #b6c0b0; cursor: pointer;
         transition: color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1),
             transform .28s cubic-bezier(.22,1,.36,1); }
-    .fp-del svg { width: 1.05rem; height: 1.05rem; }
+    .fp-del svg, .fp-open svg { width: 1.05rem; height: 1.05rem; }
     .fp-del:hover, .fp-del:focus-visible { color: #dc2626; background: rgb(220 38 38 / .09); transform: scale(1.1); }
-    html.dark .fp-del { color: #5d6858; }
+    /* The way back is a door, not a warning: it warms to the house green. */
+    .fp-open:hover, .fp-open:focus-visible { color: var(--color-brand-700); background: var(--color-brand-50); transform: scale(1.1); }
+    html.dark .fp-del, html.dark .fp-open { color: #5d6858; }
     html.dark .fp-del:hover, html.dark .fp-del:focus-visible { color: #f87171; background: rgb(248 113 113 / .13); }
+    html.dark .fp-open:hover, html.dark .fp-open:focus-visible { color: #bfe19a; background: rgb(61 104 35 / .3); }
+    @media (prefers-reduced-motion: reduce) {
+        .fp-del, .fp-open { transition: none; }
+        .fp-del:hover, .fp-open:hover { transform: none; }
+    }
     /* A deleted post leaves the way a card should: folding shut so the
        column closes over the gap, not blinking out of it. The height it
        folds from is set inline by the handler just before this class lands. */

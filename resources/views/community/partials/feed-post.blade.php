@@ -29,16 +29,31 @@
 @endphp
 <article class="card p-4 mb-5 feed-post wall-post fp-card fp-hue-{{ $fpHue }}" id="wallpost-{{ $post->id }}"
          data-post-id="{{ $post->id }}" data-view="post:{{ $post->id }}">
-    {{-- Your own post can be taken down, from the corner where nothing of
-         yours ever renders (Follow and the DM door both hide on your own
-         card). Somebody else's post offers Report in the action row instead
-         — the two are never both drawn. The class is the one the delegated
-         handler already listens for; it asks before it acts. --}}
-    @if ($isMine)
-        <button type="button" class="wall-delete-btn fp-del" data-post-id="{{ $post->id }}"
-                title="Delete this post" aria-label="Delete this post">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
-        </button>
+    {{-- The card's own corner, where nothing of the post itself renders
+         (Follow and the DM door both hide on your own card).
+
+         Your own post can be taken down from here — somebody else's offers
+         Report in the action row instead, and the two are never both drawn.
+         The delete class is the one the delegated handler already listens
+         for; it asks before it acts.
+
+         Beside it, on a card that has been lifted out of the wall it lives
+         on (the saved list), the way back to where it came from. --}}
+    @if ($isMine || ($permalink ?? false))
+        <div class="fp-corner">
+            @if ($isMine)
+                <button type="button" class="wall-delete-btn fp-del" data-post-id="{{ $post->id }}"
+                        title="Delete this post" aria-label="Delete this post">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
+                </button>
+            @endif
+            @if ($permalink ?? false)
+                <a class="fp-open" href="{{ route('community.post.show', ['id' => $post->id]) }}"
+                   title="Open this post on the wall" aria-label="Open this post on the wall">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5h5v5m0-5l-7 7M18 13v5a1 1 0 01-1 1H6a1 1 0 01-1-1V7a1 1 0 011-1h5"/></svg>
+                </a>
+            @endif
+        </div>
     @endif
     <header class="flex items-start gap-3">
         {{-- What is on their mind, in the cloud over the face — the same
@@ -167,16 +182,8 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 21V4m0 1h11l-1.5 3L15 11H4"/></svg>
             </button>
         @endunless
-        {{-- The way back to where the post lives.
-             Only where a card has been lifted out of its wall — the saved
-             list — because everywhere else you are already there. --}}
-        @if ($permalink ?? false)
-            <a class="fp-act fp-open" href="{{ route('community.post.show', ['id' => $post->id]) }}"
-               title="Open this post on the wall">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5h5v5m0-5l-7 7M18 13v5a1 1 0 01-1 1H6a1 1 0 01-1-1V7a1 1 0 011-1h5"/></svg>
-                <span class="fp-lbl">See the post</span>
-            </a>
-        @endif
+        {{-- The way back to where the post lives has moved to the card's
+             corner, beside delete (see .fp-corner above). --}}
         {{-- How many have looked at it. Not a button: nothing happens when
              you press it, it is the post telling you how far it went. --}}
         <span class="fp-act fp-views" title="Views">
