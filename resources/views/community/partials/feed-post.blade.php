@@ -82,6 +82,9 @@
         'followers' => $post->authorFollowers ?? 0,
         'coFarmers' => $post->authorCoFarmers ?? 0,
         'mutual' => $post->authorMutual ?? 0,
+        // One lone chip joins the place and the work on the line above
+        // rather than opening a second row under them for itself.
+        'mergeSingleCount' => true,
         'fallback' => $author?->created_at
             ? '🌱 Member since ' . $author->created_at->timezone('Asia/Manila')->format('M Y')
             : null,
