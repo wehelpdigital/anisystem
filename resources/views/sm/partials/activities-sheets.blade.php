@@ -628,19 +628,49 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
     </div>
-    <div class="mir-find">
-        {{-- Three ways to ask, because there are three ways people remember a
-             job: the day it falls on, what it is called, or how far into the
-             crop it is. --}}
-        <div class="mir-modes" role="tablist" aria-label="Search by">
-            <button type="button" class="mir-mode is-on" data-mir-mode="all">All</button>
-            <button type="button" class="mir-mode" data-mir-mode="text">Text</button>
-            <button type="button" class="mir-mode" data-mir-mode="date">Date</button>
-            <button type="button" class="mir-mode" data-mir-mode="day">Day no.</button>
+    {{-- One card for the asking, folded away until it is wanted. Open, it is
+         every way of narrowing the plan; shut, it is one line saying what is
+         currently being asked, so the answer gets the screen. --}}
+    <div class="mir-find is-shut" id="mirrorFind">
+        <button type="button" class="mir-find-head" id="mirrorFindHead" aria-expanded="false" aria-controls="mirrorFindBody">
+            <svg class="mir-find-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
+            <span class="mir-find-say" id="mirrorFindSay">Search &amp; filters</span>
+            <span class="mir-find-n hidden" id="mirrorFindN">1</span>
+            <svg class="mir-find-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="mir-find-body" id="mirrorFindBody">
+            {{-- The padding lives on this inner wrapper rather than on the
+                 fields: a .form-input is width:100%, and 100% of the card
+                 PLUS a margin either side is wider than the card. --}}
+            <div class="mir-find-in"><div class="mir-find-pad">
+                {{-- Three ways to ask, because there are three ways people
+                     remember a job: what it is called, the day it falls on,
+                     or how far into the crop it is. --}}
+                <div class="mir-modes" role="tablist" aria-label="Search by">
+                    <button type="button" class="mir-mode is-on" data-mir-mode="all">All</button>
+                    <button type="button" class="mir-mode" data-mir-mode="text">Text</button>
+                    <button type="button" class="mir-mode" data-mir-mode="date">Date</button>
+                    <button type="button" class="mir-mode" data-mir-mode="day">Day no.</button>
+                </div>
+                <input type="search" id="mirrorQuery" class="form-input mir-input hidden"
+                       placeholder="Search activities, lots or items…" autocomplete="off">
+                <input type="date" id="mirrorDate" class="form-input mir-input hidden">
+                {{-- The lot narrows whatever else is being asked rather than
+                     replacing it: "herbicide, on Apartado 1" is one question,
+                     not two. Filled from the board's own lot tags. --}}
+                <select id="mirrorLot" class="form-select mir-input"><option value="">Every lot</option></select>
+                <div class="mir-tools">
+                    <button type="button" class="mir-tool" id="mirrorTodayBtn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
+                        Today
+                    </button>
+                    <button type="button" class="mir-tool" id="mirrorFoldBtn" data-folded="0">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 11l7-7 7 7M5 19l7-7 7 7"/></svg>
+                        <span id="mirrorFoldLabel">Collapse all</span>
+                    </button>
+                </div>
+            </div></div>
         </div>
-        <input type="search" id="mirrorQuery" class="form-input mir-input hidden"
-               placeholder="Search activities, lots or items…" autocomplete="off">
-        <input type="date" id="mirrorDate" class="form-input mir-input hidden">
     </div>
     {{-- Copying a long season takes a moment; an empty screen reads as
          broken, so the wait says it is working. --}}

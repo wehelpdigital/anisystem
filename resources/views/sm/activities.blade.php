@@ -214,9 +214,47 @@
             display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
         .mir-x svg { width: 1.2rem; height: 1.2rem; }
         .mir-x:hover { background: var(--tl-hover, rgb(0 0 0 / .06)); }
-        .mir-find { flex: none; display: flex; flex-direction: column; gap: .5rem;
-            padding: .6rem .9rem; background: var(--tl-surface, #fff);
+        /* One card, folded away until it is wanted. Shut, it is a single line
+           saying what is being asked; open, it is every way of asking. The
+           body folds on a 0fr/1fr grid — the same trick the day cards use —
+           because that animates to the content's own height without anyone
+           having to measure it. */
+        .mir-find { flex: none; background: var(--tl-surface, #fff);
             border-bottom: 1px solid var(--tl-border, #e5e7eb); }
+        .mir-find-head { width: 100%; display: flex; align-items: center; gap: .5rem;
+            padding: .6rem .9rem; border: 0; background: transparent; cursor: pointer;
+            font: inherit; text-align: left; color: var(--tl-text, #111827); }
+        .mir-find-ico { width: 1rem; height: 1rem; flex: none; color: var(--tl-text-faint, #6b7280); }
+        .mir-find-say { flex: 1 1 auto; min-width: 0; font-size: .82rem; font-weight: 700;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .mir-find-n { flex: none; min-width: 1.15rem; height: 1.15rem; padding: 0 .3rem;
+            border-radius: 999px; background: var(--color-brand-600); color: #fff;
+            font-size: .625rem; font-weight: 800; line-height: 1.15rem; text-align: center; }
+        .mir-find-n.hidden { display: none; }
+        .mir-find-chev { width: .85rem; height: .85rem; flex: none; color: var(--tl-text-faint, #6b7280);
+            transition: transform .28s cubic-bezier(.22, 1, .36, 1); }
+        .mir-find:not(.is-shut) .mir-find-chev { transform: rotate(180deg); }
+        .mir-find-body { display: grid; grid-template-rows: 1fr;
+            transition: grid-template-rows .28s cubic-bezier(.22, 1, .36, 1); }
+        .mir-find.is-shut .mir-find-body { grid-template-rows: 0fr; }
+        .mir-find-in { overflow: hidden; min-height: 0; }
+        /* Padding on the wrapper, not margins on the fields: a .form-input is
+           width:100%, and 100% of the card plus a margin either side is wider
+           than the card — which is exactly how the inputs ran off its edge. */
+        .mir-find-pad { display: flex; flex-direction: column; gap: .5rem; padding: .1rem .9rem .7rem; }
+        .mir-find.is-shut .mir-find-pad { visibility: hidden; }
+        .mir-tools { display: flex; gap: .4rem; }
+        .mir-tool { flex: 1 1 0; display: inline-flex; align-items: center; justify-content: center;
+            gap: .3rem; padding: .4rem .5rem; border-radius: .6rem; cursor: pointer;
+            border: 1px solid var(--tl-border, #e5e7eb); background: transparent;
+            font-size: .74rem; font-weight: 700; color: var(--tl-text-soft, #4b5563);
+            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+        .mir-tool svg { width: .9rem; height: .9rem; flex: none; }
+        .mir-tool:hover { background: var(--tl-hover, rgb(0 0 0 / .05)); color: var(--tl-text, #111827); }
+        .mir-tool:disabled { opacity: .4; cursor: not-allowed; }
+        @media (prefers-reduced-motion: reduce) {
+            .mir-find-body, .mir-find-chev, .mir-tool { transition: none; }
+        }
         .mir-modes { display: flex; gap: .3rem; }
         .mir-mode { flex: 1 1 0; padding: .35rem .3rem; border-radius: .6rem; cursor: pointer;
             border: 1px solid var(--tl-border, #e5e7eb); background: transparent;
@@ -3610,19 +3648,54 @@
         const count = document.getElementById('mirrorCount');
         const qInput = document.getElementById('mirrorQuery');
         const dInput = document.getElementById('mirrorDate');
+        const lotSel = document.getElementById('mirrorLot');
+        const find = document.getElementById('mirrorFind');
+        const findSay = document.getElementById('mirrorFindSay');
+        const findN = document.getElementById('mirrorFindN');
+        const foldBtn = document.getElementById('mirrorFoldBtn');
+        const foldLabel = document.getElementById('mirrorFoldLabel');
+        const todayBtn = document.getElementById('mirrorTodayBtn');
         let mode = 'all';
+        // Read off the board before its markers are stripped from the copies.
+        let todayKey = '';
 
         // Anything that acts, in a place meant only for reading.
+        // The chevron stays: folding a day shut is reading, not editing, and
+        // on a season of seventy days it is how you get past what you have
+        // already checked. The mirror runs it itself (see the click handler).
         const STRIP = [
-            '.date-header-btn', '.day-menu-btn', '.date-chevron', '.date-header-stage',
+            '.date-header-btn', '.day-menu-btn', '.date-header-stage',
             '.date-header-weather', '.wx-mini-btn', '.rest-day-add-btn',
             '.icon-btn', '.card-menu-btn', '.note-kebab', '.add-note-activity-btn',
             '.note-fold-btn', '.expense-row-menu', '.income-row-menu', '.money-row-menu',
             '.act-fab-add', '.group-add-activity-btn',
         ].join(',');
 
+        /* Which lots this plan actually uses, read off the board's own tags so
+         * the list cannot name a lot the plan has never heard of. */
+        function fillLots() {
+            const seen = new Map();
+            document.querySelectorAll('#activitiesList .activity-card .lot-tag[data-lot-id]').forEach((t) => {
+                const id = t.getAttribute('data-lot-id');
+                const name = (t.textContent || '').trim();
+                if (id && name && !seen.has(id)) seen.set(id, name);
+            });
+            const keep = lotSel.value;
+            lotSel.innerHTML = '<option value="">Every lot</option>';
+            [...seen.entries()].sort((a, b) => a[1].localeCompare(b[1])).forEach(([id, name]) => {
+                const o = document.createElement('option');
+                o.value = id;
+                o.textContent = name;
+                lotSel.appendChild(o);
+            });
+            if (keep && seen.has(keep)) lotSel.value = keep;
+        }
+
         function build() {
             body.innerHTML = '';
+            todayKey = (document.querySelector('#activitiesList .date-group.is-today')
+                || {}).getAttribute?.('data-date') || '';
+            fillLots();
             const groups = document.querySelectorAll('#activitiesList .date-group[data-date]');
             groups.forEach((g) => {
                 const copy = g.cloneNode(true);
@@ -3690,28 +3763,55 @@
 
         function apply() {
             const raw = mode === 'date' ? (dInput.value || '') : (qInput.value || '').trim().toLowerCase();
+            const lot = lotSel.value;
             let days = 0;
             let acts = 0;
             body.querySelectorAll('.date-group').forEach((g) => {
                 const cards = [...g.querySelectorAll('.activity-card')];
                 let shown = 0;
                 cards.forEach((c) => {
-                    const ok = matches(g, c, raw);
+                    // The lot narrows whatever else is being asked rather than
+                    // replacing it: "herbicide, on Apartado 1" is one question.
+                    const onLot = !lot || !!c.querySelector(`.lot-tag[data-lot-id="${lot}"]`);
+                    const ok = onLot && matches(g, c, raw);
                     c.classList.toggle('mir-away', !ok);
                     if (ok) shown++;
                 });
                 // A date search keeps its day even when the day holds nothing:
                 // "that date is empty" is the answer, not a blank screen.
-                const keep = mode === 'date' && raw
+                const keep = mode === 'date' && raw && !lot
                     ? (g.getAttribute('data-date') || '') === raw
                     : shown > 0;
                 g.classList.toggle('mir-away', !keep);
                 if (keep) { days++; acts += shown; }
             });
             none.classList.toggle('hidden', days > 0);
-            count.textContent = raw
+            const asking = !!raw || !!lot;
+            count.textContent = asking
                 ? `${acts} ${acts === 1 ? 'activity' : 'activities'} on ${days} ${days === 1 ? 'day' : 'days'}`
                 : 'Every activity, for reading only';
+            sayFilters(raw, lot);
+            syncFoldBtn();
+        }
+
+        /* What the shut card says it is asking. A filter you cannot see is a
+         * filter you forget you set, and then the plan looks wrong. */
+        function sayFilters(raw, lot) {
+            const bits = [];
+            if (raw) bits.push((mode === 'date' ? 'Date: ' : mode === 'day' ? 'Day ' : '') + raw);
+            if (lot) bits.push(lotSel.options[lotSel.selectedIndex]?.textContent || 'a lot');
+            findN.textContent = String(bits.length);
+            findN.classList.toggle('hidden', bits.length === 0);
+            findSay.textContent = bits.length ? bits.join(' · ') : 'Search & filters';
+        }
+
+        /* Collapse all / expand all, and the label that tells the truth about
+         * which one the next tap will do. */
+        function syncFoldBtn() {
+            const live = [...body.querySelectorAll('.date-group:not(.mir-away)')];
+            const allShut = live.length > 0 && live.every((g) => g.classList.contains('is-folded'));
+            foldBtn.dataset.folded = allShut ? '1' : '0';
+            foldLabel.textContent = allShut ? 'Expand all' : 'Collapse all';
         }
 
         /* A filter that snaps is a different screen; one that settles is the
@@ -3791,13 +3891,94 @@
         });
         qInput.addEventListener('input', sift);
         dInput.addEventListener('change', sift);
+        lotSel.addEventListener('change', sift);
 
-        /* The third guard. Capture runs before the click can bubble back to
-         * the document handlers that run the board, so stopping it here means
-         * a stray tap on a copied card cannot open, tick, drag or delete the
-         * real one it was copied from. */
-        ['click', 'pointerdown', 'dragstart', 'submit'].forEach((type) => {
-            body.addEventListener(type, (e) => { e.stopPropagation(); e.preventDefault(); }, true);
+        // The card itself folds, so the answer gets the screen once the
+        // question has been asked.
+        document.getElementById('mirrorFindHead')?.addEventListener('click', () => {
+            const shut = find.classList.toggle('is-shut');
+            document.getElementById('mirrorFindHead').setAttribute('aria-expanded', shut ? 'false' : 'true');
+        });
+
+        foldBtn?.addEventListener('click', () => {
+            const openThem = foldBtn.dataset.folded === '1';
+            body.querySelectorAll('.date-group:not(.mir-away)')
+                .forEach((g) => g.classList.toggle('is-folded', !openThem));
+            syncFoldBtn();
+        });
+
+        /* Today, in a list that can be seventy days long. It lands on the day
+         * the board itself marked as today; failing that — a season that has
+         * not started, or has ended — on the nearest day there is, because
+         * "there is no today here" is better answered by showing where you
+         * are than by refusing to move. */
+        todayBtn?.addEventListener('click', () => {
+            const live = [...body.querySelectorAll('.date-group:not(.mir-away)[data-date]')];
+            if (!live.length) return;
+            let target = todayKey ? live.find((g) => g.getAttribute('data-date') === todayKey) : null;
+            if (!target) {
+                const aim = todayKey || new Date().toISOString().slice(0, 10);
+                target = live.reduce((best, g) => {
+                    const d = g.getAttribute('data-date') || '';
+                    const gap = Math.abs(new Date(d + 'T00:00:00') - new Date(aim + 'T00:00:00'));
+                    return (!best || gap < best.gap) ? { g, gap } : best;
+                }, null)?.g;
+            }
+            if (!target) return;
+            target.classList.remove('is-folded');
+            syncFoldBtn();
+            /* The browser's own scrolling, not arithmetic of mine.
+             *
+             * A day card carries content-visibility:auto, so every day still
+             * off screen stands on an ESTIMATE of its height rather than its
+             * real one. Scrolling toward one therefore MOVES it: the days
+             * passed on the way lay themselves out properly and the ground
+             * shifts underneath. Measuring a distance and jumping it landed
+             * seven weeks short, and re-measuring frame by frame never caught
+             * up. scrollIntoView is told the element rather than a number, so
+             * it is the one thing that cannot be made stale by the layout it
+             * causes — measured at 0px off, and still 0 once settled. */
+            target.scrollIntoView({ block: 'start' });
+            body.scrollTop = Math.max(0, body.scrollTop - 8);
+            // One more look, in case a day rendering below shifted the ground.
+            setTimeout(() => {
+                const br = body.getBoundingClientRect();
+                const tr = target.getBoundingClientRect();
+                if (Math.abs(tr.top - br.top) > 12) {
+                    target.scrollIntoView({ block: 'start' });
+                    body.scrollTop = Math.max(0, body.scrollTop - 8);
+                }
+                // A brief rise so the eye knows which one it was brought to.
+                target.classList.remove('mir-sift-in');
+                void target.offsetWidth;
+                target.classList.add('mir-sift-in');
+            }, 220);
+        });
+
+        /* The third guard, and the mirror's own hands.
+         *
+         * Capture runs before a click can bubble back to the document
+         * handlers that run the board, so stopping it here means a stray tap
+         * on a copied card cannot open, tick, drag or delete the real one it
+         * was copied from. The one gesture the mirror keeps for itself is
+         * folding a day shut — reading, not editing — and it is served here,
+         * inside the same guard, so it can never be mistaken for the board's
+         * own fold. */
+        body.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const head = e.target.closest('.date-header');
+            if (head) {
+                const g = head.closest('.date-group');
+                if (g) {
+                    g.classList.toggle('is-folded');
+                    syncFoldBtn();
+                }
+                return;
+            }
+            e.preventDefault();
+        }, true);
+        ['pointerdown', 'dragstart', 'submit'].forEach((type) => {
+            body.addEventListener(type, (e) => { e.stopPropagation(); }, true);
         });
     })();
 
