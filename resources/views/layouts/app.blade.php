@@ -738,34 +738,5 @@
             paint();
         })();
     </script>
-
-    {{-- Patayo lang po. A browser page cannot truly lock orientation (the
-         manifest's portrait-primary only binds once installed), so a PHONE
-         turned sideways is asked to turn back — a full house-green screen
-         with the phone righting itself. A phone is touch-first AND short in
-         landscape; a tablet is taller than 480px and never sees this, and a
-         squat desktop window has a fine pointer. --}}
-    <div class="rotate-hold" role="status">
-        <span class="rotate-hold-phone" aria-hidden="true">📱</span>
-        <p class="rotate-hold-title">Patayo lang po</p>
-        <p class="rotate-hold-sub">AniSenso is made for portrait — turn your phone back upright.</p>
-    </div>
-    <style>
-        .rotate-hold { display: none; }
-        @media screen and (orientation: landscape) and (max-height: 480px) and (pointer: coarse) {
-            .rotate-hold { position: fixed; inset: 0; z-index: 400; display: flex;
-                flex-direction: column; align-items: center; justify-content: center; gap: .45rem;
-                text-align: center; padding: 1.5rem;
-                background: linear-gradient(135deg, #16260b, #2f5219 55%, #1c3010);
-                color: #eef6e4; animation: rotHoldIn .28s cubic-bezier(.22, 1, .36, 1); }
-        }
-        .rotate-hold-phone { font-size: 3rem; line-height: 1; display: inline-block;
-            animation: rotHoldTurn 2.4s cubic-bezier(.22, 1, .36, 1) infinite; }
-        @keyframes rotHoldTurn { 0%, 45% { transform: rotate(90deg); } 60%, 88% { transform: rotate(0); } 100% { transform: rotate(90deg); } }
-        @keyframes rotHoldIn { from { opacity: 0; } }
-        .rotate-hold-title { font-weight: 800; font-size: 1.05rem; font-family: var(--font-heading); }
-        .rotate-hold-sub { font-size: .8rem; opacity: .85; max-width: 18rem; line-height: 1.5; }
-        @media (prefers-reduced-motion: reduce) { .rotate-hold, .rotate-hold-phone { animation: none; } }
-    </style>
 </body>
 </html>
