@@ -3,6 +3,11 @@
 @section('title', 'My Account')
 @section('page-title', 'My Account')
 @section('page-subtitle', 'Profile & security')
+{{-- Arrived through "Edit profile" on the community profile: the arrow
+     leads back there, so editing is a detour and not a dead end. --}}
+@if (request()->query('from') === 'community')
+    @section('back', route('community.connect.profile', ['userId' => auth()->id()]))
+@endif
 
 @section('content')
 <div class="max-w-4xl mx-auto space-y-5">

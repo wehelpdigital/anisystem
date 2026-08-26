@@ -110,6 +110,12 @@ class CommunityReportController extends Controller
 
             return $row ? ['userId' => (int) $row->createdByUserId, 'text' => $say($row->name . ' — ' . $row->description)] : null;
         }
+        if ($type === 'member') {
+            // The profile's flag: the member themselves is the subject.
+            $row = \App\Models\User::where('id', $id)->where('deleteStatus', 1)->first();
+
+            return $row ? ['userId' => (int) $row->id, 'text' => $say($row->full_name . ' — member profile')] : null;
+        }
 
         return null;
     }

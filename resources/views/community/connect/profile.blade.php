@@ -4,7 +4,17 @@
 @section('body-class', 'plaza-ground pf-full')
 @section('page-title', 'Community')
 @section('page-subtitle', $member->full_name)
-@section('back', route('community.connect.members'))
+@php
+    /* Back goes where the visitor actually came from — the wall, a
+     * discussion, the co-farmers shelf — not to one hardcoded page. The
+     * members directory stays as the fallback for a cold open (no referrer,
+     * or a reload pointing at itself). */
+    $pfPrev = url()->previous();
+    $pfBack = ($pfPrev && $pfPrev !== url()->current() && str_starts_with($pfPrev, url('/app')))
+        ? $pfPrev
+        : route('community.connect.members');
+@endphp
+@section('back', $pfBack)
 
 @push('head')
 @include('community.partials.plaza-css')
@@ -56,11 +66,26 @@
             {{-- Follow, the wall's own green pill, in flow at the card's top
                  right — fully below the cover, never over it. --}}
             @unless ($isSelf)
+                {{-- The standing tie, on the LEFT — a tag that is also the
+                     door out: tapping it asks before the tie is undone
+                     (connect-js confirms every connected disconnect). --}}
+                @if ($status === 'connected')
+                    <span class="conn-action pf-connected-wrap" data-member-id="{{ $member->id }}" data-status="connected">
+                        <button type="button" class="pf-connected conn-btn" data-action="disconnect"
+                                title="Remove {{ $member->firstName }} as a co-farmer">🤝 Connected</button>
+                    </span>
+                @endif
                 <div class="pf-quick">
                     <button type="button" class="fp-follow {{ $isFollowed ? 'is-on' : '' }}"
                             data-follow="{{ $member->id }}" data-name="{{ $member->full_name }}"
                             aria-pressed="{{ $isFollowed ? 'true' : 'false' }}">
                         <span class="on">Following</span><span class="off">+ Follow</span>
+                    </button>
+                    {{-- The flag, after Follow: the way to tell the house
+                         about this member, quiet until needed. --}}
+                    <button type="button" class="pf-flag rp-door" data-report="member:{{ $member->id }}"
+                            title="Report this member" aria-label="Report this member">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 21V4m0 1h11l-1.5 3L15 11H4"/></svg>
                     </button>
                 </div>
             @endunless
@@ -132,10 +157,13 @@
             {{-- Message and Follow live in the corner now (see .pf-quick);
                  what stays down here is the deliberate connection act — and
                  an incoming request gets its own card below instead. --}}
-            @if ($isSelf || $status !== 'pending_in')
+            {{-- Connected lives in the top-left tag now, and a request has
+                 its own card — the foot holds only Connect / Requested / the
+                 owner's own edit door. --}}
+            @if ($isSelf || ! in_array($status, ['pending_in', 'connected'], true))
                 <div class="pf-acts">
                     @if ($isSelf)
-                        <a href="{{ route('account.index') }}" class="btn btn-white btn-sm">✏️ Edit profile</a>
+                        <a href="{{ route('account.index', ['from' => 'community']) }}" class="btn btn-white btn-sm">✏️ Edit profile</a>
                     @else
                         @include('community.connect.partials.action', ['status' => $status, 'memberId' => $member->id])
                     @endif
@@ -322,7 +350,10 @@
        photo, taller than its box for a portrait one, which is what was
        leaning on the name below. Each link in the chain is given the size. */
     .pf-face > .avatar-online-wrap { display:block; width:100%; height:100%; }
-    .pf-face .avatar { display:block; width:100%; height:100%; font-size:1.5rem;
+    /* Flex, not block: a member with no photo is their initials, and block
+       display threw away the centring that keeps the letters mid-circle. */
+    .pf-face .avatar { display:flex; align-items:center; justify-content:center;
+        width:100%; height:100%; font-size:1.5rem;
         border-radius:999px; overflow:hidden; }
     .pf-face .avatar img { width:100%; height:100%; object-fit:cover; display:block; }
     /* The dot rides on the rim of the circle, not on the picture's corner. */
@@ -344,7 +375,27 @@
        which begins exactly where the cover ends: just under it, over
        nothing. (pf-body is the positioning context, not the card, so the
        cover's height never enters the arithmetic.) */
-    .pf-quick { position:absolute; right:.9rem; top:.6rem; z-index:3; }
+    .pf-quick { position:absolute; right:.9rem; top:.6rem; z-index:3; display:flex; align-items:center; gap:.45rem; }
+    /* The tag on the opposite corner: the tie, wearing the wall pill's
+       green — and the door out of it, which asks first. */
+    .pf-connected-wrap { position:absolute; left:.9rem; top:.6rem; z-index:3; }
+    .pf-connected { border:1px solid var(--color-brand-200); background:var(--color-brand-50);
+        color:var(--color-brand-700); border-radius:999px; padding:.25rem .6rem;
+        font-size:.74rem; font-weight:800; cursor:pointer;
+        transition:background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1),
+            border-color .28s cubic-bezier(.22,1,.36,1); }
+    .pf-connected:hover { background:rgb(220 38 38 / .08); border-color:rgb(220 38 38 / .4); color:#b91c1c; }
+    html.dark .pf-connected { background:rgb(61 104 35 / .3); border-color:#3f5626; color:#bfe19a; }
+    html.dark .pf-connected:hover { background:rgb(248 113 113 / .12); color:#f87171; }
+    /* The flag beside Follow: a quiet circle that goes red when meant. */
+    .pf-flag { width:2rem; height:2rem; border-radius:999px; border:1px solid var(--color-gray-200);
+        background:var(--color-white); color:var(--color-gray-400); cursor:pointer; flex:none;
+        display:inline-flex; align-items:center; justify-content:center;
+        transition:color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1),
+            background .28s cubic-bezier(.22,1,.36,1); }
+    .pf-flag svg { width:.95rem; height:.95rem; }
+    .pf-flag:hover { color:#b91c1c; border-color:rgb(220 38 38 / .4); background:rgb(220 38 38 / .06); }
+    html.dark .pf-flag { background:#26301c; border-color:#3a4a2c; color:#93a087; }
     /* The full-width Message: comp-send brings the moving gradient; this
        only rounds it into the card's own corners and gives it air. */
     .pf-msg { margin-top:.9rem; border-radius:.85rem; }
@@ -424,19 +475,28 @@
        and the row scrolls instead of crushing "Shared Plans" to a smudge. */
     .profile-tabs { overflow-x:auto; scrollbar-width:none; }
     .profile-tabs::-webkit-scrollbar { display:none; }
-    /* Green doors: outline pills that fill solid when stood in. */
+    /* Green doors. The one you are standing in is the BORDERED one — a
+       soft-filled pill until chosen, then white with the brand's own edge —
+       and the swap eases rather than snaps. */
     .profile-tab { flex:1; white-space:nowrap; min-height:2.75rem; padding:.55rem .75rem;
         display:inline-flex; align-items:center; justify-content:center; gap:.4rem;
-        border:1.5px solid var(--color-brand-300); background:var(--color-white); border-radius:.7rem;
+        border:2px solid transparent; background:var(--color-brand-50); border-radius:.7rem;
         font-size:.85rem; font-weight:700; color:var(--color-brand-700); cursor:pointer;
         transition:background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1),
-            border-color .28s cubic-bezier(.22,1,.36,1); }
+            border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
     .profile-tab svg { width:1rem; height:1rem; flex:none; }
     .profile-tab .pt-n { font-size:.7rem; font-weight:800; opacity:.75; }
-    .profile-tab.is-active { border-color:transparent; color:#fff;
-        background-image:linear-gradient(120deg, #2f5219, #4a7c2a 60%, #3d6823); }
-    html.dark .profile-tab { background:#1f2817; border-color:#3f5626; color:#bfe19a; }
-    html.dark .profile-tab.is-active { border-color:transparent; color:#fff; }
+    .profile-tab.is-active { background:var(--color-white); border-color:var(--color-brand-600);
+        color:var(--color-brand-800); transform:translateY(-1px); }
+    html.dark .profile-tab { background:#1f2817; color:#bfe19a; }
+    html.dark .profile-tab.is-active { background:#26301c; border-color:#6b9f3d; color:#dbe6cf; }
+    /* The panel that arrives, arriving: a short rise-and-fade on each switch. */
+    [data-tab-panel]:not(.hidden) { animation:pfPanelIn .28s cubic-bezier(.22,1,.36,1); }
+    @keyframes pfPanelIn { from { opacity:0; transform:translateY(.4rem); } }
+    @media (prefers-reduced-motion: reduce) {
+        [data-tab-panel]:not(.hidden) { animation:none; }
+        .profile-tab { transition:none; }
+    }
 
     /* Accept, asking for the tap: a soft ripple ring breathing out of it. */
     .pf-request-acts .btn { flex:1 1 0; justify-content:center; }
@@ -492,6 +552,7 @@
 
 @include('community.connect.partials.connect-js')
 @include('community.partials.avatar-zoom')
+@include('community.partials.report-js')
 @include('community.partials.mutual-js')
 @push('scripts')
 @include('community.partials.emoji-js')

@@ -25,7 +25,7 @@ class CommunityReport extends BaseModel
     protected $casts = ['reviewedAt' => 'datetime'];
 
     /** What can be reported. */
-    public const TYPES = ['post', 'comment', 'topic', 'reply', 'story', 'group'];
+    public const TYPES = ['post', 'comment', 'topic', 'reply', 'story', 'group', 'member'];
 
     /**
      * The reasons offered, in the order they are shown.

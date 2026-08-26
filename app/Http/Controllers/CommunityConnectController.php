@@ -280,16 +280,25 @@ class CommunityConnectController extends Controller
         return response()->json(['success' => true, 'data' => ['count' => $users->count(), 'html' => $html]]);
     }
 
-    /** Incoming friend requests waiting on the viewer. */
+    /** Incoming friend requests waiting on the viewer, a page at a time. */
     public function requests(Request $request)
     {
         $rows = CommunityConnection::active()
             ->where('friendUserId', Auth::id())
             ->where('status', 'pending')
             ->orderByDesc('id')
-            ->get();
+            ->paginate(15)
+            ->withQueryString();
 
-        $requesters = User::whereIn('id', $rows->pluck('userId'))->get()->keyBy('id');
+        $requesters = User::whereIn('id', $rows->getCollection()->pluck('userId'))->get()->keyBy('id');
+
+        // The scroller asks for the cards alone.
+        if ($request->boolean('rows')) {
+            return response()->view('community.connect.partials.request-rows', [
+                'rows' => $rows,
+                'requesters' => $requesters,
+            ]);
+        }
 
         return view('community.connect.requests', [
             'rows' => $rows,

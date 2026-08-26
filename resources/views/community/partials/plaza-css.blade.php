@@ -1410,9 +1410,16 @@
     @media (hover:none) { .profile-photo-del { opacity:1; } }
 
     /* --- Profile video album --- */
-    .profile-videos-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:.5rem; }
-    @media (min-width:640px) { .profile-videos-grid { grid-template-columns:repeat(3, 1fr); } }
-    .profile-video-tile { position:relative; aspect-ratio:16/9; border-radius:.6rem; overflow:hidden;
+    /* One film per row on a phone, two from sm — a video wants the width a
+       thumbnail grid was denying it, and the native controls need room to
+       be usable at all. */
+    .profile-videos-grid { display:grid; grid-template-columns:1fr; gap:.9rem; }
+    @media (min-width:640px) { .profile-videos-grid { grid-template-columns:repeat(2, 1fr); } }
+    .profile-video-tile { position:relative; aspect-ratio:16/9; border-radius:1rem; overflow:hidden;
+        box-shadow:0 12px 28px -20px rgb(0 0 0 / .6);
+        transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .profile-video-tile:hover { transform:translateY(-2px); box-shadow:0 16px 34px -20px rgb(0 0 0 / .65); }
+    .profile-video-tile-legacy { position:relative; aspect-ratio:16/9; border-radius:.6rem; overflow:hidden;
         background:#000; }
     .profile-video-el { width:100%; height:100%; object-fit:cover; display:block; background:#000; }
     .profile-video-del { position:absolute; top:.4rem; right:.4rem; width:1.85rem; height:1.85rem;
