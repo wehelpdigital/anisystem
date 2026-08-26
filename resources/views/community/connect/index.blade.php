@@ -45,8 +45,10 @@
             <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
         </a>
     @endif
-    {{-- Brought back by the (i), which only exists while the panel is away. --}}
-    <button type="button" class="btn btn-white btn-sm shrink-0 hidden" id="memInfoOpen" aria-label="About this page" title="About this page">i</button>
+    {{-- Brought back by the (i), which only exists while the panel is away.
+         Green like its neighbour: the two buttons on this band are the same
+         kind of thing. --}}
+    <button type="button" class="btn btn-outline btn-sm shrink-0 hidden" id="memInfoOpen" aria-label="About this page" title="About this page">i</button>
 </div>
 
 <div class="sheet hidden" id="memSearchSheet" style="--sheet-width:30rem">
