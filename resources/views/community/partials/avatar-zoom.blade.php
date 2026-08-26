@@ -65,7 +65,22 @@
         // beside it still goes to the profile, the face shows the face.
         e.preventDefault();
         e.stopPropagation();
+        /* Sized to what the file can honestly fill. A 512px avatar drawn at
+         * 670 device pixels is mush; the circle grows no further than the
+         * source's short side (the cover-crop's real resolution) plus a 40%
+         * grace, and never below a readable floor. Sharp-and-smaller beats
+         * big-and-blurry. */
+        pic.style.width = pic.style.height = '';
+        pic.onload = () => {
+            const dpr = window.devicePixelRatio || 1;
+            const native = Math.min(pic.naturalWidth || 0, pic.naturalHeight || 0);
+            if (!native) return;
+            const cap = Math.min(336, window.innerWidth * 0.78);
+            const size = Math.max(176, Math.min(cap, (native / dpr) * 1.4));
+            pic.style.width = pic.style.height = Math.round(size) + 'px';
+        };
         pic.src = img.currentSrc || img.src;
+        if (pic.complete) pic.onload();
         pic.alt = img.alt || '';
         name.textContent = img.alt || face.getAttribute('title') || '';
         box.classList.add('is-open');

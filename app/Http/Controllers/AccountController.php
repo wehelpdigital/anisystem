@@ -174,7 +174,9 @@ class AccountController extends Controller
 
         // 512 is twice the biggest circle the app draws, which keeps it sharp
         // on a retina screen without storing a wall poster.
-        $path = \App\Support\MediaOptimizer::storeImageAsWebp($request->file('avatar'), 'community/avatars', 512, 86);
+        // 1024, not 512: the avatar viewer shows a face at ~670 device pixels
+        // on a phone, and a 512px master arrives there already soft.
+        $path = \App\Support\MediaOptimizer::storeImageAsWebp($request->file('avatar'), 'community/avatars', 1024, 86);
         $user->update(['avatarPath' => $path]);
 
         return response()->json([
