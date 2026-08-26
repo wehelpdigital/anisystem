@@ -10,6 +10,18 @@
 @if ($tip)
 <div class="tod" role="note">
     <span class="tod-glow" aria-hidden="true"></span>
+    {{-- The card's animated dashed hem: an SVG stroke, because a CSS dashed
+         border cannot wear a gradient. The dashes march slowly around the
+         card while the greens in them drift light-to-deep. --}}
+    <svg class="tod-ring" aria-hidden="true" preserveAspectRatio="none">
+        <defs>
+            <linearGradient id="todRingGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0"/>
+                <stop offset="1"/>
+            </linearGradient>
+        </defs>
+        <rect pathLength="100"/>
+    </svg>
     <div class="tod-head">
         <span class="tod-bulb" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 17h5M10 21h4M12 3a6 6 0 00-3.5 10.9c.6.45.9 1.1.9 1.8V16h5.2v-.3c0-.7.3-1.35.9-1.8A6 6 0 0012 3z"/></svg>
@@ -53,6 +65,18 @@
         0%, 100% { transform: translateX(-30%) scale(.9); opacity: .5; }
         50% { transform: translateX(30%) scale(1.1); opacity: .85; }
     }
+    /* The dashed hem itself: pathLength=100 makes the dash arithmetic
+       resolution-independent, so the march is the same speed on any width. */
+    .tod-ring { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .tod-ring rect { x: 1.25px; y: 1.25px; rx: 14px;
+        width: calc(100% - 2.5px); height: calc(100% - 2.5px);
+        fill: none; stroke: url(#todRingGrad); stroke-width: 2;
+        stroke-dasharray: .85 .55; animation: todMarch 16s linear infinite; }
+    @keyframes todMarch { to { stroke-dashoffset: -100; } }
+    .tod-ring stop:first-child { stop-color: #6b9f3d; animation: todStopA 6s ease-in-out infinite alternate; }
+    .tod-ring stop:last-child { stop-color: #c4e0a5; animation: todStopB 6s ease-in-out infinite alternate; }
+    @keyframes todStopA { to { stop-color: #a9d383; } }
+    @keyframes todStopB { to { stop-color: #4a7c2a; } }
     .tod-head { position: relative; display: flex; align-items: center; gap: .6rem; }
     .tod-bulb { flex: 0 0 auto; width: 2.2rem; height: 2.2rem; border-radius: .7rem;
         display: inline-flex; align-items: center; justify-content: center;
@@ -73,7 +97,7 @@
     .tod-ask:hover { color: #cdd8c0; }
     .tod-ask svg { width: .85rem; height: .85rem; }
     @media (prefers-reduced-motion: reduce) {
-        .tod, .tod-glow, .tod-bulb { animation: none; }
+        .tod, .tod-glow, .tod-bulb, .tod-ring rect, .tod-ring stop { animation: none; }
     }
 </style>
 
