@@ -2216,6 +2216,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const WARN_TODAY_STRONG = new Set(['herbicide', 'copper_fungicide']);                       // herbicide / bactericide today
     const WARN_PREV_SPRAY   = new Set(['herbicide', 'pesticide', 'fungicide', 'copper_fungicide']); // any spray yesterday (foliar is fine)
     const WARN_GRANULAR     = new Set(['fertilizer']);
+    const WARN_HERB         = new Set(['herbicide']);
+    const WARN_HERB_WINDOW_DAYS = 4;   // clear days a herbicide pass wants after it
     const WARN_RAIN_CODES   = new Set([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82, 95, 96, 99]);
     const WARN_ICON = '<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>';
 
@@ -2354,12 +2356,44 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                     }
                 }
+
+                /* Rule 5 — a herbicide pass wants clear days after it.
+                 * Any spray landing on a lot within four days of a herbicide
+                 * application there gets flagged — herbicide again included.
+                 * The closest pass is the one named (back = 1 first, and the
+                 * sig dedupes the rest). Yesterday's herbicide-after-spray
+                 * case is Rule 1's when today's spray is itself strong; this
+                 * rule covers the gentler sprays and the longer window. */
+                const sprayToday = todays.find((a) => actIs(a, WARN_SPRAYS_ALL));
+                if (sprayToday) {
+                    for (let back = 1; back <= 4; back++) {
+                        if (back === 1 && actIs(sprayToday, WARN_TODAY_STRONG)) continue;   // Rule 1's ground
+                        const past = isoFromDate(new Date(parseLocalDate(date).getTime() - back * 86400000));
+                        const herbPast = ((byDateLot[past] || {})[lid] || []).find((a) => actIs(a, WARN_HERB));
+                        if (!herbPast) continue;
+                        const chemNow = actTypes(sprayToday).find((t) => WARN_SPRAYS_ALL.has(t)) || sprayToday.type;
+                        push(date, {
+                            sig: `herbwindow|${date}|${lid}`,
+                            ico: '🌿',
+                            title: 'Herbicide went down ' + (back === 1 ? 'yesterday' : back + ' days ago'),
+                            lots: [lid],
+                            detail: `${warnLotName(lid)} had herbicide ("${herbPast.title}") ${back === 1 ? 'yesterday' : back + ' days ago'}, and today you're spraying ${warnChem(chemNow)}. A herbicide pass wants at least ${WARN_HERB_WINDOW_DAYS} clear days before the next spray — the crop is still working the stress off, and a second chemical on top risks leaf burn. Consider moving this one later.`,
+                        });
+                        break;
+                    }
+                }
             });
 
             // Rule 4 — spraying before forecast rain (today + future only).
+            // Herbicide included, with its own sentence: washed-off foliar is
+            // a wasted pass, but washed-off herbicide also travels — into the
+            // paddy water and the lots beside it.
             if (date >= today) {
                 byDate[date].forEach((a) => {
                     if (!actIs(a, WARN_SPRAYS_ALL)) return;
+                    // Name the spray the rule matched on, not whichever type
+                    // happens to colour the card.
+                    const chemT = actTypes(a).find((t) => WARN_SPRAYS_ALL.has(t)) || a.type;
                     a.lots.forEach((lid) => {
                         const d = (WX_BY_LOT_DATE[lid] || {})[date];
                         if (!warnIsRainy(d)) return;
@@ -2368,7 +2402,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             ico: '🌧️',
                             title: 'Rain forecast on a spray day',
                             lots: [lid],
-                            detail: `${d.emoji || '🌧️'} ${d.text || 'Rain'}${d.pop != null ? ` (${d.pop}% chance)` : ''} is forecast for ${warnLotName(lid)} on this day. Spraying ${warnChem(a.type)} right before rain can wash it off and waste the application — consider rescheduling to a drier day.`,
+                            detail: `${d.emoji || '🌧️'} ${d.text || 'Rain'}${d.pop != null ? ` (${d.pop}% chance)` : ''} is forecast for ${warnLotName(lid)} on this day. `
+                                + (chemT === 'herbicide'
+                                    ? 'Herbicide needs rain-free hours to work — rain right after can wash it off before it acts, and carry it into the paddy water and neighbouring lots. Reschedule to a drier day.'
+                                    : `Spraying ${warnChem(chemT)} right before rain can wash it off and waste the application — consider rescheduling to a drier day.`),
                         });
                     });
                 });
