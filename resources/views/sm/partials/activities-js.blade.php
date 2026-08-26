@@ -4823,20 +4823,45 @@ document.addEventListener('DOMContentLoaded', () => {
             list.innerHTML = '';
             $qsa('#versionStrip .version-chip').forEach((chip) => {
                 const current = chip.classList.contains('is-selected');
-                const row = document.createElement('button');
-                row.type = 'button';
+                /* A row is two doors now, so it is a div holding two buttons
+                 * rather than one button: the name switches to that version,
+                 * the pencil opens its rename/duplicate/delete box. A button
+                 * inside a button is not a thing HTML will parse. */
+                const row = document.createElement('div');
                 row.className = 'version-sheet-row' + (current ? ' is-current' : '');
+
+                const pick = document.createElement('button');
+                pick.type = 'button';
+                pick.className = 'vsr-pick';
                 const name = document.createElement('span');
                 name.className = 'vsr-name';
                 name.textContent = (chip.dataset.isOriginal === '1' ? '★ ' : '') + (chip.dataset.versionName || chip.textContent.trim());
-                row.appendChild(name);
+                pick.appendChild(name);
                 if (current) {
                     const now = document.createElement('span');
                     now.className = 'vsr-now';
                     now.textContent = 'current';
-                    row.appendChild(now);
+                    pick.appendChild(now);
                 }
-                row.addEventListener('click', () => { closeSheet('versionsSheet'); setTimeout(() => chip.click(), 240); });
+                pick.addEventListener('click', () => { closeSheet('versionsSheet'); setTimeout(() => chip.click(), 240); });
+                row.appendChild(pick);
+
+                // Editing is the owner's, like adding: the box it opens can
+                // rename and delete a plan's whole timeline.
+                if (!IS_WORKER) {
+                    const edit = document.createElement('button');
+                    edit.type = 'button';
+                    edit.className = 'vsr-edit' + LOCK_EDIT_CLS;
+                    edit.disabled = !CAN_EDIT;
+                    edit.title = editTitle('Rename, duplicate or delete this version');
+                    edit.setAttribute('aria-label', 'Edit ' + (chip.dataset.versionName || 'this version'));
+                    edit.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>';
+                    edit.addEventListener('click', () => {
+                        closeSheet('versionsSheet');
+                        setTimeout(() => openManageVersion(chip), 240);
+                    });
+                    row.appendChild(edit);
+                }
                 list.appendChild(row);
             });
             // Starting a second plan is the owner's call, so a worker is not
@@ -9135,23 +9160,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    $id('manageVersionBtn')?.addEventListener('click', () => {
+    /* Rename / duplicate / delete, for whichever version was asked about.
+     *
+     * It used to read the active chip and nothing else, because the only door
+     * was the ⋮ beside the strip. The versions sheet now puts a pencil on
+     * every row, so the box has to be able to open on a version you are not
+     * currently in — which is the whole point of editing from a list. */
+    function openManageVersion(chip) {
         if (!mayEditBoard()) return;
-        const active = activeVersionChip();
-        if (!active) {
-            toast('No active version to manage.', 'error');
+        if (!chip) {
+            toast('No version to manage.', 'error');
             return;
         }
-        const isOriginal = active.getAttribute('data-is-original') === '1';
-        $id('renameVersionId').value = active.getAttribute('data-version-id');
-        $id('renameVersionName').value = active.getAttribute('data-version-name') || '';
-        $id('renameVersionDescription').value = active.getAttribute('data-version-description') || '';
+        const isOriginal = chip.getAttribute('data-is-original') === '1';
+        $id('renameVersionId').value = chip.getAttribute('data-version-id');
+        $id('renameVersionName').value = chip.getAttribute('data-version-name') || '';
+        $id('renameVersionDescription').value = chip.getAttribute('data-version-description') || '';
         $id('deleteVersionZone').classList.toggle('hidden', isOriginal);
         $id('originalVersionHint').classList.toggle('hidden', !isOriginal);
         // Duplicate is only offered while there's room for another version.
         $id('duplicateVersionZone')?.classList.toggle('hidden', $qsa('#versionStrip .version-chip').length >= MAX_VERSIONS);
         openSheet('manageVersionSheet');
-    });
+    }
+    window.smManageVersion = openManageVersion;
+
+    $id('manageVersionBtn')?.addEventListener('click', () => openManageVersion(activeVersionChip()));
 
     // Duplicate the version currently open in the manage sheet — a full fork
     // (activities + items + lots/workers + date notes), left inactive.

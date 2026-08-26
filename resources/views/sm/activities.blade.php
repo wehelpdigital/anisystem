@@ -941,6 +941,21 @@
             .vsr-now { font-size: .68rem; font-weight: 800; color: var(--color-brand-700); text-transform: uppercase; flex-shrink: 0; }
             .vsr-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
             .vsr-add { justify-content: center; border-style: dashed; color: var(--color-gray-500); }
+            /* Two doors in one row: the name switches to that version, the
+               pencil opens its manage box. The name takes the room and gives
+               it up first, so a long one trails off rather than pushing the
+               pencil off the edge. */
+            .vsr-pick { flex: 1 1 auto; min-width: 0; display: flex; align-items: center;
+                justify-content: space-between; gap: .6rem; padding: 0; border: 0;
+                background: transparent; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+            .vsr-edit { flex: 0 0 auto; width: 2rem; height: 2rem; border: 0; border-radius: 999px;
+                display: inline-flex; align-items: center; justify-content: center;
+                background: transparent; color: var(--color-gray-400); cursor: pointer;
+                transition: color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+            .vsr-edit svg { width: 1rem; height: 1rem; }
+            .vsr-edit:hover, .vsr-edit:focus-visible { color: var(--color-brand-700); background: var(--color-brand-100); }
+            .vsr-edit:disabled { opacity: .4; cursor: not-allowed; }
+            @media (prefers-reduced-motion: reduce) { .vsr-edit { transition: none; } }
 
             /* A chevron says the card folds — drawn by CSS so the twin Blade
                and JS renderers stay byte-identical. */
@@ -1540,7 +1555,16 @@
             #actHeaderBar > #addActivityWrap { flex: 0 0 auto; }
             #actHeaderBar > .btn, #actHeaderBar > .icon-btn { justify-content: center; }
             #actHeaderBar > #versionsSheetBtn { flex: 1 1 auto; min-width: 0; overflow: hidden; }
-            #versionsSheetBtn > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            /* The name gives way, never the icons either side of it: a long
+               version trails off into an ellipsis instead of shouldering the
+               chevron out of the button. */
+            #versionsSheetLabel { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            /* The ⋮ has nothing left to do here: every version in the sheet
+               carries its own pencil now, which opens the same manage box.
+               It stays in the DOM because those pencils forward to it, and it
+               is still the only way in on a desktop, where the sheet is not
+               drawn at all and the chip strip stands in its place. */
+            #actHeaderBar > #manageVersionBtn { display: none; }
             #addActivityWrap .btn { justify-content: center; }
             /* The eye carries no word at any width it is drawn at, so it is
                square for its whole life. 2.25rem is .btn-sm's own height. */
@@ -2580,10 +2604,22 @@
     {{-- min-w-0: without it this grow item refuses to shrink below its content
          width (flex min-width:auto), so long version lists would overflow the
          row instead of engaging the strip's own swipe scroll. --}}
-    {{-- Phones: the chip strip folds behind one button + bottom sheet. --}}
-    <button type="button" id="versionsSheetBtn" class="btn btn-white btn-sm shrink-0 md:hidden" title="Switch or add a plan version">
+    {{-- Phones: the chip strip folds behind one button + bottom sheet.
+
+         The button says which version you are IN rather than the word
+         "Versions": on a plan with one version the word was a label for a
+         thing nobody had, and on a plan with four it still did not say which
+         one you were reading. The name it wears is the answer to the question
+         the button is actually asked. A long one trails off (see the ellipsis
+         rule for #versionsSheetBtn > span) rather than pushing the row. --}}
+    @php
+        $activeVersion = $schedule->versions->firstWhere('isActive', 1) ?? $schedule->versions->first();
+    @endphp
+    <button type="button" id="versionsSheetBtn" class="btn btn-white btn-sm shrink-0 md:hidden"
+            title="{{ $activeVersion?->versionName ? 'Version: ' . $activeVersion->versionName . ' — switch, add or edit' : 'Switch or add a plan version' }}">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg>
-        <span>Versions</span>
+        <span id="versionsSheetLabel">{{ $activeVersion?->versionName ?: 'Versions' }}</span>
+        <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
     </button>
     <div class="scroll-chips grow min-w-0" id="versionStrip">
         @foreach ($schedule->versions as $v)
