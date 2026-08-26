@@ -294,6 +294,29 @@
         .mir-body .date-header { cursor: default; }
         .mir-body [draggable] { -webkit-user-drag: none; }
         .mir-body input, .mir-body button, .mir-body a, .mir-body label { pointer-events: none; }
+        /* ---- Date Diff ----
+           Two days picked, and the gap between them named on both. It is the
+           one control the mirror adds rather than inherits, so it is also the
+           one thing in here allowed to take a tap. */
+        .mir-diff { pointer-events: auto !important; flex: none;
+            display: inline-flex; align-items: center; gap: .25rem;
+            padding: .12rem .5rem; border-radius: 999px; cursor: pointer;
+            border: 1px dashed var(--date-color, #4A90E2);
+            background: color-mix(in srgb, var(--date-color, #4A90E2) 8%, var(--tl-surface, #fff));
+            color: var(--date-color, #4A90E2);
+            font-size: .62rem; font-weight: 800; letter-spacing: .01em; white-space: nowrap;
+            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1),
+                border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+        .mir-diff svg { width: .7rem; height: .7rem; flex: none; }
+        .mir-diff:hover { background: color-mix(in srgb, var(--date-color, #4A90E2) 16%, var(--tl-surface, #fff)); }
+        /* Picked: solid, in the day's own colour, so the pair is visible from
+           across a scroll of seventy days. */
+        .mir-diff.is-on { border-style: solid; background: var(--date-color, #4A90E2);
+            color: #fff; transform: scale(1.04); }
+        /* And once the pair is complete, the number it produced gets the
+           emphasis — it is the answer, not a label. */
+        .mir-diff.has-gap { font-size: .68rem; padding: .16rem .6rem; }
+        @media (prefers-reduced-motion: reduce) { .mir-diff { transition: none; } .mir-diff.is-on { transform: none; } }
         /* ---- the board's filters stop at the mirror's edge ----
            Show hidden, hide done days, hide empty dates, only day zero: those
            are settings on how you are LOOKING at the board, and several of
@@ -3770,9 +3793,67 @@
                     n.classList.add('is-open');
                     n.querySelectorAll('.note-fold').forEach((f) => { f.style.maxHeight = 'none'; });
                 });
+                /* Date Diff: pick two days and the gap between them is named
+                 * on both. A plan is full of "how long after transplanting?"
+                 * and "how many days did that take?", and counting squares on
+                 * a calendar with a finger is how people get it wrong. Only a
+                 * day that HAS a date can be measured to. */
+                const key = copy.getAttribute('data-date') || '';
+                const head = copy.querySelector('.date-header');
+                if (head && key && key !== '__no-date__') {
+                    const d = document.createElement('button');
+                    d.type = 'button';
+                    d.className = 'mir-diff';
+                    d.dataset.date = key;
+                    d.title = 'Measure the days between this one and another';
+                    d.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">'
+                        + '<path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg>'
+                        + '<span class="mir-diff-t">Date Diff</span>';
+                    head.appendChild(d);
+                }
                 body.appendChild(copy);
             });
+            diffPicks.length = 0;
+            paintDiff();
             apply();
+        }
+
+        /* ---- Date Diff -------------------------------------------------
+         * Two at a time, because a distance has two ends. Picking a third
+         * lets the older of the two go rather than refusing the tap: the
+         * gesture people make is "now compare THIS one to that one", and a
+         * button that just declines leaves them hunting for which to undo. */
+        const diffPicks = [];
+        function toggleDiff(btn) {
+            const at = diffPicks.indexOf(btn);
+            if (at > -1) diffPicks.splice(at, 1);
+            else {
+                diffPicks.push(btn);
+                if (diffPicks.length > 2) diffPicks.shift();
+            }
+            paintDiff();
+        }
+        function paintDiff() {
+            let gap = null;
+            if (diffPicks.length === 2) {
+                const [a, b] = diffPicks.map((x) => x.dataset.date).sort();
+                gap = Math.round(
+                    (new Date(b + 'T00:00:00') - new Date(a + 'T00:00:00')) / 86400000);
+            }
+            body.querySelectorAll('.mir-diff').forEach((b) => {
+                const on = diffPicks.includes(b);
+                b.classList.toggle('is-on', on);
+                b.classList.toggle('has-gap', on && gap !== null);
+                b.setAttribute('aria-pressed', on ? 'true' : 'false');
+                const t = b.querySelector('.mir-diff-t');
+                if (!t) return;
+                // The number goes on BOTH ends of the measurement, so the
+                // answer is there whichever one you are looking at.
+                t.textContent = !on ? 'Date Diff'
+                    : gap === null ? 'Pick another'
+                    : gap === 0 ? 'Same day'
+                    : gap + (gap === 1 ? ' day apart' : ' days apart');
+            });
         }
 
         /* What a day is asked, and what an activity is asked. A day matches on
@@ -4030,6 +4111,11 @@
          * own fold. */
         body.addEventListener('click', (e) => {
             e.stopPropagation();
+            // Before the fold, because the diff tag sits inside the header it
+            // would otherwise fold: a tap meant to measure must not shut the
+            // day it is measuring from.
+            const diff = e.target.closest('.mir-diff');
+            if (diff) { e.preventDefault(); toggleDiff(diff); return; }
             const head = e.target.closest('.date-header');
             if (head) {
                 const g = head.closest('.date-group');
