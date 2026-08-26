@@ -616,6 +616,11 @@
     <div class="sheet-body space-y-1">
         @php
             $actRows = [
+                // The way back from a mistake, each on its own row. They used
+                // to stand in the toolbar; they are the rarer answer, so the
+                // board's daily controls have that space now.
+                ['activityUndoBtn', 'Undo', 'M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4', 'actUndoBadge', ''],
+                ['activityRedoBtn', 'Redo', 'M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4', 'actRedoBadge', ''],
                 ['openDraftsBtn', 'Drafts', 'M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4', 'actDraftsBadge', ''],
                 ['openReportBtn', 'Report', 'M11 3.055A9 9 0 1020.945 13H12a1 1 0 01-1-1V3.055zM15 3.936A9.02 9.02 0 0120.064 9H15V3.936z', '', ''],
                 ['quickShareBtn', 'Quick Share', 'M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z', '', ''],

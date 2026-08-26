@@ -1448,19 +1448,23 @@
             #actHeaderBar { flex-wrap: wrap; row-gap: .35rem; }
             /* The controls share the whole line instead of packing left with
                a dead stretch after the last one: every button grows the same
-               amount, so the row reads as one fitted bar edge to edge. */
+               amount, so the row reads as one fitted bar edge to edge. The
+               eye, + and Search moved to the toolbar row, which fills the
+               same way for the same reason. */
             #actHeaderBar > .btn,
-            #actHeaderBar > .icon-btn,
-            #actHeaderBar > #addActivityWrap { flex: 1 1 auto; }
+            #actHeaderBar > .icon-btn { flex: 1 1 auto; }
             #actHeaderBar > .btn, #actHeaderBar > .icon-btn { justify-content: center; }
+            #actToolbar > .btn,
+            #actToolbar > #addActivityWrap { flex: 1 1 auto; }
+            #actToolbar > .btn { justify-content: center; }
             #addActivityWrap .btn { width: 100%; justify-content: center; }
         }
-        /* The narrowest phones: the controls line carries six buttons now
-           (Versions, ⋮, Today, the eye, +, Search), and at 360px the last
-           one was ~25px short of the line. Slimmer button air buys it back,
-           so Search always sits beside + instead of dropping a line. */
+        /* The narrowest phones: the toolbar line carries six controls now
+           (Modules, Tools, Notice, the eye, +, Search), and at 360px the last
+           one is short of the line. Slimmer button air buys it back, so
+           Search sits beside + instead of dropping to a second row. */
         @media (max-width: 400px) {
-            #actHeaderBar .btn { padding-left: .55rem; padding-right: .55rem; }
+            #actHeaderBar .btn, #actToolbar .btn { padding-left: .55rem; padding-right: .55rem; }
         }
         @media (max-width: 767px) {
             /* These two moved into the eye sheet on phones; the Tools rows
@@ -2222,6 +2226,11 @@
     $isWorker = \App\Support\WorkerContext::activeGrant() !== null;
     // Per module, as this worker's owner set it; true throughout for an owner.
     $may = fn (string $key) => \App\Support\WorkerContext::canUseModule($key);
+    // Add Activity moved up into the toolbar, so what it may do has to be
+    // known here rather than in the block further down that used to be the
+    // first thing to ask. That block still reads these for the board itself.
+    $boardMayEdit = \App\Support\WorkerContext::canEdit();
+    $whyNoEdit = 'Only someone who can edit the plan may do this';
 @endphp
 
 {{-- ===================== TOOLBAR (sticky, persistent) =====================
@@ -2278,12 +2287,43 @@
              every page. Empty until the note is folded away. --}}
         <span data-mod-say-slot></span>
 
-        <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative" data-activities-only disabled title="Nothing to undo">
+        {{-- The three the board is worked with, standing where Undo and Redo
+             used to: what the board shows, what to add to it, and how to find
+             something on it. Undo and Redo have gone into the Tools menu —
+             they are the rarer answer to a mistake, not a daily control — but
+             stay in the DOM (toolbar-in-menu) so the menu rows can forward to
+             their handlers. --}}
+        <button type="button" id="viewFilterBtn" class="btn btn-white btn-sm shrink-0 md:hidden" data-activities-only
+                title="What the board shows" aria-label="What the board shows">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        </button>
+        <div class="shrink-0" id="addActivityWrap" data-activities-only>
+            {{-- The board's most prominent write: drawn where everyone else has it,
+                 greyed and inert, saying why. openAddActivitySheet refuses too. --}}
+            @if (! \App\Support\WorkerContext::activeGrant() || \App\Support\WorkerContext::canEdit())
+            <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm{{ $boardMayEdit ? '' : ' is-locked' }}"
+                    @disabled(! $boardMayEdit) @if (! $boardMayEdit) title="{{ $whyNoEdit }}" @endif>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                <span class="hidden sm:inline">Add Activity</span>
+            </button>
+            @endif
+        </div>
+        {{-- Search & filter, one tap from the board. Icon-only on a phone so
+             the row keeps to its line; the word joins it from sm up. Opens the
+             same filters sheet the old menu row opened, and wears the same
+             live filter-count badge (mirrored in syncActionsSheet). --}}
+        <button type="button" id="searchToolbarBtn" data-sheet-open="filtersSheet" class="btn btn-white btn-sm shrink-0 relative" data-activities-only
+                title="Search &amp; filter the board" aria-label="Search and filter the board">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
+            <span class="hidden sm:inline">Search</span>
+            <span id="toolbarFilterCount" class="absolute -top-0.5 -right-0.5 hidden min-w-5 h-5 px-1 rounded-full bg-brand-600 text-white text-[0.625rem] font-bold items-center justify-center">0</span>
+        </button>
+        <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative toolbar-in-menu" data-activities-only disabled title="Nothing to undo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
             <span class="hidden sm:inline">Undo</span>
             <span id="activityUndoCount" class="absolute -top-0.5 -right-0.5 hidden min-w-5 h-5 px-1 rounded-full bg-accent-500 text-ink text-[0.625rem] font-bold items-center justify-center">0</span>
         </button>
-        <button type="button" id="activityRedoBtn" class="btn btn-white btn-sm relative" data-activities-only disabled title="Nothing to redo">
+        <button type="button" id="activityRedoBtn" class="btn btn-white btn-sm relative toolbar-in-menu" data-activities-only disabled title="Nothing to redo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg>
             <span class="hidden sm:inline">Redo</span>
             <span id="activityRedoCount" class="absolute -top-0.5 -right-0.5 hidden min-w-5 h-5 px-1 rounded-full bg-accent-500 text-ink text-[0.625rem] font-bold items-center justify-center">0</span>
@@ -2379,7 +2419,8 @@
     // draws itself. Twin of $mayEdit in partials/activity-card.blade.php and of
     // CAN_EDIT / MAY_NOTE in partials/activities-js.blade.php. A drag has no
     // button to grey out, so the affordance itself has to come and go.
-    $boardMayEdit = \App\Support\WorkerContext::canEdit();
+    // ($boardMayEdit and $whyNoEdit are settled with $isWorker, above the
+    // toolbar, because Add Activity now stands in it.)
     $boardMayNote = \App\Support\WorkerContext::canWriteModule('notes');
     // Dragging is its own question now. An editing worker may still change a
     // day through the sheets, where the change is deliberate and named; what
@@ -2387,7 +2428,6 @@
     // MAY_DRAG_NOTE in partials/activities-js.blade.php.
     $boardMayDrag = $boardMayEdit && ! $isWorker;
     $boardMayDragNote = $boardMayNote && ! $isWorker;
-    $whyNoEdit = 'Only someone who can edit the plan may do this';
     $whyNoNote = 'You are not allowed to write notes on this schedule';
 @endphp
 
@@ -2481,12 +2521,9 @@
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
         <span class="hidden sm:inline">Today</span>
     </button>
-    {{-- Phones: one eye button owns both day filters (see #viewFilterSheet),
-         so the toolbar carries one control instead of two toggles. --}}
-    <button type="button" id="viewFilterBtn" class="btn btn-white btn-sm shrink-0 md:hidden" data-activities-only
-            title="What the board shows" aria-label="What the board shows">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-    </button>
+    {{-- The eye (both day filters, see #viewFilterSheet), Add Activity and
+         Search have moved up to the toolbar row, into the place Undo and Redo
+         used to hold. --}}
     <button type="button" id="toggleEmptyDatesBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
             title="Show or hide the empty &quot;no activities&quot; dates">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
@@ -2507,28 +2544,6 @@
             title="Share this whole plan or email workers">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z"/></svg>
         <span class="hidden sm:inline">Quick Share</span>
-    </button>
-    <div class="shrink-0" id="addActivityWrap" data-activities-only>
-        {{-- The board's most prominent write: drawn where everyone else has it,
-             greyed and inert, saying why. openAddActivitySheet refuses too. --}}
-        @if (! \App\Support\WorkerContext::activeGrant() || \App\Support\WorkerContext::canEdit())
-        <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm{{ $boardMayEdit ? '' : ' is-locked' }}"
-                @disabled(! $boardMayEdit) @if (! $boardMayEdit) title="{{ $whyNoEdit }}" @endif>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-            <span class="hidden sm:inline">Add Activity</span>
-        </button>
-        @endif
-    </div>
-    {{-- Search & filter, one tap from the board — it lived only behind the
-         Tools menu, three taps deep. Icon-only on a phone so the row keeps
-         to its one line; the word joins it from sm up. Opens the same
-         filters sheet the old menu row opened, and wears the same live
-         filter-count badge (mirrored in syncActionsSheet). --}}
-    <button type="button" id="searchToolbarBtn" data-sheet-open="filtersSheet" class="btn btn-white btn-sm shrink-0 relative" data-activities-only
-            title="Search &amp; filter the board" aria-label="Search and filter the board">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
-        <span class="hidden sm:inline">Search</span>
-        <span id="toolbarFilterCount" class="absolute -top-0.5 -right-0.5 hidden min-w-5 h-5 px-1 rounded-full bg-brand-600 text-white text-[0.625rem] font-bold items-center justify-center">0</span>
     </button>
 </div>
 
@@ -3407,6 +3422,21 @@
             // own Search button now (it left the menu for the board).
             mirrorBadge('openDraftsBtn', 'actDraftsBadge', 'draftsBadge');
             mirrorBadge('searchToolbarBtn', 'toolbarFilterCount', 'activeFilterCount');
+
+            // Undo and Redo live only in this menu now, so their rows carry
+            // everything the buttons used to say in the toolbar: how many
+            // steps are waiting, what the next one would put back, and the
+            // greying that means there is nothing to go back to.
+            [['activityUndoBtn', 'actUndoBadge', 'activityUndoCount'],
+             ['activityRedoBtn', 'actRedoBadge', 'activityRedoCount']]
+            .forEach(([btnId, badgeId, countId]) => {
+                mirrorBadge(btnId, badgeId, countId);
+                const row = document.querySelector('.activity-action-row[data-forward="' + btnId + '"]');
+                const btn = document.getElementById(btnId);
+                if (!row || !btn) return;
+                row.disabled = btn.disabled;
+                row.title = btn.title || '';
+            });
 
             // (The Calendar/List switch lives in the eye menu now — see
             // #viewFilterSheet — so there is no view row here to mirror.)
