@@ -121,6 +121,7 @@
      shimmering placeholders forever. --}}
 @include('community.partials.pymk-js')
 @include('community.connect.partials.connect-js')
+@include('community.partials.avatar-zoom')
 @include('community.partials.infinite-js')
 <script>
 /* The info panel remembers being dismissed, per browser: somebody who has read

@@ -94,6 +94,7 @@
 @include('community.partials.comment-tools-js')
 @include('community.partials.react-js')
 @include('community.partials.mention-js')
+@include('community.partials.avatar-zoom')
 <script>
 (() => {
     const grid = document.getElementById('cofarmersGrid');

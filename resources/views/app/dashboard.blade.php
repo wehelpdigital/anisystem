@@ -880,6 +880,7 @@
 @include('community.partials.wall-comment-js')
 @include('community.partials.video-js')
 @include('community.partials.composer-preview-js')
+@include('community.partials.avatar-zoom')
 
 @push('scripts')
 <script>

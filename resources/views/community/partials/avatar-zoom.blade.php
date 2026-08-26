@@ -22,8 +22,22 @@
         box-shadow: 0 30px 90px rgb(0 0 0 / .55), 0 0 0 5px rgb(255 255 255 / .16);
         transform: scale(.82); transition: transform .34s cubic-bezier(.22, 1, .36, 1); }
     .avz.is-open .avz-pic { transform: scale(1); }
-    .avz-name { color: #fff; font-weight: 700; font-size: .95rem; letter-spacing: .01em;
-        text-shadow: 0 1px 6px rgb(0 0 0 / .5); }
+    .avz-name { color: #fff; font-weight: 800; font-size: 1.05rem; letter-spacing: .01em;
+        font-family: var(--font-heading); text-shadow: 0 1px 6px rgb(0 0 0 / .5); }
+    /* Who they are, under the face: rank pill, then the plain facts, then
+       the thought they pinned — each line optional, the column staying
+       centred whatever is missing. */
+    .avz-info { display: flex; flex-direction: column; align-items: center; gap: .45rem;
+        max-width: min(86vw, 24rem); text-align: center; margin-top: -.25rem; }
+    .avz-info .rankb { pointer-events: none; }
+    .avz-facts { display: flex; flex-wrap: wrap; justify-content: center; gap: .35rem .9rem;
+        color: rgb(255 255 255 / .85); font-size: .78rem; font-weight: 600;
+        text-shadow: 0 1px 4px rgb(0 0 0 / .5); }
+    .avz-bubble { font-size: .8rem; font-style: italic; color: #eaf2e2;
+        background: rgb(255 255 255 / .12); border: 1px solid rgb(255 255 255 / .18);
+        border-radius: 999px; padding: .3rem .85rem; max-width: 100%;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .avz-info > [hidden] { display: none; }
     .avz-x { position: absolute; top: max(1rem, env(safe-area-inset-top)); right: 1rem;
         width: 2.5rem; height: 2.5rem; border: 0; border-radius: 999px; cursor: pointer;
         background: rgb(255 255 255 / .14); color: #fff; font-size: 1.05rem;
@@ -35,7 +49,12 @@
 <div class="avz" id="avatarZoom" role="dialog" aria-modal="true" aria-label="Profile photo">
     <button type="button" class="avz-x" aria-label="Close">✕</button>
     <img class="avz-pic" id="avatarZoomPic" src="" alt="">
-    <p class="avz-name" id="avatarZoomName"></p>
+    <div class="avz-info">
+        <p class="avz-name" id="avatarZoomName"></p>
+        <span class="rankb" id="avatarZoomRank" hidden></span>
+        <p class="avz-facts" id="avatarZoomFacts" hidden></p>
+        <p class="avz-bubble" id="avatarZoomBubble" hidden></p>
+    </div>
 </div>
 <script>
 (function () {
@@ -83,6 +102,26 @@
         if (pic.complete) pic.onload();
         pic.alt = img.alt || '';
         name.textContent = img.alt || face.getAttribute('title') || '';
+        /* The rest of who they are, read off the avatar itself (the partial
+         * writes these attributes wherever a photo is drawn): the rank pill
+         * in its arc's colours, the plain facts, the pinned thought. Each
+         * line simply stays away when the member has not said. */
+        const rank = document.getElementById('avatarZoomRank');
+        const facts = document.getElementById('avatarZoomFacts');
+        const bubble = document.getElementById('avatarZoomBubble');
+        const rankText = face.getAttribute('data-z-rank') || '';
+        rank.hidden = !rankText;
+        rank.textContent = rankText;
+        rank.className = 'rankb rankb-a' + (face.getAttribute('data-z-arc') || '1');
+        const bits = [];
+        if (face.getAttribute('data-z-place')) bits.push('📍 ' + face.getAttribute('data-z-place'));
+        if (face.getAttribute('data-z-prof')) bits.push('🧑‍🌾 ' + face.getAttribute('data-z-prof'));
+        facts.hidden = !bits.length;
+        facts.innerHTML = '';
+        bits.forEach((b) => { const s = document.createElement('span'); s.textContent = b; facts.appendChild(s); });
+        const thought = face.getAttribute('data-z-bubble') || '';
+        bubble.hidden = !thought;
+        bubble.textContent = thought ? '💭 ' + thought : '';
         box.classList.add('is-open');
         document.addEventListener('keydown', onKey);
     });

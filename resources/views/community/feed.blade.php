@@ -507,6 +507,7 @@
 
 @push('scripts')
 @include('community.partials.emoji-js')
+@include('community.partials.avatar-zoom')
 @include('community.partials.lightbox-js')
 @include('community.partials.comment-tools-js')
 @include('community.partials.react-js')
