@@ -34,8 +34,8 @@
                 </div>
             </div>
             <span class="conn-action pf-request-acts" data-member-id="{{ $member->id }}" data-status="pending_in">
-                <button type="button" class="btn btn-primary conn-btn conn-grad" data-action="accept">Accept</button>
-                <button type="button" class="btn btn-white conn-btn" data-action="decline">Not now</button>
+                <button type="button" class="btn btn-primary btn-sm conn-btn conn-grad" data-action="accept">Accept</button>
+                <button type="button" class="btn btn-white btn-sm conn-btn" data-action="decline">Not now</button>
             </span>
         </div>
     @endif
@@ -167,11 +167,18 @@
     @endif
 
     {{-- Wall | Shared Plans tabs --}}
-    <div class="profile-tabs flex gap-1 p-1 rounded-xl bg-gray-100 mb-4" role="tablist" id="profileTabs">
-        <button type="button" class="profile-tab is-active" data-tab="wall" aria-selected="true">Wall</button>
-        <button type="button" class="profile-tab" data-tab="photos" aria-selected="false">Photos <span class="text-xs opacity-70">({{ $photos->total() }})</span></button>
-        <button type="button" class="profile-tab" data-tab="videos" aria-selected="false">Videos <span class="text-xs opacity-70">({{ $videos->total() }})</span></button>
-        <button type="button" class="profile-tab" data-tab="plans" aria-selected="false">Shared Plans <span class="text-xs opacity-70">({{ $plans->count() }})</span></button>
+    {{-- Three green doors with their icons. Shared Plans left the row — the
+         plans a member shares already reach you where plans are used. --}}
+    <div class="profile-tabs flex gap-1.5 mb-4" role="tablist" id="profileTabs">
+        <button type="button" class="profile-tab is-active" data-tab="wall" aria-selected="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h10"/></svg>
+            Wall</button>
+        <button type="button" class="profile-tab" data-tab="photos" aria-selected="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            Photos <span class="pt-n">{{ $photos->total() }}</span></button>
+        <button type="button" class="profile-tab" data-tab="videos" aria-selected="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            Videos <span class="pt-n">{{ $videos->total() }}</span></button>
     </div>
 
     <div data-tab-panel="wall">
@@ -268,7 +275,10 @@
     .pf-head { padding:0; overflow:hidden; }
     .pf-cover { height:7rem; background-size:cover; background-repeat:no-repeat; background-color:var(--color-gray-100); }
     @media (min-width:640px) { .pf-cover { height:11rem; } }
-    .pf-body { padding:0 1rem 1rem; position:relative; }
+    /* The 1px of top padding is load-bearing: without it, .pf-id's negative
+       margin collapses THROUGH this box's top edge and drags the whole body
+       — and everything absolutely anchored to it — up over the cover. */
+    .pf-body { padding:1px 1rem 1rem; position:relative; }
     /* The face sits on the cover's edge — half over, half under — and the
        name stands UNDER it, centred, the way the ranking page and every
        member card introduce a person. Side by side, the name printed over
@@ -314,12 +324,11 @@
     .pf-loc { display:flex; align-items:center; justify-content:center; gap:.3rem; font-size:.78rem; color:var(--color-gray-500); margin-top:.5rem; }
     .pf-loc svg { width:.85rem; height:.85rem; color:#e11d48; flex:none; }
 
-    /* Follow — the wall's own green pill — pinned to the card's top right
-       JUST under the cover (the cover's height is fixed, so "just under"
-       can be said exactly), overlapping nothing. */
-    .pf-head { position:relative; }
-    .pf-quick { position:absolute; right:.9rem; top:calc(7rem + .6rem); z-index:3; }
-    @media (min-width:640px) { .pf-quick { top:calc(11rem + .6rem); } }
+    /* Follow — the wall's own green pill — pinned to the body's top right,
+       which begins exactly where the cover ends: just under it, over
+       nothing. (pf-body is the positioning context, not the card, so the
+       cover's height never enters the arithmetic.) */
+    .pf-quick { position:absolute; right:.9rem; top:.6rem; z-index:3; }
     /* The full-width Message: comp-send brings the moving gradient; this
        only rounds it into the card's own corners and gives it air. */
     .pf-msg { margin-top:.9rem; border-radius:.85rem; }
@@ -381,12 +390,35 @@
        and the row scrolls instead of crushing "Shared Plans" to a smudge. */
     .profile-tabs { overflow-x:auto; scrollbar-width:none; }
     .profile-tabs::-webkit-scrollbar { display:none; }
-    .profile-tab { flex:1; white-space:nowrap; min-height:2.75rem; padding:.55rem .75rem; border:0; background:transparent; border-radius:.6rem;
-        font-size:.9rem; font-weight:600; color:#5b6472; cursor:pointer; transition:background .2s ease, color .2s ease, box-shadow .2s ease; }
-    .profile-tab.is-active { background:#fff; color:#1f2937; box-shadow:0 1px 2px rgba(0,0,0,.08); }
-    html.dark .profile-tabs { background:#1a2213; }
-    html.dark .profile-tab { color:#9aa69a; }
-    html.dark .profile-tab.is-active { background:#232a1c; color:#e5e9df; }
+    /* Green doors: outline pills that fill solid when stood in. */
+    .profile-tab { flex:1; white-space:nowrap; min-height:2.75rem; padding:.55rem .75rem;
+        display:inline-flex; align-items:center; justify-content:center; gap:.4rem;
+        border:1.5px solid var(--color-brand-300); background:var(--color-white); border-radius:.7rem;
+        font-size:.85rem; font-weight:700; color:var(--color-brand-700); cursor:pointer;
+        transition:background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1),
+            border-color .28s cubic-bezier(.22,1,.36,1); }
+    .profile-tab svg { width:1rem; height:1rem; flex:none; }
+    .profile-tab .pt-n { font-size:.7rem; font-weight:800; opacity:.75; }
+    .profile-tab.is-active { border-color:transparent; color:#fff;
+        background-image:linear-gradient(120deg, #2f5219, #4a7c2a 60%, #3d6823); }
+    html.dark .profile-tab { background:#1f2817; border-color:#3f5626; color:#bfe19a; }
+    html.dark .profile-tab.is-active { border-color:transparent; color:#fff; }
+
+    /* Accept, asking for the tap: a soft ripple ring breathing out of it. */
+    .pf-request-acts .btn { flex:1 1 0; justify-content:center; }
+    .pf-request-acts [data-action="accept"] { position:relative;
+        animation:pfAskRipple 2.2s cubic-bezier(.22,1,.36,1) infinite; }
+    @keyframes pfAskRipple {
+        0% { box-shadow:0 0 0 0 rgb(74 124 42 / .45); }
+        60% { box-shadow:0 0 0 .65rem rgb(74 124 42 / 0); }
+        100% { box-shadow:0 0 0 0 rgb(74 124 42 / 0); } }
+    @media (prefers-reduced-motion: reduce) { .pf-request-acts [data-action="accept"] { animation:none; } }
+
+    /* The About card opens on a brand gradient edge — painted as the card's
+       own background sized to its top few pixels, so the corner radius is
+       the card's and not a stub's. */
+    .pf-about { background-image:linear-gradient(90deg, #2f5219, #6b9f3d 45%, #a9d383 75%, #4a7c2a);
+        background-size:100% 4px; background-repeat:no-repeat; }
     [data-tab-panel].hidden { display:none; }
     /* A tab change arrives, it doesn't snap. */
     @keyframes profilePanelIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }

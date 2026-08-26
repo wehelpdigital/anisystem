@@ -32,10 +32,22 @@ class CommunityWallController extends Controller
         $page = max(1, (int) $request->query('page', 1));
         $result = $this->pagePosts($userId, $page);
 
+        /* render=feed: the profile wall draws the community wall's own card
+         * now, so a post looks and works the same wherever it is met. The
+         * old wall-posts shape stays for anything that never asked. */
+        if ($request->query('render') === 'feed') {
+            $items = $result['items']->loadCount('comments');
+            $html = $items->map(
+                fn ($p) => view('community.partials.feed-post', ['post' => $p])->render()
+            )->implode('');
+        } else {
+            $html = view('community.connect.partials.wall-posts', ['posts' => $result['items']])->render();
+        }
+
         return response()->json([
             'success' => true,
             'data' => [
-                'html' => view('community.connect.partials.wall-posts', ['posts' => $result['items']])->render(),
+                'html' => $html,
                 'hasMore' => $result['hasMore'],
                 'nextPage' => $page + 1,
             ],
