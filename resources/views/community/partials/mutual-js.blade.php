@@ -4,27 +4,45 @@
 @once
 <style>
     /* Each shared face is a card wearing the house gradient as its edge:
-       the wrapper IS the border, the white card sits 1.5px inside it. */
-    .mut-card { padding: 1.5px; border-radius: 1rem; margin-bottom: .65rem;
+       the wrapper IS the border — a thicker band along the top, a hairline
+       around the rest — and the white card sits inside it. */
+    .mut-card { padding: 4px 1.5px 1.5px; border-radius: 1rem; margin-bottom: .65rem;
         background: linear-gradient(120deg, #2f5219, #8fc267 45%, #4a7c2a 75%, #a9d383);
         background-size: 220% 220%;
         animation: mutEdge 9s ease-in-out infinite alternate; }
     @keyframes mutEdge { from { background-position: 0% 30%; } to { background-position: 100% 70%; } }
-    .mut-card-in { background: var(--color-white); border-radius: calc(1rem - 1.5px);
-        padding: .75rem .85rem; }
+    .mut-card-in { position: relative; background: var(--color-white);
+        border-radius: calc(1rem - 2px); padding: .75rem .85rem; }
     html.dark .mut-card-in { background: #1c2415; }
+    /* A card whose face carries a cloud pays for the air the cloud floats
+       in — the same deal the wall's posts make. */
+    .mut-card-in:has(.mut-cloud) { padding-top: 2.35rem; }
+    /* Hung from the card's own top-left, so it clears the whole row and the
+       tail still comes down over the face beneath it. Two classes deep on
+       purpose: .status-cloud's own `bottom` is defined later in the cascade,
+       and left standing it squashed this box to its padding. */
+    .mut-card-in .mut-cloud { top: .5rem; left: .85rem; bottom: auto; max-width: 12rem; }
     .mut-head { display: flex; align-items: center; gap: .7rem; }
     .mut-face { flex: none; }
     .mut-mid { min-width: 0; flex: 1 1 auto; }
-    .mut-name-row { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
-    .mut-name { font-size: .88rem; font-weight: 800; color: var(--color-gray-900);
+    .mut-name { display: block; font-size: .88rem; font-weight: 800; color: var(--color-gray-900);
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .mut-name:hover { color: var(--color-brand-700); }
+    /* The level and the place share one line under the name, the whole
+       block sitting centred on the face beside it. Never wrapping: two
+       lines here made the column taller than the photo it stands against. */
+    .mut-line { display: flex; align-items: center; gap: .45rem; flex-wrap: nowrap;
+        min-width: 0; margin-top: .25rem; }
+    /* The badge gives up its title in this narrow card — "🌱 Lv 4" leaves
+       the place its room. */
+    .mut-line .rankb { flex: none; }
+    .mut-line .rankb-t { display: none; }
     .mut-loc { display: flex; align-items: center; gap: .25rem; font-size: .72rem;
-        color: var(--color-gray-500); margin-top: .2rem; }
+        color: var(--color-gray-500); min-width: 0; }
     .mut-loc svg { width: .8rem; height: .8rem; flex: none; color: #e11d48; }
-    .mut-head .fp-follow { flex: none; align-self: flex-start; }
-    .mut-bubble { margin-top: .5rem; font-size: .76rem; color: var(--color-gray-500); }
+    /* A long town keeps the line honest by trailing off. */
+    .mut-loc-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .mut-head .fp-follow { flex: none; }
     .mut-counts { display: flex; gap: .9rem; flex-wrap: wrap; margin-top: .5rem;
         font-size: .72rem; font-weight: 600; color: var(--color-gray-500); }
     .mut-counts b { color: var(--color-gray-900); font-weight: 800; }
