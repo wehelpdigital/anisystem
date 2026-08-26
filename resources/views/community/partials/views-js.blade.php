@@ -29,19 +29,11 @@
             credentials: 'same-origin',
             body: JSON.stringify({ items }),
         })
-            .then((r) => r.json())
-            .then((j) => {
-                const counts = (j.data && j.data.counts) || {};
-                // Show the new number where it is displayed, so a reader sees
-                // their own look land rather than waiting for a reload.
-                Object.keys(counts).forEach((kind) => {
-                    Object.entries(counts[kind] || {}).forEach(([id, n]) => {
-                        document.querySelectorAll(`[data-view-count="${kind}:${id}"]`)
-                            .forEach((el) => { el.textContent = n; });
-                    });
-                });
-            })
             .catch(() => { /* a lost count is a lost count */ });
+        /* The look is RECORDED now but SHOWN later: a number that ticks up
+         * while you are reading it turns every wall into a slot machine.
+         * The count on screen stays what the page opened with; the next
+         * open or refresh renders the new total. */
         if (pending.length) timer = setTimeout(flush, 400);
     }
 
