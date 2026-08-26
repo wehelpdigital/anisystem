@@ -940,7 +940,9 @@
        cover. Its margin box is the visible lower half, which is what the
        name block centres itself against — name and level sit inline with
        the photo, on its midline, not hanging from its hat. */
-    .mc-face { display: block; margin-top: -2.5rem; flex: none; }
+    /* Above the card's edge strip (z-3): the face crosses the border, so
+       the border must pass behind the face, not draw a line through it. */
+    .mc-face { display: block; margin-top: -2.5rem; flex: none; position: relative; z-index: 4; }
     .mc-face .avatar { width: 5rem; height: 5rem; font-size: 1.6rem;
         border: 3px solid var(--color-white); box-shadow: 0 8px 20px -14px rgb(0 0 0 / .8); }
     .mc-who { padding-top: 0; }
