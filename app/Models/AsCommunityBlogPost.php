@@ -7,7 +7,7 @@ class AsCommunityBlogPost extends BaseModel
     protected $table = 'as_community_blog_posts';
 
     protected $fillable = [
-        'title', 'slug', 'coverImagePath', 'excerpt', 'body',
+        'title', 'slug', 'coverImagePath', 'coverPaths', 'excerpt', 'body',
         'authorName', 'isPublished', 'publishedAt', 'viewCount', 'deleteStatus',
     ];
 
@@ -15,6 +15,7 @@ class AsCommunityBlogPost extends BaseModel
         'isPublished' => 'boolean',
         'publishedAt' => 'datetime',
         'deleteStatus' => 'integer',
+        'coverPaths' => 'array',
     ];
 
     public function comments()
@@ -26,6 +27,33 @@ class AsCommunityBlogPost extends BaseModel
     public function scopePublished($q)
     {
         return $q->where('isPublished', 1);
+    }
+
+    /**
+     * Every cover this story wears, as [url, motherUrl] pairs, first first.
+     *
+     * coverPaths is the whole wardrobe; an article that has only ever had
+     * its one column still answers with that one, so the card never has to
+     * ask which era the row is from. The mother URL rides along for the
+     * same reason coverUrlOnMother() exists: the files are uploaded over
+     * there, and a fresh deploy here may not hold the local copy.
+     *
+     * @return list<array{url: string, mother: ?string}>
+     */
+    public function covers(): array
+    {
+        $paths = array_values(array_filter(array_map('strval', (array) ($this->coverPaths ?? []))));
+        if ($paths === [] && $this->coverImagePath) {
+            $paths = [(string) $this->coverImagePath];
+        }
+        $base = rtrim((string) config('mother.url'), '/');
+
+        return array_map(fn ($p) => [
+            'url' => \App\Support\MediaStore::url($p),
+            'mother' => ($base !== '' && ! \App\Support\MediaStore::isRemote($p))
+                ? $base . '/storage/' . ltrim($p, '/')
+                : null,
+        ], $paths);
     }
 
     public function coverUrl(): ?string

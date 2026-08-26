@@ -6,17 +6,25 @@
      Expects: $posts. --}}
 @foreach ($posts as $post)
     <a href="{{ route('community.blog.show', ['id' => $post->id]) }}" class="blog-card bl-hue-{{ $post->id % 6 }}">
-        <div class="blog-cover">
-            @if ($post->coverUrl())
-                <img src="{{ $post->coverUrl() }}" alt="" loading="lazy"
-                    onload="this.classList.add('is-loaded')" onerror="this.remove()">
-            @else
+        @php $covers = $post->covers(); @endphp
+        {{-- Every cover the story wears, stacked: the page drifts through
+             them on its own clock and a thumb can slide them left or right
+             (blog-covers JS on the page). No dots, no arrows — the drift
+             itself says there is more. --}}
+        <div class="blog-cover" @if (count($covers) > 1) data-covers @endif>
+            @forelse ($covers as $i => $c)
+                <img src="{{ $c['url'] }}" alt="" loading="lazy"
+                    class="bc-img {{ $i === 0 ? 'is-on' : '' }}"
+                    data-cover @if ($c['mother']) data-cover-alt="{{ $c['mother'] }}" @endif
+                    onload="this.classList.add('is-loaded')">
+            @empty
                 <div class="blog-cover-fallback">🌾</div>
-            @endif
+            @endforelse
         </div>
         <div class="blog-body">
             <span class="blog-title">{{ $post->title }}</span>
-            @if ($post->excerpt)<span class="blog-excerpt">{{ \Illuminate\Support\Str::limit($post->excerpt, 120) }}</span>@endif
+            @if ($post->excerpt)<span class="blog-excerpt">{{ \Illuminate\Support\Str::limit($post->excerpt, 160) }}</span>@endif
+            <span class="blog-more">Read More</span>
             <span class="blog-meta">
                 @if ($post->authorName)<span>✍️ {{ $post->authorName }}</span>@endif
                 @if ($post->publishedAt)<span>{{ $post->publishedAt->format('M j, Y') }}</span>@endif

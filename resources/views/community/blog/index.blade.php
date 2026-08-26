@@ -49,6 +49,26 @@
        loading language. A 404 just leaves the quiet brand gradient. */
     .blog-cover img { width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .28s ease; }
     .blog-cover img.is-loaded { opacity:1; }
+    /* A story with several covers stacks them and shows one at a time. The
+       page drifts through them on its own clock (crossfade); a thumb slides
+       them left or right (the prep/out classes give the slide its
+       direction). No dots and no arrows, on purpose. */
+    .blog-cover img.bc-img { position:absolute; inset:0; opacity:0;
+        transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1); }
+    .blog-cover img.bc-img.is-on.is-loaded { opacity:1; }
+    .blog-cover img.bc-prep-l { transform:translateX(-32%); transition:none; }
+    .blog-cover img.bc-prep-r { transform:translateX(32%); transition:none; }
+    .blog-cover img.bc-img.is-on { transform:translateX(0); }
+    .blog-cover img.bc-out-l { transform:translateX(-32%); }
+    .blog-cover img.bc-out-r { transform:translateX(32%); }
+    .blog-cover[data-covers] { touch-action:pan-y; }
+    .blog-more { font-size:.8rem; font-weight:800; color:var(--color-brand-700);
+        transition:color .28s cubic-bezier(.22,1,.36,1); }
+    .blog-card:hover .blog-more { text-decoration:underline; }
+    html.dark .blog-more { color:var(--color-brand-300, #a3d284); }
+    @media (prefers-reduced-motion: reduce) {
+        .blog-cover .bc-img { transition:opacity .3s ease; transform:none !important; }
+    }
     .blog-cover:has(img)::before { content:''; position:absolute; inset:0; pointer-events:none;
         background:linear-gradient(100deg, rgba(255,255,255,0) 20%, rgba(255,255,255,.5) 50%, rgba(255,255,255,0) 80%);
         background-size:220% 100%; animation:blogShimmer 1.15s linear infinite; }
@@ -149,6 +169,7 @@
             if (!res.ok) throw new Error('HTTP ' + res.status);
             const d = (await res.json()).data || {};
             grid.innerHTML = d.html || '';
+            window.blogCovers?.();   // the fresh cards bring fresh sliders
             const count = grid.children.length;
             if (none) none.hidden = count > 0;
             // A filtered answer of one page has nothing to page through.
@@ -170,6 +191,59 @@
         findEl.dispatchEvent(new Event('input', { bubbles: true }));
     });
     if (query) say(grid.children.length, grid.children.length);
+})();
+
+/* The covers drift and can be pushed.
+ *
+ * Each card with more than one cover crossfades through them on its own
+ * randomly-set clock — the wall of cards never flips in unison — and a
+ * horizontal drag slides to the next or previous one with the direction
+ * the thumb gave it. A drag is not a tap: the card is a link, and the
+ * click that ends a swipe is swallowed so the reader stays on the list. */
+(function () {
+    function bind(box) {
+        if (box.__covers) return;
+        box.__covers = true;
+        const imgs = [...box.querySelectorAll('.bc-img')];
+        if (imgs.length < 2) return;
+        let idx = 0, timer = null, swiped = false;
+        function show(next, dir) {
+            if (next === idx) return;
+            const cur = imgs[idx], nxt = imgs[next];
+            imgs.forEach((im) => im.classList.remove('bc-out-l', 'bc-out-r', 'bc-prep-l', 'bc-prep-r'));
+            if (dir) {
+                nxt.classList.add(dir === 'l' ? 'bc-prep-r' : 'bc-prep-l');
+                void nxt.offsetWidth;              // the start position must be seen
+                cur.classList.add(dir === 'l' ? 'bc-out-l' : 'bc-out-r');
+            }
+            cur.classList.remove('is-on');
+            nxt.classList.remove('bc-prep-l', 'bc-prep-r');
+            nxt.classList.add('is-on');
+            idx = next;
+        }
+        function arm() {
+            clearTimeout(timer);
+            timer = setTimeout(() => { show((idx + 1) % imgs.length); arm(); }, 4200 + Math.random() * 3600);
+        }
+        arm();
+        let x0 = null, y0 = null;
+        box.addEventListener('pointerdown', (e) => { x0 = e.clientX; y0 = e.clientY; });
+        box.addEventListener('pointerup', (e) => {
+            if (x0 === null) return;
+            const dx = e.clientX - x0, dy = e.clientY - y0;
+            x0 = null;
+            if (Math.abs(dx) > 36 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+                swiped = true;
+                show(dx < 0 ? (idx + 1) % imgs.length : (idx - 1 + imgs.length) % imgs.length, dx < 0 ? 'l' : 'r');
+                arm();
+            }
+        });
+        box.closest('a')?.addEventListener('click', (e) => {
+            if (swiped) { e.preventDefault(); swiped = false; }
+        });
+    }
+    window.blogCovers = () => document.querySelectorAll('.blog-cover[data-covers]').forEach(bind);
+    window.blogCovers();
 })();
 </script>
 @endpush
