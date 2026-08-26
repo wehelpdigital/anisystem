@@ -15,9 +15,9 @@
      $myPosition, $breakdown, $actions, $titles, $levels, $maxLevel. --}}
 @extends('layouts.app')
 
-@section('title', 'Community Ranking')
+@section('title', 'Community Rankings')
 @section('body-class', 'plaza-ground rk-full')
-@section('page-title', 'Community Ranking')
+@section('page-title', 'Community Rankings')
 @section('page-subtitle', 'Ang hagdan ng bukid')
 @section('back', route('community.index'))
 
@@ -94,12 +94,12 @@
         <div class="rk-board card" data-animate-rows>
             @forelse ($rows as $i => $r)
                 @continue(count($rows) >= 3 && $i < 3)
-                @php
-                    $ru = $r['user'];
-                    $where = trim(implode(', ', array_filter([$ru->city, $ru->province])));
-                    $bubble = trim((string) ($ru->statusBubble ?? ''));
-                @endphp
-                <div class="rk-row {{ (int) $ru->id === (int) auth()->id() ? 'is-me' : '' }}" style="--i: {{ min($i, 30) }}">
+                @continue($i >= 15)
+                @php $ru = $r['user']; @endphp
+                {{-- One line per climber: rank, face, name, level, points —
+                     the board is a scoreboard, not a directory. Rows 13-15
+                     fade toward the dots below, saying "it keeps going". --}}
+                <div class="rk-row rk-fade-{{ max(0, $i - 11) }} {{ (int) $ru->id === (int) auth()->id() ? 'is-me' : '' }}" style="--i: {{ min($i, 30) }}">
                     <span class="rk-pos">Rank: {{ $i + 1 }}</span>
                     @include('community.partials.avatar', ['user' => $ru, 'size' => 'avatar-sm'])
                     <span class="rk-row-mid">
@@ -107,18 +107,6 @@
                             <a class="rk-row-name" href="{{ route('community.connect.profile', ['userId' => $ru->id]) }}">{{ $ru->full_name }}</a>
                             <span class="rankb rankb-a{{ $r['rank']['arc'] }}"><span class="rankb-e">{{ $r['rank']['emoji'] }}</span><span class="rankb-lv">Lv {{ $r['rank']['n'] }}</span><span class="rankb-t">{{ $r['rank']['name'] }}</span></span>
                         </span>
-                        {{-- Who this member IS, not just what they scored:
-                             where they farm, what they do, and the thought
-                             they last pinned over their face. --}}
-                        @if ($where || $ru->profession)
-                            <span class="rk-row-facts">
-                                @if ($where)<span>📍 {{ $where }}</span>@endif
-                                @if ($ru->profession)<span>🧑‍🌾 {{ $ru->profession }}</span>@endif
-                            </span>
-                        @endif
-                        @if ($bubble !== '')
-                            <span class="rk-row-bubble">💭 {{ \Illuminate\Support\Str::limit($bubble, 60) }}</span>
-                        @endif
                     </span>
                     @if ((int) $ru->id === (int) auth()->id())<span class="rk-you">Ikaw</span>@endif
                     <b class="rk-row-pts">{{ number_format($r['points']) }}</b>
@@ -130,6 +118,23 @@
                     <p class="text-sm text-gray-500 mt-1">Be the first on the board — write a post, answer a co-farmer, ask the AI Technician.</p>
                 </div>
             @endforelse
+            {{-- Standing below the fold: three dots walk down to where YOU
+                 are, so the board always ends with your own line. --}}
+            @if ($myPosition > 15 || $myPosition <= 0)
+                <div class="rk-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+                <div class="rk-row is-me rk-merow">
+                    <span class="rk-pos">Rank: {{ $myPosition > 0 ? $myPosition : '—' }}</span>
+                    @include('community.partials.avatar', ['user' => $me, 'size' => 'avatar-sm', 'link' => false])
+                    <span class="rk-row-mid">
+                        <span class="rk-row-head">
+                            <span class="rk-row-name">{{ $me->full_name }}</span>
+                            <span class="rankb rankb-a{{ $myRank['arc'] }}"><span class="rankb-e">{{ $myRank['emoji'] }}</span><span class="rankb-lv">Lv {{ $myRank['n'] }}</span><span class="rankb-t">{{ $myRank['name'] }}</span></span>
+                        </span>
+                    </span>
+                    <span class="rk-you">Ikaw</span>
+                    <b class="rk-row-pts">{{ number_format($myPoints) }}</b>
+                </div>
+            @endif
         </div>
         @if (count($rows) > 0)
             <p class="rk-foot">Top {{ count($rows) }} · counted from everything you have done in the community, refreshed every few minutes.</p>
@@ -172,7 +177,7 @@
              only that there is one waiting — that is the whole point of a
              mystery. The gift wiggles (see .rk-gift) so the eye finds it. --}}
         <p class="rk-guide-gift"><span class="rk-gift" aria-hidden="true">🎁</span>
-            A <b>mystery prize</b> waits at <b>Level 40</b> — and another at <b>Level 60</b>, <b>Level 80</b> and <b>Level 100</b>. What is inside is only found out by the one who gets there.</p>
+            A <b>mystery prize</b> waits at <b>Level 40</b> — and more at <b>Level 50</b>, <b>60</b>, <b>80</b> and <b>100</b>. What is inside is only found out by the one who gets there.</p>
         @unless ($unlocked)
             <p class="rk-guide-gate">🔒 The free road ends at <b>Level {{ $freeCap }}</b>.
                 <a href="{{ url('/account/subscription') }}">Subscribe</a> to climb past it — every point you keep earning starts counting again the moment you do.</p>
@@ -194,7 +199,7 @@
                 </h3>
                 <div class="rk-lvls">
                     @for ($n = $lo; $n <= $hi; $n++)
-                        @php $gifted = $n >= 40 && $n % 20 === 0; @endphp
+                        @php $gifted = in_array($n, [40, 50, 60, 80, 100], true); @endphp
                         <span class="rk-lvl {{ $n === $myRank['n'] ? 'is-you' : ($myPoints >= $levels[$n - 1] ? 'is-passed' : '') }} {{ $gifted ? 'has-gift' : '' }}" style="--i: {{ $n - $lo }}">
                             @if ($gifted)<span class="rk-gift" title="A mystery prize waits here" aria-label="Mystery prize">🎁</span>@endif
                             <b>Lv {{ $n }}</b>
@@ -203,6 +208,21 @@
                     @endfor
                 </div>
             </div>
+            @if ($arcN === 5)
+                {{-- The Level 50 gift, named: halfway up the whole ladder,
+                     the house itself signs your name. --}}
+                <div class="card rk-cert" data-animate-rows>
+                    <div class="rk-cert-seal" aria-hidden="true">
+                        <img src="{{ asset('images/logo.png') }}" alt="">
+                    </div>
+                    <div class="rk-cert-txt">
+                        <i class="rk-cert-kicker">The Level 50 prize</i>
+                        <b>Harvest Hero Certification</b>
+                        <span>Reach Level 50 and AniSenso certifies you a <b>Harvest Hero</b> — an official certification carrying the AniSenso seal, with your name on it, yours to show wherever farmers gather.</span>
+                    </div>
+                    <span class="rk-gift rk-cert-gift" aria-hidden="true">🎁</span>
+                </div>
+            @endif
         @endforeach
     </div>
 </div>
@@ -296,12 +316,19 @@
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .rk-step-name:hover { color: var(--color-brand-700); }
     .rk-step-pts { font-size: .82rem; font-variant-numeric: tabular-nums; color: var(--color-gray-700); }
+    /* The podium in the house's own greens — deepest for first, lighter
+       down the steps — each block a living gradient on the shared sweep. */
     .rk-block { width: 100%; border-radius: .6rem .6rem 0 0; transform-origin: bottom;
-        background: linear-gradient(180deg, #a9d383, #6b9f3d); animation: rkBlock .55s cubic-bezier(.22,1,.36,1) both; }
-    .rk-step-1 .rk-block { height: 4.2rem; animation-delay: .35s; background: linear-gradient(180deg, #f7d878, #d9a92f); }
-    .rk-step-2 .rk-block { height: 2.9rem; animation-delay: .2s; background: linear-gradient(180deg, #d7dee2, #a9b4bb); }
-    .rk-step-3 .rk-block { height: 2.1rem; animation-delay: .5s; background: linear-gradient(180deg, #ecc99f, #c78d4e); }
+        background-size: 100% 260%;
+        animation: rkBlock .55s cubic-bezier(.22,1,.36,1) both, rkBlockFlow 7s ease-in-out infinite alternate; }
+    .rk-step-1 .rk-block { height: 4.2rem; animation-delay: .35s, 0s;
+        background-image: linear-gradient(180deg, #a9d383, #4a7c2a 45%, #2f5219 80%, #6b9f3d); }
+    .rk-step-2 .rk-block { height: 2.9rem; animation-delay: .2s, .8s;
+        background-image: linear-gradient(180deg, #c4e0a5, #6b9f3d 45%, #4a7c2a 80%, #8fc267); }
+    .rk-step-3 .rk-block { height: 2.1rem; animation-delay: .5s, 1.6s;
+        background-image: linear-gradient(180deg, #ddedc8, #8fc267 45%, #6b9f3d 80%, #a9d383); }
     @keyframes rkBlock { from { transform: scaleY(0); } }
+    @keyframes rkBlockFlow { from { background-position: 0% 0%; } to { background-position: 0% 100%; } }
     .rk-step.is-me .rk-step-name::after { content: ' · Ikaw'; color: var(--color-brand-700); }
 
     /* ---- The board ---- */
@@ -317,13 +344,23 @@
         text-transform: uppercase; letter-spacing: .02em; }
     .rk-row-mid { display: flex; flex-direction: column; gap: .15rem; min-width: 0; flex: 1 1 auto; }
     .rk-row-head { display: flex; align-items: center; gap: .45rem; min-width: 0; flex-wrap: wrap; row-gap: .15rem; }
-    .rk-row-facts { display: flex; gap: .6rem; flex-wrap: wrap; font-size: .68rem; font-weight: 600;
-        color: var(--color-gray-500); }
-    /* The last thought they pinned over their face, riding along quietly. */
-    .rk-row-bubble { font-size: .68rem; color: var(--color-gray-400); font-style: italic;
-        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
-    html.dark .rk-row-facts { color: #93a087; }
-    html.dark .rk-row-bubble { color: #6c7a5f; }
+    /* The board trails off: its last rows fade toward the dots that walk
+       down to your own line. */
+    .rk-row.rk-fade-1 { opacity: .7; }
+    .rk-row.rk-fade-2 { opacity: .45; }
+    .rk-row.rk-fade-3 { opacity: .22; }
+    .rk-dots { display: flex; flex-direction: column; align-items: center; gap: .3rem; padding: .5rem 0 .4rem; }
+    .rk-dots i { width: .35rem; height: .35rem; border-radius: 999px; background: var(--color-brand-400);
+        animation: rkDotWalk 1.6s ease-in-out infinite; }
+    .rk-dots i:nth-child(2) { animation-delay: .25s; }
+    .rk-dots i:nth-child(3) { animation-delay: .5s; }
+    @keyframes rkDotWalk { 0%, 100% { transform: translateY(0); opacity: .35; }
+        50% { transform: translateY(.3rem); opacity: 1; } }
+    .rk-merow { border: 1.5px dashed var(--color-brand-300); }
+    @media (prefers-reduced-motion: reduce) {
+        .rk-dots i { animation: none; opacity: .7; }
+        .rk-block { animation: rkBlock .01s both; }
+    }
     .rk-row-name { font-size: .85rem; font-weight: 700; color: var(--color-gray-900);
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
     .rk-row-name:hover { color: var(--color-brand-700); }
@@ -382,6 +419,30 @@
     .rk-guide-gate a { color: var(--color-brand-700); font-weight: 800; text-decoration: underline; }
     html.dark .rk-guide-gate { color: #cdd8c2; }
     html.dark .rk-guide-gate a { color: #a3d284; }
+    /* The certificate card: the seal, the name of the prize, and the words
+       — on a quiet parchment-toned gradient with the house's gold edge. */
+    .rk-cert { display: flex; align-items: center; gap: .9rem; padding: 1rem;
+        margin: -.35rem 0 .85rem; position: relative; overflow: hidden;
+        border: 1.5px solid rgb(217 169 47 / .45);
+        background: linear-gradient(115deg, #fdfaf0, #faf3d9 45%, #fdf9ec 75%, #f7eecb);
+        background-size: 220% 220%; animation: rkBreathe 10s ease-in-out infinite; }
+    html.dark .rk-cert { border-color: rgb(217 169 47 / .3);
+        background: linear-gradient(115deg, #2a2410, #332b12 45%, #292312 75%, #362d13);
+        background-size: 220% 220%; }
+    .rk-cert-seal { flex: none; width: 3.4rem; height: 3.4rem; border-radius: 999px;
+        background: #fff; display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 4px 14px rgb(160 120 20 / .3), 0 0 0 2.5px rgb(217 169 47 / .5); }
+    .rk-cert-seal img { width: 2.5rem; height: auto; }
+    .rk-cert-txt { min-width: 0; flex: 1 1 auto; }
+    .rk-cert-kicker { display: block; font-style: normal; font-size: .64rem; font-weight: 800;
+        letter-spacing: .08em; text-transform: uppercase; color: #b8860b; }
+    .rk-cert-txt > b { display: block; font-family: var(--font-heading); font-size: 1rem;
+        font-weight: 800; color: var(--color-gray-900); margin-top: .15rem; }
+    .rk-cert-txt > span { display: block; font-size: .78rem; color: var(--color-gray-600);
+        line-height: 1.55; margin-top: .3rem; }
+    html.dark .rk-cert-txt > span { color: #d8ceac; }
+    .rk-cert-gift { position: absolute; top: .6rem; right: .7rem; font-size: 1.2rem; }
+
     .rk-lvl { position: relative; }
     .rk-lvl.has-gift { box-shadow: inset 0 0 0 1.5px rgb(217 169 47 / .55); background: #fdf6e0; }
     html.dark .rk-lvl.has-gift { background: #2a2410; }

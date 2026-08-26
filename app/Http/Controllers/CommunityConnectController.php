@@ -273,8 +273,26 @@ class CommunityConnectController extends Controller
             ->orderBy('firstName')->orderBy('lastName')
             ->get();
 
-        $html = $users->map(function ($u) {
-            return view('community.partials.mutual-row', ['user' => $u])->render();
+        /* Each card says who the person is, in the wall's own numbers:
+         * level, followers, co-farmers, and the mutual count with the
+         * VIEWER — all batched, plus whether the viewer already follows. */
+        $ids = $users->pluck('id')->map(fn ($id) => (int) $id)->all();
+        $social = app(\App\Services\CommunitySocialService::class);
+        $followers = $social->followerCounts($ids);
+        $mates = CommunityConnection::connectionCounts($ids);
+        $mutual = CommunityConnection::mutualCounts($meId, $ids);
+        $following = \App\Models\CommunityFollow::active()
+            ->where('followerUserId', $meId)->whereIn('followedUserId', $ids)
+            ->pluck('followedUserId')->flip();
+
+        $html = $users->map(function ($u) use ($followers, $mates, $mutual, $following) {
+            return view('community.partials.mutual-row', [
+                'user' => $u,
+                'followers' => $followers[(int) $u->id] ?? 0,
+                'coFarmers' => $mates[(int) $u->id] ?? 0,
+                'mutual' => $mutual[(int) $u->id] ?? 0,
+                'isFollowed' => isset($following[(int) $u->id]),
+            ])->render();
         })->implode('');
 
         return response()->json(['success' => true, 'data' => ['count' => $users->count(), 'html' => $html]]);

@@ -3,20 +3,38 @@
      and the faces behind it slide up. Delegated + guarded singleton. --}}
 @once
 <style>
-    .mut-row { display: flex; align-items: center; gap: .75rem; padding: .55rem .35rem;
-        border-radius: .7rem; text-decoration: none;
-        transition: background .28s cubic-bezier(.22, 1, .36, 1); }
-    .mut-row:hover { background: var(--color-gray-50); }
-    html.dark .mut-row:hover { background: rgb(255 255 255 / .05); }
-    .mut-row-mid { min-width: 0; flex: 1 1 auto; }
-    .mut-row-mid b { display: block; font-size: .85rem; font-weight: 700; color: var(--color-gray-900);
+    /* Each shared face is a card wearing the house gradient as its edge:
+       the wrapper IS the border, the white card sits 1.5px inside it. */
+    .mut-card { padding: 1.5px; border-radius: 1rem; margin-bottom: .65rem;
+        background: linear-gradient(120deg, #2f5219, #8fc267 45%, #4a7c2a 75%, #a9d383);
+        background-size: 220% 220%;
+        animation: mutEdge 9s ease-in-out infinite alternate; }
+    @keyframes mutEdge { from { background-position: 0% 30%; } to { background-position: 100% 70%; } }
+    .mut-card-in { background: var(--color-white); border-radius: calc(1rem - 1.5px);
+        padding: .75rem .85rem; }
+    html.dark .mut-card-in { background: #1c2415; }
+    .mut-head { display: flex; align-items: center; gap: .7rem; }
+    .mut-face { flex: none; }
+    .mut-mid { min-width: 0; flex: 1 1 auto; }
+    .mut-name-row { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+    .mut-name { font-size: .88rem; font-weight: 800; color: var(--color-gray-900);
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .mut-row-mid i { display: block; font-style: normal; font-size: .72rem; color: var(--color-gray-500); margin-top: .1rem; }
-    .mut-row-go { flex: none; width: 1rem; height: 1rem; color: var(--color-gray-300); }
+    .mut-name:hover { color: var(--color-brand-700); }
+    .mut-loc { display: flex; align-items: center; gap: .25rem; font-size: .72rem;
+        color: var(--color-gray-500); margin-top: .2rem; }
+    .mut-loc svg { width: .8rem; height: .8rem; flex: none; color: #e11d48; }
+    .mut-head .fp-follow { flex: none; align-self: flex-start; }
+    .mut-bubble { margin-top: .5rem; font-size: .76rem; color: var(--color-gray-500); }
+    .mut-counts { display: flex; gap: .9rem; flex-wrap: wrap; margin-top: .5rem;
+        font-size: .72rem; font-weight: 600; color: var(--color-gray-500); }
+    .mut-counts b { color: var(--color-gray-900); font-weight: 800; }
+    html.dark .mut-counts b { color: #e8efe1; }
+    .mut-find { width: 100%; margin-bottom: .8rem; }
     .mut-state { text-align: center; font-size: .8rem; color: var(--color-gray-400); padding: 1.2rem 0; }
     /* The number itself invites the tap wherever author-facts prints it. */
     .js-mutual { cursor: pointer; text-decoration: underline; text-decoration-style: dotted;
         text-underline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) { .mut-card { animation: none; } }
 </style>
 <div class="sheet hidden" id="mutualSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
@@ -25,6 +43,8 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body" style="padding-bottom:1.1rem">
+        <input type="search" id="mutualSheetFind" class="form-input mut-find"
+               placeholder="Search these co-farmers…" autocomplete="off">
         <div id="mutualSheetList"><p class="mut-state">Loading…</p></div>
     </div>
 </div>
@@ -55,6 +75,15 @@
         } catch (_) {
             list.innerHTML = '<p class="mut-state">Could not load the list just now.</p>';
         }
+    });
+
+    /* The search box narrows the cards as you type — name, place or work,
+     * matched against what the card itself carries. */
+    document.getElementById('mutualSheetFind')?.addEventListener('input', (e) => {
+        const q = (e.target.value || '').trim().toLowerCase();
+        document.querySelectorAll('#mutualSheetList .mut-card').forEach((c) => {
+            c.style.display = !q || (c.getAttribute('data-mut-find') || '').includes(q) ? '' : 'none';
+        });
     });
 })();
 </script>

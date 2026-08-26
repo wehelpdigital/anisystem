@@ -27,7 +27,7 @@
             'icon' => 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.9 9.9 0 01-4.29-.94L3 20l1.05-3.15A7.6 7.6 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z',
         ],
         'ranking' => [
-        'label' => 'Community Ranking', 'short' => 'Ranking',
+        'label' => 'Community Rankings', 'short' => 'Rankings',
         'url' => route('community.ranking'),
         // A rosette: the ladder is for bragging, and the icon should look
         // like something you win.
