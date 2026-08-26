@@ -359,26 +359,28 @@
     /* The dot rides on the rim of the circle, not on the picture's corner. */
     .pf-face .avatar-online-dot { position:absolute; right:.15rem; bottom:.15rem; z-index:2; }
     @media (min-width:640px) { .pf-face { width:6rem; height:6rem; } }
-    .pf-name { min-width:0; padding-bottom:.15rem; }
+    /* The name's margin clears the dashed ring, which turns ~6px below the
+       face itself — .55rem left it almost touching. */
+    .pf-name { min-width:0; padding-bottom:.15rem; margin-top:1.15rem; }
     .pf-name h2 { font-family:var(--font-heading); font-size:1.15rem; font-weight:800; line-height:1.2;
         color:var(--color-gray-900); overflow-wrap:anywhere; }
     /* Each line of the introduction breathes: name, then the rank it earned,
        then what they say they do, then where — none of them crowding. */
-    .pf-name { margin-top:.55rem; }
     .pf-rank { margin-top:.55rem; }
     .pf-rank .rankb { pointer-events:none; }
     .pf-headline { font-size:.82rem; font-weight:600; color:var(--color-gray-600); margin-top:.55rem; }
     .pf-loc { display:flex; align-items:center; justify-content:center; gap:.3rem; font-size:.78rem; color:var(--color-gray-500); margin-top:.5rem; }
     .pf-loc svg { width:.85rem; height:.85rem; color:#e11d48; flex:none; }
 
-    /* Follow — the wall's own green pill — pinned to the body's top right,
+    /* Follow — the wall's own green pill — pinned to the body's top LEFT,
        which begins exactly where the cover ends: just under it, over
        nothing. (pf-body is the positioning context, not the card, so the
-       cover's height never enters the arithmetic.) */
-    .pf-quick { position:absolute; right:.9rem; top:.6rem; z-index:3; display:flex; align-items:center; gap:.45rem; }
+       cover's height never enters the arithmetic.) The left corner because
+       the right one pressed the pill against the face's ring. */
+    .pf-quick { position:absolute; left:.9rem; top:.6rem; z-index:3; display:flex; align-items:center; gap:.4rem; }
     /* The tag on the opposite corner: the tie, wearing the wall pill's
        green — and the door out of it, which asks first. */
-    .pf-connected-wrap { position:absolute; left:.9rem; top:.6rem; z-index:3; }
+    .pf-connected-wrap { position:absolute; right:.9rem; top:.6rem; z-index:3; }
     .pf-connected { border:1px solid var(--color-brand-200); background:var(--color-brand-50);
         color:var(--color-brand-700); border-radius:999px; padding:.25rem .6rem;
         font-size:.74rem; font-weight:800; cursor:pointer;
@@ -387,15 +389,15 @@
     .pf-connected:hover { background:rgb(220 38 38 / .08); border-color:rgb(220 38 38 / .4); color:#b91c1c; }
     html.dark .pf-connected { background:rgb(61 104 35 / .3); border-color:#3f5626; color:#bfe19a; }
     html.dark .pf-connected:hover { background:rgb(248 113 113 / .12); color:#f87171; }
-    /* The flag beside Follow: a quiet circle that goes red when meant. */
-    .pf-flag { width:2rem; height:2rem; border-radius:999px; border:1px solid var(--color-gray-200);
-        background:var(--color-white); color:var(--color-gray-400); cursor:pointer; flex:none;
-        display:inline-flex; align-items:center; justify-content:center;
-        transition:color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1),
-            background .28s cubic-bezier(.22,1,.36,1); }
-    .pf-flag svg { width:.95rem; height:.95rem; }
-    .pf-flag:hover { color:#b91c1c; border-color:rgb(220 38 38 / .4); background:rgb(220 38 38 / .06); }
-    html.dark .pf-flag { background:#26301c; border-color:#3a4a2c; color:#93a087; }
+    /* The flag beside Follow: bare — no circle around it — quiet until it
+       goes red under the finger. */
+    .pf-flag { border:0; background:transparent; padding:.3rem; color:var(--color-gray-400);
+        cursor:pointer; flex:none; display:inline-flex; align-items:center; justify-content:center;
+        transition:color .28s cubic-bezier(.22,1,.36,1); }
+    .pf-flag svg { width:1.05rem; height:1.05rem; }
+    .pf-flag:hover { color:#b91c1c; }
+    html.dark .pf-flag { color:#93a087; }
+    html.dark .pf-flag:hover { color:#f87171; }
     /* The full-width Message: comp-send brings the moving gradient; this
        only rounds it into the card's own corners and gives it air. */
     .pf-msg { margin-top:.9rem; border-radius:.85rem; }
