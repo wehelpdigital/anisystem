@@ -268,8 +268,50 @@
         .mir-range .form-input { flex: 1 1 0; min-width: 0; }
         .mir-range-to { flex: none; font-size: .74rem; font-weight: 700;
             color: var(--tl-text-faint, #6b7280); }
-        /* Lots as tags: few enough to show at once, and more than one can be
-           asked about together. */
+        /* The two tags that open pickers. Each says what it is currently
+           narrowing to, so a filter left on is never invisible. */
+        .mir-picks { display: flex; gap: .4rem; }
+        .mir-pickbtn { flex: 1 1 0; min-width: 0; display: inline-flex; align-items: center;
+            gap: .35rem; padding: .4rem .6rem; border-radius: .6rem; cursor: pointer;
+            border: 1px solid var(--tl-border, #e5e7eb); background: transparent;
+            font-size: .74rem; font-weight: 700; color: var(--tl-text-soft, #4b5563);
+            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1),
+                border-color .28s cubic-bezier(.22,1,.36,1); }
+        .mir-pickbtn svg { width: .9rem; height: .9rem; flex: none; }
+        .mir-pickbtn-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .mir-pickbtn.is-set { border-color: var(--color-brand-500); color: var(--color-brand-800);
+            background: var(--color-brand-50); }
+        .mir-pickbtn:hover { background: var(--tl-hover, rgb(0 0 0 / .05)); }
+
+        /* The picker itself: a sheet of tags over the mirror, because a farm
+           can run a dozen lots and a plan a dozen kinds of work — too many to
+           lay flat inside the search card without burying it. */
+        .mir-pick { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 360;
+            display: flex; align-items: flex-end; justify-content: center;
+            background: rgb(17 24 39 / .45); opacity: 0;
+            transition: opacity .28s cubic-bezier(.22, 1, .36, 1); }
+        .mir-pick.is-open { opacity: 1; }
+        .mir-pick[hidden] { display: none; }
+        .mir-pick-card { width: min(100%, 30rem); max-height: 78vh; display: flex; flex-direction: column;
+            background: var(--tl-surface, #fff); border-radius: 1.1rem 1.1rem 0 0;
+            transform: translateY(1rem); transition: transform .32s cubic-bezier(.22, 1, .36, 1); }
+        .mir-pick.is-open .mir-pick-card { transform: none; }
+        .mir-pick-head { flex: none; display: flex; align-items: center; gap: .6rem;
+            padding: .8rem .9rem .5rem; }
+        .mir-pick-title { flex: 1 1 auto; font-family: var(--font-heading); font-size: .98rem;
+            font-weight: 800; color: var(--tl-text, #111827); }
+        .mir-pick-body { flex: 1 1 auto; overflow-y: auto; padding: .2rem .9rem .6rem;
+            display: flex; flex-wrap: wrap; gap: .35rem; align-content: flex-start; }
+        .mir-pick-foot { flex: none; display: flex; gap: .4rem;
+            padding: .6rem .9rem calc(.8rem + env(safe-area-inset-bottom));
+            border-top: 1px solid var(--tl-border, #e5e7eb); }
+        .mir-tool.is-go { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
+        .mir-tool.is-go:hover { background: var(--color-brand-700); color: #fff; }
+        @media (prefers-reduced-motion: reduce) {
+            .mir-pick, .mir-pick-card, .mir-pickbtn { transition: none; }
+        }
+
+        /* The tags inside the picker, and the lot tags they grew out of. */
         .mir-lots { display: flex; flex-wrap: wrap; gap: .3rem; }
         .mir-lot { padding: .28rem .6rem; border-radius: 999px; cursor: pointer;
             border: 1px solid var(--tl-border, #e5e7eb); background: transparent;
@@ -3687,8 +3729,17 @@
         const range = document.getElementById('mirrorRange');
         const fromInput = document.getElementById('mirrorFrom');
         const toInput = document.getElementById('mirrorTo');
-        const lotWrap = document.getElementById('mirrorLots');
+        const lotsBtn = document.getElementById('mirrorLotsBtn');
+        const typesBtn = document.getElementById('mirrorTypesBtn');
+        const pick = document.getElementById('mirrorPick');
+        const pickBody = document.getElementById('mirrorPickBody');
+        const pickTitle = document.getElementById('mirrorPickTitle');
         const lotsOn = new Set();
+        const typesOn = new Set();
+        // id/slug -> the name a person would call it, read off the board.
+        const lotNameById = new Map();
+        const typeNameBySlug = new Map();
+        let picking = 'lots';
         const find = document.getElementById('mirrorFind');
         const findSay = document.getElementById('mirrorFindSay');
         const findN = document.getElementById('mirrorFindN');
@@ -3713,45 +3764,111 @@
 
         /* Which lots this plan actually uses, read off the board's own tags so
          * the list cannot name a lot the plan has never heard of. */
-        function fillLots() {
-            const seen = new Map();
-            document.querySelectorAll('#activitiesList .activity-card .lot-tag[data-lot-id]').forEach((t) => {
-                const id = t.getAttribute('data-lot-id');
-                const name = (t.textContent || '').trim();
-                if (id && name && !seen.has(id)) seen.set(id, name);
-            });
-            lotsOn.clear();
-            lotWrap.innerHTML = '';
-            [...seen.entries()].sort((a, b) => a[1].localeCompare(b[1])).forEach(([id, name]) => {
-                const b = document.createElement('button');
-                b.type = 'button';
-                b.className = 'mir-lot';
-                b.dataset.lot = id;
-                b.textContent = name;
-                b.setAttribute('aria-pressed', 'false');
-                b.addEventListener('click', () => {
-                    // Each tag is its own yes/no, so two lots can be asked
-                    // about at once; none chosen means every lot.
-                    const on = !lotsOn.has(id);
-                    if (on) lotsOn.add(id); else lotsOn.delete(id);
-                    b.classList.toggle('is-on', on);
-                    b.setAttribute('aria-pressed', on ? 'true' : 'false');
-                    sift();
+        /* What this plan actually uses — read off the board itself, so neither
+         * list can offer a lot the farm has never worked or a kind of work
+         * the plan has never scheduled. */
+        function readVocabulary() {
+            lotNameById.clear();
+            typeNameBySlug.clear();
+            document.querySelectorAll('#activitiesList .activity-card').forEach((c) => {
+                c.querySelectorAll('.lot-tag[data-lot-id]').forEach((t) => {
+                    const id = t.getAttribute('data-lot-id');
+                    const name = (t.textContent || '').trim();
+                    if (id && name && !lotNameById.has(id)) lotNameById.set(id, name);
                 });
-                lotWrap.appendChild(b);
+                // A card can carry several kinds at once (data-activity-types
+                // is the whole list; data-activity-type only the first).
+                const slugs = (c.getAttribute('data-activity-types')
+                    || c.getAttribute('data-activity-type') || '').split(',');
+                slugs.map((s) => s.trim()).filter(Boolean).forEach((slug) => {
+                    if (typeNameBySlug.has(slug)) return;
+                    /* The board's own label for a kind of work lives in a
+                     * badge on the card, but only for the plain kinds —
+                     * irrigation, service and payroll draw something else
+                     * instead. So the slug is made readable when there is no
+                     * badge to borrow: "foliar_spray" → "Foliar spray". */
+                    let label = '';
+                    if (slugs.length === 1) {
+                        label = (c.querySelector('.activity-type-badge')?.textContent || '').trim();
+                    }
+                    if (!label) {
+                        label = slug.replace(/[_-]+/g, ' ');
+                        label = label.charAt(0).toUpperCase() + label.slice(1);
+                    }
+                    typeNameBySlug.set(slug, label);
+                });
             });
-            lotWrap.classList.toggle('hidden', seen.size === 0);
         }
 
-        function lotNames() {
-            return [...lotWrap.querySelectorAll('.mir-lot.is-on')].map((b) => b.textContent);
+        function chosenNames(which) {
+            const [set, names] = which === 'lots' ? [lotsOn, lotNameById] : [typesOn, typeNameBySlug];
+            return [...set].map((k) => names.get(k) || k);
+        }
+
+        /* Both tags say what they are narrowing to rather than just how many:
+         * "Apartado 1" is the answer to "which lot?", where "1 selected" is
+         * only the answer to "did I pick anything?". Past two it counts,
+         * because three names do not fit and would only trail off. */
+        function sayPicks() {
+            [['lots', lotsBtn, 'Every lot', 'lots'],
+             ['types', typesBtn, 'Any kind of work', 'kinds']].forEach(([which, btn, empty, word]) => {
+                const names = chosenNames(which);
+                const t = btn.querySelector('.mir-pickbtn-t');
+                t.textContent = !names.length ? empty
+                    : names.length <= 2 ? names.join(', ')
+                    : names.length + ' ' + word;
+                btn.classList.toggle('is-set', names.length > 0);
+            });
+        }
+
+        function openPick(which) {
+            picking = which;
+            const [set, names] = which === 'lots' ? [lotsOn, lotNameById] : [typesOn, typeNameBySlug];
+            pickTitle.textContent = which === 'lots' ? 'Which lots?' : 'Which kinds of work?';
+            pickBody.innerHTML = '';
+            [...names.entries()].sort((a, b) => a[1].localeCompare(b[1])).forEach(([key, name]) => {
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'mir-lot' + (set.has(key) ? ' is-on' : '');
+                b.textContent = name;
+                b.setAttribute('aria-pressed', set.has(key) ? 'true' : 'false');
+                b.addEventListener('click', () => {
+                    // Each tag is its own yes/no, so several can be asked
+                    // about at once; none chosen means all of them.
+                    const on = !set.has(key);
+                    if (on) set.add(key); else set.delete(key);
+                    b.classList.toggle('is-on', on);
+                    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+                    sayPicks();
+                    sift();
+                });
+                pickBody.appendChild(b);
+            });
+            if (!names.size) {
+                const p = document.createElement('p');
+                p.className = 'mir-none';
+                p.textContent = which === 'lots'
+                    ? 'This plan has no lots on it yet.'
+                    : 'Nothing on this plan says what kind of work it is.';
+                pickBody.appendChild(p);
+            }
+            pick.hidden = false;
+            pick.setAttribute('aria-hidden', 'false');
+            requestAnimationFrame(() => pick.classList.add('is-open'));
+        }
+        function closePick() {
+            pick.classList.remove('is-open');
+            setTimeout(() => { pick.hidden = true; pick.setAttribute('aria-hidden', 'true'); }, 280);
         }
 
         function build() {
             body.innerHTML = '';
             todayKey = (document.querySelector('#activitiesList .date-group.is-today')
                 || {}).getAttribute?.('data-date') || '';
-            fillLots();
+            readVocabulary();
+            lotsOn.clear();
+            typesOn.clear();
+            sayPicks();
             const groups = document.querySelectorAll('#activitiesList .date-group[data-date]');
             groups.forEach((g) => {
                 const copy = g.cloneNode(true);
@@ -3898,24 +4015,28 @@
             const raw = mode === 'date'
                 ? [fromInput.value, toInput.value].filter(Boolean).join(' → ')
                 : (qInput.value || '').trim().toLowerCase();
-            const asking = !!raw || lotsOn.size > 0;
+            const asking = !!raw || lotsOn.size > 0 || typesOn.size > 0;
             let days = 0;
             let acts = 0;
             body.querySelectorAll('.date-group').forEach((g) => {
                 const cards = [...g.querySelectorAll('.activity-card')];
                 let shown = 0;
                 cards.forEach((c) => {
-                    // The lots narrow whatever else is being asked rather than
-                    // replacing it: "herbicide, on Apartado 1" is one question.
+                    // Lot and kind narrow whatever else is being asked rather
+                    // than replacing it: "herbicide, on Apartado 1" is one
+                    // question, and every part of it has to hold.
                     const onLot = lotsOn.size === 0
                         || [...lotsOn].some((id) => c.querySelector(`.lot-tag[data-lot-id="${id}"]`));
-                    const ok = onLot && matches(g, c, raw);
+                    const kinds = (c.getAttribute('data-activity-types')
+                        || c.getAttribute('data-activity-type') || '').split(',').map((s) => s.trim());
+                    const onType = typesOn.size === 0 || kinds.some((k) => typesOn.has(k));
+                    const ok = onLot && onType && matches(g, c, raw);
                     c.classList.toggle('mir-away', !ok);
                     if (ok) shown++;
                 });
                 // A date range keeps its days even where they hold nothing:
                 // "that week is empty" is the answer, not a blank screen.
-                const keep = mode === 'date' && raw && lotsOn.size === 0
+                const keep = mode === 'date' && raw && !lotsOn.size && !typesOn.size
                     ? inRange(g)
                     : shown > 0;
                 g.classList.toggle('mir-away', !keep);
@@ -3940,7 +4061,7 @@
         function sayFilters(raw) {
             const bits = [];
             if (raw) bits.push((mode === 'day' ? 'Day ' : '') + raw);
-            const names = lotNames();
+            const names = [...chosenNames('lots'), ...chosenNames('types')];
             if (names.length) bits.push(names.join(', '));
             findN.textContent = String(bits.length);
             findN.classList.toggle('hidden', bits.length === 0);
@@ -4002,6 +4123,7 @@
         }
         function close() {
             if (panel.hidden) return;
+            if (!pick.hidden) closePick();
             panel.classList.remove('is-open');
             document.body.style.removeProperty('overflow');
             // Let the fade finish before the screen is taken away.
@@ -4015,7 +4137,10 @@
         openBtn.addEventListener('click', open);
         document.getElementById('mirrorCloseBtn')?.addEventListener('click', close);
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !panel.hidden) close();
+            if (e.key !== 'Escape' || panel.hidden) return;
+            // The picker is on top, so it is what Escape means first.
+            if (!pick.hidden) { closePick(); return; }
+            close();
         });
 
         panel.querySelectorAll('.mir-mode').forEach((b) => {
@@ -4034,6 +4159,22 @@
         qInput.addEventListener('input', sift);
         fromInput.addEventListener('change', sift);
         toInput.addEventListener('change', sift);
+
+        lotsBtn?.addEventListener('click', () => openPick('lots'));
+        typesBtn?.addEventListener('click', () => openPick('types'));
+        document.getElementById('mirrorPickClose')?.addEventListener('click', closePick);
+        document.getElementById('mirrorPickDone')?.addEventListener('click', closePick);
+        document.getElementById('mirrorPickClear')?.addEventListener('click', () => {
+            (picking === 'lots' ? lotsOn : typesOn).clear();
+            pickBody.querySelectorAll('.mir-lot').forEach((b) => {
+                b.classList.remove('is-on');
+                b.setAttribute('aria-pressed', 'false');
+            });
+            sayPicks();
+            sift();
+        });
+        // The ground behind the card dismisses it, the card itself does not.
+        pick?.addEventListener('click', (e) => { if (e.target === pick) closePick(); });
 
         // The card itself folds, so the answer gets the screen once the
         // question has been asked.

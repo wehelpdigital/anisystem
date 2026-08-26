@@ -663,12 +663,22 @@
                     <span class="mir-range-to">to</span>
                     <input type="date" id="mirrorTo" class="form-input" aria-label="To date">
                 </div>
-                {{-- Lots as tags, not a dropdown: they are few, they are worth
-                     seeing all at once, and more than one can be asked about
-                     together. They narrow whatever else is being asked rather
-                     than replacing it — "herbicide, on Apartado 1" is one
-                     question, not two. Filled from the board's own lot tags. --}}
-                <div class="mir-lots" id="mirrorLots" role="group" aria-label="Lots"></div>
+                {{-- Lots and kinds of work both narrow whatever else is being
+                     asked rather than replacing it — "herbicide, on Apartado
+                     1" is one question, not two. Each is a tag that opens its
+                     own picker: a farm can run a dozen lots and a plan a
+                     dozen kinds of work, and two dozen tags laid out here
+                     would bury the card they were meant to fit inside. --}}
+                <div class="mir-picks">
+                    <button type="button" class="mir-pickbtn" id="mirrorLotsBtn" data-pick="lots">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
+                        <span class="mir-pickbtn-t">Every lot</span>
+                    </button>
+                    <button type="button" class="mir-pickbtn" id="mirrorTypesBtn" data-pick="types">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5a2 2 0 011.41.59l7 7a2 2 0 010 2.82l-5 5a2 2 0 01-2.82 0l-7-7A2 2 0 013 10V5a2 2 0 012-2z"/></svg>
+                        <span class="mir-pickbtn-t">Any kind of work</span>
+                    </button>
+                </div>
                 <div class="mir-tools">
                     <button type="button" class="mir-tool" id="mirrorTodayBtn">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
@@ -687,6 +697,25 @@
     <div class="mir-load" id="mirrorLoad" role="status" aria-label="Reading the plan"><i></i><i></i><i></i></div>
     <div class="mir-body" id="mirrorBody"></div>
     <p class="mir-none hidden" id="mirrorNone">Nothing matches that.</p>
+
+    {{-- One picker, lent to whichever tag asked for it. Both lists are the
+         same shape — a set of names, any number of them chosen — so they are
+         the same box with a different title and a different set poured in. --}}
+    <div class="mir-pick" id="mirrorPick" hidden aria-hidden="true">
+        <div class="mir-pick-card" role="dialog" aria-modal="true" aria-labelledby="mirrorPickTitle">
+            <div class="mir-pick-head">
+                <h3 class="mir-pick-title" id="mirrorPickTitle">Lots</h3>
+                <button type="button" class="mir-x" id="mirrorPickClose" aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+                </button>
+            </div>
+            <div class="mir-pick-body" id="mirrorPickBody"></div>
+            <div class="mir-pick-foot">
+                <button type="button" class="mir-tool" id="mirrorPickClear">Clear</button>
+                <button type="button" class="mir-tool is-go" id="mirrorPickDone">Done</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="sheet hidden" id="activityActionsSheet" style="--sheet-width:26rem">
