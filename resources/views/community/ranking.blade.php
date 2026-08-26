@@ -16,7 +16,7 @@
 @extends('layouts.app')
 
 @section('title', 'Community Ranking')
-@section('body-class', 'plaza-ground')
+@section('body-class', 'plaza-ground rk-full')
 @section('page-title', 'Community Ranking')
 @section('page-subtitle', 'Ang hagdan ng bukid')
 @section('back', route('community.index'))
@@ -28,19 +28,30 @@
 <div class="rk-wrap">
 
     {{-- ================= You, on the ladder ================= --}}
+    {{-- The face first, the pill it earned under it, the name under that:
+         a member's own plate, on a slowly breathing gradient with its own
+         edge (see .rk-me). --}}
     <div class="rk-me card" id="rkMe" data-rank-n="{{ $myRank['n'] }}" data-rank-name="{{ $myRank['name'] }}">
+        <div class="rk-me-face">
+            @include('community.partials.avatar', ['user' => $me, 'size' => 'avatar-lg', 'link' => false])
+        </div>
         <div class="rk-me-badge rankb rankb-big rankb-a{{ $myRank['arc'] }}" id="rkMeBadge">
             <span class="rankb-e">{{ $myRank['emoji'] }}</span>
             <span class="rankb-lv">Lv {{ $myRank['n'] }}</span>
             <span class="rankb-t">{{ $myRank['name'] }}</span>
         </div>
+        <p class="rk-me-name">{{ $me->full_name }}</p>
         <p class="rk-me-en">Level {{ $myRank['n'] }} of {{ $maxLevel }}</p>
         <p class="rk-me-pts"><b id="rkMePts" data-count="{{ $myPoints }}">0</b> <span>points</span>
             @if ($myPosition > 0)
-                <span class="rk-me-pos">#{{ $myPosition }} on the board</span>
+                <span class="rk-me-pos">Rank: {{ $myPosition }}</span>
             @endif
         </p>
-        @if ($myNext)
+        @if ($capped)
+            {{-- The bar has stopped for a reason, and the reason is said. --}}
+            <p class="rk-me-gate">🔒 You are at the free summit — Level {{ $freeCap }}.
+                <a href="{{ url('/account/subscription') }}">Subscribe</a> to keep climbing; everything you do keeps counting the moment you do.</p>
+        @elseif ($myNext)
             <div class="rk-bar" role="progressbar" aria-valuemin="{{ $myRank['min'] }}" aria-valuemax="{{ $myNext['min'] }}" aria-valuenow="{{ $myPoints }}">
                 <span id="rkBarFill" data-to="{{ round($myProgress * 100, 1) }}"></span>
             </div>
@@ -83,14 +94,33 @@
         <div class="rk-board card" data-animate-rows>
             @forelse ($rows as $i => $r)
                 @continue(count($rows) >= 3 && $i < 3)
-                <div class="rk-row {{ (int) $r['user']->id === (int) auth()->id() ? 'is-me' : '' }}" style="--i: {{ min($i, 30) }}">
-                    <span class="rk-pos">{{ $i + 1 }}</span>
-                    @include('community.partials.avatar', ['user' => $r['user'], 'size' => 'avatar-sm'])
+                @php
+                    $ru = $r['user'];
+                    $where = trim(implode(', ', array_filter([$ru->city, $ru->province])));
+                    $bubble = trim((string) ($ru->statusBubble ?? ''));
+                @endphp
+                <div class="rk-row {{ (int) $ru->id === (int) auth()->id() ? 'is-me' : '' }}" style="--i: {{ min($i, 30) }}">
+                    <span class="rk-pos">Rank: {{ $i + 1 }}</span>
+                    @include('community.partials.avatar', ['user' => $ru, 'size' => 'avatar-sm'])
                     <span class="rk-row-mid">
-                        <a class="rk-row-name" href="{{ route('community.connect.profile', ['userId' => $r['user']->id]) }}">{{ $r['user']->full_name }}</a>
-                        <span class="rankb rankb-a{{ $r['rank']['arc'] }}"><span class="rankb-e">{{ $r['rank']['emoji'] }}</span><span class="rankb-lv">Lv {{ $r['rank']['n'] }}</span><span class="rankb-t">{{ $r['rank']['name'] }}</span></span>
+                        <span class="rk-row-head">
+                            <a class="rk-row-name" href="{{ route('community.connect.profile', ['userId' => $ru->id]) }}">{{ $ru->full_name }}</a>
+                            <span class="rankb rankb-a{{ $r['rank']['arc'] }}"><span class="rankb-e">{{ $r['rank']['emoji'] }}</span><span class="rankb-lv">Lv {{ $r['rank']['n'] }}</span><span class="rankb-t">{{ $r['rank']['name'] }}</span></span>
+                        </span>
+                        {{-- Who this member IS, not just what they scored:
+                             where they farm, what they do, and the thought
+                             they last pinned over their face. --}}
+                        @if ($where || $ru->profession)
+                            <span class="rk-row-facts">
+                                @if ($where)<span>📍 {{ $where }}</span>@endif
+                                @if ($ru->profession)<span>🧑‍🌾 {{ $ru->profession }}</span>@endif
+                            </span>
+                        @endif
+                        @if ($bubble !== '')
+                            <span class="rk-row-bubble">💭 {{ \Illuminate\Support\Str::limit($bubble, 60) }}</span>
+                        @endif
                     </span>
-                    @if ((int) $r['user']->id === (int) auth()->id())<span class="rk-you">Ikaw</span>@endif
+                    @if ((int) $ru->id === (int) auth()->id())<span class="rk-you">Ikaw</span>@endif
                     <b class="rk-row-pts">{{ number_format($r['points']) }}</b>
                 </div>
             @empty
@@ -123,10 +153,12 @@
                             <span class="rk-task-l">{{ $a['label'] }}</span>
                             <span class="rk-task-how">{{ $a['how'] }}</span>
                         </span>
-                        <span class="rk-task-pts">+{{ $a['pts'] }}</span>
+                        <span class="rk-task-pts">+{{ $a['pts'] }} pts</span>
+                        {{-- What this task has banked for you, as one plain
+                             number — the arithmetic stays backstage. --}}
                         <span class="rk-task-tally {{ $n > 0 ? 'has-some' : '' }}">
                             <b data-count="{{ $n * $a['pts'] }}">{{ number_format($n * $a['pts']) }}</b>
-                            <i>{{ number_format($n) }}×</i>
+                            <i>collected</i>
                         </span>
                     </div>
                 @endforeach
@@ -141,6 +173,15 @@
              never leave this sentence telling an old story. --}}
         <p class="rk-guide-intro">A hundred levels, ten titles — every tenth level hands you a new name
             to wear, from {{ $titles[1]['name'] }} to {{ $titles[10]['name'] }}. Each level costs more than the one before it.</p>
+        {{-- The wrapped boxes on the ladder: nobody is told what is inside,
+             only that there is one waiting — that is the whole point of a
+             mystery. The gift wiggles (see .rk-gift) so the eye finds it. --}}
+        <p class="rk-guide-gift"><span class="rk-gift" aria-hidden="true">🎁</span>
+            A <b>mystery prize</b> waits at <b>Level 40</b> — and another at <b>Level 60</b>, <b>Level 80</b> and <b>Level 100</b>. What is inside is only found out by the one who gets there.</p>
+        @unless ($unlocked)
+            <p class="rk-guide-gate">🔒 The free road ends at <b>Level {{ $freeCap }}</b>.
+                <a href="{{ url('/account/subscription') }}">Subscribe</a> to climb past it — every point you keep earning starts counting again the moment you do.</p>
+        @endunless
         @foreach ($titles as $arcN => $title)
             @php
                 $lo = ($arcN - 1) * 10 + 1;
@@ -158,7 +199,9 @@
                 </h3>
                 <div class="rk-lvls">
                     @for ($n = $lo; $n <= $hi; $n++)
-                        <span class="rk-lvl {{ $n === $myRank['n'] ? 'is-you' : ($myPoints >= $levels[$n - 1] ? 'is-passed' : '') }}" style="--i: {{ $n - $lo }}">
+                        @php $gifted = $n >= 40 && $n % 20 === 0; @endphp
+                        <span class="rk-lvl {{ $n === $myRank['n'] ? 'is-you' : ($myPoints >= $levels[$n - 1] ? 'is-passed' : '') }} {{ $gifted ? 'has-gift' : '' }}" style="--i: {{ $n - $lo }}">
+                            @if ($gifted)<span class="rk-gift" title="A mystery prize waits here" aria-label="Mystery prize">🎁</span>@endif
                             <b>Lv {{ $n }}</b>
                             <i>{{ $levels[$n - 1] === 0 ? 'Start' : number_format($levels[$n - 1]) }}</i>
                         </span>
@@ -174,9 +217,37 @@
 <style>
     .rk-wrap { max-width: 40rem; margin: 0 auto; }
 
+    /* The ladder is a destination, not a hallway: the bottom tab bar steps
+       away so the whole screen is the board. The back arrow up top is the
+       way home. */
+    body.rk-full .tabbar { display: none; }
+    body.rk-full { padding-bottom: 0; }
+    body.rk-full main { padding-bottom: 1.5rem; }
+
     /* ---- You, on the ladder ---- */
-    .rk-me { padding: 1.25rem 1rem 1.1rem; text-align: center; margin-bottom: 1rem;
-        animation: rkRise .45s cubic-bezier(.22,1,.36,1) both; }
+    .rk-me { padding: 1.35rem 1rem 1.2rem; text-align: center; margin-bottom: 1rem;
+        animation: rkRise .45s cubic-bezier(.22,1,.36,1) both;
+        position: relative; overflow: hidden;
+        border: 1.5px solid rgb(107 159 61 / .35);
+        background: linear-gradient(115deg, #f4faee, #e2f0d4 30%, #f7fbf2 55%, #dcecca 80%, #eef6e4);
+        background-size: 260% 260%;
+        animation: rkRise .45s cubic-bezier(.22,1,.36,1) both, rkBreathe 9s ease-in-out infinite; }
+    @keyframes rkBreathe { 0%, 100% { background-position: 0% 40%; } 50% { background-position: 100% 60%; } }
+    html.dark .rk-me { border-color: rgb(143 194 103 / .3);
+        background: linear-gradient(115deg, #1c2415, #243019 30%, #1a2113 55%, #2a381e 80%, #202a17);
+        background-size: 260% 260%; }
+    .rk-me-face { display: flex; justify-content: center; margin-bottom: .6rem;
+        animation: rkBadgePop .55s cubic-bezier(.22,1,.36,1) .05s both; }
+    .rk-me-face .avatar { box-shadow: 0 8px 26px rgb(40 70 15 / .3), 0 0 0 3px #fff; }
+    html.dark .rk-me-face .avatar { box-shadow: 0 8px 26px rgb(0 0 0 / .5), 0 0 0 3px rgb(255 255 255 / .14); }
+    .rk-me-name { margin-top: .45rem; font-size: 1rem; font-weight: 800; color: var(--color-gray-900);
+        font-family: var(--font-heading); }
+    .rk-me-gate { margin: .8rem auto 0; max-width: 24rem; font-size: .76rem; font-weight: 600;
+        color: var(--color-gray-600); background: rgb(255 255 255 / .65); border: 1px dashed rgb(107 159 61 / .5);
+        border-radius: .8rem; padding: .55rem .8rem; line-height: 1.5; }
+    .rk-me-gate a { color: var(--color-brand-700); font-weight: 800; text-decoration: underline; }
+    html.dark .rk-me-gate { background: rgb(0 0 0 / .25); color: #cdd8c2; }
+    html.dark .rk-me-gate a { color: #a3d284; }
     .rk-me-badge { animation: rkBadgePop .55s cubic-bezier(.22,1,.36,1) .15s both; }
     @keyframes rkBadgePop { from { opacity: 0; transform: scale(.6); } 60% { transform: scale(1.12); } to { opacity: 1; transform: scale(1); } }
     .rk-me-en { font-size: .74rem; font-weight: 700; color: var(--color-gray-500); margin-top: .4rem; }
@@ -187,9 +258,14 @@
         background: var(--color-brand-50); color: var(--color-brand-700); font-size: .68rem; font-weight: 800; }
     .rk-bar { height: .5rem; border-radius: 999px; background: var(--color-gray-200);
         overflow: hidden; margin: .8rem auto 0; max-width: 22rem; }
+    /* The fill is a moving gradient, not a flat green: the ladder's bars all
+       breathe the same sweep (rkFlow), so progress reads as something alive. */
     .rk-bar span { display: block; height: 100%; width: 0; border-radius: 999px;
-        background: linear-gradient(90deg, #6b9f3d, #4a7c2a);
+        background: linear-gradient(90deg, #6b9f3d, #a9d383, #4a7c2a, #8fc267, #6b9f3d);
+        background-size: 300% 100%;
+        animation: rkFlow 3.2s linear infinite;
         transition: width 1.1s cubic-bezier(.22,1,.36,1) .35s; }
+    @keyframes rkFlow { from { background-position: 0% 0; } to { background-position: 300% 0; } }
     .rk-me-next { margin-top: .45rem; font-size: .74rem; font-weight: 600; color: var(--color-gray-500); }
     .rk-me-next b { color: var(--color-gray-800); }
     .rk-me-title { margin-top: .2rem; font-size: .7rem; font-weight: 600; color: var(--color-gray-400); }
@@ -241,9 +317,18 @@
     @keyframes rkRise { from { opacity: 0; transform: translateY(.55rem); } }
     .rk-row:nth-child(even) { background: color-mix(in srgb, var(--color-gray-100) 55%, transparent); }
     .rk-row.is-me { background: var(--color-brand-50); box-shadow: inset 0 0 0 1.5px var(--color-brand-300); }
-    .rk-pos { flex: none; width: 1.9rem; text-align: center; font-size: .78rem; font-weight: 800;
-        color: var(--color-gray-400); font-variant-numeric: tabular-nums; }
-    .rk-row-mid { display: flex; align-items: center; gap: .45rem; min-width: 0; flex: 1 1 auto; flex-wrap: wrap; row-gap: .15rem; }
+    .rk-pos { flex: none; min-width: 3.4rem; text-align: center; font-size: .66rem; font-weight: 800;
+        color: var(--color-gray-400); font-variant-numeric: tabular-nums;
+        text-transform: uppercase; letter-spacing: .02em; }
+    .rk-row-mid { display: flex; flex-direction: column; gap: .15rem; min-width: 0; flex: 1 1 auto; }
+    .rk-row-head { display: flex; align-items: center; gap: .45rem; min-width: 0; flex-wrap: wrap; row-gap: .15rem; }
+    .rk-row-facts { display: flex; gap: .6rem; flex-wrap: wrap; font-size: .68rem; font-weight: 600;
+        color: var(--color-gray-500); }
+    /* The last thought they pinned over their face, riding along quietly. */
+    .rk-row-bubble { font-size: .68rem; color: var(--color-gray-400); font-style: italic;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+    html.dark .rk-row-facts { color: #93a087; }
+    html.dark .rk-row-bubble { color: #6c7a5f; }
     .rk-row-name { font-size: .85rem; font-weight: 700; color: var(--color-gray-900);
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
     .rk-row-name:hover { color: var(--color-brand-700); }
@@ -274,6 +359,33 @@
 
     /* ---- Guide ---- */
     .rk-guide-intro { font-size: .82rem; color: var(--color-gray-600); line-height: 1.55; margin-bottom: .9rem; }
+    /* The wrapped box: it wiggles now and then and throws a soft shine, so
+       the eye finds it without a single word of chrome. */
+    .rk-gift { display: inline-block; font-size: 1.05rem; line-height: 1;
+        animation: rkGift 2.8s cubic-bezier(.22,1,.36,1) infinite;
+        filter: drop-shadow(0 0 6px rgb(217 169 47 / .55)); }
+    @keyframes rkGift {
+        0%, 62%, 100% { transform: rotate(0) scale(1); }
+        66% { transform: rotate(-12deg) scale(1.18); }
+        70% { transform: rotate(10deg) scale(1.18); }
+        74% { transform: rotate(-7deg) scale(1.12); }
+        78% { transform: rotate(4deg) scale(1.06); }
+        82% { transform: rotate(0) scale(1); } }
+    .rk-guide-gift { display: block; font-size: .8rem; line-height: 1.55;
+        color: var(--color-gray-700); background: linear-gradient(115deg, #fdf6e0, #faedc4);
+        border: 1px solid rgb(217 169 47 / .4); border-radius: .8rem; padding: .65rem .8rem; margin-bottom: .9rem; }
+    .rk-guide-gift .rk-gift { font-size: 1.3rem; margin-right: .45rem; vertical-align: -.25rem; }
+    html.dark .rk-guide-gift { background: linear-gradient(115deg, #2a2410, #332b12); color: #e3d9b8;
+        border-color: rgb(217 169 47 / .3); }
+    .rk-guide-gate { font-size: .78rem; line-height: 1.55; color: var(--color-gray-600);
+        border: 1px dashed rgb(107 159 61 / .5); border-radius: .8rem; padding: .6rem .8rem; margin-bottom: .9rem; }
+    .rk-guide-gate a { color: var(--color-brand-700); font-weight: 800; text-decoration: underline; }
+    html.dark .rk-guide-gate { color: #cdd8c2; }
+    html.dark .rk-guide-gate a { color: #a3d284; }
+    .rk-lvl { position: relative; }
+    .rk-lvl.has-gift { box-shadow: inset 0 0 0 1.5px rgb(217 169 47 / .55); background: #fdf6e0; }
+    html.dark .rk-lvl.has-gift { background: #2a2410; }
+    .rk-lvl.has-gift .rk-gift { position: absolute; top: -.55rem; right: -.3rem; font-size: .95rem; }
     .rk-arc { padding: .8rem .85rem .85rem; margin-bottom: .85rem; }
     .rk-arc.is-mine { box-shadow: inset 0 0 0 1.5px var(--color-brand-300), var(--shadow-card); }
     .rk-arc-h { display: flex; align-items: center; gap: .6rem; margin-bottom: .55rem; }
@@ -309,10 +421,12 @@
     html.dark .rk-task-tally:not(.has-some) b { color: #4a5540; }
 
     @media (prefers-reduced-motion: reduce) {
-        .rk-me, .rk-me-badge, .rk-me.is-up .rk-me-badge, .rk-medal, .rk-block,
+        .rk-me, .rk-me-badge, .rk-me-face, .rk-me.is-up .rk-me-badge, .rk-medal, .rk-block,
         [data-animate-rows] .rk-row, [data-animate-rows] .rk-task, [data-animate-rows] .rk-lvl,
-        [data-rk-panel]:not(.hidden), .rk-lvl.is-you { animation: none; }
-        .rk-bar span { transition: none; }
+        [data-rk-panel]:not(.hidden), .rk-lvl.is-you, .rk-bar span, .rk-gift { animation: none; }
+        .rk-me { background-position: 50% 50%; }
+        .rk-bar span { transition: none;
+            background: linear-gradient(90deg, #6b9f3d, #4a7c2a); }
     }
 </style>
 @endpush

@@ -18,10 +18,18 @@ class CommunityRankingController extends Controller
     public function index()
     {
         $meId = (int) Auth::id();
+        $me = Auth::user();
 
         $points = CommunityRank::pointsFor($meId);
         $rank = CommunityRank::rankOf($points);
         $next = CommunityRank::next($rank);
+
+        /* The free summit. The scoreboard itself already holds a free
+         * member's points at the cap (see CommunityRank::map()); the page
+         * additionally needs to KNOW it is holding them, so it can say why
+         * the bar has stopped moving instead of looking broken. */
+        $unlocked = $me && ($me->isSuperAdmin() || $me->hasActiveSubscription());
+        $capped = ! $unlocked && $points >= CommunityRank::freePointsCap();
 
         /* How far along the CURRENT step the member is, for the progress
          * bar: nought at the rank's own doorstep, one at the next rank's.
@@ -45,6 +53,10 @@ class CommunityRankingController extends Controller
             'titles' => CommunityRank::TITLES,
             'levels' => CommunityRank::thresholds(),
             'maxLevel' => CommunityRank::MAX_LEVEL,
+            'me' => $me,
+            'unlocked' => $unlocked,
+            'capped' => $capped,
+            'freeCap' => CommunityRank::FREE_LEVEL_CAP,
         ]);
     }
 }

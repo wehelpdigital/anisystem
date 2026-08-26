@@ -62,6 +62,12 @@ class CommunityRank
         'reactionsGiven' => ['emoji' => '👍', 'pts' => 1, 'group' => 'Say something',
             'label' => 'React to a post',
             'how' => 'A thumbs-up, a heart — small, but it counts.'],
+        'blogComments' => ['emoji' => '📰', 'pts' => 5, 'group' => 'Say something',
+            'label' => 'Comment on a blog article',
+            'how' => 'Join the conversation under the technicians\' articles.'],
+        'profileVideos' => ['emoji' => '📹', 'pts' => 10, 'group' => 'Say something',
+            'label' => 'Upload a profile video',
+            'how' => 'A film on your own profile shelf.'],
 
         // --- What comes back ----------------------------------------------
         'commentsReceived' => ['emoji' => '📥', 'pts' => 3, 'group' => 'What comes back',
@@ -82,6 +88,9 @@ class CommunityRank
         'coFarmers' => ['emoji' => '🤝', 'pts' => 15, 'group' => 'What comes back',
             'label' => 'Gain a co-farmer',
             'how' => 'An accepted connection — the strongest tie there is here.'],
+        'bookmarksReceived' => ['emoji' => '🔖', 'pts' => 2, 'group' => 'What comes back',
+            'label' => 'Your post gets saved',
+            'how' => 'Somebody kept your post to come back to.'],
 
         // --- Work the farm -------------------------------------------------
         'aiQuestions' => ['emoji' => '🤖', 'pts' => 5, 'group' => 'Work the farm',
@@ -93,6 +102,12 @@ class CommunityRank
         'notes' => ['emoji' => '📒', 'pts' => 2, 'group' => 'Work the farm',
             'label' => 'Write a farm note',
             'how' => 'Notes pinned to your schedule days.'],
+        'photos' => ['emoji' => '📷', 'pts' => 2, 'group' => 'Work the farm',
+            'label' => 'Add a picture to an album',
+            'how' => 'Photos and clips kept in your season albums.'],
+        'albums' => ['emoji' => '🗂️', 'pts' => 10, 'group' => 'Work the farm',
+            'label' => 'Put an album together',
+            'how' => 'A named album in your season gallery.'],
 
         // --- Show up -------------------------------------------------------
         'days' => ['emoji' => '📅', 'pts' => 3, 'group' => 'Show up',
@@ -123,6 +138,46 @@ class CommunityRank
 
     /** The top of the ladder. */
     public const MAX_LEVEL = 100;
+
+    /**
+     * The free summit. A member without a subscription climbs to here and
+     * the ladder holds them: their banked points freeze one shy of Level 21's
+     * floor until they subscribe, and everything they keep doing starts
+     * counting again the moment they do. Bridged super admins are never held.
+     */
+    public const FREE_LEVEL_CAP = 20;
+
+    /** The most points a free member can bank: one shy of Level 21's floor. */
+    public static function freePointsCap(): int
+    {
+        return self::thresholds()[self::FREE_LEVEL_CAP] - 1;
+    }
+
+    /**
+     * Everyone the gate stands open for, as a userId => true set.
+     *
+     * Read inside the scoreboard build so caps land in the same five-minute
+     * cache as the scores themselves — a fresh subscription shows within
+     * minutes, like every other number on the board.
+     *
+     * @return array<int, true>
+     */
+    private static function unlockedIds(): array
+    {
+        try {
+            $subs = DB::table('anisystem_subscriptions')
+                ->where('deleteStatus', 1)->where('status', 'active')
+                ->where('expiresAt', '>', now('Asia/Manila'))
+                ->pluck('userId')->all();
+            $admins = DB::table('anisystem_users')->whereNotNull('adminUserId')->pluck('id')->all();
+
+            return array_fill_keys(array_map('intval', array_merge($subs, $admins)), true);
+        } catch (\Throwable $e) {
+            Log::warning('CommunityRank: unlocked set failed', ['error' => $e->getMessage()]);
+
+            return [];
+        }
+    }
 
     /**
      * What each level costs, level 1 to 100.
@@ -168,9 +223,16 @@ class CommunityRank
 
         return self::$map = Cache::remember('as-community-rank-map', self::MAP_TTL, function () {
             $counts = self::countsForAll();
+            $unlocked = self::unlockedIds();
+            $cap = self::freePointsCap();
             $map = [];
             foreach ($counts as $userId => $c) {
-                $map[$userId] = self::score($c);
+                $pts = self::score($c);
+                // The free summit: without a subscription the bank stops here.
+                if (! isset($unlocked[$userId])) {
+                    $pts = min($pts, $cap);
+                }
+                $map[$userId] = $pts;
             }
             arsort($map);
 
@@ -317,6 +379,12 @@ class CommunityRank
             ->selectRaw('userId as u, COUNT(*) as n')->groupBy('userId')->get());
         $try('reactionsGiven', fn () => DB::table('as_community_reactions')
             ->selectRaw('userId as u, COUNT(*) as n')->groupBy('userId')->get());
+        $try('blogComments', fn () => DB::table('as_community_blog_comments')
+            ->where('deleteStatus', 1)
+            ->selectRaw('userId as u, COUNT(*) as n')->groupBy('userId')->get());
+        $try('profileVideos', fn () => DB::table('as_community_profile_videos')
+            ->where('deleteStatus', 1)
+            ->selectRaw('userId as u, COUNT(*) as n')->groupBy('userId')->get());
 
         // --- What comes back ------------------------------------------------
         // Somebody ELSE answered: your own comment under your own post is
@@ -353,6 +421,11 @@ class CommunityRank
         $try('coFarmers', fn () => DB::table('as_community_connections')
             ->where('deleteStatus', 1)->where('status', 'accepted')
             ->selectRaw('friendUserId as u, COUNT(*) as n')->groupBy('friendUserId')->get());
+        $try('bookmarksReceived', fn () => DB::table('as_community_bookmarks as b')
+            ->join('as_community_wall_posts as p', fn ($j) => $j->on('p.id', '=', 'b.targetId')->where('b.targetType', 'wall'))
+            ->where('b.deleteStatus', 1)->where('p.deleteStatus', 1)
+            ->whereColumn('b.userId', '!=', 'p.authorUserId')
+            ->selectRaw('p.authorUserId as u, COUNT(*) as n')->groupBy('p.authorUserId')->get());
 
         // --- Work the farm --------------------------------------------------
         $try('aiQuestions', fn () => DB::table('anisystem_ai_messages as m')
@@ -369,6 +442,10 @@ class CommunityRank
             ->join('as_cropping_schedules as s', 's.id', '=', 'n.croppingScheduleId')
             ->where('n.deleteStatus', 1)->where('s.deleteStatus', 1)
             ->selectRaw('s.anisystemUserId as u, COUNT(*) as n')->groupBy('s.anisystemUserId')->get());
+        $try('photos', fn () => DB::table('as_gallery_images')->where('deleteStatus', 1)
+            ->selectRaw('userId as u, COUNT(*) as n')->groupBy('userId')->get());
+        $try('albums', fn () => DB::table('as_gallery_albums')->where('deleteStatus', 1)
+            ->selectRaw('userId as u, COUNT(*) as n')->groupBy('userId')->get());
 
         // --- Show up ---------------------------------------------------------
         $try('days', fn () => DB::table('as_member_days')
