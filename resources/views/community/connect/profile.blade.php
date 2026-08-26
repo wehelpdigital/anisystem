@@ -276,6 +276,17 @@
         margin-top:-2.75rem; }
     .pf-face { position:relative; display:inline-block; flex:none; width:5.5rem; height:5.5rem;
         border-radius:999px; box-shadow:0 0 0 3px var(--color-white); background:var(--color-white); }
+    /* A dashed green ring turning slowly around the face, its green washing
+       light-to-deep as it goes — the page's one touch of ceremony. The
+       dashes carry the motion, the colour sweep carries the gradient. */
+    .pf-face::after { content:''; position:absolute; inset:-8px; border-radius:999px;
+        border:2.5px dashed #6b9f3d; pointer-events:none; z-index:0;
+        animation:pfRingSpin 18s linear infinite, pfRingGlow 5s ease-in-out infinite alternate; }
+    @keyframes pfRingSpin { to { transform:rotate(360deg); } }
+    @keyframes pfRingGlow {
+        from { border-color:#3d6823; filter:drop-shadow(0 0 2px rgb(61 104 35 / .35)); }
+        to { border-color:#a9d383; filter:drop-shadow(0 0 5px rgb(143 194 103 / .55)); } }
+    @media (prefers-reduced-motion: reduce) { .pf-face::after { animation:none; } }
     /* The face is a circle whatever shape the file is.
        On your own profile the avatar arrives wrapped in .avatar-online-wrap
        (it carries the green dot), and that wrapper is an inline-block with no
