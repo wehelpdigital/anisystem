@@ -30,7 +30,6 @@
         <a href="{{ route('community.groups.show', ['id' => $discussion->id]) }}" class="fd-face {{ $hue }}"
             @if ($discussion->coverImagePath)
                 data-gz-name="{{ $discussion->name }}"
-                @if (filled($discussion->description)) data-gz-desc="{{ \Illuminate\Support\Str::limit($discussion->description, 120) }}" @endif
                 data-gz-members="{{ $discussion->member_count }}" data-gz-topics="{{ $discussion->post_count }}"
                 data-gz-url="{{ route('community.groups.show', ['id' => $discussion->id]) }}"
             @endif>

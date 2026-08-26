@@ -60,9 +60,6 @@
         color: rgb(255 255 255 / .9); font-size: .78rem; font-weight: 600;
         text-shadow: 0 1px 4px rgb(0 0 0 / .5); }
     .avz-counts b { font-weight: 800; color: #cfe8b5; }
-    /* A room's one line about itself — plain words, no cloud around them. */
-    .avz-desc { font-size: .8rem; font-style: italic; color: #eaf2e2; max-width: 100%;
-        text-shadow: 0 1px 4px rgb(0 0 0 / .5); }
     /* Tag-like door to the profile, cut like the toolbar's bordered Search
        button but dressed for the dark. */
     .avz-visit { display: inline-flex; align-items: center; gap: .35rem;
@@ -107,7 +104,6 @@
         <span class="rankb" id="avatarZoomRank" hidden></span>
         <p class="avz-counts" id="avatarZoomCounts" hidden></p>
         <p class="avz-facts" id="avatarZoomFacts" hidden></p>
-        <p class="avz-desc" id="avatarZoomDesc" hidden></p>
         <a class="avz-visit" id="avatarZoomVisit" href="#" hidden>Visit Profile</a>
     </div>
 </div>
@@ -175,11 +171,10 @@
         /* The rest of who — or what — this is, read off the face itself (the
          * partials write these attributes wherever a photo is drawn). For a
          * member: the rank pill in its arc's colours and where they farm.
-         * For a room: its numbers and what it is about. Each line simply
-         * stays away when there is nothing to say. */
+         * For a room: its numbers. Each line simply stays away when there
+         * is nothing to say. */
         const rank = document.getElementById('avatarZoomRank');
         const facts = document.getElementById('avatarZoomFacts');
-        const desc = document.getElementById('avatarZoomDesc');
         const rankText = isRoom ? '' : (face.getAttribute('data-z-rank') || '');
         rank.hidden = !rankText;
         rank.textContent = rankText;
@@ -198,9 +193,6 @@
         facts.hidden = !bits.length;
         facts.innerHTML = '';
         bits.forEach((b) => { const s = document.createElement('span'); s.textContent = b; facts.appendChild(s); });
-        const about = isRoom ? (face.getAttribute('data-gz-desc') || '') : '';
-        desc.hidden = !about;
-        desc.textContent = about;
         /* The standing they hold — mutual co-farmers, co-farmers, followers —
          * fetched fresh on open (counts drift too much to bake into every
          * card) and shown only where a number means something: zeroes stay

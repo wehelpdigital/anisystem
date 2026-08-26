@@ -16,7 +16,6 @@
             <span class="avatar avatar-md avatar-sq overflow-hidden {{ CommunityAvatar::hue($g->name) }}"
                 @if ($g->coverImagePath)
                     data-gz-name="{{ $g->name }}"
-                    @if (filled($g->description ?? null)) data-gz-desc="{{ \Illuminate\Support\Str::limit($g->description, 120) }}" @endif
                     data-gz-members="{{ $g->member_count }}"
                     data-gz-url="{{ route('community.groups.show', ['id' => $g->id]) }}"
                 @endif>@if ($g->coverImagePath)<img src="{{ \App\Support\MediaStore::url($g->coverImagePath) }}" alt="" class="w-full h-full object-cover">@else{{ CommunityAvatar::monogram($g->name) }}@endif</span>

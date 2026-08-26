@@ -417,7 +417,6 @@
                 <span class="disc-face {{ CommunityAvatar::hue($group->name) }}"
                     @if ($group->coverImagePath)
                         data-gz-name="{{ $group->name }}"
-                        @if (filled($group->description)) data-gz-desc="{{ \Illuminate\Support\Str::limit($group->description, 120) }}" @endif
                         data-gz-members="{{ $memberCount }}" data-gz-topics="{{ $topicCount }}"
                     @endif>
                     @if ($group->coverImagePath)<img src="{{ \App\Support\MediaStore::url($group->coverImagePath) }}" alt="">@else{{ CommunityAvatar::monogram($group->name) }}@endif
@@ -429,7 +428,6 @@
                 <span class="disc-face {{ CommunityAvatar::hue($group->name) }}"
                     @if ($group->coverImagePath)
                         data-gz-name="{{ $group->name }}"
-                        @if (filled($group->description)) data-gz-desc="{{ \Illuminate\Support\Str::limit($group->description, 120) }}" @endif
                         data-gz-members="{{ $memberCount }}" data-gz-topics="{{ $topicCount }}"
                     @endif>
                     @if ($group->coverImagePath)<img src="{{ \App\Support\MediaStore::url($group->coverImagePath) }}" alt="">@else{{ CommunityAvatar::monogram($group->name) }}@endif
