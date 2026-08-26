@@ -30,10 +30,11 @@
         transform: scale(.82);
         transition: transform .34s cubic-bezier(.22, 1, .36, 1), opacity .28s cubic-bezier(.22, 1, .36, 1); }
     .avz.is-open .avz-picwrap { transform: scale(1); }
-    /* The same slow dashed ring the profile page's face wears. */
+    /* The same dashed ring the profile page's face wears, turning at a
+       stroll — a lap in 18s read as a spin. */
     .avz-picwrap::after { content: ''; position: absolute; inset: -9px; border-radius: 999px;
         border: 2.5px dashed #8fc267; pointer-events: none;
-        animation: avzRingSpin 18s linear infinite, avzRingGlow 5s ease-in-out infinite alternate; }
+        animation: avzRingSpin 48s linear infinite, avzRingGlow 5s ease-in-out infinite alternate; }
     @keyframes avzRingSpin { to { transform: rotate(360deg); } }
     @keyframes avzRingGlow {
         from { border-color: #6b9f3d; filter: drop-shadow(0 0 2px rgb(107 159 61 / .4)); }
@@ -46,8 +47,10 @@
     /* Who — or what — this is, under the face: rank pill, the standing that
        matters here, the plain facts — each line optional, the column staying
        centred whatever is missing. */
+    /* The positive margin keeps the name clear of the dashed ring, which
+       turns 9px outside the picture itself. */
     .avz-info { display: flex; flex-direction: column; align-items: center; gap: .45rem;
-        max-width: min(86vw, 24rem); text-align: center; margin-top: -.25rem; opacity: 1;
+        max-width: min(86vw, 24rem); text-align: center; margin-top: .35rem; opacity: 1;
         transition: opacity .28s cubic-bezier(.22, 1, .36, 1); }
     .avz-info .rankb { pointer-events: none; }
     .avz-facts { display: flex; flex-wrap: wrap; justify-content: center; gap: .35rem .9rem;
