@@ -943,10 +943,15 @@
     /* The face half on the cover, the name centred against it — the row's
        own height comes from the face, so a one-line name does not float
        above a photo twice its height. */
-    .mc-head { display: flex; align-items: center; gap: .75rem; padding-top: .6rem; min-height: 2.6rem; }
-    .mc-face { display: block; margin-top: -2.4rem; flex: none; }
-    .mc-face .avatar { border: 3px solid var(--color-white); box-shadow: 0 8px 20px -14px rgb(0 0 0 / .8); }
-    .mc-who { padding-top: .1rem; }
+    .mc-head { display: flex; align-items: center; gap: .85rem; padding-top: .6rem; min-height: 2.6rem; }
+    /* The face at a size worth meeting: 5rem, half of it standing over the
+       cover. Its margin box is the visible lower half, which is what the
+       name block centres itself against — name and level sit inline with
+       the photo, on its midline, not hanging from its hat. */
+    .mc-face { display: block; margin-top: -2.5rem; flex: none; }
+    .mc-face .avatar { width: 5rem; height: 5rem; font-size: 1.6rem;
+        border: 3px solid var(--color-white); box-shadow: 0 8px 20px -14px rgb(0 0 0 / .8); }
+    .mc-who { padding-top: 0; }
     /* A card has more room than an avatar in a list, so the cloud over it
        may say more before it trails off. */
     .mc-face .status-cloud { max-width: 13rem; }
@@ -970,9 +975,10 @@
     /* The two decisions, side by side and the same size — a stretched
        badge beside a small button reads as one broken row. */
     /* The head is a row of three: face, who they are, and the one gesture
-       that costs nothing. align-items:start so a two-line name does not drag
-       the button down the card with it. */
-    .mc-head { align-items: flex-start; }
+       that costs nothing. The who-block centres against the face's visible
+       half; the Follow button keeps to the top corner on its own, so a
+       two-line name still cannot drag it down the card. */
+    .mc-follow { align-self: flex-start; }
     .mc-line { display: block; font-size: .72rem; color: var(--color-gray-500); line-height: 1.3;
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .mc-follow { flex: none; margin-top: .1rem; }
