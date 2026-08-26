@@ -1,7 +1,10 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+{{-- class="booting": the page's own content stays out of sight until it is
+     whole (see partials.boot-veil-css). --}}
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="booting">
 <head>
     <meta charset="utf-8">
+    @include('partials.boot-veil-css')
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
     {{-- Page pinch-zoom is off app-wide, on the owner's ask: the two places
          zoom belongs (the Google map, the image lightbox) implement their own

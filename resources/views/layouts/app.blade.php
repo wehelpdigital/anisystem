@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+{{-- class="booting": the page's own content stays out of sight until it is
+     whole (see partials.boot-veil-css). Stamped by the server rather than by
+     a script, so there is no frame in which it has not been applied. --}}
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="booting">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
@@ -25,6 +28,8 @@
     @if (\App\Support\RealtimeConfig::livekitUrl())
         <meta name="livekit-url" content="{{ \App\Support\RealtimeConfig::livekitUrl() }}">
     @endif
+    {{-- Ahead of everything: the page is shown whole or not at all. --}}
+    @include('partials.boot-veil-css')
     <title>@yield('title', 'Dashboard') | AniSystem</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
     {{-- Installable: the app can live on the home screen, run without the
