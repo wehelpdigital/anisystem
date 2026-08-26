@@ -54,6 +54,17 @@
                         aria-pressed="{{ ($m->isFollowed ?? false) ? 'true' : 'false' }}">
                     <span class="on">Following</span><span class="off">+ Follow</span>
                 </button>
+                {{-- A co-farmer needs no "Connected" label — being on this
+                     shelf says it. The ✕ beside Follow is the way out, and
+                     it asks before it acts (see connect-js). --}}
+                @if ($m->connStatus === 'connected')
+                    <span class="conn-action mc-x" data-member-id="{{ $m->id }}" data-status="connected">
+                        <button type="button" class="conn-btn mc-x-btn" data-action="disconnect"
+                                title="Remove {{ $m->firstName }} as a co-farmer" aria-label="Remove {{ $m->full_name }} as a co-farmer">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+                        </button>
+                    </span>
+                @endif
             </div>
 
             {{-- The same introduction the wall gives an author, in the same
@@ -92,9 +103,13 @@
                 </p>
             @endif
 
-            <div class="mc-acts">
-                @include('community.connect.partials.action', ['status' => $m->connStatus, 'memberId' => $m->id])
-            </div>
+            {{-- Connected members carry their ✕ up beside Follow; the foot
+                 only holds the acts that are still ahead. --}}
+            @if ($m->connStatus !== 'connected')
+                <div class="mc-acts">
+                    @include('community.connect.partials.action', ['status' => $m->connStatus, 'memberId' => $m->id])
+                </div>
+            @endif
         </div>
     </div>
 @endforeach

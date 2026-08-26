@@ -37,6 +37,10 @@ class CommunityWallController extends Controller
          * old wall-posts shape stays for anything that never asked. */
         if ($request->query('render') === 'feed') {
             $items = $result['items']->loadCount('comments');
+            // The card says who the author is — followers, co-farmers, and
+            // the mutual count whose tap opens the shared-faces sheet.
+            app(\App\Services\CommunitySocialService::class)
+                ->attachAuthorFacts($items, (int) Auth::id());
             $html = $items->map(
                 fn ($p) => view('community.partials.feed-post', ['post' => $p])->render()
             )->implode('');
@@ -138,10 +142,20 @@ class CommunityWallController extends Controller
         $videoPath = $clips[0]['video'] ?? null;
         $videoPoster = $clips[0]['poster'] ?? null;
 
+        /* A post on somebody ELSE's wall tags them by itself: the wall owner
+         * is who the words are for, and the mention makes that readable —
+         * and tappable — wherever the post travels. Skipped when the author
+         * already tagged them with their own hands. */
+        $body = trim((string) $request->input('body'));
+        if ((int) $wallOwner->id !== (int) Auth::id()
+            && ! in_array((int) $wallOwner->id, \App\Support\CommunityText::mentionedUserIds($body), true)) {
+            $body = trim('@[' . $wallOwner->full_name . '](' . $wallOwner->id . ')' . ($body !== '' ? ' ' . $body : ''));
+        }
+
         $post = CommunityWallPost::create([
             'wallUserId' => $wallOwner->id,
             'authorUserId' => Auth::id(),
-            'body' => $request->input('body') ?: '',
+            'body' => $body,
             // The first picture where every older renderer looks, the whole
             // list where the new one does. Schema-guarded, so a deploy that
             // has not run the migration yet posts the first photo instead of

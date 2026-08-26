@@ -91,14 +91,30 @@
             {{-- The numbers, as a row that scrolls rather than wraps: five of
                  them stacked two-and-three looks like a table nobody reads. --}}
             <div class="pf-stats">
-                <span class="pf-stat"><b>{{ $postCount }}</b><i>{{ \Illuminate\Support\Str::plural('post', $postCount) }}</i></span>
                 <span class="pf-stat"><b>{{ $followerCount }}</b><i>{{ \Illuminate\Support\Str::plural('follower', $followerCount) }}</i></span>
                 <span class="pf-stat"><b>{{ $followingCount }}</b><i>following</i></span>
-                {{-- Shared plans are not here: the tab below already carries
-                     that count, and a fifth number pushed the row off a
-                     360px screen entirely rather than half-showing. --}}
-                <span class="pf-stat"><b>{{ $connectionCount }}</b><i>{{ \Illuminate\Support\Str::plural('connection', $connectionCount) }}</i></span>
+                <span class="pf-stat"><b>{{ $connectionCount }}</b><i>{{ \Illuminate\Support\Str::plural('co-farmer', $connectionCount) }}</i></span>
+                @if (! $isSelf && ($mutualCount ?? 0) > 0)
+                    <button type="button" class="pf-stat js-mutual" data-mutual-user="{{ $member->id }}" data-mutual-name="{{ $member->firstName }}">
+                        <b>{{ $mutualCount }}</b><i>mutual {{ \Illuminate\Support\Str::plural('co-farmer', $mutualCount) }}</i>
+                    </button>
+                @endif
             </div>
+
+            {{-- The shared faces, fanned in a straight row — each circle
+                 leaning on the last. Tapping the strip opens the same list
+                 the number opens. Absent entirely when nothing is shared. --}}
+            @if (! $isSelf && ($mutualUsers ?? collect())->isNotEmpty())
+                <button type="button" class="pf-mutual-fan js-mutual" data-mutual-user="{{ $member->id }}" data-mutual-name="{{ $member->firstName }}"
+                        title="See your mutual co-farmers" aria-label="See your mutual co-farmers">
+                    @foreach ($mutualUsers as $mu)
+                        <span class="pf-fan-face">@include('community.partials.avatar', ['user' => $mu, 'size' => 'avatar-sm', 'link' => false])</span>
+                    @endforeach
+                    @if (($mutualCount ?? 0) > $mutualUsers->count())
+                        <span class="pf-fan-more">+{{ $mutualCount - $mutualUsers->count() }}</span>
+                    @endif
+                </button>
+            @endif
 
             @if (filled($member->bio))
                 <p class="pf-bio">{{ $member->bio }}</p>
@@ -355,6 +371,24 @@
     body.pf-full { padding-bottom:0; }
     body.pf-full main { padding-bottom:1.5rem; }
 
+    /* The stats can be buttons now (the mutual one opens the list): the
+       button chrome goes, the stat look stays. */
+    button.pf-stat { border:0; background:transparent; padding:0; cursor:pointer; font:inherit; }
+    button.pf-stat i { text-decoration:underline; text-decoration-style:dotted; text-underline-offset:2px; }
+    /* The shared faces, leaning on each other in one straight row. */
+    .pf-mutual-fan { display:flex; align-items:center; justify-content:center; margin:.65rem auto 0;
+        border:0; background:transparent; padding:.15rem .3rem; cursor:pointer; }
+    .pf-fan-face { display:inline-block; margin-left:-.55rem; border-radius:999px;
+        box-shadow:0 0 0 2px var(--color-white);
+        transition:transform .28s cubic-bezier(.22,1,.36,1); }
+    .pf-fan-face:first-child { margin-left:0; }
+    .pf-mutual-fan:hover .pf-fan-face { transform:translateY(-2px); }
+    .pf-fan-more { display:inline-flex; align-items:center; justify-content:center; margin-left:-.55rem;
+        width:2rem; height:2rem; border-radius:999px; background:var(--color-brand-50);
+        color:var(--color-brand-700); font-size:.68rem; font-weight:800;
+        box-shadow:0 0 0 2px var(--color-white); }
+    html.dark .pf-fan-face, html.dark .pf-fan-more { box-shadow:0 0 0 2px #26301c; }
+
     /* Five numbers: a centred row that scrolls, never a grid that wraps. */
     .pf-stats { display:flex; gap:.9rem; margin-top:.85rem; padding-bottom:.15rem;
         justify-content:center; overflow-x:auto; scrollbar-width:none; }
@@ -458,6 +492,7 @@
 
 @include('community.connect.partials.connect-js')
 @include('community.partials.avatar-zoom')
+@include('community.partials.mutual-js')
 @push('scripts')
 @include('community.partials.emoji-js')
 <script>

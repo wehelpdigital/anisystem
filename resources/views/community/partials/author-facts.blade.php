@@ -44,7 +44,11 @@
                 <span class="af-fact"><b>{{ $afMates }}</b> {{ \Illuminate\Support\Str::plural('co-farmer', $afMates) }}</span>
             @endif
             @if ($afMutual > 0)
-                <span class="af-fact"><b>{{ $afMutual }}</b> mutual {{ \Illuminate\Support\Str::plural('co-farmer', $afMutual) }}</span>
+                {{-- The number is a door: tap it and the shared faces slide
+                     up (community.partials.mutual-js, included by the pages
+                     that draw cards). --}}
+                <button type="button" class="af-fact js-mutual" data-mutual-user="{{ $user->id }}"
+                        data-mutual-name="{{ $user->firstName }}"><b>{{ $afMutual }}</b> mutual {{ \Illuminate\Support\Str::plural('co-farmer', $afMutual) }}</button>
             @endif
             @if ($afFollowers > 0)
                 <span class="af-fact"><b>{{ $afFollowers }}</b> {{ \Illuminate\Support\Str::plural('follower', $afFollowers) }}</span>

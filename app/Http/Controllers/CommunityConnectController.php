@@ -252,6 +252,34 @@ class CommunityConnectController extends Controller
         ]);
     }
 
+    /**
+     * The co-farmers the viewer SHARES with another member — the faces
+     * behind every "N mutual co-farmers" link. One list, rendered rows.
+     */
+    public function mutualWith(Request $request)
+    {
+        $otherId = (int) $request->query('userId');
+        $meId = (int) Auth::id();
+        if ($otherId <= 0 || $otherId === $meId) {
+            return response()->json(['success' => true, 'data' => ['count' => 0, 'html' => '']]);
+        }
+
+        $shared = array_values(array_intersect(
+            CommunityConnection::connectedIds($meId),
+            CommunityConnection::connectedIds($otherId)
+        ));
+        $users = User::whereIn('id', $shared ?: [0])
+            ->where('deleteStatus', 1)
+            ->orderBy('firstName')->orderBy('lastName')
+            ->get();
+
+        $html = $users->map(function ($u) {
+            return view('community.partials.mutual-row', ['user' => $u])->render();
+        })->implode('');
+
+        return response()->json(['success' => true, 'data' => ['count' => $users->count(), 'html' => $html]]);
+    }
+
     /** Incoming friend requests waiting on the viewer. */
     public function requests(Request $request)
     {
@@ -313,15 +341,30 @@ class CommunityConnectController extends Controller
         // following, which is the decision the page exists to support.
         $social = app(\App\Services\CommunitySocialService::class);
 
+        /* The co-farmers this viewer SHARES with the member: the count for
+         * the stats row and a handful of faces for the fanned strip. */
+        $mutualUsers = collect();
+        $sharedIds = [];
+        if (! $isSelf) {
+            $sharedIds = array_intersect(
+                CommunityConnection::connectedIds((int) Auth::id()),
+                CommunityConnection::connectedIds($member->id)
+            );
+            $mutualUsers = User::whereIn('id', $sharedIds ?: [0])
+                ->where('deleteStatus', 1)
+                ->orderBy('firstName')->limit(8)->get();
+        }
+
         return view('community.connect.profile', [
             'member' => $member,
             'status' => $status,
             'isSelf' => $isSelf,
             'plans' => $plans,
             'connectionCount' => count(CommunityConnection::connectedIds($member->id)),
+            'mutualCount' => count($sharedIds),
+            'mutualUsers' => $mutualUsers,
             'photos' => $photos,
             'videos' => $videos,
-            'postCount' => \App\Models\CommunityWallPost::active()->where('authorUserId', $member->id)->count(),
             'followerCount' => $social->followerCount($member->id),
             'followingCount' => $social->followingCount($member->id),
             'isFollowed' => ! $isSelf && $social->isFollowing((int) Auth::id(), (int) $member->id),

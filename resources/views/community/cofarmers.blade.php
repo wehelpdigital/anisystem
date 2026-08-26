@@ -95,6 +95,10 @@
 @include('community.partials.react-js')
 @include('community.partials.mention-js')
 @include('community.partials.avatar-zoom')
+@include('community.partials.mutual-js')
+{{-- The ✕ beside Follow (and any Connect this page ever draws) speaks
+     through the connection handlers — which this page never loaded. --}}
+@include('community.connect.partials.connect-js')
 <script>
 (() => {
     const grid = document.getElementById('cofarmersGrid');

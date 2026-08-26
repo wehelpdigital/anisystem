@@ -8,7 +8,8 @@
         <button type="button" class="btn btn-primary btn-sm conn-btn conn-grad" data-action="accept">Accept</button>
         <button type="button" class="btn btn-white btn-sm conn-btn" data-action="decline">Decline</button>
     @elseif ($status === 'connected')
-        <span class="badge badge-green">Connected</span>
-        <button type="button" class="btn btn-ghost btn-sm text-gray-400 conn-btn" data-action="disconnect" title="Remove connection">✕</button>
+        {{-- No "Connected" label: standing here says it. Just the way out,
+             which asks first (see connect-js). --}}
+        <button type="button" class="btn btn-ghost btn-sm text-gray-400 conn-btn" data-action="disconnect" title="Remove this co-farmer">✕</button>
     @endif
 </span>

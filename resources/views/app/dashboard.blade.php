@@ -881,6 +881,7 @@
 @include('community.partials.video-js')
 @include('community.partials.composer-preview-js')
 @include('community.partials.avatar-zoom')
+@include('community.partials.mutual-js')
 
 @push('scripts')
 <script>
