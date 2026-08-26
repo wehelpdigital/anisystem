@@ -1446,6 +1446,14 @@
             /* And if a row ever does outgrow the screen, it wraps rather than
                hiding controls off-edge. */
             #actHeaderBar { flex-wrap: wrap; row-gap: .35rem; }
+            /* The controls share the whole line instead of packing left with
+               a dead stretch after the last one: every button grows the same
+               amount, so the row reads as one fitted bar edge to edge. */
+            #actHeaderBar > .btn,
+            #actHeaderBar > .icon-btn,
+            #actHeaderBar > #addActivityWrap { flex: 1 1 auto; }
+            #actHeaderBar > .btn, #actHeaderBar > .icon-btn { justify-content: center; }
+            #addActivityWrap .btn { width: 100%; justify-content: center; }
         }
         /* The narrowest phones: the controls line carries six buttons now
            (Versions, ⋮, Today, the eye, +, Search), and at 360px the last
