@@ -125,19 +125,38 @@
             </div>
 
             {{-- The numbers, as a row that scrolls rather than wraps: five of
-                 them stacked two-and-three looks like a table nobody reads. --}}
-            <div class="pf-stats">
-                <span class="pf-stat"><b>{{ $followerCount }}</b><i>{{ \Illuminate\Support\Str::plural('follower', $followerCount) }}</i></span>
-                <span class="pf-stat"><b>{{ $followingCount }}</b><i>following</i></span>
-                <span class="pf-stat"><b>{{ $connectionCount }}</b><i>{{ \Illuminate\Support\Str::plural('co-farmer', $connectionCount) }}</i></span>
-                @if (! $isSelf && ($mutualCount ?? 0) > 0)
-                    {{-- Just "mutual": the long word was what clipped this
-                         row off the screen's right edge. --}}
-                    <button type="button" class="pf-stat js-mutual" data-mutual-user="{{ $member->id }}" data-mutual-name="{{ $member->firstName }}">
-                        <b>{{ $mutualCount }}</b><i>mutual</i>
-                    </button>
-                @endif
-            </div>
+                 them stacked two-and-three looks like a table nobody reads.
+
+                 A zero is not a fact worth a word. "0 followers" under a new
+                 member's name reads as a verdict on them, and three of them
+                 in a row is a shelf of nothing; each number stays away until
+                 it has something to say, and the row itself goes when none
+                 of them do. --}}
+            @php
+                $pfMutual = $isSelf ? 0 : (int) ($mutualCount ?? 0);
+                $pfHasStats = $followerCount > 0 || $followingCount > 0
+                    || $connectionCount > 0 || $pfMutual > 0;
+            @endphp
+            @if ($pfHasStats)
+                <div class="pf-stats">
+                    @if ($followerCount > 0)
+                        <span class="pf-stat"><b>{{ $followerCount }}</b><i>{{ \Illuminate\Support\Str::plural('follower', $followerCount) }}</i></span>
+                    @endif
+                    @if ($followingCount > 0)
+                        <span class="pf-stat"><b>{{ $followingCount }}</b><i>following</i></span>
+                    @endif
+                    @if ($connectionCount > 0)
+                        <span class="pf-stat"><b>{{ $connectionCount }}</b><i>{{ \Illuminate\Support\Str::plural('co-farmer', $connectionCount) }}</i></span>
+                    @endif
+                    @if ($pfMutual > 0)
+                        {{-- Just "mutual": the long word was what clipped this
+                             row off the screen's right edge. --}}
+                        <button type="button" class="pf-stat js-mutual" data-mutual-user="{{ $member->id }}" data-mutual-name="{{ $member->firstName }}">
+                            <b>{{ $pfMutual }}</b><i>mutual</i>
+                        </button>
+                    @endif
+                </div>
+            @endif
 
             {{-- The shared faces, fanned in a straight row — each circle
                  leaning on the last. Tapping the strip opens the same list
@@ -225,10 +244,12 @@
             Wall</button>
         <button type="button" class="profile-tab" data-tab="photos" aria-selected="false">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            Photos <span class="pt-n">{{ $photos->total() }}</span></button>
+            {{-- The count is a boast, not a label: no photos, no badge. The
+                 door stays open either way. --}}
+            Photos @if ($photos->total() > 0)<span class="pt-n">{{ $photos->total() }}</span>@endif</button>
         <button type="button" class="profile-tab" data-tab="videos" aria-selected="false">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-            Videos <span class="pt-n">{{ $videos->total() }}</span></button>
+            Videos @if ($videos->total() > 0)<span class="pt-n">{{ $videos->total() }}</span>@endif</button>
     </div>
 
     <div data-tab-panel="wall">
