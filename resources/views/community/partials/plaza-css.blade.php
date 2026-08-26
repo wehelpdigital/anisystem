@@ -915,7 +915,7 @@
        enough for the face's outstanding half AND the cloud over it — so the
        column keeps one rhythm whether or not a member has said anything.
        (Adjacent card margins collapse; this top margin IS the gap.) */
-    .mc-card { margin-top: 4.1rem; }
+    .mc-card { margin-top: 5.1rem; }
     .mc-name-row { display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; min-width: 0; }
     /* Connect and Accept wear the composers' living green: the one deliberate
        act on the card, dressed like every other primary act in the plaza. */
