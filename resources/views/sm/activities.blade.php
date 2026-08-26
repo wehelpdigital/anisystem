@@ -1449,15 +1449,23 @@
             /* The controls share the whole line instead of packing left with
                a dead stretch after the last one: every button grows the same
                amount, so the row reads as one fitted bar edge to edge. The
-               eye, + and Search moved to the toolbar row, which fills the
-               same way for the same reason. */
+               eye and Search moved to the toolbar row, which fills the same
+               way for the same reason. */
             #actHeaderBar > .btn,
-            #actHeaderBar > .icon-btn { flex: 1 1 auto; }
+            #actHeaderBar > .icon-btn,
+            #actHeaderBar > #addActivityWrap { flex: 1 1 auto; }
             #actHeaderBar > .btn, #actHeaderBar > .icon-btn { justify-content: center; }
-            #actToolbar > .btn,
-            #actToolbar > #addActivityWrap { flex: 1 1 auto; }
-            #actToolbar > .btn { justify-content: center; }
+            #actToolbar > .btn { flex: 1 1 auto; justify-content: center; }
             #addActivityWrap .btn { width: 100%; justify-content: center; }
+        }
+        /* Today, while it is a lone arrow: stretched across a share of the
+           line it read as a wide empty slab with a mark in the middle of it,
+           and a square is what an icon on its own wants (2.25rem is .btn-sm's
+           own height). Keyed to 639px, not 767px, because its word comes back
+           at sm — squaring it up there would crop the label. */
+        @media (max-width: 639px) {
+            #actHeaderBar > #todayTomorrowBtn { flex: 0 0 auto; width: 2.25rem;
+                padding-left: 0; padding-right: 0; }
         }
         /* The narrowest phones: the toolbar line carries six controls now
            (Modules, Tools, Notice, the eye, +, Search), and at 360px the last
@@ -2287,27 +2295,17 @@
              every page. Empty until the note is folded away. --}}
         <span data-mod-say-slot></span>
 
-        {{-- The three the board is worked with, standing where Undo and Redo
-             used to: what the board shows, what to add to it, and how to find
-             something on it. Undo and Redo have gone into the Tools menu —
-             they are the rarer answer to a mistake, not a daily control — but
-             stay in the DOM (toolbar-in-menu) so the menu rows can forward to
-             their handlers. --}}
+        {{-- Two of the three the board is worked with, standing where Undo and
+             Redo used to: what the board shows, and how to find something on
+             it. (Add Activity stayed on the controls row, beside the rest of
+             what is done TO the board.) Undo and Redo have gone into the Tools
+             menu — they are the rarer answer to a mistake, not a daily control
+             — but stay in the DOM (toolbar-in-menu) so the menu rows can
+             forward to their handlers. --}}
         <button type="button" id="viewFilterBtn" class="btn btn-white btn-sm shrink-0 md:hidden" data-activities-only
                 title="What the board shows" aria-label="What the board shows">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
         </button>
-        <div class="shrink-0" id="addActivityWrap" data-activities-only>
-            {{-- The board's most prominent write: drawn where everyone else has it,
-                 greyed and inert, saying why. openAddActivitySheet refuses too. --}}
-            @if (! \App\Support\WorkerContext::activeGrant() || \App\Support\WorkerContext::canEdit())
-            <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm{{ $boardMayEdit ? '' : ' is-locked' }}"
-                    @disabled(! $boardMayEdit) @if (! $boardMayEdit) title="{{ $whyNoEdit }}" @endif>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-                <span class="hidden sm:inline">Add Activity</span>
-            </button>
-            @endif
-        </div>
         {{-- Search & filter, one tap from the board. Icon-only on a phone so
              the row keeps to its line; the word joins it from sm up. Opens the
              same filters sheet the old menu row opened, and wears the same
@@ -2545,6 +2543,17 @@
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z"/></svg>
         <span class="hidden sm:inline">Quick Share</span>
     </button>
+    <div class="shrink-0" id="addActivityWrap" data-activities-only>
+        {{-- The board's most prominent write: drawn where everyone else has it,
+             greyed and inert, saying why. openAddActivitySheet refuses too. --}}
+        @if (! \App\Support\WorkerContext::activeGrant() || \App\Support\WorkerContext::canEdit())
+        <button type="button" id="addActivityBtn" class="btn btn-primary btn-sm{{ $boardMayEdit ? '' : ' is-locked' }}"
+                @disabled(! $boardMayEdit) @if (! $boardMayEdit) title="{{ $whyNoEdit }}" @endif>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+            <span class="hidden sm:inline">Add Activity</span>
+        </button>
+        @endif
+    </div>
 </div>
 
 
