@@ -496,6 +496,9 @@ class CommunityConnectController extends Controller
                 'deletable' => (bool) $m['deletable'],
                 'deleteId'  => $m['deleteId'],
                 'ts'        => $m['ts'],
+                // The card's words: what the clip is and where it was shared.
+                'title'     => $m['title'] ?? null,
+                'source'    => $m['source'] ?? null,
             ])
             ->values();
     }
@@ -571,6 +574,9 @@ class CommunityConnectController extends Controller
             'poster' => $stored['poster'] ? \App\Support\MediaStore::url($stored['poster']) : null,
             'deletable' => true,
             'deleteId' => $video->id,
+            'title' => 'Video',
+            'source' => 'Your profile',
+            'ts' => $video->created_at,
         ]])->render();
 
         return response()->json(['success' => true, 'message' => 'Video added.', 'data' => ['html' => $html]]);

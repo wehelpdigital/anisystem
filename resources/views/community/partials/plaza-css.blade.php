@@ -1412,15 +1412,31 @@
     @media (hover:none) { .profile-photo-del { opacity:1; } }
 
     /* --- Profile video album --- */
-    /* One film per row on a phone, two from sm — a video wants the width a
-       thumbnail grid was denying it, and the native controls need room to
-       be usable at all. */
-    .profile-videos-grid { display:grid; grid-template-columns:1fr; gap:.9rem; }
-    @media (min-width:640px) { .profile-videos-grid { grid-template-columns:repeat(2, 1fr); } }
-    .profile-video-tile { position:relative; aspect-ratio:16/9; border-radius:1rem; overflow:hidden;
-        box-shadow:0 12px 28px -20px rgb(0 0 0 / .6);
-        transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
-    .profile-video-tile:hover { transform:translateY(-2px); box-shadow:0 16px 34px -20px rgb(0 0 0 / .65); }
+    /* The gallery picker's card, worn here: two across on a phone, a square
+       clip with its words on a line of their own below — the same shape the
+       wall's "from the gallery" sheet draws a video in. */
+    .profile-videos-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:.6rem; }
+    @media (min-width:768px) { .profile-videos-grid { grid-template-columns:repeat(3, 1fr); } }
+    .profile-video-tile { position:relative; display:block; border-radius:.7rem; overflow:hidden;
+        border:1px solid var(--color-gray-200); background:var(--color-white);
+        transition:transform .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1),
+            box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .profile-video-tile:hover { transform:translateY(-2px); border-color:#a8cc7e;
+        box-shadow:0 8px 20px -12px rgb(0 0 0 / .45); }
+    html.dark .profile-video-tile { background:#1c2416; border-color:#2b3a1c; }
+    .pvt-shot { position:relative; display:block; aspect-ratio:1; overflow:hidden;
+        background:#10160c center / cover no-repeat; }
+    .pvt-shot .profile-video-el { position:absolute; inset:0; background:transparent; }
+    /* The clapperboard pill the picker's clips wear, same corner. */
+    .pvt-badge { z-index:2; position:absolute; left:.3rem; top:.3rem; display:inline-flex; align-items:center;
+        gap:.15rem; padding:.1rem .35rem; border-radius:999px; background:rgb(17 24 39 / .72);
+        color:#fff; font-size:.62rem; font-weight:800; letter-spacing:.02em; pointer-events:none; }
+    .pvt-meta { display:block; padding:.45rem .6rem .55rem; }
+    .pvt-name { display:block; font-size:.7rem; font-weight:700; color:var(--color-gray-700);
+        overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    html.dark .pvt-name { color:#e5e9f5; }
+    .pvt-sub { display:block; font-size:.62rem; color:var(--color-gray-400);
+        overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .profile-video-tile-legacy { position:relative; aspect-ratio:16/9; border-radius:.6rem; overflow:hidden;
         background:#000; }
     .profile-video-el { width:100%; height:100%; object-fit:cover; display:block; background:#000; }
