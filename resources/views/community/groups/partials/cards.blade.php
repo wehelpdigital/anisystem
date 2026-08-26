@@ -21,7 +21,17 @@
                     <img src="{{ \App\Support\MediaStore::url($g->bannerImagePath) }}" alt="" loading="lazy">
                 @endif
             </div>
-            <a href="{{ route('community.groups.show', ['id' => $g->id]) }}" class="dc-face {{ $hue }}" aria-hidden="true" tabindex="-1">
+            {{-- With a real photo the face opens the photo viewer (see
+                 community.partials.avatar-zoom) carrying the room's own facts;
+                 a monogram stays a plain door — two letters have nothing
+                 bigger to show. --}}
+            <a href="{{ route('community.groups.show', ['id' => $g->id]) }}" class="dc-face {{ $hue }}" aria-hidden="true" tabindex="-1"
+                @if ($g->coverImagePath)
+                    data-gz-name="{{ $g->name }}"
+                    @if (filled($g->description)) data-gz-desc="{{ \Illuminate\Support\Str::limit($g->description, 120) }}" @endif
+                    data-gz-members="{{ $g->member_count }}" data-gz-topics="{{ $g->post_count }}" data-gz-replies="{{ $g->reply_count ?? 0 }}"
+                    data-gz-url="{{ route('community.groups.show', ['id' => $g->id]) }}"
+                @endif>
                 @if ($g->coverImagePath)
                     <img src="{{ \App\Support\MediaStore::url($g->coverImagePath) }}" alt="">
                 @else

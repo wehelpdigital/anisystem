@@ -339,6 +339,8 @@
 </div>
 {{-- The gallery sheet itself. @once inside, so including it here is safe. --}}
 @include('sm.partials.media-picker')
+{{-- Tap a room's face to see it big, with the room's own facts under it. --}}
+@include('community.partials.avatar-zoom')
 @endsection
 
 @push('scripts')
