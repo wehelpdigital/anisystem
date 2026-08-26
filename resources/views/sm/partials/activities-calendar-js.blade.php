@@ -209,7 +209,7 @@ const __init = () => {
         root.classList.toggle('hidden', !isCal);
         list.classList.toggle('hidden', isCal);
 
-        byId('viewToggleLabel').textContent = isCal ? 'List' : 'Calendar';
+        byId('viewToggleLabel').textContent = isCal ? 'List view' : 'Calendar view';
         // Empty-date rows only exist in the list, so its toggle hides here.
         // Squeeze-animate on user switches; snap on the initial restore.
         const emptyBtn = byId('toggleEmptyDatesBtn');

@@ -9509,6 +9509,7 @@ document.addEventListener('DOMContentLoaded', () => {
             done: 'toggleDoneDaysBtn',
             hidden: 'toggleHiddenBtn',
             contract: 'contractAllBtn',
+            view: 'viewToggleBtn',
         };
 
         /* Day-zero only: the anchors every other date is counted from. Not a
@@ -9560,6 +9561,15 @@ document.addEventListener('DOMContentLoaded', () => {
             $id('vfHiddenRow')?.classList.toggle('is-gone', n === 0);
             const sub = $id('vfHiddenSub');
             if (sub) sub.textContent = n + (n === 1 ? ' activity kept out of prints' : ' activities kept out of prints');
+            // The view row names the view a tap switches TO, same as the
+            // real toolbar toggle it forwards to.
+            const vName = $id('vfViewName');
+            if (vName) {
+                const toCalendar = ($id('viewToggleLabel')?.textContent || '').includes('Calendar');
+                vName.textContent = toCalendar ? 'Calendar view' : 'List view';
+                const vSub = $id('vfViewSub');
+                if (vSub) vSub.textContent = toCalendar ? 'See the days on a month grid' : 'Back to the running list';
+            }
             btn.classList.toggle('is-filtering', emptyHidden || doneHidden || dzOnly);
             applyDayZero();
         }
@@ -9576,9 +9586,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const target = VF_TARGETS[row.dataset.viewFilter];
             if (!target) return;
             $id(target)?.click();
-            // Contract all is a one-shot action — get out of the way so the
-            // folded board is what you see. The rest are toggles: stay open.
-            if (row.dataset.viewFilter === 'contract') closeSheet('viewFilterSheet');
+            // Contract all and the view switch change the whole board — get
+            // out of the way so the result is what you see. The rest are
+            // toggles: stay open.
+            if (row.dataset.viewFilter === 'contract' || row.dataset.viewFilter === 'view') closeSheet('viewFilterSheet');
             else setTimeout(paint, 60);   // let the real toggle repaint first
         });
         document.addEventListener('activities:rendered', paint);

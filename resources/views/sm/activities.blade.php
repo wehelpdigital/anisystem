@@ -2277,7 +2277,7 @@
                 title="Switch to calendar view" aria-pressed="false">
             <svg id="viewIconCalendar" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
             <svg id="viewIconList" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            <span id="viewToggleLabel">Calendar</span>
+            <span id="viewToggleLabel">Calendar view</span>
         </button>
         <button type="button" id="openNotesBtn" class="btn btn-white btn-sm toolbar-desktop-action" data-activities-only
                 title="Open the schedule notebook">
@@ -3379,10 +3379,8 @@
             mirrorBadge('openDraftsBtn', 'actDraftsBadge', 'draftsBadge');
             mirrorBadge('openSearchBtn', 'actFilterBadge', 'activeFilterCount');
 
-            // Calendar / List label mirrors the real toggle.
-            const viewLabel = document.getElementById('actViewLabel');
-            const realView = document.getElementById('viewToggleLabel');
-            if (viewLabel && realView) viewLabel.textContent = realView.textContent;
+            // (The Calendar/List switch lives in the eye menu now — see
+            // #viewFilterSheet — so there is no view row here to mirror.)
 
             // Show/Hide Hidden: mirror label, hide the row when nothing is hidden.
             const hiddenRow = document.querySelector('.activity-action-row[data-forward="toggleHiddenBtn"]');
