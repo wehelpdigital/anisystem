@@ -136,9 +136,6 @@
                 </div>
             @endif
         </div>
-        @if (count($rows) > 0)
-            <p class="rk-foot">Top {{ count($rows) }} · counted from everything you have done in the community, refreshed every few minutes.</p>
-        @endif
     </div>
 
     {{-- ---------------- Tasks ---------------- --}}
