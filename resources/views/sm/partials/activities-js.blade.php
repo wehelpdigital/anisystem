@@ -236,6 +236,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const d = parseLocalDate(iso);
         return d ? `${DAY_LONG[d.getDay()]}, ${MONTH_LONG[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}` : iso;
     }
+    /* "August 22, 2029" — a date the way it is said out loud, for the toasts.
+     *
+     * A toast is read once, in passing, and often while the thumb is still
+     * moving. "2029-08-22" makes the reader do the parsing; the month's own
+     * name does not. The weekday is left off here on purpose: it is the one
+     * part nobody needs to confirm a move landed where they meant. */
+    function prettyDateWords(iso) {
+        const d = parseLocalDate(iso);
+        return d ? `${MONTH_LONG[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}` : iso;
+    }
     function timeRequiredLabel(v) {
         if (v === 'whole') return 'Whole day';
         if (v === 'n/a') return 'N/A';
@@ -4272,7 +4282,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         api(U.reorder(), { method: 'POST', body: { items } })
             .then(() => {
-                toast('Moved to ' + newDate);
+                toast('Moved to ' + prettyDateWords(newDate));
                 recomputeLotDayZero();
                 pushUndo('Move activity to ' + newDate, () => restoreBoardSnapshot(snapshot));
             })
@@ -5657,7 +5667,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             reorderAndRenumberActivities();
             recomputeLotDayZero();
-            toast(`Moved ${items.length} ${items.length === 1 ? 'activity' : 'activities'} to ${newDate}`
+            toast(`Moved ${items.length} ${items.length === 1 ? 'activity' : 'activities'} to ${prettyDateWords(newDate)}`
                 + (lockedCount ? ` · ${lockedCount} done stayed locked` : ''));
             pushUndo(`Move group from ${oldDate} to ${newDate}`, () => restoreBoardSnapshot(snapshot));
             return true;
@@ -5720,7 +5730,7 @@ document.addEventListener('DOMContentLoaded', () => {
         reorderAndRenumberActivities();
         recomputeLotDayZero();
 
-        if (succeeded.length > 0) toast(`Deleted ${succeeded.length} ${succeeded.length === 1 ? 'activity' : 'activities'} on ${dateKey}`);
+        if (succeeded.length > 0) toast(`Deleted ${succeeded.length} ${succeeded.length === 1 ? 'activity' : 'activities'} on ${prettyDateWords(dateKey)}`);
         if (failed.length > 0) toast(`${failed.length} could not be deleted — refresh and try again.`, 'error');
 
         if (succeeded.length > 0) {
@@ -6257,7 +6267,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     .forEach((g) => paintDayCash(g));
             }
             if (orderIds && orderIds.length > 1) saveDxOrder('expense', toDate);
-            toast('Expense moved to ' + prettyDateFull(toDate) + '.');
+            toast('Expense moved to ' + prettyDateWords(toDate) + '.');
         } catch (err) {
             toast(err.message, 'error');
         }
@@ -6502,7 +6512,7 @@ document.addEventListener('DOMContentLoaded', () => {
             repaintDayCash(toDate);
             toast(fromDate === toDate
                 ? (kind === 'income' ? 'Income strip moved.' : 'Expense strip moved.')
-                : ((kind === 'income' ? 'Income' : 'Expenses') + ' moved to ' + prettyDateFull(toDate) + '.'));
+                : ((kind === 'income' ? 'Income' : 'Expenses') + ' moved to ' + prettyDateWords(toDate) + '.'));
         } catch (err) {
             toast(err.message, 'error');
             // The board guessed; the server said no. Put the guess back.
@@ -6682,7 +6692,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderDayIncome(toDate);
             repaintDayCash(fromDate);
             repaintDayCash(toDate);
-            toast('Income moved to ' + prettyDateFull(toDate) + '.');
+            toast('Income moved to ' + prettyDateWords(toDate) + '.');
         } catch (err) { toast(err.message, 'error'); }
     }
 
@@ -7246,7 +7256,7 @@ document.addEventListener('DOMContentLoaded', () => {
             _refreshDateNoteUI(sourceDate, '', []);
             _refreshDateNoteUI(targetDate, content, media);
             _land($qs(`#activitiesList .date-note-block[data-date="${targetDate}"]`));
-            toast('Note moved to ' + prettyDate(targetDate) + '.');
+            toast('Note moved to ' + prettyDateWords(targetDate) + '.');
         } catch (err) { _setMoving(srcBlk, false); toast(err.message || 'Could not move the note.', 'error'); }
     }
 
@@ -7269,7 +7279,7 @@ document.addEventListener('DOMContentLoaded', () => {
             _refreshProgressMarkerUI(sourceDate, null);
             _refreshProgressMarkerUI(targetDate, { id: (res.data && res.data.id) || info.id, note: info.note || '' });
             _land($qs(`#activitiesList .progress-marker[data-date="${targetDate}"]`));
-            toast('Marker moved to ' + prettyDate(targetDate) + '.');
+            toast('Marker moved to ' + prettyDateWords(targetDate) + '.');
         } catch (err) { _setMoving(srcMk, false); toast(err.message || 'Could not move the marker.', 'error'); }
     }
 
@@ -8467,7 +8477,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dragBoardSnapshot = null;
         api(U.reorder(), { method: 'POST', body: { items } })
             .then(() => {
-                toast(oldDate && oldDate !== newDate ? 'Moved to ' + newDate : 'Order saved');
+                toast(oldDate && oldDate !== newDate ? 'Moved to ' + prettyDateWords(newDate) : 'Order saved');
                 recomputeLotDayZero();
                 if (snapshot && snapshot.length) {
                     const label = (oldDate && oldDate !== newDate) ? 'Move activity to ' + newDate : 'Reorder activities';
@@ -8529,7 +8539,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dragBoardSnapshot = null;
         api(U.reorder(), { method: 'POST', body: { items } })
             .then(() => {
-                toast('Moved to ' + newDate);
+                toast('Moved to ' + prettyDateWords(newDate));
                 recomputeLotDayZero();
                 if (snapshot && snapshot.length) {
                     pushUndo('Move activity to ' + newDate, () => restoreBoardSnapshot(snapshot));
