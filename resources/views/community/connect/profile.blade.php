@@ -41,9 +41,12 @@
                     <span class="status-bubble {{ filled($member->statusBubble) ? '' : 'is-empty' }}" id="statusBubble"
                           @if ($isSelf) role="button" tabindex="0" title="Set your status" data-status-bubble @endif><span class="status-bubble-text" @if ($isSelf) data-status-text @endif>{{ $member->statusBubble ?: ($isSelf ? "💭 What's on your mind?" : '') }}</span></span>
                 </span>
+                {{-- Face first, name under it, the rank on its own line —
+                     the same order the ranking page and the member cards
+                     speak, and nothing left printing over the cover. --}}
                 <div class="pf-name">
-                    <h2>{{ $member->full_name }}
-                        @include('community.partials.rank-badge', ['rankUser' => $member, 'rankBig' => true])</h2>
+                    <h2>{{ $member->full_name }}</h2>
+                    <p class="pf-rank">@include('community.partials.rank-badge', ['rankUser' => $member, 'rankBig' => true])</p>
                     @if (filled($member->headline))
                         <p class="pf-headline">{{ $member->headline }}</p>
                     @endif
@@ -77,7 +80,7 @@
                     <a href="{{ route('account.index') }}" class="btn btn-white btn-sm">✏️ Edit profile</a>
                 @else
                     @if ($member->allowMessages)
-                        <button type="button" class="btn btn-primary btn-sm js-open-dm" data-dm-user="{{ $member->id }}" data-dm-name="{{ $member->full_name }}">
+                        <button type="button" class="btn btn-primary btn-sm conn-grad js-open-dm" data-dm-user="{{ $member->id }}" data-dm-name="{{ $member->full_name }}">
                             💬 Message
                         </button>
                     @endif
@@ -232,10 +235,13 @@
     .pf-cover { height:7rem; background-size:cover; background-repeat:no-repeat; background-color:var(--color-gray-100); }
     @media (min-width:640px) { .pf-cover { height:11rem; } }
     .pf-body { padding:0 1rem 1rem; }
-    /* The face sits on the cover's edge — half over, half under — which is
-       what makes a header read as a profile rather than as a banner ad. */
-    .pf-id { display:flex; align-items:flex-end; gap:.85rem; margin-top:-2rem; }
-    .pf-face { position:relative; display:inline-block; flex:none; width:5rem; height:5rem;
+    /* The face sits on the cover's edge — half over, half under — and the
+       name stands UNDER it, centred, the way the ranking page and every
+       member card introduce a person. Side by side, the name printed over
+       the cover behind the thought cloud. */
+    .pf-id { display:flex; flex-direction:column; align-items:center; text-align:center;
+        margin-top:-2.75rem; }
+    .pf-face { position:relative; display:inline-block; flex:none; width:5.5rem; height:5.5rem;
         border-radius:999px; box-shadow:0 0 0 3px var(--color-white); background:var(--color-white); }
     /* The face is a circle whatever shape the file is.
        On your own profile the avatar arrives wrapped in .avatar-online-wrap
@@ -254,20 +260,23 @@
     .pf-name { min-width:0; padding-bottom:.15rem; }
     .pf-name h2 { font-family:var(--font-heading); font-size:1.15rem; font-weight:800; line-height:1.2;
         color:var(--color-gray-900); overflow-wrap:anywhere; }
-    .pf-headline { font-size:.82rem; font-weight:600; color:var(--color-gray-600); margin-top:.1rem; }
-    .pf-loc { display:flex; align-items:center; gap:.25rem; font-size:.78rem; color:var(--color-gray-500); margin-top:.15rem; }
+    .pf-rank { margin-top:.3rem; }
+    .pf-rank .rankb { pointer-events:none; }
+    .pf-headline { font-size:.82rem; font-weight:600; color:var(--color-gray-600); margin-top:.3rem; }
+    .pf-loc { display:flex; align-items:center; justify-content:center; gap:.25rem; font-size:.78rem; color:var(--color-gray-500); margin-top:.2rem; }
     .pf-loc svg { width:.85rem; height:.85rem; color:var(--color-gray-400); flex:none; }
 
-    /* Five numbers: a row that scrolls, never a grid that wraps two-and-three. */
+    /* Five numbers: a centred row that scrolls, never a grid that wraps. */
     .pf-stats { display:flex; gap:.9rem; margin-top:.85rem; padding-bottom:.15rem;
-        overflow-x:auto; scrollbar-width:none; }
+        justify-content:center; overflow-x:auto; scrollbar-width:none; }
     .pf-stats::-webkit-scrollbar { display:none; }
     .pf-stat { flex:none; display:flex; align-items:baseline; gap:.28rem; }
     .pf-stat b { font-size:.95rem; font-weight:800; color:var(--color-gray-900); }
     .pf-stat i { font-style:normal; font-size:.72rem; font-weight:600; color:var(--color-gray-500); }
-    .pf-bio { font-size:.85rem; color:var(--color-gray-700); margin-top:.75rem; white-space:pre-line; overflow-wrap:anywhere; }
-    .pf-acts { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; margin-top:.9rem;
-        padding-top:.9rem; border-top:1px solid var(--color-gray-100); }
+    .pf-bio { font-size:.85rem; color:var(--color-gray-700); margin-top:.75rem; text-align:center;
+        white-space:pre-line; overflow-wrap:anywhere; }
+    .pf-acts { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:.5rem;
+        margin-top:.9rem; padding-top:.9rem; border-top:1px solid var(--color-gray-100); }
     html.dark .pf-acts { border-top-color:rgb(255 255 255 / .08); }
 
     /* ---- About panel ---- */
