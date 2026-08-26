@@ -944,7 +944,8 @@
          and nothing a worker can start, so it is not drawn for them. --}}
     @if (! $isWorkerHere)
     <a href="{{ route('sm.create') }}"
-        class="md:hidden fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full btn-primary shadow-lg flex items-center justify-center sweep-fill sweep-green"
+        class="md:hidden fixed right-4 z-30 w-14 h-14 rounded-full btn-primary shadow-lg flex items-center justify-center sweep-fill sweep-green"
+        style="bottom: calc(3.5rem + 30px + env(safe-area-inset-bottom, 0px))"
         aria-label="New cropping schedule">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
     </a>
