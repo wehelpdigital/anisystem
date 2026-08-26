@@ -1446,6 +1446,15 @@
             /* And if a row ever does outgrow the screen, it wraps rather than
                hiding controls off-edge. */
             #actHeaderBar { flex-wrap: wrap; row-gap: .35rem; }
+        }
+        /* The narrowest phones: the controls line carries six buttons now
+           (Versions, ⋮, Today, the eye, +, Search), and at 360px the last
+           one was ~25px short of the line. Slimmer button air buys it back,
+           so Search always sits beside + instead of dropping a line. */
+        @media (max-width: 400px) {
+            #actHeaderBar .btn { padding-left: .55rem; padding-right: .55rem; }
+        }
+        @media (max-width: 767px) {
             /* These two moved into the eye sheet on phones; the Tools rows
                would be the duplicates now. They stay for desktop, where
                Contract All has no other entry point at all. */
@@ -2502,6 +2511,17 @@
         </button>
         @endif
     </div>
+    {{-- Search & filter, one tap from the board — it lived only behind the
+         Tools menu, three taps deep. Icon-only on a phone so the row keeps
+         to its one line; the word joins it from sm up. Opens the same
+         filters sheet the old menu row opened, and wears the same live
+         filter-count badge (mirrored in syncActionsSheet). --}}
+    <button type="button" id="searchToolbarBtn" data-sheet-open="filtersSheet" class="btn btn-white btn-sm shrink-0 relative" data-activities-only
+            title="Search &amp; filter the board" aria-label="Search and filter the board">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
+        <span class="hidden sm:inline">Search</span>
+        <span id="toolbarFilterCount" class="absolute -top-0.5 -right-0.5 hidden min-w-5 h-5 px-1 rounded-full bg-brand-600 text-white text-[0.625rem] font-bold items-center justify-center">0</span>
+    </button>
 </div>
 
 
@@ -3375,9 +3395,10 @@
         };
 
         function syncActionsSheet() {
-            // Drafts / Search filter counts.
+            // Drafts count in the menu; the filter count rides the toolbar's
+            // own Search button now (it left the menu for the board).
             mirrorBadge('openDraftsBtn', 'actDraftsBadge', 'draftsBadge');
-            mirrorBadge('openSearchBtn', 'actFilterBadge', 'activeFilterCount');
+            mirrorBadge('searchToolbarBtn', 'toolbarFilterCount', 'activeFilterCount');
 
             // (The Calendar/List switch lives in the eye menu now — see
             // #viewFilterSheet — so there is no view row here to mirror.)
