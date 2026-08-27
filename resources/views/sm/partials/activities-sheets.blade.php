@@ -643,51 +643,85 @@
                  fields: a .form-input is width:100%, and 100% of the card
                  PLUS a margin either side is wider than the card. --}}
             <div class="mir-find-in"><div class="mir-find-pad">
-                {{-- Three ways to ask, because there are three ways people
-                     remember a job: what it is called, the day it falls on,
-                     or how far into the crop it is. --}}
-                <div class="mir-modes" role="tablist" aria-label="Search by">
-                    <button type="button" class="mir-mode is-on" data-mir-mode="all">All</button>
-                    <button type="button" class="mir-mode" data-mir-mode="text">Text</button>
-                    <button type="button" class="mir-mode" data-mir-mode="date">Date</button>
-                    <button type="button" class="mir-mode" data-mir-mode="day">Day no.</button>
+                {{-- Three sections, because they are three different acts:
+                     FIND something, NARROW what came back, then MOVE about in
+                     it. Run together they read as one long form of unrelated
+                     controls, which is how a search card stops being used. --}}
+                <div class="mir-sec">
+                    <p class="mir-sec-h">Find</p>
+                    {{-- Three ways to ask, because there are three ways people
+                         remember a job: what it is called, the day it falls
+                         on, or how far into the crop it is. --}}
+                    <div class="mir-modes" role="tablist" aria-label="Search by">
+                        <button type="button" class="mir-mode is-on" data-mir-mode="all">All</button>
+                        <button type="button" class="mir-mode" data-mir-mode="text">Text</button>
+                        <button type="button" class="mir-mode" data-mir-mode="date">Date</button>
+                        <button type="button" class="mir-mode" data-mir-mode="day">Day no.</button>
+                    </div>
+                    <input type="search" id="mirrorQuery" class="form-input mir-input hidden"
+                           placeholder="Search activities, lots or items…" autocomplete="off">
+                    {{-- A range rather than a single day: "that week" and
+                         "since transplanting" are the questions actually asked
+                         of a plan. Either end may be left open — a start alone
+                         means "from then on", an end alone "up to then".
+
+                         Each end is a tag that summons the calendar rather
+                         than a field sitting open: two date fields side by
+                         side dominate a card that is mostly tags, and say
+                         "type something" when the answer is always picked. --}}
+                    <div class="mir-range mir-input hidden" id="mirrorRange">
+                        <button type="button" class="mir-datebtn" id="mirrorFromBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            <span class="mir-datebtn-t" id="mirrorFromT">From</span>
+                        </button>
+                        <span class="mir-range-to" aria-hidden="true">→</span>
+                        <button type="button" class="mir-datebtn" id="mirrorToBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            <span class="mir-datebtn-t" id="mirrorToT">To</span>
+                        </button>
+                        <button type="button" class="mir-datex hidden" id="mirrorDateClear" aria-label="Clear the dates">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+                        </button>
+                        {{-- The real fields, kept out of sight. The tags call
+                             showPicker() on them, so the calendar is the
+                             browser's own — the one the phone already knows. --}}
+                        <input type="date" id="mirrorFrom" class="mir-datehide" aria-label="From date" tabindex="-1">
+                        <input type="date" id="mirrorTo" class="mir-datehide" aria-label="To date" tabindex="-1">
+                    </div>
                 </div>
-                <input type="search" id="mirrorQuery" class="form-input mir-input hidden"
-                       placeholder="Search activities, lots or items…" autocomplete="off">
-                {{-- A range rather than a single day: "that week" and "since
-                     transplanting" are the questions actually asked of a
-                     plan. Either end may be left open — a start alone means
-                     "from then on", an end alone "up to then". --}}
-                <div class="mir-range mir-input hidden" id="mirrorRange">
-                    <input type="date" id="mirrorFrom" class="form-input" aria-label="From date">
-                    <span class="mir-range-to">to</span>
-                    <input type="date" id="mirrorTo" class="form-input" aria-label="To date">
+
+                <div class="mir-sec">
+                    <p class="mir-sec-h">Narrow</p>
+                    {{-- Lot and activity type both narrow whatever else is
+                         being asked rather than replacing it — "herbicide, on
+                         Apartado 1" is one question, not two. Each is a tag
+                         that opens its own picker: a farm can run a dozen lots
+                         and a plan a dozen types, and two dozen tags laid out
+                         here would bury the card they were meant to fit in. --}}
+                    <div class="mir-picks">
+                        <button type="button" class="mir-pickbtn" id="mirrorLotsBtn" data-pick="lots">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
+                            <span class="mir-pickbtn-t">Every lot</span>
+                        </button>
+                        <button type="button" class="mir-pickbtn" id="mirrorTypesBtn" data-pick="types">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5a2 2 0 011.41.59l7 7a2 2 0 010 2.82l-5 5a2 2 0 01-2.82 0l-7-7A2 2 0 013 10V5a2 2 0 012-2z"/></svg>
+                            <span class="mir-pickbtn-t">Activity Type</span>
+                        </button>
+                    </div>
                 </div>
-                {{-- Lots and kinds of work both narrow whatever else is being
-                     asked rather than replacing it — "herbicide, on Apartado
-                     1" is one question, not two. Each is a tag that opens its
-                     own picker: a farm can run a dozen lots and a plan a
-                     dozen kinds of work, and two dozen tags laid out here
-                     would bury the card they were meant to fit inside. --}}
-                <div class="mir-picks">
-                    <button type="button" class="mir-pickbtn" id="mirrorLotsBtn" data-pick="lots">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
-                        <span class="mir-pickbtn-t">Every lot</span>
-                    </button>
-                    <button type="button" class="mir-pickbtn" id="mirrorTypesBtn" data-pick="types">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5a2 2 0 011.41.59l7 7a2 2 0 010 2.82l-5 5a2 2 0 01-2.82 0l-7-7A2 2 0 013 10V5a2 2 0 012-2z"/></svg>
-                        <span class="mir-pickbtn-t">Any kind of work</span>
-                    </button>
-                </div>
-                <div class="mir-tools">
-                    <button type="button" class="mir-tool" id="mirrorTodayBtn">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
-                        Today
-                    </button>
-                    <button type="button" class="mir-tool" id="mirrorFoldBtn" data-folded="0">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 11l7-7 7 7M5 19l7-7 7 7"/></svg>
-                        <span id="mirrorFoldLabel">Collapse all</span>
-                    </button>
+
+                <div class="mir-sec">
+                    <p class="mir-sec-h">Move about</p>
+                    <div class="mir-tools">
+                        <button type="button" class="mir-tool" id="mirrorTodayBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
+                            Today
+                        </button>
+                        <button type="button" class="mir-tool" id="mirrorFoldBtn" data-folded="0">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 11l7-7 7 7M5 19l7-7 7 7"/></svg>
+                            <span id="mirrorFoldLabel">Collapse all</span>
+                        </button>
+                    </div>
                 </div>
             </div></div>
         </div>

@@ -241,9 +241,38 @@
         /* Padding on the wrapper, not margins on the fields: a .form-input is
            width:100%, and 100% of the card plus a margin either side is wider
            than the card — which is exactly how the inputs ran off its edge. */
-        .mir-find-pad { display: flex; flex-direction: column; gap: .5rem; padding: .1rem .9rem .7rem; }
+        .mir-find-pad { display: flex; flex-direction: column; padding: .1rem .9rem .7rem; }
         .mir-find.is-shut .mir-find-pad { visibility: hidden; }
+        /* Three acts, three sections: find something, narrow what came back,
+           then move about in it. Run together they read as one long form of
+           unrelated controls, which is how a search card stops being used. */
+        .mir-sec { display: flex; flex-direction: column; gap: .45rem; padding: .55rem 0; }
+        .mir-sec + .mir-sec { border-top: 1px solid var(--tl-border, #e5e7eb); }
+        .mir-sec-h { font-size: .62rem; font-weight: 800; letter-spacing: .08em;
+            text-transform: uppercase; color: var(--tl-text-faint, #9ca3af); }
         .mir-tools { display: flex; gap: .4rem; }
+        /* Each end of the range is a tag that summons the browser's own
+           calendar; the real fields are kept out of sight behind them. */
+        .mir-datehide { position: absolute; width: 1px; height: 1px; opacity: 0;
+            pointer-events: none; border: 0; padding: 0; margin: -1px; overflow: hidden; }
+        .mir-datebtn { flex: 1 1 0; min-width: 0; display: inline-flex; align-items: center;
+            justify-content: center; gap: .35rem; padding: .4rem .55rem; border-radius: .6rem;
+            cursor: pointer; border: 1px solid var(--tl-border, #e5e7eb); background: transparent;
+            font-size: .76rem; font-weight: 700; color: var(--tl-text-soft, #4b5563);
+            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1),
+                border-color .28s cubic-bezier(.22,1,.36,1); }
+        .mir-datebtn svg { width: .9rem; height: .9rem; flex: none; }
+        .mir-datebtn-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .mir-datebtn:hover { background: var(--tl-hover, rgb(0 0 0 / .05)); }
+        .mir-datebtn.is-set { border-color: var(--color-brand-500); background: var(--color-brand-50);
+            color: var(--color-brand-800); }
+        .mir-datex { flex: none; width: 1.8rem; height: 1.8rem; border: 0; border-radius: 999px;
+            display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+            background: transparent; color: var(--tl-text-faint, #9ca3af); }
+        .mir-datex svg { width: .85rem; height: .85rem; }
+        .mir-datex:hover { background: var(--tl-hover, rgb(0 0 0 / .06)); color: #dc2626; }
+        .mir-datex.hidden { display: none; }
+        @media (prefers-reduced-motion: reduce) { .mir-datebtn { transition: none; } }
         .mir-tool { flex: 1 1 0; display: inline-flex; align-items: center; justify-content: center;
             gap: .3rem; padding: .4rem .5rem; border-radius: .6rem; cursor: pointer;
             border: 1px solid var(--tl-border, #e5e7eb); background: transparent;
@@ -3758,8 +3787,12 @@
             '.date-header-btn', '.day-menu-btn', '.date-header-stage',
             '.date-header-weather', '.wx-mini-btn', '.rest-day-add-btn',
             '.icon-btn', '.card-menu-btn', '.note-kebab', '.add-note-activity-btn',
-            '.note-fold-btn', '.expense-row-menu', '.income-row-menu', '.money-row-menu',
-            '.act-fab-add', '.group-add-activity-btn',
+            '.note-fold-btn', '.act-fab-add', '.group-add-activity-btn',
+            // The money strips carry their own kebab, drag grip and buttons
+            // (dx-* — see the expense/income blocks in activities-js). The
+            // figures stay; the handles on them do not.
+            '.dx-kebab', '.dx-grip', '.dx-menu', '.dx-actions', '.dx-btn', '.dx-edit', '.dx-del',
+            '.inline-note-grip',
         ].join(',');
 
         /* Which lots this plan actually uses, read off the board's own tags so
@@ -3811,7 +3844,7 @@
          * because three names do not fit and would only trail off. */
         function sayPicks() {
             [['lots', lotsBtn, 'Every lot', 'lots'],
-             ['types', typesBtn, 'Any kind of work', 'kinds']].forEach(([which, btn, empty, word]) => {
+             ['types', typesBtn, 'Activity Type', 'types']].forEach(([which, btn, empty, word]) => {
                 const names = chosenNames(which);
                 const t = btn.querySelector('.mir-pickbtn-t');
                 t.textContent = !names.length ? empty
@@ -3824,7 +3857,7 @@
         function openPick(which) {
             picking = which;
             const [set, names] = which === 'lots' ? [lotsOn, lotNameById] : [typesOn, typeNameBySlug];
-            pickTitle.textContent = which === 'lots' ? 'Which lots?' : 'Which kinds of work?';
+            pickTitle.textContent = which === 'lots' ? 'Which lots?' : 'Activity Type';
             pickBody.innerHTML = '';
             [...names.entries()].sort((a, b) => a[1].localeCompare(b[1])).forEach(([key, name]) => {
                 const b = document.createElement('button');
@@ -3849,7 +3882,7 @@
                 p.className = 'mir-none';
                 p.textContent = which === 'lots'
                     ? 'This plan has no lots on it yet.'
-                    : 'Nothing on this plan says what kind of work it is.';
+                    : 'Nothing on this plan says what type of activity it is.';
                 pickBody.appendChild(p);
             }
             pick.hidden = false;
@@ -4012,8 +4045,14 @@
         }
 
         function apply() {
+            // The shut card says the range the way the tags do — "Aug 25, 26",
+            // not "2026-08-25", which is a key rather than a date.
+            const said = (v) => (v ? new Date(v + 'T00:00:00').toLocaleDateString(undefined,
+                { month: 'short', day: 'numeric', year: '2-digit' }) : '');
             const raw = mode === 'date'
-                ? [fromInput.value, toInput.value].filter(Boolean).join(' → ')
+                ? (fromInput.value || toInput.value
+                    ? (said(fromInput.value) || 'the start') + ' → ' + (said(toInput.value) || 'the end')
+                    : '')
                 : (qInput.value || '').trim().toLowerCase();
             const asking = !!raw || lotsOn.size > 0 || typesOn.size > 0;
             let days = 0;
@@ -4149,7 +4188,7 @@
                 panel.querySelectorAll('.mir-mode').forEach((x) => x.classList.toggle('is-on', x === b));
                 qInput.classList.toggle('hidden', mode === 'all' || mode === 'date');
                 range.classList.toggle('hidden', mode !== 'date');
-                if (mode === 'all') { qInput.value = ''; fromInput.value = ''; toInput.value = ''; }
+                if (mode === 'all') { qInput.value = ''; fromInput.value = ''; toInput.value = ''; sayDates(); }
                 if (mode === 'text') qInput.placeholder = 'Search activities, lots or items…';
                 if (mode === 'day') qInput.placeholder = 'Day number — 12, DAS+12, DAT-3…';
                 sift();
@@ -4157,8 +4196,38 @@
             });
         });
         qInput.addEventListener('input', sift);
-        fromInput.addEventListener('change', sift);
-        toInput.addEventListener('change', sift);
+        fromInput.addEventListener('change', () => { sayDates(); sift(); });
+        toInput.addEventListener('change', () => { sayDates(); sift(); });
+
+        /* Each end of the range is a tag that summons the browser's own
+         * calendar. showPicker() is the direct way and the phone's own
+         * control answers it; where it is refused (an older browser, or a
+         * call it does not consider user-driven) a plain click on the field
+         * still opens the picker on mobile. */
+        function summon(input) {
+            try { input.showPicker(); } catch (_) { input.focus(); input.click(); }
+        }
+        function sayDates() {
+            [[fromInput, 'mirrorFromT', 'From'], [toInput, 'mirrorToT', 'To']].forEach(([inp, id, empty]) => {
+                const t = document.getElementById(id);
+                const btn = t.closest('.mir-datebtn');
+                if (!inp.value) { t.textContent = empty; btn.classList.remove('is-set'); return; }
+                const d = new Date(inp.value + 'T00:00:00');
+                t.textContent = d.toLocaleDateString(undefined,
+                    { month: 'short', day: 'numeric', year: '2-digit' });
+                btn.classList.add('is-set');
+            });
+            document.getElementById('mirrorDateClear')
+                ?.classList.toggle('hidden', !fromInput.value && !toInput.value);
+        }
+        document.getElementById('mirrorFromBtn')?.addEventListener('click', () => summon(fromInput));
+        document.getElementById('mirrorToBtn')?.addEventListener('click', () => summon(toInput));
+        document.getElementById('mirrorDateClear')?.addEventListener('click', () => {
+            fromInput.value = '';
+            toInput.value = '';
+            sayDates();
+            sift();
+        });
 
         lotsBtn?.addEventListener('click', () => openPick('lots'));
         typesBtn?.addEventListener('click', () => openPick('types'));
