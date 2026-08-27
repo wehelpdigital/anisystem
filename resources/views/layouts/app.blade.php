@@ -554,16 +554,15 @@
         /* pointer-events stay off until it is truly on, so a cancelled show
            can never trap a tap behind an invisible sheet of glass. */
         .nav-loader.is-on { opacity: 1; pointer-events: auto; }
-        .nav-loader-spin { width: 2.4rem; height: 2.4rem; border-radius: 999px;
-            border: 3px solid rgb(74 124 42 / .2); border-top-color: #4a7c2a;
-            animation: navLoaderSpin .8s linear infinite; }
-        @keyframes navLoaderSpin { to { transform: rotate(360deg); } }
         html.dark .nav-loader { background: rgb(10 14 8 / .72); }
-        html.dark .nav-loader-spin { border-color: rgb(107 159 61 / .25); border-top-color: #6b9f3d; }
+        /* The card lifts in rather than appearing, so a fast navigation that
+           never gets to show it does not flash a box at anybody. */
+        .nav-loader .bv-card { transform: translateY(6px) scale(.98); opacity: 0;
+            transition: transform .3s cubic-bezier(.22,1,.36,1), opacity .3s cubic-bezier(.22,1,.36,1); }
+        .nav-loader.is-on .bv-card { transform: none; opacity: 1; }
         @media (prefers-reduced-motion: reduce) {
             .nav-loader { transition: none; }
-            /* Slowed, not stopped: the turn is the message that work is happening. */
-            .nav-loader-spin { animation-duration: 1.6s; }
+            .nav-loader .bv-card { transition: none; transform: none; opacity: 1; }
         }
 
         /* One slow tide for every gradient that wants to look alive — accent
@@ -608,14 +607,20 @@
          */
         html:not(.dark) body:not(.plaza-ground) { background-color: #f1f3f5; }
     </style>
+    {{-- Going somewhere. The card the activities board waits with, on every
+         page in the app: a scene from the farm, a line, and the aside under
+         it. A ring that turns says only "not broken yet"; this says what is
+         happening and gives somebody something to read while it does. --}}
     <div id="navLoader" class="nav-loader" hidden aria-hidden="true">
-        <div class="nav-loader-spin"></div>
+        @include('sm.partials.wait-card')
     </div>
     <script>
         (() => {
             const veil = document.getElementById('navLoader');
             if (!veil) return;
             const clear = () => { veil.classList.remove('is-on'); veil.hidden = true; };
+            // A different line every time it goes up.
+            const roll = () => { try { window.rollWaitLine?.(veil.querySelector('.bv-card')); } catch (_) {} };
             document.addEventListener('click', (e) => {
                 // Every real link, not only the ones that thought to ask:
                 // a tap that is about to unload this page should say so.
@@ -647,6 +652,7 @@
                  * truth. */
                 setTimeout(() => {
                     if (e.defaultPrevented) return;
+                    roll();
                     veil.hidden = false;
                     requestAnimationFrame(() => veil.classList.add('is-on'));
                     // And if we are somehow still here — a handler that

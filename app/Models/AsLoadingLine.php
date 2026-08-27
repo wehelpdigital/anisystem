@@ -28,7 +28,7 @@ class AsLoadingLine extends BaseModel
         'rice', 'watering', 'bee', 'moon',
     ];
 
-    protected $fillable = ['line', 'scene', 'surface', 'deleteStatus'];
+    protected $fillable = ['line', 'subline', 'scene', 'surface', 'deleteStatus'];
 
     protected $casts = ['deleteStatus' => 'integer'];
 
@@ -46,13 +46,17 @@ class AsLoadingLine extends BaseModel
             return self::query()
                 ->where('surface', $surface)
                 ->where('deleteStatus', 1)
-                ->get(['line', 'scene'])
-                ->map(fn ($r) => ['line' => $r->line, 'scene' => $r->scene])
+                ->get(['line', 'subline', 'scene'])
+                ->map(fn ($r) => [
+                    'line' => $r->line,
+                    'sub' => (string) $r->subline,
+                    'scene' => $r->scene,
+                ])
                 ->all();
         });
 
         if (! $all) {
-            return [['line' => 'Working out the day…', 'scene' => 'seedling']];
+            return [['line' => 'Working out the day…', 'sub' => 'One moment.', 'scene' => 'seedling']];
         }
 
         shuffle($all);

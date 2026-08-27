@@ -1,3 +1,121 @@
+@once
+{{-- Inline, not pushed. @push('head') is emitted where @stack('head') sits,
+     and this card is included from inside the layout — below that point — so
+     the rules arrived after the stack had been written and every one of them
+     was silently dropped, which is why ten scenes once rendered at once and
+     full size. A <style> in the body is valid HTML and cannot be out-ordered. --}}
+<style>
+.bv-card { display: flex; flex-direction: column; align-items: center; gap: .7rem;
+    padding: 1.5rem 1.9rem 1.35rem; border-radius: 1rem; background: var(--color-white, #fff);
+    border: 1px solid var(--color-gray-200, #e5e7eb);
+    box-shadow: 0 20px 45px -30px rgb(15 23 42 / .6); }
+.bv-text { font-size: .9rem; font-weight: 800; color: var(--color-gray-800, #1f2937);
+    text-align: center; max-width: 15rem; }
+html.dark #boardVeil { background: #10160c; }
+html.dark .bv-card { background: #151b12; border-color: #2b3a1c; }
+html.dark .bv-text { color: #e8efe1; }
+
+/* ---- The scenes ---------------------------------------------------
+   Ten little farms, drawn in SVG and moved with CSS. All ten are in
+   the card and nine are display:none — a hidden element's animations
+   do not run, so the sleeping ones cost nothing and swapping scenes
+   is a class toggle rather than a build. */
+.bv-scene { display: block; width: 3.5rem; height: 3.5rem; }
+.bv-s { display: none; }
+.bv-s.is-on { display: block; }
+.bv-s svg { width: 3.5rem; height: 3.5rem; display: block; }
+
+/* The egg rocks; the crack opens; the beak comes through it. */
+.bv-egg .egg-body { transform-origin: 28px 44px; animation: bvRock 1.6s ease-in-out infinite; }
+.bv-egg .egg-crack { stroke-dasharray: 34; stroke-dashoffset: 34;
+    animation: bvDraw 1.6s ease-in-out infinite; }
+.bv-egg .egg-beak { opacity: 0; animation: bvPeek 1.6s ease-in-out infinite; }
+@keyframes bvRock { 0%, 100% { transform: rotate(-7deg); } 50% { transform: rotate(7deg); } }
+@keyframes bvDraw { 0%, 25% { stroke-dashoffset: 34; } 70%, 100% { stroke-dashoffset: 0; } }
+@keyframes bvPeek { 0%, 65% { opacity: 0; } 80%, 100% { opacity: 1; } }
+
+/* The stem draws itself, then the leaves open. */
+.bv-seedling .sd-stem { stroke-dasharray: 24; stroke-dashoffset: 24;
+    animation: bvStem 2.2s ease-in-out infinite; }
+.bv-seedling .sd-leaf-l { transform-origin: 28px 28px; animation: bvLeaf 2.2s ease-in-out infinite .5s; }
+.bv-seedling .sd-leaf-r { transform-origin: 28px 24px; animation: bvLeaf 2.2s ease-in-out infinite .8s; }
+@keyframes bvStem { 0% { stroke-dashoffset: 24; } 45%, 100% { stroke-dashoffset: 0; } }
+@keyframes bvLeaf { 0%, 20% { transform: scale(0); } 60%, 100% { transform: scale(1); } }
+
+/* Wheels turn, the body rides the ruts, the exhaust goes up. */
+.bv-tractor .tr-wheel-big { transform-origin: 19px 38px; animation: bvSpin 1.6s linear infinite; }
+.bv-tractor .tr-wheel-small { transform-origin: 39px 40px; animation: bvSpin 1.1s linear infinite; }
+.bv-tractor .tr-body { animation: bvBump .5s ease-in-out infinite alternate; }
+.bv-tractor .tr-puff-1 { animation: bvPuff 1.4s ease-out infinite; }
+.bv-tractor .tr-puff-2 { animation: bvPuff 1.4s ease-out infinite .5s; }
+@keyframes bvSpin { to { transform: rotate(360deg); } }
+@keyframes bvBump { from { transform: translateY(0); } to { transform: translateY(-1.2px); } }
+@keyframes bvPuff { 0% { opacity: .9; transform: translateY(3px); } 100% { opacity: 0; transform: translateY(-6px); } }
+
+/* Three drops, one after another, and the cloud sagging under them. */
+.bv-rain .rn-cloud { animation: bvSag 2.4s ease-in-out infinite; }
+.bv-rain .rn-drop { animation: bvFall 1.1s linear infinite; }
+.bv-rain .rn-2 { animation-delay: .36s; }
+.bv-rain .rn-3 { animation-delay: .72s; }
+@keyframes bvSag { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(1.5px); } }
+@keyframes bvFall { 0% { opacity: 0; transform: translateY(-4px); } 25% { opacity: 1; } 100% { opacity: 0; transform: translateY(8px); } }
+
+/* The rays turn; the sun breathes. */
+.bv-sun .sn-rays { transform-origin: 28px 28px; animation: bvSpin 9s linear infinite; }
+.bv-sun .sn-core { transform-origin: 28px 28px; animation: bvBreathe 2.6s ease-in-out infinite; }
+@keyframes bvBreathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.09); } }
+
+/* Five more minutes: the head dips, and the nose works. */
+.bv-carabao .cb-head { transform-origin: 28px 14px; animation: bvNod 2.6s ease-in-out infinite; }
+.bv-carabao .cb-nose { animation: bvBreathe 1.6s ease-in-out infinite; transform-origin: 28px 37px; }
+@keyframes bvNod { 0%, 100% { transform: rotate(-4deg) translateY(0); } 50% { transform: rotate(4deg) translateY(1.5px); } }
+
+/* A full head of rice, bending the way a full one does. */
+.bv-rice .rc-stalk { transform-origin: 28px 48px; animation: bvSway 3s ease-in-out infinite; }
+@keyframes bvSway { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+
+/* The can tips, and the water comes. */
+.bv-watering .wt-can { transform-origin: 34px 34px; animation: bvTip 2.4s ease-in-out infinite; }
+.bv-watering .wt-drop { animation: bvFall 1s linear infinite; }
+.bv-watering .wt-2 { animation-delay: .4s; }
+@keyframes bvTip { 0%, 100% { transform: rotate(0); } 45%, 65% { transform: rotate(-16deg); } }
+
+/* One bee, going about its business — the wings too fast to see. */
+.bv-bee .be-fly { animation: bvHover 2.6s ease-in-out infinite; }
+/* The hinge is where each wing meets the body, in viewBox units — a
+   wing flapping about its own middle looks like it is being waved. */
+.bv-bee .be-wing-l { transform-origin: 27px 23px; animation: bvFlap .18s ease-in-out infinite alternate; }
+.bv-bee .be-wing-r { transform-origin: 29px 23px; animation: bvFlap .18s ease-in-out infinite alternate-reverse; }
+@keyframes bvHover { 0%, 100% { transform: translate(-5px, 2px); } 25% { transform: translate(0, -3px); } 50% { transform: translate(5px, 2px); } 75% { transform: translate(0, -2px); } }
+@keyframes bvFlap { from { transform: scaleY(1); } to { transform: scaleY(.35); } }
+
+/* The night shift: the moon rides, the stars come and go. */
+.bv-moon .mn-body { transform-origin: 30px 28px; animation: bvRide 4s ease-in-out infinite; }
+.bv-moon .mn-star { animation: bvTwinkle 2s ease-in-out infinite; }
+.bv-moon .mn-s2 { animation-delay: .6s; }
+.bv-moon .mn-s3 { animation-delay: 1.2s; }
+@keyframes bvRide { 0%, 100% { transform: translateY(1.5px) rotate(-4deg); } 50% { transform: translateY(-1.5px) rotate(4deg); } }
+@keyframes bvTwinkle { 0%, 100% { opacity: .25; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.2); } }
+
+/* Nobody who has asked for stillness gets a farm jumping at them: the
+   scene holds its finished pose and only the card's fade remains. */
+@media (prefers-reduced-motion: reduce) {
+    #boardVeil { transition: none; }
+    .bv-s * { animation: none !important; }
+    .bv-egg .egg-crack { stroke-dashoffset: 0; }
+    .bv-egg .egg-beak { opacity: 1; }
+    .bv-seedling .sd-stem { stroke-dashoffset: 0; }
+}
+
+    /* The second line: quieter, narrower, and never the same weight as the
+       first — it is an aside, not a headline. */
+    .bv-sub { margin-top: -.25rem; font-size: .78rem; line-height: 1.5;
+        color: var(--color-gray-500, #6b7280); text-align: center; max-width: 15rem; }
+    .bv-sub:empty { display: none; }
+    html.dark .bv-sub { color: #a8bd93; }
+</style>
+@endonce
+
 {{-- What a wait looks like: a little scene from the farm, drawn rather than
      spun, and something to read that is not the word "Loading".
 
@@ -10,7 +128,10 @@
      element's animations do not run, so nine sleeping farms cost nothing, and
      switching lines is a class toggle rather than a build. --}}
 @php
-    $waitPool = $waitPool ?? [['line' => 'Working out the day…', 'scene' => 'seedling']];
+    // A caller that has not thought about it gets a pool anyway: this card is
+    // wanted on every screen that waits, and making each of them remember to
+    // fetch one is how half of them end up without it.
+    $waitPool = $waitPool ?? \App\Models\AsLoadingLine::pool();
     $waitFirst = $waitPool[0];
     $waitScene = in_array($waitFirst['scene'], \App\Models\AsLoadingLine::SCENES, true)
         ? $waitFirst['scene']
@@ -153,10 +274,13 @@
             </svg>
         </span>
     </span>
-    <span class="bv-text" id="boardVeilText">{{ $waitFirst['line'] }}</span>
+    <span class="bv-text" data-wait-line>{{ $waitFirst['line'] }}</span>
+    {{-- The second half of the joke, and the reason the card does not look
+         half-empty: one sentence is a caption, two are a voice. --}}
+    <span class="bv-sub" data-wait-sub>{{ $waitFirst['sub'] ?? '' }}</span>
 </div>
 @once
-    @push('scripts')
+    {{-- Inline for the same reason as the styles above. --}}
     <script>
     /* One line per wait, drawn at random. The pool travels with the page, so
        re-rolling costs nothing and a farmer opening the same board twice in a
@@ -168,8 +292,10 @@
             const pool = window.WAIT_LINES || [];
             if (!card || pool.length < 2) return;
             const pick = pool[Math.floor(Math.random() * pool.length)];
-            const text = card.querySelector('.bv-text');
+            const text = card.querySelector('[data-wait-line]');
             if (text) text.textContent = pick.line;
+            const sub = card.querySelector('[data-wait-sub]');
+            if (sub) sub.textContent = pick.sub || '';
             let scene = card.querySelector('.bv-s[data-scene="' + pick.scene + '"]');
             // A line added from the admin naming a scene this build does not
             // know about still shows — it just grows a seedling.
@@ -178,5 +304,4 @@
         };
     })();
     </script>
-    @endpush
 @endonce

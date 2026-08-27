@@ -121,8 +121,10 @@
 
         {{-- Shown while a tab's content loads (the Activities iframe especially). --}}
         <div class="collab-loader" id="collabLoader" aria-hidden="true">
-            <span class="collab-spin" aria-hidden="true"></span>
-            <span class="collab-loader-text" id="collabLoaderText">Loading…</span>
+            @include('sm.partials.wait-card')
+            {{-- The tab's own name still goes somewhere: the card says what
+                 the farm is doing, this says which room you are opening. --}}
+            <span class="collab-loader-text" id="collabLoaderText"></span>
         </div>
     </div>
 </div>

@@ -1761,7 +1761,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // The wait keeps talking: when the figures land and the sky has not,
         // the card turns over to another line rather than announcing which
         // internal step it is on — nobody waiting on a board cares which.
-        if (what === 'cash' && !boardReady.weather) window.rollWaitLine?.();
+        if (what === 'cash' && !boardReady.weather) {
+            // Name the card. Three of them can be on this page now — the
+            // board's veil, the module loader and the app's own navigation
+            // card — and rollWaitLine defaults to the first one it finds.
+            window.rollWaitLine?.($id('boardVeil')?.querySelector('.bv-card'));
+        }
         if (boardReady.cash && boardReady.weather) liftVeil('both');
     };
     // Nothing may ever answer — no network, no API key, an empty board. The
