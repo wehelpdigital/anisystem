@@ -1911,7 +1911,11 @@ document.addEventListener('DOMContentLoaded', () => {
             : `<div class="date-note-block" data-date="${esc(dateKey)}" data-content="${esc(noteContent || '')}" data-media="${esc(JSON.stringify(noteMediaArr))}" title="${esc(noteTitle('Drag to place it between activities · tap the dots for options'))}"${hasNote ? '' : ' style="display:none;"'}><div class="date-note-inner rich-text">${noteContent || ''}</div>${noteChips}${NOTE_KEBAB}</div>`;
         const expenseBlock = isNoDate ? ''
             : `<div class="day-expense-block" data-date="${esc(dateKey)}" data-block-sort="${esc(blockSortAttr(dateKey, 'expense'))}"></div>`
-              + `<div class="day-income-block" data-date="${esc(dateKey)}" data-block-sort="${esc(blockSortAttr(dateKey, 'income'))}" hidden></div>`;
+              + `<div class="day-income-block" data-date="${esc(dateKey)}" data-block-sort="${esc(blockSortAttr(dateKey, 'income'))}" hidden></div>`
+              // The twin of the Blade host div. Every day-card thing in this
+              // module has two renderers, and the one that forgets is the one
+              // whose strip vanishes on the next redraw.
+              + `<div class="day-inv-block" data-date="${esc(dateKey)}" hidden></div>`;
 
         const wrap = document.createElement('div');
         // Today's card wears a ring that breathes, so the eye finds the day
@@ -3849,19 +3853,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
     $id('itemNameInput')?.addEventListener('input', (e) => refreshPriceDatalistFor(e.target.value));
 
-    function appendItemTag(name, price, qty, unit) {
+    function appendItemTag(name, price, qty, unit, stockId) {
         const unitSafe = unit || '';
         const priceNum = (price !== '' && price != null && !isNaN(parseFloat(price))) ? parseFloat(price) : null;
         const qtyText = `&nbsp;×${esc(trimQty(qty || 1))}${unitSafe ? ' ' + esc(unitSafe) : ''}`;
         const priceText = priceNum != null ? ` <span class="item-tag-price">@ ₱${esc(fmtMoney(priceNum))}</span>` : '';
-        const html = `<span class="item-tag material-tag"
-            data-name="${esc(name)}" data-price="${priceNum != null ? esc(String(priceNum)) : ''}" data-qty="${esc(trimQty(qty || 1))}" data-unit="${esc(unitSafe)}">
-            <strong>${esc(name)}</strong>${qtyText}${priceText}
+        /* A line that spends stock wears a mark. The tick that finishes the
+           activity will take it off the shelf, and somebody scanning the row
+           later should be able to see which lines will do that. */
+        const fromShed = stockId ? ' <span class="item-tag-stock" title="Comes off the inventory when this activity is ticked done">📦</span>' : '';
+        const html = `<span class="item-tag material-tag${stockId ? ' is-stock' : ''}"
+            data-name="${esc(name)}" data-price="${priceNum != null ? esc(String(priceNum)) : ''}" data-qty="${esc(trimQty(qty || 1))}" data-unit="${esc(unitSafe)}" data-stock="${stockId ? esc(String(stockId)) : ''}">
+            <strong>${esc(name)}</strong>${qtyText}${priceText}${fromShed}
             <button type="button" class="remove-item-tag" aria-label="Remove">✕</button>
         </span>`;
         $id('itemsContainer').insertAdjacentHTML('beforeend', html);
         refreshItemsEmptyState();
     }
+
+    /* ---- The shelf, offered inside the activity sheet ----
+     *
+     * Choosing something here is what makes the line spend stock. It is
+     * asked before the name, because it is the question that decides what
+     * the rest of the form means — and choosing fills the name and unit in,
+     * since somebody who picked Urea off the shelf has already said both. */
+    function fillStockPicker() {
+        const sel = $id('itemStockPick');
+        const wrap = $id('itemStockWrap');
+        if (!sel || !wrap) return;
+        const items = window.IV_ITEMS || [];
+        // A picker with nothing in it is a question with no answers.
+        wrap.classList.toggle('hidden', items.length === 0);
+        sel.innerHTML = '<option value="">No — just list it on this activity</option>'
+            + items.map((i) => `<option value="${i.id}" data-unit="${esc(i.unit)}" data-name="${esc(i.name)}">${esc(i.icon + ' ' + i.name)} — ${esc(i.says)}</option>`).join('');
+        sayStockPick();
+    }
+
+    function sayStockPick() {
+        const sel = $id('itemStockPick');
+        const hint = $id('itemStockHint');
+        if (!sel || !hint) return;
+        const opt = sel.selectedOptions[0];
+        if (!sel.value) {
+            hint.textContent = 'A plain line is a note to yourself. It costs nothing off the count.';
+            return;
+        }
+        const item = (window.IV_ITEMS || []).find((i) => String(i.id) === sel.value);
+        hint.textContent = item
+            ? `${item.says} on hand. The quantity below comes off it when this activity is ticked done.`
+            : '';
+        // Fill what they have already told us by choosing.
+        const nameBox = $id('itemNameInput');
+        const unitBox = $id('itemUnitInput');
+        if (nameBox && !nameBox.value.trim()) nameBox.value = opt.getAttribute('data-name') || '';
+        if (unitBox) unitBox.value = opt.getAttribute('data-unit') || '';
+    }
+    $id('itemStockPick')?.addEventListener('change', sayStockPick);
 
     function fmtMoney(n) {
         return Number(n || 0).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -3963,7 +4010,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const open = panel.classList.toggle('hidden');
         $id('itemsToggleBtn').setAttribute('aria-expanded', open ? 'false' : 'true');
         $id('itemsToggleLabel').textContent = open ? '+ Item' : 'Cancel';
-        if (!open) { refreshNameDatalist(); window.smFocus($id('itemNameInput'), { delay: 50 }); }
+        if (!open) {
+            refreshNameDatalist();
+            /* The shelf is fetched the first time somebody opens this, not on
+               every board load: most activities never touch the inventory,
+               and a farm's whole stock list on every page is a cost paid by
+               everyone for the few who need it. */
+            (window.IV_ITEMS ? Promise.resolve() : (window.ivReload?.() ?? Promise.resolve()))
+                .then(fillStockPicker).catch(() => fillStockPicker());
+            window.smFocus($id('itemNameInput'), { delay: 50 });
+        }
     });
 
     $id('addItemBtn')?.addEventListener('click', () => {
@@ -3976,7 +4032,8 @@ document.addEventListener('DOMContentLoaded', () => {
             toast('That item is already added — remove it first to change it.', 'info');
             return;
         }
-        appendItemTag(name, price, qty, unit);
+        const stockId = $id('itemStockPick')?.value || '';
+        appendItemTag(name, price, qty, unit, stockId);
         rememberItem(name, price, unit);
         refreshNameDatalist();
         // Clear the fields for the next item, keep the panel open.
@@ -3984,6 +4041,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('itemPriceInput').value = '';
         $id('itemQtyInput').value = '1';
         $id('itemUnitInput').value = '';
+        if ($id('itemStockPick')) { $id('itemStockPick').value = ''; sayStockPick(); }
         $id('itemNameInput').focus();
     });
 
@@ -4111,7 +4169,7 @@ document.addEventListener('DOMContentLoaded', () => {
             (a.items || []).forEach((it) => {
                 const name = it.itemName || it.material?.materialName || it.service?.serviceName;
                 if (name) {
-                    appendItemTag(name, it.unitPrice != null ? it.unitPrice : '', it.quantity, it.unitOfMeasure || '');
+                    appendItemTag(name, it.unitPrice != null ? it.unitPrice : '', it.quantity, it.unitOfMeasure || '', it.inventoryItemId || '');
                     rememberItem(name, it.unitPrice != null ? it.unitPrice : '', it.unitOfMeasure || '');
                 }
             });
@@ -4175,6 +4233,10 @@ document.addEventListener('DOMContentLoaded', () => {
             unitPrice: tag.getAttribute('data-price') || '',
             quantity: tag.getAttribute('data-qty'),
             unitOfMeasure: tag.getAttribute('data-unit') || '',
+            // The rows are destroyed and recreated on every save, so this
+            // has to travel with them or the line quietly stops spending
+            // stock the next time the activity is edited.
+            inventoryItemId: tag.getAttribute('data-stock') || null,
         })).filter((it) => it.itemName);
         const isIrrigation = activityMode === 'irrigation';
         const isService = activityMode === 'service';
@@ -4560,6 +4622,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cls === 'add-map') {
             const date = dayMenuDate;
             setTimeout(() => openDayMapPick(date), 260);
+            return;
+        }
+        /* The shed, from the day it happened on. The date is captured before
+           the timeout because another kebab tap would reassign it, and the
+           delay lets this sheet finish closing before the next one opens. */
+        if (cls === 'iv-out' || cls === 'iv-in') {
+            const date = dayMenuDate;
+            const dir = cls === 'iv-in' ? 'in' : 'out';
+            setTimeout(() => window.ivOpenMove?.({
+                direction: dir,
+                date,
+                title: dir === 'in' ? 'Add new inventory' : 'Expense an inventory',
+            }), 260);
             return;
         }
         const target = $qs(`#activitiesList .date-group[data-date="${dayMenuDate}"] .${cls}`);
@@ -5237,6 +5312,11 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const res = await api(U.toggleDone(id), { method: 'POST' });
             toast(res.message);
+            /* The tick may have spent something. Only re-read the shed when
+               the server says it moved — most activities carry no inventory
+               line, and a request per tick for nothing is a request for
+               nothing. */
+            if (res.data?.stockMoved > 0) window.ivDayChanged?.(null);
         } catch (err) {
             toast(err.message, 'error');
             const cardNow = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
@@ -6408,8 +6488,83 @@ document.addEventListener('DOMContentLoaded', () => {
         $qsa('#activitiesList .day-income-block[data-date]').forEach((el) => {
             if (typeof window.renderDayIncome === 'function') window.renderDayIncome(el.getAttribute('data-date'));
         });
+        $qsa('#activitiesList .day-inv-block').forEach(renderInvBlock);
         placeMoneyBlocks();
     }
+
+    /* ---- WHAT THE SHED DID ON THIS DAY ----
+     *
+     * The same card the money strips use, in the same place, because it is
+     * the same kind of fact: something that happened on this day and is not
+     * an activity. Each line says the item, what it was, and what it became
+     * — "300 → 220 kg" — because that is the reading somebody wants when
+     * they are standing in front of the shelf wondering whether the board
+     * and the shed agree.
+     *
+     * Read-only here. A move made by an activity is undone by unticking it,
+     * and a hand-typed one is undone in the Inventory module, where the whole
+     * log is in front of you rather than one day of it.
+     */
+    const DAY_INVENTORY = (window.DAY_INVENTORY && typeof window.DAY_INVENTORY === 'object'
+        && !Array.isArray(window.DAY_INVENTORY)) ? window.DAY_INVENTORY : {};
+    window.DAY_INVENTORY = DAY_INVENTORY;
+
+    const trimQ = (n) => (Math.round((Number(n) || 0) * 1000) / 1000)
+        .toLocaleString(undefined, { maximumFractionDigits: 3 });
+
+    function renderInvBlock(block) {
+        if (!block) return;
+        const dateKey = (block.getAttribute('data-date') || '').trim();
+        const rows = (dateKey && Array.isArray(DAY_INVENTORY[dateKey])) ? DAY_INVENTORY[dateKey] : [];
+        if (!rows.length) { block.innerHTML = ''; block.hidden = true; return; }
+        block.hidden = false;
+
+        const items = rows.map((r) => `<div class="dx-row iv-day-row">
+            <span class="dx-amt ${r.isIn ? 'iv-in' : 'iv-out'}">${r.isIn ? '+' : '−'}${esc(trimQ(Math.abs(r.delta)))} ${esc(r.unit)}</span>
+            <span class="dx-note">
+                <b>${esc(r.name)}</b>
+                <span class="iv-day-was">${esc(r.reasonLabel)} · ${esc(trimQ(r.before))} → ${esc(trimQ(r.after))}${r.note ? ' · ' + esc(r.note) : ''}</span>
+            </span>
+        </div>`).join('');
+
+        block.innerHTML = `<div class="dx-card iv-day-card">
+            <div class="dx-head"><span>📦 Inventory</span><span class="dx-total">${rows.length} ${rows.length === 1 ? 'change' : 'changes'}</span></div>
+            <div class="dx-list">${items}</div>
+        </div>`;
+    }
+
+    /** One day's strip, after something moved. */
+    function renderInvBlockFor(dateKey) {
+        $qsa(`#activitiesList .day-inv-block[data-date="${dateKey}"]`).forEach(renderInvBlock);
+    }
+    window.renderInvBlockFor = renderInvBlockFor;
+
+    /* The move sheet tells the board a day changed. The board holds its own
+       copy of the day's rows, so it re-reads the whole lot rather than trying
+       to guess what one save did to a running total. */
+    window.ivDayChanged = async function ivDayChanged(dateKey) {
+        try {
+            const res = await api(`{{ route('sm.inventory.list') }}?id=${SCHEDULE_ID}`, { method: 'GET' });
+            const byDay = {};
+            (res.data?.moves || []).forEach((m) => {
+                if (!m.on) return;
+                (byDay[m.on] = byDay[m.on] || []).push({
+                    id: m.id, name: m.itemName, icon: m.icon, unit: m.unit,
+                    delta: m.delta, before: m.before, after: m.after, isIn: m.isIn,
+                    reason: m.reason, reasonLabel: m.reasonLabel, reasonIcon: m.reasonIcon, note: m.note,
+                });
+            });
+            // The log comes back newest-first; a day reads oldest-first.
+            Object.keys(byDay).forEach((d) => byDay[d].reverse());
+            Object.keys(DAY_INVENTORY).forEach((k) => delete DAY_INVENTORY[k]);
+            Object.assign(DAY_INVENTORY, byDay);
+            $qsa('#activitiesList .day-inv-block').forEach(renderInvBlock);
+        } catch (_) {
+            // The next full load will have it; a failed repaint is not worth
+            // a message on top of the one the save already showed.
+            if (dateKey) renderInvBlockFor(dateKey);
+        }
+    };
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', hydrateAllExpenseBlocks, { once: true });
     else hydrateAllExpenseBlocks();

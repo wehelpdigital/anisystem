@@ -10,6 +10,9 @@ class AsScheduleActivityItem extends BaseModel
         'activityId',
         'itemType',
         'materialId',
+        // Which thing in the shed this line spends, if any. Null for a line
+        // that is only a note to itself.
+        'inventoryItemId',
         'serviceId',
         'itemName',
         'unitPrice',

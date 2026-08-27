@@ -2210,6 +2210,29 @@
         .worker-tag { background: #fef3e8; color: #a66200; }
         .service-tag { background: #e6f7f1; color: #0f6f4d; }
         .item-tag-price { font-weight: 700; opacity: .85; }
+        /* A line that will come off the shed when this activity is ticked
+           done. The mark is small on purpose: it is a fact about the line,
+           not a warning about it. */
+        .item-tag-stock { margin-left: .15rem; font-size: .8em; }
+        .item-tag.is-stock { border-color: var(--color-brand-300); }
+
+        /* WHAT THE SHED DID ON THIS DAY.
+           The money strips' card in a different colour, because it is the
+           same kind of fact — something that happened on this day and is not
+           an activity — counted in kilos rather than pesos. */
+        .day-inv-block { margin: .55rem .7rem 0; }
+        .date-activities > .day-inv-block { margin: .5rem 0; }
+        .day-inv-block[hidden] { display: none; }
+        .iv-day-card { background: #f5f8fb; border-color: #dbe6ef; }
+        .iv-day-card .dx-head { color: #33566f; }
+        .iv-day-row { align-items: flex-start; }
+        .iv-day-row .dx-amt { flex: none; font-variant-numeric: tabular-nums; }
+        .iv-day-row .dx-amt.iv-in { color: var(--color-brand-700); }
+        .iv-day-row .dx-amt.iv-out { color: #b45309; }
+        .iv-day-row .dx-note { display: flex; flex-direction: column; gap: .05rem; }
+        .iv-day-was { font-size: .68rem; opacity: .7; }
+        html.dark .iv-day-card { background: #141b21; border-color: #26333d; }
+        html.dark .iv-day-card .dx-head { color: #9fc0d6; }
         .activity-na-tag { background: #f3f4f6; color: #6b7280; border: 1px dashed #d1d5db; }
         .day-zero-badge { background: #ff9800; color: #fff; }
         .transplant-badge { background: #16a34a; color: #fff; }
@@ -3265,6 +3288,14 @@
                              the day showed nothing, and only a redraw of that
                              day ever brought it out. --}}
                         <div class="day-income-block" data-date="{{ $dateKey }}" data-block-sort="{{ ($incomeSortByDate[$dateKey] ?? null) === null ? '' : $incomeSortByDate[$dateKey] }}" hidden></div>
+                        {{-- And what the shed did on this day: what an
+                             activity spent when it was ticked done, and
+                             anything logged by hand from the day menu. Its
+                             place is painted here even when empty, for the
+                             same reason the income strip's is — a strip that
+                             only the JS renderer ever creates has nowhere to
+                             land on a freshly loaded page. --}}
+                        <div class="day-inv-block" data-date="{{ $dateKey }}" hidden></div>
                     @endif
                     @php
                         // Interleave positioned inline notes with the day's cards by order.
@@ -4729,6 +4760,12 @@
     window.DAY_EXPENSES = @json($dayExpensesForJs);
     // A keyed collection JSON-encodes to an object; an empty one becomes [].
     if (Array.isArray(window.DAY_EXPENSES)) window.DAY_EXPENSES = {};
+
+    // What the shed did, by day. Seeded whole rather than fetched per day:
+    // most days have none of these, and a request per empty day is a request
+    // for nothing. { 'YYYY-MM-DD': [{name, delta, before, after, ...}, ...] }
+    window.DAY_INVENTORY = @json($inventoryForJs ?? (object) []);
+    if (Array.isArray(window.DAY_INVENTORY)) window.DAY_INVENTORY = {};
 </script>
 @include('sm.partials.activities-js', [
     'schedule' => $schedule,
@@ -4737,6 +4774,12 @@
     'draftsCount' => $draftsCount,
 ])
 @include('sm.partials.activities-calendar-js', ['schedule' => $schedule])
+{{-- The shed's own sheet, for the day menu's two rows and for the picker in
+     the activity sheet. Not standalone: the board wants the machinery, not
+     the module's renderers, and the shelf is only fetched when something
+     actually asks for it. --}}
+@include('sm.partials.inventory-move-sheet')
+@include('sm.partials.inventory-js', ['schedule' => $schedule, 'standalone' => false])
 @include('community.partials.lightbox-js')
 <script>
     // Filter-sheet extras: active-filter count badge on the toolbar button, and

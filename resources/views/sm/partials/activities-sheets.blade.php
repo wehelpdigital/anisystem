@@ -383,6 +383,24 @@
                         <span class="text-xs font-bold text-gray-500 uppercase">New item</span>
                         <button type="button" class="btn-ghost rounded-full w-7 h-7 flex items-center justify-center text-gray-400 hover:text-gray-700 js-quick-form-close" data-form="itemPickerPanel" aria-label="Close">✕</button>
                     </div>
+
+                    {{-- FROM THE SHED, OR JUST A NAME.
+                         A line that names something on the inventory comes off
+                         the count when this activity is ticked done; a line
+                         that is only a name is a note to yourself and moves
+                         nothing. The difference is worth making obvious, so it
+                         is the first thing asked rather than a checkbox after
+                         the fact. Hidden entirely when the shelf is empty —
+                         a picker with nothing in it is a question with no
+                         answers. --}}
+                    <div id="itemStockWrap" class="hidden">
+                        <label class="form-label text-xs! mb-1!" for="itemStockPick">Take it from the inventory?</label>
+                        <select id="itemStockPick" class="form-select bg-white!">
+                            <option value="">No — just list it on this activity</option>
+                        </select>
+                        <p class="form-hint" id="itemStockHint"></p>
+                    </div>
+
                     <div>
                         <label class="form-label text-xs! mb-1!" for="itemNameInput">Item name</label>
                         <input type="text" id="itemNameInput" class="form-input bg-white!" list="itemNameList" maxlength="255" placeholder="e.g. Urea 46-0-0" autocomplete="off">
@@ -870,6 +888,22 @@
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetNoteLock }}" data-action="add-map" @disabled(! $mayNote) @if(! $mayNote) title="{{ $whyNoNote }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
             Add a map
+        </button>
+        @endif
+        {{-- THE SHED, FROM THE DAY IT HAPPENED ON.
+             Most stock moves by an activity being ticked done. These two are
+             for everything else: the bag opened without a task against it,
+             and the delivery that arrived on a Tuesday. Logging them from the
+             day means the date is already right, which is the part people get
+             wrong when they come back to it on Friday. --}}
+        @if (! $isWorker)
+        <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetLock }}" data-action="iv-out" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/><path stroke-linecap="round" d="M9 12h6"/></svg>
+            Expense an inventory
+        </button>
+        <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetLock }}" data-action="iv-in" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/><path stroke-linecap="round" d="M12 9v6M9 12h6"/></svg>
+            Add new inventory
         </button>
         @endif
         @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)

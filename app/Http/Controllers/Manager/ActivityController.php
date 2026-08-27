@@ -72,6 +72,39 @@ class ActivityController extends BaseScheduleController
             ->groupBy(fn ($i) => $i->incomeDate->format('Y-m-d'))
             ->map(fn ($grp) => $grp->first()?->blockSort);
 
+        /* WHAT THE SHED DID, BY DAY.
+         *
+         * Seeded whole rather than fetched per day: unlike income, most days
+         * have none of these, and the ones that do have one or two lines —
+         * a whole season of them is smaller than one day's activities, and
+         * fetching per day would mean a request for every day that has
+         * nothing to show. */
+        $inventoryByDate = \App\Models\AsInventoryMove::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)
+            ->orderBy('id')
+            ->get()
+            ->groupBy(fn ($m) => $m->happenedOn?->format('Y-m-d'));
+        $inventoryNames = \App\Models\AsInventoryItem::where('croppingScheduleId', $schedule->id)
+            ->get()->keyBy('id');
+        $inventoryForJs = $inventoryByDate->map(fn ($grp) => $grp->map(function ($m) use ($inventoryNames) {
+            $item = $inventoryNames->get($m->itemId);
+
+            return [
+                'id' => $m->id,
+                'name' => $item->name ?? 'Removed item',
+                'icon' => $item?->icon() ?? '📦',
+                'unit' => $item->unit ?? '',
+                'delta' => (float) $m->delta,
+                'before' => (float) $m->qtyBefore,
+                'after' => (float) $m->qtyAfter,
+                'isIn' => $m->isIn(),
+                'reason' => $m->reason,
+                'reasonLabel' => $m->reasonLabel(),
+                'reasonIcon' => $m->reasonIcon(),
+                'note' => $m->note,
+            ];
+        })->values());
+
         $activeVersion = $schedule->versions->firstWhere('isActive', true)
             ?? $schedule->versions->firstWhere('isOriginal', true)
             ?? $schedule->versions->first();
@@ -114,6 +147,7 @@ class ActivityController extends BaseScheduleController
             'expensesByDate'    => $expensesByDate,
             'expenseSortByDate' => $expenseSortByDate,
             'incomeSortByDate'  => $incomeSortByDate,
+            'inventoryForJs'    => $inventoryForJs,
             'markersByDate'     => $markersByDate,
             'activeVersion'     => $activeVersion,
             'activityTypes'   => AsScheduleActivity::ACTIVITY_TYPES,
@@ -359,14 +393,82 @@ class ActivityController extends BaseScheduleController
 
         $next = !((bool) $activity->isDone);
         $activity->update(['isDone' => $next]);
+
+        /* WHAT IT USED COMES OFF THE SHELF.
+         *
+         * Only the lines that point at something in the inventory — a line
+         * that is just a note to yourself moves nothing. Done spends it,
+         * unticking gives it back, and both are safe to repeat: the spend is
+         * refused if this activity already has moves against it, and the
+         * give-back has nothing to find the second time.
+         *
+         * Against the ACTIVITY's date rather than today, because that is the
+         * day it was used on, and the log is a diary.
+         *
+         * Deliberately not inside a transaction with the flag above. If the
+         * stock write fails the tick still stands — a farmer who marked work
+         * done should not be told it did not happen because a number could
+         * not be written, and the module is where a wrong count is fixed. */
+        $moved = 0;
+        try {
+            if ($next) {
+                $moved = $this->stockFor($activity, $schedule->id);
+            } else {
+                $moved = app(\App\Services\InventoryService::class)->unspendForActivity($activity->id);
+            }
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Inventory did not follow a done toggle', [
+                'activity' => $activity->id, 'error' => $e->getMessage(),
+            ]);
+        }
+
         $this->broadcastBoard($schedule, 'toggle-done', ['id' => $activity->id, 'isDone' => $next], $activity->versionId);
 
-        return $this->jsonOk($next ? 'Marked as done — the activity is now locked.' : 'Reopened for editing.', [
+        $said = $next ? 'Marked as done — the activity is now locked.' : 'Reopened for editing.';
+        if ($moved > 0) {
+            $said .= $next
+                ? ' ' . $moved . ' ' . \Illuminate\Support\Str::plural('item', $moved) . ' taken off the inventory.'
+                : ' ' . $moved . ' ' . \Illuminate\Support\Str::plural('item', $moved) . ' put back on the inventory.';
+        }
+
+        return $this->jsonOk($said, [
             'data' => [
                 'id'     => $activity->id,
                 'isDone' => $next,
+                'stockMoved' => $moved,
             ],
         ]);
+    }
+
+    /**
+     * Spend this activity's inventory lines.
+     *
+     * Read off the item rows rather than from the request, because the tick
+     * carries no payload and the rows are the record of what the activity
+     * says it uses. Keyed to the activity, never to the item row's id: every
+     * save of an activity soft-deletes its item rows and creates fresh ones,
+     * so a ledger keyed to a row would be orphaned by the next edit.
+     */
+    private function stockFor(AsScheduleActivity $activity, int $scheduleId): int
+    {
+        $lines = \App\Models\AsScheduleActivityItem::where('activityId', $activity->id)
+            ->where('deleteStatus', 1)
+            ->whereNotNull('inventoryItemId')
+            ->get()
+            ->map(fn ($r) => ['itemId' => (int) $r->inventoryItemId, 'qty' => (float) $r->quantity])
+            ->filter(fn ($l) => $l['itemId'] > 0 && $l['qty'] > 0)
+            ->values()->all();
+
+        if ($lines === []) {
+            return 0;
+        }
+
+        return app(\App\Services\InventoryService::class)->spendForActivity(
+            $scheduleId,
+            $activity->id,
+            $lines,
+            $activity->targetDate?->format('Y-m-d'),
+        );
     }
 
     /**
@@ -1068,6 +1170,9 @@ class ActivityController extends BaseScheduleController
             'unitPrice' => $it->unitPrice !== null ? (float) $it->unitPrice : null,
             'quantity' => $it->quantity !== null ? (float) $it->quantity : null,
             'unitOfMeasure' => $it->displayUnit(),
+            // So editing an activity keeps the line pointing at the same
+            // thing in the shed rather than quietly becoming a plain note.
+            'inventoryItemId' => $it->inventoryItemId ? (int) $it->inventoryItemId : null,
         ])->values();
     }
 
@@ -1167,6 +1272,7 @@ class ActivityController extends BaseScheduleController
             'items.*.unitPrice'     => 'nullable|numeric|min:0|max:99999999',
             'items.*.quantity'      => 'nullable|numeric|min:0',
             'items.*.unitOfMeasure' => 'nullable|string|max:30',
+            'items.*.inventoryItemId' => 'nullable|integer',
             'items.*.notes'         => 'nullable|string|max:500',
             // A reminder checklist: the day's errands, each optionally
             // carrying money that only counts once the line is ticked.
@@ -1353,6 +1459,11 @@ class ActivityController extends BaseScheduleController
                         'unitPrice'     => isset($item['unitPrice']) && $item['unitPrice'] !== '' ? $item['unitPrice'] : null,
                         'quantity'      => isset($item['quantity']) && $item['quantity'] !== '' ? $item['quantity'] : null,
                         'unitOfMeasure' => isset($item['unitOfMeasure']) && $item['unitOfMeasure'] !== '' ? $item['unitOfMeasure'] : null,
+                        // Which thing in the shed this line spends, if any.
+                        // The rows are recreated on every save, so this value
+                        // has to come back with the payload or the link is
+                        // lost — which is why the picker sends it.
+                        'inventoryItemId' => ! empty($item['inventoryItemId']) ? (int) $item['inventoryItemId'] : null,
                         'notes'         => $item['notes'] ?? null,
                         'deleteStatus'  => 1,
                     ]);
