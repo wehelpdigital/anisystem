@@ -101,9 +101,107 @@
     .disc-tool:hover { background:var(--color-gray-100); color:var(--color-gray-800); }
     .disc-tool-leave:hover { color:#dc2626; border-color:#fca5a5; background:#fef2f2; }
     .disc-hero-join { display:block; width:100%; margin-top:.7rem; }
+    /* Waiting is not the same as being offered something: the button stays
+       to say what is happening, but stops looking like an invitation. */
+    .disc-hero-join.is-waiting, .disc-shut-go.is-waiting {
+        background:var(--color-gray-100); color:var(--color-gray-500);
+        border-color:var(--color-gray-200); box-shadow:none; }
+    .disc-hero-join:disabled, .disc-shut-go:disabled { opacity:.75; cursor:default; }
+
+    /* The number waiting, on the doorkeeper's button. Same red pill the
+       list uses for unread topics — one language for "there is something
+       here for you". */
+    .disc-tool { position:relative; }
+    .door-count { position:absolute; top:-.28rem; right:-.28rem; }
+
     @media (prefers-reduced-motion: reduce) {
         .disc-hero::before { animation:none; }
         .disc-tool { transition:none; }
+    }
+
+    /* THE FRONT STEP of a shut room. Centred and roomy: it is the whole
+       page for somebody outside, not a notice bar above a room. */
+    .disc-shut { padding:2rem 1.25rem 1.6rem; text-align:center; margin-top:.9rem; }
+    .disc-shut-lock { display:flex; align-items:center; justify-content:center;
+        width:3.6rem; height:3.6rem; margin:0 auto .8rem; border-radius:9999px;
+        background:var(--color-brand-50); color:var(--color-brand-700); }
+    .disc-shut-lock svg { width:1.7rem; height:1.7rem; }
+    .disc-shut-t { font-family:var(--font-heading); font-weight:800; font-size:1.08rem;
+        color:var(--color-gray-900); }
+    .disc-shut-s { font-size:.9rem; color:var(--color-gray-500); line-height:1.5;
+        margin:.4rem auto 1.1rem; max-width:26rem; }
+    .disc-shut-go { display:block; width:100%; max-width:20rem; margin:0 auto; }
+    .disc-shut-back { display:inline-block; margin-top:.9rem; font-size:.82rem;
+        font-weight:700; color:var(--color-gray-400); text-decoration:none; }
+    .disc-shut-back:hover { color:var(--color-brand-700); }
+    html.dark .disc-shut-lock { background:#25311b; color:#bfe19a; }
+
+    /* THE DOORKEEPER'S SHEETS — a queue, and a roster.
+
+       One row shape for all three lists (waiting, moderators, members),
+       because they are the same thing seen three times: a person, and what
+       you can do about them. What changes is the button on the end. */
+    .dq-list { display:flex; flex-direction:column; gap:.15rem; }
+    .dq-row { display:flex; align-items:center; gap:.65rem; padding:.55rem .35rem;
+        border-radius:.75rem; transition:background var(--dur) var(--ease-house); }
+    .dq-row:hover { background:var(--color-gray-50); }
+    .dq-row.is-going { opacity:0; transform:translateX(1.2rem);
+        transition:opacity .26s var(--ease-house), transform .26s var(--ease-house); }
+    .dq-face { width:2.35rem; height:2.35rem; border-radius:9999px; flex-shrink:0;
+        object-fit:cover; display:inline-flex; align-items:center; justify-content:center;
+        background:var(--color-brand-100); color:var(--color-brand-700);
+        font-size:.72rem; font-weight:800; }
+    .dq-who { min-width:0; flex:1 1 auto; }
+    .dq-name { display:block; font-size:.88rem; font-weight:800; color:var(--color-gray-900);
+        overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .dq-sub { display:block; font-size:.7rem; font-weight:600; color:var(--color-gray-400);
+        overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .dq-acts { display:flex; align-items:center; gap:.3rem; flex-shrink:0; }
+    .dq-btn { display:inline-flex; align-items:center; justify-content:center;
+        min-height:1.9rem; padding:0 .6rem; border-radius:999px; cursor:pointer;
+        font-size:.74rem; font-weight:800; border:1px solid var(--color-gray-200);
+        background:#fff; color:var(--color-gray-600);
+        transition:background var(--dur) var(--ease-house), color var(--dur) var(--ease-house),
+            border-color var(--dur) var(--ease-house); }
+    .dq-btn:hover { background:var(--color-gray-100); color:var(--color-gray-900); }
+    .dq-btn.is-yes { border-color:var(--color-brand-300); color:var(--color-brand-800);
+        background:var(--color-brand-50); }
+    .dq-btn.is-yes:hover { background:var(--color-brand-100); }
+    .dq-btn.is-no:hover { color:#dc2626; border-color:#fca5a5; background:#fef2f2; }
+    .dq-btn[disabled] { opacity:.5; cursor:default; }
+    /* What somebody already is, when it is not a thing to press. */
+    .dq-tag { font-size:.66rem; font-weight:800; letter-spacing:.02em; text-transform:uppercase;
+        padding:.14rem .45rem; border-radius:999px; flex-shrink:0;
+        background:var(--color-brand-50); color:var(--color-brand-800); }
+    .dq-none { text-align:center; padding:1.6rem .5rem .8rem; }
+    .dq-load { display:flex; align-items:center; justify-content:center; gap:.35rem; padding:1.4rem 0; }
+    .dq-load i { display:block; width:.45rem; height:.45rem; border-radius:9999px;
+        background:var(--color-brand-400); animation:discDot2 1s cubic-bezier(.22,1,.36,1) infinite; }
+    .dq-load i:nth-child(2) { animation-delay:.12s; }
+    .dq-load i:nth-child(3) { animation-delay:.24s; }
+    @keyframes discDot2 { 0%,100% { opacity:.25; transform:translateY(0); } 50% { opacity:1; transform:translateY(-.25rem); } }
+
+    /* Two jobs, two tabs — the ranking page's switcher in this room's words. */
+    .mr-tabs { display:flex; gap:.25rem; padding:.25rem; border-radius:.75rem;
+        background:var(--color-gray-100); margin-bottom:.7rem; }
+    .mr-tab { flex:1; min-height:2.4rem; border:0; border-radius:.55rem; cursor:pointer;
+        font-size:.82rem; font-weight:800; color:var(--color-gray-500); background:transparent;
+        transition:background var(--dur) var(--ease-house), color var(--dur) var(--ease-house); }
+    .mr-tab.is-active { background:#fff; color:var(--color-gray-900);
+        box-shadow:0 1px 2px rgb(0 0 0 / .08); }
+    .mr-say { font-size:.78rem; font-weight:600; color:var(--color-gray-400);
+        line-height:1.45; margin-bottom:.6rem; }
+    .mr-say-warn { color:#b45309; background:#fffbeb; border:1px solid #fde68a;
+        border-radius:.7rem; padding:.55rem .7rem; }
+    html.dark .mr-tabs { background:#1a2213; }
+    html.dark .mr-tab.is-active { background:#26301c; color:#e8efe1; }
+    html.dark .dq-row:hover { background:#1c2417; }
+    html.dark .dq-name { color:#e8efe1; }
+    html.dark .dq-btn { background:#1c2417; border-color:#2f3a26; color:#b9c6ad; }
+    html.dark .mr-say-warn { color:#fbbf24; background:#2b2210; border-color:#5b4715; }
+    @media (prefers-reduced-motion: reduce) {
+        .dq-row, .dq-btn, .mr-tab { transition:none; }
+        .dq-load i { animation-duration:2.6s; }
     }
     .disc-hero-num { display:inline-flex; align-items:center; gap:.25rem; }
     /* Being in the room is worth seeing, but it is a fact about you rather
@@ -447,6 +545,25 @@
              room, or leave it. Both are quiet — the room is the page, and
              neither of these is what a reader came for. --}}
         <div class="disc-hero-tools">
+            @if ($waitingCount > 0 || ($mayModerate && $group->asksForApproval()))
+                {{-- Who is at the door. The number is the whole reason this
+                     button exists, so it wears it — an organiser should not
+                     have to open a sheet to find out nobody is waiting. --}}
+                <button type="button" id="doorQueueBtn" class="disc-tool"
+                        title="People waiting to join" aria-label="People waiting to join">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+                    <span class="disc-new door-count {{ $waitingCount > 0 ? '' : 'hidden' }}" id="doorCount">{{ $waitingCount > 99 ? '99+' : $waitingCount }}</span>
+                </button>
+            @endif
+            @if ($mayModerate)
+                {{-- Who keeps the room. Moderators see it too — they can put
+                     somebody out — but only the one who started it is offered
+                     the tab that hands out the keys. --}}
+                <button type="button" id="manageRoomBtn" class="disc-tool"
+                        title="Members and moderators" aria-label="Members and moderators">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                </button>
+            @endif
             @if ($canEditGroup ?? false)
                 <button type="button" id="editGroupBtn" class="disc-tool" title="Edit this discussion" aria-label="Edit this discussion">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.4-9.4a2 2 0 112.8 2.8L11 15l-4 1 1-4 8.6-8.4z"/></svg>
@@ -465,9 +582,20 @@
         </div>
         @unless ($isMember || $isOwner)
             {{-- For somebody outside the room this is the whole page's offer,
-                 so it keeps its words and its width. --}}
-            <button type="button" id="joinLeaveBtn" class="btn btn-primary btn-sm disc-hero-join"
-                    data-joined="0" data-name="{{ $group->name }}">Join this discussion</button>
+                 so it keeps its words and its width. What it says depends on
+                 what the room will actually do when it is pressed. --}}
+            @php
+                $asked = ($myRequest && $myRequest->status === \App\Models\CommunityGroupJoinRequest::PENDING);
+                $doorWord = ! $group->isPrivate() ? 'Join this discussion'
+                    : ($asked ? 'Waiting for the organiser'
+                        : ($group->asksForPassword() ? 'Enter the password' : 'Ask to join'));
+            @endphp
+            <button type="button" id="joinLeaveBtn"
+                    class="btn btn-primary btn-sm disc-hero-join {{ ($asked || $wasRemoved) ? 'is-waiting' : '' }}"
+                    data-joined="0" data-name="{{ $group->name }}"
+                    data-door="{{ $group->isPrivate() ? ($group->joinMode ?: 'approval') : 'open' }}"
+                    @if ($asked) data-asked="1" @endif
+                    @if ($wasRemoved) disabled @endif>{{ $wasRemoved ? 'Removed from this discussion' : $doorWord }}</button>
         @endunless
         {{-- Whose room this is. A reader deciding whether to trust what is
              said in here wants to know who keeps it. --}}
@@ -532,6 +660,48 @@
     </div>
     @endif
 
+@unless ($mayEnter)
+    {{-- THE FRONT STEP.
+
+         A shut room is still findable, and the hero above has already given
+         its name, its cover, its size and who started it — enough to
+         recognise the room and decide to knock. What stops here is what is
+         said inside. The page shows the door instead of an empty room,
+         because an empty room reads as a broken page.
+
+         The topics are not merely hidden: the controller does not load them,
+         and the endpoint that pages them refuses the same way. --}}
+    <div class="card disc-shut">
+        <div class="disc-shut-lock" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>
+        </div>
+        <h3 class="disc-shut-t">This discussion is private</h3>
+        @if ($wasRemoved)
+            <p class="disc-shut-s">The organiser removed you from this discussion, so you cannot rejoin it. Message them if you think it was a mistake.</p>
+        @elseif ($myRequest && $myRequest->status === \App\Models\CommunityGroupJoinRequest::PENDING)
+            <p class="disc-shut-s">You asked to join {{ $myRequest->created_at?->diffForHumans() }}. {{ $group->creator->firstName ?? 'The organiser' }} will let you know — you will get a notification either way.</p>
+        @elseif ($myRequest && $myRequest->status === \App\Models\CommunityGroupJoinRequest::DECLINED)
+            <p class="disc-shut-s">Your last request was turned down. You can ask again if something has changed.</p>
+        @elseif ($group->asksForPassword())
+            <p class="disc-shut-s">Ask whoever runs it for the password, then type it in to come inside.</p>
+        @else
+            <p class="disc-shut-s">{{ $group->creator->firstName ?? 'The organiser' }} decides who comes in. Ask to join and you will hear back either way.</p>
+        @endif
+        @unless ($wasRemoved)
+            @php
+                $stepAsked = ($myRequest && $myRequest->status === \App\Models\CommunityGroupJoinRequest::PENDING);
+            @endphp
+            <button type="button" class="btn btn-primary disc-shut-go {{ $stepAsked ? 'is-waiting' : '' }}"
+                    id="shutJoinBtn" data-name="{{ $group->name }}"
+                    data-door="{{ $group->joinMode ?: 'approval' }}"
+                    @if ($stepAsked) data-asked="1" @endif>{{
+                $stepAsked ? 'Waiting for the organiser'
+                    : ($group->asksForPassword() ? 'Enter the password' : 'Ask to join')
+            }}</button>
+        @endunless
+        <a class="disc-shut-back" href="{{ route('community.groups.index') }}">Back to discussions</a>
+    </div>
+@else
     {{-- The room's two views, opened the way every module is opened. --}}
     <div class="disc-viewbar" id="roomViewBar">
         <button type="button" id="roomViewBtn" class="btn btn-white btn-sm" aria-haspopup="dialog" aria-expanded="false" title="Switch view">
@@ -789,6 +959,7 @@
         @endif
     </div>
 </div>
+@endunless
     {{-- A long thread, read on its own.
          A topic with twenty answers pushes every other topic off the page, so
          the room keeps the last few inline and opens the rest here. The post
@@ -838,6 +1009,104 @@
         @endforeach
     </div>
 </div>
+
+@if ($mayModerate)
+    {{-- WHO IS AT THE DOOR.
+
+         A queue rather than a list of settings: each row is a person, and
+         the only two things to do with a person waiting outside are let
+         them in or turn them away, so both are on the row. The row leaves
+         when it is answered — the queue is what is still to decide, and a
+         decided row lingering in it is just a thing to read past. --}}
+    <div class="sheet hidden" id="doorQueueSheet" style="--sheet-width:26rem">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+            <h3 class="sheet-title">Waiting to join</h3>
+            <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+        </div>
+        <div class="sheet-body">
+            <div class="dq-load hidden" id="doorQueueLoad"><i></i><i></i><i></i></div>
+            <div id="doorQueueList" class="dq-list"></div>
+            <div class="dq-none hidden" id="doorQueueNone">
+                <div class="empty-tile" style="width:3.2rem;height:3.2rem;font-size:1.4rem;">🚪</div>
+                <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Walang naghihintay</p>
+                <p class="text-sm text-gray-500 mt-1">Nobody is waiting to join right now.</p>
+            </div>
+        </div>
+    </div>
+
+    {{-- WHO KEEPS THE ROOM.
+
+         Two tabs because they are two different jobs done at different
+         times: handing somebody the keys is a considered thing, putting
+         somebody out is a thing you do when something has happened. Mixing
+         them into one list of members with two buttons each would put the
+         irreversible action next to the routine one on every row.
+
+         A moderator sees only the second tab. They can put a member out —
+         that is the job — but a deputy who can deputise is an owner by
+         another name, and the room would drift from whoever started it. --}}
+    <div class="sheet hidden" id="manageRoomSheet" style="--sheet-width:26rem">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+            <h3 class="sheet-title">Members</h3>
+            <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+        </div>
+        <div class="sheet-body">
+            @if ($mayGovern)
+                <div class="mr-tabs" role="tablist" id="manageTabs">
+                    <button type="button" class="mr-tab is-active" data-mr-tab="mods" aria-selected="true">Moderators</button>
+                    <button type="button" class="mr-tab" data-mr-tab="out" aria-selected="false">Remove</button>
+                </div>
+            @endif
+            <div class="dq-load hidden" id="manageLoad"><i></i><i></i><i></i></div>
+
+            <div data-mr-panel="mods" class="{{ $mayGovern ? '' : 'hidden' }}">
+                <p class="mr-say">A moderator can let people in and put people out. They cannot choose other moderators — only you can.</p>
+                <div id="modsList" class="dq-list"></div>
+            </div>
+
+            <div data-mr-panel="out" class="{{ $mayGovern ? 'hidden' : '' }}">
+                @if ($group->isPrivate())
+                    <p class="mr-say">Removing somebody takes them out of the room and keeps them out. They are told, and told why.</p>
+                    <div id="outList" class="dq-list"></div>
+                @else
+                    {{-- Honest about why the tab is empty rather than hiding
+                         it: this room is open, so putting somebody out would
+                         only be theatre — they would walk straight back in. --}}
+                    <div class="dq-none">
+                        <div class="empty-tile" style="width:3.2rem;height:3.2rem;font-size:1.4rem;">🌏</div>
+                        <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">This discussion is open</p>
+                        <p class="text-sm text-gray-500 mt-1">Anyone can walk into a public discussion, so removing somebody would not keep them out. Make it private first.</p>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+
+    {{-- Why somebody was removed. Asked for, not optional: the person is
+         told the reason, and "you were removed" with no reason is the kind
+         of thing people carry around. --}}
+    <div class="sheet hidden" id="removeWhySheet" style="--sheet-width:24rem">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+            <h3 class="sheet-title">Remove <span id="removeWhoName">this member</span>?</h3>
+            <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+        </div>
+        <div class="sheet-body space-y-2.5">
+            <p class="mr-say mr-say-warn">They lose access to this discussion and cannot rejoin it. They will be told, along with the reason you give.</p>
+            <div>
+                <label class="form-label" for="removeWhy">Why?</label>
+                <textarea id="removeWhy" class="form-textarea" rows="3" maxlength="500"
+                          placeholder="e.g. Nagpo-post ng hindi kaugnay sa usapan"></textarea>
+                <p class="form-hint">They will read this, so say it the way you would to their face.</p>
+            </div>
+        </div>
+        <div class="sheet-footer">
+            <button type="button" class="btn btn-danger" id="removeWhyGo" style="margin-top:0">Remove from discussion</button>
+        </div>
+    </div>
+@endif
 @endpush
 
 @push('scripts')
@@ -854,6 +1123,8 @@
 @include('community.partials.video-js')
 @include('community.partials.chat-media-js')
 @include('community.partials.infinite-js')
+{{-- What a shut room asks for, if this one is shut. --}}
+@include('community.partials.door-pass')
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const CSRF = document.querySelector('meta[name=csrf-token]').content;
@@ -875,6 +1146,59 @@ document.addEventListener('DOMContentLoaded', () => {
             const open = heroDesc.classList.toggle('is-open');
             heroMore.textContent = open ? 'Show less' : 'Show more';
         });
+    }
+
+    /* ---------------- the door ----------------
+       Three ways in and one button, because the farmer pressing it should
+       not have to know which kind of door this is. knock() asks whatever
+       this room asks and comes back with what happened; the callers below
+       only care whether they are now inside. */
+    const ROOM_DOOR = @json($group->isPrivate() ? ($group->joinMode ?: 'approval') : 'open');
+    const ROOM_NAME = @json($group->name);
+
+    async function knock(said = null) {
+        const res = await fetch(`/app/community/groups/${groupId}/join`, {
+            method: 'POST',
+            headers: jsonHeaders,
+            body: said === null ? undefined : JSON.stringify({ password: said }),
+        });
+        return await res.json();
+    }
+
+    /**
+     * Ask the room's own question, then knock — retrying while the password
+     * is wrong, because a typo is not a refusal. Returns 'joined',
+     * 'waiting', or null if they backed out or it failed.
+     */
+    async function goThroughTheDoor() {
+        let said = null;
+        if (ROOM_DOOR === 'password') {
+            said = window.askForPassword ? await window.askForPassword(ROOM_NAME) : null;
+            if (said === null) return null;
+        } else {
+            const ok = window.confirmAction ? await window.confirmAction({
+                title: ROOM_DOOR === 'approval' ? 'Ask to join ' + ROOM_NAME + '?' : 'Join ' + ROOM_NAME + '?',
+                message: ROOM_DOOR === 'approval'
+                    ? 'The organiser will decide, and you will hear back either way.'
+                    : 'You will be able to post and reply here, and the others in the room will see you as a member.',
+                confirmText: ROOM_DOOR === 'approval' ? 'Ask to join' : 'Join',
+                confirmClass: 'btn-primary',
+            }) : true;
+            if (!ok) return null;
+        }
+
+        for (;;) {
+            const data = await knock(said);
+            const outcome = data.data?.outcome;
+            if (outcome === 'wrong') {
+                said = window.askForPassword ? await window.askForPassword(ROOM_NAME) : null;
+                if (said === null) return null;
+                continue;
+            }
+            if (!data.success) { toast(data.message, 'error'); return null; }
+            toast(data.message);
+            return outcome || 'joined';
+        }
     }
 
     /* ---------------- join / leave: everything swaps live ---------------- */
@@ -919,6 +1243,33 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('joinLeaveBtn')?.addEventListener('click', async (e) => {
         const btn = e.currentTarget;
         const joined = btn.getAttribute('data-joined') === '1';
+
+        /* Coming IN to a shut room is the door's business, not this
+           handler's — the question, the password and the retry all live in
+           goThroughTheDoor(). Leaving is the same act whatever kind of room
+           it is, so it falls through to the code below. */
+        if (!joined && ROOM_DOOR !== 'open') {
+            if (btn.dataset.asked) {
+                toast('You already asked to join. Hintayin lang natin sila.');
+                return;
+            }
+            btn.disabled = true;
+            try {
+                const outcome = await goThroughTheDoor();
+                if (outcome === 'waiting') {
+                    btn.textContent = 'Waiting for the organiser';
+                    btn.dataset.asked = '1';
+                    btn.classList.add('is-waiting');
+                } else if (outcome === 'joined') {
+                    // The room is behind a door this page did not render, so
+                    // the way in is to fetch the page that has it.
+                    window.location.reload();
+                    return;
+                }
+            } catch (_) { toast('Network error — try again.', 'error'); }
+            finally { if (btn.isConnected) btn.disabled = false; }
+            return;
+        }
         /* Both directions are asked about.
 
            Leaving costs you the room: the topics, the chat, everything behind
@@ -957,6 +1308,25 @@ document.addEventListener('DOMContentLoaded', () => {
             if (btn.isConnected) { btn.disabled = false; delete btn.dataset.busy; }
         }
     });
+    // The front step of a shut room: the one thing on the page.
+    document.getElementById('shutJoinBtn')?.addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+        if (btn.dataset.asked) { toast('You already asked. Hintayin lang natin sila.'); return; }
+        btn.disabled = true;
+        try {
+            const outcome = await goThroughTheDoor();
+            if (outcome === 'joined') { window.location.reload(); return; }
+            if (outcome === 'waiting') {
+                btn.textContent = 'Waiting for the organiser';
+                btn.dataset.asked = '1';
+                btn.classList.add('is-waiting');
+                const say = document.querySelector('.disc-shut-s');
+                if (say) say.textContent = 'Your request is with the organiser. You will get a notification either way.';
+            }
+        } catch (_) { toast('Network error — try again.', 'error'); }
+        finally { if (btn.isConnected) btn.disabled = false; }
+    });
+
     document.getElementById('joinFromGate')?.addEventListener('click', async (e) => {
         const btn = e.currentTarget;   // null once this awaits
         btn.disabled = true;
@@ -1880,6 +2250,284 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.plazaOpenDm) window.plazaOpenDm(parseInt(pm.getAttribute('data-pm'), 10), pm.getAttribute('data-name'));
         else window.location = '/app/community?dm=' + pm.getAttribute('data-pm');
     });
+
+    /* ================= KEEPING THE ROOM =================
+     *
+     * Two sheets, both built from the same row: a face, a name, a line
+     * under it, and whatever you can do about that person. They are the
+     * same list seen three ways — who is waiting, who holds the keys, who
+     * is here — so one row builder serves all three and only the buttons
+     * on the end change.
+     *
+     * Everything is fetched when a sheet opens rather than rendered into
+     * the page: an organiser opens these rarely, and a roster baked into
+     * every page load would be stale by the time it was looked at. */
+    (function keepTheRoom() {
+        const queueBtn = document.getElementById('doorQueueBtn');
+        const manageBtn = document.getElementById('manageRoomBtn');
+        if (!queueBtn && !manageBtn) return;
+
+        // This is the chat block, which carries CSRF but not the headers
+        // bundle the topics block builds — so it is built again here rather
+        // than reached for across a scope that does not hold it.
+        const jsonHeaders = { 'X-CSRF-TOKEN': CSRF, 'Content-Type': 'application/json', Accept: 'application/json' };
+
+        const face = (p) => p.avatar
+            ? `<img class="dq-face" src="${esc(p.avatar)}" alt="">`
+            : `<span class="dq-face">${esc(p.initials || '?')}</span>`;
+
+        /* userId first, id second. A waiting person carries both — `id` is
+           their request, `userId` is them — and every action here is about
+           the person, so reading `id` first would send the request's number
+           where the member's belongs and quietly act on nobody. */
+        const row = (p, sub, acts) => `
+            <div class="dq-row" data-user="${p.userId ?? p.id}">
+                ${face(p)}
+                <span class="dq-who">
+                    <span class="dq-name">${esc(p.name)}</span>
+                    ${sub ? `<span class="dq-sub">${esc(sub)}</span>` : ''}
+                </span>
+                <span class="dq-acts">${acts}</span>
+            </div>`;
+
+        /** Take a row out of its list, and say so if the list is now empty. */
+        const drop = (el, emptyId) => {
+            const list = el.parentElement;
+            const done = () => {
+                el.remove();
+                if (emptyId && list && !list.children.length) {
+                    document.getElementById(emptyId)?.classList.remove('hidden');
+                }
+            };
+            if (reduceMotion) { done(); return; }
+            el.classList.add('is-going');
+            el.addEventListener('transitionend', done, { once: true });
+            setTimeout(done, 400);   // safety if transitionend is missed
+        };
+
+        /* ---- who is waiting ---- */
+        const qList = document.getElementById('doorQueueList');
+        const qNone = document.getElementById('doorQueueNone');
+        const qLoad = document.getElementById('doorQueueLoad');
+        const qCount = document.getElementById('doorCount');
+
+        const sayHowMany = (n) => {
+            if (!qCount) return;
+            qCount.textContent = n > 99 ? '99+' : String(n);
+            qCount.classList.toggle('hidden', n <= 0);
+        };
+
+        async function loadQueue() {
+            qLoad.classList.remove('hidden');
+            qList.innerHTML = '';
+            qNone.classList.add('hidden');
+            try {
+                const res = await fetch(`/app/community/groups/${groupId}/requests`, { headers: jsonHeaders });
+                const data = await res.json();
+                const asks = data.data?.requests || [];
+                sayHowMany(asks.length);
+                if (!asks.length) { qNone.classList.remove('hidden'); return; }
+                qList.innerHTML = asks.map((p) => row(p, p.place || p.asked, `
+                    <button type="button" class="dq-btn is-yes" data-door-yes>Let in</button>
+                    <button type="button" class="dq-btn is-no" data-door-no>No</button>
+                `)).join('');
+            } catch (_) {
+                qList.innerHTML = '<p class="mr-say">Could not load who is waiting.</p>';
+            } finally {
+                qLoad.classList.add('hidden');
+            }
+        }
+
+        queueBtn?.addEventListener('click', () => { window.openSheet('doorQueueSheet'); loadQueue(); });
+
+        qList?.addEventListener('click', async (e) => {
+            const yes = e.target.closest('[data-door-yes]');
+            const no = e.target.closest('[data-door-no]');
+            const btn = yes || no;
+            if (!btn) return;
+            const el = btn.closest('.dq-row');
+            const userId = el?.getAttribute('data-user');
+            el.querySelectorAll('.dq-btn').forEach((b) => { b.disabled = true; });
+            try {
+                const res = await fetch(`/app/community/groups/${groupId}/requests`, {
+                    method: 'POST',
+                    headers: jsonHeaders,
+                    body: JSON.stringify({ userId: Number(userId), decision: yes ? 'approve' : 'decline' }),
+                });
+                const data = await res.json();
+                if (!data.success) {
+                    toast(data.message, 'error');
+                    el.querySelectorAll('.dq-btn').forEach((b) => { b.disabled = false; });
+                    return;
+                }
+                toast(data.message);
+                /* "Already answered" is a success — somebody else got there
+                   first — but it is not THIS decision taking effect, so the
+                   queue is re-read rather than crossed off. Treating it as
+                   done is how a row that acted on nobody looked like it had
+                   worked. */
+                if (data.data?.outcome === 'already') { loadQueue(); return; }
+                sayHowMany(data.data?.waiting ?? 0);
+                drop(el, 'doorQueueNone');
+                // A new member changes the number in the hero, and the roster
+                // behind the other sheet is now a person out of date.
+                if (yes) {
+                    const c = document.getElementById('memberCount');
+                    if (c) c.textContent = String((parseInt(c.textContent || '0', 10) || 0) + 1);
+                    rosterStale = true;
+                }
+            } catch (_) {
+                toast('Network error — try again.', 'error');
+                el.querySelectorAll('.dq-btn').forEach((b) => { b.disabled = false; });
+            }
+        });
+
+        /* ---- who keeps the room ---- */
+        const mLoad = document.getElementById('manageLoad');
+        const modsList = document.getElementById('modsList');
+        const outList = document.getElementById('outList');
+        let rosterStale = true;
+
+        async function loadRoster() {
+            mLoad.classList.remove('hidden');
+            try {
+                const res = await fetch(`/app/community/groups/${groupId}/chat-members`, { headers: jsonHeaders });
+                const data = await res.json();
+                const all = (data.data?.members || []).filter((m) => !m.isCreator);
+
+                if (modsList) {
+                    modsList.innerHTML = all.length
+                        ? all.map((m) => row(m, m.role === 'moderator' ? 'Moderator' : 'Member',
+                            m.role === 'moderator'
+                                ? '<button type="button" class="dq-btn" data-demote>Remove as moderator</button>'
+                                : '<button type="button" class="dq-btn is-yes" data-promote>Make moderator</button>'
+                        )).join('')
+                        : '<p class="mr-say">Nobody else is in this discussion yet.</p>';
+                }
+                if (outList) {
+                    outList.innerHTML = all.length
+                        ? all.map((m) => row(m, m.role === 'moderator' ? 'Moderator' : 'Member',
+                            `<button type="button" class="dq-btn is-no" data-kick data-name="${esc(m.name)}">Remove</button>`
+                        )).join('')
+                        : '<p class="mr-say">Nobody else is in this discussion yet.</p>';
+                }
+                rosterStale = false;
+            } catch (_) {
+                if (modsList) modsList.innerHTML = '<p class="mr-say">Could not load the members.</p>';
+                if (outList) outList.innerHTML = '<p class="mr-say">Could not load the members.</p>';
+            } finally {
+                mLoad.classList.add('hidden');
+            }
+        }
+
+        manageBtn?.addEventListener('click', () => {
+            window.openSheet('manageRoomSheet');
+            if (rosterStale) loadRoster();
+        });
+
+        // Two tabs, the ranking page's switcher in this room's words.
+        document.getElementById('manageTabs')?.addEventListener('click', (e) => {
+            const tab = e.target.closest('.mr-tab');
+            if (!tab) return;
+            const want = tab.getAttribute('data-mr-tab');
+            document.querySelectorAll('#manageTabs .mr-tab').forEach((b) => {
+                const on = b.getAttribute('data-mr-tab') === want;
+                b.classList.toggle('is-active', on);
+                b.setAttribute('aria-selected', on ? 'true' : 'false');
+            });
+            document.querySelectorAll('[data-mr-panel]').forEach((p) => {
+                p.classList.toggle('hidden', p.getAttribute('data-mr-panel') !== want);
+            });
+        });
+
+        // Handing over the keys, or taking them back.
+        modsList?.addEventListener('click', async (e) => {
+            const up = e.target.closest('[data-promote]');
+            const down = e.target.closest('[data-demote]');
+            const btn = up || down;
+            if (!btn) return;
+            const el = btn.closest('.dq-row');
+            btn.disabled = true;
+            try {
+                const res = await fetch(`/app/community/groups/${groupId}/role`, {
+                    method: 'POST',
+                    headers: jsonHeaders,
+                    body: JSON.stringify({
+                        userId: Number(el.getAttribute('data-user')),
+                        role: up ? 'moderator' : 'member',
+                    }),
+                });
+                const data = await res.json();
+                if (!data.success) { toast(data.message, 'error'); btn.disabled = false; return; }
+                toast(data.message);
+                // The row rewrites itself rather than the whole list being
+                // fetched again: only this one person changed.
+                el.querySelector('.dq-sub').textContent = up ? 'Moderator' : 'Member';
+                el.querySelector('.dq-acts').innerHTML = up
+                    ? '<button type="button" class="dq-btn" data-demote>Remove as moderator</button>'
+                    : '<button type="button" class="dq-btn is-yes" data-promote>Make moderator</button>';
+                const twin = outList?.querySelector(`.dq-row[data-user="${el.getAttribute('data-user')}"] .dq-sub`);
+                if (twin) twin.textContent = up ? 'Moderator' : 'Member';
+            } catch (_) { toast('Network error — try again.', 'error'); btn.disabled = false; }
+        });
+
+        /* ---- showing somebody out ---- */
+        const whySheet = document.getElementById('removeWhySheet');
+        const whyBox = document.getElementById('removeWhy');
+        const whyGo = document.getElementById('removeWhyGo');
+        let kicking = null;   // { userId, name, el }
+
+        outList?.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-kick]');
+            if (!btn) return;
+            const el = btn.closest('.dq-row');
+            kicking = {
+                userId: Number(el.getAttribute('data-user')),
+                name: btn.getAttribute('data-name') || 'this member',
+                el,
+            };
+            document.getElementById('removeWhoName').textContent = kicking.name;
+            whyBox.value = '';
+            window.openSheet('removeWhySheet');
+            setTimeout(() => whyBox.focus(), 280);
+        });
+
+        whyGo?.addEventListener('click', async () => {
+            if (!kicking) return;
+            const reason = whyBox.value.trim();
+            /* The reason is required because the person is going to read
+               it. "You were removed" with nothing after it is the kind of
+               thing somebody carries around for a season. */
+            if (reason.length < 3) {
+                whyBox.focus();
+                toast('Say why — they will be told the reason.', 'error');
+                return;
+            }
+            /* Held onto before the sheet closes. Closing fires sheet:close,
+               which clears `kicking` in the same tick — reading it after
+               would be reading a variable the close just emptied. */
+            const { userId, el } = kicking;
+            whyGo.disabled = true;
+            try {
+                const res = await fetch(`/app/community/groups/${groupId}/remove`, {
+                    method: 'POST',
+                    headers: jsonHeaders,
+                    body: JSON.stringify({ userId, reason }),
+                });
+                const data = await res.json();
+                if (!data.success) { toast(data.message, 'error'); return; }
+                toast(data.message);
+                window.closeSheet('removeWhySheet');
+                drop(el, null);
+                modsList?.querySelector(`.dq-row[data-user="${userId}"]`)?.remove();
+                const c = document.getElementById('memberCount');
+                if (c) c.textContent = String(Math.max(0, (parseInt(c.textContent || '0', 10) || 0) - 1));
+            } catch (_) { toast('Network error — try again.', 'error'); }
+            finally { whyGo.disabled = false; }
+        });
+
+        whySheet?.addEventListener('sheet:close', () => { kicking = null; });
+    })();
 });
 
     /* ---------------- editing the room ---------------- */
