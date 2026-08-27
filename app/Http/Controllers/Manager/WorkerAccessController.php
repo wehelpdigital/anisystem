@@ -295,24 +295,32 @@ class WorkerAccessController extends Controller
 
     private function sendInviteEmail(WorkerGrant $grant, User $boss): void
     {
-        $link = route('worker.invite.show', ['token' => $grant->inviteToken]);
-        $bossName = $boss->full_name ?: 'Your farm manager';
-        $html = '<p>Hi,</p>'
-            . '<p><strong>' . e($bossName) . '</strong> has invited you to access their AniSystem cropping schedule as a worker.</p>'
-            . '<p>Set your password to get started:</p>'
-            . '<p><a href="' . e($link) . '" style="background:#4c8a39;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;display:inline-block;">Set my password</a></p>'
-            . '<p>Or open this link:<br>' . e($link) . '</p>'
-            . '<p>If you didn\'t expect this, you can ignore this email.</p>';
-        $this->mail->send($grant->invitedEmail, 'New AniSystem worker', 'You\'ve been invited to AniSystem', $html);
+        /* Templated in the mother app like every other message this app
+         * sends. It was a string literal in this file, so nobody could
+         * change a word of the one email a new worker ever reads without a
+         * deploy — while the welcome and the password reset had been
+         * editable in the admin for months. */
+        // The grant holds an address, not a name — the name is on the worker
+        // row it was created from. Failing that, the part before the @ is
+        // still better than opening with "Hi ,".
+        $name = optional(\App\Models\AsScheduleWorker::find($grant->scheduleWorkerId))->workerName
+            ?: \Illuminate\Support\Str::before((string) $grant->invitedEmail, '@');
+
+        $this->mail->sendTemplate('worker_invite', $grant->invitedEmail, $name, [
+            'workerName' => $name,
+            'bossName' => $boss->full_name ?: 'Your farm manager',
+            'inviteUrl' => route('worker.invite.show', ['token' => $grant->inviteToken]),
+        ], [
+            'relatedType' => 'worker_grant',
+            'relatedId' => $grant->id,
+        ]);
     }
 
     private function sendReadyEmail(string $email, string $name, User $boss): void
     {
-        $bossName = $boss->full_name ?: 'Your farm manager';
-        $html = '<p>Hi ' . e($name) . ',</p>'
-            . '<p><strong>' . e($bossName) . '</strong> has given your existing AniSystem account access to their farm.</p>'
-            . '<p>Log in and use the farm switcher (next to your profile) to open it.</p>'
-            . '<p><a href="' . e(route('login')) . '">Log in to AniSystem</a></p>';
-        $this->mail->send($email, $name, 'Farm access granted on AniSystem', $html);
+        $this->mail->sendTemplate('worker_access_ready', $email, $name, [
+            'workerName' => $name,
+            'bossName' => $boss->full_name ?: 'Your farm manager',
+        ]);
     }
 }

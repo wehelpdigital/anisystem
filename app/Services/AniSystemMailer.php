@@ -14,9 +14,37 @@ use Illuminate\Support\Facades\Mail;
  */
 class AniSystemMailer
 {
-    /** Send one mailable to one recipient. Throws on transport failure. */
-    public function send(string $toEmail, string $toName, Mailable $mailable): void
+    /**
+     * Send one mailable to one recipient. Throws on transport failure.
+     *
+     * Resend leads here too. This app has two mail paths for historical
+     * reasons — templated messages through MailService, mailables through
+     * this — and only fixing one of them would have left the morning digest
+     * still writing itself into a log file while password resets flew. A
+     * mailable knows how to render itself to HTML and name its own subject,
+     * which is everything the mail book needs.
+     */
+    public function send(string $toEmail, string $toName, Mailable $mailable, array $about = []): void
     {
+        if (app(ResendMailer::class)->configured()) {
+            $subject = '';
+            try {
+                $subject = (string) ($mailable->envelope()->subject ?? '');
+            } catch (\Throwable $e) {
+                $subject = (string) ($mailable->subject ?? '');
+            }
+
+            app(EmailQueue::class)->queueAndSend(
+                $toEmail,
+                $toName,
+                $subject !== '' ? $subject : config('app.name', 'AniSystem'),
+                $mailable->render(),
+                $about
+            );
+
+            return;
+        }
+
         $mailer = $this->prepareGroupMailer();
 
         $pending = $mailer

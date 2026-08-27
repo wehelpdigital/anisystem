@@ -143,7 +143,18 @@
                      still be the right person to record the day, or to keep
                      the maps, and not the right person to spend the farm's AI
                      credits. Each answer stands on its own. --}}
-                @include('sm.partials.worker-rights', ['p' => 'wl'])
+                {{-- What they can open only makes sense once there is a they
+                     to open it. Before a login exists these switches are
+                     answers to a question nobody has asked — and worse, they
+                     look like settings that are already in force. The panel
+                     arrives with the login. --}}
+                <div id="wlRightsWrap" class="hidden">
+                    @include('sm.partials.worker-rights', ['p' => 'wl'])
+                </div>
+                <p id="wlNoLoginSay" class="text-xs text-gray-500 leading-relaxed">
+                    Send a registration link or set a password below. Once this worker
+                    can log in, you choose what they are allowed to open.
+                </p>
 
 {{-- Community access is a row in the rights panel above. --}}
 
@@ -473,6 +484,10 @@ const __init = () => {
         wlAccess.dispatchEvent(new Event('change', { bubbles: true }));
         document.getElementById('wlCommunity').checked = login ? !!login.communityAccess : true;
         window.workerRights.paint('wl', login);
+        // The rights panel belongs to a login, not to a worker: no login, no
+        // question to answer, and a line saying how to get one instead.
+        document.getElementById('wlRightsWrap')?.classList.toggle('hidden', !login);
+        document.getElementById('wlNoLoginSay')?.classList.toggle('hidden', !!login);
         document.getElementById('wlRevoke').classList.toggle('hidden', !login);
         document.getElementById('wlPwRow').classList.add('hidden');
         document.getElementById('wlPassword').value = '';
