@@ -20,7 +20,7 @@ class MailService
      * Send a templated email. Returns true when the message was handed to the
      * SMTP server (or logged in fallback mode); false only on send failure.
      */
-    public function sendTemplate(string $templateKey, string $toEmail, string $toName, array $tags = []): bool
+    public function sendTemplate(string $templateKey, string $toEmail, string $toName, array $tags = [], array $about = []): bool
     {
         $group = config('anisystem.mail_group', 'AniSystem');
 
@@ -38,10 +38,15 @@ class MailService
 
         $rendered = $template->render($tags);
 
-        return $this->send($toEmail, $toName, $rendered['subject'], $rendered['body']);
+        // What this message IS travels with it, so the mail book can say
+        // which template a row came from and what it was about.
+        return $this->send($toEmail, $toName, $rendered['subject'], $rendered['body'], [
+            'groupKey' => $group,
+            'templateKey' => $templateKey,
+        ] + $about);
     }
 
-    public function sendTemplateToUser(string $templateKey, User $user, array $tags = []): bool
+    public function sendTemplateToUser(string $templateKey, User $user, array $tags = [], array $about = []): bool
     {
         $tags = array_merge([
             'firstName' => $user->firstName,
@@ -49,11 +54,26 @@ class MailService
             'email' => $user->email,
         ], $tags);
 
-        return $this->sendTemplate($templateKey, $user->email, $user->full_name, $tags);
+        return $this->sendTemplate($templateKey, $user->email, $user->full_name, $tags, $about);
     }
 
-    public function send(string $toEmail, string $toName, string $subject, string $htmlBody): bool
+    public function send(string $toEmail, string $toName, string $subject, string $htmlBody, array $about = []): bool
     {
+        /* Resend leads.
+         *
+         * Every message goes into the mail book first and then straight out,
+         * so a reset link somebody is waiting on does not sit in a queue —
+         * and if it fails there is a row saying who it was for and why, which
+         * the mother app's cron picks up and tries again.
+         *
+         * The SMTP path below is kept for a farm that would rather use its
+         * own server: fill the mail settings in the mother app and turn them
+         * on, and mail goes that way instead. With neither configured, mail
+         * is written to the log so a development flow never hard-fails. */
+        if (app(ResendMailer::class)->configured()) {
+            return app(EmailQueue::class)->queueAndSend($toEmail, $toName, $subject, $htmlBody, $about);
+        }
+
         $settings = MailSmtpSetting::forGroup(config('anisystem.mail_group', 'AniSystem'));
 
         if (! $settings || ! $settings->isActive || ! $settings->isConfigured()) {

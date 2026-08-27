@@ -18,8 +18,21 @@ return [
         'key' => env('POSTMARK_API_KEY'),
     ],
 
+    /*
+     * Resend — how this app's mail actually leaves the building.
+     *
+     * RESEND_KEY is the name the owner put in the environment; RESEND_API_KEY
+     * is the name Laravel's own resend mailer looks for. Both are read so the
+     * key only has to be set once, whichever name it was set under.
+     *
+     * `from` MUST be an address on a domain verified in the Resend dashboard.
+     * The sandbox sender onboarding@resend.dev is accepted by the API but
+     * only DELIVERED to the address that owns the key — good enough to prove
+     * the wiring, useless for writing to a farmer.
+     */
     'resend' => [
-        'key' => env('RESEND_API_KEY'),
+        'key' => env('RESEND_KEY', env('RESEND_API_KEY')),
+        'from' => env('RESEND_FROM', 'AniSystem <onboarding@resend.dev>'),
     ],
 
     'ses' => [
