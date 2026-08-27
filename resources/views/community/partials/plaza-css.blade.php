@@ -916,11 +916,6 @@
        ordinary gap between bands. (Adjacent card margins collapse; this top
        margin IS the gap.) */
     .mc-card { margin-top: 1.15rem; }
-    /* Deep enough to be a place rather than a stripe, and to hold the face's
-       outstanding half and the cloud above it with room to spare: the face
-       reaches 1.9rem up into it, the cloud another 1.55rem past that. */
-    .mc-cover { height: 6.25rem; }
-    @media (min-width: 640px) { .mc-cover { height: 7.5rem; } }
     .mc-name-row { display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; min-width: 0; }
     /* Connect and Accept wear the composers' living green: the one deliberate
        act on the card, dressed like every other primary act in the plaza. */
@@ -955,7 +950,13 @@
        the photo, on its midline, not hanging from its hat. */
     /* Above the card's edge strip (z-3): the face crosses the border, so
        the border must pass behind the face, not draw a line through it. */
-    .mc-face { display: block; margin-top: -2.5rem; flex: none; position: relative; z-index: 4; }
+    /* Hung from the head's top, not centred in it: the head is taller on
+       My Co-Farmers (it carries the ✕ beside Follow), and under
+       align-items:center that extra height pushed the face down — the same
+       photo rose 30px into its band on Members and 19px here. Pinned to the
+       top, the overlap is the margin and nothing else. */
+    .mc-face { display: block; margin-top: -2.5rem; flex: none; position: relative; z-index: 4;
+        align-self: flex-start; }
     .mc-face .avatar { width: 5rem; height: 5rem; font-size: 1.6rem;
         border: 3px solid var(--color-white); box-shadow: 0 8px 20px -14px rgb(0 0 0 / .8); }
     .mc-who { padding-top: 0; }
@@ -1283,14 +1284,25 @@
        A cover of their own if they have set one; otherwise the house green,
        deep and slowly turning — the same tide everything else here rides,
        and a colour that says "this app" rather than a random tint that says
-       nothing. Every surface that shows a member wears this; only the height
-       and the bleed belong to the surface, so those live in the modifiers.
+       nothing.
 
-       The band NEVER decides its own height: a bare .mem-cover collapses to
-       nothing, which is the honest failure — a surface that forgot to size
-       its band shows no band at all rather than a green stripe of the wrong
-       depth in the middle of a card. */
-    .mem-cover { display: block; overflow: hidden;
+       ONE HEIGHT, everywhere. A member's field was 60px on a post, 100px on
+       a member card and 176px on their profile, which made the same picture
+       read as three different features — and at 60px a landscape photo is a
+       letterbox slit you cannot recognise a farm in. The house band is 7rem
+       on a phone and 9rem once there is room; a surface overrides only its
+       bleed, never its depth. The narrow measure is for the suggestion tile
+       in the sideways rail, which is a third of a screen wide and would be a
+       portrait if it took the full one.
+
+       The picture always FILLS the band — object-fit:cover, cropped to the
+       frame, never squashed to it — and is anchored at the same point its
+       owner chose on their profile. Every cover in the app is far larger
+       than any band it lands in, so it is only ever scaled down: what shows
+       is the file's own resolution. */
+    :root { --cover-h: 7rem; --cover-h-sm: 3.5rem; }
+    @media (min-width: 640px) { :root { --cover-h: 9rem; } }
+    .mem-cover { display: block; overflow: hidden; height: var(--cover-h);
         background: linear-gradient(120deg, #16220f, #2f5219 32%, #3d6823 52%, #24380f 76%, #16220f);
         background-size: 260% 260%;
         animation: mcDrift 15s ease-in-out infinite alternate; }
@@ -1299,8 +1311,9 @@
     /* A cover photo is the cover; nothing needs to drift under it. */
     .mem-cover:has(img) { animation: none; }
     @media (prefers-reduced-motion: reduce) { .mem-cover { animation: none; } }
-    /* The suggestion card's own measurements: short, because the card is. */
-    .reco-top { height: 2.3rem; margin: 0 -.5rem 0; }
+    /* The suggestion tile's own measure — the one place the house depth does
+       not fit, because the card it crowns is a third of a screen wide. */
+    .reco-top { height: var(--cover-h-sm); margin: 0 -.5rem 0; }
     .reco-who { display: block; min-width: 0; }
     .reco-face { display: flex; justify-content: center; margin-top: -1.5rem; }
     .reco-face .avatar { width: 3rem; height: 3rem; font-size: .95rem;
@@ -1695,7 +1708,7 @@
 
        Squared at the bottom, because a band wearing four rounded corners
        reads as a shelf floating inside the card rather than its top edge. */
-    .fp-cover { height: 3.75rem; margin: -1rem -1rem 0;
+    .fp-cover { margin: -1rem -1rem .6rem;
         border-radius: inherit; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
     /* The card goes back to its plain padding: the cloud no longer needs a
        clearing above the head, because it now hangs over the photo. Written
@@ -1703,8 +1716,10 @@
        same weight and does not know there is a picture. */
     .feed-post:has(.fp-cover) { padding-top: 1rem; }
     /* Only the first thing in the head — the face, or the wrap holding the
-       face and its cloud — climbs onto the photo. */
-    .feed-post:has(.fp-cover) > header > :first-child { margin-top: -1.4rem; }
+       face and its cloud — climbs onto the photo, and it climbs exactly half
+       its own height, so the ring sits ON the edge rather than near it. The
+       name keeps the band's .6rem of clearance and never leans on the photo. */
+    .feed-post:has(.fp-cover) > header > :first-child { margin-top: -1.85rem; }
     /* A face reads as standing ON the photo only if it is cut out of it. */
     .feed-post:has(.fp-cover) > header .avatar { border: 3px solid var(--color-white); }
     html.dark .feed-post:has(.fp-cover) > header .avatar { border-color: #151b12; }

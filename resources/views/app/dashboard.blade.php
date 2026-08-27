@@ -109,9 +109,11 @@
        hour's badge stands half over the photo's lower edge, the way a face
        stands on a profile. Only drawn when there is a cover to draw, so the
        rows below only move for somebody who has chosen a picture. */
-    .dash-hero-cover { grid-column: 1 / -1; grid-row: 1; height: 5rem;
+    .dash-hero-cover { grid-column: 1 / -1; grid-row: 1;
         margin: calc(var(--dh-py) * -1) calc(var(--dh-px) * -1) 0; }
-    .dash-hero:has(.dash-hero-cover) { row-gap: .3rem; }
+    /* The greeting keeps its distance from the photo's lower edge — the same
+       clearance a post's name gets under the same band. */
+    .dash-hero:has(.dash-hero-cover) { row-gap: .6rem; }
     .dash-hero:has(.dash-hero-cover) .dash-hero-mark { grid-row: 2; align-self: start;
         margin-top: -1.7rem; position: relative;
         border: 3px solid var(--color-white); box-shadow: 0 8px 20px -14px rgb(0 0 0 / .8); }
@@ -119,7 +121,6 @@
     .dash-hero:has(.dash-hero-cover) .dash-hero-body { grid-column: 2; grid-row: 2; }
     .dash-hero:has(.dash-hero-cover) .dash-hero-state { grid-column: 2; grid-row: 3; }
     @media (min-width: 640px) {
-        .dash-hero-cover { height: 6.5rem; }
         .dash-hero:has(.dash-hero-cover) .dash-hero-state { grid-column: 3; grid-row: 2; align-self: center; }
     }
     .dash-chip { display: inline-flex; align-items: center; gap: .35rem; padding: .35rem .75rem;

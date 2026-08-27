@@ -344,8 +344,11 @@
 <style>
     /* ---- Profile header ---- */
     .pf-head { padding:0; overflow:hidden; }
-    .pf-cover { height:7rem; background-size:cover; background-repeat:no-repeat; background-color:var(--color-gray-100); }
-    @media (min-width:640px) { .pf-cover { height:11rem; } }
+    /* The house band's depth (plaza-css --cover-h), not one of its own: the
+       profile used to run 11rem on a desktop while the very same photo was
+       9rem on a member card and 7rem on a post, and one picture wearing
+       three depths reads as three different features. */
+    .pf-cover { height:var(--cover-h); background-size:cover; background-repeat:no-repeat; background-color:var(--color-gray-100); }
     /* The 1px of top padding is load-bearing: without it, .pf-id's negative
        margin collapses THROUGH this box's top edge and drags the whole body
        — and everything absolutely anchored to it — up over the cover. */
