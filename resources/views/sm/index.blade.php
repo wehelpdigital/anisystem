@@ -730,6 +730,24 @@
                 @endif
             </button>
             <button type="button" id="schFoldAll" class="sch-pill sch-foldall">Collapse all</button>
+            {{-- The closed seasons, one tap away. A season that has been shut
+                 is done being farmed, so it is not on this shelf — but it is
+                 not gone either, and this is the door to it. Drawn only when
+                 there is something behind the door, except while you are
+                 standing in it. --}}
+            @if (($archivedCount ?? 0) > 0 || ($showArchived ?? false))
+                <a href="{{ ($showArchived ?? false) ? route('sm.index') : route('sm.index', ['archived' => 1]) }}"
+                   class="sch-pill sch-archives{{ ($showArchived ?? false) ? ' is-set' : '' }}">
+                    @if ($showArchived ?? false)
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                        Back to seasons
+                    @else
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M6 7v11a2 2 0 002 2h8a2 2 0 002-2V7M9 4h6M10 11h4"/></svg>
+                        Archives
+                        <span class="sch-pill-now">{{ $archivedCount }}</span>
+                    @endif
+                </a>
+            @endif
         </div>
 
         {{-- The orders, asked for once. --}}
@@ -775,7 +793,14 @@
                 <div class="mx-auto w-16 h-16 rounded-2xl bg-brand-50 flex items-center justify-center mb-4">
                     <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v3m8-3v3M4 8h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1zm4 8h6"/></svg>
                 </div>
-                @if (request()->filled('search'))
+                @if ($showArchived ?? false)
+                    {{-- Standing in the Archives with nothing in them. Telling
+                         somebody to create their first schedule here would be
+                         answering a question they did not ask. --}}
+                    <h2 class="text-lg font-bold text-gray-900 mb-1">Nothing in the archives</h2>
+                    <p class="text-sm text-gray-500 mb-5">A season goes in here when you close it. Nothing is lost — you can open it from here, and reopening puts it back on the shelf.</p>
+                    <a href="{{ route('sm.index') }}" class="btn btn-outline">Back to seasons</a>
+                @elseif (request()->filled('search'))
                     <h2 class="text-lg font-bold text-gray-900 mb-1">No schedules match your search</h2>
                     <p class="text-sm text-gray-500 mb-5">Try a different search, or clear it to see all your schedules.</p>
                     <a href="{{ route('sm.index') }}" class="btn btn-outline">Clear search</a>

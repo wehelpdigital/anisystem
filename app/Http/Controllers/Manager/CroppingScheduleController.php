@@ -33,8 +33,15 @@ class CroppingScheduleController extends Controller
     {
         // Workers list their active boss's schedules; owners list their own.
         $ownerId = \App\Support\WorkerContext::effectiveOwnerId();
+        /* Two shelves, one page. A closed season is done being farmed, so it
+         * leaves the list that answers "what am I working on" and waits in the
+         * Archives — where it can still be opened, and reopening it puts it
+         * straight back. Nothing is deleted and nothing changes but where it
+         * is listed. */
+        $showArchived = $request->boolean('archived');
         $query = AsCroppingSchedule::active()
             ->forClient($ownerId)
+            ->when($showArchived, fn ($q) => $q->archived(), fn ($q) => $q->onShelf())
             ->withCount([
                 'lots as lots_count' => fn ($q) => $q->where('as_schedule_lots.deleteStatus', 1),
                 'workers as workers_count' => fn ($q) => $q->where('as_schedule_workers.deleteStatus', 1),
@@ -219,7 +226,12 @@ class CroppingScheduleController extends Controller
         $grant = \App\Support\WorkerContext::activeGrant();
         $boss = $grant?->boss;
 
+        // What the Archives button says, and whether it is worth drawing.
+        $archivedCount = AsCroppingSchedule::active()->forClient($ownerId)->archived()->count();
+
         return view('sm.index', compact('schedules', 'allSchedules', 'summary', 'cards', 'todayHref', 'sorts', 'sort') + [
+            'showArchived' => $showArchived,
+            'archivedCount' => $archivedCount,
             'isWorkerHere' => $grant !== null,
             'workerBossName' => $boss ? trim(($boss->firstName ?? '') . ' ' . ($boss->lastName ?? '')) : null,
             'hats' => \App\Support\UserHats::for(Auth::user()),

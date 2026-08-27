@@ -59,6 +59,25 @@ class AsCroppingSchedule extends BaseModel
     }
 
     /**
+     * The seasons still being farmed.
+     *
+     * Closing a season means it is done, so it stops appearing on the home
+     * screen and on the seasons page — the two places that answer "what am I
+     * working on". It is not deleted and nothing about it changes; it moves to
+     * the Archives, and reopening it brings it straight back here.
+     */
+    public function scopeOnShelf($q)
+    {
+        return $q->where($this->getTable() . '.status', '!=', self::STATUS_COMPLETED);
+    }
+
+    /** The seasons that have been closed. */
+    public function scopeArchived($q)
+    {
+        return $q->where($this->getTable() . '.status', self::STATUS_COMPLETED);
+    }
+
+    /**
      * Mother-app owner scoping (usersId). Kept for compatibility.
      */
     public function scopeForUser($q, $userId)
