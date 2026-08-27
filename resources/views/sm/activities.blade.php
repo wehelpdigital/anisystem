@@ -2274,11 +2274,22 @@
         /* Reference-image thumbnails on cards (multiple) */
         .activity-card-images { display: flex; flex-wrap: wrap; gap: .4rem; }
         .activity-card-images img { width: 84px; height: 84px; object-fit: cover; border-radius: .6rem; border: 1px solid #eef0f3; }
-        html.dark .activity-card-images img { border-color: var(--tl-border-soft); }
+        /* A clip on a card is wider than a photo, because a square film with
+           a scrub bar squeezed into it is neither watchable nor scrubbable. */
+        .activity-card-images video { width: 152px; height: 86px; object-fit: cover; border-radius: .6rem;
+            border: 1px solid #eef0f3; background: #000; }
+        html.dark .activity-card-images img,
+        html.dark .activity-card-images video { border-color: var(--tl-border-soft); }
 
-        /* Reference-image gallery in the sheet (thumb + remove) */
-        .activity-image-thumb { position: relative; aspect-ratio: 1; border-radius: .6rem; overflow: hidden; border: 1px solid #e5e7eb; }
-        .activity-image-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        /* Reference-file gallery in the sheet (thumb + remove) */
+        .activity-image-thumb { position: relative; aspect-ratio: 1; border-radius: .6rem; overflow: hidden; border: 1px solid #e5e7eb; background: #f3f4f6; }
+        .activity-image-thumb img,
+        .activity-image-thumb video { width: 100%; height: 100%; object-fit: cover; display: block; }
+        /* A clip's tile says it is a clip even before it has painted a frame —
+           a still square with no mark on it reads as a photograph. */
+        .activity-image-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+            pointer-events: none; color: #fff; filter: drop-shadow(0 1px 4px rgb(0 0 0 / .5)); }
+        .activity-image-play svg { width: 1.9rem; height: 1.9rem; }
         .activity-image-x { position: absolute; top: .25rem; right: .25rem; width: 1.9rem; height: 1.9rem; display: inline-flex; align-items: center; justify-content: center; border-radius: 9999px; background: rgba(17,24,39,.72); color: #fff; font-size: .9rem; line-height: 1; cursor: pointer; }
         @media (max-width: 640px) { .activity-image-x { width: 2.4rem; height: 2.4rem; font-size: 1.1rem; } }
 
@@ -3535,6 +3546,7 @@
 @include('sm.partials.draw-canvas')
 @include('sm.partials.note-editor')
 @include('sm.partials.note-lightbox')
+@include('sm.partials.attach-media')
 @include('community.partials.video-js')
 @endpush
 

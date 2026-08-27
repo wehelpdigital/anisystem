@@ -31,6 +31,19 @@ use Illuminate\Validation\Rule;
 class ActivityController extends BaseScheduleController
 {
     /**
+     * The shape of a path a reference file may point at.
+     *
+     * Not a folder whitelist, and deliberately so. A file kept on the mother
+     * app comes back under that host's own naming, and a picture chosen out
+     * of the season's gallery lives wherever the module that made it put it —
+     * so the folder is not something this end can enumerate. What it CAN
+     * insist on is the shape: plain segments of ordinary characters, ending
+     * in a media extension. No traversal, no absolute path, no backslash, and
+     * nothing that could name a file outside the public media disk.
+     */
+    private const ATTACHABLE_PATH = '#^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*\.(?:jpe?g|png|webp|gif|avif|mp4|mov|m4v|webm|ogv|3gp)$#i';
+
+    /**
      * Module page — the activity timeline. Server-renders the initial
      * timeline (date groups, rest days, markers, notes) exactly like the
      * mother setup tab so the page is useful before any JS runs.
@@ -519,43 +532,107 @@ class ActivityController extends BaseScheduleController
      * next activity save persists it. Orphans (upload without save) are
      * tolerated.
      */
+    /**
+     * A reference file for an activity — a photo, or a clip.
+     *
+     * Two things changed here and both were the same complaint. A file
+     * attached to an activity used to go into storage and NOWHERE else, so
+     * the Gallery — the one place the app promises everything a season keeps
+     * can be found — had never heard of it. And only stills were allowed,
+     * which meant "here is what the blight looks like" could be a photograph
+     * and never a ten-second walk down the row.
+     *
+     * So: clips are accepted, every upload files itself in the Gallery with
+     * the title and description the uploader was asked for, and the caller
+     * gets back the same shape it always did plus the gallery row's id.
+     */
     public function uploadImage(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request);
 
-        $validator = Validator::make($request->all(), [
+        // 'image' is the field name every existing caller sends; a clip comes
+        // under 'video'. Whichever arrived decides the rules.
+        $isClip = $request->hasFile('video');
+        $field = $isClip ? 'video' : 'image';
+
+        $validator = Validator::make($request->all(), $isClip ? [
+            'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-m4v|max:102400',
+            'title' => 'nullable|string|max:180',
+            'description' => 'nullable|string|max:2000',
+        ] : [
             'image' => 'required|image|mimes:jpg,jpeg,png,webp,gif|max:8192',
+            'title' => 'nullable|string|max:180',
+            'description' => 'nullable|string|max:2000',
         ], [
             'image.required' => 'Pick an image to upload.',
             'image.image'    => 'File must be an image.',
             'image.mimes'    => 'Allowed types: JPG, PNG, WebP, GIF.',
             'image.max'      => 'Image is too large — max 8 MB.',
+            'video.required' => 'Pick a clip to upload.',
+            'video.mimetypes' => 'Allowed types: MP4, MOV, WebM.',
+            'video.max'      => 'Clip is too large — max 100 MB.',
         ]);
         if ($validator->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
         }
 
-        $file         = $request->file('image');
-        // Extension derived from content, never the client filename (RCE/XSS guard).
-        $ext          = \App\Support\UploadHelper::safeExtension($file, ['jpg', 'jpeg', 'png', 'webp', 'gif']);
-        $stem         = Str::uuid()->toString();
-        $relativeDir  = 'schedule-activities/' . $schedule->id;
-        $relativePath = $relativeDir . '/' . $stem . '.' . $ext;
+        $file = $request->file($field);
+        $relativePath = null;
 
         try {
             $stored = \App\Support\MediaStore::putFile($file, 'schedule-activities', $schedule->id);
             if ($stored === null) {
-                return $this->jsonFail('Image upload failed.', 500);
+                return $this->jsonFail('Upload failed.', 500);
             }
             $relativePath = $stored;
         } catch (\Throwable $e) {
-            return $this->jsonFail('Image upload failed: ' . $e->getMessage(), 500);
+            return $this->jsonFail('Upload failed: ' . $e->getMessage(), 500);
         }
 
-        return $this->jsonOk('Image uploaded.', [
+        /* Into the Gallery as well as onto the activity.
+         *
+         * The row is a reference to the same stored file, not a copy — the
+         * picture on the activity and the picture in the Gallery are one
+         * file, so deleting the activity does not take the Gallery's copy and
+         * vice versa. A failure here must not lose somebody's upload: the
+         * file is already safe, so the shelving is attempted and forgiven. */
+        $galleryId = null;
+        try {
+            // Every gallery picture lives in an album, so anything filed from
+            // here goes to one of its own — made once, reused after that,
+            // exactly as the Collab Room does with its team photos.
+            $album = \App\Models\AsGalleryAlbum::firstOrCreate(
+                ['croppingScheduleId' => $schedule->id, 'title' => 'From activities', 'deleteStatus' => 1],
+                ['userId' => \Illuminate\Support\Facades\Auth::id(),
+                 'description' => 'Photos and clips attached to activities on this season.']
+            );
+            $order = (int) \App\Models\AsGalleryImage::where('albumId', $album->id)
+                ->where('deleteStatus', 1)->max('sortOrder');
+
+            $row = \App\Models\AsGalleryImage::create([
+                'albumId' => $album->id,
+                'croppingScheduleId' => $schedule->id,
+                'userId' => \Illuminate\Support\Facades\Auth::id(),
+                'path' => $relativePath,
+                'caption' => trim((string) $request->input('title')) ?: null,
+                'description' => trim((string) $request->input('description')) ?: null,
+                'isTeam' => 0,
+                'sortOrder' => $order + 1,
+                'deleteStatus' => 1,
+            ]);
+            $galleryId = $row->id;
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Activity upload could not be shelved in the Gallery: ' . $e->getMessage());
+        }
+
+        return $this->jsonOk($isClip ? 'Clip uploaded.' : 'Image uploaded.', [
             'data' => [
+                // The names the existing callers read, unchanged.
                 'imagePath' => $relativePath,
-                'imageUrl'  => asset('storage/' . $relativePath),
+                'imageUrl'  => \App\Support\MediaStore::url($relativePath),
+                'kind'      => $isClip ? 'video' : 'image',
+                'galleryId' => $galleryId,
+                'title'     => trim((string) $request->input('title')) ?: null,
             ],
         ]);
     }
@@ -1332,17 +1409,26 @@ class ActivityController extends BaseScheduleController
         // Items are free-form now (name + price + qty + unit), so there's no
         // catalog id to cross-check — just the field validation above.
 
-        // Normalize incoming reference image path(s) + path-traversal guard.
-        // Accept the multi-image `imagePaths` list, falling back to the legacy
-        // single `imagePath`. Every path must live under schedule-activities/.
+        /* Normalize incoming reference file path(s) + path-traversal guard.
+         *
+         * Accept the multi-file `imagePaths` list, falling back to the legacy
+         * single `imagePath`. The rule used to be "under schedule-activities/"
+         * and that was too tight twice over: a file kept on the mother app
+         * comes back wearing an mm: prefix, and a picture chosen out of the
+         * season's gallery lives in whichever folder first put it there. Both
+         * were being refused as invalid paths.
+         *
+         * So the check is now on the shape of the path rather than on which
+         * folder it names — see ATTACHABLE_PATH. */
         $rawPaths = $request->filled('imagePaths')
             ? (array) $request->input('imagePaths', [])
             : [(string) $request->input('imagePath', '')];
         $submittedImagePaths = [];
         foreach ($rawPaths as $p) {
-            $p = ltrim(trim((string) $p), '/\\');
+            $p = trim((string) $p);
             if ($p === '') continue;
-            if (str_contains($p, '..') || ! str_starts_with($p, 'schedule-activities/')) {
+            $bare = \App\Support\MediaStore::strip($p);
+            if (str_contains($bare, '..') || ! preg_match(self::ATTACHABLE_PATH, $bare)) {
                 return $this->jsonFail('Invalid image path.', 422);
             }
             $submittedImagePaths[] = $p;

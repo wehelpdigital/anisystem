@@ -246,7 +246,13 @@
     @if(count($cardImages))
         <div class="activity-card-images mt-2" data-lightbox>
             @foreach($cardImages as $img)
-                <img src="{{ $img['url'] }}" alt="Reference image" loading="lazy">
+                @if (($img['kind'] ?? 'image') === 'video')
+                    {{-- A clip plays where it sits. Pointing an <img> at an
+                         .mp4 is what a broken-image glyph is made of. --}}
+                    <video src="{{ $img['url'] }}" controls playsinline preload="metadata"></video>
+                @else
+                    <img src="{{ $img['url'] }}" alt="Reference image" loading="lazy">
+                @endif
             @endforeach
         </div>
     @endif

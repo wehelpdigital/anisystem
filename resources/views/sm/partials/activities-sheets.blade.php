@@ -597,14 +597,25 @@
                 </div>
             </div>
 
-            {{-- Reference images — at the bottom, multiple allowed. --}}
+            {{-- Reference files — at the bottom, multiple allowed.
+
+                 Two headings, because a photo and a clip answer different
+                 questions: "this is the pest" and "this is how you do it".
+                 One button each, because the three ways of getting there
+                 belong inside the sheet that follows, not on this form. --}}
             <div id="activityImagesSection">
                 <span class="form-label">Reference images <span class="text-gray-400 font-normal">(optional, max 8 MB each)</span></span>
-                <input type="file" id="activityImageFileInput" accept="image/jpeg,image/png,image/webp,image/gif" class="hidden" multiple>
                 <div id="activityImagesGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-2"></div>
                 <button type="button" id="activityImageUploadBtn" class="btn btn-white w-full">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    <span id="activityImageUploadLabel">Add images</span>
+                    <span id="activityImageUploadLabel">Add photos</span>
+                </button>
+
+                <span class="form-label mt-4">Reference videos <span class="text-gray-400 font-normal">(optional, max 100 MB each)</span></span>
+                <div id="activityVideosGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-2"></div>
+                <button type="button" id="activityVideoUploadBtn" class="btn btn-white w-full">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                    <span id="activityVideoUploadLabel">Add videos</span>
                 </button>
             </div>
         </div>

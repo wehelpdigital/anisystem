@@ -322,17 +322,33 @@ class AsScheduleActivity extends BaseModel
         return array_values(array_filter([$this->imagePath]));
     }
 
+    /** File endings that mean "this one moves". */
+    public const CLIP_EXTENSIONS = ['mp4', 'mov', 'm4v', 'webm', 'ogv', '3gp'];
+
     /**
-     * Reference images as [{path, url}] for the front-end.
+     * Reference files as [{path, url, kind}] for the front-end.
      *
-     * @return array<int, array{path:string, url:string}>
+     * Photos and clips share the one list. A clip is not a different KIND of
+     * attachment to an activity — it is the same "here is what I mean", just
+     * moving — so it needed no column of its own; the file ending says which
+     * it is, and the form shows each under its own heading.
+     *
+     * The address goes through MediaStore because half of these paths live on
+     * the mother app now, and asset() would have pointed every one of those
+     * at a file this host does not have.
+     *
+     * @return array<int, array{path:string, url:string, kind:string}>
      */
     public function imageList(): array
     {
-        return array_map(fn ($p) => [
-            'path' => $p,
-            'url' => asset('storage/' . ltrim($p, '/')),
-        ], $this->imagePathList());
+        return array_map(function ($p) {
+            $ext = strtolower(pathinfo((string) $p, PATHINFO_EXTENSION));
+            return [
+                'path' => $p,
+                'url' => \App\Support\MediaStore::url($p),
+                'kind' => in_array($ext, self::CLIP_EXTENSIONS, true) ? 'video' : 'image',
+            ];
+        }, $this->imagePathList());
     }
 
     /** Label + color for an irrigation activity's water task (or null). */

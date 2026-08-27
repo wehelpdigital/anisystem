@@ -943,7 +943,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const imageUrl = a.imageUrl || (a.imagePath ? STORAGE_BASE + '/' + String(a.imagePath).replace(/^\/+/, '') : '');
         const cardImages = (a.images && a.images.length) ? a.images : (imageUrl ? [{ url: imageUrl }] : []);
         const imagesHtml = cardImages.length
-            ? `<div class="activity-card-images mt-2" data-lightbox>${cardImages.map((im) => `<img src="${esc(im.url)}" alt="Reference image" loading="lazy">`).join('')}</div>`
+            ? `<div class="activity-card-images mt-2" data-lightbox>${cardImages.map((im) => (
+                // A clip plays where it sits; an <img> pointed at an .mp4 is
+                // a broken-image glyph. Mirrors activity-card.blade.php.
+                (im.kind === 'video' || /\.(mp4|mov|m4v|webm|ogv|3gp)(\?|$)/i.test(im.path || im.url || ''))
+                    ? `<video src="${esc(im.url)}" controls playsinline preload="metadata"></video>`
+                    : `<img src="${esc(im.url)}" alt="Reference image" loading="lazy">`)).join('')}</div>`
             : '';
         const nameAttr = esc(a.activityTitle || '');
 
@@ -3913,65 +3918,83 @@ document.addEventListener('DOMContentLoaded', () => {
         if (_src) _src.value = '';
     });
 
-    // ---- Reference images (multiple; upload immediately, persist on save) ----
-    let ACTIVITY_IMAGES = [];   // [{ path, url }]
+    /* ---- Reference files: photos and clips ----
+     *
+     * One list underneath, split into two on screen. A clip is not a
+     * different kind of attachment to an activity — it is the same "here is
+     * what I mean", moving — so it travels in the same imagePaths list the
+     * activity has always had, and what it IS comes off the file ending.
+     *
+     * Getting one here goes through the shared attach sheet, which is where
+     * the three doors (the gallery, this device, the camera) and the naming
+     * and the progress bars live. */
+    let ACTIVITY_IMAGES = [];   // [{ path, url, kind }]
+
+    const CLIP_ENDINGS = /\.(mp4|mov|m4v|webm|ogv|3gp)(\?|$)/i;
+    const isClip = (m) => (m.kind || '') === 'video' || CLIP_ENDINGS.test(m.path || '');
+
     function renderActivityImages() {
-        const grid = $id('activityImagesGrid');
-        if (!grid) return;
-        grid.innerHTML = ACTIVITY_IMAGES.map((img, i) => `
-            <div class="activity-image-thumb">
-                <img src="${esc(img.url)}" alt="Reference image" loading="lazy">
-                <button type="button" class="activity-image-x" data-remove-image="${i}" aria-label="Remove image">✕</button>
-            </div>`).join('');
-        grid.classList.toggle('hidden', ACTIVITY_IMAGES.length === 0);
+        const draw = (grid, rows, empty) => {
+            if (!grid) return;
+            grid.innerHTML = rows.map(({ m, i }) => `
+                <div class="activity-image-thumb">
+                    ${isClip(m)
+                        ? `<video src="${esc(m.url)}" muted playsinline preload="metadata"></video>
+                           <span class="activity-image-play" aria-hidden="true">
+                             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>`
+                        : `<img src="${esc(m.url)}" alt="Reference image" loading="lazy">`}
+                    <button type="button" class="activity-image-x" data-remove-image="${i}" aria-label="Remove">✕</button>
+                </div>`).join('');
+            grid.classList.toggle('hidden', rows.length === 0);
+        };
+        // The index carried on the button is the index in the ONE list, so
+        // removing a clip from the second grid removes the right thing.
+        const all = ACTIVITY_IMAGES.map((m, i) => ({ m, i }));
+        draw($id('activityImagesGrid'), all.filter(({ m }) => !isClip(m)));
+        draw($id('activityVideosGrid'), all.filter(({ m }) => isClip(m)));
     }
+
     function setActivityImages(list) {
-        ACTIVITY_IMAGES = (list || []).filter((x) => x && x.path).map((x) => ({ path: x.path, url: x.url }));
+        ACTIVITY_IMAGES = (list || []).filter((x) => x && x.path)
+            .map((x) => ({ path: x.path, url: x.url, kind: x.kind || (CLIP_ENDINGS.test(x.path) ? 'video' : 'image') }));
         renderActivityImages();
     }
 
-    $id('activityImagesGrid')?.addEventListener('click', (e) => {
-        const btn = e.target.closest('[data-remove-image]');
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('#activityImagesGrid [data-remove-image], #activityVideosGrid [data-remove-image]');
         if (!btn) return;
         ACTIVITY_IMAGES.splice(Number(btn.dataset.removeImage), 1);
         renderActivityImages();
     });
 
-    document.addEventListener('click', (e) => {
-        if (e.target.closest('#activityImageUploadBtn')) {
-            const fi = $id('activityImageFileInput');
-            fi.value = '';
-            fi.click();
+    function addReference(kind) {
+        if (typeof window.smAttachMedia !== 'function') {
+            toast('Attachments are not available here.', 'error');
+            return;
         }
-    });
-
-    $id('activityImageFileInput')?.addEventListener('change', async (e) => {
-        const files = Array.from(e.target.files || []);
-        if (!files.length) return;
-        const uploadBtn = $id('activityImageUploadBtn');
-        const label = $id('activityImageUploadLabel');
-        const prev = label ? label.textContent : '';
-        uploadBtn.disabled = true;
-        if (label) label.textContent = 'Uploading…';
-        try {
-            for (const file of files) {
-                if (!/^image\//.test(file.type)) {
-                    toast(`"${file.name}" is not an image — skipped.`, 'error');
-                    continue;
+        const cap = kind === 'video' ? 12 : 12;
+        window.smAttachMedia({
+            scheduleId: SCHEDULE_ID,
+            kind,
+            uploadUrl: U.imageUpload(),
+            onDone: (items) => {
+                for (const it of items || []) {
+                    if (ACTIVITY_IMAGES.length >= cap) {
+                        toast('That is as many files as one activity can hold.', 'error');
+                        break;
+                    }
+                    // The same file twice is a slip, not an intention.
+                    if (ACTIVITY_IMAGES.some((m) => m.path === it.path)) continue;
+                    ACTIVITY_IMAGES.push({ path: it.path, url: it.url, kind: it.kind || kind });
                 }
-                const fd = new FormData();
-                fd.append('image', file);
-                const res = await api(U.imageUpload(), { method: 'POST', body: fd });
-                ACTIVITY_IMAGES.push({ path: res.data.imagePath, url: res.data.imageUrl });
                 renderActivityImages();
-            }
-            toast('Image(s) uploaded.');
-        } catch (err) {
-            toast(err.message, 'error');
-        } finally {
-            uploadBtn.disabled = false;
-            if (label) label.textContent = prev || 'Add images';
-        }
+            },
+        });
+    }
+
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('#activityImageUploadBtn')) addReference('image');
+        else if (e.target.closest('#activityVideoUploadBtn')) addReference('video');
     });
 
     // ---- Materials & services item picker ----
@@ -5500,6 +5523,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => {
         if (e.target.closest('button, a, input, textarea, select, label, .item-tag')) return;
         if (e.target.closest('[data-lightbox] img')) return;   // image clicks open the lightbox
+        // A tap on a clip is a tap on its own controls — play, scrub, mute —
+        // and must not also fold the card away underneath the finger.
+        if (e.target.closest('[data-lightbox] video')) return;
         const card = e.target.closest('#activitiesList .activity-card[data-id]');
         if (!card) return;
         // A drag that just ended never reaches here: the touch-drag system
