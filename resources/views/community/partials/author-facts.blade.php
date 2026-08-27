@@ -41,7 +41,7 @@
     {{-- Where they farm and what they do: what the person IS. --}}
     @if ($afPlace || $afWork)
         <p class="af-line">
-            @if ($afPlace)<span class="af-fact">📍 {{ $afPlace }}</span>@endif
+            @if ($afPlace)<span class="af-fact">@include('community.partials.place', ['place' => $afPlace])</span>@endif
             @if ($afWork)<span class="af-fact">🧑‍🌾 {{ \Illuminate\Support\Str::limit($afWork, 34) }}</span>@endif
             {{-- A lone chip rides up here rather than opening a second row. --}}
             @if ($afMerge)@include('community.partials.author-counts', $afCountVars)@endif

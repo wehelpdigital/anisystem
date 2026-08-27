@@ -66,7 +66,7 @@
                     @include('community.partials.top-badge', ['topUser' => $author])
                     @if (in_array((int) $post->authorUserId, $friendIds, true))<span class="badge badge-green align-middle ml-1">Co-farmer</span>@endif
                 </p>
-                <p class="text-xs text-gray-400">@if ($place)📍 {{ $place }} · @endif{{ $post->created_at?->diffForHumans() }}</p>
+                <p class="text-xs text-gray-400">@if ($place)@include('community.partials.place', ['place' => $place]) · @endif{{ $post->created_at?->diffForHumans() }}</p>
             </div>
         </header>
         <p class="text-sm text-gray-700 mt-2 whitespace-pre-line break-words">{!! \App\Support\CommunityText::render($post->body) !!}</p>

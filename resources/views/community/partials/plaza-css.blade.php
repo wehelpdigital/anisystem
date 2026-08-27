@@ -211,6 +211,13 @@
     .wall-act:active { transform: scale(.95); }
     @media (prefers-reduced-motion: reduce) { .wall-act:active { transform: none; } }
 
+    /* Where somebody farms. The pin is sized in em, so one rule serves the
+       .688rem line in a sidebar row and the 1rem one on a profile without
+       either getting a mark the wrong size for its words. */
+    .place-pin { display: inline-flex; align-items: center; gap: .25rem; min-width: 0; }
+    .place-pin svg { width: 1.05em; height: 1.05em; flex: none; color: #e11d48; }
+    html.dark .place-pin svg { color: #fb7185; }
+
     /* --- Initials avatars: crc32(lower(name))%8 → av-h0..7. Circle = person, squircle = place. --- */
     /* Every face in this app wears the same green ring.
        Two backgrounds in one box — the member's own hue clipped to the

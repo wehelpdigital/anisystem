@@ -295,7 +295,7 @@
                  have been here. The same fallback a post uses, so the box you
                  write in still matches the post it becomes. --}}
             @if ($mePlace)
-                <p class="text-xs text-gray-400">📍 {{ $mePlace }}</p>
+                <p class="text-xs text-gray-400">@include('community.partials.place', ['place' => $mePlace])</p>
             @elseif (auth()->user()?->created_at)
                 <p class="text-xs text-gray-400">🌱 Member since {{ auth()->user()->created_at->timezone('Asia/Manila')->format('M Y') }}</p>
             @endif
