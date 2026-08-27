@@ -5,6 +5,7 @@
         <div class="bg-gray-50 rounded-lg px-3 py-2">
             <p class="text-sm">
                 <span class="font-semibold text-gray-900">{{ optional($comment->author)->full_name ?: 'Member' }}</span>
+                @include('community.partials.top-badge', ['topUser' => $comment->author])
                 <span class="text-[0.688rem] text-gray-400 ms-1">· {{ $comment->created_at?->diffForHumans() }}</span>
             </p>
             @if (filled($comment->body))

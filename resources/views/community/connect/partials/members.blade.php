@@ -41,6 +41,7 @@
                              wall puts it: beside the name it belongs to.
                              Nothing under it — the name and the level ARE
                              the head; everything else lives in the facts. --}}
+                        @include('community.partials.top-badge', ['topUser' => $m])
                         @include('community.partials.rank-badge', ['rankUser' => $m])
                     </span>
                 </div>

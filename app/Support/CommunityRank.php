@@ -140,6 +140,31 @@ class CommunityRank
     public const MAX_LEVEL = 100;
 
     /**
+     * The podium: the twenty seats at the top of the board, in metal.
+     *
+     * A level says how far somebody has walked; a placement says who is in
+     * front right now, and only twenty can be. The metals narrow as they
+     * climb — five seats of nickel, five of bronze, four silver, three gold,
+     * two platinum, and one diamond that belongs to whoever is first — so
+     * moving up a metal is rarer each time.
+     *
+     * 'to' is the last placement the metal covers; the list is read in order
+     * and the first metal that reaches the placement wins it. To retune the
+     * podium, move these numbers — nothing else knows the boundaries.
+     */
+    public const PODIUM = [
+        ['to' => 1, 'key' => 'diamond', 'name' => 'Diamond'],
+        ['to' => 3, 'key' => 'platinum', 'name' => 'Platinum'],
+        ['to' => 6, 'key' => 'gold', 'name' => 'Gold'],
+        ['to' => 10, 'key' => 'silver', 'name' => 'Silver'],
+        ['to' => 15, 'key' => 'bronze', 'name' => 'Bronze'],
+        ['to' => 20, 'key' => 'nickel', 'name' => 'Nickel'],
+    ];
+
+    /** How many seats the podium holds — the last metal's final place. */
+    public const PODIUM_SIZE = 20;
+
+    /**
      * The free summit. A member without a subscription climbs to here and
      * the ladder holds them: their banked points freeze one shy of Level 21's
      * floor until they subscribe, and everything they keep doing starts
@@ -494,6 +519,111 @@ class CommunityRank
         }
 
         return $rows;
+    }
+
+    /** In-request memo of the podium. */
+    private static ?array $podium = null;
+
+    /**
+     * The twenty seats at the top, as userId => placement (1-based).
+     *
+     * Built once and cached with the scoreboard, because the badge it feeds is
+     * worn on every card on every page: a wall of thirty posts asks this
+     * question thirty times and must not pay for it thirty times.
+     *
+     * The seats are the ones the leaderboard shows, not the raw map's first
+     * twenty rows — a departed member or the assistant sitting high in the
+     * points would otherwise hold a seat nobody can see, and everyone below
+     * would wear a placement one worse than the board they can read. Extra
+     * rows are drawn in so those gaps close up rather than shortening the
+     * podium. Nobody is placed on nothing: a seat needs at least one point.
+     *
+     * @return array<int, int>
+     */
+    public static function podium(): array
+    {
+        if (self::$podium !== null) {
+            return self::$podium;
+        }
+
+        return self::$podium = Cache::remember('as-community-podium', self::MAP_TTL, function () {
+            $map = self::map();
+            // Deep enough that a run of hidden members cannot shorten the podium.
+            $reach = array_slice($map, 0, self::PODIUM_SIZE * 3, true);
+            $reach = array_filter($reach, static fn ($points) => (int) $points > 0);
+            if ($reach === []) {
+                return [];
+            }
+
+            try {
+                $seated = \App\Models\User::where('deleteStatus', 1)
+                    ->whereIn('id', array_keys($reach))
+                    ->where(fn ($q) => $q->whereNull('email')
+                        ->orWhereRaw('LOWER(email) <> ?', [\App\Models\User::ASSISTANT_EMAIL]))
+                    ->pluck('id')->all();
+            } catch (\Throwable $e) {
+                Log::warning('CommunityRank: podium lookup failed', ['error' => $e->getMessage()]);
+
+                return [];
+            }
+            $seated = array_fill_keys(array_map('intval', $seated), true);
+
+            $podium = [];
+            $place = 0;
+            foreach ($reach as $userId => $points) {
+                if (! isset($seated[(int) $userId])) {
+                    continue;
+                }
+                $podium[(int) $userId] = ++$place;
+                if ($place >= self::PODIUM_SIZE) {
+                    break;
+                }
+            }
+
+            return $podium;
+        });
+    }
+
+    /**
+     * The metal one member is wearing, or null for everybody off the podium.
+     *
+     * @return array{place: int, key: string, name: string}|null
+     */
+    public static function podiumFor(int $userId): ?array
+    {
+        $place = self::podium()[$userId] ?? 0;
+        if ($place < 1) {
+            return null;
+        }
+        foreach (self::PODIUM as $metal) {
+            if ($place <= $metal['to']) {
+                return ['place' => $place, 'key' => $metal['key'], 'name' => $metal['name']];
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * The whole podium in a shape a page can hand to JavaScript.
+     *
+     * Twenty rows at most, so shipping the lot to the browser costs less than
+     * one avatar and lets a card built in JS wear the same chip as the card
+     * built in Blade beside it.
+     *
+     * @return array<int, array{place: int, key: string, name: string}>
+     */
+    public static function podiumChips(): array
+    {
+        $out = [];
+        foreach (array_keys(self::podium()) as $userId) {
+            $metal = self::podiumFor((int) $userId);
+            if ($metal) {
+                $out[(int) $userId] = $metal;
+            }
+        }
+
+        return $out;
     }
 
     /** Where one member stands on the board (1-based), 0 if unplaced. */

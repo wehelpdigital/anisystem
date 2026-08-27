@@ -36,6 +36,7 @@
             <div class="min-w-0 grow">
                 <p class="text-sm leading-tight">
                     <a href="{{ route('community.connect.profile', ['userId' => $author->id]) }}" class="font-semibold text-gray-900 hover:text-brand-700">{{ $author->full_name }}</a>
+                    @include('community.partials.top-badge', ['topUser' => $author])
                     @if (in_array((int) $post->authorUserId, $friendIds, true))<span class="badge badge-green align-middle ml-1">Co-farmer</span>@endif
                 </p>
                 <p class="text-xs text-gray-400">@if ($place)📍 {{ $place }} · @endif{{ $post->created_at?->diffForHumans() }}</p>
@@ -64,6 +65,7 @@
                 <div class="min-w-0 grow">
                     <p class="text-sm leading-tight">
                         <a href="{{ route('community.connect.profile', ['userId' => optional($post->author)->id]) }}" class="font-semibold text-gray-900 hover:text-brand-700">{{ optional($post->author)->full_name ?: 'Member' }}</a>
+                        @include('community.partials.top-badge', ['topUser' => $post->author])
                         @if ($post->group)<span class="text-xs text-gray-400">in <a href="{{ route('community.groups.show', ['id' => $post->group->id]) }}" class="text-brand-700 hover:text-brand-800">{{ $post->group->name }}</a></span>@endif
                     </p>
                     <p class="text-xs text-gray-400">{{ $post->created_at?->diffForHumans() }}</p>

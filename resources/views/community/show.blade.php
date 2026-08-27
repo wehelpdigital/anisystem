@@ -348,6 +348,7 @@ const __init = () => {
                 <div class="min-w-0 grow">
                     <p class="text-sm">
                         <span class="font-bold text-gray-900">${escapeHtml(c.authorName)}</span>
+                        ${window.topBadge ? window.topBadge(c.authorId) : ''}
                         <span class="text-xs text-gray-400 ml-1">${escapeHtml(c.createdAt || 'just now')}</span>
                         ${c.isQuestion && !isReply ? '<span class="badge badge-gray ml-1">Question</span>' : ''}
                     </p>

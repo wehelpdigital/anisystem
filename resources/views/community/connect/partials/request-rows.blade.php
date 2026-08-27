@@ -9,6 +9,7 @@
                 @include('community.partials.avatar', ['user' => $u, 'size' => 'avatar-md', 'link' => false])
                 <span class="min-w-0">
                     <span class="block font-semibold text-gray-900 truncate">{{ $u->full_name }}</span>
+                    @include('community.partials.top-badge', ['topUser' => $u, 'topFlat' => true])
                     @if (filled($u->location))
                         <span class="rq-loc">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>

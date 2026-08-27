@@ -25,6 +25,7 @@
                 <a class="mut-name" href="{{ route('community.connect.profile', ['userId' => $user->id]) }}">{{ $user->full_name }}</a>
                 <span class="mut-line">
                     @include('community.partials.rank-badge', ['rankUser' => $user])
+                    @include('community.partials.top-badge', ['topUser' => $user])
                     @if ($mutPlace)
                         <span class="mut-loc">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>

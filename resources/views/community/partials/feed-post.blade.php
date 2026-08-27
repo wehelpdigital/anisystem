@@ -69,6 +69,11 @@
             <p class="text-sm leading-tight flex items-center flex-wrap gap-x-1.5 gap-y-0.5">
                 @if ($author->is_assistant)<span class="font-semibold author-ai">{{ $author->full_name }}</span>@else<a href="{{ route('community.connect.profile', ['userId' => $author->id]) }}" class="font-semibold text-gray-900 hover:text-brand-700">{{ $author->full_name }}</a>@endif
                 @include('community.partials.dm-btn', ['user' => $author])
+                {{-- The seat first, on the days somebody holds one: it is four
+                     characters against the level chip's whole sentence, and it
+                     is the rarer thing to say, so it gets the place next to
+                     the name that survives the row wrapping. --}}
+                @include('community.partials.top-badge', ['topUser' => $author])
                 {{-- The rank they have climbed to, before the follow button:
                      who somebody IS on the ladder comes before what you might
                      do about them. --}}

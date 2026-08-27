@@ -11,6 +11,7 @@
     <div class="min-w-0 grow">
         <p class="text-sm">
             <span class="font-bold text-gray-900">{{ optional($comment->author)->full_name ?: 'Member' }}</span>
+            @include('community.partials.top-badge', ['topUser' => $comment->author])
             <span class="text-xs text-gray-400 ml-1">{{ $comment->created_at?->diffForHumans() }}</span>
             @if ($comment->isQuestion)
                 <span class="badge badge-gray ml-1">Question</span>
@@ -34,6 +35,7 @@
                     <div class="min-w-0 grow">
                         <p class="text-sm">
                             <span class="font-bold text-gray-900">{{ optional($reply->author)->full_name ?: 'Member' }}</span>
+                            @include('community.partials.top-badge', ['topUser' => $reply->author])
                             <span class="text-xs text-gray-400 ml-1">{{ $reply->created_at?->diffForHumans() }}</span>
                         </p>
                         <p class="text-sm text-gray-600 mt-1 whitespace-pre-line">{{ $reply->body }}</p>

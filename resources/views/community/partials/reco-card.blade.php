@@ -19,6 +19,7 @@
     <a href="{{ route('community.connect.profile', ['userId' => $u->id]) }}" class="reco-who">
         <span class="reco-face">@include('community.partials.avatar', ['user' => $u, 'size' => 'avatar-md', 'link' => false, 'showOnline' => true])</span>
         <span class="reco-name">{{ $u->full_name }}</span>
+        @include('community.partials.top-badge', ['topUser' => $u, 'topFlat' => true])
     </a>
     {{-- Only when there is something to say. A suggestion with no reason
          behind it — somebody topped up to fill the strip — would otherwise

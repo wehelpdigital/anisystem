@@ -9,6 +9,8 @@
                 <p class="text-sm leading-tight">
                     @if ($post->author)
                         <a href="{{ route('community.connect.profile', ['userId' => $post->author->id]) }}" class="font-semibold text-gray-900 hover:text-brand-700">{{ $post->author->full_name }}</a>
+                        @include('community.partials.top-badge', ['topUser' => $post->author])
+                        @include('community.partials.rank-badge', ['rankUser' => $post->author])
                     @else
                         <span class="font-semibold text-gray-900">Member</span>
                     @endif

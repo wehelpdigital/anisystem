@@ -78,6 +78,7 @@
                              and an <a> inside an <a> splits the card in two. --}}
                         @include('community.partials.avatar', ['user' => $topic->author, 'size' => 'avatar-sm', 'link' => false])
                         <b>{{ $topic->author->firstName }}</b>
+                        @include('community.partials.top-badge', ['topUser' => $topic->author, 'topFlat' => true])
                     @endif
                     <span>💬 {{ $topic->reply_count }} {{ \Illuminate\Support\Str::plural('comment', $topic->reply_count) }}</span>
                     <span>· {{ $topic->created_at?->diffForHumans(null, true) }} ago</span>

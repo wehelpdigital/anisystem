@@ -112,7 +112,7 @@
                      speak, and nothing left printing over the cover. --}}
                 <div class="pf-name">
                     <h2>{{ $member->full_name }}</h2>
-                    <p class="pf-rank">@include('community.partials.rank-badge', ['rankUser' => $member, 'rankBig' => true])</p>
+                    <p class="pf-rank">@include('community.partials.rank-badge', ['rankUser' => $member, 'rankBig' => true])@include('community.partials.top-badge', ['topUser' => $member, 'topBig' => true])</p>
                     @if (filled($member->headline))
                         <p class="pf-headline">{{ $member->headline }}</p>
                     @endif
@@ -393,7 +393,8 @@
         color:var(--color-gray-900); overflow-wrap:anywhere; }
     /* Each line of the introduction breathes: name, then the rank it earned,
        then what they say they do, then where — none of them crowding. */
-    .pf-rank { margin-top:.55rem; }
+    .pf-rank { margin-top:.55rem; display:flex; align-items:center;
+        justify-content:center; flex-wrap:wrap; gap:.35rem; }
     .pf-rank .rankb { pointer-events:none; }
     .pf-headline { font-size:.82rem; font-weight:600; color:var(--color-gray-600); margin-top:.55rem; }
     .pf-loc { display:flex; align-items:center; justify-content:center; gap:.3rem; font-size:.78rem; color:var(--color-gray-500); margin-top:.5rem; }

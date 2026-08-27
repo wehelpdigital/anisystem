@@ -40,7 +40,7 @@
             <span class="rankb-lv">Lv {{ $myRank['n'] }}</span>
             <span class="rankb-t">{{ $myRank['name'] }}</span>
         </div>
-        <p class="rk-me-name">{{ $me->full_name }}</p>
+        <p class="rk-me-name">{{ $me->full_name }}@include('community.partials.top-badge', ['topUser' => $me, 'topFlat' => true])</p>
         <p class="rk-me-en">Level {{ $myRank['n'] }} of {{ $maxLevel }}</p>
         <p class="rk-me-pts"><b id="rkMePts" data-count="{{ $myPoints }}">0</b> <span>points</span>
             @if ($myPosition > 0)
@@ -106,6 +106,10 @@
                         <span class="rk-row-head">
                             <a class="rk-row-name" href="{{ route('community.connect.profile', ['userId' => $ru->id]) }}">{{ $ru->full_name }}</a>
                             <span class="rankb rankb-a{{ $r['rank']['arc'] }}"><span class="rankb-e">{{ $r['rank']['emoji'] }}</span><span class="rankb-lv">Lv {{ $r['rank']['n'] }}</span><span class="rankb-t">{{ $r['rank']['name'] }}</span></span>
+                            {{-- The metal this seat is struck in, so the chip
+                                 worn on a card out in the community is
+                                 explained by the row that granted it. --}}
+                            @include('community.partials.top-badge', ['topUser' => $ru, 'topFlat' => true])
                         </span>
                     </span>
                     @if ((int) $ru->id === (int) auth()->id())<span class="rk-you">Ikaw</span>@endif

@@ -1601,4 +1601,74 @@
     html.dark .rankb-a9 { background:#2b2140; border-color:#4b3a72; color:#c3aaf0; }
     html.dark .rankb-a10 { color:#3a2b00; }
     @media (prefers-reduced-motion: reduce) { .rankb { transition:none; } .rankb-a10 { animation:none; } }
+
+    /* THE PODIUM CHIP — a seat in the top twenty, worn in metal.
+
+       The level chip beside it is a walk anyone can finish; this is a seat
+       somebody else has to leave. So it is struck in metal rather than
+       painted: a soft diagonal sheen across each chip, and on the three
+       rarest metals that sheen drifts on the app's shared tide, which is
+       what makes a diamond read as diamond from across a card.
+
+       Same height and radius as the level chip so a name wearing both keeps
+       one clean line. The number is tabular so #1 and #11 hold the same
+       column, and it never wraps or truncates — it is the whole message. */
+    .topb { display:inline-flex; align-items:center; gap:.2rem; flex:none;
+        /* Sized to its four characters no matter what holds it. Several of
+           these cards are column flexboxes, and a flex item in one is
+           stretched the full width of the card unless it says otherwise. */
+        width:max-content; align-self:center;
+        padding:.08rem .4rem .08rem .28rem; border-radius:999px; border:1px solid transparent;
+        font-size:.62rem; font-weight:900; letter-spacing:.01em; line-height:1.25;
+        text-decoration:none; vertical-align:middle; white-space:nowrap;
+        background-size:220% 100%;
+        transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .topb:hover { transform:translateY(-1px); box-shadow:0 3px 8px -4px rgb(0 0 0 / .35); }
+    .topb-m { display:inline-flex; width:.72rem; height:.72rem; flex:none; opacity:.9; }
+    .topb-m svg { width:100%; height:100%; }
+    .topb-n { font-variant-numeric:tabular-nums; }
+    /* What a screen reader hears and an eye never sees. */
+    .topb-say { position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+        overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap; border:0; }
+    .topb-big { font-size:.74rem; padding:.16rem .56rem .16rem .4rem; }
+    .topb-big .topb-m { width:.92rem; height:.92rem; }
+
+    /* The six metals. The top three drift; the lower three hold still, which
+       is itself part of the ladder — movement is the last thing you earn. */
+    .topb-diamond { color:#0b5f73; border-color:#7dd8ee;
+        background-image:linear-gradient(110deg,#e8fbff,#8fe6f7 28%,#ffffff 48%,#6ed3ea 72%,#e8fbff);
+        animation:gradSweep 7s ease-in-out infinite alternate; }
+    .topb-platinum { color:#45409b; border-color:#c2c5ea;
+        background-image:linear-gradient(110deg,#f8f7ff,#cfd2ef 30%,#ffffff 52%,#c6c9ec 78%,#f8f7ff);
+        animation:gradSweep 9s ease-in-out infinite alternate; }
+    .topb-gold { color:#7a5504; border-color:#e2bd54;
+        background-image:linear-gradient(110deg,#fdf3d4,#f0c453 30%,#fff9e6 55%,#eabb4c 80%,#fdf3d4);
+        animation:gradSweep 11s ease-in-out infinite alternate; }
+    .topb-silver { color:#4a5563; border-color:#c6ccd4;
+        background-image:linear-gradient(115deg,#fbfcfd,#ccd2d9 45%,#f4f6f8); }
+    .topb-bronze { color:#7a3f14; border-color:#d3a075;
+        background-image:linear-gradient(115deg,#fbead9,#dc9e6d 45%,#f7e0cb); }
+    .topb-nickel { color:#45564b; border-color:#bac7bf;
+        background-image:linear-gradient(115deg,#f3f7f4,#bbc8c0 45%,#eaefeb); }
+
+    html.dark .topb-diamond { color:#c9f5ff; border-color:#2b7e93;
+        background-image:linear-gradient(110deg,#0d3b47,#1c6e83 28%,#2b8ba3 48%,#175f73 72%,#0d3b47); }
+    html.dark .topb-platinum { color:#dcdbff; border-color:#4f4b96;
+        background-image:linear-gradient(110deg,#25234a,#3a3673 30%,#4b4795 52%,#332f66 78%,#25234a); }
+    html.dark .topb-gold { color:#ffe9ae; border-color:#8a6a1c;
+        background-image:linear-gradient(110deg,#3b2f0d,#6b5416 30%,#8a6d1f 55%,#5a4712 80%,#3b2f0d); }
+    html.dark .topb-silver { color:#dfe4ea; border-color:#5b6472;
+        background-image:linear-gradient(115deg,#2b3038,#454c57 45%,#343a43); }
+    html.dark .topb-bronze { color:#f6d3b3; border-color:#7d4f2a;
+        background-image:linear-gradient(115deg,#3a2313,#65401f 45%,#452a17); }
+    html.dark .topb-nickel { color:#d3e0d7; border-color:#4d5c53;
+        background-image:linear-gradient(115deg,#252d28,#3b473f 45%,#2c352f); }
+
+    @media (prefers-reduced-motion: reduce) {
+        .topb { transition:none; animation:none; }
+    }
 </style>
+{{-- The podium's data rides with the podium's styles, so the two can never
+     arrive on a page apart: every card built in JavaScript on a page that can
+     draw this chip can also ask who is wearing one. --}}
+@include('community.partials.top-badge-js')

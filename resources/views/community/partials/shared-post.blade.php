@@ -21,6 +21,7 @@
             <i>{{ $shared->author?->initials ?: '?' }}</i>
         @endif
         <b>@if ($shared->author)<a href="{{ route('community.connect.profile', ['userId' => $shared->author->id]) }}">{{ $shared->author->full_name }}</a>@else A farmer @endif</b>
+        @include('community.partials.top-badge', ['topUser' => $shared->author])
         <em>{{ $shared->created_at?->diffForHumans() }}</em>
     </span>
     @if (trim((string) $shared->body) !== '')

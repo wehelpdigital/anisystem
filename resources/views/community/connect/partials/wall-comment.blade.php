@@ -20,6 +20,10 @@
                 <div class="bg-gray-50 rounded-lg px-2.5 py-1.5">
                     @if ($comment->author)
                         <a href="{{ route('community.connect.profile', ['userId' => $comment->author->id]) }}" class="text-xs font-semibold text-gray-900 hover:text-brand-700">{{ $comment->author->full_name }}</a>
+                        {{-- The seat only. A comment is a narrow line and the
+                             level chip carries a word; the podium chip is four
+                             characters and is the rarer thing to say. --}}
+                        @include('community.partials.top-badge', ['topUser' => $comment->author])
                     @else
                         <span class="text-xs font-semibold text-gray-900">Member</span>
                     @endif

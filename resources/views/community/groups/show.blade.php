@@ -474,7 +474,7 @@
         @if ($group->creator)
             <p class="disc-started">
                 @include('community.partials.avatar', ['user' => $group->creator, 'size' => 'avatar-sm', 'link' => false])
-                <span>Started by <a href="{{ route('community.connect.profile', ['userId' => $group->creator->id]) }}">{{ $group->creator->full_name }}</a>@if ($group->created_at) · {{ $group->created_at->timezone('Asia/Manila')->format('M Y') }}@endif</span>
+                <span>Started by <a href="{{ route('community.connect.profile', ['userId' => $group->creator->id]) }}">{{ $group->creator->full_name }}</a>@include('community.partials.top-badge', ['topUser' => $group->creator])@if ($group->created_at) · {{ $group->created_at->timezone('Asia/Manila')->format('M Y') }}@endif</span>
             </p>
         @endif
         @if ($group->description)
@@ -1847,7 +1847,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const pm = (!m.isMe && m.allowMessages)
                     ? `<button type="button" class="js-dm-member inline-flex items-center justify-center w-7 h-7 rounded-full text-gray-400 hover:text-brand-700 hover:bg-white shrink-0" title="Message ${esc(m.name)}" data-pm="${m.id}" data-name="${esc(m.name)}"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.9 9.9 0 01-4.29-.94L3 20l1.05-3.15A7.6 7.6 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></button>`
                     : (m.isMe ? '<span class="text-[0.625rem] font-bold text-gray-400 shrink-0">You</span>' : '');
-                return `<div class="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white">${dot}${av}<span class="grow min-w-0 truncate text-sm font-semibold text-gray-800">${esc(m.name)}</span>${pm}</div>`;
+                const seat = window.topBadge ? window.topBadge(m.id) : '';
+                return `<div class="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white">${dot}${av}<span class="grow min-w-0 truncate text-sm font-semibold text-gray-800">${esc(m.name)}</span>${seat}${pm}</div>`;
             }).join('');
             const html = rows(d.data.members.slice());
             if (membersPanel) membersPanel.innerHTML = html;

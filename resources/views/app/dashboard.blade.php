@@ -431,6 +431,10 @@
                  this account rather than a decoration on the name. It links
                  to the ladder so climbing is one tap from the greeting. --}}
             @include('community.partials.rank-badge', ['rankUser' => $user, 'rankChipLike' => true])
+            {{-- And your seat, on the days you hold one. It is the fact most
+                 worth seeing on your own greeting, because it is the one that
+                 can be gone tomorrow. --}}
+            @include('community.partials.top-badge', ['topUser' => $user])
             {{-- No chip for a super admin: admin power lives in the mother
                  site, and in here an admin is just another member. The
                  subscription facts still speak for everyone else. --}}

@@ -779,6 +779,9 @@ class CommunityController extends Controller
             'isQuestion' => (bool) $c->isQuestion,
             'authorName' => optional($c->author)->full_name ?: 'Member',
             'authorInitials' => optional($c->author)->initials ?: '?',
+            // So the JS twin of the comment can wear the podium chip the
+            // Blade one wears. A name is not enough to look a seat up.
+            'authorId' => (int) $c->anisystemUserId,
             'createdAt' => $c->created_at?->diffForHumans(),
             'mine' => (int) $c->anisystemUserId === (int) Auth::id(),
         ];

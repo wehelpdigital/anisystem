@@ -33,6 +33,7 @@
                 @include('community.partials.avatar', ['user' => $member, 'size' => 'avatar-md'])
                 <div class="min-w-0">
                     <p class="text-sm font-semibold text-gray-900 truncate">{{ $member->full_name }}</p>
+                    @include('community.partials.top-badge', ['topUser' => $member, 'topFlat' => true])
                     @if (in_array((int) $member->id, $friendIds, true))
                         <span class="badge badge-green">Co-farmer</span>
                     @elseif ($member->statusBubble)
@@ -62,6 +63,7 @@
             <div class="min-w-0 grow">
                 <p class="text-sm leading-tight">
                     <a href="{{ route('community.connect.profile', ['userId' => $author->id]) }}" class="font-semibold text-gray-900 hover:text-brand-700">{{ $author->full_name }}</a>
+                    @include('community.partials.top-badge', ['topUser' => $author])
                     @if (in_array((int) $post->authorUserId, $friendIds, true))<span class="badge badge-green align-middle ml-1">Co-farmer</span>@endif
                 </p>
                 <p class="text-xs text-gray-400">@if ($place)📍 {{ $place }} · @endif{{ $post->created_at?->diffForHumans() }}</p>
