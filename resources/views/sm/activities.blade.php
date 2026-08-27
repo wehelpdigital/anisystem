@@ -756,6 +756,36 @@
         html.dark .item-shed b { color: #e8efe1; }
         html.dark .item-shed i { color: #a8bd93; }
 
+        /* The row you are standing on, said twice — a tick on the right and a
+           tinted rail on the left. One of them is easy to miss on a small
+           screen in the sun; both together are not. */
+        .module-nav-row.is-here { background: #f2f8ec; border-color: #cfe0b8; }
+        html.dark .module-nav-row.is-here { background: rgb(107 159 61 / .16); border-color: #3f5626; }
+
+        /* ---- Who to send this to ------------------------------------------
+           A worker with no address is drawn and locked rather than left out:
+           "why is Nena missing" is a worse question than "why is Nena greyed
+           out", which answers itself and says what to go and fix. */
+        .ew-list { display: flex; flex-direction: column; gap: .35rem; max-height: 21rem; overflow-y: auto; }
+        .ew-row { display: flex; align-items: center; gap: .7rem; cursor: pointer;
+            padding: .6rem .7rem; border-radius: .75rem;
+            border: 1px solid var(--color-gray-200, #e5e7eb); background: var(--color-white, #fff);
+            transition: border-color .18s ease, background .18s ease; }
+        .ew-row:hover { border-color: #a8cc7e; background: #f7fbf3; }
+        .ew-row input { flex: none; }
+        .ew-who { display: block; min-width: 0; flex: 1 1 auto; }
+        .ew-who b { display: block; font-size: .86rem; font-weight: 700; color: var(--color-gray-900, #111827);
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .ew-who i { display: block; font-style: normal; font-size: .72rem; color: var(--color-gray-500, #6b7280);
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .ew-row.is-off { cursor: not-allowed; background: var(--color-gray-50, #f9fafb); opacity: .72; }
+        .ew-row.is-off:hover { border-color: var(--color-gray-200, #e5e7eb); background: var(--color-gray-50, #f9fafb); }
+        .ew-row.is-off .ew-who i { color: #b45309; font-weight: 600; }
+        .ew-lock { flex: none; font-size: .9rem; }
+        html.dark .ew-row { background: #151b12; border-color: #2b3a1c; }
+        html.dark .ew-row.is-off { background: rgb(255 255 255 / .03); }
+        html.dark .ew-who b { color: #e8efe1; }
+
         .tt-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .1rem; }
         .tt-tag { padding: .35rem .7rem; border-radius: 999px; font-size: .78rem; font-weight: 700;
             border: 2px solid var(--color-gray-200); background: var(--color-white); color: #374151;
@@ -3920,6 +3950,7 @@
         document.body.classList.toggle('act-module-open', key === 'activities');
         document.querySelectorAll('#modulesSheet .module-nav-row').forEach((row) => {
             row.querySelector('.module-nav-check')?.classList.toggle('hidden', row.dataset.module !== key);
+            row.classList.toggle('is-here', row.dataset.module === key);
         });
         // Tell the module it is on screen — a kept pane may want to refresh
         // what it shows (the Maps shelf re-reads its saved maps, for one).
@@ -4578,7 +4609,17 @@
         });
     })();
 
-    document.getElementById('modulesBtn')?.addEventListener('click', () => openSheet('modulesSheet'));
+    document.getElementById('modulesBtn')?.addEventListener('click', () => {
+        /* Tick the row you are standing on, every time the sheet opens.
+           showModule paints it on a switch, and nothing switches on first
+           paint — so the board's own row went unticked until you had left it
+           and come back, which is exactly when you least need telling. */
+        document.querySelectorAll('#modulesSheet .module-nav-row').forEach((row) => {
+            row.querySelector('.module-nav-check')?.classList.toggle('hidden', row.dataset.module !== current);
+            row.classList.toggle('is-here', row.dataset.module === current);
+        });
+        openSheet('modulesSheet');
+    });
     document.addEventListener('click', (e) => {
         const row = e.target.closest('#modulesSheet .module-nav-row');
         if (row) { showModule(row.dataset.module); return; }

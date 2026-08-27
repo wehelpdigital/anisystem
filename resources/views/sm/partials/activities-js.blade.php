@@ -4671,6 +4671,11 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => openDayIncome(date), 260);
             return;
         }
+        if (cls === 'email-day') {
+            const date = dayMenuDate;
+            setTimeout(() => openEmailWho({ date }), 260);
+            return;
+        }
         if (cls === 'capture-photo') {
             const date = dayMenuDate;
             setTimeout(() => captureDayPhoto(date), 260);
@@ -5535,6 +5540,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (cardIsDone && (action === 'edit' || action === 'move')) { openDoneNoteSheet(id, name); return; }
             if (action === 'edit') { const done = spinBtn(kebab); openEditActivitySheet(id).finally(() => done && done()); }
             else if (action === 'duplicate') { const done = spinBtn(kebab); duplicateActivity(id, name).finally(() => done && done()); }
+            else if (action === 'email') openEmailWho({ activityId: id, name });
             else if (action === 'advanced') openAdvancedInfo(id, name);
             else if (action === 'tag') openActivityTagSheet(id, name);
             else if (action === 'draft') moveActivityToDrafts(id, name);
@@ -5543,6 +5549,117 @@ document.addEventListener('DOMContentLoaded', () => {
             // way to hide from presentations now; the endpoint itself stays.
             else if (action === 'move') openMoveSheet(id, name);
             return;
+        }
+    });
+
+
+    /* ================================================================
+     * SENDING A DAY, OR ONE JOB, TO THE PEOPLE WHO HAVE TO DO IT
+     *
+     * One sheet for both. The audience comes from the server rather than off
+     * the board, because the board only knows the workers it happens to have
+     * drawn — a day with two cards on it does not know about the other nine
+     * people on the season.
+     *
+     * A worker with no address is drawn and locked. Leaving them out invites
+     * "why is Nena missing"; showing them greyed out with the reason on the
+     * row answers it, and says what to go and fix.
+     * ================================================================ */
+    let EMAIL_WHO = null;   // { date } | { activityId, name }
+
+    async function openEmailWho(about) {
+        EMAIL_WHO = about;
+        const list = $id('emailWhoList');
+        const title = $id('emailWhoTitle');
+        const say = $id('emailWhoSay');
+        const note = $id('emailWhoNote');
+        if (!list) return;
+
+        title.textContent = about.activityId ? 'Email this activity' : 'Email this date';
+        say.textContent = 'Loading…';
+        note.textContent = '';
+        list.innerHTML = '<p class="text-sm text-gray-400 text-center py-6">Loading…</p>';
+        openSheet('emailWhoSheet');
+
+        const qs = new URLSearchParams({ scheduleId: String(SCHEDULE_ID) });
+        if (about.activityId) qs.set('activityId', String(about.activityId));
+        else qs.set('date', about.date);
+
+        try {
+            const res = await fetch(@json(route('sm.email.audience')) + '?' + qs.toString(),
+                { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
+            const d = (await res.json()).data || {};
+            const rows = d.workers || [];
+
+            say.innerHTML = about.activityId
+                ? 'Send <strong>' + esc(d.title || 'this activity') + '</strong> (' + esc(d.dateLabel || '') + ') to:'
+                : 'Send the work planned for <strong>' + esc(d.dateLabel || '') + '</strong> to:';
+
+            if (!rows.length) {
+                list.innerHTML = '<p class="text-sm text-gray-500 text-center py-6">'
+                    + (about.activityId
+                        ? 'Nobody is assigned to this activity yet.'
+                        : 'This season has no workers yet.')
+                    + '</p>';
+                return;
+            }
+
+            list.innerHTML = rows.map((w) => {
+                const off = !w.reachable;
+                return '<label class="ew-row' + (off ? ' is-off' : '') + '">'
+                    + '<input type="checkbox" class="form-checkbox" value="' + w.id + '"'
+                    + (off ? ' disabled' : '') + '>'
+                    + '<span class="ew-who"><b>' + esc(w.name) + '</b>'
+                    + '<i>' + (off ? 'No email on file' : esc(w.email)) + '</i></span>'
+                    + (off ? '<span class="ew-lock" title="Add an email to this worker in the Workers module">🔒</span>' : '')
+                    + '</label>';
+            }).join('');
+
+            const off = rows.filter((w) => !w.reachable).length;
+            note.textContent = off
+                ? off + (off === 1 ? ' worker has' : ' workers have') + ' no email address — add one in the Workers module and they can be sent to.'
+                : '';
+        } catch (_) {
+            list.innerHTML = '<p class="text-sm text-red-600 text-center py-6">Could not load the list just now.</p>';
+        }
+    }
+
+    $id('emailWhoAll')?.addEventListener('click', () => {
+        const boxes = $qsa('#emailWhoList input[type=checkbox]:not(:disabled)');
+        const turnOn = boxes.some((b) => !b.checked);
+        boxes.forEach((b) => { b.checked = turnOn; });
+        $id('emailWhoAll').textContent = turnOn ? 'Select none' : 'Select all';
+    });
+
+    $id('emailWhoSend')?.addEventListener('click', async (e) => {
+        if (!EMAIL_WHO) return;
+        const ids = $qsa('#emailWhoList input[type=checkbox]:checked').map((b) => parseInt(b.value, 10));
+        if (!ids.length) { toast('Choose at least one worker.', 'error'); return; }
+
+        const btn = e.currentTarget;
+        const was = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+        try {
+            const url = EMAIL_WHO.activityId ? @json(route('sm.email.activity')) : @json(route('sm.email.day'));
+            const body = EMAIL_WHO.activityId
+                ? { scheduleId: SCHEDULE_ID, activityId: EMAIL_WHO.activityId, workerIds: ids }
+                : { scheduleId: SCHEDULE_ID, date: EMAIL_WHO.date, workerIds: ids };
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json', 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify(body),
+            });
+            const d = await res.json();
+            if (!res.ok || d.success === false) throw new Error(d.message || 'Could not send.');
+            closeSheet('emailWhoSheet');
+            toast(d.message || 'Sent.');
+        } catch (err) {
+            toast(err.message, 'error');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = was;
         }
     });
 

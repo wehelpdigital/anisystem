@@ -363,6 +363,13 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-activities-toggle-hidden', [App\Http\Controllers\Manager\ActivityController::class, 'toggleHidden'])->name('sm.activities.toggle-hidden');
     Route::post('/app/sm-activities-toggle-done', [App\Http\Controllers\Manager\ActivityController::class, 'toggleDone'])->name('sm.activities.toggle-done');
     Route::post('/app/sm-activities-append-note', [App\Http\Controllers\Manager\ActivityController::class, 'appendNote'])->name('sm.activities.append-note');
+
+    /* Sending a day, or one job, to the people who have to do it. The morning
+       digest goes out on its own; this is an owner standing on the board
+       deciding that these people had better know about Thursday now. */
+    Route::get('/app/sm-email-audience', [App\Http\Controllers\Manager\ScheduleEmailController::class, 'audience'])->name('sm.email.audience');
+    Route::post('/app/sm-email-day', [App\Http\Controllers\Manager\ScheduleEmailController::class, 'sendDay'])->name('sm.email.day');
+    Route::post('/app/sm-email-activity', [App\Http\Controllers\Manager\ScheduleEmailController::class, 'sendActivity'])->name('sm.email.activity');
     Route::post('/app/sm-activities-duplicate', [App\Http\Controllers\Manager\ActivityController::class, 'duplicate'])->name('sm.activities.duplicate');
     Route::post('/app/sm-activities-set-date', [App\Http\Controllers\Manager\ActivityController::class, 'setDate'])->name('sm.activities.set-date');
     Route::post('/app/sm-activities-reorder', [App\Http\Controllers\Manager\ActivityController::class, 'reorder'])->name('sm.activities.reorder');

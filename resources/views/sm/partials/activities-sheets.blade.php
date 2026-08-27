@@ -481,7 +481,7 @@
 <div class="sheet hidden" id="modulesSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Schedule modules</h3>
+        <h3 class="sheet-title">Modules</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full -mr-1" aria-label="Close">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
@@ -875,6 +875,15 @@
          markers and moving the day are the plan, and follow $mayEdit. --}}
     <div class="sheet-body space-y-1">
         @if (! \App\Support\WorkerContext::activeGrant() || $mayNote)
+        {{-- Telling people about a day is not writing on it. This row follows
+             $mayEdit like the money rows do: speaking to the farm in its own
+             name is the plan's business, not the notebook's. --}}
+        @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
+        <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetLock }}" data-action="email-day" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            Email this date
+        </button>
+        @endif
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetNoteLock }}" data-action="date-note-btn" @disabled(! $mayNote) @if(! $mayNote) title="{{ $whyNoNote }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.5 20H7a2 2 0 01-2-2V5a2 2 0 012-2h6l4 4v3M9 8h3M9 12h3"/><path stroke-linecap="round" stroke-linejoin="round" d="M17 15v5m2.5-2.5h-5"/></svg>
             Add a note to this day
@@ -1030,6 +1039,9 @@
             @endif
             @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
             <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="duplicate" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Duplicate</button>
+            @endif
+            @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
+            <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="email" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Email this activity</button>
             @endif
             {{-- Reading what went on this ground before is a read. It stays. --}}
             <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="advanced">Advanced info</button>
@@ -1662,5 +1674,40 @@
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-primary w-full" data-sheet-close>Done</button>
+    </div>
+</div>
+
+{{-- ======================= WHO TO SEND THIS TO =======================
+     One sheet for both errands — a whole day, or one activity. What it is
+     about is set when it opens.
+
+     A worker with no address on file is SHOWN and locked rather than left
+     out: "why is Nena not in this list" is a worse question than "why is
+     Nena greyed out", which answers itself, and it tells an owner exactly
+     what to go and fix. --}}
+<div class="sheet hidden" id="emailWhoSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title truncate" id="emailWhoTitle">Send to</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full -mr-1" aria-label="Close">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+    </div>
+    <div class="sheet-body">
+        <p class="text-sm text-gray-600 mb-3" id="emailWhoSay">Choose who should get this.</p>
+
+        <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold uppercase tracking-wide text-gray-500">Workers</span>
+            <button type="button" id="emailWhoAll" class="text-xs font-bold text-brand-700 hover:text-brand-800">Select all</button>
+        </div>
+
+        <div id="emailWhoList" class="ew-list">
+            <p class="text-sm text-gray-400 text-center py-6">Loading…</p>
+        </div>
+
+        <p class="form-hint mt-3" id="emailWhoNote"></p>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-primary w-full" id="emailWhoSend">Send</button>
     </div>
 </div>
