@@ -229,30 +229,28 @@
        The width is a variable: a 28px face in a comment thread cannot wear
        the same ring as an 80px one on a member card without either
        disappearing or being swallowed. */
-    /* The ring is DASHED, and the dashes are the gradient.
-       A dashed border cannot hold a gradient — border-color:transparent shows
-       the background straight through and the dashes vanish; border-image
-       throws the dash style away altogether. So the dashes ARE the background:
-       a repeating conic gradient whose lit wedges cycle through the house
-       greens and whose gaps are transparent, clipped to the border box. The
-       gaps show the page behind because the hue layer is clipped to the
-       padding box — which is exactly what a dashed ring should do. */
+    /* Every face in this app wears the same green ring: one unbroken line,
+       thin, with the house gradient running round it.
+       Two backgrounds in one box — the member's own hue clipped to the
+       padding box, the greens clipped to the border box — which is how a
+       border can hold a gradient at all, and the same trick .reco-edge uses.
+       It works with the overflow:hidden every avatar carries because that
+       clips the photo at the PADDING edge, so the picture sits inside the
+       ring rather than under it.
+       The width is a variable: a 28px face in a comment thread cannot wear
+       the same ring as an 80px one on a member card without either
+       disappearing or swallowing the photo. */
     .avatar { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
         border-radius:9999px; color:var(--av-fg);
-        border: var(--av-ring, 2px) solid transparent;
+        border: var(--av-ring, 1.5px) solid transparent;
         background:
             linear-gradient(var(--av-bg), var(--av-bg)) padding-box,
-            repeating-conic-gradient(from 0deg,
-                #2f5219 0deg 8deg, transparent 8deg 13deg,
-                #4a7c2a 13deg 21deg, transparent 21deg 26deg,
-                #6b9f3d 26deg 34deg, transparent 34deg 39deg,
-                #8fc267 39deg 47deg, transparent 47deg 52deg,
-                #4a7c2a 52deg 60deg, transparent 60deg 65deg) border-box;
+            linear-gradient(135deg, #2f5219, #6b9f3d 26%, #b8d38e 48%, #4a7c2a 72%, #2f5219) border-box;
         font-family:var(--font-heading); font-weight:800; letter-spacing:.02em;
         box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / .35); user-select:none; }
-    .avatar-sm { width:1.75rem; height:1.75rem; font-size:.6rem; --av-ring:1.5px; }
+    .avatar-sm { width:1.75rem; height:1.75rem; font-size:.6rem; --av-ring:1px; }
     .avatar-md { width:2.5rem;  height:2.5rem;  font-size:.8rem; }
-    .avatar-lg { width:3.25rem; height:3.25rem; font-size:1.05rem; --av-ring:2.5px; }
+    .avatar-lg { width:3.25rem; height:3.25rem; font-size:1.05rem; --av-ring:2px; }
     .avatar-sq { border-radius:.9rem; }
     .av-h0 { --av-bg:#e4efd4; --av-fg:#2d5016; } .av-h1 { --av-bg:#fdf0c7; --av-fg:#7a5b00; }
     .av-h2 { --av-bg:#dbeafe; --av-fg:#1e40af; } .av-h3 { --av-bg:#fde3e3; --av-fg:#9c1c1c; }
@@ -994,7 +992,7 @@
     /* The house green does the cutting-out here, not a white line: a face on
        a photograph needs a rim to stand on, and the ring every other avatar
        in the app already wears is that rim, at the width this size wants. */
-    .mc-face .avatar { width: 5rem; height: 5rem; font-size: 1.6rem; --av-ring: 3.5px;
+    .mc-face .avatar { width: 5rem; height: 5rem; font-size: 1.6rem; --av-ring: 2.5px;
         box-shadow: 0 8px 20px -14px rgb(0 0 0 / .8); }
     .mc-who { padding-top: 0; }
     /* A card has more room than an avatar in a list, so the cloud over it
@@ -1353,7 +1351,7 @@
     .reco-top { height: var(--cover-h-sm); margin: 0 -.5rem 0; }
     .reco-who { display: block; min-width: 0; }
     .reco-face { display: flex; justify-content: center; margin-top: -1.5rem; }
-    .reco-face .avatar { width: 3rem; height: 3rem; font-size: .95rem; --av-ring: 2.5px;
+    .reco-face .avatar { width: 3rem; height: 3rem; font-size: .95rem; --av-ring: 2px;
         box-shadow: 0 6px 16px -10px rgb(0 0 0 / .8); }
     .reco-name { display: block; margin-top: .4rem; font-size: .8rem; font-weight: 800; line-height: 1.25;
         color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -1790,7 +1788,7 @@
        block instead of a picture with writing next to it. */
     .feed-post:has(.fp-cover) > header .avatar,
     .group-post:has(.fp-cover) > header .avatar {
-        width: 3.5rem; height: 3.5rem; font-size: 1.15rem; --av-ring: 3px;
+        width: 3.5rem; height: 3.5rem; font-size: 1.15rem; --av-ring: 2.5px;
         box-shadow: 0 6px 16px -11px rgb(0 0 0 / .8); }
     /* Only the first thing in the head — the face, or the wrap holding the
        face and its cloud — climbs onto the photo, and it climbs exactly half

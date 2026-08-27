@@ -2818,7 +2818,7 @@
              two read as the same control opened twice. Now Tools stands with
              Notice, the eye and Search — one glyph, one word from sm up. --}}
         <button type="button" id="activityActionsBtn" class="btn btn-white btn-sm relative" data-activities-only title="Tools" aria-label="Tools">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a4 4 0 0 1 5.3 5L21 12.3l-2.6 2.6-1-1a4 4 0 0 1-5-5.3l1.1-1.1z"/><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 12.5L5 21a2.1 2.1 0 0 1-3-3l8.5-8.5"/></svg>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
             <span class="hidden sm:inline">Tools</span>
         </button>
 
