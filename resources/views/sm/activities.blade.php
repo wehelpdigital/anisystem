@@ -2843,11 +2843,28 @@
              all. --}}
         <button type="button" id="mirrorBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
                 title="Mirror — read the whole plan" aria-label="Mirror: read the whole plan">
-            {{-- A reflection, not a hand mirror. The oval-on-a-stick read as a
-                 lollipop at 16px and said nothing about what the button does;
-                 a page with its own reflection under a dashed line says both
-                 halves of it — the plan, held up to be read. --}}
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="8.5" rx="1.6"/><path stroke-linecap="round" stroke-dasharray="2.6 2.2" d="M2.5 13.5h19"/><rect x="6.5" y="15.5" width="11" height="5.5" rx="1.4" opacity=".42"/></svg>
+            {{-- A compact mirror: the ring, the glass inside it, the little
+                 loop you hold it by, and a shine across the top-left corner
+                 of the glass. Drawn rather than dropped in as a picture — a
+                 path is a few hundred bytes against a PNG's several thousand,
+                 it stays sharp at any size, and it takes currentColor, so it
+                 is the same ink as every other button in this bar in either
+                 theme. A picture would have needed two of itself and would
+                 still have been the wrong grey in one of them. --}}
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.7"
+                 stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                {{-- the loop, and the two shoulders it hangs from --}}
+                <circle cx="12" cy="2.6" r="1.5"/>
+                <path d="M10.6 3.2 8.2 5.9M13.4 3.2l2.4 2.7"/>
+                {{-- the case, and the glass — the gap between them is what
+                     makes this a mirror rather than a stopwatch, so it is
+                     wide enough to survive being drawn at 16 pixels --}}
+                <circle cx="12" cy="14.3" r="8.5"/>
+                <circle cx="12" cy="14.3" r="5.7"/>
+                {{-- the shine --}}
+                <path d="M8.8 14.3a3.2 3.2 0 0 1 3.2-3.2"/>
+                <path d="M8.85 16.7v.01"/>
+            </svg>
         </button>
         <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative toolbar-in-menu" data-activities-only disabled title="Nothing to undo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
