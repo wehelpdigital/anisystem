@@ -67,22 +67,48 @@
     @media (prefers-reduced-motion: reduce) { .dash-hero { animation: none; } }
     .dash-hero-mark { grid-column: 1; grid-row: 1 / -1; align-self: center;
         width: 3rem; height: 3rem; border-radius: 999px; flex-shrink: 0;
-        display: inline-flex; align-items: center; justify-content: center; }
-    .dash-hero-mark svg { width: 1.55rem; height: 1.55rem; }
+        display: inline-flex; align-items: center; justify-content: center;
+        /* The circle is the window frame: the scene runs to its edges and is
+           cut by it, rather than being a small glyph floating in a tint. */
+        overflow: hidden; }
+    .tod-svg { width: 100%; height: 100%; display: block; }
     .dash-hero-body { grid-column: 2; min-width: 0; }
-    .tod-morning { background: linear-gradient(135deg, #fff7e0, #fbe6ae); color: #d97706; }
-    .tod-afternoon { background: linear-gradient(135deg, #e8f4fd, #cde7fa); color: #0284c7; }
-    .tod-evening { background: linear-gradient(135deg, #e9e7fb, #d5d2f2); color: #6d28d9; }
-    html.dark .tod-morning { color: #fbbf24; }
-    html.dark .tod-afternoon { color: #7dd3fc; }
-    html.dark .tod-evening { color: #c4b5fd; }
-    html.dark .tod-morning, html.dark .tod-afternoon, html.dark .tod-evening { background: rgb(255 255 255 / .07); }
+    /* The scene paints its own sky, so the tints these classes used to carry
+       would only show through the corners the circle already cuts off. They
+       stay as hooks — the markup and a future scene may want them. */
     .dash-hero-h { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800;
         color: #24380f; line-height: 1.2; letter-spacing: -.01em; }
     .dash-hero-p { font-size: .82rem; color: #4c6b33; margin-top: .2rem; }
     /* Enough air that the greeting reads as a welcome rather than a header. */
     .dash-hero-mark { width: 3.35rem; height: 3.35rem; }
-    .dash-hero-mark svg { width: 1.7rem; height: 1.7rem; }
+
+    /* ---- The sky, moving ------------------------------------------------
+       Every part is a group with one animation on it. Nothing is scripted,
+       and everything stops when stillness is asked for — a scene that keeps
+       turning behind somebody who has said no to motion is the one place a
+       nice idea becomes a rude one. */
+    .tod-rays { transform-origin: 28px 34px; animation: todSpin 26s linear infinite; }
+    .tod-rays-fast { transform-origin: 28px 24px; animation-duration: 18s; }
+    /* Dawn: the sun comes up, and the light warms as it does. */
+    .tod-rise { animation: todRise 7s ease-in-out infinite alternate; }
+    @keyframes todRise { from { transform: translateY(3.5px); } to { transform: translateY(-1px); } }
+    @keyframes todSpin { to { transform: rotate(360deg); } }
+    /* Clouds cross and come round again. The two at night run at different
+       speeds, which is the whole of the depth. */
+    .tod-cloud-a { animation: todDrift 15s linear infinite; }
+    .tod-cloud-n1 { animation: todDrift 19s linear infinite; }
+    .tod-cloud-n2 { animation: todDrift 27s linear infinite; animation-delay: -9s; }
+    @keyframes todDrift { from { transform: translateX(-24px); } to { transform: translateX(60px); } }
+    .tod-moon { transform-origin: 30px 24px; animation: todBreathe 6s ease-in-out infinite; }
+    @keyframes todBreathe { 0%, 100% { opacity: .96; } 50% { opacity: 1; } }
+    .tod-star { animation: todTwinkle 3.4s ease-in-out infinite; }
+    .tod-s2 { animation-delay: .8s; } .tod-s3 { animation-delay: 1.6s; } .tod-s4 { animation-delay: 2.4s; }
+    @keyframes todTwinkle { 0%, 100% { opacity: .28; } 50% { opacity: 1; } }
+    .tod-bird { animation: todFly 11s linear infinite; }
+    @keyframes todFly { from { transform: translate(-14px, 4px); } to { transform: translate(48px, -6px); } }
+    @media (prefers-reduced-motion: reduce) {
+        .tod-rays, .tod-rise, .tod-cloud, .tod-moon, .tod-star, .tod-bird { animation: none !important; }
+    }
     /* The hour's badge floats — a slow bob, the way the sun hangs in the
        sky rather than sits on a shelf. */
     .dash-hero-mark { animation: heroBob 3.8s ease-in-out infinite alternate; }
@@ -449,13 +475,94 @@
         @if (filled($user->coverPath ?? null))
             @include('community.partials.cover-band', ['coverUser' => $user, 'coverClass' => 'dash-hero-cover'])
         @endif
+        {{-- Not an icon of the hour — a window onto it.
+
+             A glyph tells you what time it is, which the line underneath
+             already does. A scene tells you what the day is like, which is
+             the thing a farmer actually looks up to check. So: the sun climbs
+             and turns at dawn, stands high and hot with a cloud crossing it
+             at noon, and after six the moon sits behind clouds that drift
+             over it while the stars come and go.
+
+             Everything is inside a 56-unit box clipped by the circle it sits
+             in, and every moving part is a CSS animation on a group — no
+             JavaScript, and nothing that runs when somebody has asked for
+             stillness. --}}
         <span class="dash-hero-mark {{ $__tod }}" aria-hidden="true">
             @if ($__tod === 'tod-morning')
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v2M5.3 6.7l1.4 1.4M18.7 6.7l-1.4 1.4M8 15a4 4 0 118 0M2 15h2m16 0h2M3 19h18"/></svg>
+                <svg class="tod-svg" viewBox="0 0 56 56" fill="none">
+                    <defs>
+                        <linearGradient id="todSkyM" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0" stop-color="#ffe6ad"/><stop offset=".62" stop-color="#ffc98a"/>
+                            <stop offset="1" stop-color="#ffb27a"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="56" height="56" fill="url(#todSkyM)"/>
+                    {{-- The sun climbs, and its light turns with it. --}}
+                    <g class="tod-rise">
+                        <g class="tod-rays">
+                            <path d="M28 16v-7M28 53v7M9 34h-7M54 34h7M15.4 21.4l-5-5M40.6 46.6l5 5M45.6 21.4l5-5M10.4 46.6l-5 5"
+                                  stroke="#fff3cf" stroke-width="3.4" stroke-linecap="round" opacity=".85"/>
+                        </g>
+                        <circle cx="28" cy="34" r="9.5" fill="#fff0bd"/>
+                        <circle cx="28" cy="34" r="7.6" fill="#fbbf24"/>
+                    </g>
+                    {{-- The ground the sun comes up over. --}}
+                    <path d="M0 41c9-3 16 2 27 1s20-5 29-2v16H0z" fill="#7fae57"/>
+                    <path d="M0 45c10-2 17 2 28 1s18-4 28-2v12H0z" fill="#4a7c2a"/>
+                    <g class="tod-bird"><path d="M12 15c1.6-1.8 3.2-1.8 4.6 0M18 12.6c1.4-1.6 2.8-1.6 4 0"
+                        stroke="#8a5a2b" stroke-width="1.4" stroke-linecap="round" opacity=".7"/></g>
+                </svg>
             @elseif ($__tod === 'tod-afternoon')
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4l1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4m11.4-11.4l1.4-1.4"/></svg>
+                <svg class="tod-svg" viewBox="0 0 56 56" fill="none">
+                    <defs>
+                        <linearGradient id="todSkyA" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0" stop-color="#9fd2f5"/><stop offset="1" stop-color="#d7ecfb"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="56" height="56" fill="url(#todSkyA)"/>
+                    <g class="tod-rays tod-rays-fast">
+                        <path d="M28 8V1M28 40v7M8 24H1M48 24h7M14.6 10.6l-5-5M41.4 37.4l5 5M41.4 10.6l5-5M14.6 37.4l-5 5"
+                              stroke="#ffe9a8" stroke-width="3.4" stroke-linecap="round"/>
+                    </g>
+                    <circle cx="28" cy="24" r="9.5" fill="#ffe9a8"/>
+                    <circle cx="28" cy="24" r="7.6" fill="#fbbf24"/>
+                    {{-- One cloud crossing, because a sky with nothing moving
+                         in it is a picture rather than a day. --}}
+                    <g class="tod-cloud tod-cloud-a">
+                        <path d="M6 30a4.4 4.4 0 0 1 .8-8.7A6.4 6.4 0 0 1 19 22.8a4.1 4.1 0 0 1 .6 7.2z" fill="#ffffff" opacity=".92"/>
+                    </g>
+                    <path d="M0 40c9-3 16 2 27 1s20-5 29-2v17H0z" fill="#7fae57"/>
+                    <path d="M0 45c10-2 17 2 28 1s18-4 28-2v12H0z" fill="#4a7c2a"/>
+                </svg>
             @else
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                <svg class="tod-svg" viewBox="0 0 56 56" fill="none">
+                    <defs>
+                        <linearGradient id="todSkyE" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0" stop-color="#1e2b52"/><stop offset="1" stop-color="#3d4a78"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="56" height="56" fill="url(#todSkyE)"/>
+                    <g fill="#fff3cf">
+                        <circle class="tod-star tod-s1" cx="11" cy="12" r="1.5"/>
+                        <circle class="tod-star tod-s2" cx="45" cy="9" r="1.2"/>
+                        <circle class="tod-star tod-s3" cx="38" cy="20" r="1"/>
+                        <circle class="tod-star tod-s4" cx="17" cy="24" r="1.1"/>
+                    </g>
+                    {{-- A crescent, made by taking a bite out of a disc — a
+                         stroked arc goes to mush at this size. --}}
+                    <path class="tod-moon" d="M34 8a14 14 0 1 0 10 22A16.5 16.5 0 0 1 34 8z" fill="#f2f4ff"/>
+                    {{-- Two clouds, at different speeds, so the sky has depth
+                         rather than one band sliding past. --}}
+                    <g class="tod-cloud tod-cloud-n1">
+                        <path d="M4 27a4.4 4.4 0 0 1 .8-8.7A6.4 6.4 0 0 1 17 19.8a4.1 4.1 0 0 1 .6 7.2z" fill="#8e9ac4" opacity=".75"/>
+                    </g>
+                    <g class="tod-cloud tod-cloud-n2">
+                        <path d="M2 36a3.4 3.4 0 0 1 .6-6.7A5 5 0 0 1 12 30.4a3.2 3.2 0 0 1 .5 5.6z" fill="#b3bde0" opacity=".6"/>
+                    </g>
+                    <path d="M0 42c9-3 16 2 27 1s20-5 29-2v16H0z" fill="#2c3d1c"/>
+                    <path d="M0 46c10-2 17 2 28 1s18-4 28-2v11H0z" fill="#1d2a13"/>
+                </svg>
             @endif
         </span>
         <div class="dash-hero-body">
