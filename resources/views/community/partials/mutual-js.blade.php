@@ -6,7 +6,10 @@
     /* Each shared face is a card wearing the house gradient as its edge:
        the wrapper IS the border — a thicker band along the top, a hairline
        around the rest — and the white card sits inside it. */
-    .mut-card { padding: 4px 1.5px 1.5px; border-radius: 1rem; margin-bottom: .65rem;
+    /* The gradient edge, and the top of it no thicker than the rest: at 4px
+       it read as a coloured bar laid on the card rather than as the card's
+       own rim. */
+    .mut-card { padding: 2px 1.5px 1.5px; border-radius: 1rem; margin-bottom: .65rem;
         background: linear-gradient(120deg, #2f5219, #8fc267 45%, #4a7c2a 75%, #a9d383);
         background-size: 220% 220%;
         animation: mutEdge 9s ease-in-out infinite alternate; }
@@ -14,15 +17,27 @@
     .mut-card-in { position: relative; background: var(--color-white);
         border-radius: calc(1rem - 2px); padding: .75rem .85rem; }
     html.dark .mut-card-in { background: #1c2415; }
-    /* A card whose face carries a cloud pays for the air the cloud floats
-       in — the same deal the wall's posts make. */
-    .mut-card-in:has(.mut-cloud) { padding-top: 2.35rem; }
+    /* Every card pays for the air now, cloud or none: the Follow pill lives
+       up there too, so the room has to be there whether anybody has said
+       what is on their mind or not. (See the rule further down.) */
     /* Hung from the card's own top-left, so it clears the whole row and the
        tail still comes down over the face beneath it. Two classes deep on
        purpose: .status-cloud's own `bottom` is defined later in the cascade,
        and left standing it squashed this box to its padding. */
-    .mut-card-in .mut-cloud { top: .5rem; left: .85rem; bottom: auto; max-width: 12rem; }
-    .mut-head { display: flex; align-items: center; gap: .7rem; }
+    .mut-card-in .mut-cloud { top: .5rem; left: .85rem; bottom: auto; max-width: 8.5rem; }
+    /* Follow goes to the card's own upper corner.
+       Sitting at the end of the head row it was squeezing the name and the
+       place line into whatever was left, and on a long name the pill and the
+       location fought over the same forty pixels. Lifted out, the words get
+       the width and the one thing you can do about this person is where the
+       eye lands first. */
+    .mut-card-in > .mut-head > .fp-follow,
+    .mut-card-in > .fp-follow { position: absolute; top: .55rem; right: .6rem; z-index: 3; }
+    /* The head no longer holds it, so the row is face + words. */
+    .mut-head { display: flex; align-items: center; gap: .7rem; padding-right: 5.5rem; }
+    /* Room for the pill above the row, and the cloud shortened so the two
+       never reach across each other. */
+    .mut-card-in { padding-top: 2.35rem; }
     .mut-face { flex: none; }
     .mut-mid { min-width: 0; flex: 1 1 auto; }
     .mut-name { display: block; font-size: .88rem; font-weight: 800; color: var(--color-gray-900);
