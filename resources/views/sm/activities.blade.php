@@ -1026,7 +1026,7 @@
         @media (max-width: 767px) {
             /* "Jun 17, 2026" -> "Jun 17, 26" and "2 activities" -> "2", so the
                date, the count and the kebab all fit on one line. */
-            .dh-long, .dh-word, .dh-modprefix { display: none; }
+            .dh-long, .dh-word { display: none; }
             .dh-short { display: inline; }
 
             /* One toolbar line: a long module name gives way — truncated in
@@ -1035,8 +1035,8 @@
                buttons refuse to shrink so the label is the only thing that
                bends. */
             /* The owner's call: "Activities" stays written on the back
-               button; the hamburger gives up its module name instead — the
-               menu it opens says where you are anyway. */
+               button; the hamburger gives up its words instead — the menu it
+               opens says where you are anyway. */
             #currentModuleLabel { display: none; }
             #moduleBackBtn, #actToolbar > .btn:last-child { flex-shrink: 0; }
 
@@ -1823,8 +1823,13 @@
                narrow one. */
             #actToolbar, #actHeaderBar { flex-wrap: nowrap; }
             #actToolbar > .btn { flex: 0 0 auto; justify-content: center; }
+            /* Give way, but never take: 1 1 auto let these two absorb the
+               slack, so a sparse row — a module with nothing but Modules and
+               Notice in it — stretched the hamburger into a wide empty plate
+               with one small mark adrift in the middle, which is the very
+               thing the note above says a button is not. */
             #actToolbar > #modulesBtn,
-            #actToolbar > #activityActionsBtn { flex: 1 1 auto; min-width: 0; overflow: hidden; }
+            #actToolbar > #activityActionsBtn { flex: 0 1 auto; min-width: 0; overflow: hidden; }
             #actHeaderBar > .btn,
             #actHeaderBar > .icon-btn,
             #actHeaderBar > #addActivityWrap { flex: 0 0 auto; }
@@ -2751,9 +2756,11 @@
     <div id="actToolbar" class="flex items-center gap-2 flex-wrap">
         <button type="button" id="modulesBtn" class="btn btn-white btn-sm" title="Switch module">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            {{-- "Modules - " is dropped on phones so the label stays short and
-                 leaves the toolbar room for Tools, Undo and Redo on one line. --}}
-            <span id="currentModuleLabel"><span class="dh-modprefix">Modules - </span>Activities</span>
+            {{-- It says what the button DOES, not where you already are: the
+                 app header above this row already names the module, so
+                 "Modules - Settings" was the same word twice and left nobody
+                 any wiser about what pressing it would open. --}}
+            <span id="currentModuleLabel">Other Modules</span>
         </button>
         {{-- Right after the module it is leaving, not flung to the far edge:
              pinned right it sat directly under the notification bell, reading
@@ -2766,10 +2773,13 @@
         {{-- Tools menu: collapses Drafts / Report / Search / Calendar / Weather
              (and, on phones, undo/redo/show-hidden) into one hamburger, like the
              Modules button. Each row forwards to the real button below. --}}
+        {{-- A wrench, and no chevron: three stacked lines is the sign for
+             "modules" on the button to its left, and wearing it here made the
+             two read as the same control opened twice. Now Tools stands with
+             Notice, the eye and Search — one glyph, one word from sm up. --}}
         <button type="button" id="activityActionsBtn" class="btn btn-white btn-sm relative" data-activities-only title="Tools" aria-label="Tools">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a4 4 0 0 1 5.3 5L21 12.3l-2.6 2.6-1-1a4 4 0 0 1-5-5.3l1.1-1.1z"/><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 12.5L5 21a2.1 2.1 0 0 1-3-3l8.5-8.5"/></svg>
             <span class="hidden sm:inline">Tools</span>
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </button>
 
         <button type="button" id="readinessBtn" class="btn btn-white btn-sm relative {{ $readiness['count'] > 0 ? 'has-alerts' : '' }}"
@@ -3688,6 +3698,11 @@
         const btn = document.getElementById('moduleBackBtn');
         if (!btn) return;
         const word = btn.querySelector('span');
+        // A second button saying "Schedule" is not worth its place in the row:
+        // the app header's own back arrow, directly above it, already goes
+        // exactly there. It earns its keep only when it names a screen inside
+        // this shell — somewhere the header cannot take you.
+        btn.dataset.homeward = backTo && MODULES[backTo] ? '' : '1';
         if (backTo && MODULES[backTo]) {
             if (word) word.textContent = MODULES[backTo].label;
             btn.title = 'Back to ' + MODULES[backTo].label;
@@ -3835,9 +3850,10 @@
         // asked for, now that the thing that answers it is visible.
         if (handOffExtra) handOffExtra();
 
-        // Keep the prefix in its own span so CSS can drop it on phones; using
-        // textContent here would flatten it away on the first module switch.
-        label.innerHTML = '<span class="dh-modprefix">Modules - </span>' + escapeHtml(MODULES[key].label);
+        // The button says what it opens, not where you are — so it reads the
+        // same in every module and the switch has nothing to rewrite. The app
+        // header below is where the module's own name is kept in step.
+        label.textContent = 'Other Modules';
         // Keep the app header + browser tab in step with the swapped module.
         const pageTitle = document.getElementById('appPageTitle');
         if (pageTitle) pageTitle.textContent = MODULES[key].label;
@@ -3847,9 +3863,12 @@
         window.smHelpKey?.(key);
         document.title = MODULES[key].label + ' — ' + @json($schedule->title);
         setActivitiesChrome(key === 'activities');
-        // Show a way back whenever another module is open, and say where to.
-        document.getElementById('moduleBackBtn')?.classList.toggle('hidden', key === 'activities');
+        // Show a way back whenever another module is open, and say where to —
+        // paintModuleBack decides whether it is worth showing at all, so it
+        // runs first and the class below reads its answer.
         paintModuleBack();
+        const backBtn = document.getElementById('moduleBackBtn');
+        backBtn?.classList.toggle('hidden', key === 'activities' || backBtn.dataset.homeward === '1');
         // The AI module IS the technician chat — hide the floating one there.
         document.getElementById('aiFloat')?.classList.toggle('ai-float-off', key === 'ai');
         // ...and it takes the toolbar's row, so the arrow has to lead home.
