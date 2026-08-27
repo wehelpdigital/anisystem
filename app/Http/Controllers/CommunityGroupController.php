@@ -156,8 +156,15 @@ class CommunityGroupController extends Controller
             ->pluck('groupId')
             ->all();
 
+        // Rooms this person has already knocked on, so the card says "Asked"
+        // rather than inviting them to ask a second time.
+        $asked = CommunityGroupJoinRequest::active()
+            ->where('userId', $userId)->waiting()
+            ->pluck('groupId')->map(fn ($id) => (int) $id)->all();
+
         foreach ($items as $g) {
             $g->joined = in_array($g->id, $myGroupIds, true);
+            $g->askedToJoin = in_array((int) $g->id, $asked, true);
             $g->unreadCount = $unreadByGroup[(int) $g->id] ?? 0;
         }
 

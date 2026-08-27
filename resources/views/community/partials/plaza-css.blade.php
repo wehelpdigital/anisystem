@@ -1627,8 +1627,10 @@
     .topb-m { display:inline-flex; width:.72rem; height:.72rem; flex:none; opacity:.9; }
     .topb-m svg { width:100%; height:100%; }
     .topb-n { font-variant-numeric:tabular-nums; }
-    /* What a screen reader hears and an eye never sees. */
-    .topb-say { position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    /* What a screen reader hears and an eye never sees. Ours rather than the
+       framework's: these pages build their stylesheet separately, and a
+       utility that does not survive that build turns the sentence visible. */
+    .topb-say, .plaza-say { position:absolute; width:1px; height:1px; padding:0; margin:-1px;
         overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap; border:0; }
     .topb-big { font-size:.74rem; padding:.16rem .56rem .16rem .4rem; }
     .topb-big .topb-m { width:.92rem; height:.92rem; }

@@ -41,6 +41,15 @@
         <div class="card-body flex flex-col grow dc-body">
             <a href="{{ route('community.groups.show', ['id' => $g->id]) }}" class="min-w-0 block">
                 <h3 class="font-bold text-gray-900 leading-snug" style="font-family:var(--font-heading)">{{ $g->name }}
+                    @if ($g->privacy === \App\Models\CommunityGroup::PRIVATE)
+                        {{-- The room is findable; what is said in it is not.
+                             Beside the name, because the name is what the
+                             lock is about. --}}
+                        <span class="dc-lock" title="{{ $g->joinMode === \App\Models\CommunityGroup::BY_PASSWORD ? 'Private — asks for a password' : 'Private — the organiser lets people in' }}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>
+                            <span class="plaza-say">Private discussion</span>
+                        </span>
+                    @endif
                     @if (($g->unreadCount ?? 0) > 0)
                         {{-- New topics since you were last in this room. --}}
                         <span class="disc-new" title="{{ $g->unreadCount }} new since your last visit">{{ $g->unreadCount > 99 ? '99+' : $g->unreadCount }}</span>
@@ -71,8 +80,18 @@
             <div class="disc-act" style="--sw-t:{{ 8 + ($g->id % 7) }}s;--sw-d:-{{ $g->id % 11 }}s">
                 <a href="{{ route('community.groups.show', ['id' => $g->id]) }}"
                    class="btn btn-primary disc-open {{ $g->joined ? '' : 'is-off' }}">Open</a>
+                {{-- The button says what will happen. Tapping "Join" on a
+                     room that is going to ask somebody else first, and then
+                     not being in it, reads as a failure rather than as the
+                     room working the way it was built to. --}}
                 <button type="button" class="btn btn-primary disc-join {{ $g->joined ? 'is-off' : '' }}"
-                        data-group-id="{{ $g->id }}" data-name="{{ $g->name }}">Join</button>
+                        data-group-id="{{ $g->id }}" data-name="{{ $g->name }}"
+                        data-door="{{ $g->privacy === \App\Models\CommunityGroup::PRIVATE ? ($g->joinMode ?: 'approval') : 'open' }}"
+                        @if (($g->askedToJoin ?? false)) data-asked="1" @endif>{{
+                    $g->privacy !== \App\Models\CommunityGroup::PRIVATE ? 'Join'
+                        : (($g->askedToJoin ?? false) ? 'Asked'
+                            : ($g->joinMode === \App\Models\CommunityGroup::BY_PASSWORD ? 'Enter password' : 'Ask to join'))
+                }}</button>
             </div>
         </div>
     </div>

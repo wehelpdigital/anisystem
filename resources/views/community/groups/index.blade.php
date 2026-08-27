@@ -173,6 +173,60 @@
     .gb-src .ic svg { width:1.25rem; height:1.25rem; }
     .gb-src .sub { display:block; font-size:.72rem; font-weight:600; color:var(--color-gray-400); }
     @media (prefers-reduced-motion: reduce) { .gb-well, .gb-src { transition:none; } }
+
+    /* WHO CAN COME IN — two tiles, and a second question under them.
+
+       Tiles rather than a dropdown: there are two answers, each needs a
+       line explaining what it means in practice, and a closed dropdown
+       shows neither. The real radios stay in the markup and are only made
+       invisible, so a keyboard and a screen reader still meet a radio
+       group and the sheet's FormData still has something to read. */
+    .gb-door { display:flex; flex-direction:column; gap:.45rem; }
+    .gb-pick { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; }
+    .gb-opt { position:relative; display:flex; flex-direction:column; align-items:center;
+        gap:.15rem; padding:.7rem .55rem; border-radius:.9rem; cursor:pointer; text-align:center;
+        border:1.5px solid var(--color-gray-200); background:#fff;
+        transition:border-color var(--dur) var(--ease-house), background var(--dur) var(--ease-house),
+            box-shadow var(--dur) var(--ease-house), transform var(--dur) var(--ease-house); }
+    .gb-opt input { position:absolute; opacity:0; width:1px; height:1px; pointer-events:none; }
+    .gb-opt:active { transform:scale(.985); }
+    .gb-opt.is-on { border-color:var(--color-brand-500); background:var(--color-brand-50);
+        box-shadow:0 0 0 3px rgb(107 159 61 / .12); }
+    .gb-opt input:focus-visible + .gb-opt-i,
+    .gb-opt:focus-within { outline:none; }
+    .gb-opt:focus-within { box-shadow:0 0 0 3px rgb(107 159 61 / .3); }
+    .gb-opt-i { display:flex; align-items:center; justify-content:center;
+        width:1.7rem; height:1.7rem; color:var(--color-gray-400);
+        transition:color var(--dur) var(--ease-house); }
+    .gb-opt-i svg { width:1.15rem; height:1.15rem; }
+    .gb-opt.is-on .gb-opt-i { color:var(--color-brand-700); }
+    .gb-opt-t { font-size:.86rem; font-weight:800; color:var(--color-gray-900); line-height:1.2; }
+    .gb-opt.is-on .gb-opt-t { color:var(--color-brand-800); }
+    .gb-opt-s { font-size:.68rem; font-weight:600; color:var(--color-gray-400); line-height:1.25; }
+    /* The second question is one step in from the first, so the page reads
+       as "private, and here is what private means here". */
+    .gb-how { display:flex; flex-direction:column; gap:.45rem; padding:.65rem .7rem;
+        border-radius:.9rem; background:var(--color-gray-50);
+        border:1px solid var(--color-gray-100); }
+    .gb-how.is-opening { animation:gbHowIn .3s var(--ease-house) both; }
+    @keyframes gbHowIn { from { opacity:0; transform:translateY(-.35rem); } to { opacity:1; transform:none; } }
+    .gb-pick-2 .gb-opt { padding:.6rem .5rem; }
+    html.dark .gb-opt { background:#1c2417; border-color:#2f3a26; }
+    html.dark .gb-opt.is-on { background:#25311b; border-color:var(--color-brand-500); }
+    html.dark .gb-opt-t { color:#e8efe1; }
+    html.dark .gb-how { background:#1a2213; border-color:#2b3423; }
+    @media (prefers-reduced-motion: reduce) {
+        .gb-opt { transition:none; }
+        .gb-how.is-opening { animation:none; }
+    }
+    /* The lock on a shut room's name. Small and grey — it is a fact about
+       the room, not a warning about it. */
+    .dc-lock { display:inline-flex; align-items:center; justify-content:center;
+        vertical-align:middle; width:1.05rem; height:1.05rem; margin-left:.15rem;
+        color:var(--color-gray-400); }
+    .dc-lock svg { width:100%; height:100%; }
+    html.dark .dc-lock { color:#8a978a; }
+
     .disc-spin { display:flex; align-items:center; justify-content:center; gap:.35rem; padding:.9rem 0; }
     .disc-spin i { display:block; width:.45rem; height:.45rem; border-radius:9999px;
         background:var(--color-brand-400); animation:discDot 1s cubic-bezier(.22,1,.36,1) infinite; }
@@ -303,6 +357,59 @@
             <label class="form-label" for="groupDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
             <textarea id="groupDesc" class="form-textarea" rows="2" maxlength="500" placeholder="What's this discussion about?"></textarea>
         </div>
+        {{-- WHO CAN COME IN.
+
+             Two choices, each with the sentence that explains it, because
+             "Private" alone does not tell a farmer what will actually
+             happen when somebody taps Join. Choosing Private opens a second
+             question — a password to hand out, or your say-so each time —
+             and only the password answer asks for a password. --}}
+        <div class="gb-door">
+            <span class="form-label">Who can join?</span>
+            <div class="gb-pick">
+                <label class="gb-opt is-on">
+                    <input type="radio" name="gbPrivacy" value="public" checked>
+                    <span class="gb-opt-i" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg>
+                    </span>
+                    <span class="gb-opt-t">Public</span>
+                    <span class="gb-opt-s">Sinuman sa AniSenso</span>
+                </label>
+                <label class="gb-opt">
+                    <input type="radio" name="gbPrivacy" value="private">
+                    <span class="gb-opt-i" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>
+                    </span>
+                    <span class="gb-opt-t">Private</span>
+                    <span class="gb-opt-s">Ikaw ang magpapapasok</span>
+                </label>
+            </div>
+
+            <div class="gb-how hidden" id="gbHow">
+                <span class="form-label">How do they get in?</span>
+                <div class="gb-pick gb-pick-2">
+                    <label class="gb-opt is-on">
+                        <input type="radio" name="gbMode" value="approval" checked>
+                        <span class="gb-opt-t">You approve</span>
+                        <span class="gb-opt-s">Each one asks, you say yes or no</span>
+                    </label>
+                    <label class="gb-opt">
+                        <input type="radio" name="gbMode" value="password">
+                        <span class="gb-opt-t">Password</span>
+                        <span class="gb-opt-s">You share it with whoever you want</span>
+                    </label>
+                </div>
+                <div class="hidden" id="gbPassWrap">
+                    <label class="form-label" for="groupPass">Password</label>
+                    <input type="text" id="groupPass" class="form-input" maxlength="60" autocomplete="off"
+                           placeholder="e.g. anipalay2026">
+                    {{-- Shown, not dotted: the organiser is writing a secret
+                         they intend to read out to other people, not one
+                         they are trying to keep from the room. --}}
+                    <p class="form-hint">At least 4 characters. You can see it again later, so you can pass it on.</p>
+                </div>
+            </div>
+        </div>
         {{-- The three doors, shared by both pictures: whichever well was
              tapped is the one the pick lands in. --}}
         <input type="file" id="groupPicFile" accept="image/jpeg,image/png,image/webp" class="hidden">
@@ -341,6 +448,8 @@
 @include('sm.partials.media-picker')
 {{-- Tap a room's face to see it big, with the room's own facts under it. --}}
 @include('community.partials.avatar-zoom')
+{{-- What a shut discussion asks for, if the card's button leads to one. --}}
+@include('community.partials.door-pass')
 @endsection
 
 @push('scripts')
@@ -448,6 +557,46 @@ document.addEventListener('DOMContentLoaded', () => {
         face.className = 'gb-face av-h' + (name ? crc32str(name.toLowerCase()) % 8 : 7);
     });
 
+    /* ---------------- Who can come in ----------------
+       Two radio groups painted as tiles. The tick lives on the real radio;
+       the class only follows it, so a keyboard arrowing through the group
+       repaints correctly without a second source of truth. */
+    (function theDoor() {
+        const how = document.getElementById('gbHow');
+        const passWrap = document.getElementById('gbPassWrap');
+        const pass = document.getElementById('groupPass');
+
+        const paint = (group) => {
+            document.querySelectorAll('input[name="' + group + '"]').forEach((r) => {
+                r.closest('.gb-opt')?.classList.toggle('is-on', r.checked);
+            });
+        };
+        const chosen = (group) => document.querySelector('input[name="' + group + '"]:checked')?.value;
+
+        const settle = (animate) => {
+            const shut = chosen('gbPrivacy') === 'private';
+            how.classList.toggle('hidden', !shut);
+            if (shut && animate) {
+                how.classList.remove('is-opening');
+                void how.offsetWidth;   // restart the run rather than skip it
+                how.classList.add('is-opening');
+            }
+            passWrap.classList.toggle('hidden', !(shut && chosen('gbMode') === 'password'));
+        };
+
+        document.addEventListener('change', (e) => {
+            const r = e.target.closest('input[name="gbPrivacy"], input[name="gbMode"]');
+            if (!r) return;
+            paint(r.name);
+            settle(true);
+            if (r.name === 'gbMode' && r.value === 'password') setTimeout(() => pass?.focus(), 260);
+        });
+
+        paint('gbPrivacy');
+        paint('gbMode');
+        settle(false);
+    })();
+
     document.getElementById('createGroupSave')?.addEventListener('click', async (e) => {
         // Captured now: `currentTarget` is null once this handler awaits.
         const saveBtn = e.currentTarget;
@@ -464,9 +613,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 : (missing[0] === 'banner' ? 'Add a cover photo.' : 'Add a discussion photo.'), 'error');
             return;
         }
+        const privacy = document.querySelector('input[name="gbPrivacy"]:checked')?.value || 'public';
+        const joinMode = document.querySelector('input[name="gbMode"]:checked')?.value || 'approval';
+        const joinPassword = (document.getElementById('groupPass')?.value || '').trim();
+        // Asked here as well as on the server, so the answer arrives before
+        // the two photos have finished uploading.
+        if (privacy === 'private' && joinMode === 'password' && joinPassword.length < 4) {
+            document.getElementById('groupPass')?.focus();
+            toast('Give the password at least 4 characters.', 'error');
+            return;
+        }
         const fd = new FormData();
         fd.append('name', name);
         if (description) fd.append('description', description);
+        fd.append('privacy', privacy);
+        if (privacy === 'private') {
+            fd.append('joinMode', joinMode);
+            if (joinMode === 'password') fd.append('joinPassword', joinPassword);
+        }
         // A file goes up; a gallery pick goes up as the path it already has.
         [['image', 'imagePath'], ['banner', 'bannerPath']].forEach(([key, pathKey]) => {
             const pic = pics[key];
@@ -489,25 +653,75 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', async (e) => {
         const btn = e.target.closest('.disc-join');
         if (!btn || btn.dataset.busy) return;
-        /* Asked first: joining puts your name in a room other people can
-           see, and a tap on a card in a scrolling list is easy to make by
-           accident. */
         const name = btn.getAttribute('data-name') || 'this discussion';
-        const ok = await (window.confirmAction ? window.confirmAction({
-            title: 'Join ' + name + '?',
-            message: 'You will see its topics on your wall, and the others there will see you as a member.',
-            confirmText: 'Join',
-            confirmClass: 'btn-primary',
-        }) : Promise.resolve(true));
-        if (!ok) return;
+        const door = btn.getAttribute('data-door') || 'open';
+        const askForPassword = window.askForPassword || (() => Promise.resolve(null));
+
+        // Already knocked. Asking twice does nothing but look like it failed.
+        if (btn.dataset.asked) {
+            toast('You already asked to join ' + name + '. ' + 'Hintayin lang natin sila.');
+            return;
+        }
+
+        /* Each door asks its own question, because the answer to "are you
+           sure" is different for each: joining an open room is a small act,
+           a password is a thing you have to have been given, and asking is
+           a message to a person. */
+        let said = null;
+        if (door === 'password') {
+            said = await askForPassword(name);
+            if (said === null) return;
+        } else {
+            const ok = await (window.confirmAction ? window.confirmAction({
+                title: door === 'approval' ? 'Ask to join ' + name + '?' : 'Join ' + name + '?',
+                message: door === 'approval'
+                    ? 'The organiser will decide, and you will hear back either way.'
+                    : 'You will see its topics on your wall, and the others there will see you as a member.',
+                confirmText: door === 'approval' ? 'Ask to join' : 'Join',
+                confirmClass: 'btn-primary',
+            }) : Promise.resolve(true));
+            if (!ok) return;
+        }
+
         btn.dataset.busy = '1';
         const id = btn.getAttribute('data-group-id');
         const card = btn.closest('[data-group-card]');
         const open = card?.querySelector('.disc-open');
         btn.style.opacity = '.6';
         try {
-            const res = await fetch(`/app/community/groups/${id}/join`, { method: 'POST', headers: jsonHeaders });
-            const data = await res.json();
+            let data, outcome;
+            /* A wrong password is a typo, not a refusal, so the sheet comes
+               straight back with the field shaking rather than making them
+               find the room's button again. They leave the loop by backing
+               out of the sheet, which answers null. */
+            for (;;) {
+                const res = await fetch(`/app/community/groups/${id}/join`, {
+                    method: 'POST',
+                    headers: { ...jsonHeaders, 'Content-Type': 'application/json' },
+                    body: said === null ? undefined : JSON.stringify({ password: said }),
+                });
+                data = await res.json();
+                outcome = data.data?.outcome;
+                if (outcome !== 'wrong') break;
+                said = await askForPassword(name);
+                if (said === null) { btn.style.opacity = ''; return; }
+            }
+
+            // Asked, not joined: the card records the knock and stops
+            // offering to knock again.
+            if (data.success && outcome === 'waiting') {
+                toast(data.message);
+                btn.textContent = 'Asked';
+                btn.dataset.asked = '1';
+                btn.style.opacity = '';
+                return;
+            }
+            if (data.success && outcome === 'password') {
+                btn.style.opacity = '';
+                toast(data.message, 'error');
+                return;
+            }
+
             if (data.success) {
                 toast(data.message);
                 btn.textContent = '✓';
