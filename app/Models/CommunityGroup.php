@@ -18,14 +18,27 @@ class CommunityGroup extends BaseModel
 
     protected $fillable = [
         'name', 'slug', 'description', 'privacy', 'joinMode', 'joinPassword',
-        'coverImagePath', 'bannerImagePath', 'createdByUserId', 'deleteStatus',
+        'coverImagePath', 'bannerImagePath', 'bannerPos', 'createdByUserId', 'deleteStatus',
     ];
 
     protected $casts = [
         // Encrypted rather than hashed, because the organiser has to be able
         // to read it back to tell the next person (see the migration).
         'joinPassword' => 'encrypted',
+        'bannerPos' => 'integer',
     ];
+
+    /**
+     * Which band of the banner shows, as a CSS object-position percentage.
+     *
+     * Read through a helper rather than straight off the column so a room
+     * created before the column existed — or one whose value somebody has
+     * poked out of range — still frames itself somewhere sensible.
+     */
+    public function bannerBand(): int
+    {
+        return max(0, min(100, (int) ($this->bannerPos ?? 50)));
+    }
 
     public function members()
     {

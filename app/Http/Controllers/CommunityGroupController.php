@@ -297,12 +297,19 @@ class CommunityGroupController extends Controller
             // made with.
             'imagePath' => 'nullable|string|max:500',
             'bannerPath' => 'nullable|string|max:500',
+            // Which band of the banner shows: 0 the top, 100 the bottom.
+            'bannerPos' => 'nullable|integer|min:0|max:100',
         ]);
 
         $patch = [
             'name' => $data['name'],
             'description' => $data['description'] ?? null,
         ];
+        // Sent only when the organiser has actually dragged the picture, so a
+        // save from any older client leaves the framing exactly as it was.
+        if ($request->filled('bannerPos')) {
+            $patch['bannerPos'] = max(0, min(100, (int) $data['bannerPos']));
+        }
         // A picture left alone keeps the one it had: an edit that quietly
         // cleared the banner because the field was empty would be a trap.
         if ($request->hasFile('image')) {
@@ -339,6 +346,8 @@ class CommunityGroupController extends Controller
             // a second copy of it.
             'imagePath' => 'nullable|string|max:500',
             'bannerPath' => 'nullable|string|max:500',
+            // Which band of the banner shows: 0 the top, 100 the bottom.
+            'bannerPos' => 'nullable|integer|min:0|max:100',
             // The door. Anything unrecognised falls back to an open room —
             // a typo must never accidentally shut a discussion.
             'privacy' => 'nullable|in:public,private',
@@ -368,14 +377,17 @@ class CommunityGroupController extends Controller
             ], 422);
         }
 
+        $bannerPos = max(0, min(100, (int) ($data['bannerPos'] ?? 50)));
+
         $group = null;
-        DB::transaction(function () use ($data, $door, $coverPath, $bannerPath, &$group) {
+        DB::transaction(function () use ($data, $door, $coverPath, $bannerPath, $bannerPos, &$group) {
             $group = CommunityGroup::create([
                 'name' => $data['name'],
                 'slug' => $this->uniqueSlug($data['name']),
                 'description' => $data['description'] ?? null,
                 'coverImagePath' => $coverPath,
                 'bannerImagePath' => $bannerPath,
+                'bannerPos' => $bannerPos,
                 'createdByUserId' => Auth::id(),
                 'deleteStatus' => 1,
             ] + $door);

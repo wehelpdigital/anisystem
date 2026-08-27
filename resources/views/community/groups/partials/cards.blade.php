@@ -18,7 +18,8 @@
         <div class="dc-top">
             <div class="dc-cover {{ $hue }}">
                 @if ($g->bannerImagePath)
-                    <img src="{{ \App\Support\MediaStore::url($g->bannerImagePath) }}" alt="" loading="lazy">
+                    <img src="{{ \App\Support\MediaStore::url($g->bannerImagePath) }}" alt="" loading="lazy"
+                         style="object-position:50% {{ $g->bannerBand() }}%">
                 @endif
             </div>
             {{-- With a real photo the face opens the photo viewer (see

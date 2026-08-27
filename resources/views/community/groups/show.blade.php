@@ -243,7 +243,16 @@
         border:1px dashed var(--color-gray-300); color:var(--color-gray-400); font-size:.75rem; }
     .eg-pic-box img { width:100%; height:100%; object-fit:cover; }
     .eg-pic-box i { font-style:normal; font-weight:800; }
-    .eg-pic-banner { width:100%; height:4.5rem; }
+    .eg-pic-banner { width:100%; height:4.5rem; position:relative; }
+    .eg-pic-banner img { object-position:50% var(--eg-band, 50%); }
+    .eg-pic-banner:has(img) { cursor:grab; }
+    .eg-pic-banner.is-dragging { cursor:grabbing; }
+    .eg-drag { position:absolute; left:.4rem; bottom:.4rem; display:inline-flex; align-items:center;
+        gap:.25rem; padding:.2rem .45rem; border-radius:999px; pointer-events:none;
+        background:rgb(0 0 0 / .55); color:#fff; font-size:.6rem; font-weight:700; }
+    .eg-drag svg { width:.75rem; height:.75rem; }
+    .eg-drag.hidden { display:none; }
+    .eg-pic-banner.is-dragging .eg-drag { opacity:0; }
     /* The banner bleeds to the card's edge and takes the top two corners with
        it; the padding below is the card's own again. */
     .disc-hero.has-banner { padding-top:0; }
@@ -527,7 +536,8 @@
     <div class="card disc-hero group-hero {{ CommunityAvatar::hue($group->name) }}{{ $group->bannerImagePath ? ' has-banner' : '' }}">
         @if ($group->bannerImagePath)
             <div class="disc-banner">
-                <img src="{{ \App\Support\MediaStore::url($group->bannerImagePath) }}" alt="" loading="lazy">
+                <img src="{{ \App\Support\MediaStore::url($group->bannerImagePath) }}" alt="" loading="lazy"
+                     style="object-position:50% {{ $group->bannerBand() }}%">
                 {{-- data-gz-*: a tapped photo opens the photo viewer with the
                      room's facts. No data-gz-url — the viewer offers no door
                      to the page you are already on. --}}
@@ -669,12 +679,19 @@
                 </label>
                 <label class="eg-pic eg-pic-wide">
                     <span class="eg-pic-lbl">Cover photo</span>
-                    <span class="eg-pic-box eg-pic-banner" id="egBannerBox">
+                    {{-- Drag says which band of a tall photo the wide banner
+                         shows, exactly as an account's own cover is framed. --}}
+                    <span class="eg-pic-box eg-pic-banner" id="egBannerBox"
+                          style="--eg-band: {{ $group->bannerBand() }}%">
                         @if ($group->bannerImagePath)
                             <img src="{{ \App\Support\MediaStore::url($group->bannerImagePath) }}" alt="">
                         @else
                             <i>Add a cover</i>
                         @endif
+                        <span class="eg-drag {{ $group->bannerImagePath ? '' : 'hidden' }}" id="egBannerDrag">
+                            <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m0-16l-3 3m3-3l3 3m-3 13l-3-3m3 3l3-3"/></svg>
+                            Drag to choose what shows
+                        </span>
                     </span>
                     <input type="file" id="egBanner" accept="image/jpeg,image/png,image/webp" class="hidden">
                 </label>
@@ -2570,6 +2587,65 @@ document.addEventListener('DOMContentLoaded', () => {
         preview(document.getElementById('egCover'), document.getElementById('egCoverBox'));
         preview(document.getElementById('egBanner'), document.getElementById('egBannerBox'));
 
+        /* Which band of the banner shows. Starts at whatever the room was
+           saved with; a NEW picture has a new middle, so choosing one puts it
+           back to the centre rather than carrying the old framing across. */
+        const bannerBox = document.getElementById('egBannerBox');
+        let bannerBand = parseInt(@json($group->bannerBand()), 10) || 50;
+        const setBand = (v) => {
+            bannerBand = Math.max(0, Math.min(100, Math.round(v)));
+            bannerBox?.style.setProperty('--eg-band', bannerBand + '%');
+        };
+        document.getElementById('egBanner')?.addEventListener('change', () => {
+            if (!document.getElementById('egBanner').files[0]) return;
+            setBand(50);
+            document.getElementById('egBannerDrag')?.classList.remove('hidden');
+        });
+
+        /* The pointer's travel maps to the PHOTO's travel, not to the box, so
+           a finger moved the height of the well sweeps the whole picture.
+           Same arithmetic as the account page's cover — the two feel alike. */
+        if (bannerBox) {
+            let drag = null;
+            const from = (e) => (e.touches ? e.touches[0].clientY : e.clientY);
+            bannerBox.addEventListener('mousedown', (e) => {
+                if (!bannerBox.querySelector('img')) return;
+                drag = { y: from(e), band: bannerBand, moved: false };
+                bannerBox.classList.add('is-dragging');
+            });
+            bannerBox.addEventListener('touchstart', (e) => {
+                if (!bannerBox.querySelector('img')) return;
+                drag = { y: from(e), band: bannerBand, moved: false };
+                bannerBox.classList.add('is-dragging');
+            }, { passive: true });
+            const move = (e) => {
+                if (!drag) return;
+                const travelled = from(e) - drag.y;
+                if (Math.abs(travelled) > 3) drag.moved = true;
+                e.preventDefault();
+                setBand(drag.band - (travelled / Math.max(1, bannerBox.clientHeight)) * 100);
+            };
+            const end = () => {
+                if (!drag) return;
+                // The box is inside a <label>: a drag that also fired the file
+                // chooser would replace the picture somebody was framing.
+                const moved = drag.moved;
+                drag = null;
+                bannerBox.classList.remove('is-dragging');
+                if (moved) bannerBox.dataset.justDragged = '1';
+            };
+            window.addEventListener('mousemove', move);
+            window.addEventListener('touchmove', move, { passive: false });
+            window.addEventListener('mouseup', end);
+            window.addEventListener('touchend', end);
+            bannerBox.addEventListener('click', (e) => {
+                if (!bannerBox.dataset.justDragged) return;
+                delete bannerBox.dataset.justDragged;
+                e.preventDefault();
+                e.stopPropagation();
+            }, true);
+        }
+
         btn.addEventListener('click', () => window.openSheet?.(sheet));
         document.getElementById('egSave')?.addEventListener('click', async (e) => {
             const save = e.currentTarget;
@@ -2584,6 +2660,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const banner = document.getElementById('egBanner').files[0];
             if (cover) fd.append('image', cover);
             if (banner) fd.append('banner', banner);
+            fd.append('bannerPos', String(bannerBand));
             try {
                 const gid = document.getElementById('groupRoot')?.getAttribute('data-group-id');
                 const r = await fetch(@json(url('/app/community/groups')) + '/' + gid + '/edit', {

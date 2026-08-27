@@ -21,7 +21,8 @@
     <div class="fd-top">
         <div class="fd-banner {{ $hue }}">
             @if ($discussion->bannerImagePath)
-                <img src="{{ \App\Support\MediaStore::url($discussion->bannerImagePath) }}" alt="" loading="lazy">
+                <img src="{{ \App\Support\MediaStore::url($discussion->bannerImagePath) }}" alt="" loading="lazy"
+                     style="object-position:50% {{ $discussion->bannerBand() }}%">
             @endif
             <span class="fd-kicker">Discussion</span>
         </div>

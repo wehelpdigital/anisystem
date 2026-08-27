@@ -133,7 +133,18 @@
     .gb-well:hover { border-color:var(--color-brand-400); background:var(--color-brand-50); }
     .gb-well i { font-style:normal; font-size:.75rem; font-weight:600; color:var(--color-gray-400);
         padding:0 .75rem 1.25rem; }
-    .gb-well img { width:100%; height:100%; object-fit:cover; }
+    .gb-well img { width:100%; height:100%; object-fit:cover; object-position:50% var(--gb-band, 50%); }
+    /* Only a well with a picture in it can be dragged, and it says so. */
+    .gb-well:has(img) { cursor:grab; }
+    .gb-well.is-dragging { cursor:grabbing; }
+    .gb-drag { position:absolute; left:.4rem; bottom:.4rem; display:inline-flex; align-items:center;
+        gap:.25rem; padding:.2rem .45rem; border-radius:999px; pointer-events:none;
+        background:rgb(0 0 0 / .55); color:#fff; font-size:.6rem; font-weight:700;
+        transition:opacity var(--dur) var(--ease-house); }
+    .gb-drag svg { width:.75rem; height:.75rem; }
+    .gb-drag.hidden { display:none; }
+    .gb-well.is-dragging .gb-drag { opacity:0; }
+    .gb-well { position:relative; }
     /* Missing, after the save was refused: the ask, made visible. */
     .gb-well.is-wanted, .gb-face.is-wanted { border-color:#ef4444; border-style:solid; }
 
@@ -334,6 +345,14 @@
             <label class="form-label">Cover photo <span class="gb-req">required</span></label>
             <button type="button" class="gb-well" id="groupBannerPreview" data-pic="banner">
                 <i>Add a wide photo for the top of the discussion</i>
+                {{-- A banner is a wide slot and a phone photo is a tall
+                     picture, so centring it is a guess — a field with sky
+                     above it comes out as sky. Drag says which band shows,
+                     exactly as an account's own cover is framed. --}}
+                <span class="gb-drag hidden" id="groupBannerDrag">
+                    <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m0-16l-3 3m3-3l3 3m-3 13l-3-3m3 3l3-3"/></svg>
+                    Drag to choose what shows
+                </span>
             </button>
         </div>
         <div class="gb-face-row">
@@ -471,6 +490,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const pics = { image: null, banner: null };   // {file} | {path, url}
     let picking = null;                           // which well opened the sheet
 
+    /* Which band of the banner shows. A new picture has a new middle, so
+       every pick puts it back to 50 rather than carrying the last photo's
+       framing onto a photo of something else. */
+    let bannerBand = 50;
+
+    function setBand(v) {
+        bannerBand = Math.max(0, Math.min(100, Math.round(v)));
+        document.getElementById('groupBannerPreview')?.style.setProperty('--gb-band', bannerBand + '%');
+    }
+
     function showPic(which, url) {
         const box = document.getElementById(which === 'banner' ? 'groupBannerPreview' : 'groupMonogramPreview');
         if (!box) return;
@@ -482,7 +511,47 @@ document.addEventListener('DOMContentLoaded', () => {
         img.src = url;
         img.alt = '';
         box.prepend(img);
+        if (which === 'banner') {
+            setBand(50);
+            document.getElementById('groupBannerDrag')?.classList.remove('hidden');
+        }
     }
+
+    /* Drag maps the pointer's travel to the PHOTO's travel, not to the box:
+       moving a finger the height of the well sweeps the whole picture, so a
+       tall one is reachable end to end in one gesture. The same arithmetic
+       the account page's cover uses, so the two feel identical. */
+    (() => {
+        const well = document.getElementById('groupBannerPreview');
+        if (!well) return;
+        let drag = null;
+        const from = (e) => (e.touches ? e.touches[0].clientY : e.clientY);
+        const start = (e) => {
+            if (!well.querySelector('img')) return;
+            drag = { y: from(e), band: bannerBand, moved: false };
+            well.classList.add('is-dragging');
+        };
+        const move = (e) => {
+            if (!drag) return;
+            const travelled = from(e) - drag.y;
+            if (Math.abs(travelled) > 3) drag.moved = true;
+            e.preventDefault();
+            setBand(drag.band - (travelled / Math.max(1, well.clientHeight)) * 100);
+        };
+        const end = () => {
+            if (!drag) return;
+            // A drag must not also open the picture chooser underneath it.
+            if (drag.moved) well.dataset.justDragged = '1';
+            drag = null;
+            well.classList.remove('is-dragging');
+        };
+        well.addEventListener('mousedown', start);
+        well.addEventListener('touchstart', start, { passive: true });
+        window.addEventListener('mousemove', move);
+        window.addEventListener('touchmove', move, { passive: false });
+        window.addEventListener('mouseup', end);
+        window.addEventListener('touchend', end);
+    })();
 
     function tookFile(f) {
         if (!f || !picking) return;
@@ -496,6 +565,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // remembered, so the pick knows where to land.
     document.querySelectorAll('[data-pic]').forEach((well) => {
         well.addEventListener('click', () => {
+            // The gesture that framed the picture must not also replace it.
+            if (well.dataset.justDragged) { delete well.dataset.justDragged; return; }
             picking = well.getAttribute('data-pic');
             const title = document.getElementById('groupPicTitle');
             if (title) title.textContent = picking === 'banner' ? 'Add a cover photo' : 'Add the discussion photo';
@@ -627,6 +698,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fd.append('name', name);
         if (description) fd.append('description', description);
         fd.append('privacy', privacy);
+        fd.append('bannerPos', String(bannerBand));
         if (privacy === 'private') {
             fd.append('joinMode', joinMode);
             if (joinMode === 'password') fd.append('joinPassword', joinPassword);
