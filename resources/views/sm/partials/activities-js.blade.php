@@ -4124,20 +4124,96 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    /* ---- The crop decides what else this lot can be asked --------------
+     * The same rule the Lots module follows: the ways a crop can honestly be
+     * counted come with it, so a cassava lot is never offered a sowing it
+     * never had, and a mango is read by its age rather than a day number. */
+    function qalCropChanged() {
+        const sel = $id('qalCrop');
+        const opt = sel?.selectedOptions[0];
+        if (!sel || !opt) return;
+        const isTree = opt.getAttribute('data-tree') === '1';
+        const allow = (opt.getAttribute('data-counters') || '').split(',').filter(Boolean);
+        const want = opt.getAttribute('data-counter') || '';
+
+        // Only the counters this crop keeps, and the usual one chosen.
+        const dt = $id('qalDayType');
+        if (dt) {
+            const keep = new Set(allow.length ? allow : ['DAT', 'DAS', 'DAP']);
+            if (want) keep.add(want);
+            let shown = 0;
+            [...dt.options].forEach((o) => {
+                const on = keep.has(o.value);
+                o.hidden = !on; o.disabled = !on;
+                if (on) shown++;
+            });
+            dt.value = keep.has(want) ? want : (allow[0] || 'DAT');
+            dt.disabled = shown <= 1;
+        }
+
+        // A day count belongs to a crop that has one; an age belongs to a
+        // tree. Never both, and never neither.
+        $id('qalMaturityWrap')?.classList.toggle('hidden', isTree || !sel.value);
+        $id('qalTreeWrap')?.classList.toggle('hidden', !isTree);
+        const mat = $id('qalMaturity');
+        if (mat && !isTree) {
+            const days = opt.getAttribute('data-maturity');
+            mat.placeholder = days ? days + ' is usual for this crop' : '';
+            if (!mat.value && days) mat.value = days;
+        }
+
+        const hint = $id('qalDayTypeHint');
+        if (hint) {
+            hint.textContent = isTree
+                ? 'A standing crop has no day count — the plan reads it by the age above.'
+                : (allow.length === 1 ? 'This crop is only counted one way.' : '');
+        }
+    }
+    $id('qalCrop')?.addEventListener('change', qalCropChanged);
+
+    /** The date a tree of that age would have been planted. */
+    function qalPlantedFromAge() {
+        const months = (parseInt($id('qalTreeYears')?.value, 10) || 0) * 12
+            + (parseInt($id('qalTreeMonths')?.value, 10) || 0);
+        if (months <= 0) return null;
+        const d = new Date();
+        d.setMonth(d.getMonth() - months);
+        return isoFromDate(d);
+    }
+
     $id('qalSave')?.addEventListener('click', async (e) => {
         const btn = e.currentTarget;
         const lotName = ($id('qalName').value || '').trim();
         if (!lotName) { toast('Give the lot a name.', 'error'); return; }
+        const isTree = $id('qalCrop')?.selectedOptions[0]?.getAttribute('data-tree') === '1';
         btn.disabled = true;
         try {
+            /* Everything the Lots module sends, to the endpoint it sends it
+               to — so a lot made here is not a poorer row than one made
+               there, and the day-number lens right above this form can count
+               from it the moment it exists. */
             const res = await api(U.lotStore(), { method: 'POST', body: {
                 lotName,
                 lotSize: parseFloat($id('qalSize').value) || 1,
                 lotSizeUnit: ($id('qalUnit').value || 'ha').trim() || 'ha',
                 variety: ($id('qalVariety').value || '').trim() || null,
+                crop: ($id('qalCrop')?.value || '') || null,
+                dayType: $id('qalDayType')?.value || 'DAT',
+                // The endpoint's own names: daysToMaturity, and a PLANTED
+                // DATE rather than an age — an age would be wrong by a month
+                // the moment it was saved, so the Lots module stores the date
+                // the age implies and works the age out again on the way back.
+                daysToMaturity: (!isTree && $id('qalMaturity')?.value) ? parseInt($id('qalMaturity').value, 10) : null,
+                treePlantedAt: isTree ? qalPlantedFromAge() : null,
+                locBarangay: ($id('qalBarangay')?.value || '').trim() || null,
+                locZone: ($id('qalZone')?.value || '').trim() || null,
+                notes: ($id('qalNotes')?.value || '').trim() || null,
             } });
             const lot = res.data;
             LOT_NAMES[lot.id] = lot.lotName + (lot.variety ? ' · ' + lot.variety : '');
+            // The board's own map of how each lot counts has to learn the new
+            // one, or the lens above would read it as a default DAT lot.
+            if (lot.dayType) LOT_DAY_TYPE[lot.id] = lot.dayType;
             const chip = document.createElement('button');
             chip.type = 'button';
             chip.className = 'chip lot-chip';
@@ -4146,7 +4222,9 @@ document.addEventListener('DOMContentLoaded', () => {
             chip.textContent = LOT_NAMES[lot.id];
             $id('activityLotsContainer').insertBefore(chip, $id('quickAddLotBtn'));
             chip.click();   // select it right away
-            ['qalName', 'qalVariety'].forEach((i) => { $id(i).value = ''; });
+            ['qalName', 'qalVariety', 'qalMaturity', 'qalTreeYears', 'qalTreeMonths',
+             'qalBarangay', 'qalZone', 'qalNotes'].forEach((i) => { if ($id(i)) $id(i).value = ''; });
+            if ($id('qalCrop')) { $id('qalCrop').value = ''; qalCropChanged(); }
             $id('quickAddLotForm').classList.add('hidden');
             toast(res.message);
         } catch (err) { toast(err.message, 'error'); }
@@ -4159,17 +4237,22 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!workerName) { toast('Give the worker a name.', 'error'); return; }
         btn.disabled = true;
         try {
-            const body = {
+            /* Everything the Workers module sends. Skills especially: they
+               are what the board reads to say who is right for a job, so a
+               worker added mid-plan without them is a worker the board has
+               nothing to say about. */
+            const skills = $qsa('#qawSkills .chip.is-selected').map((c) => c.getAttribute('data-value'));
+            const res = await api(U.workerStore(), { method: 'POST', body: {
                 workerName,
+                email: ($id('qawEmail').value || '').trim() || null,
+                phone: ($id('qawPhone').value || '').trim() || null,
                 costPerHalfDay: parseFloat($id('qawRate').value) || 0,
-            };
-            const email = ($id('qawEmail').value || '').trim();
-            const phone = ($id('qawPhone').value || '').trim();
-            if (email) body.email = email;
-            if (phone) body.phone = phone;
-            const res = await api(U.workerStore(), { method: 'POST', body });
+                skills,
+                notes: ($id('qawNotes')?.value || '').trim() || null,
+            } });
             const w = res.data;
             WORKER_NAMES[w.id] = w.workerName;
+            WORKER_RATES[w.id] = Number(w.costPerHalfDay) || 0;
             const chip = document.createElement('button');
             chip.type = 'button';
             chip.className = 'chip worker-chip';
@@ -4177,8 +4260,16 @@ document.addEventListener('DOMContentLoaded', () => {
             chip.setAttribute('aria-pressed', 'false');
             chip.textContent = w.workerName;
             $id('activityWorkersContainer').insertBefore(chip, $id('quickAddWorkerBtn'));
-            chip.click();   // select it right away
-            ['qawName', 'qawRate', 'qawEmail', 'qawPhone'].forEach((i) => { $id(i).value = ''; });
+            chip.click();   // on the activity right away
+            // A chip that has just been made has not been through the rules
+            // yet — a worker added on a Sunday should look as off as one who
+            // was already there.
+            markWorkerAvailability();
+            ['qawName', 'qawEmail', 'qawPhone', 'qawRate', 'qawNotes'].forEach((f) => { if ($id(f)) $id(f).value = ''; });
+            $qsa('#qawSkills .chip.is-selected').forEach((c) => {
+                c.classList.remove('is-selected');
+                c.setAttribute('aria-pressed', 'false');
+            });
             $id('quickAddWorkerForm').classList.add('hidden');
             toast(res.message);
         } catch (err) { toast(err.message, 'error'); }

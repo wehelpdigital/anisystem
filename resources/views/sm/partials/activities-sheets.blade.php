@@ -147,19 +147,95 @@
                 {{-- What the form is waiting for, where the answer will go. --}}
                 <p class="form-hint" id="activityWhenWaiting">Pick the lot first — the day and the
                     day-number options below depend on which ground this is about.</p>
-                <div id="quickAddLotForm" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2">
+                {{-- A lot made here is the same lot the Lots module makes.
+
+                     It used to ask four things — name, variety, size, unit —
+                     and leave the rest blank, which meant a lot created in
+                     the middle of planning an activity had no crop, so the
+                     growth stages knew nothing about it, and no day type, so
+                     the day-number lens right above could not count from it.
+                     A shortcut that quietly makes a worse row is not a
+                     shortcut. It asks what the module asks, and posts to the
+                     same endpoint. --}}
+                <div id="quickAddLotForm" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2.5">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-bold text-gray-500 uppercase">New lot</span>
                         <button type="button" class="btn-ghost rounded-full w-7 h-7 flex items-center justify-center text-gray-400 hover:text-gray-700 js-quick-form-close" data-form="quickAddLotForm" aria-label="Close">✕</button>
                     </div>
+
+                    <input type="text" id="qalName" class="form-input bg-white!" placeholder="Lot name *" maxlength="255">
+
                     <div class="grid grid-cols-2 gap-2">
-                        <input type="text" id="qalName" class="form-input" placeholder="Lot name *" maxlength="255">
-                        <input type="text" id="qalVariety" class="form-input" placeholder="Variety (optional)" maxlength="255">
+                        <input type="number" id="qalSize" class="form-input bg-white!" placeholder="Size" value="1" min="0" step="0.0001" inputmode="decimal">
+                        <select id="qalUnit" class="form-select bg-white!">
+                            <option value="ha">hectares</option>
+                            <option value="sqm">square metres</option>
+                            <option value="acre">acres</option>
+                        </select>
                     </div>
+
+                    {{-- The crop, from the same catalogue the Lots module
+                         picks from — grouped, so a farmer finds rice under
+                         Cereals rather than scrolling eighty-five names. --}}
+                    <div>
+                        <label class="form-label text-xs! mb-1!" for="qalCrop">Crop</label>
+                        <select id="qalCrop" class="form-select bg-white!">
+                            <option value="">Not set — no growth-stage guidance</option>
+                            @foreach (\App\Support\CropStages::grouped() as $group => $rows)
+                                <optgroup label="{{ $group }}">
+                                    @foreach ($rows as $c)
+                                        <option value="{{ $c['value'] }}"
+                                                data-tree="{{ $c['perennial'] ? '1' : '' }}"
+                                                data-maturity="{{ $c['maturity'] ?? '' }}"
+                                                data-counters="{{ implode(',', \App\Support\CropCatalog::countersFor($c['value'])) }}"
+                                                data-counter="{{ $c['counter'] }}">{{ $c['icon'] }} {{ $c['label'] }}</option>
+                                    @endforeach
+                                </optgroup>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <input type="text" id="qalVariety" class="form-input bg-white!" placeholder="Variety (optional) — e.g. IR64" maxlength="255">
+
+                    {{-- How this lot counts its days. Rebuilt from the crop
+                         above, exactly as the Lots module does it, so a
+                         cassava lot is never offered a sowing it never had. --}}
+                    <div id="qalDayTypeWrap">
+                        <label class="form-label text-xs! mb-1!" for="qalDayType">Day counter</label>
+                        <select id="qalDayType" class="form-select bg-white!">
+                            <option value="DAT">DAS → DAT (sown, then transplanted)</option>
+                            <option value="DAS">DAS only (direct seeded)</option>
+                            <option value="DAP">DAP (planted)</option>
+                            <option value="TREE">Mature trees — read by age, no day count</option>
+                        </select>
+                        <p class="form-hint" id="qalDayTypeHint"></p>
+                    </div>
+
+                    {{-- Only for a crop that has one. A day count on an
+                         orchard is a number about a seedling; an age on a
+                         rice lot is nothing at all. --}}
+                    <div id="qalMaturityWrap" class="hidden">
+                        <label class="form-label text-xs! mb-1!" for="qalMaturity">Days to maturity</label>
+                        <input type="number" id="qalMaturity" min="1" max="999" class="form-input bg-white!" placeholder="">
+                    </div>
+                    <div id="qalTreeWrap" class="hidden grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="form-label text-xs! mb-1!" for="qalTreeYears">Tree age — years</label>
+                            <input type="number" id="qalTreeYears" min="0" max="120" class="form-input bg-white!" placeholder="0">
+                        </div>
+                        <div>
+                            <label class="form-label text-xs! mb-1!" for="qalTreeMonths">…and months</label>
+                            <input type="number" id="qalTreeMonths" min="0" max="11" class="form-input bg-white!" placeholder="0">
+                        </div>
+                    </div>
+
                     <div class="grid grid-cols-2 gap-2">
-                        <input type="number" id="qalSize" class="form-input" placeholder="Size" value="1" min="0" step="any" inputmode="decimal">
-                        <input type="text" id="qalUnit" class="form-input" placeholder="Unit" value="ha" maxlength="50">
+                        <input type="text" id="qalBarangay" class="form-input bg-white!" placeholder="Barangay" maxlength="120">
+                        <input type="text" id="qalZone" class="form-input bg-white!" placeholder="Zone" maxlength="60">
                     </div>
+
+                    <textarea id="qalNotes" rows="2" maxlength="2000" class="form-textarea bg-white!" placeholder="Notes (optional)"></textarea>
+
                     <button type="button" id="qalSave" class="btn btn-primary btn-sm w-full">Add lot</button>
                 </div>
             </div>
@@ -384,19 +460,43 @@
                         </span>
                     </label>
                 </div>
-                <div id="quickAddWorkerForm" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2">
+                {{-- A worker added here is the same worker the Workers
+                     module adds. Skills and notes were the two things this
+                     form left out, and skills are not decoration: they are
+                     what the board reads to say who is right for a job. An
+                     email is asked for plainly rather than as an afterthought,
+                     because without one this person cannot be sent the day's
+                     work — which is the first thing somebody tries after
+                     adding them. --}}
+                <div id="quickAddWorkerForm" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2.5">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-bold text-gray-500 uppercase">New worker</span>
                         <button type="button" class="btn-ghost rounded-full w-7 h-7 flex items-center justify-center text-gray-400 hover:text-gray-700 js-quick-form-close" data-form="quickAddWorkerForm" aria-label="Close">✕</button>
                     </div>
+
+                    <input type="text" id="qawName" class="form-input bg-white!" placeholder="Worker name *" maxlength="255">
+
                     <div class="grid grid-cols-2 gap-2">
-                        <input type="text" id="qawName" class="form-input" placeholder="Worker name *" maxlength="255">
-                        <input type="number" id="qawRate" class="form-input" placeholder="₱ per half-day" min="0" step="any" inputmode="decimal">
+                        <input type="email" id="qawEmail" class="form-input bg-white!" placeholder="Email — for the day's work" maxlength="255">
+                        <input type="tel" id="qawPhone" class="form-input bg-white!" placeholder="Phone (optional)" maxlength="32">
                     </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <input type="email" id="qawEmail" class="form-input" placeholder="Email (optional)" maxlength="255">
-                        <input type="tel" id="qawPhone" class="form-input" placeholder="Phone (optional)" maxlength="32">
+
+                    <div>
+                        <label class="form-label text-xs! mb-1!" for="qawRate">Rate per half-day (₱)</label>
+                        <input type="number" id="qawRate" class="form-input bg-white!" placeholder="0.00" min="0" step="0.01" inputmode="decimal">
                     </div>
+
+                    <div>
+                        <span class="form-label text-xs! mb-1!">Skills</span>
+                        <div id="qawSkills" data-chip-group class="flex flex-wrap gap-2">
+                            @foreach (\App\Models\AsScheduleWorker::SKILLS as $slug => $label)
+                                <button type="button" class="chip" data-value="{{ $slug }}">{{ $label }}</button>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <textarea id="qawNotes" rows="2" maxlength="2000" class="form-textarea bg-white!" placeholder="Notes (optional)"></textarea>
+
                     <button type="button" id="qawSave" class="btn btn-primary btn-sm w-full">Add worker</button>
                 </div>
             </div>
