@@ -40,11 +40,14 @@
             <span class="rankb-lv">Lv {{ $myRank['n'] }}</span>
             <span class="rankb-t">{{ $myRank['name'] }}</span>
         </div>
-        <p class="rk-me-name">{{ $me->full_name }}@include('community.partials.top-badge', ['topUser' => $me, 'topFlat' => true])</p>
+        <p class="rk-me-name">{{ $me->full_name }}</p>
         <p class="rk-me-en">Level {{ $myRank['n'] }} of {{ $maxLevel }}</p>
         <p class="rk-me-pts"><b id="rkMePts" data-count="{{ $myPoints }}">0</b> <span>points</span>
+            {{-- Your own placement, in the badge rather than the word — and
+                 only here, not beside the name as well, since one plate does
+                 not need to say the same thing twice. --}}
             @if ($myPosition > 0)
-                <span class="rk-me-pos">Rank: {{ $myPosition }}</span>
+                <span class="rk-me-pos">@include('community.partials.place-chip', ['place' => $myPosition])</span>
             @endif
         </p>
         @if ($capped)
@@ -100,16 +103,17 @@
                      the board is a scoreboard, not a directory. Rows 13-15
                      fade toward the dots below, saying "it keeps going". --}}
                 <div class="rk-row rk-fade-{{ max(0, $i - 11) }} {{ (int) $ru->id === (int) auth()->id() ? 'is-me' : '' }}" style="--i: {{ min($i, 30) }}">
-                    <span class="rk-pos">Rank: {{ $i + 1 }}</span>
+                    {{-- The badge stands where the word "Rank" did. It is the
+                         same chip these members wear out in the community, so
+                         the row that granted it and the card that shows it
+                         are recognisably the same thing — which is also why
+                         it is no longer repeated beside the name. --}}
+                    <span class="rk-pos">@include('community.partials.place-chip', ['place' => $i + 1])</span>
                     @include('community.partials.avatar', ['user' => $ru, 'size' => 'avatar-sm'])
                     <span class="rk-row-mid">
                         <span class="rk-row-head">
                             <a class="rk-row-name" href="{{ route('community.connect.profile', ['userId' => $ru->id]) }}">{{ $ru->full_name }}</a>
                             <span class="rankb rankb-a{{ $r['rank']['arc'] }}"><span class="rankb-e">{{ $r['rank']['emoji'] }}</span><span class="rankb-lv">Lv {{ $r['rank']['n'] }}</span><span class="rankb-t">{{ $r['rank']['name'] }}</span></span>
-                            {{-- The metal this seat is struck in, so the chip
-                                 worn on a card out in the community is
-                                 explained by the row that granted it. --}}
-                            @include('community.partials.top-badge', ['topUser' => $ru, 'topFlat' => true])
                         </span>
                     </span>
                     @if ((int) $ru->id === (int) auth()->id())<span class="rk-you">Ikaw</span>@endif
@@ -127,7 +131,7 @@
             @if ($myPosition > 15 || $myPosition <= 0)
                 <div class="rk-dots" aria-hidden="true"><i></i><i></i><i></i></div>
                 <div class="rk-row is-me rk-merow">
-                    <span class="rk-pos">Rank: {{ $myPosition > 0 ? $myPosition : '—' }}</span>
+                    <span class="rk-pos">@include('community.partials.place-chip', ['place' => $myPosition])</span>
                     @include('community.partials.avatar', ['user' => $me, 'size' => 'avatar-sm', 'link' => false])
                     <span class="rk-row-mid">
                         <span class="rk-row-head">
@@ -270,8 +274,9 @@
     .rk-me-pts { margin-top: .3rem; font-size: .8rem; color: var(--color-gray-500); }
     .rk-me-pts b { font-size: 1.5rem; font-weight: 800; color: var(--color-gray-900);
         font-variant-numeric: tabular-nums; font-family: var(--font-heading); }
-    .rk-me-pos { display: inline-block; margin-left: .5rem; padding: .12rem .5rem; border-radius: 999px;
-        background: var(--color-brand-50); color: var(--color-brand-700); font-size: .68rem; font-weight: 800; }
+    /* The plate's own placement. It sits on the points line, so it is only a
+       holder now — the chip inside brings its own colour and shape. */
+    .rk-me-pos { display: inline-flex; vertical-align: middle; margin-left: .5rem; }
     .rk-bar { height: .5rem; border-radius: 999px; background: var(--color-gray-200);
         overflow: hidden; margin: .8rem auto 0; max-width: 22rem; }
     /* The fill is a moving gradient, not a flat green: the ladder's bars all
@@ -340,9 +345,12 @@
     @keyframes rkRise { from { opacity: 0; transform: translateY(.55rem); } }
     .rk-row:nth-child(even) { background: color-mix(in srgb, var(--color-gray-100) 55%, transparent); }
     .rk-row.is-me { background: var(--color-brand-50); box-shadow: inset 0 0 0 1.5px var(--color-brand-300); }
-    .rk-pos { flex: none; min-width: 3.4rem; text-align: center; font-size: .66rem; font-weight: 800;
-        color: var(--color-gray-400); font-variant-numeric: tabular-nums;
-        text-transform: uppercase; letter-spacing: .02em; }
+    /* The place column holds a badge now, not a word. Its width is what it
+       always was, so the faces and names below still line up in a column
+       rather than stepping in and out with the number's length. */
+    .rk-pos { flex: none; min-width: 3.4rem; display: flex; justify-content: center; }
+    .rk-place { cursor: default; }
+    .rk-place:hover { transform: none; box-shadow: none; }
     .rk-row-mid { display: flex; flex-direction: column; gap: .15rem; min-width: 0; flex: 1 1 auto; }
     .rk-row-head { display: flex; align-items: center; gap: .45rem; min-width: 0; flex-wrap: wrap; row-gap: .15rem; }
     /* The board trails off: its last rows fade toward the dots that walk

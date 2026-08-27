@@ -1652,6 +1652,12 @@
         background-image:linear-gradient(115deg,#fbead9,#dc9e6d 45%,#f7e0cb); }
     .topb-nickel { color:#45564b; border-color:#bac7bf;
         background-image:linear-gradient(115deg,#f3f7f4,#bbc8c0 45%,#eaefeb); }
+    /* Off the podium: the shape without the prize. Used on the board's own
+       rows, where a place past the twentieth still has to be readable. */
+    .topb-plain { color:var(--color-gray-500); border-color:var(--color-gray-200);
+        background-image:linear-gradient(115deg,#fbfbfc,#eef0f2 45%,#f8f9fa); }
+    html.dark .topb-plain { color:#9aa79c; border-color:#2f3a26;
+        background-image:linear-gradient(115deg,#1c2417,#232c1d 45%,#1e2719); }
 
     html.dark .topb-diamond { color:#c9f5ff; border-color:#2b7e93;
         background-image:linear-gradient(110deg,#0d3b47,#1c6e83 28%,#2b8ba3 48%,#175f73 72%,#0d3b47); }

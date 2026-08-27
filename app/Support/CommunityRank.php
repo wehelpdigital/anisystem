@@ -591,7 +591,20 @@ class CommunityRank
      */
     public static function podiumFor(int $userId): ?array
     {
-        $place = self::podium()[$userId] ?? 0;
+        return self::metalAt(self::podium()[$userId] ?? 0);
+    }
+
+    /**
+     * The metal a placement is struck in, from the number alone.
+     *
+     * The board already knows what row it is drawing and does not need to
+     * look the member up again to find out — and off the podium there is no
+     * metal, which is the honest answer rather than a twenty-first one.
+     *
+     * @return array{place: int, key: string, name: string}|null
+     */
+    public static function metalAt(int $place): ?array
+    {
         if ($place < 1) {
             return null;
         }
