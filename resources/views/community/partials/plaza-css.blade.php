@@ -212,13 +212,27 @@
     @media (prefers-reduced-motion: reduce) { .wall-act:active { transform: none; } }
 
     /* --- Initials avatars: crc32(lower(name))%8 → av-h0..7. Circle = person, squircle = place. --- */
+    /* Every face in this app wears the same green ring.
+       Two backgrounds in one box — the member's own hue clipped to the
+       padding box, the house green clipped to the border box — which is how
+       a border can hold a gradient at all, and the same trick .reco-edge
+       uses. It works with the overflow:hidden every avatar carries because
+       that clips its photo at the PADDING edge, so the picture sits inside
+       the ring rather than under it.
+       The width is a variable: a 28px face in a comment thread cannot wear
+       the same ring as an 80px one on a member card without either
+       disappearing or being swallowed. */
     .avatar { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
-        border-radius:9999px; background:var(--av-bg); color:var(--av-fg);
+        border-radius:9999px; color:var(--av-fg);
+        border: var(--av-ring, 2px) solid transparent;
+        background:
+            linear-gradient(var(--av-bg), var(--av-bg)) padding-box,
+            linear-gradient(135deg, #2f5219, #6b9f3d 26%, #b8d38e 48%, #4a7c2a 72%, #2f5219) border-box;
         font-family:var(--font-heading); font-weight:800; letter-spacing:.02em;
         box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / .35); user-select:none; }
-    .avatar-sm { width:1.75rem; height:1.75rem; font-size:.6rem; }
+    .avatar-sm { width:1.75rem; height:1.75rem; font-size:.6rem; --av-ring:1.5px; }
     .avatar-md { width:2.5rem;  height:2.5rem;  font-size:.8rem; }
-    .avatar-lg { width:3.25rem; height:3.25rem; font-size:1.05rem; }
+    .avatar-lg { width:3.25rem; height:3.25rem; font-size:1.05rem; --av-ring:2.5px; }
     .avatar-sq { border-radius:.9rem; }
     .av-h0 { --av-bg:#e4efd4; --av-fg:#2d5016; } .av-h1 { --av-bg:#fdf0c7; --av-fg:#7a5b00; }
     .av-h2 { --av-bg:#dbeafe; --av-fg:#1e40af; } .av-h3 { --av-bg:#fde3e3; --av-fg:#9c1c1c; }
@@ -957,8 +971,11 @@
        top, the overlap is the margin and nothing else. */
     .mc-face { display: block; margin-top: -2.5rem; flex: none; position: relative; z-index: 4;
         align-self: flex-start; }
-    .mc-face .avatar { width: 5rem; height: 5rem; font-size: 1.6rem;
-        border: 3px solid var(--color-white); box-shadow: 0 8px 20px -14px rgb(0 0 0 / .8); }
+    /* The house green does the cutting-out here, not a white line: a face on
+       a photograph needs a rim to stand on, and the ring every other avatar
+       in the app already wears is that rim, at the width this size wants. */
+    .mc-face .avatar { width: 5rem; height: 5rem; font-size: 1.6rem; --av-ring: 3.5px;
+        box-shadow: 0 8px 20px -14px rgb(0 0 0 / .8); }
     .mc-who { padding-top: 0; }
     /* A card has more room than an avatar in a list, so the cloud over it
        may say more before it trails off. */
@@ -1316,8 +1333,8 @@
     .reco-top { height: var(--cover-h-sm); margin: 0 -.5rem 0; }
     .reco-who { display: block; min-width: 0; }
     .reco-face { display: flex; justify-content: center; margin-top: -1.5rem; }
-    .reco-face .avatar { width: 3rem; height: 3rem; font-size: .95rem;
-        border: 2.5px solid var(--color-white); box-shadow: 0 6px 16px -10px rgb(0 0 0 / .8); }
+    .reco-face .avatar { width: 3rem; height: 3rem; font-size: .95rem; --av-ring: 2.5px;
+        box-shadow: 0 6px 16px -10px rgb(0 0 0 / .8); }
     .reco-name { display: block; margin-top: .4rem; font-size: .8rem; font-weight: 800; line-height: 1.25;
         color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     /* One line of reason. Two lines were held open so neighbouring cards
@@ -1326,7 +1343,6 @@
         margin-top: .1rem; font-size: .68rem; font-weight: 600; line-height: 1.45;
         color: var(--color-brand-700); }
     html.dark .reco-card { border-color: #2b3a1c; }
-    html.dark .reco-face .avatar { border-color: #151b12; }
     html.dark .reco-name { color: #e8efe1; }
     html.dark .reco-why { color: #a5c97e; }
     /* The buttons: same width, same height, at the foot of every card, and
@@ -1418,6 +1434,31 @@
         width: .55rem; height: .55rem; transform: rotate(45deg);
         background: inherit; border: inherit; border-top: 0; border-left: 0;
         border-bottom-right-radius: .12rem; }
+    /* One more bubble, adrift under the tail: a diamond alone is the tail of
+       a SPEECH bubble, and what hangs over these faces is a thought. */
+    .status-cloud::before { content: ''; position: absolute; left: .55rem; bottom: -.82rem;
+        width: .33rem; height: .33rem; border-radius: 999px;
+        background: inherit; border: inherit; }
+    /* And it floats, the way a thought does — a slow rise and settle with the
+       faintest turn in it, so the bubble reads as hanging over the face
+       rather than bolted to it.
+       Two things are deliberately left out. The composer's own cloud is a
+       BUTTON ("what's on your mind?") and its hover lift is a transform an
+       animation would win against; and the clouds are desynchronised by
+       negative delays, because a column of them all rising together reads as
+       a machine rather than as a dozen people thinking. */
+    .status-cloud { animation: cloudFloat 4.6s ease-in-out infinite; will-change: transform; }
+    @keyframes cloudFloat {
+        0%   { transform: translateY(0) rotate(-.7deg); }
+        50%  { transform: translateY(-3.5px) rotate(.7deg); }
+        100% { transform: translateY(0) rotate(-.7deg); }
+    }
+    .comp-me .status-cloud, .dash-me .status-cloud { animation: none; }
+    .feed-post:nth-child(3n+2) .status-cloud, .group-post:nth-child(3n+2) .status-cloud,
+    .mc-card:nth-of-type(3n+2) .status-cloud { animation-delay: -1.5s; }
+    .feed-post:nth-child(3n) .status-cloud, .group-post:nth-child(3n) .status-cloud,
+    .mc-card:nth-of-type(3n) .status-cloud { animation-delay: -3s; }
+    @media (prefers-reduced-motion: reduce) { .status-cloud { animation: none; } }
     html.dark .status-cloud { background: #232a1c; border-color: #3a4a2c; }
     html.dark .status-cloud-text { color: #dbe6cf; }
 
@@ -1710,24 +1751,41 @@
        reads as a shelf floating inside the card rather than its top edge. */
     .fp-cover { margin: -1rem -1rem .6rem;
         border-radius: inherit; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+    /* A topic card is padded p-3 on a phone and p-4 from sm, so its band has
+       to bleed by whichever of those is in force or it stops short of the
+       card's own edge by three pixels on one side. */
+    .group-post .fp-cover { margin: -.75rem -.75rem .55rem; }
+    @media (min-width: 640px) { .group-post .fp-cover { margin: -1rem -1rem .6rem; } }
     /* The card goes back to its plain padding: the cloud no longer needs a
        clearing above the head, because it now hangs over the photo. Written
        after the cloud's own rule, which asks for the same property at the
        same weight and does not know there is a picture. */
-    .feed-post:has(.fp-cover) { padding-top: 1rem; }
+    .feed-post:has(.fp-cover), .group-post:has(.fp-cover) { padding-top: 1rem; }
+    @media (max-width: 639px) { .group-post:has(.fp-cover) { padding-top: .75rem; } }
+    /* A face worth the band it stands on.
+       At avatar-md the head was a 40px disc against a 112px photograph, with
+       the name and the facts line stacked beside it running twice its height
+       — a small round afterthought rather than the person the card is about.
+       At 3.5rem it spans both lines, which is what makes the head read as one
+       block instead of a picture with writing next to it. */
+    .feed-post:has(.fp-cover) > header .avatar,
+    .group-post:has(.fp-cover) > header .avatar {
+        width: 3.5rem; height: 3.5rem; font-size: 1.15rem; --av-ring: 3px;
+        box-shadow: 0 6px 16px -11px rgb(0 0 0 / .8); }
     /* Only the first thing in the head — the face, or the wrap holding the
        face and its cloud — climbs onto the photo, and it climbs exactly half
        its own height, so the ring sits ON the edge rather than near it. The
        name keeps the band's .6rem of clearance and never leans on the photo. */
-    .feed-post:has(.fp-cover) > header > :first-child { margin-top: -1.85rem; }
-    /* A face reads as standing ON the photo only if it is cut out of it. */
-    .feed-post:has(.fp-cover) > header .avatar { border: 3px solid var(--color-white); }
-    html.dark .feed-post:has(.fp-cover) > header .avatar { border-color: #151b12; }
+    .feed-post:has(.fp-cover) > header > :first-child,
+    .group-post:has(.fp-cover) > header > :first-child { margin-top: -2.4rem; }
     /* Delete and permalink now land on somebody's field, so they carry a
        pane of the card's own surface to be read against. */
-    .feed-post:has(.fp-cover) .fp-del, .feed-post:has(.fp-cover) .fp-open {
-        background: rgb(255 255 255 / .86); box-shadow: 0 2px 8px -5px rgb(0 0 0 / .9); }
-    html.dark .feed-post:has(.fp-cover) .fp-del, html.dark .feed-post:has(.fp-cover) .fp-open {
+    .feed-post:has(.fp-cover) .fp-del, .feed-post:has(.fp-cover) .fp-open,
+    .group-post:has(.fp-cover) .post-delete-btn {
+        background: rgb(255 255 255 / .86); border-radius: 999px;
+        box-shadow: 0 2px 8px -5px rgb(0 0 0 / .9); }
+    html.dark .feed-post:has(.fp-cover) .fp-del, html.dark .feed-post:has(.fp-cover) .fp-open,
+    html.dark .group-post:has(.fp-cover) .post-delete-btn {
         background: rgb(21 27 18 / .82); }
 </style>
 {{-- The podium's data rides with the podium's styles, so the two can never

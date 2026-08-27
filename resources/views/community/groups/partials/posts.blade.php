@@ -21,6 +21,13 @@
     <article class="card p-3 sm:p-4 mb-4 sm:mb-5 group-post fp-card fp-hue-{{ $post->id % 6 }}"
              id="post-{{ $post->id }}" data-post-id="{{ $post->id }}"
              data-view="topic:{{ $post->id }}">
+        {{-- The author's own field along the top, exactly as the wall draws it
+             — a topic and a wall post are the same card in two rooms, and one
+             of them wearing a cover while the other did not was the only
+             difference between them. --}}
+        @if (filled(optional($post->author)->coverPath))
+            @include('community.partials.cover-band', ['coverUser' => $post->author, 'coverClass' => 'fp-cover'])
+        @endif
         <header class="flex items-start gap-3">
             {{-- The cloud over the face, as the wall draws it; the card
                  pads its head to hold it. --}}
