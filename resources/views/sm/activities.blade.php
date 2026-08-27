@@ -3432,6 +3432,10 @@
         lots:          { label: 'Lots',          url: @json(route('sm.lots',          ['id' => $schedule->id])) },
         @if (! $isWorker)
         workers:       { label: 'Workers',       url: @json(route('sm.workers',       ['id' => $schedule->id])) },
+        {{-- Fresh every time: what is on the shelf changes whenever an
+             activity is ticked done, and a kept pane would go on showing
+             the stock as it stood when the module was first opened. --}}
+        inventory:     { label: 'Inventory',     url: @json(route('sm.inventory',     ['id' => $schedule->id])), fresh: true },
         @endif
         @if (! $isWorker)
         documentation: { label: 'Documentation', url: @json(route('sm.documentation', ['id' => $schedule->id])) },

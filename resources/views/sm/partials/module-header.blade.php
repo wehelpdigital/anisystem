@@ -7,6 +7,7 @@
         'settings' => ['label' => 'Settings', 'route' => 'sm.settings'],
         'lots' => ['label' => 'Lots', 'route' => 'sm.lots'],
         'workers' => ['label' => 'Workers', 'route' => 'sm.workers'],
+        'inventory' => ['label' => 'Inventory', 'route' => 'sm.inventory'],
         'documentation' => ['label' => 'Documentation', 'route' => 'sm.documentation'],
         'activities' => ['label' => 'Activities', 'route' => 'sm.activities'],
         'post-harvest' => ['label' => 'Post-harvest', 'route' => 'sm.post-harvest'],
@@ -20,7 +21,7 @@
     // shell, so a chip left standing here is the door the hub tile and the
     // modules sheet already dropped — and both of these now answer 404.
     if (\App\Support\WorkerContext::activeGrant()) {
-        unset($modules['workers'], $modules['ai'], $modules['documentation'], $modules['post-harvest']);
+        unset($modules['workers'], $modules['ai'], $modules['documentation'], $modules['post-harvest'], $modules['inventory']);
     }
 @endphp
 

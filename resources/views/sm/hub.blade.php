@@ -38,6 +38,9 @@
     // is the owner's answer for this person, not a rule about workers.
     $doorOpen = [
         'workers' => ! $isWorker,
+        // What the farm owns and what it cost is the owner's ledger, and a
+        // worker's tick of "done" spends from it without ever opening it.
+        'inventory' => ! $isWorker,
         'notes' => $mayNotes,
         // What the season is documented as, and what came off it at the end,
         // are the owner's record of their own farm — not a shelf a worker
@@ -55,6 +58,8 @@
             'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2'],
         ['Workers', 'workers', (int) $schedule->workers_count,
             'M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z'],
+        ['Inventory', 'inventory', null,
+            'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4'],
         ['Documentation', 'documentation', (int) $documentationCount,
             'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
         ['Post-harvest', 'post-harvest', (int) $postHarvestCount,

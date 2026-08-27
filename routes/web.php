@@ -198,6 +198,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-day-type', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'setDayType'])->name('sm.day-type');
     Route::get('/app/sm-lots', [App\Http\Controllers\Manager\LotController::class, 'page'])->name('sm.lots');
     Route::get('/app/sm-workers', [App\Http\Controllers\Manager\WorkerController::class, 'page'])->name('sm.workers');
+    Route::get('/app/sm-inventory', [App\Http\Controllers\Manager\InventoryController::class, 'page'])->name('sm.inventory');
     Route::get('/app/sm-documentation', [App\Http\Controllers\Manager\DocumentationController::class, 'page'])->name('sm.documentation');
     Route::get('/app/sm-activities', [App\Http\Controllers\Manager\ActivityController::class, 'page'])->name('sm.activities');
     Route::get('/app/sm-ai', [App\Http\Controllers\AiController::class, 'schedulePage'])->name('sm.ai');
@@ -233,6 +234,14 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-workers-delete', [App\Http\Controllers\Manager\WorkerController::class, 'destroy'])->name('sm.workers.destroy');
     Route::get('/app/sm-workers-rules', [App\Http\Controllers\Manager\WorkerController::class, 'rules'])->name('sm.workers.rules');
     Route::post('/app/sm-workers-rules-save', [App\Http\Controllers\Manager\WorkerController::class, 'saveRules'])->name('sm.workers.rules.save');
+    // --- Inventory: the shelf, and every change to it ---
+    Route::get('/app/sm-inventory-list', [App\Http\Controllers\Manager\InventoryController::class, 'listAll'])->name('sm.inventory.list');
+    Route::post('/app/sm-inventory-store', [App\Http\Controllers\Manager\InventoryController::class, 'store'])->name('sm.inventory.store');
+    Route::put('/app/sm-inventory-update', [App\Http\Controllers\Manager\InventoryController::class, 'update'])->name('sm.inventory.update');
+    Route::delete('/app/sm-inventory-delete', [App\Http\Controllers\Manager\InventoryController::class, 'destroy'])->name('sm.inventory.destroy');
+    Route::post('/app/sm-inventory-move', [App\Http\Controllers\Manager\InventoryController::class, 'moveStock'])->name('sm.inventory.move');
+    Route::delete('/app/sm-inventory-move-delete', [App\Http\Controllers\Manager\InventoryController::class, 'deleteMove'])->name('sm.inventory.move.delete');
+
     Route::post('/app/sm-workers-access-grant', [App\Http\Controllers\Manager\WorkerAccessController::class, 'grant'])->name('sm.workers.access.grant');
     Route::post('/app/sm-workers-access-password', [App\Http\Controllers\Manager\WorkerAccessController::class, 'setPassword'])->name('sm.workers.access.password');
     Route::delete('/app/sm-workers-access-revoke', [App\Http\Controllers\Manager\WorkerAccessController::class, 'revoke'])->name('sm.workers.access.revoke');
