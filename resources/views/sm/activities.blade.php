@@ -786,6 +786,36 @@
         html.dark .ew-row.is-off { background: rgb(255 255 255 / .03); }
         html.dark .ew-who b { color: #e8efe1; }
 
+        /* ---- A short list behind a tag --------------------------------
+           Four options do not need an operating-system wheel that looks like
+           nothing else in the app. Each row carries the word and the reason,
+           because "Medium" and "High" mean whatever the reader decides they
+           mean until somebody says. */
+        .pick-list { display: flex; flex-direction: column; gap: .35rem; }
+        .pick-row { display: block; width: 100%; text-align: left; cursor: pointer;
+            padding: .7rem .85rem; border-radius: .8rem;
+            border: 1px solid var(--color-gray-200, #e5e7eb); background: var(--color-white, #fff);
+            transition: border-color .2s ease, background .2s ease; }
+        .pick-row:hover { border-color: #a8cc7e; background: #f7fbf3; }
+        .pick-row.is-on { border-color: #4a7c2a; background: #f2f8ec; }
+        .pick-row b { display: block; font-size: .88rem; font-weight: 800; color: var(--color-gray-900, #111827); }
+        .pick-row i { display: block; font-style: normal; margin-top: .12rem;
+            font-size: .74rem; line-height: 1.5; color: var(--color-gray-500, #6b7280); }
+        html.dark .pick-row { background: #151b12; border-color: #2b3a1c; }
+        html.dark .pick-row.is-on { background: rgb(74 124 42 / .18); border-color: #4a7c2a; }
+        html.dark .pick-row b { color: #e8efe1; }
+        @media (prefers-reduced-motion: reduce) { .pick-row { transition: none; } }
+
+        /* A tag that always carries an answer wears the quieter dress: these
+           two are never empty, so the leading star and the filled green of a
+           task-type tag would make every activity look urgent. */
+        #activityPriorityBtn.is-set, #activityTimeBtn.is-set {
+            background: var(--color-white, #fff); border-color: var(--color-gray-200, #e5e7eb);
+            color: var(--color-gray-900, #111827); }
+        #activityPriorityBtn.is-set::before, #activityTimeBtn.is-set::before { content: none; }
+        html.dark #activityPriorityBtn.is-set, html.dark #activityTimeBtn.is-set {
+            background: #1c2416; border-color: #2b3a1c; color: #e8efe1; }
+
         .tt-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .1rem; }
         .tt-tag { padding: .35rem .7rem; border-radius: 999px; font-size: .78rem; font-weight: 700;
             border: 2px solid var(--color-gray-200); background: var(--color-white); color: #374151;

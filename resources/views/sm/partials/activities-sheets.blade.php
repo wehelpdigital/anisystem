@@ -110,7 +110,68 @@
                  Stays on the worker checklist too: a day's pay is pay for a
                  particular day, and saving used to fail on a date field that
                  tab was hiding. --}}
-            <div class="keep-on-workers">
+            {{-- THE LOT COMES FIRST, and there is one of it.
+
+                 Everything below this depends on the answer. Which counter
+                 the day-number lens is in (DAS on a field, DOS on an
+                 orchard), whether a Day-0 anchor makes any sense, whether
+                 there is a transplant to mark at all — every one of those is
+                 a fact about the ground, and asking them above the question
+                 that decides them meant the form could contradict itself in
+                 front of somebody.
+
+                 One lot, because those answers have to come from somewhere.
+                 Two lots on different crops keep different counters, and a
+                 single "DAS day" field cannot mean both. An activity that
+                 covers the whole farm is still possible — that is what
+                 picking none means. --}}
+            <div id="activityLotsWrap">
+                <span class="form-label">Lot
+                    <span class="text-gray-400 font-normal">— pick none and it applies everywhere (N/A)</span>
+                </span>
+                <div id="activityLotsContainer" class="flex flex-wrap gap-2">
+                    {{-- The name alone. The variety made every chip a sentence,
+                         and a row of sentences is not a row you can scan. It is
+                         on the tooltip for anyone who needs it. --}}
+                    @foreach ($schedule->lots as $lot)
+                        <button type="button" class="chip lot-chip" data-lot-id="{{ $lot->id }}" aria-pressed="false"
+                            @if(!empty($lot->variety)) title="{{ $lot->variety }}" @endif>
+                            {{ $lot->lotName }}
+                        </button>
+                    @endforeach
+                    <button type="button" class="chip chip-dashed" id="quickAddLotBtn" data-chip-manual>+ Lot</button>
+                </div>
+                {{-- Said only when it matters: an activity already saved
+                     against several lots is about to become one. --}}
+                <p class="form-hint act-lot-warn hidden" id="activityLotNarrow"></p>
+                {{-- What the form is waiting for, where the answer will go. --}}
+                <p class="form-hint" id="activityWhenWaiting">Pick the lot first — the day and the
+                    day-number options below depend on which ground this is about.</p>
+                <div id="quickAddLotForm" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-gray-500 uppercase">New lot</span>
+                        <button type="button" class="btn-ghost rounded-full w-7 h-7 flex items-center justify-center text-gray-400 hover:text-gray-700 js-quick-form-close" data-form="quickAddLotForm" aria-label="Close">✕</button>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="qalName" class="form-input" placeholder="Lot name *" maxlength="255">
+                        <input type="text" id="qalVariety" class="form-input" placeholder="Variety (optional)" maxlength="255">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="number" id="qalSize" class="form-input" placeholder="Size" value="1" min="0" step="any" inputmode="decimal">
+                        <input type="text" id="qalUnit" class="form-input" placeholder="Unit" value="ha" maxlength="50">
+                    </div>
+                    <button type="button" id="qalSave" class="btn btn-primary btn-sm w-full">Add lot</button>
+                </div>
+            </div>
+
+
+            {{-- WHEN, once there is a lot to count from.
+                 The By-DAS tab is a lens over a particular lot's calendar, so
+                 offering it before one is chosen is offering a lens over
+                 nothing. Hidden until the question above is answered — and
+                 shown at once for the N/A case, because "everywhere" is an
+                 answer too. --}}
+            <div class="keep-on-workers" id="activityWhenWrap" hidden>
                 <div class="when-tabs" id="whenTabs" role="tablist">
                     <button type="button" class="when-tab is-active" id="whenTabDate" aria-selected="true">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -163,39 +224,6 @@
             </div>
             </div>
 
-            <div>
-                <span class="form-label">Lots
-                    <span class="text-gray-400 font-normal">— pick none and it applies everywhere (N/A)</span>
-                </span>
-                <div id="activityLotsContainer" class="flex flex-wrap gap-2">
-                    {{-- The name alone. The variety made every chip a sentence,
-                         and a row of sentences is not a row you can scan. It is
-                         on the tooltip for anyone who needs it. --}}
-                    @foreach ($schedule->lots as $lot)
-                        <button type="button" class="chip lot-chip" data-lot-id="{{ $lot->id }}" aria-pressed="false"
-                            @if(!empty($lot->variety)) title="{{ $lot->variety }}" @endif>
-                            {{ $lot->lotName }}
-                        </button>
-                    @endforeach
-                    <button type="button" class="chip chip-dashed" id="quickAddLotBtn" data-chip-manual>+ Lot</button>
-                </div>
-                <div id="quickAddLotForm" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-gray-500 uppercase">New lot</span>
-                        <button type="button" class="btn-ghost rounded-full w-7 h-7 flex items-center justify-center text-gray-400 hover:text-gray-700 js-quick-form-close" data-form="quickAddLotForm" aria-label="Close">✕</button>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <input type="text" id="qalName" class="form-input" placeholder="Lot name *" maxlength="255">
-                        <input type="text" id="qalVariety" class="form-input" placeholder="Variety (optional)" maxlength="255">
-                    </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <input type="number" id="qalSize" class="form-input" placeholder="Size" value="1" min="0" step="any" inputmode="decimal">
-                        <input type="text" id="qalUnit" class="form-input" placeholder="Unit" value="ha" maxlength="50">
-                    </div>
-                    <button type="button" id="qalSave" class="btn btn-primary btn-sm w-full">Add lot</button>
-                </div>
-            </div>
-
             <div id="activityTypeWrap">
                 <label class="form-label">Task type</label>
                 {{-- Tags, not a dropdown, because one tank is often two
@@ -241,10 +269,21 @@
             {{-- Priority stays on the worker checklist too: a crew day can be
                  the critical one of the week, and its length cannot — which is
                  why the field beside it is not offered there. --}}
+            {{-- Two short answers, asked the way every other short answer on
+                 this form is asked: a tag that says what was chosen and opens
+                 a list. A native select on a phone is an operating-system
+                 wheel that looks like nothing else here, and four options do
+                 not need one. The selects stay, hidden, because everything
+                 downstream — the save, the card's colour, the filters —
+                 already reads them. --}}
             <div class="grid grid-cols-2 gap-3 keep-on-workers">
                 <div>
-                    <label class="form-label" for="activityPriority">Priority</label>
-                    <select id="activityPriority" class="form-select">
+                    <label class="form-label">Priority</label>
+                    <button type="button" class="tt-open is-set" id="activityPriorityBtn" aria-haspopup="dialog">
+                        <span class="tt-open-val" id="activityPriorityText">Medium</span>
+                        <svg class="tt-open-caret" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <select id="activityPriority" class="hidden" tabindex="-1" aria-hidden="true">
                         <option value="critical">Critical</option>
                         <option value="high">High</option>
                         <option value="medium" selected>Medium</option>
@@ -252,8 +291,12 @@
                     </select>
                 </div>
                 <div class="js-time-required">
-                    <label class="form-label" for="activityTimeRequired">Time required</label>
-                    <select id="activityTimeRequired" class="form-select">
+                    <label class="form-label">Time required</label>
+                    <button type="button" class="tt-open is-set" id="activityTimeBtn" aria-haspopup="dialog">
+                        <span class="tt-open-val" id="activityTimeText">Half Day</span>
+                        <svg class="tt-open-caret" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <select id="activityTimeRequired" class="hidden" tabindex="-1" aria-hidden="true">
                         <option value="half" selected>Half Day</option>
                         <option value="whole">Whole Day</option>
                         <option value="n/a">N/A</option>
@@ -466,11 +509,13 @@
             </div>
         </div>
     </div>
+    {{-- No Cancel. The ✕ in the header and the tap outside both already
+         close this sheet, and a third way to leave was taking half the width
+         of the one way to finish. --}}
     <div class="sheet-footer">
-        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
         {{-- The sheet itself refuses to open for a viewer; if it is ever reached
              another way, the Save is the last door and it is shut too. --}}
-        <button type="button" id="saveActivityBtn" class="btn btn-primary{{ $sheetLock }}"
+        <button type="button" id="saveActivityBtn" class="btn btn-primary w-full{{ $sheetLock }}"
                 @disabled(! $mayEdit) @if (! $mayEdit) title="{{ $whyNoEdit }}" @endif>Save Activity</button>
     </div>
 </div>
@@ -1712,5 +1757,40 @@
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-primary w-full" id="emailWhoSend">Send</button>
+    </div>
+</div>
+
+{{-- ================= PRIORITY, AND HOW LONG IT TAKES =================
+     Two short lists, in the shape every other pick on this form uses. The
+     hidden selects remain the source of truth; these only write into them,
+     so nothing downstream had to learn a new place to look. --}}
+<div class="sheet hidden" id="priorityPickSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Priority</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">&#10005;</button>
+    </div>
+    <div class="sheet-body">
+        <div class="pick-list" data-pick-for="activityPriority">
+            <button type="button" class="pick-row" data-value="critical"><b>Critical</b><i>Cannot slip. The season turns on it.</i></button>
+            <button type="button" class="pick-row" data-value="high"><b>High</b><i>Do it on the day if at all possible.</i></button>
+            <button type="button" class="pick-row" data-value="medium"><b>Medium</b><i>The ordinary run of work.</i></button>
+            <button type="button" class="pick-row" data-value="low"><b>Low</b><i>When there is time.</i></button>
+        </div>
+    </div>
+</div>
+
+<div class="sheet hidden" id="timePickSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Time required</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">&#10005;</button>
+    </div>
+    <div class="sheet-body">
+        <div class="pick-list" data-pick-for="activityTimeRequired">
+            <button type="button" class="pick-row" data-value="half"><b>Half Day</b><i>A morning, or an afternoon.</i></button>
+            <button type="button" class="pick-row" data-value="whole"><b>Whole Day</b><i>Both, and the pay to match.</i></button>
+            <button type="button" class="pick-row" data-value="n/a"><b>N/A</b><i>Not the kind of job you measure in days.</i></button>
+        </div>
     </div>
 </div>

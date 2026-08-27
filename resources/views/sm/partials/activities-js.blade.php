@@ -2400,6 +2400,46 @@ document.addEventListener('DOMContentLoaded', () => {
         paintTaskTypes();
     }
 
+    /* ---- Priority, and how long it takes ------------------------------
+     * Two short lists behind two tags. The hidden selects are still the
+     * source of truth — the save, the card's colour and the filters all read
+     * them — so these only write into them and repaint the tag. Anything that
+     * sets the select programmatically (loading an activity to edit) fires a
+     * change, which is what keeps the words on the tag honest. */
+    function paintPick(selectId, textId) {
+        const sel = $id(selectId);
+        const out = $id(textId);
+        if (!sel || !out) return;
+        out.textContent = sel.options[sel.selectedIndex]?.textContent.trim() || '';
+        // The row that is chosen says so when the list is next opened.
+        const list = $qs(`.pick-list[data-pick-for="${selectId}"]`);
+        list?.querySelectorAll('.pick-row').forEach((r) => {
+            r.classList.toggle('is-on', r.getAttribute('data-value') === sel.value);
+        });
+    }
+
+    $id('activityPriorityBtn')?.addEventListener('click', () => window.openSheet?.('priorityPickSheet'));
+    $id('activityTimeBtn')?.addEventListener('click', () => window.openSheet?.('timePickSheet'));
+
+    document.addEventListener('click', (e) => {
+        const row = e.target.closest('.pick-list .pick-row');
+        if (!row) return;
+        const forId = row.closest('.pick-list').getAttribute('data-pick-for');
+        const sel = $id(forId);
+        if (!sel) return;
+        sel.value = row.getAttribute('data-value');
+        sel.dispatchEvent(new Event('change', { bubbles: true }));
+        paintPick(forId, forId === 'activityPriority' ? 'activityPriorityText' : 'activityTimeText');
+        window.closeSheet?.(forId === 'activityPriority' ? 'priorityPickSheet' : 'timePickSheet');
+    });
+
+    // Anything that writes the select — including loading an activity to edit
+    // — repaints its tag, so the two can never say different things.
+    $id('activityPriority')?.addEventListener('change', () => paintPick('activityPriority', 'activityPriorityText'));
+    $id('activityTimeRequired')?.addEventListener('change', () => paintPick('activityTimeRequired', 'activityTimeText'));
+    paintPick('activityPriority', 'activityPriorityText');
+    paintPick('activityTimeRequired', 'activityTimeText');
+
     // The tag opens the box; the box writes back through paintTaskTypes.
     $id('activityTypeBtn')?.addEventListener('click', () => window.openSheet?.('taskTypeSheet'));
 
@@ -2935,18 +2975,51 @@ document.addEventListener('DOMContentLoaded', () => {
     $id('activityLotsContainer')?.addEventListener('click', (e) => {
         const chip = e.target.closest('.lot-chip');
         if (!chip) return;
-        chip.classList.toggle('is-selected');
-        chip.setAttribute('aria-pressed', chip.classList.contains('is-selected') ? 'true' : 'false');
+        /* One lot at a time. Every question under this one — which counter
+           the lens is in, whether a Day-0 anchor means anything, whether
+           there is a transplant to mark — is a fact about the ground, and
+           two lots on different crops cannot both be the answer. Tapping the
+           chosen one again lets it go, which is the N/A case: everywhere. */
+        const wasOn = chip.classList.contains('is-selected');
+        $qsa('#activityLotsContainer .lot-chip').forEach((c) => {
+            c.classList.remove('is-selected');
+            c.setAttribute('aria-pressed', 'false');
+        });
+        if (!wasOn) {
+            chip.classList.add('is-selected');
+            chip.setAttribute('aria-pressed', 'true');
+        }
+        sayLotNarrowed(false);
         refreshActivityModalLotState();
     });
 
+    /* An activity saved before this rule keeps all of its lots until somebody
+       edits it — at which point the form can only hold one, so it says so
+       rather than quietly dropping the rest on save. */
+    let LOTS_WERE = [];
+    function sayLotNarrowed(show, names) {
+        const el = $id('activityLotNarrow');
+        if (!el) return;
+        el.classList.toggle('hidden', !show);
+        if (show) {
+            el.textContent = 'This activity was saved against ' + names.length + ' lots ('
+                + names.join(', ') + '). An activity covers one lot now — pick the one it is '
+                + 'really about, and saving will keep only that.';
+        }
+    }
+
     function setActivityLots(lotIds) {
-        const ids = (lotIds || []).map(Number);
+        const ids = (lotIds || []).map(Number).filter((n) => !Number.isNaN(n));
+        LOTS_WERE = ids.slice();
+        // The first is kept; the rest are named in a line under the chips so
+        // nothing disappears without being mentioned.
+        const keep = ids.length ? ids[0] : null;
         $qsa('#activityLotsContainer .lot-chip').forEach((c) => {
-            const on = ids.includes(parseInt(c.getAttribute('data-lot-id'), 10));
+            const on = parseInt(c.getAttribute('data-lot-id'), 10) === keep;
             c.classList.toggle('is-selected', on);
             c.setAttribute('aria-pressed', on ? 'true' : 'false');
         });
+        sayLotNarrowed(ids.length > 1, ids.map((id) => LOT_NAMES[id] || ('Lot #' + id)));
     }
 
     function getActivityLotIds() {
@@ -3237,6 +3310,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function shouldShowDayZeroToggle() {
         const currentId = parseInt($id('activityId').value, 10);
         const hasCurrentId = !isNaN(currentId) && currentId > 0;
+        /* Nothing to anchor until there is ground to anchor it to.
+         *
+         * Day 0 is a fact about a lot — where its count starts — and the
+         * panel's own words change with the crop (DOS on an orchard, DAS on
+         * a field). Offering it above the question that decides both meant a
+         * reader could tick it, then pick a lot, and watch the sentence they
+         * had agreed to rewrite itself. It waits with the dates. */
+        if (!WHEN_ASKED) return false;
         const selected = getActivityLotIds();
         if (selected.length === 0) return true;
         for (const lotId of selected) {
@@ -3258,6 +3339,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function shouldShowTransplantToggle() {
         const currentId = parseInt($id('activityId').value, 10);
         const hasCurrentId = !isNaN(currentId) && currentId > 0;
+        /* Whether there is a transplant to mark at all is a fact about the
+         * crop on the ground: rice has one, corn does not, an orchard cannot.
+         * So this waits for the lot question with everything else, rather
+         * than offering DAT 0 over a lot nobody has chosen yet. */
+        if (!WHEN_ASKED) return false;
         const selected = getActivityLotIds();
         if (selected.length === 0) return true;
         // Transplant (DAT) only applies to DAS/DAT lots — never DAP-only.
@@ -3505,9 +3591,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function refreshActivityModalLotState() {
-        refreshDayZeroToggleVisibility();   // may force-uncheck Day 0…
+        refreshWhenVisibility();            // the dates wait for the ground…
+        refreshDayZeroToggleVisibility();   // …may force-uncheck Day 0…
         refreshActivityDasRow();            // …which this then reads
     }
+
+    /* WHEN waits for WHERE.
+     *
+     * The By-DAS tab is a lens over one lot's own calendar, and the counter
+     * it is in comes from that lot — so offering it before a lot is chosen
+     * is offering a lens over nothing, and the label on it would be a guess.
+     *
+     * "Everywhere" (no lot) is an answer, not an absence: an activity on the
+     * whole farm still happens on a day, so the block opens for it too — the
+     * moment somebody has actually said so by tapping a chip off, and on a
+     * form that has just been opened for a NEW activity, where nothing has
+     * been asked yet, it stays shut until the first tap. */
+    let WHEN_ASKED = false;
+    function refreshWhenVisibility() {
+        const wrap = $id('activityWhenWrap');
+        if (!wrap) return;
+        const chose = getActivityLotIds().length > 0;
+        const show = chose || WHEN_ASKED;
+        wrap.hidden = !show;
+        // A form the reader has not answered yet says what it is waiting for.
+        const hint = $id('activityWhenWaiting');
+        if (hint) hint.classList.toggle('hidden', show);
+    }
+    /* Tapping any chip — on or off — counts as answering the question. */
+    $id('activityLotsContainer')?.addEventListener('click', (e) => {
+        if (e.target.closest('.lot-chip')) { WHEN_ASKED = true; refreshWhenVisibility(); }
+    });
+    window.__resetWhenAsked = (asked) => { WHEN_ASKED = !!asked; };
 
     $id('activityStartDas')?.addEventListener('input', function () {
         const anchor = _activityDasAnchor();
@@ -4140,6 +4255,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setActPane('details');
         $id('activityModeTabs')?.classList.remove('is-locked');
         setActivityLots([]);
+        // Nothing has been asked yet, so the date block waits.
+        window.__resetWhenAsked?.(false);
         setWorkerPay({});
         setActivityWorkers([]);
         setActivityImages([]);
@@ -4224,6 +4341,9 @@ document.addEventListener('DOMContentLoaded', () => {
             $id('activityIsDayZero').checked = !!boolFlag(a.isDayZero);
             $id('activityIsTransplant').checked = !!boolFlag(a.isTransplant);
             setActivityLots(a.lotIds || (a.lots || []).map((l) => l.id));
+            // An activity that exists has already answered the lot question,
+            // even when the answer is "everywhere" — so its date block opens.
+            window.__resetWhenAsked?.(true);
             setWorkerPay(a.workerPay || {});
             setActivityWorkers(a.workerIds || (a.workers || []).map((w) => w.id));
             if (a.activityType === 'worker_payroll') setActPane('workers');
