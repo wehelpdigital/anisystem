@@ -57,7 +57,7 @@
 
 @foreach ($wallPosts as $post)
     @php $author = $post->author; $place = trim(implode(', ', array_filter([$author->city, $author->province]))); @endphp
-    <article class="card p-4 mb-3 wall-post" id="wallpost-{{ $post->id }}" data-post-id="{{ $post->id }}">
+    <article class="card p-4 mb-3 wall-post" id="wallpost-{{ $post->id }}" data-post-id="{{ $post->id }}" data-view="post:{{ $post->id }}">
         <header class="flex items-start gap-3">
             @include('community.partials.avatar', ['user' => $author, 'size' => 'avatar-md'])
             <div class="min-w-0 grow">
@@ -86,4 +86,6 @@
 
 @push('scripts')
 @include('community.partials.react-js')
+{{-- These are walls too: a post read here is a post read. --}}
+@include('community.partials.views-js')
 @endpush

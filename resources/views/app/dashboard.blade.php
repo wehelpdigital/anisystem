@@ -929,6 +929,11 @@
 @include('community.partials.video-js')
 @include('community.partials.composer-preview-js')
 @include('community.partials.avatar-zoom')
+{{-- The wall on this page draws the very same cards the community wall
+     does, data-view markers and all — and the script that watches them
+     was never included here, so a post read on the home screen was
+     never counted as read. --}}
+@include('community.partials.views-js')
 @include('community.partials.mutual-js')
 
 @push('scripts')

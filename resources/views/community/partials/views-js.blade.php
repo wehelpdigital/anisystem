@@ -45,21 +45,36 @@
         if (!timer) timer = setTimeout(flush, 700);
     }
 
-    /* Half a second on screen is a look; a card that flashed past is not. */
+    /* Half a second on screen is a look; a card that flashed past is not.
+     *
+     * "On screen" cannot be measured as a fraction of the ITEM, which is what
+     * intersectionRatio gives. A discussion room's own marker wraps the whole
+     * room — 2405px against a 700px phone — so its ratio tops out at 0.29 and
+     * a rule of "more than half of it" meant a room's view counter could only
+     * ever move from the list of rooms, never from opening one. The same trap
+     * was waiting for any long post: a wall card with three photos in it can
+     * pass right under a reader's nose and never be half visible at once.
+     *
+     * So the measure is the visible SLICE against whichever is smaller, the
+     * item or the window: half a short card, or half a screenful of a long
+     * one. Both mean the same thing — a good look at it. */
     const held = new WeakMap();
     const obs = ('IntersectionObserver' in window) ? new IntersectionObserver((entries) => {
+        const vh = window.innerHeight || document.documentElement.clientHeight || 0;
         entries.forEach((en) => {
             const el = en.target;
             const at = el.getAttribute('data-view');
             if (!at) return;
             const [kind, id] = at.split(':');
-            if (en.isIntersecting && en.intersectionRatio > 0.5) {
+            const enough = Math.min(en.boundingClientRect.height || 0, vh) * 0.5;
+            // Always clear first: several thresholds fire during one scroll,
+            // and the old code left every previous timer running.
+            clearTimeout(held.get(el));
+            if (en.isIntersecting && enough > 0 && en.intersectionRect.height >= enough) {
                 held.set(el, setTimeout(() => saw(kind, id), 500));
-            } else {
-                clearTimeout(held.get(el));
             }
         });
-    }, { threshold: [0, 0.5, 1] }) : null;
+    }, { threshold: [0, 0.1, 0.25, 0.5, 0.75, 1] }) : null;
 
     function watch(scope) {
         (scope || document).querySelectorAll('[data-view]:not([data-view-on])').forEach((el) => {
