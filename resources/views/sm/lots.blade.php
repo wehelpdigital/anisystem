@@ -165,6 +165,17 @@
 
 @push('head')
 <style>
+    /* A field that is still filling itself, saying so.
+     *
+     * A disabled select already reads as "not yet" — this adds the movement
+     * that separates "still coming" from "not for you". Slow and shallow: it
+     * is a field waiting, not a page loading. */
+    .form-select.is-waiting { animation: lotWait 1.4s ease-in-out infinite; }
+    @keyframes lotWait { 0%, 100% { opacity: .55; } 50% { opacity: .85; } }
+    @media (prefers-reduced-motion: reduce) {
+        .form-select.is-waiting { animation: none; opacity: .6; }
+    }
+
     .crop-pick { display: flex; flex-wrap: wrap; gap: .4rem; }
     .crop-opt { display: inline-flex; align-items: center; gap: .35rem; padding: .4rem .7rem;
         border: 2px solid var(--color-gray-200); background: var(--color-white); border-radius: 999px;
@@ -252,13 +263,52 @@ const __init = () => {
     const townSel = document.getElementById('lotTown');
     let PH = null, phPromise = null;
 
+    /* WHILE THE LIST IS COMING.
+     *
+     * The eighty-seven provinces and their towns arrive as one file, and
+     * until it lands both dropdowns are empty. They used to sit there
+     * looking ready: tapping one opened nothing and closed again, which
+     * reads as a broken control rather than as a list still on its way.
+     *
+     * So they say what is true. Coming: shut, and the word says why. Failed:
+     * shut, and the word says that too — silence was the worst of the three,
+     * because the fetch swallows its own error and an empty province list is
+     * indistinguishable from a farm with no provinces in it.
+     */
+    const sayLoading = (state) => {
+        const words = {
+            loading: 'Loading the list…',
+            failed: 'Could not load the list',
+        };
+        [provinceSel, townSel].forEach((sel) => {
+            sel.classList.toggle('is-waiting', state === 'loading');
+        });
+        if (state === 'ready') return;
+        provinceSel.disabled = true;
+        townSel.disabled = true;
+        provinceSel.innerHTML = `<option value="">${words[state]}</option>`;
+        townSel.innerHTML = '<option value="">Select province first</option>';
+    };
+
     const ensureLocations = () => {
         if (PH) return Promise.resolve(PH);
         if (!phPromise) {
+            sayLoading('loading');
             phPromise = fetch(PH_URL, { headers: { Accept: 'application/json' } })
                 .then((r) => r.json())
-                .then((data) => (PH = data || {}))
-                .catch(() => (PH = {}));
+                .then((data) => {
+                    PH = data || {};
+                    // The province list is open; the town list waits for a
+                    // province, which is what its own disable already says.
+                    provinceSel.classList.remove('is-waiting');
+                    townSel.classList.remove('is-waiting');
+                    // Painted now rather than at the next sheet open, or the
+                    // field goes on saying "Loading…" about a list that is
+                    // already sitting in memory behind it.
+                    fillProvinces(provinceSel.value || '');
+                    return PH;
+                })
+                .catch(() => { PH = {}; sayLoading('failed'); return PH; });
         }
         return phPromise;
     };
@@ -271,15 +321,26 @@ const __init = () => {
         return html;
     };
     const fillProvinces = (selected) => {
-        provinceSel.innerHTML = optionList(Object.keys(PH || {}).sort((a, b) => a.localeCompare(b)), selected || '');
+        // Nothing to paint yet: leave whatever sayLoading() has written, or
+        // the field flashes an empty "— Select —" that is not the truth.
+        if (!PH) return;
+        provinceSel.disabled = false;
+        provinceSel.innerHTML = optionList(Object.keys(PH).sort((a, b) => a.localeCompare(b)), selected || '');
         provinceSel.value = selected || '';
     };
     const fillTowns = (province, selected) => {
-        townSel.innerHTML = optionList((PH && PH[province]) ? PH[province] : [], selected || '');
+        if (!PH) return;
+        townSel.innerHTML = province
+            ? optionList(PH[province] || [], selected || '')
+            : '<option value="">Select province first</option>';
+        // Locked until there is a province to narrow it to — a town list of
+        // every town in the country is not a list anybody can use.
         townSel.disabled = !province;
-        townSel.value = selected || '';
+        townSel.value = province ? (selected || '') : '';
     };
     provinceSel.addEventListener('change', () => fillTowns(provinceSel.value, ''));
+    // Warmed on arrival, so by the time the sheet opens the list is usually
+    // already here and nobody sees the waiting state at all.
     ensureLocations(); // warm the cache
 
     const fmtDate = (iso) => {
@@ -393,6 +454,13 @@ const __init = () => {
         // Province → town/city selects (async: the dataset loads once, cached).
         const prov = lot ? (lot.locProvince || '') : '';
         const town = lot ? (lot.locTown || '') : '';
+        /* Painted once the list is actually here.
+         *
+         * This used to paint before the fetch and again after, so on a cold
+         * open the two fields rendered empty and enabled for the length of
+         * the round trip — which is the whole complaint: they looked ready,
+         * and tapping them did nothing. Now they say they are loading until
+         * they have something to show, and are painted once. */
         fillProvinces(prov);
         fillTowns(prov, town);
         openSheet('lotSheet');
