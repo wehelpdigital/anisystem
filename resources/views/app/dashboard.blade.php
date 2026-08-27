@@ -109,15 +109,36 @@
        hour's badge stands half over the photo's lower edge, the way a face
        stands on a profile. Only drawn when there is a cover to draw, so the
        rows below only move for somebody who has chosen a picture. */
-    .dash-hero-cover { grid-column: 1 / -1; grid-row: 1;
+    .dash-hero-cover { grid-column: 1 / -1; grid-row: 1; position: relative;
         margin: calc(var(--dh-py) * -1) calc(var(--dh-px) * -1) 0; }
+    /* A deep wash of the house green down from the photo's top edge, fading
+       out well before the bottom of it — a border thick enough to be weather
+       rather than a hairline, drifting on the same slow tide the hero's own
+       accent rides. It is drawn INSIDE .mem-cover, which clips at its own
+       rounded box and sits inside the hero's overflow:hidden, so the wash can
+       never paint across the card's curved corners. */
+    .dash-hero-cover::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+        background: linear-gradient(180deg,
+            rgb(31 56 16 / .86) 0%, rgb(61 104 35 / .5) 16%,
+            rgb(107 159 61 / .22) 34%, rgb(184 211 142 / .07) 52%, transparent 66%);
+        /* Oversized so the drift has somewhere to go: at rest the wash is a
+           thick band across the top, and at the far end of the tide it has
+           thinned to a rim. Any deeper and the photograph underneath stops
+           being a photograph. */
+        background-size: 100% 165%;
+        animation: heroWash 13s ease-in-out infinite alternate; }
+    @keyframes heroWash { from { background-position: 50% 0%; } to { background-position: 50% 100%; } }
+    @media (prefers-reduced-motion: reduce) { .dash-hero-cover::after { animation: none; } }
     /* The greeting keeps its distance from the photo's lower edge — the same
        clearance a post's name gets under the same band. */
     .dash-hero:has(.dash-hero-cover) { row-gap: .6rem; }
-    .dash-hero:has(.dash-hero-cover) .dash-hero-mark { grid-row: 2; align-self: start;
-        margin-top: -1.7rem; position: relative;
-        border: 3px solid var(--color-white); box-shadow: 0 8px 20px -14px rgb(0 0 0 / .8); }
-    html.dark .dash-hero:has(.dash-hero-cover) .dash-hero-mark { border-color: #151b12; }
+    /* The hour sits on the greeting's own midline, not half-buried in the
+       photo above it. Standing on the cover's edge it was reading as part of
+       the picture and left the two lines of words hanging off its shoulder;
+       centred against them it is what it always was — a mark beside the
+       sentence it belongs to. */
+    .dash-hero:has(.dash-hero-cover) .dash-hero-mark { grid-row: 2; align-self: center;
+        margin-top: 0; position: relative; }
     .dash-hero:has(.dash-hero-cover) .dash-hero-body { grid-column: 2; grid-row: 2; }
     .dash-hero:has(.dash-hero-cover) .dash-hero-state { grid-column: 2; grid-row: 3; }
     @media (min-width: 640px) {
