@@ -62,6 +62,14 @@
     .gr-body { padding: .85rem .9rem; }
     .gr-stage { font-size: 1.05rem; font-weight: 800; color: var(--color-gray-900); }
     .gr-what { font-size: .85rem; line-height: 1.5; color: var(--tl-text-muted, #4b5563); margin-top: .2rem; }
+    /* The one line of guidance a patterned crop carries. Same shape as the
+       do-list below it, so a crop with the short answer and a crop with the
+       long one read as the same kind of page. */
+    .gr-needs { font-size: .84rem; line-height: 1.5; margin-top: .7rem;
+        padding: .6rem .7rem; border-radius: .7rem;
+        background: var(--color-brand-50); color: #3d6823; }
+    .gr-needs b { font-weight: 800; }
+    html.dark .gr-needs { background: rgb(61 104 35 / .25); color: #bfe19a; }
     .gr-bar { height: .4rem; border-radius: 999px; background: var(--color-gray-200); overflow: hidden; margin-top: .6rem; }
     .gr-bar span { display: block; height: 100%; border-radius: 999px;
         background: linear-gradient(90deg, #6b9f3d, #4a7c2a); }
@@ -171,14 +179,30 @@
                 @if ($st['progress'] !== null)
                     <div class="gr-bar"><span style="width: {{ round($st['progress'] * 100) }}%"></span></div>
                 @endif
+                {{-- A tree's stages are months apart, so "day 14 of this
+                     stage · next in about 24 days" would be wrong twice
+                     over — and a tree has no harvest window to be at the
+                     end of, only the last stage of its life. --}}
+                @php $unit = $st['unit'] ?? 'day'; @endphp
                 <p class="gr-next">
-                    Day {{ $st['dayInStage'] + 1 }} of this stage
+                    {{ ucfirst($unit) }} {{ $st['dayInStage'] + 1 }} of this stage
                     @if ($st['next'])
-                        · {{ $st['next']['label'] }} in about {{ $st['next']['inDays'] }} {{ \Illuminate\Support\Str::plural('day', $st['next']['inDays']) }}
+                        · {{ $st['next']['label'] }} in about {{ $st['next']['inDays'] }} {{ \Illuminate\Support\Str::plural($unit, $st['next']['inDays']) }}
+                    @elseif ($unit === 'month')
+                        · the last of its stages
                     @else
                         · the harvest window
                     @endif
                 </p>
+
+                {{-- What the stage asks for.
+                     The seven crops with hand-written guidance get the full
+                     do/watch lists below. Every other crop still carries the
+                     one line its stage was written with, and showing it is
+                     the difference between guidance and a bare label. --}}
+                @if (! $r['tips']['do'] && ! empty($st['needs']))
+                    <p class="gr-needs"><b>What it usually needs:</b> {{ $st['needs'] }}</p>
+                @endif
 
                 <div class="gr-lists">
                     @if ($r['tips']['do'])
