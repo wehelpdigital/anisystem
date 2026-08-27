@@ -262,8 +262,12 @@
                 <label class="flex items-start gap-3 cursor-pointer select-none">
                     <input type="checkbox" id="activityIsDayZero" class="mt-1 w-5 h-5 rounded border-amber-400 text-amber-600 focus:ring-amber-300">
                     <span class="text-sm text-amber-900">
+                        {{-- Both lines are rewritten in JS when the lots this
+                             activity covers are standing trees: an orchard
+                             keeps no day count, so day zero there is the Day
+                             of Start rather than DAS 0. --}}
                         <strong>Mark this activity as Day 0</strong><br>
-                        <span class="text-amber-800/80">Its start date becomes the day-counter's Day 0 for every lot it covers (DAS 0 for DAS/DAT lots, DAP 0 for DAP lots). When several anchors conflict, the earliest date wins.</span>
+                        <span class="text-amber-800/80 day-zero-say">Its start date becomes the day-counter's Day 0 for every lot it covers (DAS 0 for DAS/DAT lots, DAP 0 for DAP lots). When several anchors conflict, the earliest date wins.</span>
                     </span>
                 </label>
             </div>

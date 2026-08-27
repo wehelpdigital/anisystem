@@ -338,7 +338,7 @@ class CroppingScheduleController extends Controller
             'description' => 'nullable|string|max:5000',
             'cropType' => 'nullable|string|max:100',
             'cropVariety' => 'nullable|string|max:255',
-            'dayType' => 'nullable|in:DAP,DAS,DAT',
+            'dayType' => 'nullable|in:DAP,DAS,DAT,TREE',
             'lots' => 'nullable|array',
             'workers' => 'nullable|array',
             'materials' => 'nullable|array',
@@ -361,9 +361,11 @@ class CroppingScheduleController extends Controller
         $materialUnits = ['kg', 'g', 'ml', 'l', 'bottle', 'sachet', 'piece', 'pack'];
 
         // Day counter is per-lot. The wizard's pick is the default applied to
-        // every lot; lots can be changed later in the Lots module. Three modes:
-        // DAT (sown then transplanted), DAS (direct seeded, never flips), DAP.
-        $scheduleDayType = in_array(strtoupper((string) $request->input('dayType')), ['DAP', 'DAS', 'DAT'], true)
+        // every lot; lots can be changed later in the Lots module. Four modes:
+        // DAT (sown then transplanted), DAS (direct seeded, never flips), DAP,
+        // and TREE — a standing orchard, which counts no days at all and is
+        // read by the age of its trees.
+        $scheduleDayType = in_array(strtoupper((string) $request->input('dayType')), ['DAP', 'DAS', 'DAT', 'TREE'], true)
             ? strtoupper((string) $request->input('dayType'))
             : 'DAT';
 
@@ -687,7 +689,7 @@ class CroppingScheduleController extends Controller
         $this->assertUnlocked($schedule);
 
         $validator = Validator::make($request->all(), [
-            'dayType' => 'required|in:DAP,DAS,DAT',
+            'dayType' => 'required|in:DAP,DAS,DAT,TREE',
         ]);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => 'Invalid day type.'], 422);

@@ -3247,6 +3247,42 @@ document.addEventListener('DOMContentLoaded', () => {
         return true;
     }
 
+    /**
+     * What Day 0 is CALLED for the lots this activity covers.
+     *
+     * On a field it starts a day count, and the count is named after the way
+     * the field was established — DAS, DAP, DAT. An orchard has no such
+     * count: the trees were there before this season and will be here after
+     * it, so day zero is only the day this plan starts watching them. Calling
+     * that "DAS 0" would put a number on a five-year-old mango that reads as
+     * a seedling nine weeks out of the nursery.
+     *
+     * So on a tree lot it is Day of Start — DOS — and the panel says as much.
+     */
+    function dayZeroWords() {
+        const selected = getActivityLotIds();
+        const trees = selected.filter((id) => lotIsTree(id));
+        // Nothing chosen yet: speak generally rather than guess.
+        if (!selected.length) return null;
+        if (trees.length === selected.length) {
+            return {
+                title: 'Mark this activity as the Day of Start (DOS)',
+                say: 'These lots are standing trees, so there is no sowing or planting to count from. '
+                    + 'This marks the day the plan starts watching them — DOS 0 — and the growth guidance still '
+                    + 'reads the trees by their age.',
+            };
+        }
+        if (trees.length) {
+            return {
+                title: 'Mark this activity as Day 0',
+                say: 'For the field lots this becomes day zero of their count (DAS 0, or DAP 0). '
+                    + 'The tree lots have no day count — for those it marks the Day of Start (DOS 0) only. '
+                    + 'When several anchors conflict, the earliest date wins.',
+            };
+        }
+        return null;   // all fields: the panel's own written words already fit
+    }
+
     function refreshDayZeroToggleVisibility() {
         const panel = $id('activityDayZeroPanel');
         if (!panel) return;
@@ -3258,9 +3294,27 @@ document.addEventListener('DOMContentLoaded', () => {
             $id('activityIsDayZero').checked = false;
             panel.classList.add('hidden');
         }
+
+        // Say it in the words that fit the ground this activity covers.
+        const words = dayZeroWords();
+        const strong = panel.querySelector('strong');
+        const soft = panel.querySelector('.day-zero-say');
+        if (strong && soft) {
+            if (!strong.dataset.said) {
+                strong.dataset.said = strong.textContent;
+                soft.dataset.said = soft.textContent;
+            }
+            strong.textContent = words ? words.title : strong.dataset.said;
+            soft.textContent = words ? words.say : soft.dataset.said;
+        }
+
         const tpPanel = $id('activityTransplantPanel');
         if (tpPanel) {
-            if (activityMode === 'task' && shouldShowTransplantToggle()) {
+            // Trees are never transplanted into this plan — offering DAT 0 on
+            // an orchard is offering a counter it does not keep.
+            const anyField = getActivityLotIds().some((id) => !lotIsTree(id));
+            const okHere = getActivityLotIds().length === 0 || anyField;
+            if (activityMode === 'task' && okHere && shouldShowTransplantToggle()) {
                 tpPanel.classList.remove('hidden');
             } else {
                 $id('activityIsTransplant').checked = false;

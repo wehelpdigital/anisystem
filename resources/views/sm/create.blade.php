@@ -11,13 +11,19 @@
         'cancelUrl' => route('sm.index'),
         // The crop moved to the lot, where it belongs, so the wizard has no
         // list of crops to offer and no lots to offer them for.
-        // The same three a lot can be set to later. A field is established
+        // The same answers a lot can be set to later. A field is established
         // in one of three ways and each is counted differently; asking for two
         // meant direct-seeded fields were read against a transplanted calendar.
+        //
+        // The fourth is not a way of counting but the absence of one: an
+        // orchard has no day the season started, and its trees are read by
+        // their age instead. Put last, because it is the one that turns the
+        // question off rather than answering it.
         'dayTypes' => [
             ['value' => 'DAT', 'label' => 'DAS → DAT — sown, then transplanted'],
             ['value' => 'DAS', 'label' => 'DAS only — direct seeded (DSR)'],
             ['value' => 'DAP', 'label' => 'DAP — days after planting'],
+            ['value' => 'TREE', 'label' => 'Mature trees — no day count, read by age'],
         ],
     ];
 @endphp

@@ -68,6 +68,27 @@
                     <textarea id="settingsDescription" rows="3" maxlength="5000" class="form-textarea" @readonly($setWorker)>{{ $schedule->description }}</textarea>
                 </div>
 
+                {{-- HOW DAYS ARE COUNTED.
+                     The heading above has promised this since the module was
+                     written, and it was only ever askable at creation — so a
+                     season set up wrong stayed wrong, and an orchard had no
+                     way to say it keeps no day count at all.
+
+                     It is the season's default. Each lot can still answer for
+                     itself in Lots, which is where a farm with rice in the
+                     paddy and mangoes on the ridge sorts itself out. --}}
+                <div>
+                    <label for="settingsDayType" class="form-label">How days are counted</label>
+                    <select id="settingsDayType" class="form-select" @disabled($setWorker)>
+                        <option value="DAT" @selected(($schedule->dayType ?: 'DAS') === 'DAT')>DAS → DAT — sown, then transplanted</option>
+                        <option value="DAS" @selected(($schedule->dayType ?: 'DAS') === 'DAS')>DAS only — direct seeded (DSR)</option>
+                        <option value="DAP" @selected($schedule->dayType === 'DAP')>DAP — days after planting</option>
+                        <option value="TREE" @selected($schedule->dayType === 'TREE')>Mature trees — no day count, read by age</option>
+                    </select>
+                    <p class="form-hint" id="settingsDayTypeHint"></p>
+                    <p class="form-hint">This is the season's default. A lot can still be set differently in <a href="{{ route('sm.lots', ['id' => $schedule->id]) }}" class="text-brand-700 font-semibold">Lots</a>.</p>
+                </div>
+
                 @unless ($setWorker)
                 <div class="flex justify-end">
                     <button type="button" id="saveBasicBtn" class="btn btn-primary w-full sm:w-auto">Save Basic Info</button>
@@ -191,10 +212,47 @@ const __init = () => {
 
     /* ---------------- Basic Info ---------------- */
 
+    /* What the season is set to now, so a save that does not touch the day
+       counter does not spend a request saying so. */
+    let CURRENT_DAY_TYPE = @json($schedule->dayType ?: 'DAS');
+
+    /* Each answer, in a sentence — the codes are three letters and the
+       difference between them is a whole calendar. */
+    const DAY_TYPE_SAYS = {
+        DAT: 'Counts DAS from sowing, then restarts as DAT on the transplant date.',
+        DAS: 'One count from sowing, all season. Direct-seeded rice never becomes DAT.',
+        DAP: 'One count from the day it went in the ground.',
+        TREE: 'No day count at all. The trees are read by their age, which each lot gives in Lots.',
+    };
+    const sayDayType = () => {
+        const sel = document.getElementById('settingsDayType');
+        const hint = document.getElementById('settingsDayTypeHint');
+        if (sel && hint) hint.textContent = DAY_TYPE_SAYS[sel.value] || '';
+    };
+    document.getElementById('settingsDayType')?.addEventListener('change', sayDayType);
+    sayDayType();
+
     document.getElementById('saveBasicBtn').addEventListener('click', async (e) => {
         const btn = e.currentTarget;
         btn.disabled = true;
         try {
+            /* Two calls, because they are two endpoints.
+             *
+             * The day counter has always had its own — it relabels every day
+             * number on the board for everyone, and it refuses on a locked
+             * season, which a title change does not. Sending it through the
+             * general update would mean teaching that endpoint a rule it does
+             * not have. It goes first: if it is refused, the save says so
+             * rather than reporting success over a setting that did not take. */
+            const dayType = document.getElementById('settingsDayType')?.value;
+            if (dayType && dayType !== CURRENT_DAY_TYPE) {
+                await api(`{{ route('sm.day-type') }}?id=${SCHEDULE_ID}`, {
+                    method: 'POST',
+                    body: { dayType },
+                });
+                CURRENT_DAY_TYPE = dayType;
+            }
+
             const res = await api(`{{ route('sm.update') }}?id=${SCHEDULE_ID}`, {
                 method: 'PUT',
                 body: {
