@@ -83,21 +83,51 @@
              season: one farm can have corn on the upper block and rice in the
              paddy, and a single answer for the whole schedule was wrong for
              one of them. It is also what makes a growth stage answerable. --}}
+        {{-- One tag, not eighty-five chips.
+             The list is the whole of Philippine farming now; laid out flat it
+             would bury the form it was meant to sit in. So the field says what
+             is chosen, and the choosing happens in a sheet with a search box
+             and the crops in their families. --}}
         <div>
             <label class="form-label">Crop <span class="text-gray-400 font-normal">(optional)</span></label>
-            <div class="crop-pick" id="lotCropPick">
-                @foreach (\App\Support\CropStages::options() as $c)
-                    <button type="button" class="crop-opt" data-crop="{{ $c['value'] }}">
-                        <span class="crop-emoji">{{ $c['icon'] }}</span>
-                        <span>{{ $c['label'] }}</span>
-                    </button>
-                @endforeach
-            </div>
+            <button type="button" class="crop-tag" id="lotCropBtn">
+                <span class="crop-tag-e" id="lotCropIcon">🌱</span>
+                <span class="crop-tag-t" id="lotCropNow">Choose a crop</span>
+                <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>
             <input type="hidden" id="lotCrop" value="">
-            <p class="form-hint">
-                Currently: <strong id="lotCropNow" class="is-none">Not set</strong>.
-                Sets the growth stages this lot is read against — tap a chosen crop again to clear it.
-            </p>
+            <p class="form-hint">Sets the growth stages this lot is read against.</p>
+        </div>
+
+        {{-- HOW LONG, or HOW OLD — never both.
+             A crop that is harvested once is planned by its days to maturity;
+             a tree is read by its age. Which of the two is asked follows from
+             the crop, and the other is not merely hidden but cleared, so a
+             lot cannot carry an answer to a question it is no longer being
+             asked. --}}
+        <div id="lotMaturityWrap" class="hidden">
+            <label for="lotMaturity" class="form-label">Days to maturity <span class="text-gray-400 font-normal">(optional)</span></label>
+            <input type="number" id="lotMaturity" min="1" max="999" class="form-input" placeholder="">
+            <p class="form-hint" id="lotMaturityHint"></p>
+        </div>
+
+        <div id="lotTreeWrap" class="hidden">
+            <label class="form-label">How old are the trees?</label>
+            <div class="tree-age">
+                <div>
+                    <input type="number" id="lotTreeYears" min="0" max="120" class="form-input" placeholder="0">
+                    <span class="tree-age-u">years</span>
+                </div>
+                <div>
+                    <input type="number" id="lotTreeMonths" min="0" max="11" class="form-input" placeholder="0">
+                    <span class="tree-age-u">months</span>
+                </div>
+            </div>
+            <p class="form-hint" id="lotTreeHint"></p>
+            {{-- The age is what somebody standing in the orchard knows; the
+                 date it implies is what is stored, so it stays right next
+                 season instead of quietly ageing into a lie. --}}
+            <input type="hidden" id="lotTreePlanted" value="">
         </div>
 
         <div>
@@ -105,7 +135,9 @@
             <input type="text" id="lotVariety" maxlength="255" class="form-input" placeholder="e.g. IR64">
         </div>
 
-        <div>
+        {{-- A tree has no day counter, so it is not asked for one: its stages
+             are read against its age, which the field above already knows. --}}
+        <div id="lotDayTypeWrap">
             <label for="lotDayType" class="form-label">Day counter</label>
             {{-- Three answers, because a field is established in one of three
                  ways and each is counted differently. Direct-seeded rice never
@@ -161,6 +193,71 @@
         <button type="button" id="saveLotBtn" class="btn btn-primary">Save Lot</button>
     </div>
 </div>
+
+{{-- WHICH CROP.
+
+     Eighty-five of them, in their families, with a search box — because a
+     farmer looking for sayote should type "sayote" rather than read past
+     twelve fruit vegetables to find it, and one looking for "something in
+     the ampalaya line" should be able to browse the family instead.
+
+     Stacked over the lot sheet rather than replacing it, so the half-filled
+     form is still behind and comes back untouched. --}}
+<div class="sheet hidden" id="cropPickSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Choose a crop</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="crop-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+            <input type="text" id="cropSearch" class="form-input" autocomplete="off"
+                   placeholder="Search — palay, sayote, mangga…">
+            <button type="button" class="crop-search-x hidden" id="cropSearchX" aria-label="Clear">✕</button>
+        </div>
+
+        {{-- "None" is a real answer: a lot may genuinely not have a crop set
+             yet, and taking that away would leave no way back to it. --}}
+        <button type="button" class="crop-row is-none" data-crop="">
+            <span class="crop-row-e">🌱</span>
+            <span class="crop-row-t"><b>Not set</b><small>No growth-stage guidance for this lot</small></span>
+        </button>
+
+        <div id="cropPickList">
+            @foreach (\App\Support\CropStages::grouped() as $group => $rows)
+                <div class="crop-group" data-crop-group>
+                    <p class="crop-group-h">{{ $group }}</p>
+                    @foreach ($rows as $c)
+                        @php
+                            // Worked out here rather than inline: an @else glued
+                            // to the end of a word is not a directive to Blade,
+                            // it is the six characters "@else" printed out.
+                            $years = $c['bearingAt'] ? rtrim(rtrim(number_format($c['bearingAt'] / 12, 1), '0'), '.') : null;
+                            $says = $c['perennial']
+                                ? ($years ? 'Tree — bears at about ' . $years . ' years old' : 'Tree — read by its age')
+                                : trim(($c['maturity'] ? $c['maturity'] . ' days to harvest' : '') . ' · counted in ' . $c['counter'], ' ·');
+                        @endphp
+                        <button type="button" class="crop-row" data-crop="{{ $c['value'] }}"
+                                data-find="{{ strtolower($c['label'] . ' ' . $group) }}"
+                                data-tree="{{ $c['perennial'] ? '1' : '' }}"
+                                data-maturity="{{ $c['maturity'] ?? '' }}"
+                                data-bearing="{{ $c['bearingAt'] ?? '' }}"
+                                data-counter="{{ $c['counter'] }}">
+                            <span class="crop-row-e">{{ $c['icon'] }}</span>
+                            <span class="crop-row-t">
+                                <b>{{ $c['label'] }}</b>
+                                <small>{{ $says }}</small>
+                            </span>
+                            <svg class="crop-row-tick hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        </button>
+                    @endforeach
+                </div>
+            @endforeach
+        </div>
+        <p class="crop-none hidden" id="cropPickNone">Nothing matches that. Try the local name, or pick “Vegetables — mixed”.</p>
+    </div>
+</div>
 @endpush
 
 @push('head')
@@ -175,6 +272,56 @@
     @media (prefers-reduced-motion: reduce) {
         .form-select.is-waiting { animation: none; opacity: .6; }
     }
+
+    /* THE CROP TAG — one field that says what is chosen and opens the list. */
+    .crop-tag { display: flex; align-items: center; gap: .5rem; width: 100%;
+        padding: .55rem .7rem; border-radius: .75rem; cursor: pointer; text-align: left;
+        border: 1px solid var(--color-gray-200); background: var(--color-white);
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+    .crop-tag:hover { border-color: var(--color-brand-300); background: var(--color-brand-50); }
+    .crop-tag-e { font-size: 1.1rem; line-height: 1; flex: none; }
+    .crop-tag-t { flex: 1 1 auto; min-width: 0; font-size: .9rem; font-weight: 700; color: #3d6823;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .crop-tag-t.is-none { color: var(--color-gray-400); font-weight: 500; }
+    .crop-tag-c { width: 1rem; height: 1rem; flex: none; color: var(--color-gray-400); }
+    html.dark .crop-tag { background: #1c2416; border-color: #2b3a1c; }
+
+    /* THE PICKER — a search box, then the families. */
+    .crop-search { position: relative; margin-bottom: .6rem; }
+    .crop-search svg { position: absolute; left: .65rem; top: 50%; transform: translateY(-50%);
+        width: 1rem; height: 1rem; color: var(--color-gray-400); pointer-events: none; }
+    .crop-search .form-input { padding-left: 2.1rem; padding-right: 2.1rem; }
+    .crop-search-x { position: absolute; right: .45rem; top: 50%; transform: translateY(-50%);
+        width: 1.5rem; height: 1.5rem; border-radius: 999px; font-size: .75rem;
+        color: var(--color-gray-400); cursor: pointer; }
+    .crop-search-x:hover { background: var(--color-gray-100); color: var(--color-gray-700); }
+    .crop-group-h { font-size: .68rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
+        color: var(--color-gray-400); padding: .7rem .2rem .25rem; }
+    .crop-row { display: flex; align-items: center; gap: .65rem; width: 100%; text-align: left;
+        padding: .5rem .45rem; border-radius: .7rem; cursor: pointer;
+        transition: background .2s ease; }
+    .crop-row:hover { background: var(--color-gray-50); }
+    .crop-row.is-on { background: var(--color-brand-50); }
+    .crop-row-e { font-size: 1.15rem; line-height: 1; flex: none; width: 1.6rem; text-align: center; }
+    .crop-row-t { flex: 1 1 auto; min-width: 0; }
+    .crop-row-t b { display: block; font-size: .87rem; font-weight: 700; color: var(--color-gray-900);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .crop-row-t small { display: block; font-size: .69rem; color: var(--color-gray-400); }
+    .crop-row-tick { width: 1.1rem; height: 1.1rem; flex: none; color: var(--color-brand-600); }
+    .crop-row.is-none { border: 1px dashed var(--color-gray-200); margin-bottom: .2rem; }
+    .crop-none { text-align: center; font-size: .82rem; color: var(--color-gray-400); padding: 1.4rem .5rem; }
+    .crop-group[hidden], .crop-row[hidden] { display: none; }
+    html.dark .crop-row:hover { background: #1c2416; }
+    html.dark .crop-row.is-on { background: #25311b; }
+    html.dark .crop-row-t b { color: #e8efe1; }
+    @media (prefers-reduced-motion: reduce) { .crop-tag, .crop-row { transition: none; } }
+
+    /* HOW OLD — two numbers that mean one thing, so they share a line. */
+    .tree-age { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .tree-age > div { position: relative; }
+    .tree-age .form-input { padding-right: 3.6rem; }
+    .tree-age-u { position: absolute; right: .7rem; top: 50%; transform: translateY(-50%);
+        font-size: .75rem; font-weight: 600; color: var(--color-gray-400); pointer-events: none; }
 
     .crop-pick { display: flex; flex-wrap: wrap; gap: .4rem; }
     .crop-opt { display: inline-flex; align-items: center; gap: .35rem; padding: .4rem .7rem;
@@ -445,8 +592,15 @@ const __init = () => {
         document.getElementById('lotSize').value = lot ? parseFloat(lot.lotSize) || 0 : '';
         document.getElementById('lotSizeUnit').value = lot ? (lot.lotSizeUnit || 'hectare') : 'hectare';
         document.getElementById('lotVariety').value = lot ? (lot.variety || '') : '';
+        // The crop first: it decides which of the timing questions is asked,
+        // and setLotCrop clears whichever one no longer applies.
         setLotCrop(lot ? (lot.crop || '') : '');
-        document.getElementById('lotDayType').value = lot ? (lot.dayType || 'DAT') : 'DAT';
+        document.getElementById('lotMaturity').value = lot && lot.daysToMaturity ? lot.daysToMaturity : '';
+        treeAge(lot && lot.treeAgeMonths ? Number(lot.treeAgeMonths) : 0);
+        // TREE is not one of the counter's three answers; a tree lot simply
+        // does not show the field, and its stored value stays as it is.
+        const dt = lot ? (lot.dayType || 'DAT') : 'DAT';
+        document.getElementById('lotDayType').value = dt === 'TREE' ? 'DAT' : dt;
         sayDayType();
         document.getElementById('lotBarangay').value = lot ? (lot.locBarangay || '') : '';
         document.getElementById('lotZone').value = lot ? (lot.locZone || '') : '';
@@ -519,49 +673,150 @@ const __init = () => {
 
     /* ---------------- Save ---------------- */
 
-    /* One crop per lot, and tapping the chosen one again clears it — a lot
-       whose crop was set by mistake needs a way back to "not set". */
-    /** Which crop chip is lit, and what the form will send. */
+    /* ---------------- Which crop, and what that means ----------------
+     *
+     * One crop per lot. The tag says what is chosen; the sheet does the
+     * choosing. What follows the choice is the point: a crop that is
+     * harvested once is planned by its days to maturity, and a tree is read
+     * by its age, so the form asks whichever of the two applies and clears
+     * the other — a lot must not carry an answer to a question it is no
+     * longer being asked.
+     */
+    const cropRow = (key) => key
+        ? document.querySelector(`#cropPickList .crop-row[data-crop="${CSS.escape(key)}"]`)
+        : null;
+
+    /** Which crop is chosen, and what the form will send. */
     function setLotCrop(value) {
         const want = matchCrop(value);
         document.getElementById('lotCrop').value = want;
-        let lit = null;
-        document.querySelectorAll('#lotCropPick .crop-opt').forEach((b) => {
-            const on = b.getAttribute('data-crop') === want;
-            b.classList.toggle('is-selected', on);
-            b.setAttribute('aria-pressed', on ? 'true' : 'false');
-            if (on) lit = b;
-        });
+        const row = cropRow(want);
+
         const say = document.getElementById('lotCropNow');
-        if (say) {
-            say.textContent = lit ? lit.textContent.trim() : 'Not set';
-            say.classList.toggle('is-none', !lit);
-        }
+        const emoji = document.getElementById('lotCropIcon');
+        say.textContent = row ? row.querySelector('b').textContent.trim() : 'Choose a crop';
+        say.classList.toggle('is-none', !row);
+        emoji.textContent = row ? row.querySelector('.crop-row-e').textContent.trim() : '🌱';
+
+        document.querySelectorAll('#cropPickSheet .crop-row').forEach((b) => {
+            const on = b.getAttribute('data-crop') === want;
+            b.classList.toggle('is-on', on);
+            b.querySelector('.crop-row-tick')?.classList.toggle('hidden', !on);
+        });
+
+        sayCropTiming(row);
     }
 
+    /** Show the one question this crop is actually asked, and hide the rest. */
+    function sayCropTiming(row) {
+        const isTree = !!row?.getAttribute('data-tree');
+        const maturity = row?.getAttribute('data-maturity') || '';
+        const bearing = Number(row?.getAttribute('data-bearing') || 0);
+
+        document.getElementById('lotMaturityWrap').classList.toggle('hidden', !row || isTree);
+        document.getElementById('lotTreeWrap').classList.toggle('hidden', !isTree);
+        // A tree has no day counter — its stages are read against its age.
+        document.getElementById('lotDayTypeWrap').classList.toggle('hidden', isTree);
+
+        if (row && !isTree) {
+            const box = document.getElementById('lotMaturity');
+            box.placeholder = maturity ? `${maturity} — the usual for this crop` : '';
+            document.getElementById('lotMaturityHint').textContent = maturity
+                ? `Leave it empty and ${maturity} days is assumed. Varieties are sold by their duration — put yours in and every growth stage moves with it.`
+                : 'Put in your variety’s duration and every growth stage moves with it.';
+        }
+        if (isTree) {
+            document.getElementById('lotTreeHint').textContent = bearing
+                ? `This one usually starts bearing at about ${(bearing / 12).toFixed(1).replace(/\.0$/, '')} years old.`
+                : 'Its age is what the growth-stage guidance is read against.';
+        }
+        // Clearing the one that no longer applies, so nothing stale is sent.
+        if (isTree) document.getElementById('lotMaturity').value = '';
+        else { treeAge(0); }
+    }
+
+    /** The tree's age, in the two boxes and in the hidden date they imply. */
+    function treeAge(months) {
+        const y = document.getElementById('lotTreeYears');
+        const m = document.getElementById('lotTreeMonths');
+        if (!months) { y.value = ''; m.value = ''; document.getElementById('lotTreePlanted').value = ''; return; }
+        y.value = Math.floor(months / 12);
+        m.value = months % 12;
+        stampTreeDate();
+    }
+
+    /** Turn the typed age into the planting date that will be stored. */
+    function stampTreeDate() {
+        const y = Number(document.getElementById('lotTreeYears').value || 0);
+        const m = Number(document.getElementById('lotTreeMonths').value || 0);
+        const months = (y * 12) + m;
+        const out = document.getElementById('lotTreePlanted');
+        if (!months && !document.getElementById('lotTreeYears').value && !document.getElementById('lotTreeMonths').value) {
+            out.value = '';
+            return;
+        }
+        const d = new Date();
+        d.setMonth(d.getMonth() - months);
+        out.value = d.toISOString().slice(0, 10);
+    }
+    ['lotTreeYears', 'lotTreeMonths'].forEach((id) => {
+        document.getElementById(id)?.addEventListener('input', stampTreeDate);
+    });
+
     /**
-     * A stored crop turned into the key of a chip. Exact key first, then a
-     * loose match on the label, so "Rice (Palay)" or "RICE" still lights the
-     * rice chip instead of leaving the row looking broken.
+     * A stored crop turned into a key in the list. Exact first, then the
+     * whole label — the old loose "contains" match turned "corn" into
+     * whichever corn happened to be first once there were three of them.
      */
     function matchCrop(value) {
         const v = String(value || '').trim().toLowerCase();
         if (!v) return '';
-        const opts = [...document.querySelectorAll('#lotCropPick .crop-opt')];
-        const exact = opts.find((b) => b.getAttribute('data-crop') === v);
-        if (exact) return v;
-        const loose = opts.find((b) => {
-            const key = b.getAttribute('data-crop');
-            const label = b.textContent.trim().toLowerCase();
-            return v.includes(key) || label.includes(v) || v.includes(label);
-        });
-        return loose ? loose.getAttribute('data-crop') : '';
+        if (cropRow(v)) return v;
+        const rows = [...document.querySelectorAll('#cropPickList .crop-row')];
+        const byLabel = rows.find((b) => b.querySelector('b').textContent.trim().toLowerCase() === v);
+        return byLabel ? byLabel.getAttribute('data-crop') : '';
     }
-    document.getElementById('lotCropPick')?.addEventListener('click', (e) => {
-        const opt = e.target.closest('.crop-opt');
-        if (!opt) return;
-        const want = opt.getAttribute('data-crop');
-        setLotCrop(document.getElementById('lotCrop').value === want ? '' : want);
+
+    document.getElementById('lotCropBtn')?.addEventListener('click', () => {
+        openSheet('cropPickSheet');
+        // Straight into the search box on a keyboard; on a phone the field is
+        // left alone so the list is not immediately hidden behind one.
+        if (!window.matchMedia('(hover: none)').matches) {
+            setTimeout(() => document.getElementById('cropSearch')?.focus(), 280);
+        }
+    });
+
+    document.getElementById('cropPickSheet')?.addEventListener('click', (e) => {
+        const row = e.target.closest('.crop-row');
+        if (!row) return;
+        setLotCrop(row.getAttribute('data-crop') || '');
+        closeSheet('cropPickSheet');
+    });
+
+    /* Searching hides rows, and a family with nothing left hides too — a
+       heading standing over an empty space reads as a broken list. */
+    const cropSearch = document.getElementById('cropSearch');
+    const cropSift = () => {
+        const q = (cropSearch.value || '').trim().toLowerCase();
+        document.getElementById('cropSearchX').classList.toggle('hidden', !q);
+        let shown = 0;
+        document.querySelectorAll('#cropPickList [data-crop-group]').forEach((g) => {
+            let left = 0;
+            g.querySelectorAll('.crop-row').forEach((r) => {
+                const hit = !q || (r.getAttribute('data-find') || '').includes(q);
+                r.hidden = !hit;
+                if (hit) left++;
+            });
+            g.hidden = left === 0;
+            shown += left;
+        });
+        document.getElementById('cropPickNone').classList.toggle('hidden', shown > 0);
+    };
+    cropSearch?.addEventListener('input', cropSift);
+    document.getElementById('cropSearchX')?.addEventListener('click', () => {
+        cropSearch.value = '';
+        cropSift();
+        cropSearch.focus();
     });
 
     document.getElementById('saveLotBtn').addEventListener('click', async (e) => {
@@ -572,6 +827,10 @@ const __init = () => {
             lotSize: document.getElementById('lotSize').value || 0,
             lotSizeUnit: document.getElementById('lotSizeUnit').value,
             crop: document.getElementById('lotCrop').value || null,
+            // The server decides which of these two survives, from the crop —
+            // this only sends what the form was actually showing.
+            daysToMaturity: Number(document.getElementById('lotMaturity').value) || null,
+            treePlantedAt: document.getElementById('lotTreePlanted').value || null,
             variety: document.getElementById('lotVariety').value.trim() || null,
             locBarangay: document.getElementById('lotBarangay').value.trim() || null,
             locZone: document.getElementById('lotZone').value.trim() || null,

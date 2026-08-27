@@ -146,9 +146,16 @@
                 <span class="gr-fold-stage">{{ $r['blocked'] ? 'Not readable yet' : ($r['stage']['label'] ?? '') }}</span>
             </span>
             @if ($r['age'])
-                <span class="gr-age">
-                    <span class="gr-age-n block">{{ $r['age']['day'] }}</span>
-                    <span class="gr-age-l">{{ $r['age']['counter'] }}</span>
+                {{-- A tree's number is months, not days, and the label has to
+                     say so — "66 DAP" on a five-year-old mango reads as a
+                     seedling nine weeks out of the nursery. --}}
+                @php
+                    $isAge = ($r['age']['counter'] ?? '') === 'AGE';
+                    $ageYears = $isAge ? floor($r['age']['day'] / 12) : 0;
+                @endphp
+                <span class="gr-age" @if ($isAge) title="{{ $r['age']['day'] }} months old" @endif>
+                    <span class="gr-age-n block">{{ $isAge && $ageYears >= 2 ? $ageYears : $r['age']['day'] }}</span>
+                    <span class="gr-age-l">{{ $isAge ? ($ageYears >= 2 ? 'years old' : 'months') : $r['age']['counter'] }}</span>
                 </span>
             @endif
         </div>

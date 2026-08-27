@@ -65,6 +65,25 @@ class LotCalendar
     {
         $mode = strtoupper((string) ($lot->dayType ?: 'DAT'));
 
+        /* A tree keeps no day count.
+         *
+         * Its stages are read against its age in months, so that is what
+         * comes back — with the unit said out loud, because a caller handed
+         * "day 66" for a five-and-a-half-year-old mango would draw it as a
+         * seedling nine weeks out of the nursery. */
+        if ($mode === 'TREE' || CropStages::isPerennial($lot->crop ?? null)) {
+            if (! $lot->treePlantedAt) {
+                return null;
+            }
+            $planted = Carbon::parse($lot->treePlantedAt)->startOfDay();
+            $here = $on->copy()->startOfDay();
+            if ($here->lt($planted)) {
+                return null;
+            }
+
+            return ['day' => (int) $planted->diffInMonths($here), 'counter' => 'AGE', 'unit' => 'month'];
+        }
+
         if ($mode === 'DAT' && $transplant) {
             $t = $transplant->copy()->startOfDay();
             if ($on->copy()->startOfDay()->gte($t)) {

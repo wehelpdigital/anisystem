@@ -91,8 +91,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const LOT_DAY_TYPE = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => ($l->dayType ?: 'DAT')]));
     const lotDayType = (lotId) => {
         const v = String(LOT_DAY_TYPE[lotId] || 'DAT').toUpperCase();
-        return (v === 'DAP' || v === 'DAS') ? v : 'DAT';
+        return (v === 'DAP' || v === 'DAS' || v === 'TREE') ? v : 'DAT';
     };
+    /** A standing crop, read by the age of its trees rather than a day count. */
+    const lotIsTree = (lotId) => lotDayType(lotId) === 'TREE';
     // What a lot's count is called while it is still before any transplant.
     const lotBaseCounter = (lotId) => (lotDayType(lotId) === 'DAP' ? 'DAP' : 'DAS');
     const WORKER_NAMES = @json($schedule->workers->mapWithKeys(fn ($w) => [$w->id => $w->workerName]));
@@ -128,17 +130,48 @@ document.addEventListener('DOMContentLoaded', () => {
         $shapeStages = fn ($rows) => collect($rows)->map(fn ($st) => [
             'from' => $st[0], 'label' => $st[1], 'what' => $st[2], 'needs' => $st[3],
         ])->all();
-        $cropTables = collect(\App\Support\CropStages::CROPS)->map(fn ($c) => [
-            'label' => $c['label'],
-            'icon' => $c['icon'],
-            'counter' => $c['counter'],
-            'stages' => $shapeStages($c['stages']),
-            // Rice grown from seed in the field keeps its own calendar; every
-            // other crop has one, and falls back to it.
-            'stagesDirect' => isset($c['stagesDirect']) ? $shapeStages($c['stagesDirect']) : null,
-        ])->all();
+
+        /* ONLY THE CROPS THIS SCHEDULE ACTUALLY GROWS.
+         *
+         * The whole catalogue used to be written into every board — which was
+         * fine at seven crops and is eighty-five now, most of them for farms
+         * that will never plant them. A schedule needs the tables for the
+         * crops on its own lots and nothing else.
+         *
+         * Each is laid out against that lot's own days to maturity, so the
+         * board's pill and the growth module agree on where the crop is. Two
+         * lots of the same crop with different varieties get their own table,
+         * keyed by lot rather than by crop, because that is the level at
+         * which the answer actually differs.
+         */
+        $cropTables = [];
+        $lotStages = [];
+        foreach ($schedule->lots as $lot) {
+            $key = \App\Support\CropStages::normalize($lot->crop);
+            if (! $key) { continue; }
+            $maturity = $lot->maturityDays();
+            $tag = $key . ':' . ($maturity ?: 'x');
+            $lotStages[$lot->id] = $tag;
+            if (isset($cropTables[$tag])) { continue; }
+            $cropTables[$tag] = [
+                'label' => \App\Support\CropStages::label($key),
+                'icon' => \App\Support\CropStages::icon($key),
+                'counter' => \App\Support\CropStages::counter($key),
+                'isTree' => \App\Support\CropStages::isPerennial($key),
+                'stages' => $shapeStages(\App\Support\CropStages::stagesFor($key, null, $maturity)),
+                // Rice grown from seed in the field keeps its own calendar;
+                // every other crop has one, and falls back to it.
+                'stagesDirect' => $shapeStages(\App\Support\CropStages::stagesFor($key, 'DAS', $maturity)),
+            ];
+        }
     @endphp
-    const CROP_STAGES = @json($cropTables);
+    const CROP_STAGES = @json((object) $cropTables);
+    /* Which table each lot reads — its crop AND its maturity, because two
+       lots of the same crop can be two different varieties. */
+    const LOT_STAGE_KEY = @json((object) $lotStages);
+    // How old the trees on a lot are, in months, for the crops that are read
+    // by age rather than by a day count.
+    const LOT_TREE_AGE = @json((object) $schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->treeAgeMonths()])->all());
     const LOT_MANUAL_DAY_ZERO = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->dayZeroDate ? $l->dayZeroDate->format('Y-m-d') : null]));
     const LOT_MANUAL_TRANSPLANT = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->transplantDate ? $l->transplantDate->format('Y-m-d') : null]));
 
@@ -362,6 +395,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function lotDayNumberOn(lotId, dateStr) {
         const b = parseLocalDate(dateStr);
         if (!b) return null;
+        // A tree has no day number at all. Returning one would put "DAS 340"
+        // on a card standing in a mango orchard.
+        if (lotIsTree(lotId)) return null;
         // The lot says how it was established; the crop only says what the
         // calendars are. A lot that was direct seeded is read against the
         // direct-seeded table for the whole season even though the same crop
@@ -384,8 +420,11 @@ document.addEventListener('DOMContentLoaded', () => {
      *   seeded — no transplant, and every stage lands on a different day of
      *   its own count than it does for a transplanted crop.
      */
-    function stageOf(crop, day, counter) {
-        const table = CROP_STAGES[crop];
+    function stageOf(stageKey, day, counter) {
+        // Keyed by the LOT's table now, not by the crop name: two lots of the
+        // same crop can be two varieties with different durations, and they
+        // do not reach the same stage on the same day.
+        const table = CROP_STAGES[stageKey];
         if (!table || day === null || day === undefined) return null;
         const stages = (counter && String(counter).toUpperCase() !== 'DAT' && table.stagesDirect)
             ? table.stagesDirect
@@ -462,14 +501,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const ids = group ? lotsOnDay(group) : Object.keys(LOT_CROP).map(Number);
         return ids.map((id) => {
             const crop = LOT_CROP[id];
-            if (!crop) return null;
-            const age = lotDayNumberOn(id, dateKey);
+            const key = LOT_STAGE_KEY[id];
+            if (!crop || !key) return null;
+            /* A tree keeps no day count. Its age in months is the number its
+               stages are read against, so that is what is asked for — and if
+               nobody has said how old it is, there is nothing to read. */
+            const tree = CROP_STAGES[key]?.isTree;
+            const age = tree
+                ? (LOT_TREE_AGE[id] != null ? { day: Number(LOT_TREE_AGE[id]), counter: 'AGE' } : null)
+                : lotDayNumberOn(id, dateKey);
             if (!age) return null;
-            const stage = stageOf(crop, age.day, age.counter);
+            const stage = stageOf(key, age.day, age.counter);
             if (!stage) return null;
             return {
                 lotId: id, lotName: LOT_NAMES[id] || ('Lot #' + id),
-                day: age.day, counter: age.counter, crop, stage,
+                day: age.day, counter: age.counter, crop, stage, isTree: !!tree,
             };
         }).filter(Boolean);
     }

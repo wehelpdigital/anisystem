@@ -25,7 +25,33 @@ class LotController extends BaseScheduleController
     {
         $v = strtoupper(trim((string) $value));
 
-        return in_array($v, ['DAP', 'DAS', 'DAT'], true) ? $v : 'DAT';
+        return in_array($v, ['DAP', 'DAS', 'DAT', 'TREE'], true) ? $v : 'DAT';
+    }
+
+    /**
+     * The two facts that only apply to one kind of crop each.
+     *
+     * Days to maturity belongs to something that is going to be harvested
+     * once; a planting date belongs to something that will still be here
+     * next season. Storing both would leave whichever one no longer applies
+     * sitting in the row, quietly wrong, waiting to be read — so the one
+     * that does not apply is cleared when the crop is set.
+     */
+    private function cropTiming(Request $request): array
+    {
+        $crop = \App\Support\CropStages::normalize($request->input('crop'));
+        $tree = $crop && \App\Support\CropStages::isPerennial($crop);
+
+        $days = (int) $request->input('daysToMaturity', 0);
+
+        return [
+            'crop' => $crop,
+            'daysToMaturity' => (! $tree && $days > 0) ? min(999, $days) : null,
+            'treePlantedAt' => $tree && $request->filled('treePlantedAt')
+                ? $request->input('treePlantedAt') : null,
+            // A tree is not counted in days from anything, so its lot says so.
+            'dayType' => $tree ? 'TREE' : self::dayType($request->input('dayType')),
+        ];
     }
 
     /** A lot as the module reads it, crop spelled out for the card badge. */
@@ -34,6 +60,11 @@ class LotController extends BaseScheduleController
         return $lot->toArray() + [
             'cropLabel' => \App\Support\CropStages::label($lot->crop),
             'cropIcon' => \App\Support\CropStages::icon($lot->crop),
+            'cropIsTree' => \App\Support\CropStages::isPerennial($lot->crop),
+            // What the stages will actually be read against, whether the lot
+            // said so itself or the crop's own figure stood in.
+            'maturityDays' => $lot->maturityDays(),
+            'treeAgeMonths' => $lot->treeAgeMonths(),
         ];
     }
 
@@ -65,11 +96,10 @@ class LotController extends BaseScheduleController
                 'lotSize'            => $request->lotSize,
                 'lotSizeUnit'        => $request->lotSizeUnit,
                 'variety'            => $request->filled('variety') ? trim($request->variety) : null,
-                'crop'        => \App\Support\CropStages::normalize($request->input('crop')),
-                'dayType'            => self::dayType($request->input('dayType')),
                 'notes'              => $request->notes,
                 'deleteStatus'       => 1,
             ],
+            $this->cropTiming($request),
             $this->addressFields($request)
         ));
 
@@ -95,10 +125,9 @@ class LotController extends BaseScheduleController
                 'lotSize'     => $request->lotSize,
                 'lotSizeUnit' => $request->lotSizeUnit,
                 'variety'     => $request->filled('variety') ? trim($request->variety) : null,
-                'crop'        => \App\Support\CropStages::normalize($request->input('crop')),
-                'dayType'     => self::dayType($request->input('dayType')),
                 'notes'       => $request->notes,
             ],
+            $this->cropTiming($request),
             $this->addressFields($request)
         ));
 
@@ -128,11 +157,14 @@ class LotController extends BaseScheduleController
             // A key from the crop catalogue; anything else is simply not a
             // crop we have stages for, so it is dropped rather than stored.
             'crop'        => 'nullable|string|max:60',
+            // Optional: left empty, the crop's own typical figure stands.
+            'daysToMaturity' => 'nullable|integer|min:1|max:999',
+            'treePlantedAt' => 'nullable|date',
             'locBarangay' => 'nullable|string|max:120',
             'locZone'     => 'nullable|string|max:60',
             'locTown'     => 'nullable|string|max:120',
             'locProvince' => 'nullable|string|max:120',
-            'dayType'     => 'nullable|in:DAP,DAS,DAT',
+            'dayType'     => 'nullable|in:DAP,DAS,DAT,TREE',
             'notes'       => 'nullable|string|max:2000',
         ];
     }

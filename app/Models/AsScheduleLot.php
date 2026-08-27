@@ -13,6 +13,8 @@ class AsScheduleLot extends BaseModel
         'lotSizeUnit',
         'variety',
         'crop',
+        'daysToMaturity',
+        'treePlantedAt',
         'locBarangay',
         'locZone',
         'locTown',
@@ -28,8 +30,42 @@ class AsScheduleLot extends BaseModel
         'lotSize' => 'decimal:4',
         'dayZeroDate' => 'date:Y-m-d',
         'transplantDate' => 'date:Y-m-d',
+        'treePlantedAt' => 'date:Y-m-d',
+        'daysToMaturity' => 'integer',
         'deleteStatus' => 'integer',
     ];
+
+    /**
+     * How long this lot's crop takes, in days.
+     *
+     * Its own figure when it has one — varieties are sold by their duration
+     * and that is the number a farmer plans around — and the crop's typical
+     * figure otherwise, which is a reasonable answer and what every lot got
+     * before this was askable.
+     */
+    public function maturityDays(): ?int
+    {
+        $mine = (int) ($this->daysToMaturity ?? 0);
+
+        return $mine > 0 ? $mine : \App\Support\CropStages::maturity($this->crop);
+    }
+
+    /**
+     * How old this lot's trees are, in whole months, or null if it is not a
+     * perennial or nobody has said when they went in.
+     *
+     * Worked out from the planting date every time it is asked, so it is
+     * right this season and right the next one. An age typed in and stored as
+     * a number would be wrong by exactly as long as the app had been running.
+     */
+    public function treeAgeMonths(): ?int
+    {
+        if (! $this->treePlantedAt || ! \App\Support\CropStages::isPerennial($this->crop)) {
+            return null;
+        }
+
+        return max(0, (int) $this->treePlantedAt->diffInMonths(now('Asia/Manila')));
+    }
 
     /** Human-readable full address for display, e.g. "Brgy. San Jose, Zone 3, Talavera, Nueva Ecija". */
     public function getFullAddressAttribute(): string

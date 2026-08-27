@@ -58,7 +58,12 @@ class GrowthStageController extends BaseScheduleController
             $age = \App\Support\LotCalendar::ageOf($lot, $on, $dayZeroEff[$lot->id] ?? null, $transplantEff[$lot->id] ?? null);
             // The counter is not decoration: rice read in DAS was direct
             // seeded and has a different calendar from transplanted rice.
-            $stage = $crop && $age ? CropStages::stageFor($crop, $age['day'], $age['counter']) : null;
+            // The lot's own days to maturity when it knows them: a 105-day
+            // variety and a 120-day one do not reach panicle initiation on
+            // the same day, and reading both against one figure is how a
+            // farmer gets told they have three weeks left when they have one.
+            $maturity = $lot->maturityDays();
+            $stage = $crop && $age ? CropStages::stageFor($crop, $age['day'], $age['counter'], $maturity) : null;
 
             $rows[] = [
                 'lot' => $lot,
@@ -67,8 +72,10 @@ class GrowthStageController extends BaseScheduleController
                 'icon' => CropStages::icon($lot->crop),
                 'age' => $age,
                 'stage' => $stage,
+                'isTree' => CropStages::isPerennial($crop),
+                'maturity' => $maturity,
                 'tips' => $stage ? CropStageTips::for($crop, $stage['index'], $age['counter'] ?? null) : ['do' => [], 'watch' => []],
-                'timeline' => $crop ? CropStages::timeline($crop, $age['day'] ?? null, $age['counter'] ?? null) : [],
+                'timeline' => $crop ? CropStages::timeline($crop, $age['day'] ?? null, $age['counter'] ?? null, $maturity) : [],
                 // Why a lot cannot be read, said plainly, because "no stage"
                 // on its own is not a useful answer.
                 'blocked' => $this->whyBlocked($lot, $crop, $age, isset($dayZeroEff[$lot->id])),
@@ -88,6 +95,7 @@ class GrowthStageController extends BaseScheduleController
         return match (strtoupper((string) ($mode ?: 'DAT'))) {
             'DAS' => 'Direct seeded — one count from sowing',
             'DAP' => 'Counted from planting',
+            'TREE' => 'A standing crop — read by the age of the trees',
             default => 'Sown, then transplanted — DAS until the transplant, DAT after',
         };
     }
@@ -96,6 +104,11 @@ class GrowthStageController extends BaseScheduleController
     {
         if (! $crop) {
             return 'No crop set on this lot. Open Lots and say what is growing here.';
+        }
+        // A tree is not waiting for a day zero; it is waiting to be told how
+        // old it is, which is a different thing and a different fix.
+        if (! $age && CropStages::isPerennial($crop)) {
+            return 'No age on these trees yet. Open Lots and say how old they are — that is what their guidance is read against.';
         }
         if (! $age) {
             return $hasDayZero
