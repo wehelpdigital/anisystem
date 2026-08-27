@@ -128,12 +128,13 @@
             <span class="sched-fact"><span class="sf-emoji">🌱</span>Started {{ $schedule->created_at->format('M j, Y') }}</span>
         </div>
 
-        <div class="sched-foot">
-            @include('sm.partials.community-switch', ['schedule' => $schedule])
+        {{-- The share-to-community switch used to stand here. Sharing a whole
+             plan into the community is retired — the community talks in posts
+             and discussions now — so the toggle and the "View in Community"
+             link it turned on have both gone. The row keeps its shape by
+             pushing the one remaining control to the right. --}}
+        <div class="sched-foot sched-foot-end">
             <div class="flex items-center gap-3 shrink-0">
-                @if ($schedule->isPublic)
-                    <a href="{{ route('community.show', ['id' => $schedule->id]) }}" class="text-xs font-semibold text-brand-700 hover:text-brand-800">View in Community →</a>
-                @endif
                 {{-- "Mark completed" sounded like ticking a task off. What the
                      button does is close the season and lock it, and the way
                      back is Reopen — so it says that. --}}
@@ -213,6 +214,9 @@
             background: var(--color-gray-50, #f9fafb); border: 1px solid var(--color-gray-200, #e5e7eb);
             color: var(--color-gray-700, #374151); }
         .sf-emoji { font-size: .85rem; line-height: 1; }
+        /* With the share switch gone the row has one child; space-between
+           would leave it hard against the left edge of a full-width bar. */
+        .sched-foot-end { justify-content: flex-end !important; }
         .sched-foot { display: flex; align-items: center; justify-content: space-between; gap: .75rem;
             flex-wrap: wrap; margin-top: .9rem; padding: .7rem 1.1rem;
             background: var(--color-gray-50, #f9fafb);
