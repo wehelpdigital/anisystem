@@ -602,7 +602,12 @@
         @if ($group->creator)
             <p class="disc-started">
                 @include('community.partials.avatar', ['user' => $group->creator, 'size' => 'avatar-sm', 'link' => false])
-                <span>Started by <a href="{{ route('community.connect.profile', ['userId' => $group->creator->id]) }}">{{ $group->creator->full_name }}</a>@include('community.partials.top-badge', ['topUser' => $group->creator])@if ($group->created_at) · {{ $group->created_at->timezone('Asia/Manila')->format('M Y') }}@endif</span>
+                {{-- The badge goes on its own line in the source so a space
+                     survives between it and the name. Glued to the closing
+                     </a> it renders touching the last letter. --}}
+                <span>Started by <a href="{{ route('community.connect.profile', ['userId' => $group->creator->id]) }}">{{ $group->creator->full_name }}</a>
+                    @include('community.partials.top-badge', ['topUser' => $group->creator])
+                    @if ($group->created_at) · {{ $group->created_at->timezone('Asia/Manila')->format('M Y') }}@endif</span>
             </p>
         @endif
         @if ($group->description)
