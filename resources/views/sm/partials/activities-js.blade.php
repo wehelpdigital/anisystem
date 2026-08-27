@@ -449,6 +449,9 @@ document.addEventListener('DOMContentLoaded', () => {
         pill.title = detail;
         pill.setAttribute('aria-label', 'Growth stage — ' + detail);
         pill.setAttribute('data-date', dateKey);
+        // Remembered so the cost pill, which repaints on its own schedule,
+        // can re-fit the line without re-deriving what this one stands for.
+        pill.dataset.lots = String(rows.length);
         // Now that it is showing, the second line is wanted.
         syncRowBreak(header);
         fitDayStage(pill, rows.length);
@@ -1395,17 +1398,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
         pill.hidden = total <= 0;
         if (total > 0) {
+            // The exact figure is kept on the element, because when the line
+            // will not hold it the pill is rewritten short and the number it
+            // was rounded from would otherwise be gone.
+            pill.dataset.total = String(total);
+            delete pill.dataset.short;
             pill.innerHTML = `${SVG.wallet}<span>${esc(money(total))}</span>`;
             pill.title = 'Cash to prepare for this day — wages for everyone on it, plus any extra expense logged against it';
         } else {
             pill.textContent = '';
+            delete pill.dataset.total;
+            delete pill.dataset.short;
         }
 
         // The forecast, the cost and the growth stage share a second line.
         // CSS order puts them after everything else; the break is what makes
         // "after" mean "next line" — and the header itself is asked what is
         // down there, so no one painter has to know about the others.
-        syncRowBreak(group.querySelector('.date-header'));
+        const header = group.querySelector('.date-header');
+        syncRowBreak(header);
+        // The cost is the widest thing on that line, so it is the arrival
+        // most likely to push it over. Re-fit with what is there now.
+        fitDayFacts(header, dayStageLots(group));
+    }
+
+    /** How many lots the day's stage pill is standing for, if it has one. */
+    function dayStageLots(group) {
+        const pill = group?.querySelector('.date-header-stage:not([hidden])');
+        const n = Number(pill?.dataset.lots);
+        return Number.isFinite(n) ? n : NaN;
     }
     /* A number nobody can check is a number nobody trusts. Tapping it shows
        the same arithmetic in longhand: one line per activity with who is on
@@ -1511,13 +1532,36 @@ document.addEventListener('DOMContentLoaded', () => {
      * on a tablet and does not on a phone, and neither does it fit or not
      * according to how long the weather chip happens to be that morning.
      */
-    function fitDayStage(pill, lots) {
-        const header = pill.closest('.date-header');
-        if (!header || pill.hidden) return;
+    /**
+     * A sum in as few characters as it can be said in.
+     *
+     * ₱1.2k rather than ₱1,200.00. Only ever used when the exact figure will
+     * not fit on the line — the pill opens a sheet with the arithmetic in
+     * longhand, so nothing is lost by rounding the headline.
+     */
+    function moneyShort(n) {
+        const v = Math.round(Number(n) || 0);
+        // The thresholds sit just under the round number, not on it, because
+        // the rounding happens after: ₱999,999 is a million to one decimal
+        // place, and testing against 1,000,000 would have called it ₱1000k.
+        if (v >= 999500) {
+            const m = v / 1000000;
+            return '₱' + (m >= 10 ? Math.round(m) : m.toFixed(1).replace(/\.0$/, '')) + 'M';
+        }
+        if (v >= 1000) {
+            const k = v / 1000;
+            return '₱' + (k >= 10 ? Math.round(k) : k.toFixed(1).replace(/\.0$/, '')) + 'k';
+        }
+        return '₱' + v;
+    }
 
-        const facts = () => [pill, header.querySelector('.day-warn-btn'),
-            header.querySelector('.date-header-weather, .wx-mini-btn'),
-            header.querySelector('.date-header-cash:not([hidden])')].filter(Boolean);
+    function fitDayFacts(header, lots) {
+        if (!header) return;
+
+        const stage = () => header.querySelector('.date-header-stage:not([hidden])');
+        const cash = () => header.querySelector('.date-header-cash:not([hidden])');
+        const wx = () => header.querySelector('.date-header-weather, .wx-mini-btn');
+        const facts = () => [stage(), header.querySelector('.day-warn-btn'), wx(), cash()].filter(Boolean);
 
         /* One line, or two?
          *
@@ -1532,12 +1576,78 @@ document.addEventListener('DOMContentLoaded', () => {
             return rows.some((el) => Math.abs(middle(el) - m) > 8);
         };
 
+        /* The facts give way in the order of what is least worth reading off
+         * the board.
+         *
+         * The stage's NAME goes first: "Booting & heading" is one tap away in
+         * the sheet the pill opens, and the count of lots is the part nobody
+         * can work out by looking. The exact peso goes next, for the same
+         * reason — ₱1.2k answers "roughly how much" and the sheet answers the
+         * rest. The forecast folds last, because it is the only one of the
+         * three that is about what is going to happen rather than what is
+         * already recorded.
+         *
+         * Nothing is ever dropped. Each step is a shorter way of saying the
+         * same thing, and each is checked before the next is spent. */
+        const steps = [
+            () => {
+                const pill = stage();
+                if (!pill) return false;
+                /* Told, or read off the pill. The cost repaints on its own
+                 * and does not know what the stage stands for; the day's
+                 * first paint runs the cost before the stage. Either way the
+                 * pill itself knows, so this never depends on who called. */
+                const n = Number.isFinite(lots) ? lots : Number(pill.dataset.lots);
+                if (!Number.isFinite(n)) return false;
+                const short = n + ' lot' + (n === 1 ? '' : 's');
+                const word = pill.querySelector('span:last-child');
+                if (!word || word.textContent === short) return false;
+                if (!pill.title) pill.title = 'What the crop is doing on this day';
+                word.textContent = short;
+                return true;
+            },
+            () => {
+                const pill = cash();
+                if (!pill || pill.dataset.short === '1') return false;
+                const total = Number(pill.dataset.total || 0);
+                const word = pill.querySelector('span:last-child');
+                if (!word || !total) return false;
+                word.textContent = moneyShort(total);
+                pill.dataset.short = '1';
+                return true;
+            },
+            () => {
+                const strip = header.querySelector('.date-header-weather');
+                if (!strip) return false;   // already a button, or no forecast
+                const n = strip.querySelectorAll('.js-wx-chip').length;
+                // One forecast is never worth folding: "1 lot" says less than
+                // the chip it replaced.
+                if (n <= 1) return false;
+                const first = strip.querySelector('.wx-emoji');
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'wx-mini-btn';
+                btn.title = 'Weather for each lot';
+                btn.setAttribute('aria-label', 'Weather for each lot');
+                btn.innerHTML = '<span class="wx-emoji">' + (first ? first.textContent : '⛅') + '</span>'
+                    + '<span>' + n + ' lots</span>';
+                btn.dataset.wxFor = strip.dataset.wxFor || '';
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();          // not a fold of the day
+                    $id('weatherBtn')?.click();
+                });
+                strip.replaceWith(btn);
+                return true;
+            },
+        ];
+
         const settle = () => {
-            if (!wrapped()) return;
-            const short = lots + ' lot' + (lots === 1 ? '' : 's');
-            const word = pill.querySelector('span:last-child');
-            if (!word || word.textContent === short) return;
-            word.textContent = short;
+            for (const step of steps) {
+                if (!wrapped()) return;
+                // A step that had nothing left to give does not count as an
+                // attempt: fall straight through to the next one.
+                step();
+            }
         };
         /* Measured twice: once now, because reading offsetTop has already
          * forced the layout the pill was just written into, and once on the
@@ -1546,6 +1656,12 @@ document.addEventListener('DOMContentLoaded', () => {
         settle();
         requestAnimationFrame(settle);
     }
+
+    /** Kept for the stage painter, which knows the lot count. */
+    function fitDayStage(pill, lots) {
+        if (pill && !pill.hidden) fitDayFacts(pill.closest('.date-header'), lots);
+    }
+    window.__fitDayFacts = fitDayFacts;
 
     /* Which of the three second-line facts are actually showing decides
        whether the break belongs there at all. Asked of the header rather
@@ -6987,6 +7103,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.__ensureRowBreak?.(header, true);
                 header.appendChild(strip);
                 collapseIfCramped(strip);
+                /* The forecast is the last of the three facts to arrive, so
+                 * this is the moment the line is finally whole — and the
+                 * moment a day that fit without it may no longer. Read off
+                 * the pill rather than asked of the painter: this block runs
+                 * in its own scope, which is why the helpers around it are
+                 * reached through window. */
+                const lotCount = Number(header.querySelector('.date-header-stage:not([hidden])')?.dataset.lots);
+                window.__fitDayFacts?.(header, lotCount);
             });
             $qsa('#activitiesList .rest-day-marker[data-date]').forEach((m) => {
                 const seen = m.querySelectorAll(WX_ANY);
