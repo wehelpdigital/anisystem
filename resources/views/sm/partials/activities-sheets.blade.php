@@ -118,7 +118,11 @@
                     </button>
                     <button type="button" class="when-tab" id="whenTabDas" aria-selected="false">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/></svg>
-                        By <span class="day-type-label">{{ $schedule->dayType }}</span>
+                        {{-- The counter belongs to the LOT, not the season: a
+                             mango orchard beside a rice field keeps no DAT.
+                             activities-js repaints this from whichever
+                             reference lot is chosen. --}}
+                        By <span class="act-day-label">{{ $schedule->dayType }}</span>
                     </button>
                 </div>
                 <div id="whenPaneDate" class="when-pane">
@@ -149,7 +153,7 @@
                         <select id="activityDasRefLot" class="form-select"></select>
                     </div>
                     <div>
-                        <label class="form-label" for="activityStartDas"><span class="day-type-label">{{ $schedule->dayType }}</span> day</label>
+                        <label class="form-label" for="activityStartDas"><span class="act-day-label">{{ $schedule->dayType }}</span> day</label>
                         <input type="number" id="activityStartDas" class="form-input" step="1" placeholder="e.g. 21">
                     </div>
                 </div>

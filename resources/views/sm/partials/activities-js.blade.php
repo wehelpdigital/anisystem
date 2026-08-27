@@ -3355,6 +3355,28 @@ document.addEventListener('DOMContentLoaded', () => {
         refreshActivityDasRow();
     });
 
+    /* ---- What the lens is counting ------------------------------------
+     * The counter belongs to the LOT, not to the season. A schedule set to
+     * DAT can hold a mango orchard, and "DAT day" over a five-year-old tree
+     * is a number about a seedling.
+     *
+     * The lens always measures from the lot's day zero and never from a
+     * transplant date, so what belongs on the label is the BASE counter:
+     * DAS or DAP on a field, and on a standing orchard DOS — the day the
+     * plan started watching, which is the only thing there is to count from
+     * when nothing was sown this season. (The Day-0 panel has said DOS on
+     * tree lots since it learned to; this is the same word.) */
+    function activityRefCounter() {
+        const lotId = parseInt($id('activityDasRefLot')?.value, 10);
+        if (!lotId) return dayType();
+        return lotIsTree(lotId) ? 'DOS' : lotBaseCounter(lotId);
+    }
+
+    function paintActivityCounter() {
+        const c = activityRefCounter();
+        $qsa('.act-day-label').forEach((el) => { el.textContent = c; });
+    }
+
     // ---- DAS day-number lens over the date inputs ----
     function _activityDasAnchor() {
         const lotId = parseInt($id('activityDasRefLot')?.value, 10);
@@ -3388,7 +3410,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateActivityDasNote() {
         const anchor = _activityDasAnchor();
         if (!anchor) return;
-        const dt = dayType();
+        const dt = activityRefCounter();
         const sel = $id('activityDasRefLot');
         const lotName = sel.options[sel.selectedIndex]?.textContent || '';
         const s = $id('activityTargetDate').value;
@@ -3456,6 +3478,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sel.appendChild(opt);
         });
         if (candidates.includes(prev)) sel.value = prev;
+        paintActivityCounter();
         syncActivityDasFromDates();
     }
 
@@ -3483,7 +3506,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     $id('activityTargetDate')?.addEventListener('change', syncActivityDasFromDates);
     $id('activityTargetEndDate')?.addEventListener('change', syncActivityDasFromDates);
-    $id('activityDasRefLot')?.addEventListener('change', syncActivityDasFromDates);
+    $id('activityDasRefLot')?.addEventListener('change', () => {
+        paintActivityCounter();
+        syncActivityDasFromDates();
+    });
     $id('activityIsDayZero')?.addEventListener('change', refreshActivityDasRow);
     // Start date feeds the transplant cutoff (>= 40 DAS hides the DAT 0 toggle).
     $id('activityTargetDate')?.addEventListener('change', refreshDayZeroToggleVisibility);
@@ -5497,6 +5523,10 @@ document.addEventListener('DOMContentLoaded', () => {
     /** Which counts the chosen lot keeps, in the order they run. */
     function moveCountersFor(lotId) {
         const mode = lotDayType(lotId);
+        // A standing orchard keeps none of the field counters: nothing was
+        // sown or planted this season, so the only thing to count from is the
+        // day the plan started watching it.
+        if (mode === 'TREE') return ['DOS'];
         if (mode === 'DAP') return ['DAP'];
         // A sown-then-transplanted lot keeps two, and only once it has a
         // transplant date to count the second one from.
