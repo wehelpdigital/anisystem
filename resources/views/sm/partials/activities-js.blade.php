@@ -1758,8 +1758,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.boardVeilStep = (what) => {
         boardReady[what] = true;
-        const text = $id('boardVeilText');
-        if (text && what === 'cash' && !boardReady.weather) text.textContent = 'Fetching the forecast…';
+        // The wait keeps talking: when the figures land and the sky has not,
+        // the card turns over to another line rather than announcing which
+        // internal step it is on — nobody waiting on a board cares which.
+        if (what === 'cash' && !boardReady.weather) window.rollWaitLine?.();
         if (boardReady.cash && boardReady.weather) liftVeil('both');
     };
     // Nothing may ever answer — no network, no API key, an empty board. The
