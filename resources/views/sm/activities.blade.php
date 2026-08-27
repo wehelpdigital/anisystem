@@ -2899,7 +2899,11 @@
              all. --}}
         <button type="button" id="mirrorBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
                 title="Mirror — read the whole plan" aria-label="Mirror: read the whole plan">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><ellipse cx="12" cy="9" rx="6.5" ry="7.5"/><path stroke-linecap="round" d="M12 16.5V21m-3 0h6"/><path stroke-linecap="round" opacity=".55" d="M9.4 5.6a4.6 5.4 0 00-1.6 3.6"/></svg>
+            {{-- A reflection, not a hand mirror. The oval-on-a-stick read as a
+                 lollipop at 16px and said nothing about what the button does;
+                 a page with its own reflection under a dashed line says both
+                 halves of it — the plan, held up to be read. --}}
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="8.5" rx="1.6"/><path stroke-linecap="round" stroke-dasharray="2.6 2.2" d="M2.5 13.5h19"/><rect x="6.5" y="15.5" width="11" height="5.5" rx="1.4" opacity=".42"/></svg>
         </button>
         <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative toolbar-in-menu" data-activities-only disabled title="Nothing to undo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>

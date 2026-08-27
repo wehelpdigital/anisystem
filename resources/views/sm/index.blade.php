@@ -212,6 +212,31 @@
         /* ---- the shelf's own controls: how it is arranged, and shutting
            all of it at once ---- */
         .sch-bar { display: flex; align-items: center; gap: .5rem; margin-bottom: .75rem; }
+        /* ---- The Archives banner --------------------------------------
+           The way back wears the community Search button's shape — a green
+           outline with its icon — because it is the one deliberate thing on
+           this page and should look like the app's other deliberate things. */
+        .sch-arch { margin-bottom: 1rem; }
+        .sch-arch-back { display: inline-flex; align-items: center; gap: .4rem;
+            padding: .5rem .95rem; border-radius: 999px; cursor: pointer;
+            font-size: .82rem; font-weight: 700; text-decoration: none;
+            color: #2f5a17; background: var(--color-white);
+            border: 1.5px solid #4a7c2a;
+            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+        .sch-arch-back svg { width: .95rem; height: .95rem; }
+        .sch-arch-back:hover { background: #f2f8ec; color: #24380f; }
+        .sch-arch-say { display: flex; align-items: flex-start; gap: .85rem; margin-top: .9rem; }
+        .sch-arch-ico { flex: none; width: 2.75rem; height: 2.75rem; border-radius: .9rem;
+            display: inline-flex; align-items: center; justify-content: center;
+            background: #eef2f7; color: #55617a; }
+        .sch-arch-ico svg { width: 1.4rem; height: 1.4rem; }
+        .sch-arch-h { font-size: 1.15rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.25; }
+        .sch-arch-p { font-size: .82rem; line-height: 1.55; color: var(--color-gray-500); margin-top: .15rem; }
+        html.dark .sch-arch-back { background: #151b12; color: #a5c97e; border-color: #4a7c2a; }
+        html.dark .sch-arch-ico { background: rgb(255 255 255 / .06); color: #a8bd93; }
+        html.dark .sch-arch-h { color: #e8efe1; }
+        @media (prefers-reduced-motion: reduce) { .sch-arch-back { transition: none; } }
+
         .sch-pill { display: inline-flex; align-items: center; gap: .35rem; flex: none;
             padding: .35rem .75rem; border-radius: 999px; cursor: pointer;
             font-size: .76rem; font-weight: 700; color: var(--color-gray-600);
@@ -564,6 +589,33 @@
         @endif
     @endif
 
+    {{-- The Archives is a different page.
+
+         Everything above the list — the greeting, the season counts, the
+         quick tools, the "here are your cropping schedules for today" — is
+         about the work in front of somebody. None of it is true of a shelf of
+         finished seasons, and all of it stands between a reader and the one
+         thing they came here to find. The archives get their own banner
+         instead, and then the list. --}}
+    @if ($showArchived ?? false)
+        <div class="sch-arch">
+            <a href="{{ route('sm.index') }}" class="sch-arch-back">
+                <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                Back to seasons
+            </a>
+            <div class="sch-arch-say">
+                <span class="sch-arch-ico" aria-hidden="true">
+                    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6.5h18v3H3zM4.5 9.5v9a2 2 0 002 2h11a2 2 0 002-2v-9"/><path stroke-linecap="round" d="M10 13.5h4"/></svg>
+                </span>
+                <div class="min-w-0">
+                    <h1 class="sch-arch-h">Archives</h1>
+                    <p class="sch-arch-p">{{ $archivedCount }} closed
+                        {{ \Illuminate\Support\Str::plural('season', $archivedCount) }}. Open any of them to
+                        read or reopen — reopening puts it back on the shelf.</p>
+                </div>
+            </div>
+        </div>
+    @else
     <div class="sch-hero">
         @php
             // No hour in the greeting any more. This page is a list of
@@ -688,6 +740,7 @@
               </div>
             </div>
         </section>
+    @endif
 
         {{-- Search runs as you type (see the script below); the button-less form
              still submits on Enter as a no-JS fallback. --}}
@@ -735,17 +788,11 @@
                  not gone either, and this is the door to it. Drawn only when
                  there is something behind the door, except while you are
                  standing in it. --}}
-            @if (($archivedCount ?? 0) > 0 || ($showArchived ?? false))
-                <a href="{{ ($showArchived ?? false) ? route('sm.index') : route('sm.index', ['archived' => 1]) }}"
-                   class="sch-pill sch-archives{{ ($showArchived ?? false) ? ' is-set' : '' }}">
-                    @if ($showArchived ?? false)
-                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                        Back to seasons
-                    @else
-                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M6 7v11a2 2 0 002 2h8a2 2 0 002-2V7M9 4h6M10 11h4"/></svg>
-                        Archives
-                        <span class="sch-pill-now">{{ $archivedCount }}</span>
-                    @endif
+            @if (($archivedCount ?? 0) > 0 && ! ($showArchived ?? false))
+                <a href="{{ route('sm.index', ['archived' => 1]) }}" class="sch-pill sch-archives">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6.5h18v3H3zM4.5 9.5v9a2 2 0 002 2h11a2 2 0 002-2v-9"/><path stroke-linecap="round" d="M10 13.5h4"/></svg>
+                    Archives
+                    <span class="sch-pill-now">{{ $archivedCount }}</span>
                 </a>
             @endif
         </div>
@@ -970,8 +1017,11 @@
          was read by nobody at the bottom of this list. --}}
 
     {{-- One floating button, for the one thing this page exists to start —
-         and nothing a worker can start, so it is not drawn for them. --}}
-    @if (! $isWorkerHere)
+         and nothing a worker can start, so it is not drawn for them. Nor in
+         the Archives: a shelf of finished seasons is not where anybody starts
+         a new one, and a green + hanging over closed work reads as an
+         invitation to do the wrong thing. --}}
+    @if (! $isWorkerHere && ! ($showArchived ?? false))
     <a href="{{ route('sm.create') }}"
         class="md:hidden fixed right-4 z-30 w-14 h-14 rounded-full btn-primary shadow-lg flex items-center justify-center sweep-fill sweep-green"
         style="bottom: calc(3.5rem + 30px + env(safe-area-inset-bottom, 0px))"

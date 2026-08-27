@@ -928,11 +928,14 @@
              wrong when they come back to it on Friday. --}}
         @if (! $isWorker)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetLock }}" data-action="iv-out" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>
-            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/><path stroke-linecap="round" d="M9 12h6"/></svg>
+            {{-- Spending is a box LEAVING: an arrow out of the shed. --}}
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 4H6a2 2 0 00-2 2v12a2 2 0 002 2h5"/><path stroke-linecap="round" stroke-linejoin="round" d="M16 8l4 4-4 4M20 12H10"/></svg>
             Expense an inventory
         </button>
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetLock }}" data-action="iv-in" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>
-            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/><path stroke-linecap="round" d="M12 9v6M9 12h6"/></svg>
+            {{-- Shelving is a box ARRIVING: an arrow into the shed, and the box
+                 kept whole so the pair reads as one errand in two directions. --}}
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 4h5a2 2 0 012 2v12a2 2 0 01-2 2h-5"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 8l-4 4 4 4M4 12h10"/></svg>
             Add new inventory
         </button>
         @endif
