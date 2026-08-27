@@ -183,7 +183,11 @@
     .cph-wrap { display: flex; flex-direction: column; min-height: 0; height: 100%; gap: .4rem; }
     /* One button, and a line of words beside it. */
     /* The tab's own name, in the shape the chat and the whiteboard use. */
-    .cph-head { display: flex; align-items: center; gap: .5rem; padding: .1rem .1rem .15rem; }
+    /* The same head the other tabs wear (.collab-tabhead in collab.blade):
+       at .1rem the title sat on the panel's very top edge while every other
+       tab's had room above it, so switching to this one looked like the page
+       had jumped. */
+    .cph-head { display: flex; align-items: center; gap: .5rem; padding: .55rem .75rem .35rem; }
     .cph-title { font-size: .85rem; font-weight: 800; color: var(--color-gray-800); }
     html.dark .cph-title { color: #e8efe1; }
 

@@ -23,7 +23,14 @@
        goes away with no way back. */
     html.collab-embed .mod-say-x { display: none; }
     html.collab-embed .mod-say-wrap.is-away { grid-template-rows: 1fr; opacity: 1; margin-bottom: .85rem; }
-    html.collab-embed main { padding: .6rem .75rem 1rem !important; max-width: none !important; }
+    /* Enough headroom for the count badges, which hang ABOVE the buttons they
+       belong to: at .6rem the bell's number was sliced in half by the tab's
+       own "Team tasks" line sitting directly over the frame. */
+    html.collab-embed main { padding: 1.4rem .75rem 1rem !important; max-width: none !important; }
+    /* The version, Today and Add row is a second row of controls, not a
+       continuation of the first: two pixels under the toolbar's divider it
+       read as one crowded block with a line through the middle of it. */
+    html.collab-embed #actHeaderBar { margin-top: .9rem; }
     /* The sticky toolbar bleeds full-width via -mx-4/-mx-6 in the normal app; that
        bleed (up to 24px each side) exceeds the embed's smaller padding and causes a
        horizontal scrollbar. Neutralize it so the toolbar fits the embed width. */
