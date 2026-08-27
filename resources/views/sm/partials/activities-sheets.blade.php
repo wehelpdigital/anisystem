@@ -429,6 +429,24 @@
                             @endforeach
                         </datalist>
                     </div>
+                    {{-- THE OTHER HALF OF THE SHED.
+                         Above, a line can SPEND something the inventory
+                         already holds. Here it can put something new ON it:
+                         the material gets an entry in the Inventory module,
+                         with no stock and no movement, because writing an
+                         activity down is not the same as receiving a delivery.
+                         What it buys is that the thing now exists to be
+                         received against — and the next activity that needs it
+                         can pick it from the list above.
+                         Hidden while a stock item is chosen: that line is
+                         already about something on the shelf. --}}
+                    <label class="item-shed" id="itemToShedWrap">
+                        <input type="checkbox" id="itemToShed" class="form-checkbox">
+                        <span>
+                            <b>Also add it to the inventory</b>
+                            <i>Puts it on the shed's list so you can record deliveries and spend it from future activities. No stock is added.</i>
+                        </span>
+                    </label>
                     <button type="button" id="addItemBtn" class="btn btn-primary btn-sm w-full">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
                         Add to list

@@ -741,6 +741,21 @@
         html.dark .tt-open.is-set { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
         @media (prefers-reduced-motion: reduce) { .tt-open { transition: none; } }
 
+        /* "Also add it to the inventory" — a question with its reason under
+           it, because the difference between listing a material and shelving
+           one is not obvious from three words. */
+        .item-shed { display: flex; align-items: flex-start; gap: .5rem; cursor: pointer;
+            padding: .5rem .6rem; border-radius: .7rem;
+            background: var(--color-gray-50, #f9fafb); border: 1px solid var(--color-gray-200, #e5e7eb); }
+        .item-shed.hidden { display: none; }
+        .item-shed input { margin-top: .15rem; flex: none; }
+        .item-shed b { display: block; font-size: .78rem; font-weight: 800; color: var(--color-gray-800, #1f2937); }
+        .item-shed i { display: block; font-style: normal; font-size: .68rem; line-height: 1.45;
+            color: var(--color-gray-500, #6b7280); margin-top: .1rem; }
+        html.dark .item-shed { background: rgb(255 255 255 / .04); border-color: #2b3a1c; }
+        html.dark .item-shed b { color: #e8efe1; }
+        html.dark .item-shed i { color: #a8bd93; }
+
         .tt-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .1rem; }
         .tt-tag { padding: .35rem .7rem; border-radius: 999px; font-size: .78rem; font-weight: 700;
             border: 2px solid var(--color-gray-200); background: var(--color-white); color: #374151;

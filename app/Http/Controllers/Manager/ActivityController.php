@@ -1273,6 +1273,9 @@ class ActivityController extends BaseScheduleController
             'items.*.quantity'      => 'nullable|numeric|min:0',
             'items.*.unitOfMeasure' => 'nullable|string|max:30',
             'items.*.inventoryItemId' => 'nullable|integer',
+            // "Also put this on the shed": a line naming something the farm
+            // keeps but the inventory has never heard of.
+            'items.*.toShed' => 'nullable|boolean',
             'items.*.notes'         => 'nullable|string|max:500',
             // A reminder checklist: the day's errands, each optionally
             // carrying money that only counts once the line is ticked.
@@ -1452,6 +1455,30 @@ class ActivityController extends BaseScheduleController
                 foreach ((array) $request->input('items', []) as $item) {
                     $name = trim((string) ($item['itemName'] ?? ''));
                     if ($name === '') continue;
+                    /* A line that names something new for the shed puts it
+                     * there. Only the ITEM is created — no stock and no move:
+                     * writing an activity down is not the same as receiving a
+                     * delivery, and inventing one would leave the shed saying
+                     * the farm holds something nobody bought. What it buys is
+                     * that the thing now exists to be received against, and
+                     * the next activity can spend it.
+                     *
+                     * Keyed on the name within this season, so ticking the box
+                     * twice for the same material does not shelve it twice. */
+                    if (! empty($item['toShed']) && empty($item['inventoryItemId'])) {
+                        $shelved = \App\Models\AsInventoryItem::firstOrCreate(
+                            [
+                                'croppingScheduleId' => $activity->croppingScheduleId,
+                                'name' => $name,
+                                'deleteStatus' => 1,
+                            ],
+                            [
+                                'kind' => 'other',
+                                'unit' => $this->shedUnit($item['unitOfMeasure'] ?? null),
+                            ]
+                        );
+                        $item['inventoryItemId'] = $shelved->id;
+                    }
                     AsScheduleActivityItem::create([
                         'activityId'    => $activity->id,
                         'itemType'      => 'custom',
@@ -2130,6 +2157,27 @@ class ActivityController extends BaseScheduleController
      * @param  array<int, int>  $workerIds
      * @return array<int, array<string, mixed>>
      */
+    /**
+     * The shed's unit for a line's free-text one.
+     *
+     * An activity line may say "bottle", "sack" or "cavan" — words about how a
+     * thing is bought. The inventory counts in a fixed base unit and says the
+     * pack separately, so anything it does not know becomes a piece: one
+     * bottle is one thing on the shelf, which is true and countable, and the
+     * farmer can set the real unit in the inventory module afterwards.
+     */
+    private function shedUnit(?string $unit): string
+    {
+        $u = trim(mb_strtolower((string) $unit));
+        foreach (\App\Models\AsInventoryItem::UNITS as $known) {
+            if ($u === mb_strtolower($known)) {
+                return $known;
+            }
+        }
+
+        return $u === 'l' ? 'L' : 'piece';
+    }
+
     private function workerPivot(Request $request, array $workerIds): array
     {
         $pay = (array) $request->input('workerPay', []);

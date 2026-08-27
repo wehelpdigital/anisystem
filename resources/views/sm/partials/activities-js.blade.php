@@ -3898,7 +3898,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     $id('itemNameInput')?.addEventListener('input', (e) => refreshPriceDatalistFor(e.target.value));
 
-    function appendItemTag(name, price, qty, unit, stockId) {
+    function appendItemTag(name, price, qty, unit, stockId, toShed) {
         const unitSafe = unit || '';
         const priceNum = (price !== '' && price != null && !isNaN(parseFloat(price))) ? parseFloat(price) : null;
         const qtyText = `&nbsp;×${esc(trimQty(qty || 1))}${unitSafe ? ' ' + esc(unitSafe) : ''}`;
@@ -3907,9 +3907,13 @@ document.addEventListener('DOMContentLoaded', () => {
            activity will take it off the shelf, and somebody scanning the row
            later should be able to see which lines will do that. */
         const fromShed = stockId ? ' <span class="item-tag-stock" title="Comes off the inventory when this activity is ticked done">📦</span>' : '';
+        /* A different mark for a different promise: this one is not spending
+           anything, it is putting the material on the shed's list when the
+           activity saves. */
+        const toShedMark = (!stockId && toShed) ? ' <span class="item-tag-stock" title="Will be added to the inventory when this activity is saved">🆕</span>' : '';
         const html = `<span class="item-tag material-tag${stockId ? ' is-stock' : ''}"
-            data-name="${esc(name)}" data-price="${priceNum != null ? esc(String(priceNum)) : ''}" data-qty="${esc(trimQty(qty || 1))}" data-unit="${esc(unitSafe)}" data-stock="${stockId ? esc(String(stockId)) : ''}">
-            <strong>${esc(name)}</strong>${qtyText}${priceText}${fromShed}
+            data-name="${esc(name)}" data-price="${priceNum != null ? esc(String(priceNum)) : ''}" data-qty="${esc(trimQty(qty || 1))}" data-unit="${esc(unitSafe)}" data-stock="${stockId ? esc(String(stockId)) : ''}" data-toshed="${(!stockId && toShed) ? '1' : ''}">
+            <strong>${esc(name)}</strong>${qtyText}${priceText}${fromShed}${toShedMark}
             <button type="button" class="remove-item-tag" aria-label="Remove">✕</button>
         </span>`;
         $id('itemsContainer').insertAdjacentHTML('beforeend', html);
@@ -3932,6 +3936,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sel.innerHTML = '<option value="">No — just list it on this activity</option>'
             + items.map((i) => `<option value="${i.id}" data-unit="${esc(i.unit)}" data-name="${esc(i.name)}">${esc(i.icon + ' ' + i.name)} — ${esc(i.says)}</option>`).join('');
         sayStockPick();
+        syncToShedVisibility();
     }
 
     function sayStockPick() {
@@ -3953,7 +3958,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (nameBox && !nameBox.value.trim()) nameBox.value = opt.getAttribute('data-name') || '';
         if (unitBox) unitBox.value = opt.getAttribute('data-unit') || '';
     }
-    $id('itemStockPick')?.addEventListener('change', sayStockPick);
+
+    /* The two halves of the shed are alternatives, never both: a line taking
+       Urea off the shelf cannot also be putting Urea on it. */
+    function syncToShedVisibility() {
+        const taking = !!($id('itemStockPick')?.value);
+        const wrap = $id('itemToShedWrap');
+        if (!wrap) return;
+        wrap.classList.toggle('hidden', taking);
+        if (taking && $id('itemToShed')) $id('itemToShed').checked = false;
+    }
+    $id('itemStockPick')?.addEventListener('change', () => { sayStockPick(); syncToShedVisibility(); });
 
     function fmtMoney(n) {
         return Number(n || 0).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -4078,7 +4093,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         const stockId = $id('itemStockPick')?.value || '';
-        appendItemTag(name, price, qty, unit, stockId);
+        const toShed = !stockId && !!$id('itemToShed')?.checked;
+        appendItemTag(name, price, qty, unit, stockId, toShed);
         rememberItem(name, price, unit);
         refreshNameDatalist();
         // Clear the fields for the next item, keep the panel open.
@@ -4087,6 +4103,8 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('itemQtyInput').value = '1';
         $id('itemUnitInput').value = '';
         if ($id('itemStockPick')) { $id('itemStockPick').value = ''; sayStockPick(); }
+        if ($id('itemToShed')) $id('itemToShed').checked = false;
+        syncToShedVisibility();
         $id('itemNameInput').focus();
     });
 
@@ -4282,6 +4300,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // has to travel with them or the line quietly stops spending
             // stock the next time the activity is edited.
             inventoryItemId: tag.getAttribute('data-stock') || null,
+            // Put it on the shed's list when this saves. The server keys on
+            // the name within the season, so an edit that saves the same line
+            // again does not shelve it twice.
+            toShed: tag.getAttribute('data-toshed') ? 1 : 0,
         })).filter((it) => it.itemName);
         const isIrrigation = activityMode === 'irrigation';
         const isService = activityMode === 'service';
