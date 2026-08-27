@@ -101,52 +101,58 @@
 
         <div data-set-pane="notify" hidden>
             <div class="card">
-                <div class="card-body space-y-4">
-                    <div>
-                        <h2 class="font-bold text-gray-900">Daily schedule email</h2>
-                        <p class="text-sm text-gray-500">
-                            One message each morning with what is on today and what is coming tomorrow, so nobody
-                            has to open the app to find out where to be.
-                        </p>
+                <div class="card-body">
+                    {{-- The head says what the whole pane is for before any
+                         switch does, because "notifications" on its own could
+                         mean six different things. --}}
+                    <div class="nt-head">
+                        <span class="nt-head-mark" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </span>
+                        <div class="min-w-0">
+                            <h2 class="nt-head-h">Daily schedule email</h2>
+                            <p class="nt-head-p">One message each morning with what is on today and what is
+                                coming tomorrow, so nobody has to open the app to find out where to be.</p>
+                        </div>
                     </div>
 
-                    <label class="flex items-start gap-3 cursor-pointer select-none">
-                        <input type="checkbox" id="notifyWorkersDaily" @disabled($setWorker) class="mt-1 w-5 h-5 rounded"
-                               @checked($schedule->notifyWorkersDaily)>
-                        <span class="text-sm text-gray-700">
-                            <strong class="text-gray-900">Email the workers</strong><br>
-                            Each worker gets only the activities they are actually on. A worker with no email
-                            address on file is skipped.
-                        </span>
-                    </label>
+                    {{-- Each answer is a card you can tap anywhere on, not a
+                         checkbox with a paragraph standing beside it. Two of
+                         them side by side once there is room. --}}
+                    <div class="nt-picks">
+                        <label class="nt-pick">
+                            <input type="checkbox" id="notifyWorkersDaily" @disabled($setWorker) @checked($schedule->notifyWorkersDaily)>
+                            <span class="nt-pick-body">
+                                <b>Email the workers</b>
+                                <i>Each worker gets only the activities they are actually on. Anyone with
+                                   no address on file is skipped.</i>
+                            </span>
+                        </label>
 
-                    <label class="flex items-start gap-3 cursor-pointer select-none">
-                        <input type="checkbox" id="notifyOwnerDaily" @disabled($setWorker) class="mt-1 w-5 h-5 rounded"
-                               @checked($schedule->notifyOwnerDaily)>
-                        <span class="text-sm text-gray-700">
-                            <strong class="text-gray-900">Email me</strong><br>
-                            The whole day, every activity, whoever is on it.
-                        </span>
-                    </label>
+                        <label class="nt-pick">
+                            <input type="checkbox" id="notifyOwnerDaily" @disabled($setWorker) @checked($schedule->notifyOwnerDaily)>
+                            <span class="nt-pick-body">
+                                <b>Email me</b>
+                                <i>The whole day — every activity, and whoever is on it.</i>
+                            </span>
+                        </label>
+                    </div>
 
-                    <div>
-                        <label class="form-label" for="notifyHour">Send at</label>
-                        <select id="notifyHour" class="form-select" style="max-width:12rem" @disabled($setWorker)>
+                    <div class="nt-when">
+                        <div class="min-w-0">
+                            <label class="form-label mb-1!" for="notifyHour">Send at</label>
+                            <p class="nt-when-p">Philippine time. Once a day — a re-run never sends twice.</p>
+                        </div>
+                        <select id="notifyHour" class="form-select nt-hour" @disabled($setWorker)>
                             @for ($h = 0; $h < 24; $h++)
                                 <option value="{{ $h }}" @selected((int) $schedule->notifyHour === $h)>
                                     {{ \Carbon\Carbon::createFromTime($h)->format('g:00 A') }}
                                 </option>
                             @endfor
                         </select>
-                        <p class="form-hint">Philippine time. Sent once a day — a re-run never sends twice.</p>
                     </div>
 
-                    <div class="rounded-xl bg-gray-50 border border-gray-200 p-3 text-xs text-gray-500">
-                        Mail goes out through the SMTP set up in the mother app, and the layout is the template
-                        written there — so changing either changes what everyone receives.
-                    </div>
-
-                    <div class="flex flex-wrap gap-2">
+                    <div class="nt-acts">
                         @unless ($setWorker)
                         <button type="button" class="btn btn-primary" id="saveNotifyBtn">Save notifications</button>
                         @endunless
@@ -157,6 +163,61 @@
         </div>
 
     </div>
+
+@push('head')
+<style>
+    /* ---- The notifications pane -----------------------------------------
+       It was a heading, two checkboxes with paragraphs beside them, a select,
+       a grey box explaining the plumbing, and two buttons: a form read top to
+       bottom, for a screen that asks three short questions.
+
+       The grey box has gone with the plumbing it described. Mail leaves
+       through Resend now, and a farmer setting the morning email has no use
+       for the name of a transport. */
+    .nt-head { display: flex; align-items: flex-start; gap: .85rem; }
+    .nt-head-mark { flex: none; width: 2.6rem; height: 2.6rem; border-radius: .85rem;
+        display: inline-flex; align-items: center; justify-content: center;
+        background: #eef6e6; color: #3d6823; }
+    .nt-head-mark svg { width: 1.35rem; height: 1.35rem; }
+    .nt-head-h { font-family: var(--font-heading); font-size: 1.02rem; font-weight: 800;
+        color: var(--color-gray-900); line-height: 1.25; }
+    .nt-head-p { margin-top: .2rem; font-size: .82rem; line-height: 1.55; color: var(--color-gray-500); }
+
+    .nt-picks { display: grid; gap: .6rem; margin-top: 1.1rem; }
+    @media (min-width: 640px) { .nt-picks { grid-template-columns: 1fr 1fr; } }
+    .nt-pick { display: flex; align-items: flex-start; gap: .7rem; cursor: pointer;
+        padding: .85rem .9rem; border-radius: .9rem;
+        border: 1px solid var(--color-gray-200); background: var(--color-white);
+        transition: border-color .22s cubic-bezier(.22,1,.36,1), background .22s cubic-bezier(.22,1,.36,1); }
+    .nt-pick:hover { border-color: #a8cc7e; background: #f8fbf4; }
+    /* What is ON says so without being read: somebody glancing at this pane
+       wants to know what it is doing, not to audit two checkboxes. */
+    .nt-pick:has(input:checked) { border-color: #4a7c2a; background: #f2f8ec; }
+    .nt-pick:has(input:disabled) { cursor: default; opacity: .7; }
+    .nt-pick input { flex: none; margin-top: .15rem; width: 1.15rem; height: 1.15rem; border-radius: .35rem; }
+    .nt-pick-body { min-width: 0; }
+    .nt-pick-body b { display: block; font-size: .88rem; font-weight: 800; color: var(--color-gray-900); }
+    .nt-pick-body i { display: block; font-style: normal; margin-top: .18rem;
+        font-size: .76rem; line-height: 1.55; color: var(--color-gray-500); }
+
+    /* The hour stands beside its own sentence rather than under it. */
+    .nt-when { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+        margin-top: 1.1rem; padding: .9rem; border-radius: .9rem;
+        background: var(--color-gray-50); border: 1px solid var(--color-gray-200); }
+    .nt-when-p { font-size: .74rem; line-height: 1.5; color: var(--color-gray-500); }
+    .nt-hour { width: 9.5rem; flex: none; margin-left: auto; }
+    .nt-acts { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.1rem; }
+    .nt-acts .btn { flex: 1 1 auto; justify-content: center; }
+    @media (min-width: 480px) { .nt-acts .btn { flex: 0 0 auto; } }
+
+    html.dark .nt-head-mark { background: rgb(107 159 61 / .18); color: #a5c97e; }
+    html.dark .nt-pick { background: #151b12; border-color: #2b3a1c; }
+    html.dark .nt-pick:has(input:checked) { background: rgb(74 124 42 / .18); border-color: #4a7c2a; }
+    html.dark .nt-pick-body b { color: #e8efe1; }
+    html.dark .nt-when { background: rgb(255 255 255 / .04); border-color: #2b3a1c; }
+    @media (prefers-reduced-motion: reduce) { .nt-pick { transition: none; } }
+</style>
+@endpush
 @endsection
 
 @push('scripts')
