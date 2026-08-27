@@ -436,6 +436,12 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/community/groups/{id}/chat', [App\Http\Controllers\CommunityGroupController::class, 'chatMessages'])->whereNumber('id')->name('community.groups.chat');
     Route::get('/app/community/groups/{id}/chat-members', [App\Http\Controllers\CommunityGroupController::class, 'chatMembers'])->whereNumber('id')->name('community.groups.chat.members');
     Route::post('/app/community/groups/{id}/chat', [App\Http\Controllers\CommunityGroupController::class, 'chatSend'])->whereNumber('id')->name('community.groups.chat.send');
+    // The door of a private discussion: who is waiting, who keeps the keys,
+    // and who is shown out. Every one of these checks standing for itself.
+    Route::get('/app/community/groups/{id}/requests', [App\Http\Controllers\CommunityGroupController::class, 'joinRequests'])->whereNumber('id')->name('community.groups.requests');
+    Route::post('/app/community/groups/{id}/requests', [App\Http\Controllers\CommunityGroupController::class, 'decideRequest'])->whereNumber('id')->name('community.groups.requests.decide');
+    Route::post('/app/community/groups/{id}/role', [App\Http\Controllers\CommunityGroupController::class, 'setRole'])->whereNumber('id')->name('community.groups.role');
+    Route::post('/app/community/groups/{id}/remove', [App\Http\Controllers\CommunityGroupController::class, 'removeMember'])->whereNumber('id')->name('community.groups.remove');
     Route::post('/app/community/posts/{postId}/reply', [App\Http\Controllers\CommunityGroupController::class, 'storeReply'])->whereNumber('postId')->name('community.groups.reply');
     Route::delete('/app/community/posts/{postId}', [App\Http\Controllers\CommunityGroupController::class, 'deletePost'])->whereNumber('postId')->name('community.groups.post.delete');
     Route::post('/app/community/react', [App\Http\Controllers\CommunityGroupController::class, 'react'])->name('community.react');

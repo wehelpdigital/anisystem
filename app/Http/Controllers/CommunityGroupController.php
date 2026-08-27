@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CommunityGroup;
+use App\Models\CommunityGroupJoinRequest;
 use App\Models\CommunityGroupMember;
 use App\Models\CommunityGroupMessage;
 use App\Models\CommunityGroupPost;
@@ -167,12 +168,22 @@ class CommunityGroupController extends Controller
     public function show(Request $request, int $id)
     {
         $group = $this->group($id);
-        $userId = Auth::id();
+        $user = Auth::user();
+        $userId = (int) $user->id;
         $isMember = $this->isMember($group->id, $userId);
+        $role = $this->roleIn($group->id, $userId);
+        $mayEnter = $group->mayEnter($user, $isMember);
 
-        $posts = $this->pagePosts($group->id, 1);
-        $this->withReactions($posts['items']);
-        $this->withAuthorFacts($posts['items']);
+        /* A shut room still has a front step. Somebody who is not in a
+         * private discussion gets its name, its cover and its size — enough
+         * to recognise the room and decide to ask — and none of what is
+         * said inside. Loading the topics for a page that will not show
+         * them would be work done to throw away, so it is skipped. */
+        $posts = $mayEnter ? $this->pagePosts($group->id, 1) : ['items' => collect(), 'hasMore' => false];
+        if ($mayEnter) {
+            $this->withReactions($posts['items']);
+            $this->withAuthorFacts($posts['items']);
+        }
 
         // Being here IS reading it: the room's badge clears on arrival, and
         // only for somebody who actually joined (a visitor has no badge).
@@ -184,9 +195,24 @@ class CommunityGroupController extends Controller
         return view('community.groups.show', [
             'group' => $group,
             'isMember' => $isMember,
-            'isOwner' => (int) $group->createdByUserId === (int) $userId,
+            'isOwner' => (int) $group->createdByUserId === $userId,
             // Whoever started the room keeps it; the house can fix any of them.
             'canEditGroup' => $this->canEditGroup($group),
+            'mayEnter' => $mayEnter,
+            'myRole' => $role,
+            // Keeping order is wider than deciding who holds the keys.
+            'mayModerate' => $group->mayModerate($user, $role),
+            'mayGovern' => $group->mayGovern($user),
+            'waitingCount' => $group->asksForApproval() && $group->mayModerate($user, $role)
+                ? $this->waitingCount($group->id) : 0,
+            // Where this person stands with a door they have knocked on.
+            'myRequest' => $group->asksForApproval() && ! $isMember
+                ? CommunityGroupJoinRequest::active()
+                    ->where('groupId', $group->id)->where('userId', $userId)->first()
+                : null,
+            'wasRemoved' => (bool) CommunityGroupMember::where('groupId', $group->id)
+                ->where('userId', $userId)->where('deleteStatus', 0)
+                ->whereNotNull('removedAt')->exists(),
             'memberCount' => $group->members()->count(),
             'topicCount' => $group->posts()->count(),
             'posts' => $posts['items'],
@@ -198,6 +224,9 @@ class CommunityGroupController extends Controller
     public function posts(Request $request, int $id)
     {
         $group = $this->group($id);
+        // The page can hide the topics; this hands them over. Both have to
+        // ask the same question or the lock is only paint.
+        $this->mustEnter($group);
         $page = max(1, (int) $request->query('page', 1));
         $posts = $this->pagePosts($group->id, $page, self::term($request));
         $this->withReactions($posts['items']);
@@ -303,7 +332,17 @@ class CommunityGroupController extends Controller
             // a second copy of it.
             'imagePath' => 'nullable|string|max:500',
             'bannerPath' => 'nullable|string|max:500',
+            // The door. Anything unrecognised falls back to an open room —
+            // a typo must never accidentally shut a discussion.
+            'privacy' => 'nullable|in:public,private',
+            'joinMode' => 'nullable|in:password,approval',
+            'joinPassword' => 'nullable|string|min:4|max:60',
         ]);
+
+        $door = $this->readDoor($data);
+        if (is_string($door)) {
+            return response()->json(['success' => false, 'message' => $door], 422);
+        }
 
         $coverPath = $request->hasFile('image')
             ? $this->storeImage($request->file('image'), 'community-groups/covers')
@@ -323,7 +362,7 @@ class CommunityGroupController extends Controller
         }
 
         $group = null;
-        DB::transaction(function () use ($data, $coverPath, $bannerPath, &$group) {
+        DB::transaction(function () use ($data, $door, $coverPath, $bannerPath, &$group) {
             $group = CommunityGroup::create([
                 'name' => $data['name'],
                 'slug' => $this->uniqueSlug($data['name']),
@@ -332,11 +371,11 @@ class CommunityGroupController extends Controller
                 'bannerImagePath' => $bannerPath,
                 'createdByUserId' => Auth::id(),
                 'deleteStatus' => 1,
-            ]);
+            ] + $door);
             CommunityGroupMember::create([
                 'groupId' => $group->id,
                 'userId' => Auth::id(),
-                'role' => 'owner',
+                'role' => CommunityGroupMember::OWNER,
                 'deleteStatus' => 1,
             ]);
         });
@@ -348,15 +387,125 @@ class CommunityGroupController extends Controller
         ]);
     }
 
+    /**
+     * Ask to come in.
+     *
+     * One endpoint for all three kinds of door, because the caller is a
+     * farmer pressing one button and should not have to know which kind it
+     * is. What comes back says what happened: `joined` walks them in,
+     * `waiting` tells them somebody has been asked, `password` says the
+     * room wants the secret before it will answer.
+     */
     public function join(Request $request, int $id)
     {
         $group = $this->group($id);
-        CommunityGroupMember::updateOrCreate(
-            ['groupId' => $group->id, 'userId' => Auth::id()],
-            ['role' => 'member', 'deleteStatus' => 1]
-        );
+        $user = Auth::user();
 
-        return response()->json(['success' => true, 'message' => 'Joined ' . $group->name . '.']);
+        // Shown out is not the same as walked out. Somebody the organiser
+        // removed cannot let themselves back in — otherwise removing them
+        // from a password room means nothing, they just retype it.
+        $row = CommunityGroupMember::where('groupId', $group->id)
+            ->where('userId', $user->id)->first();
+        if ($row && $row->wasRemoved() && ! $user->isSuperAdmin()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'The organiser removed you from this discussion, so you cannot rejoin it.',
+            ], 403);
+        }
+
+        // An open room, or somebody the door does not apply to. Admins
+        // answer for the whole community and are never kept out of part of it.
+        if (! $group->isPrivate() || $group->isCreator($user) || $user->isSuperAdmin()) {
+            return $this->seat($group, (int) $user->id);
+        }
+
+        if ($group->asksForPassword()) {
+            $said = (string) $request->input('password', '');
+            if ($said === '') {
+                return response()->json([
+                    'success' => true,
+                    'data' => ['outcome' => 'password'],
+                    'message' => 'This discussion asks for a password.',
+                ]);
+            }
+            // hash_equals over ===: the comparison is against a secret, and
+            // a length-leaking early exit costs nothing to avoid.
+            if (! hash_equals((string) $group->joinPassword, $said)) {
+                return response()->json([
+                    'success' => false,
+                    'data' => ['outcome' => 'wrong'],
+                    'message' => 'That is not the password for this discussion.',
+                ], 422);
+            }
+
+            return $this->seat($group, (int) $user->id);
+        }
+
+        // Approval: somebody has to say yes.
+        $ask = CommunityGroupJoinRequest::updateOrCreate(
+            ['groupId' => $group->id, 'userId' => $user->id],
+            [
+                'status' => CommunityGroupJoinRequest::PENDING,
+                'decidedByUserId' => null,
+                'decidedAt' => null,
+                'deleteStatus' => 1,
+            ]
+        );
+        $this->tellTheDoorkeepers($group, $user);
+
+        return response()->json([
+            'success' => true,
+            'data' => ['outcome' => 'waiting', 'requestId' => $ask->id],
+            'message' => 'Your request was sent. ' . ($group->creator->firstName ?? 'The organiser') . ' will let you know.',
+        ]);
+    }
+
+    /** Put somebody in the room and say so. */
+    private function seat(CommunityGroup $group, int $userId)
+    {
+        CommunityGroupMember::updateOrCreate(
+            ['groupId' => $group->id, 'userId' => $userId],
+            [
+                'role' => CommunityGroupMember::MEMBER,
+                'deleteStatus' => 1,
+                'removedAt' => null,
+                'removedReason' => null,
+                'removedByUserId' => null,
+            ]
+        );
+        // A standing request is answered by the act of walking in.
+        CommunityGroupJoinRequest::where('groupId', $group->id)
+            ->where('userId', $userId)
+            ->waiting()
+            ->update(['status' => CommunityGroupJoinRequest::APPROVED, 'decidedAt' => now('Asia/Manila')]);
+
+        return response()->json([
+            'success' => true,
+            'data' => ['outcome' => 'joined'],
+            'message' => 'Joined ' . $group->name . '.',
+        ]);
+    }
+
+    /** Everyone who can open the door hears that somebody is at it. */
+    private function tellTheDoorkeepers(CommunityGroup $group, User $asker): void
+    {
+        $keepers = CommunityGroupMember::active()
+            ->where('groupId', $group->id)
+            ->whereIn('role', [CommunityGroupMember::OWNER, CommunityGroupMember::MODERATOR])
+            ->pluck('userId')
+            ->push((int) $group->createdByUserId)
+            ->unique();
+
+        foreach ($keepers as $keeperId) {
+            $this->notifications->notify(
+                userId: (int) $keeperId,
+                type: 'group_request',
+                title: ($asker->full_name ?: 'A farmer') . ' wants to join ' . $group->name,
+                body: 'Open the discussion to let them in or turn them down.',
+                url: route('community.groups.show', ['id' => $group->id]),
+                actorUserId: (int) $asker->id,
+            );
+        }
     }
 
     public function leave(Request $request, int $id)
@@ -365,7 +514,10 @@ class CommunityGroupController extends Controller
         if ((int) $group->createdByUserId === (int) Auth::id()) {
             return response()->json(['success' => false, 'message' => 'The owner cannot leave their own discussion.'], 422);
         }
-        CommunityGroupMember::where('groupId', $group->id)->where('userId', Auth::id())->update(['deleteStatus' => 0]);
+        // Walking out clears any mark of having been shown out, so somebody
+        // who left of their own accord can always come back.
+        CommunityGroupMember::where('groupId', $group->id)->where('userId', Auth::id())
+            ->update(['deleteStatus' => 0, 'removedAt' => null, 'removedReason' => null, 'removedByUserId' => null]);
 
         return response()->json(['success' => true, 'message' => 'Left ' . $group->name . '.']);
     }
@@ -884,6 +1036,22 @@ class CommunityGroupController extends Controller
             return response()->json(['success' => false, 'message' => 'That post is gone.'], 404);
         }
 
+        /* A reaction is a thing said inside the room, so a shut room refuses
+         * it like it refuses everything else. Reached by post id rather than
+         * by room, this endpoint would otherwise be the one way to touch a
+         * private discussion from outside it. */
+        $roomId = match ($data['targetType']) {
+            'post' => (int) $target->groupId,
+            'reply' => (int) (CommunityGroupPost::where('id', $target->postId)->value('groupId') ?? 0),
+            default => 0,
+        };
+        if ($roomId > 0) {
+            $room = CommunityGroup::active()->where('id', $roomId)->first();
+            if ($room && ! $room->mayEnter(Auth::user(), $this->isMember($roomId, (int) Auth::id()))) {
+                return response()->json(['success' => false, 'message' => 'This discussion is private.'], 403);
+            }
+        }
+
         $userId = (int) Auth::id();
         $existing = \App\Models\CommunityReaction::where('targetType', $data['targetType'])
             ->where('targetId', $data['targetId'])
@@ -1053,6 +1221,11 @@ class CommunityGroupController extends Controller
             ->orderBy('firstName')
             ->get();
 
+        // What each of them is here, so the roster can say "moderator" and
+        // the manage sheet knows who it may offer to promote or remove.
+        $roles = CommunityGroupMember::active()->where('groupId', $group->id)
+            ->pluck('role', 'userId');
+
         $items = $users->map(fn ($u) => [
             'id' => $u->id,
             'name' => $u->full_name,
@@ -1061,6 +1234,8 @@ class CommunityGroupController extends Controller
             'online' => $u->isOnline(),
             'allowMessages' => (bool) $u->allowMessages,
             'isMe' => (int) $u->id === $meId,
+            'role' => $roles[$u->id] ?? CommunityGroupMember::MEMBER,
+            'isCreator' => (int) $u->id === (int) $group->createdByUserId,
         ])->sortByDesc('online')->values();
 
         return response()->json(['success' => true, 'data' => [
@@ -1068,6 +1243,267 @@ class CommunityGroupController extends Controller
             'online' => $items->where('online', true)->count(),
             'total' => $items->count(),
         ]]);
+    }
+
+    /* ==================================================================
+     * The door: who is waiting, who holds the keys, who is shown out.
+     * ================================================================ */
+
+    /** Everyone standing at the door of this room. Doorkeepers only. */
+    public function joinRequests(Request $request, int $id)
+    {
+        $group = $this->group($id);
+        if (! $group->mayModerate(Auth::user(), $this->roleIn($group->id, (int) Auth::id()))) {
+            return response()->json(['success' => false, 'message' => 'Only the organiser can see who is waiting.'], 403);
+        }
+
+        $asks = CommunityGroupJoinRequest::active()->where('groupId', $group->id)
+            ->waiting()->orderBy('id')->get();
+        $users = User::whereIn('id', $asks->pluck('userId')->all() ?: [0])
+            ->where('deleteStatus', 1)->get()->keyBy('id');
+
+        $items = $asks->map(function ($ask) use ($users) {
+            $u = $users->get($ask->userId);
+            if (! $u) {
+                return null;   // a member who left the app keeps no place in the queue
+            }
+
+            return [
+                'id' => $ask->id,
+                'userId' => (int) $u->id,
+                'name' => $u->full_name,
+                'avatar' => $u->avatarPath ? \App\Support\MediaStore::url($u->avatarPath) : null,
+                'initials' => $u->initials,
+                'place' => $u->location ?: null,
+                'asked' => $ask->created_at?->diffForHumans(),
+            ];
+        })->filter()->values();
+
+        return response()->json(['success' => true, 'data' => [
+            'requests' => $items,
+            'count' => $items->count(),
+        ]]);
+    }
+
+    /** Let somebody in, or turn them down. Doorkeepers only. */
+    public function decideRequest(Request $request, int $id)
+    {
+        $group = $this->group($id);
+        $me = Auth::user();
+        if (! $group->mayModerate($me, $this->roleIn($group->id, (int) $me->id))) {
+            return response()->json(['success' => false, 'message' => 'Only the organiser can answer this.'], 403);
+        }
+
+        $data = $request->validate([
+            'userId' => 'required|integer',
+            'decision' => 'required|in:approve,decline',
+        ]);
+
+        $ask = CommunityGroupJoinRequest::active()->where('groupId', $group->id)
+            ->where('userId', $data['userId'])->waiting()->first();
+        if (! $ask) {
+            // Two doorkeepers, one queue: the second one to press is told
+            // plainly rather than shown an error for doing nothing wrong.
+            return response()->json([
+                'success' => true,
+                'data' => ['outcome' => 'already'],
+                'message' => 'That request has already been answered.',
+            ]);
+        }
+
+        $asker = User::find($ask->userId);
+        $letIn = $data['decision'] === 'approve';
+
+        DB::transaction(function () use ($ask, $group, $me, $letIn) {
+            $ask->update([
+                'status' => $letIn ? CommunityGroupJoinRequest::APPROVED : CommunityGroupJoinRequest::DECLINED,
+                'decidedByUserId' => (int) $me->id,
+                'decidedAt' => now('Asia/Manila'),
+            ]);
+            if ($letIn) {
+                CommunityGroupMember::updateOrCreate(
+                    ['groupId' => $group->id, 'userId' => $ask->userId],
+                    [
+                        'role' => CommunityGroupMember::MEMBER,
+                        'deleteStatus' => 1,
+                        'removedAt' => null,
+                        'removedReason' => null,
+                        'removedByUserId' => null,
+                    ]
+                );
+            }
+        });
+
+        if ($asker) {
+            $this->notifications->notify(
+                userId: (int) $asker->id,
+                type: $letIn ? 'group_approved' : 'group_declined',
+                title: $letIn
+                    ? 'You are in ' . $group->name
+                    : 'Your request to join ' . $group->name . ' was turned down',
+                body: $letIn ? 'Come and say hello.' : null,
+                url: route('community.groups.show', ['id' => $group->id]),
+                actorUserId: (int) $me->id,
+            );
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => ['outcome' => $letIn ? 'approved' : 'declined', 'waiting' => $this->waitingCount($group->id)],
+            'message' => $letIn
+                ? ($asker->firstName ?? 'They') . ' is in.'
+                : 'Turned down.',
+        ]);
+    }
+
+    /**
+     * Make somebody a moderator, or take it back.
+     *
+     * The creator and admins only. A moderator cannot appoint another
+     * moderator: a deputy who can deputise is an owner by another name, and
+     * the room would drift away from whoever started it.
+     */
+    public function setRole(Request $request, int $id)
+    {
+        $group = $this->group($id);
+        $me = Auth::user();
+        if (! $group->mayGovern($me)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Only the one who started this discussion can choose its moderators.',
+            ], 403);
+        }
+
+        $data = $request->validate([
+            'userId' => 'required|integer',
+            'role' => 'required|in:moderator,member',
+        ]);
+
+        if ((int) $data['userId'] === (int) $group->createdByUserId) {
+            return response()->json([
+                'success' => false,
+                'message' => 'The one who started the discussion already keeps it.',
+            ], 422);
+        }
+
+        $row = CommunityGroupMember::active()->where('groupId', $group->id)
+            ->where('userId', $data['userId'])->first();
+        if (! $row) {
+            return response()->json(['success' => false, 'message' => 'They are not in this discussion.'], 422);
+        }
+
+        $row->update(['role' => $data['role']]);
+        $who = User::find($data['userId']);
+        $up = $data['role'] === CommunityGroupMember::MODERATOR;
+
+        if ($who) {
+            $this->notifications->notify(
+                userId: (int) $who->id,
+                type: 'group_role',
+                title: $up
+                    ? 'You are now a moderator of ' . $group->name
+                    : 'You are no longer a moderator of ' . $group->name,
+                body: $up ? 'You can let people in and keep the room in order.' : null,
+                url: route('community.groups.show', ['id' => $group->id]),
+                actorUserId: (int) $me->id,
+            );
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $up
+                ? ($who->firstName ?? 'They') . ' is a moderator now.'
+                : ($who->firstName ?? 'They') . ' is a member again.',
+        ]);
+    }
+
+    /**
+     * Show somebody out, with a reason they are told.
+     *
+     * Private rooms only — a public room has no door to put somebody
+     * outside of, and removing them there would only be theatre. The
+     * creator can never be removed; a moderator can remove members but not
+     * another moderator.
+     */
+    public function removeMember(Request $request, int $id)
+    {
+        $group = $this->group($id);
+        $me = Auth::user();
+        $myRole = $this->roleIn($group->id, (int) $me->id);
+
+        if (! $group->isPrivate()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Anyone can walk into an open discussion, so removing somebody would not keep them out.',
+            ], 422);
+        }
+        if (! $group->mayModerate($me, $myRole)) {
+            return response()->json(['success' => false, 'message' => 'Only the organiser can remove somebody.'], 403);
+        }
+
+        $data = $request->validate([
+            'userId' => 'required|integer',
+            'reason' => 'required|string|min:3|max:500',
+        ]);
+        $theirId = (int) $data['userId'];
+
+        if ($theirId === (int) $group->createdByUserId) {
+            return response()->json([
+                'success' => false,
+                'message' => 'The one who started this discussion cannot be removed from it.',
+            ], 422);
+        }
+        if ($theirId === (int) $me->id) {
+            return response()->json(['success' => false, 'message' => 'Use Leave to walk out yourself.'], 422);
+        }
+
+        $row = CommunityGroupMember::active()->where('groupId', $group->id)
+            ->where('userId', $theirId)->first();
+        if (! $row) {
+            return response()->json(['success' => false, 'message' => 'They are not in this discussion.'], 422);
+        }
+        // A deputy does not remove another deputy — only whoever appointed
+        // them can undo that.
+        if ($row->role === CommunityGroupMember::MODERATOR && ! $group->mayGovern($me)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Only the one who started this discussion can remove a moderator.',
+            ], 403);
+        }
+
+        $reason = trim($data['reason']);
+        DB::transaction(function () use ($row, $group, $me, $reason, $theirId) {
+            $row->update([
+                'deleteStatus' => 0,
+                'role' => CommunityGroupMember::MEMBER,
+                'removedAt' => now('Asia/Manila'),
+                'removedReason' => $reason,
+                'removedByUserId' => (int) $me->id,
+            ]);
+            // And no standing request to walk back in through.
+            CommunityGroupJoinRequest::where('groupId', $group->id)->where('userId', $theirId)
+                ->waiting()->update([
+                    'status' => CommunityGroupJoinRequest::DECLINED,
+                    'decidedByUserId' => (int) $me->id,
+                    'decidedAt' => now('Asia/Manila'),
+                ]);
+        });
+
+        $who = User::find($theirId);
+        $this->notifications->notify(
+            userId: $theirId,
+            type: 'group_removed',
+            title: 'You were removed from ' . $group->name,
+            // The reason is the whole point of asking for one.
+            body: $reason,
+            url: route('community.groups.index'),
+            actorUserId: (int) $me->id,
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => ($who->firstName ?? 'They') . ' was removed, and told why.',
+        ]);
     }
 
     /** Post a chat message (text and/or a photo). Members only. */
@@ -1154,6 +1590,80 @@ class CommunityGroupController extends Controller
             ->where('groupId', $groupId)
             ->where('userId', $userId)
             ->exists();
+    }
+
+    /**
+     * What this person is in this room — owner, moderator, member, or null.
+     *
+     * Read straight off the membership row, so a moderator who left is not
+     * still a moderator.
+     */
+    private function roleIn(int $groupId, int $userId): ?string
+    {
+        return CommunityGroupMember::active()
+            ->where('groupId', $groupId)
+            ->where('userId', $userId)
+            ->value('role');
+    }
+
+    /**
+     * The lock. Anything that shows what is inside a room calls this first.
+     *
+     * A private room is visible from the outside — its name, its cover, how
+     * many are in it — but what is said inside is only for the people in it.
+     * The check lives here rather than in the view because the JSON endpoints
+     * would otherwise hand over the same topics the page is hiding.
+     */
+    private function mustEnter(CommunityGroup $group): void
+    {
+        $user = Auth::user();
+        if ($group->mayEnter($user, $this->isMember($group->id, (int) $user?->id))) {
+            return;
+        }
+        abort(403, 'This discussion is private.');
+    }
+
+    /** How many are waiting at the door — the number on the doorkeeper's badge. */
+    private function waitingCount(int $groupId): int
+    {
+        return CommunityGroupJoinRequest::active()
+            ->where('groupId', $groupId)
+            ->waiting()
+            ->count();
+    }
+
+    /**
+     * Read a door setting off a submitted form.
+     *
+     * Returns the columns to write, or a sentence explaining what is missing.
+     * Everything unrecognised lands on "public": a room only shuts because
+     * somebody chose to shut it, never because a field arrived malformed.
+     */
+    private function readDoor(array $data): array|string
+    {
+        if (($data['privacy'] ?? CommunityGroup::PUBLIC) !== CommunityGroup::PRIVATE) {
+            return ['privacy' => CommunityGroup::PUBLIC, 'joinMode' => null, 'joinPassword' => null];
+        }
+
+        $mode = $data['joinMode'] ?? CommunityGroup::BY_APPROVAL;
+        if ($mode === CommunityGroup::BY_PASSWORD) {
+            $secret = trim((string) ($data['joinPassword'] ?? ''));
+            if (mb_strlen($secret) < 4) {
+                return 'A password discussion needs a password of at least 4 characters.';
+            }
+
+            return [
+                'privacy' => CommunityGroup::PRIVATE,
+                'joinMode' => CommunityGroup::BY_PASSWORD,
+                'joinPassword' => $secret,
+            ];
+        }
+
+        return [
+            'privacy' => CommunityGroup::PRIVATE,
+            'joinMode' => CommunityGroup::BY_APPROVAL,
+            'joinPassword' => null,
+        ];
     }
 
     /**

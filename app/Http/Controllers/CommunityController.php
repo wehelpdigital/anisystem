@@ -256,9 +256,25 @@ class CommunityController extends Controller
             ->distinct()->pluck('t.groupId');
         $live = $spoken->merge($answered)->map(fn ($id) => (int) $id)->unique()->values();
 
+        $mine = \App\Models\CommunityGroupMember::active()
+            ->where('userId', $meId)
+            ->pluck('groupId')
+            ->map(fn ($id) => (int) $id)
+            ->all();
+        $mineSet = array_flip($mine);
+
         $rooms = \App\Models\CommunityGroup::active()
             ->withCount(['members as member_count', 'posts as post_count'])
             ->when($live->isNotEmpty(), fn ($q) => $q->whereIn('id', $live->all()))
+            /* A private room is not advertised to somebody outside it. The
+             * card carries the room's latest topic and who wrote it, which
+             * is exactly what a shut door is keeping in — a room you may
+             * not enter must not arrive on your wall quoting itself. */
+            ->where(function ($w) use ($mine) {
+                $w->where('privacy', '!=', \App\Models\CommunityGroup::PRIVATE)
+                    ->orWhereNull('privacy')
+                    ->orWhereIn('id', $mine ?: [0]);
+            })
             ->inRandomOrder()
             ->limit($take)
             ->get();
@@ -266,13 +282,6 @@ class CommunityController extends Controller
         if ($rooms->isEmpty()) {
             return $rooms;
         }
-
-        $mine = \App\Models\CommunityGroupMember::active()
-            ->where('userId', $meId)
-            ->pluck('groupId')
-            ->map(fn ($id) => (int) $id)
-            ->all();
-        $mineSet = array_flip($mine);
 
         $topics = \App\Models\CommunityGroupPost::active()
             ->whereIn('groupId', $rooms->pluck('id')->all())
@@ -318,11 +327,21 @@ class CommunityController extends Controller
             ->pluck('t.groupId');
         $live = $spoken->merge($answered)->map(fn ($id) => (int) $id)->unique()->values();
 
+        $mine = \App\Models\CommunityGroupMember::active()
+            ->where('userId', $meId)->pluck('groupId')->map(fn ($id) => (int) $id)->all();
+
         $discussion = \App\Models\CommunityGroup::active()
             ->withCount(['members as member_count', 'posts as post_count'])
             // Nothing recent anywhere (a new farm): show a room anyway rather
             // than a gap where the card should be.
             ->when($live->isNotEmpty(), fn ($q) => $q->whereIn('id', $live->all()))
+            // But never a private room this reader is outside of — the card
+            // quotes the room's last topic, which is what the door shuts in.
+            ->where(function ($w) use ($mine) {
+                $w->where('privacy', '!=', \App\Models\CommunityGroup::PRIVATE)
+                    ->orWhereNull('privacy')
+                    ->orWhereIn('id', $mine ?: [0]);
+            })
             ->inRandomOrder()
             ->first();
 
@@ -457,8 +476,12 @@ class CommunityController extends Controller
             ->values();
         \App\Models\CommunityReaction::attach($wallPosts, 'wallpost', (int) $me->id);
 
-        // Group posts only from groups you belong to (respects membership).
-        $myGroupIds = \App\Models\CommunityGroupMember::where('userId', (int) $me->id)
+        /* Group posts only from groups you belong to. active() matters: the
+         * membership row survives leaving and being removed (deleteStatus 0),
+         * so without it somebody shown the door still reads the room's
+         * topics through a hashtag. */
+        $myGroupIds = \App\Models\CommunityGroupMember::active()
+            ->where('userId', (int) $me->id)
             ->pluck('groupId')->all();
         $groupPosts = \App\Models\CommunityGroupPost::active()
             ->where('body', 'like', $like)
