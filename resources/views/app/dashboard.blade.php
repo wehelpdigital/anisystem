@@ -60,10 +60,10 @@
         align-items: center; gap: .55rem .95rem;
         --dh-px: 1.35rem; --dh-py: 1.25rem;
         padding: var(--dh-py) var(--dh-px); border-radius: 1.1rem; position: relative; overflow: hidden;
-        background-image: linear-gradient(118deg, #24380f, #3d6823 24%, #4a7c2a 46%, #6b9f3d 64%, #3d6823 84%, #24380f);
+        background-image: linear-gradient(118deg, #f2f8ec, #e2f0d2 22%, #cfe6b6 46%, #e8f4dc 66%, #dceecb 84%, #f2f8ec);
         background-size: 260% 100%;
         animation: gradSweep 14s ease-in-out infinite alternate;
-        border: 1px solid #2f5219; }
+        border: 1px solid #cfe0b8; }
     @media (prefers-reduced-motion: reduce) { .dash-hero { animation: none; } }
     .dash-hero-mark { grid-column: 1; grid-row: 1 / -1; align-self: center;
         width: 3rem; height: 3rem; border-radius: 999px; flex-shrink: 0;
@@ -78,9 +78,8 @@
     html.dark .tod-evening { color: #c4b5fd; }
     html.dark .tod-morning, html.dark .tod-afternoon, html.dark .tod-evening { background: rgb(255 255 255 / .07); }
     .dash-hero-h { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800;
-        color: #fff; line-height: 1.2; letter-spacing: -.01em;
-        text-shadow: 0 1px 2px rgb(16 26 10 / .35); }
-    .dash-hero-p { font-size: .82rem; color: rgb(255 255 255 / .82); margin-top: .2rem; }
+        color: #24380f; line-height: 1.2; letter-spacing: -.01em; }
+    .dash-hero-p { font-size: .82rem; color: #4c6b33; margin-top: .2rem; }
     /* Enough air that the greeting reads as a welcome rather than a header. */
     .dash-hero-mark { width: 3.35rem; height: 3.35rem; }
     .dash-hero-mark svg { width: 1.7rem; height: 1.7rem; }
@@ -90,7 +89,7 @@
     @keyframes heroBob { from { transform: translateY(2px); } to { transform: translateY(-3px); } }
     @media (prefers-reduced-motion: reduce) { .dash-hero-mark { animation: none; } }
     .dash-hero-warn { display: inline-flex; align-items: center; gap: .3rem; margin-top: .35rem;
-        font-size: .78rem; font-weight: 700; color: #fde68a; }
+        font-size: .78rem; font-weight: 700; color: #b45309; }
     .dash-hero-warn svg { width: .85rem; height: .85rem; }
     /* Under the words on a phone, beside them once there is room. */
     .dash-hero-state { grid-column: 2; justify-self: start;
@@ -136,8 +135,13 @@
         background: var(--color-gray-50); border: 1px solid var(--color-gray-200); color: var(--color-gray-600); }
     .dash-chip.is-ok { background: #f0f7e8; border-color: #cfe3b8; color: #3d6823; }
     .dash-chip.is-warn { background: #fff7ed; border-color: #fed7aa; color: #9a3412; }
-    html.dark .dash-hero { border-color: #24380f;
-        background-image: linear-gradient(118deg, #16220f, #24380f 24%, #2f5219 46%, #3d6823 64%, #24380f 84%, #16220f); }
+    /* Dark keeps the same idea a few stops down: still a light-ON-dark wash
+       rather than a slab, still moving. */
+    html.dark .dash-hero { border-color: #2b3a1c;
+        background-image: linear-gradient(118deg, #18200f, #22301a 22%, #2c3f21 46%, #24331b 66%, #1d2714 84%, #18200f); }
+    html.dark .dash-hero-h { color: #e8efe1; }
+    html.dark .dash-hero-p { color: #a8bd93; }
+    html.dark .dash-hero-warn { color: #fdba74; }
     html.dark .dash-chip { background: rgb(255 255 255 / .05); border-color: #2b3a1c; color: #cdd8c0; }
     html.dark .dash-chip.is-ok { background: rgb(61 104 35 / .22); border-color: #3f5626; color: #bfe19a; }
     html.dark .dash-chip.is-warn { background: rgb(154 52 18 / .2); border-color: rgb(154 52 18 / .5); color: #fdba74; }
