@@ -204,16 +204,15 @@
                      list forced that into two tasks or a half-truth. The first
                      one picked leads — it is what colours the card and what
                      the filters read — and the rest ride with it. --}}
-                <div class="tt-tags" id="activityTypeTags" role="group" aria-label="Task type">
-                    @foreach ($activityTypes as $slug => $label)
-                        {{-- The kinds with a tab of their own are chosen there,
-                             and the reminder checklist is not a task type at
-                             all. --}}
-                        @if (!in_array($slug, ['irrigation', 'service', 'worker_payroll', 'reminder_checklist'], true))
-                            <button type="button" class="tt-tag" data-type="{{ $slug }}" aria-pressed="false">{{ $label }}</button>
-                        @endif
-                    @endforeach
-                </div>
+                {{-- One tag that says what is chosen, and opens the rest.
+                     Sixteen kinds laid out here filled a third of the sheet
+                     with things nobody was going to pick, and pushed the
+                     fields under them off the screen. The picking happens in
+                     a box of its own; this button is the answer. --}}
+                <button type="button" class="tt-open" id="activityTypeBtn" aria-haspopup="dialog">
+                    <span class="tt-open-val" id="activityTypeBtnText">Choose a task type</span>
+                    <svg class="tt-open-caret" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </button>
                 <p class="form-hint" id="activityTypeHint">Pick one, or several if they go in the same tank.</p>
                 <p class="tt-warn" id="activityTypeWarn" hidden></p>
                 {{-- Kept, hidden, as the single source of the primary type:
@@ -1614,5 +1613,36 @@
     <div class="sheet-footer">
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
         <button type="button" id="saveRenameVersionBtn" class="btn btn-primary">Save Changes</button>
+    </div>
+</div>
+
+{{-- ============================ TASK TYPE PICKER ============================
+     The kinds an activity can be, in a box of its own. Several may be picked
+     — a fungicide and an insecticide go out in the same knapsack all the time
+     — and the FIRST one leads: it colours the card and it is what the filters
+     read. Tapping a chosen one again drops it.
+
+     The tags keep the ids and classes activities-js already binds to; only
+     the room they stand in has changed. --}}
+<div class="sheet hidden" id="taskTypeSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Task type</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">&#10005;</button>
+    </div>
+    <div class="sheet-body">
+        <div class="tt-tags" id="activityTypeTags" role="group" aria-label="Task type">
+            @foreach ($activityTypes as $slug => $label)
+                {{-- The kinds with a tab of their own are chosen there, and the
+                     reminder checklist is not a task type at all. --}}
+                @if (!in_array($slug, ['irrigation', 'service', 'worker_payroll', 'reminder_checklist'], true))
+                    <button type="button" class="tt-tag" data-type="{{ $slug }}" aria-pressed="false">{{ $label }}</button>
+                @endif
+            @endforeach
+        </div>
+        <p class="form-hint" id="taskTypeSheetHint">The first one picked leads — it colours the card. Tap a chosen one again to drop it.</p>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-primary w-full" data-sheet-close>Done</button>
     </div>
 </div>

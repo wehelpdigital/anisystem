@@ -723,6 +723,24 @@
         .reminder-head-badge { background: #f5f0ff; color: #6d28d9; border: 1px solid #ddd6fe; font-weight: 800; }
         html.dark .reminder-head-badge { background: rgb(109 40 217 / .18); border-color: rgb(139 92 246 / .45); color: #c4b5fd; }
 
+        /* The one tag that stands on the form: a pill the width of the field,
+           reading as an answer rather than as one option among sixteen. */
+        .tt-open { display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+            width: 100%; margin-top: .1rem; padding: .55rem .85rem; border-radius: 999px;
+            font-size: .85rem; font-weight: 700; text-align: left; cursor: pointer;
+            background: var(--color-white, #fff); border: 1px solid var(--color-gray-200, #e5e7eb);
+            color: var(--color-gray-400, #9ca3af);
+            transition: border-color .18s ease, color .18s ease, background .18s ease; }
+        .tt-open:hover { border-color: #a8cc7e; background: #f3f8ec; }
+        /* Chosen, and dressed like the tag it stands for. */
+        .tt-open.is-set { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+        .tt-open.is-set::before { content: '\2605\00a0'; font-size: .72rem; }
+        .tt-open-val { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1 1 auto; }
+        .tt-open-caret { width: .9rem; height: .9rem; flex: none; opacity: .75; }
+        html.dark .tt-open { background: #1c2416; border-color: #2b3a1c; color: #8b9a80; }
+        html.dark .tt-open.is-set { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+        @media (prefers-reduced-motion: reduce) { .tt-open { transition: none; } }
+
         .tt-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .1rem; }
         .tt-tag { padding: .35rem .7rem; border-radius: 999px; font-size: .78rem; font-weight: 700;
             border: 2px solid var(--color-gray-200); background: var(--color-white); color: #374151;

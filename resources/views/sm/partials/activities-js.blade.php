@@ -2372,6 +2372,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 ? 'The first one leads: ' + (ACTIVITY_TYPE_LABELS[TASK_TYPES[0]] || TASK_TYPES[0]) + '. Tap it again to drop it.'
                 : 'Pick one, or several if they go in the same tank.';
         }
+
+        /* The tag on the form is the answer, so it has to say the answer: the
+         * leading kind by name, and how many are riding with it. "2 selected"
+         * would make somebody open the box again to find out which. */
+        const btn = $id('activityTypeBtn');
+        const btnText = $id('activityTypeBtnText');
+        if (btn && btnText) {
+            const lead = TASK_TYPES[0];
+            btn.classList.toggle('is-set', !!lead);
+            btnText.textContent = !lead
+                ? 'Choose a task type'
+                : (ACTIVITY_TYPE_LABELS[lead] || lead)
+                    + (TASK_TYPES.length > 1 ? ' +' + (TASK_TYPES.length - 1) + ' more' : '');
+        }
     }
 
     function setTaskTypes(list) {
@@ -2380,6 +2394,9 @@ document.addEventListener('DOMContentLoaded', () => {
             .filter((t, i, a) => a.indexOf(t) === i);
         paintTaskTypes();
     }
+
+    // The tag opens the box; the box writes back through paintTaskTypes.
+    $id('activityTypeBtn')?.addEventListener('click', () => window.openSheet?.('taskTypeSheet'));
 
     $id('activityTypeTags')?.addEventListener('click', (e) => {
         const tag = e.target.closest('.tt-tag');
