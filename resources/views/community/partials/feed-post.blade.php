@@ -6,7 +6,9 @@
      $friendIds, $followingIds, $savedIds — each defaulted, because older
      callers do not know about following or bookmarks and must keep working;
      $permalink, which adds a link back to the post's own page for lists that
-     have lifted it out of the wall it belongs to. --}}
+     have lifted it out of the wall it belongs to; $showCover, which a page
+     that is ALREADY about this one person turns off so their field is not
+     redrawn above every post they have written. --}}
 @php
     $author = $post->author;
     $meId = (int) auth()->id();
@@ -54,6 +56,18 @@
                 </a>
             @endif
         </div>
+    @endif
+    {{-- The author's own field along the top of what they wrote, with their
+         face standing half over its lower edge — the profile page's opening,
+         at a post's scale.
+
+         Only for members who have set one. A post is mostly its words, so a
+         wall of them should not all grow by a band of house green just to
+         prove that most people have not chosen a picture yet; a cover here
+         is a member saying something extra about themselves, and the cards
+         without one keep the shape they always had. --}}
+    @if (($showCover ?? true) && filled($author->coverPath ?? null))
+        @include('community.partials.cover-band', ['coverUser' => $author, 'coverClass' => 'fp-cover'])
     @endif
     <header class="flex items-start gap-3">
         {{-- What is on their mind, in the cloud over the face — the same

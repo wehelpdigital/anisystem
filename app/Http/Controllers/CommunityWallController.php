@@ -41,8 +41,11 @@ class CommunityWallController extends Controller
             // the mutual count whose tap opens the shared-faces sheet.
             app(\App\Services\CommunitySocialService::class)
                 ->attachAuthorFacts($items, (int) Auth::id());
+            // No cover band on a profile's own wall: the page opens with this
+            // member's field already, and repeating it over every post they
+            // have written says nothing the header has not said.
             $html = $items->map(
-                fn ($p) => view('community.partials.feed-post', ['post' => $p])->render()
+                fn ($p) => view('community.partials.feed-post', ['post' => $p, 'showCover' => false])->render()
             )->implode('');
         } else {
             $html = view('community.connect.partials.wall-posts', ['posts' => $result['items']])->render();
@@ -205,6 +208,9 @@ class CommunityWallController extends Controller
                 'post' => tap($post->load('author'), fn ($p) => app(\App\Services\CommunitySocialService::class)
                     ->attachAuthorFacts(collect([$p]), (int) Auth::id())),
                 'friendIds' => [],
+                // Same reason as the wall above: a card just posted onto your
+                // own profile joins a column that already carries your cover.
+                'showCover' => false,
             ])->render()
             : view('community.connect.partials.wall-posts', ['posts' => collect([$post->load('author')])])->render();
 

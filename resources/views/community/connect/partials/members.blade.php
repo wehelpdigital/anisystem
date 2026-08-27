@@ -22,11 +22,15 @@
         $mutual = (int) ($m->mutualCount ?? 0);
     @endphp
     <div class="card card-hover mb-4 mc-card mc-hue-{{ $mcHue }}" data-member-card="{{ $m->id }}">
-        {{-- No cover band: the face itself stands over the card's top edge —
-             the same overlap it had over the cover — with the thought cloud
-             above it. The card's top margin (see .mc-card) is the air both
-             of them stand in, the same for every card so the column keeps
-             one rhythm. --}}
+        {{-- Their own field across the top, with the face standing half over
+             its lower edge and the thought cloud above that — the same three
+             things in the same order the profile page puts them in, so a
+             member met in a list looks like the page they lead to.
+
+             Drawn for everybody, cover or none: a member who has not set one
+             gets the house green, so the column keeps one rhythm instead of
+             alternating between tall cards and short ones. --}}
+        @include('community.partials.cover-band', ['coverUser' => $m, 'coverClass' => 'mc-cover'])
         <div class="mc-body">
             <div class="mc-head">
                 {{-- What is on their mind sits above the photo, in the cloud

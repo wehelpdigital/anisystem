@@ -910,12 +910,17 @@
     .mc-hue-5 { --mc-a: #be185d; --mc-b: #fbcfe8; }
     /* A band that lifts on hover lifts the page with it. */
     .mc-card.card-hover:hover { transform: none; }
-    /* No cover band any more: the card starts at its own top edge, and the
-       face stands over it. Every card claims the same air above itself —
-       enough for the face's outstanding half AND the cloud over it — so the
-       column keeps one rhythm whether or not a member has said anything.
-       (Adjacent card margins collapse; this top margin IS the gap.) */
-    .mc-card { margin-top: 5.1rem; }
+    /* The cover is back, and with it the air moves INSIDE the card: the face
+       and its cloud now stand on the member's own field instead of hanging
+       above the card in a column of empty page. What is left above is an
+       ordinary gap between bands. (Adjacent card margins collapse; this top
+       margin IS the gap.) */
+    .mc-card { margin-top: 1.15rem; }
+    /* Deep enough to be a place rather than a stripe, and to hold the face's
+       outstanding half and the cloud above it with room to spare: the face
+       reaches 1.9rem up into it, the cloud another 1.55rem past that. */
+    .mc-cover { height: 6.25rem; }
+    @media (min-width: 640px) { .mc-cover { height: 7.5rem; } }
     .mc-name-row { display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; min-width: 0; }
     /* Connect and Accept wear the composers' living green: the one deliberate
        act on the card, dressed like every other primary act in the plaza. */
@@ -937,10 +942,6 @@
     .mc-x-btn:hover { color: #dc2626; background: rgb(220 38 38 / .08); }
     html.dark .mc-x-btn { color: #5d6858; }
     html.dark .mc-x-btn:hover { color: #f87171; background: rgb(248 113 113 / .12); }
-    /* No cover of their own: a colour that is theirs, drifting. Chosen by
-       id, so the same person keeps the same band every time — a random one
-       per render would make a list flicker on every page. */
-
     .mc-body { padding: 0 .9rem .9rem; }
     /* The face hangs over the cover, and the cloud above it hangs over the
        card — so the head of the card gets the air the cloud needs. */
@@ -1278,20 +1279,28 @@
         transition: box-shadow .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
     .reco-card:hover { border-color: var(--color-brand-200); box-shadow: 0 10px 26px -18px rgb(0 0 0 / .6); }
     @media (prefers-reduced-motion: reduce) { .reco-card { transition: none; } }
-    /* The strip runs to the card's own edges and the face stands on it.
+    /* ---- The band a person is introduced on ------------------------------
        A cover of their own if they have set one; otherwise the house green,
        deep and slowly turning — the same tide everything else here rides,
        and a colour that says "this app" rather than a random tint that says
-       nothing. */
-    .reco-top { display: block; height: 2.3rem; margin: 0 -.5rem .0; overflow: hidden;
+       nothing. Every surface that shows a member wears this; only the height
+       and the bleed belong to the surface, so those live in the modifiers.
+
+       The band NEVER decides its own height: a bare .mem-cover collapses to
+       nothing, which is the honest failure — a surface that forgot to size
+       its band shows no band at all rather than a green stripe of the wrong
+       depth in the middle of a card. */
+    .mem-cover { display: block; overflow: hidden;
         background: linear-gradient(120deg, #16220f, #2f5219 32%, #3d6823 52%, #24380f 76%, #16220f);
         background-size: 260% 260%;
         animation: mcDrift 15s ease-in-out infinite alternate; }
     @keyframes mcDrift { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
-    .reco-top img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .mem-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
     /* A cover photo is the cover; nothing needs to drift under it. */
-    .reco-top:has(img) { animation: none; }
-    @media (prefers-reduced-motion: reduce) { .reco-top { animation: none; } }
+    .mem-cover:has(img) { animation: none; }
+    @media (prefers-reduced-motion: reduce) { .mem-cover { animation: none; } }
+    /* The suggestion card's own measurements: short, because the card is. */
+    .reco-top { height: 2.3rem; margin: 0 -.5rem 0; }
     .reco-who { display: block; min-width: 0; }
     .reco-face { display: flex; justify-content: center; margin-top: -1.5rem; }
     .reco-face .avatar { width: 3rem; height: 3rem; font-size: .95rem;
@@ -1675,6 +1684,36 @@
     @media (prefers-reduced-motion: reduce) {
         .topb { transition:none; animation:none; }
     }
+
+    /* ---- A cover on a post card ------------------------------------------
+       The band sits in the card's flow, at the top, bled back out through the
+       padding to the card's own edges — and then the FACE alone is lifted
+       into it. Absolutely positioned over the head instead, it took the name
+       and the level chips with it and printed them across the photo: in a
+       row this shallow the text sits at the avatar's own height, so anything
+       that moves the avatar up must leave its neighbours behind.
+
+       Squared at the bottom, because a band wearing four rounded corners
+       reads as a shelf floating inside the card rather than its top edge. */
+    .fp-cover { height: 3.75rem; margin: -1rem -1rem 0;
+        border-radius: inherit; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+    /* The card goes back to its plain padding: the cloud no longer needs a
+       clearing above the head, because it now hangs over the photo. Written
+       after the cloud's own rule, which asks for the same property at the
+       same weight and does not know there is a picture. */
+    .feed-post:has(.fp-cover) { padding-top: 1rem; }
+    /* Only the first thing in the head — the face, or the wrap holding the
+       face and its cloud — climbs onto the photo. */
+    .feed-post:has(.fp-cover) > header > :first-child { margin-top: -1.4rem; }
+    /* A face reads as standing ON the photo only if it is cut out of it. */
+    .feed-post:has(.fp-cover) > header .avatar { border: 3px solid var(--color-white); }
+    html.dark .feed-post:has(.fp-cover) > header .avatar { border-color: #151b12; }
+    /* Delete and permalink now land on somebody's field, so they carry a
+       pane of the card's own surface to be read against. */
+    .feed-post:has(.fp-cover) .fp-del, .feed-post:has(.fp-cover) .fp-open {
+        background: rgb(255 255 255 / .86); box-shadow: 0 2px 8px -5px rgb(0 0 0 / .9); }
+    html.dark .feed-post:has(.fp-cover) .fp-del, html.dark .feed-post:has(.fp-cover) .fp-open {
+        background: rgb(21 27 18 / .82); }
 </style>
 {{-- The podium's data rides with the podium's styles, so the two can never
      arrive on a page apart: every card built in JavaScript on a page that can

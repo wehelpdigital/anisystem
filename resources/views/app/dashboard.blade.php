@@ -49,9 +49,13 @@
      * line at the far right — three ragged rows for two facts. A grid keeps
      * the badge beside what it belongs to at every width, and lets the chip
      * fall in under the words rather than off to the side of nothing. */
+    /* The padding is held in variables because the cover band has to bleed
+       back out through it to the card's own edges, and it changes on a
+       phone — one place to read it from, so the two can never disagree. */
     .dash-hero { display: grid; grid-template-columns: auto minmax(0, 1fr);
         align-items: center; gap: .55rem .95rem;
-        padding: 1.25rem 1.35rem; border-radius: 1.1rem; position: relative; overflow: hidden;
+        --dh-px: 1.35rem; --dh-py: 1.25rem;
+        padding: var(--dh-py) var(--dh-px); border-radius: 1.1rem; position: relative; overflow: hidden;
         background: var(--color-white); border: 1px solid var(--color-gray-200); }
     .dash-hero::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
         background: linear-gradient(90deg, #6b9f3d, #b8d38e 55%, transparent);
@@ -98,6 +102,25 @@
         .dash-hero { grid-template-columns: auto minmax(0, 1fr) auto; }
         .dash-hero-state { grid-column: 3; grid-row: 1 / -1; justify-self: end; align-self: center;
             flex-direction: column; align-items: flex-end; }
+    }
+    /* --- Your own field, across the top of your own greeting ---
+       A row of its own at the head of the hero's grid, bled back out through
+       the card's padding to its edges; everything else drops one row and the
+       hour's badge stands half over the photo's lower edge, the way a face
+       stands on a profile. Only drawn when there is a cover to draw, so the
+       rows below only move for somebody who has chosen a picture. */
+    .dash-hero-cover { grid-column: 1 / -1; grid-row: 1; height: 5rem;
+        margin: calc(var(--dh-py) * -1) calc(var(--dh-px) * -1) 0; }
+    .dash-hero:has(.dash-hero-cover) { row-gap: .3rem; }
+    .dash-hero:has(.dash-hero-cover) .dash-hero-mark { grid-row: 2; align-self: start;
+        margin-top: -1.7rem; position: relative;
+        border: 3px solid var(--color-white); box-shadow: 0 8px 20px -14px rgb(0 0 0 / .8); }
+    html.dark .dash-hero:has(.dash-hero-cover) .dash-hero-mark { border-color: #151b12; }
+    .dash-hero:has(.dash-hero-cover) .dash-hero-body { grid-column: 2; grid-row: 2; }
+    .dash-hero:has(.dash-hero-cover) .dash-hero-state { grid-column: 2; grid-row: 3; }
+    @media (min-width: 640px) {
+        .dash-hero-cover { height: 6.5rem; }
+        .dash-hero:has(.dash-hero-cover) .dash-hero-state { grid-column: 3; grid-row: 2; align-self: center; }
     }
     .dash-chip { display: inline-flex; align-items: center; gap: .35rem; padding: .35rem .75rem;
         border-radius: 999px; font-size: .74rem; font-weight: 700;
@@ -326,7 +349,7 @@
     html.dark .dash-stat.is-lead { background: rgb(61 104 35 / .22); border-color: #3f5626; }
     html.dark .dash-stat.is-lead b { color: #bfe19a; }
     @media (max-width: 480px) {
-        .dash-hero { padding: .9rem 1rem; gap: .7rem; }
+        .dash-hero { --dh-px: 1rem; --dh-py: .9rem; gap: .7rem; }
         .dash-hero-state { margin-left: 0; flex-basis: 100%; }
         .dash-stat b { font-size: 1.15rem; }
     }
@@ -406,6 +429,14 @@
             : ($__h < 18 ? ['Magandang hapon', 'tod-afternoon'] : ['Magandang gabi', 'tod-evening']);
     @endphp
     <div class="dash-hero">
+        {{-- Your own field across the top of your own greeting, with the hour
+             standing half over its edge the way a face stands on a profile.
+             Only if you have set a cover: the home screen is the first thing
+             this app shows anybody, and a band of house green there would
+             cost every farmer without a picture a fifth of it to say nothing. --}}
+        @if (filled($user->coverPath ?? null))
+            @include('community.partials.cover-band', ['coverUser' => $user, 'coverClass' => 'dash-hero-cover'])
+        @endif
         <span class="dash-hero-mark {{ $__tod }}" aria-hidden="true">
             @if ($__tod === 'tod-morning')
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v2M5.3 6.7l1.4 1.4M18.7 6.7l-1.4 1.4M8 15a4 4 0 118 0M2 15h2m16 0h2M3 19h18"/></svg>
