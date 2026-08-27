@@ -190,22 +190,27 @@ class CropCatalog
         'sweetpotato' => [
             'label' => 'Sweet potato (Kamote)', 'icon' => '🍠', 'group' => 'Root crops',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 105, 'pattern' => 'root',
+            'counters' => ['DAP'],
         ],
         'cassava' => [
             'label' => 'Cassava (Kamoteng kahoy)', 'icon' => '🥔', 'group' => 'Root crops',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 270, 'pattern' => 'root',
+            'counters' => ['DAP'],
         ],
         'taro' => [
             'label' => 'Taro (Gabi)', 'icon' => '🥔', 'group' => 'Root crops',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 180, 'pattern' => 'root',
+            'counters' => ['DAP'],
         ],
         'ubi' => [
             'label' => 'Purple yam (Ubi)', 'icon' => '🍠', 'group' => 'Root crops',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 270, 'pattern' => 'root',
+            'counters' => ['DAP'],
         ],
         'potato' => [
             'label' => 'Potato (Patatas)', 'icon' => '🥔', 'group' => 'Root crops',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 100, 'pattern' => 'root',
+            'counters' => ['DAP'],
         ],
         'carrot' => [
             'label' => 'Carrot (Karot)', 'icon' => '🥕', 'group' => 'Root crops',
@@ -218,15 +223,17 @@ class CropCatalog
         'ginger' => [
             'label' => 'Ginger (Luya)', 'icon' => '🫚', 'group' => 'Root crops',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 270, 'pattern' => 'root',
+            'counters' => ['DAP'],
         ],
         'turmeric' => [
             'label' => 'Turmeric (Luyang dilaw)', 'icon' => '🫚', 'group' => 'Root crops',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 255, 'pattern' => 'root',
+            'counters' => ['DAP'],
         ],
 
         /* ---------------- Leafy & brassicas ---------------- */
         'pechay' => [
-            'label' => 'Pechay', 'icon' => '🥬', 'group' => 'Leafy vegetables',
+            'label' => 'Pechay (Petsay)', 'icon' => '🥬', 'group' => 'Leafy vegetables',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 35, 'pattern' => 'leafy',
         ],
         'cabbage' => [
@@ -246,11 +253,11 @@ class CropCatalog
             'kind' => self::ANNUAL, 'counter' => 'DAS', 'maturity' => 38, 'pattern' => 'leafy',
         ],
         'broccoli' => [
-            'label' => 'Broccoli', 'icon' => '🥦', 'group' => 'Leafy vegetables',
+            'label' => 'Broccoli (Brokoli)', 'icon' => '🥦', 'group' => 'Leafy vegetables',
             'kind' => self::ANNUAL, 'counter' => 'DAT', 'maturity' => 80, 'pattern' => 'leafy',
         ],
         'cauliflower' => [
-            'label' => 'Cauliflower', 'icon' => '🥦', 'group' => 'Leafy vegetables',
+            'label' => 'Cauliflower (Koliplor)', 'icon' => '🥦', 'group' => 'Leafy vegetables',
             'kind' => self::ANNUAL, 'counter' => 'DAT', 'maturity' => 90, 'pattern' => 'leafy',
         ],
         'alugbati' => [
@@ -288,7 +295,7 @@ class CropCatalog
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 50, 'pattern' => 'cucurbit',
         ],
         'okra' => [
-            'label' => 'Okra', 'icon' => '🌿', 'group' => 'Fruit vegetables',
+            'label' => 'Okra (Okra)', 'icon' => '🌿', 'group' => 'Fruit vegetables',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 50, 'pattern' => 'fruiting',
         ],
         'chili' => [
@@ -310,13 +317,14 @@ class CropCatalog
         'sayote' => [
             'label' => 'Chayote (Sayote)', 'icon' => '🥒', 'group' => 'Fruit vegetables',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 105, 'pattern' => 'cucurbit',
+            'counters' => ['DAP'],
         ],
         'watermelon' => [
             'label' => 'Watermelon (Pakwan)', 'icon' => '🍉', 'group' => 'Fruit vegetables',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 85, 'pattern' => 'cucurbit',
         ],
         'melon' => [
-            'label' => 'Melon', 'icon' => '🍈', 'group' => 'Fruit vegetables',
+            'label' => 'Melon (Milon)', 'icon' => '🍈', 'group' => 'Fruit vegetables',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 80, 'pattern' => 'cucurbit',
         ],
 
@@ -324,6 +332,7 @@ class CropCatalog
         'onion' => [
             'label' => 'Onion — bulb (Sibuyas)', 'icon' => '🧅', 'group' => 'Onions & garlic',
             'kind' => self::ANNUAL, 'counter' => 'DAT', 'maturity' => 115, 'pattern' => 'bulb',
+            'counters' => ['DAT', 'DAS', 'DAP'],
         ],
         'onion_spring' => [
             'label' => 'Spring onion (Sibuyas na mura)', 'icon' => '🧅', 'group' => 'Onions & garlic',
@@ -332,20 +341,24 @@ class CropCatalog
         'garlic' => [
             'label' => 'Garlic (Bawang)', 'icon' => '🧄', 'group' => 'Onions & garlic',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 125, 'pattern' => 'bulb',
+            'counters' => ['DAP'],
         ],
         'shallot' => [
             'label' => 'Shallot (Sibuyas Tagalog)', 'icon' => '🧅', 'group' => 'Onions & garlic',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 85, 'pattern' => 'bulb',
+            'counters' => ['DAP'],
         ],
 
         /* ---------------- Industrial & plantation ---------------- */
         'sugarcane' => [
             'label' => 'Sugarcane (Tubo)', 'icon' => '🎋', 'group' => 'Industrial crops',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 330,
+            'counters' => ['DAP'],
         ],
         'pineapple' => [
             'label' => 'Pineapple (Pinya)', 'icon' => '🍍', 'group' => 'Industrial crops',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 480, 'pattern' => 'root',
+            'counters' => ['DAP'],
         ],
         'tobacco' => [
             'label' => 'Tobacco (Tabako)', 'icon' => '🌿', 'group' => 'Industrial crops',
@@ -356,7 +369,7 @@ class CropCatalog
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 165, 'pattern' => 'fruiting',
         ],
         'abaca' => [
-            'label' => 'Abaca', 'icon' => '🌿', 'group' => 'Industrial crops',
+            'label' => 'Abaca (Abaka)', 'icon' => '🌿', 'group' => 'Industrial crops',
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 20,
         ],
         'rubber' => [
@@ -364,7 +377,7 @@ class CropCatalog
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 72,
         ],
         'oilpalm' => [
-            'label' => 'Oil palm', 'icon' => '🌴', 'group' => 'Industrial crops',
+            'label' => 'Oil palm (Palma)', 'icon' => '🌴', 'group' => 'Industrial crops',
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 36,
         ],
         'bamboo' => [
@@ -376,9 +389,10 @@ class CropCatalog
         'banana' => [
             'label' => 'Banana (Saging)', 'icon' => '🍌', 'group' => 'Fruit trees',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 330,
+            'counters' => ['DAP'],
         ],
         'papaya' => [
-            'label' => 'Papaya', 'icon' => '🫐', 'group' => 'Fruit trees',
+            'label' => 'Papaya (Papaya)', 'icon' => '🫐', 'group' => 'Fruit trees',
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 9,
         ],
         'mango' => [
@@ -390,7 +404,7 @@ class CropCatalog
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 72,
         ],
         'calamansi' => [
-            'label' => 'Calamansi', 'icon' => '🍋', 'group' => 'Fruit trees',
+            'label' => 'Calamansi (Kalamansi)', 'icon' => '🍋', 'group' => 'Fruit trees',
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 30,
         ],
         'citrus' => [
@@ -406,7 +420,7 @@ class CropCatalog
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 42,
         ],
         'avocado' => [
-            'label' => 'Avocado', 'icon' => '🥑', 'group' => 'Fruit trees',
+            'label' => 'Avocado (Abukado)', 'icon' => '🥑', 'group' => 'Fruit trees',
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 48,
         ],
         'guava' => [
@@ -414,19 +428,19 @@ class CropCatalog
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 24,
         ],
         'lanzones' => [
-            'label' => 'Lanzones', 'icon' => '🫒', 'group' => 'Fruit trees',
+            'label' => 'Lanzones (Lansones)', 'icon' => '🫒', 'group' => 'Fruit trees',
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 96,
         ],
         'rambutan' => [
-            'label' => 'Rambutan', 'icon' => '🍒', 'group' => 'Fruit trees',
+            'label' => 'Rambutan (Rambutan)', 'icon' => '🍒', 'group' => 'Fruit trees',
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 60,
         ],
         'durian' => [
-            'label' => 'Durian', 'icon' => '🍈', 'group' => 'Fruit trees',
+            'label' => 'Durian (Duryan)', 'icon' => '🍈', 'group' => 'Fruit trees',
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 72,
         ],
         'mangosteen' => [
-            'label' => 'Mangosteen', 'icon' => '🫐', 'group' => 'Fruit trees',
+            'label' => 'Mangosteen (Mangostan)', 'icon' => '🫐', 'group' => 'Fruit trees',
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 96,
         ],
         'chico' => [
@@ -442,7 +456,7 @@ class CropCatalog
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 36,
         ],
         'santol' => [
-            'label' => 'Santol', 'icon' => '🍑', 'group' => 'Fruit trees',
+            'label' => 'Santol (Santol)', 'icon' => '🍑', 'group' => 'Fruit trees',
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 60,
         ],
         'starapple' => [
@@ -458,7 +472,7 @@ class CropCatalog
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 36,
         ],
         'dragonfruit' => [
-            'label' => 'Dragon fruit', 'icon' => '🐉', 'group' => 'Fruit trees',
+            'label' => 'Dragon fruit (Saniata)', 'icon' => '🐉', 'group' => 'Fruit trees',
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 18,
         ],
         'coffee' => [
@@ -466,7 +480,7 @@ class CropCatalog
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 36,
         ],
         'cacao' => [
-            'label' => 'Cacao', 'icon' => '🍫', 'group' => 'Fruit trees',
+            'label' => 'Cacao (Kakaw)', 'icon' => '🍫', 'group' => 'Fruit trees',
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 30,
         ],
         'malunggay' => [
@@ -480,7 +494,7 @@ class CropCatalog
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 70, 'pattern' => 'fruiting',
         ],
         'strawberry' => [
-            'label' => 'Strawberry', 'icon' => '🍓', 'group' => 'Other',
+            'label' => 'Strawberry (Presa)', 'icon' => '🍓', 'group' => 'Other',
             'kind' => self::ANNUAL, 'counter' => 'DAT', 'maturity' => 75, 'pattern' => 'fruiting',
         ],
     ];
@@ -503,6 +517,49 @@ class CropCatalog
     {
         return ($key && isset(self::CROPS[$key]))
             && (self::CROPS[$key]['kind'] ?? self::ANNUAL) === self::PERENNIAL;
+    }
+
+    /**
+     * The ways THIS crop can honestly be counted.
+     *
+     * The lot form offered all three to everything, which is how a mango lot
+     * came to be set to "sown, then transplanted" and a cassava lot to DAS.
+     * Neither is a thing that happens: cassava goes in as a cutting and has
+     * no sowing to count from, and a standing tree has no day zero at all.
+     *
+     * Read off how the crop is actually established, not off a preference:
+     *   • a crop raised in a seedbed and moved         → DAT, or DAS if
+     *     somebody direct-seeds it instead
+     *   • a crop sown where it stands                  → DAS or DAP
+     *   • a crop planted as a cutting, tuber or set    → DAP only, because
+     *     there was never a seed in the ground
+     *   • a standing perennial                         → TREE only
+     *
+     * The first entry is the one the form picks by default: the way the crop
+     * is most often grown here.
+     *
+     * @return array<int, string>
+     */
+    public static function countersFor(?string $key): array
+    {
+        if (! $key || ! isset(self::CROPS[$key])) {
+            // Nothing chosen: every way is still open.
+            return ['DAT', 'DAS', 'DAP'];
+        }
+        if (self::isPerennial($key)) {
+            return ['TREE'];
+        }
+
+        $crop = self::CROPS[$key];
+        if (! empty($crop['counters'])) {
+            return $crop['counters'];
+        }
+
+        return match ($crop['counter'] ?? 'DAP') {
+            'DAT' => ['DAT', 'DAS'],
+            'DAS' => ['DAS', 'DAP'],
+            default => ['DAP', 'DAS'],
+        };
     }
 
     /** The crop's own typical days to harvest, before a lot overrides it. */

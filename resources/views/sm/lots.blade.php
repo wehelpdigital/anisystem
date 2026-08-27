@@ -135,21 +135,30 @@
             <input type="text" id="lotVariety" maxlength="255" class="form-input" placeholder="e.g. IR64">
         </div>
 
-        {{-- A tree has no day counter, so it is not asked for one: its stages
-             are read against its age, which the field above already knows. --}}
+        {{-- HOW THIS LOT'S DAYS ARE COUNTED.
+
+             The list is rebuilt from whatever crop is chosen, because most
+             crops can only honestly be counted one or two ways: rice is sown
+             then transplanted or direct seeded and never "planted"; cassava
+             goes in as a cutting and has no sowing to count from at all; and
+             a standing tree has no day zero, only an age.
+
+             All four are written out here so the markup says what the answers
+             are; the JS keeps the ones that apply and drops the rest. --}}
         <div id="lotDayTypeWrap">
             <label for="lotDayType" class="form-label">Day counter</label>
-            {{-- Three answers, because a field is established in one of three
-                 ways and each is counted differently. Direct-seeded rice never
-                 gets a DAT number at all, and reading it against a transplanted
-                 calendar puts every stage in the wrong week. --}}
             <select id="lotDayType" class="form-select">
                 <option value="DAT">DAS → DAT — sown, then transplanted</option>
                 <option value="DAS">DAS only — direct seeded (DSR)</option>
                 <option value="DAP">DAP — days after planting</option>
+                <option value="TREE">Mature trees — no day count, read by age</option>
             </select>
             <p class="form-hint" id="lotDayTypeHint"></p>
-            <p class="form-hint">How this lot's day numbers are counted. <strong>DAP</strong> is a single count from planting. <strong>DAS/DAT</strong> counts DAS from sowing, then flips to DAT once you flag the transplant activity.</p>
+            {{-- Said only while the list still holds more than one answer.
+                 A crop with one honest way of being counted has already been
+                 answered, and a paragraph comparing three of them under a
+                 select showing one is noise. --}}
+            <p class="form-hint" id="lotDayTypeAll">How this lot's day numbers are counted. <strong>DAP</strong> is a single count from planting. <strong>DAS/DAT</strong> counts DAS from sowing, then flips to DAT once you flag the transplant activity.</p>
         </div>
 
         {{-- Lot address — town + province power the local weather forecast. --}}
@@ -243,6 +252,12 @@
                                 data-tree="{{ $c['perennial'] ? '1' : '' }}"
                                 data-maturity="{{ $c['maturity'] ?? '' }}"
                                 data-bearing="{{ $c['bearingAt'] ?? '' }}"
+                                {{-- The ways this crop can honestly be counted,
+                                     first one being how it is usually grown.
+                                     The day-counter select is rebuilt from
+                                     this, so a cassava lot is never offered a
+                                     sowing it never had. --}}
+                                data-counters="{{ implode(',', \App\Support\CropCatalog::countersFor($c['value'])) }}"
                                 data-counter="{{ $c['counter'] }}">
                             <span class="crop-row-e">{{ $c['icon'] }}</span>
                             <span class="crop-row-t">
@@ -592,16 +607,15 @@ const __init = () => {
         document.getElementById('lotSize').value = lot ? parseFloat(lot.lotSize) || 0 : '';
         document.getElementById('lotSizeUnit').value = lot ? (lot.lotSizeUnit || 'hectare') : 'hectare';
         document.getElementById('lotVariety').value = lot ? (lot.variety || '') : '';
-        // The crop first: it decides which of the timing questions is asked,
-        // and setLotCrop clears whichever one no longer applies.
-        setLotCrop(lot ? (lot.crop || '') : '');
+        /* The crop first, and it is handed what the lot already counts in.
+         *
+         * It decides which timing question is asked AND which day counters
+         * are on offer, so it has to run before either is filled — and it
+         * must be told the saved answer, or narrowing the list around a lot
+         * would quietly change how that lot has been counted all season. */
+        setLotCrop(lot ? (lot.crop || '') : '', lot ? (lot.dayType || 'DAT') : '');
         document.getElementById('lotMaturity').value = lot && lot.daysToMaturity ? lot.daysToMaturity : '';
         treeAge(lot && lot.treeAgeMonths ? Number(lot.treeAgeMonths) : 0);
-        // TREE is not one of the counter's three answers; a tree lot simply
-        // does not show the field, and its stored value stays as it is.
-        const dt = lot ? (lot.dayType || 'DAT') : 'DAT';
-        document.getElementById('lotDayType').value = dt === 'TREE' ? 'DAT' : dt;
-        sayDayType();
         document.getElementById('lotBarangay').value = lot ? (lot.locBarangay || '') : '';
         document.getElementById('lotZone').value = lot ? (lot.locZone || '') : '';
         document.getElementById('lotNotes').value = lot ? (lot.notes || '') : '';
@@ -663,6 +677,7 @@ const __init = () => {
         DAT: 'Counts DAS from day zero, then restarts as DAT on the transplant date. Stages read against the transplanted calendar once it does.',
         DAS: 'One count from sowing, all season. Stages read against the direct-seeded calendar — a transplant date is ignored.',
         DAP: 'One count from planting, all season.',
+        TREE: 'No day count at all. The stages are read against how old the trees are, which is the field above.',
     };
     function sayDayType() {
         const sel = document.getElementById('lotDayType');
@@ -670,6 +685,47 @@ const __init = () => {
         if (sel && hint) hint.textContent = DAY_TYPE_SAYS[sel.value] || '';
     }
     document.getElementById('lotDayType')?.addEventListener('change', sayDayType);
+
+    /**
+     * Keep only the ways THIS crop can honestly be counted.
+     *
+     * The list used to offer all three to everything, which is how a mango
+     * lot came to be set to "sown, then transplanted". Rice is sown then
+     * transplanted or direct seeded and never planted; cassava goes in as a
+     * cutting and has no sowing to count from; a standing tree has no day
+     * zero, only an age.
+     *
+     * The options are only hidden, never removed, so the same select can be
+     * refilled when the crop changes again — and a value already stored on
+     * the lot is kept even if the crop's list has since narrowed, because
+     * silently rewriting somebody's answer is worse than showing an odd one.
+     *
+     * @param {string[]} allow  the modes to keep, best-first
+     * @param {string}   want   the mode to land on
+     */
+    function fitDayTypes(allow, want) {
+        const sel = document.getElementById('lotDayType');
+        if (!sel) return;
+        const keep = new Set(allow);
+        // Whatever is already chosen stays offered, so an existing lot never
+        // has its answer taken away by a list that narrowed around it.
+        if (want) keep.add(want);
+
+        let shown = 0;
+        [...sel.options].forEach((o) => {
+            const on = keep.has(o.value);
+            o.hidden = !on;
+            o.disabled = !on;
+            if (on) shown++;
+        });
+        sel.value = keep.has(want) ? want : (allow[0] || 'DAT');
+
+        // One answer is not a choice — say so rather than offering a menu of
+        // one, and drop the paragraph that compares the others.
+        sel.disabled = shown <= 1;
+        document.getElementById('lotDayTypeAll')?.classList.toggle('hidden', shown <= 1);
+        sayDayType();
+    }
 
     /* ---------------- Save ---------------- */
 
@@ -686,8 +742,15 @@ const __init = () => {
         ? document.querySelector(`#cropPickList .crop-row[data-crop="${CSS.escape(key)}"]`)
         : null;
 
-    /** Which crop is chosen, and what the form will send. */
-    function setLotCrop(value) {
+    /**
+     * Which crop is chosen, and what the form will send.
+     *
+     * @param {string} keepDayType  what the lot already counts in. Passed
+     *   when the sheet is being filled from a saved lot, so its answer
+     *   survives; omitted when somebody picks a crop, so the counter moves
+     *   to how that crop is usually grown.
+     */
+    function setLotCrop(value, keepDayType) {
         const want = matchCrop(value);
         document.getElementById('lotCrop').value = want;
         const row = cropRow(want);
@@ -704,19 +767,30 @@ const __init = () => {
             b.querySelector('.crop-row-tick')?.classList.toggle('hidden', !on);
         });
 
-        sayCropTiming(row);
+        sayCropTiming(row, keepDayType);
     }
 
     /** Show the one question this crop is actually asked, and hide the rest. */
-    function sayCropTiming(row) {
+    function sayCropTiming(row, keepDayType) {
         const isTree = !!row?.getAttribute('data-tree');
         const maturity = row?.getAttribute('data-maturity') || '';
         const bearing = Number(row?.getAttribute('data-bearing') || 0);
 
         document.getElementById('lotMaturityWrap').classList.toggle('hidden', !row || isTree);
         document.getElementById('lotTreeWrap').classList.toggle('hidden', !isTree);
-        // A tree has no day counter — its stages are read against its age.
-        document.getElementById('lotDayTypeWrap').classList.toggle('hidden', isTree);
+
+        /* The day counter follows the crop.
+         *
+         * It stays on screen for a tree rather than disappearing — "Mature
+         * trees — no day count, read by age" is an answer worth seeing, and a
+         * field that vanishes leaves somebody wondering what happened to the
+         * setting they were looking at a moment ago. It just has nothing else
+         * to offer, so it says the one thing and stops. */
+        const allow = (row?.getAttribute('data-counters') || 'DAT,DAS,DAP')
+            .split(',').map((s) => s.trim()).filter(Boolean);
+        // On a crop change, land on how the crop is usually grown; when the
+        // sheet is merely being filled, keep what the lot already says.
+        fitDayTypes(allow, keepDayType || allow[0]);
 
         if (row && !isTree) {
             const box = document.getElementById('lotMaturity');
