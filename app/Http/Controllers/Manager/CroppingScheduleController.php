@@ -190,7 +190,11 @@ class CroppingScheduleController extends Controller
         // page being shown.
         $summary = [
             'schedules' => AsCroppingSchedule::active()->forClient($ownerId)->count(),
-            'active' => AsCroppingSchedule::active()->forClient($ownerId)->where('status', 'active')->count(),
+            /* "Active" meant status = 'active', which is not one of the five
+             * values the column allows (draft, setup, generated, completed,
+             * archived) — so this counted zero on every farm in the app and
+             * always had. It is the seasons still being farmed. */
+            'active' => AsCroppingSchedule::active()->forClient($ownerId)->onShelf()->count(),
             'lots' => \App\Models\AsScheduleLot::where('deleteStatus', 1)
                 ->whereIn('croppingScheduleId', AsCroppingSchedule::active()->forClient($ownerId)->select('id'))
                 ->count(),
@@ -211,8 +215,10 @@ class CroppingScheduleController extends Controller
 
         // Where "open today's board" lands: the season that is running, or
         // failing that the newest one on the shelf.
+        // Same non-existent status here: this branch never matched, so
+        // "open today's board" has always silently used the fallback.
         $todaySchedule = AsCroppingSchedule::active()->forClient($ownerId)
-            ->where('status', 'active')->orderByDesc('created_at')->first()
+            ->onShelf()->orderByDesc('created_at')->first()
             ?? $schedules->first();
         $todayHref = $todaySchedule ? route('sm.activities', ['id' => $todaySchedule->id]) : null;
 

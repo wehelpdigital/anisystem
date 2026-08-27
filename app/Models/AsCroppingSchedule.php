@@ -52,6 +52,17 @@ class AsCroppingSchedule extends BaseModel
     public const STATUS_SETUP = 'setup';
     public const STATUS_COMPLETED = 'completed';
 
+    /**
+     * The states that mean "not being farmed any more".
+     *
+     * The column is an ENUM of draft, setup, generated, completed, archived.
+     * Closing a season writes 'completed'; 'archived' is the column's own
+     * older word for the same thing and no row uses it today — but a scope
+     * that only knew one of them would quietly leave such a row on the shelf
+     * for ever, which is the kind of bug nobody finds until a customer does.
+     */
+    public const CLOSED = ['completed', 'archived'];
+
     /** A completed schedule is locked — read-only until the owner reopens it. */
     public function isLocked(): bool
     {
@@ -68,13 +79,13 @@ class AsCroppingSchedule extends BaseModel
      */
     public function scopeOnShelf($q)
     {
-        return $q->where($this->getTable() . '.status', '!=', self::STATUS_COMPLETED);
+        return $q->whereNotIn($this->getTable() . '.status', self::CLOSED);
     }
 
     /** The seasons that have been closed. */
     public function scopeArchived($q)
     {
-        return $q->where($this->getTable() . '.status', self::STATUS_COMPLETED);
+        return $q->whereIn($this->getTable() . '.status', self::CLOSED);
     }
 
     /**
