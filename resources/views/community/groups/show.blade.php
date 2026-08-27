@@ -112,7 +112,26 @@
        list uses for unread topics — one language for "there is something
        here for you". */
     .disc-tool { position:relative; }
-    .door-count { position:absolute; top:-.28rem; right:-.28rem; }
+    /* Who is at the door, worn as a tag rather than a badge stuck on a
+       corner. A red disc hanging off the edge of a round button is an alarm
+       pinned to a control; the number set INSIDE the pill is what the button
+       is about — and it stops the count from overlapping the two buttons
+       either side of it, which is what a -.28rem offset was always going to
+       do in a row this tight. */
+    .disc-tool-tag { width:auto; min-width:2.1rem; padding:0 .55rem; gap:.35rem;
+        color:var(--color-gray-700); }
+    /* The red disc itself, spelled out here: .disc-new is written in the
+       discussions LIST's own stylesheet, so on this page the count has been
+       an unstyled bare numeral in the corner all along — which is precisely
+       what "a floating number" looks like. */
+    .disc-tool-tag .door-count { position:static; margin-left:0;
+        display:inline-flex; align-items:center; justify-content:center;
+        min-width:1.1rem; height:1.1rem; padding:0 .3rem; border-radius:999px;
+        background:#ef4444; color:#fff; font-size:.62rem; font-weight:800;
+        line-height:1; }
+    /* Nobody waiting: the pill closes back to a plain round button rather
+       than holding an empty slot open where the number used to be. */
+    .disc-tool-tag:has(.door-count.hidden) { width:2.1rem; min-width:0; padding:0; }
 
     @media (prefers-reduced-motion: reduce) {
         .disc-hero::before { animation:none; }
@@ -549,7 +568,7 @@
                 {{-- Who is at the door. The number is the whole reason this
                      button exists, so it wears it — an organiser should not
                      have to open a sheet to find out nobody is waiting. --}}
-                <button type="button" id="doorQueueBtn" class="disc-tool"
+                <button type="button" id="doorQueueBtn" class="disc-tool disc-tool-tag"
                         title="People waiting to join" aria-label="People waiting to join">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
                     <span class="disc-new door-count {{ $waitingCount > 0 ? '' : 'hidden' }}" id="doorCount">{{ $waitingCount > 99 ? '99+' : $waitingCount }}</span>
