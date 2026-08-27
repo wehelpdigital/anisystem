@@ -5,6 +5,9 @@
 @php $cmapKey = config('services.google_maps.key'); @endphp
 
 <div class="cmap-wrap" id="cmapWrap">
+{{-- The tab says its own name, as the chat and the whiteboard do. It sits
+     above the key check, because a room with no map key still has a tab. --}}
+<div class="collab-tabhead"><span class="collab-tabtitle">🗺️ Team map</span></div>
 @if (! $cmapKey)
     {{-- No key, no map — say so instead of a grey void. --}}
     <div class="cmap-nokey">

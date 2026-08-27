@@ -108,6 +108,10 @@
         <div class="collab-panel" data-panel="location" id="collabLocation">@include('sm.partials.collab-location', ['schedule' => $schedule])</div>
         <div class="collab-panel" data-panel="map" id="collabMap">@include("sm.partials.schedule-map", ["schedule" => $schedule])</div>
         <div class="collab-panel" data-panel="activities" id="collabActivities">
+            {{-- The tab says its own name, as the chat and the whiteboard do.
+                 Here it lives outside the frame: the page inside is the whole
+                 Activities module and has a head of its own. --}}
+            <div class="collab-tabhead"><span class="collab-tabtitle">✅ Team tasks</span></div>
             {{-- Eager (no lazy) so it preloads in the background the moment the
                  Collab Room opens — switching to Activities is then instant. --}}
             <iframe id="collabActivitiesFrame" title="Activities" loading="eager"
@@ -192,6 +196,21 @@
     .collab-panel { position: absolute; inset: 0; visibility: hidden; pointer-events: none; }
     .collab-panel.is-active { visibility: visible; pointer-events: auto; }
     #collabActivitiesFrame { width: 100%; height: 100%; border: 0; display: block; }
+    /* Every tab says its own name.
+     *
+     * Three of them already did — the chat, the whiteboard and the AI carry
+     * a title in their own bars — and the rest opened straight onto their
+     * controls, so a reader who tapped the wrong tab had nothing telling
+     * them where they had landed. This is the same line in the same place
+     * for the five that were missing it. */
+    .collab-tabhead { display: flex; align-items: center; gap: .5rem;
+        padding: .55rem .75rem .35rem; flex: none; }
+    .collab-tabtitle { font-size: .85rem; font-weight: 800; color: var(--color-gray-800); }
+    html.dark .collab-tabtitle { color: #e8efe1; }
+    /* The tasks tab is a frame that fills its panel, so the title needs the
+       panel to be a column or the frame would sit on top of it. */
+    #collabActivities { display: flex; flex-direction: column; }
+    #collabActivities #collabActivitiesFrame { flex: 1 1 auto; height: auto; }
     /* Chat + AI panels host a column layout; drawing hosts the canvas board. */
     #collabChat, #collabAi, #collabDrawing, #collabMap { display: flex; flex-direction: column; }
     /* Chat/whiteboard are tabs here, not floats — hide the floating launcher. */

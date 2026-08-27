@@ -36,7 +36,17 @@
     html.collab-embed #teamChat,
     html.collab-embed #scheduleBoard,
     html.collab-embed .activity-action-row[data-forward="quickShareBtn"],
-    html.collab-embed .activity-action-row[data-forward="openReportBtn"] { display: none !important; }
+    html.collab-embed .activity-action-row[data-forward="openReportBtn"],
+    /* Not in the Collab Room's tasks tab.
+     *
+     * The Tools hamburger opens a sheet of module errands that belong to the
+     * full Activities page; the Mirror is a whole-plan reader that wants the
+     * screen this tab does not have; and the AI button forwards to a float
+     * that is already hidden in here, so it opened nothing. The room has its
+     * own AI tab a thumb away. */
+    html.collab-embed #activityActionsBtn,
+    html.collab-embed #mirrorBtn,
+    html.collab-embed #aiTechBtn { display: none !important; }
 </style>
 <script>
     // Tell the Collab Room parent once the board has actually painted, so it can
@@ -3534,6 +3544,47 @@
      * want back is the note. The module you were in when you asked is
      * remembered here so the thing you opened knows where to return you. */
     let cameFrom = null;
+
+    /* WHERE BACK GOES.
+     *
+     * One button serves every module in this shell, and it used to say
+     * "Activities" and mean it — so opening the AI Technician from the
+     * cropping schedule's own page and pressing back landed you somewhere
+     * you had never been. Which is fine when you DID come from the board,
+     * and a small lie the rest of the time.
+     *
+     * Kept apart from cameFrom above, which is the deep-link origin the map
+     * and the drawing pad read to return somebody to the note that sent
+     * them. This is a plainer thing: the screen that was showing when this
+     * one was opened.
+     */
+    let backTo = null;          // a module key inside this shell
+    let enteredByLink = false;  // the shell opened straight into a module
+    /* Two moves must not leave a trail behind them: the first paint of a deep
+     * link, because `current` says 'activities' before anything has been
+     * shown and the reader has not seen it; and a press of Back itself,
+     * because recording where you came FROM while going back is how a back
+     * button ends up bouncing between two screens for ever. */
+    let noTrail = false;
+    const HUB_URL = @json(route('sm.hub', ['id' => $schedule->id]));
+
+    /** Say where back goes, so the word on the button is not a guess. */
+    function paintModuleBack() {
+        const btn = document.getElementById('moduleBackBtn');
+        if (!btn) return;
+        const word = btn.querySelector('span');
+        if (backTo && MODULES[backTo]) {
+            if (word) word.textContent = MODULES[backTo].label;
+            btn.title = 'Back to ' + MODULES[backTo].label;
+        } else if (enteredByLink) {
+            if (word) word.textContent = 'Schedule';
+            btn.title = 'Back to the cropping schedule';
+        } else {
+            if (word) word.textContent = 'Activities';
+            btn.title = 'Back to activities';
+        }
+    }
+
     window.smCameFrom = () => cameFrom;
     // The origin's own name, so a module that offers a way back can say where
     // back goes instead of hoping the reader guesses. A button labelled
@@ -3550,6 +3601,10 @@
         if (!MODULES[key]) { closeModulesSheetForNav(); return; }
         // Only a deep link sets this, and only from somewhere else.
         cameFrom = extra && current && current !== key ? current : (extra ? cameFrom : null);
+        // Every move inside the shell is remembered, deep link or not — this
+        // is what the back button reads, and it is a different question from
+        // the one cameFrom answers.
+        if (noTrail) { noTrail = false; } else if (current && current !== key) { backTo = current; }
         // What to do with the pane once the module is on screen — a sticky
         // module takes its deep link by hand instead of by re-fetch.
         let handOffExtra = null;
@@ -3677,8 +3732,9 @@
         window.smHelpKey?.(key);
         document.title = MODULES[key].label + ' — ' + @json($schedule->title);
         setActivitiesChrome(key === 'activities');
-        // Show a "back to Activities" button whenever another module is open.
+        // Show a way back whenever another module is open, and say where to.
         document.getElementById('moduleBackBtn')?.classList.toggle('hidden', key === 'activities');
+        paintModuleBack();
         // The AI module IS the technician chat — hide the floating one there.
         document.getElementById('aiFloat')?.classList.toggle('ai-float-off', key === 'ai');
         // ...and it takes the toolbar's row, so the arrow has to lead home.
@@ -3720,9 +3776,15 @@
         if (!a) return;
         if (on) {
             if (!a.dataset.hubHref) a.dataset.hubHref = a.getAttribute('href') || '';
-            a.setAttribute('href', shellUrl('activities'));
-            a.setAttribute('aria-label', 'Back to activities');
-            a.title = 'Back to activities';
+            /* Where the arrow leads is the same question the module's own
+               back button answers, and the two must not disagree: somebody
+               who reached the AI tab from the schedule's page is not sent to
+               a board they have not seen. */
+            const home = (backTo && MODULES[backTo]) ? backTo : (enteredByLink ? null : 'activities');
+            a.setAttribute('href', home ? shellUrl(home) : (a.dataset.hubHref || HUB_URL));
+            const word = home ? MODULES[home].label : 'the cropping schedule';
+            a.setAttribute('aria-label', 'Back to ' + word);
+            a.title = 'Back to ' + word;
         } else if (a.dataset.hubHref) {
             a.setAttribute('href', a.dataset.hubHref);
             a.setAttribute('aria-label', 'Back');
@@ -4402,8 +4464,21 @@
     document.getElementById('openNotesBtn')?.addEventListener('click', () => showModule('notes'));
     document.getElementById('openDrawBtn')?.addEventListener('click', () => showModule('draw'));
     document.getElementById('openMapsBtn')?.addEventListener('click', () => showModule('maps'));
-    // "Back to Activities" from any open module.
-    document.getElementById('moduleBackBtn')?.addEventListener('click', () => showModule('activities'));
+    /* Back to wherever you actually came from: the module that was showing
+       when this one was opened, or — if the shell was opened straight into a
+       module from the schedule's own page — that page. Activities only when
+       Activities is genuinely where you were. */
+    document.getElementById('moduleBackBtn')?.addEventListener('click', () => {
+        if (backTo && MODULES[backTo]) {
+            const back = backTo;
+            backTo = null;
+            noTrail = true;
+            showModule(back);
+            return;
+        }
+        if (enteredByLink) { window.location.href = HUB_URL; return; }
+        showModule('activities');
+    });
 
     // Deep link: the hub tiles open this shell with ?module=<key>, so the module
     // loads here (with the hamburger) instead of as its own cut-off page. The
@@ -4415,6 +4490,12 @@
     const applyDeepLink = () => {
         const wanted = new URLSearchParams(location.search).get('module');
         if (wanted && MODULES[wanted] && wanted !== 'activities') {
+            /* Opened straight into a module, so the reader has never seen the
+               board — "back to Activities" would send them somewhere new, and
+               the shell's own starting value would otherwise record it as a
+               screen they had been on. */
+            enteredByLink = true;
+            noTrail = true;
             history.replaceState({ module: wanted }, '', shellUrl(wanted));
             // module-booting kept the server-painted board out of sight; lift
             // it only once the module has actually landed, so Activities never

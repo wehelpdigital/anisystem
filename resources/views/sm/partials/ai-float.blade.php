@@ -247,8 +247,16 @@
     .ai-float-msg:first-child { margin-top: auto; }
     /* Hide the launcher while the panel is open — no doubled controls in the corner. */
     .ai-float.is-open .ai-float-fab { display: none; }
-    .ai-float-welcome { text-align: center; padding: 1.25rem .5rem .75rem; }
-    .ai-float-hero { width: 3rem; height: 3rem; border-radius: 999px; overflow: hidden; margin: 0 auto; display: flex; align-items: center; justify-content: center; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-brand-200); }
+    /* The same welcome the full AI page gives: a soft wash of the brand green
+       falling from the top behind the face, and the face breathing rather
+       than sitting still. Two doors onto one conversation should not greet
+       somebody two different ways. */
+    .ai-float-welcome { text-align: center; padding: 1.25rem .5rem .75rem; border-radius: 1.5rem;
+        background: radial-gradient(120% 90% at 50% 0%, var(--color-brand-50) 0%, transparent 70%); }
+    .ai-float-hero { width: 3rem; height: 3rem; border-radius: 999px; overflow: hidden; margin: 0 auto; display: flex; align-items: center; justify-content: center; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff;
+        box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-200), 0 10px 24px -8px rgb(74 124 42 / .45);
+        animation: aiFloatIdle 5s ease-in-out infinite; }
+    @keyframes aiFloatIdle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
     .ai-float-hero img { width: 100%; height: 100%; object-fit: cover; }
     .ai-float-sug { display: flex; align-items: center; gap: .6rem; width: 100%; margin-top: .9rem; padding: .6rem .75rem; text-align: left; border: 1px solid var(--color-gray-200); border-radius: .9rem; background: var(--color-white); box-shadow: var(--shadow-card); font-size: .9rem; font-weight: 700; color: var(--color-gray-800); cursor: pointer; transition: transform .18s ease, border-color .18s ease; }
     .ai-float-sug:hover { transform: translateY(-1px); border-color: var(--color-brand-300); }
@@ -365,7 +373,7 @@
 
     @media (prefers-reduced-motion: reduce) {
         .ai-float-fab, .ai-float-msg, .ai-float-panel, .ai-float-head,
-        .ai-float-chip, .ai-float-attmenu { animation: none; }
+        .ai-float-chip, .ai-float-attmenu, .ai-float-hero { animation: none; }
         .ai-float-sug, .ai-float-box, .ai-float-send { transition: none; }
         /* Slowed, not stopped — the pulse is the message that work is happening. */
         .ai-float-dots i { animation-duration: 1.8s; }

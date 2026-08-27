@@ -19,16 +19,24 @@
          which asked somebody to pick a source before they had picked a photo,
          and gave each way one word to explain itself. One button opens all
          three now, in a sheet with room for a sentence each. --}}
-    <div class="cph-srcrow">
-        <button type="button" class="cph-add" id="cphAddBtn">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8a2 2 0 012-2h1.4l1-1.6h7.2l1 1.6H18a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V8z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 9.6v5M9.5 12.1h5"/></svg>
-            <span id="cphAddLabel">Add photo</span>
-        </button>
-        <span class="cph-srchint">Everyone in the room draws on the same picture.</span>
+    {{-- The tab says its own name, as the chat and the whiteboard do. --}}
+    <div class="cph-head">
+        <span class="cph-title">📸 Team photo</span>
     </div>
 
     {{-- The photo, and the pens over it. --}}
     <div class="cph-stage" id="cphStage">
+        {{-- The way in sits at the head of the tools rather than floating
+             above them: before a photo exists it is the only control there
+             is, and after one exists it is one more thing you can do to the
+             picture. Two boxes stacked with a gap read as two panels. --}}
+        <div class="cph-srcrow">
+            <button type="button" class="btn btn-outline btn-sm cph-add" id="cphAddBtn">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8a2 2 0 012-2h1.4l1-1.6h7.2l1 1.6H18a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V8z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 9.6v5M9.5 12.1h5"/></svg>
+                <span id="cphAddLabel">Add photo</span>
+            </button>
+            <span class="cph-srchint">Everyone in the room draws on the same picture.</span>
+        </div>
         <div class="cph-bar" id="cphBar" hidden>
             {{-- Row one: what you draw with, as one segmented control
                  rather than eight loose keys. --}}
@@ -174,16 +182,28 @@
 <style>
     .cph-wrap { display: flex; flex-direction: column; min-height: 0; height: 100%; gap: .4rem; }
     /* One button, and a line of words beside it. */
-    .cph-srcrow { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
-    .cph-add { display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .85rem;
-        border-radius: 999px; font-size: .8rem; font-weight: 800; color: #fff; background: #4a7c2a;
-        box-shadow: 0 6px 16px rgb(74 124 42 / .26);
-        transition: background .28s cubic-bezier(.22,1,.36,1), transform .1s ease; }
-    .cph-add:hover { background: #3d6823; }
-    .cph-add:active { transform: scale(.96); }
+    /* The tab's own name, in the shape the chat and the whiteboard use. */
+    .cph-head { display: flex; align-items: center; gap: .5rem; padding: .1rem .1rem .15rem; }
+    .cph-title { font-size: .85rem; font-weight: 800; color: var(--color-gray-800); }
+    html.dark .cph-title { color: #e8efe1; }
+
+    /* The head of the tool card, not a panel of its own: same background and
+       border as the bar below it, joined to it with no seam so the two read
+       as one container. Before there is a photo the bar is hidden and this
+       is simply the whole card. */
+    .cph-srcrow { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
+        margin-top: .35rem; padding: .4rem .45rem;
+        border-radius: .85rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-200); }
+    /* Joined only when there is something below to join to. */
+    .cph-stage:has(.cph-bar:not([hidden])) .cph-srcrow {
+        border-bottom-left-radius: 0; border-bottom-right-radius: 0;
+        border-bottom-color: transparent; margin-bottom: calc(-1 * .4rem - 1px); }
+    .cph-stage:has(.cph-bar:not([hidden])) .cph-bar {
+        border-top-left-radius: 0; border-top-right-radius: 0; }
     .cph-add svg { width: 1.05rem; height: 1.05rem; }
     .cph-srchint { font-size: .72rem; color: var(--color-gray-400); }
     @media (max-width: 560px) { .cph-srchint { display: none; } }
+    html.dark .cph-srcrow { background: #151b12; border-color: #2b3a1c; }
 
     /* The three ways, in the sheet. */
     .cph-srcs { display: flex; flex-direction: column; gap: .5rem; }
