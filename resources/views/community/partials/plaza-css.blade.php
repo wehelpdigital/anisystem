@@ -229,12 +229,25 @@
        The width is a variable: a 28px face in a comment thread cannot wear
        the same ring as an 80px one on a member card without either
        disappearing or being swallowed. */
+    /* The ring is DASHED, and the dashes are the gradient.
+       A dashed border cannot hold a gradient — border-color:transparent shows
+       the background straight through and the dashes vanish; border-image
+       throws the dash style away altogether. So the dashes ARE the background:
+       a repeating conic gradient whose lit wedges cycle through the house
+       greens and whose gaps are transparent, clipped to the border box. The
+       gaps show the page behind because the hue layer is clipped to the
+       padding box — which is exactly what a dashed ring should do. */
     .avatar { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
         border-radius:9999px; color:var(--av-fg);
         border: var(--av-ring, 2px) solid transparent;
         background:
             linear-gradient(var(--av-bg), var(--av-bg)) padding-box,
-            linear-gradient(135deg, #2f5219, #6b9f3d 26%, #b8d38e 48%, #4a7c2a 72%, #2f5219) border-box;
+            repeating-conic-gradient(from 0deg,
+                #2f5219 0deg 8deg, transparent 8deg 13deg,
+                #4a7c2a 13deg 21deg, transparent 21deg 26deg,
+                #6b9f3d 26deg 34deg, transparent 34deg 39deg,
+                #8fc267 39deg 47deg, transparent 47deg 52deg,
+                #4a7c2a 52deg 60deg, transparent 60deg 65deg) border-box;
         font-family:var(--font-heading); font-weight:800; letter-spacing:.02em;
         box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / .35); user-select:none; }
     .avatar-sm { width:1.75rem; height:1.75rem; font-size:.6rem; --av-ring:1.5px; }
