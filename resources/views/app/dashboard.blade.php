@@ -52,18 +52,19 @@
     /* The padding is held in variables because the cover band has to bleed
        back out through it to the card's own edges, and it changes on a
        phone — one place to read it from, so the two can never disagree. */
+    /* The greeting stands on the house green, moving.
+       Not a flat panel: the gradient is oversized and rides the same slow
+       gradSweep tide every accent in this app is on, so the colour under the
+       words drifts the way weather does rather than sitting there. */
     .dash-hero { display: grid; grid-template-columns: auto minmax(0, 1fr);
         align-items: center; gap: .55rem .95rem;
         --dh-px: 1.35rem; --dh-py: 1.25rem;
         padding: var(--dh-py) var(--dh-px); border-radius: 1.1rem; position: relative; overflow: hidden;
-        background: var(--color-white); border: 1px solid var(--color-gray-200); }
-    .dash-hero::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
-        background: linear-gradient(90deg, #6b9f3d, #b8d38e 55%, transparent);
-        /* The hairline drifts like the rest of the app's accents — gradSweep
-           lives in the layout; the oversize is what gives it room to move. */
-        background-size: 220% 100%;
-        animation: gradSweep 12s ease-in-out infinite alternate; }
-    @media (prefers-reduced-motion: reduce) { .dash-hero::before { animation: none; } }
+        background-image: linear-gradient(118deg, #24380f, #3d6823 24%, #4a7c2a 46%, #6b9f3d 64%, #3d6823 84%, #24380f);
+        background-size: 260% 100%;
+        animation: gradSweep 14s ease-in-out infinite alternate;
+        border: 1px solid #2f5219; }
+    @media (prefers-reduced-motion: reduce) { .dash-hero { animation: none; } }
     .dash-hero-mark { grid-column: 1; grid-row: 1 / -1; align-self: center;
         width: 3rem; height: 3rem; border-radius: 999px; flex-shrink: 0;
         display: inline-flex; align-items: center; justify-content: center; }
@@ -77,8 +78,9 @@
     html.dark .tod-evening { color: #c4b5fd; }
     html.dark .tod-morning, html.dark .tod-afternoon, html.dark .tod-evening { background: rgb(255 255 255 / .07); }
     .dash-hero-h { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800;
-        color: var(--color-gray-900); line-height: 1.2; letter-spacing: -.01em; }
-    .dash-hero-p { font-size: .82rem; color: var(--color-gray-500); margin-top: .2rem; }
+        color: #fff; line-height: 1.2; letter-spacing: -.01em;
+        text-shadow: 0 1px 2px rgb(16 26 10 / .35); }
+    .dash-hero-p { font-size: .82rem; color: rgb(255 255 255 / .82); margin-top: .2rem; }
     /* Enough air that the greeting reads as a welcome rather than a header. */
     .dash-hero-mark { width: 3.35rem; height: 3.35rem; }
     .dash-hero-mark svg { width: 1.7rem; height: 1.7rem; }
@@ -88,7 +90,7 @@
     @keyframes heroBob { from { transform: translateY(2px); } to { transform: translateY(-3px); } }
     @media (prefers-reduced-motion: reduce) { .dash-hero-mark { animation: none; } }
     .dash-hero-warn { display: inline-flex; align-items: center; gap: .3rem; margin-top: .35rem;
-        font-size: .78rem; font-weight: 700; color: #b45309; }
+        font-size: .78rem; font-weight: 700; color: #fde68a; }
     .dash-hero-warn svg { width: .85rem; height: .85rem; }
     /* Under the words on a phone, beside them once there is room. */
     .dash-hero-state { grid-column: 2; justify-self: start;
@@ -111,24 +113,9 @@
        rows below only move for somebody who has chosen a picture. */
     .dash-hero-cover { grid-column: 1 / -1; grid-row: 1; position: relative;
         margin: calc(var(--dh-py) * -1) calc(var(--dh-px) * -1) 0; }
-    /* A deep wash of the house green down from the photo's top edge, fading
-       out well before the bottom of it — a border thick enough to be weather
-       rather than a hairline, drifting on the same slow tide the hero's own
-       accent rides. It is drawn INSIDE .mem-cover, which clips at its own
-       rounded box and sits inside the hero's overflow:hidden, so the wash can
-       never paint across the card's curved corners. */
-    .dash-hero-cover::after { content: ''; position: absolute; inset: 0; pointer-events: none;
-        background: linear-gradient(180deg,
-            rgb(31 56 16 / .86) 0%, rgb(61 104 35 / .5) 16%,
-            rgb(107 159 61 / .22) 34%, rgb(184 211 142 / .07) 52%, transparent 66%);
-        /* Oversized so the drift has somewhere to go: at rest the wash is a
-           thick band across the top, and at the far end of the tide it has
-           thinned to a rim. Any deeper and the photograph underneath stops
-           being a photograph. */
-        background-size: 100% 165%;
-        animation: heroWash 13s ease-in-out infinite alternate; }
-    @keyframes heroWash { from { background-position: 50% 0%; } to { background-position: 50% 100%; } }
-    @media (prefers-reduced-motion: reduce) { .dash-hero-cover::after { animation: none; } }
+    /* No wash over the photograph any more: the moving green now lives
+       BEHIND the greeting, where it is decoration rather than something laid
+       over somebody's own field. The cover shows what it shows. */
     /* The greeting keeps its distance from the photo's lower edge — the same
        clearance a post's name gets under the same band. */
     .dash-hero:has(.dash-hero-cover) { row-gap: .6rem; }
@@ -149,9 +136,8 @@
         background: var(--color-gray-50); border: 1px solid var(--color-gray-200); color: var(--color-gray-600); }
     .dash-chip.is-ok { background: #f0f7e8; border-color: #cfe3b8; color: #3d6823; }
     .dash-chip.is-warn { background: #fff7ed; border-color: #fed7aa; color: #9a3412; }
-    html.dark .dash-hero { background: #151b12; border-color: #2b3a1c; }
-    html.dark .dash-hero-h { color: #e8efe1; }
-    html.dark .dash-hero-p { color: #a8bd93; }
+    html.dark .dash-hero { border-color: #24380f;
+        background-image: linear-gradient(118deg, #16220f, #24380f 24%, #2f5219 46%, #3d6823 64%, #24380f 84%, #16220f); }
     html.dark .dash-chip { background: rgb(255 255 255 / .05); border-color: #2b3a1c; color: #cdd8c0; }
     html.dark .dash-chip.is-ok { background: rgb(61 104 35 / .22); border-color: #3f5626; color: #bfe19a; }
     html.dark .dash-chip.is-warn { background: rgb(154 52 18 / .2); border-color: rgb(154 52 18 / .5); color: #fdba74; }
