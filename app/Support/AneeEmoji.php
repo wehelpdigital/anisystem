@@ -82,16 +82,48 @@ class AneeEmoji
     ];
 
     /**
-     * The ones she is told about.
+     * The ones she is told about, grouped by the moment they belong to.
      *
-     * Fifty-six names in a system prompt is a paragraph nobody reads, model or
-     * person, and a model given fifty-six options picks the first four. These
-     * are the faces a technician actually needs in a working conversation —
-     * the rest are cut, named and served, for an admin who wants them.
+     * A flat list of names is why she wore two faces. Counted across every
+     * answer on this install: smile eight times, thinking five, eight others
+     * once each — ten of fifty-six. A model handed a flat list picks from the
+     * top of it and keeps picking, and no instruction to "vary" beats the
+     * shape of the list itself.
+     *
+     * Grouped, the choice is a different one: find the moment — she is
+     * pleased, she is worried, she got something wrong — and the faces for it
+     * are the only ones in front of her. The heading is what she reads; the
+     * names are what she writes.
      */
+    public const GROUPS = [
+        'Hello, and goodbye' => ['wave', 'salute'],
+        'Pleased, impressed, celebrating with them' => [
+            'happy', 'grin', 'cheer', 'delighted', 'starstruck', 'amazed',
+            'laughing', 'thumbsup', 'love', 'heart', 'flower',
+        ],
+        'Warm and ordinary' => ['smile', 'wink', 'calm', 'relieved', 'leaf', 'content'],
+        'Working something out' => ['thinking', 'idea', 'unsure', 'doubtful', 'whisper'],
+        'Yes, no, or one of the two' => ['yes', 'no', 'choose'],
+        'Bad news, worry, or bad luck of theirs' => [
+            'concerned', 'worried', 'alarmed', 'shocked', 'sad', 'teary',
+            'wince', 'weary', 'glum',
+        ],
+        'A mistake of your own' => ['oops', 'facepalm', 'blushing'],
+        'Grave, and meant to be' => ['serious'],
+    ];
+
+    /** Every face she is told about, flattened — for anything that needs the list. */
     public const CORE = [
-        'smile', 'happy', 'wink', 'thinking', 'idea', 'yes', 'no', 'thumbsup',
-        'worried', 'concerned', 'oops', 'sad', 'salute', 'wave', 'leaf', 'grin',
+        'wave', 'salute',
+        'happy', 'grin', 'cheer', 'delighted', 'starstruck', 'amazed',
+        'laughing', 'thumbsup', 'love', 'heart', 'flower',
+        'smile', 'wink', 'calm', 'relieved', 'leaf', 'content',
+        'thinking', 'idea', 'unsure', 'doubtful', 'whisper',
+        'yes', 'no', 'choose',
+        'concerned', 'worried', 'alarmed', 'shocked', 'sad', 'teary',
+        'wince', 'weary', 'glum',
+        'oops', 'facepalm', 'blushing',
+        'serious',
     ];
 
     public static function has(string $name): bool
@@ -131,21 +163,34 @@ class AneeEmoji
     /** The paragraph the model is given. */
     public static function promptLine(): string
     {
-        $list = [];
-        foreach (self::CORE as $name) {
-            $list[] = ':anee-' . $name . ': (' . self::FACES[$name] . ')';
+        $block = '';
+        foreach (self::GROUPS as $heading => $names) {
+            $block .= '  ' . $heading . ":\n";
+            foreach ($names as $name) {
+                $block .= '    :anee-' . $name . ': -- ' . self::FACES[$name] . "\n";
+            }
         }
 
         return "--- Your face, and how a reply looks ---\n"
             . "You have a face and you may show it. Writing :anee-NAME: puts a\n"
             . "small picture of yourself wearing that expression into the reply.\n"
-            . "The ones to use:\n  " . implode("\n  ", $list) . "\n"
+            . "Find the moment first, then take the face from it:\n"
+            . $block
             . "\n"
-            . "Use them the way a person texting a friend does -- more than one in\n"
-            . "a reply is fine when the reply has more than one beat to it: a\n"
-            . "greeting at the top, agreement in the middle, a warning at the end.\n"
-            . "Ordinary emoji are welcome too where they carry meaning rather than\n"
-            . "decorate: a crop, the weather, a pest, water, money.\n"
+            . "How to wear them:\n"
+            . "  - Two or three in a reply that has two or three beats to it: the\n"
+            . "    reaction at the top, the turn in the middle, the warning at the\n"
+            . "    end. One is plenty for a short answer. None at all is fine for a\n"
+            . "    grave one.\n"
+            . "  - Never the same face twice in one reply, and do not open every\n"
+            . "    reply with the one you opened the last one with. :anee-smile: is\n"
+            . "    not a default -- it is what you wear when nothing stronger fits.\n"
+            . "  - Match the face to what you are actually saying. Celebrating a\n"
+            . "    harvest is :anee-cheer: or :anee-starstruck:, not a polite smile;\n"
+            . "    bad news is :anee-concerned: or :anee-sad:; your own mistake is\n"
+            . "    :anee-oops:.\n"
+            . "  - Ordinary emoji are welcome too where they carry meaning rather\n"
+            . "    than decorate: a crop, the weather, a pest, water, money.\n"
             . "\n"
             . "Lay a reply out so it can be read on a phone in a field:\n"
             . "  - Short paragraphs with a blank line between them.\n"

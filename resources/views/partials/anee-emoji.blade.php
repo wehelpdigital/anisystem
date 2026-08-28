@@ -20,12 +20,14 @@
         border-top: 1px dashed rgb(107 159 61 / .38); }
     html.dark .ai-rule { border-top-color: rgb(168 204 126 / .3); }
 
-    /* A face is drawn at two em and counted as rather less, so it does not
-       stretch the line it lands on — but the pull is off the TOP only now.
-       Taking it off the bottom too tucked her chin into the line beneath,
-       which is the one direction there is nothing to spare in. */
-    .anee-emo { display: inline-block; width: 2em; height: 2em;
-        vertical-align: -.62em; margin: -.55em .1em 0; }
+    /* A face is drawn at two and a half em and counted as rather less, so it
+       barely stretches the line it lands on — but the pull is off the TOP
+       only. Taking it off the bottom too tucked her chin into the line
+       beneath, which is the one direction there is nothing to spare in.
+       Two em read; two and a half carries across a phone held at arm's
+       length in the sun, which is where these are looked at. */
+    .anee-emo { display: inline-block; width: 2.5em; height: 2.5em;
+        vertical-align: -.78em; margin: -.82em .12em 0; }
 
     /* ---- room to read -------------------------------------------------
        Her answers are laid out now — paragraphs, steps, a rule between what
@@ -53,7 +55,7 @@
     .aibubble li, .ai-float-msg .b li, .sai-b li { padding-left: .15em; }
     /* At one and a half em the face is a green smudge — you can see there is
        a picture and not what it is doing, which is the whole point of it.
-       Two em is the smallest size where the expression reads. */
+       Two em is the smallest size where the expression reads at all. */
 </style>
 <script>
 (function () {
