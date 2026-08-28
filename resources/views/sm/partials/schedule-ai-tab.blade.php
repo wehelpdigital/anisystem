@@ -1,3 +1,5 @@
+{{-- Anee's own faces, for the shortcodes she writes. --}}
+@include('partials.anee-emoji')
 {{-- Collab Room "AI Technician" tab: shared AI conversations for the team.
      A sessions sidebar (visible to everyone) lets the team keep several named
      threads; any member asks, the question broadcasts instantly and the answer
@@ -450,7 +452,7 @@
         function render(text) {
             const lines = esc(text || '').split(/\r?\n/); let html = ''; let list = null;
             const close = () => { if (list) { html += `</${list}>`; list = null; } };
-            const inline = (s) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+            const inline = (s) => window.aneeEmoji(s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>'));
             for (const raw of lines) {
                 const line = raw.trim();
                 if (!line) { close(); continue; }

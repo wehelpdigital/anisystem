@@ -176,9 +176,28 @@ class AiSetting extends BaseModel
         - No flattery. Do not open by praising the question. Answer it.
         TXT;
 
+    /**
+     * Anee's face.
+     *
+     * Whatever the mother app's admin set, and her own portrait otherwise —
+     * she ships with a face rather than a placeholder robot, and an admin can
+     * still put another one over it.
+     */
+    public function faceUrl(): string
+    {
+        return $this->avatarPath
+            ? \App\Support\MediaStore::url($this->avatarPath)
+            : asset('images/anee/avatar-512.jpg');
+    }
+
     /** The prompt the provider is actually given. */
     public function instructions(): string
     {
-        return trim(self::PERSONA . "\n\n" . trim((string) $this->systemPrompt)) . "\n\n" . self::HOUSE_RULES;
+        return trim(self::PERSONA . "\n\n" . trim((string) $this->systemPrompt))
+            . "\n\n" . self::HOUSE_RULES
+            // Built rather than written out: the list of faces lives with the
+            // pictures, so adding one to the sheet cannot leave the prompt
+            // offering a name that draws nothing.
+            . "\n\n" . \App\Support\AneeEmoji::promptLine();
     }
 }

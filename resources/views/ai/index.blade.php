@@ -354,6 +354,8 @@
 @endpush
 
 @section('content')
+{{-- Anee's own faces, for the shortcodes she writes. --}}
+@include('partials.anee-emoji')
 
 {{-- The trail is gone from the page.
      This is a chat, and a chat wants the whole screen: the row of crumbs sat
@@ -421,10 +423,8 @@
                 <span class="aimsg-face">
                     @if ($m->role === 'user')
                         {{ auth()->user()->initials }}
-                    @elseif ($settings->avatarPath)
-                        <img data-ai-face src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="">
                     @else
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
+                        <img data-ai-face src="{{ $settings->faceUrl() }}" alt="">
                     @endif
                 </span>
                 <div class="aibubble">
@@ -577,11 +577,7 @@
 <button type="button" id="aiMenuBtn"
         class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full text-gray-500 hover:bg-gray-100 transition overflow-hidden"
         title="{{ $settings->assistantName }} options" aria-label="{{ $settings->assistantName }} options" aria-haspopup="dialog">
-    @if ($settings->avatarPath)
-        <img data-ai-face src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="" class="w-7 h-7 md:w-8 md:h-8 rounded-full object-cover">
-    @else
-        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
-    @endif
+        <img data-ai-face src="{{ $settings->faceUrl() }}" alt="" class="w-7 h-7 md:w-8 md:h-8 rounded-full object-cover">
 </button>
 @endpush
 
@@ -611,7 +607,7 @@ const __init = () => {
         planPreview: @json(route('ai.plan.preview')),
     };
     const CAN_ASK = @json((bool) $settings->isUsable());
-    const AVATAR = @json($settings->avatarPath ? \App\Support\MediaStore::url($settings->avatarPath) : null);
+    const AVATAR = @json($settings->faceUrl());
     const MY_INITIALS = @json(auth()->user()->initials);
     const UNLIMITED = @json((bool) $aiUnlimited);
     /* The bill, quoted before it is run up: the server's own pre-flight
@@ -694,9 +690,9 @@ const __init = () => {
         closeList();
         return html || '<p></p>';
     }
-    const inline = (s) => s
+    const inline = (s) => window.aneeEmoji(s
         .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-        .replace(/(^|\s)\*([^*]+)\*(?=\s|$|[.,;:!?])/g, '$1<em>$2</em>');
+        .replace(/(^|\s)\*([^*]+)\*(?=\s|$|[.,;:!?])/g, '$1<em>$2</em>'));
 
     // New turns wear .is-new so only they animate in — history stays settled.
     // `images` is a list of URLs: one renders naturally, two or more grid up.

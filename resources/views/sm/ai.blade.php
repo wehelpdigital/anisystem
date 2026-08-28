@@ -356,6 +356,8 @@
 @endpush
 
 @section('content')
+{{-- Anee's own faces, for the shortcodes she writes. --}}
+@include('partials.anee-emoji')
 @php
     // Super admins ride free — the wallet row hides for them (view-side check,
     // same pattern the floating assistant already uses).
@@ -474,10 +476,8 @@
                 <span class="aimsg-face">
                     @if ($m->role === 'user')
                         {!! \App\Support\ChatFace::mine() !!}
-                    @elseif ($settings->avatarPath)
-                        <img data-ai-face src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="">
                     @else
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
+                        <img data-ai-face src="{{ $settings->faceUrl() }}" alt="">
                     @endif
                 </span>
                 <div class="aibubble">
@@ -505,11 +505,7 @@
         @empty
             <div class="ai-hello" id="aiWelcome">
                 <span class="aimsg-face mx-auto">
-                    @if ($settings->avatarPath)
-                        <img data-ai-face src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="">
-                    @else
-                        <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
-                    @endif
+                        <img data-ai-face src="{{ $settings->faceUrl() }}" alt="">
                 </span>
                 {{-- She says who she is, then how to get a good answer out
                      of her. The second part is not decoration: a vague
@@ -809,11 +805,7 @@
 <button type="button" id="aiMenuBtn"
         class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full text-gray-500 hover:bg-gray-100 transition overflow-hidden"
         title="{{ $settings->assistantName }} options" aria-label="{{ $settings->assistantName }} options" aria-haspopup="dialog">
-    @if ($settings->avatarPath)
-        <img data-ai-face src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="" class="w-7 h-7 md:w-8 md:h-8 rounded-full object-cover">
-    @else
-        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
-    @endif
+        <img data-ai-face src="{{ $settings->faceUrl() }}" alt="" class="w-7 h-7 md:w-8 md:h-8 rounded-full object-cover">
 </button>
 @endpush
 @endunless
@@ -837,7 +829,7 @@ const __init = () => {
     };
     const COIN = '<svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>';
     const buyCard = (msg) => `<div class="ai-buyc"><span class="ico">${COIN}</span><div><h3>You're out of AI Credits</h3><p>${escapeHtml(msg)}</p><a class="btn btn-accent btn-sm mt-2" href="${escapeHtml(URLS.credits)}">Purchase AI credits</a></div></div>`;
-    const AVATAR = @json($settings->avatarPath ? \App\Support\MediaStore::url($settings->avatarPath) : null);
+    const AVATAR = @json($settings->faceUrl());
     const MY_FACE = @json(\App\Support\ChatFace::mine());
     const BOT = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>';
 

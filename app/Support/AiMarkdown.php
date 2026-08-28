@@ -61,7 +61,11 @@ class AiMarkdown
     private static function inline(string $s): string
     {
         $s = preg_replace('/\*\*([^*]+)\*\*/u', '<strong>$1</strong>', $s);
+        $s = preg_replace('/(^|\s)\*([^*]+)\*(?=\s|$|[.,;:!?])/u', '$1<em>$2</em>', $s);
 
-        return preg_replace('/(^|\s)\*([^*]+)\*(?=\s|$|[.,;:!?])/u', '$1<em>$2</em>', $s);
+        // Last, and on the escaped string: a shortcode is plain text, so it
+        // survives escaping unchanged and nothing a model writes can get here
+        // as markup.
+        return AneeEmoji::render($s);
     }
 }

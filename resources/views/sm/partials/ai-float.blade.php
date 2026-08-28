@@ -1,3 +1,5 @@
+{{-- Anee's own faces, for the shortcodes she writes. --}}
+@include('partials.anee-emoji')
 {{--
     Floating AI-technician chat, available on every schedule page.
     Self-contained: pulls the AI settings + credit balance itself and talks to
@@ -589,7 +591,7 @@
             const esc = escapeHtml(text || '');
             const lines = esc.split(/\r?\n/); let html = ''; let list = null;
             const close = () => { if (list) { html += `</${list}>`; list = null; } };
-            const inline = (s) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+            const inline = (s) => window.aneeEmoji(s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>'));
             for (const raw of lines) {
                 const line = raw.trim();
                 if (!line) { close(); continue; }
