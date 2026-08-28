@@ -1650,7 +1650,21 @@
         text-decoration:none; vertical-align:middle; white-space:nowrap;
         transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
     .rankb:hover { transform:translateY(-1px); box-shadow:0 3px 8px -4px rgb(0 0 0 / .35); }
-    .rankb-e { font-size:.72rem; line-height:1; }
+    /* The mark on the chip: one medal, at every rank.
+       It used to be ten emoji, one per arc — a seed, a bee, a crown — and at
+       eleven pixels that read as ten different things rather than one thing
+       at ten heights. The arc still speaks, in the chip's own colour, which
+       was carrying that job the whole time.
+
+       Painted as a background rather than an <img> because six places write
+       this span and none of them should have to know what is in it. The
+       character stays in the markup, out of sight, so the tooltip and any
+       screen reader that reaches it are unchanged. The box is the artwork's
+       own shape — 96 by 144 — so nothing is squeezed and there is no
+       transparent margin padding the chip out. */
+    .rankb-e { display:inline-block; flex:none; font-size:.72rem; line-height:1;
+        width:.9em; height:1.35em; overflow:hidden; text-indent:-100em;
+        background:url('{{ asset('images/rank-medal.png') }}') center/contain no-repeat; }
     /* The number never truncates; the title gives way first. */
     .rankb-lv { flex:none; font-variant-numeric:tabular-nums; }
     .rankb-t { min-width:0; overflow:hidden; text-overflow:ellipsis; opacity:.85; font-weight:700; }
