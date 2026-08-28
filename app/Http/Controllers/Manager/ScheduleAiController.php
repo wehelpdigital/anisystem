@@ -62,7 +62,9 @@ class ScheduleAiController extends BaseScheduleController
             'success' => true,
             'data' => [
                 'sessions' => $list->map(fn ($s) => $this->shapeSession($s))->all(),
-                'currentId' => $current->id,
+                // Null unless the caller named one. The page opens on a blank
+                // thread rather than on the last one somebody else used.
+                'currentId' => $current?->id,
             ],
         ]);
     }
@@ -193,6 +195,15 @@ class ScheduleAiController extends BaseScheduleController
         }
 
         $session = $this->resolveSession($schedule, $request->query('sessionId'));
+        // No session named: an empty thread, not the newest one going.
+        if (! $session) {
+            return response()->json(['success' => true, 'data' => [
+                'sessionId' => null,
+                'messages' => [],
+                'maxId' => 0,
+                'balance' => $this->credits->balance((int) $schedule->anisystemUserId),
+            ]]);
+        }
         $after = (int) $request->query('after', 0);
         $query = ScheduleAiMessage::active()
             ->where('scheduleId', $schedule->id)
@@ -255,7 +266,9 @@ class ScheduleAiController extends BaseScheduleController
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
         }
 
-        $session = $this->resolveSession($schedule, $request->input('sessionId'));
+        // A question with no thread named starts one of its own.
+        $session = $this->resolveSession($schedule, $request->input('sessionId'))
+            ?? $this->startSession($schedule);
         $prompt = trim((string) $request->input('message'));
         /* One picture or several.
          *
@@ -364,28 +377,35 @@ class ScheduleAiController extends BaseScheduleController
     }
 
     /**
-     * Resolve the session to act on: an explicit valid id, else the team's most
-     * recent session, else a freshly created one (guarantees a session exists).
+     * The session to act on: the one named, and otherwise none.
+     *
+     * This used to fall back to the schedule's most recently used session,
+     * which meant walking into the tab put you inside whatever thread any team
+     * member had last used -- and the ten turns before yours were briefed to
+     * the model as the context for your question. Somebody else's conversation
+     * was answering it. The room is still shared: every session is in the
+     * sidebar and one tap opens it. What is gone is being put in one without
+     * asking.
+     *
+     * Nothing is created here either, so opening the tab and reading does not
+     * litter the team's list with empty threads. A question creates the
+     * session it starts -- see ask().
      */
-    private function resolveSession($schedule, $sessionId): ScheduleAiSession
+    private function resolveSession($schedule, $sessionId): ?ScheduleAiSession
     {
         $sessionId = (int) $sessionId;
-        if ($sessionId) {
-            $found = ScheduleAiSession::active()
-                ->where('scheduleId', $schedule->id)->find($sessionId);
-            if ($found) {
-                return $found;
-            }
+        if (! $sessionId) {
+            return null;
         }
 
-        $latest = ScheduleAiSession::active()
+        return ScheduleAiSession::active()
             ->where('scheduleId', $schedule->id)
-            ->orderByDesc(DB::raw('COALESCE(lastMessageAt, created_at)'))
-            ->first();
-        if ($latest) {
-            return $latest;
-        }
+            ->find($sessionId);
+    }
 
+    /** A brand new thread for a question that named none. */
+    private function startSession($schedule): ScheduleAiSession
+    {
         return ScheduleAiSession::create([
             'scheduleId' => $schedule->id,
             'title' => null,

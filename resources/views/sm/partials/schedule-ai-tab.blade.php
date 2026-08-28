@@ -690,6 +690,10 @@
                 // templating that could throw and strand them in the composer.
                 clearPhotos();
                 if (res.data.question && res.data.question.id) { rendered.add(res.data.question.id); lastId = Math.max(lastId, res.data.question.id); }
+                // The first question of a blank thread is what creates it, so
+                // this is where the page learns which thread it is now in.
+                // Without it the next question would start a second one.
+                if (res.data.question && res.data.question.sessionId) currentSession = res.data.question.sessionId;
                 clearThinking();
                 addMsg(res.data.answer); setBalance(res.data.balance);
                 refreshSessionsSoon();

@@ -59,7 +59,11 @@ class AiController extends Controller
         $userId = Auth::id();
         $settings = AiSetting::current();
 
-        $conversation = $this->resolveConversation($request, $userId);
+        // A fresh chat unless one was named. Opening this page used to resume
+        // the newest thread, which reads as a clean start and is not one --
+        // the module page inside a season already starts clean, and the old
+        // chats are one tap away under "Recent chats".
+        $conversation = $request->filled('c') ? $this->resolveConversation($request, $userId) : null;
 
         return view('ai.index', [
             'settings' => $settings,
@@ -169,6 +173,23 @@ class AiController extends Controller
         }
 
         $conversation = $this->resolveConversation($request, $userId, true);
+
+        /* The one invariant this endpoint has.
+         *
+         * Every turn sent to the model below is read off this conversation, so
+         * whose it is decides whose words the model sees. resolveConversation
+         * scopes by account and always has -- this is the assertion that says
+         * so out loud, immediately before the history is read, where a future
+         * refactor of that query would have to trip over it.
+         */
+        if ((int) $conversation->userId !== (int) $userId) {
+            report(new \RuntimeException(
+                'AI conversation ' . $conversation->id . ' belongs to user '
+                . $conversation->userId . ', asked by ' . $userId
+            ));
+
+            return $this->json(false, 'That chat could not be opened. Start a new one.', [], 403);
+        }
 
         /* What the question is allowed to carry with it.
          *
