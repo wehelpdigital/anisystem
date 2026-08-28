@@ -234,6 +234,7 @@
         (() => {
             const SAVES_URL = @json(route('sm.map.saves')) + '?scheduleId=' + @json($schedule->id);
             const OPEN_SAVE = @json($openSaveQ);
+            const ATTACH = @json($attachLot ?? null);
             let saves = @json($saves ?? []);
             let liveCount = @json((int) ($liveCount ?? 0));
             const esc = window.escapeHtml || ((s) => String(s ?? '')
@@ -436,7 +437,19 @@
             // Rendered with ?save= — inside the shell that means something
             // sent us and the shell knows its name; on the standalone page
             // nobody did, and then the shelf is the only truthful way back.
-            if (OPEN_SAVE) enterStage(OPEN_SAVE, window.smOriginLabel?.());
+            /* A visit sent here by a lot skips the shelf.
+             *
+             * The shelf answers "which of my maps?", and somebody who pressed
+             * Attach a map on a lot has already answered it — this one, the
+             * one that lot was pinned on, or a new one if it has none. Making
+             * them choose from a grid first is asking a question they came
+             * here having settled. */
+            // 0, not 'blank': a blank map CLEARS the team's live canvas for
+            // everybody, and attaching a lot to a map is an additive errand.
+            // Nobody pressing "Attach a map" is asking for the field plan the
+            // team drew this morning to be thrown away.
+            if (ATTACH) enterStage(ATTACH.mapSaveId || 0, window.smOriginLabel?.());
+            else if (OPEN_SAVE) enterStage(OPEN_SAVE, window.smOriginLabel?.());
 
             /* The shell keeps this pane alive between visits; when it shows
                again the shelf re-reads the saves so nothing new is missing.

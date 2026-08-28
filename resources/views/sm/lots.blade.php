@@ -277,6 +277,25 @@
 
 @push('head')
 <style>
+    /* Where the lot is, and the one thing anybody wants to do about it. Its
+       own row rather than a badge among the badges: this one is a link out
+       of the app, and a link that leaves should not look like a label. */
+    .lot-pin-chip { display: flex; align-items: center; gap: .55rem;
+        padding: .5rem .6rem; border-radius: .7rem; text-decoration: none;
+        background: rgb(225 29 72 / .07); border: 1px solid rgb(225 29 72 / .18);
+        color: #9f1239; transition: background .28s cubic-bezier(.22,1,.36,1); }
+    .lot-pin-chip:hover { background: rgb(225 29 72 / .12); }
+    .lot-pin-chip svg { width: 1.05rem; height: 1.05rem; flex: 0 0 auto; }
+    .lot-pin-chip svg.go { width: .85rem; height: .85rem; margin-left: auto; opacity: .65; }
+    .lot-pin-chip span { min-width: 0; font-size: .78rem; font-weight: 800; line-height: 1.25;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lot-pin-chip i { display: block; font-style: normal; font-size: .68rem;
+        font-weight: 600; opacity: .75; }
+    html.dark .lot-pin-chip { background: rgb(225 29 72 / .16); border-color: rgb(225 29 72 / .3); color: #fda4af; }
+    html.dark .lot-pin-chip:hover { background: rgb(225 29 72 / .24); }
+    @media (prefers-reduced-motion: reduce) { .lot-pin-chip { transition: none; } }
+</style>
+<style>
     /* A field that is still filling itself, saying so.
      *
      * A disabled select already reads as "not yet" — this adds the movement
@@ -391,6 +410,12 @@
         'fullAddress' => $l->full_address,
         'dayType' => $l->dayType ?: 'DAT',
         'notes' => $l->notes,
+        // Where it is on the ground, as against what it is called. The card
+        // uses these to decide whether to offer a way there.
+        'pinned' => $l->isPinned(),
+        'pinLabel' => $l->pinLabel,
+        'mapsHref' => $l->mapsHref(),
+        'mapSaveId' => $l->mapSaveId,
     ])->values();
 @endphp
 <script>
@@ -530,6 +555,20 @@ const __init = () => {
         return (ini || '?').toUpperCase();
     }
 
+    /* ATTACH A MAP.
+     *
+     * An address gets a delivery note written. It does not get a technician,
+     * an agronomist or a hauler to the gate — "Brgy. San Isidro" is four
+     * hundred hectares of possibility to somebody who has never been there.
+     *
+     * So a lot gets a button that opens the map with its name on it, waiting
+     * for a pin. The boundary can be drawn in the same visit with the same
+     * tools the drawing module has, and saving files the whole thing in Maps
+     * and in the Gallery exactly as every other map save does. What comes
+     * back to this card is two numbers and a link that opens the Maps app.
+     */
+    const MAP_URL = @json(route('sm.maps', ['id' => $schedule->id]));
+
     function lotCardHtml(lot) {
         // Same golden-angle hue the lot gets on its activity cards, so the colour
         // reads as "this lot" consistently across modules.
@@ -567,9 +606,17 @@ const __init = () => {
                     ${lot.notes ? `<p class="text-xs text-gray-500 line-clamp-2">${escapeHtml(lot.notes)}</p>` : ''}
                 </div>
 
+                ${lot.pinned ? `
+                <a class="lot-pin-chip" href="${escapeHtml(lot.mapsHref)}" target="_blank" rel="noopener">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-7.5 7-12a7 7 0 10-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>
+                    <span>${lot.pinLabel ? escapeHtml(lot.pinLabel) : 'On the map'}<i>Open in Google Maps</i></span>
+                    <svg class="go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </a>` : ''}
+
                 ${MAY_EDIT_LOTS ? `
                 <div class="flex items-center gap-1.5 pt-3 border-t border-gray-100">
                     <button type="button" class="btn btn-white btn-sm" data-edit-lot="${lot.id}">Edit</button>
+                    <a class="btn btn-white btn-sm" href="${MAP_URL}&lot=${lot.id}">${lot.pinned ? 'Open the map' : 'Attach a map'}</a>
                     <button type="button" class="btn btn-ghost btn-sm px-2.5! text-red-500 hover:bg-red-50! ml-auto" data-delete-lot="${lot.id}" aria-label="Delete lot">
                         <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
                     </button>

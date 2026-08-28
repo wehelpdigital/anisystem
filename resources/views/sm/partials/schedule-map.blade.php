@@ -16,6 +16,20 @@
         <p class="text-sm text-gray-500">Set <code class="font-mono text-xs bg-gray-100 rounded px-1">GOOGLE_MAPS_KEY</code> in the environment and redeploy. The rest of the room works without it.</p>
     </div>
 @else
+    @if (! empty($attachLot))
+        {{-- WHOSE PLACE THIS IS.
+
+             One line, and it stays: somebody who came here from a lot is
+             pinning THAT lot, and forty seconds of panning around a
+             satellite photo is long enough to lose track of which one. --}}
+        <div class="cmap-errand" id="cmapErrand">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-7.5 7-12a7 7 0 10-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>
+            <span>
+                <b>{{ $attachLot['name'] }}</b>
+                <i id="cmapErrandSay">Tap the map where this lot is. Draw its boundary too if you like, then Save.</i>
+            </span>
+        </div>
+    @endif
     <div class="cmap-bar">
         {{-- One labelled menu instead of a row of mystery glyphs: each tool
              carries its name, and the button always shows what is active. --}}
@@ -74,6 +88,10 @@
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l8 6-3 10H7L4 9l8-6z"/></svg>
                     <span>Area — tap corners, hectares</span>
                 </button>
+                <button type="button" class="cmap-mrow" data-mtool="pin" data-short="Pin">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-7.5 7-12a7 7 0 10-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>
+                    <span>Pin a place — drag it, tap it for Google Maps</span>
+                </button>
                 <button type="button" class="cmap-mrow" data-mtool="text" data-short="Text">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 6h14M12 6v13M9 19h6"/></svg>
                     <span>Text label</span>
@@ -86,6 +104,37 @@
                      list, under ten drawing tools. They are not tools — they
                      are what you do with the map — so they have their own
                      button and their own sheet now. --}}
+            </div>
+        </div>
+        {{-- WHAT A PIN IS FOR.
+
+             A place on this map is a place on the ground, and the thing
+             anybody wants from it is to be taken there. So the sheet a pin
+             opens leads with Google Maps. The coordinates underneath are for
+             reading out over a phone, and the name is for everybody on the
+             team who was not standing there when it was dropped. --}}
+        <div class="sheet hidden" id="cmapPinSheet" style="--sheet-width:22rem">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+                <h3 class="sheet-title">This place</h3>
+                <button type="button" class="icon-btn" data-sheet-close aria-label="Close">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="sheet-body space-y-3">
+                <div>
+                    <label class="form-label" for="cmapPinName">What is here?</label>
+                    <input type="text" id="cmapPinName" class="form-input" maxlength="80"
+                           placeholder="e.g. Pump house, Lot A gate, water source">
+                    <p class="form-hint">Optional. A pin with no name is still a place.</p>
+                </div>
+                <div class="cmap-pin-at" id="cmapPinAt"></div>
+                <a href="#" target="_blank" rel="noopener" class="btn btn-primary w-full" id="cmapPinGo">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-7.5 7-12a7 7 0 10-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>
+                    Open in Google Maps
+                </a>
+                <button type="button" class="btn btn-secondary w-full" id="cmapPinSave">Save the name</button>
+                <button type="button" class="btn btn-ghost w-full cmap-pin-del" id="cmapPinDel">Remove this pin</button>
             </div>
         </div>
         <button type="button" class="cmap-tool" id="cmapSearchBtn" title="Search a place" aria-label="Search a place">
@@ -344,6 +393,41 @@
         scrollbar-width: none; border-bottom: 1px solid var(--color-gray-100); flex-shrink: 0; }
     .cmap-bar::-webkit-scrollbar { display: none; }
     /* Same visual language as the whiteboard toolbar. */
+    /* The pin's own name, riding a Google marker label under the teardrop. */
+    /* Below the tip, not across the head. Google centres a marker label on
+       the marker's anchor, and this pin's anchor is its point — so with no
+       offset the name is written straight through the teardrop. */
+    .cmap-pin-name { text-shadow: 0 1px 3px #fff, 0 0 6px #fff, 0 0 2px #fff;
+        transform: translateY(1.9rem); white-space: nowrap; }
+    html.dark .cmap-pin-name { text-shadow: 0 1px 3px #000, 0 0 6px #000, 0 0 2px #000; }
+    /* Coordinates, in the one kind of font where a 1 and a 7 cannot be taken
+       for each other. These get read out over a phone. */
+    .cmap-pin-at { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: .82rem; font-weight: 700; letter-spacing: .01em;
+        color: var(--color-gray-700); background: var(--color-gray-100);
+        border-radius: .6rem; padding: .55rem .7rem; text-align: center; }
+    html.dark .cmap-pin-at { color: #cdd8c0; background: rgb(255 255 255 / .06); }
+    .cmap-pin-del { color: #b91c1c; }
+    html.dark .cmap-pin-del { color: #fca5a5; }
+
+    /* The errand line. Full width above the toolbar, because it is not a
+       tool and must not scroll away with them. */
+    /* Above the toolbar, not in it: .cmap-bar is an overflow-x scroller, and
+       a full-width child of one of those is not full width — it is a very
+       narrow column with the sentence wrapped down it one word at a time. */
+    .cmap-errand { display: flex; align-items: center; gap: .55rem;
+        margin: .5rem .5rem 0; padding: .5rem .7rem; border-radius: .7rem;
+        background: rgb(225 29 72 / .08); border: 1px solid rgb(225 29 72 / .2);
+        color: #9f1239; }
+    .cmap-errand svg { width: 1.1rem; height: 1.1rem; flex: 0 0 auto; }
+    .cmap-errand span { min-width: 0; }
+    .cmap-errand b { display: block; font-size: .82rem; font-weight: 800; line-height: 1.2; }
+    .cmap-errand i { display: block; font-style: normal; font-size: .7rem;
+        font-weight: 600; opacity: .8; line-height: 1.35; margin-top: .1rem; }
+    .cmap-errand.is-done { background: rgb(74 124 42 / .1); border-color: rgb(74 124 42 / .28); color: #2f5219; }
+    html.dark .cmap-errand { background: rgb(225 29 72 / .16); border-color: rgb(225 29 72 / .32); color: #fda4af; }
+    html.dark .cmap-errand.is-done { background: rgb(107 159 61 / .2); border-color: rgb(107 159 61 / .4); color: #bfe19a; }
+
     .cmap-tool { min-width: 2.15rem; height: 2.15rem; border-radius: .6rem; flex-shrink: 0;
         display: inline-flex; align-items: center; justify-content: center;
         background: var(--color-gray-100); color: var(--color-gray-600);
@@ -627,6 +711,20 @@
         save: @json(route('sm.map.save')),
         load: @json(route('sm.map.load')),
     };
+    /* THE ERRAND, IF THERE IS ONE.
+     *
+     * A visit that came from a lot's "Attach a map" is not the same visit as
+     * opening Maps. It has one thing to do — say where that lot is — and the
+     * map behaves accordingly: the pin tool is already out, a line across the
+     * top says whose place is being pinned, and the first pin dropped is
+     * written back to the lot without anybody having to find a save button.
+     *
+     * Everything else on the map still works. Draw the boundary while you are
+     * there; measure it; save the whole thing. The errand narrows what the
+     * screen ASKS for, not what it allows. */
+    const ATTACH = @json($attachLot ?? null);
+    const LOT_PIN_URL = @json(route('sm.lots.pin'));
+
     let map = null, proj = null, satOn = true;
     let tool = 'pan', color = '#f5c518', width = 3;
     let tempPts = [], tempShape = null;
@@ -1213,6 +1311,26 @@
             parts.push(ar2); mlabels.push(ar2);
             measureBadge(parts, o.id, at2, style.strokeColor, mlabels,
                 { kind: 'area', closed: true, segs: segs2, area: ar2, pts });
+        } else if (o.kind === 'pin') {
+            /* A place, not a shape. Always draggable — a pin dropped from a
+               moving tricycle is thirty metres out and the fix for that is
+               moving it, not deleting it and starting again. Its tip is the
+               point, so what you grab is exactly what you placed. */
+            const pm = new (G().Marker)({
+                map, position: LL(pts[0]), draggable: true, clickable: true,
+                icon: pinIcon(o.color || '#e11d48', 1.7),
+                title: o.label || 'Pinned place',
+                zIndex: 900,
+            });
+            if (o.label) {
+                pm.setLabel({ text: o.label, className: 'cmap-pin-name',
+                    color: '#111827', fontSize: '12px', fontWeight: '700' });
+            }
+            pm.addListener('dragend', (ev) => {
+                if (editing && editing.o.id === o.id) return;
+                commitPinMove(o, ev.latLng);
+            });
+            parts.push(pm);
         } else if (o.kind === 'text') {
             const tm = textMark(pts[0], o.label || '', 'cmap-txt-g', '#111827');
             // Its own face and its own size, for whoever is looking: the
@@ -1254,6 +1372,12 @@
                 // gesture the label was picked up for. (A drag never gets
                 // here — Google fires click only when nothing moved.)
                 if (o.kind === 'text' && held) openTextSheet(objIndex.get(o.id) || o);
+            } else if (o.kind === 'pin' && tool !== 'erase') {
+                // A pin answers to any tool but the eraser, because the thing
+                // it does — tell you where it is and offer to take you there
+                // — is not an editing gesture and should not require finding
+                // the right tool first.
+                openPinSheet(objIndex.get(o.id) || o);
             } else if (tool === 'text' && o.kind === 'text') {
                 // With the Text tool out, a tap on ground writes a new label
                 // and a tap on a label rewrites that one — otherwise the only
@@ -1465,6 +1589,18 @@
             return res.data.object;
         } catch (e) { if (window.toast) toast(e.message, 'error'); return null; }
     }
+
+    /* A pin moves the way a label does: one point, saved, and put back where
+       the map still believes it is if the server refuses. Same function, said
+       under a second name, so a fix to one is a fix to both. */
+    const commitPinMove = (o, latLng) => {
+        // On an errand, the lot follows the pin. Dragging is the correction
+        // gesture — a pin dropped from a moving tricycle is thirty metres
+        // out, and the lot must not keep the wrong thirty metres.
+        if (ATTACH) pinTheLot([latLng.lat(), latLng.lng()], o.label);
+
+        return commitTextMove(o, latLng);
+    };
 
     /* ---------- drawing ---------- */
     /* The half-drawn shape streams to the room (throttled, broadcast-only,
@@ -1770,6 +1906,94 @@
         placeCorner(draftRedo.pop());
         return true;
     }
+    /* ---------- the lot this map was opened for ---------- */
+    /** Tell the Lots module where this lot is. Quiet on failure by design:
+     *  the pin is on the map either way, and a toast about a lot record is
+     *  not what somebody standing in a field needs to read. */
+    async function pinTheLot(pt, label) {
+        if (!ATTACH) return;
+        try {
+            // scheduleId, not id: every write on the Lots controller reads
+            // the schedule off that key, and a missing one is a 404 rather
+            // than a helpful error.
+            await api(LOT_PIN_URL + '?scheduleId=' + SID, {
+                method: 'POST',
+                body: { lotId: ATTACH.id, lat: pt[0], lng: pt[1], label: label || ATTACH.name },
+            });
+            // Held here as well as on the server, because saving the map
+            // later has to send the same coordinates back with the save's id
+            // attached, and re-reading them off the lot for that would be a
+            // round trip to learn what this function already knew.
+            ATTACH.pinned = true;
+            ATTACH.lat = pt[0];
+            ATTACH.lng = pt[1];
+            ATTACH.label = label || ATTACH.name;
+            const box = document.getElementById('cmapErrand');
+            const say = document.getElementById('cmapErrandSay');
+            if (box) box.classList.add('is-done');
+            if (say) say.textContent = 'Pinned. Drag it if it is not quite right, and Save when you are done.';
+        } catch (e) {
+            const say = document.getElementById('cmapErrandSay');
+            if (say) say.textContent = 'The pin is on the map, but the lot did not take it — try dragging it once more.';
+        }
+    }
+
+    /* ---------- a pin's sheet ---------- */
+    let pinOpen = null;
+
+    /** Six decimals is about a tenth of a metre; more is a false promise. */
+    const pinAt = (pt) => Number(pt[0]).toFixed(6) + ', ' + Number(pt[1]).toFixed(6);
+
+    /* The universal form, not a maps.google.com search string: this opens the
+       Maps app on a phone that has one and the website on a machine that does
+       not, and it drops the marker on the exact point rather than on whatever
+       Google decides the nearest named thing is. */
+    const pinHref = (pt) => 'https://www.google.com/maps/search/?api=1&query='
+        + Number(pt[0]).toFixed(6) + '%2C' + Number(pt[1]).toFixed(6);
+
+    function openPinSheet(o) {
+        if (!o) return;
+        pinOpen = o;
+        const pt = ((objIndex.get(o.id) || o).points || [])[0] || [0, 0];
+        const name = document.getElementById('cmapPinName');
+        const at = document.getElementById('cmapPinAt');
+        const go = document.getElementById('cmapPinGo');
+        if (name) name.value = o.label || '';
+        if (at) at.textContent = pinAt(pt);
+        if (go) go.setAttribute('href', pinHref(pt));
+        window.openSheet && window.openSheet('cmapPinSheet');
+    }
+
+    document.getElementById('cmapPinSave')?.addEventListener('click', async () => {
+        const o = pinOpen;
+        if (!o) return;
+        const name = (document.getElementById('cmapPinName')?.value || '').trim();
+        window.closeSheet && window.closeSheet('cmapPinSheet');
+        if (name === (o.label || '')) return;
+        try {
+            const res = await api(URLS.update + '?scheduleId=' + SID, {
+                method: 'POST', body: { id: o.id, label: name || null },
+            });
+            if (!objIndex.has(o.id)) return;
+            pushHist({ type: 'label', id: o.id, before: o.label, after: res.data.object.label });
+            dropObject(o.id);
+            renderObject(res.data.object);
+            markMapDirty();
+        } catch (e) { if (window.toast) toast(e.message, 'error'); }
+    });
+
+    document.getElementById('cmapPinDel')?.addEventListener('click', async () => {
+        const o = pinOpen;
+        if (!o) return;
+        window.closeSheet && window.closeSheet('cmapPinSheet');
+        pushHist({ type: 'remove', object: objIndex.get(o.id) || o, measured: false });
+        try {
+            await api(URLS.remove + '?scheduleId=' + SID, { method: 'DELETE', body: { id: o.id } });
+        } catch (_) { /* the map is already without it; the server catches up */ }
+        dropObject(o.id, true);
+        markMapDirty();
+    });
+
     function onTap(latLng) {
         const p = [latLng.lat(), latLng.lng()];
         if (tool === 'path' || tool === 'area') {
@@ -1787,6 +2011,25 @@
             // asks, and only pressing its button writes anything — so backing
             // out of a label leaves the map exactly as it was.
             openTextSheet(null, p);
+        } else if (tool === 'pin') {
+            /* A pin goes down where you tapped, immediately.
+             *
+             * Unlike a label, a pin with no name is already useful — it is a
+             * place, and the coordinates are the point of it. Asking for a
+             * name first would put a form between somebody standing in a
+             * field and the one thing they came here to record. The name
+             * sheet opens after, over a pin that is already saved, and
+             * closing it without typing leaves a perfectly good pin. */
+            saveObject('pin', [p], ATTACH ? ATTACH.name : null).then((o) => {
+                if (!o) return;
+                // On an errand, the first pin IS the answer — write it to the
+                // lot before the sheet opens, so backing out of the sheet
+                // still leaves the lot findable. The name can be improved
+                // afterwards; being findable cannot be improved later by
+                // somebody who has walked away.
+                if (ATTACH) pinTheLot(p, o.label);
+                openPinSheet(o);
+            });
         }
     }
 
@@ -1883,7 +2126,7 @@
     function selectVertex(o, i, m, parts) {
         beginEdit(o, parts);
         clearSelVertex();
-        if (o.kind === 'rect' || o.kind === 'text') return;
+        if (o.kind === 'rect' || o.kind === 'text' || o.kind === 'pin') return;
         selVertex = { id: o.id, index: i, marker: m, color: o.color || '#f5c518' };
         m.setIcon(pinIcon(selVertex.color, 1.5));
         document.getElementById('cmapDelPoint').hidden = false;
@@ -1918,7 +2161,13 @@
     }
     function geometryOf(o, parts) {
         const first = parts[0];
-        if (o.kind === 'text') { const pos = first.getPosition(); return [[pos.lat(), pos.lng()]]; }
+        if (o.kind === 'text' || o.kind === 'pin') {
+            // A marker has a position, not a path. getPath() on one throws,
+            // and the throw takes the whole drag with it.
+            const pos = first.getPosition();
+
+            return [[pos.lat(), pos.lng()]];
+        }
         const pts = [];
         first.getPath().forEach((v) => pts.push([v.lat(), v.lng()]));
         if (o.kind === 'rect') {
@@ -2853,6 +3102,35 @@
            SCALE, which is exactly the ratio the measurement labels above
            already use: 11 on screen, 22 here. Lines are kept apart rather
            than run together, since the editor takes several of them. */
+        const drawPin = (p, o) => {
+            const [x, y] = px(p);
+            const r = 9 * SCALE;                 // the head
+            const tip = y;                        // the point IS the place
+            const cy = tip - r * 2.1;
+            ctx.beginPath();
+            ctx.arc(x, cy, r, Math.PI * 0.86, Math.PI * 0.14);
+            ctx.lineTo(x, tip);
+            ctx.closePath();
+            ctx.fillStyle = o.color || '#e11d48';
+            ctx.fill();
+            ctx.lineWidth = 2 * SCALE;
+            ctx.strokeStyle = '#fff';
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(x, cy, r * 0.4, 0, Math.PI * 2);
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+            if (!o.label) return;
+            const fs = 12 * SCALE;
+            ctx.font = '700 ' + fs + 'px Roboto, Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.lineWidth = 4 * SCALE;
+            ctx.strokeStyle = '#fff';
+            ctx.strokeText(o.label, x, tip + fs * 0.35);
+            ctx.fillStyle = '#111827';
+            ctx.fillText(o.label, x, tip + fs * 0.35);
+        };
         const plate = (p, o) => {
             const st = textStyle(o);
             const lines = String(o.label || '').split('\n');
@@ -2890,6 +3168,7 @@
             const closed = (o.kind === 'rect' || o.kind === 'area');
 
             if (o.kind === 'text') { plate(pts[0], o); return; }
+            if (o.kind === 'pin') { drawPin(pts[0], o); return; }
 
             ctx.beginPath();
             pts.forEach((p, i) => { const [x, y] = px(p); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
@@ -3169,6 +3448,21 @@
             // save can replace it rather than making a third copy.
             if (r && r.data && r.data.saveId) {
                 setLoadedSave({ id: r.data.saveId, title: r.data.title || 'Map' });
+                /* On an errand, the lot remembers WHICH map it was pinned on.
+                 * "Open the map" from the Lots module then comes back to the
+                 * drawing the pin was placed in — the boundary, the notes,
+                 * the measurements — rather than to a blank canvas with one
+                 * lonely teardrop on it. */
+                if (ATTACH && ATTACH.pinned) {
+                    ATTACH.mapSaveId = r.data.saveId;
+                    api(LOT_PIN_URL + '?scheduleId=' + SID, {
+                        method: 'POST',
+                        body: {
+                            lotId: ATTACH.id, lat: ATTACH.lat, lng: ATTACH.lng,
+                            label: ATTACH.label, mapSaveId: r.data.saveId,
+                        },
+                    }).catch(() => { /* the map is saved; the link is a nicety */ });
+                }
             }
             // The file is current as of now, so the autosave's clock starts
             // again from here rather than firing straight after this one. A
@@ -3619,14 +3913,27 @@
         if (at) map.setCenter(at);
     };
 
+    /* An errand arrives with the tool already chosen.
+     *
+     * Somebody who pressed "Attach a map" has said what they came to do. Made
+     * to find the tools menu and pick Pin out of eleven rows, half of them
+     * would drop a freehand squiggle instead and wonder why nothing was
+     * pinned. Only when the lot has no pin yet: coming back to a lot that is
+     * already placed is a visit to LOOK at it, and a pin tool waiting for a
+     * tap would put a second pin down on the first stray touch. */
+    function armErrand() {
+        if (!ATTACH || ATTACH.pinned) return;
+        setTool('pin');
+    }
+
     window.initCollabMap = function () {
-        if (booted) { window.cmapRefresh(); return; }
-        if (window.google && window.google.maps) { booted = true; buildMap(); return; }
+        if (booted) { window.cmapRefresh(); armErrand(); return; }
+        if (window.google && window.google.maps) { booted = true; buildMap(); armErrand(); return; }
         if (loading) return;
         loading = true;
         // Loaded only when the tab is opened — no quota spent on rooms that
         // never look at the map.
-        window.__cmapBoot = () => { booted = true; buildMap(); };
+        window.__cmapBoot = () => { booted = true; buildMap(); armErrand(); };
         const s = document.createElement('script');
         s.src = 'https://maps.googleapis.com/maps/api/js?key=' + encodeURIComponent(KEY)
             + '&libraries=geometry,places&v=weekly&loading=async&callback=__cmapBoot';

@@ -48,7 +48,42 @@ class ScheduleMapController extends BaseScheduleController
             'saves' => $this->saveRows($schedule),
             // Whether the live canvas holds anything worth going back to.
             'liveCount' => ScheduleMapObject::active()->where('scheduleId', $schedule->id)->count(),
+            // Which lot sent you here, if one did. ?lot= comes off the Lots
+            // module's "Attach a map" — the page then opens straight onto the
+            // canvas with the pin tool out, because somebody who pressed that
+            // button has already said what they came to do.
+            'attachLot' => $this->attachLot($schedule, $request->query('lot')),
         ]);
+    }
+
+    /**
+     * The lot named in ?lot=, if it is really one of this schedule's.
+     *
+     * Nothing here trusts the query string: a lot id from another farm would
+     * otherwise put that farm's name on this page and, worse, be the id a pin
+     * gets written to. The pin endpoint checks the same thing again — this is
+     * the display half, that is the writing half, and neither leans on the
+     * other.
+     */
+    private function attachLot($schedule, $lotId): ?array
+    {
+        $id = (int) $lotId;
+        if ($id <= 0) {
+            return null;
+        }
+
+        $lot = \App\Models\AsScheduleLot::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)->find($id);
+
+        return $lot ? [
+            'id' => $lot->id,
+            'name' => $lot->lotName,
+            'pinned' => $lot->isPinned(),
+            'lat' => $lot->pinLat,
+            'lng' => $lot->pinLng,
+            'label' => $lot->pinLabel,
+            'mapSaveId' => $lot->mapSaveId,
+        ] : null;
     }
 
     public function objects(Request $request)
@@ -85,7 +120,7 @@ class ScheduleMapController extends BaseScheduleController
         $this->assertCanEdit();
 
         $validator = Validator::make($request->all(), [
-            'kind' => 'required|in:pen,line,path,rect,area,text,arrow',
+            'kind' => 'required|in:pen,line,path,rect,area,text,arrow,pin',
             'color' => 'nullable|string|max:16',
             // 20 was the pen's ceiling. A label's type size lives in the same
             // column and wants to go bigger than any line ever would.
@@ -240,7 +275,7 @@ class ScheduleMapController extends BaseScheduleController
 
         $validator = Validator::make($request->all(), [
             'done' => 'nullable|boolean',
-            'kind' => 'nullable|in:pen,line,path,rect,area,arrow',
+            'kind' => 'nullable|in:pen,line,path,rect,area,arrow,pin',
             'color' => 'nullable|string|max:16',
             'points' => 'nullable|array|max:200',
             'points.*' => 'array|size:2',
@@ -820,7 +855,14 @@ class ScheduleMapController extends BaseScheduleController
                 $color = 'f5c518';
             }
 
-            if ($o['kind'] === 'text') {
+            if ($o['kind'] === 'pin') {
+                // Static Maps draws a marker natively, and full size — a
+                // one-point polyline would draw nothing at all, which is how
+                // a saved picture ends up missing the one thing the map was
+                // saved FOR.
+                $piece = '&markers=' . rawurlencode('color:0x' . $color . '|'
+                    . round($pts[0][0], 6) . ',' . round($pts[0][1], 6));
+            } elseif ($o['kind'] === 'text') {
                 $piece = '&markers=' . rawurlencode('size:small|color:0x' . $color . '|'
                     . round($pts[0][0], 6) . ',' . round($pts[0][1], 6));
             } else {

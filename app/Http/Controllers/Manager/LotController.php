@@ -65,6 +65,9 @@ class LotController extends BaseScheduleController
             // said so itself or the crop's own figure stood in.
             'maturityDays' => $lot->maturityDays(),
             'treeAgeMonths' => $lot->treeAgeMonths(),
+            // Where it is, and the one link that acts on that.
+            'pinned' => $lot->isPinned(),
+            'mapsHref' => $lot->mapsHref(),
         ];
     }
 
@@ -77,6 +80,50 @@ class LotController extends BaseScheduleController
         $schedule->load(['lots', 'defaultGroupings.lots']);
 
         return view('sm.lots', compact('schedule'));
+    }
+
+    /**
+     * Put a lot on the map, or take it off.
+     *
+     * Called from the map itself, the moment a pin goes down while a lot is
+     * being attached — not from a form. Standing in a field with a phone,
+     * the gesture is "drop it here", and anything between that gesture and
+     * the record is a step that gets skipped.
+     *
+     * Sending no coordinates unpins the lot, which is how somebody undoes a
+     * pin dropped on the wrong side of the road.
+     */
+    public function pin(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+
+        $data = Validator::make($request->all(), [
+            'lotId' => 'required|integer',
+            'lat' => 'nullable|numeric|between:-90,90',
+            'lng' => 'nullable|numeric|between:-180,180',
+            'label' => 'nullable|string|max:120',
+            'mapSaveId' => 'nullable|integer',
+        ])->validate();
+
+        $lot = AsScheduleLot::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)
+            ->find($data['lotId']);
+        if (! $lot) {
+            return $this->jsonFail('That lot is not on this schedule.', 404);
+        }
+
+        // Both or neither. Half a coordinate is a lot that claims to be
+        // findable and is not, which is worse than one that never claimed it.
+        $has = isset($data['lat'], $data['lng']) && $data['lat'] !== null && $data['lng'] !== null;
+        $lot->update([
+            'pinLat' => $has ? $data['lat'] : null,
+            'pinLng' => $has ? $data['lng'] : null,
+            'pinLabel' => $has ? ($data['label'] ?? null) : null,
+            'mapSaveId' => $has ? ($data['mapSaveId'] ?? $lot->mapSaveId) : null,
+        ]);
+
+        return $this->jsonOk($has ? 'Lot pinned on the map.' : 'Pin removed.',
+            ['data' => $this->lotPayload($lot->fresh())]);
     }
 
     public function store(Request $request)

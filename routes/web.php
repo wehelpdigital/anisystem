@@ -227,6 +227,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-lots-store', [App\Http\Controllers\Manager\LotController::class, 'store'])->name('sm.lots.store');
     Route::put('/app/sm-lots-update', [App\Http\Controllers\Manager\LotController::class, 'update'])->name('sm.lots.update');
     Route::delete('/app/sm-lots-delete', [App\Http\Controllers\Manager\LotController::class, 'destroy'])->name('sm.lots.destroy');
+    // Where a lot is. Posted by the map the moment a pin goes down.
+    Route::post('/app/sm-lots-pin', [App\Http\Controllers\Manager\LotController::class, 'pin'])->name('sm.lots.pin');
 
     // --- Workers ---
     Route::post('/app/sm-workers-store', [App\Http\Controllers\Manager\WorkerController::class, 'store'])->name('sm.workers.store');

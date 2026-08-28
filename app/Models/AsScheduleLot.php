@@ -19,6 +19,13 @@ class AsScheduleLot extends BaseModel
         'locZone',
         'locTown',
         'locProvince',
+        // Where the place actually IS, as against what it is called. An
+        // address gets a delivery note written; a pin gets somebody to the
+        // gate.
+        'pinLat',
+        'pinLng',
+        'pinLabel',
+        'mapSaveId',
         'dayZeroDate',
         'transplantDate',
         'dayType',
@@ -28,6 +35,9 @@ class AsScheduleLot extends BaseModel
 
     protected $casts = [
         'lotSize' => 'decimal:4',
+        'pinLat' => 'float',
+        'pinLng' => 'float',
+        'mapSaveId' => 'integer',
         'dayZeroDate' => 'date:Y-m-d',
         'transplantDate' => 'date:Y-m-d',
         'treePlantedAt' => 'date:Y-m-d',
@@ -43,6 +53,31 @@ class AsScheduleLot extends BaseModel
      * figure otherwise, which is a reasonable answer and what every lot got
      * before this was askable.
      */
+    /** Has somebody said where this is, in the way a phone can act on? */
+    public function isPinned(): bool
+    {
+        return $this->pinLat !== null && $this->pinLng !== null;
+    }
+
+    /**
+     * The link that opens this lot in Maps.
+     *
+     * The universal form on purpose: it opens the Maps app on a phone that
+     * has one and the website on a machine that does not, and it drops the
+     * marker on the exact point rather than on whatever Google decides the
+     * nearest named thing is.
+     */
+    public function mapsHref(): ?string
+    {
+        if (! $this->isPinned()) {
+            return null;
+        }
+
+        return 'https://www.google.com/maps/search/?api=1&query='
+            . number_format((float) $this->pinLat, 6, '.', '') . '%2C'
+            . number_format((float) $this->pinLng, 6, '.', '');
+    }
+
     public function maturityDays(): ?int
     {
         $mine = (int) ($this->daysToMaturity ?? 0);
