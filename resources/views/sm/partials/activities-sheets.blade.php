@@ -1891,6 +1891,43 @@
     </div>
 </div>
 
+{{-- The star's colours, with their names.
+
+     The star used to cycle: tap, tap, tap until the right colour came round.
+     That is fine for two states and silly for nine — and it meant the
+     colours had no names, so two people marking the same board could not
+     agree on one out loud. Naming them is the whole point of this sheet;
+     picking one is just what you do while you are here.
+
+     The line under the title says what a marker IS, because the board's
+     other marks all mean something the app enforces and this one does not.
+     Somebody arriving at a coloured star needs to be told that before they
+     go looking for the rule behind it. --}}
+<div class="sheet hidden" id="markerPickSheet" style="--sheet-width:23rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Marker</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">&#10005;</button>
+    </div>
+    <div class="sheet-body">
+        <p class="form-hint mb-3">A colour you give this line for your own reasons — the app never
+            asks what it means. Use them however your farm already talks: a colour for a field, for
+            a crew, for “check this one”.</p>
+        <div class="mark-grid" id="markerPickGrid">
+            <button type="button" class="mark-swatch" data-mark="0">
+                <span class="mark-star" data-star="0"><svg viewBox="0 0 24 24" stroke-linejoin="round"><path d="m12 3.4 2.63 5.33 5.88.86-4.25 4.15 1 5.86L12 16.85l-5.26 2.75 1-5.86-4.25-4.15 5.88-.86z"/></svg></span>
+                <span class="mark-name">None</span>
+            </button>
+            @foreach ([1 => 'Leaf', 2 => 'Sun', 3 => 'Ember', 4 => 'Rose', 5 => 'Orchid', 6 => 'Dusk', 7 => 'Sky', 8 => 'Tide'] as $ink => $inkName)
+                <button type="button" class="mark-swatch" data-mark="{{ $ink }}">
+                    <span class="mark-star" data-star="{{ $ink }}"><svg viewBox="0 0 24 24" stroke-linejoin="round"><path d="m12 3.4 2.63 5.33 5.88.86-4.25 4.15 1 5.86L12 16.85l-5.26 2.75 1-5.86-4.25-4.15 5.88-.86z"/></svg></span>
+                    <span class="mark-name">{{ $inkName }}</span>
+                </button>
+            @endforeach
+        </div>
+    </div>
+</div>
+
 <div class="sheet hidden" id="timePickSheet" style="--sheet-width:22rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">

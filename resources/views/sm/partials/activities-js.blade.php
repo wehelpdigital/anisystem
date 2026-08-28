@@ -1009,7 +1009,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button type="button" class="icon-btn icon-btn-danger delete-activity-btn${LOCK_EDIT_CLS}" data-id="${a.id}" data-name="${nameAttr}"${LOCK_EDIT} title="${esc(editTitle('Delete'))}">${SVG.trash}</button>
             </div>
             <button type="button" class="icon-btn card-menu-btn md:hidden done-hide" data-id="${a.id}" data-name="${nameAttr}" title="Actions">${SVG.kebab}</button>
-            <button type="button" class="icon-btn star-btn${LOCK_EDIT_CLS}" data-star-btn data-id="${a.id}" data-star="${starOf(a)}"${LOCK_EDIT} title="${esc(editTitle('Marker — tap to change its colour'))}" aria-label="Marker colour ${starOf(a)} of 8">${SVG.star}</button>
+            <button type="button" class="icon-btn star-btn${LOCK_EDIT_CLS}" data-star-btn data-id="${a.id}" data-star="${starOf(a)}"${LOCK_EDIT} title="${esc(editTitle(starOf(a) ? `Marker: ${starName(starOf(a))}` : 'Marker — tap to pick a colour'))}" aria-label="Marker: ${esc(starName(starOf(a)))}">${SVG.star}</button>
         </div>
     </div>
     ${descHtml ? `<div class="activity-description-content text-sm text-gray-700 mt-2" data-lightbox>${descHtml}</div>` : ''}
@@ -4786,6 +4786,10 @@ document.addEventListener('DOMContentLoaded', () => {
      * The colour lives in one place, data-star, and the stylesheet paints
      * from it. Nothing here knows a hex value. */
     const STAR_INKS = 8;
+    // The names have to live here as well as in the sheet's markup, because
+    // this is what says the colour out loud after it is chosen.
+    const STAR_NAMES = ['None', 'Leaf', 'Sun', 'Ember', 'Rose', 'Orchid', 'Dusk', 'Sky', 'Tide'];
+    const starName = (v) => STAR_NAMES[v] || 'None';
 
     /** What colour a card arrives wearing. */
     function starOf(a) {
@@ -4793,32 +4797,54 @@ document.addEventListener('DOMContentLoaded', () => {
         return (Number.isFinite(n) && n >= 0 && n <= STAR_INKS) ? n : 0;
     }
 
-    async function turnStar(btn) {
+    /* Which line is being marked, while the sheet is open. Tapping a star
+       used to cycle it — fine for two states, silly for nine, and it left
+       the colours nameless, so two people looking at the same board could
+       not agree on one out loud. */
+    let STAR_FOR = { id: null, was: 0 };
+
+    function openStarSheet(btn) {
         if (!CAN_EDIT) { toast(WHY_NO_EDIT, 'error'); return; }
-        const id = btn.getAttribute('data-id');
-        const was = parseInt(btn.getAttribute('data-star') || '0', 10) || 0;
-        const next = (was + 1) % (STAR_INKS + 1);   // …8 → off → 1…
+        const now = parseInt(btn.getAttribute('data-star') || '0', 10) || 0;
+        STAR_FOR = { id: btn.getAttribute('data-id'), was: now };
+        $qsa('#markerPickGrid .mark-swatch').forEach((s) => {
+            s.classList.toggle('is-on', Number(s.getAttribute('data-mark')) === now);
+        });
+        openSheet('markerPickSheet');
+    }
+
+    async function setStar(next) {
+        const { id, was } = STAR_FOR;
+        if (!id || next === was) { closeSheet('markerPickSheet'); return; }
 
         // Painted before it is saved: a marker that waits for the network to
         // agree is a marker you tap twice.
         const paint = (v) => {
             $qsa(`[data-star-btn][data-id="${id}"]`).forEach((b) => {
                 b.setAttribute('data-star', String(v));
-                b.setAttribute('aria-label', `Marker colour ${v} of ${STAR_INKS}`);
+                b.setAttribute('aria-label', `Marker: ${starName(v)}`);
+                b.setAttribute('title', v ? `Marker: ${starName(v)}` : 'Marker — tap to pick a colour');
+                b.classList.remove('is-turning');
+                void b.offsetWidth;                 // restart the pop
+                b.classList.add('is-turning');
             });
         };
         paint(next);
-        btn.classList.remove('is-turning');
-        void btn.offsetWidth;                       // restart the pop
-        btn.classList.add('is-turning');
+        closeSheet('markerPickSheet');
 
         try {
             await api(U.marker(), { method: 'POST', body: { id, markerColor: next } });
+            toast(next ? `Marked ${starName(next)}.` : 'Marker removed.');
         } catch (err) {
             paint(was);
             toast(err.message, 'error');
         }
     }
+
+    document.addEventListener('click', (e) => {
+        const swatch = e.target.closest('#markerPickGrid .mark-swatch');
+        if (swatch) setStar(Number(swatch.getAttribute('data-mark')) || 0);
+    });
 
     // Single-card move-to-date (mobile fallback for drag & drop).
     let CARD_MENU = { id: null, name: '' };
@@ -5810,7 +5836,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const starBtn = e.target.closest('[data-star-btn]');
         if (starBtn) {
-            turnStar(starBtn);
+            openStarSheet(starBtn);
             return;
         }
         const menuBtn = e.target.closest('.card-menu-btn');
@@ -10372,7 +10398,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     case 'toggle-hidden': { const c = cardOf(d.id); if (c) { c.classList.toggle('is-hidden', !!d.isHidden); refreshHiddenActivityCount(); } break; }
                     // Somebody else moved the star. It is a mark on a shared
                     // board, so it changes colour under everyone at once.
-                    case 'marker': { $qsa(`[data-star-btn][data-id="${d.id}"]`).forEach((b) => b.setAttribute('data-star', String(d.markerColor ?? 0))); break; }
+                    case 'marker': { const v = Number(d.markerColor ?? 0) || 0; $qsa(`[data-star-btn][data-id="${d.id}"]`).forEach((b) => { b.setAttribute('data-star', String(v)); b.setAttribute('aria-label', `Marker: ${starName(v)}`); b.setAttribute('title', v ? `Marker: ${starName(v)}` : 'Marker — tap to pick a colour'); }); break; }
                     case 'set-date': { const c = cardOf(d.id); if (c) { c.setAttribute('data-target-date', d.targetDate); reorderAndRenumberActivities(true); } break; }
                     case 'reordered': applyReorder(d.items); break;
                     // Async, so the switch's own try/catch cannot see it fail:

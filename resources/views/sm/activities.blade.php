@@ -2305,14 +2305,44 @@
         .star-btn[data-star="0"]:hover svg path { stroke: #6b9f3d; }
         /* On: the gradient, filled, no outline. */
         .star-btn:not([data-star="0"]) svg path { stroke: none; }
-        .star-btn[data-star="1"] svg path { fill: url(#actStar1); }
-        .star-btn[data-star="2"] svg path { fill: url(#actStar2); }
-        .star-btn[data-star="3"] svg path { fill: url(#actStar3); }
-        .star-btn[data-star="4"] svg path { fill: url(#actStar4); }
-        .star-btn[data-star="5"] svg path { fill: url(#actStar5); }
-        .star-btn[data-star="6"] svg path { fill: url(#actStar6); }
-        .star-btn[data-star="7"] svg path { fill: url(#actStar7); }
-        .star-btn[data-star="8"] svg path { fill: url(#actStar8); }
+        /* One palette, written once. The stars on the cards and the swatches
+           in the picker are the same eight inks, so a colour cannot drift
+           between where it is chosen and where it is worn. */
+        [data-star="1"] svg path { fill: url(#actStar1); }
+        [data-star="2"] svg path { fill: url(#actStar2); }
+        [data-star="3"] svg path { fill: url(#actStar3); }
+        [data-star="4"] svg path { fill: url(#actStar4); }
+        [data-star="5"] svg path { fill: url(#actStar5); }
+        [data-star="6"] svg path { fill: url(#actStar6); }
+        [data-star="7"] svg path { fill: url(#actStar7); }
+        [data-star="8"] svg path { fill: url(#actStar8); }
+
+        /* ---- the picker ----
+           Three across on a phone, four when there is room. Each swatch is
+           the star it will set plus the name it goes by, because the names
+           are the reason this sheet exists: a board where one person says
+           "the green ones" and another says "the first colour" is a board
+           with no markers on it. */
+        .mark-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+        @media (min-width: 420px) { .mark-grid { grid-template-columns: repeat(4, 1fr); } }
+        .mark-swatch { display: flex; flex-direction: column; align-items: center; gap: .3rem;
+            padding: .7rem .3rem .6rem; cursor: pointer; border-radius: .8rem;
+            border: 1px solid var(--color-gray-200, #e5e7eb); background: var(--color-white, #fff);
+            transition: border-color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1),
+                transform .28s cubic-bezier(.22,1,.36,1); }
+        .mark-swatch:hover { border-color: #a8cc7e; background: #f7fbf3; transform: translateY(-2px); }
+        .mark-swatch.is-on { border-color: #4a7c2a; background: #f2f8ec; box-shadow: 0 0 0 2px #d7e8c4; }
+        .mark-star { display: block; width: 1.9rem; height: 1.9rem; }
+        .mark-star svg { width: 100%; height: 100%; display: block; }
+        .mark-star[data-star="0"] svg path { fill: none; stroke: var(--tl-text-faint, #b6bcc6); stroke-width: 1.7; }
+        .mark-name { font-size: .72rem; font-weight: 700; color: var(--color-gray-600, #4b5563); }
+        html.dark .mark-swatch { background: #151b12; border-color: #2b3a1c; }
+        html.dark .mark-swatch.is-on { background: rgb(107 159 61 / .16); border-color: #6b9f3d; box-shadow: none; }
+        html.dark .mark-name { color: #cbd6c0; }
+        @media (prefers-reduced-motion: reduce) {
+            .mark-swatch { transition: none; }
+            .mark-swatch:hover { transform: none; }
+        }
         /* A tap should feel like a tap. */
         .star-btn { transition: transform .28s cubic-bezier(.22,1,.36,1); }
         .star-btn:active { transform: scale(.86); }
@@ -3620,7 +3650,9 @@
         <linearGradient id="actStar3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fdba74"/><stop offset="1" stop-color="#c2410c"/></linearGradient>
         <linearGradient id="actStar4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fda4af"/><stop offset="1" stop-color="#be123c"/></linearGradient>
         <linearGradient id="actStar5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0abfc"/><stop offset="1" stop-color="#a21caf"/></linearGradient>
-        <linearGradient id="actStar6" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c4b5fd"/><stop offset="1" stop-color="#5b21b6"/></linearGradient>
+        {{-- Indigo rather than violet: beside Orchid, a violet Dusk was the
+             same purple twice and the two names stopped meaning anything. --}}
+        <linearGradient id="actStar6" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a5b4fc"/><stop offset="1" stop-color="#3730a3"/></linearGradient>
         <linearGradient id="actStar7" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7dd3fc"/><stop offset="1" stop-color="#0369a1"/></linearGradient>
         <linearGradient id="actStar8" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6ee7b7"/><stop offset="1" stop-color="#0f766e"/></linearGradient>
     </defs>

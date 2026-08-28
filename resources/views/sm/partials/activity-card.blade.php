@@ -241,12 +241,18 @@
                  The board already tells you a line's priority, its type, its
                  status and its tags. This one is not another of those: it is
                  a mark somebody put here for a reason they never had to give
-                 the app. Tap to move it round eight colours and off again.
+                 the app. Tap it and the colours open, each with its name.
                  Twin of the star in renderActivityCard(). --}}
+            @php
+                $starInk = (int) ($a->markerColor ?? 0);
+                // Same order as STAR_NAMES in activities-js and the swatches
+                // in #markerPickGrid — one list, said in three places.
+                $starInkName = ['None', 'Leaf', 'Sun', 'Ember', 'Rose', 'Orchid', 'Dusk', 'Sky', 'Tide'][$starInk] ?? 'None';
+            @endphp
             <button type="button" class="icon-btn star-btn{{ $lockCls }}" data-star-btn data-id="{{ $a->id }}"
-                    data-star="{{ (int) ($a->markerColor ?? 0) }}" @disabled(! $mayEdit)
-                    title="{{ $editTitle('Marker — tap to change its colour') }}"
-                    aria-label="Marker colour {{ (int) ($a->markerColor ?? 0) }} of 8">
+                    data-star="{{ $starInk }}" @disabled(! $mayEdit)
+                    title="{{ $editTitle($starInk ? 'Marker: ' . $starInkName : 'Marker — tap to pick a colour') }}"
+                    aria-label="Marker: {{ $starInkName }}">
                 <svg viewBox="0 0 24 24" stroke-linejoin="round"><path d="m12 3.4 2.63 5.33 5.88.86-4.25 4.15 1 5.86L12 16.85l-5.26 2.75 1-5.86-4.25-4.15 5.88-.86z"/></svg>
             </button>
         </div>
