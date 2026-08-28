@@ -4,9 +4,11 @@
 @section('body-class', 'hide-tabbar')
 
 @section('title', $settings->assistantName . ' — ' . $schedule->title)
-{{-- Her name, not her job title: every other screen in this app names the
-     thing you are looking at, and this one is a person. --}}
-@section('page-title', $settings->assistantName)
+{{-- Her name AND what she is for. Every other screen in this app names the
+     thing you are looking at; this one is a person, and a person who has just
+     been introduced is worth introducing properly. The name is read from the
+     settings so a farm that renames her keeps the rest of the sentence. --}}
+@section('page-title', $settings->assistantName . ', Your Smart Agricultural Technician')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'ai')
 @section('back', route('sm.hub', ['id' => $schedule->id]))
@@ -134,7 +136,21 @@
            the floating button says the same thing in a third of the height,
            and people like it, so this is that: a 3rem face, a line of type at
            the panel's size, one grey sentence, and the questions. */
-        .ai-hello { margin-block: auto; text-align: center; padding: 1rem .75rem .5rem; border-radius: 1.5rem; background: radial-gradient(120% 90% at 50% 0%, var(--color-brand-50) 0%, transparent 70%); }
+        /* Her whole introduction, on two lines if it needs them.
+           The app bar's title is a single truncating line everywhere else,
+           which is right for "Workers" and wrong for a sentence — on a phone
+           it cut to "Anee, Your Smart …", losing the half that says what she
+           is for. Scoped to this page and clamped to two lines at a smaller
+           size, so the bar keeps the height every sticky offset below it is
+           measured against. */
+        #appPageTitle {
+            white-space: normal; overflow: hidden; text-overflow: clip;
+            font-size: .8rem; line-height: 1.15;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+        }
+        @media (min-width: 768px) { #appPageTitle { font-size: 1rem; -webkit-line-clamp: 1; } }
+
+        .ai-hello { margin-block: auto; text-align: center; padding: .5rem .75rem .4rem; border-radius: 1.5rem; background: radial-gradient(120% 90% at 50% 0%, var(--color-brand-50) 0%, transparent 70%); }
         .ai-hello .aimsg-face { width: 3rem; height: 3rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-200), 0 10px 24px -8px rgb(74 124 42 / .45); animation: aiFloatIdle 5s ease-in-out infinite; }
         .ai-hello h2 { font-size: .95rem; font-weight: 700; margin-top: .5rem; color: var(--color-gray-800); }
         .ai-hello .sub { font-size: .8rem; color: var(--color-gray-500); margin-top: .15rem; max-width: 22rem; margin-inline: auto; line-height: 1.45; }
@@ -494,25 +510,23 @@
                      needing three more, so telling a farmer this before they
                      type is worth more than any feature on the page. --}}
                 <h2>Hi, I'm {{ $settings->assistantName }}</h2>
-                <p class="sub">Your farm technician. Ask me about
-                    {{ \Illuminate\Support\Str::limit($schedule->cropType ?: 'this crop', 24) }} —
-                    fertiliser, pests, water, timing — or snap a leaf.</p>
+                {{-- One line. The chips underneath already say what she can
+                     be asked, so listing it here twice cost a line of a short
+                     phone's screen for nothing. --}}
+                <p class="sub">Your technician for {{ \Illuminate\Support\Str::limit($schedule->cropType ?: 'this crop', 24) }}</p>
 
+                {{-- Four short lines. It was three paragraphs, and an
+                     instruction you have to scroll to finish is an
+                     instruction nobody reads. The example does most of the
+                     teaching, so it is what the space goes to. --}}
                 <div class="ai-howto">
                     <p class="ai-howto-h">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
-                        Ask like you're describing it to someone who can't see your field
+                        The more you tell me, the better I answer
                     </p>
-                    <p class="ai-howto-b">My answer is only as good as your question. Say the crop and
-                        variety, how old it is, what you already did, and what you're seeing — colours,
-                        which leaves, how many plants, how the weather has been. One clear question with
-                        the details in it beats five vague ones, and it costs you fewer credits than
-                        going back and forth.</p>
-                    <p class="ai-howto-eg"><b>Instead of</b> "my rice is sick" —
-                        <b>try</b> "IR64, 32 days after sowing, lower leaves yellowing from the tip inward,
-                        urea applied 10 days ago, heavy rain all week. What should I check?"</p>
-                    <p class="ai-howto-b">I don't look at your cropping plan unless you switch it on below
-                        the box — that way a general question gets a general answer.</p>
+                    <p class="ai-howto-b">Crop and age, what you did, what you see.</p>
+                    <p class="ai-howto-eg"><b>Not</b> "my rice is sick"<br>
+                        <b>Try</b> "IR64, 32 days old, lower leaves yellowing, urea 10 days ago, heavy rain."</p>
                 </div>
                 <div class="grid gap-2 max-w-md mx-auto mt-3">
                     <button type="button" class="aisuggest js-suggest" data-q="My leaves are yellowing at the tips — what should I check?">

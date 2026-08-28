@@ -486,16 +486,10 @@
                 <h4>Hi team \u2014 I'm ${AI_NAME}</h4>
                 <p>Ask me about pests &amp; diseases, fertilizer rates and timing, irrigation, planting and harvest windows, or troubleshooting a problem. Everyone on the team sees the questions and answers, and you can save a whole session to your schedule notes.</p>
                 <div class="sai-howto">
-                    <p class="sai-howto-h">Ask like you're describing it to someone who can't see the field</p>
-                    <p class="sai-howto-b">My answer is only as good as your question. Say the crop and variety,
-                        how old it is, what was already done, and what you're seeing \u2014 colours, which
-                        leaves, how many plants, how the weather has been. One clear question with the
-                        details in it beats five vague ones, and it costs fewer credits than going back
-                        and forth.</p>
-                    <p class="sai-howto-eg"><b>Instead of</b> "the rice is sick" \u2014 <b>try</b> "IR64, 32 days
-                        after sowing, lower leaves yellowing from the tip inward, urea 10 days ago, heavy
-                        rain all week. What should we check?"</p>
-                    <p class="sai-howto-b">I don't read this cropping plan unless you switch it on under the box.</p>
+                    <p class="sai-howto-h">The more you tell me, the better I answer</p>
+                    <p class="sai-howto-b">Crop and age, what was done, what you see.</p>
+                    <p class="sai-howto-eg"><b>Not</b> "the rice is sick"<br>
+                        <b>Try</b> "IR64, 32 days old, lower leaves yellowing, urea 10 days ago, heavy rain."</p>
                 </div>`;
             /* The three suggestion chips are gone. They were pills in the
              * stylesheet at the top of this file and squares by the time the

@@ -4,8 +4,8 @@
 @section('body-class', 'hide-tabbar')
 
 @section('title', $settings->assistantName)
-{{-- Her name, not her job title. --}}
-@section('page-title', $settings->assistantName)
+{{-- Her name, and what she is for. --}}
+@section('page-title', $settings->assistantName . ', Your Smart Agricultural Technician')
 @section('page-subtitle', 'Crop questions, answered')
 
 @php

@@ -1002,6 +1002,22 @@
            it, or block:'start' parks its header behind them and the jump
            looks like it overshot by one day. Matches what the Gallery's
            shelf bar sticks at inside this shell. */
+        /* A fold's work stops at the day it happened in.
+         *
+         * A season is hundreds of cards in one column, and every one of them
+         * used to be re-measured whenever anything above changed height — so
+         * opening a day, or opening a card inside it, spent each frame of the
+         * animation laying out the whole board. On the demo season (eight
+         * days) it never showed; on a real one it is the stutter.
+         *
+         * `contain: layout` draws the boundary: a day's insides are its own
+         * problem, and the rest of the list only has to be moved, not
+         * rebuilt. Deliberately not content-visibility here — the board
+         * carries drag targets, sticky headers and observers that expect
+         * their subtrees to exist, and skipping them is a bigger promise than
+         * this needs. (The Mirror is a read-only copy with none of that, so
+         * it takes the stronger medicine.) */
+        #activitiesList .date-group { contain: layout; }
         #activitiesList .date-group { scroll-margin-top: 6.9rem; }
         @media (min-width: 768px) { #activitiesList .date-group { scroll-margin-top: 7.7rem; } }
         #activitiesList.no-fold-anim .date-body,
@@ -1277,32 +1293,27 @@
                 /* Nudged with position, not margin: on a centred flex item a
                    top margin grows the margin box and the centring gives back
                    half of it, so the tag barely moves. */
-                /* Sized to its tags, not to the row: a growing lot would push
-                   the kebab back out to the far edge instead of letting it
-                   sit right after the name. The max-width is what keeps the
-                   two together — a wrapping flex line breaks BEFORE it
-                   shrinks, so a card with two long lot tags used to throw the
-                   lots onto their own line and the kebab onto a third. Capped
-                   to the space the row has left, the box never triggers that
-                   break and scrolls its tags internally instead. */
-                /* 11rem = the 30px check, the 34px type icon, the 88px kebab
-                   and star together, and the three 8px gaps — measured in the
-                   browser rather than guessed, because guessing is how the
-                   old 8.5rem got there and the star tipped it over. Leave it
-                   short and the kebab and the star drop onto a row of their
-                   own underneath, which is exactly what this cap exists to
-                   stop; leave it long and the lot name loses letters it did
-                   not need to lose. */
-                flex: 0 1 auto; min-width: 0; max-width: calc(100% - 11rem); align-self: center;
-                position: relative; top: .18rem;
-                display: flex; flex-wrap: nowrap; gap: .25rem;
-                overflow-x: auto; scrollbar-width: none;
+                /* The lot gets its own line.
+                 *
+                 * It used to share the head row with the tick, the type icon
+                 * and the kebab, capped to whatever those left over. On a
+                 * 360px phone that was ninety-two pixels — enough for
+                 * "Apratado 1 " and then a cut, with the rest of the name
+                 * behind a sideways scroll inside a box the width of a
+                 * thumbnail. Nobody finds that scroll, and a lot name is the
+                 * one thing on a farm card you have to be able to read.
+                 *
+                 * So the strip is a full-width item of the same wrapped row,
+                 * ordered to sit right under the tick and the kebab. It costs
+                 * a line on cards whose lot is short, and buys every card a
+                 * readable one. Tags wrap inside it now instead of scrolling,
+                 * because a wrap you can see beats a scroll you cannot. */
+                order: 1; flex: 0 0 100%; min-width: 0; max-width: 100%;
+                margin-top: .1rem;
+                display: flex; flex-wrap: wrap; gap: .25rem; row-gap: .2rem;
             }
-            .activity-card .activity-card-lothead::-webkit-scrollbar { display: none; }
-            /* Tags keep their own width inside that capped box — left to
-               shrink they broke "Lot A — North Field" over three lines and
-               made the head row as tall as the card. They scroll instead. */
-            .activity-card .activity-card-lothead > .item-tag { flex: 0 0 auto; white-space: nowrap; }
+            .activity-card .activity-card-lothead > .item-tag {
+                flex: 0 1 auto; min-width: 0; max-width: 100%; white-space: normal; }
             /* The kebab rides the head row again, right after the lot name.
                It is back in flow, so `order` is what keeps it on that first
                line: the title, badges and lot meta are full-width items of
@@ -1313,8 +1324,12 @@
                grip; the row still reserves that column so a long lot name
                cannot run under the grip or the fold chevron. */
             .activity-card { position: relative; }
+            /* The tick, the type icon and the kebab share line one; the lot
+               takes line two (order 1); the title and the rest follow. The
+               kebab is pushed to the far edge by the auto margin rather than
+               by whatever the lot happened to leave. */
             .activity-card > .flex.items-start.justify-between > .flex.items-center {
-                position: static; order: 1; align-self: center; margin: 0;
+                position: static; order: 0; align-self: center; margin: 0 0 0 auto;
             }
             .activity-card .activity-card-title,
             .activity-card .activity-card-badges,

@@ -103,15 +103,10 @@
                 {{-- How to ask. Not decoration: a vague question costs the
                      same as a good one and comes back needing three more. --}}
                 <div class="aif-howto">
-                    <p class="aif-howto-h">Ask like you're describing it to someone who can't see your field</p>
-                    <p class="aif-howto-b">My answer is only as good as your question. Say the crop and
-                        variety, how old it is, what you already did, and what you're seeing — colours,
-                        which leaves, how many plants, the weather. One clear question with the details
-                        beats five vague ones, and costs fewer credits than going back and forth.</p>
-                    <p class="aif-howto-eg"><b>Instead of</b> "my rice is sick" — <b>try</b> "IR64, 32 days
-                        after sowing, lower leaves yellowing from the tip inward, urea 10 days ago, heavy
-                        rain all week. What should I check?"</p>
-                    <p class="aif-howto-b">I don't read your cropping plan unless you switch it on under the box.</p>
+                    <p class="aif-howto-h">The more you tell me, the better I answer</p>
+                    <p class="aif-howto-b">Crop and age, what you did, what you see.</p>
+                    <p class="aif-howto-eg"><b>Not</b> "my rice is sick"<br>
+                        <b>Try</b> "IR64, 32 days old, lower leaves yellowing, urea 10 days ago, heavy rain."</p>
                 </div>
                 <button type="button" class="ai-float-sug js-float-suggest">
                     <span class="ic" aria-hidden="true"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 21c.5-4.5 2.5-15 16-17-.5 13.5-8 16-12 16-1.33 0-2.67 0-4 1zm0 0c2-6 5-10 10-12"/></svg></span>
