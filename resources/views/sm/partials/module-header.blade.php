@@ -35,7 +35,10 @@
         <a href="{{ route('sm.hub', ['id' => $schedule->id]) }}"
             class="chip chip-dashed shrink-0" data-chip-manual>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            All Modules
+            {{-- The same word the shell's hamburger uses. "All Modules" here
+                 against "Other Modules" there read as two different doors,
+                 and it is one door. --}}
+            Modules
         </a>
         @foreach ($modules as $key => $m)
             <a href="{{ route($m['route'], ['id' => $schedule->id]) }}"

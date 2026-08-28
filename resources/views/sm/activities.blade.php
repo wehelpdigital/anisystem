@@ -251,6 +251,20 @@
         .mir-find-chev { width: .85rem; height: .85rem; flex: none; color: var(--tl-text-faint, #6b7280);
             transition: transform .28s cubic-bezier(.22, 1, .36, 1); }
         .mir-find:not(.is-shut) .mir-find-chev { transform: rotate(180deg); }
+        /* Opening and shutting the search card.
+         *
+         * Two things made this stutter. The first is that a growing card
+         * resizes the scroller beneath it, and the scroller holds every day
+         * of the season — so each frame of the animation re-laid-out hundreds
+         * of cards. `contain` draws a box around this card's own layout so
+         * the work stops at its edge, and the groups below opt out of layout
+         * until they are on screen (see .mir-body .date-group).
+         *
+         * The second is that the contents used to be switched from visible to
+         * hidden the instant the class changed, so the card animated shut over
+         * an empty box and snapped at the end. They fade with it now, on the
+         * same curve, and only stop taking clicks once they have gone. */
+        .mir-find { contain: layout style; }
         .mir-find-body { display: grid; grid-template-rows: 1fr;
             transition: grid-template-rows .28s cubic-bezier(.22, 1, .36, 1); }
         .mir-find.is-shut .mir-find-body { grid-template-rows: 0fr; }
@@ -258,8 +272,13 @@
         /* Padding on the wrapper, not margins on the fields: a .form-input is
            width:100%, and 100% of the card plus a margin either side is wider
            than the card — which is exactly how the inputs ran off its edge. */
-        .mir-find-pad { display: flex; flex-direction: column; padding: .1rem .9rem .7rem; }
-        .mir-find.is-shut .mir-find-pad { visibility: hidden; }
+        .mir-find-pad { display: flex; flex-direction: column; padding: .1rem .9rem .7rem;
+            opacity: 1; transition: opacity .22s cubic-bezier(.22, 1, .36, 1); }
+        .mir-find.is-shut .mir-find-pad { opacity: 0; visibility: hidden;
+            /* Visibility flips only after the fade, so nothing disappears
+               while the card is still moving; on the way open it flips at
+               once, because content that fades in from nothing is worse. */
+            transition: opacity .18s cubic-bezier(.22, 1, .36, 1), visibility 0s linear .22s; }
         /* Three acts, three sections: find something, narrow what came back,
            then move about in it. Run together they read as one long form of
            unrelated controls, which is how a search card stops being used. */
@@ -375,13 +394,37 @@
            no lift on hover, no hand cursor, no drag. The done tick keeps its
            colour — it is the answer the mirror exists to give — but stops
            being a button. */
-        .mir-body .date-group { margin-bottom: .9rem; animation: none; }
+        /* A season is hundreds of cards, and every one of them used to be
+           re-measured whenever anything above changed height — which is what
+           made opening the search card stutter. A group off screen is skipped
+           until it is scrolled to; the intrinsic size keeps the scrollbar
+           honest while it is skipped. */
+        .mir-body .date-group { margin-bottom: .9rem; animation: none;
+            content-visibility: auto; contain-intrinsic-size: auto 260px; }
         .mir-body .activity-card { cursor: default; }
         .mir-body .activity-card:hover { transform: none; box-shadow: var(--shadow-card); }
         .mir-body .done-check { pointer-events: none; opacity: 1; }
         .mir-body .date-header { cursor: default; }
         .mir-body [draggable] { -webkit-user-drag: none; }
         .mir-body input, .mir-body button, .mir-body a, .mir-body label { pointer-events: none; }
+        /* A lot name gets its whole name here.
+         *
+         * On the board the lot strip is capped and scrolls sideways, so a
+         * long name stays on the head row and the kebab keeps its place. The
+         * mirror has neither: nothing in here is tappable, so there is no
+         * kebab to make room for — and, worse, nothing in here can be
+         * scrolled either, so "Apratado 1" was cut off at the box's edge with
+         * no way to see the rest of it. A cap that exists to protect a button
+         * that isn't drawn is just a guillotine. It wraps instead. */
+        /* Three names deep so it outranks the board's own rule for this strip
+           wherever that rule happens to sit in the file — the phone rule that
+           caps and scrolls it is written later, and an equal-weight override
+           would quietly lose. */
+        .mir-body .activity-card .activity-card-lothead {
+            max-width: 100%; overflow: visible;
+            flex-wrap: wrap; row-gap: .25rem; }
+        .mir-body .activity-card .activity-card-lothead > .item-tag {
+            white-space: normal; max-width: 100%; }
         /* ---- Date Diff ----
            Two days picked, and the gap between them named on both. It is the
            one control the mirror adds rather than inherits, so it is also the
@@ -2845,8 +2888,11 @@
             {{-- It says what the button DOES, not where you already are: the
                  app header above this row already names the module, so
                  "Modules - Settings" was the same word twice and left nobody
-                 any wiser about what pressing it would open. --}}
-            <span id="currentModuleLabel">Other Modules</span>
+                 any wiser about what pressing it would open. One word, and
+                 the same word on every page — "Other Modules" here against
+                 "All Modules" on a page opened on its own read as two
+                 different doors when it is one. --}}
+            <span id="currentModuleLabel">Modules</span>
         </button>
         {{-- Right after the module it is leaving, not flung to the far edge:
              pinned right it sat directly under the notification bell, reading
@@ -3984,7 +4030,7 @@
         // The button says what it opens, not where you are — so it reads the
         // same in every module and the switch has nothing to rewrite. The app
         // header below is where the module's own name is kept in step.
-        label.textContent = 'Other Modules';
+        label.textContent = 'Modules';
         // Keep the app header + browser tab in step with the swapped module.
         const pageTitle = document.getElementById('appPageTitle');
         if (pageTitle) pageTitle.textContent = MODULES[key].label;
