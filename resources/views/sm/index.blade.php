@@ -108,24 +108,23 @@
            zero of its own animations reads as a still image that then starts
            moving. It fades up instead, and everything inside it starts
            mid-cycle, so the first thing anybody sees is already weather. */
+        /* Held at nothing for its first second, then faded up.
+           Running the whole time — opacity does not pause an animation — so by
+           the time it can be seen the drift, the squall and a dozen clouds are
+           all under way rather than sitting on frame zero of them.
+           What is on screen during that second is the card's own ground, which
+           is the one thing guaranteed to match the card's own ground. A panel
+           painted to look like it would have to ride the eighteen-second
+           gradient this card sweeps and stay in step with it forever, and the
+           drift would show as a patch. */
         .sch-hero-sky { position: absolute; inset: 0; z-index: 0;
-            pointer-events: none; opacity: .88; }
-        html.dark .sch-hero-sky { opacity: .92; }
-        /* The cover it comes out from behind.
-           It goes up in the same frame the weather is painted — no transition
-           on the way in, or the sky would be visible through it while it
-           arrived — and comes off a second later, by which time the drift,
-           the squall and a dozen clouds are all under way rather than sitting
-           on frame zero of them. A second is enough for that and short enough
-           that the cover reads as the card arriving, not as a wait. */
-        .sch-hero-veil { position: absolute; inset: 0; z-index: 0;
-            pointer-events: none; background: #07100a; opacity: 0; }
-        .sch-hero-veil.is-up { opacity: 1; transition: none; }
-        .sch-hero-veil.is-up.is-off { opacity: 0;
+            pointer-events: none; opacity: 0;
             transition: opacity 1.1s cubic-bezier(.22, 1, .36, 1); }
+        .sch-hero-sky.is-on { opacity: .88; }
+        html.dark .sch-hero-sky.is-on { opacity: .92; }
         /* Nothing is moving to wait for, so nothing waits. */
         @media (prefers-reduced-motion: reduce) {
-            .sch-hero-veil.is-up { opacity: 0; }
+            .sch-hero-sky { transition: none; }
         }
         /* Content over weather. Without this the stat tiles are opaque boxes
            sitting ON the sky rather than in front of it, and the sky stops
@@ -719,7 +718,6 @@
              way, and the two sit on top of each other because they are the
              same fact. --}}
         <span class="sch-hero-sky" id="schHeroSky" aria-hidden="true"></span>
-        <span class="sch-hero-veil" id="schHeroVeil" aria-hidden="true"></span>
         @php
             // No hour in the greeting any more. This page is a list of
             // schedules, and "Good evening" was a second thing to read before
@@ -1620,22 +1618,21 @@ document.addEventListener('DOMContentLoaded', () => {
              * the same light, and the card is meant to read like a window. */
             const sky = document.getElementById('schHeroSky');
             if (sky && window.wxAtmosphere) {
-                /* COVERED, THEN UNCOVERED A SECOND LATER.
+                /* PAINTED NOW, SHOWN A SECOND LATER.
                  *
-                 * The weather is painted and its animations start the moment
-                 * it exists — but the first second of a drift, a squall and a
-                 * dozen clouds all easing out of their own start points is
-                 * the least convincing second of it, and that is exactly the
-                 * second it used to arrive on.
+                 * The weather's animations start the moment it exists — but
+                 * the first second of a drift, a squall and a dozen clouds all
+                 * easing out of their own start points is the least convincing
+                 * second of it, and that is exactly the second it used to
+                 * arrive on.
                  *
-                 * So it runs behind a cover and the cover comes off once it is
-                 * properly going. The cover goes up first, in this order, so
-                 * there is no frame in which the sky is on screen without it.
+                 * So it is painted straight away and simply not shown yet. It
+                 * runs at zero opacity over the card's own ground — no cover,
+                 * nothing to match, nothing to shift — and fades up once it is
+                 * properly going.
                  */
-                const veil = document.getElementById('schHeroVeil');
-                veil?.classList.add('is-up');
                 sky.innerHTML = window.wxAtmosphere(key, window.wxDaypart && window.wxDaypart(hour));
-                setTimeout(() => veil?.classList.add('is-off'), 1000);
+                setTimeout(() => sky.classList.add('is-on'), 1000);
             }
             const meta = (window.WX_SKIES || {})[key];
             const mark = document.getElementById('schHeroMark');
