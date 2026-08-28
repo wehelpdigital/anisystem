@@ -17,6 +17,23 @@
         .dash-shell { grid-template-columns: minmax(0, 1fr) 20rem; }
         .dash-side { position: sticky; top: 5rem; }
     }
+    /* The forecast panel: a tinted, drifting box rather than a row of
+       emoji on the card's own white. The tint is today's sky said in
+       colour and is held under a fifth of an alpha, because the numbers
+       have to stay louder than the mood. */
+    .dash-wx-panel { padding: .6rem .7rem .5rem; }
+    .dash-wx-place { font-size: .688rem; font-weight: 700; color: var(--color-gray-600);
+        margin-bottom: .4rem; }
+    .dash-wx-place b { font-weight: 800; color: var(--color-gray-800); }
+    .dash-wx-art { display: flex; align-items: center; justify-content: center;
+        height: 1.9rem; margin: .15rem 0; }
+    .dash-wx-advice { font-size: .656rem; line-height: 1.5; color: var(--color-gray-600);
+        margin-top: .5rem; padding-top: .45rem;
+        border-top: 1px dashed rgb(148 163 184 / .35); }
+    html.dark .dash-wx-place { color: #b7c2ad; }
+    html.dark .dash-wx-place b { color: #e8efe1; }
+    html.dark .dash-wx-advice { color: #b7c2ad; border-top-color: rgb(148 163 184 / .2); }
+
     /* Weather: shimmering skeleton while it loads, then the forecast fades up. */
     :root { --wx-sk1: #edf0f3; --wx-sk2: #dfe4ea; }
     html.dark { --wx-sk1: #1b2417; --wx-sk2: #27331d; }
@@ -112,6 +129,9 @@
     /* The hour's badge floats — a slow bob, the way the sun hangs in the
        sky rather than sits on a shelf. */
     .dash-hero-mark { animation: heroBob 3.8s ease-in-out infinite alternate; }
+    /* A weather scene fills the same circle the hour's did — the mark is a
+       window onto the sky either way, and the frame does not change. */
+    .dash-hero-mark.is-weather .wx-sky { width: 100%; height: 100%; }
     @keyframes heroBob { from { transform: translateY(2px); } to { transform: translateY(-3px); } }
     @media (prefers-reduced-motion: reduce) { .dash-hero-mark { animation: none; } }
     .dash-hero-warn { display: inline-flex; align-items: center; gap: .3rem; margin-top: .35rem;
@@ -462,9 +482,11 @@
          with the hour drawn on it, not a slab of green. --}}
     @php
         $__h = (int) now('Asia/Manila')->format('G');
-        [$__greet, $__tod] = $__h < 12
-            ? ['Magandang umaga', 'tod-morning']
-            : ($__h < 18 ? ['Magandang hapon', 'tod-afternoon'] : ['Magandang gabi', 'tod-evening']);
+        [$__greet, $__tod, $__timeWord] = $__h < 12
+            ? ['Magandang umaga', 'tod-morning', 'umaga']
+            : ($__h < 18
+                ? ['Magandang hapon', 'tod-afternoon', 'hapon']
+                : ['Magandang gabi', 'tod-evening', 'gabi']);
     @endphp
     <div class="dash-hero">
         {{-- Your own field across the top of your own greeting, with the hour
@@ -488,7 +510,9 @@
              in, and every moving part is a CSS animation on a group — no
              JavaScript, and nothing that runs when somebody has asked for
              stillness. --}}
-        <span class="dash-hero-mark {{ $__tod }}" aria-hidden="true">
+        <span class="dash-hero-mark {{ $__tod }}" id="dashHeroMark"
+              data-time-word="{{ $__timeWord }}" data-night="{{ $__tod === 'tod-evening' ? 1 : 0 }}"
+              aria-hidden="true">
             @if ($__tod === 'tod-morning')
                 <svg class="tod-svg" viewBox="0 0 56 56" fill="none">
                     <defs>
@@ -566,7 +590,14 @@
             @endif
         </span>
         <div class="dash-hero-body">
-            <h2 class="dash-hero-h">{{ $__greet }}, {{ \Illuminate\Support\Str::title($user->firstName ?: 'kaibigan') }}</h2>
+            {{-- "Magandang umaga" is true at six on any morning and says
+                 nothing about this one. When the forecast for this farmer's
+                 own location is in and confident, the first word is replaced
+                 by one that has looked out of the window — "Maulang umaga",
+                 "Mainit na hapon", "Mahanging gabi" — and the scene beside it
+                 becomes that weather. Until then, and forever if no location
+                 is set, it stays as it was. --}}
+            <h2 class="dash-hero-h"><span id="dashGreetWord">{{ $__greet }}</span>, {{ \Illuminate\Support\Str::title($user->firstName ?: 'kaibigan') }}</h2>
             <p class="dash-hero-p">{{ now('Asia/Manila')->format('l, F j') }} — {{ $scheduleCount === 0 ? 'no seasons planned yet.' : $scheduleCount . ' ' . \Illuminate\Support\Str::plural('season', $scheduleCount) . ' on the shelf.' }}</p>
             @if ($expiringSoon)
                 <a href="{{ route('purchase.plans') }}" class="dash-hero-warn">
@@ -1401,6 +1432,9 @@
 })();
 </script>
 
+{{-- Every sky the app can draw, and the colours that go with them. --}}
+@include('partials.weather-scenes')
+
 {{-- Per-schedule weather: one deduped fetch fills every schedule card's
      [data-weather-for] slot. Fetched after paint so Open-Meteo never blocks the
      dashboard; each card degrades to nothing on failure. --}}
@@ -1412,24 +1446,47 @@
 
     // The forecast always starts on today, so day index 0 is today — mark it by
     // index rather than a (possibly cached) flag, so the green marker is reliable.
+    /* Which sky each day is. The forecast hands over the WMO code and the
+       day's high, which is all wxKeyFor needs — and a thirty-six degree
+       clear day is a different working day from a twenty-eight degree one,
+       which is the distinction an emoji cannot make. */
+    const skyOf = (d) => (window.wxKeyFor ? window.wxKeyFor(d.code, false, d.max) : 'cloudy');
+
     function dayCell(d, isToday) {
         const today = isToday || d.isToday;
-        // No box — today is simply shown in green (theme-aware via .wx-today-label).
+        const key = skyOf(d);
+        const name = window.wxName ? window.wxName(key, true) : (d.text || '');
+        // The drawing replaces the emoji: a rain cell now actually rains.
+        const art = window.wxSky ? window.wxSky(key, 30) : `<div class="text-xl">${d.emoji}</div>`;
         return `<div class="flex-1 min-w-0 text-center rounded-lg px-1 py-1.5">
             <p class="text-[0.625rem] font-bold ${today ? 'wx-today-label' : 'text-gray-500'} truncate">${esc(today ? 'Today' : d.dow)}</p>
-            <div class="text-xl leading-none my-0.5" title="${esc(d.text)}">${d.emoji}</div>
+            <div class="dash-wx-art" title="${esc(name)}">${art}</div>
             <p class="text-[0.688rem] font-bold ${today ? 'wx-today-label' : 'text-gray-800'}">${d.max != null ? d.max + '°' : '–'}<span class="text-gray-400 font-medium">${d.min != null ? '/' + d.min + '°' : ''}</span></p>
-            ${d.pop != null ? `<p class="text-[0.562rem] font-semibold text-blue-500">💧${d.pop}%</p>` : ''}
+            ${d.pop != null ? `<p class="text-[0.562rem] font-semibold text-blue-500">${d.pop}%</p>` : ''}
         </div>`;
     }
+
     function locBlock(loc) {
         if (!loc) return '';
         if (loc.ok === false) {
-            return `<p class="text-[0.688rem] text-gray-400 mt-2 pt-2 border-t border-gray-100">🌦️ Weather unavailable for ${esc(loc.place || 'this location')}</p>`;
+            return `<p class="text-[0.688rem] text-gray-400 mt-2 pt-2 border-t border-gray-100">Weather unavailable for ${esc(loc.place || 'this location')}</p>`;
         }
-        return `<div class="mt-2 pt-2 border-t border-gray-100">
-            <p class="text-[0.688rem] font-semibold text-gray-500 mb-1.5 truncate">📍 ${esc(loc.place)}</p>
+        /* The panel takes today's colour and today's advice.
+         *
+         * A row of temperatures says what the sky will do; it does not say
+         * what to do about it, which is the only reason anybody opens a
+         * forecast. The line underneath is the answer — hold the spraying,
+         * bring the grain in, do the heavy work before ten — and the tint
+         * behind the whole panel is the same sky said in colour, so a
+         * farmer knows what kind of week it is before reading a number. */
+        const todayKey = loc.days && loc.days.length ? skyOf(loc.days[0]) : 'cloudy';
+        const hue = window.wxHue ? window.wxHue(todayKey) : '';
+        const advice = window.wxAdvice ? window.wxAdvice(todayKey) : '';
+        const name = window.wxName ? window.wxName(todayKey, true) : '';
+        return `<div class="dash-wx-panel ${hue} mt-2">
+            <p class="dash-wx-place truncate">${esc(loc.place)}${name ? ` · <b>${esc(name)}</b>` : ''}</p>
             <div class="flex gap-1">${loc.days.map((d, i) => dayCell(d, i === 0)).join('')}</div>
+            ${advice ? `<p class="dash-wx-advice">${esc(advice)}</p>` : ''}
         </div>`;
     }
 
@@ -1443,6 +1500,38 @@
         if (!data || !data.success || !data.data) { slots.forEach((s) => { s.style.display = 'none'; }); return; }
         const locations = data.data.locations || {};
         const schedules = data.data.schedules || {};
+
+        /* The greeting looks out of the window.
+         *
+         * Only when the sky is actually worth naming: a twenty percent
+         * chance of rain does not make it a maulang umaga, so a wet key has
+         * to come with a real probability behind it before it takes the
+         * word. Everything else — a clear sky, a hot day, a windy one — is
+         * the code the forecast gave us and needs no second opinion.
+         *
+         * The first location on the list is the one that speaks. A farmer
+         * with two farms is standing in one of them, and the alternative is
+         * a greeting that hedges. */
+        (function greetByWeather() {
+            const mark = document.getElementById('dashHeroMark');
+            const word = document.getElementById('dashGreetWord');
+            if (!mark || !word || !window.wxKeyFor) return;
+            const first = Object.values(locations).find((l) => l && l.ok !== false && (l.days || []).length);
+            if (!first) return;
+            const today = first.days[0];
+            const night = mark.getAttribute('data-night') === '1';
+            const key = window.wxKeyFor(today.code, night, today.max);
+            const wet = ['rain', 'heavy_rain', 'showers', 'drizzle', 'storm'].includes(key);
+            if (wet && (today.pop == null || today.pop < 60)) return;
+            const meta = (window.WX_SKIES || {})[key];
+            if (!meta || !meta.greeting) return;
+
+            word.textContent = meta.greeting + ' ' + (mark.getAttribute('data-time-word') || '');
+            // The hour's own scene steps aside for the weather's.
+            mark.classList.add('is-weather');
+            mark.innerHTML = window.wxSky(key);
+            mark.setAttribute('title', meta.label);
+        })();
 
         slots.forEach((slot) => {
             const id = slot.getAttribute('data-weather-for');

@@ -1,3 +1,8 @@
+{{-- The drawn skies, their colours and what each one means. Included
+     here rather than by the callers: this partial is used by the weather
+     module and by the activities tool, and neither should have to know. --}}
+@include('partials.weather-scenes')
+
 {{-- Weather panels — six days, and the hours inside whichever day you open —
      built into
      whatever host element is handed to window.wxRenderPanels(host, data).
@@ -63,7 +68,21 @@
     @media (prefers-reduced-motion: reduce) { .wx-day { transition: none; } }
     .wx-day-dow { font-size: .68rem; font-weight: 800; color: var(--color-gray-500); text-transform: uppercase; }
     .wx-day.is-today .wx-day-dow { color: var(--color-brand-700); }
-    .wx-day-emoji { font-size: 1.5rem; line-height: 1.1; margin: .15rem 0; }
+    /* The drawn sky sits where the emoji did: same slot, same height, so a
+       row of days keeps its rhythm whichever it is showing. */
+    .wx-day-emoji { display: flex; align-items: center; justify-content: center;
+        height: 1.9rem; margin: .15rem 0; }
+    .wx-hero-sky { display: block; flex: none; }
+    .wx-skyname { font-size: .72rem; font-weight: 800; color: var(--color-brand-800, #2f5219); margin-top: .05rem; }
+    html.dark .wx-skyname { color: #a5c97e; }
+    /* What the sky means, which is the half a forecast usually leaves out. */
+    .wx-advice { margin-top: .8rem; padding: .6rem .7rem; border-radius: .7rem;
+        font-size: .76rem; line-height: 1.55; color: var(--color-gray-700, #374151);
+        background: rgb(255 255 255 / .55); border: 1px solid rgb(148 163 184 / .28); }
+    .wx-advice-h { display: block; font-size: .62rem; font-weight: 800; letter-spacing: .06em;
+        text-transform: uppercase; color: var(--color-brand-700, #3d6823); margin-bottom: .2rem; }
+    html.dark .wx-advice { background: rgb(21 27 18 / .55); border-color: #2b3a1c; color: #cdd8c0; }
+    html.dark .wx-advice-h { color: #a5c97e; }
     .wx-day-temp { font-size: .8rem; font-weight: 800; color: var(--color-gray-800); }
     .wx-day-temp small { color: var(--color-gray-400); font-weight: 600; }
     .wx-day-pop { font-size: .68rem; font-weight: 700; color: #2563eb; }
@@ -76,7 +95,8 @@
     .wx-hour.is-now { border-color: var(--color-brand-400); background: var(--color-brand-50); }
     .wx-hour-time { font-size: .7rem; font-weight: 800; color: var(--color-gray-500); }
     .wx-hour.is-now .wx-hour-time { color: var(--color-brand-700); }
-    .wx-hour-emoji { font-size: 1.35rem; line-height: 1.2; margin: .2rem 0; }
+    .wx-hour-emoji { display: flex; align-items: center; justify-content: center;
+        height: 1.65rem; margin: .2rem 0; }
     .wx-hour-temp { font-size: .9rem; font-weight: 800; color: var(--color-gray-900); }
     .wx-hour-pop { font-size: .7rem; font-weight: 700; color: #2563eb; margin-top: .1rem; }
     .wx-hour-pop.is-dry { color: var(--color-gray-400); }
@@ -110,12 +130,17 @@
         : pop >= 20 ? 'a slight chance of rain'
         : 'little chance of rain';
 
+    /* Which sky a row is. The forecast hands over the WMO code and the
+       day's high, which is what tells a clear day from a dangerous one. */
+    const skyOf = (d, night) => (window.wxKeyFor ? window.wxKeyFor(d.code, !!night, d.max ?? d.temp) : 'cloudy');
+    const skyArt = (d, size, night) => (window.wxSky ? window.wxSky(skyOf(d, night), size) : (d.emoji || ''));
+
     function dayStrip(days) {
         return '<div class="flex gap-1">' + days.map((d) => `
             <button type="button" class="wx-day ${d.isToday ? 'is-today' : ''}" data-wx-day="${esc(d.date || '')}"
                     aria-expanded="false" title="${esc(d.text)} — tap for this day's hours">
                 <div class="wx-day-dow">${esc(d.isToday ? 'Today' : d.dow)}</div>
-                <div class="wx-day-emoji">${d.emoji}</div>
+                <div class="wx-day-emoji">${skyArt(d, 30)}</div>
                 <div class="wx-day-temp">${d.max != null ? d.max + '&deg;' : '&ndash;'}<small>${d.min != null ? '/' + d.min + '&deg;' : ''}</small></div>
                 <div class="wx-day-pop">${d.pop != null ? '&#128167;' + d.pop + '%' : '&nbsp;'}</div>
                 <svg class="wx-day-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
@@ -145,7 +170,7 @@
             <div class="wx-hours mt-2">${hours.map((h) => `
                 <div class="wx-hour ${h.isNow ? 'is-now' : ''}" title="${esc(h.text)}${h.mm != null ? ' &middot; ' + h.mm + ' mm' : ''}">
                     <div class="wx-hour-time">${esc(h.isNow ? 'Now' : h.hour)}</div>
-                    <div class="wx-hour-emoji">${h.emoji}</div>
+                    <div class="wx-hour-emoji">${skyArt(h, 26, h.night)}</div>
                     <div class="wx-hour-temp">${h.temp != null ? h.temp + '&deg;' : '&ndash;'}</div>
                     <div class="wx-hour-pop ${(h.pop || 0) < 20 ? 'is-dry' : ''}">&#128167;${h.pop != null ? h.pop + '%' : '&mdash;'}</div>
                 </div>`).join('')}</div>
@@ -162,17 +187,28 @@
               + `${today.min != null ? ', down to <b>' + today.min + '&deg;</b>' : ''}. `
               + `There is a <b>${today.pop != null ? today.pop + '%' : '&mdash;'}</b> chance of rain &mdash; ${rainWord(today.pop)}.`
             : 'No reading for today.';
-        return `<div class="card mb-3"><div class="card-body">
+        /* The card wears today's sky as a tint and carries what that sky
+         * means for the work. A forecast that stops at "80% chance of rain"
+         * has told a farmer what they can see out of the window; the line
+         * below says what to do about it, which is the reason they opened
+         * it. Both come from the same table the dashboard reads. */
+        const todayKey = today ? skyOf(today) : 'cloudy';
+        const hue = window.wxHue ? window.wxHue(todayKey) : '';
+        const advice = window.wxAdvice ? window.wxAdvice(todayKey) : '';
+        const skyName = window.wxName ? window.wxName(todayKey, true) : '';
+        return `<div class="card mb-3 ${hue}"><div class="card-body">
             <div class="flex items-start justify-between gap-2">
                 <div class="min-w-0">
                     <p class="font-bold text-gray-900 text-sm">${esc(loc.place || 'Location')}</p>
+                    ${skyName ? `<p class="wx-skyname">${esc(skyName)}</p>` : ''}
                     <div class="wx-lotpills">${lotPills(lots)}</div>
                 </div>
-                <span class="text-3xl leading-none">${today ? today.emoji : '&#9925;'}</span>
+                <span class="wx-hero-sky">${today ? skyArt(today, 46) : ''}</span>
             </div>
             <div class="wx-verdict mt-3"><span class="wx-verdict-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg></span><span class="wx-verdict-text">${verdict}</span></div>
             <div class="mt-3" data-wx-strip>${dayStrip(loc.days || [])}</div>
             <div class="wx-open" data-wx-open><div class="wx-open-in" data-wx-open-in></div></div>
+            ${advice ? `<div class="wx-advice"><span class="wx-advice-h">What it means today</span>${esc(advice)}</div>` : ''}
             <p class="wx-legend mt-2">&#128167; is the chance of rain that day. Two figures are the day's high and low. Tap a day for its hours.</p>
         </div></div>`;
     }
