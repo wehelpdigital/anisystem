@@ -52,7 +52,12 @@
        see the top of is a cloud you are flying over, and nobody reading this
        card is. Each one is three overlapping ellipses; that is the whole
        trick, and it is why they read as cloud rather than as lozenges. */
-    .atm-cloud { position: absolute; top: var(--t, -3.2rem); left: var(--x, 0);
+    /* Placed by its CENTRE, not its left edge. That is what lets a cloud sit
+       half off the left edge and its opposite number sit half off the right,
+       which is the difference between a sky that is weighted evenly and one
+       that has all its cloud on one side. */
+    .atm-cloud { position: absolute; top: var(--t, -3.2rem);
+        left: calc(var(--cx, 50%) - var(--w, 12rem) / 2);
         width: var(--w, 12rem); height: var(--h, 5.4rem);
         animation: atmDrift var(--d, 34s) ease-in-out infinite alternate; }
     .atm-cloud i { position: absolute; bottom: 0; border-radius: 50%;
@@ -159,29 +164,57 @@
         50% { transform: translateY(-8%) scaleY(1.08); opacity: 1; }
     }
 
-    /* ---- lightning: the whole card, for a sixteenth of a second -------- */
-    .atm-flash { position: absolute; inset: 0;
-        background: radial-gradient(ellipse at 68% 8%, rgb(255 255 255 / .85), transparent 62%);
-        opacity: 0; animation: atmFlash 7s linear infinite; }
-    html.dark .atm-flash { background: radial-gradient(ellipse at 68% 8%, rgb(226 232 240 / .55), transparent 62%); }
-    @keyframes atmFlash {
-        0%, 88%, 100% { opacity: 0; }
-        89% { opacity: 1; }
-        90.5% { opacity: .1; }
-        92% { opacity: .8; }
-        94% { opacity: 0; }
-    }
-    .atm-bolt { position: absolute; top: 2.2rem; right: 22%; width: 1.4rem;
-        color: rgb(250 204 21 / .85); opacity: 0;
-        animation: atmFlash 7s linear infinite; }
+    /* ---- lightning ------------------------------------------------------
+       A strike is three things happening at once and none of them is a
+       picture of a bolt sitting on a card: the sky lights, the fork appears
+       for a moment with a second flicker behind it, and it is gone. So it is
+       built as three: the fork itself, a glow around where it came down, and
+       a wash across the whole card. They share one timeline, which is what
+       makes them read as one event rather than three animations.
+
+       The double blink in the middle is the whole character of it. A single
+       fade in and out reads as a shape being shown to you; the stutter reads
+       as lightning. */
+    .atm-strike { position: absolute; top: 0; bottom: 0; left: var(--x, 60%);
+        width: 0; }
+    .atm-bolt { position: absolute; top: var(--t, 2.4rem); left: -.92rem;
+        width: 1.85rem; color: rgb(253 224 71 / .95); opacity: 0;
+        filter: drop-shadow(0 0 6px rgb(253 224 71 / .9))
+                drop-shadow(0 0 14px rgb(255 255 255 / .7));
+        animation: atmStrike var(--p, 8s) linear infinite var(--dl, 0s); }
     .atm-bolt svg { width: 100%; height: auto; display: block; }
+    /* The light it throws where it lands, which is what you actually see
+       from a distance — the fork is small and the glow is not. */
+    .atm-glow { position: absolute; top: -30%; left: -9rem; width: 18rem; height: 15rem;
+        border-radius: 50%; opacity: 0;
+        background: radial-gradient(circle at 50% 30%,
+            rgb(255 255 255 / .78) 0 16%, rgb(253 224 71 / .3) 38%, transparent 72%);
+        animation: atmStrike var(--p, 8s) linear infinite var(--dl, 0s); }
+    .atm-flash { position: absolute; inset: 0; opacity: 0;
+        background: rgb(255 255 255 / .42);
+        animation: atmStrike var(--p, 8s) linear infinite var(--dl, 0s); }
+    html.dark .atm-flash { background: rgb(203 213 225 / .3); }
+    @keyframes atmStrike {
+        0%, 70% { opacity: 0; }
+        70.6% { opacity: 1; }
+        71.6% { opacity: .12; }
+        72.4% { opacity: .95; }
+        73.2% { opacity: .3; }
+        74.6% { opacity: 0; }
+        100% { opacity: 0; }
+    }
 
     /* Everything stops for anybody who has asked the system to stop things.
        An atmosphere that does not move is a still photograph of the sky,
        which is a perfectly good thing for a card to have. */
     @media (prefers-reduced-motion: reduce) {
         .atm *, .atm { animation: none !important; }
-        .atm-flash, .atm-bolt { opacity: .35; }
+        /* A frozen full-brightness flash is a white card. The fork stays,
+           faintly, because it is the part that says "storm"; the light it
+           throws and the wash over everything are the parts that only make
+           sense in motion. */
+        .atm-bolt { opacity: .5; }
+        .atm-flash, .atm-glow { opacity: 0; }
     }
 </style>
 
@@ -207,7 +240,21 @@
     /** Cloud hanging over the top edge, showing only its underside. */
     function clouds(n, dark) {
         let s = '';
-        const at = spread(n, 0.11);
+        /* Spread, not scattered.
+         *
+         * A golden-angle walk covers a line evenly ON AVERAGE, which over
+         * four clouds means it does not: three would land left of centre and
+         * one would not, and the card looked like it was leaning. Cloud i
+         * sits at i/(n-1) across the card, so the first is half off the left
+         * edge and the last is half off the right, and everything between is
+         * spaced. The jitter is small and alternates, enough to stop the
+         * spacing being visibly exact. */
+        const at = [];
+        for (let i = 0; i < n; i++) {
+            const base = n === 1 ? 0.5 : i / (n - 1);
+            const jitter = (i % 2 ? 1 : -1) * (((i * 3) % 4) * 0.018);
+            at.push(Math.max(0, Math.min(1, base + jitter)));
+        }
         at.forEach((p, i) => {
             /* Nothing here divides evenly into anything else. Widths off a
                7-step cycle, depths off a 5, layouts off a 3 and alphas off a
@@ -225,7 +272,7 @@
             const lay = ['', ' lay-b', ' lay-c'][i % 3];
             const a = r2(0.68 + ((i * 3) % 4) * 0.11);
             s += `<span class="atm-cloud${dark ? ' is-dark' : ''}${lay}"
-                style="--x:${r2(p * 104 - 12)}%;--w:${r2(w)}rem;--h:${r2(h)}rem;`
+                style="--cx:${r2(p * 100)}%;--w:${r2(w)}rem;--h:${r2(h)}rem;`
                 + `--t:${r2(t)}rem;--d:${d}s;--a:${a}">
                 <i></i><i></i><i></i></span>`;
         });
@@ -307,8 +354,19 @@
         return s;
     }
 
-    const BOLT = `<span class="atm-bolt"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M13.5 2 5 14h5.5L9 22l9-13h-5.6z"/></svg></span>`;
+    /* One strike: the fork, the light where it came down, and the wash over
+       everything. Given the same period and the same delay, so the three of
+       them are one event. Two strikes half a cycle apart is what stops a
+       storm looking like a metronome. */
+    const strike = (x, t, period, delay) =>
+        `<span class="atm-strike" style="--x:${x};--t:${t};--p:${period};--dl:${delay}">
+            <span class="atm-glow"></span>
+            <span class="atm-bolt"><svg viewBox="0 0 34 86" fill="currentColor" aria-hidden="true">
+                <path d="M21 0 6 40h10L9 68l6-2-4 20 20-46H20l8-40z"/>
+                <path d="M16 40 4 62l7-2-3 14 9-22h-6z" opacity=".72"/>
+            </svg></span>
+            <span class="atm-flash"></span>
+        </span>`;
 
     /* Each sky, as the place it is. Order matters: what is drawn last is
        nearest, and rain has to fall in FRONT of the cloud it comes from. */
@@ -324,7 +382,21 @@
         heavy_rain: () => clouds(5, true) + rainfall(52, 'heavy'),
         showers: () => sun() + clouds(3) + rainfall(26),
         showers_night: () => stars(10) + moon() + clouds(3) + rainfall(26),
-        storm: () => clouds(5, true) + rainfall(44, 'heavy') + BOLT + '<span class="atm-flash"></span>',
+        /* The strikes stand at the edges of the frame.
+         *
+         * A card carries its words across the middle, and anything drawn
+         * there is behind them: a fork at two-thirds across was a bolt
+         * striking behind a paragraph, which is to say it was nothing at
+         * all. At the margins both are visible, half off the frame, which is
+         * also how you actually see lightning — at the edge of what you were
+         * looking at rather than in the middle of it.
+         *
+         * The glow reaches well in from there, and the flash takes the whole
+         * card, so the light still crosses everything even though the forks
+         * do not. */
+        storm: () => clouds(5, true) + rainfall(44, 'heavy')
+            + strike('4%', '1.6rem', '8s', '0s')
+            + strike('96%', '2.6rem', '8s', '4.3s'),
         snow: () => clouds(3) + snow(22),
         hot: () => sun() + heat(4),
         windy: () => clouds(2) + gusts(4),

@@ -120,6 +120,11 @@
         html.dark .tod-morning { color: #fbbf24; }
         html.dark .tod-afternoon { color: #7dd3fc; }
         html.dark .tod-evening { color: #c4b5fd; }
+        .sch-hero-say { padding: .6rem .8rem; border-radius: .85rem;
+            background: rgb(255 255 255 / .9);
+            box-shadow: 0 1px 2px rgb(15 23 42 / .05); }
+        html.dark .sch-hero-say { background: rgb(21 27 18 / .9);
+            box-shadow: 0 1px 2px rgb(0 0 0 / .3); }
         .sch-hero-h { font-size: 1.15rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.25; }
         .sch-hero-p { font-size: .82rem; color: var(--color-gray-500); margin-top: .15rem; }
         .sch-hero-p b { font-weight: 700; color: var(--color-gray-700); }
@@ -687,7 +692,16 @@
                  could be read. --}}
             <span class="sch-hero-emoji sch-hero-mark fs-slot" id="schHeroMark"
                   data-fs-act="quiet" data-fs-size="34" title="Your seasons, day by day"></span>
-            <div class="min-w-0">
+            {{-- A plate under the words.
+
+                 The weather behind this card is the point of it, and the
+                 point of a heading is that it can be read without effort.
+                 Both are had by standing the text on nine-tenths of the
+                 card's own colour: opaque enough that a raindrop never
+                 crosses a letter, sheer enough that the sky still shows
+                 through and the plate does not read as a box dropped on top
+                 of the design. --}}
+            <div class="min-w-0 sch-hero-say">
                 <h1 class="sch-hero-h">Here are your cropping schedules for today</h1>
                 <p class="sch-hero-p">{!! $__say !!}</p>
                 @if (($todayHref ?? null) && $summary['today'] > 0)
