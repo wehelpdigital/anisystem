@@ -1008,9 +1008,30 @@
            the content size (old browsers simply snap — still correct). */
         .date-chevron { width: 1rem; height: 1rem; flex-shrink: 0; color: var(--date-color); transition: transform .18s ease; }
         .date-group:not(.is-folded) .date-chevron { transform: rotate(90deg); }
-        .date-body { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+        /* The fold stopped animating its height.
+         *
+         * Height is a layout property: every frame of a 1fr-to-0fr slide made
+         * the browser lay the page out again and repaint it. On a desktop
+         * that is free. On a phone it is not — throttled to a mid-range
+         * handset, a day fold produced seven distinct heights across the
+         * whole animation and eight frames over budget. Seven steps is not a
+         * slide, it is a stutter, and no easing curve fixes it.
+         *
+         * So the box changes size once, and what the eye actually follows —
+         * the content — fades and rises into place on the compositor, where
+         * opacity and transform cost nothing per frame. It reads as smoother
+         * than the slide did precisely because nothing is being computed
+         * while it happens. */
+        .date-body { display: grid; grid-template-rows: 1fr; }
         .date-body-inner { overflow: hidden; min-height: 0; }
         .date-group.is-folded .date-body { grid-template-rows: 0fr; }
+        .date-group:not(.is-folded) .date-body-inner > * {
+            animation: foldReveal .26s cubic-bezier(.22, 1, .36, 1) both;
+        }
+        @keyframes foldReveal {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: none; }
+        }
         /* Restoring the remembered open days on load applies instantly. */
         /* A day scrolled to must clear the sticky app bar and toolbar above
            it, or block:'start' parks its header behind them and the jump
@@ -1034,9 +1055,29 @@
         #activitiesList .date-group { contain: layout; }
         #activitiesList .date-group { scroll-margin-top: 6.9rem; }
         @media (min-width: 768px) { #activitiesList .date-group { scroll-margin-top: 7.7rem; } }
+        /* Nothing decorative moves while a fold does.
+         *
+         * Every day on the board wears a slow gradient drift, and
+         * background-position is a paint property — the browser repaints
+         * those boxes on every frame, forever, for the whole life of the
+         * page. It is affordable on a desktop and it is the reason a phone
+         * has nothing left when a fold asks for a few frames of its own.
+         *
+         * So for the third of a second a fold takes, the drift holds still.
+         * Twelve seconds of a twelve-second loop is not a thing anyone can
+         * see stopping, and the frames it gives back are the ones the fold
+         * was missing. */
+        #activitiesList.is-folding .date-group,
+        #activitiesList.is-folding .date-header,
+        #activitiesList.is-folding .activity-card { animation-play-state: paused; }
+
         #activitiesList.no-fold-anim .date-body,
         #activitiesList.no-fold-anim .date-chevron { transition: none; }
-        @media (prefers-reduced-motion: reduce) { .date-body, .date-chevron { transition: none; } }
+        #activitiesList.no-fold-anim .date-body-inner > * { animation: none; }
+        @media (prefers-reduced-motion: reduce) {
+            .date-body, .date-chevron { transition: none; }
+            .date-group:not(.is-folded) .date-body-inner > * { animation: none; }
+        }
 
         .date-activities { display: flex; flex-direction: column; gap: .55rem; padding: .7rem; }
         .date-activities.drag-over { outline: 2px dashed #86b556; outline-offset: -4px; border-radius: .8rem; background: color-mix(in srgb, #86b556 12%, var(--tl-surface)); }
@@ -1365,6 +1406,35 @@
             .activity-card.act-collapsed > :not(:first-child) { display: none; }
             .activity-card.act-collapsed .activity-card-badges,
             .activity-card.act-collapsed .activity-card-lotmeta { display: none; }
+            /* Opening and shutting, on the compositor.
+             *
+             * The JS used to measure the card before and after and animate
+             * the height between them, which is one layout and one repaint
+             * per frame of the whole board below it. Throttled to a phone
+             * that gave six distinct heights across the animation — a lurch,
+             * not a glide. The height now changes once and the revealed
+             * content fades and rises into it; on the way shut it fades out
+             * first, so nothing vanishes before the box has agreed to move.
+             * See toggleCardExpand(). */
+            .activity-card.is-revealing > :not(:first-child),
+            .activity-card.is-revealing .activity-card-badges,
+            .activity-card.is-revealing .activity-card-lotmeta {
+                animation: foldReveal .24s cubic-bezier(.22, 1, .36, 1) both;
+            }
+            .activity-card.is-hiding > :not(:first-child),
+            .activity-card.is-hiding .activity-card-badges,
+            .activity-card.is-hiding .activity-card-lotmeta {
+                animation: foldHide .12s ease both;
+            }
+            @keyframes foldHide { to { opacity: 0; transform: translateY(-4px); } }
+            @media (prefers-reduced-motion: reduce) {
+                .activity-card.is-revealing > :not(:first-child),
+                .activity-card.is-revealing .activity-card-badges,
+                .activity-card.is-revealing .activity-card-lotmeta,
+                .activity-card.is-hiding > :not(:first-child),
+                .activity-card.is-hiding .activity-card-badges,
+                .activity-card.is-hiding .activity-card-lotmeta { animation: none; }
+            }
             /* An expanded card is the read view, so the scanning clamps come
                off: full title, full description. */
             .activity-card:not(.act-collapsed) .activity-card-title {
