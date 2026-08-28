@@ -296,7 +296,16 @@
        because the dashboard has the codes in hand and should not have to ask
        the server what they mean. */
     window.wxKeyFor = function (code, night, tempC, windKph) {
-        code = Number(code) || 0;
+        /* An absent code is not code 0.
+         *
+         * `Number(code) || 0` made undefined into zero, and zero is CLEAR —
+         * so a reading that arrived without a code did not fail visibly, it
+         * promised sunshine. That is the worst direction for a wrong answer
+         * to go: somebody deciding whether to spray reads it as a clear
+         * window. Unknown draws an overcast sky, which commits to nothing.
+         */
+        code = Number(code);
+        if (!Number.isFinite(code)) return 'cloudy';
         let base;
         if (code === 0 || code === 1) base = night ? 'clear_night' : 'clear';
         else if (code === 2) base = night ? 'partly_night' : 'partly';

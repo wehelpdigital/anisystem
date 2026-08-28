@@ -212,7 +212,8 @@ class WeatherService
             if ($when->lt($now->copy()->startOfHour()) || count($out) >= $hours) {
                 continue;
             }
-            $meta = $this->codeMeta((int) ($h['weather_code'][$i] ?? 0));
+            $code = isset($h['weather_code'][$i]) ? (int) $h['weather_code'][$i] : null;
+            $meta = $this->codeMeta((int) ($code ?? 0));
             $out[] = [
                 'time' => $iso,
                 'hour' => $when->isoFormat('h A'),
@@ -221,6 +222,9 @@ class WeatherService
                 'newDay' => $when->hour === 0,
                 'text' => $meta['text'],
                 'emoji' => $meta['emoji'],
+                // Same two, for the same reason — see hourlyByDay().
+                'code' => $code,
+                'night' => $when->hour < 6 || $when->hour >= 18,
                 'temp' => isset($h['temperature_2m'][$i]) ? (int) round($h['temperature_2m'][$i]) : null,
                 'pop' => isset($h['precipitation_probability'][$i]) ? (int) $h['precipitation_probability'][$i] : null,
                 'mm' => isset($h['precipitation'][$i]) ? round((float) $h['precipitation'][$i], 1) : null,
@@ -289,13 +293,26 @@ class WeatherService
             if ($when->isSameDay($now) && $when->lt($now->copy()->startOfHour())) {
                 continue;
             }
-            $meta = $this->codeMeta((int) ($h['weather_code'][$i] ?? 0));
+            $code = isset($h['weather_code'][$i]) ? (int) $h['weather_code'][$i] : null;
+            $meta = $this->codeMeta((int) ($code ?? 0));
             $out[$date][] = [
                 'time' => $iso,
                 'hour' => $when->isoFormat('h A'),
                 'isNow' => $when->isSameDay($now) && $when->hour === $now->hour,
                 'text' => $meta['text'],
                 'emoji' => $meta['emoji'],
+                /* The code itself, kept.
+                 *
+                 * It was being turned into a word and an emoji and then
+                 * dropped — but the animated scenes are chosen from the code,
+                 * so every hour arrived without one and every hour of every
+                 * day drew the same clear sun. A forecast that says "sunny"
+                 * twenty-four hours running is not a forecast.
+                 *
+                 * And whether it is dark: an hour is a POINT, so this is a
+                 * fact about it in a way it can never be about a whole day. */
+                'code' => $code,
+                'night' => $when->hour < 6 || $when->hour >= 18,
                 'temp' => isset($h['temperature_2m'][$i]) ? (int) round($h['temperature_2m'][$i]) : null,
                 'pop' => isset($h['precipitation_probability'][$i]) ? (int) $h['precipitation_probability'][$i] : null,
                 'mm' => isset($h['precipitation'][$i]) ? round((float) $h['precipitation'][$i], 1) : null,

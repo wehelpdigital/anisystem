@@ -47,8 +47,14 @@ class AsWeatherScene extends BaseModel
      * not the same working day as a clear day at twenty-eight, and the
      * difference is the one that puts people in hospital.
      */
-    public static function keyFor(int $code, bool $night = false, ?float $tempC = null, ?float $windKph = null): string
+    public static function keyFor(?int $code, bool $night = false, ?float $tempC = null, ?float $windKph = null): string
     {
+        // No reading is not a clear sky. Its JS twin used to make the same
+        // mistake by coercion, and promised sunshine for a missing code.
+        if ($code === null) {
+            return 'cloudy';
+        }
+
         // A dangerous sky outranks a hot or windy one; nothing outranks a storm.
         $base = match (true) {
             $code === 0 => $night ? 'clear_night' : 'clear',

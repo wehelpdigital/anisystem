@@ -5405,6 +5405,16 @@ document.addEventListener('DOMContentLoaded', () => {
      * this is the record a report or the AI technician looks back at, so it
      * shows when it was captured rather than pretending to be live. */
     window.SAVED_WX_DATES = new Set(@json($savedWeatherDates ?? []));
+
+    /* The drawn sky for a saved hour, and the emoji for one saved before the
+     * code was being kept. Falling back rather than guessing: a row with no
+     * code would come back from wxKeyFor as an overcast sky, and drawing
+     * clouds over a record that plainly says "sunny" is worse than the emoji
+     * it was filed with. */
+    const hourArt = (h) => (h && h.code != null && window.wxSky && window.wxKeyFor)
+        ? window.wxSky(window.wxKeyFor(h.code, !!h.night, h.temp), 34)
+        : (h && h.emoji) || '';
+
     async function openSavedWeather(date) {
         const body = $id('savedWeatherBody');
         const title = $id('savedWeatherTitle');
@@ -5427,7 +5437,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const rail = hrs.length ? `<div class="wx-hours mt-3">${hrs.map((h) => `
                         <div class="wx-hour" title="${esc(h.text || '')}">
                             <div class="wx-hour-time">${esc(h.hour || '')}</div>
-                            <div class="wx-hour-emoji">${h.emoji || ''}</div>
+                            <div class="wx-hour-emoji">${hourArt(h)}</div>
                             <div class="wx-hour-temp">${h.temp != null ? h.temp + '&deg;' : '&ndash;'}</div>
                             <div class="wx-hour-pop ${(h.pop || 0) < 20 ? 'is-dry' : ''}">&#128167;${h.pop != null ? h.pop + '%' : '&mdash;'}</div>
                         </div>`).join('')}</div>`
