@@ -464,7 +464,7 @@
             close(); return html || '<p></p>';
         }
         const faceHtml = (m) => m.role === 'assistant'
-            ? '<span class="sai-face bot">AI</span>'
+            ? `<span class="sai-face bot"><img src="${AI_AVATAR}" alt=""></span>`
             : `<span class="sai-face">${m.mine ? MY_FACE : esc(m.initials || '·')}</span>`;
 
         // Ghost bubbles shown while a session loads (matches the server-rendered
@@ -499,10 +499,8 @@
     /* Her actual face where a sheaf of wheat used to stand in for it. She
        has a photograph in the settings and wears it on every other surface;
        the fallback keeps the old mark for an install that has not set one. */
-    const AI_AVATAR = @json(\App\Support\MediaStore::url(\App\Models\AiSetting::current()->avatarPath));
-    const AI_FACE = AI_AVATAR
-        ? `<div class="sai-intro-badge has-face"><img src="${AI_AVATAR}" alt=""></div>`
-        : '<div class="sai-intro-badge">\u{1F33E}</div>';
+    const AI_AVATAR = @json(\App\Models\AiSetting::current()->faceUrl());
+    const AI_FACE = `<div class="sai-intro-badge has-face"><img src="${AI_AVATAR}" alt=""></div>`;
 
     // Her name, so the greeting and the toasts all say the same thing.
     const AI_NAME = @json(\App\Models\AiSetting::current()->assistantName);

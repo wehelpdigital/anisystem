@@ -93,9 +93,13 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
             <span>Activities</span>
         </button>
+        {{-- Her face, not a robot head. Every other surface in the app now
+             shows the person you are about to talk to, and a tab that draws a
+             generic machine beside seven drawn icons reads as a different
+             feature from the one it opens. --}}
         <button type="button" class="collab-tab" data-tab="ai" role="tab" aria-selected="false">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
-            <span>AI Technician</span>
+            <img class="collab-tab-face" src="{{ \App\Models\AiSetting::current()?->faceUrl() }}" alt="">
+            <span>{{ \App\Models\AiSetting::current()?->assistantName ?? 'Anee' }}</span>
         </button>
     </div>
 
@@ -186,6 +190,8 @@
 
     .collab-tabs { display: flex; gap: .25rem; padding: .25rem; background: var(--color-gray-100); border-radius: .8rem; flex-shrink: 0; overflow-x: auto; scrollbar-width: none; }
     .collab-tabs::-webkit-scrollbar { display: none; }
+    .collab-tab-face { width: 1.15rem; height: 1.15rem; border-radius: 999px;
+        object-fit: cover; flex-shrink: 0; }
     .collab-tab { flex: 1 1 auto; display: inline-flex; align-items: center; justify-content: center; gap: .4rem; padding: .55rem .6rem; border-radius: .6rem; font-size: .9rem; font-weight: 700; color: var(--color-gray-500); white-space: nowrap; transition: background .15s ease, color .15s ease; }
     .collab-tab:hover { color: var(--color-gray-800); }
     .collab-tab.is-active { background: var(--color-white); color: var(--color-gray-900); box-shadow: 0 1px 3px rgb(0 0 0 / .1); }

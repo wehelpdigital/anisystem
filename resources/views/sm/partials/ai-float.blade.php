@@ -11,9 +11,10 @@
     $aiFloatBalance = $aiFloatSettings
         ? app(\App\Services\AiCreditService::class)->balance(auth()->id())
         : 0;
-    $aiFloatAvatar = $aiFloatSettings && $aiFloatSettings->avatarPath
-        ? \App\Support\MediaStore::url($aiFloatSettings->avatarPath)
-        : null;
+    // Her own portrait unless an admin has set another — the same face the
+    // full page and the collab tab wear, so the button you tap and the person
+    // you reach are visibly the same one.
+    $aiFloatAvatar = $aiFloatSettings ? $aiFloatSettings->faceUrl() : null;
     // Same free-rider rule as the full pages: an account that is never
     // charged is never shown a price, a balance, or a purchase card.
     $aiFloatUnlimited = app(\App\Services\AiCreditService::class)->unlimited((int) auth()->id());
@@ -28,18 +29,14 @@
 @if ($aiFloatSettings && $aiFloatSettings->isUsable())
 <div id="aiFloat" class="ai-float{{ request('module') === 'ai' ? ' ai-float-off' : '' }}">
     <button type="button" id="aiFloatFab" class="ai-float-fab" aria-label="Ask {{ $aiFloatSettings->assistantName }}" title="Ask {{ $aiFloatSettings->assistantName }}">
-        @if ($aiFloatAvatar)
-            <img data-ai-face src="{{ $aiFloatAvatar }}" alt="">
-        @else
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
-        @endif
+        <img data-ai-face src="{{ $aiFloatAvatar }}" alt="">
     </button>
 
     <div id="aiFloatPanel" class="ai-float-panel hidden">
         <div class="ai-float-head">
             <span class="ai-float-avatar">
                 <span class="ai-float-face">
-                    @if ($aiFloatAvatar)<img data-ai-face src="{{ $aiFloatAvatar }}" alt="">@else<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7z"/></svg>@endif
+                    <img data-ai-face src="{{ $aiFloatAvatar }}" alt="">
                 </span>
             </span>
             <div class="min-w-0 grow">
@@ -103,7 +100,7 @@
         <div class="ai-float-thread" id="aiFloatThread">
             <div class="ai-float-welcome" id="aiFloatWelcome">
                 <span class="ai-float-hero">
-                    @if ($aiFloatAvatar)<img data-ai-face src="{{ $aiFloatAvatar }}" alt="">@else<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>@endif
+                    <img data-ai-face src="{{ $aiFloatAvatar }}" alt="">
                 </span>
                 <p class="font-semibold text-gray-800 mt-2">Hi, I'm {{ $aiFloatSettings->assistantName }}</p>
                 <p class="text-sm text-gray-500 mt-1">Ask me anything about your crop, I'm willing to answer.</p>
@@ -116,14 +113,6 @@
                     <p class="aif-howto-eg"><b>Not</b> "my rice is sick"<br>
                         <b>Try</b> "RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"</p>
                 </div>
-                <button type="button" class="ai-float-sug js-float-suggest">
-                    <span class="ic" aria-hidden="true"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 21c.5-4.5 2.5-15 16-17-.5 13.5-8 16-12 16-1.33 0-2.67 0-4 1zm0 0c2-6 5-10 10-12"/></svg></span>
-                    <span class="t">Ilang sako ng urea ang kailangan ko para sa isang ektarya?</span>
-                </button>
-                <button type="button" class="ai-float-sug js-float-suggest">
-                    <span class="ic" aria-hidden="true"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3s6 6.5 6 11a6 6 0 11-12 0c0-4.5 6-11 6-11z"/></svg></span>
-                    <span class="t">Is it a good time to irrigate today?</span>
-                </button>
             </div>
         </div>
 

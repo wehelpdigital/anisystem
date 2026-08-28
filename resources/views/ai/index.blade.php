@@ -142,7 +142,7 @@
         /* Centred in whatever height the thread has: with the panel this
            short there is room left over, and an empty chat reads better with
            the greeting in the middle of it than pinned to the ceiling. */
-        .ai-hello { margin-block: auto; text-align: center; padding: 1rem 1.25rem .75rem; border-radius: 1.5rem; background: radial-gradient(120% 90% at 50% 0%, var(--color-brand-50) 0%, transparent 70%); }
+        .ai-hello { margin-block: auto; text-align: center; padding: 1.9rem 1.25rem 1.1rem; border-radius: 1.5rem; background: radial-gradient(120% 90% at 50% 0%, var(--color-brand-50) 0%, transparent 70%); }
         .ai-hello .aimsg-face { width: 2.75rem; height: 2.75rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-200), 0 10px 24px -8px rgb(74 124 42 / .45); animation: aiFloatIdle 5s ease-in-out infinite; }
         .ai-hello h2 { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; margin-top: .6rem; color: var(--color-gray-900); }
         .ai-hello .sub { font-size: .8rem; color: var(--color-gray-500); margin-top: .25rem; max-width: 24rem; margin-inline: auto; line-height: 1.45; }

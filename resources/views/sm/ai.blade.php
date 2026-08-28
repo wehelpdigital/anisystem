@@ -150,7 +150,7 @@
         }
         @media (min-width: 768px) { #appPageTitle { font-size: 1rem; -webkit-line-clamp: 1; } }
 
-        .ai-hello { margin-block: auto; text-align: center; padding: .5rem .75rem .4rem; border-radius: 1.5rem; background: radial-gradient(120% 90% at 50% 0%, var(--color-brand-50) 0%, transparent 70%); }
+        .ai-hello { margin-block: auto; text-align: center; padding: 1.6rem .75rem .9rem; border-radius: 1.5rem; background: radial-gradient(120% 90% at 50% 0%, var(--color-brand-50) 0%, transparent 70%); }
         .ai-hello .aimsg-face { width: 3rem; height: 3rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-200), 0 10px 24px -8px rgb(74 124 42 / .45); animation: aiFloatIdle 5s ease-in-out infinite; }
         .ai-hello h2 { font-size: .95rem; font-weight: 700; margin-top: .5rem; color: var(--color-gray-800); }
         .ai-hello .sub { font-size: .8rem; color: var(--color-gray-500); margin-top: .15rem; max-width: 22rem; margin-inline: auto; line-height: 1.45; }
@@ -534,23 +534,6 @@
                     <p class="ai-howto-eg"><b>Not</b> "my rice is sick"<br>
                         <b>Try</b> "RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"</p>
                 </div>
-                <div class="grid gap-2 max-w-md mx-auto mt-3">
-                    <button type="button" class="aisuggest js-suggest" data-q="Ilang sako ng urea ang kailangan ko para sa isang ektarya?">
-                        <span class="ic" aria-hidden="true"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 21c.5-4.5 2.5-15 16-17-.5 13.5-8 16-12 16-1.33 0-2.67 0-4 1zm0 0c2-6 5-10 10-12"/></svg></span>
-                        <span class="t">Ilang sako ng urea kada ektarya?</span>
-                        <svg class="go w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                    </button>
-                    <button type="button" class="aisuggest js-suggest" data-q="How much urea per hectare for the first top dressing?">
-                        <span class="ic" aria-hidden="true"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg></span>
-                        <span class="t">Urea for the first top dressing</span>
-                        <svg class="go w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                    </button>
-                    <button type="button" class="aisuggest js-suggest" data-q="When should I stop irrigating before harvest?">
-                        <span class="ic" aria-hidden="true"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3s6 6.5 6 11a6 6 0 11-12 0c0-4.5 6-11 6-11z"/></svg></span>
-                        <span class="t">When to stop irrigating</span>
-                        <svg class="go w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                    </button>
-                </div>
             </div>
         @endforelse
     </div>
@@ -880,7 +863,7 @@ const __init = () => {
         const esc = escapeHtml(text || '');
         const lines = esc.split(/\r?\n/); let html = ''; let list = null;
         const close = () => { if (list) { html += `</${list}>`; list = null; } };
-        const inline = (s) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/(^|\s)\*([^*]+)\*(?=\s|$|[.,;:!?])/g, '$1<em>$2</em>');
+        const inline = (s) => window.aneeEmoji(s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/(^|\s)\*([^*]+)\*(?=\s|$|[.,;:!?])/g, '$1<em>$2</em>'));
         for (const raw of lines) {
             const line = raw.trim();
             if (!line) { close(); continue; }
