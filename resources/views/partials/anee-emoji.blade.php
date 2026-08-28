@@ -20,13 +20,37 @@
         border-top: 1px dashed rgb(107 159 61 / .38); }
     html.dark .ai-rule { border-top-color: rgb(168 204 126 / .3); }
 
+    /* A face is drawn at two em and counted as rather less, so it does not
+       stretch the line it lands on — but the pull is off the TOP only now.
+       Taking it off the bottom too tucked her chin into the line beneath,
+       which is the one direction there is nothing to spare in. */
     .anee-emo { display: inline-block; width: 2em; height: 2em;
-        vertical-align: -.68em; margin: -.5em .08em; }
-    /* The negative block margin is what stops a face stretching the line it
-       lands on. A two-em image in a line of fifteen-pixel text grows that
-       line's box by half again, so a paragraph with one face in it had one
-       gappy line in the middle of five tight ones. Drawn at two em, counted
-       as about one. */
+        vertical-align: -.62em; margin: -.55em .1em 0; }
+
+    /* ---- room to read -------------------------------------------------
+       Her answers are laid out now — paragraphs, steps, a rule between what
+       is wrong and what to do — and all of that was written into bubbles
+       spaced for one short sentence. The four surfaces call their bubble
+       three different things; the rules name all three, which is still one
+       place to change rather than four. */
+    .aibubble, .ai-float-msg .b, .sai-b { line-height: 1.65; }
+    .aibubble p + p, .ai-float-msg .b p + p, .sai-b p + p { margin-top: 1.05em; }
+    .aibubble ul, .aibubble ol,
+    .ai-float-msg .b ul, .ai-float-msg .b ol,
+    .sai-b ul, .sai-b ol { margin: .85em 0; }
+    /* A hairline between steps. A numbered list of three things to do in a
+       field is read one line at a time, and without a rule the second and
+       third run together at a glance. */
+    .aibubble li + li, .ai-float-msg .b li + li, .sai-b li + li {
+        margin-top: .5em; padding-top: .5em;
+        border-top: 1px dashed rgb(107 159 61 / .28); }
+    html.dark .aibubble li + li, html.dark .ai-float-msg .b li + li,
+    html.dark .sai-b li + li { border-top-color: rgb(168 204 126 / .22); }
+    /* Not in a reply of the reader's own, which is white on green and where
+       a green hairline is a smudge. */
+    .aimsg.me .aibubble li + li, .ai-float-msg.me .b li + li,
+    .sai-msg.me .sai-b li + li { border-top-color: rgb(255 255 255 / .28); }
+    .aibubble li, .ai-float-msg .b li, .sai-b li { padding-left: .15em; }
     /* At one and a half em the face is a green smudge — you can see there is
        a picture and not what it is doing, which is the whole point of it.
        Two em is the smallest size where the expression reads. */

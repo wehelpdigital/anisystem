@@ -219,7 +219,8 @@
     /* 1024, where the tab bar goes — below that the bubble has to clear it. */
     @media (min-width: 1024px) { .ai-float { bottom: 1.25rem; right: 1.25rem; } }
     .ai-float-fab {
-        width: 3.5rem; height: 3.5rem; border-radius: 999px; overflow: hidden;
+        position: relative;
+        width: 3.5rem; height: 3.5rem; border-radius: 999px;
         display: flex; align-items: center; justify-content: center;
         background: linear-gradient(140deg, #6b9f3d, #3d6823); color: #fff;
         box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px rgb(74 124 42 / .35), 0 6px 20px rgba(0,0,0,.22);
@@ -227,6 +228,16 @@
         animation: aiFabPulse .9s ease 1;
     }
     .ai-float-fab:hover { filter: brightness(1.05); } .ai-float-fab:active { transform: scale(.95); }
+    /* The same dot the panel's avatar wears, on the button that opens it.
+       The round clip moves from the button to the photo inside it — the photo
+       is the only thing that ever needed clipping, and with the button
+       clipping too there was nowhere for a dot on its edge to live. */
+    .ai-float-fab { overflow: visible; }
+    .ai-float-fab img { border-radius: 999px; }
+    .ai-float-fab::after { content: ""; position: absolute; right: .05rem; bottom: .05rem;
+        width: .8rem; height: .8rem; border-radius: 999px; background: #7ee06a;
+        border: 2.5px solid var(--color-white); pointer-events: none; }
+    html.dark .ai-float-fab::after { border-color: #151b12; }
     .ai-float-fab img { width: 100%; height: 100%; object-fit: cover; }
     @keyframes aiFabPulse {
         from { box-shadow: 0 0 0 2px var(--color-white), 0 0 0 0 rgb(74 124 42 / .45), 0 6px 20px rgba(0,0,0,.22); }
@@ -248,6 +259,8 @@
     .ai-float-head { display: flex; align-items: center; gap: .5rem; padding: .6rem .75rem; border-bottom: 1px solid var(--color-brand-100); background: linear-gradient(115deg, var(--color-brand-50), var(--color-white) 70%); }
     .ai-float-avatar { position: relative; flex-shrink: 0; }
     .ai-float-avatar .ai-float-face { box-shadow: 0 0 0 2px var(--color-white), 0 0 0 3px var(--color-brand-200); }
+    /* The online dot. Green on white, and a lighter green on the green
+       header below, where the brand shade would vanish. */
     .ai-float-avatar::after { content: ""; position: absolute; right: -1px; bottom: -1px; width: .6rem; height: .6rem; border-radius: 999px; background: var(--color-brand-500); border: 2px solid var(--color-white); }
     .ai-float-face { width: 2rem; height: 2rem; border-radius: 999px; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--color-brand-50); color: var(--color-brand-700); }
     .ai-float-face img { width: 100%; height: 100%; object-fit: cover; }
@@ -452,7 +465,7 @@
     .ai-float-head .ai-float-credits:hover { background: rgb(255 255 255 / .3); }
     .ai-float-head .ai-float-icon { color: rgb(255 255 255 / .85); }
     .ai-float-head .ai-float-icon:hover { background: rgb(255 255 255 / .18); color: #fff; }
-    .ai-float-head .ai-float-avatar::after { border-color: #4a7c2a; background: var(--color-accent-500); }
+    .ai-float-head .ai-float-avatar::after { border-color: #4a7c2a; background: #7ee06a; }
     html.dark .ai-float-head .ai-float-credits { color: #fff; }
 
     /* ---- Phones: the chat takes the whole screen ----
