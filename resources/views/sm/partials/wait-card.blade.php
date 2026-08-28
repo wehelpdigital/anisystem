@@ -1114,6 +1114,11 @@ html.dark .bv-text { color: #e8efe1; }
             setTimeout(done, hold);
         };
 
+        // Where the rotation is when localStorage is not available — a
+        // private window still works through the list, it just starts at the
+        // top each time the page loads.
+        let ROLLED = 0;
+
         window.rollWaitLine = function (host) {
             const card = host || document.querySelector('.bv-card');
             const pool = window.WAIT_LINES || [];
@@ -1121,21 +1126,26 @@ html.dark .bv-text { color: #e8efe1; }
             card.__shownAt = performance.now();
             if (pool.length < 2) return;
 
-            /* Never the same picture twice running.
+            /* IN TURN, NOT AT RANDOM.
              *
-             * Random with replacement over a pool of thirty will show you the
-             * same drawing back to back about once in thirty waits, and that
-             * is the one time anybody notices — a wait that ends and starts
-             * again on the same picture reads as the app not having done
-             * anything. Ten attempts is plenty; the eleventh is not worth a
-             * loop that could spin on a one-scene pool.
+             * Drawing lots over thirty rows repeats one about every fifth
+             * wait, and can show the same reminder three times in a morning
+             * while thirty others go unseen — which is the difference
+             * between "a reminder" and "that reminder again". Rotating shows
+             * every one before it shows any of them twice.
+             *
+             * The place in the rotation is remembered, so a wait picks up
+             * where the last one left off rather than restarting at the top
+             * of the list on every page. The server hands over a differently
+             * shuffled pool each load, so the ORDER still varies between
+             * visits; only the not-repeating is guaranteed.
              */
-            const showing = (card.querySelector('.bv-s.is-on') || {}).dataset;
-            const was = showing ? showing.scene : null;
-            let pick = pool[Math.floor(Math.random() * pool.length)];
-            for (let i = 0; i < 10 && pick.scene === was; i++) {
-                pick = pool[Math.floor(Math.random() * pool.length)];
-            }
+            const KEY = 'bv.turn';
+            let at = 0;
+            try { at = (parseInt(localStorage.getItem(KEY), 10) || 0) + 1; } catch (_) { at = ROLLED + 1; }
+            ROLLED = at;
+            try { localStorage.setItem(KEY, String(at % 100000)); } catch (_) { /* private mode */ }
+            const pick = pool[at % pool.length];
             const text = card.querySelector('[data-wait-line]');
             if (text) text.textContent = pick.line;
             const sub = card.querySelector('[data-wait-sub]');
