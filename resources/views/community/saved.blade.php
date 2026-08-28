@@ -12,6 +12,7 @@
 @section('title', 'Saved posts')
 @section('body-class', 'plaza-ground')
 @section('page-title', 'Saved posts')
+@section('help-key', 'community-saved')
 @section('back', route('community.index'))
 
 @section('content')

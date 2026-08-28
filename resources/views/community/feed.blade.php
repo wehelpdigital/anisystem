@@ -6,6 +6,7 @@
 
 @section('title', 'Community')
 @section('page-title', 'Community')
+@section('help-key', 'community')
 @section('page-subtitle', 'Kamustahan ng mga magsasaka')
 
 @push('head')

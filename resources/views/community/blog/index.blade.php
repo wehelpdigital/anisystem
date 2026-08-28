@@ -3,6 +3,7 @@
 @section('title', 'Technician\'s Blog — Community')
 @section('body-class', 'plaza-ground')
 @section('page-title', 'Community')
+@section('help-key', 'community-blog')
 @section('page-subtitle', 'Technician\'s Blog')
 
 @push('head')

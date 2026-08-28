@@ -2,6 +2,7 @@
 
 @section('title', $group->name . ' — Discussions')
 @section('page-title', $group->name)
+@section('help-key', 'community-discussions')
 @section('page-subtitle', 'Discussion')
 @section('back', route('community.groups.index'))
 {{-- A room is a place you are in; the bar underneath is for leaving it. The

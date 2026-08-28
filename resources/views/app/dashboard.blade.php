@@ -2,6 +2,7 @@
 
 @section('title', 'Dashboard')
 @section('page-title', 'Dashboard')
+@section('help-key', 'home')
 @section('page-subtitle', 'Your farm at a glance')
 
 {{-- Reuse the shared community design system so the avatars / hues on this

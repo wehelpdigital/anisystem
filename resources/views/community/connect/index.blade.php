@@ -3,6 +3,7 @@
 @section('title', 'Members')
 @section('body-class', 'plaza-ground')
 @section('page-title', 'Members')
+@section('help-key', 'community-members')
 @section('back', route('community.index'))
 
 @section('content')

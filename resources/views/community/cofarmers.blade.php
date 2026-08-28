@@ -3,6 +3,7 @@
 @section('title', 'My Co-Farmers — Community')
 @section('body-class', 'plaza-ground')
 @section('page-title', 'Community')
+@section('help-key', 'community-cofarmers')
 @section('page-subtitle', 'Your co-farmers and their latest')
 
 @push('head')

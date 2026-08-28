@@ -18,6 +18,7 @@
 @section('title', 'Community Rankings')
 @section('body-class', 'plaza-ground rk-full')
 @section('page-title', 'Community Rankings')
+@section('help-key', 'community-ranking')
 @section('page-subtitle', 'Ang hagdan ng bukid')
 @section('back', route('community.index'))
 

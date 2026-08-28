@@ -2,6 +2,7 @@
 
 @section('title', 'My Account')
 @section('page-title', 'My Account')
+@section('help-key', 'account')
 @section('page-subtitle', 'Profile & security')
 {{-- Arrived through "Edit profile" on the community profile: the arrow
      leads back there, so editing is a detour and not a dead end. --}}

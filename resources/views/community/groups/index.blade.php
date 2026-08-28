@@ -3,6 +3,7 @@
 @section('title', 'Discussions — Community')
 @section('body-class', 'plaza-ground')
 @section('page-title', 'Community')
+@section('help-key', 'community-discussions')
 @section('page-subtitle', 'Talk crops with other farmers')
 @section('back', route('community.index'))
 

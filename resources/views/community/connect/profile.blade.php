@@ -3,6 +3,7 @@
 @section('title', $member->full_name . ' — Community')
 @section('body-class', 'plaza-ground pf-full')
 @section('page-title', 'Community')
+@section('help-key', 'community-profile')
 @section('page-subtitle', $member->full_name)
 @php
     /* Back goes where the visitor actually came from — the wall, a
