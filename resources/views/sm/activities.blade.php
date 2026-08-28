@@ -946,27 +946,52 @@
          *
          * It rides the same gradSweep the day headers use, so the drift here
          * is the drift everywhere else, on its own slower clock. */
+        /* background-COLOR, not the shorthand: the shorthand would reset
+           the stage tint, which is an image. */
         .gs-lot { border: 1px solid var(--color-gray-200); border-radius: .9rem;
             overflow: hidden; margin-bottom: .75rem;
-            background: linear-gradient(135deg,
-                rgb(107 159 61 / .10),
-                rgb(168 204 126 / .20) 30%,
-                rgb(107 159 61 / .07) 62%,
-                rgb(61 104 35 / .16));
-            background-size: 240% 240%;
-            animation: gradSweep 16s ease-in-out infinite alternate; }
+            background-color: var(--color-white, #fff); }
+
+    /* ---- the season, said in colour --------------------------------------
+       A lot's panel takes the colour of what the crop is doing right now.
+       Soil brown at the start, the greens through establishment and
+       tillering, water blue where the crop's demand for it peaks, the golds
+       through flowering and filling, and a deep harvest amber at the end.
+       Held under a fifth of an alpha throughout: the words on top are what
+       anybody came to read.
+
+       Eight bands, and a stage is placed in one by how far through the
+       season it sits rather than by its name — which is what lets rice,
+       maize and a mango tree share the same eight. */
+    .gs-c0, .gr-c0 { background-image: linear-gradient(135deg, rgb(138 90 43 / .16), rgb(180 130 80 / .10) 45%, rgb(110 70 32 / .16)); }
+    .gs-c1, .gr-c1 { background-image: linear-gradient(135deg, rgb(143 194 103 / .18), rgb(190 220 150 / .10) 45%, rgb(107 159 61 / .16)); }
+    .gs-c2, .gr-c2 { background-image: linear-gradient(135deg, rgb(107 159 61 / .20), rgb(143 194 103 / .12) 45%, rgb(74 124 42 / .18)); }
+    .gs-c3, .gr-c3 { background-image: linear-gradient(135deg, rgb(47 82 25 / .20), rgb(74 124 42 / .12) 45%, rgb(31 61 16 / .18)); }
+    .gs-c4, .gr-c4 { background-image: linear-gradient(135deg, rgb(13 148 136 / .18), rgb(56 189 248 / .12) 45%, rgb(30 64 175 / .18)); }
+    .gs-c5, .gr-c5 { background-image: linear-gradient(135deg, rgb(251 191 36 / .20), rgb(253 224 71 / .12) 45%, rgb(240 180 41 / .18)); }
+    .gs-c6, .gr-c6 { background-image: linear-gradient(135deg, rgb(249 168 37 / .20), rgb(251 191 36 / .12) 45%, rgb(217 130 20 / .18)); }
+    .gs-c7, .gr-c7 { background-image: linear-gradient(135deg, rgb(180 83 9 / .20), rgb(217 178 60 / .12) 45%, rgb(120 53 15 / .18)); }
+    /* The drift is the same one the day headers and the forecast wear. */
+    .gs-lot, .gr-card { background-size: 240% 240%;
+        animation: gradSweep 16s ease-in-out infinite alternate; }
+    @media (prefers-reduced-motion: reduce) { .gs-lot, .gr-card { animation: none; } }
+
         .gs-head { display: flex; align-items: center; gap: .6rem; padding: .7rem .8rem;
-            background: transparent; cursor: pointer; user-select: none; }
-        .gs-head:hover { background: rgb(107 159 61 / .08); }
-        html.dark .gs-lot { border-color: #2b3a1c;
-            background: linear-gradient(135deg,
-                rgb(107 159 61 / .16),
-                rgb(107 159 61 / .28) 30%,
-                rgb(47 82 25 / .18) 62%,
-                rgb(61 104 35 / .30));
-            background-size: 240% 240%; }
-        html.dark .gs-head { background: transparent; }
-        html.dark .gs-head:hover { background: rgb(107 159 61 / .14); }
+            background: rgb(255 255 255 / .28); cursor: pointer; user-select: none; }
+        .gs-head:hover { background: rgb(255 255 255 / .45); }
+        /* Dark mode keeps the same eight, lifted: a tint under a fifth of an
+           alpha disappears entirely against a dark card. */
+        html.dark .gs-lot, html.dark .gr-card { border-color: #2b3a1c; }
+        html.dark .gs-c0, html.dark .gr-c0 { background-image: linear-gradient(135deg, rgb(138 90 43 / .30), rgb(180 130 80 / .18) 45%, rgb(110 70 32 / .30)); }
+        html.dark .gs-c1, html.dark .gr-c1 { background-image: linear-gradient(135deg, rgb(143 194 103 / .26), rgb(190 220 150 / .16) 45%, rgb(107 159 61 / .26)); }
+        html.dark .gs-c2, html.dark .gr-c2 { background-image: linear-gradient(135deg, rgb(107 159 61 / .30), rgb(143 194 103 / .18) 45%, rgb(74 124 42 / .28)); }
+        html.dark .gs-c3, html.dark .gr-c3 { background-image: linear-gradient(135deg, rgb(74 124 42 / .32), rgb(107 159 61 / .18) 45%, rgb(47 82 25 / .30)); }
+        html.dark .gs-c4, html.dark .gr-c4 { background-image: linear-gradient(135deg, rgb(13 148 136 / .30), rgb(56 189 248 / .18) 45%, rgb(30 64 175 / .28)); }
+        html.dark .gs-c5, html.dark .gr-c5 { background-image: linear-gradient(135deg, rgb(251 191 36 / .28), rgb(253 224 71 / .16) 45%, rgb(240 180 41 / .26)); }
+        html.dark .gs-c6, html.dark .gr-c6 { background-image: linear-gradient(135deg, rgb(249 168 37 / .28), rgb(251 191 36 / .16) 45%, rgb(217 130 20 / .26)); }
+        html.dark .gs-c7, html.dark .gr-c7 { background-image: linear-gradient(135deg, rgb(217 119 6 / .30), rgb(217 178 60 / .16) 45%, rgb(146 64 14 / .28)); }
+        html.dark .gs-head { background: rgb(0 0 0 / .18); }
+        html.dark .gs-head:hover { background: rgb(0 0 0 / .26); }
         @media (prefers-reduced-motion: reduce) { .gs-lot { animation: none; } }
         /* The same accordion the Growth Stages module wears: a lot folds to
            its header, and the folded header borrows the stage's name. */

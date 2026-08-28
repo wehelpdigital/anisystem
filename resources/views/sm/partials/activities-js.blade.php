@@ -545,7 +545,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="grow">${esc(step.label)}</span>
                     <span class="gs-when">${r.counter} ${step.from}+</span>
                 </div>`).join('');
-            return `<div class="gs-lot" data-lot="${r.lotId}">
+            /* Which of the eight this lot is in. By fraction, not by name:
+             * rice has eight stages and a mango tree has five, and the point
+             * of the colour is "how far through is this", which is the same
+             * question either way. */
+            const allSteps = (st.stages || CROP_STAGES[r.crop].stages);
+            const band = allSteps.length > 1
+                ? Math.round((st.index / (allSteps.length - 1)) * 7)
+                : 0;
+            return `<div class="gs-lot gs-c${band}" data-lot="${r.lotId}">
                 <div class="gs-head" title="Tap to fold or open this lot">
                     <svg class="gs-chev" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                     <span class="gs-emoji">${st.icon || '🌱'}</span>

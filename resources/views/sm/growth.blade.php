@@ -29,17 +29,55 @@
     html.dark .gr-date-tag:hover { background: rgb(61 104 35 / .4); }
     @media (prefers-reduced-motion: reduce) { .gr-date-tag { transition: none; } }
 
+    /* ---- the season, said in colour --------------------------------------
+       Soil brown at the start, the greens through establishment and
+       tillering, water blue where the crop's demand for it peaks, the golds
+       through flowering and filling, and a deep harvest amber at the end.
+       Held under a fifth of an alpha: the words on top are what anybody came
+       to read. The same eight the growth tool in Activities wears, so a lot
+       is the same colour in both places. */
+    .gr-c0 { background-image: linear-gradient(135deg, rgb(138 90 43 / .16), rgb(180 130 80 / .10) 45%, rgb(110 70 32 / .16)); }
+    .gr-c1 { background-image: linear-gradient(135deg, rgb(143 194 103 / .18), rgb(190 220 150 / .10) 45%, rgb(107 159 61 / .16)); }
+    .gr-c2 { background-image: linear-gradient(135deg, rgb(107 159 61 / .20), rgb(143 194 103 / .12) 45%, rgb(74 124 42 / .18)); }
+    .gr-c3 { background-image: linear-gradient(135deg, rgb(47 82 25 / .20), rgb(74 124 42 / .12) 45%, rgb(31 61 16 / .18)); }
+    .gr-c4 { background-image: linear-gradient(135deg, rgb(13 148 136 / .18), rgb(56 189 248 / .12) 45%, rgb(30 64 175 / .18)); }
+    .gr-c5 { background-image: linear-gradient(135deg, rgb(251 191 36 / .20), rgb(253 224 71 / .12) 45%, rgb(240 180 41 / .18)); }
+    .gr-c6 { background-image: linear-gradient(135deg, rgb(249 168 37 / .20), rgb(251 191 36 / .12) 45%, rgb(217 130 20 / .18)); }
+    .gr-c7 { background-image: linear-gradient(135deg, rgb(180 83 9 / .20), rgb(217 178 60 / .12) 45%, rgb(120 53 15 / .18)); }
+    .gr-card { background-size: 240% 240%; animation: gradSweep 16s ease-in-out infinite alternate; }
+    @media (prefers-reduced-motion: reduce) { .gr-card { animation: none; } }
+    html.dark .gr-c0 { background-image: linear-gradient(135deg, rgb(138 90 43 / .30), rgb(180 130 80 / .18) 45%, rgb(110 70 32 / .30)); }
+    html.dark .gr-c1 { background-image: linear-gradient(135deg, rgb(143 194 103 / .26), rgb(190 220 150 / .16) 45%, rgb(107 159 61 / .26)); }
+    html.dark .gr-c2 { background-image: linear-gradient(135deg, rgb(107 159 61 / .30), rgb(143 194 103 / .18) 45%, rgb(74 124 42 / .28)); }
+    html.dark .gr-c3 { background-image: linear-gradient(135deg, rgb(74 124 42 / .32), rgb(107 159 61 / .18) 45%, rgb(47 82 25 / .30)); }
+    html.dark .gr-c4 { background-image: linear-gradient(135deg, rgb(13 148 136 / .30), rgb(56 189 248 / .18) 45%, rgb(30 64 175 / .28)); }
+    html.dark .gr-c5 { background-image: linear-gradient(135deg, rgb(251 191 36 / .28), rgb(253 224 71 / .16) 45%, rgb(240 180 41 / .26)); }
+    html.dark .gr-c6 { background-image: linear-gradient(135deg, rgb(249 168 37 / .28), rgb(251 191 36 / .16) 45%, rgb(217 130 20 / .26)); }
+    html.dark .gr-c7 { background-image: linear-gradient(135deg, rgb(217 119 6 / .30), rgb(217 178 60 / .16) 45%, rgb(146 64 14 / .28)); }
+    /* background-COLOR, not the shorthand: the shorthand resets
+       background-image, and the stage's tint is an image. A white card with
+       a coloured wash over it is what this is meant to be. */
     .gr-card { border: 1px solid var(--color-gray-200); border-radius: 1rem; overflow: hidden;
-        background: var(--color-white); margin-bottom: .9rem; }
+        background-color: var(--color-white); margin-bottom: .9rem; }
+    /* The header is transparent so the card's own stage colour shows
+       through it: the tint belongs to the lot, not to one band of it, and a
+       header painting its own green over the top was the reason only the
+       top inch of the card was coloured. */
     .gr-top { display: flex; align-items: center; gap: .7rem; padding: .8rem .9rem;
-        background: linear-gradient(135deg, #f3f8ec, #e4efd4); cursor: pointer; user-select: none; }
+        background: rgb(255 255 255 / .28); cursor: pointer; user-select: none; }
+    .gr-top:hover { background: rgb(255 255 255 / .45); }
     /* Accordion, the same one the activities board uses: a lot folds down to
        its header, the chevron flags state, and the body is a 1fr→0fr grid
        row so height animates without knowing the content size. */
     .gr-chev { width: 1rem; height: 1rem; flex-shrink: 0; color: #6b9f3d; transition: transform .18s ease; }
     .gr-card:not(.is-folded) .gr-chev { transform: rotate(90deg); }
     .gr-fold { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
-    .gr-fold-inner { overflow: hidden; min-height: 0; }
+    /* Sliding and fading together, as every other fold in the app now
+       does. The slide alone leaves the contents at full strength against a
+       shutting edge, which reads as a clip rather than a movement. */
+    .gr-fold-inner { overflow: hidden; min-height: 0; opacity: 1;
+        transition: opacity .22s ease; }
+    .gr-card.is-folded .gr-fold-inner { opacity: 0; }
     .gr-card.is-folded .gr-fold { grid-template-rows: 0fr; }
     /* Folded, the header answers for the body: the stage takes the counter
        explainer's line, so a folded page reads lot | stage | day. */
@@ -47,9 +85,13 @@
     .gr-card.is-folded .gr-mode { display: none; }
     .gr-card.is-folded .gr-fold-stage { display: block; }
     /* Restoring the remembered folds on load applies instantly. */
-    #grCards.no-fold-anim .gr-fold, #grCards.no-fold-anim .gr-chev { transition: none; }
+    #grCards.no-fold-anim .gr-fold, #grCards.no-fold-anim .gr-chev,
+    #grCards.no-fold-anim .gr-fold-inner { transition: none; }
     @media (prefers-reduced-motion: reduce) { .gr-fold, .gr-chev { transition: none; } }
-    .gr-foldall { margin-left: auto; }
+    /* Collapse all leads the row rather than trailing it: it acts on
+       everything below, and a control for the whole list belongs at the
+       start of the line the list begins on. */
+    .gr-foldall { margin-right: auto; }
     html.dark .gr-chev { color: #86b556; }
     .gr-emoji { font-size: 1.7rem; line-height: 1; }
     .gr-lot { font-size: .98rem; font-weight: 800; color: var(--color-gray-900); }
@@ -108,8 +150,9 @@
     html.dark .gr-note p { color: #fcd34d; }
     html.dark .gr-note-ico { color: #fcd34d; }
 
-    html.dark .gr-card { background: #151b12; border-color: #2b3a1c; }
-    html.dark .gr-top { background: linear-gradient(135deg, #1c2416, #24301a); }
+    html.dark .gr-card { background-color: #151b12; border-color: #2b3a1c; }
+    html.dark .gr-top { background: rgb(0 0 0 / .18); }
+    html.dark .gr-top:hover { background: rgb(0 0 0 / .26); }
     html.dark .gr-lot, html.dark .gr-stage, html.dark .gr-step.is-now { color: #e8efe1; }
     html.dark .gr-blocked { background: rgb(255 255 255 / .04); }
 </style>
@@ -140,7 +183,17 @@
 
 <div id="grCards">
 @forelse ($rows as $r)
-    <div class="gr-card" data-lot="{{ $r['lot']->id }}">
+    @php
+        /* Which of the eight colour bands this lot's stage sits in.
+           By fraction through the season, not by the stage's name: rice has
+           eight stages and a mango tree has five, and the question the colour
+           answers — how far through is this — is the same either way. */
+        $grStage = $r['stage'] ?? [];
+        $grSteps = max(1, count($r['timeline'] ?? []) - 1);
+        $grBand = (int) round((($grStage['index'] ?? 0) / $grSteps) * 7);
+        $grBand = max(0, min(7, $grBand));
+    @endphp
+    <div class="gr-card gr-c{{ $grBand }}" data-lot="{{ $r['lot']->id }}">
         <div class="gr-top" title="Tap to fold or open this lot">
             <svg class="gr-chev" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             <span class="gr-emoji">{{ $r['icon'] }}</span>
