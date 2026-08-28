@@ -1012,9 +1012,20 @@
         #growthStageList.no-fold-anim .gs-fold, #growthStageList.no-fold-anim .gs-chev { transition: none; }
         @media (prefers-reduced-motion: reduce) { .gs-fold, .gs-chev { transition: none; } }
         .gs-emoji { font-size: 1.5rem; line-height: 1; }
+        .gs-emoji.fs-slot { width: 2.4rem; height: 2.4rem; border-radius: .7rem; overflow: hidden;
+            background: rgb(255 255 255 / .5); }
+        html.dark .gs-emoji.fs-slot { background: rgb(0 0 0 / .22); }
         .gs-lotname { font-weight: 800; font-size: .92rem; color: var(--color-gray-900); }
         html.dark .gs-lotname { color: #e5e9f5; }
-        .gs-day { font-size: .7rem; font-weight: 700; color: #3d6823; }
+    /* THE LINE UNDER THE LOT NAME.
+       "Rice — transplanted · DAS 54 · Panicle initiation" was #3d6823, a
+       dark green, printed on a card whose whole background is now a green
+       wash — and it vanished into it. Dark mode had no rule for it at all,
+       so the same green sat on a near-black card and vanished the other way.
+       It is the line that says WHAT this lot is; it has to be readable
+       before anything on the card is worth having. */
+        .gs-day { font-size: .7rem; font-weight: 700; color: var(--color-gray-600); }
+        html.dark .gs-day { color: #c7d4ba; }
         .gs-body { padding: .75rem .8rem; }
         .gs-now { font-size: 1.05rem; font-weight: 800; color: var(--color-gray-900); }
         html.dark .gs-now { color: #e5e9f5; }
@@ -2955,6 +2966,8 @@
 @endpush
 
 @section('content')
+{{-- The plant drawings, for the growth-stage tool. --}}
+@include('partials.farm-scenes')
 @php
     use Illuminate\Support\Carbon;
     use Illuminate\Support\Str;

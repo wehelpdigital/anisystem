@@ -94,12 +94,24 @@
     .gr-foldall { margin-right: auto; }
     html.dark .gr-chev { color: #86b556; }
     .gr-emoji { font-size: 1.7rem; line-height: 1; }
+    .gr-emoji.fs-slot { width: 2.6rem; height: 2.6rem; border-radius: .75rem; overflow: hidden;
+        background: rgb(255 255 255 / .5); }
+    html.dark .gr-emoji.fs-slot { background: rgb(0 0 0 / .22); }
     .gr-lot { font-size: .98rem; font-weight: 800; color: var(--color-gray-900); }
     .gr-mode { display: block; font-size: .68rem; color: var(--color-gray-400); margin-top: .1rem; }
-    .gr-crop { font-size: .72rem; font-weight: 700; color: #3d6823; }
+    /* Was #3d6823 — a dark green on a card that is now itself tinted, and
+       on the green bands the two were near enough the same colour to make
+       the line disappear. Dark mode had no rule at all, so the same green
+       sat on a near-black card. Neutral in both, which is what a line of
+       supporting text should have been anyway. */
+    .gr-crop { font-size: .72rem; font-weight: 700; color: var(--color-gray-600); }
+    html.dark .gr-crop { color: #c7d4ba; }
+    html.dark .gr-mode { color: #8fa383; }
     .gr-age { margin-left: auto; text-align: right; flex: 0 0 auto; }
-    .gr-age-n { font-size: 1.35rem; font-weight: 800; line-height: 1; color: #3d6823; }
-    .gr-age-l { font-size: .62rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #6b9f3d; }
+    .gr-age-n { font-size: 1.35rem; font-weight: 800; line-height: 1; color: #2f5219; }
+    .gr-age-l { font-size: .62rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #4f7c2c; }
+    html.dark .gr-age-n { color: #d6e8bf; }
+    html.dark .gr-age-l { color: #9dc178; }
 
     .gr-body { padding: .85rem .9rem; }
     .gr-stage { font-size: 1.05rem; font-weight: 800; color: var(--color-gray-900); }
@@ -159,6 +171,7 @@
 @endpush
 
 @section('content')
+@include('partials.farm-scenes')
 @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'growth'])
 
 {{-- The whole page is "on this date": today by default, any date on request,
@@ -192,11 +205,25 @@
         $grSteps = max(1, count($r['timeline'] ?? []) - 1);
         $grBand = (int) round((($grStage['index'] ?? 0) / $grSteps) * 7);
         $grBand = max(0, min(7, $grBand));
+        /* Same arithmetic, six bands instead of eight, because that is how
+           many pictures of a plant there are. Colour and drawing answer the
+           same question and are allowed to disagree about how finely. */
+        $grFamily = \App\Models\AsCropScene::familyFor($r['lot']->crop);
+        $grPlantBand = \App\Models\AsCropScene::bandFor(
+            $grStage['index'] ?? null, $grSteps + 1
+        );
     @endphp
     <div class="gr-card gr-c{{ $grBand }}" data-lot="{{ $r['lot']->id }}">
         <div class="gr-top" title="Tap to fold or open this lot">
             <svg class="gr-chev" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            <span class="gr-emoji">{{ $r['icon'] }}</span>
+            {{-- The plant itself, at the point of the season this lot has
+                 reached. The emoji said "a plant"; this says which plant, and
+                 how far on — the same drawing the card in Schedules and the
+                 tool in Activities use, so a lot looks the same wherever you
+                 meet it. --}}
+            <span class="gr-emoji fs-slot" data-fs-crop="{{ $grFamily }}"
+                  data-fs-band="{{ $grPlantBand }}" data-fs-size="40"
+                  title="{{ $r['cropLabel'] ?: 'This lot' }}"></span>
             <span class="min-w-0">
                 <span class="gr-lot block">{{ $r['lot']->lotName }}</span>
                 <span class="gr-crop">{{ $r['cropLabel'] ?: 'No crop set' }}</span>

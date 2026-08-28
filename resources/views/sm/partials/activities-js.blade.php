@@ -553,10 +553,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const band = allSteps.length > 1
                 ? Math.round((st.index / (allSteps.length - 1)) * 7)
                 : 0;
+            const plantBand = allSteps.length > 1
+                ? Math.max(0, Math.min(5, Math.round((st.index / (allSteps.length - 1)) * 5)))
+                : 0;
             return `<div class="gs-lot gs-c${band}" data-lot="${r.lotId}">
                 <div class="gs-head" title="Tap to fold or open this lot">
                     <svg class="gs-chev" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                    <span class="gs-emoji">${st.icon || '🌱'}</span>
+                    <span class="gs-emoji fs-slot" data-fs-crop="${window.fsFamilyOf ? window.fsFamilyOf(r.crop) : 'mixed'}"
+                          data-fs-band="${plantBand}" data-fs-size="36"></span>
                     <span class="grow min-w-0">
                         <span class="gs-lotname">${esc(r.lotName)}</span>
                         <span class="gs-day block">${esc(st.cropLabel)} · ${r.counter} ${r.day}<span class="gs-fold-stage"> · ${esc(st.label)}</span></span>
@@ -582,6 +586,10 @@ document.addEventListener('DOMContentLoaded', () => {
             Set the crop on a lot in the Lots module and give it a day zero.</p>`;
 
         gsApplyFolds();
+        // The lots are rebuilt every time this opens, so the plant slots in
+        // them are new every time. fsPaint at load only ever saw the page
+        // that existed then.
+        window.fsPaint && window.fsPaint(box);
         $id('gsFoldAll')?.classList.toggle('hidden', !rows.length);
         openSheet('growthStageSheet');
     }

@@ -457,13 +457,19 @@ html.dark .bv-text { color: #e8efe1; }
          * milliseconds still flashes a card nobody can read, and a screen
          * that finishes at the exact moment the last widget is still
          * settling shows the finished page mid-arrangement. So every wait
-         * gets a full second whatever happens, and a wait that was over
-         * almost before it began gets a further half so the reminder can
-         * actually be read.
+         * gets a floor whatever happens, and a wait that was over almost
+         * before it began gets a further half so the reminder can actually
+         * be read.
+         *
+         * The floor is four seconds because the card is not decoration — it
+         * is a sentence and a subtitle about not spraying into the wind, and
+         * two seconds was long enough to notice one and not long enough to
+         * finish it. A reminder nobody can read is a spinner with extra
+         * steps.
          *
          * These are display floors, not delays added to real work: a job
-         * that genuinely takes two seconds waits no longer than it did. */
-        const MIN_VISIBLE = 2000;
+         * that genuinely takes four seconds waits no longer than it did. */
+        const MIN_VISIBLE = 4000;
         const TOO_QUICK = 350;
         const EXTRA_FOR_QUICK = 500;
 
