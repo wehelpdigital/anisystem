@@ -463,7 +463,7 @@ html.dark .bv-text { color: #e8efe1; }
          *
          * These are display floors, not delays added to real work: a job
          * that genuinely takes two seconds waits no longer than it did. */
-        const MIN_VISIBLE = 1000;
+        const MIN_VISIBLE = 2000;
         const TOO_QUICK = 350;
         const EXTRA_FOR_QUICK = 500;
 
