@@ -26,7 +26,7 @@
         margin-bottom: .4rem; }
     .dash-wx-place b { font-weight: 800; color: var(--color-gray-800); }
     .dash-wx-art { display: flex; align-items: center; justify-content: center;
-        height: 1.9rem; margin: .15rem 0; }
+        height: 2.7rem; margin: .2rem 0; }
     .dash-wx-advice { font-size: .656rem; line-height: 1.5; color: var(--color-gray-600);
         margin-top: .5rem; padding-top: .45rem;
         border-top: 1px dashed rgb(148 163 184 / .35); }
@@ -1457,7 +1457,7 @@
         const key = skyOf(d);
         const name = window.wxName ? window.wxName(key, true) : (d.text || '');
         // The drawing replaces the emoji: a rain cell now actually rains.
-        const art = window.wxSky ? window.wxSky(key, 30) : `<div class="text-xl">${d.emoji}</div>`;
+        const art = window.wxSky ? window.wxSky(key, 42) : `<div class="text-xl">${d.emoji}</div>`;
         return `<div class="flex-1 min-w-0 text-center rounded-lg px-1 py-1.5">
             <p class="text-[0.625rem] font-bold ${today ? 'wx-today-label' : 'text-gray-500'} truncate">${esc(today ? 'Today' : d.dow)}</p>
             <div class="dash-wx-art" title="${esc(name)}">${art}</div>

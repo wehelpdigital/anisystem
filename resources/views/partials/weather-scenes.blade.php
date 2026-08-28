@@ -100,8 +100,14 @@
     @keyframes wxRipple { 0% { opacity: .8; transform: scale(.2); } 100% { opacity: 0; transform: scale(1.5); } }
 
     /* Showers: the sun is still there behind it, which is the whole
-       character of a shower. */
+       character of a shower — and at night the moon is, which is the whole
+       reason there are two of these. A picture of noon under the words
+       "Maulang gabi" is the app not having looked. */
     .wx-showers .wx-rays { transform-origin: 19px 19px; animation: wxSpin 16s linear infinite; }
+    .wx-showers_night .wx-cloud { animation: wxSag 3s ease-in-out infinite; }
+    .wx-showers_night .wx-moon { transform-origin: 20px 26px; animation: wxRide 6s ease-in-out infinite; }
+    .wx-showers_night .wx-star { animation: wxTwinkle 2.4s ease-in-out infinite; }
+    .wx-showers_night .wx-drop { animation: wxFall 1.4s linear infinite; }
 
     /* The storm: the flash is short, sudden and rare, the way one is. */
     .wx-storm .wx-cloud { animation: wxSag 2.4s ease-in-out infinite; }
@@ -205,6 +211,13 @@
             <path class="wx-drop wx-d1" d="M25 41v4"/><path class="wx-drop wx-d2" d="M33 41v4"/><path class="wx-drop wx-d3" d="M41 41v4"/>
         </g>`;
 
+    S.showers_night = `<path class="wx-moon" d="M20 20a11 11 0 1 0 8 17A13 13 0 0 1 20 20z" fill="#e8edf5" stroke="#a9b4c6" stroke-width="2"/>
+        <circle class="wx-star" cx="9" cy="13" r="1.6" fill="#f0b429"/>
+        <path class="wx-cloud" d="M22 36a7 7 0 0 1 1-13.9A10 10 0 0 1 42 24a6.5 6.5 0 0 1 1 12H22z" fill="#cfd8e3" stroke="#8b98ab" stroke-width="2"/>
+        <g stroke="#5b9bd5" stroke-width="2.8" stroke-linecap="round">
+            <path class="wx-drop wx-d1" d="M25 41v4"/><path class="wx-drop wx-d2" d="M33 41v4"/><path class="wx-drop wx-d3" d="M41 41v4"/>
+        </g>`;
+
     S.storm = `<path class="wx-cloud" d="M16 27a7.5 7.5 0 0 1 1-14.9A10.6 10.6 0 0 1 37 14a7 7 0 0 1 1 13H16z" fill="#9aa8bb" stroke="#64748b" stroke-width="2"/>
         <path class="wx-bolt" d="M28 30l-6 10h5l-3 10 10-13h-5l4-7z" fill="#f7c948" stroke="#d99e0b" stroke-width="1.6" stroke-linejoin="round"/>
         <g stroke="#3b82f6" stroke-width="2.6" stroke-linecap="round">
@@ -292,12 +305,12 @@
         else if ([51, 53, 55, 56, 57].includes(code)) base = 'drizzle';
         else if ([61, 63].includes(code)) base = 'rain';
         else if ([65, 66, 67].includes(code)) base = 'heavy_rain';
-        else if ([80, 81, 82].includes(code)) base = 'showers';
+        else if ([80, 81, 82].includes(code)) base = night ? 'showers_night' : 'showers';
         else if ([71, 73, 75, 77, 85, 86].includes(code)) base = 'snow';
         else if ([95, 96, 99].includes(code)) base = 'storm';
         else base = 'cloudy';
 
-        if (['storm', 'heavy_rain', 'rain', 'showers', 'drizzle', 'snow', 'fog'].includes(base)) return base;
+        if (['storm', 'heavy_rain', 'rain', 'showers', 'showers_night', 'drizzle', 'snow', 'fog'].includes(base)) return base;
         if (windKph != null && windKph >= 38) return 'windy';
         if (tempC != null && tempC >= 34 && !night) return 'hot';
         return base;

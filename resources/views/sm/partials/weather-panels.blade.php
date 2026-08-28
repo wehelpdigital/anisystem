@@ -71,7 +71,7 @@
     /* The drawn sky sits where the emoji did: same slot, same height, so a
        row of days keeps its rhythm whichever it is showing. */
     .wx-day-emoji { display: flex; align-items: center; justify-content: center;
-        height: 1.9rem; margin: .15rem 0; }
+        height: 2.7rem; margin: .2rem 0; }
     .wx-hero-sky { display: block; flex: none; }
     .wx-skyname { font-size: .72rem; font-weight: 800; color: var(--color-brand-800, #2f5219); margin-top: .05rem; }
     html.dark .wx-skyname { color: #a5c97e; }
@@ -96,7 +96,7 @@
     .wx-hour-time { font-size: .7rem; font-weight: 800; color: var(--color-gray-500); }
     .wx-hour.is-now .wx-hour-time { color: var(--color-brand-700); }
     .wx-hour-emoji { display: flex; align-items: center; justify-content: center;
-        height: 1.65rem; margin: .2rem 0; }
+        height: 2.2rem; margin: .2rem 0; }
     .wx-hour-temp { font-size: .9rem; font-weight: 800; color: var(--color-gray-900); }
     .wx-hour-pop { font-size: .7rem; font-weight: 700; color: #2563eb; margin-top: .1rem; }
     .wx-hour-pop.is-dry { color: var(--color-gray-400); }
@@ -140,7 +140,7 @@
             <button type="button" class="wx-day ${d.isToday ? 'is-today' : ''}" data-wx-day="${esc(d.date || '')}"
                     aria-expanded="false" title="${esc(d.text)} — tap for this day's hours">
                 <div class="wx-day-dow">${esc(d.isToday ? 'Today' : d.dow)}</div>
-                <div class="wx-day-emoji">${skyArt(d, 30)}</div>
+                <div class="wx-day-emoji">${skyArt(d, 42)}</div>
                 <div class="wx-day-temp">${d.max != null ? d.max + '&deg;' : '&ndash;'}<small>${d.min != null ? '/' + d.min + '&deg;' : ''}</small></div>
                 <div class="wx-day-pop">${d.pop != null ? '&#128167;' + d.pop + '%' : '&nbsp;'}</div>
                 <svg class="wx-day-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
@@ -170,7 +170,7 @@
             <div class="wx-hours mt-2">${hours.map((h) => `
                 <div class="wx-hour ${h.isNow ? 'is-now' : ''}" title="${esc(h.text)}${h.mm != null ? ' &middot; ' + h.mm + ' mm' : ''}">
                     <div class="wx-hour-time">${esc(h.isNow ? 'Now' : h.hour)}</div>
-                    <div class="wx-hour-emoji">${skyArt(h, 26, h.night)}</div>
+                    <div class="wx-hour-emoji">${skyArt(h, 34, h.night)}</div>
                     <div class="wx-hour-temp">${h.temp != null ? h.temp + '&deg;' : '&ndash;'}</div>
                     <div class="wx-hour-pop ${(h.pop || 0) < 20 ? 'is-dry' : ''}">&#128167;${h.pop != null ? h.pop + '%' : '&mdash;'}</div>
                 </div>`).join('')}</div>
@@ -203,7 +203,7 @@
                     ${skyName ? `<p class="wx-skyname">${esc(skyName)}</p>` : ''}
                     <div class="wx-lotpills">${lotPills(lots)}</div>
                 </div>
-                <span class="wx-hero-sky">${today ? skyArt(today, 46) : ''}</span>
+                <span class="wx-hero-sky">${today ? skyArt(today, 64) : ''}</span>
             </div>
             <div class="wx-verdict mt-3"><span class="wx-verdict-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg></span><span class="wx-verdict-text">${verdict}</span></div>
             <div class="mt-3" data-wx-strip>${dayStrip(loc.days || [])}</div>

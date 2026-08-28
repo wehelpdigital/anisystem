@@ -78,6 +78,9 @@ class WeatherSceneSeeder extends Seeder
         ['showers', 'Rain showers', 'Pabugso-bugsong ulan', 'Maulang', 'showers', 'rain',
             'Work in the gaps and keep a cover to hand. Not a drying day, and not a spraying one — a shower an hour later undoes it.'],
 
+        ['showers_night', 'Rain showers at night', 'Pabugso-bugsong ulan', 'Maulang', 'showers_night', 'rain',
+            'Showers on and off overnight. Bring anything drying under cover and leave it there — a break in the rain at ten is not the end of it.'],
+
         ['storm', 'Thunderstorm', 'May kulog at kidlat', 'Mabagyong', 'storm', 'storm',
             'Come in when you hear thunder. The tallest thing in an open field should not be you. Secure loose sheets and covers before it arrives.'],
 

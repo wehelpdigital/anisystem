@@ -29,7 +29,7 @@ class AsWeatherScene extends BaseModel
     /** The drawings the front end knows. A key naming anything else falls back. */
     public const SCENES = [
         'clear', 'clear_night', 'partly', 'partly_night', 'cloudy', 'fog',
-        'drizzle', 'rain', 'heavy_rain', 'showers', 'storm', 'snow', 'hot', 'windy',
+        'drizzle', 'rain', 'heavy_rain', 'showers', 'showers_night', 'storm', 'snow', 'hot', 'windy',
     ];
 
     /** The colour families the panels can wear. */
@@ -38,9 +38,10 @@ class AsWeatherScene extends BaseModel
     /**
      * Which sky a WMO code is.
      *
-     * Night matters for the two clear cases and nowhere else: rain at night is
-     * still rain, but a clear night is a different picture entirely from a
-     * clear noon and the greeting says a different thing about it.
+     * Night matters wherever the drawing has a sun in it. Rain at night is
+     * still rain and the raincloud is the same picture — but a clear night, a
+     * half-clouded night and a shower at night all have to lose the sun, or
+     * the app greets somebody with "Maulang gabi" over a picture of noon.
      *
      * Heat and wind ride over the top. A clear day at thirty-six degrees is
      * not the same working day as a clear day at twenty-eight, and the
@@ -58,13 +59,13 @@ class AsWeatherScene extends BaseModel
             in_array($code, [51, 53, 55, 56, 57], true) => 'drizzle',
             in_array($code, [61, 63], true) => 'rain',
             in_array($code, [65, 66, 67], true) => 'heavy_rain',
-            in_array($code, [80, 81, 82], true) => 'showers',
+            in_array($code, [80, 81, 82], true) => $night ? 'showers_night' : 'showers',
             in_array($code, [71, 73, 75, 77, 85, 86], true) => 'snow',
             in_array($code, [95, 96, 99], true) => 'storm',
             default => 'cloudy',
         };
 
-        if (in_array($base, ['storm', 'heavy_rain', 'rain', 'showers', 'drizzle', 'snow', 'fog'], true)) {
+        if (in_array($base, ['storm', 'heavy_rain', 'rain', 'showers', 'showers_night', 'drizzle', 'snow', 'fog'], true)) {
             return $base;
         }
 
