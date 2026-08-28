@@ -9,155 +9,183 @@ use Illuminate\Support\Facades\Cache;
 /**
  * What the app says while it is still thinking.
  *
- * Every one is something that actually happens on a farm while you wait for
- * something else, which is the joke: the app is doing what the farmer is
- * doing. They come in pairs. The first line says what is going on; the second
- * is the aside somebody would really add — "Waking the carabao… / He heard
- * you. He is thinking about it." One sentence is a caption. Two are a voice.
+ * These used to be jokes about the farm. They are reminders now, because a
+ * wait is a few seconds of somebody's attention and there is better to do
+ * with it: wear the coat, drink before you are thirsty, spray with the wind
+ * behind you, keep the chemicals out of drink bottles.
+ *
+ * They come in pairs, and the pair is the whole point. The first line is the
+ * reminder; the second is WHY, in the voice of somebody who has seen it go
+ * wrong. "Boots, not slippers" is nagging. "Boots, not slippers — snakes,
+ * nails and glass do not announce themselves" is advice.
+ *
+ * Nothing here is a diagnosis or a dose. It is the sort of thing a good
+ * neighbour says over the fence, and every one of it is safe to be wrong
+ * about in the sense that following it costs nothing.
  *
  * Keyed on the line itself, so re-running adds what is new and leaves
- * anybody's edits from the admin alone. A subline is only ever filled in
- * where there is not one already, for the same reason.
+ * anybody's edits from the admin alone — but the scene and the reason are
+ * refreshed, because those are ours to keep in step with the drawings.
+ * Anything on this surface that is NOT in this list is retired rather than
+ * deleted: the jokes are gone from the screen and still in the table.
  */
 class LoadingLineSeeder extends Seeder
 {
     public function run(): void
     {
-        foreach (self::LINES as [$line, $sub, $scene]) {
-            $row = AsLoadingLine::firstOrCreate(
-                ['line' => $line, 'surface' => 'board'],
-                ['scene' => $scene, 'subline' => $sub, 'deleteStatus' => 1]
-            );
+        $keep = [];
 
-            // An older row from before there were sublines gets its second
-            // half; one somebody has written themselves is left alone.
+        foreach (self::LINES as [$line, $sub, $scene]) {
+            $keep[] = $line;
+            $row = AsLoadingLine::firstOrNew(['line' => $line, 'surface' => 'board']);
+            $row->scene = $scene;
+            $row->deleteStatus = 1;
+            // The reason is only written where nobody has written their own.
             if (blank($row->subline)) {
                 $row->subline = $sub;
-                $row->save();
             }
+            $row->save();
         }
+
+        // The old jokes step aside. deleteStatus 0 is the app's own word for
+        // "not shown" — pool() already filters on it — so nothing is lost and
+        // an admin can bring any of them back.
+        AsLoadingLine::where('surface', 'board')
+            ->whereNotIn('line', $keep)
+            ->update(['deleteStatus' => 0]);
 
         Cache::forget('as_loading_lines.board');
     }
 
     /** @var array<int, array{0:string,1:string,2:string}> */
-    public const LINES = [
-        // ---- The hens ---------------------------------------------------
-        ['Preparing the chicken eggs…', 'They are not in a hurry.', 'egg'],
-        ['Counting the eggs before they hatch…', 'A risk, and we are taking it.', 'egg'],
-        ['Asking the hens to hurry up…', 'The hens have their own schedule.', 'egg'],
-        ['Turning the eggs one more time…', 'Twice a day, every day. No exceptions.', 'egg'],
-        ['Warming the eggs a little longer…', 'Twenty-one days is twenty-one days.', 'egg'],
-        ['Sending the rooster back to bed…', 'He is not listening.', 'egg'],
-        ['Feeding the chickens first…', 'They complain otherwise.', 'egg'],
-        ['Finding where the hen has been laying…', 'Under the house. Again.', 'egg'],
+    private const LINES = [
+        // ---- Rain, and what it does to people who ignore it -------------
+        ['Wear your kapote before the sky opens.', 'Wet clothes and wind is how a fever starts.', 'rain'],
+        ['Dry off before you sit down.', 'A cold back after a hot day is asking for it.', 'rain'],
+        ['Stay out of standing floodwater.', 'Leptospirosis gets in through a cut you never noticed.', 'rain'],
+        ['Wash and dry your feet after wading.', 'Then look between the toes.', 'rain'],
+        ['Come in when you hear thunder.', 'The tallest thing in an open field should not be you.', 'rain'],
+        ['Cover the fertiliser before the rain.', 'A wet sack is money turning to stone.', 'rain'],
+        ['Walk the bunds after heavy rain.', 'One breach empties a week of water.', 'rain'],
+        ['Clear the canal before the storm, not during.', 'Nobody clears a canal well in the dark.', 'rain'],
+        ['Put the sprayer away when it rains.', 'It washes off before it works, and you paid for it.', 'rain'],
+        ['Bring the drying grain in early.', 'One shower undoes a whole day of sun.', 'rain'],
+        ['Keep a dry set of clothes in the shed.', 'The walk home is longer when you are wet.', 'rain'],
 
-        // ---- The seedbed ------------------------------------------------
-        ['Waking up the seedlings…', 'Gently. They have had a long night.', 'seedling'],
-        ['Telling the seedlings it is morning…', 'Some of them believe it.', 'seedling'],
-        ['Straightening the rows…', 'Crooked rows haunt a person.', 'seedling'],
-        ['Sorting the good seeds from the empty ones…', 'The empty ones float. That is the trick.', 'seedling'],
-        ['Whispering to the seedbed…', 'It helps. Nobody knows why.', 'seedling'],
-        ['Counting the tillers…', 'Lost count at forty. Starting again.', 'seedling'],
-        ['Pulling one weed on the way past…', 'It is never just one.', 'seedling'],
-        ['Looking for where the shovel went…', 'It was here yesterday.', 'seedling'],
-        ['Watering the seedbed…', 'A fine spray, not a flood.', 'seedling'],
-        ['Thinning the seedlings…', 'The hard part is pulling the good ones.', 'seedling'],
-        ['Checking under a leaf for eggs…', 'Not the chicken kind.', 'seedling'],
-        ['Hardening off the seedlings…', 'A few hours of sun a day.', 'seedling'],
-        ['Reading the soil…', 'It says it is hungry.', 'seedling'],
+        // ---- Sun and heat -----------------------------------------------
+        ['Do the heavy work before ten.', 'The field will still be there at four.', 'sun'],
+        ['Wear the hat even when it is cloudy.', 'The burn comes through the grey.', 'sun'],
+        ['Take shade every hour.', 'Ten minutes now buys the whole afternoon.', 'sun'],
+        ['Long sleeves beat sunburn.', 'Lighter cloth, more cover.', 'sun'],
+        ['Headache and chills in the heat mean stop.', 'That is heat stroke starting, not tiredness.', 'sun'],
+        ['Nobody works the noon field alone.', 'Heat is easier to see on somebody else than on yourself.', 'sun'],
+        ['Rest in shade, not in the truck.', 'A parked cab is hotter than the field.', 'sun'],
 
-        // ---- The machine ------------------------------------------------
-        ['Starting the tractor…', 'The third try is usually the one.', 'tractor'],
-        ['Warming up the hand tractor…', 'It likes to be asked nicely.', 'tractor'],
-        ['Looking for the tractor key…', 'Check the other pocket.', 'tractor'],
-        ['Waiting for the last pass to finish…', 'Two more rounds.', 'tractor'],
-        ['Filling the tank before the sun gets high…', 'Diesel now, coffee after.', 'tractor'],
-        ['Sharpening the bolo…', 'A dull blade is more work than a sharp one.', 'tractor'],
-        ['Tightening one bolt that keeps working loose…', 'The same bolt. Every season.', 'tractor'],
-        ['Greasing the bearings…', 'Now, not after it starts squealing.', 'tractor'],
-        ['Backing the trailer through the gate…', 'One try. Always one try.', 'tractor'],
-        ['Waiting for the mechanic…', 'He said this morning.', 'tractor'],
-        ['Checking the tyre pressure…', 'The back left, as usual.', 'tractor'],
-        ['Cleaning the air filter…', 'Dust in, power out.', 'tractor'],
+        // ---- Water ------------------------------------------------------
+        ['Drink before you are thirsty.', 'Thirst turns up late and leaves early.', 'water'],
+        ['Carry more water than you think you need.', 'You will not walk back for it.', 'water'],
+        ['Plain water first, softdrinks after.', 'Sugar does not replace what you sweated out.', 'water'],
+        ['A pinch of salt in the water on a long day.', 'You lose more than water out there.', 'water'],
+        ['Dark urine means you are already behind.', 'Drink, and sit down for ten minutes.', 'water'],
+        ['Fill the jug the night before.', 'Morning you will not stop to do it.', 'water'],
 
-        // ---- The sky ----------------------------------------------------
-        ['Waiting for the rain to pass…', 'It will pass. Probably.', 'rain'],
-        ['Checking if the clouds mean it…', 'They usually do not.', 'rain'],
-        ['Counting the drops on the roof…', 'Getting faster.', 'rain'],
-        ['Asking the sky politely…', 'Worth a try.', 'rain'],
-        ['Watching one dark cloud very closely…', 'It is coming this way.', 'rain'],
-        ['Running the sacks under cover…', 'Faster than it looks.', 'rain'],
-        ['Digging the drain a little deeper…', 'Before it is needed, not after.', 'rain'],
-        ['Reading the wind…', 'Coming off the sea. That means rain.', 'rain'],
-        ['Bringing the washing in…', 'Priorities.', 'rain'],
-        ['Watching the river…', 'Still low. Still watching.', 'rain'],
+        // ---- Health -----------------------------------------------------
+        ['Take your vitamins.', 'Same time every day, or it will not happen.', 'vitamin'],
+        ['Eat before you go out.', 'An empty stomach in the sun is how people faint.', 'vitamin'],
+        ['Never spray on an empty stomach.', 'It goes into you faster.', 'vitamin'],
+        ['Get the tetanus shot.', 'Rusty wire and bare feet are a bad pair.', 'vitamin'],
+        ['A check-up once a year.', 'Cheaper than the year you cannot work.', 'vitamin'],
+        ['Bring the whole family for deworming.', 'The clinic does it free, and it is quick.', 'vitamin'],
 
-        ['Letting the dew dry first…', 'Spraying wet leaves is money on the ground.', 'sun'],
-        ['Waiting for the sun to clear the trees…', 'Ten more minutes.', 'sun'],
-        ['Working out how hot this will get…', 'Hot.', 'sun'],
-        ['Finding shade for the merienda…', 'Under the mango, as always.', 'sun'],
-        ['Squinting at the far end of the field…', 'Something is greener over there.', 'sun'],
-        ['Waiting out the noon heat…', 'Nothing good happens at one o’clock.', 'sun'],
-        ['Checking the shade cloth…', 'One corner has come loose.', 'sun'],
-        ['Drinking water before the work, not after…', 'A lesson learned the hard way.', 'sun'],
+        // ---- Spraying ---------------------------------------------------
+        ['Mask and gloves before you mix.', 'The mix is the strongest it will ever be.', 'spray'],
+        ['Spray with the wind behind you.', 'Never walk into your own mist.', 'spray'],
+        ['Do not spray at noon.', 'Heat lifts it off the leaf and into the air you are breathing.', 'spray'],
+        ['Wash your hands before you eat or smoke.', 'That is how most of it gets swallowed.', 'spray'],
+        ['Change out of sprayed clothes at the door.', 'Do not carry it into the house.', 'spray'],
+        ['Rinse the sprayer away from the well.', 'Downhill of the water, always.', 'spray'],
+        ['Read the label, even the one you know.', 'The dose may have changed since you last bought it.', 'spray'],
+        ['Never put chemicals in a drink bottle.', 'That is how children are poisoned.', 'spray'],
+        ['Lock the chemicals up.', 'A shed with a latch is not a lock.', 'spray'],
+        ['Respect the re-entry time.', 'The label says how long. It means it.', 'spray'],
+        ['Mind the days before harvest.', 'The waiting time on the label is the one buyers test for.', 'spray'],
+        ['Mix outside, not in the kitchen.', 'And not with the spoon that goes back in the drawer.', 'spray'],
 
-        // ---- The carabao ------------------------------------------------
-        ['Waking the carabao…', 'He heard you. He is thinking about it.', 'carabao'],
-        ['The carabao says five more minutes…', 'That was ten minutes ago.', 'carabao'],
-        ['Walking the carabao to the field…', 'At his pace, not yours.', 'carabao'],
-        ['Giving the carabao a drink first…', 'Non-negotiable.', 'carabao'],
-        ['Explaining the plan to the carabao…', 'He has heard better plans.', 'carabao'],
-        ['Scratching the carabao behind the ear…', 'Purely professional.', 'carabao'],
-        ['Getting the carabao out of the mud…', 'He is not helping.', 'carabao'],
-        ['Fixing the yoke…', 'It rubs on one side.', 'carabao'],
+        // ---- Feet and hands ---------------------------------------------
+        ['Boots, not slippers, in the field.', 'Snakes, nails and glass do not announce themselves.', 'boots'],
+        ['Shake your boots out before you put them on.', 'Something may have moved in overnight.', 'boots'],
+        ['Dry your boots upside down.', 'Damp boots are where the itch starts.', 'boots'],
+        ['Gloves for the thorny work.', 'A scratch you ignore is the one that swells.', 'boots'],
 
-        // ---- The crop ---------------------------------------------------
-        ['Counting the grains…', 'There are a great many grains.', 'rice'],
-        ['Checking if the palay is ready…', 'Bite one. You will know.', 'rice'],
-        ['Weighing the last sack…', 'Forty-nine and a half. Close enough.', 'rice'],
-        ['Drying the palay on the road…', 'Watching for tricycles.', 'rice'],
-        ['Bringing in the last cavan…', 'The heaviest one, obviously.', 'rice'],
-        ['Rubbing a head of rice between two fingers…', 'Hard, not chalky. Good.', 'rice'],
-        ['Chasing a maya out of the field…', 'It will be back.', 'rice'],
-        ['Walking the bund…', 'Looking for the hole a rat made.', 'rice'],
-        ['Levelling the paddy…', 'Water finds every mistake.', 'rice'],
-        ['Checking for empty panicles…', 'A few. Not too many.', 'rice'],
-        ['Sacking up…', 'Fifty kilos at a time.', 'rice'],
-        ['Waiting for the thresher…', 'He is at the neighbour’s.', 'rice'],
+        // ---- Tools and machines -----------------------------------------
+        ['A sharp bolo is the safe one.', 'A dull blade slips.', 'tools'],
+        ['Cut away from your body. Always.', 'Even when the other way is faster.', 'tools'],
+        ['Put the tool down before you answer the phone.', 'One hand cannot do both.', 'tools'],
+        ['Check the handle before harvest.', 'A loose head finds a leg.', 'tools'],
+        ['Carry the blade pointing down.', 'And never hand it over blade first.', 'tools'],
+        ['Turn it off before you clear the jam.', 'Every hand ever lost was cleared with it still running.', 'tractor'],
+        ['Guard back on before you start it.', 'Putting it back later means never.', 'tractor'],
+        ['Walk behind the machine before you reverse.', 'Look. Do not assume.', 'tractor'],
+        ['No passengers on the tractor.', 'There is one seat, for a reason.', 'tractor'],
+        ['Let the engine cool before refuelling.', 'Petrol on hot metal does not forgive.', 'tractor'],
+        ['Check the brakes before the slope.', 'Not on it.', 'tractor'],
 
-        // ---- The water --------------------------------------------------
-        ['Filling the sprayer…', 'Measure twice. It is not water.', 'watering'],
-        ['Opening the canal gate…', 'Slowly, or the bund goes.', 'watering'],
-        ['Waiting for the water to reach the far end…', 'It always takes longer than you think.', 'watering'],
-        ['Checking the water level…', 'Ankle deep is about right.', 'watering'],
-        ['Chasing the water down the furrow…', 'It has found a hole again.', 'watering'],
-        ['Untangling the hose…', 'How does it even do this.', 'watering'],
-        ['Priming the pump…', 'Give it a minute.', 'watering'],
-        ['Mixing the fertiliser…', 'Read the label. Then read it again.', 'watering'],
-        ['Waiting for the tank to fill…', 'Slower than it ought to be.', 'watering'],
-        ['Repairing the bund…', 'Mud, hands, patience.', 'watering'],
+        // ---- When it goes wrong -----------------------------------------
+        ['Wash a cut straight away.', 'Field soil and open skin do not mix.', 'firstaid'],
+        ['Keep a first aid kit in the shed.', 'And know which shelf it is on.', 'firstaid'],
+        ['A cut still open tomorrow needs a clinic.', 'Do not wait for it to smell.', 'firstaid'],
+        ['Put the health centre in your phone tonight.', 'Nobody looks up a number well in an emergency.', 'firstaid'],
+        ['Know who has a vehicle after dark.', 'Ask before you need to.', 'firstaid'],
 
-        // ---- The rest of the farm ---------------------------------------
-        ['Waiting for the bees to finish…', 'They are working. So are we.', 'bee'],
-        ['Letting the bees get on with it…', 'No spraying while they are out.', 'bee'],
-        ['Counting the flowers…', 'More than yesterday.', 'bee'],
-        ['Following one bee back to the hive…', 'Lost it at the fence.', 'bee'],
-        ['Watching a butterfly and calling it work…', 'It counts as scouting.', 'bee'],
-        ['Looking for the good insects…', 'Not everything with six legs is a problem.', 'bee'],
+        // ---- The crop itself --------------------------------------------
+        ['Walk the field before you spray anything.', 'Half the time there is nothing to spray for.', 'seedling'],
+        ['Look under the leaf, not on top.', 'That is where they live.', 'seedling'],
+        ['Pull the weeds while they are small.', 'A week from now it is a job.', 'seedling'],
+        ['Rotate what you plant.', 'The same crop twice feeds the same pest twice.', 'seedling'],
+        ['Keep the seedbed damp, not flooded.', 'Drowned seed does not come back.', 'seedling'],
+        ['Buy seed you can trace.', 'Cheap seed is expensive in September.', 'seedling'],
 
-        ['Reading the moon…', 'Waning. Good for root crops.', 'moon'],
-        ['Checking the planting calendar…', 'Lola’s calendar, not the phone’s.', 'moon'],
-        ['Waiting for the roosters…', 'Four in the morning, like clockwork.', 'moon'],
-        ['Closing the gate for the night…', 'Twice, because of the goat.', 'moon'],
-        ['Asking the neighbour how he did it…', 'He will not say.', 'moon'],
-        ['Locking the shed…', 'The bolo lives inside now.', 'moon'],
-        ['Writing the day down…', 'Before any of it is forgotten.', 'moon'],
-        ['Adding up what today cost…', 'Less than yesterday. Somehow.', 'moon'],
-        ['Turning off the pump for the night…', 'Listen for the click.', 'moon'],
-        ['Feeding the dog…', 'He has been waiting since four.', 'moon'],
-        ['Counting the sacks one last time…', 'The same number as before. Good.', 'moon'],
-        ['Sitting down for one minute…', 'One minute.', 'moon'],
-        ['Waiting for the kettle…', 'Kape muna.', 'moon'],
+        // ---- Water in the field -----------------------------------------
+        ['Water early, not at noon.', 'Most of a noon watering never reaches the root.', 'watering'],
+        ['Water the soil, not the leaf.', 'Wet leaves overnight is how disease starts.', 'watering'],
+        ['Let it dry between waterings at tillering.', 'Roots follow the water down.', 'watering'],
+        ['Turn the pump off before you walk away.', 'Listen for the click.', 'watering'],
+        ['Check the hose before the dry weeks.', 'A split you fix now is not a split you fix in a hurry.', 'watering'],
+
+        // ---- Animals ----------------------------------------------------
+        ['Water and shade for the animals first.', 'They cannot go and get it themselves.', 'carabao'],
+        ['Rest the carabao before it is tired.', 'After is too late.', 'carabao'],
+        ['Check the hooves after wet weeks.', 'Standing in mud softens them.', 'carabao'],
+        ['No animal works at noon either.', 'Same rule as you.', 'carabao'],
+
+        // ---- The good insects -------------------------------------------
+        ['Do not spray while the bees are out.', 'Early morning or late afternoon instead.', 'bee'],
+        ['Leave the flowering weeds at the edge.', 'That is where the helpful insects live.', 'bee'],
+        ['Not everything with six legs is a pest.', 'Some of them are eating the pests for you.', 'bee'],
+
+        // ---- After harvest ----------------------------------------------
+        ['Dry to fourteen percent, not to "looks dry".', 'Above that it moulds inside the sack.', 'rice'],
+        ['Turn the grain every hour on the pavement.', 'The bottom layer never dries on its own.', 'rice'],
+        ['Sacks off the floor and off the wall.', 'Air underneath, or the bottom row rots.', 'rice'],
+        ['Check the store for droppings.', 'One rat family eats a sack a season.', 'rice'],
+        ['Never dry grain on the road.', 'One truck costs more than the drying time saved.', 'rice'],
+        ['Weigh before you sell, not after.', 'Your own scale, your own number.', 'rice'],
+
+        // ---- Records and money ------------------------------------------
+        ['Write it down before you forget.', 'Tonight you remember. Next month you will not.', 'notebook'],
+        ['Keep the receipts.', 'The ones you throw away are the ones you need.', 'notebook'],
+        ['Note the date you sprayed.', 'The re-entry and the harvest wait both count from it.', 'notebook'],
+        ['Write down what did not work, too.', 'That is the half everybody forgets.', 'notebook'],
+        ['Ask two buyers before you sell.', 'Two calls can be a week of wages.', 'notebook'],
+        ['Photograph the damage the same day.', 'Insurance and help both ask for a date.', 'notebook'],
+
+        // ---- The end of the day -----------------------------------------
+        ['Stop when the light goes.', 'Tired hands are how tools get away from you.', 'moon'],
+        ['Sleep is part of the work.', 'Six hours is not a plan, it is a debt.', 'moon'],
+        ['One day off a week.', 'The field will not notice. Your back will.', 'moon'],
+        ['Eat with your family before it goes cold.', 'The work will still be there.', 'moon'],
+        ['Close the gate and lock the shed.', 'Then stop thinking about it.', 'moon'],
+        ['Charge the phone tonight.', 'You will want it tomorrow.', 'moon'],
+        ['Tell somebody where you will be working.', 'Especially if you are going alone.', 'moon'],
     ];
 }

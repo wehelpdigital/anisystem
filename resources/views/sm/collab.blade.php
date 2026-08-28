@@ -273,13 +273,24 @@
     const ready = new Set();
     let frameReady = false, loaderShownAt = 0;
 
-    function showLoader(text) { loaderText.textContent = text || 'Loading…'; loader.classList.add('on'); loader.setAttribute('aria-hidden', 'false'); loaderShownAt = performance.now(); }
+    function showLoader(text) {
+        loaderText.textContent = text || 'Loading…';
+        loader.classList.add('on');
+        loader.setAttribute('aria-hidden', 'false');
+        loaderShownAt = performance.now();
+        // A different reminder each time the room waits.
+        window.rollWaitLine?.(loader.querySelector('.bv-card'));
+    }
     function hideLoader() { loader.classList.remove('on'); loader.setAttribute('aria-hidden', 'true'); }
     // Mark a tab loaded; keep the loader up for a short minimum so it doesn't flash.
     function markReady(tab) {
         ready.add(tab);
         if (current !== tab) return;
-        setTimeout(hideLoader, Math.max(0, 280 - (performance.now() - loaderShownAt)));
+        /* Was 280ms, which is enough not to flicker and not enough to read.
+         * The shared floor is a full second, and half a second more when the
+         * tab was ready almost before it was asked for. */
+        if (window.waitCardRelease) window.waitCardRelease(loader, hideLoader);
+        else setTimeout(hideLoader, Math.max(0, 280 - (performance.now() - loaderShownAt)));
     }
     const rafReady = (tab) => requestAnimationFrame(() => markReady(tab));
     function frameIsLoaded() {

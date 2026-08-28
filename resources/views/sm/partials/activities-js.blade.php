@@ -1763,8 +1763,16 @@ document.addEventListener('DOMContentLoaded', () => {
         veilLifted = true;
         const veil = $id('boardVeil');
         if (!veil) return;
-        veil.classList.add('is-done');
-        setTimeout(() => { veil.hidden = true; }, 320);
+        /* The reminder gets its second before the board arrives. This veil
+         * is up from the first paint, so on a warm cache the figures can
+         * land in under a tenth of a second — long enough to see a card
+         * appear and vanish, not long enough to read one. */
+        const go = () => {
+            veil.classList.add('is-done');
+            setTimeout(() => { veil.hidden = true; }, 320);
+        };
+        if (window.waitCardRelease) window.waitCardRelease(veil, go);
+        else go();
     }
     window.boardVeilStep = (what) => {
         boardReady[what] = true;

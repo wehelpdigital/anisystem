@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Support\Facades\Cache;
 
 /**
- * Something to say while a screen is still working.
+ * Something worth knowing while a screen is still working.
  *
- * One line, one little scene to draw beside it. The board takes a handful at
- * page render and re-rolls in the browser every time the veil goes up, so a
- * farmer who opens the same board four times in a morning is not read the
- * same joke four times.
+ * A wait is a few seconds of somebody's attention and the app has it whether
+ * it wants it or not, so it spends it on something useful: wear the coat,
+ * drink before you are thirsty, spray with the wind behind you. One line, the
+ * reason underneath it, and a small scene to draw beside them.
+ *
+ * The board takes a handful at page render and re-rolls in the browser every
+ * time a veil goes up, so a farmer who opens the same board four times in a
+ * morning is not told the same thing four times.
  */
 class AsLoadingLine extends BaseModel
 {
@@ -24,8 +28,12 @@ class AsLoadingLine extends BaseModel
      * screen by mistyping this.
      */
     public const SCENES = [
-        'egg', 'seedling', 'tractor', 'rain', 'sun', 'carabao',
-        'rice', 'watering', 'bee', 'moon',
+        // Health and weather — what a wait is mostly spent reminding people of
+        'rain', 'sun', 'water', 'vitamin', 'firstaid', 'boots', 'moon',
+        // The work, and doing it without hurting yourself
+        'spray', 'tools', 'tractor', 'notebook',
+        // The farm itself
+        'seedling', 'rice', 'watering', 'carabao', 'bee',
     ];
 
     protected $fillable = ['line', 'subline', 'scene', 'surface', 'deleteStatus'];

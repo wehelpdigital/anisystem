@@ -4160,6 +4160,8 @@
             // as the wrong wait: "Loading Maps…" says what is actually coming.
             loaderLabel.textContent = 'Loading ' + (MODULES[key].label || '') + '…';
             loader.classList.remove('hidden');
+            // A different reminder each time, and the clock starts now.
+            window.rollWaitLine?.(loader.querySelector('.bv-card'));
             host.classList.add('hidden');
             try {
                 const sep = MODULES[key].url.includes('?') ? '&' : '?';
@@ -4179,7 +4181,18 @@
                 activitiesRoot.classList.remove('module-hidden');
                 key = 'activities';
             } finally {
-                loader.classList.add('hidden');
+                /* Not the instant the fetch lands.
+                 *
+                 * A module that comes back in eighty milliseconds still
+                 * flashes a card nobody could read, and a module that comes
+                 * back exactly as its own widgets are settling shows a page
+                 * mid-arrangement. waitCardRelease gives every wait a full
+                 * second and a very short one a further half — a floor on
+                 * how long the card is up, never a delay added to real
+                 * work. */
+                const hide = () => loader.classList.add('hidden');
+                if (window.waitCardRelease) window.waitCardRelease(loader, hide);
+                else hide();
             }
         }
 
