@@ -567,7 +567,7 @@ const __init = () => {
      * and in the Gallery exactly as every other map save does. What comes
      * back to this card is two numbers and a link that opens the Maps app.
      */
-    const MAP_URL = @json(route('sm.maps', ['id' => $schedule->id]));
+    const MAP_URL = @json(route('sm.lots.map', ['id' => $schedule->id]));
 
     function lotCardHtml(lot) {
         // Same golden-angle hue the lot gets on its activity cards, so the colour

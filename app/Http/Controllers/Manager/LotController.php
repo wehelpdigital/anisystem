@@ -83,6 +83,40 @@ class LotController extends BaseScheduleController
     }
 
     /**
+     * One lot's own map.
+     *
+     * A page of its own rather than the Maps module with a lot's name bolted
+     * to the top of it. The drawing engine is shared — there is one of those
+     * in this app and there is going to go on being one — but nothing around
+     * it is: no team heading, no live-position sharing, no clear-for-
+     * everybody, no shelf of the team's plans. One lot, one question, one
+     * Save.
+     */
+    public function map(Request $request)
+    {
+        $schedule = $this->schedule($request->query('id'));
+        $lot = AsScheduleLot::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)
+            ->findOrFail((int) $request->query('lot'));
+
+        return view('sm.lot-map', [
+            'schedule' => $schedule,
+            'lot' => $lot,
+            // What the map itself needs to know about the errand: which lot,
+            // and whether it already has a place.
+            'attachLot' => [
+                'id' => $lot->id,
+                'name' => $lot->lotName,
+                'pinned' => $lot->isPinned(),
+                'lat' => $lot->pinLat,
+                'lng' => $lot->pinLng,
+                'label' => $lot->pinLabel,
+                'mapSaveId' => $lot->mapSaveId,
+            ],
+        ]);
+    }
+
+    /**
      * Put a lot on the map, or take it off.
      *
      * Called from the map itself, the moment a pin goes down while a lot is

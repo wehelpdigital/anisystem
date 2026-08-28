@@ -7,7 +7,21 @@
 <div class="cmap-wrap" id="cmapWrap">
 {{-- The tab says its own name, as the chat and the whiteboard do. It sits
      above the key check, because a room with no map key still has a tab. --}}
-<div class="collab-tabhead"><span class="collab-tabtitle">🗺️ Team map</span></div>
+@php
+    /* Whose map this is.
+     *
+     * 'team'  the Collab Room and the Maps module: a shared canvas, live to
+     *         everybody in the room, with a shelf of saved plans.
+     * 'lot'   one lot's own map, opened from the Lots module. Same engine,
+     *         none of the room: no team heading, no live-position sharing,
+     *         no clear-for-everybody, no shelf. The page around it has its
+     *         own header and its own Save.
+     */
+    $mapChrome = $mapChrome ?? 'team';
+@endphp
+@if ($mapChrome !== 'lot')
+    <div class="collab-tabhead"><span class="collab-tabtitle">🗺️ Team map</span></div>
+@endif
 @if (! $cmapKey)
     {{-- No key, no map — say so instead of a grey void. --}}
     <div class="cmap-nokey">
@@ -16,7 +30,7 @@
         <p class="text-sm text-gray-500">Set <code class="font-mono text-xs bg-gray-100 rounded px-1">GOOGLE_MAPS_KEY</code> in the environment and redeploy. The rest of the room works without it.</p>
     </div>
 @else
-    @if (! empty($attachLot))
+    @if (! empty($attachLot) && $mapChrome !== 'lot')
         {{-- WHOSE PLACE THIS IS.
 
              One line, and it stays: somebody who came here from a lot is
@@ -296,19 +310,25 @@
         <button type="button" class="cmap-tool" id="cmapFindMe" title="Centre the map on me" aria-label="Centre the map on my position">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.25"/><circle cx="12" cy="12" r="8"/><path stroke-linecap="round" d="M12 1.5v2.5M12 20v2.5M1.5 12h2.5M20 12h2.5"/></svg>
         </button>
+        @if ($mapChrome !== 'lot')
+        {{-- Broadcasting where you are standing is a thing you do for a room.
+             A lot's own map has nobody in it to tell. --}}
         <button type="button" class="cmap-tool" id="cmapGps" title="Share my live GPS position with the team" aria-label="Share my live GPS position">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/><path stroke-linecap="round" d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22M12 12h.01"/></svg>
         </button>
+        @endif
         <button type="button" class="cmap-tool is-active" id="cmapLayer" title="Toggle map / satellite" aria-label="Toggle map or satellite view" aria-pressed="true">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg>
         </button>
-        @if (\App\Support\WorkerContext::canEdit())
+        @if ($mapChrome !== 'lot' && \App\Support\WorkerContext::canEdit())
         <button type="button" class="cmap-tool cmap-danger" id="cmapClear" title="Clear the whole map for the team" aria-label="Clear the map for the team">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>
         </button>
         @endif
-        {{-- Opening and saving, together, out of the tools list. --}}
-        @if (\App\Support\WorkerContext::canAddNotes())
+        {{-- Opening and saving, together, out of the tools list. On a lot's
+             map there is nothing to open — it has one map, and the page's own
+             Save writes it. --}}
+        @if ($mapChrome !== 'lot' && \App\Support\WorkerContext::canAddNotes())
         <button type="button" class="cmap-tool cmap-savebtn" id="cmapSaveMenuBtn" title="Open or save a map" aria-label="Open or save a map">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg>
         </button>
@@ -729,6 +749,9 @@
      * there; measure it; save the whole thing. The errand narrows what the
      * screen ASKS for, not what it allows. */
     const ATTACH = @json($attachLot ?? null);
+    // 'team' or 'lot' — see the note at the top of this file. The engine is
+    // the same either way; what changes is who it thinks it is talking to.
+    const CHROME = @json($mapChrome);
     const LOT_PIN_URL = @json(route('sm.lots.pin'));
 
     let map = null, proj = null, satOn = true;
@@ -1591,7 +1614,7 @@
             pushHist({ type: 'add', object: res.data.object });
             // A label says its own thing about what to do next, and pen
             // strokes say nothing at all.
-            if (kind !== 'pen' && kind !== 'text' && window.toast) toast('Saved to the team map.');
+            if (kind !== 'pen' && kind !== 'text' && window.toast) toast(CHROME === 'lot' ? 'Saved.' : 'Saved to the team map.');
             return res.data.object;
         } catch (e) { if (window.toast) toast(e.message, 'error'); return null; }
     }
@@ -1913,6 +1936,41 @@
         return true;
     }
     /* ---------- the lot this map was opened for ---------- */
+    /** The lot's own pin, on a map that is only about this lot.
+     *
+     * Tapping a second time on this page means "no, HERE" — so the one that
+     * was there goes, and the new one takes its name. On the team's map
+     * nothing of the sort happens: there, a second pin is a second place.
+     *
+     * The id is not on the lot record — the record keeps coordinates, which is
+     * what the rest of the app asks it for — so on the way in the pin standing
+     * exactly where the lot says it is gets adopted as this one.
+     */
+    function adoptErrandPin() {
+        if (CHROME !== 'lot' || !ATTACH || !ATTACH.pinned || ATTACH.objId) return;
+        for (const o of objIndex.values()) {
+            if (o.kind !== 'pin') continue;
+            const pt = (o.points || [])[0];
+            // A millionth of a degree is about a tenth of a metre, and the
+            // lot's coordinates were written from this very pin — so this is
+            // an identity check with room for the round trip through the
+            // database, not a search for the nearest pin.
+            if (pt && Math.abs(pt[0] - ATTACH.lat) < 1e-6 && Math.abs(pt[1] - ATTACH.lng) < 1e-6) {
+                ATTACH.objId = o.id;
+                return;
+            }
+        }
+    }
+    function moveErrandPin(newId) {
+        if (CHROME !== 'lot' || !ATTACH) return;
+        adoptErrandPin();
+        const old = ATTACH.objId;
+        ATTACH.objId = newId;
+        if (!old || old === newId) return;
+        api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: old } }).catch(() => {});
+        dropObject(old, true);
+    }
+
     /** Tell the Lots module where this lot is. Quiet on failure by design:
      *  the pin is on the map either way, and a toast about a lot record is
      *  not what somebody standing in a field needs to read. */
@@ -1934,6 +1992,16 @@
             ATTACH.lat = pt[0];
             ATTACH.lng = pt[1];
             ATTACH.label = label || ATTACH.name;
+            // For a host page that draws its own line about the errand: the
+            // banner below only exists when this map is embedded in one that
+            // does not.
+            window.dispatchEvent(new CustomEvent('anee:lot-pinned', {
+                detail: {
+                    ok: true,
+                    at: Number(pt[0]).toFixed(6) + ', ' + Number(pt[1]).toFixed(6),
+                    href: pinHref(pt),
+                },
+            }));
             const box = document.getElementById('cmapErrand');
             const say = document.getElementById('cmapErrandSay');
             if (box) box.classList.add('is-done');
@@ -1941,6 +2009,9 @@
         } catch (e) {
             const say = document.getElementById('cmapErrandSay');
             if (say) say.textContent = 'The pin is on the map, but the lot did not take it — try dragging it once more.';
+            // Same news for a host page that draws its own line: without this
+            // a failed write is completely silent there.
+            window.dispatchEvent(new CustomEvent('anee:lot-pinned', { detail: { ok: false } }));
         }
     }
 
@@ -2033,7 +2104,7 @@
                 // still leaves the lot findable. The name can be improved
                 // afterwards; being findable cannot be improved later by
                 // somebody who has walked away.
-                if (ATTACH) pinTheLot(p, o.label);
+                if (ATTACH) { moveErrandPin(o.id); pinTheLot(p, o.label); }
                 openPinSheet(o);
             });
         }
@@ -3038,6 +3109,7 @@
     function loadObjects(fit) {
         return api(`${URLS.objects}?scheduleId=${SID}`).then((r) => {
             (r.data.objects || []).forEach(renderObject);
+            adoptErrandPin();
             if (!fit) return false;
             const b = new (G().LatLngBounds)();
             let any = false;
@@ -3791,7 +3863,7 @@
             e.currentTarget.setAttribute('aria-pressed', satOn ? 'true' : 'false');
         });
         document.getElementById('cmapFindMe')?.addEventListener('click', (e) => findMe(e.currentTarget));
-        document.getElementById('cmapGps').addEventListener('click', (e) => toggleGps(e.currentTarget));
+        document.getElementById('cmapGps')?.addEventListener('click', (e) => toggleGps(e.currentTarget));
         document.getElementById('cmapClear')?.addEventListener('click', async () => {
             const ok = window.confirmAction
                 ? await confirmAction({ title: 'Clear the map?', message: 'Removes every shape for the whole team.', confirmText: 'Clear map' })
@@ -3810,7 +3882,7 @@
 
         // On by default: seeing each other on the land is why the map exists.
         // The browser still asks permission; declining just leaves it off.
-        toggleGps(document.getElementById('cmapGps'));
+        if (document.getElementById('cmapGps')) toggleGps(document.getElementById('cmapGps'));
 
         if (window.Echo) {
             try {
