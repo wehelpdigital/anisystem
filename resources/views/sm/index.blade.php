@@ -89,15 +89,39 @@
         @keyframes heroBob { from { transform: translateY(2px); } to { transform: translateY(-3px); } }
         @media (prefers-reduced-motion: reduce) { .sch-hero-emoji { animation: none; } }
         .sch-hero-emoji svg { width: 1.55rem; height: 1.55rem; }
-        /* The scene fills its bubble rather than sitting in the middle of it
-           at icon size — these drawings have a ground line and a sky, and
-           cropping them to a 1.55rem square throws both away. */
-        .sch-hero-emoji.fs-slot { width: 3.4rem; height: 3.4rem; overflow: hidden; }
-        .sch-hero-emoji.fs-slot svg { width: 2.3rem; height: 2.3rem; }
-        /* The panel takes the day's colour, so the bubble inside it cannot
-           also be a coloured pane or the two fight. */
-        .sch-hero.fs-pane .sch-hero-emoji.fs-slot { background: rgb(255 255 255 / .55); }
-        html.dark .sch-hero.fs-pane .sch-hero-emoji.fs-slot { background: rgb(0 0 0 / .3); }
+        /* THE MARK: weather behind, calendar in front.
+
+           The bubble is bigger than the plain one it replaces because it now
+           holds two drawings, and it clips — a raincloud drawn to the edge of
+           a circle should stop at the circle. */
+        .sch-hero-mark { position: relative; width: 3.6rem; height: 3.6rem;
+            overflow: hidden; background: rgb(255 255 255 / .7); }
+        html.dark .sch-hero-mark { background: rgb(0 0 0 / .4); }
+        /* The sky fills the bubble exactly. It was overflowing by an eighth,
+           which put the moon in the corner and cut the raindrops off below
+           the crop — a picture of rain with the rain outside the frame.
+           Opacity high, because this is the half somebody is reading: the
+           calendar tells you nothing you did not know from the page's name. */
+        .sch-hero-wx { position: absolute; inset: 9% 9% 13%; display: flex;
+            align-items: center; justify-content: center; opacity: .95; }
+        .sch-hero-wx .wx-sky { width: 100%; height: 100%; }
+        /* The calendar sits in the corner of its own weather rather than in
+           the middle of it. Two drawings stacked concentric in a 58-pixel
+           circle is one shape nobody can read; offset, both survive. */
+        .sch-hero-cal { position: absolute; right: 2px; bottom: 1px; z-index: 1;
+            line-height: 0;
+            filter: drop-shadow(0 0 2px rgb(255 255 255 / .98))
+                    drop-shadow(0 0 4px rgb(255 255 255 / .9))
+                    drop-shadow(0 1px 1px rgb(255 255 255 / .9)); }
+        html.dark .sch-hero-cal { filter: drop-shadow(0 0 2px rgb(21 27 18 / .98))
+                    drop-shadow(0 0 4px rgb(21 27 18 / .9))
+                    drop-shadow(0 1px 1px rgb(21 27 18 / .9)); }
+        .sch-hero-cal svg { width: 1.5rem; height: 1.5rem; }
+        /* No weather yet — the calendar has the bubble to itself and sits
+           where a lone icon should, in the middle. */
+        .sch-hero-mark:not(.has-wx) .sch-hero-cal { position: relative;
+            right: auto; bottom: auto; }
+        .sch-hero-mark:not(.has-wx) .sch-hero-cal svg { width: 2rem; height: 2rem; }
 
         /* The shelf's own badge: field green, like the page it heads. */
         .sch-hero-emoji.is-plan { background: linear-gradient(135deg, #eef6e4, #d5e8bd); color: #4a7c2a; }
@@ -655,10 +679,21 @@
             }
         @endphp
         <div class="sch-hero-left">
-            {{-- A season on a calendar, which is what this page is a list of,
-                 drawn rather than sat still. --}}
-            <span class="sch-hero-emoji fs-slot" data-fs-act="quiet" data-fs-size="34"
-                  title="Your seasons, day by day"></span>
+            {{-- A calendar, with the weather happening behind it.
+
+                 The panel's tint says roughly what kind of day it is; this
+                 says it plainly. If it is raining, it is raining behind the
+                 calendar — cloud, drops and all — and a farmer glancing at
+                 this page learns the one thing that decides whether any of
+                 the plan below survives the morning.
+
+                 Two layers, not one drawing: the calendar is what this page
+                 IS, and it must not be replaced by the sky. It sits on top
+                 with a white halo so it stays legible against a storm. --}}
+            <span class="sch-hero-emoji sch-hero-mark" id="schHeroMark" title="Your seasons, day by day">
+                <span class="sch-hero-wx" id="schHeroWx" aria-hidden="true"></span>
+                <span class="sch-hero-cal fs-slot" data-fs-act="quiet" data-fs-size="30"></span>
+            </span>
             <div class="min-w-0">
                 <h1 class="sch-hero-h">Here are your cropping schedules for today</h1>
                 <p class="sch-hero-p">{!! $__say !!}</p>
@@ -1495,6 +1530,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const hue = window.wxHue ? window.wxHue(key) : '';
             if (!hue) return;
             hero.className = hero.className.replace(/\bfs-hue-\S+/g, '').trim() + ' ' + hue;
+
+            /* And the sky itself, behind the calendar. The panel's tint says
+             * roughly; this says which. A drawing arriving where there was
+             * none reads as the page finishing, not as it changing its mind
+             * — which is why the calendar in front never moves. */
+            const sky = document.getElementById('schHeroWx');
+            const mark = document.getElementById('schHeroMark');
+            if (sky && window.wxSky) {
+                sky.innerHTML = window.wxSky(key);
+                // Only now does the calendar step aside; until the forecast
+                // answers it has the bubble to itself, which is the right
+                // picture for "we do not know yet".
+                mark && mark.classList.add('has-wx');
+            }
+            const meta = (window.WX_SKIES || {})[key];
+            if (mark && meta && meta.label) {
+                mark.setAttribute('title', meta.label + ' — your seasons, day by day');
+            }
         })
         .catch(() => {});
 })();
