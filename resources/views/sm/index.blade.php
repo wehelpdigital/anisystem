@@ -114,9 +114,10 @@
         /* The cover it comes out from behind.
            It goes up in the same frame the weather is painted — no transition
            on the way in, or the sky would be visible through it while it
-           arrived — and comes off three seconds later, by which time the
-           drift, the squall and a dozen clouds are all well into their cycles
-           rather than sitting on frame zero of them. */
+           arrived — and comes off a second later, by which time the drift,
+           the squall and a dozen clouds are all under way rather than sitting
+           on frame zero of them. A second is enough for that and short enough
+           that the cover reads as the card arriving, not as a wait. */
         .sch-hero-veil { position: absolute; inset: 0; z-index: 0;
             pointer-events: none; background: #07100a; opacity: 0; }
         .sch-hero-veil.is-up { opacity: 1; transition: none; }
@@ -1619,7 +1620,7 @@ document.addEventListener('DOMContentLoaded', () => {
              * the same light, and the card is meant to read like a window. */
             const sky = document.getElementById('schHeroSky');
             if (sky && window.wxAtmosphere) {
-                /* COVERED, THEN UNCOVERED THREE SECONDS LATER.
+                /* COVERED, THEN UNCOVERED A SECOND LATER.
                  *
                  * The weather is painted and its animations start the moment
                  * it exists — but the first second of a drift, a squall and a
@@ -1634,7 +1635,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const veil = document.getElementById('schHeroVeil');
                 veil?.classList.add('is-up');
                 sky.innerHTML = window.wxAtmosphere(key, window.wxDaypart && window.wxDaypart(hour));
-                setTimeout(() => veil?.classList.add('is-off'), 3000);
+                setTimeout(() => veil?.classList.add('is-off'), 1000);
             }
             const meta = (window.WX_SKIES || {})[key];
             const mark = document.getElementById('schHeroMark');
