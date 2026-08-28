@@ -39,14 +39,10 @@
         .sch-hero { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
             gap: .85rem 1.25rem; padding: 1.05rem 1.25rem; margin-bottom: 1rem; border-radius: 1.1rem;
             background: var(--color-white); border: 1px solid var(--color-gray-200); position: relative; overflow: hidden; }
-        /* One restrained accent: a hairline of field-green along the top.
-           It drifts on the shared gradSweep tide (layout) — the oversize is
-           what gives the gradient room to move. */
-        .sch-hero::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
-            background: linear-gradient(90deg, #6b9f3d, #b8d38e 55%, transparent);
-            background-size: 220% 100%;
-            animation: gradSweep 12s ease-in-out infinite alternate; }
-        @media (prefers-reduced-motion: reduce) { .sch-hero::before { animation: none; } }
+        /* The hairline of field-green along the top is gone. It was one
+           restrained accent on a card that had nothing else going on; the
+           card is weather now, and a bright green rule across the top of a
+           rainy sky is a second thing shouting over the first. */
         .sch-hero-left { display: flex; align-items: center; gap: .85rem; min-width: 0; }
 
         /* Whose farm this is. A quiet strip above the greeting — it is a
@@ -106,9 +102,18 @@
         /* THE SKY: the whole card, filled by the atmosphere layer.
            No sizing or arrangement here — the atmosphere knows how to fill a
            box, and the only thing this side decides is how loud it is. */
+        /* It arrives, rather than appearing.
+           The weather is painted when the forecast answers, a second or two
+           after the page — and a picture that pops into existence at frame
+           zero of its own animations reads as a still image that then starts
+           moving. It fades up instead, and everything inside it starts
+           mid-cycle, so the first thing anybody sees is already weather. */
         .sch-hero-sky { position: absolute; inset: 0; z-index: 0;
-            pointer-events: none; opacity: .88; }
-        html.dark .sch-hero-sky { opacity: .92; }
+            pointer-events: none; opacity: 0;
+            transition: opacity .7s cubic-bezier(.22, 1, .36, 1); }
+        .sch-hero-sky.is-on { opacity: .88; }
+        html.dark .sch-hero-sky.is-on { opacity: .92; }
+        @media (prefers-reduced-motion: reduce) { .sch-hero-sky { transition: none; } }
         /* Content over weather. Without this the stat tiles are opaque boxes
            sitting ON the sky rather than in front of it, and the sky stops
            halfway across the card. */
@@ -447,21 +452,35 @@
             background: linear-gradient(120deg, #2a2018, #3a2c1e 42%, #4a3826 68%, #2f241a); }
         html.dark .se-status { background: rgb(0 0 0 / .45); color: #d5dfc9; }
 
-        .se-toprow { display: flex; align-items: flex-start; gap: .35rem; }
-        .se-desc { font-size: .8rem; color: var(--color-gray-500); flex: 1 1 auto; min-width: 0;
+        .se-desc { font-size: .8rem; color: var(--color-gray-500);
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        /* Quiet until you look for them, and pushed right whether or not the
-           season has a description to sit beside. */
-        .se-tool { flex: 0 0 auto; margin-left: auto; width: 2rem; height: 2rem;
+        /* On the cover, so they sit on a tinted ground rather than on white:
+           the ink is the cover's own dark green, held back until a thumb or a
+           pointer comes near. z-index because the cover paints a gradient
+           over itself and these have to be above it to be clickable. */
+        .se-tools { position: relative; z-index: 1; flex: none; margin-left: auto;
+            display: inline-flex; align-items: center; gap: .1rem; }
+        .se-tool { width: 1.9rem; height: 1.9rem; flex: none;
             display: inline-flex; align-items: center; justify-content: center;
-            border-radius: .55rem; color: var(--color-gray-400);
+            border-radius: .5rem; color: rgb(61 104 35 / .5);
             transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
-        .se-tool + .se-tool { margin-left: 0; }
-        .se-tool svg { width: 1.05rem; height: 1.05rem; }
-        .se-tool:hover { background: var(--color-gray-100); color: var(--color-gray-700); }
-        .se-tool.is-danger:hover { background: rgb(239 68 68 / .1); color: #dc2626; }
-        html.dark .se-tool:hover { background: rgb(255 255 255 / .07); color: #e8efe1; }
+        .se-tool svg { width: 1rem; height: 1rem; }
+        .se-tool:hover { background: rgb(255 255 255 / .55); color: #2f5219; }
+        .se-tool.is-danger:hover { background: rgb(255 255 255 / .7); color: #dc2626; }
+        html.dark .se-tool { color: rgb(213 223 201 / .55); }
+        html.dark .se-tool:hover { background: rgb(0 0 0 / .3); color: #e8efe1; }
+        html.dark .se-tool.is-danger:hover { color: #fca5a5; }
         @media (prefers-reduced-motion: reduce) { .se-tool { transition: none; } }
+        /* The status WORD is the first thing to give up its space when the
+           row runs out. The two tools and the chevron are hit targets and
+           cannot shrink, and the season's name is what anybody is scanning
+           for — so on a phone the pill keeps its coloured dot, which is the
+           whole of the signal, and drops the five letters that repeat it.
+           That is about seventy pixels back to the title. */
+        @media (max-width: 480px) {
+            .se-status { font-size: 0; gap: 0; padding: .3rem; }
+            .se-status .se-dot { width: .5rem; height: .5rem; }
+        }
         /* Where the crop stands today — the one line a farmer opens this
            page for, so it reads before the counts do. */
         /* One lot at a time, slid rather than stacked: a season with five
@@ -955,6 +974,33 @@
                          aria-expanded="true" aria-label="Fold or unfold {{ $s->title }}">
                         <span class="se-crops" aria-hidden="true">{{ count($card['icons']) ? implode('', $card['icons']) : '🌱' }}</span>
                         <h2 class="se-title" title="{{ $s->title }}">{{ $s->title }}</h2>
+                        {{-- Duplicate and Delete, level with the name they
+                             act on. They were at the foot of the card taking
+                             a third of Open's row, then at the top of the
+                             body floating in white space on a season with no
+                             description. Here they are anchored to something:
+                             the line that says which season this is.
+
+                             The cover is the fold handle, so both of these
+                             stop the click getting to it — a tap meant for
+                             Duplicate that folds the card away instead is
+                             the kind of thing you only forgive once. --}}
+                        <span class="se-tools">
+                            @if (! \App\Support\WorkerContext::activeGrant() || \App\Support\WorkerContext::canEdit())
+                                <button type="button" class="se-tool"
+                                    data-duplicate-schedule="{{ $s->id }}" data-title="{{ $s->title }}"
+                                    title="Duplicate this schedule" aria-label="Duplicate {{ $s->title }}">
+                                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                </button>
+                            @endif
+                            @if (! \App\Support\WorkerContext::activeGrant())
+                                <button type="button" class="se-tool is-danger"
+                                    data-delete-schedule="{{ $s->id }}" data-title="{{ $s->title }}"
+                                    title="Delete this schedule" aria-label="Delete {{ $s->title }}">
+                                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
+                                </button>
+                            @endif
+                        </span>
                         <span class="se-status"><i class="se-dot se-dot-{{ $s->status }}"></i>{{ $s->status }}</span>
                         <span class="se-chev" aria-hidden="true">
                             <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
@@ -975,25 +1021,9 @@
                              still in plain sight — the far side of the first
                              line, which is where a card's own controls go
                              everywhere else in this app. --}}
-                        <div class="se-toprow">
-                            @if ($s->description)
-                                <p class="se-desc">{{ \Illuminate\Support\Str::limit($s->description, 100) }}</p>
-                            @endif
-                            @if (! \App\Support\WorkerContext::activeGrant() || \App\Support\WorkerContext::canEdit())
-                                <button type="button" class="se-tool"
-                                    data-duplicate-schedule="{{ $s->id }}" data-title="{{ $s->title }}"
-                                    title="Duplicate this schedule" aria-label="Duplicate schedule">
-                                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                                </button>
-                            @endif
-                            @if (! \App\Support\WorkerContext::activeGrant())
-                                <button type="button" class="se-tool is-danger"
-                                    data-delete-schedule="{{ $s->id }}" data-title="{{ $s->title }}"
-                                    title="Delete this schedule" aria-label="Delete schedule">
-                                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
-                                </button>
-                            @endif
-                        </div>
+                        @if ($s->description)
+                            <p class="se-desc">{{ \Illuminate\Support\Str::limit($s->description, 100) }}</p>
+                        @endif
 
                         {{-- Where each lot stands today — same arithmetic as
                              Growth Stages, so the two pages never disagree.
@@ -1255,13 +1285,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => {
         const head = e.target.closest('[data-se-fold]');
         if (!head) return;
+        // Duplicate and Delete live on the cover now, and the cover is the
+        // fold handle. A tap meant for one of them that folds the card away
+        // instead is the kind of thing you only forgive once.
+        if (e.target.closest('.se-tools')) return;
         const card = head.closest('[data-schedule-card]');
         if (card) toggleCard(card);
     });
     document.addEventListener('keydown', (e) => {
         if (e.key !== 'Enter' && e.key !== ' ') return;
         const head = e.target.closest?.('[data-se-fold]');
-        if (!head) return;
+        if (!head || e.target.closest?.('.se-tools')) return;
         e.preventDefault();
         const card = head.closest('[data-schedule-card]');
         if (card) toggleCard(card);
@@ -1573,6 +1607,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const sky = document.getElementById('schHeroSky');
             if (sky && window.wxAtmosphere) {
                 sky.innerHTML = window.wxAtmosphere(key, window.wxDaypart && window.wxDaypart(hour));
+                // A frame between the paint and the fade, or the browser
+                // collapses the two into one and there is nothing to
+                // transition from.
+                requestAnimationFrame(() => sky.classList.add('is-on'));
             }
             const meta = (window.WX_SKIES || {})[key];
             const mark = document.getElementById('schHeroMark');

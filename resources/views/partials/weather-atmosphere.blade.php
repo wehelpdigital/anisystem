@@ -26,7 +26,7 @@
        long enough that the card is never quite as it was. */
     @keyframes atmBreath { 0%, 100% { opacity: .88; } 50% { opacity: 1; } }
     .atm { position: absolute; inset: 0; overflow: hidden; pointer-events: none;
-        animation: atmBreath 17s ease-in-out infinite;
+        animation: atmBreath 17s ease-in-out -6.5s infinite;
         /* One palette, so a piece used by four kinds of weather agrees with
            itself in all four. */
         --atm-cloud: rgb(148 163 184 / .3);
@@ -92,8 +92,8 @@
     .atm-cloud { position: absolute; top: var(--t, -3.2rem);
         left: calc(var(--cx, 50%) - var(--w, 12rem) / 2);
         width: var(--w, 12rem); height: var(--h, 5.4rem);
-        animation: atmDrift var(--d, 34s) ease-in-out infinite alternate,
-                   atmCloudLife var(--d2, 19s) ease-in-out infinite; }
+        animation: atmDrift var(--d, 34s) ease-in-out var(--dl, -5s) infinite alternate,
+                   atmCloudLife var(--d2, 19s) ease-in-out var(--dl2, -3s) infinite; }
     .atm-cloud i { position: absolute; bottom: 0; border-radius: 50%;
         background: var(--atm-cloud); filter: blur(1px); }
     .atm-cloud.is-dark i { background: var(--atm-cloud-dark); }
@@ -136,7 +136,7 @@
         50% { transform: skewX(-16deg) translateX(4%); opacity: 1; }
     }
     .atm-rainfall { position: absolute; inset: -20% -14%;
-        animation: atmSquall 7s ease-in-out infinite; }
+        animation: atmSquall 7s ease-in-out -2.4s infinite; }
     /* And every streak has its own weight, because some of it is falling
        close to you and some of it is falling fifty metres away. All of them
        at one alpha is a comb moving down the screen. */
@@ -162,13 +162,13 @@
     .atm-disc { position: absolute; inset: 36%; border-radius: 50%;
         background: radial-gradient(circle at 50% 50%,
             var(--atm-sun) 0 42%, rgb(251 191 36 / .22) 62%, transparent 78%);
-        animation: atmBreathe 7s ease-in-out infinite; }
+        animation: atmBreathe 7s ease-in-out -2.6s infinite; }
     .atm-fan { position: absolute; inset: 0;
         background: repeating-conic-gradient(from 0deg at 50% 50%,
             var(--atm-ray) 0deg 3.2deg, transparent 3.2deg 15deg);
         -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 22%, rgb(0 0 0 / .55) 44%, transparent 68%);
         mask-image: radial-gradient(circle at 50% 50%, #000 22%, rgb(0 0 0 / .55) 44%, transparent 68%);
-        animation: atmSpin 26s linear infinite; }
+        animation: atmSpin 26s linear -9s infinite; }
     @keyframes atmSpin { to { transform: rotate(360deg); } }
     @keyframes atmBreathe {
         0%, 100% { transform: scale(.94); opacity: .72; }
@@ -178,7 +178,7 @@
     /* ---- the moon, and what is out with it ----------------------------- */
     .atm-moonbox { position: absolute; top: 2.6rem; right: 1.4rem;
         width: 4.4rem; height: 4.4rem; color: var(--atm-moon);
-        animation: atmBreathe 9s ease-in-out infinite; }
+        animation: atmBreathe 9s ease-in-out -3.4s infinite; }
     .atm-moonbox svg { width: 100%; height: 100%; display: block; }
     .atm-star { position: absolute; width: 3px; height: 3px; border-radius: 50%;
         background: var(--atm-star);
@@ -346,7 +346,8 @@
             const a = r2(0.68 + ((i * 3) % 4) * 0.11);
             s += `<span class="atm-cloud${dark ? ' is-dark' : ''}${lay}"
                 style="--cx:${r2(p * 100)}%;--w:${r2(w)}rem;--h:${r2(h)}rem;`
-                + `--t:${r2(t)}rem;--d:${d}s;--d2:${d2}s;--a:${a}">
+                + `--t:${r2(t)}rem;--d:${d}s;--d2:${d2}s;--a:${a};`
+                + `--dl:-${r2(3 + ((i * 5) % 9) * 1.4)}s;--dl2:-${r2(1 + ((i * 3) % 7) * 1.1)}s">
                 <i></i><i></i><i></i></span>`;
         });
 
