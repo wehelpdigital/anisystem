@@ -24,9 +24,9 @@
        backdrop that holds one exact value is the tell that it is a graphic.
        Twenty-six seconds is slow enough that nobody catches it changing and
        long enough that the card is never quite as it was. */
-    @keyframes atmBreath { 0%, 100% { opacity: .84; } 50% { opacity: 1; } }
+    @keyframes atmBreath { 0%, 100% { opacity: .88; } 50% { opacity: 1; } }
     .atm { position: absolute; inset: 0; overflow: hidden; pointer-events: none;
-        animation: atmBreath 26s ease-in-out infinite;
+        animation: atmBreath 17s ease-in-out infinite;
         /* One palette, so a piece used by four kinds of weather agrees with
            itself in all four. */
         --atm-cloud: rgb(148 163 184 / .3);
@@ -101,7 +101,7 @@
        different periods per cloud and no two clouds sharing either, so the
        ceiling is never twice the same and never obviously cycling. */
     @keyframes atmCloudLife {
-        0%, 100% { opacity: calc(var(--a, 1) * .58); }
+        0%, 100% { opacity: calc(var(--a, 1) * .45); }
         50% { opacity: var(--a, 1); }
     }
     .atm-cloud i:nth-child(1) { left: 0; width: 62%; height: 78%; }
@@ -114,9 +114,13 @@
     .atm-cloud.lay-c i:nth-child(1) { left: 0; width: 40%; height: 62%; }
     .atm-cloud.lay-c i:nth-child(2) { left: 20%; width: 62%; height: 100%; }
     .atm-cloud.lay-c i:nth-child(3) { left: 66%; width: 36%; height: 54%; }
+    /* Ten per cent over twenty-four seconds is a pixel and a half a second,
+       which the eye files as "not moving". Thirty, with a little rise and
+       fall so it is not running on rails, is weather going past. */
     @keyframes atmDrift {
-        from { transform: translateX(-10%); }
-        to { transform: translateX(10%); }
+        from { transform: translate(-30%, 4%); }
+        50% { transform: translate(0, -3%); }
+        to { transform: translate(30%, 4%); }
     }
 
     /* ---- rain, falling the whole height --------------------------------
@@ -128,11 +132,11 @@
        and thickens, then eases — which is the difference between rain and a
        screensaver of falling lines. */
     @keyframes atmSquall {
-        0%, 100% { transform: skewX(-7deg) translateX(-1.5%); opacity: .72; }
-        50% { transform: skewX(-13deg) translateX(1.5%); opacity: 1; }
+        0%, 100% { transform: skewX(-5deg) translateX(-4%); opacity: .7; }
+        50% { transform: skewX(-16deg) translateX(4%); opacity: 1; }
     }
-    .atm-rainfall { position: absolute; inset: -20% -10%;
-        animation: atmSquall 11s ease-in-out infinite; }
+    .atm-rainfall { position: absolute; inset: -20% -14%;
+        animation: atmSquall 7s ease-in-out infinite; }
     /* And every streak has its own weight, because some of it is falling
        close to you and some of it is falling fifty metres away. All of them
        at one alpha is a comb moving down the screen. */
@@ -164,9 +168,12 @@
             var(--atm-ray) 0deg 3.2deg, transparent 3.2deg 15deg);
         -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 22%, rgb(0 0 0 / .55) 44%, transparent 68%);
         mask-image: radial-gradient(circle at 50% 50%, #000 22%, rgb(0 0 0 / .55) 44%, transparent 68%);
-        animation: atmSpin 46s linear infinite; }
+        animation: atmSpin 26s linear infinite; }
     @keyframes atmSpin { to { transform: rotate(360deg); } }
-    @keyframes atmBreathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+    @keyframes atmBreathe {
+        0%, 100% { transform: scale(.94); opacity: .72; }
+        50% { transform: scale(1.1); opacity: 1; }
+    }
 
     /* ---- the moon, and what is out with it ----------------------------- */
     .atm-moonbox { position: absolute; top: 2.6rem; right: 1.4rem;
@@ -186,9 +193,9 @@
         background: var(--atm-fog); filter: blur(9px);
         animation: atmRoll var(--d, 26s) ease-in-out infinite alternate,
                    atmFogLife calc(var(--d, 26s) * 0.7) ease-in-out infinite; }
-    @keyframes atmRoll { from { transform: translateX(-22%); } to { transform: translateX(22%); } }
+    @keyframes atmRoll { from { transform: translateX(-38%); } to { transform: translateX(38%); } }
     /* Fog thins and gathers. A band at one opacity is a grey stripe. */
-    @keyframes atmFogLife { 0%, 100% { opacity: .5; } 50% { opacity: 1; } }
+    @keyframes atmFogLife { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
 
     /* ---- wind: what it does to the air, since it cannot be seen -------- */
     .atm-gust { position: absolute; left: -25%; width: 150%; height: 2px;
@@ -331,10 +338,10 @@
             // same offset hangs further down and the two drifted apart.
             const vis = 0.9 + ((i * 2) % 5) * 0.45;
             const t = -(h - vis);
-            const d = 24 + ((i * 5) % 6) * 5;
+            const d = 13 + ((i * 5) % 6) * 3;
             // The second clock, on a different cycle length from the first so
             // the two never line up and the cloud never repeats itself.
-            const d2 = 15 + ((i * 4) % 7) * 3;
+            const d2 = 8 + ((i * 4) % 7) * 2;
             const lay = ['', ' lay-b', ' lay-c'][i % 3];
             const a = r2(0.68 + ((i * 3) % 4) * 0.11);
             s += `<span class="atm-cloud${dark ? ' is-dark' : ''}${lay}"
@@ -451,11 +458,11 @@
         partly_night: () => stars(12) + moon() + clouds(2),
         cloudy: () => clouds(5),
         fog: () => clouds(2) + fog(),
-        drizzle: () => clouds(3) + rainfall(22, 'fine'),
-        rain: () => clouds(4) + rainfall(34),
-        heavy_rain: () => clouds(5, true) + rainfall(52, 'heavy'),
-        showers: () => sun() + clouds(3) + rainfall(26),
-        showers_night: () => stars(10) + moon() + clouds(3) + rainfall(26),
+        drizzle: () => clouds(3) + rainfall(40, 'fine'),
+        rain: () => clouds(4) + rainfall(64),
+        heavy_rain: () => clouds(5, true) + rainfall(88, 'heavy'),
+        showers: () => sun() + clouds(3) + rainfall(48),
+        showers_night: () => stars(10) + moon() + clouds(3) + rainfall(48),
         /* The strikes stand at the edges of the frame.
          *
          * A card carries its words across the middle, and anything drawn
@@ -468,10 +475,10 @@
          * The glow reaches well in from there, and the flash takes the whole
          * card, so the light still crosses everything even though the forks
          * do not. */
-        storm: () => clouds(5, true) + rainfall(44, 'heavy')
+        storm: () => clouds(5, true) + rainfall(76, 'heavy')
             + strike('4%', '1.6rem', '8s', '0s')
             + strike('96%', '2.6rem', '8s', '4.3s'),
-        snow: () => clouds(3) + snow(22),
+        snow: () => clouds(3) + snow(34),
         hot: () => sun() + heat(4),
         windy: () => clouds(2) + gusts(4),
     };

@@ -266,7 +266,8 @@ html.dark .bv-text { color: #e8efe1; }
                     <path d="M20 48h16" stroke="#c98a12" stroke-width="2" stroke-linecap="round"/>
                 </g>
             </svg>
-    
+        </span>
+
         {{-- Forty more, so a wait stops looking like one animation with the
              words changed. Same palette, shared motions. --}}
         <span class="bv-s bv-hat {{ $waitScene === 'hat' ? 'is-on' : '' }}" data-scene="hat">
