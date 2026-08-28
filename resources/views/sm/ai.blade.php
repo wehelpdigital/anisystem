@@ -840,7 +840,13 @@ const __init = () => {
          * different question than the one about to be sent. */
         const planOn = byId('aiUsePlan')?.getAttribute('aria-pressed') === 'true';
         const planTin = planOn ? Number(byId('aiUsePlan')?.dataset.planTokens || 0) : 0;
-        const tin = Math.ceil(msg.length / 4) + 900 + planTin;
+        /* What a question weighs before its own words: the house prompt
+           and the persona, measured server-side from the text actually
+           sent, plus room for the turns before it. Not a number typed
+           in here — there are four of these composers, and four copies
+           of one constant is four chances to disagree with the wall. */
+        const OVERHEAD = @json(\App\Services\AiCreditService::overheadTokens());
+        const tin = Math.ceil(msg.length / 4) + OVERHEAD + planTin;
         const cost = Math.max(.01, Math.round((tin / 1000 * PRICE.inK + PRICE.halfOut / 1000 * PRICE.outK + shots * PRICE.img) * 100) / 100);
         hint.textContent = planOn
             ? `≈ ${cost} credits — the season is attached`

@@ -107,11 +107,32 @@ class AiCreditService
      * A conservative pre-flight estimate, so a client with an empty balance is
      * told before the provider is called rather than after.
      */
+    /**
+     * What every question carries before its own text.
+     *
+     * The instructions the provider is actually given -- house rules, persona,
+     * the faces -- measured rather than guessed, because they are edited from
+     * the mother app and grew by half again the day Anee learned to react. On
+     * top of that, room for the earlier turns of the chat, which cannot be
+     * known while somebody is still typing.
+     *
+     * Static and argument-free so the four composers can quote the same number
+     * without each being handed a settings row.
+     */
+    public static function overheadTokens(?AiSetting $settings = null): int
+    {
+        $settings = $settings ?: AiSetting::current();
+
+        // ~4 characters per token is the usual rough rule.
+        return (int) ceil(mb_strlen($settings->instructions()) / 4) + self::HISTORY_ALLOWANCE;
+    }
+
+    /** Room for the turns before this one, which nobody can count in advance. */
+    private const HISTORY_ALLOWANCE = 400;
+
     public function estimate(AiSetting $settings, string $prompt, int $images = 0): float
     {
-        // ~4 characters per token is the usual rough rule; the system prompt
-        // and history add a fixed overhead.
-        $promptTokens = (int) ceil(mb_strlen($prompt) / 4) + 900;
+        $promptTokens = (int) ceil(mb_strlen($prompt) / 4) + self::overheadTokens($settings);
 
         return $this->priceFor($settings, $promptTokens, (int) $settings->maxOutputTokens / 2, $images);
     }
