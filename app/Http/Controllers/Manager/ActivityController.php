@@ -391,6 +391,41 @@ class ActivityController extends BaseScheduleController
     }
 
     /**
+     * The star somebody put on this line, and its colour.
+     *
+     * A marker, not a meaning. The board already has priority, status, type
+     * and tags, and every one of them argues with the reader about what it
+     * stands for. This one does not: eight colours and off, and what any of
+     * them means is between the person who set it and whoever they told.
+     *
+     * The colour arrives from the client rather than being cycled here, so
+     * two people tapping the same star at the same moment end up agreeing on
+     * a colour instead of racing each other round the ring.
+     */
+    public function setMarker(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        $id = (int) $request->input('id');
+        $activity = AsScheduleActivity::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->where('id', $id)
+            ->first();
+        if (! $activity) return $this->jsonFail('Activity not found.', 404);
+
+        $color = (int) $request->input('markerColor', 0);
+        if ($color < 0 || $color > 8) {
+            return $this->jsonFail('That is not one of the marker colours.', 422);
+        }
+
+        $activity->update(['markerColor' => $color]);
+        $this->broadcastBoard($schedule, 'marker', ['id' => $activity->id, 'markerColor' => $color], $activity->versionId);
+
+        return $this->jsonOk($color === 0 ? 'Marker cleared.' : 'Marker set.', [
+            'data' => ['id' => $activity->id, 'markerColor' => $color],
+        ]);
+    }
+
+    /**
      * Toggle the per-activity isDone flag. Done activities lock on the
      * timeline: no dragging, no full edit — only appended notes.
      */

@@ -1241,9 +1241,15 @@
                    lots onto their own line and the kebab onto a third. Capped
                    to the space the row has left, the box never triggers that
                    break and scrolls its tags internally instead. */
-                /* 8.5rem = the check, the type icon, the 44px kebab and the
-                   three gaps beside it, measured rather than guessed. */
-                flex: 0 1 auto; min-width: 0; max-width: calc(100% - 8.5rem); align-self: center;
+                /* 11rem = the 30px check, the 34px type icon, the 88px kebab
+                   and star together, and the three 8px gaps — measured in the
+                   browser rather than guessed, because guessing is how the
+                   old 8.5rem got there and the star tipped it over. Leave it
+                   short and the kebab and the star drop onto a row of their
+                   own underneath, which is exactly what this cap exists to
+                   stop; leave it long and the lot name loses letters it did
+                   not need to lose. */
+                flex: 0 1 auto; min-width: 0; max-width: calc(100% - 11rem); align-self: center;
                 position: relative; top: .18rem;
                 display: flex; flex-wrap: nowrap; gap: .25rem;
                 overflow-x: auto; scrollbar-width: none;
@@ -2280,6 +2286,42 @@
             border: 1px solid #eef0f3; background: #000; }
         html.dark .activity-card-images img,
         html.dark .activity-card-images video { border-color: var(--tl-border-soft); }
+
+        /* ---- THE STAR -------------------------------------------------
+           A marker somebody puts on a line for their own reasons. The board
+           already has priority, status, type and tags, and every one of them
+           argues with the reader about what it means; this one does not.
+
+           Eight colours and off. Each colour is a real <linearGradient>,
+           declared once for the whole page (see #actStarInks at the foot of
+           the board) and pointed at from here — CSS can hand `fill` a paint
+           server by url(), so the state lives in one data-attribute and the
+           JS renderer has nothing to say about colour at all. */
+        .star-btn { padding: .3rem; line-height: 0; }
+        .star-btn svg { width: 1.15rem; height: 1.15rem; display: block; }
+        /* Off: an outline, so the card says the marker exists without
+           claiming one has been set. */
+        .star-btn[data-star="0"] svg path { fill: none; stroke: var(--tl-text-faint, #b6bcc6); stroke-width: 1.7; }
+        .star-btn[data-star="0"]:hover svg path { stroke: #6b9f3d; }
+        /* On: the gradient, filled, no outline. */
+        .star-btn:not([data-star="0"]) svg path { stroke: none; }
+        .star-btn[data-star="1"] svg path { fill: url(#actStar1); }
+        .star-btn[data-star="2"] svg path { fill: url(#actStar2); }
+        .star-btn[data-star="3"] svg path { fill: url(#actStar3); }
+        .star-btn[data-star="4"] svg path { fill: url(#actStar4); }
+        .star-btn[data-star="5"] svg path { fill: url(#actStar5); }
+        .star-btn[data-star="6"] svg path { fill: url(#actStar6); }
+        .star-btn[data-star="7"] svg path { fill: url(#actStar7); }
+        .star-btn[data-star="8"] svg path { fill: url(#actStar8); }
+        /* A tap should feel like a tap. */
+        .star-btn { transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        .star-btn:active { transform: scale(.86); }
+        .star-btn.is-turning { animation: starPop .34s cubic-bezier(.22,1,.36,1); }
+        @keyframes starPop { 40% { transform: scale(1.28) rotate(-9deg); } }
+        @media (prefers-reduced-motion: reduce) {
+            .star-btn, .star-btn:active { transition: none; transform: none; }
+            .star-btn.is-turning { animation: none; }
+        }
 
         /* Reference-file gallery in the sheet (thumb + remove) */
         .activity-image-thumb { position: relative; aspect-ratio: 1; border-radius: .6rem; overflow: hidden; border: 1px solid #e5e7eb; background: #f3f4f6; }
@@ -3564,6 +3606,25 @@
 @include('sm.partials.note-editor')
 @include('sm.partials.note-lightbox')
 @include('sm.partials.attach-media')
+
+{{-- The eight inks a star can be dipped in.
+     Declared once for the page and pointed at by id from the stylesheet, so
+     a board holding two hundred stars holds one copy of each gradient. Kept
+     out of the flow (not display:none — a hidden paint server is still a
+     valid one, but a zero-size svg is the safer way to say it). --}}
+<svg id="actStarInks" width="0" height="0" aria-hidden="true" focusable="false"
+     style="position:absolute;width:0;height:0;overflow:hidden">
+    <defs>
+        <linearGradient id="actStar1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8fd14f"/><stop offset="1" stop-color="#2f5219"/></linearGradient>
+        <linearGradient id="actStar2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fde047"/><stop offset="1" stop-color="#b45309"/></linearGradient>
+        <linearGradient id="actStar3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fdba74"/><stop offset="1" stop-color="#c2410c"/></linearGradient>
+        <linearGradient id="actStar4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fda4af"/><stop offset="1" stop-color="#be123c"/></linearGradient>
+        <linearGradient id="actStar5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0abfc"/><stop offset="1" stop-color="#a21caf"/></linearGradient>
+        <linearGradient id="actStar6" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c4b5fd"/><stop offset="1" stop-color="#5b21b6"/></linearGradient>
+        <linearGradient id="actStar7" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7dd3fc"/><stop offset="1" stop-color="#0369a1"/></linearGradient>
+        <linearGradient id="actStar8" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6ee7b7"/><stop offset="1" stop-color="#0f766e"/></linearGradient>
+    </defs>
+</svg>
 @include('community.partials.video-js')
 @endpush
 

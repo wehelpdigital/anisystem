@@ -237,6 +237,18 @@
             <button type="button" class="icon-btn card-menu-btn md:hidden done-hide" data-id="{{ $a->id }}" data-name="{{ $a->activityTitle }}" title="Actions">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
             </button>
+            {{-- A star, and nothing behind it.
+                 The board already tells you a line's priority, its type, its
+                 status and its tags. This one is not another of those: it is
+                 a mark somebody put here for a reason they never had to give
+                 the app. Tap to move it round eight colours and off again.
+                 Twin of the star in renderActivityCard(). --}}
+            <button type="button" class="icon-btn star-btn{{ $lockCls }}" data-star-btn data-id="{{ $a->id }}"
+                    data-star="{{ (int) ($a->markerColor ?? 0) }}" @disabled(! $mayEdit)
+                    title="{{ $editTitle('Marker — tap to change its colour') }}"
+                    aria-label="Marker colour {{ (int) ($a->markerColor ?? 0) }} of 8">
+                <svg viewBox="0 0 24 24" stroke-linejoin="round"><path d="m12 3.4 2.63 5.33 5.88.86-4.25 4.15 1 5.86L12 16.85l-5.26 2.75 1-5.86-4.25-4.15 5.88-.86z"/></svg>
+            </button>
         </div>
     </div>
     @if($a->description)

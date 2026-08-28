@@ -361,6 +361,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-activities-delete', [App\Http\Controllers\Manager\ActivityController::class, 'destroy'])->name('sm.activities.destroy');
     Route::post('/app/sm-activities-image-upload', [App\Http\Controllers\Manager\ActivityController::class, 'uploadImage'])->name('sm.activities.image-upload');
     Route::post('/app/sm-activities-toggle-hidden', [App\Http\Controllers\Manager\ActivityController::class, 'toggleHidden'])->name('sm.activities.toggle-hidden');
+    Route::post('/app/sm-activities-marker', [App\Http\Controllers\Manager\ActivityController::class, 'setMarker'])->name('sm.activities.marker');
     Route::post('/app/sm-activities-toggle-done', [App\Http\Controllers\Manager\ActivityController::class, 'toggleDone'])->name('sm.activities.toggle-done');
     Route::post('/app/sm-activities-append-note', [App\Http\Controllers\Manager\ActivityController::class, 'appendNote'])->name('sm.activities.append-note');
 

@@ -184,6 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lotStore:         ()  => `{{ route('sm.lots.store') }}?scheduleId=${SCHEDULE_ID}`,
         workerStore:      ()  => `{{ route('sm.workers.store') }}?scheduleId=${SCHEDULE_ID}`,
         toggleHidden:     (id) => `{{ route('sm.activities.toggle-hidden') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
+        marker:           ()  => `{{ route('sm.activities.marker') }}?scheduleId=${SCHEDULE_ID}`,
         toggleDone:       (id) => `{{ route('sm.activities.toggle-done') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
         appendNote:       (id) => `{{ route('sm.activities.append-note') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
         duplicate:        (id) => `{{ route('sm.activities.duplicate') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
@@ -330,6 +331,9 @@ document.addEventListener('DOMContentLoaded', () => {
         duplicate: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>',
         archive: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>',
         kebab: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>',
+        // No class and no fill here: the stylesheet paints it from the
+        // button's data-star, which is the only place the colour lives.
+        star: '<svg viewBox="0 0 24 24" stroke-linejoin="round"><path d="m12 3.4 2.63 5.33 5.88.86-4.25 4.15 1 5.86L12 16.85l-5.26 2.75 1-5.86-4.25-4.15 5.88-.86z"/></svg>',
         star: '<svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>',
         clock: '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
         water: '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3s6 6.686 6 11a6 6 0 11-12 0c0-4.314 6-11 6-11z"/></svg>',
@@ -1005,6 +1009,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button type="button" class="icon-btn icon-btn-danger delete-activity-btn${LOCK_EDIT_CLS}" data-id="${a.id}" data-name="${nameAttr}"${LOCK_EDIT} title="${esc(editTitle('Delete'))}">${SVG.trash}</button>
             </div>
             <button type="button" class="icon-btn card-menu-btn md:hidden done-hide" data-id="${a.id}" data-name="${nameAttr}" title="Actions">${SVG.kebab}</button>
+            <button type="button" class="icon-btn star-btn${LOCK_EDIT_CLS}" data-star-btn data-id="${a.id}" data-star="${starOf(a)}"${LOCK_EDIT} title="${esc(editTitle('Marker — tap to change its colour'))}" aria-label="Marker colour ${starOf(a)} of 8">${SVG.star}</button>
         </div>
     </div>
     ${descHtml ? `<div class="activity-description-content text-sm text-gray-700 mt-2" data-lightbox>${descHtml}</div>` : ''}
@@ -4770,6 +4775,51 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    /* ---- The star -------------------------------------------------------
+     *
+     * A marker, not a meaning. Eight colours and off, and the app never asks
+     * what any of them stands for — which is the whole point: the board's
+     * other marks (priority, type, status, tags) all come with an argument
+     * about what they mean, and sometimes a person just wants to put a dot
+     * next to a line.
+     *
+     * The colour lives in one place, data-star, and the stylesheet paints
+     * from it. Nothing here knows a hex value. */
+    const STAR_INKS = 8;
+
+    /** What colour a card arrives wearing. */
+    function starOf(a) {
+        const n = parseInt(a?.markerColor ?? 0, 10);
+        return (Number.isFinite(n) && n >= 0 && n <= STAR_INKS) ? n : 0;
+    }
+
+    async function turnStar(btn) {
+        if (!CAN_EDIT) { toast(WHY_NO_EDIT, 'error'); return; }
+        const id = btn.getAttribute('data-id');
+        const was = parseInt(btn.getAttribute('data-star') || '0', 10) || 0;
+        const next = (was + 1) % (STAR_INKS + 1);   // …8 → off → 1…
+
+        // Painted before it is saved: a marker that waits for the network to
+        // agree is a marker you tap twice.
+        const paint = (v) => {
+            $qsa(`[data-star-btn][data-id="${id}"]`).forEach((b) => {
+                b.setAttribute('data-star', String(v));
+                b.setAttribute('aria-label', `Marker colour ${v} of ${STAR_INKS}`);
+            });
+        };
+        paint(next);
+        btn.classList.remove('is-turning');
+        void btn.offsetWidth;                       // restart the pop
+        btn.classList.add('is-turning');
+
+        try {
+            await api(U.marker(), { method: 'POST', body: { id, markerColor: next } });
+        } catch (err) {
+            paint(was);
+            toast(err.message, 'error');
+        }
+    }
+
     // Single-card move-to-date (mobile fallback for drag & drop).
     let CARD_MENU = { id: null, name: '' };
     let INFO_ID = null;
@@ -5756,6 +5806,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (hideBtn) {
             const done = spinBtn(hideBtn);
             if (done) Promise.resolve(toggleActivityHidden(hideBtn.getAttribute('data-id'))).finally(done);
+            return;
+        }
+        const starBtn = e.target.closest('[data-star-btn]');
+        if (starBtn) {
+            turnStar(starBtn);
             return;
         }
         const menuBtn = e.target.closest('.card-menu-btn');
@@ -10315,6 +10370,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     case 'deleted': if (d.id) _removeCardById(d.id); break;
                     case 'toggle-done': { const c = cardOf(d.id); if (c) applyDoneState(c, !!d.isDone); break; }
                     case 'toggle-hidden': { const c = cardOf(d.id); if (c) { c.classList.toggle('is-hidden', !!d.isHidden); refreshHiddenActivityCount(); } break; }
+                    // Somebody else moved the star. It is a mark on a shared
+                    // board, so it changes colour under everyone at once.
+                    case 'marker': { $qsa(`[data-star-btn][data-id="${d.id}"]`).forEach((b) => b.setAttribute('data-star', String(d.markerColor ?? 0))); break; }
                     case 'set-date': { const c = cardOf(d.id); if (c) { c.setAttribute('data-target-date', d.targetDate); reorderAndRenumberActivities(true); } break; }
                     case 'reordered': applyReorder(d.items); break;
                     // Async, so the switch's own try/catch cannot see it fail:
