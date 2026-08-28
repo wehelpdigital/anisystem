@@ -94,34 +94,35 @@
            The bubble is bigger than the plain one it replaces because it now
            holds two drawings, and it clips — a raincloud drawn to the edge of
            a circle should stop at the circle. */
-        .sch-hero-mark { position: relative; width: 3.6rem; height: 3.6rem;
-            overflow: hidden; background: rgb(255 255 255 / .7); }
+        /* THE MARK: a calendar, centred, and nothing else in the bubble. */
+        .sch-hero-mark { width: 3.6rem; height: 3.6rem; overflow: hidden;
+            background: rgb(255 255 255 / .7); }
         html.dark .sch-hero-mark { background: rgb(0 0 0 / .4); }
-        /* The sky fills the bubble exactly. It was overflowing by an eighth,
-           which put the moon in the corner and cut the raindrops off below
-           the crop — a picture of rain with the rain outside the frame.
-           Opacity high, because this is the half somebody is reading: the
-           calendar tells you nothing you did not know from the page's name. */
-        .sch-hero-wx { position: absolute; inset: 9% 9% 13%; display: flex;
-            align-items: center; justify-content: center; opacity: .95; }
-        .sch-hero-wx .wx-sky { width: 100%; height: 100%; }
-        /* The calendar sits in the corner of its own weather rather than in
-           the middle of it. Two drawings stacked concentric in a 58-pixel
-           circle is one shape nobody can read; offset, both survive. */
-        .sch-hero-cal { position: absolute; right: 2px; bottom: 1px; z-index: 1;
-            line-height: 0;
-            filter: drop-shadow(0 0 2px rgb(255 255 255 / .98))
-                    drop-shadow(0 0 4px rgb(255 255 255 / .9))
-                    drop-shadow(0 1px 1px rgb(255 255 255 / .9)); }
-        html.dark .sch-hero-cal { filter: drop-shadow(0 0 2px rgb(21 27 18 / .98))
-                    drop-shadow(0 0 4px rgb(21 27 18 / .9))
-                    drop-shadow(0 1px 1px rgb(21 27 18 / .9)); }
-        .sch-hero-cal svg { width: 1.5rem; height: 1.5rem; }
-        /* No weather yet — the calendar has the bubble to itself and sits
-           where a lone icon should, in the middle. */
-        .sch-hero-mark:not(.has-wx) .sch-hero-cal { position: relative;
-            right: auto; bottom: auto; }
-        .sch-hero-mark:not(.has-wx) .sch-hero-cal svg { width: 2rem; height: 2rem; }
+        .sch-hero-mark svg { width: 2.1rem; height: 2.1rem; }
+
+        /* THE SKY, behind the whole card.
+           Three of it, spread and offset, rather than one big watermark: a
+           single cloud stretched across a card reads as a picture of a cloud,
+           and three passing over it read as weather. They keep their own
+           animations, so the rain falls and the sun turns.
+           Whatever is on the card sits above this — see the z-index below,
+           which is the only reason the numbers stay readable. */
+        .sch-hero-sky { position: absolute; inset: 0 -.6rem; z-index: 0;
+            pointer-events: none; display: flex; align-items: center;
+            justify-content: space-between; opacity: .22; }
+        html.dark .sch-hero-sky { opacity: .3; }
+        /* Bigger than they look they need to be: at six rem the raindrops
+           under a cloud are two pixels long and the whole thing reads as a
+           grey smudge. The size is what makes it legible as WEATHER rather
+           than as a texture. */
+        .sch-hero-sky .wx-sky { flex: 0 0 auto; width: 7.5rem; height: 7.5rem; }
+        .sch-hero-sky .wx-sky:nth-child(1) { transform: translateY(-24%) scale(.78); }
+        .sch-hero-sky .wx-sky:nth-child(2) { transform: translateY(18%) scale(1.02); }
+        .sch-hero-sky .wx-sky:nth-child(3) { transform: translateY(-14%) scale(.88); }
+        /* Content over weather. Without this the stat tiles are opaque boxes
+           sitting ON the sky rather than in front of it, and the sky stops
+           halfway across the card. */
+        .sch-hero-left, .sch-hero-stats { position: relative; z-index: 1; }
 
         /* The shelf's own badge: field green, like the page it heads. */
         .sch-hero-emoji.is-plan { background: linear-gradient(135deg, #eef6e4, #d5e8bd); color: #4a7c2a; }
@@ -660,6 +661,13 @@
          weather is the thing the words do NOT say, and it is what decides
          whether today's plan survives contact with the morning. --}}
     <div class="sch-hero fs-pane fs-hue-sky" id="schHero">
+        {{-- The weather, across the whole card and well behind everything on
+             it. Faded almost to nothing on purpose: this is meant to be read
+             the way you read a room's light rather than the way you read a
+             label — you look up, and the card is raining. The gradient tint
+             is the same forecast said a second way, and the two sit on top of
+             each other because they are the same fact. --}}
+        <span class="sch-hero-sky" id="schHeroSky" aria-hidden="true"></span>
         @php
             // No hour in the greeting any more. This page is a list of
             // schedules, and "Good evening" was a second thing to read before
@@ -679,21 +687,12 @@
             }
         @endphp
         <div class="sch-hero-left">
-            {{-- A calendar, with the weather happening behind it.
-
-                 The panel's tint says roughly what kind of day it is; this
-                 says it plainly. If it is raining, it is raining behind the
-                 calendar — cloud, drops and all — and a farmer glancing at
-                 this page learns the one thing that decides whether any of
-                 the plan below survives the morning.
-
-                 Two layers, not one drawing: the calendar is what this page
-                 IS, and it must not be replaced by the sky. It sits on top
-                 with a white halo so it stays legible against a storm. --}}
-            <span class="sch-hero-emoji sch-hero-mark" id="schHeroMark" title="Your seasons, day by day">
-                <span class="sch-hero-wx" id="schHeroWx" aria-hidden="true"></span>
-                <span class="sch-hero-cal fs-slot" data-fs-act="quiet" data-fs-size="30"></span>
-            </span>
+            {{-- A calendar, and only a calendar. The weather is behind the
+                 whole card now — sharing a bubble the size of a thumbnail
+                 with a raincloud made two drawings out of which neither
+                 could be read. --}}
+            <span class="sch-hero-emoji sch-hero-mark fs-slot" id="schHeroMark"
+                  data-fs-act="quiet" data-fs-size="34" title="Your seasons, day by day"></span>
             <div class="min-w-0">
                 <h1 class="sch-hero-h">Here are your cropping schedules for today</h1>
                 <p class="sch-hero-p">{!! $__say !!}</p>
@@ -1531,20 +1530,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!hue) return;
             hero.className = hero.className.replace(/\bfs-hue-\S+/g, '').trim() + ' ' + hue;
 
-            /* And the sky itself, behind the calendar. The panel's tint says
-             * roughly; this says which. A drawing arriving where there was
-             * none reads as the page finishing, not as it changing its mind
-             * — which is why the calendar in front never moves. */
-            const sky = document.getElementById('schHeroWx');
-            const mark = document.getElementById('schHeroMark');
+            /* And the weather itself, drifting across the card behind
+             * everything on it. The tint says roughly; this says which.
+             * Nothing on the card moves to make room — it appears behind, so
+             * the page reads as finishing rather than as changing its mind. */
+            const sky = document.getElementById('schHeroSky');
             if (sky && window.wxSky) {
-                sky.innerHTML = window.wxSky(key);
-                // Only now does the calendar step aside; until the forecast
-                // answers it has the bubble to itself, which is the right
-                // picture for "we do not know yet".
-                mark && mark.classList.add('has-wx');
+                sky.innerHTML = window.wxSky(key) + window.wxSky(key) + window.wxSky(key);
             }
             const meta = (window.WX_SKIES || {})[key];
+            const mark = document.getElementById('schHeroMark');
             if (mark && meta && meta.label) {
                 mark.setAttribute('title', meta.label + ' — your seasons, day by day');
             }
