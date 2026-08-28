@@ -133,7 +133,7 @@ class OuterHelpPageSeeder extends Seeder
                 $this->callout('A closed room is still findable — its name, cover and size show — but nothing said inside it does.'),
             ]],
 
-            'community-members' => ['How to use Members', 'Every farmer on AniSenso, and how to reach them.', [
+            'community-members' => ['How to use Members', 'Every farmer on anee.io, and how to reach them.', [
                 $this->t('Members is the whole list. Search it, follow somebody, or send a request to become co-farmers.'),
                 $this->tips([
                     'Follow is one-way: you see their posts, they need not see yours.',

@@ -179,7 +179,7 @@ class CommunityWorldSeeder extends Seeder
     private function seedWall($people, User $demo): void
     {
         $posts = [
-            ['wall' => $demo, 'author' => $people[0], 'body' => 'Welcome to AniSystem! Your wet-season plan looks solid. 🌾', 'comments' => [
+            ['wall' => $demo, 'author' => $people[0], 'body' => 'Welcome to anee.io! Your wet-season plan looks solid. 🌾', 'comments' => [
                 ['user' => $demo, 'body' => 'Salamat po, Aling Rosa!'],
             ]],
             ['wall' => $demo, 'author' => $people[1], 'body' => 'Let us swap notes on urea timing this season.', 'comments' => []],

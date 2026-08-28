@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Technician's Blog: articles the AniSenso team publishes for the community
+ * Technician's Blog: articles the anee.io team publishes for the community
  * (managed in the mother app), plus members' comments. Shown beside the
- * Discussions tab in AniSystem. House conventions: camelCase, integer
+ * Discussions tab in anee.io. House conventions: camelCase, integer
  * deleteStatus, no FK.
  */
 return new class extends Migration

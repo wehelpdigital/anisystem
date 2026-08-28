@@ -6,9 +6,9 @@
 <div class="bg-gray-50 py-10 md:py-16 px-4 min-h-[70vh] flex items-start justify-center">
     <div class="w-full max-w-md">
         <div class="text-center mb-6">
-            <img src="{{ asset('images/logo.png') }}" alt="AniSystem" class="h-12 w-auto mx-auto mb-4">
+            <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="h-12 w-auto mx-auto mb-4">
             <h1 class="text-2xl font-bold text-gray-900">Set a new password</h1>
-            <p class="text-sm text-gray-500 mt-1">Choose a strong password for your AniSystem account.</p>
+            <p class="text-sm text-gray-500 mt-1">Choose a strong password for your anee.io account.</p>
         </div>
 
         <div class="card card-body">

@@ -33,6 +33,8 @@ return new class extends Migration
             $t->increments('id');
             // Which mail group and template this came from, for the mother
             // app's list. Free text: a one-off email has no template.
+            // The mailer's group, not the app's name: it matches rows in the
+            // mother app's tables, which have not been renamed.
             $t->string('groupKey', 40)->default('AniSystem');
             $t->string('templateKey', 60)->nullable()->index();
 

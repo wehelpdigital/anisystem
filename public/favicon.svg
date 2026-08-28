@@ -1,6 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#2d5016"/>
-  <path d="M32 50c0-14 4-24 18-30-1 13-5 24-18 30z" fill="#6b9f3d"/>
-  <path d="M32 50c0-14-4-24-18-30 1 13 5 24 18 30z" fill="#f5c518"/>
-  <rect x="30.5" y="38" width="3" height="14" rx="1.5" fill="#e8f0dc"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="anee.io">
+  <title>anee.io</title>
+  <rect width="64" height="64" rx="13" fill="#2B3A1C"/>
+  <!-- Two leaves, each a lens struck by two arcs of DIFFERENT radius: the
+       outer edge bulges half again as far as the inner one, which is what
+       stops them reading as symmetrical almonds. Both radii are measured off
+       the artwork rather than guessed — 0.57 and 0.70 of the chord between
+       the tip and the point where the two leaves meet.
+
+       The stroke is the ground's own colour, which is how the artwork gets
+       the dark seam down the middle of the V: it is not a line drawn between
+       the leaves, it is each leaf's outline, and the two of them together
+       leave a gap. The mark is drawn a shade larger to pay for what the
+       stroke eats. -->
+  <g stroke="#2B3A1C" stroke-width="1.8" stroke-linejoin="round">
+    <path d="M31.93 48.6 A23.41 23.41 0 0 0 3 19.4 A28.79 28.79 0 0 0 31.93 48.6 Z" fill="#E8BE1C"/>
+    <path d="M32.07 48.6 A23.41 23.41 0 0 1 61 19.4 A28.79 28.79 0 0 1 32.07 48.6 Z" fill="#87B84C"/>
+  </g>
 </svg>

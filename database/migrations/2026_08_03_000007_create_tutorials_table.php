@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Tutorial videos — a help library the AniSenso team curates (managed in the
+ * Tutorial videos — a help library the anee.io team curates (managed in the
  * mother app). Each entry is a YouTube video with a cover, title and blurb,
  * grouped by category. Shown as its own page beside Community and Support.
  */

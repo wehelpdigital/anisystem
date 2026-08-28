@@ -8,7 +8,7 @@ namespace App\Models;
  * the legacy `usersId` owner column is kept for mother-app compatibility.
  *
  * Generation/calendar/report relations from the mother app are intentionally
- * NOT ported — AniSystem exposes only the planning surface.
+ * NOT ported — anee.io exposes only the planning surface.
  */
 class AsCroppingSchedule extends BaseModel
 {
@@ -97,7 +97,7 @@ class AsCroppingSchedule extends BaseModel
     }
 
     /**
-     * AniSystem client scoping — clients only ever see their own schedules.
+     * anee.io client scoping — clients only ever see their own schedules.
      */
     /**
      * The seasons this request may see of one client's farm.
@@ -121,7 +121,7 @@ class AsCroppingSchedule extends BaseModel
         return $q;
     }
 
-    /** The AniSystem client who owns this schedule. */
+    /** The anee.io client who owns this schedule. */
     public function owner()
     {
         return $this->belongsTo(User::class, 'anisystemUserId');

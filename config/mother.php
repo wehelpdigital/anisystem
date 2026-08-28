@@ -7,7 +7,7 @@ return [
     | The mother app
     |--------------------------------------------------------------------------
     |
-    | Dragonscale Axis: the admin app AniSystem shares a database with, and
+    | Dragonscale Axis: the admin app anee.io shares a database with, and
     | now its media store too. Kept in the environment rather than hard-coded
     | so the host can move without a deploy of this app's code.
     |

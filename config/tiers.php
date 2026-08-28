@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AniSystem subscription tiers. Prices here are for DISPLAY only — the real,
+ * anee.io subscription tiers. Prices here are for DISPLAY only — the real,
  * chargeable price lives in the mother app's ecom products / variants
  * (/ecom-products-variants) and flows in via the Plan/Subscription records.
  *

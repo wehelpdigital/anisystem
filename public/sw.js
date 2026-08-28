@@ -1,4 +1,4 @@
-/* AniSystem service worker.
+/* anee.io service worker.
  *
  * Deliberately thin. This app is a live record of a farm — a stale page
  * served from a cache is worse than a page that says it cannot reach the
@@ -8,7 +8,9 @@
  * the background.
  */
 const OFFLINE_URL = '/offline.html';
-const CACHE = 'anisystem-shell-v1';
+// Bumped with the rebrand: the old cache holds the old icon, and a
+// service worker that keeps its key goes on serving it.
+const CACHE = 'anee-shell-v2';
 
 self.addEventListener('install', (event) => {
     event.waitUntil(
@@ -39,7 +41,7 @@ self.addEventListener('fetch', (event) => {
 self.addEventListener('push', (event) => {
     let data = {};
     try { data = event.data ? event.data.json() : {}; } catch (_) { data = { title: event.data && event.data.text() }; }
-    const title = data.title || 'AniSystem';
+    const title = data.title || 'anee.io';
     event.waitUntil(self.registration.showNotification(title, {
         body: data.body || '',
         icon: '/images/pwa/icon-192.png',

@@ -77,7 +77,7 @@
     </nav>
 
     @php
-        $byline = trim((string) $post->authorName) ?: 'AniSenso Team';
+        $byline = trim((string) $post->authorName) ?: 'anee.io Team';
         $bylineInitials = \Illuminate\Support\Str::of($byline)->explode(' ')
             ->filter()->take(2)->map(fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)))->implode('');
     @endphp

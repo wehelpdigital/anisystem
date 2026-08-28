@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Carbon;
 
 /**
- * Creates in-app notifications for AniSystem clients. Community features call
+ * Creates in-app notifications for anee.io clients. Community features call
  * notify() when someone comments/replies/connects; subscription expiry is
  * synced lazily on page load via syncExpiryReminder().
  */

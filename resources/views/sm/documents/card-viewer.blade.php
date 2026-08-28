@@ -1032,7 +1032,7 @@
 
             {{-- Document foot — generated date + page marker --}}
             <div class="cv-cover-foot">
-                <span>AniSystem by AniSenso &middot; Generated {{ $generatedAt->format('M j, Y') }}</span>
+                <span>anee.io &middot; Generated {{ $generatedAt->format('M j, Y') }}</span>
                 <span>Cover &middot; Page 1 of {{ count($slides) + 1 }}</span>
             </div>
         </div> {{-- /.cv-slide-body --}}

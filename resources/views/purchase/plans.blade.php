@@ -19,7 +19,7 @@
         <div class="card max-w-md mx-auto">
             <div class="card-body text-center py-10">
                 <p class="font-semibold text-gray-800">No plans are available right now.</p>
-                <p class="text-sm text-gray-500 mt-1">Please check back soon or contact support at support@anisenso.com.</p>
+                <p class="text-sm text-gray-500 mt-1">Please check back soon or contact support at support@anee.io.</p>
             </div>
         </div>
     @else
@@ -62,7 +62,7 @@
         </div>
 
         <p class="text-center text-xs text-gray-500 mt-6 max-w-md mx-auto">
-            Payments are verified manually by the AniSenso team. Your subscription starts the moment
+            Payments are verified manually by the anee.io team. Your subscription starts the moment
             your GCash payment is approved — you'll get an email confirmation.
         </p>
     @endif

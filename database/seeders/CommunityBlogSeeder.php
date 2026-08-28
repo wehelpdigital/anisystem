@@ -28,7 +28,7 @@ class CommunityBlogSeeder extends Seeder
             ],
             [
                 'title' => 'Reading your labour report before you spend',
-                'author' => 'AniSenso Team',
+                'author' => 'anee.io Team',
                 'excerpt' => 'Your worker-days are money. Here is how to spot an expensive week early.',
                 'body' => '<p>Open <strong>Reports → Labour Report</strong> and look at the per-phase totals. If land-prep labour is climbing past a third of your season budget, something is off — usually too many whole-day tasks stacked on the same dates.</p>'
                     . '<h3>Three quick checks</h3><ol><li>Spread heavy tasks across days instead of piling them on one.</li>'
@@ -45,7 +45,7 @@ class CommunityBlogSeeder extends Seeder
             ],
             [
                 'title' => 'Post-harvest: turning a good season into next season\'s plan',
-                'author' => 'AniSenso Team',
+                'author' => 'anee.io Team',
                 'excerpt' => 'Yield, moisture, buyer, price — capture it now while the numbers are fresh.',
                 'body' => '<p>The moment the harvest is weighed, open <strong>Reports → Post-Harvest Report</strong> and enter your yield and the price you got. The app subtracts materials, services, labour and your extra expenses so you see the real net — not just the gross.</p>'
                     . '<p>Save it as a copy. Next season you plan from real figures instead of memory, and you can compare lots side by side to see which ones actually paid.</p>',
@@ -59,7 +59,7 @@ class CommunityBlogSeeder extends Seeder
             ],
             [
                 'title' => 'Building healthy soil between seasons',
-                'author' => 'AniSenso Team',
+                'author' => 'anee.io Team',
                 'excerpt' => 'The fallow is not downtime — it is when next season\'s yield is decided.',
                 'body' => '<p>What you do between crops matters as much as what you do during them. Incorporate rice straw instead of burning it, and you return organic matter and potassium to the soil for free.</p>'
                     . '<p>Consider a short mungbean cover crop: it fixes nitrogen, smothers weeds, and gives you a small harvest before the next main crop.</p>',
@@ -81,7 +81,7 @@ class CommunityBlogSeeder extends Seeder
             ],
             [
                 'title' => 'Water management for higher yields',
-                'author' => 'AniSenso Team',
+                'author' => 'anee.io Team',
                 'excerpt' => 'Alternate wetting and drying saves water and often lifts yield.',
                 'body' => '<p>Keeping the paddy flooded the whole season wastes water and can starve roots of oxygen. Try <strong>alternate wetting and drying</strong>: let the water drop to 15cm below the surface, then re-flood.</p>'
                     . '<p>Skip AWD during flowering — that stage needs steady water. Everywhere else, your pump bill drops and the crop rarely complains.</p>',
@@ -95,7 +95,7 @@ class CommunityBlogSeeder extends Seeder
             ],
             [
                 'title' => 'Selling smarter: reading the palay market',
-                'author' => 'AniSenso Team',
+                'author' => 'anee.io Team',
                 'excerpt' => 'Timing and quality move your price more than yield does.',
                 'body' => '<p>Everyone harvests at once, so prices dip at peak. If you can dry and store cleanly, holding a few weeks often pays. If you cannot, sell dry and clean — buyers dock wet, dirty grain hard.</p>'
                     . '<p>Track the price you actually got each season in your Post-Harvest reports; patterns appear after a year or two.</p>',
@@ -116,7 +116,7 @@ class CommunityBlogSeeder extends Seeder
             ],
             [
                 'title' => 'Climate-smart farming for the wet season',
-                'author' => 'AniSenso Team',
+                'author' => 'anee.io Team',
                 'excerpt' => 'Plan for the typhoon you hope never comes.',
                 'body' => '<p>Wet-season farming is risk management. Favour shorter-duration, lodging-resistant varieties, and stagger planting so one storm cannot flatten everything at once.</p>'
                     . '<p>Keep drainage canals clear before the rains, and mark a resume-here point in your schedule so you can pick up cleanly after a disruption.</p>',

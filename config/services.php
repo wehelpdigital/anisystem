@@ -32,7 +32,7 @@ return [
      */
     'resend' => [
         'key' => env('RESEND_KEY', env('RESEND_API_KEY')),
-        'from' => env('RESEND_FROM', 'AniSystem <onboarding@resend.dev>'),
+        'from' => env('RESEND_FROM', 'anee.io <onboarding@resend.dev>'),
     ],
 
     'ses' => [

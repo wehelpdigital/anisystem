@@ -13,7 +13,9 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    // The app's own name is the fallback, not the framework's. A server
+    // whose .env forgot APP_NAME should still say anee.io, not Laravel.
+    'name' => env('APP_NAME', 'anee.io'),
 
     /*
     |--------------------------------------------------------------------------

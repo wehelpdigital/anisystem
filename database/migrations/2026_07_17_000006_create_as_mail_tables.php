@@ -50,7 +50,7 @@ return new class extends Migration
                 'groupKey' => 'AniSystem',
                 'smtpPort' => 587,
                 'smtpEncryption' => 'tls',
-                'smtpFromName' => 'AniSystem',
+                'smtpFromName' => 'anee.io',
                 'isActive' => 0,
                 'deleteStatus' => 1,
                 'created_at' => $now,
@@ -65,7 +65,7 @@ return new class extends Migration
             return '<div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;padding:24px;color:#1f2937;">'
                 .'<h2 style="color:#2d5016;margin:0 0 16px;">{{siteName}}</h2>'
                 .$inner
-                .'<p style="margin-top:28px;font-size:12px;color:#6b7280;">This email was sent by {{siteName}} — the AniSenso cropping schedule manager.</p>'
+                .'<p style="margin-top:28px;font-size:12px;color:#6b7280;">This email was sent by {{siteName}} — the anee.io cropping schedule manager.</p>'
                 .'</div>';
         };
 

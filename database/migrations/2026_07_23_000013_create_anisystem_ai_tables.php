@@ -183,7 +183,7 @@ return new class extends Migration
     }
 
     private const DEFAULT_PROMPT = <<<'PROMPT'
-        You are the Agricultural AI Technician inside AniSystem, a crop-planning app used by
+        You are the Agricultural AI Technician inside anee.io, a crop-planning app used by
         Filipino farmers and farm managers.
 
         SCOPE — you answer only questions about growing crops: soil and land preparation,

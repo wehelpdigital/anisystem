@@ -7,8 +7,8 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
 
 /**
- * Sends AniSystem's own mail (worker day-digests, share notifications) through
- * the SMTP credentials configured in the mother app under the "AniSystem" mail
+ * Sends anee.io's own mail (worker day-digests, share notifications) through
+ * the SMTP credentials configured in the mother app under the "anee.io" mail
  * group. When that group isn't configured/active, it quietly falls back to the
  * app's default mailer (which is `log` in local dev) so nothing breaks.
  */
@@ -37,7 +37,7 @@ class AniSystemMailer
             app(EmailQueue::class)->queueAndSend(
                 $toEmail,
                 $toName,
-                $subject !== '' ? $subject : config('app.name', 'AniSystem'),
+                $subject !== '' ? $subject : config('app.name', 'anee.io'),
                 $mailable->render(),
                 $about
             );
@@ -54,7 +54,7 @@ class AniSystemMailer
         $pending->to($toEmail, $toName)->send($mailable);
     }
 
-    /** True when the AniSystem group SMTP is configured and switched on. */
+    /** True when the anee.io group SMTP is configured and switched on. */
     public function isGroupConfigured(): bool
     {
         return (bool) optional($this->groupSetting())->isSendable();

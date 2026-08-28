@@ -219,12 +219,12 @@
                      the house itself signs your name. --}}
                 <div class="card rk-cert" data-animate-rows>
                     <div class="rk-cert-seal" aria-hidden="true">
-                        <img src="{{ asset('images/logo.png') }}" alt="">
+                        <img src="{{ asset('images/logo-mark.png') }}?v=anee" alt="">
                     </div>
                     <div class="rk-cert-txt">
                         <i class="rk-cert-kicker">The Level 50 prize</i>
                         <b>Harvest Hero Certification</b>
-                        <span>Reach Level 50 and AniSenso certifies you a <b>Harvest Hero</b> — an official certification carrying the AniSenso seal, with your name on it, yours to show wherever farmers gather.</span>
+                        <span>Reach Level 50 and anee.io certifies you a <b>Harvest Hero</b> — an official certification carrying the anee.io seal, with your name on it, yours to show wherever farmers gather.</span>
                     </div>
                     <span class="rk-gift rk-cert-gift" aria-hidden="true">🎁</span>
                 </div>

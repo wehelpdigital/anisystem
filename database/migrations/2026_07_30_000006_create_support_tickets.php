@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Support tickets raised by AniSystem clients and answered by admins in the
+ * Support tickets raised by anee.io clients and answered by admins in the
  * mother app. One ticket has a thread of messages (client + admin).
  */
 return new class extends Migration

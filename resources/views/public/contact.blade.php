@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('title', 'Contact Us')
-@section('meta_description', 'Get in touch with the AniSystem team. Questions about plans, GCash payments, or using the cropping schedule manager? Send us a message — we reply fast.')
+@section('meta_description', 'Get in touch with the anee.io team. Questions about plans, GCash payments, or using the cropping schedule manager? Send us a message — we reply fast.')
 
 @section('content')
 
@@ -90,7 +90,7 @@
                                 </span>
                                 <span>
                                     <span class="block font-semibold text-gray-900">Email</span>
-                                    <a href="mailto:support@anisenso.com" class="text-brand-700 hover:underline">support@anisenso.com</a>
+                                    <a href="mailto:support@anee.io" class="text-brand-700 hover:underline">support@anee.io</a>
                                 </span>
                             </li>
                             <li class="flex items-start gap-3">
@@ -109,7 +109,7 @@
                 <div class="relative overflow-hidden card border-transparent bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900">
                     <div class="absolute inset-0 bg-dot-grid opacity-40" aria-hidden="true"></div>
                     <div class="card-body relative">
-                        <h3 class="font-heading text-lg font-bold text-white">New to AniSystem?</h3>
+                        <h3 class="font-heading text-lg font-bold text-white">New to anee.io?</h3>
                         <p class="mt-2 text-sm text-brand-100 leading-relaxed">
                             The tutorial answers most questions about payments, plans and getting your first
                             season set up.

@@ -26,7 +26,7 @@ use Illuminate\Validation\Rule;
  * Activities module — faithful port of the mother app's ActivityController
  * (btc-check aniSensoAdmin\ScheduleManager\ActivityController) minus the
  * export / worker-presentation / card-viewer document endpoints, which live
- * in Manager\DocumentController in AniSystem.
+ * in Manager\DocumentController in anee.io.
  */
 class ActivityController extends BaseScheduleController
 {

@@ -57,7 +57,7 @@
             @else
                 <div class="rounded-xl bg-gray-50 border border-gray-200 px-4 py-4 text-sm text-gray-600 text-center">
                     GCash payment details will be provided by support. Please contact
-                    <span class="font-semibold">support@anisenso.com</span> to complete your payment.
+                    <span class="font-semibold">support@anee.io</span> to complete your payment.
                 </div>
             @endif
 

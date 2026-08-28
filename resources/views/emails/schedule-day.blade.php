@@ -36,7 +36,7 @@
                 </p>
             @endif
         </div>
-        <p style="text-align:center;font-size:11px;color:#9ca3af;margin:16px 0 0;">Sent with AniSystem</p>
+        <p style="text-align:center;font-size:11px;color:#9ca3af;margin:16px 0 0;">Sent with anee.io</p>
     </div>
 </body>
 </html>

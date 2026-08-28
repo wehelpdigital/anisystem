@@ -66,7 +66,7 @@ class ScheduleDayDigest extends Mailable
             'tomorrow_date' => now('Asia/Manila')->addDay()->format('l, M j'),
             'today_count' => (string) $today,
             'tomorrow_count' => (string) $tomorrow,
-            'app_name' => 'AniSystem',
+            'app_name' => 'anee.io',
         ];
     }
 

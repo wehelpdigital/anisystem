@@ -40,10 +40,10 @@ class CommunityPublicController extends Controller
         return view('community.public-post', [
             'post' => $post,
             'shown' => $shown,
-            'ogTitle' => $author . ' on AniSystem',
+            'ogTitle' => $author . ' on anee.io',
             'ogDescription' => $body !== ''
                 ? Str::limit($body, 180)
-                : 'A post from the AniSystem farming community.',
+                : 'A post from the anee.io farming community.',
             'ogImage' => MediaStore::url($shown->imagePath ?: $shown->videoPoster) ?: asset('images/logo.png'),
         ]);
     }

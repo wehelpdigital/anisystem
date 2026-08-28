@@ -27,7 +27,7 @@ class EnsureSubscriptionActive
             return redirect()->route('login');
         }
 
-        // Mother-site super admins get full access without an AniSystem
+        // Mother-site super admins get full access without an anee.io
         // subscription (they're bridged in via SuperAdminBridge).
         if ($user->isSuperAdmin()) {
             return $next($request);

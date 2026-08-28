@@ -341,7 +341,7 @@ class CommunityGroupController extends Controller
             // Two pictures, two jobs: the badge is the room's face in a list,
             // the banner is what makes its own page look like somewhere.
             'banner' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
-            // Either picture may instead be pointed at in the AniSenso
+            // Either picture may instead be pointed at in the anee.io
             // gallery — a reference to a file that already exists rather than
             // a second copy of it.
             'imagePath' => 'nullable|string|max:500',

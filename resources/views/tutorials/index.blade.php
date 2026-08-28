@@ -2,7 +2,7 @@
 
 @section('title', 'Tutorials')
 @section('page-title', 'Tutorials')
-@section('page-subtitle', 'Learn AniSystem')
+@section('page-subtitle', 'Learn anee.io')
 
 @push('head')
 <style>

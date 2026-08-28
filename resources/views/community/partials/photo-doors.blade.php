@@ -48,7 +48,7 @@
         </button>
         <button type="button" class="pd-src" data-pd="gallery">
             <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l2-3h6l2 3h3v13H4V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 13l2.5-2.5L14 14l2-2 2 2"/></svg></span>
-            <span>From the AniSenso gallery<span class="sub">A photo your seasons already keep</span></span>
+            <span>From the anee.io gallery<span class="sub">A photo your seasons already keep</span></span>
         </button>
     </div>
 </div>

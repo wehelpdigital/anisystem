@@ -148,8 +148,8 @@ class User extends Authenticatable
     }
 
     /**
-     * A mother-site super admin bridged into AniSystem (see SuperAdminBridge).
-     * Such members get full access without an AniSystem subscription.
+     * A mother-site super admin bridged into anee.io (see SuperAdminBridge).
+     * Such members get full access without an anee.io subscription.
      */
     public function isSuperAdmin(): bool
     {
@@ -237,7 +237,7 @@ class User extends Authenticatable
 
     /**
      * Password reset email goes through the mother system's mail settings and
-     * templates (group AniSystem, template key password_reset).
+     * templates (group anee.io, template key password_reset).
      */
     public function sendPasswordResetNotification($token)
     {

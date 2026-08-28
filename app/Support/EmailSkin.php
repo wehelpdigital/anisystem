@@ -3,7 +3,7 @@
 namespace App\Support;
 
 /**
- * What an AniSystem email looks like.
+ * What an anee.io email looks like.
  *
  * Every template in the mother app stores only its MIDDLE — the greeting, the
  * sentences, the button, the table of the day's work. This wraps that in the
@@ -33,7 +33,7 @@ class EmailSkin
      */
     public static function wrap(string $inner, string $title = ''): string
     {
-        $app = e(config('app.name', 'AniSystem'));
+        $app = e(config('app.name', 'anee.io'));
         $year = date('Y');
         $sub = $title !== '' ? '<div style="margin-top:4px;font-size:13px;color:#d6e9bd;">' . e($title) . '</div>' : '';
 

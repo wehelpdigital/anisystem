@@ -10,7 +10,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 /**
  * Sends templated email using the SMTP settings + email templates managed in
- * the mother system (btc-check → Ani-Senso → Mail Settings), group 'AniSystem'.
+ * the mother system (btc-check → Mail Settings), group 'AniSystem' — the
+ * key kept its old spelling because it names a row over there.
  * When SMTP is not configured/active, emails are written to the Laravel log so
  * flows never hard-fail in development.
  */
@@ -32,7 +33,7 @@ class MailService
         }
 
         $tags = array_merge([
-            'siteName' => config('app.name', 'AniSystem'),
+            'siteName' => config('app.name', 'anee.io'),
             'loginUrl' => route('login'),
         ], $tags);
 

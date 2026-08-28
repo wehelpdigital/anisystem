@@ -393,7 +393,7 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg>
                     </span>
                     <span class="gb-opt-t">Public</span>
-                    <span class="gb-opt-s">Sinuman sa AniSenso</span>
+                    <span class="gb-opt-s">Sinuman sa anee.io</span>
                 </label>
                 <label class="gb-opt">
                     <input type="radio" name="gbPrivacy" value="private">
@@ -460,7 +460,7 @@
         </button>
         <button type="button" class="gb-src" data-src="gallery">
             <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l2-3h6l2 3h3v13H4V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 13l2.5-2.5L14 14l2-2 2 2"/></svg></span>
-            <span>From the AniSenso gallery<span class="sub">A photo your seasons already keep</span></span>
+            <span>From the anee.io gallery<span class="sub">A photo your seasons already keep</span></span>
         </button>
     </div>
 </div>

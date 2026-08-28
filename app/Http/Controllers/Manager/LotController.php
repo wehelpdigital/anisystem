@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 /**
  * Lots — store/update/destroy ported verbatim from the mother app,
- * plus page() rendering the AniSystem mobile-first module page.
+ * plus page() rendering the anee.io mobile-first module page.
  */
 class LotController extends BaseScheduleController
 {

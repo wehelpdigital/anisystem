@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('code') · {{ config('app.name', 'AniSystem') }}</title>
+    <title>@yield('code') · {{ config('app.name', 'anee.io') }}</title>
     {{-- Match the app's theme before first paint (same key the app writes). --}}
     <script>
         (() => {

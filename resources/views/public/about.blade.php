@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('title', 'About')
-@section('meta_description', 'AniSenso — Ani (Yield) + Senso (Sensei/Asenso). Learn how AniSystem, the AniSenso cropping schedule manager, helps Filipino farmers reach maximum yield and income.')
+@section('meta_description', 'anee.io — from ani, the harvest. The cropping schedule manager for Filipino farmers: plan lots, workers, materials, activities and irrigation, and follow the plan day by day.')
 
 @section('content')
 
@@ -12,13 +12,13 @@
         <div class="absolute inset-0 -z-10 bg-dot-grid opacity-40" aria-hidden="true"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28 text-center animate-fade-up">
             <span class="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur px-4 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-accent-400 ring-1 ring-white/20">
-                About AniSystem
+                About anee.io
             </span>
             <h1 class="mt-5 font-heading text-3xl sm:text-5xl font-bold text-white max-w-3xl mx-auto leading-tight text-balance">
                 Helping Filipino Farmers Reach <span class="bg-gradient-to-r from-accent-300 to-accent-500 bg-clip-text text-transparent">Maximum Yield</span> and Income
             </h1>
             <p class="mt-5 max-w-2xl mx-auto text-brand-100 text-base sm:text-lg">
-                AniSystem is the cropping schedule manager by AniSenso — the same planning system our
+                anee.io is the cropping schedule manager — the same planning system our
                 agronomists and technicians use, now available to every farmer.
             </p>
         </div>
@@ -36,20 +36,20 @@
             </div>
             <div class="reveal">
                 <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Our story</p>
-                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">What Does "AniSenso" Mean?</h2>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">Where the Name Comes From</h2>
                 <p class="mt-4 text-gray-600 leading-relaxed">
-                    <span class="font-semibold text-ink">Ani</span> means <em>Yield</em>.
-                    <span class="font-semibold text-ink">Senso</span> carries two meanings:
-                    <em>Sensei</em> — a teacher — and <em>Asenso</em> — success. Put together, AniSenso is about
-                    teaching Filipino farmers the science of maximum yield so their families can prosper.
+                    <span class="font-semibold text-ink">Ani</span> is the harvest — the whole point of a
+                    season, and the only thing a farmer is really keeping score of. It is also the name of
+                    the technician inside the app: ask <span class="font-semibold text-ink">Anee</span>
+                    anything about your crop and she will answer.
                 </p>
                 <p class="mt-4 text-gray-600 leading-relaxed">
-                    For years, AniSenso has helped farmers maximize their harvests of palay, mais and more
-                    through exclusive technical research, technician support, fertilization and management
-                    technologies — with locally and internationally recognized, award-winning results.
+                    For years our team has helped farmers maximize their harvests of palay, mais and more
+                    through technical research, technician support, fertilization and management
+                    technologies — with locally and internationally recognized results.
                 </p>
                 <p class="mt-4 text-gray-600 leading-relaxed">
-                    <span class="font-semibold text-ink">AniSystem</span> is the next step: the exact cropping
+                    <span class="font-semibold text-ink">anee.io</span> is the next step: the exact cropping
                     schedule manager our team uses to run client farms, packaged as a simple web app. Plan your
                     lots, workers, materials, activities and irrigation for the whole season — and follow the
                     plan day by day, straight from your phone.
@@ -63,7 +63,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="max-w-2xl mx-auto text-center reveal">
                 <p class="text-sm font-bold uppercase tracking-wider text-brand-600">The app</p>
-                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">What AniSystem Does for You</h2>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">What anee.io Does for You</h2>
             </div>
             <div class="mt-12 grid gap-6 md:grid-cols-3">
                 @php
@@ -81,7 +81,7 @@
                         [
                             'img' => 'images/icons/technician-support.png',
                             'title' => 'The Technician\'s Discipline',
-                            'text' => 'Built from the same protocol system AniSenso technicians follow on client farms — critical rules, documentation and all.',
+                            'text' => 'Built from the same protocol system anee.io technicians follow on client farms — critical rules, documentation and all.',
                         ],
                     ];
                 @endphp
@@ -155,7 +155,7 @@
                 Reach Your Crop's Maximum Potential This Season
             </h2>
             <p class="mt-4 max-w-xl mx-auto text-brand-100">
-                Start planning with AniSystem today — the schedule manager built by the AniSenso team.
+                Start planning with anee.io today — the schedule manager our own technicians run on.
             </p>
             <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
                 <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Get Started</a>

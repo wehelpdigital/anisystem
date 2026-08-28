@@ -205,7 +205,7 @@ class ReelController extends Controller
 
         try {
             $res = \Illuminate\Support\Facades\Http::timeout(12)
-                ->withHeaders(['User-Agent' => 'AniSystem/1.0 (farm management; reels)'])
+                ->withHeaders(['User-Agent' => 'anee.io/1.0 (farm management; reels)'])
                 ->get('https://api.openverse.org/v1/audio/', array_filter([
                     'q' => $q !== '' ? $q : 'acoustic instrumental',
                     // Asked for wide and narrowed below. The API's own
@@ -272,7 +272,7 @@ class ReelController extends Controller
 
         try {
             $res = \Illuminate\Support\Facades\Http::timeout(25)
-                ->withHeaders(['User-Agent' => 'AniSystem/1.0 (farm management; reels)'])
+                ->withHeaders(['User-Agent' => 'anee.io/1.0 (farm management; reels)'])
                 ->get($url);
             if (! $res->successful()) {
                 throw new \RuntimeException('http ' . $res->status());

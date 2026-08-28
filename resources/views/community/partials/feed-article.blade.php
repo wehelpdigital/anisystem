@@ -33,7 +33,7 @@
         @endunless
         <a href="{{ route('community.blog.show', ['id' => $article->id]) }}" class="fa-title">{{ $article->title }}</a>
         <p class="fa-by">
-            {{ $article->authorName ?: 'AniSenso' }}@if ($article->publishedAt) · {{ \Illuminate\Support\Carbon::parse($article->publishedAt)->diffForHumans() }}@endif
+            {{ $article->authorName ?: 'anee.io' }}@if ($article->publishedAt) · {{ \Illuminate\Support\Carbon::parse($article->publishedAt)->diffForHumans() }}@endif
         </p>
         <p class="fa-excerpt">{{ $excerpt }}</p>
         {{-- Green, and the width of the card: this is the one thing the card

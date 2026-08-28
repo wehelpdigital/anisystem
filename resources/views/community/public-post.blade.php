@@ -16,7 +16,7 @@
     {{-- The link preview. Absolute URLs on purpose: a scraper has no page to
          resolve a relative one against. --}}
     <meta property="og:type" content="article">
-    <meta property="og:site_name" content="AniSystem">
+    <meta property="og:site_name" content="anee.io">
     <meta property="og:title" content="{{ $ogTitle }}">
     <meta property="og:description" content="{{ $ogDescription }}">
     <meta property="og:url" content="{{ url()->current() }}">
@@ -81,7 +81,7 @@
     </article>
 
     <div class="pp-join">
-        <p class="pp-join-t">This is a post from AniSystem</p>
+        <p class="pp-join-t">This is a post from anee.io</p>
         <p class="pp-join-s">A place where Filipino farmers plan their seasons and compare what actually worked. Sign in to comment, react and follow.</p>
         <div class="pp-join-b">
             <a href="{{ route('signup') }}" class="btn btn-primary">Create a free account</a>

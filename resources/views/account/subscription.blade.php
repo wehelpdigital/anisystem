@@ -42,7 +42,7 @@
                         @elseif ($status === 'pending')
                             Your payment is still awaiting manual verification by our team. You will receive an email once it is approved — this usually takes less than a day.
                         @elseif ($status === 'suspended')
-                            Your subscription has been suspended. Please contact support at support@anisenso.com so we can help you restore access.
+                            Your subscription has been suspended. Please contact support at support@anee.io so we can help you restore access.
                         @elseif ($status === 'expired')
                             Your subscription has expired. Renew below to regain access to your cropping schedules — your data is safe and waiting for you.
                         @elseif ($status === 'rejected')
@@ -62,7 +62,7 @@
     @php $currentTier = $user->planTier(); @endphp
     <div class="mb-5">
         <h2 class="text-base font-bold text-gray-900 mb-1">Plans</h2>
-        <p class="text-sm text-gray-500 mb-3">Pricing is set in the AniSenso store; choose the tier that fits your farm.</p>
+        <p class="text-sm text-gray-500 mb-3">Pricing is set in the anee.io store; choose the tier that fits your farm.</p>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             @foreach (config('tiers') as $key => $tier)
                 <div class="card p-4 {{ $currentTier === $key ? 'ring-2 ring-brand-500' : '' }}">
@@ -143,7 +143,7 @@
                     @elseif ($status === 'suspended')
                         <div class="rounded-xl bg-orange-50 border border-orange-200 px-4 py-3 text-sm text-orange-800">
                             <span class="font-semibold">Subscription suspended.</span>
-                            Please contact support at support@anisenso.com to restore your access.
+                            Please contact support at support@anee.io to restore your access.
                         </div>
                     @else
                         <div class="rounded-xl bg-gray-50 border border-gray-200 px-4 py-3 text-sm text-gray-600">

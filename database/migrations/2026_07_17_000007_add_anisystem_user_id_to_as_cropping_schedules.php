@@ -13,7 +13,7 @@ return new class extends Migration
         }
 
         Schema::table('as_cropping_schedules', function (Blueprint $table) {
-            // NULL = created by a btc-check admin; set = owned by an AniSystem SaaS client
+            // NULL = created by a btc-check admin; set = owned by an anee.io SaaS client
             $table->unsignedBigInteger('anisystemUserId')->nullable()->after('usersId')->index();
         });
     }

@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('title', 'Cropping Schedule Manager for Filipino Farmers')
-@section('meta_description', 'AniSystem by AniSenso — plan every cropping season like a pro. Manage lots, activities, workers and costs, ask the built-in AI Technician, and learn from a community of Filipino farmers — all in one mobile-friendly web app.')
+@section('meta_description', 'anee.io — plan every cropping season like a pro. Manage lots, activities, workers and costs, ask the built-in AI Technician, and learn from a community of Filipino farmers — all in one mobile-friendly web app.')
 
 @section('content')
 
@@ -20,7 +20,7 @@
                 <div class="animate-fade-up">
                     <span class="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur px-4 py-1.5 text-xs sm:text-sm font-semibold text-accent-400 ring-1 ring-white/20">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2a1 1 0 011 1v1.07A6 6 0 0116 10c0 4-3 6-6 8-3-2-6-4-6-8a6 6 0 015-5.93V3a1 1 0 011-1z"/></svg>
-                        From the makers of AniSenso — for Palay, Mais, and more
+                        For Palay, Mais, and more
                     </span>
 
                     <h1 class="mt-6 font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.08] text-balance">
@@ -29,7 +29,7 @@
                     </h1>
 
                     <p class="mt-5 text-base sm:text-lg text-gray-200 leading-relaxed max-w-xl">
-                        AniSystem is the AniSenso cropping schedule manager, now in your hands. Map your lots,
+                        anee.io is the cropping schedule manager our technicians run on, now in your hands. Map your lots,
                         schedule every activity from land prep to harvest, track workers and costs, and ask the built-in AI Technician —
                         all from your phone, wherever your farm is.
                     </p>
@@ -98,7 +98,7 @@
                         </div>
                     </div>
                     <p class="mt-3 text-center text-sm text-gray-300">
-                        Watch how AniSystem works — from sign-up to your first full season plan.
+                        Watch how anee.io works — from sign-up to your first full season plan.
                     </p>
                 </div>
 
@@ -113,7 +113,7 @@
                 <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Everything in one place</p>
                 <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">Your Whole Season, Organized</h2>
                 <p class="mt-4 text-gray-600">
-                    The same schedule manager AniSenso technicians use — built mobile-first so you can run it
+                    The same schedule manager our technicians use — built mobile-first so you can run it
                     right from the field.
                 </p>
             </div>
@@ -229,8 +229,8 @@
                     Planned Seasons Produce <span class="text-brand-600">Better Harvests</span>
                 </h2>
                 <p class="mt-4 text-gray-600 leading-relaxed">
-                    AniSenso has a proven track record of helping Filipino farmers achieve maximum crop yields
-                    through science-backed fertilization and management technologies. AniSystem puts the same
+                    Our team has a proven track record of helping Filipino farmers achieve maximum crop yields
+                    through science-backed fertilization and management technologies. anee.io puts the same
                     disciplined season plan — the exact protocol our technicians follow — into your own hands.
                 </p>
                 <ul class="mt-6 space-y-3">
@@ -248,13 +248,13 @@
                     @endforeach
                 </ul>
                 <div class="mt-8">
-                    <a href="{{ route('about') }}" class="btn btn-primary">Learn more about AniSenso</a>
+                    <a href="{{ route('about') }}" class="btn btn-primary">Learn more about anee.io</a>
                 </div>
             </div>
             <div class="order-1 lg:order-2 reveal">
                 <div class="relative">
                     <div class="absolute -inset-3 rounded-[1.75rem] bg-gradient-to-br from-brand-100 to-accent-500/20 -rotate-1"></div>
-                    <img src="{{ asset('images/rice-comparison.png') }}" alt="Rice yield comparison — before and after following the AniSenso protocol"
+                    <img src="{{ asset('images/rice-comparison.png') }}" alt="Rice yield comparison — before and after following the protocol"
                          class="relative rounded-2xl shadow-card-lg w-full object-cover ring-1 ring-black/5" loading="lazy">
                 </div>
             </div>
@@ -266,7 +266,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="max-w-2xl mx-auto text-center reveal">
                 <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Why farmers switch</p>
-                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">Traditional Farming vs AniSystem</h2>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">Traditional Farming vs anee.io</h2>
                 <p class="mt-4 text-gray-600">
                     The season doesn't have to live in your head and on scattered paper. See what changes when
                     the whole plan is in one place.
@@ -309,7 +309,7 @@
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                                 </span>
                                 <div>
-                                    <p class="text-[11px] font-bold uppercase tracking-wide text-brand-700">With AniSystem</p>
+                                    <p class="text-[11px] font-bold uppercase tracking-wide text-brand-700">With anee.io</p>
                                     <p class="text-sm text-gray-700 font-medium leading-snug">{{ $row['gain'] }}</p>
                                 </div>
                             </div>
@@ -335,7 +335,7 @@
                         <div class="px-6 py-5 bg-brand-600">
                             <span class="font-heading font-bold text-white inline-flex items-center gap-2">
                                 <svg class="w-5 h-5 text-accent-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 00-1.4 1.4l2 2a1 1 0 001.4 0l4-4z" clip-rule="evenodd"/></svg>
-                                With AniSystem
+                                With anee.io
                             </span>
                         </div>
                     </div>
@@ -366,7 +366,7 @@
 
             <div class="mt-10 text-center reveal">
                 <a href="{{ route('signup') }}" class="btn btn-primary btn-lg">
-                    Start planning the AniSystem way
+                    Start planning the anee.io way
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
                 </a>
             </div>
@@ -382,7 +382,7 @@
                     <div class="max-w-2xl">
                         <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Everything you gain</p>
                         <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-white text-balance">
-                            What You Get with AniSystem
+                            What You Get with anee.io
                         </h2>
                         <p class="mt-4 text-brand-100 leading-relaxed">
                             One subscription, every feature — the concrete benefits that keep your season on track
@@ -401,7 +401,7 @@
                             'Keep photos and documentation with every stage.',
                             'Export, print and share the plan with your whole team.',
                             'Run it from any phone, right in the middle of the field.',
-                            'Follow the same protocol AniSenso technicians use.',
+                            'Follow the same protocol our technicians use.',
                             'Renew easily via GCash — remaining days stack, nothing wasted.',
                             'Your data stays organized and safe, season to season.',
                         ];
@@ -492,7 +492,7 @@
                 Ready for Your Best Season Yet?
             </h2>
             <p class="mt-4 max-w-xl mx-auto text-brand-100 text-base sm:text-lg">
-                Join the farmers already planning smarter with AniSystem. Reach your crop's maximum potential this season.
+                Join the farmers already planning smarter with anee.io. Reach your crop's maximum potential this season.
             </p>
             <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
                 <a href="{{ route('signup') }}" class="btn btn-accent btn-lg shadow-lg shadow-black/20">Get Started Now</a>

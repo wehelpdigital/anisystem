@@ -10,11 +10,11 @@ use Illuminate\Support\Str;
 /**
  * Cross-app sign-in for mother-site super admins.
  *
- * AniSystem and the mother site share one database but are separate apps with
+ * anee.io and the mother site share one database but are separate apps with
  * isolated sessions (different host, cookie name and session table). The mother
  * site's admins live in the shared `users` table; here they live in
  * `anisystem_users`. This bridge lets an admin sign in with their mother
- * credentials and transparently maps them to a normal AniSystem member — their
+ * credentials and transparently maps them to a normal anee.io member — their
  * own schedules and full community access — creating that member on first use.
  *
  * It only READS the `users` table, so the mother site's own auth/session state
@@ -26,7 +26,7 @@ class SuperAdminBridge
     private const ADMIN_TABLE = 'users';
 
     /**
-     * Validate mother-site credentials and return the linked AniSystem member,
+     * Validate mother-site credentials and return the linked anee.io member,
      * or null when the email/password isn't a valid, active super admin.
      */
     public static function attempt(string $email, string $password): ?User
@@ -71,7 +71,7 @@ class SuperAdminBridge
             ->update(['anisystemUserId' => $member->id]);
     }
 
-    /** Find (or create) the AniSystem member mapped to this mother admin. */
+    /** Find (or create) the anee.io member mapped to this mother admin. */
     private static function linkedMember(object $admin): User
     {
         $member = User::where('adminUserId', $admin->id)->first();

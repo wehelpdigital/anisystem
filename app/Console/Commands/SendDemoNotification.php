@@ -16,7 +16,7 @@ use Illuminate\Console\Command;
 class SendDemoNotification extends Command
 {
     protected $signature = 'anisystem:demo-notification
-                            {email? : Who to notify (defaults to every AniSystem user with a schedule)}';
+                            {email? : Who to notify (defaults to every anee.io user with a schedule)}';
 
     protected $description = 'Write sample notifications so the bell has something to show';
 

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Technician's Blog (member-facing). Articles the AniSenso team publishes from
+ * Technician's Blog (member-facing). Articles the anee.io team publishes from
  * the mother app; members read them and comment. Sits beside Discussions.
  */
 class CommunityBlogController extends Controller

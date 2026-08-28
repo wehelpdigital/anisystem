@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Schema;
  * seen on that date. Counting starts the day this ships — history that was
  * never recorded is not invented.
  *
- * (AniSystem's own tables wear the as_ prefix; an unprefixed name here would
+ * (anee.io's own tables wear the as_ prefix; an unprefixed name here would
  * be a migration that says DONE and builds nothing anyone reads.)
  */
 return new class extends Migration

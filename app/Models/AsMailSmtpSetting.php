@@ -3,8 +3,9 @@
 namespace App\Models;
 
 /**
- * SMTP credentials configured in the mother app (AniSenso → Mail Settings),
- * grouped by `groupKey`. AniSystem reads the row for the "AniSystem" group and
+ * SMTP credentials configured in the mother app (anee.io → Mail Settings),
+ * grouped by `groupKey`. anee.io reads the row for the "AniSystem" group
+ * — the key kept its old spelling because it names a row over there — and
  * sends its own mail (worker digests, share notifications) through it.
  *
  * The password is stored PLAIN TEXT in the shared table on purpose — the two

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 /**
- * A single in-app notification for an AniSystem client — expiry reminders,
+ * A single in-app notification for an anee.io client — expiry reminders,
  * community comments/replies on their shared plans, connection requests, etc.
  * Surfaced through the top-bar bell.
  */

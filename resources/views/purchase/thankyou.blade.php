@@ -49,7 +49,7 @@
                     </p>
                 @elseif ($status === 'rejected')
                     <p class="text-sm text-gray-600 mt-2 max-w-xs mx-auto">
-                        This payment could not be verified. Please subscribe again or contact support@anisenso.com.
+                        This payment could not be verified. Please subscribe again or contact support@anee.io.
                     </p>
                 @endif
             @endif

@@ -795,7 +795,7 @@
     @endif
 
     <footer class="doc-footer">
-        {{ $schedule->title }} — printed {{ $generatedAt->format('M j, Y · g:i A') }} from AniSystem by AniSenso
+        {{ $schedule->title }} — printed {{ $generatedAt->format('M j, Y · g:i A') }} from anee.io
     </footer>
 </body>
 </html>

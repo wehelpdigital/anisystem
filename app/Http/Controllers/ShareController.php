@@ -228,7 +228,7 @@ class ShareController extends Controller
             $schedule->activities->count() . ' ' . Str::plural('activity', $schedule->activities->count()),
         ]);
 
-        return 'A cropping plan on AniSystem — ' . implode(' · ', $bits) . '.';
+        return 'A cropping plan on anee.io — ' . implode(' · ', $bits) . '.';
     }
 
     private function activitySummary(AsScheduleActivity $activity): string
@@ -236,6 +236,6 @@ class ShareController extends Controller
         $when = $activity->targetDate ? Carbon::parse($activity->targetDate)->format('M j, Y') : 'unscheduled';
         $lots = $activity->lots->pluck('lotName')->implode(', ');
 
-        return trim($when . ($lots ? ' · ' . $lots : '')) . ' — shared from AniSystem.';
+        return trim($when . ($lots ? ' · ' . $lots : '')) . ' — shared from anee.io.';
     }
 }

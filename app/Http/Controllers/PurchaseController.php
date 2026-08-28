@@ -99,7 +99,7 @@ class PurchaseController extends Controller
                 $data['notes'] ?? null,
             );
         } catch (\Throwable $e) {
-            Log::error('AniSystem checkout failed for user '.$user->id.': '.$e->getMessage());
+            Log::error('anee.io checkout failed for user '.$user->id.': '.$e->getMessage());
 
             return back()->withInput()
                 ->with('error', 'We could not submit your payment right now. Please try again in a moment.');

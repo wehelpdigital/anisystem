@@ -30,17 +30,28 @@
     @endif
     {{-- Ahead of everything: the page is shown whole or not at all. --}}
     @include('partials.boot-veil-css')
-    <title>@yield('title', 'Dashboard') | AniSystem</title>
-    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+    <title>@yield('title', 'Dashboard') | anee.io</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}?v=anee">
+    {{-- The SVG is for browsers that take one; the rest get a PNG at the two
+         sizes they actually draw, and the .ico for the ones that only ever
+         ask for that. --}}
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon-96.png') }}?v=anee">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32.png') }}?v=anee">
+    <link rel="alternate icon" href="{{ asset('favicon.ico') }}?v=anee">
     {{-- Installable: the app can live on the home screen, run without the
          browser's chrome, and raise notifications like anything else on the
          phone. --}}
-    <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
-    <meta name="theme-color" content="#4a7c2a">
+    <link rel="manifest" href="{{ asset('manifest.webmanifest') }}?v=anee">
+    {{-- The ground the app icon is drawn on, so an installed window
+         and its icon are the same green. --}}
+    <meta name="theme-color" content="#2B3A1C">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="AniSystem">
-    <link rel="apple-touch-icon" href="{{ asset('images/pwa/icon-192.png') }}">
+    <meta name="apple-mobile-web-app-title" content="anee.io">
+    {{-- Apple rounds its own corners and never masks further, so this one is
+         full-bleed: a rounded square inside a rounded square shows a hairline
+         of the wrong colour down every edge. --}}
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}?v=anee">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -95,11 +106,16 @@
                         </a>
                     @else
                         <a href="{{ route('app.dashboard') }}" class="shrink-0">
-                            <img src="{{ asset('images/logo.png') }}" alt="AniSystem" class="h-8 md:h-9 w-auto">
+                            {{-- The mark, not the wordmark: the words are six
+                                 and a half times as wide as they are tall, and
+                                 at this height that is two hundred pixels of a
+                                 three-ninety screen with the page title still
+                                 to come. --}}
+                            <img src="{{ asset('images/logo-mark.png') }}?v=anee" alt="anee.io" class="h-8 md:h-9 w-auto">
                         </a>
                     @endif
                     <div class="min-w-0">
-                        <h1 id="appPageTitle" class="text-base md:text-lg font-bold text-gray-900 truncate leading-tight">@yield('page-title', 'AniSystem')</h1>
+                        <h1 id="appPageTitle" class="text-base md:text-lg font-bold text-gray-900 truncate leading-tight">@yield('page-title', 'anee.io')</h1>
                         @hasSection('page-subtitle')
                             <p class="text-xs text-gray-500 truncate">@yield('page-subtitle')</p>
                         @endif
@@ -422,7 +438,7 @@
                             if (this.open) this.load();
                             this.buzz();
                             window.smNotify?.({
-                                title: p.title || 'AniSystem',
+                                title: p.title || 'anee.io',
                                 body: p.body || '',
                                 url: p.url || '/app',
                                 tag: 'n' + (p.type || 'x'),
@@ -509,7 +525,7 @@
          Extra bottom padding on phones clears the fixed tab bar. --}}
     <footer class="mt-6 md:mt-10 border-t border-gray-100 footer-safe">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p class="text-xs text-gray-400">© {{ date('Y') }} AniSystem. All rights reserved.</p>
+            <p class="text-xs text-gray-400">© {{ date('Y') }} anee.io. All rights reserved.</p>
             <nav class="flex flex-wrap items-center justify-center text-xs" style="column-gap:1.75rem;row-gap:.5rem;" aria-label="Legal">
                 <a href="{{ route('legal.show', ['slug' => 'privacy']) }}" class="text-gray-500 hover:text-brand-700 font-semibold">Privacy</a>
                 <a href="{{ route('legal.show', ['slug' => 'terms']) }}" class="text-gray-500 hover:text-brand-700 font-semibold">Terms</a>

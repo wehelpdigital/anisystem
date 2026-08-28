@@ -16,7 +16,7 @@
             size: A4 portrait;
             margin: 18mm 16mm 22mm;
             @bottom-center {
-                content: "{!! addslashes($schedule->title) !!} — Worker Presentation · Generated {{ $generatedAt->format('M j, Y') }} · AniSystem by AniSenso · Page " counter(page) " of " counter(pages);
+                content: "{!! addslashes($schedule->title) !!} — Worker Presentation · Generated {{ $generatedAt->format('M j, Y') }} · anee.io · Page " counter(page) " of " counter(pages);
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
                 font-size: 8pt;
                 color: #6b7280;
@@ -1923,7 +1923,7 @@
 
         <footer class="doc-footer">
             {{ $schedule->title }} — Worker Presentation · Generated {{ $generatedAt->format('M j, Y · g:i A') }} ·
-            AniSystem by AniSenso
+            anee.io
         </footer>
     </div> {{-- /second .sheet (activities + labor + per-worker + irrigation + footer) --}}
 

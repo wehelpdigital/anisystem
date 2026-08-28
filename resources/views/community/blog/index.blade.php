@@ -257,7 +257,7 @@
         <div class="blog-hero-mark">📰</div>
         <div class="min-w-0">
             <h1>Technician's Blog</h1>
-            <p>Guides and advice from the AniSenso team.</p>
+            <p>Guides and advice from the anee.io team.</p>
         </div>
     </div>
     @if ($posts->total())

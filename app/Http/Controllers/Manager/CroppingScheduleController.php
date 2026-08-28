@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 /**
- * Cropping schedule list / create / hub / settings for AniSystem clients.
+ * Cropping schedule list / create / hub / settings for anee.io clients.
  *
  * Ported from the mother app's CroppingScheduleController. The mother's
  * single "setup" SPA page is split here into a module launcher ("hub")

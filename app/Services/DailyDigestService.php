@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Log;
  * else's jobs is noise, and noise is what makes people stop reading these.
  * The owner gets the whole day.
  *
- * Sending goes through {@see AniSystemMailer}, which uses the SMTP credentials
+ * Sending goes through {@see anee.ioMailer}, which uses the SMTP credentials
  * configured in the mother app rather than this app's own mail config.
  */
 class DailyDigestService

@@ -7,7 +7,7 @@
      ============================================================ --}}
 @php
     $publicUrl = route('share.schedule', $schedule->shareToken);
-    $shareTitle = $schedule->title . ' — cropping plan on AniSystem';
+    $shareTitle = $schedule->title . ' — cropping plan on anee.io';
 @endphp
 <div class="sheet hidden" id="shareScheduleSheet" style="--sheet-width:30rem">
     <div class="sheet-handle"></div>

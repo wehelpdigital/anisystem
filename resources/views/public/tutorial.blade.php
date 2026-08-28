@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
-@section('title', 'Tutorial — How AniSystem Works')
-@section('meta_description', 'Step-by-step guide to AniSystem: create an account, pay via GCash, set up lots, workers, materials and services, build your activities timeline, plan irrigation and export your season.')
+@section('title', 'Tutorial — How anee.io Works')
+@section('meta_description', 'Step-by-step guide to anee.io: create an account, pay via GCash, set up lots, workers, materials and services, build your activities timeline, plan irrigation and export your season.')
 
 @section('content')
 
@@ -18,7 +18,7 @@
                 From Sign-Up to Harvest, <span class="bg-gradient-to-r from-accent-300 to-accent-500 bg-clip-text text-transparent">Step by Step</span>
             </h1>
             <p class="mt-5 max-w-2xl mx-auto text-brand-100 text-base sm:text-lg">
-                Everything you need to plan your first cropping season with AniSystem — in ten short steps.
+                Everything you need to plan your first cropping season with anee.io — in ten short steps.
             </p>
         </div>
     </section>
@@ -60,7 +60,7 @@
                     ],
                     [
                         'title' => 'Build your activities timeline',
-                        'text' => 'This is the heart of AniSystem. Add every activity — land prep, sowing, fertilization, spraying, harvest — with dates, priorities and assigned lots. Keep unfinished ideas as drafts, mark an activity as the Day-0 anchor, and save whole timelines as versions so you can compare plans or reuse them next season.',
+                        'text' => 'This is the heart of anee.io. Add every activity — land prep, sowing, fertilization, spraying, harvest — with dates, priorities and assigned lots. Keep unfinished ideas as drafts, mark an activity as the Day-0 anchor, and save whole timelines as versions so you can compare plans or reuse them next season.',
                         'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>',
                     ],
                     [
@@ -136,11 +136,11 @@
                     ],
                     [
                         'q' => 'Is my farm data safe?',
-                        'a' => 'Yes. Your data is stored securely on our servers and is visible only to your account and the AniSenso support team. We never share your farm information with anyone else.',
+                        'a' => 'Yes. Your data is stored securely on our servers and is visible only to your account and the anee.io support team. We never share your farm information with anyone else.',
                     ],
                     [
-                        'q' => 'Can I use AniSystem on my phone?',
-                        'a' => 'Absolutely — AniSystem is built mobile-first. Every screen works on any smartphone browser, so you can check today\'s activities, mark progress and add photos right from the field. No app installation needed.',
+                        'q' => 'Can I use anee.io on my phone?',
+                        'a' => 'Absolutely — anee.io is built mobile-first. Every screen works on any smartphone browser, so you can check today\'s activities, mark progress and add photos right from the field. No app installation needed.',
                     ],
                     [
                         'q' => 'Can I manage more than one farm or season?',
@@ -148,7 +148,7 @@
                     ],
                     [
                         'q' => 'What are DAS, DAP and DAT?',
-                        'a' => 'They\'re ways of counting days from your crop\'s starting point: Days After Sowing, Days After Planting, and Days After Transplanting. You choose one per schedule, set each lot\'s Day-0 date, and AniSystem computes the exact calendar date of every activity for every lot.',
+                        'a' => 'They\'re ways of counting days from your crop\'s starting point: Days After Sowing, Days After Planting, and Days After Transplanting. You choose one per schedule, set each lot\'s Day-0 date, and anee.io computes the exact calendar date of every activity for every lot.',
                     ],
                 ];
             @endphp

@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Shared base for all AniSystem models living in the shared btc-check DB.
+ * Shared base for all anee.io models living in the shared btc-check DB.
  * Mirrors the mother system's conventions: Asia/Manila timestamps and the
  * `deleteStatus` integer soft-delete flag (1 = active, 0 = soft-deleted).
  */

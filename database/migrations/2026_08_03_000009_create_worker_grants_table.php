@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 /**
  * Worker login access. A boss (manager) grants one of their workers a login to
- * AniSystem with a chosen level of schedule access (view or edit) and optional
+ * anee.io with a chosen level of schedule access (view or edit) and optional
  * community access. The worker sets their own password from an emailed invite
  * link. A worker may hold grants from several bosses (they pick which farm to
  * open after logging in). Boss/Lifetime tiers only.

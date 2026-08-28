@@ -38,7 +38,7 @@ class AiCreditService
      */
     /**
      * Whether this account rides free. Mother-site admins bridged into
-     * AniSystem run the platform - metering them would be charging the house
+     * anee.io run the platform - metering them would be charging the house
      * for its own electricity, and the owner said it plainly: admin accounts
      * have unlimited AI credits.
      */

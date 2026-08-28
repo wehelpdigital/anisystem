@@ -111,7 +111,7 @@ class CommunityRank
 
         // --- Show up -------------------------------------------------------
         'days' => ['emoji' => '📅', 'pts' => 3, 'group' => 'Show up',
-            'label' => 'Visit AniSenso',
+            'label' => 'Visit anee.io',
             'how' => 'Each day you open the app counts once — counted from today onward.'],
     ];
 

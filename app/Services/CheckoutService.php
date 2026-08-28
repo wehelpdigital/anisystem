@@ -23,8 +23,8 @@ class CheckoutService
 
     /**
      * The GCash receiving account details shown on the payment page.
-     * Reads the AniSystem store's payment settings; falls back to the
-     * Ani-Senso store row when AniSystem has none configured yet.
+     * Reads the anee.io store's payment settings; falls back to the
+     * Ani-Senso store row when anee.io has none configured yet.
      */
     public function gcashSettings(): ?object
     {
@@ -97,8 +97,8 @@ class CheckoutService
                 'grandTotal' => $plan->price,
                 'affiliateCommissionTotal' => 0,
                 'netRevenue' => $plan->price,
-                'orderNotes' => 'AniSystem subscription checkout. Plan: '.$plan->planName
-                    .' ('.$plan->durationDays.' days). AniSystem user #'.$user->id.'.',
+                'orderNotes' => 'anee.io subscription checkout. Plan: '.$plan->planName
+                    .' ('.$plan->durationDays.' days). anee.io user #'.$user->id.'.',
                 'isPackage' => 0,
                 'recoveryToken' => Str::random(48),
                 'recoveryTokenExpiresAt' => $now->copy()->addDays(7),
@@ -110,7 +110,7 @@ class CheckoutService
             DB::table('ecom_order_items')->insert([
                 'orderId' => $orderId,
                 'productId' => $plan->ecomProductId,
-                'productName' => 'AniSystem Schedule Manager Subscription',
+                'productName' => 'anee.io Schedule Manager Subscription',
                 'productStore' => config('anisystem.store_name', 'AniSystem'),
                 'productType' => 'access',
                 'variantId' => $plan->ecomVariantId,
@@ -150,7 +150,7 @@ class CheckoutService
                 'fieldChanged' => 'paymentMethod',
                 'previousValue' => null,
                 'newValue' => 'manual_gcash',
-                'description' => 'Customer submitted payment details via GCash from AniSystem. Amount: ₱'
+                'description' => 'Customer submitted payment details via GCash from anee.io. Amount: ₱'
                     .number_format($amountSent, 2)
                     .($referenceNumber ? '. Ref: '.$referenceNumber : ''),
                 'ipAddress' => request()->ip(),
@@ -233,8 +233,8 @@ class CheckoutService
                 'grandTotal' => $pack->price,
                 'affiliateCommissionTotal' => 0,
                 'netRevenue' => $pack->price,
-                'orderNotes' => 'AniSystem AI Credits. Pack: '.$pack->packName
-                    .' ('.$pack->credits.' credits). AniSystem user #'.$user->id.'.',
+                'orderNotes' => 'anee.io AI Credits. Pack: '.$pack->packName
+                    .' ('.$pack->credits.' credits). anee.io user #'.$user->id.'.',
                 'isPackage' => 0,
                 'recoveryToken' => Str::random(48),
                 'recoveryTokenExpiresAt' => $now->copy()->addDays(7),
@@ -246,7 +246,7 @@ class CheckoutService
             DB::table('ecom_order_items')->insert([
                 'orderId' => $orderId,
                 'productId' => $pack->ecomProductId,
-                'productName' => 'AniSystem AI Credits',
+                'productName' => 'anee.io AI Credits',
                 'productStore' => config('anisystem.store_name', 'AniSystem'),
                 'productType' => 'access',
                 'variantId' => $pack->ecomVariantId,
@@ -284,7 +284,7 @@ class CheckoutService
                 'fieldChanged' => 'paymentMethod',
                 'previousValue' => null,
                 'newValue' => 'manual_gcash',
-                'description' => 'Customer submitted payment details via GCash from AniSystem (AI Credits). Amount: ₱'
+                'description' => 'Customer submitted payment details via GCash from anee.io (AI Credits). Amount: ₱'
                     .number_format($amountSent, 2)
                     .($referenceNumber ? '. Ref: '.$referenceNumber : ''),
                 'ipAddress' => request()->ip(),

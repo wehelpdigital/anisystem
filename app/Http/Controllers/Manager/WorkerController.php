@@ -12,7 +12,7 @@ use Illuminate\Validation\Rule;
 
 /**
  * Workers — store/update/destroy/rules/saveRules ported verbatim from the
- * mother app, plus page() rendering the AniSystem mobile-first module page.
+ * mother app, plus page() rendering the anee.io mobile-first module page.
  */
 class WorkerController extends BaseScheduleController
 {

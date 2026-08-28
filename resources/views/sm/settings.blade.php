@@ -327,7 +327,7 @@ const __init = () => {
                 // Live-update the app-bar subtitle (schedule title) + tab title.
                 const sub = document.querySelector('header .min-w-0 p.text-xs');
                 if (sub) sub.textContent = t;
-                document.title = `Settings — ${t} | AniSystem`;
+                document.title = `Settings — ${t} | anee.io`;
             }
         } catch (err) {
             toast(err.message, 'error');

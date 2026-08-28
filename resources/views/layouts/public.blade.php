@@ -31,9 +31,9 @@
             }, 600);
         });
     </script>
-    <title>@yield('title', 'AniSystem') — AniSystem by AniSenso</title>
-    <meta name="description" content="@yield('meta_description', 'AniSystem — the cropping schedule manager for Filipino farmers by AniSenso. Plan lots, workers, materials, activities and irrigation in one mobile-friendly web app.')">
-    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+    <title>@yield('title', 'anee.io') — anee.io</title>
+    <meta name="description" content="@yield('meta_description', 'anee.io — the cropping schedule manager for Filipino farmers. Plan lots, workers, materials, activities and irrigation in one mobile-friendly web app.')">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}?v=anee">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -69,7 +69,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="flex items-center justify-between h-16 md:h-20">
                 <a href="{{ route('home') }}" class="flex items-center shrink-0">
-                    <img src="{{ asset('images/logo.png') }}" alt="AniSystem by AniSenso" class="h-10 md:h-12 w-auto">
+                    <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="h-10 md:h-12 w-auto">
                 </a>
 
                 <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-gray-700">
@@ -119,16 +119,16 @@
     <footer class="bg-gray-900 text-gray-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 grid gap-10 md:grid-cols-3">
             <div>
-                <img src="{{ asset('images/logo.png') }}" alt="AniSystem by AniSenso" class="h-10 w-auto mb-4">
+                <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="h-10 w-auto mb-4">
                 <p class="text-sm leading-relaxed text-gray-400">
-                    AniSystem is the cropping schedule manager by AniSenso — empowering Filipino farmers with
+                    anee.io is the cropping schedule manager empowering Filipino farmers with
                     education, technology, and quality products for a sustainable agricultural future.
                 </p>
             </div>
             <div>
                 <h4 class="text-white font-bold mb-4">Quick Links</h4>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="{{ route('about') }}" class="hover:text-accent-500">About AniSystem</a></li>
+                    <li><a href="{{ route('about') }}" class="hover:text-accent-500">About anee.io</a></li>
                     <li><a href="{{ route('tutorial') }}" class="hover:text-accent-500">Tutorial</a></li>
                     <li><a href="{{ route('contact') }}" class="hover:text-accent-500">Contact Us</a></li>
                     <li><a href="{{ route('signup') }}" class="hover:text-accent-500">Create an Account</a></li>
@@ -138,14 +138,14 @@
             <div>
                 <h4 class="text-white font-bold mb-4">Contact</h4>
                 <ul class="space-y-2 text-sm text-gray-400">
-                    <li>support@anisenso.com</li>
+                    <li>support@anee.io</li>
                     <li>Philippines</li>
                 </ul>
             </div>
         </div>
         <div class="border-t border-gray-800">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 text-xs text-gray-500 flex flex-col sm:flex-row justify-between gap-2">
-                <span>© {{ date('Y') }} AniSystem · An AniSenso product</span>
+                <span>© {{ date('Y') }} anee.io</span>
                 <span>Helping Filipino farmers reach maximum yield and income</span>
             </div>
         </div>

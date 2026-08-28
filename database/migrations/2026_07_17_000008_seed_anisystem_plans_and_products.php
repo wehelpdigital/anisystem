@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 return new class extends Migration
 {
     /**
-     * Seeds the AniSystem subscription plans and the matching ecom product +
+     * Seeds the anee.io subscription plans and the matching ecom product +
      * variants under the existing 'AniSystem' store (ecom_product_stores id 5),
      * so orders created at checkout carry meaningful productId/variantId
      * references for the mother system's reporting and trigger flows.
@@ -19,14 +19,14 @@ return new class extends Migration
         // 1. Ensure the ecom product exists (soft-referenced by name; legacy NOT NULL datetime columns).
         $product = DB::table('ecom_products')
             ->where('productStore', 'AniSystem')
-            ->where('productName', 'AniSystem Schedule Manager Subscription')
+            ->where('productName', 'anee.io Schedule Manager Subscription')
             ->where('deleteStatus', 1)
             ->first();
 
         if (! $product) {
             $productId = DB::table('ecom_products')->insertGetId([
-                'productName' => 'AniSystem Schedule Manager Subscription',
-                'productDescription' => 'Access subscription to the AniSystem cropping schedule manager web app.',
+                'productName' => 'anee.io Schedule Manager Subscription',
+                'productDescription' => 'Access subscription to the anee.io cropping schedule manager web app.',
                 'productStore' => 'AniSystem',
                 'productType' => 'access',
                 'isActive' => 1,
@@ -42,7 +42,7 @@ return new class extends Migration
         $plans = [
             ['planKey' => 'monthly', 'planName' => 'Monthly Plan', 'price' => 499.00, 'durationDays' => 30,
                 'variantName' => '30 Days Subscription', 'sortOrder' => 1,
-                'description' => 'Full access to the AniSystem schedule manager for 30 days.'],
+                'description' => 'Full access to the anee.io schedule manager for 30 days.'],
             ['planKey' => 'season', 'planName' => 'Season Pass', 'price' => 1299.00, 'durationDays' => 120,
                 'variantName' => '120 Days Subscription', 'sortOrder' => 2,
                 'description' => 'Covers a full cropping season — 120 days of access at a discounted rate.'],

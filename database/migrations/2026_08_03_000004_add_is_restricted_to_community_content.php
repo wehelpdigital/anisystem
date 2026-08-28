@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Admin moderation: a staff member (in the mother app) can restrict any piece
  * of community content — wall post, profile-wall comment, discussion post or
- * reply. When set, AniSystem hides the body/media and shows an "admin
+ * reply. When set, anee.io hides the body/media and shows an "admin
  * restricted this content" notice in its place. `restrictedReason` is an
  * optional short note shown to moderators.
  */

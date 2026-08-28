@@ -605,7 +605,7 @@
             // The phone's own share sheet knows every app installed on it;
             // a desktop gets the link on the clipboard instead.
             if (navigator.share) {
-                await navigator.share({ url, title: 'A post on AniSystem' }).catch(() => {});
+                await navigator.share({ url, title: 'A post on anee.io' }).catch(() => {});
                 return;
             }
             await navigator.clipboard?.writeText(url);
