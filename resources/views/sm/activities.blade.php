@@ -766,22 +766,36 @@
         .reminder-head-badge { background: #f5f0ff; color: #6d28d9; border: 1px solid #ddd6fe; font-weight: 800; }
         html.dark .reminder-head-badge { background: rgb(109 40 217 / .18); border-color: rgb(139 92 246 / .45); color: #c4b5fd; }
 
-        /* The one tag that stands on the form: a pill the width of the field,
-           reading as an answer rather than as one option among sixteen. */
-        .tt-open { display: flex; align-items: center; justify-content: space-between; gap: .5rem;
-            width: 100%; margin-top: .1rem; padding: .55rem .85rem; border-radius: 999px;
-            font-size: .85rem; font-weight: 700; text-align: left; cursor: pointer;
-            background: var(--color-white, #fff); border: 1px solid var(--color-gray-200, #e5e7eb);
-            color: var(--color-gray-400, #9ca3af);
-            transition: border-color .18s ease, color .18s ease, background .18s ease; }
+        /* A tag, the same tag the date wears.
+         *
+         * These were pills the full width of the field with a chevron on the
+         * right, and a full-width box with a chevron is a dropdown no matter
+         * what element it is built from — which is exactly what was reported
+         * about them twice. The date beside them had already found the
+         * answer: an icon, the words, a rounded border, and only as wide as
+         * what it has to say. Everything below is that same pill, so the
+         * three short answers on this form now look like one another and
+         * like the date. Deliberately no chevron: the leading icon is what
+         * says "this opens something", as it does on the date. */
+        .tt-open { position: relative; display: inline-flex; align-items: center; gap: .5rem;
+            max-width: 100%; margin-top: .1rem; padding: .5rem .85rem; min-height: 2.75rem;
+            border-radius: 999px; font-size: .92rem; font-weight: 700; text-align: left;
+            cursor: pointer; background: #fff;
+            border: 2px solid var(--color-gray-200, #e5e7eb); color: #9ca3af;
+            transition: border-color .2s ease, color .2s ease, background .2s ease; }
         .tt-open:hover { border-color: #a8cc7e; background: #f3f8ec; }
-        /* Chosen, and dressed like the tag it stands for. */
-        .tt-open.is-set { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
-        .tt-open.is-set::before { content: '\2605\00a0'; font-size: .72rem; }
-        .tt-open-val { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1 1 auto; }
-        .tt-open-caret { width: .9rem; height: .9rem; flex: none; opacity: .75; }
-        html.dark .tt-open { background: #1c2416; border-color: #2b3a1c; color: #8b9a80; }
-        html.dark .tt-open.is-set { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+        .tt-open:focus-visible { border-color: #4a7c2a; outline: none; }
+        .tt-open-ico { width: 1.15rem; height: 1.15rem; flex: 0 0 auto; color: #4a7c2a; }
+        /* Answered: the words go dark and heavy, exactly as the date's do.
+           The old state painted the whole pill solid green with a star, which
+           made a chosen answer louder than the question above it. */
+        .tt-open.is-set { color: #1f2937; }
+        .tt-open-val { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .tt-open:not(.is-set) .tt-open-val { font-weight: 500; }
+        html.dark .tt-open { background: #1c2136; border-color: #2a3050; color: #8b9a80; }
+        html.dark .tt-open:hover { background: #232a45; border-color: #3d6823; }
+        html.dark .tt-open.is-set { color: #e5e9f5; }
+        html.dark .tt-open-ico { color: #a5c97e; }
         @media (prefers-reduced-motion: reduce) { .tt-open { transition: none; } }
 
         /* "Also add it to the inventory" — a question with its reason under

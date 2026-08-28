@@ -314,8 +314,8 @@
                      fields under them off the screen. The picking happens in
                      a box of its own; this button is the answer. --}}
                 <button type="button" class="tt-open" id="activityTypeBtn" aria-haspopup="dialog">
+                    <svg class="tt-open-ico" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M3 11V4a1 1 0 011-1h7l9 9-8 8-9-9z"/></svg>
                     <span class="tt-open-val" id="activityTypeBtnText">Choose a task type</span>
-                    <svg class="tt-open-caret" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </button>
                 <p class="form-hint" id="activityTypeHint">Pick one, or several if they go in the same tank.</p>
                 <p class="tt-warn" id="activityTypeWarn" hidden></p>
@@ -356,8 +356,8 @@
                 <div>
                     <label class="form-label">Priority</label>
                     <button type="button" class="tt-open is-set" id="activityPriorityBtn" aria-haspopup="dialog">
+                        <svg class="tt-open-ico" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 21V4m0 0h11l-1.5 3.5L15 11H4"/></svg>
                         <span class="tt-open-val" id="activityPriorityText">Medium</span>
-                        <svg class="tt-open-caret" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <select id="activityPriority" class="hidden" tabindex="-1" aria-hidden="true">
                         <option value="critical">Critical</option>
@@ -369,8 +369,8 @@
                 <div class="js-time-required">
                     <label class="form-label">Time required</label>
                     <button type="button" class="tt-open is-set" id="activityTimeBtn" aria-haspopup="dialog">
+                        <svg class="tt-open-ico" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         <span class="tt-open-val" id="activityTimeText">Half Day</span>
-                        <svg class="tt-open-caret" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <select id="activityTimeRequired" class="hidden" tabindex="-1" aria-hidden="true">
                         <option value="half" selected>Half Day</option>
