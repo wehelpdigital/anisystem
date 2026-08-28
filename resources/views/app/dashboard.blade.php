@@ -1035,30 +1035,21 @@
 
     </div>
 
-    {{-- Latest from the Technician's Blog --}}
+    {{-- Latest from the Technician's Blog.
+
+         The same band the blog's own page draws, from the same partial —
+         Home had its own 16:9 tile, so one article looked like two different
+         things depending on which screen you met it on. Three of them here
+         rather than six: this is a taste, and the page is long already. --}}
     @if (!empty($latestBlog) && $latestBlog->isNotEmpty())
+        @include('community.blog.partials.card-css')
         <div>
             <div class="flex items-center justify-between gap-3 mb-3 px-1">
                 <h2 class="text-base md:text-lg font-bold text-gray-900">📰 From the Technician's Blog</h2>
                 <a href="{{ route('community.blog') }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 shrink-0">See all →</a>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                @foreach ($latestBlog as $article)
-                    <a href="{{ route('community.blog.show', ['id' => $article->id]) }}" class="card card-hover overflow-hidden block">
-                        <div style="aspect-ratio:16/9;background:linear-gradient(120deg,var(--color-brand-100),var(--color-brand-50));overflow:hidden;">
-                            @if ($article->coverUrl())
-                                <img src="{{ $article->coverUrl() }}" alt="" loading="lazy" class="w-full h-full object-cover"
-                                     data-cover data-cover-alt="{{ $article->coverUrlOnMother() }}">
-                            @else
-                                <div class="w-full h-full flex items-center justify-center text-3xl">🌾</div>
-                            @endif
-                        </div>
-                        <div class="p-3">
-                            <span class="font-bold text-gray-900 text-sm leading-tight block">{{ \Illuminate\Support\Str::limit($article->title, 60) }}</span>
-                            @if ($article->publishedAt)<span class="text-xs text-gray-400">{{ $article->publishedAt->format('M j, Y') }}</span>@endif
-                        </div>
-                    </a>
-                @endforeach
+            <div class="blog-grid blog-grid-inset">
+                @include('community.blog.partials.cards', ['posts' => $latestBlog->take(3)])
             </div>
         </div>
     @endif
