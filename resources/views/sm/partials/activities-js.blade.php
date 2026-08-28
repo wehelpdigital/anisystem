@@ -5479,33 +5479,36 @@ document.addEventListener('DOMContentLoaded', () => {
             card.classList.toggle('act-collapsed', !opening);
             return;
         }
-        /* The height changes once; the content is what animates.
+        /* The box slides between two measured heights, and the content
+         * fades and rises into it while it does.
          *
-         * This used to measure the card before and after and slide the height
-         * between the two. Height is a layout property, so every frame of
-         * that slide laid out the board again and repainted it — free on a
-         * desktop, and on a phone six distinct heights across the whole
-         * animation. A six-step slide is a lurch.
-         *
-         * Opening: the box takes its full size in one go and the revealed
-         * content fades and rises into it. Shutting: the content fades out
-         * first, so the card does not empty before it moves. Both are
-         * opacity and transform, which the compositor does without asking
-         * the main thread for anything. */
-        quietTheBoard(320);
+         * The slide alone was measured, on a phone, finding nine or ten of
+         * the twelve heights that device can draw in the time — near enough
+         * every frame. Removing it (which was tried) left exactly one: a
+         * jump. So it stays, and the fade rides along to cover the frames it
+         * cannot afford. Height is measured to measured because the card's
+         * children cannot be re-wrapped: the markup is rendered twice, in
+         * Blade and in JS, and both copies would have to change in step
+         * forever. */
+        quietTheBoard(340);
         clearTimeout(card.__foldTimer);
-        if (opening) {
-            card.classList.remove('act-collapsed', 'is-hiding');
-            card.classList.add('is-revealing');
-            card.__foldTimer = setTimeout(() => card.classList.remove('is-revealing'), 280);
-        } else {
-            card.classList.remove('is-revealing');
-            card.classList.add('is-hiding');
-            card.__foldTimer = setTimeout(() => {
-                card.classList.remove('is-hiding');
-                card.classList.add('act-collapsed');
-            }, 120);
-        }
+        card.classList.remove('is-revealing', 'is-hiding');
+
+        const from = card.getBoundingClientRect().height;
+        card.classList.toggle('act-collapsed', !opening);
+        const to = card.getBoundingClientRect().height;
+
+        card.style.height = from + 'px';
+        card.style.overflow = 'hidden';
+        void card.offsetHeight;
+        card.style.transition = 'height .28s cubic-bezier(.22,1,.36,1)';
+        card.style.height = to + 'px';
+        card.classList.add(opening ? 'is-revealing' : 'is-hiding');
+
+        card.__foldTimer = setTimeout(() => {
+            card.style.height = ''; card.style.overflow = ''; card.style.transition = '';
+            card.classList.remove('is-revealing', 'is-hiding');
+        }, 300);
     }
     // Re-rendered and freshly added cards fold according to the saved set —
     // without this every JS re-render came back fully expanded.

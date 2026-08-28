@@ -903,9 +903,16 @@
            its header, and the folded header borrows the stage's name. */
         .gs-chev { width: .9rem; height: .9rem; flex-shrink: 0; color: #6b9f3d; transition: transform .18s ease; }
         .gs-lot:not(.is-folded) .gs-chev { transform: rotate(90deg); }
-        .gs-fold { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
-        .gs-fold-inner { overflow: hidden; min-height: 0; }
+        .gs-fold { display: grid; grid-template-rows: 1fr;
+            transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+        /* Sliding and fading together, like every other fold on this board.
+           The slide alone leaves the content full-strength against a shutting
+           edge, which is what makes a fold read as a clip rather than a
+           movement. */
+        .gs-fold-inner { overflow: hidden; min-height: 0; opacity: 1;
+            transition: opacity .22s ease; }
         .gs-lot.is-folded .gs-fold { grid-template-rows: 0fr; }
+        .gs-lot.is-folded .gs-fold-inner { opacity: 0; }
         .gs-fold-stage { display: none; }
         .gs-lot.is-folded .gs-fold-stage { display: inline; }
         #growthStageList.no-fold-anim .gs-fold, #growthStageList.no-fold-anim .gs-chev { transition: none; }
@@ -1008,22 +1015,25 @@
            the content size (old browsers simply snap — still correct). */
         .date-chevron { width: 1rem; height: 1rem; flex-shrink: 0; color: var(--date-color); transition: transform .18s ease; }
         .date-group:not(.is-folded) .date-chevron { transform: rotate(90deg); }
-        /* The fold stopped animating its height.
+        /* The slide, and a fade riding on top of it.
          *
-         * Height is a layout property: every frame of a 1fr-to-0fr slide made
-         * the browser lay the page out again and repaint it. On a desktop
-         * that is free. On a phone it is not — throttled to a mid-range
-         * handset, a day fold produced seven distinct heights across the
-         * whole animation and eight frames over budget. Seven steps is not a
-         * slide, it is a stutter, and no easing curve fixes it.
+         * Measured at four times CPU throttle — a mid-range phone — the
+         * height slide produces nine or ten distinct heights out of the
+         * twelve frames the device can render in that time. That is very
+         * nearly every frame, and it is as smooth as the hardware goes.
+         * Taking it away (which was tried) leaves one step: an instant jump,
+         * which is not smoother, it is just quicker to be over.
          *
-         * So the box changes size once, and what the eye actually follows —
-         * the content — fades and rises into place on the compositor, where
-         * opacity and transform cost nothing per frame. It reads as smoother
-         * than the slide did precisely because nothing is being computed
-         * while it happens. */
-        .date-body { display: grid; grid-template-rows: 1fr; }
-        .date-body-inner { overflow: hidden; min-height: 0; }
+         * So the box slides as it always did, and the content fades and rises
+         * into it at the same time. The fade is compositor work and costs
+         * nothing, and it covers the two or three frames the slide cannot
+         * afford — the eye follows the arriving content rather than counting
+         * the steps of the edge. */
+        .date-body { display: grid; grid-template-rows: 1fr;
+            transition: grid-template-rows .28s cubic-bezier(.22, 1, .36, 1); }
+        .date-body-inner { overflow: hidden; min-height: 0; opacity: 1;
+            transition: opacity .22s ease; }
+        .date-group.is-folded .date-body-inner { opacity: 0; }
         .date-group.is-folded .date-body { grid-template-rows: 0fr; }
         .date-group:not(.is-folded) .date-body-inner > * {
             animation: foldReveal .26s cubic-bezier(.22, 1, .36, 1) both;
@@ -1074,6 +1084,7 @@
         #activitiesList.no-fold-anim .date-body,
         #activitiesList.no-fold-anim .date-chevron { transition: none; }
         #activitiesList.no-fold-anim .date-body-inner > * { animation: none; }
+        #activitiesList.no-fold-anim .date-body-inner { transition: none; }
         @media (prefers-reduced-motion: reduce) {
             .date-body, .date-chevron { transition: none; }
             .date-group:not(.is-folded) .date-body-inner > * { animation: none; }
@@ -1172,8 +1183,13 @@
         /* The fold itself. Nought to the height the words need and back, on
            the house easing; the JS lifts the ceiling entirely once it is open
            so a picture that decodes late is not cut off by a stale number. */
-        .note-fold { overflow: hidden; max-height: 0; opacity: 0;
-            transition: max-height .28s cubic-bezier(.22,1,.36,1), opacity .22s ease; }
+        /* The margin is in the transition too. It used to arrive the instant
+           the class changed — five and a half pixels of jump at the very
+           start of a movement whose whole job is to look continuous, which
+           is the sort of thing you feel without being able to name. */
+        .note-fold { overflow: hidden; max-height: 0; opacity: 0; margin-top: 0;
+            transition: max-height .28s cubic-bezier(.22,1,.36,1), opacity .22s ease,
+                margin-top .28s cubic-bezier(.22,1,.36,1); }
         .is-open > .note-fold { opacity: 1; }
         .is-open > .note-head + .note-fold { margin-top: .35rem; }
         @media (prefers-reduced-motion: reduce) {
@@ -1406,16 +1422,11 @@
             .activity-card.act-collapsed > :not(:first-child) { display: none; }
             .activity-card.act-collapsed .activity-card-badges,
             .activity-card.act-collapsed .activity-card-lotmeta { display: none; }
-            /* Opening and shutting, on the compositor.
-             *
-             * The JS used to measure the card before and after and animate
-             * the height between them, which is one layout and one repaint
-             * per frame of the whole board below it. Throttled to a phone
-             * that gave six distinct heights across the animation — a lurch,
-             * not a glide. The height now changes once and the revealed
-             * content fades and rises into it; on the way shut it fades out
-             * first, so nothing vanishes before the box has agreed to move.
-             * See toggleCardExpand(). */
+            /* The card's own fade, riding on its height slide.
+             * Same reasoning as the day above: the slide stays, because on a
+             * mid-range phone it still finds nine or ten heights out of the
+             * twelve frames available, and the fade covers the ones it
+             * misses. See toggleCardExpand(). */
             .activity-card.is-revealing > :not(:first-child),
             .activity-card.is-revealing .activity-card-badges,
             .activity-card.is-revealing .activity-card-lotmeta {
@@ -1426,7 +1437,7 @@
             .activity-card.is-hiding .activity-card-lotmeta {
                 animation: foldHide .12s ease both;
             }
-            @keyframes foldHide { to { opacity: 0; transform: translateY(-4px); } }
+            @keyframes foldHide { to { opacity: 0; } }
             @media (prefers-reduced-motion: reduce) {
                 .activity-card.is-revealing > :not(:first-child),
                 .activity-card.is-revealing .activity-card-badges,
