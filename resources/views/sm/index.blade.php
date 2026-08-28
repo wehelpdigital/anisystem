@@ -100,25 +100,12 @@
         html.dark .sch-hero-mark { background: rgb(0 0 0 / .4); }
         .sch-hero-mark svg { width: 2.1rem; height: 2.1rem; }
 
-        /* THE SKY, behind the whole card.
-           Three of it, spread and offset, rather than one big watermark: a
-           single cloud stretched across a card reads as a picture of a cloud,
-           and three passing over it read as weather. They keep their own
-           animations, so the rain falls and the sun turns.
-           Whatever is on the card sits above this — see the z-index below,
-           which is the only reason the numbers stay readable. */
-        .sch-hero-sky { position: absolute; inset: 0 -.6rem; z-index: 0;
-            pointer-events: none; display: flex; align-items: center;
-            justify-content: space-between; opacity: .22; }
-        html.dark .sch-hero-sky { opacity: .3; }
-        /* Bigger than they look they need to be: at six rem the raindrops
-           under a cloud are two pixels long and the whole thing reads as a
-           grey smudge. The size is what makes it legible as WEATHER rather
-           than as a texture. */
-        .sch-hero-sky .wx-sky { flex: 0 0 auto; width: 7.5rem; height: 7.5rem; }
-        .sch-hero-sky .wx-sky:nth-child(1) { transform: translateY(-24%) scale(.78); }
-        .sch-hero-sky .wx-sky:nth-child(2) { transform: translateY(18%) scale(1.02); }
-        .sch-hero-sky .wx-sky:nth-child(3) { transform: translateY(-14%) scale(.88); }
+        /* THE SKY: the whole card, filled by the atmosphere layer.
+           No sizing or arrangement here — the atmosphere knows how to fill a
+           box, and the only thing this side decides is how loud it is. */
+        .sch-hero-sky { position: absolute; inset: 0; z-index: 0;
+            pointer-events: none; opacity: .72; }
+        html.dark .sch-hero-sky { opacity: .8; }
         /* Content over weather. Without this the stat tiles are opaque boxes
            sitting ON the sky rather than in front of it, and the sky stops
            halfway across the card. */
@@ -655,18 +642,25 @@
     {{-- The skies too: a quiet board hands the panel over to the forecast,
          and it cannot do that without the drawings and the colour table. --}}
     @include('partials.weather-scenes')
+    {{-- And the weather as a place rather than a picture of one: what fills
+         the card behind everything on it. --}}
+    @include('partials.weather-atmosphere')
     {{-- The panel wears the sky. Not the day's work: what is on the board is
          already said in words directly underneath, and a picture of a plough
          above a line saying "1 activity" was the same fact told twice. The
          weather is the thing the words do NOT say, and it is what decides
          whether today's plan survives contact with the morning. --}}
     <div class="sch-hero fs-pane fs-hue-sky" id="schHero">
-        {{-- The weather, across the whole card and well behind everything on
-             it. Faded almost to nothing on purpose: this is meant to be read
-             the way you read a room's light rather than the way you read a
-             label — you look up, and the card is raining. The gradient tint
-             is the same forecast said a second way, and the two sit on top of
-             each other because they are the same fact. --}}
+        {{-- The weather, filling the card behind everything on it.
+
+             Not three copies of an icon: real rain falling the height of the
+             card, a sun off the top corner with its rays reaching in, cloud
+             hanging over the top edge with only its underside showing. You
+             are meant to read it the way you read the light in a room rather
+             than the way you read a label — you look up, and the card is
+             raining. The gradient tint is the same forecast said a second
+             way, and the two sit on top of each other because they are the
+             same fact. --}}
         <span class="sch-hero-sky" id="schHeroSky" aria-hidden="true"></span>
         @php
             // No hour in the greeting any more. This page is a list of
@@ -1535,9 +1529,7 @@ document.addEventListener('DOMContentLoaded', () => {
              * Nothing on the card moves to make room — it appears behind, so
              * the page reads as finishing rather than as changing its mind. */
             const sky = document.getElementById('schHeroSky');
-            if (sky && window.wxSky) {
-                sky.innerHTML = window.wxSky(key) + window.wxSky(key) + window.wxSky(key);
-            }
+            if (sky && window.wxAtmosphere) sky.innerHTML = window.wxAtmosphere(key);
             const meta = (window.WX_SKIES || {})[key];
             const mark = document.getElementById('schHeroMark');
             if (mark && meta && meta.label) {
