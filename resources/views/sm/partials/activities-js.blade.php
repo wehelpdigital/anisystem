@@ -5909,9 +5909,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else qs.set('date', about.date);
 
         try {
-            const res = await fetch(@json(route('sm.email.audience')) + '?' + qs.toString(),
-                { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
-            const d = (await res.json()).data || {};
+            const d = (await api(@json(route('sm.email.audience')) + '?' + qs.toString())).data || {};
             const rows = d.workers || [];
 
             say.innerHTML = about.activityId
@@ -5968,14 +5966,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const body = EMAIL_WHO.activityId
                 ? { scheduleId: SCHEDULE_ID, activityId: EMAIL_WHO.activityId, workerIds: ids }
                 : { scheduleId: SCHEDULE_ID, date: EMAIL_WHO.date, workerIds: ids };
-            const res = await fetch(url, {
-                method: 'POST',
-                headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json', 'Content-Type': 'application/json' },
-                credentials: 'same-origin',
-                body: JSON.stringify(body),
-            });
-            const d = await res.json();
-            if (!res.ok || d.success === false) throw new Error(d.message || 'Could not send.');
+            /* Through api(), like every other write on this board.
+             *
+             * This was a hand-rolled fetch reading a CSRF constant that does
+             * not exist in this file — nothing was ever sent, and what came
+             * back was a ReferenceError wearing the send button's error toast.
+             * api() carries the token, names an expired session for what it
+             * is, and throws with the server's own message. */
+            const d = await api(url, { method: 'POST', body });
             closeSheet('emailWhoSheet');
             toast(d.message || 'Sent.');
         } catch (err) {
