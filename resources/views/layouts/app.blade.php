@@ -111,7 +111,7 @@
                                  at this height that is two hundred pixels of a
                                  three-ninety screen with the page title still
                                  to come. --}}
-                            <img src="{{ asset('images/logo-mark.png') }}?v=anee" alt="anee.io" class="h-8 md:h-9 w-auto">
+                            <img src="{{ asset('images/logo-mark.png') }}?v=anee" alt="anee.io" class="h-7 md:h-8 w-auto">
                         </a>
                     @endif
                     <div class="min-w-0">

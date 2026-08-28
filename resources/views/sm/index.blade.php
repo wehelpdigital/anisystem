@@ -447,8 +447,21 @@
             background: linear-gradient(120deg, #2a2018, #3a2c1e 42%, #4a3826 68%, #2f241a); }
         html.dark .se-status { background: rgb(0 0 0 / .45); color: #d5dfc9; }
 
-        .se-desc { font-size: .8rem; color: var(--color-gray-500);
+        .se-toprow { display: flex; align-items: flex-start; gap: .35rem; }
+        .se-desc { font-size: .8rem; color: var(--color-gray-500); flex: 1 1 auto; min-width: 0;
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        /* Quiet until you look for them, and pushed right whether or not the
+           season has a description to sit beside. */
+        .se-tool { flex: 0 0 auto; margin-left: auto; width: 2rem; height: 2rem;
+            display: inline-flex; align-items: center; justify-content: center;
+            border-radius: .55rem; color: var(--color-gray-400);
+            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+        .se-tool + .se-tool { margin-left: 0; }
+        .se-tool svg { width: 1.05rem; height: 1.05rem; }
+        .se-tool:hover { background: var(--color-gray-100); color: var(--color-gray-700); }
+        .se-tool.is-danger:hover { background: rgb(239 68 68 / .1); color: #dc2626; }
+        html.dark .se-tool:hover { background: rgb(255 255 255 / .07); color: #e8efe1; }
+        @media (prefers-reduced-motion: reduce) { .se-tool { transition: none; } }
         /* Where the crop stands today — the one line a farmer opens this
            page for, so it reads before the counts do. */
         /* One lot at a time, slid rather than stacked: a season with five
@@ -952,9 +965,35 @@
                          measure the contents first. --}}
                     <div class="se-fold-wrap">
                     <div class="card-body flex flex-col grow se-body">
-                        @if ($s->description)
-                            <p class="se-desc">{{ \Illuminate\Support\Str::limit($s->description, 100) }}</p>
-                        @endif
+                        {{-- The line about the season, and the two things you
+                             rarely do to it.
+
+                             Duplicate and Delete used to sit beside Open at
+                             the foot of the card, taking a third of the width
+                             from the one button anybody came to press. Up
+                             here they are out of the way of the thumb and
+                             still in plain sight — the far side of the first
+                             line, which is where a card's own controls go
+                             everywhere else in this app. --}}
+                        <div class="se-toprow">
+                            @if ($s->description)
+                                <p class="se-desc">{{ \Illuminate\Support\Str::limit($s->description, 100) }}</p>
+                            @endif
+                            @if (! \App\Support\WorkerContext::activeGrant() || \App\Support\WorkerContext::canEdit())
+                                <button type="button" class="se-tool"
+                                    data-duplicate-schedule="{{ $s->id }}" data-title="{{ $s->title }}"
+                                    title="Duplicate this schedule" aria-label="Duplicate schedule">
+                                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                </button>
+                            @endif
+                            @if (! \App\Support\WorkerContext::activeGrant())
+                                <button type="button" class="se-tool is-danger"
+                                    data-delete-schedule="{{ $s->id }}" data-title="{{ $s->title }}"
+                                    title="Delete this schedule" aria-label="Delete schedule">
+                                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
+                                </button>
+                            @endif
+                        </div>
 
                         {{-- Where each lot stands today — same arithmetic as
                              Growth Stages, so the two pages never disagree.
@@ -1031,30 +1070,15 @@
                             </span></span>
                         </div>
 
-                        <div class="flex items-center gap-2 mt-3 sch-acts">
+                        {{-- One button, the width of the card. It is the
+                             only thing on this card anybody presses on
+                             purpose, and it was sharing a row with two icons
+                             that get pressed once a season. --}}
+                        <div class="mt-3 sch-acts">
                             {{-- Its own clock and starting point, from its own
                                  id, so a shelf of these never sweeps as one. --}}
-                            <a href="{{ route('sm.hub', ['id' => $s->id]) }}" class="btn btn-primary flex-1 sweep-fill sweep-green"
+                            <a href="{{ route('sm.hub', ['id' => $s->id]) }}" class="btn btn-primary w-full sweep-fill sweep-green"
                                style="--sw-t:{{ 9 + ($s->id % 7) }}s;--sw-d:-{{ $s->id % 11 }}s">Open</a>
-                            {{-- A worker duplicates only with the edit right; deleting a whole
-                                 season is the owner's alone — an edit grant lets you
-                                 tend the farm, not remove it. --}}
-                            @if (! \App\Support\WorkerContext::activeGrant() || \App\Support\WorkerContext::canEdit())
-<button type="button"
-                                class="btn btn-ghost px-3! text-gray-500 hover:bg-gray-100!"
-                                data-duplicate-schedule="{{ $s->id }}" data-title="{{ $s->title }}"
-                                title="Duplicate this schedule" aria-label="Duplicate schedule">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                            </button>
-                            @endif
-                            @if (! \App\Support\WorkerContext::activeGrant())
-                            <button type="button"
-                                class="btn btn-ghost px-3! text-red-500 hover:bg-red-50!"
-                                data-delete-schedule="{{ $s->id }}" data-title="{{ $s->title }}"
-                                aria-label="Delete schedule">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
-                            </button>
-                            @endif
                         </div>
                     </div>
                     </div>{{-- /.se-fold-wrap --}}
