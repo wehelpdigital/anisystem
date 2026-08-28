@@ -1172,15 +1172,16 @@
             .dh-long, .dh-word { display: none; }
             .dh-short { display: inline; }
 
-            /* One toolbar line: a long module name gives way — truncated in
-               the hamburger — rather than shoving a right-seated button (the
-               AI module parks its menu here) onto a second row. The small
-               buttons refuse to shrink so the label is the only thing that
-               bends. */
-            /* The owner's call: "Activities" stays written on the back
-               button; the hamburger gives up its words instead — the menu it
-               opens says where you are anyway. */
-            #currentModuleLabel { display: none; }
+            /* The hamburger keeps its word.
+               This used to hide the label on phones, and that was right when
+               the label was the module's OWN name — the app header directly
+               above already said "Settings", so the button was spending
+               seventy pixels to repeat it. The label is the constant word
+               "Modules" now: it names the door rather than the room, the
+               header never says it, and a bare hamburger tells a first-time
+               reader nothing. It stays, and the row gives way around it. */
+            #currentModuleLabel { display: inline; }
+            #modulesBtn { flex-shrink: 0; }
             #moduleBackBtn, #actToolbar > .btn:last-child { flex-shrink: 0; }
 
             /* A multi-day group reads as one range instead of a start date plus
@@ -2056,15 +2057,14 @@
            in the 328px a 360px screen leaves after padding. Redo lost, and
            dropped to a line of its own.
 
-           The word that goes is the module's own name, and only while the
-           board is what is on screen: the app header already says
-           "Activities" directly above this row, so the button was spending
-           seventy pixels to repeat it. Open another module and the name
-           comes back — there it is doing real work, and the activities-only
-           buttons have stepped aside to make room for it. */
+           The word used to be what gave way, because the word used to be the
+           module's own name and the app header already said it. Now it is
+           "Modules" — the name of the door, which nothing else on the screen
+           says — so the gaps close up instead and the row wraps if it must.
+           A hamburger with no word beside it is a shape you have to have
+           been taught. */
         @media (max-width: 767px) {
-            body:has(#activitiesRoot:not(.module-hidden)) #currentModuleLabel { display: none; }
-            /* Tighter too, so the row has slack rather than being exactly as
+            /* Tighter, so the row has slack rather than being exactly as
                wide as its contents. */
             #actToolbar { gap: .375rem; row-gap: .375rem; }
         }
