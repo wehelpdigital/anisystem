@@ -90,6 +90,15 @@
         animation: gradSweep 14s ease-in-out infinite alternate;
         border: 1px solid #cfe0b8; }
     @media (prefers-reduced-motion: reduce) { .dash-hero { animation: none; } }
+    /* Held until the forecast has answered.
+       Only the greeting is held — the card keeps its place in the layout, so
+       nothing below it moves when it arrives. It is uncovered either way: a
+       forecast that fails, or one that never comes back, gets the greeting
+       the clock alone would have given it, rather than a page with a hole
+       where somebody's name should be. */
+    .dash-hero.is-waiting { opacity: 0; }
+    .dash-hero { opacity: 1; transition: opacity .5s cubic-bezier(.22, 1, .36, 1); }
+    @media (prefers-reduced-motion: reduce) { .dash-hero { transition: none; } }
     .dash-hero-mark { grid-column: 1; grid-row: 1 / -1; align-self: center;
         width: 3rem; height: 3rem; border-radius: 999px; flex-shrink: 0;
         display: inline-flex; align-items: center; justify-content: center;
@@ -496,7 +505,7 @@
                 ? ['Magandang hapon', 'tod-afternoon', 'hapon']
                 : ['Magandang gabi', 'tod-evening', 'gabi']);
     @endphp
-    <div class="dash-hero">
+    <div class="dash-hero is-waiting" id="dashHero">
         {{-- Your own field across the top of your own greeting, with the hour
              standing half over its edge the way a face stands on a profile.
              Only if you have set a cover: the home screen is the first thing
@@ -1448,8 +1457,29 @@
      dashboard; each card degrades to nothing on failure. --}}
 <script>
 (() => {
+    /* The greeting is held until this runs.
+     *
+     * "Magandang umaga" is true at six on any morning, and the forecast can
+     * arrive a second later and make it "Mabagyong umaga" — which is a better
+     * greeting and a worse thing to watch happen. So the card sits invisible
+     * until the answer is in, and is uncovered whatever the answer turns out
+     * to be, including no answer at all. */
+    const hero = document.getElementById('dashHero');
+    let shown = false;
+    const showHero = () => {
+        if (shown) return;
+        shown = true;
+        hero && hero.classList.remove('is-waiting');
+    };
+    /* A slow network is not a reason to withhold somebody's own name. Three
+       and a half seconds is longer than this call has ever taken and short
+       enough that nobody is left looking at a gap. */
+    setTimeout(showHero, 3500);
+
     const slots = Array.from(document.querySelectorAll('[data-weather-for]'));
-    if (!slots.length) return;
+    // Nothing on this page asks for a forecast, so nothing is going to change
+    // the greeting — say it now.
+    if (!slots.length) { showHero(); return; }
     const esc = window.escapeHtml || ((s) => String(s == null ? '' : s));
 
     // The forecast always starts on today, so day index 0 is today — mark it by
@@ -1550,7 +1580,9 @@
             else slot.style.display = 'none';
         });
     }
-    load();
+    // Every ending — answered, refused, thrown — ends with the greeting on
+    // screen. There is no path through this function that may leave it hidden.
+    load().catch(() => {}).then(showHero);
 })();
 </script>
 @endpush
