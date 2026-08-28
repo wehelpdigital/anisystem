@@ -151,13 +151,6 @@ class CroppingScheduleController extends Controller
                     'through' => $through,
                     'next' => $stage['next']['label'] ?? null,
                     'nextIn' => $stage['next']['inDays'] ?? null,
-                    // What to draw beside the day count: the plant this crop
-                    // is, at the point of the season it has reached. An emoji
-                    // said "a plant"; this says which plant and how far on.
-                    'family' => \App\Models\AsCropScene::familyFor($lot->crop),
-                    'band' => \App\Models\AsCropScene::bandFor(
-                        $stage['index'] ?? null, $stage['count'] ?? null
-                    ),
                 ];
             }
             // The one furthest through its season leads, because that is the
@@ -220,28 +213,6 @@ class CroppingScheduleController extends Controller
                 ->count(),
         ];
 
-        /* What KIND of day this is.
-         *
-         * The card already says how many activities are on the board. That is
-         * a number, and a number does not tell you whether to check the wind
-         * before you leave the house. So the day's activity types are read
-         * and the loudest one speaks for it — a spraying day outranks three
-         * monitorings, because the spraying is the thing the weather can
-         * ruin and the thing that has to be got right.
-         *
-         * Only the types, and only today's: one small column off the same
-         * rows the count above already touches. */
-        $todayTypes = \App\Models\AsScheduleActivity::where('deleteStatus', 1)
-            ->whereIn('croppingScheduleId', AsCroppingSchedule::active()->forClient($ownerId)->select('id'))
-            ->where(function ($q) {
-                $d = \Illuminate\Support\Carbon::today()->toDateString();
-                $q->whereDate('targetDate', $d)
-                    ->orWhere(fn ($w) => $w->whereDate('targetDate', '<=', $d)->whereDate('targetEndDate', '>=', $d));
-            })
-            ->pluck('activityType')
-            ->all();
-        $todayScene = \App\Models\AsActivityScene::leadFor($todayTypes);
-
         // Where "open today's board" lands: the season that is running, or
         // failing that the newest one on the shelf.
         // Same non-existent status here: this branch never matched, so
@@ -270,8 +241,6 @@ class CroppingScheduleController extends Controller
             'isWorkerHere' => $grant !== null,
             'workerBossName' => $boss ? trim(($boss->firstName ?? '') . ' ' . ($boss->lastName ?? '')) : null,
             'hats' => \App\Support\UserHats::for(Auth::user()),
-            'todayScene' => $todayScene,
-            'todaySceneRow' => \App\Models\AsActivityScene::one($todayScene),
         ]);
     }
 

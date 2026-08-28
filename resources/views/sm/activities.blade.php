@@ -1012,9 +1012,6 @@
         #growthStageList.no-fold-anim .gs-fold, #growthStageList.no-fold-anim .gs-chev { transition: none; }
         @media (prefers-reduced-motion: reduce) { .gs-fold, .gs-chev { transition: none; } }
         .gs-emoji { font-size: 1.5rem; line-height: 1; }
-        .gs-emoji.fs-slot { width: 2.4rem; height: 2.4rem; border-radius: .7rem; overflow: hidden;
-            background: rgb(255 255 255 / .5); }
-        html.dark .gs-emoji.fs-slot { background: rgb(0 0 0 / .22); }
         .gs-lotname { font-weight: 800; font-size: .92rem; color: var(--color-gray-900); }
         html.dark .gs-lotname { color: #e5e9f5; }
     /* THE LINE UNDER THE LOT NAME.
@@ -2966,8 +2963,6 @@
 @endpush
 
 @section('content')
-{{-- The plant drawings, for the growth-stage tool. --}}
-@include('partials.farm-scenes')
 @php
     use Illuminate\Support\Carbon;
     use Illuminate\Support\Str;

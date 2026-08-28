@@ -94,9 +94,6 @@
     .gr-foldall { margin-right: auto; }
     html.dark .gr-chev { color: #86b556; }
     .gr-emoji { font-size: 1.7rem; line-height: 1; }
-    .gr-emoji.fs-slot { width: 2.6rem; height: 2.6rem; border-radius: .75rem; overflow: hidden;
-        background: rgb(255 255 255 / .5); }
-    html.dark .gr-emoji.fs-slot { background: rgb(0 0 0 / .22); }
     .gr-lot { font-size: .98rem; font-weight: 800; color: var(--color-gray-900); }
     .gr-mode { display: block; font-size: .68rem; color: var(--color-gray-400); margin-top: .1rem; }
     /* Was #3d6823 — a dark green on a card that is now itself tinted, and
@@ -171,7 +168,6 @@
 @endpush
 
 @section('content')
-@include('partials.farm-scenes')
 @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'growth'])
 
 {{-- The whole page is "on this date": today by default, any date on request,
@@ -205,25 +201,11 @@
         $grSteps = max(1, count($r['timeline'] ?? []) - 1);
         $grBand = (int) round((($grStage['index'] ?? 0) / $grSteps) * 7);
         $grBand = max(0, min(7, $grBand));
-        /* Same arithmetic, six bands instead of eight, because that is how
-           many pictures of a plant there are. Colour and drawing answer the
-           same question and are allowed to disagree about how finely. */
-        $grFamily = \App\Models\AsCropScene::familyFor($r['lot']->crop);
-        $grPlantBand = \App\Models\AsCropScene::bandFor(
-            $grStage['index'] ?? null, $grSteps + 1
-        );
     @endphp
     <div class="gr-card gr-c{{ $grBand }}" data-lot="{{ $r['lot']->id }}">
         <div class="gr-top" title="Tap to fold or open this lot">
             <svg class="gr-chev" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            {{-- The plant itself, at the point of the season this lot has
-                 reached. The emoji said "a plant"; this says which plant, and
-                 how far on — the same drawing the card in Schedules and the
-                 tool in Activities use, so a lot looks the same wherever you
-                 meet it. --}}
-            <span class="gr-emoji fs-slot" data-fs-crop="{{ $grFamily }}"
-                  data-fs-band="{{ $grPlantBand }}" data-fs-size="40"
-                  title="{{ $r['cropLabel'] ?: 'This lot' }}"></span>
+            <span class="gr-emoji">{{ $r['icon'] }}</span>
             <span class="min-w-0">
                 <span class="gr-lot block">{{ $r['lot']->lotName }}</span>
                 <span class="gr-crop">{{ $r['cropLabel'] ?: 'No crop set' }}</span>

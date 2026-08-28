@@ -98,11 +98,7 @@
            also be a coloured pane or the two fight. */
         .sch-hero.fs-pane .sch-hero-emoji.fs-slot { background: rgb(255 255 255 / .55); }
         html.dark .sch-hero.fs-pane .sch-hero-emoji.fs-slot { background: rgb(0 0 0 / .3); }
-        /* One line of what the day asks of you, under the count. Muted, and
-           it wraps — it is advice, not a heading. */
-        .sch-hero-tip { font-size: .76rem; line-height: 1.5; color: var(--color-gray-500);
-            margin-top: .3rem; max-width: 46ch; }
-        html.dark .sch-hero-tip { color: #9fb391; }
+
         /* The shelf's own badge: field green, like the page it heads. */
         .sch-hero-emoji.is-plan { background: linear-gradient(135deg, #eef6e4, #d5e8bd); color: #4a7c2a; }
         html.dark .sch-hero-emoji.is-plan { background: rgb(255 255 255 / .07); color: #a8cc7e; }
@@ -448,14 +444,7 @@
            skipping past the lot you were reaching for is its own kind of
            bounce. */
         .se-reads-rail > .se-slide { flex: 0 0 100%; scroll-snap-align: start;
-            scroll-snap-stop: always; min-width: 0;
-            display: flex; align-items: center; gap: .6rem; }
-        /* min-width: 0 on the body, or the truncating lot name refuses to
-           truncate and pushes the plant off its own slide. */
-        .se-slide-body { min-width: 0; flex: 1 1 auto; }
-        .se-plant { width: 2.6rem; height: 2.6rem; border-radius: .8rem; flex: 0 0 auto;
-            background: rgb(107 159 61 / .10); overflow: hidden; }
-        html.dark .se-plant { background: rgb(255 255 255 / .06); }
+            scroll-snap-stop: always; min-width: 0; }
         .se-reads-rail .se-read { margin-top: 0; }
         /* One bar per lot: they are at different points in different crops. */
         .se-lotbar { height: .3rem; border-radius: 999px; background: var(--color-gray-100);
@@ -641,14 +630,12 @@
     {{-- The skies too: a quiet board hands the panel over to the forecast,
          and it cannot do that without the drawings and the colour table. --}}
     @include('partials.weather-scenes')
-    @php
-        // The panel wears the day's colour; the JS below repaints it with the
-        // sky's colour when the board is quiet and the forecast has an
-        // opinion, which is the one case where the weather IS the news.
-        $todaySceneHue = 'fs-hue-' . ($todaySceneRow['hue'] ?? 'leaf');
-    @endphp
-    <div class="sch-hero fs-pane {{ $todayScene === 'quiet' ? 'is-quiet-day' : '' }} {{ $todaySceneHue }}"
-         id="schHero" data-quiet="{{ $todayScene === 'quiet' ? 1 : 0 }}">
+    {{-- The panel wears the sky. Not the day's work: what is on the board is
+         already said in words directly underneath, and a picture of a plough
+         above a line saying "1 activity" was the same fact told twice. The
+         weather is the thing the words do NOT say, and it is what decides
+         whether today's plan survives contact with the morning. --}}
+    <div class="sch-hero fs-pane fs-hue-sky" id="schHero">
         @php
             // No hour in the greeting any more. This page is a list of
             // schedules, and "Good evening" was a second thing to read before
@@ -668,26 +655,13 @@
             }
         @endphp
         <div class="sch-hero-left">
-            {{-- WHAT KIND OF DAY THIS IS.
-
-                 A calendar told you this page was about days, which you knew.
-                 What it could not tell you is whether today is a spraying day
-                 or a ploughing day — and that is the difference between
-                 checking the wind before you leave and not.
-
-                 So the picture is the loudest thing on the board today: a
-                 knapsack sprayer, a plough, a sickle, a hand casting granules.
-                 On a day with nothing on it, the calendar comes back, and the
-                 panel behind it takes the colour of the sky instead. --}}
-            <span class="sch-hero-emoji fs-slot {{ $todaySceneHue }}"
-                  data-fs-act="{{ $todayScene }}" data-fs-size="34"
-                  title="{{ $todaySceneRow['label'] }}"></span>
+            {{-- A season on a calendar, which is what this page is a list of,
+                 drawn rather than sat still. --}}
+            <span class="sch-hero-emoji fs-slot" data-fs-act="quiet" data-fs-size="34"
+                  title="Your seasons, day by day"></span>
             <div class="min-w-0">
                 <h1 class="sch-hero-h">Here are your cropping schedules for today</h1>
                 <p class="sch-hero-p">{!! $__say !!}</p>
-                @if (! empty($todaySceneRow['blurb']))
-                    <p class="sch-hero-tip">{{ $todaySceneRow['blurb'] }}</p>
-                @endif
                 @if (($todayHref ?? null) && $summary['today'] > 0)
                     <a href="{{ $todayHref }}" class="sch-hero-cta">
                         Open today's board
@@ -949,14 +923,6 @@
                                 <div class="se-reads-rail" data-reads>
                                     @foreach ($reads as $r)
                                         <div class="se-slide">
-                                            {{-- The plant, at the point of the
-                                                 season this lot has reached.
-                                                 Left of the day count and the
-                                                 bar, because it is what the
-                                                 two of them are describing. --}}
-                                            <span class="se-plant fs-slot" data-fs-crop="{{ $r['family'] }}"
-                                                  data-fs-band="{{ $r['band'] }}" data-fs-size="38"></span>
-                                            <div class="se-slide-body">
                                             <div class="se-read">
                                                 <span class="se-read-day">{{ $r['counter'] }} {{ $r['day'] }}</span>
                                                 @if ($r['stage'])
@@ -971,7 +937,6 @@
                                                     <b>{{ $r['through'] }}%</b>
                                                 </div>
                                             @endif
-                                            </div>
                                         </div>
                                     @endforeach
                                 </div>
@@ -1500,18 +1465,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-/* A QUIET DAY WEARS THE WEATHER.
+/* THE PANEL WEARS THE SKY.
  *
- * When the board has something on it, the panel is coloured by the work —
- * that is the news. When it has nothing, the work has no colour to give and
- * the sky becomes the news instead: a quiet day in the rain and a quiet day
- * under the sun are not the same quiet day.
+ * A wet day and a clear one are not the same working day, and that is the one
+ * thing the words on this card do not already say. The tint is the only thing
+ * that changes — the calendar stays a calendar, because swapping the picture
+ * a second after the page settles reads as a page correcting itself.
  *
- * Only then, and only if the forecast answers. A page that repaints itself a
- * second after loading for no visible reason is a page that looks broken. */
-(function skyOnQuietDays() {
+ * Sky blue until the forecast answers, and quietly left alone if it does not:
+ * a hero that goes grey to announce it could not reach the weather has made
+ * the failure louder than anything on the card. */
+(function heroWearsTheSky() {
     const hero = document.getElementById('schHero');
-    if (!hero || hero.getAttribute('data-quiet') !== '1' || !window.wxKeyFor) return;
+    if (!hero || !window.wxKeyFor) return;
 
     fetch(@json(route('app.weather')), { headers: { Accept: 'application/json' }, credentials: 'same-origin' })
         .then((r) => (r.ok ? r.json() : null))
@@ -1529,11 +1495,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const hue = window.wxHue ? window.wxHue(key) : '';
             if (!hue) return;
             hero.className = hero.className.replace(/\bfs-hue-\S+/g, '').trim() + ' ' + hue;
-            const say = window.wxAdvice && window.wxAdvice(key);
-            const tip = hero.querySelector('.sch-hero-tip');
-            if (say && tip) tip.textContent = say;
-            const slot = hero.querySelector('.fs-slot');
-            if (slot && window.wxSky) slot.innerHTML = window.wxSky(key, 34);
         })
         .catch(() => {});
 })();
