@@ -130,6 +130,27 @@
             content-visibility: auto;
             contain-intrinsic-size: auto 400px;
         }
+        /* And a folded day is a header, not four hundred pixels.
+         *
+         * This is what made a fold worse the further down you had scrolled.
+         * A day off screen is not laid out, so the browser uses the number
+         * above for its height — measured, an actual folded day is sixty to
+         * ninety pixels, and it was being counted as four hundred. With most
+         * of a season folded the document's height was a fiction, and every
+         * fold made the browser render a few more days, discover their real
+         * size, and correct the total underneath you. Eight days was already
+         * a hundred and eighty pixels of correction across one fold; a
+         * hundred days is the judder that was reported.
+         *
+         * The `auto` keyword still lets a day that HAS been on screen
+         * remember its own size. This is only the guess for one it has never
+         * drawn, and now the guess is nearly right. */
+        #activitiesList .date-group.is-folded { contain-intrinsic-size: auto 92px; }
+        /* And nothing re-anchors the scroll while a fold is moving. The
+           browser's scroll anchoring exists to keep your place when content
+           above you resizes; during a deliberate animation it is one more
+           thing tugging at the viewport. */
+        #activitiesList.is-folding { overflow-anchor: none; }
         /* Today's card, ringed by a halo that swells out of its border and
            fades. It is the day's OWN colour — the same hue its header wears —
            so the mark says "this day" in the language the board already
@@ -401,6 +422,10 @@
            honest while it is skipped. */
         .mir-body .date-group { margin-bottom: .9rem; animation: none;
             content-visibility: auto; contain-intrinsic-size: auto 260px; }
+        /* Same correction as the board: a folded day is a header, and a guess
+           four times its real height turns the scrollbar into a fiction that
+           has to be paid back the moment anything moves. */
+        .mir-body .date-group.is-folded { contain-intrinsic-size: auto 92px; }
         .mir-body .activity-card { cursor: default; }
         .mir-body .activity-card:hover { transform: none; box-shadow: var(--shadow-card); }
         .mir-body .done-check { pointer-events: none; opacity: 1; }
