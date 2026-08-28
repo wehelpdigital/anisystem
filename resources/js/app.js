@@ -1696,11 +1696,38 @@ window.screenLoader = function screenLoader(label = 'Working…') {
         el = document.createElement('div');
         el.id = 'screenLoaderOverlay';
         el.className = 'screen-loader';
-        el.innerHTML = '<span class="spin" aria-hidden="true"></span><p data-loader-label></p>';
+        /* The same card every other wait in this app uses.
+         *
+         * This was the last turning ring left, and a ring says only "not
+         * broken yet" — which is the least a wait can say. The layout carries
+         * a wait card on every page for the navigation veil, so this borrows
+         * that one rather than building a second: one set of scenes, one pool
+         * of reminders, and no way for the two to drift apart.
+         *
+         * The spinner stays as the fallback for the few screens outside the
+         * app shell — signing in, mainly — which have no card to copy. */
+        const source = document.querySelector('#navLoader .bv-card, .bv-card');
+        if (source) {
+            el.classList.add('has-card');
+            el.appendChild(source.cloneNode(true));
+        } else {
+            el.innerHTML = '<span class="spin" aria-hidden="true"></span>';
+        }
+        el.insertAdjacentHTML('beforeend', '<p data-loader-label></p>');
         document.body.appendChild(el);
     }
+    // A different reminder every time it goes up, and its clock started, so
+    // the card's own minimum-visible floor is measured from now.
+    const card = el.querySelector('.bv-card');
+    if (card) {
+        try { window.rollWaitLine?.(card); } catch (_) { /* pool not loaded */ }
+        try { window.waitCardShown?.(card); } catch (_) { /* older build */ }
+    }
+    // The label is the TASK — "Duplicating…" — and the card says the
+    // reminder. Two different things, so they get two different places.
     el.querySelector('[data-loader-label]').textContent = label;
     el.classList.remove('hidden');
+
     return { hide: () => el.classList.add('hidden') };
 };
 

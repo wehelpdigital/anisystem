@@ -248,10 +248,18 @@ html.dark .bv-text { color: #e8efe1; }
         ? $waitFirst['scene']
         : 'seedling';
 @endphp
-<div class="bv-card">
-    <span class="bv-scene" aria-hidden="true">
+@once
+{{-- THE BOOK OF SCENES.
+
+     Seventy-two drawings, held in a <template> so they cost the page nothing
+     but their bytes: template content is not in the document, so none of it
+     lays out and none of it animates. Every card was carrying a copy of the
+     whole book — thirty-eight kilobytes each, and the activities board has
+     three of them — which was affordable at sixteen drawings and is not at
+     seventy-two. --}}
+<template id="bvScenes">
         {{-- Rain, and the coat. --}}
-        <span class="bv-s bv-rain {{ $waitScene === 'rain' ? 'is-on' : '' }}" data-scene="rain">
+        <span class="bv-s bv-rain" data-scene="rain">
             <svg viewBox="0 0 56 56" fill="none">
                 <path class="rn-cloud" d="M15 24a6.5 6.5 0 0 1 1-12.9A9.5 9.5 0 0 1 34 12a6 6 0 0 1 1 12H15z" fill="#cfd8e3" stroke="#9aa8bb" stroke-width="2"/>
                 <path class="rn-drop rn-1" d="M17 28v4" stroke="#5b9bd5" stroke-width="2.6" stroke-linecap="round"/>
@@ -270,7 +278,7 @@ html.dark .bv-text { color: #e8efe1; }
 
         {{-- Forty more, so a wait stops looking like one animation with the
              words changed. Same palette, shared motions. --}}
-        <span class="bv-s bv-hat {{ $waitScene === 'hat' ? 'is-on' : '' }}" data-scene="hat">
+        <span class="bv-s bv-hat" data-scene="hat">
             <svg viewBox="0 0 56 56" fill="none">
     <ellipse class="bv-sway" cx="28" cy="34" rx="22" ry="7" fill="#f0b429" stroke="#c98a12" stroke-width="2" style="transform-origin:28px 34px"/>
     <path class="bv-sway" d="M17 34c0-9 4-15 11-15s11 6 11 15z" fill="#fde047" stroke="#c98a12" stroke-width="2" style="transform-origin:28px 34px"/>
@@ -278,14 +286,14 @@ html.dark .bv-text { color: #e8efe1; }
     <circle class="bv-pulse" cx="45" cy="14" r="4" fill="#f0b429" style="transform-origin:45px 14px"/>
             </svg>
         </span>
-        <span class="bv-s bv-gloves {{ $waitScene === 'gloves' ? 'is-on' : '' }}" data-scene="gloves">
+        <span class="bv-s bv-gloves" data-scene="gloves">
             <svg viewBox="0 0 56 56" fill="none">
     <path class="bv-sway" d="M18 46V26a3 3 0 0 1 6 0v-4a3 3 0 0 1 6 0v-2a3 3 0 0 1 6 0v6a3 3 0 0 1 5 2v12a6 6 0 0 1-6 6z"
           fill="#8fc96a" stroke="#4a7c2a" stroke-width="2" stroke-linejoin="round" style="transform-origin:28px 46px"/>
     <path class="bv-sway" d="M18 36h23" stroke="#4a7c2a" stroke-width="2" style="transform-origin:28px 46px"/>
             </svg>
         </span>
-        <span class="bv-s bv-mask {{ $waitScene === 'mask' ? 'is-on' : '' }}" data-scene="mask">
+        <span class="bv-s bv-mask" data-scene="mask">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M12 22c8-4 24-4 32 0v10c0 8-7 14-16 14s-16-6-16-14z" fill="#cfd8e3" stroke="#5b6779" stroke-width="2" stroke-linejoin="round"/>
     <path d="M12 26H6M44 26h6" stroke="#5b6779" stroke-width="2.4" stroke-linecap="round"/>
@@ -293,7 +301,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-blink" d="M25 34h6M28 31v6" stroke="#cfd8e3" stroke-width="2" stroke-linecap="round"/>
             </svg>
         </span>
-        <span class="bv-s bv-goggles {{ $waitScene === 'goggles' ? 'is-on' : '' }}" data-scene="goggles">
+        <span class="bv-s bv-goggles" data-scene="goggles">
             <svg viewBox="0 0 56 56" fill="none">
     <rect x="8" y="22" width="40" height="14" rx="7" fill="#7dd3fc" opacity=".55" stroke="#5b6779" stroke-width="2"/>
     <path d="M28 22v14" stroke="#5b6779" stroke-width="2"/>
@@ -301,14 +309,14 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-slide" d="M14 26l4 4" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".9"/>
             </svg>
         </span>
-        <span class="bv-s bv-helmet {{ $waitScene === 'helmet' ? 'is-on' : '' }}" data-scene="helmet">
+        <span class="bv-s bv-helmet" data-scene="helmet">
             <svg viewBox="0 0 56 56" fill="none">
     <path class="bv-bob" d="M12 34a16 16 0 0 1 32 0v6H12z" fill="#e11d48" stroke="#9f1239" stroke-width="2" stroke-linejoin="round"/>
     <path class="bv-bob" d="M20 34c0-6 3.5-10 8-10s8 4 8 10z" fill="#cfd8e3" opacity=".8"/>
     <path class="bv-bob" d="M12 40h32v3a3 3 0 0 1-3 3H15a3 3 0 0 1-3-3z" fill="#9f1239"/>
             </svg>
         </span>
-        <span class="bv-s bv-ear {{ $waitScene === 'ear' ? 'is-on' : '' }}" data-scene="ear">
+        <span class="bv-s bv-ear" data-scene="ear">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M20 44V26a8 8 0 0 1 16 0v18" stroke="#5b6779" stroke-width="2.6" fill="none" stroke-linecap="round"/>
     <rect class="bv-bob" x="12" y="26" width="10" height="16" rx="4" fill="#f0b429" stroke="#c98a12" stroke-width="2"/>
@@ -316,7 +324,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-blink" d="M46 20c3 3 3 9 0 12M10 20c-3 3-3 9 0 12" stroke="#8b98ab" stroke-width="2" stroke-linecap="round"/>
             </svg>
         </span>
-        <span class="bv-s bv-soap {{ $waitScene === 'soap' ? 'is-on' : '' }}" data-scene="soap">
+        <span class="bv-s bv-soap" data-scene="soap">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M14 32c0-4 6-6 14-6s14 2 14 6v8a6 6 0 0 1-6 6H20a6 6 0 0 1-6-6z" fill="#c98c4a" stroke="#8a5a2b" stroke-width="2" stroke-linejoin="round"/>
     <circle class="bv-rise" cx="20" cy="24" r="3" fill="#7dd3fc" opacity=".85" style="transform-origin:20px 24px"/>
@@ -324,14 +332,14 @@ html.dark .bv-text { color: #e8efe1; }
     <circle class="bv-rise" cx="37" cy="24" r="2.6" fill="#7dd3fc" opacity=".9" style="transform-origin:37px 24px"/>
             </svg>
         </span>
-        <span class="bv-s bv-bottle {{ $waitScene === 'bottle' ? 'is-on' : '' }}" data-scene="bottle">
+        <span class="bv-s bv-bottle" data-scene="bottle">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M23 14h10v5l4 5v20a4 4 0 0 1-4 4H23a4 4 0 0 1-4-4V24l4-5z" fill="#7dd3fc" opacity=".55" stroke="#5b9bd5" stroke-width="2" stroke-linejoin="round"/>
     <rect x="23" y="10" width="10" height="5" rx="2" fill="#5b9bd5"/>
     <path class="bv-grow" d="M20 32h16v10a4 4 0 0 1-4 4h-8a4 4 0 0 1-4-4z" fill="#5b9bd5" opacity=".7" style="transform-origin:28px 46px"/>
             </svg>
         </span>
-        <span class="bv-s bv-shade {{ $waitScene === 'shade' ? 'is-on' : '' }}" data-scene="shade">
+        <span class="bv-s bv-shade" data-scene="shade">
             <svg viewBox="0 0 56 56" fill="none">
     <circle class="bv-pulse" cx="45" cy="12" r="6" fill="#f0b429" style="transform-origin:45px 12px"/>
     <path d="M20 46V28" stroke="#8a5a2b" stroke-width="3" stroke-linecap="round"/>
@@ -343,7 +351,7 @@ html.dark .bv-text { color: #e8efe1; }
     <ellipse cx="20" cy="47" rx="12" ry="3" fill="#5b6779" opacity=".2"/>
             </svg>
         </span>
-        <span class="bv-s bv-nap {{ $waitScene === 'nap' ? 'is-on' : '' }}" data-scene="nap">
+        <span class="bv-s bv-nap" data-scene="nap">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M6 20v26M50 20v26" stroke="#8a5a2b" stroke-width="3" stroke-linecap="round"/>
     <path class="bv-sway" d="M6 24c8 14 36 14 44 0" stroke="#f0b429" stroke-width="4" fill="none" stroke-linecap="round" style="transform-origin:28px 24px"/>
@@ -351,7 +359,7 @@ html.dark .bv-text { color: #e8efe1; }
     <text class="bv-rise" x="36" y="18" font-size="10" font-weight="800" fill="#8b98ab" style="transform-origin:36px 18px">z</text>
             </svg>
         </span>
-        <span class="bv-s bv-phone {{ $waitScene === 'phone' ? 'is-on' : '' }}" data-scene="phone">
+        <span class="bv-s bv-phone" data-scene="phone">
             <svg viewBox="0 0 56 56" fill="none">
     <rect x="18" y="10" width="20" height="36" rx="4" fill="#cfd8e3" stroke="#5b6779" stroke-width="2"/>
     <rect x="21" y="15" width="14" height="24" rx="1.5" fill="#8fc96a" opacity=".55"/>
@@ -360,7 +368,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-blink" d="M46 13c6 8 6 22 0 30" stroke="#6aa84f" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
             </svg>
         </span>
-        <span class="bv-s bv-torch {{ $waitScene === 'torch' ? 'is-on' : '' }}" data-scene="torch">
+        <span class="bv-s bv-torch" data-scene="torch">
             <svg viewBox="0 0 56 56" fill="none">
     <rect class="bv-sway" x="10" y="24" width="16" height="9" rx="2.5" fill="#5b6779" style="transform-origin:12px 28px"/>
     <path class="bv-sway" d="M26 22l8-4v22l-8-4z" fill="#8b98ab" style="transform-origin:12px 28px"/>
@@ -368,7 +376,7 @@ html.dark .bv-text { color: #e8efe1; }
     <circle class="bv-pulse" cx="34" cy="28" r="3" fill="#f0b429" style="transform-origin:34px 28px"/>
             </svg>
         </span>
-        <span class="bv-s bv-sack {{ $waitScene === 'sack' ? 'is-on' : '' }}" data-scene="sack">
+        <span class="bv-s bv-sack" data-scene="sack">
             <svg viewBox="0 0 56 56" fill="none">
     <path class="bv-bob" d="M18 22c0-4 3-6 10-6s10 2 10 6l4 20a4 4 0 0 1-4 5H18a4 4 0 0 1-4-5z"
           fill="#c98c4a" stroke="#8a5a2b" stroke-width="2" stroke-linejoin="round" style="transform-origin:28px 47px"/>
@@ -376,7 +384,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-bob" d="M22 34h12M22 39h9" stroke="#8a5a2b" stroke-width="1.8" stroke-linecap="round" opacity=".6" style="transform-origin:28px 47px"/>
             </svg>
         </span>
-        <span class="bv-s bv-back {{ $waitScene === 'back' ? 'is-on' : '' }}" data-scene="back">
+        <span class="bv-s bv-back" data-scene="back">
             <svg viewBox="0 0 56 56" fill="none">
     <circle cx="20" cy="14" r="5" fill="#c98c4a"/>
     <path d="M20 19c-4 0-7 3-7 7v6l-5 12h5l4-9 4 9h5l-3-12v-6c0-4-3-7-7-7z" fill="#4a7c2a"/>
@@ -384,7 +392,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-blink" d="M14 26c-3 2-4 5-4 8" stroke="#e11d48" stroke-width="2.4" fill="none" stroke-linecap="round"/>
             </svg>
         </span>
-        <span class="bv-s bv-cart {{ $waitScene === 'cart' ? 'is-on' : '' }}" data-scene="cart">
+        <span class="bv-s bv-cart" data-scene="cart">
             <svg viewBox="0 0 56 56" fill="none">
     <path class="bv-slide" d="M10 20h6l6 18h20" stroke="#5b6779" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
     <path class="bv-slide" d="M18 24h26l-3 12H21z" fill="#c98c4a" stroke="#8a5a2b" stroke-width="2" stroke-linejoin="round"/>
@@ -392,7 +400,7 @@ html.dark .bv-text { color: #e8efe1; }
     <g class="bv-spin" style="transform-origin:40px 44px"><circle cx="40" cy="44" r="5" fill="none" stroke="#5b6779" stroke-width="2.4"/><path d="M40 40v8" stroke="#5b6779" stroke-width="1.6"/></g>
             </svg>
         </span>
-        <span class="bv-s bv-rope {{ $waitScene === 'rope' ? 'is-on' : '' }}" data-scene="rope">
+        <span class="bv-s bv-rope" data-scene="rope">
             <svg viewBox="0 0 56 56" fill="none">
     <circle cx="28" cy="30" r="15" fill="none" stroke="#c98c4a" stroke-width="4"/>
     <circle class="bv-spin" cx="28" cy="30" r="10" fill="none" stroke="#8a5a2b" stroke-width="4" stroke-dasharray="5 4" style="transform-origin:28px 30px"/>
@@ -400,7 +408,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-sway" d="M43 30c4 2 6 6 5 12" stroke="#c98c4a" stroke-width="3.4" fill="none" stroke-linecap="round" style="transform-origin:43px 30px"/>
             </svg>
         </span>
-        <span class="bv-s bv-bolo {{ $waitScene === 'bolo' ? 'is-on' : '' }}" data-scene="bolo">
+        <span class="bv-s bv-bolo" data-scene="bolo">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M14 42l22-24c4-4 9-4 11 0L26 44z" fill="#cfd8e3" stroke="#5b6779" stroke-width="2" stroke-linejoin="round"/>
     <path d="M14 42l-6 6 8-2z" fill="#8a5a2b"/>
@@ -408,7 +416,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-blink" d="M40 20l4-4" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
             </svg>
         </span>
-        <span class="bv-s bv-sharpen {{ $waitScene === 'sharpen' ? 'is-on' : '' }}" data-scene="sharpen">
+        <span class="bv-s bv-sharpen" data-scene="sharpen">
             <svg viewBox="0 0 56 56" fill="none">
     <rect x="8" y="34" width="40" height="9" rx="4" fill="#8b98ab" stroke="#5b6779" stroke-width="2"/>
     <g class="bv-slide" style="transform-origin:28px 30px">
@@ -418,20 +426,20 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-blink" d="M20 28l-3 3M30 22l-3 3" stroke="#fde047" stroke-width="2.4" stroke-linecap="round"/>
             </svg>
         </span>
-        <span class="bv-s bv-ladder {{ $waitScene === 'ladder' ? 'is-on' : '' }}" data-scene="ladder">
+        <span class="bv-s bv-ladder" data-scene="ladder">
             <svg viewBox="0 0 56 56" fill="none">
     <path class="bv-sway" d="M18 48L24 8M38 48L32 8" stroke="#c98c4a" stroke-width="3.4" stroke-linecap="round" style="transform-origin:28px 48px"/>
     <path class="bv-sway" d="M22 40h12M23 32h10M24.5 24h8M26 16h6" stroke="#8a5a2b" stroke-width="3" stroke-linecap="round" style="transform-origin:28px 48px"/>
             </svg>
         </span>
-        <span class="bv-s bv-bucket {{ $waitScene === 'bucket' ? 'is-on' : '' }}" data-scene="bucket">
+        <span class="bv-s bv-bucket" data-scene="bucket">
             <svg viewBox="0 0 56 56" fill="none">
     <path class="bv-sway" d="M14 24h28l-4 22H18z" fill="#cfd8e3" stroke="#5b6779" stroke-width="2" stroke-linejoin="round" style="transform-origin:28px 20px"/>
     <path class="bv-sway" d="M17 20a11 11 0 0 1 22 0" stroke="#5b6779" stroke-width="2.4" fill="none" style="transform-origin:28px 20px"/>
     <path class="bv-grow" d="M16 34h24l-2 12H18z" fill="#5b9bd5" opacity=".65" style="transform-origin:28px 46px"/>
             </svg>
         </span>
-        <span class="bv-s bv-hose {{ $waitScene === 'hose' ? 'is-on' : '' }}" data-scene="hose">
+        <span class="bv-s bv-hose" data-scene="hose">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M8 46c0-14 10-22 22-22" stroke="#4a7c2a" stroke-width="4" fill="none" stroke-linecap="round"/>
     <rect x="30" y="20" width="12" height="8" rx="2" transform="rotate(-12 36 24)" fill="#5b6779"/>
@@ -440,7 +448,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-fall3" d="M44 28l6 3" stroke="#7dd3fc" stroke-width="2.6" stroke-linecap="round"/>
             </svg>
         </span>
-        <span class="bv-s bv-pump {{ $waitScene === 'pump' ? 'is-on' : '' }}" data-scene="pump">
+        <span class="bv-s bv-pump" data-scene="pump">
             <svg viewBox="0 0 56 56" fill="none">
     <rect x="14" y="26" width="20" height="18" rx="3" fill="#8b98ab" stroke="#5b6779" stroke-width="2"/>
     <path class="bv-slide" d="M24 26V14h14" stroke="#5b6779" stroke-width="3.4" fill="none" stroke-linecap="round" style="transform-origin:24px 26px"/>
@@ -449,14 +457,14 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-fall2" d="M42 38v5" stroke="#7dd3fc" stroke-width="2.4" stroke-linecap="round"/>
             </svg>
         </span>
-        <span class="bv-s bv-canal {{ $waitScene === 'canal' ? 'is-on' : '' }}" data-scene="canal">
+        <span class="bv-s bv-canal" data-scene="canal">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M6 22h8v22H6zM42 22h8v22h-8z" fill="#8b98ab" stroke="#5b6779" stroke-width="2"/>
     <path class="bv-flow" d="M14 28h28M14 34h28M14 40h28" stroke="#5b9bd5" stroke-width="3" stroke-linecap="round"/>
     <path class="bv-bob" d="M4 48c4-2 8 2 12 0s8 2 12 0 8 2 12 0 8 2 12 0" stroke="#7dd3fc" stroke-width="2.4" fill="none" stroke-linecap="round"/>
             </svg>
         </span>
-        <span class="bv-s bv-flood {{ $waitScene === 'flood' ? 'is-on' : '' }}" data-scene="flood">
+        <span class="bv-s bv-flood" data-scene="flood">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M14 40V24h6v16M36 40V20h6v20" stroke="#8a5a2b" stroke-width="2.6" fill="none" stroke-linecap="round"/>
     <path class="bv-sway" d="M20 26h16v14H20z" fill="#c98c4a" opacity=".5" style="transform-origin:28px 40px"/>
@@ -464,7 +472,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-bob2" d="M2 45c5-3 9 3 14 0s9 3 14 0 9 3 14 0 9 3 12 0" stroke="#7dd3fc" stroke-width="2.6" fill="none" stroke-linecap="round"/>
             </svg>
         </span>
-        <span class="bv-s bv-soil {{ $waitScene === 'soil' ? 'is-on' : '' }}" data-scene="soil">
+        <span class="bv-s bv-soil" data-scene="soil">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M6 44h44" stroke="#8a5a2b" stroke-width="2.6" stroke-linecap="round" opacity=".6"/>
     <path class="bv-sway" d="M16 30c4-4 10-4 14 0 3 3 2 8-3 8h-8c-5 0-6-5-3-8z" fill="#c98c4a" stroke="#8a5a2b" stroke-width="2" style="transform-origin:23px 26px"/>
@@ -473,7 +481,7 @@ html.dark .bv-text { color: #e8efe1; }
     <circle class="bv-fall3" cx="20" cy="40" r="1.8" fill="#8a5a2b"/>
             </svg>
         </span>
-        <span class="bv-s bv-compost {{ $waitScene === 'compost' ? 'is-on' : '' }}" data-scene="compost">
+        <span class="bv-s bv-compost" data-scene="compost">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M8 44c2-12 10-18 20-18s18 6 20 18z" fill="#8a5a2b" stroke="#5f3d1a" stroke-width="2" stroke-linejoin="round"/>
     <path d="M18 40c3-6 6-8 10-8s7 2 10 8z" fill="#c98c4a" opacity=".7"/>
@@ -481,14 +489,14 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-rise2" d="M32 22c0-4 4-4 4-8" stroke="#8b98ab" stroke-width="2.2" fill="none" stroke-linecap="round" style="transform-origin:34px 18px"/>
             </svg>
         </span>
-        <span class="bv-s bv-fertbag {{ $waitScene === 'fertbag' ? 'is-on' : '' }}" data-scene="fertbag">
+        <span class="bv-s bv-fertbag" data-scene="fertbag">
             <svg viewBox="0 0 56 56" fill="none">
     <path class="bv-bob" d="M16 18h24l3 26a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4z" fill="#cfd8e3" stroke="#5b6779" stroke-width="2" stroke-linejoin="round" style="transform-origin:28px 48px"/>
     <path class="bv-bob" d="M18 18c4-4 16-4 20 0" stroke="#5b6779" stroke-width="2" fill="none" style="transform-origin:28px 48px"/>
     <text class="bv-bob" x="28" y="38" font-size="12" font-weight="800" text-anchor="middle" fill="#4a7c2a" style="transform-origin:28px 48px">N</text>
             </svg>
         </span>
-        <span class="bv-s bv-granule {{ $waitScene === 'granule' ? 'is-on' : '' }}" data-scene="granule">
+        <span class="bv-s bv-granule" data-scene="granule">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M12 20c6-4 12-4 17 0l-3 12H15z" fill="#f0b429" opacity=".85" stroke="#c98a12" stroke-width="2" stroke-linejoin="round"/>
     <circle class="bv-fall" cx="32" cy="26" r="2.2" fill="#f0b429"/>
@@ -497,7 +505,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path d="M8 46h40" stroke="#8a5a2b" stroke-width="2.6" stroke-linecap="round" opacity=".55"/>
             </svg>
         </span>
-        <span class="bv-s bv-sprout {{ $waitScene === 'sprout' ? 'is-on' : '' }}" data-scene="sprout">
+        <span class="bv-s bv-sprout" data-scene="sprout">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M8 44h40" stroke="#8a5a2b" stroke-width="2.6" stroke-linecap="round" opacity=".55"/>
     <ellipse cx="28" cy="40" rx="7" ry="5" fill="#c98c4a" stroke="#8a5a2b" stroke-width="2"/>
@@ -506,7 +514,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-sway2" d="M28 32c7-1 9-6 7-10-5-1-9 3-7 10z" fill="#8fc96a" style="transform-origin:28px 32px"/>
             </svg>
         </span>
-        <span class="bv-s bv-nursery {{ $waitScene === 'nursery' ? 'is-on' : '' }}" data-scene="nursery">
+        <span class="bv-s bv-nursery" data-scene="nursery">
             <svg viewBox="0 0 56 56" fill="none">
     <rect x="8" y="32" width="40" height="14" rx="3" fill="#c98c4a" stroke="#8a5a2b" stroke-width="2"/>
     <path d="M18 32v14M28 32v14M38 32v14" stroke="#8a5a2b" stroke-width="1.6" opacity=".6"/>
@@ -515,7 +523,7 @@ html.dark .bv-text { color: #e8efe1; }
     <g class="bv-sway" style="transform-origin:43px 32px"><path d="M43 32V25" stroke="#4a7c2a" stroke-width="2.2" stroke-linecap="round"/><path d="M43 27c-4 0-5-3-4-5 3 0 5 2 4 5z" fill="#6aa84f"/></g>
             </svg>
         </span>
-        <span class="bv-s bv-transplant {{ $waitScene === 'transplant' ? 'is-on' : '' }}" data-scene="transplant">
+        <span class="bv-s bv-transplant" data-scene="transplant">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M6 46h44" stroke="#8a5a2b" stroke-width="2.6" stroke-linecap="round" opacity=".55"/>
     <path class="bv-bob" d="M28 42V30" stroke="#4a7c2a" stroke-width="2.4" stroke-linecap="round" style="transform-origin:28px 42px"/>
@@ -525,7 +533,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-sway" d="M16 26c-4 0-6 3-6 6s3 5 6 4" stroke="#c98c4a" stroke-width="3" fill="none" stroke-linecap="round" style="transform-origin:10px 32px"/>
             </svg>
         </span>
-        <span class="bv-s bv-weeds {{ $waitScene === 'weeds' ? 'is-on' : '' }}" data-scene="weeds">
+        <span class="bv-s bv-weeds" data-scene="weeds">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M6 44h44" stroke="#8a5a2b" stroke-width="2.6" stroke-linecap="round" opacity=".55"/>
     <g class="bv-sway" style="transform-origin:18px 44px">
@@ -537,7 +545,7 @@ html.dark .bv-text { color: #e8efe1; }
     </g>
             </svg>
         </span>
-        <span class="bv-s bv-pest {{ $waitScene === 'pest' ? 'is-on' : '' }}" data-scene="pest">
+        <span class="bv-s bv-pest" data-scene="pest">
             <svg viewBox="0 0 56 56" fill="none">
     <path class="bv-sway" d="M30 40c-12-2-16-10-13-18 9-2 16 6 13 18z" fill="#6aa84f" style="transform-origin:30px 42px"/>
     <path class="bv-sway" d="M30 40c-4-8-8-12-13-14" stroke="#4a7c2a" stroke-width="1.6" fill="none" style="transform-origin:30px 42px"/>
@@ -548,7 +556,7 @@ html.dark .bv-text { color: #e8efe1; }
     </g>
             </svg>
         </span>
-        <span class="bv-s bv-spider {{ $waitScene === 'spider' ? 'is-on' : '' }}" data-scene="spider">
+        <span class="bv-s bv-spider" data-scene="spider">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M28 6v10M12 14l6 8M44 14l-6 8M6 30h10M50 30h-10M12 44l7-7M44 44l-7-7"
           stroke="#8b98ab" stroke-width="1.6" opacity=".55"/>
@@ -560,7 +568,7 @@ html.dark .bv-text { color: #e8efe1; }
     </g>
             </svg>
         </span>
-        <span class="bv-s bv-bird {{ $waitScene === 'bird' ? 'is-on' : '' }}" data-scene="bird">
+        <span class="bv-s bv-bird" data-scene="bird">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M28 46V22" stroke="#8a5a2b" stroke-width="3" stroke-linecap="round"/>
     <path d="M14 26h28" stroke="#8a5a2b" stroke-width="3" stroke-linecap="round"/>
@@ -569,7 +577,7 @@ html.dark .bv-text { color: #e8efe1; }
     <g class="bv-slide"><path d="M44 12c-4 0-6 2-6 4 3-1 5-1 6-4z" fill="#5b6779"/></g>
             </svg>
         </span>
-        <span class="bv-s bv-snail {{ $waitScene === 'snail' ? 'is-on' : '' }}" data-scene="snail">
+        <span class="bv-s bv-snail" data-scene="snail">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M6 46h44" stroke="#8a5a2b" stroke-width="2.6" stroke-linecap="round" opacity=".55"/>
     <g class="bv-slide">
@@ -581,7 +589,7 @@ html.dark .bv-text { color: #e8efe1; }
     </g>
             </svg>
         </span>
-        <span class="bv-s bv-mosquito {{ $waitScene === 'mosquito' ? 'is-on' : '' }}" data-scene="mosquito">
+        <span class="bv-s bv-mosquito" data-scene="mosquito">
             <svg viewBox="0 0 56 56" fill="none">
     <g class="bv-slide">
         <ellipse cx="28" cy="30" rx="4" ry="8" fill="#3f3f46" transform="rotate(-20 28 30)"/>
@@ -593,7 +601,7 @@ html.dark .bv-text { color: #e8efe1; }
     </g>
             </svg>
         </span>
-        <span class="bv-s bv-net {{ $waitScene === 'net' ? 'is-on' : '' }}" data-scene="net">
+        <span class="bv-s bv-net" data-scene="net">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M28 6l20 8v6H8v-6z" fill="#cfd8e3" opacity=".8" stroke="#5b6779" stroke-width="2" stroke-linejoin="round"/>
     <path class="bv-sway" d="M12 20c-2 12 0 22 4 28M44 20c2 12 0 22-4 28" stroke="#8b98ab" stroke-width="2" fill="none" style="transform-origin:28px 20px"/>
@@ -601,7 +609,7 @@ html.dark .bv-text { color: #e8efe1; }
     <rect x="18" y="40" width="20" height="8" rx="2" fill="#8fc96a" opacity=".7"/>
             </svg>
         </span>
-        <span class="bv-s bv-mouse {{ $waitScene === 'mouse' ? 'is-on' : '' }}" data-scene="mouse">
+        <span class="bv-s bv-mouse" data-scene="mouse">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M6 46h44" stroke="#8a5a2b" stroke-width="2.6" stroke-linecap="round" opacity=".55"/>
     <g class="bv-slide">
@@ -613,7 +621,7 @@ html.dark .bv-text { color: #e8efe1; }
     </g>
             </svg>
         </span>
-        <span class="bv-s bv-thermometer {{ $waitScene === 'thermometer' ? 'is-on' : '' }}" data-scene="thermometer">
+        <span class="bv-s bv-thermometer" data-scene="thermometer">
             <svg viewBox="0 0 56 56" fill="none">
     <rect x="24" y="8" width="8" height="28" rx="4" fill="#cfd8e3" stroke="#5b6779" stroke-width="2"/>
     <circle cx="28" cy="40" r="7" fill="#e11d48" stroke="#9f1239" stroke-width="2"/>
@@ -621,7 +629,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path d="M34 14h6M34 20h4M34 26h6" stroke="#5b6779" stroke-width="1.8" stroke-linecap="round"/>
             </svg>
         </span>
-        <span class="bv-s bv-pills {{ $waitScene === 'pills' ? 'is-on' : '' }}" data-scene="pills">
+        <span class="bv-s bv-pills" data-scene="pills">
             <svg viewBox="0 0 56 56" fill="none">
     <g class="bv-bob">
         <rect x="10" y="24" width="20" height="11" rx="5.5" transform="rotate(-20 20 30)" fill="#e11d48" opacity=".85" stroke="#9f1239" stroke-width="2"/>
@@ -633,7 +641,7 @@ html.dark .bv-text { color: #e8efe1; }
     </g>
             </svg>
         </span>
-        <span class="bv-s bv-stetho {{ $waitScene === 'stetho' ? 'is-on' : '' }}" data-scene="stetho">
+        <span class="bv-s bv-stetho" data-scene="stetho">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M18 10v10a8 8 0 0 0 16 0V10" stroke="#5b6779" stroke-width="2.6" fill="none" stroke-linecap="round"/>
     <circle cx="18" cy="9" r="2.6" fill="#5b6779"/><circle cx="34" cy="9" r="2.6" fill="#5b6779"/>
@@ -641,7 +649,7 @@ html.dark .bv-text { color: #e8efe1; }
     <circle class="bv-pulse" cx="42" cy="42" r="6" fill="#8b98ab" stroke="#5b6779" stroke-width="2" style="transform-origin:42px 42px"/>
             </svg>
         </span>
-        <span class="bv-s bv-eye {{ $waitScene === 'eye' ? 'is-on' : '' }}" data-scene="eye">
+        <span class="bv-s bv-eye" data-scene="eye">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M6 30c8-10 16-14 22-14s14 4 22 14c-8 10-16 14-22 14s-14-4-22-14z"
           fill="none" stroke="#5b6779" stroke-width="2.4" stroke-linejoin="round"/>
@@ -650,7 +658,7 @@ html.dark .bv-text { color: #e8efe1; }
     <circle class="bv-blink" cx="25" cy="27" r="1.6" fill="#fff"/>
             </svg>
         </span>
-        <span class="bv-s bv-dry {{ $waitScene === 'dry' ? 'is-on' : '' }}" data-scene="dry">
+        <span class="bv-s bv-dry" data-scene="dry">
             <svg viewBox="0 0 56 56" fill="none">
     <circle class="bv-spin" cx="44" cy="12" r="5" fill="#f0b429" style="transform-origin:44px 12px"/>
     <path class="bv-spin" d="M44 4v3M44 17v3M36 12h3M49 12h3M38.5 6.5l2 2M47.5 15.5l2 2M49.5 6.5l-2 2M40.5 15.5l-2 2"
@@ -659,7 +667,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-sway" d="M14 38h24M16 34h20" stroke="#f0b429" stroke-width="2.6" stroke-linecap="round" style="transform-origin:28px 44px"/>
             </svg>
         </span>
-        <span class="bv-s bv-store {{ $waitScene === 'store' ? 'is-on' : '' }}" data-scene="store">
+        <span class="bv-s bv-store" data-scene="store">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M8 24L28 10l20 14v22H8z" fill="#c98c4a" stroke="#8a5a2b" stroke-width="2" stroke-linejoin="round"/>
     <rect x="22" y="30" width="12" height="16" rx="1.5" fill="#8a5a2b"/>
@@ -667,7 +675,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-pulse" d="M28 16l4 5h-8z" fill="#6aa84f" style="transform-origin:28px 19px"/>
             </svg>
         </span>
-        <span class="bv-s bv-weevil {{ $waitScene === 'weevil' ? 'is-on' : '' }}" data-scene="weevil">
+        <span class="bv-s bv-weevil" data-scene="weevil">
             <svg viewBox="0 0 56 56" fill="none">
     <ellipse cx="28" cy="34" rx="16" ry="11" fill="#f0b429" opacity=".55" stroke="#c98a12" stroke-width="2"/>
     <path d="M18 30c6-3 14-3 20 0" stroke="#c98a12" stroke-width="1.8" fill="none"/>
@@ -679,14 +687,14 @@ html.dark .bv-text { color: #e8efe1; }
     </g>
             </svg>
         </span>
-        <span class="bv-s bv-label {{ $waitScene === 'label' ? 'is-on' : '' }}" data-scene="label">
+        <span class="bv-s bv-label" data-scene="label">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M14 14h20l12 12v20a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V18a4 4 0 0 1 4-4z" fill="#fff" stroke="#5b6779" stroke-width="2" stroke-linejoin="round"/>
     <path d="M34 14v12h12" stroke="#5b6779" stroke-width="2" fill="none" stroke-linejoin="round"/>
     <path class="bv-tick" d="M17 32h20M17 38h14M17 44h9" stroke="#4a7c2a" stroke-width="2.4" stroke-linecap="round"/>
             </svg>
         </span>
-        <span class="bv-s bv-scale {{ $waitScene === 'scale' ? 'is-on' : '' }}" data-scene="scale">
+        <span class="bv-s bv-scale" data-scene="scale">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M28 14v26M16 46h24" stroke="#5b6779" stroke-width="3" stroke-linecap="round"/>
     <path d="M10 20h36" stroke="#5b6779" stroke-width="2.6" stroke-linecap="round"/>
@@ -695,7 +703,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-bob2" d="M40 20l6 12h-12z" fill="#f0b429" opacity=".8" stroke="#c98a12" stroke-width="2" style="transform-origin:46px 26px"/>
             </svg>
         </span>
-        <span class="bv-s bv-basket {{ $waitScene === 'basket' ? 'is-on' : '' }}" data-scene="basket">
+        <span class="bv-s bv-basket" data-scene="basket">
             <svg viewBox="0 0 56 56" fill="none">
     <path class="bv-bob" d="M10 26h36l-4 20H14z" fill="#c98c4a" stroke="#8a5a2b" stroke-width="2" stroke-linejoin="round" style="transform-origin:28px 46px"/>
     <path class="bv-bob" d="M16 26v20M28 26v20M40 26v20" stroke="#8a5a2b" stroke-width="1.6" opacity=".6" style="transform-origin:28px 46px"/>
@@ -704,7 +712,7 @@ html.dark .bv-text { color: #e8efe1; }
     <circle class="bv-bob" cx="40" cy="22" r="5" fill="#6aa84f" style="transform-origin:28px 46px"/>
             </svg>
         </span>
-        <span class="bv-s bv-clock {{ $waitScene === 'clock' ? 'is-on' : '' }}" data-scene="clock">
+        <span class="bv-s bv-clock" data-scene="clock">
             <svg viewBox="0 0 56 56" fill="none">
     <circle cx="28" cy="30" r="17" fill="#fff" stroke="#5b6779" stroke-width="2.6"/>
     <path d="M28 17v3M28 40v3M15 30h3M38 30h3" stroke="#5b6779" stroke-width="2" stroke-linecap="round"/>
@@ -713,7 +721,7 @@ html.dark .bv-text { color: #e8efe1; }
     <circle cx="28" cy="30" r="2" fill="#5b6779"/>
             </svg>
         </span>
-        <span class="bv-s bv-money {{ $waitScene === 'money' ? 'is-on' : '' }}" data-scene="money">
+        <span class="bv-s bv-money" data-scene="money">
             <svg viewBox="0 0 56 56" fill="none">
     <g class="bv-bob"><circle cx="20" cy="34" r="10" fill="#f0b429" stroke="#c98a12" stroke-width="2"/>
         <text x="20" y="39" font-size="13" font-weight="800" text-anchor="middle" fill="#8a6a10">P</text></g>
@@ -722,7 +730,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-rise" d="M44 18v-6" stroke="#4a7c2a" stroke-width="2.4" stroke-linecap="round" style="transform-origin:44px 15px"/>
             </svg>
         </span>
-        <span class="bv-s bv-lightning {{ $waitScene === 'lightning' ? 'is-on' : '' }}" data-scene="lightning">
+        <span class="bv-s bv-lightning" data-scene="lightning">
             <svg viewBox="0 0 56 56" fill="none">
     <path class="bv-sway" d="M12 26a7 7 0 0 1 1-13.9A10 10 0 0 1 33 13a6.5 6.5 0 0 1 1 13z" fill="#8b98ab" stroke="#5b6779" stroke-width="2" style="transform-origin:24px 20px"/>
     <path class="bv-blink" d="M26 28l-6 12h6l-4 10 14-16h-7l4-6z" fill="#fde047" stroke="#c98a12" stroke-width="1.6" stroke-linejoin="round"/>
@@ -730,14 +738,14 @@ html.dark .bv-text { color: #e8efe1; }
     <circle cx="42" cy="22" r="6" fill="#4a7c2a" opacity=".7"/>
             </svg>
         </span>
-        <span class="bv-s bv-windy {{ $waitScene === 'windy' ? 'is-on' : '' }}" data-scene="windy">
+        <span class="bv-s bv-windy" data-scene="windy">
             <svg viewBox="0 0 56 56" fill="none">
     <path class="bv-slide" d="M6 20h22a5 5 0 1 0-5-5" stroke="#5b9bd5" stroke-width="2.6" fill="none" stroke-linecap="round"/>
     <path class="bv-slide" d="M6 30h30a6 6 0 1 1-6 6" stroke="#7dd3fc" stroke-width="2.6" fill="none" stroke-linecap="round"/>
     <path class="bv-slide" d="M6 40h16a4 4 0 1 0-4 4" stroke="#5b9bd5" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".7"/>
             </svg>
         </span>
-        <span class="bv-s bv-tarp {{ $waitScene === 'tarp' ? 'is-on' : '' }}" data-scene="tarp">
+        <span class="bv-s bv-tarp" data-scene="tarp">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M8 18h40" stroke="#8a5a2b" stroke-width="2.6" stroke-linecap="round"/>
     <path class="bv-sway" d="M10 18c6 14 30 14 36 0v22H10z" fill="#5b9bd5" opacity=".5" stroke="#5b9bd5" stroke-width="2" stroke-linejoin="round" style="transform-origin:28px 18px"/>
@@ -746,7 +754,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-fall2" d="M36 8v5" stroke="#7dd3fc" stroke-width="2.4" stroke-linecap="round"/>
             </svg>
         </span>
-        <span class="bv-s bv-roof {{ $waitScene === 'roof' ? 'is-on' : '' }}" data-scene="roof">
+        <span class="bv-s bv-roof" data-scene="roof">
             <svg viewBox="0 0 56 56" fill="none">
     <path d="M6 32L28 14l22 18" stroke="#5b6779" stroke-width="2.6" fill="none" stroke-linejoin="round"/>
     <path class="bv-sway" d="M14 32h28v14H14z" fill="#cfd8e3" stroke="#5b6779" stroke-width="2" style="transform-origin:28px 46px"/>
@@ -754,7 +762,7 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-bob" d="M40 20l8-4v8z" fill="#8b98ab" stroke="#5b6779" stroke-width="2" stroke-linejoin="round" style="transform-origin:44px 20px"/>
             </svg>
         </span>
-        <span class="bv-s bv-calendar {{ $waitScene === 'calendar' ? 'is-on' : '' }}" data-scene="calendar">
+        <span class="bv-s bv-calendar" data-scene="calendar">
             <svg viewBox="0 0 56 56" fill="none">
     <rect x="10" y="14" width="36" height="32" rx="4" fill="#fff" stroke="#5b6779" stroke-width="2.4"/>
     <path d="M18 10v8M38 10v8M10 24h36" stroke="#5b6779" stroke-width="2.4" stroke-linecap="round"/>
@@ -764,9 +772,8 @@ html.dark .bv-text { color: #e8efe1; }
     <path class="bv-tick" d="M18 40l4 4 8-8" stroke="#4a7c2a" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </span>
-    </span>
         {{-- Noon, and the heat off the ground. --}}
-        <span class="bv-s bv-sun {{ $waitScene === 'sun' ? 'is-on' : '' }}" data-scene="sun">
+        <span class="bv-s bv-sun" data-scene="sun">
             <svg viewBox="0 0 56 56" fill="none">
                 <g class="sn-rays">
                     <path d="M28 4v5M28 39v5M8 24h5M43 24h5M13.6 9.6l3.6 3.6M38.8 34.8l3.6 3.6M42.4 9.6l-3.6 3.6M17.2 34.8l-3.6 3.6"
@@ -779,7 +786,7 @@ html.dark .bv-text { color: #e8efe1; }
             </svg>
         </span>
         {{-- A glass, filling. --}}
-        <span class="bv-s bv-water {{ $waitScene === 'water' ? 'is-on' : '' }}" data-scene="water">
+        <span class="bv-s bv-water" data-scene="water">
             <svg viewBox="0 0 56 56" fill="none">
                 <path class="wg-drop" d="M28 8c2 3 3 4.4 3 6a3 3 0 0 1-6 0c0-1.6 1-3 3-6z" fill="#5b9bd5"/>
                 {{-- A straight glass on purpose: the water inside is a plain
@@ -792,7 +799,7 @@ html.dark .bv-text { color: #e8efe1; }
             </svg>
         </span>
         {{-- One capsule. --}}
-        <span class="bv-s bv-vitamin {{ $waitScene === 'vitamin' ? 'is-on' : '' }}" data-scene="vitamin">
+        <span class="bv-s bv-vitamin" data-scene="vitamin">
             <svg viewBox="0 0 56 56" fill="none">
                 <g class="vt-cap">
                     <path d="M16 28a7 7 0 0 1 7-7h5v14h-5a7 7 0 0 1-7-7z" fill="#f0b429" stroke="#c98a12" stroke-width="2"/>
@@ -802,7 +809,7 @@ html.dark .bv-text { color: #e8efe1; }
             </svg>
         </span>
         {{-- The wand, and the mist. --}}
-        <span class="bv-s bv-spray {{ $waitScene === 'spray' ? 'is-on' : '' }}" data-scene="spray">
+        <span class="bv-s bv-spray" data-scene="spray">
             <svg viewBox="0 0 56 56" fill="none">
                 <g class="sp-wand">
                     <path d="M10 46l14-10" stroke="#4a7c2a" stroke-width="3.4" stroke-linecap="round"/>
@@ -819,7 +826,7 @@ html.dark .bv-text { color: #e8efe1; }
             </svg>
         </span>
         {{-- Boots by the door. --}}
-        <span class="bv-s bv-boots {{ $waitScene === 'boots' ? 'is-on' : '' }}" data-scene="boots">
+        <span class="bv-s bv-boots" data-scene="boots">
             <svg viewBox="0 0 56 56" fill="none">
                 <g class="bt-left">
                     <path d="M15 16h9v18l5 3v7H15z" fill="#4a7c2a" stroke="#2f5219" stroke-width="2" stroke-linejoin="round"/>
@@ -833,7 +840,7 @@ html.dark .bv-text { color: #e8efe1; }
             </svg>
         </span>
         {{-- The blade on the stone. --}}
-        <span class="bv-s bv-tools {{ $waitScene === 'tools' ? 'is-on' : '' }}" data-scene="tools">
+        <span class="bv-s bv-tools" data-scene="tools">
             <svg viewBox="0 0 56 56" fill="none">
                 <rect x="10" y="38" width="34" height="7" rx="3.5" fill="#b9b2a6" stroke="#8d867a" stroke-width="2"/>
                 <g class="tl-blade">
@@ -844,7 +851,7 @@ html.dark .bv-text { color: #e8efe1; }
             </svg>
         </span>
         {{-- The kit. --}}
-        <span class="bv-s bv-firstaid {{ $waitScene === 'firstaid' ? 'is-on' : '' }}" data-scene="firstaid">
+        <span class="bv-s bv-firstaid" data-scene="firstaid">
             <svg viewBox="0 0 56 56" fill="none">
                 <path class="fa-lid" d="M12 22h32a2 2 0 0 1 2 2v3H10v-3a2 2 0 0 1 2-2z" fill="#c8ceda" stroke="#8e9aab" stroke-width="2" stroke-linejoin="round"/>
                 <path d="M23 22v-3a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3" stroke="#8e9aab" stroke-width="2" stroke-linejoin="round"/>
@@ -853,7 +860,7 @@ html.dark .bv-text { color: #e8efe1; }
             </svg>
         </span>
         {{-- The record. --}}
-        <span class="bv-s bv-notebook {{ $waitScene === 'notebook' ? 'is-on' : '' }}" data-scene="notebook">
+        <span class="bv-s bv-notebook" data-scene="notebook">
             <svg viewBox="0 0 56 56" fill="none">
                 <rect x="12" y="10" width="32" height="36" rx="3" fill="#fdfdfb" stroke="#c8ceda" stroke-width="2"/>
                 <path d="M18 10v36" stroke="#c8ceda" stroke-width="2"/>
@@ -866,7 +873,7 @@ html.dark .bv-text { color: #e8efe1; }
             </svg>
         </span>
         {{-- The seedbed. --}}
-        <span class="bv-s bv-seedling {{ $waitScene === 'seedling' ? 'is-on' : '' }}" data-scene="seedling">
+        <span class="bv-s bv-seedling" data-scene="seedling">
             <svg viewBox="0 0 56 56" fill="none">
                 <path d="M8 44h40" stroke="#8a5a2b" stroke-width="3" stroke-linecap="round"/>
                 <path class="sd-stem" d="M28 44V22" stroke="#4a7c2a" stroke-width="3" stroke-linecap="round"/>
@@ -875,7 +882,7 @@ html.dark .bv-text { color: #e8efe1; }
             </svg>
         </span>
         {{-- The machine. --}}
-        <span class="bv-s bv-tractor {{ $waitScene === 'tractor' ? 'is-on' : '' }}" data-scene="tractor">
+        <span class="bv-s bv-tractor" data-scene="tractor">
             <svg viewBox="0 0 56 56" fill="none">
                 <g class="tr-body">
                     <path d="M14 34V24h9l3 8h10v2" stroke="#4a7c2a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -894,7 +901,7 @@ html.dark .bv-text { color: #e8efe1; }
             </svg>
         </span>
         {{-- Five more minutes. --}}
-        <span class="bv-s bv-carabao {{ $waitScene === 'carabao' ? 'is-on' : '' }}" data-scene="carabao">
+        <span class="bv-s bv-carabao" data-scene="carabao">
             <svg viewBox="0 0 56 56" fill="none">
                 <g class="cb-head">
                     <path d="M20 18C13 20 7 18 4 11" stroke="#7c828b" stroke-width="4" stroke-linecap="round" fill="none"/>
@@ -911,7 +918,7 @@ html.dark .bv-text { color: #e8efe1; }
             </svg>
         </span>
         {{-- The head, and the grain drying under it. --}}
-        <span class="bv-s bv-rice {{ $waitScene === 'rice' ? 'is-on' : '' }}" data-scene="rice">
+        <span class="bv-s bv-rice" data-scene="rice">
             <svg viewBox="0 0 56 56" fill="none">
                 <g class="rc-stalk">
                     <path d="M28 44c0-14 2-22 6-28" stroke="#6b9f3d" stroke-width="3" stroke-linecap="round"/>
@@ -931,7 +938,7 @@ html.dark .bv-text { color: #e8efe1; }
             </svg>
         </span>
         {{-- The can tips. --}}
-        <span class="bv-s bv-watering {{ $waitScene === 'watering' ? 'is-on' : '' }}" data-scene="watering">
+        <span class="bv-s bv-watering" data-scene="watering">
             <svg viewBox="0 0 56 56" fill="none">
                 <g class="wt-can">
                     <path d="M20 22h16v14a4 4 0 0 1-4 4H24a4 4 0 0 1-4-4V22z" fill="#8fc267" stroke="#3d6823" stroke-width="2"/>
@@ -943,7 +950,7 @@ html.dark .bv-text { color: #e8efe1; }
             </svg>
         </span>
         {{-- One bee. --}}
-        <span class="bv-s bv-bee {{ $waitScene === 'bee' ? 'is-on' : '' }}" data-scene="bee">
+        <span class="bv-s bv-bee" data-scene="bee">
             <svg viewBox="0 0 56 56" fill="none">
                 <g class="be-fly">
                     <ellipse class="be-wing be-wing-l" cx="21" cy="20" rx="7" ry="4" transform="rotate(-22 21 20)" fill="#dbeafe" stroke="#8fb3d4" stroke-width="1.5"/>
@@ -955,7 +962,7 @@ html.dark .bv-text { color: #e8efe1; }
             </svg>
         </span>
         {{-- The end of the day. --}}
-        <span class="bv-s bv-moon {{ $waitScene === 'moon' ? 'is-on' : '' }}" data-scene="moon">
+        <span class="bv-s bv-moon" data-scene="moon">
             <svg viewBox="0 0 56 56" fill="none">
                 <path class="mn-body" d="M34 8a16 16 0 1 0 11 25A19 19 0 0 1 34 8z" fill="#e8edf5" stroke="#a9b4c6" stroke-width="2"/>
                 <g fill="#f0b429">
@@ -970,7 +977,41 @@ html.dark .bv-text { color: #e8efe1; }
                 </g>
             </svg>
         </span>
-    </span>
+</template>
+<script>
+(function () {
+    /** Put one scene into a card's slot. */
+    window.bvPaintScene = function (host, scene) {
+        const lib = document.getElementById('bvScenes');
+        if (!lib || !host) return;
+        const pick = lib.content.querySelector('.bv-s[data-scene="' + String(scene).replace(/"/g, '') + '"]')
+            // A line naming a scene this build does not know about still
+            // shows; it just grows a seedling.
+            || lib.content.querySelector('.bv-s[data-scene="seedling"]');
+        if (!pick) return;
+        const node = pick.cloneNode(true);
+        node.classList.add('is-on');
+        host.replaceChildren(node);
+    };
+
+    /* Fill whatever is on the page. Cards are static markup, so this runs
+       once — and again on DOMContentLoaded for the ones parsed after this
+       script, since a partial included further down the page has not been
+       read yet when this line executes. */
+    const paintAll = () => document.querySelectorAll('.bv-scene[data-scene-want]').forEach((h) => {
+        if (!h.firstElementChild) window.bvPaintScene(h, h.getAttribute('data-scene-want'));
+    });
+    paintAll();
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', paintAll);
+    }
+})();
+</script>
+@endonce
+<div class="bv-card">
+    {{-- The one scene this card is showing. Filled from the book
+         below, which every card on the page shares. --}}
+    <span class="bv-scene" aria-hidden="true" data-scene-want="{{ $waitScene }}"></span>
     <span class="bv-text" data-wait-line>{{ $waitFirst['line'] }}</span>
     {{-- The reason. A reminder with no reason behind it is nagging; with one
          it is somebody who knows something telling you why. --}}
@@ -1053,11 +1094,8 @@ html.dark .bv-text { color: #e8efe1; }
             if (text) text.textContent = pick.line;
             const sub = card.querySelector('[data-wait-sub]');
             if (sub) sub.textContent = pick.sub || '';
-            let scene = card.querySelector('.bv-s[data-scene="' + pick.scene + '"]');
-            // A line added from the admin naming a scene this build does not
-            // know about still shows — it just grows a seedling.
-            if (!scene) scene = card.querySelector('.bv-s[data-scene="seedling"]');
-            card.querySelectorAll('.bv-s').forEach((s) => s.classList.toggle('is-on', s === scene));
+            const slot = card.querySelector('.bv-scene');
+            if (slot && window.bvPaintScene) window.bvPaintScene(slot, pick.scene);
         };
 
         // Cards that are on the page from the first paint (the board's own

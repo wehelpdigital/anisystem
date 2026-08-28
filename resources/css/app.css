@@ -579,6 +579,12 @@ body.no-footer footer { display: none; }
     animation: screenLoaderSpin .7s linear infinite;
 }
 .screen-loader p { color: #fff; font-weight: 700; font-size: .95rem; }
+/* With a card in it the overlay is a card on a dark ground, and the label
+   below it is the caption. The card brings its own white and its own
+   shadow, so the only thing to say here is how much room it gets. */
+.screen-loader.has-card { gap: 1rem; padding: 1.25rem; }
+.screen-loader.has-card .bv-card { max-width: min(22rem, 88vw); }
+.screen-loader.has-card p { font-size: .88rem; opacity: .92; text-align: center; }
 @keyframes screenLoaderSpin { to { transform: rotate(360deg); } }
 @keyframes screenLoaderIn { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .screen-loader { animation: none; } }

@@ -350,8 +350,13 @@
     </div>
     <div class="cmap-stage">
         <div class="cmap-map" id="cmapMap"></div>
+        {{-- Google's script is a few seconds on a phone signal, and this is
+             the one wait in the app that was still a turning ring. The same
+             card the rest of them use, with the veil's own line as the
+             caption under it: the card says something worth reading, the
+             caption says what is happening. --}}
         <div class="cmap-veil" id="cmapVeil">
-            <span class="cmap-veil-spin"></span>
+            @include('sm.partials.wait-card')
             <span class="cmap-veil-txt">Finding your ground…</span>
         </div>
         {{-- Three seconds of holding still is a long time to wonder whether
@@ -546,6 +551,7 @@
         background: #161d16; color: #cbd5c0; font-size: .8rem; font-weight: 700;
         transition: opacity .45s cubic-bezier(.22,1,.36,1); }
     .cmap-veil.is-done { opacity: 0; pointer-events: none; }
+    .cmap-veil .bv-card { max-width: min(20rem, 82vw); }
     .cmap-veil-spin { width: 1.7rem; height: 1.7rem; border-radius: 999px;
         border: 3px solid rgb(255 255 255 / .14); border-top-color: #f5c518;
         animation: cmapVeilSpin .8s linear infinite; }
