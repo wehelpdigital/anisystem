@@ -20,12 +20,18 @@
      rain can be present while a sun's glow stays faint. Turn the whole thing
      down with opacity on the container if a card needs it quieter. --}}
 <style>
+    /* Weather is never the same thickness for two minutes together, and a
+       backdrop that holds one exact value is the tell that it is a graphic.
+       Twenty-six seconds is slow enough that nobody catches it changing and
+       long enough that the card is never quite as it was. */
+    @keyframes atmBreath { 0%, 100% { opacity: .84; } 50% { opacity: 1; } }
     .atm { position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+        animation: atmBreath 26s ease-in-out infinite;
         /* One palette, so a piece used by four kinds of weather agrees with
            itself in all four. */
         --atm-cloud: rgb(148 163 184 / .3);
         --atm-cloud-dark: rgb(100 116 139 / .38);
-        --atm-rain: rgb(56 189 248 / .6);
+        --atm-rain: rgb(37 150 220 / .85);
         --atm-sun: rgb(251 191 36 / .55);
         --atm-ray: rgb(251 191 36 / .18);
         --atm-moon: rgb(203 213 225 / .6);
@@ -37,7 +43,7 @@
     html.dark .atm {
         --atm-cloud: rgb(148 163 184 / .3);
         --atm-cloud-dark: rgb(71 85 105 / .55);
-        --atm-rain: rgb(125 211 252 / .5);
+        --atm-rain: rgb(125 211 252 / .7);
         --atm-sun: rgb(251 191 36 / .42);
         --atm-ray: rgb(251 191 36 / .13);
         --atm-moon: rgb(226 232 240 / .5);
@@ -86,11 +92,18 @@
     .atm-cloud { position: absolute; top: var(--t, -3.2rem);
         left: calc(var(--cx, 50%) - var(--w, 12rem) / 2);
         width: var(--w, 12rem); height: var(--h, 5.4rem);
-        animation: atmDrift var(--d, 34s) ease-in-out infinite alternate; }
+        animation: atmDrift var(--d, 34s) ease-in-out infinite alternate,
+                   atmCloudLife var(--d2, 19s) ease-in-out infinite; }
     .atm-cloud i { position: absolute; bottom: 0; border-radius: 50%;
         background: var(--atm-cloud); filter: blur(1px); }
     .atm-cloud.is-dark i { background: var(--atm-cloud-dark); }
-    .atm-cloud { opacity: var(--a, 1); }
+    /* Each cloud fades and fills on its own clock as well as drifting. Two
+       different periods per cloud and no two clouds sharing either, so the
+       ceiling is never twice the same and never obviously cycling. */
+    @keyframes atmCloudLife {
+        0%, 100% { opacity: calc(var(--a, 1) * .58); }
+        50% { opacity: var(--a, 1); }
+    }
     .atm-cloud i:nth-child(1) { left: 0; width: 62%; height: 78%; }
     .atm-cloud i:nth-child(2) { left: 26%; width: 58%; height: 100%; }
     .atm-cloud i:nth-child(3) { left: 58%; width: 46%; height: 68%; }
@@ -101,20 +114,34 @@
     .atm-cloud.lay-c i:nth-child(1) { left: 0; width: 40%; height: 62%; }
     .atm-cloud.lay-c i:nth-child(2) { left: 20%; width: 62%; height: 100%; }
     .atm-cloud.lay-c i:nth-child(3) { left: 66%; width: 36%; height: 54%; }
-    @keyframes atmDrift { from { transform: translateX(-4%); } to { transform: translateX(4%); } }
+    @keyframes atmDrift {
+        from { transform: translateX(-10%); }
+        to { transform: translateX(10%); }
+    }
 
     /* ---- rain, falling the whole height --------------------------------
        Streaks, not drops: at this scale a falling circle is a dot that
        stutters, and a short line reads as rain the moment it moves. The
        layer is skewed so every streak leans the same way, which is cheaper
        than rotating each one and looks the same. */
-    .atm-rainfall { position: absolute; inset: -20% -10%; transform: skewX(-9deg); }
-    .atm-rainfall i { position: absolute; top: 0; width: 2px; height: 20%;
-        border-radius: 2px;
+    /* Rain comes in squalls. The whole curtain leans further into the wind
+       and thickens, then eases — which is the difference between rain and a
+       screensaver of falling lines. */
+    @keyframes atmSquall {
+        0%, 100% { transform: skewX(-7deg) translateX(-1.5%); opacity: .72; }
+        50% { transform: skewX(-13deg) translateX(1.5%); opacity: 1; }
+    }
+    .atm-rainfall { position: absolute; inset: -20% -10%;
+        animation: atmSquall 11s ease-in-out infinite; }
+    /* And every streak has its own weight, because some of it is falling
+       close to you and some of it is falling fifty metres away. All of them
+       at one alpha is a comb moving down the screen. */
+    .atm-rainfall i { position: absolute; top: 0; width: var(--w, 2px); height: 20%;
+        border-radius: 2px; opacity: var(--o, 1);
         background: linear-gradient(to bottom, transparent, var(--atm-rain));
         animation: atmFall linear infinite; }
-    .atm-rainfall.is-heavy i { width: 2.5px; height: 26%; }
-    .atm-rainfall.is-fine i { width: 1.5px; height: 11%; opacity: .7; }
+    .atm-rainfall.is-heavy i { height: 26%; }
+    .atm-rainfall.is-fine i { height: 11%; }
     @keyframes atmFall {
         from { transform: translateY(-120%); }
         to { transform: translateY(760%); }
@@ -157,8 +184,11 @@
     .atm-fogband { position: absolute; left: -30%; width: 160%;
         height: var(--h, 2.4rem); top: var(--t, 20%); border-radius: 50%;
         background: var(--atm-fog); filter: blur(9px);
-        animation: atmRoll var(--d, 26s) linear infinite; }
-    @keyframes atmRoll { from { transform: translateX(-18%); } to { transform: translateX(18%); } }
+        animation: atmRoll var(--d, 26s) ease-in-out infinite alternate,
+                   atmFogLife calc(var(--d, 26s) * 0.7) ease-in-out infinite; }
+    @keyframes atmRoll { from { transform: translateX(-22%); } to { transform: translateX(22%); } }
+    /* Fog thins and gathers. A band at one opacity is a grey stripe. */
+    @keyframes atmFogLife { 0%, 100% { opacity: .5; } 50% { opacity: 1; } }
 
     /* ---- wind: what it does to the air, since it cannot be seen -------- */
     .atm-gust { position: absolute; left: -25%; width: 150%; height: 2px;
@@ -302,11 +332,14 @@
             const vis = 0.9 + ((i * 2) % 5) * 0.45;
             const t = -(h - vis);
             const d = 24 + ((i * 5) % 6) * 5;
+            // The second clock, on a different cycle length from the first so
+            // the two never line up and the cloud never repeats itself.
+            const d2 = 15 + ((i * 4) % 7) * 3;
             const lay = ['', ' lay-b', ' lay-c'][i % 3];
             const a = r2(0.68 + ((i * 3) % 4) * 0.11);
             s += `<span class="atm-cloud${dark ? ' is-dark' : ''}${lay}"
                 style="--cx:${r2(p * 100)}%;--w:${r2(w)}rem;--h:${r2(h)}rem;`
-                + `--t:${r2(t)}rem;--d:${d}s;--a:${a}">
+                + `--t:${r2(t)}rem;--d:${d}s;--d2:${d2}s;--a:${a}">
                 <i></i><i></i><i></i></span>`;
         });
 
@@ -320,7 +353,15 @@
         at.forEach((p, i) => {
             const dur = (kind === 'heavy' ? 0.55 : kind === 'fine' ? 1.5 : 0.95) + (i % 5) * 0.09;
             const delay = r2((i % 11) * (dur / 11));
-            s += `<i style="left:${r2(p * 100)}%;animation-duration:${r2(dur)}s;animation-delay:${delay}s"></i>`;
+            /* Depth, said in two numbers. The near ones are wider, heavier
+               and fall faster; the far ones are hairlines you can barely
+               see. They are correlated on purpose — a thick faint streak or
+               a thin bright one reads as a mistake rather than as distance. */
+            const near = ((i * 3) % 5) / 4;                        // 0 far … 1 near
+            const w = r2((kind === 'fine' ? 1 : 1.3) + near * (kind === 'heavy' ? 1.6 : 1.2));
+            const o = r2((kind === 'fine' ? 0.38 : 0.5) + near * 0.5);
+            s += `<i style="left:${r2(p * 100)}%;--w:${w}px;--o:${o};`
+                + `animation-duration:${r2(dur * (1.25 - near * 0.35))}s;animation-delay:${delay}s"></i>`;
         });
 
         return s + '</span>';

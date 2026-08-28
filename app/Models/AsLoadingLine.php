@@ -34,6 +34,7 @@ class AsLoadingLine extends BaseModel
         'spray', 'tools', 'tractor', 'notebook',
         // The farm itself
         'seedling', 'rice', 'watering', 'carabao', 'bee',
+        'hat', 'gloves', 'mask', 'goggles', 'helmet', 'ear', 'soap', 'bottle', 'shade', 'nap', 'phone', 'torch', 'sack', 'back', 'cart', 'rope', 'bolo', 'sharpen', 'ladder', 'bucket', 'hose', 'pump', 'canal', 'flood', 'soil', 'compost', 'fertbag', 'granule', 'sprout', 'nursery', 'transplant', 'weeds', 'pest', 'spider', 'bird', 'snail', 'mosquito', 'net', 'mouse', 'thermometer', 'pills', 'stetho', 'eye', 'dry', 'store', 'weevil', 'label', 'scale', 'basket', 'clock', 'money', 'lightning', 'windy', 'tarp', 'roof', 'calendar',
     ];
 
     protected $fillable = ['line', 'subline', 'scene', 'surface', 'deleteStatus'];
@@ -48,7 +49,7 @@ class AsLoadingLine extends BaseModel
      * gets a five-minute-old set of jokes has lost nothing. The shuffle
      * happens AFTER the cache, so the order still changes on every render.
      */
-    public static function pool(string $surface = 'board', int $take = 14): array
+    public static function pool(string $surface = 'board', int $take = 30): array
     {
         $all = Cache::remember("as_loading_lines.$surface", 300, function () use ($surface) {
             return self::query()
@@ -69,6 +70,30 @@ class AsLoadingLine extends BaseModel
 
         shuffle($all);
 
-        return array_slice($all, 0, max(1, $take));
+        /* Pick for VARIETY OF PICTURE, not just of words.
+         *
+         * A straight shuffle of a hundred and fifty-seven lines regularly
+         * handed a page fourteen reminders that between them used six
+         * drawings, so re-rolling three times in a row showed the same
+         * seedling three times and the card read as one animation with the
+         * text changed. This takes the first line of each distinct scene
+         * first, and only then fills up from what is left — so a page's
+         * worth of rolls is a page's worth of different pictures.
+         */
+        $take = max(1, $take);
+        $first = [];
+        $rest = [];
+        $used = [];
+        foreach ($all as $row) {
+            $scene = $row['scene'] ?? '';
+            if (! isset($used[$scene])) {
+                $used[$scene] = true;
+                $first[] = $row;
+            } else {
+                $rest[] = $row;
+            }
+        }
+
+        return array_slice(array_merge($first, $rest), 0, $take);
     }
 }

@@ -107,8 +107,8 @@
            No sizing or arrangement here — the atmosphere knows how to fill a
            box, and the only thing this side decides is how loud it is. */
         .sch-hero-sky { position: absolute; inset: 0; z-index: 0;
-            pointer-events: none; opacity: .72; }
-        html.dark .sch-hero-sky { opacity: .8; }
+            pointer-events: none; opacity: .88; }
+        html.dark .sch-hero-sky { opacity: .92; }
         /* Content over weather. Without this the stat tiles are opaque boxes
            sitting ON the sky rather than in front of it, and the sky stops
            halfway across the card. */
