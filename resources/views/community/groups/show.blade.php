@@ -666,7 +666,12 @@
                 <textarea id="egDesc" class="form-textarea" rows="3" maxlength="500">{{ $group->description }}</textarea>
             </div>
             <div class="eg-pics">
-                <label class="eg-pic">
+                {{-- Wells, not labels. A <label> around a file input can do
+                     exactly one thing — open the file chooser — which is one
+                     door of the three. Tapping one of these asks where the
+                     picture is coming from, the same question the composer,
+                     the messenger and creating a discussion all ask. --}}
+                <div class="eg-pic" data-eg-pick="image" role="button" tabindex="0">
                     <span class="eg-pic-lbl">Badge</span>
                     <span class="eg-pic-box" id="egCoverBox">
                         @if ($group->coverImagePath)
@@ -675,9 +680,8 @@
                             <i>{{ CommunityAvatar::monogram($group->name) }}</i>
                         @endif
                     </span>
-                    <input type="file" id="egCover" accept="image/jpeg,image/png,image/webp" class="hidden">
-                </label>
-                <label class="eg-pic eg-pic-wide">
+                </div>
+                <div class="eg-pic eg-pic-wide" data-eg-pick="banner" role="button" tabindex="0">
                     <span class="eg-pic-lbl">Cover photo</span>
                     {{-- Drag says which band of a tall photo the wide banner
                          shows, exactly as an account's own cover is framed. --}}
@@ -693,8 +697,7 @@
                             Drag to choose what shows
                         </span>
                     </span>
-                    <input type="file" id="egBanner" accept="image/jpeg,image/png,image/webp" class="hidden">
-                </label>
+                </div>
             </div>
             <button type="button" id="egSave" class="btn btn-primary w-full">Save changes</button>
         </div>
@@ -1155,6 +1158,8 @@
 @include('community.partials.views-js')
 @include('community.partials.report-js')
 @include('community.partials.avatar-zoom')
+{{-- Where a picture comes from: the camera, this phone, or the gallery. --}}
+@include('community.partials.photo-doors')
 @include('community.partials.mutual-js')
 @include('community.partials.emoji-js')
 @include('community.partials.lightbox-js')
@@ -2576,16 +2581,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const btn = document.getElementById('editGroupBtn');
         if (!btn) return;
         const sheet = 'editGroupSheet';
-        const preview = (input, box) => input?.addEventListener('change', () => {
-            const f = input.files && input.files[0];
-            if (!f) return;
-            // Shown before it is sent, so a wrong pick is caught here rather
-            // than after a save.
-            const url = URL.createObjectURL(f);
-            box.innerHTML = '<img src="' + url + '" alt="">';
-        });
-        preview(document.getElementById('egCover'), document.getElementById('egCoverBox'));
-        preview(document.getElementById('egBanner'), document.getElementById('egBannerBox'));
+
+        /* What each well is holding, if anything: either a File waiting to be
+           uploaded or a gallery path that travels as a string. Empty means
+           "leave what the room already has", which is what saving without
+           touching a picture has always meant. */
+        const picked = { image: null, banner: null };
+        const BOX = { image: 'egCoverBox', banner: 'egBannerBox' };
+
+        const showPic = (which, url) => {
+            const box = document.getElementById(BOX[which]);
+            if (box) box.innerHTML = '<img src="' + url + '" alt="">';
+        };
 
         /* Which band of the banner shows. Starts at whatever the room was
            saved with; a NEW picture has a new middle, so choosing one puts it
@@ -2596,10 +2603,30 @@ document.addEventListener('DOMContentLoaded', () => {
             bannerBand = Math.max(0, Math.min(100, Math.round(v)));
             bannerBox?.style.setProperty('--eg-band', bannerBand + '%');
         };
-        document.getElementById('egBanner')?.addEventListener('change', () => {
-            if (!document.getElementById('egBanner').files[0]) return;
-            setBand(50);
-            document.getElementById('egBannerDrag')?.classList.remove('hidden');
+        /* Tapping a well asks the three-door question. Delegated from the
+           sheet, because the wells only exist for somebody who can edit the
+           room and binding at parse time would find nothing for everybody
+           else. */
+        document.getElementById('editGroupSheet')?.addEventListener('click', (e) => {
+            const well = e.target.closest('[data-eg-pick]');
+            if (!well || !window.photoDoors) return;
+            // A drag that framed the banner must not also re-open the picker.
+            if (bannerBox && bannerBox.dataset.justDragged) return;
+            const which = well.getAttribute('data-eg-pick');
+            window.photoDoors({
+                title: which === 'banner' ? 'Change the cover photo' : 'Change the discussion photo',
+                onPick: (got) => {
+                    picked[which] = got;
+                    showPic(which, got.url);
+                    if (which === 'banner') {
+                        // A new picture has a new middle, so the framing goes
+                        // back to the centre rather than carrying the old
+                        // one across.
+                        setBand(50);
+                        document.getElementById('egBannerDrag')?.classList.remove('hidden');
+                    }
+                },
+            });
         });
 
         /* The pointer's travel maps to the PHOTO's travel, not to the box, so
@@ -2656,10 +2683,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const fd = new FormData();
             fd.append('name', name);
             fd.append('description', document.getElementById('egDesc').value.trim());
-            const cover = document.getElementById('egCover').files[0];
-            const banner = document.getElementById('egBanner').files[0];
-            if (cover) fd.append('image', cover);
-            if (banner) fd.append('banner', banner);
+            /* A file goes as bytes; a gallery pick goes as a path and is
+               never re-uploaded. The endpoint takes either, and prefers the
+               file when both somehow arrive. */
+            [['image', 'imagePath'], ['banner', 'bannerPath']].forEach(([key, pathKey]) => {
+                const got = picked[key];
+                if (!got) return;
+                if (got.file) fd.append(key, got.file);
+                else if (got.path) fd.append(pathKey, got.path);
+            });
             fd.append('bannerPos', String(bannerBand));
             try {
                 const gid = document.getElementById('groupRoot')?.getAttribute('data-group-id');
