@@ -25,6 +25,7 @@
     .wx-panel.is-on { display: block; animation: wxIn .28s cubic-bezier(.22,1,.36,1) both; }
     @keyframes wxIn { from { opacity: 0; transform: translateY(.5rem); } }
     @media (prefers-reduced-motion: reduce) {
+        .wx-open-in { transition: none; }
         .wx-panel.is-on { animation: none; }
     }
 
@@ -39,7 +40,10 @@
     .wx-day.is-open .wx-day-caret { transform: rotate(180deg); color: #4a7c2a; }
     .wx-open { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
     .wx-open.is-on { grid-template-rows: 1fr; }
-    .wx-open-in { overflow: hidden; min-height: 0; }
+    /* Slide and fade together — the slide alone leaves the forecast at full
+       strength against a shutting edge, which reads as a clip. */
+    .wx-open-in { overflow: hidden; min-height: 0; opacity: 0; transition: opacity .22s ease; }
+    .wx-open.is-on .wx-open-in { opacity: 1; }
     .wx-open-hd { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem;
         margin: .75rem 0 .35rem; }
     .wx-open-day { font-size: .82rem; font-weight: 800; color: var(--color-gray-900); }

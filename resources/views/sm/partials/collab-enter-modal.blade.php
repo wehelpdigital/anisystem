@@ -34,9 +34,12 @@
                 </label>
             @endforeach
         </div>
+        {{-- One way in. The ✕ in the corner and a tap on the backdrop both
+             already close this, so a third door was taking half the width of
+             the only thing anyone came here to press. The running count went
+             with it: the ticks say who is coming, and "3 members + you" said
+             the same thing again in numbers. --}}
         <div class="ce-actions">
-            <span class="ce-count" id="ceCount"></span>
-            <button type="button" class="ce-btn ghost" data-ce-close>Cancel</button>
             <button type="button" class="ce-btn primary" data-ce-continue data-url="{{ route('sm.collab', ['id' => $schedule->id]) }}">
                 <span class="ce-spin hidden" id="ceSpin"></span>
                 <span>Open Collab Room</span>
@@ -59,9 +62,18 @@
     .ce-tools { display: flex; gap: .4rem; margin-bottom: .5rem; }
     .ce-tool { font-size: .72rem; font-weight: 700; color: var(--color-brand-700); background: var(--color-brand-50); padding: .25rem .55rem; border-radius: .5rem; }
     .ce-tool:hover { background: var(--color-brand-100); }
-    .ce-list { flex: 1 1 auto; overflow-y: auto; display: flex; flex-direction: column; gap: .25rem; margin: 0 -.3rem; padding: 0 .3rem; scrollbar-width: thin; }
-    .ce-item { display: flex; align-items: center; gap: .6rem; padding: .45rem .55rem; border-radius: .7rem; cursor: pointer; transition: background .15s ease; }
-    .ce-item:hover { background: var(--color-gray-50); }
+    /* The names live in a box of their own, and the rows stripe.
+       A bare column of labels floating on the card gave nothing to run the
+       eye along; a banded list does, and the border says where the choosing
+       starts and stops. */
+    .ce-list { flex: 1 1 auto; overflow-y: auto; display: flex; flex-direction: column;
+        border: 1px solid var(--color-gray-200); border-radius: .8rem; overflow-x: hidden;
+        background: var(--color-white); scrollbar-width: thin; }
+    .ce-item { display: flex; align-items: center; gap: .6rem; padding: .55rem .7rem;
+        cursor: pointer; transition: background .15s ease; }
+    .ce-item + .ce-item { border-top: 1px solid var(--color-gray-100); }
+    .ce-item:nth-child(even) { background: var(--color-gray-50); }
+    .ce-item:hover { background: var(--color-brand-50); }
     .ce-check { position: absolute; opacity: 0; width: 0; height: 0; }
     .ce-face { width: 2.1rem; height: 2.1rem; border-radius: 999px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 800; background: var(--color-brand-50); color: var(--color-brand-700); overflow: hidden; }
     .ce-face img { width: 100%; height: 100%; object-fit: cover; }
@@ -69,15 +81,17 @@
     .ce-tag { font-size: .62rem; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; color: var(--color-brand-700); background: var(--color-brand-50); padding: .05rem .35rem; border-radius: 999px; margin-left: .4rem; }
     .ce-mark { width: 1.5rem; height: 1.5rem; border-radius: 999px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: transparent; background: var(--color-gray-100); border: 1.5px solid var(--color-gray-200); transition: background .15s ease, color .15s ease, border-color .15s ease; }
     .ce-check:checked + .ce-face + .ce-name + .ce-mark { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
-    .ce-actions { display: flex; align-items: center; gap: .5rem; margin-top: .8rem; }
-    .ce-count { flex: 1 1 auto; font-size: .74rem; font-weight: 700; color: var(--color-gray-400); }
-    .ce-btn { display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .9rem; border-radius: .7rem; font-weight: 700; font-size: .85rem; }
-    .ce-btn.ghost { color: var(--color-gray-600); background: var(--color-gray-100); }
-    .ce-btn.ghost:hover { background: var(--color-gray-200); }
+    .ce-actions { display: flex; margin-top: .9rem; }
+    .ce-btn { display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+        width: 100%; padding: .7rem .9rem; border-radius: .7rem; font-weight: 700; font-size: .9rem; }
     .ce-btn.primary { color: #fff; background: linear-gradient(140deg, #6b9f3d, #3d6823); }
     .ce-btn.primary:disabled { opacity: .65; }
     .ce-spin { width: 1rem; height: 1rem; border-radius: 999px; border: 2px solid rgb(255 255 255 / .4); border-top-color: #fff; animation: ceSpin .7s linear infinite; }
     .ce-spin.hidden { display: none; }
+    html.dark .ce-list { background: #151b12; border-color: #2b3a1c; }
+    html.dark .ce-item + .ce-item { border-top-color: #2b3a1c; }
+    html.dark .ce-item:nth-child(even) { background: rgb(107 159 61 / .07); }
+    html.dark .ce-item:hover { background: rgb(107 159 61 / .16); }
     @media (prefers-reduced-motion: reduce) { .ce-card { animation: none; } .ce-spin { animation-duration: 1.4s; } }
 </style>
 
@@ -87,24 +101,27 @@
     if (!modal || modal.dataset.bound) return;
     modal.dataset.bound = '1';
     const checks = () => [...modal.querySelectorAll('.ce-check')];
-    const countEl = document.getElementById('ceCount');
-    const updateCount = () => {
-        const n = checks().filter((c) => c.checked).length;
-        countEl.textContent = n + ' member' + (n === 1 ? '' : 's') + ' + you';
-    };
-    const open = () => { modal.classList.remove('hidden'); updateCount(); };
+    const open = () => modal.classList.remove('hidden');
     const close = () => modal.classList.add('hidden');
 
-    // The Collab Room buttons open this picker instead of navigating straight in.
-    document.querySelectorAll('[data-collab-open]').forEach((el) => {
-        el.addEventListener('click', (e) => { e.preventDefault(); open(); });
+    /* The Collab Room buttons open this picker instead of navigating in.
+     *
+     * Delegated, not bound one by one at parse time. On the hub this partial
+     * is included ABOVE the tile that carries data-collab-open, so the
+     * querySelectorAll ran before the button existed and bound to nothing —
+     * the tile simply navigated and nobody was ever asked who was joining.
+     * A listener on the document cannot be early. */
+    document.addEventListener('click', (e) => {
+        const trigger = e.target.closest && e.target.closest('[data-collab-open]');
+        if (!trigger) return;
+        e.preventDefault();
+        open();
     });
     modal.querySelectorAll('[data-ce-close]').forEach((b) => b.addEventListener('click', close));
     modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) close(); });
-    modal.addEventListener('change', (e) => { if (e.target.classList.contains('ce-check')) updateCount(); });
-    modal.querySelector('[data-ce-all]').addEventListener('click', () => { checks().forEach((c) => c.checked = true); updateCount(); });
-    modal.querySelector('[data-ce-none]').addEventListener('click', () => { checks().forEach((c) => c.checked = false); updateCount(); });
+    modal.querySelector('[data-ce-all]').addEventListener('click', () => { checks().forEach((c) => c.checked = true); });
+    modal.querySelector('[data-ce-none]').addEventListener('click', () => { checks().forEach((c) => c.checked = false); });
 
     modal.querySelector('[data-ce-continue]').addEventListener('click', (e) => {
         const btn = e.currentTarget;

@@ -734,11 +734,15 @@
         .adv-rest { display: grid; grid-template-rows: 0fr; }
         .adv-rest.is-open { grid-template-rows: 1fr; }
         .adv-rest.is-folding { transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
-        .adv-rest > .adv-rest-in { min-height: 0; overflow: hidden; }
+        /* The fade that rides on the slide, as on every other fold here. */
+        .adv-rest > .adv-rest-in { min-height: 0; overflow: hidden;
+            opacity: 0; transition: opacity .22s ease; }
+        .adv-rest.is-open > .adv-rest-in { opacity: 1; }
         /* Breathing room that folds away with the list it belongs to. */
         .adv-rest-in .adv-list { padding-top: .55rem; }
         @media (prefers-reduced-motion: reduce) {
-            .adv-more, .adv-more-chev, .adv-rest.is-folding { transition: none; }
+            .adv-more, .adv-more-chev, .adv-rest.is-folding,
+            .adv-rest > .adv-rest-in { transition: none; }
         }
 
         html.dark .adv-row { background: #151b12; border-color: #2b3a1c; }
@@ -895,10 +899,37 @@
         .gs-quiet b { display: block; font-size: .68rem; text-transform: uppercase; letter-spacing: .05em; color: var(--color-gray-500); margin-bottom: .3rem; }
         .gs-quiet span { display: block; padding: .1rem 0; }
         html.dark .gs-quiet { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
-        .gs-lot { border: 1px solid var(--color-gray-200); border-radius: .9rem; overflow: hidden; margin-bottom: .75rem; }
+        /* Each lot sits on a green that drifts.
+         *
+         * Held well back on purpose — a tenth to a fifth of an alpha — so it
+         * reads as a tint the card is lit by rather than a colour painted on
+         * it. The words on top have to stay the loudest thing in the row, and
+         * a solid green header made the stage name fight for it.
+         *
+         * It rides the same gradSweep the day headers use, so the drift here
+         * is the drift everywhere else, on its own slower clock. */
+        .gs-lot { border: 1px solid var(--color-gray-200); border-radius: .9rem;
+            overflow: hidden; margin-bottom: .75rem;
+            background: linear-gradient(135deg,
+                rgb(107 159 61 / .10),
+                rgb(168 204 126 / .20) 30%,
+                rgb(107 159 61 / .07) 62%,
+                rgb(61 104 35 / .16));
+            background-size: 240% 240%;
+            animation: gradSweep 16s ease-in-out infinite alternate; }
         .gs-head { display: flex; align-items: center; gap: .6rem; padding: .7rem .8rem;
-            background: linear-gradient(135deg, #f3f8ec, #e4efd4); cursor: pointer; user-select: none; }
-        html.dark .gs-head { background: linear-gradient(135deg, #1c2416, #24301a); }
+            background: transparent; cursor: pointer; user-select: none; }
+        .gs-head:hover { background: rgb(107 159 61 / .08); }
+        html.dark .gs-lot { border-color: #2b3a1c;
+            background: linear-gradient(135deg,
+                rgb(107 159 61 / .16),
+                rgb(107 159 61 / .28) 30%,
+                rgb(47 82 25 / .18) 62%,
+                rgb(61 104 35 / .30));
+            background-size: 240% 240%; }
+        html.dark .gs-head { background: transparent; }
+        html.dark .gs-head:hover { background: rgb(107 159 61 / .14); }
+        @media (prefers-reduced-motion: reduce) { .gs-lot { animation: none; } }
         /* The same accordion the Growth Stages module wears: a lot folds to
            its header, and the folded header borrows the stage's name. */
         .gs-chev { width: .9rem; height: .9rem; flex-shrink: 0; color: #6b9f3d; transition: transform .18s ease; }
