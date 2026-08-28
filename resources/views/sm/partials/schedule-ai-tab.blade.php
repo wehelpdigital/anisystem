@@ -46,7 +46,12 @@
                 <button type="button" id="saiSessToggle" class="sai-sess-toggle" title="Show sessions" aria-label="Show sessions">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
-                <span class="sai-title">🤖 AI Technician <span class="sai-sub">· shared with your team</span></span>
+                {{-- Her name and what she is for, the same sentence the
+                     module page and the floating window use. The robot went
+                     with the job title: she has a face in the thread below
+                     and a name here, and an emoji standing in for both was
+                     the leftover of when she had neither. --}}
+                <span class="sai-title">{{ \App\Models\AiSetting::current()->assistantName }}, Your Smart Agricultural Technician <span class="sai-sub">· shared with your team</span></span>
                 <span class="sai-spacer"></span>
                 <button type="button" id="saiSaveSession" class="sai-save" title="Keep this session — as a note, or on a task" aria-haspopup="dialog">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a1 1 0 011-1h9l4 4v10a1 1 0 01-1 1H6a1 1 0 01-1-1V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 4v4h6M8 19v-5h8v5"/></svg>
@@ -80,7 +85,7 @@
                     </button>
                     <input type="file" id="saiPhotoFiles" accept="image/*" multiple class="hidden">
                     <input type="file" id="saiPhotoCam" accept="image/*" capture="environment" class="hidden">
-                    <textarea id="saiText" rows="1" maxlength="4000" placeholder="Ask the AI — the whole team sees the reply…"></textarea>
+                    <textarea id="saiText" rows="1" maxlength="4000" placeholder="Ask {{ \App\Models\AiSetting::current()->assistantName }} — the whole team sees the reply…"></textarea>
                     <button type="button" id="saiSend" class="sai-send" aria-label="Send">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
                     </button>
@@ -225,8 +230,18 @@
     .sai-save { display: inline-flex; align-items: center; gap: .3rem; padding: .3rem .55rem; border-radius: .6rem; font-size: .74rem; font-weight: 700; color: #fff; background: rgb(255 255 255 / .18); flex-shrink: 0; transition: background .15s ease; }
     .sai-save:hover { background: rgb(255 255 255 / .28); color: #fff; }
     .sai-save:disabled { opacity: .5; }
-    .sai-title { font-weight: 800; font-size: .9rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    /* Her whole name, over two lines if it needs them. One nowrap line
+       sharing a row with the sessions toggle, the save button and the
+       credits pill cut it to "Anee, Your Smart Agricult…", which is the half
+       that says nothing. */
+    .sai-title { font-weight: 800; font-size: .82rem; line-height: 1.18; color: #fff;
+        min-width: 0; white-space: normal; overflow: hidden;
+        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    @media (min-width: 640px) { .sai-title { font-size: .9rem; -webkit-line-clamp: 1; } }
     .sai-sub { font-weight: 600; font-size: .72rem; color: rgb(255 255 255 / .75); }
+    /* On a phone the row has not the width for both, and the intro below
+       plus the composer's own placeholder already say it is shared. */
+    @media (max-width: 639px) { .sai-sub { display: none; } }
     .sai-credits { display: inline-flex; align-items: center; gap: .25rem; padding: .12rem .5rem; border-radius: 999px; background: rgb(255 255 255 / .18); color: #fff; font-size: .72rem; font-weight: 800; font-variant-numeric: tabular-nums; flex-shrink: 0; }
     .sai-credits:hover { background: rgb(255 255 255 / .28); }
     .sai-credits svg { color: var(--color-accent-400); }

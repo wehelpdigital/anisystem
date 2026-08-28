@@ -41,7 +41,14 @@
                 </span>
             </span>
             <div class="min-w-0 grow">
+                {{-- Her name, and under it what she is for. The module page
+                     says the whole sentence in its header; this window is the
+                     same person and was introducing herself by first name
+                     only. Two lines rather than one long truncating one,
+                     because "Anee, Your Smart Agricultu…" is worse than
+                     either half said properly. --}}
                 <p class="ai-float-name truncate">{{ $aiFloatSettings->assistantName }}</p>
+                <p class="ai-float-role truncate">Your Smart Agricultural Technician</p>
                 @unless ($aiFloatUnlimited)
                 <a href="{{ route('ai.credits') }}" class="ai-float-credits">
                     <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>
@@ -256,6 +263,8 @@
     .ai-float-face img { width: 100%; height: 100%; object-fit: cover; }
     .ai-float-name { font-family: var(--font-heading); font-weight: 700; font-size: .95rem; line-height: 1.2; color: var(--color-gray-900); }
     /* Literal amber: accent-700 fails contrast on the cream wash in light mode. */
+    .ai-float-role { font-size: .68rem; font-weight: 600; line-height: 1.25;
+        color: var(--color-gray-500); margin-top: -.05rem; }
     .ai-float-credits { display: inline-flex; align-items: center; gap: .25rem; margin-top: .1rem; padding: .1rem .5rem; border-radius: 999px; background: rgb(245 197 24 / .16); color: #8a6100; font-size: .72rem; font-weight: 800; font-variant-numeric: tabular-nums; }
     .ai-float-credits:hover { background: rgb(245 197 24 / .26); }
     .ai-float-icon { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; border-radius: .55rem; color: var(--color-gray-500); flex-shrink: 0; }
@@ -445,6 +454,7 @@
         background-size: 240% 240%; animation: gradSweep 12s ease-in-out infinite alternate;
         border-bottom-color: transparent; }
     .ai-float-head .ai-float-name { color: #fff; }
+    .ai-float-head .ai-float-role { color: rgb(255 255 255 / .78); }
     .ai-float-head .ai-float-credits { background: rgb(255 255 255 / .2); color: #fff; }
     .ai-float-head .ai-float-credits:hover { background: rgb(255 255 255 / .3); }
     .ai-float-head .ai-float-icon { color: rgb(255 255 255 / .85); }
