@@ -867,6 +867,9 @@ const __init = () => {
         for (const raw of lines) {
             const line = raw.trim();
             if (!line) { close(); continue; }
+            // A rule between sections. Before the bullet check, though it could
+            // not be taken for one: a bullet needs a space after its mark.
+            if (/^(?:-{3,}|\*{3,}|_{3,})$/.test(line)) { close(); html += '<hr class="ai-rule">'; continue; }
             const b = line.match(/^[-*•]\s+(.*)$/), n = line.match(/^\d+[.)]\s+(.*)$/);
             if (b) { if (list !== 'ul') { close(); html += '<ul>'; list = 'ul'; } html += '<li>' + inline(b[1]) + '</li>'; }
             else if (n) { if (list !== 'ol') { close(); html += '<ol>'; list = 'ol'; } html += '<li>' + inline(n[1]) + '</li>'; }

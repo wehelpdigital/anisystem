@@ -13,8 +13,20 @@
     /* Sized in em so it grows with whatever bubble it lands in, and dropped
        below the baseline so it sits with the words rather than on top of
        them. A face is punctuation here, not an illustration. */
+    /* The line she can draw between two parts of an answer. Soft, and the
+       app's own green rather than a browser's grey bevel — it is a breath in
+       a reply, not a border between two documents. */
+    .ai-rule { border: 0; height: 0; margin: .85em 0;
+        border-top: 1px dashed rgb(107 159 61 / .38); }
+    html.dark .ai-rule { border-top-color: rgb(168 204 126 / .3); }
+
     .anee-emo { display: inline-block; width: 2em; height: 2em;
-        vertical-align: -.68em; margin: 0 .08em; }
+        vertical-align: -.68em; margin: -.5em .08em; }
+    /* The negative block margin is what stops a face stretching the line it
+       lands on. A two-em image in a line of fifteen-pixel text grows that
+       line's box by half again, so a paragraph with one face in it had one
+       gappy line in the middle of five tight ones. Drawn at two em, counted
+       as about one. */
     /* At one and a half em the face is a green smudge — you can see there is
        a picture and not what it is doing, which is the whole point of it.
        Two em is the smallest size where the expression reads. */

@@ -672,6 +672,9 @@ const __init = () => {
         for (const raw of lines) {
             const line = raw.trim();
             if (!line) { closeList(); continue; }
+            // A rule between sections. Before the bullet check, though it could
+            // not be taken for one: a bullet needs a space after its mark.
+            if (/^(?:-{3,}|\*{3,}|_{3,})$/.test(line)) { closeList(); html += '<hr class="ai-rule">'; continue; }
 
             const bullet = line.match(/^[-*•]\s+(.*)$/);
             const numbered = line.match(/^(\d+)[.)]\s+(.*)$/);

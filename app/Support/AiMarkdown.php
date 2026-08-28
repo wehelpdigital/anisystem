@@ -34,6 +34,15 @@ class AiMarkdown
                 continue;
             }
 
+            // A rule between sections. Checked before the bullet, though it
+            // could not be mistaken for one — a bullet needs a space after
+            // its mark and this has nothing after it at all.
+            if (preg_match('/^(?:-{3,}|\*{3,}|_{3,})$/u', $line)) {
+                $closeList();
+                $html .= '<hr class="ai-rule">';
+                continue;
+            }
+
             if (preg_match('/^[-*•]\s+(.*)$/u', $line, $m)) {
                 if ($list !== 'ul') {
                     $closeList();

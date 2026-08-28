@@ -189,6 +189,45 @@ html.dark .bv-text { color: #e8efe1; }
     .bv-sub:empty { display: none; }
     html.dark .bv-sub { color: #a8bd93; }
 
+    /* ---- the working bar ------------------------------------------------
+       Two layers, because it is doing two things at two speeds and one
+       background-position cannot be animated at two rates.
+
+       Underneath, the field greens drift end to end over four and a half
+       seconds — the same slow tide the day headers and the forecast panels
+       ride, so this belongs to the same app as they do. Over the top, a
+       barber-pole of white slants marches right in one second, which is the
+       part that reads as WORK rather than as a decorative gradient.
+
+       The slants travel exactly one period per cycle. A 45-degree stripe
+       whose pattern repeats every 1rem along the gradient's own axis repeats
+       every 1rem / sin(45°) = 1.4142rem across the box, and shifting by
+       anything else leaves a visible stutter at the loop. */
+    .bv-bar { position: relative; width: min(15rem, 100%); height: .5rem;
+        border-radius: 999px; overflow: hidden; flex-shrink: 0;
+        background: rgb(74 124 42 / .13); }
+    html.dark .bv-bar { background: rgb(255 255 255 / .09); }
+    .bv-bar::before, .bv-bar::after { content: ''; position: absolute; inset: 0; }
+    .bv-bar::before {
+        background: linear-gradient(90deg, #a8cc7e, #6b9f3d 30%, #3d6823 55%, #6b9f3d 80%, #a8cc7e);
+        background-size: 220% 100%;
+        animation: bvBarTide 4.5s ease-in-out infinite alternate; }
+    .bv-bar::after {
+        background: repeating-linear-gradient(135deg,
+            rgb(255 255 255 / .32) 0 .5rem,
+            rgb(255 255 255 / 0) .5rem 1rem);
+        animation: bvBarSlant 1s linear infinite; }
+    @keyframes bvBarTide { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+    @keyframes bvBarSlant { from { background-position: 0 0; } to { background-position: 1.4142rem 0; } }
+    /* Still a green bar, just a still one: a frozen barber-pole is a striped
+       rectangle, which says nothing, so the stripes go and the field greens
+       stay. */
+    @media (prefers-reduced-motion: reduce) {
+        .bv-bar::before, .bv-bar::after { animation: none; }
+        .bv-bar::after { display: none; }
+        .bv-bar::before { background-position: 40% 50%; }
+    }
+
     /* ---- the shared motions, for the forty scenes below ----------------
        The first sixteen scenes each rolled their own keyframes, which was
        fine for sixteen. Forty more doing the same would be four hundred
@@ -1016,6 +1055,13 @@ html.dark .bv-text { color: #e8efe1; }
     {{-- The reason. A reminder with no reason behind it is nagging; with one
          it is somebody who knows something telling you why. --}}
     <span class="bv-sub" data-wait-sub>{{ $waitFirst['sub'] ?? '' }}</span>
+    {{-- Something that moves.
+         The drawing above breathes and the words hold still, and between them
+         they say "here is a thing to read" without ever saying "and I am
+         still working on it". That is this. It shows no percentage because
+         there is no percentage to show — an indeterminate bar that pretends
+         to know how far along it is, is a lie you can watch. --}}
+    <span class="bv-bar" role="presentation" aria-hidden="true"></span>
 </div>
 @once
     {{-- Inline for the same reason as the styles above. --}}

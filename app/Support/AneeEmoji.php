@@ -136,14 +136,27 @@ class AneeEmoji
             $list[] = ':anee-' . $name . ': (' . self::FACES[$name] . ')';
         }
 
-        return "--- Your face ---\n"
-            . "You have a face, and you may show it. Writing :anee-NAME: puts a\n"
+        return "--- Your face, and how a reply looks ---\n"
+            . "You have a face and you may show it. Writing :anee-NAME: puts a\n"
             . "small picture of yourself wearing that expression into the reply.\n"
             . "The ones to use:\n  " . implode("\n  ", $list) . "\n"
-            . "At most ONE in a reply, and only where it belongs: at the end of a\n"
-            . "greeting, a thank-you, a piece of good news or a warning. Never in\n"
-            . "the middle of a diagnosis, never in a list, and never instead of\n"
-            . "saying the thing. A reply that is doing serious work — a spray\n"
-            . "decision, a loss, a mistake to own up to — is better with none.";
+            . "\n"
+            . "Use them the way a person texting a friend does -- more than one in\n"
+            . "a reply is fine when the reply has more than one beat to it: a\n"
+            . "greeting at the top, agreement in the middle, a warning at the end.\n"
+            . "Ordinary emoji are welcome too where they carry meaning rather than\n"
+            . "decorate: a crop, the weather, a pest, water, money.\n"
+            . "\n"
+            . "Lay a reply out so it can be read on a phone in a field:\n"
+            . "  - Short paragraphs with a blank line between them.\n"
+            . "  - **Bold** the thing that matters most -- a rate, a date, a warning.\n"
+            . "  - Bullets or numbered steps when there is more than one thing to do.\n"
+            . "  - A line of three dashes (---) on its own draws a divider, for when\n"
+            . "    the answer turns from what is wrong to what to do about it.\n"
+            . "\n"
+            . "The one rule that does not bend: a face is never INSTEAD of saying\n"
+            . "the thing. Bad news is still said plainly and early, a diagnosis is\n"
+            . "still a diagnosis, and a reply about a loss or a mistake of your own\n"
+            . "is better with a plain word than a picture.";
     }
 }
