@@ -213,15 +213,6 @@ class CroppingScheduleController extends Controller
                 ->count(),
         ];
 
-        // Where "open today's board" lands: the season that is running, or
-        // failing that the newest one on the shelf.
-        // Same non-existent status here: this branch never matched, so
-        // "open today's board" has always silently used the fallback.
-        $todaySchedule = AsCroppingSchedule::active()->forClient($ownerId)
-            ->onShelf()->orderByDesc('created_at')->first()
-            ?? $schedules->first();
-        $todayHref = $todaySchedule ? route('sm.activities', ['id' => $todaySchedule->id]) : null;
-
         /* Which hat this page is being read through.
          *
          * One account is often several things — a farm of one's own, work
@@ -235,7 +226,7 @@ class CroppingScheduleController extends Controller
         // What the Archives button says, and whether it is worth drawing.
         $archivedCount = AsCroppingSchedule::active()->forClient($ownerId)->archived()->count();
 
-        return view('sm.index', compact('schedules', 'allSchedules', 'summary', 'cards', 'todayHref', 'sorts', 'sort') + [
+        return view('sm.index', compact('schedules', 'allSchedules', 'summary', 'cards', 'sorts', 'sort') + [
             'showArchived' => $showArchived,
             'archivedCount' => $archivedCount,
             'isWorkerHere' => $grant !== null,

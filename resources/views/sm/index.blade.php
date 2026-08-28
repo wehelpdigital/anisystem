@@ -95,10 +95,13 @@
            holds two drawings, and it clips — a raincloud drawn to the edge of
            a circle should stop at the circle. */
         /* THE MARK: a calendar, centred, and nothing else in the bubble. */
-        .sch-hero-mark { width: 3.6rem; height: 3.6rem; overflow: hidden;
-            background: rgb(255 255 255 / .7); }
-        html.dark .sch-hero-mark { background: rgb(0 0 0 / .4); }
-        .sch-hero-mark svg { width: 2.1rem; height: 2.1rem; }
+        /* Nine-tenths again, and bigger. It is the only picture on a card
+           that is otherwise words and numbers, and at three and a half rem
+           it read as an afterthought beside them. */
+        .sch-hero-mark { width: 4.5rem; height: 4.5rem; overflow: hidden;
+            background: rgb(255 255 255 / .9); }
+        html.dark .sch-hero-mark { background: rgb(21 27 18 / .9); }
+        .sch-hero-mark svg { width: 2.7rem; height: 2.7rem; }
 
         /* THE SKY: the whole card, filled by the atmosphere layer.
            No sizing or arrangement here — the atmosphere knows how to fill a
@@ -134,14 +137,18 @@
         .sch-hero-cta:hover svg { transform: translateX(3px); }
         @media (prefers-reduced-motion: reduce) { .sch-hero-cta svg { transition: none; } }
         .sch-hero-stats { display: flex; gap: .45rem; flex-wrap: wrap; }
+        /* The same nine-tenths the words stand on. Weather runs behind all
+           four of these, and a plate that is sheer under the heading and
+           solid under the counts is two different decisions showing on one
+           card. */
         .sch-stat { display: flex; flex-direction: column; align-items: center; justify-content: center;
             min-width: 3.9rem; padding: .45rem .65rem; border-radius: .85rem;
-            background: var(--color-gray-50); border: 1px solid var(--color-gray-200); }
+            background: rgb(255 255 255 / .9); border: 1px solid var(--color-gray-200); }
         .sch-stat b { font-size: 1.05rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.15; }
         .sch-stat i { font-style: normal; font-size: .6rem; font-weight: 700; letter-spacing: .06em;
             text-transform: uppercase; color: var(--color-gray-400); }
         /* Today's tile is the one that matters — it gets the accent. */
-        .sch-stat.is-today { background: #f0f7e8; border-color: #cfe3b8; }
+        .sch-stat.is-today { background: rgb(240 247 232 / .92); border-color: #cfe3b8; }
         .sch-stat.is-today b { color: #3d6823; }
         .sch-stat.is-today i { color: #6b9f3d; }
         html.dark .sch-hero { background-color: #151b12; border-color: #2b3a1c; }
@@ -150,9 +157,9 @@
         html.dark .sch-hero-p b { color: #cdd8c0; }
         html.dark .sch-hero-cta { color: #a5c97e; }
         html.dark .tod-morning, html.dark .tod-afternoon, html.dark .tod-evening { background: rgb(255 255 255 / .07); }
-        html.dark .sch-stat { background: rgb(255 255 255 / .05); border-color: #2b3a1c; }
+        html.dark .sch-stat { background: rgb(21 27 18 / .9); border-color: #2b3a1c; }
         html.dark .sch-stat b { color: #e8efe1; }
-        html.dark .sch-stat.is-today { background: rgb(61 104 35 / .22); border-color: #3f5626; }
+        html.dark .sch-stat.is-today { background: rgb(31 45 22 / .92); border-color: #3f5626; }
         html.dark .sch-stat.is-today b { color: #bfe19a; }
         @media (max-width: 640px) {
             /* The tiles take the second row, evenly, instead of ragging. */
@@ -704,12 +711,6 @@
             <div class="min-w-0 sch-hero-say">
                 <h1 class="sch-hero-h">Here are your cropping schedules for today</h1>
                 <p class="sch-hero-p">{!! $__say !!}</p>
-                @if (($todayHref ?? null) && $summary['today'] > 0)
-                    <a href="{{ $todayHref }}" class="sch-hero-cta">
-                        Open today's board
-                        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 12h14"/></svg>
-                    </a>
-                @endif
             </div>
         </div>
         <div class="sch-hero-stats">
@@ -1542,8 +1543,13 @@ document.addEventListener('DOMContentLoaded', () => {
              * everything on it. The tint says roughly; this says which.
              * Nothing on the card moves to make room — it appears behind, so
              * the page reads as finishing rather than as changing its mind. */
+            /* And what time of day it is, which the sky key only half says.
+             * A clear noon and a clear five o'clock are the same key and not
+             * the same light, and the card is meant to read like a window. */
             const sky = document.getElementById('schHeroSky');
-            if (sky && window.wxAtmosphere) sky.innerHTML = window.wxAtmosphere(key);
+            if (sky && window.wxAtmosphere) {
+                sky.innerHTML = window.wxAtmosphere(key, window.wxDaypart && window.wxDaypart(hour));
+            }
             const meta = (window.WX_SKIES || {})[key];
             const mark = document.getElementById('schHeroMark');
             if (mark && meta && meta.label) {

@@ -47,6 +47,33 @@
         --atm-heat: rgb(249 115 22 / .16);
         --atm-wind: rgb(125 211 252 / .4); }
 
+    /* ---- the light of the hour -----------------------------------------
+       The sky key only half says what the light is doing. A clear noon and a
+       clear five o'clock are the same key and not the same afternoon, and a
+       card meant to read like a window has to know which one it is.
+
+       Drawn FIRST, so the weather sits on top of the light rather than under
+       it: rain at dusk is orange-lit rain, not rain with orange over it. */
+    .atm-tone { position: absolute; inset: 0; }
+    .atm-t-day .atm-tone {
+        background: linear-gradient(180deg, rgb(255 255 255 / .34), rgb(255 255 255 / .05)); }
+    .atm-t-dawn .atm-tone {
+        background: linear-gradient(180deg, rgb(251 191 36 / .2), rgb(244 114 182 / .12) 60%, transparent); }
+    .atm-t-dusk .atm-tone {
+        background: linear-gradient(180deg, rgb(249 115 22 / .22), rgb(124 58 237 / .16) 70%, rgb(30 41 59 / .1)); }
+    .atm-t-night .atm-tone {
+        background: linear-gradient(180deg, rgb(30 41 59 / .36), rgb(15 23 42 / .2)); }
+    /* After dark the card is already dark, so day stops lifting so hard and
+       night goes further down — the same swing, measured from a lower floor. */
+    html.dark .atm-t-day .atm-tone {
+        background: linear-gradient(180deg, rgb(255 255 255 / .1), transparent); }
+    html.dark .atm-t-dawn .atm-tone {
+        background: linear-gradient(180deg, rgb(251 191 36 / .14), rgb(244 114 182 / .08) 60%, transparent); }
+    html.dark .atm-t-dusk .atm-tone {
+        background: linear-gradient(180deg, rgb(249 115 22 / .16), rgb(76 29 149 / .18) 70%, rgb(2 6 23 / .2)); }
+    html.dark .atm-t-night .atm-tone {
+        background: linear-gradient(180deg, rgb(2 6 23 / .52), rgb(2 6 23 / .3)); }
+
     /* ---- cloud, hanging over the top edge ------------------------------
        Anchored ABOVE the box so only the underside shows. A cloud you can
        see the top of is a cloud you are flying over, and nobody reading this
@@ -260,7 +287,13 @@
                7-step cycle, depths off a 5, layouts off a 3 and alphas off a
                4 — so the pattern that repeats is 420 clouds long, and no card
                is that wide. Even intervals of even sizes read as a border. */
-            const w = 7 + ((i * 3) % 7) * 1.5;           // rem
+            /* An edge cloud shows only half of itself, so it has to be
+               wider to put the same amount of sky on the card. Without this
+               the left of every rainy card was thin — cloud 0 sat at the
+               bottom of the width cycle AND lost half its width to the
+               frame, which is the same mistake made twice. */
+            const edge = n > 1 && (i === 0 || i === n - 1);
+            const w = (7 + ((i * 3) % 7) * 1.5) * (edge ? 1.5 : 1);   // rem
             const h = w * (0.42 + ((i * 2) % 5) * 0.03);
             // How far it reaches INTO the card, which is the number that
             // matters — the rest of the cloud is above the edge and unseen.
@@ -403,15 +436,36 @@
     };
 
     /**
+     * Which part of the day an hour belongs to.
+     *
+     * Four, not two. Dawn and dusk are short and they are the two that look
+     * least like either of the things they sit between — a card that only
+     * knew day from night would call half past five in the evening "day"
+     * and be wrong about the only hour anybody would have noticed.
+     */
+    window.wxDaypart = function (hour) {
+        const h = Number.isFinite(Number(hour)) ? Number(hour) : new Date().getHours();
+        if (h >= 5 && h < 7) return 'dawn';
+        if (h >= 7 && h < 16) return 'day';
+        if (h >= 16 && h < 19) return 'dusk';
+
+        return 'night';
+    };
+
+    /**
      * The weather, as the inside of a box.
      *
-     * @param key one of the sky keys the scene book uses
+     * @param key      one of the sky keys the scene book uses
+     * @param daypart  dawn | day | dusk | night; the clock's if not given
      * @returns HTML for a container that is position:relative, overflow:hidden
      */
-    window.wxAtmosphere = function (key) {
+    window.wxAtmosphere = function (key, daypart) {
         const build = SKY[key] || SKY.cloudy;
+        const part = ['dawn', 'day', 'dusk', 'night'].includes(daypart)
+            ? daypart : window.wxDaypart();
 
-        return `<span class="atm atm-${key}">${build()}</span>`;
+        return `<span class="atm atm-${key} atm-t-${part}">`
+            + `<span class="atm-tone"></span>${build()}</span>`;
     };
 })();
 </script>

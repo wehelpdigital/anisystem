@@ -18,6 +18,13 @@
         .dash-shell { grid-template-columns: minmax(0, 1fr) 20rem; }
         .dash-side { position: sticky; top: 5rem; }
     }
+    /* The calendar beside "My Cropping Schedules". Its own bubble, because
+       a drawing with a ground line in it needs a horizon to stand on and a
+       heading does not have one. */
+    .dash-sched-cal { width: 1.9rem; height: 1.9rem; border-radius: .55rem;
+        overflow: hidden; background: var(--color-brand-50); }
+    html.dark .dash-sched-cal { background: rgb(107 159 61 / .16); }
+
     /* The forecast panel: a tinted, drifting box rather than a row of
        emoji on the card's own white. The tint is today's sky said in
        colour and is held under a fifth of an alpha, because the numbers
@@ -663,7 +670,14 @@
     {{-- My Cropping Schedules (top — the primary workspace) --}}
     <div>
         <div class="flex items-center justify-between gap-3 mb-3 px-1">
-            <h2 class="text-base md:text-lg font-bold text-gray-900">📅 My Cropping Schedules</h2>
+            {{-- The same calendar the Schedules shelf puts on its own card,
+                 rather than an emoji of one. Two screens naming the same
+                 thing should draw it the same way, and this one is drawn —
+                 the leaf on it sways. --}}
+            <h2 class="text-base md:text-lg font-bold text-gray-900 flex items-center gap-2">
+                <span class="dash-sched-cal fs-slot" data-fs-act="quiet" data-fs-size="26" aria-hidden="true"></span>
+                My Cropping Schedules
+            </h2>
             @if ($latestSchedules->isNotEmpty())
                 <a href="{{ route('sm.index') }}" class="text-sm font-bold text-brand-700 hover:underline shrink-0">View all</a>
             @endif
@@ -1435,6 +1449,8 @@
 
 {{-- Every sky the app can draw, and the colours that go with them. --}}
 @include('partials.weather-scenes')
+{{-- The calendar on the Cropping Schedules heading. --}}
+@include('partials.farm-scenes')
 
 {{-- Per-schedule weather: one deduped fetch fills every schedule card's
      [data-weather-for] slot. Fetched after paint so Open-Meteo never blocks the
