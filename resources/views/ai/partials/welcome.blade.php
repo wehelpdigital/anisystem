@@ -14,15 +14,16 @@
          a vague question costs the same as a good one and comes back needing
          three more, so this is the highest-value thing on the screen. --}}
     <h2>Magandang araw! I'm {{ $settings->assistantName }}</h2>
-    <p class="sub">Your farm technician. Ask about your crop, or snap a photo of a problem leaf.</p>
+    <p class="sub">Ask me anything about your crop, I'm willing to answer.</p>
     <div class="ai-howto">
         <p class="ai-howto-h">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
             The more you tell me, the better I answer
         </p>
         <p class="ai-howto-b">Crop and age, what you did, what you see.</p>
+        <p class="ai-howto-lbl">For example</p>
         <p class="ai-howto-eg"><b>Not</b> "my rice is sick"<br>
-            <b>Try</b> "IR64, 32 days old, lower leaves yellowing, urea 10 days ago, heavy rain."</p>
+            <b>Try</b> "RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"</p>
     </div>
     <div class="ai-caps">
         <span class="ai-cap">
@@ -41,9 +42,9 @@
     <p class="ai-overline">Try one of these</p>
     <div class="grid gap-2 max-w-md mx-auto">
         <button type="button" class="aisuggest js-suggest"
-                data-q="My rice leaves are yellowing at the tips 25 days after sowing. What should I check?">
+                data-q="Ilang sako ng urea ang kailangan ko para sa isang ektarya?">
             <span class="ic" aria-hidden="true"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 21c.5-4.5 2.5-15 16-17-.5 13.5-8 16-12 16-1.33 0-2.67 0-4 1zm0 0c2-6 5-10 10-12"/></svg></span>
-            <span class="t">Yellowing leaf tips</span>
+            <span class="t">Ilang sako ng urea kada ektarya?</span>
             <svg class="go w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
         <button type="button" class="aisuggest js-suggest"

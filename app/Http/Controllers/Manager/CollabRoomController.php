@@ -32,19 +32,27 @@ class CollabRoomController extends BaseScheduleController
             ScheduleChatController::announceJoin($schedule, $meId);
         }
 
-        // The opener can pick who's in this room (?members=1,2,3). Whoever opens
-        // is always in; unknown ids are ignored; an empty result falls back to all.
+        /* The opener picks who is in this room (?members=1,2,3).
+         *
+         * Presence of the parameter is what decides, not whether it has
+         * anything in it. It used to test the string for emptiness, so a
+         * farmer who cleared every tick sent no list at all and the room
+         * answered by inviting the whole team back in — the one case where
+         * unchecking was most clearly meant, and the one case it was ignored.
+         *
+         * Whoever opens the room is always in it; unknown ids are dropped. */
         $all = ScheduleTeam::members($schedule);
-        $param = (string) $request->query('members', '');
-        if ($param !== '') {
-            $picked = collect(explode(',', $param))
+        if ($request->has('members')) {
+            $picked = collect(explode(',', (string) $request->query('members', '')))
                 ->map(fn ($v) => (int) trim($v))
                 ->filter()
                 ->push($meId)
                 ->unique();
             $members = $all->filter(fn ($m) => $picked->contains((int) $m->id))->values();
+            // Never nobody: a room with an empty roster has no one to show the
+            // opener their own place in it.
             if ($members->isEmpty()) {
-                $members = $all;
+                $members = $all->filter(fn ($m) => (int) $m->id === $meId)->values();
             }
         } else {
             $members = $all;

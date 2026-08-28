@@ -19,7 +19,11 @@
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
         <span class="sb-title">🎨 Team whiteboard</span>
-        <span class="sb-live" id="sbLive"></span>
+        {{-- The live badge is kept in the markup but never shown: the JS
+             writes into it and the faces along the top already say who is
+             here, so it was the same fact twice in a bar with no room for
+             either of them twice. --}}
+        <span class="sb-live" id="sbLive" hidden></span>
         {{-- Autosave's only voice: a word, in the corner, that the drawing is kept. --}}
         <span class="sb-auto" id="sbAuto" role="status" aria-live="polite"></span>
         <div class="sb-pages" id="sbPages">
@@ -142,6 +146,7 @@
     .sb-hide { display: none !important; }
     .sb-bar { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; padding: .5rem .7rem; background: var(--color-white); border-bottom: 1px solid var(--color-gray-200); }
     .sb-title { font-family: var(--font-heading); font-weight: 800; font-size: .95rem; color: var(--color-gray-900); }
+    .sb-live[hidden] { display: none !important; }
     .sb-live { font-size: .68rem; font-weight: 800; color: var(--color-gray-400); }
     .sb-live.on { color: #16a34a; }
     /* Fades in rather than appearing: the point is reassurance, not a notice. */

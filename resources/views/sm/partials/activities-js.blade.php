@@ -9341,6 +9341,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    /* Where the eye goes after a drop.
+     *
+     * Moving a card to another day rewrites two containers and renumbers
+     * everything in them, and the page went wandering — usually downward,
+     * because the browser's own scroll anchoring picks something to hold
+     * still and it is rarely the card you were holding. The answer is to
+     * stop guessing and say it: the thing that moved is the thing to look
+     * at.
+     *
+     * Two frames of delay, because the rebuild is animated: asking for the
+     * card's position while the FLIP is still running scrolls to where it
+     * was, not where it is going. And `nearest`, so a card that is already
+     * comfortably on screen does not get yanked to the middle for no
+     * reason. */
+    function keepMovedCardInView(id) {
+        if (!id) return;
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            setTimeout(() => {
+                const el = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
+                if (!el) return;
+                const r = el.getBoundingClientRect();
+                const top = 120;                       // under the app bar and toolbar
+                const bottom = window.innerHeight - 90; // above the composer/tab bar
+                if (r.top >= top && r.bottom <= bottom) return;   // already in sight
+                el.scrollIntoView({
+                    block: 'center',
+                    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+                });
+                // A brief mark so the eye lands on the right card among its
+                // new neighbours rather than hunting for it.
+                el.classList.remove('just-moved');
+                void el.offsetWidth;
+                el.classList.add('just-moved');
+                setTimeout(() => el.classList.remove('just-moved'), 1400);
+            }, 260);
+        }));
+    }
+
     function handleDropIntoContainer(container) {
         if (!mayEditBoard()) return;   // both drag systems land here; say no once, here
         const card = dragSourceCard;
@@ -9388,7 +9426,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // puts everything back by the numbers.
         containers.forEach((cont) => syncBlockSortsIn(cont));
 
+        const movedId = card?.getAttribute('data-id');
         reorderAndRenumberActivities(true);   // optimistic rebuild, animated
+        keepMovedCardInView(movedId);
 
         const snapshot = dragBoardSnapshot;
         dragBoardSnapshot = null;

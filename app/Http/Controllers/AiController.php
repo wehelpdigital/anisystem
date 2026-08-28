@@ -762,6 +762,8 @@ class AiController extends Controller
             'schedule' => $schedule,
             'settings' => $settings,
             'balance' => $this->credits->balance($userId),
+            // What the "This season's plan" switch would add to a question.
+            'planTokens' => $this->planTokenCost($schedule->id, $userId),
             'conversation' => $conversation,
             'messages' => $conversation
                 // Newest sixty, oldest first. The relation is every turn the
@@ -828,6 +830,26 @@ class AiController extends Controller
             . ($rows ? "Work so far, newest first:\n" . implode("\n", $rows) . "\n" : "No activities are on this plan yet.\n")
             . "Read it before answering, and use it where it bears on the question. It is the farmer's own record, "
             . "not a rule: where it disagrees with good practice, say so plainly.\n\nQuestion: ";
+    }
+
+    /**
+     * Roughly how many input tokens attaching this plan would add.
+     *
+     * The switch on the composer is not free: it sends the season — its crop,
+     * its lots, and every activity on it up to the cap — in front of the
+     * question, and the model is billed for every word of it. A farmer
+     * turning it on deserves to see the price move before they press send,
+     * not after.
+     *
+     * Four characters to the token is the usual rule of thumb and it is
+     * close enough for a quote; the charge itself is always the provider's
+     * own count, taken after the answer comes back.
+     */
+    public function planTokenCost($scheduleId, int $userId): int
+    {
+        $text = $this->planContext($scheduleId, $userId);
+
+        return $text === '' ? 0 : (int) ceil(mb_strlen($text) / 4);
     }
 
     /** The plan a caller may attach, or null. */

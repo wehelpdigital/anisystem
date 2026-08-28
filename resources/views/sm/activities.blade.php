@@ -151,6 +151,19 @@
            above you resizes; during a deliberate animation it is one more
            thing tugging at the viewport. */
         #activitiesList.is-folding { overflow-anchor: none; }
+        /* The card that just landed somewhere else, named for a moment so
+           the eye can find it among its new neighbours. */
+        #activitiesList .activity-card.just-moved {
+            animation: justMoved 1.4s cubic-bezier(.22, 1, .36, 1) both;
+        }
+        @keyframes justMoved {
+            0%   { box-shadow: 0 0 0 3px rgb(74 124 42 / .55), var(--shadow-card); }
+            60%  { box-shadow: 0 0 0 3px rgb(74 124 42 / .35), var(--shadow-card); }
+            100% { box-shadow: 0 0 0 0 rgb(74 124 42 / 0), var(--shadow-card); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            #activitiesList .activity-card.just-moved { animation: none; }
+        }
         /* Today's card, ringed by a halo that swells out of its border and
            fades. It is the day's OWN colour — the same hue its header wears —
            so the mark says "this day" in the language the board already

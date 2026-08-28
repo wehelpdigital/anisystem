@@ -156,8 +156,12 @@
             font-size: .78rem; font-weight: 800; line-height: 1.35; color: var(--color-brand-800, #2f5219); }
         .ai-howto-h svg { width: .95rem; height: .95rem; flex: none; margin-top: .08rem; }
         .ai-howto-b { font-size: .74rem; line-height: 1.55; color: var(--color-gray-600); margin-top: .4rem; }
+        .ai-howto-lbl { font-size: .64rem; font-weight: 800; letter-spacing: .06em;
+            text-transform: uppercase; color: var(--color-brand-700, #3d6823);
+            margin-top: .5rem; padding-top: .45rem;
+            border-top: 1px dashed var(--color-brand-200, #d7e8c4); }
         .ai-howto-eg { font-size: .72rem; line-height: 1.5; color: var(--color-gray-500);
-            margin-top: .45rem; padding-top: .45rem; border-top: 1px dashed var(--color-brand-200, #d7e8c4); }
+            margin-top: .25rem; }
         .ai-howto-eg b { color: var(--color-brand-800, #2f5219); font-weight: 800; }
         html.dark .ai-howto { background: rgb(107 159 61 / .12); border-color: #2b3a1c; }
         html.dark .ai-howto-h, html.dark .ai-howto-eg b { color: #a5c97e; }

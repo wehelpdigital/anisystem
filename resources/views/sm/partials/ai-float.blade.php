@@ -104,20 +104,19 @@
                     @if ($aiFloatAvatar)<img data-ai-face src="{{ $aiFloatAvatar }}" alt="">@else<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>@endif
                 </span>
                 <p class="font-semibold text-gray-800 mt-2">Hi, I'm {{ $aiFloatSettings->assistantName }}</p>
-                <p class="text-sm text-gray-500 mt-1">Ask me about
-                    {{ \Illuminate\Support\Str::limit($schedule->cropType ?: 'this crop', 24) }} —
-                    fertiliser rates, pests, water, timing — or snap a leaf.</p>
+                <p class="text-sm text-gray-500 mt-1">Ask me anything about your crop, I'm willing to answer.</p>
                 {{-- How to ask. Not decoration: a vague question costs the
                      same as a good one and comes back needing three more. --}}
                 <div class="aif-howto">
                     <p class="aif-howto-h">The more you tell me, the better I answer</p>
                     <p class="aif-howto-b">Crop and age, what you did, what you see.</p>
+                    <p class="aif-howto-lbl">For example</p>
                     <p class="aif-howto-eg"><b>Not</b> "my rice is sick"<br>
-                        <b>Try</b> "IR64, 32 days old, lower leaves yellowing, urea 10 days ago, heavy rain."</p>
+                        <b>Try</b> "RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"</p>
                 </div>
                 <button type="button" class="ai-float-sug js-float-suggest">
                     <span class="ic" aria-hidden="true"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 21c.5-4.5 2.5-15 16-17-.5 13.5-8 16-12 16-1.33 0-2.67 0-4 1zm0 0c2-6 5-10 10-12"/></svg></span>
-                    <span class="t">My leaves are yellowing at the tips — what should I check?</span>
+                    <span class="t">Ilang sako ng urea ang kailangan ko para sa isang ektarya?</span>
                 </button>
                 <button type="button" class="ai-float-sug js-float-suggest">
                     <span class="ic" aria-hidden="true"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3s6 6.5 6 11a6 6 0 11-12 0c0-4.5 6-11 6-11z"/></svg></span>
@@ -296,8 +295,11 @@
         border: 1px solid var(--color-brand-200, #d7e8c4); background: var(--color-brand-50, #f2f8ec); }
     .aif-howto-h { font-size: .76rem; font-weight: 800; line-height: 1.35; color: var(--color-brand-800, #2f5219); }
     .aif-howto-b { font-size: .73rem; line-height: 1.55; color: var(--color-gray-600); margin-top: .35rem; }
-    .aif-howto-eg { font-size: .71rem; line-height: 1.5; color: var(--color-gray-500); margin-top: .4rem;
-        padding-top: .4rem; border-top: 1px dashed var(--color-brand-200, #d7e8c4); }
+    .aif-howto-lbl { font-size: .62rem; font-weight: 800; letter-spacing: .06em;
+        text-transform: uppercase; color: var(--color-brand-700, #3d6823);
+        margin-top: .45rem; padding-top: .4rem;
+        border-top: 1px dashed var(--color-brand-200, #d7e8c4); }
+    .aif-howto-eg { font-size: .71rem; line-height: 1.5; color: var(--color-gray-500); margin-top: .22rem; }
     .aif-howto-eg b { color: var(--color-brand-800, #2f5219); font-weight: 800; }
     html.dark .aif-howto { background: rgb(107 159 61 / .12); border-color: #2b3a1c; }
     html.dark .aif-howto-h, html.dark .aif-howto-eg b { color: #a5c97e; }

@@ -51,7 +51,7 @@
                      with the job title: she has a face in the thread below
                      and a name here, and an emoji standing in for both was
                      the leftover of when she had neither. --}}
-                <span class="sai-title">{{ \App\Models\AiSetting::current()->assistantName }}, Your Smart Agricultural Technician <span class="sai-sub">· shared with your team</span></span>
+                <span class="sai-title">{{ \App\Models\AiSetting::current()->assistantName }}, Your Smart Agritech <span class="sai-sub">· shared with your team</span></span>
                 <span class="sai-spacer"></span>
                 <button type="button" id="saiSaveSession" class="sai-save" title="Keep this session — as a note, or on a task" aria-haspopup="dialog">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a1 1 0 011-1h9l4 4v10a1 1 0 01-1 1H6a1 1 0 01-1-1V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 4v4h6M8 19v-5h8v5"/></svg>
@@ -275,7 +275,11 @@
         background-size: 220% 100%; }
     /* Intro card shown when a session is empty */
     .sai-intro { margin: auto; max-width: 30rem; text-align: center; color: var(--color-gray-500); padding: 1.5rem 1rem; animation: saiRise .28s cubic-bezier(.22,1,.36,1) both; }
-    .sai-intro-badge { width: 3rem; height: 3rem; border-radius: 999px; margin: 0 auto .7rem; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 6px 18px rgb(61 104 35 / .3); }
+    .sai-intro-badge { width: 3rem; height: 3rem; border-radius: 999px; margin: 0 auto .7rem; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 6px 18px rgb(61 104 35 / .3); overflow: hidden; }
+    /* Wearing a photograph rather than a glyph: the ring stays, the gradient
+       stops showing through, and the picture fills the circle. */
+    .sai-intro-badge.has-face { background: var(--color-white); padding: 0; }
+    .sai-intro-badge img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .sai-intro h4 { font-family: var(--font-heading); font-weight: 800; font-size: 1rem; color: var(--color-gray-900); margin-bottom: .35rem; }
     .sai-intro p { font-size: .85rem; line-height: 1.55; }
     /* How to ask — left-aligned inside a centred panel, because it is the
@@ -285,8 +289,11 @@
         background: var(--color-brand-50, #f2f8ec); }
     .sai-howto-h { font-size: .78rem; font-weight: 800; line-height: 1.35; color: var(--color-brand-800, #2f5219); }
     .sai-howto-b { font-size: .74rem; line-height: 1.55; color: var(--color-gray-600); margin-top: .4rem; }
-    .sai-howto-eg { font-size: .72rem; line-height: 1.5; color: var(--color-gray-500); margin-top: .45rem;
-        padding-top: .45rem; border-top: 1px dashed var(--color-brand-200, #d7e8c4); }
+    .sai-howto-lbl { font-size: .62rem; font-weight: 800; letter-spacing: .06em;
+        text-transform: uppercase; color: var(--color-brand-800, #2f5219);
+        margin-top: .45rem; padding-top: .45rem;
+        border-top: 1px dashed var(--color-brand-200, #d7e8c4); }
+    .sai-howto-eg { font-size: .72rem; line-height: 1.5; color: var(--color-gray-500); margin-top: .22rem; }
     .sai-howto-eg b { color: var(--color-brand-800, #2f5219); font-weight: 800; }
     html.dark .sai-howto { background: rgb(107 159 61 / .12); border-color: #2b3a1c; }
     html.dark .sai-howto-h, html.dark .sai-howto-eg b { color: #a5c97e; }
@@ -487,6 +494,14 @@
         }
     });
 
+    /* Her actual face where a sheaf of wheat used to stand in for it. She
+       has a photograph in the settings and wears it on every other surface;
+       the fallback keeps the old mark for an install that has not set one. */
+    const AI_AVATAR = @json(\App\Support\MediaStore::url(\App\Models\AiSetting::current()->avatarPath));
+    const AI_FACE = AI_AVATAR
+        ? `<div class="sai-intro-badge has-face"><img src="${AI_AVATAR}" alt=""></div>`
+        : '<div class="sai-intro-badge">\u{1F33E}</div>';
+
     // Her name, so the greeting and the toasts all say the same thing.
     const AI_NAME = @json(\App\Models\AiSetting::current()->assistantName);
 
@@ -497,14 +512,15 @@
             const el = document.createElement('div');
             el.className = 'sai-intro'; el.id = 'saiIntro';
             el.innerHTML = `
-                <div class="sai-intro-badge">\u{1F33E}</div>
-                <h4>Hi team \u2014 I'm ${AI_NAME}</h4>
-                <p>Ask me about pests &amp; diseases, fertilizer rates and timing, irrigation, planting and harvest windows, or troubleshooting a problem. Everyone on the team sees the questions and answers, and you can save a whole session to your schedule notes.</p>
+                ${AI_FACE}
+                <h4>Hi team, I'm ${AI_NAME}</h4>
+                <p>Ask me anything about your crop, I'm willing to answer. Everyone on the team sees the questions and answers, and you can save a whole session to your schedule notes.</p>
                 <div class="sai-howto">
                     <p class="sai-howto-h">The more you tell me, the better I answer</p>
                     <p class="sai-howto-b">Crop and age, what was done, what you see.</p>
+                    <p class="sai-howto-lbl">For example</p>
                     <p class="sai-howto-eg"><b>Not</b> "the rice is sick"<br>
-                        <b>Try</b> "IR64, 32 days old, lower leaves yellowing, urea 10 days ago, heavy rain."</p>
+                        <b>Try</b> "RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"</p>
                 </div>`;
             /* The three suggestion chips are gone. They were pills in the
              * stylesheet at the top of this file and squares by the time the

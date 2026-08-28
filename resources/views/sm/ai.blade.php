@@ -166,8 +166,12 @@
             color: var(--color-brand-800, #2f5219); }
         .ai-howto-h svg { width: .95rem; height: .95rem; flex: none; margin-top: .08rem; }
         .ai-howto-b { font-size: .74rem; line-height: 1.55; color: var(--color-gray-600); margin-top: .4rem; }
+        .ai-howto-lbl { font-size: .64rem; font-weight: 800; letter-spacing: .06em;
+            text-transform: uppercase; color: var(--color-brand-700, #3d6823);
+            margin-top: .5rem; padding-top: .45rem;
+            border-top: 1px dashed var(--color-brand-200, #d7e8c4); }
         .ai-howto-eg { font-size: .72rem; line-height: 1.5; color: var(--color-gray-500);
-            margin-top: .45rem; padding-top: .45rem; border-top: 1px dashed var(--color-brand-200, #d7e8c4); }
+            margin-top: .25rem; }
         .ai-howto-eg b { color: var(--color-brand-800, #2f5219); font-weight: 800; }
         html.dark .ai-howto { background: rgb(107 159 61 / .12); border-color: #2b3a1c; }
         html.dark .ai-howto-h, html.dark .ai-howto-eg b { color: #a5c97e; }
@@ -185,6 +189,9 @@
                 border-color .28s cubic-bezier(.22,1,.36,1); }
         .ai-see svg { width: .8rem; height: .8rem; flex: none; }
         .ai-see:hover { border-color: #a8cc7e; }
+        .ai-see-cost { font-size: .62rem; font-weight: 800; padding: 0 .3rem;
+            border-radius: 999px; background: rgb(245 197 24 / .22); color: #8a6100; }
+        html.dark .ai-see-cost { background: rgb(245 197 24 / .18); color: var(--color-accent-400, #f5c518); }
         .ai-see.is-on { border-color: var(--color-brand-500, #4a7c2a);
             background: var(--color-brand-50, #f2f8ec); color: var(--color-brand-800, #2f5219); }
         html.dark .ai-see { background: #151b12; border-color: #2b3a1c; color: #9aa694; }
@@ -513,7 +520,7 @@
                 {{-- One line. The chips underneath already say what she can
                      be asked, so listing it here twice cost a line of a short
                      phone's screen for nothing. --}}
-                <p class="sub">Your technician for {{ \Illuminate\Support\Str::limit($schedule->cropType ?: 'this crop', 24) }}</p>
+                <p class="sub">Ask me anything about your crop, I'm willing to answer.</p>
 
                 {{-- Four short lines. It was three paragraphs, and an
                      instruction you have to scroll to finish is an
@@ -525,13 +532,16 @@
                         The more you tell me, the better I answer
                     </p>
                     <p class="ai-howto-b">Crop and age, what you did, what you see.</p>
+                    {{-- Labelled, because "Not / Try" on its own reads as a
+                         rule until you have understood it is a worked pair. --}}
+                    <p class="ai-howto-lbl">For example</p>
                     <p class="ai-howto-eg"><b>Not</b> "my rice is sick"<br>
-                        <b>Try</b> "IR64, 32 days old, lower leaves yellowing, urea 10 days ago, heavy rain."</p>
+                        <b>Try</b> "RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"</p>
                 </div>
                 <div class="grid gap-2 max-w-md mx-auto mt-3">
-                    <button type="button" class="aisuggest js-suggest" data-q="My leaves are yellowing at the tips — what should I check?">
+                    <button type="button" class="aisuggest js-suggest" data-q="Ilang sako ng urea ang kailangan ko para sa isang ektarya?">
                         <span class="ic" aria-hidden="true"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 21c.5-4.5 2.5-15 16-17-.5 13.5-8 16-12 16-1.33 0-2.67 0-4 1zm0 0c2-6 5-10 10-12"/></svg></span>
-                        <span class="t">Yellowing leaf tips</span>
+                        <span class="t">Ilang sako ng urea kada ektarya?</span>
                         <svg class="go w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                     </button>
                     <button type="button" class="aisuggest js-suggest" data-q="How much urea per hectare for the first top dressing?">
@@ -559,10 +569,21 @@
              that quietly move an answer, and a farmer who cannot see them
              cannot tell why the same question answered differently twice. --}}
         <div class="ai-sees" role="group" aria-label="What {{ $settings->assistantName }} can see">
+            @php
+                // What the season would add to a question, priced the same
+                // way the composer prices everything else.
+                $planCredits = $aiUnlimited ?? false ? 0 : round(($planTokens ?? 0) / 1000 * (float) $settings->creditsPerInputK, 2);
+            @endphp
             <button type="button" class="ai-see" id="aiUsePlan" aria-pressed="false"
-                    title="Send this season's crop, variety and lots with the question">
+                    data-plan-tokens="{{ (int) ($planTokens ?? 0) }}"
+                    title="Sends this season — its crop, its lots and its activities — in front of the question">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.4 1.8 1.8-5.4M9 20l11-11a2.83 2.83 0 10-4-4L5 16l4 4z"/></svg>
                 This season's plan
+                {{-- The price is on the switch, not in a footnote. Turning
+                     this on can cost more than the question does. --}}
+                @if ($planCredits > 0)
+                    <span class="ai-see-cost">+{{ rtrim(rtrim(number_format($planCredits, 2), '0'), '.') }}</span>
+                @endif
             </button>
             <button type="button" class="ai-see is-on" id="aiUseMemory" aria-pressed="true"
                     title="Let her read the earlier messages in this chat">
@@ -835,9 +856,17 @@ const __init = () => {
         const msg = (input?.value || '').trim();
         const shots = chips ? chips.children.length : 0;
         if (!msg && !shots) { hint.textContent = hint.dataset.idle || ''; return; }
-        const tin = Math.ceil(msg.length / 4) + 900;
+        /* The season rides in front of the question when the switch is on,
+         * and the model is billed for every word of it — so the quote has to
+         * carry it too, or the number under the box is a number for a
+         * different question than the one about to be sent. */
+        const planOn = byId('aiUsePlan')?.getAttribute('aria-pressed') === 'true';
+        const planTin = planOn ? Number(byId('aiUsePlan')?.dataset.planTokens || 0) : 0;
+        const tin = Math.ceil(msg.length / 4) + 900 + planTin;
         const cost = Math.max(.01, Math.round((tin / 1000 * PRICE.inK + PRICE.halfOut / 1000 * PRICE.outK + shots * PRICE.img) * 100) / 100);
-        hint.textContent = `≈ ${cost} credits for this question`;
+        hint.textContent = planOn
+            ? `≈ ${cost} credits — the season is attached`
+            : `≈ ${cost} credits for this question`;
     }
 
     const CAN_ASK = @json((bool) $settings->isUsable());
@@ -1054,7 +1083,8 @@ const __init = () => {
         t.setAttribute('aria-pressed', on ? 'true' : 'false');
         t.classList.toggle('is-on', on);
         if (t.id === 'aiUsePlan') {
-            toast(on ? 'She will read this season\u2019s crop, variety and lots.'
+            sayEstimate();
+            toast(on ? 'She will read this season\u2019s plan — it is added to the question.'
                      : 'She will answer without your plan.');
         } else {
             toast(on ? 'She will read the rest of this chat.'
@@ -1079,7 +1109,10 @@ const __init = () => {
                 scheduleId: SCHEDULE_ID,
                 // Asked for, or not sent. scheduleId still travels because it
                 // says where the chat LIVES; usePlan says whether she reads it.
-                usePlan: byId('aiUsePlan')?.getAttribute('aria-pressed') === 'true' ? 1 : 0,
+                // The whole season, which is what the switch is called and
+                // what its price is quoted for — not the one-line label it
+                // used to send under the same name.
+                attachPlan: byId('aiUsePlan')?.getAttribute('aria-pressed') === 'true' ? 1 : 0,
                 forget: byId('aiUseMemory')?.getAttribute('aria-pressed') === 'true' ? 0 : 1,
             } });
             conversationId = res.data.conversationId;

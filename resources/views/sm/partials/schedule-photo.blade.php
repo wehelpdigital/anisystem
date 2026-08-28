@@ -19,10 +19,6 @@
          which asked somebody to pick a source before they had picked a photo,
          and gave each way one word to explain itself. One button opens all
          three now, in a sheet with room for a sentence each. --}}
-    {{-- The tab says its own name, as the chat and the whiteboard do. --}}
-    <div class="cph-head">
-        <span class="cph-title">📸 Team photo</span>
-    </div>
 
     {{-- The photo, and the pens over it. --}}
     <div class="cph-stage" id="cphStage">
@@ -30,7 +26,12 @@
              above them: before a photo exists it is the only control there
              is, and after one exists it is one more thing you can do to the
              picture. Two boxes stacked with a gap read as two panels. --}}
+        {{-- The tab's name sits on the same line as the way in, not on a
+             line of its own above it. Two rows for a title and one button
+             was a header and a panel where there is only ever one thought:
+             this is the team photo, and here is how you change it. --}}
         <div class="cph-srcrow">
+            <span class="cph-title">📸 Team photo</span>
             <button type="button" class="btn btn-outline btn-sm cph-add" id="cphAddBtn">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8a2 2 0 012-2h1.4l1-1.6h7.2l1 1.6H18a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V8z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 9.6v5M9.5 12.1h5"/></svg>
                 <span id="cphAddLabel">Add photo</span>
@@ -187,8 +188,8 @@
        at .1rem the title sat on the panel's very top edge while every other
        tab's had room above it, so switching to this one looked like the page
        had jumped. */
-    .cph-head { display: flex; align-items: center; gap: .5rem; padding: .55rem .75rem .35rem; }
-    .cph-title { font-size: .85rem; font-weight: 800; color: var(--color-gray-800); }
+    .cph-title { font-size: .85rem; font-weight: 800; color: var(--color-gray-800);
+        flex: 0 0 auto; white-space: nowrap; }
     html.dark .cph-title { color: #e8efe1; }
 
     /* The head of the tool card, not a panel of its own: same background and
@@ -205,7 +206,7 @@
     .cph-stage:has(.cph-bar:not([hidden])) .cph-bar {
         border-top-left-radius: 0; border-top-right-radius: 0; }
     .cph-add svg { width: 1.05rem; height: 1.05rem; }
-    .cph-srchint { font-size: .72rem; color: var(--color-gray-400); }
+    .cph-srchint { font-size: .72rem; color: var(--color-gray-400); flex: 1 1 auto; min-width: 0; }
     @media (max-width: 560px) { .cph-srchint { display: none; } }
     html.dark .cph-srcrow { background: #151b12; border-color: #2b3a1c; }
 

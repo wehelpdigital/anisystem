@@ -125,9 +125,13 @@
 
     modal.querySelector('[data-ce-continue]').addEventListener('click', (e) => {
         const btn = e.currentTarget;
+        /* The list travels even when it is empty. Leaving it off meant "I
+         * did not choose", and the room reads that as "everybody" — so
+         * clearing every tick used to invite the whole team. An empty list
+         * is a choice, and it has to be able to say so. */
         const ids = checks().filter((c) => c.checked).map((c) => c.value);
         const base = btn.getAttribute('data-url');
-        const url = ids.length ? base + (base.includes('?') ? '&' : '?') + 'members=' + encodeURIComponent(ids.join(',')) : base;
+        const url = base + (base.includes('?') ? '&' : '?') + 'members=' + encodeURIComponent(ids.join(','));
         document.getElementById('ceSpin').classList.remove('hidden');
         btn.disabled = true;
         window.location.href = url;
