@@ -25,7 +25,7 @@
 @endphp
 @if ($aiFloatSettings && $aiFloatSettings->isUsable())
 <div id="aiFloat" class="ai-float{{ request('module') === 'ai' ? ' ai-float-off' : '' }}">
-    <button type="button" id="aiFloatFab" class="ai-float-fab" aria-label="Ask the AI Technician" title="Ask the AI Technician">
+    <button type="button" id="aiFloatFab" class="ai-float-fab" aria-label="Ask {{ $aiFloatSettings->assistantName }}" title="Ask {{ $aiFloatSettings->assistantName }}">
         @if ($aiFloatAvatar)
             <img data-ai-face src="{{ $aiFloatAvatar }}" alt="">
         @else
@@ -96,8 +96,23 @@
                 <span class="ai-float-hero">
                     @if ($aiFloatAvatar)<img data-ai-face src="{{ $aiFloatAvatar }}" alt="">@else<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>@endif
                 </span>
-                <p class="font-semibold text-gray-800 mt-2">Ask about {{ \Illuminate\Support\Str::limit($schedule->cropType ?: 'this crop', 24) }}</p>
-                <p class="text-sm text-gray-500 mt-1">Fertiliser rates, pests, water, timing — or snap a leaf.</p>
+                <p class="font-semibold text-gray-800 mt-2">Hi, I'm {{ $aiFloatSettings->assistantName }}</p>
+                <p class="text-sm text-gray-500 mt-1">Ask me about
+                    {{ \Illuminate\Support\Str::limit($schedule->cropType ?: 'this crop', 24) }} —
+                    fertiliser rates, pests, water, timing — or snap a leaf.</p>
+                {{-- How to ask. Not decoration: a vague question costs the
+                     same as a good one and comes back needing three more. --}}
+                <div class="aif-howto">
+                    <p class="aif-howto-h">Ask like you're describing it to someone who can't see your field</p>
+                    <p class="aif-howto-b">My answer is only as good as your question. Say the crop and
+                        variety, how old it is, what you already did, and what you're seeing — colours,
+                        which leaves, how many plants, the weather. One clear question with the details
+                        beats five vague ones, and costs fewer credits than going back and forth.</p>
+                    <p class="aif-howto-eg"><b>Instead of</b> "my rice is sick" — <b>try</b> "IR64, 32 days
+                        after sowing, lower leaves yellowing from the tip inward, urea 10 days ago, heavy
+                        rain all week. What should I check?"</p>
+                    <p class="aif-howto-b">I don't read your cropping plan unless you switch it on under the box.</p>
+                </div>
                 <button type="button" class="ai-float-sug js-float-suggest">
                     <span class="ic" aria-hidden="true"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 21c.5-4.5 2.5-15 16-17-.5 13.5-8 16-12 16-1.33 0-2.67 0-4 1zm0 0c2-6 5-10 10-12"/></svg></span>
                     <span class="t">My leaves are yellowing at the tips — what should I check?</span>
@@ -156,6 +171,19 @@
                 <textarea id="aiFloatText" rows="1" maxlength="4000" placeholder="Ask about your crop…"></textarea>
                 <button type="button" id="aiFloatSend" class="ai-float-send" aria-label="Send">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
+                </button>
+            </div>
+            {{-- What the question carries, said out loud and off by default. --}}
+            <div class="aif-sees" role="group" aria-label="What {{ $aiFloatSettings->assistantName }} can see">
+                <button type="button" class="aif-see" id="aiFloatUsePlan" aria-pressed="false"
+                        title="Send this season's crop, variety and lots with the question">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.4 1.8 1.8-5.4M9 20l11-11a2.83 2.83 0 10-4-4L5 16l4 4z"/></svg>
+                    This season's plan
+                </button>
+                <button type="button" class="aif-see is-on" id="aiFloatUseMemory" aria-pressed="true"
+                        title="Let her read the earlier messages in this chat">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                    This chat so far
                 </button>
             </div>
         </div>
@@ -258,6 +286,32 @@
         animation: aiFloatIdle 5s ease-in-out infinite; }
     @keyframes aiFloatIdle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
     .ai-float-hero img { width: 100%; height: 100%; object-fit: cover; }
+    /* How to ask — left-aligned inside a centred panel, because it is the
+       one thing here meant to be read rather than glanced at. */
+    .aif-howto { margin: .8rem 0 0; padding: .65rem .8rem; text-align: left; border-radius: .85rem;
+        border: 1px solid var(--color-brand-200, #d7e8c4); background: var(--color-brand-50, #f2f8ec); }
+    .aif-howto-h { font-size: .76rem; font-weight: 800; line-height: 1.35; color: var(--color-brand-800, #2f5219); }
+    .aif-howto-b { font-size: .73rem; line-height: 1.55; color: var(--color-gray-600); margin-top: .35rem; }
+    .aif-howto-eg { font-size: .71rem; line-height: 1.5; color: var(--color-gray-500); margin-top: .4rem;
+        padding-top: .4rem; border-top: 1px dashed var(--color-brand-200, #d7e8c4); }
+    .aif-howto-eg b { color: var(--color-brand-800, #2f5219); font-weight: 800; }
+    html.dark .aif-howto { background: rgb(107 159 61 / .12); border-color: #2b3a1c; }
+    html.dark .aif-howto-h, html.dark .aif-howto-eg b { color: #a5c97e; }
+    html.dark .aif-howto-b, html.dark .aif-howto-eg { color: #b7c2ad; }
+    /* The two switches, where the question is typed. */
+    .aif-sees { display: flex; gap: .3rem; flex-wrap: wrap; padding: .4rem .15rem 0; }
+    .aif-see { display: inline-flex; align-items: center; gap: .28rem; cursor: pointer;
+        padding: .2rem .5rem; border-radius: 999px; font-size: .66rem; font-weight: 700;
+        border: 1px solid var(--color-gray-200); background: var(--color-white); color: var(--color-gray-500);
+        transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1),
+            border-color .28s cubic-bezier(.22,1,.36,1); }
+    .aif-see svg { width: .75rem; height: .75rem; flex: none; }
+    .aif-see:hover { border-color: #a8cc7e; }
+    .aif-see.is-on { border-color: var(--color-brand-500, #4a7c2a);
+        background: var(--color-brand-50, #f2f8ec); color: var(--color-brand-800, #2f5219); }
+    html.dark .aif-see { background: #151b12; border-color: #2b3a1c; color: #9aa694; }
+    html.dark .aif-see.is-on { background: rgb(107 159 61 / .18); border-color: #6b9f3d; color: #a5c97e; }
+    @media (prefers-reduced-motion: reduce) { .aif-see { transition: none; } }
     .ai-float-sug { display: flex; align-items: center; gap: .6rem; width: 100%; margin-top: .9rem; padding: .6rem .75rem; text-align: left; border: 1px solid var(--color-gray-200); border-radius: .9rem; background: var(--color-white); box-shadow: var(--shadow-card); font-size: .9rem; font-weight: 700; color: var(--color-gray-800); cursor: pointer; transition: transform .18s ease, border-color .18s ease; }
     .ai-float-sug:hover { transform: translateY(-1px); border-color: var(--color-brand-300); }
     .ai-float-sug .ic { width: 1.9rem; height: 1.9rem; border-radius: .6rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--color-brand-50); color: var(--color-brand-700); }
@@ -490,7 +544,27 @@
         const MY_FACE = @json(\App\Support\ChatFace::mine());
         const BOT = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7z"/></svg>';
         const COIN = '<svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>';
-        const buyCard = (msg) => `<div class="ai-buyc"><span class="ico">${COIN}</span><div><h3>You're out of AI Credits</h3><p>${escapeHtml(msg)}</p><a class="btn btn-accent btn-sm mt-2" href="${escapeHtml(URLS.credits)}">Purchase AI credits</a></div></div>`;
+        /* Two switches, each saying out loud what the next question carries.
+           Plan off, chat on: a general question deserves a general answer,
+           and a chat with no memory is not a chat. */
+        document.addEventListener('click', (e) => {
+            const t = e.target.closest('#aiFloatUsePlan, #aiFloatUseMemory');
+            if (!t) return;
+            const on = t.getAttribute('aria-pressed') !== 'true';
+            t.setAttribute('aria-pressed', on ? 'true' : 'false');
+            t.classList.toggle('is-on', on);
+            if (window.toast) {
+                if (t.id === 'aiFloatUsePlan') {
+                    toast(on ? 'She will read this season’s crop, variety and lots.'
+                             : 'She will answer without your plan.');
+                } else {
+                    toast(on ? 'She will read the rest of this chat.'
+                             : 'She will answer this question on its own.');
+                }
+            }
+        });
+
+        const buyCard = (msg) = `<div class="ai-buyc"><span class="ico">${COIN}</span><div><h3>You're out of AI Credits</h3><p>${escapeHtml(msg)}</p><a class="btn btn-accent btn-sm mt-2" href="${escapeHtml(URLS.credits)}">Purchase AI credits</a></div></div>`;
         let conversationId = null, busy = false, uploadsBusy = 0;
         const sayBusy = () => {
             const line = $('aiFloatBusy');
@@ -842,7 +916,14 @@
             input.value = ''; input.style.height = 'auto'; sayEstimate();
             const thinking = addTurn(false, '<span class="ai-float-dots"><i></i><i></i><i></i></span>');
             try {
-                const res = await api(URLS.ask, { method: 'POST', body: { message, conversationId, imagePaths: myPaths, imageScheduleIds: attachedScheds(), scheduleId: SCHEDULE_ID } });
+                const res = await api(URLS.ask, { method: 'POST', body: {
+                    message, conversationId, imagePaths: myPaths,
+                    imageScheduleIds: attachedScheds(), scheduleId: SCHEDULE_ID,
+                    // Asked for, or not sent. Being opened inside a season is
+                    // not the same as being asked about it.
+                    usePlan: document.getElementById('aiFloatUsePlan')?.getAttribute('aria-pressed') === 'true' ? 1 : 0,
+                    forget: document.getElementById('aiFloatUseMemory')?.getAttribute('aria-pressed') === 'true' ? 0 : 1,
+                } });
                 conversationId = res.data.conversationId;
                 // Chips leave the moment the send is known good.
                 clearPhotos();

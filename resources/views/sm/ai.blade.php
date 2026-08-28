@@ -3,8 +3,10 @@
      layouts.app reads this — the in-shell partial keeps its pane). --}}
 @section('body-class', 'hide-tabbar')
 
-@section('title', 'AI Technician — ' . $schedule->title)
-@section('page-title', 'AI Technician')
+@section('title', $settings->assistantName . ' — ' . $schedule->title)
+{{-- Her name, not her job title: every other screen in this app names the
+     thing you are looking at, and this one is a person. --}}
+@section('page-title', $settings->assistantName)
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'ai')
 @section('back', route('sm.hub', ['id' => $schedule->id]))
@@ -136,6 +138,42 @@
         .ai-hello .aimsg-face { width: 3rem; height: 3rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-200), 0 10px 24px -8px rgb(74 124 42 / .45); animation: aiFloatIdle 5s ease-in-out infinite; }
         .ai-hello h2 { font-size: .95rem; font-weight: 700; margin-top: .5rem; color: var(--color-gray-800); }
         .ai-hello .sub { font-size: .8rem; color: var(--color-gray-500); margin-top: .15rem; max-width: 22rem; margin-inline: auto; line-height: 1.45; }
+        /* How to ask.
+           Left-aligned inside a centred panel on purpose: it is the one
+           thing here meant to be READ rather than glanced at, and centred
+           prose of this length is read by nobody. */
+        .ai-howto { max-width: 26rem; margin: .9rem auto 0; padding: .75rem .9rem;
+            text-align: left; border-radius: .9rem;
+            border: 1px solid var(--color-brand-200, #d7e8c4); background: var(--color-brand-50, #f2f8ec); }
+        .ai-howto-h { display: flex; gap: .4rem; align-items: flex-start;
+            font-size: .78rem; font-weight: 800; line-height: 1.35;
+            color: var(--color-brand-800, #2f5219); }
+        .ai-howto-h svg { width: .95rem; height: .95rem; flex: none; margin-top: .08rem; }
+        .ai-howto-b { font-size: .74rem; line-height: 1.55; color: var(--color-gray-600); margin-top: .4rem; }
+        .ai-howto-eg { font-size: .72rem; line-height: 1.5; color: var(--color-gray-500);
+            margin-top: .45rem; padding-top: .45rem; border-top: 1px dashed var(--color-brand-200, #d7e8c4); }
+        .ai-howto-eg b { color: var(--color-brand-800, #2f5219); font-weight: 800; }
+        html.dark .ai-howto { background: rgb(107 159 61 / .12); border-color: #2b3a1c; }
+        html.dark .ai-howto-h, html.dark .ai-howto-eg b { color: #a5c97e; }
+        html.dark .ai-howto-b, html.dark .ai-howto-eg { color: #b7c2ad; }
+
+        /* What she can see. Two switches, off-looking until they are on,
+           sitting where the question is typed rather than behind a menu —
+           the point of them is that you notice them. */
+        .ai-sees { display: flex; gap: .35rem; flex-wrap: wrap; padding: 0 .1rem .35rem; }
+        .ai-see { display: inline-flex; align-items: center; gap: .3rem; cursor: pointer;
+            padding: .22rem .55rem; border-radius: 999px; font-size: .68rem; font-weight: 700;
+            border: 1px solid var(--color-gray-200); background: var(--color-white);
+            color: var(--color-gray-500);
+            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1),
+                border-color .28s cubic-bezier(.22,1,.36,1); }
+        .ai-see svg { width: .8rem; height: .8rem; flex: none; }
+        .ai-see:hover { border-color: #a8cc7e; }
+        .ai-see.is-on { border-color: var(--color-brand-500, #4a7c2a);
+            background: var(--color-brand-50, #f2f8ec); color: var(--color-brand-800, #2f5219); }
+        html.dark .ai-see { background: #151b12; border-color: #2b3a1c; color: #9aa694; }
+        html.dark .ai-see.is-on { background: rgb(107 159 61 / .18); border-color: #6b9f3d; color: #a5c97e; }
+        @media (prefers-reduced-motion: reduce) { .ai-see { transition: none; } }
         @keyframes aiFloatIdle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
         /* ===== Suggestion cards ===== */
@@ -380,7 +418,7 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18.36 6.64a9 9 0 11-12.73 0M12 2v10"/></svg>
             </span>
             <div>
-                <h3>The AI Technician is not switched on yet</h3>
+                <h3>{{ $settings->assistantName }} is not switched on yet</h3>
                 <p>It will appear here as soon as it is configured.</p>
             </div>
         </div>
@@ -450,10 +488,32 @@
                         <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
                     @endif
                 </span>
-                {{-- The panel's words, not a poster's: what it is for, one
-                     grey line about it, and the questions. --}}
-                <h2>Ask about {{ \Illuminate\Support\Str::limit($schedule->cropType ?: 'this crop', 24) }}</h2>
-                <p class="sub">Fertiliser, pests, water, timing — or snap a leaf.</p>
+                {{-- She says who she is, then how to get a good answer out
+                     of her. The second part is not decoration: a vague
+                     question costs the same as a good one and comes back
+                     needing three more, so telling a farmer this before they
+                     type is worth more than any feature on the page. --}}
+                <h2>Hi, I'm {{ $settings->assistantName }}</h2>
+                <p class="sub">Your farm technician. Ask me about
+                    {{ \Illuminate\Support\Str::limit($schedule->cropType ?: 'this crop', 24) }} —
+                    fertiliser, pests, water, timing — or snap a leaf.</p>
+
+                <div class="ai-howto">
+                    <p class="ai-howto-h">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+                        Ask like you're describing it to someone who can't see your field
+                    </p>
+                    <p class="ai-howto-b">My answer is only as good as your question. Say the crop and
+                        variety, how old it is, what you already did, and what you're seeing — colours,
+                        which leaves, how many plants, how the weather has been. One clear question with
+                        the details in it beats five vague ones, and it costs you fewer credits than
+                        going back and forth.</p>
+                    <p class="ai-howto-eg"><b>Instead of</b> "my rice is sick" —
+                        <b>try</b> "IR64, 32 days after sowing, lower leaves yellowing from the tip inward,
+                        urea applied 10 days ago, heavy rain all week. What should I check?"</p>
+                    <p class="ai-howto-b">I don't look at your cropping plan unless you switch it on below
+                        the box — that way a general question gets a general answer.</p>
+                </div>
                 <div class="grid gap-2 max-w-md mx-auto mt-3">
                     <button type="button" class="aisuggest js-suggest" data-q="My leaves are yellowing at the tips — what should I check?">
                         <span class="ic" aria-hidden="true"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 21c.5-4.5 2.5-15 16-17-.5 13.5-8 16-12 16-1.33 0-2.67 0-4 1zm0 0c2-6 5-10 10-12"/></svg></span>
@@ -480,6 +540,22 @@
         {{-- One chip per attached photo, each with its own remove. --}}
         <div id="aiPhotoChips" aria-label="Attached photos" aria-live="polite"></div>
         <div id="aiAttachBusy" class="ai-busyline hidden" role="status"><span class="sp" aria-hidden="true"></span><span class="tx">Attaching photo…</span></div>
+        {{-- What the question is allowed to carry.
+             Both off by default, and both visible: these are the two things
+             that quietly move an answer, and a farmer who cannot see them
+             cannot tell why the same question answered differently twice. --}}
+        <div class="ai-sees" role="group" aria-label="What {{ $settings->assistantName }} can see">
+            <button type="button" class="ai-see" id="aiUsePlan" aria-pressed="false"
+                    title="Send this season's crop, variety and lots with the question">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.4 1.8 1.8-5.4M9 20l11-11a2.83 2.83 0 10-4-4L5 16l4 4z"/></svg>
+                This season's plan
+            </button>
+            <button type="button" class="ai-see is-on" id="aiUseMemory" aria-pressed="true"
+                    title="Let her read the earlier messages in this chat">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                This chat so far
+            </button>
+        </div>
         <div class="aichat-box">
             <button type="button" class="ai-cam shrink-0" id="aiAttachBtn" title="Add photos" aria-label="Add photos" aria-haspopup="dialog">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -697,7 +773,7 @@
 @push('appbar-actions')
 <button type="button" id="aiMenuBtn"
         class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full text-gray-500 hover:bg-gray-100 transition overflow-hidden"
-        title="AI Technician options" aria-label="AI Technician options" aria-haspopup="dialog">
+        title="{{ $settings->assistantName }} options" aria-label="{{ $settings->assistantName }} options" aria-haspopup="dialog">
     @if ($settings->avatarPath)
         <img data-ai-face src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="" class="w-7 h-7 md:w-8 md:h-8 rounded-full object-cover">
     @else
@@ -953,6 +1029,25 @@ const __init = () => {
         });
     });
 
+    /* Two switches, and nothing hidden behind them: each says out loud what
+       the next question will carry. Off by default for the plan, because a
+       general question deserves a general answer; on for the chat, because a
+       chat with no memory is not a chat. */
+    document.addEventListener('click', (e) => {
+        const t = e.target.closest('#aiUsePlan, #aiUseMemory');
+        if (!t) return;
+        const on = t.getAttribute('aria-pressed') !== 'true';
+        t.setAttribute('aria-pressed', on ? 'true' : 'false');
+        t.classList.toggle('is-on', on);
+        if (t.id === 'aiUsePlan') {
+            toast(on ? 'She will read this season\u2019s crop, variety and lots.'
+                     : 'She will answer without your plan.');
+        } else {
+            toast(on ? 'She will read the rest of this chat.'
+                     : 'She will answer this question on its own.');
+        }
+    });
+
     async function send() {
         if (busy) return;
         if (uploadsBusy > 0) { toast('Wait a moment — a photo is still uploading.', 'error'); return; }
@@ -965,7 +1060,14 @@ const __init = () => {
         input.value = ''; input.style.height = 'auto'; sayEstimate();
         const thinking = addTurn(false, '<span class="aidots"><i></i><i></i><i></i></span>');
         try {
-            const res = await api(URLS.ask, { method: 'POST', body: { message, conversationId, imagePaths: myPaths, imageScheduleIds: myScheds, scheduleId: SCHEDULE_ID } });
+            const res = await api(URLS.ask, { method: 'POST', body: {
+                message, conversationId, imagePaths: myPaths, imageScheduleIds: myScheds,
+                scheduleId: SCHEDULE_ID,
+                // Asked for, or not sent. scheduleId still travels because it
+                // says where the chat LIVES; usePlan says whether she reads it.
+                usePlan: byId('aiUsePlan')?.getAttribute('aria-pressed') === 'true' ? 1 : 0,
+                forget: byId('aiUseMemory')?.getAttribute('aria-pressed') === 'true' ? 0 : 1,
+            } });
             conversationId = res.data.conversationId;
             noteSession(res.data);
             // Chips leave the moment the send is known good - before any

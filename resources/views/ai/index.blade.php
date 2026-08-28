@@ -4,7 +4,8 @@
 @section('body-class', 'hide-tabbar')
 
 @section('title', $settings->assistantName)
-@section('page-title', 'AI Technician')
+{{-- Her name, not her job title. --}}
+@section('page-title', $settings->assistantName)
 @section('page-subtitle', 'Crop questions, answered')
 
 @php
@@ -145,6 +146,22 @@
         .ai-hello .aimsg-face { width: 2.75rem; height: 2.75rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-200), 0 10px 24px -8px rgb(74 124 42 / .45); animation: aiFloatIdle 5s ease-in-out infinite; }
         .ai-hello h2 { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; margin-top: .6rem; color: var(--color-gray-900); }
         .ai-hello .sub { font-size: .8rem; color: var(--color-gray-500); margin-top: .25rem; max-width: 24rem; margin-inline: auto; line-height: 1.45; }
+        /* How to ask. Left-aligned inside a centred panel on purpose: it is
+           the one thing here meant to be READ, and centred prose of this
+           length is read by nobody. Twin of the block on the season's page. */
+        .ai-howto { max-width: 26rem; margin: .9rem auto 0; padding: .75rem .9rem;
+            text-align: left; border-radius: .9rem;
+            border: 1px solid var(--color-brand-200, #d7e8c4); background: var(--color-brand-50, #f2f8ec); }
+        .ai-howto-h { display: flex; gap: .4rem; align-items: flex-start;
+            font-size: .78rem; font-weight: 800; line-height: 1.35; color: var(--color-brand-800, #2f5219); }
+        .ai-howto-h svg { width: .95rem; height: .95rem; flex: none; margin-top: .08rem; }
+        .ai-howto-b { font-size: .74rem; line-height: 1.55; color: var(--color-gray-600); margin-top: .4rem; }
+        .ai-howto-eg { font-size: .72rem; line-height: 1.5; color: var(--color-gray-500);
+            margin-top: .45rem; padding-top: .45rem; border-top: 1px dashed var(--color-brand-200, #d7e8c4); }
+        .ai-howto-eg b { color: var(--color-brand-800, #2f5219); font-weight: 800; }
+        html.dark .ai-howto { background: rgb(107 159 61 / .12); border-color: #2b3a1c; }
+        html.dark .ai-howto-h, html.dark .ai-howto-eg b { color: #a5c97e; }
+        html.dark .ai-howto-b, html.dark .ai-howto-eg { color: #b7c2ad; }
         .ai-caps { display: flex; flex-wrap: wrap; justify-content: center; gap: .35rem; margin-top: .6rem; }
         .ai-cap { display: inline-flex; align-items: center; gap: .3rem; padding: .2rem .55rem; border-radius: 999px; font-size: .72rem; font-weight: 700; color: var(--color-brand-700); background: var(--color-brand-50); border: 1px solid var(--color-brand-100); }
         .ai-cap svg { width: .85rem; height: .85rem; }
@@ -366,7 +383,7 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18.36 6.64a9 9 0 11-12.73 0M12 2v10"/></svg>
             </span>
             <div>
-                <h3>The AI Technician is not switched on yet</h3>
+                <h3>{{ $settings->assistantName }} is not switched on yet</h3>
                 <p>It will appear here as soon as it is configured.</p>
             </div>
         </div>
@@ -555,7 +572,7 @@
 @push('appbar-actions')
 <button type="button" id="aiMenuBtn"
         class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full text-gray-500 hover:bg-gray-100 transition overflow-hidden"
-        title="AI Technician options" aria-label="AI Technician options" aria-haspopup="dialog">
+        title="{{ $settings->assistantName }} options" aria-label="{{ $settings->assistantName }} options" aria-haspopup="dialog">
     @if ($settings->avatarPath)
         <img data-ai-face src="{{ \App\Support\MediaStore::url($settings->avatarPath) }}" alt="" class="w-7 h-7 md:w-8 md:h-8 rounded-full object-cover">
     @else

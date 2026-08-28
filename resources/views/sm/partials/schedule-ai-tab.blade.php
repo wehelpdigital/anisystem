@@ -88,6 +88,22 @@
                 {{-- The bill quoted before it is run up: the owner's pool pays
                      for the whole room, so everyone sees the price — admins
                      included, who ride free but still spend the owner's. --}}
+                {{-- What the question is allowed to carry. Both visible,
+                     because these are the two things that quietly move an
+                     answer, and a team that cannot see them cannot tell why
+                     the same question answered differently twice. --}}
+                <div class="sai-sees" role="group" aria-label="What the technician can see">
+                    <button type="button" class="sai-see" id="saiUsePlan" aria-pressed="false"
+                            title="Send this season's crop, variety and lots with the question">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.4 1.8 1.8-5.4M9 20l11-11a2.83 2.83 0 10-4-4L5 16l4 4z"/></svg>
+                        This season's plan
+                    </button>
+                    <button type="button" class="sai-see is-on" id="saiUseMemory" aria-pressed="true"
+                            title="Let her read the earlier messages in this thread">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                        This thread so far
+                    </button>
+                </div>
                 <p class="sai-estimate" id="saiEstimate" data-idle="{{ $saiHintIdle }}">{{ $saiHintIdle }}</p>
             </div>
         </div>
@@ -247,6 +263,34 @@
     .sai-intro-badge { width: 3rem; height: 3rem; border-radius: 999px; margin: 0 auto .7rem; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; background: linear-gradient(150deg, #6b9f3d, #3d6823); color: #fff; box-shadow: 0 6px 18px rgb(61 104 35 / .3); }
     .sai-intro h4 { font-family: var(--font-heading); font-weight: 800; font-size: 1rem; color: var(--color-gray-900); margin-bottom: .35rem; }
     .sai-intro p { font-size: .85rem; line-height: 1.55; }
+    /* How to ask — left-aligned inside a centred panel, because it is the
+       one thing here meant to be read rather than glanced at. */
+    .sai-howto { max-width: 26rem; margin: .9rem auto 0; padding: .7rem .85rem; text-align: left;
+        border-radius: .9rem; border: 1px solid var(--color-brand-200, #d7e8c4);
+        background: var(--color-brand-50, #f2f8ec); }
+    .sai-howto-h { font-size: .78rem; font-weight: 800; line-height: 1.35; color: var(--color-brand-800, #2f5219); }
+    .sai-howto-b { font-size: .74rem; line-height: 1.55; color: var(--color-gray-600); margin-top: .4rem; }
+    .sai-howto-eg { font-size: .72rem; line-height: 1.5; color: var(--color-gray-500); margin-top: .45rem;
+        padding-top: .45rem; border-top: 1px dashed var(--color-brand-200, #d7e8c4); }
+    .sai-howto-eg b { color: var(--color-brand-800, #2f5219); font-weight: 800; }
+    html.dark .sai-howto { background: rgb(107 159 61 / .12); border-color: #2b3a1c; }
+    html.dark .sai-howto-h, html.dark .sai-howto-eg b { color: #a5c97e; }
+    html.dark .sai-howto-b, html.dark .sai-howto-eg { color: #b7c2ad; }
+    /* The two switches, where the question is typed rather than behind a
+       menu — the point of them is that you notice them. */
+    .sai-sees { display: flex; gap: .35rem; flex-wrap: wrap; padding: .4rem .1rem 0; }
+    .sai-see { display: inline-flex; align-items: center; gap: .3rem; cursor: pointer;
+        padding: .22rem .55rem; border-radius: 999px; font-size: .68rem; font-weight: 700;
+        border: 1px solid var(--color-gray-200); background: var(--color-white); color: var(--color-gray-500);
+        transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1),
+            border-color .28s cubic-bezier(.22,1,.36,1); }
+    .sai-see svg { width: .8rem; height: .8rem; flex: none; }
+    .sai-see:hover { border-color: #a8cc7e; }
+    .sai-see.is-on { border-color: var(--color-brand-500, #4a7c2a);
+        background: var(--color-brand-50, #f2f8ec); color: var(--color-brand-800, #2f5219); }
+    html.dark .sai-see { background: #151b12; border-color: #2b3a1c; color: #9aa694; }
+    html.dark .sai-see.is-on { background: rgb(107 159 61 / .18); border-color: #6b9f3d; color: #a5c97e; }
+    @media (prefers-reduced-motion: reduce) { .sai-see { transition: none; } }
     /* (The intro's chip rules lived here. They dressed a .sai-chip as a pill
        — the same class the photo tile below re-dresses as a square — and the
        chips they were written for are gone.) */
@@ -407,16 +451,52 @@
             + '<div class="sai-skel-row tall"><span class="sai-skel-face"></span><span class="sai-skel-b"></span></div>'
             + '</div>';
 
-        /* ---------- intro (shown when a session is empty) ---------- */
+        /* Two switches, each saying out loud what the next question will carry.
+       The plan is off by default, because a general question deserves a
+       general answer; the thread is on, because a thread with no memory is
+       not a thread. */
+    document.addEventListener('click', (e) => {
+        const t = e.target.closest('#saiUsePlan, #saiUseMemory');
+        if (!t) return;
+        const on = t.getAttribute('aria-pressed') !== 'true';
+        t.setAttribute('aria-pressed', on ? 'true' : 'false');
+        t.classList.toggle('is-on', on);
+        if (window.toast) {
+            if (t.id === 'saiUsePlan') {
+                toast(on ? 'She will read this season\u2019s crop, variety and lots.'
+                         : 'She will answer without the plan.');
+            } else {
+                toast(on ? 'She will read the rest of this thread.'
+                         : 'She will answer this question on its own.');
+            }
+        }
+    });
+
+    // Her name, so the greeting and the toasts all say the same thing.
+    const AI_NAME = @json(\App\Models\AiSetting::current()->assistantName);
+
+    /* ---------- intro (shown when a session is empty) ---------- */
         function showIntro() {
             if ($('saiIntro')) return;
             $('saiLoading')?.remove();
             const el = document.createElement('div');
             el.className = 'sai-intro'; el.id = 'saiIntro';
             el.innerHTML = `
-                <div class="sai-intro-badge">🤖</div>
-                <h4>Hi team — I'm your AI Technician</h4>
-                <p>Ask me anything about this cropping plan: pests &amp; diseases, fertilizer rates and timing, irrigation, planting and harvest windows, or troubleshooting a problem. Everyone on the team sees the questions and answers, and you can save a whole session to your schedule notes.</p>`;
+                <div class="sai-intro-badge">\u{1F33E}</div>
+                <h4>Hi team \u2014 I'm ${AI_NAME}</h4>
+                <p>Ask me about pests &amp; diseases, fertilizer rates and timing, irrigation, planting and harvest windows, or troubleshooting a problem. Everyone on the team sees the questions and answers, and you can save a whole session to your schedule notes.</p>
+                <div class="sai-howto">
+                    <p class="sai-howto-h">Ask like you're describing it to someone who can't see the field</p>
+                    <p class="sai-howto-b">My answer is only as good as your question. Say the crop and variety,
+                        how old it is, what was already done, and what you're seeing \u2014 colours, which
+                        leaves, how many plants, how the weather has been. One clear question with the
+                        details in it beats five vague ones, and it costs fewer credits than going back
+                        and forth.</p>
+                    <p class="sai-howto-eg"><b>Instead of</b> "the rice is sick" \u2014 <b>try</b> "IR64, 32 days
+                        after sowing, lower leaves yellowing from the tip inward, urea 10 days ago, heavy
+                        rain all week. What should we check?"</p>
+                    <p class="sai-howto-b">I don't read this cropping plan unless you switch it on under the box.</p>
+                </div>`;
             /* The three suggestion chips are gone. They were pills in the
              * stylesheet at the top of this file and squares by the time the
              * browser had read the bottom of it: .sai-chip is also the class
@@ -573,6 +653,10 @@
                     imagePaths: shots,
                     imageScheduleIds: attachedScheds(),
                     sessionId: currentSession,
+                    // Asked for, or not sent. Being opened inside a season is
+                    // not the same as being asked about it.
+                    usePlan: $('saiUsePlan')?.getAttribute('aria-pressed') === 'true' ? 1 : 0,
+                    forget: $('saiUseMemory')?.getAttribute('aria-pressed') === 'true' ? 0 : 1,
                 } });
                 // Chips leave the moment the send is known good — before any
                 // templating that could throw and strand them in the composer.

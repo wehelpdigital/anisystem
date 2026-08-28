@@ -170,13 +170,27 @@ class AiController extends Controller
 
         $conversation = $this->resolveConversation($request, $userId, true);
 
-        /* The plan, when the farmer attached it to THIS question; otherwise
-         * the light background a bound conversation carries. The two are not
-         * the same thing: one was asked for and is paid for, the other is a
-         * label on a chat that already belongs to a season. */
-        $context = $request->boolean('attachPlan')
-            ? $this->planContext($request->input('scheduleId'), $userId)
-            : $this->scheduleContext($request->input('scheduleId'), $userId);
+        /* What the question is allowed to carry with it.
+         *
+         * Nothing, unless the farmer said so. A chat opened inside a season
+         * used to hand over that season's crop, variety and lots with every
+         * single question, purely because the chat belonged to the season —
+         * and it changed the answers. Asked what a beetle was, Anee talked
+         * about their rice. Asked a general fertiliser question, she answered
+         * for the one variety she had been told about. The farmer never asked
+         * for any of that and could not see it happening.
+         *
+         * So the season is now a place the chat LIVES, not a premise it
+         * argues from. Two levels, both asked for out loud:
+         *   attachPlan — the whole plan, priced and shown as an attachment
+         *   usePlan    — the light label: crop, variety, lots
+         * With neither, the question goes over on its own. */
+        $context = '';
+        if ($request->boolean('attachPlan')) {
+            $context = $this->planContext($request->input('scheduleId'), $userId);
+        } elseif ($request->boolean('usePlan')) {
+            $context = $this->scheduleContext($request->input('scheduleId'), $userId);
+        }
         $context = $this->applyLinkContext($context, $conversation);
 
         $userMessage = AiMessage::create([
@@ -194,7 +208,15 @@ class AiController extends Controller
             'deleteStatus' => 1,
         ]);
 
-        $history = $conversation->messages()
+        /* The rest of this chat, unless the farmer asked for a clean read.
+         *
+         * Memory inside one chat is what makes a chat a chat — "and for
+         * corn?" has to mean something. But it is also the other thing that
+         * quietly moves an answer, so it is a switch the farmer can see and
+         * turn off for a question that should be judged on its own. */
+        $history = $request->boolean('forget')
+            ? []
+            : $conversation->messages()
             ->where('id', '<', $userMessage->id)
             // reorder(), not orderByDesc(): the relation bakes ASC, and a
             // stacked DESC loses - the model was being briefed with the

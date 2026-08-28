@@ -321,12 +321,24 @@ class ScheduleAiController extends BaseScheduleController
             $this->emit($schedule->id, 'ai.session', ['session' => $this->shapeSession($session->load('starter'))]);
         }
 
-        $history = ScheduleAiMessage::active()
+        /* The rest of this thread, unless a clean read was asked for.
+         * Memory inside one thread is what makes it a thread — "and for
+         * corn?" has to mean something — but it is one of the two things
+         * that quietly move an answer, so it is a switch the team can see. */
+        $history = $request->boolean('forget') ? [] : ScheduleAiMessage::active()
             ->where('sessionId', $session->id)->where('id', '<', $q->id)
             ->orderByDesc('id')->limit(self::HISTORY)->get()
             ->reverse()->map(fn ($m) => ['role' => $m->role, 'text' => (string) $m->content])->values()->all();
 
-        $result = $this->ai->ask($settings, $history, $this->scheduleContext($schedule) . $prompt, $image);
+        /* And the season, only when somebody said to send it.
+         * This tab lives inside a schedule, so it used to hand that
+         * schedule's crop, variety and lots over with every question purely
+         * because of where it was opened — and it changed the answers. A
+         * question about a beetle came back about their rice. The season is
+         * where the thread LIVES, not a premise it argues from. */
+        $context = $request->boolean('usePlan') ? $this->scheduleContext($schedule) : '';
+
+        $result = $this->ai->ask($settings, $history, $context . $prompt, $image);
 
         if (! $result['ok']) {
             $this->emit($schedule->id, 'ai.answer', ['error' => true, 'sessionId' => $session->id, 'content' => $result['error'] ?: 'The AI could not answer. Try again.']);
