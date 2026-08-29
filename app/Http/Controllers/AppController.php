@@ -249,6 +249,12 @@ class AppController extends Controller
             'recentChats' => $recentChats,
             'openTickets' => $openTickets,
             'canUseAi' => $user->canUseAi(),
+            // Her name and her face, for the section that introduces her. The
+            // name is an admin's to change, so nothing hard-codes "Anee".
+            'aiSettings' => \App\Models\AiSetting::current(),
+            // Her name and her face, for the section that introduces her. The
+            // name is an admin's to change, so nothing hard-codes "Anee".
+            'aiSettings' => \App\Models\AiSetting::current(),
         ]);
     }
 }

@@ -96,6 +96,93 @@
        forecast that fails, or one that never comes back, gets the greeting
        the clock alone would have given it, rather than a page with a hole
        where somebody's name should be. */
+    /* ---- Meet the technician ------------------------------------------
+       One card, three things: who she is, ten seconds of her saying so, and
+       the way in. Built as a card rather than dropped into the wall's stream
+       so it reads as the app talking, not as a post. */
+    .dash-anee { border-radius: 1.1rem; padding: 1rem; overflow: hidden;
+        border: 1px solid #cfe0b8; position: relative;
+        background-image: linear-gradient(118deg, #f4f9ee, #e6f2d9 26%, #d6ebc0 52%, #eaf5de 74%, #f4f9ee);
+        background-size: 260% 100%;
+        animation: gradSweep 16s ease-in-out infinite alternate; }
+    @media (prefers-reduced-motion: reduce) { .dash-anee { animation: none; } }
+    html.dark .dash-anee { border-color: #2b3a1c;
+        background-image: linear-gradient(118deg, #18200f, #1d2a13 26%, #24301a 52%, #1d2a13 74%, #18200f); }
+
+    .dash-anee-say { display: flex; align-items: center; gap: .8rem; margin-bottom: .85rem; }
+    .dash-anee-face { width: 3.5rem; height: 3.5rem; flex: none; border-radius: 999px;
+        object-fit: cover; border: 2px solid var(--color-white);
+        box-shadow: 0 2px 10px -4px rgb(0 0 0 / .35); }
+    html.dark .dash-anee-face { border-color: #2b3a1c; }
+    .dash-anee-h { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800;
+        color: #24380f; line-height: 1.15; letter-spacing: -.01em; }
+    html.dark .dash-anee-h { color: #e8efe1; }
+    .dash-anee-p { font-size: .8rem; line-height: 1.5; color: #4c6b33; margin-top: .15rem; }
+    html.dark .dash-anee-p { color: #a8bd93; }
+
+    /* The film keeps the clip's own shape, so nothing is cropped off her. */
+    .dash-anee-film { position: relative; border-radius: .9rem; overflow: hidden;
+        aspect-ratio: 16 / 9; background: #0d1408;
+        box-shadow: 0 10px 26px -18px rgb(0 0 0 / .8); }
+    .dash-anee-vid { width: 100%; height: 100%; display: block; object-fit: cover; }
+
+    /* The play control is ours until the first press; after that the video's
+       own controls take over, because a second set of them over a playing
+       clip is a thing to fight with. */
+    /* The whole still is the button; the dot sits in the corner rather than
+       the middle, because dead centre is where her face is and a card that
+       introduces somebody should not open by covering them up. */
+    .dash-anee-play { position: absolute; inset: 0; display: flex; align-items: flex-end;
+        justify-content: flex-end; padding: .7rem; background: rgb(9 14 6 / .16); border: 0; cursor: pointer;
+        transition: background .28s cubic-bezier(.22, 1, .36, 1); }
+    .dash-anee-play:hover { background: rgb(9 14 6 / .06); }
+    .dash-anee-playdot { display: flex; align-items: center; justify-content: center;
+        width: 3rem; height: 3rem; border-radius: 999px;
+        background: var(--color-brand-600); color: #fff;
+        box-shadow: 0 6px 18px -6px rgb(0 0 0 / .6), 0 0 0 .35rem rgb(255 255 255 / .22);
+        transition: transform .28s cubic-bezier(.22, 1, .36, 1); }
+    .dash-anee-play:hover .dash-anee-playdot { transform: scale(1.06); }
+    .dash-anee-playdot svg { width: 1.25rem; height: 1.25rem; margin-left: .14rem; }
+    .dash-anee-tag { position: absolute; left: .6rem; top: .6rem; pointer-events: none;
+        display: inline-flex; align-items: center; border-radius: 999px;
+        padding: .22rem .6rem; font-size: .68rem; font-weight: 800; color: #fff;
+        background: rgb(9 14 6 / .5); backdrop-filter: blur(4px);
+        box-shadow: inset 0 0 0 1px rgb(255 255 255 / .18); }
+    /* Both step aside the moment it is playing. */
+    .dash-anee-play, .dash-anee-tag { opacity: 1;
+        transition: opacity .28s cubic-bezier(.22, 1, .36, 1), background .28s cubic-bezier(.22, 1, .36, 1); }
+    .dash-anee-film.is-playing .dash-anee-play,
+    .dash-anee-film.is-playing .dash-anee-tag { opacity: 0; pointer-events: none; }
+    @media (prefers-reduced-motion: reduce) {
+        .dash-anee-play, .dash-anee-tag, .dash-anee-playdot { transition: none; }
+    }
+
+    .dash-anee-go { display: flex; align-items: center; justify-content: center; gap: .5rem;
+        margin-top: .85rem; padding: .7rem 1rem; border-radius: .85rem;
+        background: var(--color-brand-600); color: #fff;
+        font-size: .9rem; font-weight: 800; text-decoration: none;
+        box-shadow: 0 6px 16px -10px rgb(0 0 0 / .8);
+        transition: transform .28s cubic-bezier(.22, 1, .36, 1), background .28s cubic-bezier(.22, 1, .36, 1); }
+    .dash-anee-go:hover { background: var(--color-brand-700); transform: translateY(-1px); }
+    .dash-anee-go svg { width: 1.15rem; height: 1.15rem; flex: none; }
+    .dash-anee-go-x { width: .9rem !important; height: .9rem !important; opacity: .85;
+        transition: transform .28s cubic-bezier(.22, 1, .36, 1); }
+    .dash-anee-go:hover .dash-anee-go-x { transform: translateX(.15rem); }
+    @media (prefers-reduced-motion: reduce) {
+        .dash-anee-go, .dash-anee-go-x { transition: none; }
+        .dash-anee-go:hover { transform: none; }
+    }
+
+    /* Wide: the words and the way in on the left, the film on the right —
+       the button stays above the fold rather than below ten seconds of video. */
+    @media (min-width: 48rem) {
+        .dash-anee { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+            gap: 1rem 1.25rem; align-items: center; padding: 1.15rem 1.25rem; }
+        .dash-anee-say { grid-column: 1; margin-bottom: 0; align-self: end; }
+        .dash-anee-go { grid-column: 1; margin-top: 0; align-self: start; }
+        .dash-anee-film { grid-column: 2; grid-row: 1 / span 2; }
+    }
+
     .dash-hero.is-waiting { opacity: 0; }
     .dash-hero { opacity: 1; transition: opacity .5s cubic-bezier(.22, 1, .36, 1); }
     @media (prefers-reduced-motion: reduce) { .dash-hero { transition: none; } }
@@ -927,6 +1014,55 @@
                 </section>
             @endif
 
+            {{-- ===================== Meet the technician =====================
+                 Above the wall on purpose: a farmer who has arrived with a
+                 question should not have to scroll past everybody else's week
+                 to find somewhere to ask it. Ten seconds of her introducing
+                 herself, and one button. --}}
+            {{-- Drawn for everybody, including the plans that do not include
+                 her: an introduction is for the people who have not met her,
+                 and hiding it from them hides it from exactly the people it
+                 is for. The button below says which of the two doors it is. --}}
+            @php $aneeName = $aiSettings->assistantName; @endphp
+            <section class="dash-anee" aria-labelledby="dashAneeH">
+                <div class="dash-anee-say">
+                    <img class="dash-anee-face" src="{{ $aiSettings->faceUrl() }}" alt="" width="56" height="56">
+                    <div class="min-w-0">
+                        <h2 class="dash-anee-h" id="dashAneeH">{{ $aneeName }}</h2>
+                        <p class="dash-anee-p">Your Smart Agricultural Technician. Pests, fertiliser, weather, prices — ask in Tagalog or English, any hour.{{ $canUseAi ? '' : ' On Boss and Lifetime plans.' }}</p>
+                    </div>
+                </div>
+
+                {{-- The film. preload="none" so a homepage on mobile data does
+                     not fetch two megabytes nobody pressed play on; the poster
+                     is a still from the clip itself, so the card is her face
+                     rather than a black rectangle. --}}
+                <div class="dash-anee-film" id="dashAneeFilm">
+                    {{-- No controls until it is playing: at rest this is a
+                         poster with one button on it, and a scrub bar and a
+                         fullscreen icon over a still nobody has pressed are
+                         two more things to read. The script adds them on the
+                         first press and never takes them away. --}}
+                    <video id="dashAneeVid" class="dash-anee-vid" playsinline preload="none"
+                           poster="{{ asset('videos/anee-intro-poster.webp') }}"
+                           aria-label="{{ $aneeName }} introduces herself">
+                        <source src="{{ asset('videos/anee-intro.mp4') }}" type="video/mp4">
+                    </video>
+                    <button type="button" class="dash-anee-play" id="dashAneePlay" aria-label="Play the introduction">
+                        <span class="dash-anee-playdot">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
+                        </span>
+                    </button>
+                    <span class="dash-anee-tag" id="dashAneeTag">Meet {{ $aneeName }} · 0:10</span>
+                </div>
+
+                <a href="{{ $canUseAi ? route('ai.home') : route('purchase.plans') }}" class="dash-anee-go">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8M8 14h5m7-2a8 8 0 01-8 8H8l-4 3v-4.5A8 8 0 1120 12z"/></svg>
+                    {{ $canUseAi ? 'Ask ' . $aneeName : 'Unlock ' . $aneeName }}
+                    <svg class="dash-anee-go-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </a>
+            </section>
+
             @if (\App\Support\WorkerContext::canUseCommunity())
             <div>
                 <div class="flex items-center justify-between gap-3 mb-3 px-1">
@@ -1725,4 +1861,30 @@
         </div>
     </div>
 </div>
+@endpush
+
+@push('scripts')
+<script>
+/* The introduction plays on a press, and our chrome gets out of the way.
+ *
+ * preload="none" on the element means nothing is fetched until this runs, so
+ * a homepage opened on mobile data costs a poster and not a film. */
+(() => {
+    const film = document.getElementById('dashAneeFilm');
+    const vid = document.getElementById('dashAneeVid');
+    if (!film || !vid) return;
+    const off = () => film.classList.add('is-playing');
+    const on = () => film.classList.remove('is-playing');
+    document.getElementById('dashAneePlay')?.addEventListener('click', () => {
+        off();
+        vid.controls = true;
+        // A blocked autoplay policy rejects this; the clip's own controls are
+        // showing by then, so the press is not lost, only unhandled here.
+        vid.play?.().catch(() => on());
+    });
+    vid.addEventListener('play', off);
+    vid.addEventListener('pause', on);
+    vid.addEventListener('ended', on);
+})();
+</script>
 @endpush
