@@ -7,8 +7,9 @@
      recognisably the same thing.
 
      Off the podium there is no metal, and inventing a twenty-first would
-     make the six below it mean nothing. Those places keep the medal shape in
-     plain grey: still a placement, still readable, and visibly not a prize.
+     make the six below it mean nothing. Those places drop the medal entirely
+     and show the number in plain grey: still a placement, and visibly not a
+     prize.
 
      Expects: $place (1-based; 0 or less for unplaced). --}}
 @php
@@ -20,13 +21,7 @@
         : 'Not on the board yet';
 @endphp
 <span class="topb rk-place {{ $pcMetal ? 'topb-' . $pcMetal['key'] : 'topb-plain' }}" title="{{ $pcSays }}">
-    <span class="topb-m" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none">
-            <path d="M7.4 2.4 11 9.4M16.6 2.4 13 9.4" stroke="currentColor"
-                  stroke-width="2.6" stroke-linecap="round" />
-            <circle cx="12" cy="15.2" r="6" fill="currentColor" />
-        </svg>
-    </span>
+    <span class="topb-m" aria-hidden="true"></span>
     <span class="topb-n">{{ $pcPlace > 0 ? '#' . $pcPlace : '—' }}</span>
     <span class="topb-say">{{ $pcSays }}</span>
 </span>

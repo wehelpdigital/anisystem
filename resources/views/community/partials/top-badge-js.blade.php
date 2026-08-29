@@ -17,13 +17,12 @@
     window.topBadge = function (userId) {
         const seat = window.AS_PODIUM[String(userId ?? '')];
         if (!seat) return '';
-        const medal = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"'
-            + ' stroke-linecap="round" stroke-linejoin="round">'
-            + '<path d="M6 3h12"/><path d="M8 3v5a4 4 0 0 0 8 0V3"/><path d="M12 12v3"/>'
-            + '<path d="M9 21h6"/><path d="M12 15a3 3 0 0 0-3 3v3h6v-3a3 3 0 0 0-3-3z"/></svg>';
+        // The medal is painted by .topb-m itself, so this writes the slot and
+        // nothing else. It used to build its own — a trophy, while the Blade
+        // partial built a medal, which is what two copies of one drawing do.
         return '<a class="topb topb-' + seat.key + '" href="' + window.AS_RANK_URL + '#rankings"'
             + ' title="' + seat.name + ' · number ' + seat.place + ' in the community">'
-            + '<span class="topb-m" aria-hidden="true">' + medal + '</span>'
+            + '<span class="topb-m" aria-hidden="true"></span>'
             + '<span class="topb-n">#' + seat.place + '</span></a>';
     };
 </script>

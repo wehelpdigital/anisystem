@@ -30,16 +30,11 @@
     <{{ $tpTag }} class="topb topb-{{ $tp['key'] }} {{ ($topBig ?? false) ? 'topb-big' : '' }}"
        @unless ($tpFlat) href="{{ route('community.ranking') }}#rankings" @endunless
        title="{{ $tp['name'] }} · number {{ $tp['place'] }} in the community">
-        {{-- A medal, not a trophy: at twelve pixels an outlined cup collapses
-             into the same shape as the hourglass the farm chips use, so the
-             disc is filled and the ribbons are the only strokes. --}}
-        <span class="topb-m" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none">
-                <path d="M7.4 2.4 11 9.4M16.6 2.4 13 9.4" stroke="currentColor"
-                      stroke-width="2.6" stroke-linecap="round" />
-                <circle cx="12" cy="15.2" r="6" fill="currentColor" />
-            </svg>
-        </span>
+        {{-- The medal, drawn. It used to be two strokes and a filled disc in
+             currentColor, so the mark took the metal's own tint; the drawing
+             does not, and the metal is still said by the chip around it —
+             its colour, its border and the sheen the top three carry. --}}
+        <span class="topb-m" aria-hidden="true"></span>
         <span class="topb-n">#{{ $tp['place'] }}</span>
         {{-- Its own hiding class, not the framework's: this chip is drawn on
              pages whose stylesheet is built separately, and a utility that

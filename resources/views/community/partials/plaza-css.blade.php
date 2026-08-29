@@ -1650,21 +1650,7 @@
         text-decoration:none; vertical-align:middle; white-space:nowrap;
         transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
     .rankb:hover { transform:translateY(-1px); box-shadow:0 3px 8px -4px rgb(0 0 0 / .35); }
-    /* The mark on the chip: one medal, at every rank.
-       It used to be ten emoji, one per arc — a seed, a bee, a crown — and at
-       eleven pixels that read as ten different things rather than one thing
-       at ten heights. The arc still speaks, in the chip's own colour, which
-       was carrying that job the whole time.
-
-       Painted as a background rather than an <img> because six places write
-       this span and none of them should have to know what is in it. The
-       character stays in the markup, out of sight, so the tooltip and any
-       screen reader that reaches it are unchanged. The box is the artwork's
-       own shape — 96 by 144 — so nothing is squeezed and there is no
-       transparent margin padding the chip out. */
-    .rankb-e { display:inline-block; flex:none; font-size:.72rem; line-height:1;
-        width:.9em; height:1.35em; overflow:hidden; text-indent:-100em;
-        background:url('{{ asset('images/rank-medal.png') }}') center/contain no-repeat; }
+    .rankb-e { font-size:.72rem; line-height:1; }
     /* The number never truncates; the title gives way first. */
     .rankb-lv { flex:none; font-variant-numeric:tabular-nums; }
     .rankb-t { min-width:0; overflow:hidden; text-overflow:ellipsis; opacity:.85; font-weight:700; }
@@ -1719,8 +1705,15 @@
         background-size:220% 100%;
         transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
     .topb:hover { transform:translateY(-1px); box-shadow:0 3px 8px -4px rgb(0 0 0 / .35); }
-    .topb-m { display:inline-flex; width:.72rem; height:.72rem; flex:none; opacity:.9; }
-    .topb-m svg { width:100%; height:100%; }
+    /* The medal itself, drawn rather than stroked.
+       Its own shape — 96 by 144 — so the ribbon is not squashed into a square,
+       and only a shade taller than the level chip's mark beside it, because
+       the two are meant to sit on one clean line. */
+    .topb-m { display:inline-block; width:.58rem; height:.87rem; flex:none;
+        background:url('{{ asset('images/rank-medal.png') }}') center/contain no-repeat; }
+    /* Off the podium there is no prize, so there is no medal — just the dash.
+       A gold medal beside "—" would be the chip contradicting itself. */
+    .topb-plain .topb-m { display:none; }
     .topb-n { font-variant-numeric:tabular-nums; }
     /* What a screen reader hears and an eye never sees. Ours rather than the
        framework's: these pages build their stylesheet separately, and a
@@ -1728,7 +1721,7 @@
     .topb-say, .plaza-say { position:absolute; width:1px; height:1px; padding:0; margin:-1px;
         overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap; border:0; }
     .topb-big { font-size:.74rem; padding:.16rem .56rem .16rem .4rem; }
-    .topb-big .topb-m { width:.92rem; height:.92rem; }
+    .topb-big .topb-m { width:.74rem; height:1.11rem; }
 
     /* The six metals. The top three drift; the lower three hold still, which
        is itself part of the ladder — movement is the last thing you earn. */
