@@ -9,6 +9,15 @@
 @section('page-subtitle', 'Crop questions, answered')
 
 @php
+    /* Which dress this page is wearing.
+     *
+     * 'full'  /app/ai — the technician with the farm behind her: a plan can
+     *         be attached to a question, and a thread can be tied to one.
+     * 'home'  /app/ai-home — opened from the homepage, which is not standing
+     *         in a season. No plan to attach, no plan to tie to, and the chat
+     *         it keeps goes to Global Notes.
+     */
+    $aiChrome = $aiChrome ?? 'full';
     // Super admins ride free — the wallet row hides for them (view-side check,
     // same pattern the floating assistant already uses).
     $aiUnlimited = app(\App\Services\AiCreditService::class)->unlimited((int) auth()->id());
@@ -467,6 +476,7 @@
         {{-- One chip per attached photo, each with its own remove. --}}
         <div id="aiPhotoChips" aria-label="Attached photos" aria-live="polite"></div>
         {{-- The attached plan, and what it is adding. --}}
+        @if ($aiChrome !== 'home')
         <div id="aiPlanChip" class="ai-planchip" hidden>
             <span class="ai-planchip-ic">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
@@ -474,6 +484,7 @@
             <span class="ai-planchip-txt"><b id="aiPlanName">Plan</b><i id="aiPlanSub">attached</i></span>
             <button type="button" id="aiPlanX" class="ai-planchip-x" aria-label="Remove the plan">✕</button>
         </div>
+        @endif
         <div id="aiAttachBusy" class="ai-busyline hidden" role="status"><span class="sp" aria-hidden="true"></span><span class="tx">Attaching photo…</span></div>
         <div class="aichat-box">
             <button type="button" class="ai-cam shrink-0" id="aiAttachBtn" title="Add photos" aria-label="Add photos" aria-haspopup="dialog">
@@ -511,6 +522,7 @@
      (the messenger's + chooser, spoken in the house sheet language). The
      gallery door only shows where the season picker travels with the page. --}}
 {{-- Which plan, when there is more than one. --}}
+@if ($aiChrome !== 'home')
 <div class="sheet hidden" id="aiPlanSheet" style="--sheet-width:22rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -519,6 +531,7 @@
     </div>
     <div class="sheet-body space-y-1" id="aiPlanList"></div>
 </div>
+@endif
 
 <div class="sheet hidden" id="aiAttachSheet" style="--sheet-width:22rem">
     <div class="sheet-handle"></div>
@@ -547,6 +560,31 @@
 
 {{-- The big green masthead is gone on the owner's ask; what it held lives
      behind one square button beside the bell. --}}
+@if ($aiChrome === 'home')
+{{-- Naming what is being kept, in the same words the floating technician
+     uses for a season's notebook: a title, and why it was worth keeping.
+     The transcript is the attachment, not the whole story. --}}
+<div class="sheet hidden" id="aiGlobalNoteSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Save this chat to Global Notes</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-3">
+        <div>
+            <label class="form-label" for="aiGlobalNoteTitle">Title</label>
+            <input type="text" id="aiGlobalNoteTitle" class="form-input" maxlength="180" placeholder="Name this note">
+        </div>
+        <div>
+            <label class="form-label" for="aiGlobalNoteDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
+            <textarea id="aiGlobalNoteDesc" class="form-textarea" rows="3" maxlength="2000" placeholder="Why this chat is worth keeping…"></textarea>
+        </div>
+        <p class="text-xs text-gray-400">The whole conversation is attached underneath.</p>
+        <button type="button" id="aiGlobalNoteSave" class="btn btn-primary w-full">Save to Global Notes</button>
+    </div>
+</div>
+@endif
+
 <div class="sheet hidden" id="aiMenuSheet" style="--sheet-width:20rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -562,10 +600,21 @@
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
             <span>Recent chats<span class="sub">Pick up an earlier question</span></span>
         </button>
-        <button type="button" class="ai-attach-opt" id="aiMenuLink">
-            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 010 5.656l-3 3a4 4 0 01-5.656-5.656l1.5-1.5m7.156-2.344a4 4 0 015.656 0l.014.014a4 4 0 010 5.642l-1.5 1.5M8.5 15.5l7-7"/></svg></span>
-            <span>Link<span class="sub">Tie this chat to one of your plans</span></span>
-        </button>
+        @if ($aiChrome === 'home')
+            {{-- Keeping it. The season notebooks are not offered here because
+                 this chat is not in a season — Global Notes is where the
+                 things that belong to the farm rather than to one season
+                 already live. --}}
+            <button type="button" class="ai-attach-opt" id="aiMenuGlobalNote">
+                <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span>
+                <span>Save as a global note<span class="sub">Keep this chat in Global Notes</span></span>
+            </button>
+        @else
+            <button type="button" class="ai-attach-opt" id="aiMenuLink">
+                <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 010 5.656l-3 3a4 4 0 01-5.656-5.656l1.5-1.5m7.156-2.344a4 4 0 015.656 0l.014.014a4 4 0 010 5.642l-1.5 1.5M8.5 15.5l7-7"/></svg></span>
+                <span>Link<span class="sub">Tie this chat to one of your plans</span></span>
+            </button>
+        @endif
         @unless ($aiUnlimited)
             <a href="{{ route('ai.credits') }}" class="ai-attach-opt">
                 <span class="ic"><svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg></span>
@@ -603,6 +652,7 @@
 const __init = () => {
     const URLS = {
         ask: @json(route('ai.ask')),
+        globalNote: @json(route('ai.conversation.global-note')),
         photo: @json(route('ai.photo')),
         attach: @json(route('ai.photo.existing')),
         newConvo: @json(route('ai.conversation.new')),
@@ -1082,6 +1132,35 @@ const __init = () => {
     byId('aiMenuBtn')?.addEventListener('click', () => openSheet('aiMenuSheet'));
     byId('aiMenuNew')?.addEventListener('click', () => window.closeSheet?.('aiMenuSheet'));
     byId('aiMenuHistory')?.addEventListener('click', () => { window.closeSheet?.('aiMenuSheet'); openSheet('aiHistorySheet'); });
+    /* Keeping the chat. Nothing is written until the sheet's button is
+       pressed, so backing out of naming a note leaves the chat exactly as it
+       was — and a chat with nothing in it says so rather than filing a blank
+       page into the notebook. */
+    byId('aiMenuGlobalNote')?.addEventListener('click', () => {
+        window.closeSheet?.('aiMenuSheet');
+        if (!conversationId) { window.toast?.('Nothing to keep yet — ask something first, or open an old chat.', 'error'); return; }
+        byId('aiGlobalNoteTitle').value = '';
+        byId('aiGlobalNoteDesc').value = '';
+        openSheet('aiGlobalNoteSheet');
+        window.smFocus?.(byId('aiGlobalNoteTitle'), { delay: 120 });
+    });
+    byId('aiGlobalNoteSave')?.addEventListener('click', async () => {
+        const btn = byId('aiGlobalNoteSave');
+        if (btn.disabled) return;
+        btn.disabled = true;
+        try {
+            const res = await api(URLS.globalNote, { method: 'POST', body: {
+                conversationId,
+                title: byId('aiGlobalNoteTitle').value.trim(),
+                description: byId('aiGlobalNoteDesc').value.trim(),
+            } });
+            window.closeSheet?.('aiGlobalNoteSheet');
+            window.toast?.(res.message || 'Saved to your Global Notes.');
+        } catch (err) {
+            window.toast?.(err.message || 'Could not save that note.', 'error');
+        } finally { btn.disabled = false; }
+    });
+
     byId('aiMenuLink')?.addEventListener('click', () => {
         window.closeSheet?.('aiMenuSheet');
         // This page ties a chat to a plan through the composer's selector —

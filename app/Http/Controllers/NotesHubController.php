@@ -26,7 +26,7 @@ use Illuminate\Support\Str;
  */
 class NotesHubController extends Controller
 {
-    private const GLOBAL_SCHEDULE_ID = 0;
+    public const GLOBAL_SCHEDULE_ID = 0;
 
     public function index(Request $request)
     {

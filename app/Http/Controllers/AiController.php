@@ -51,6 +51,29 @@ class AiController extends Controller
 
     public function index(Request $request)
     {
+        return $this->page($request, 'full');
+    }
+
+    /**
+     * The same technician, opened from the homepage.
+     *
+     * One view, two dresses. The homepage is not standing in a season, so
+     * there is no plan to attach and no plan to tie a thread to — and the
+     * chat it keeps goes to Global Notes, which is where everything that
+     * belongs to the farmer rather than to one season already lives.
+     *
+     * Not a second chat page. A second chat page would be a second copy of
+     * the composer, the history rail, the photo chips and the markdown
+     * renderer, and this app already knows what happens to a thing it keeps
+     * two of.
+     */
+    public function home(Request $request)
+    {
+        return $this->page($request, 'home');
+    }
+
+    private function page(Request $request, string $chrome)
+    {
         // AI is a Boss/Lifetime feature — Basic can't use it.
         if (! $this->aiPayer()->canUseAi()) {
             return view('ai.locked', ['tier' => $request->user()->planTier()]);
@@ -83,7 +106,13 @@ class AiController extends Controller
                 ->orderByDesc('updated_at')
                 ->limit(20)
                 ->get(),
-            'schedules' => AsCroppingSchedule::active()->forClient($userId)->orderByDesc('id')->get(),
+            'aiChrome' => $chrome,
+            // Offered nowhere in the home dress: the plan button already only
+            // draws when there is something to offer, so an empty list is the
+            // whole of "no season here".
+            'schedules' => $chrome === 'home'
+                ? collect()
+                : AsCroppingSchedule::active()->forClient($userId)->orderByDesc('id')->get(),
         ]);
     }
 
@@ -597,6 +626,66 @@ class AiController extends Controller
         return $this->json(true, $activity
             ? 'Saved this conversation onto the task, in the schedule notebook.'
             : 'Saved this conversation to the schedule notebook.', ['noteId' => (int) $note->id]);
+    }
+
+    /**
+     * File a conversation into Global Notes.
+     *
+     * The same act as saveToNote, without a season: a chat opened from the
+     * homepage is not about one, and asking which notebook to put it in would
+     * be asking the farmer to invent an answer. Global Notes is where the
+     * things that belong to the farm rather than to one season already live.
+     */
+    public function saveToGlobalNote(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'conversationId' => 'required|integer',
+            'title' => 'nullable|string|max:180',
+            'description' => 'nullable|string|max:2000',
+        ]);
+        if ($validator->fails()) {
+            return $this->json(false, 'Validation failed.', ['errors' => $validator->errors()], 422);
+        }
+
+        $conversation = AiConversation::active()
+            ->where('userId', Auth::id())
+            ->find((int) $request->input('conversationId'));
+        if (! $conversation) {
+            return $this->json(false, 'That conversation is gone.', [], 404);
+        }
+
+        $messages = $conversation->messages()->orderBy('id')->limit(120)->get();
+        if ($messages->isEmpty()) {
+            return $this->json(false, 'This conversation has no messages yet.', [], 422);
+        }
+
+        $tech = AiSetting::current()?->assistantName ?: 'AI Technician';
+        $html = '';
+        if (filled($request->input('description'))) {
+            $html .= '<p>' . nl2br(e(trim((string) $request->input('description')))) . '</p>';
+        }
+        foreach ($messages as $m) {
+            $who = $m->role === 'assistant' ? $tech : 'You';
+            $cls = $m->role === 'assistant' ? 'color:#3d6823' : 'color:#1f2937';
+            $html .= '<p><strong style="' . $cls . '">' . e($who) . ':</strong> '
+                . nl2br(e((string) $m->content)) . '</p>';
+        }
+
+        $title = trim((string) $request->input('title'))
+            ?: ('AI · ' . ($conversation->title ?: 'Conversation'));
+
+        $note = \App\Models\AsScheduleNote::create([
+            // The notebook that belongs to nobody's season. Named by the hub
+            // that owns it, so the two can never drift apart.
+            'croppingScheduleId' => \App\Http\Controllers\NotesHubController::GLOBAL_SCHEDULE_ID,
+            'userId' => (int) Auth::id(),
+            'title' => mb_substr($title, 0, 180),
+            'body' => \App\Support\HtmlSanitizer::rich($html),
+            'media' => [],
+            'deleteStatus' => 1,
+        ]);
+
+        return $this->json(true, 'Saved to your Global Notes.', ['noteId' => $note->id]);
     }
 
     public function deleteConversation(Request $request)

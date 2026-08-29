@@ -398,6 +398,11 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/ai-conversations', [App\Http\Controllers\AiController::class, 'conversations'])->name('ai.conversations');
     Route::get('/app/ai-transcript', [App\Http\Controllers\AiController::class, 'transcript'])->name('ai.transcript');
     Route::post('/app/ai-conversation-note', [App\Http\Controllers\AiController::class, 'saveToNote'])->name('ai.conversation.note');
+    // The same chat, kept where a chat that belongs to no season belongs.
+    Route::post('/app/ai-conversation-global-note', [App\Http\Controllers\AiController::class, 'saveToGlobalNote'])->name('ai.conversation.global-note');
+    // The technician, opened from the homepage: no season to attach, and the
+    // notebook it keeps is the global one.
+    Route::get('/app/ai-home', [App\Http\Controllers\AiController::class, 'home'])->name('ai.home');
     Route::delete('/app/ai-conversation-delete', [App\Http\Controllers\AiController::class, 'deleteConversation'])->name('ai.conversation.delete');
     Route::post('/app/ai-conversation-rename', [App\Http\Controllers\AiController::class, 'renameConversation'])->name('ai.conversation.rename');
     Route::post('/app/ai-conversation-link', [App\Http\Controllers\AiController::class, 'linkConversation'])->name('ai.conversation.link');
