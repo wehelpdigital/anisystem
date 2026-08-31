@@ -160,6 +160,11 @@
                 <button type="button" class="btn btn-ghost w-full cmap-pin-del" id="cmapPinDel" data-pin-when="open">Delete this pin</button>
             </div>
         </div>
+        {{-- The icons, on their own line above the tools menu.
+             They used to share one sideways scroller with it, which meant the
+             widest control on the bar pushed half the others off the edge of
+             a phone — Save among them. --}}
+        <div class="cmap-acts">
         <button type="button" class="cmap-tool" id="cmapSearchBtn" title="Search a place" aria-label="Search a place">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
         </button>
@@ -384,7 +389,8 @@
             <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             <span>Finish</span>
         </button>
-    </div>
+        </div>{{-- /.cmap-acts --}}
+    </div>{{-- /.cmap-bar --}}
     <div class="cmap-stage">
         <div class="cmap-map" id="cmapMap"></div>
         {{-- Google's script is a few seconds on a phone signal, and this is
@@ -431,9 +437,19 @@
 <style>
     .cmap-wrap { display: flex; flex-direction: column; height: 100%; min-height: 0; }
     .cmap-nokey { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .4rem; padding: 2rem; text-align: center; color: var(--color-gray-400); }
-    .cmap-bar { display: flex; align-items: center; gap: .3rem; padding: .4rem .5rem; overflow-x: auto;
-        scrollbar-width: none; border-bottom: 1px solid var(--color-gray-100); flex-shrink: 0; }
-    .cmap-bar::-webkit-scrollbar { display: none; }
+    /* Two rows: the icons, then the tools menu under them.
+       One sideways scroller held both, and the menu is the widest control on
+       the bar — so on a phone half the icons lived off the right-hand edge,
+       Save included, and nothing said they were there. The sheets that sit
+       between them in the markup are display:none until they open and take
+       no space in either row. */
+    .cmap-bar { display: flex; flex-direction: column; align-items: stretch; gap: .35rem;
+        padding: .4rem .5rem; border-bottom: 1px solid var(--color-gray-100); flex-shrink: 0; }
+    .cmap-acts { order: 1; display: flex; align-items: center; gap: .3rem;
+        overflow-x: auto; scrollbar-width: none; }
+    .cmap-acts::-webkit-scrollbar { display: none; }
+    /* Under them, and only as wide as it needs to be. */
+    .cmap-menu-btn { order: 2; align-self: flex-start; }
     /* Same visual language as the whiteboard toolbar. */
     /* The pin's own name, riding a Google marker label under the teardrop. */
     /* Below the tip, not across the head. Google centres a marker label on
@@ -445,9 +461,14 @@
        exactly nothing. Theme was the wrong thing to key on anyway: the
        ground under this label is satellite as often as it is paper, and a
        map does not change with the app's own lights. */
-    .cmap-pin-name { transform: translateY(1.9rem); white-space: nowrap;
-        text-shadow: 0 1px 2px rgb(0 0 0 / .95), 0 0 3px rgb(0 0 0 / .85),
-                     1px 0 2px rgb(0 0 0 / .8), -1px 0 2px rgb(0 0 0 / .8); }
+    /* On a plate, above the pin.
+       Outlined white text on satellite imagery is a word you read twice —
+       every letter competes with whatever is behind it. A small dark tag
+       behind it competes with nothing, and it sits above the head rather
+       than below the point, where the ground it covers is sky. */
+    .cmap-pin-name { white-space: nowrap; border-radius: 999px;
+        padding: .18rem .5rem; background: rgb(9 14 6 / .82);
+        box-shadow: 0 1px 6px rgb(0 0 0 / .45), inset 0 0 0 1px rgb(255 255 255 / .22); }
     /* Coordinates, in the one kind of font where a 1 and a 7 cannot be taken
        for each other. These get read out over a phone. */
     /* A sheet that asks one thing at a time. */
@@ -1377,7 +1398,22 @@
                point, so what you grab is exactly what you placed. */
             const pm = new (G().Marker)({
                 map, position: LL(pts[0]), draggable: true, clickable: true,
-                icon: pinIcon(o.color || '#e11d48', 1.7),
+                /* The drawn pin, not a stroked symbol.
+                 *
+                 * labelOrigin puts the name ABOVE the head rather than
+                 * through it: Google centres a label on the marker's anchor,
+                 * and this pin's anchor is its point, so with no origin the
+                 * name is written straight down the middle of the teardrop.
+                 *
+                 * The drawing colour no longer reaches this one — a PNG is
+                 * the colour it was drawn. The pin was the one shape whose
+                 * colour said nothing anyway: a place is a place. */
+                icon: {
+                    url: PIN_IMG,
+                    scaledSize: new (G().Size)(26, 33),
+                    anchor: new (G().Point)(13, 33),
+                    labelOrigin: new (G().Point)(13, -9),
+                },
                 title: o.label || 'Pinned place',
                 zIndex: 900,
             });
@@ -1670,6 +1706,10 @@
     // The classic map pin — its tip IS the point, so what you grab is
     // exactly what you placed.
     const PIN = 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z';
+    /* The place pin's own artwork, at the app's own address. Drawing handles
+       and half-made shapes keep the stroked symbol below: those are controls,
+       and a control should wear the colour it is drawing in. */
+    const PIN_IMG = @json(asset('images/map-pin.png'));
     const pinIcon = (c, sc) => ({ path: PIN, scale: sc || 1.35, anchor: new (G().Point)(12, 22),
         fillColor: c || color, fillOpacity: 1, strokeColor: '#fff', strokeWeight: 1.5 });
     const ARROW_HEAD = (c) => ({ icon: { path: G().SymbolPath.FORWARD_CLOSED_ARROW, scale: 3.4,
@@ -3669,6 +3709,10 @@
         // seconds of work can be sitting in that queued write, and dropping it
         // is how the shapes you drew never reached the map you drew them on.
         await flushAutosave();
+        // Up while the swap happens: this wipes every shape and re-fetches
+        // the arriving map's, which is seconds of a map that is on screen and
+        // no longer true.
+        raiseVeil('Opening ' + (sv.name || 'the map') + '…');
         try {
             await api(`${URLS.load}?scheduleId=${SID}`, { method: 'POST', body: { id: sv.id } });
             setLoadedSave(sv);
@@ -3679,6 +3723,15 @@
             // No toast: the map arriving on screen IS the confirmation, and a
             // banner over it only covers the thing you asked to see.
         } catch (e) { if (window.toast) toast(e.message, 'error'); }
+        finally {
+            /* Down whatever happened.
+             *
+             * loadObjects only drops it once the map has settled on shapes it
+             * FOUND, so a saved plan with nothing on it yet would have left
+             * the veil up over a perfectly good empty map — and a failure
+             * would have left it up over the old one. */
+            dropVeil();
+        }
     }
 
     /* ---------- the Maps module's grid drives the stage from outside ----------
@@ -3750,6 +3803,27 @@
 
     /* ---------- boot ---------- */
     let booted = false, loading = false, veilDone = false;
+    /* The veil goes back UP when a different map is asked for.
+     *
+     * It used to be a one-shot: raised with the page, dropped when the first
+     * map settled, and gone. But the Maps module opens one saved plan after
+     * another on the same page, and every one of those is a wipe and a
+     * re-fetch of every shape on it — several seconds of a map that is on
+     * screen and wrong. From the second open onwards there was nothing to
+     * say anything was happening.
+     */
+    function raiseVeil(say) {
+        const v = document.getElementById('cmapVeil');
+        if (!v) return;
+        veilDone = false;
+        v.style.display = '';
+        v.classList.remove('is-done');
+        // A fresh line each time, the way every other wait card in this app
+        // rolls one — the same sentence twice reads as a stuck screen.
+        try { window.rollWaitLine?.(v.querySelector('.bv-card')); } catch (_) {}
+        const txt = v.querySelector('.cmap-veil-txt');
+        if (txt && say) txt.textContent = say;
+    }
     function dropVeil() {
         if (veilDone) return;
         veilDone = true;
