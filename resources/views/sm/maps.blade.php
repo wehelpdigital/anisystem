@@ -44,7 +44,10 @@
         /* Grid and stage swap with the house ease rather than snapping. */
         @keyframes mpViewIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
         .mp-view-in { animation: mpViewIn .28s cubic-bezier(.22,1,.36,1); }
-        .mp-stagebar { display: flex; align-items: center; gap: .5rem; margin-bottom: .5rem; }
+        /* Never under the app's own header: it is sticky, and this row is
+           the way back out of a map. */
+        .mp-stagebar { display: flex; align-items: center; gap: .5rem;
+            margin-bottom: .5rem; position: relative; z-index: 2; }
         /* The ways out keep their width — squeezing "All maps" to "All ma…"
            is the same lie as labelling it wrong. */
         .mp-stagebar > .btn { flex-shrink: 0; }
@@ -137,7 +140,10 @@
             /* Nothing above the toolbar — the row tucks under the header —
                but the map keeps clear of the bar's divider underneath it,
                which otherwise looked like the map was hanging off the row. */
-            body.smap-open main { padding-top: 0; }
+            /* Half a rem, not none. At zero the row of buttons sat flush
+               against the header's underside and read as cut off — and on a
+               page tall enough to scroll it went behind it. */
+            body.smap-open main { padding-top: .5rem; }
             body.smap-open main > .sticky { margin-bottom: .5rem; }
         }
 
@@ -226,7 +232,12 @@
             </div>
         </div>
         <div class="smap-stage">
-            @include('sm.partials.schedule-map', ['schedule' => $schedule])
+            {{-- 'maps' keeps the room's tools — sharing a position, clearing
+                 for everybody, the shelf of saved plans — and drops the
+                 heading, because this page's own header already says Maps and
+                 a second line saying "Team map" above the tools was the same
+                 sentence twice. --}}
+            @include('sm.partials.schedule-map', ['schedule' => $schedule, 'mapChrome' => 'maps'])
         </div>
     </div>
 

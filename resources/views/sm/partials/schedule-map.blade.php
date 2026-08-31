@@ -19,7 +19,11 @@
      */
     $mapChrome = $mapChrome ?? 'team';
 @endphp
-@if ($mapChrome !== 'lot')
+@if ($mapChrome === 'team')
+    {{-- Only the Collab Room draws it: there the map is one tab among
+         several and needs saying which. The Maps module and a lot's own map
+         are pages with their own headers, and a second line above the tools
+         repeating them was the same sentence twice. --}}
     <div class="collab-tabhead"><span class="collab-tabtitle">🗺️ Team map</span></div>
 @endif
 @if (! $cmapKey)
@@ -135,20 +139,25 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
-            <div class="sheet-body space-y-3">
-                <div>
+            {{-- Two sheets in one, because a pin is two different questions.
+                 Just dropped: what is here, and save it. Already there: the
+                 two things anybody taps a pin for. --}}
+            <div class="sheet-body space-y-3" id="cmapPinBody">
+                <div data-pin-when="new">
                     <label class="form-label" for="cmapPinName">What is here?</label>
                     <input type="text" id="cmapPinName" class="form-input" maxlength="80"
                            placeholder="e.g. Pump house, Lot A gate, water source">
                     <p class="form-hint">Optional. A pin with no name is still a place.</p>
                 </div>
                 <div class="cmap-pin-at" id="cmapPinAt"></div>
-                <a href="#" target="_blank" rel="noopener" class="btn btn-primary w-full" id="cmapPinGo">
+                <button type="button" class="btn w-full sweep-fill sweep-green cmap-pin-keep"
+                        id="cmapPinSave" data-pin-when="new"
+                        style="--sw-t: 11s; --sw-d: -3s">Save this location</button>
+                <a href="#" target="_blank" rel="noopener" class="btn btn-primary w-full" id="cmapPinGo" data-pin-when="open">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-7.5 7-12a7 7 0 10-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>
                     Open in Google Maps
                 </a>
-                <button type="button" class="btn btn-secondary w-full" id="cmapPinSave">Save the name</button>
-                <button type="button" class="btn btn-ghost w-full cmap-pin-del" id="cmapPinDel">Remove this pin</button>
+                <button type="button" class="btn btn-ghost w-full cmap-pin-del" id="cmapPinDel" data-pin-when="open">Delete this pin</button>
             </div>
         </div>
         <button type="button" class="cmap-tool" id="cmapSearchBtn" title="Search a place" aria-label="Search a place">
@@ -328,6 +337,14 @@
         {{-- Opening and saving, together, out of the tools list. On a lot's
              map there is nothing to open — it has one map, and the page's own
              Save writes it. --}}
+        @if ($mapChrome === 'lot' && \App\Support\WorkerContext::canAddNotes())
+        {{-- A lot has one map, so there is nothing to open and nothing to
+             name — one button in the same row as the tools, and a question
+             before it writes. --}}
+        <button type="button" class="cmap-tool cmap-savebtn" id="cmapLotSave" title="Save this location" aria-label="Save this location">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg>
+        </button>
+        @endif
         @if ($mapChrome !== 'lot' && \App\Support\WorkerContext::canAddNotes())
         <button type="button" class="cmap-tool cmap-savebtn" id="cmapSaveMenuBtn" title="Open or save a map" aria-label="Open or save a map">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg>
@@ -422,11 +439,24 @@
     /* Below the tip, not across the head. Google centres a marker label on
        the marker's anchor, and this pin's anchor is its point — so with no
        offset the name is written straight through the teardrop. */
-    .cmap-pin-name { text-shadow: 0 1px 3px #fff, 0 0 6px #fff, 0 0 2px #fff;
-        transform: translateY(1.9rem); white-space: nowrap; }
-    html.dark .cmap-pin-name { text-shadow: 0 1px 3px #000, 0 0 6px #000, 0 0 2px #000; }
+    /* White, outlined in near-black, in BOTH themes.
+       It used to be near-black text with a white halo, and the halo turned
+       black in night mode — a black word inside a black glow, which is
+       exactly nothing. Theme was the wrong thing to key on anyway: the
+       ground under this label is satellite as often as it is paper, and a
+       map does not change with the app's own lights. */
+    .cmap-pin-name { transform: translateY(1.9rem); white-space: nowrap;
+        text-shadow: 0 1px 2px rgb(0 0 0 / .95), 0 0 3px rgb(0 0 0 / .85),
+                     1px 0 2px rgb(0 0 0 / .8), -1px 0 2px rgb(0 0 0 / .8); }
     /* Coordinates, in the one kind of font where a 1 and a 7 cannot be taken
        for each other. These get read out over a phone. */
+    /* A sheet that asks one thing at a time. */
+    #cmapPinBody[data-pin-mode="new"] [data-pin-when="open"],
+    #cmapPinBody[data-pin-mode="open"] [data-pin-when="new"] { display: none; }
+    /* The keep button wears the app's drifting green like every other real
+       button; .btn's own background would sit on top of the gradient. */
+    .cmap-pin-keep { background-color: transparent; color: #fff; border: 0; }
+
     .cmap-pin-at { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
         font-size: .82rem; font-weight: 700; letter-spacing: .01em;
         color: var(--color-gray-700); background: var(--color-gray-100);
@@ -1353,7 +1383,7 @@
             });
             if (o.label) {
                 pm.setLabel({ text: o.label, className: 'cmap-pin-name',
-                    color: '#111827', fontSize: '12px', fontWeight: '700' });
+                    color: '#ffffff', fontSize: '12px', fontWeight: '800' });
             }
             pm.addListener('dragend', (ev) => {
                 if (editing && editing.o.id === o.id) return;
@@ -1406,7 +1436,7 @@
                 // it does — tell you where it is and offer to take you there
                 // — is not an editing gesture and should not require finding
                 // the right tool first.
-                openPinSheet(objIndex.get(o.id) || o);
+                openPinSheet(objIndex.get(o.id) || o, 'open');
             } else if (tool === 'text' && o.kind === 'text') {
                 // With the Text tool out, a tap on ground writes a new label
                 // and a tap on a label rewrites that one — otherwise the only
@@ -2028,13 +2058,23 @@
     const pinHref = (pt) => 'https://www.google.com/maps/search/?api=1&query='
         + Number(pt[0]).toFixed(6) + '%2C' + Number(pt[1]).toFixed(6);
 
-    function openPinSheet(o) {
+    /**
+     * @param {'new'|'open'} mode  'new' is a pin that has just gone down and
+     *   is being named; 'open' is a tap on one that was already there, which
+     *   is a different question with two answers.
+     */
+    function openPinSheet(o, mode) {
         if (!o) return;
         pinOpen = o;
         const pt = ((objIndex.get(o.id) || o).points || [])[0] || [0, 0];
         const name = document.getElementById('cmapPinName');
         const at = document.getElementById('cmapPinAt');
         const go = document.getElementById('cmapPinGo');
+        const body = document.getElementById('cmapPinBody');
+        const title = document.querySelector('#cmapPinSheet .sheet-title');
+        const asking = mode === 'open' ? 'open' : 'new';
+        if (body) body.setAttribute('data-pin-mode', asking);
+        if (title) title.textContent = asking === 'open' ? (o.label || 'This place') : 'This place';
         if (name) name.value = o.label || '';
         if (at) at.textContent = pinAt(pt);
         if (go) go.setAttribute('href', pinHref(pt));
@@ -2105,7 +2145,7 @@
                 // afterwards; being findable cannot be improved later by
                 // somebody who has walked away.
                 if (ATTACH) { moveErrandPin(o.id); pinTheLot(p, o.label); }
-                openPinSheet(o);
+                openPinSheet(o, 'new');
             });
         }
     }
@@ -3716,7 +3756,17 @@
         const v = document.getElementById('cmapVeil');
         if (!v) return;
         v.classList.add('is-done');
-        setTimeout(() => v.remove(), 500);
+        /* Hidden, not removed.
+         *
+         * The waiting card writes its stylesheet inline the first time it is
+         * rendered on a page, and on a map page the first time is HERE —
+         * inside this veil. Removing the node took that stylesheet out of the
+         * document with it, and the app's own navigation loader, which is the
+         * same card, then drew unstyled: a scene blown up to the full width
+         * of the phone with no frame around it. display:none costs nothing
+         * and keeps the styles where the rest of the page can still read
+         * them. */
+        setTimeout(() => { v.style.display = 'none'; }, 500);
     }
     function buildMap() {
         // The last viewport this device used opens INSTANTLY zoomed-in; a
