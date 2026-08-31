@@ -103,7 +103,9 @@ class CommunityText
             'p', 'br', 'hr', 'b', 'strong', 'i', 'em', 'u', 's', 'span[class]',
             'h2', 'h3', 'h4',
             'ul', 'ol', 'li',
-            'a[href|title]',
+            // `class` on a link too, so a built button arrives as a button
+            // rather than as a sentence with an underline.
+            'a[href|title|class]',
             'blockquote', 'cite',
             // Not figure/figcaption: the purifier's doctype is HTML 4, which
             // has never heard of them and refuses the whole document rather
