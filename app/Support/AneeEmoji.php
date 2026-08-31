@@ -153,8 +153,11 @@ class AneeEmoji
                     return $m[0];
                 }
 
-                return '<img class="anee-emo" src="' . e(self::url($m[1]))
-                    . '" alt="' . e(self::FACES[$m[1]]) . '" loading="lazy">';
+                // A span the size of a character, with the drawing hung off
+                // it. The line measures the span; the picture is out of flow,
+                // so a face never opens a canyon above the line it lands on.
+                return '<span class="anee-emo"><img src="' . e(self::url($m[1]))
+                    . '" alt="' . e(self::FACES[$m[1]]) . '" loading="lazy"></span>';
             },
             $html
         );

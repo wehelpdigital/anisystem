@@ -20,14 +20,20 @@
         border-top: 1px dashed rgb(107 159 61 / .38); }
     html.dark .ai-rule { border-top-color: rgb(168 204 126 / .3); }
 
-    /* A face is drawn at two and a half em and counted as rather less, so it
-       barely stretches the line it lands on — but the pull is off the TOP
-       only. Taking it off the bottom too tucked her chin into the line
-       beneath, which is the one direction there is nothing to spare in.
-       Two em read; two and a half carries across a phone held at arm's
-       length in the sun, which is where these are looked at. */
-    .anee-emo { display: inline-block; width: 2.5em; height: 2.5em;
-        vertical-align: -.78em; margin: -.82em .12em 0; }
+    /* A face is drawn at two and a half em and takes up one character.
+       An inline picture that size makes its whole line two and a half times
+       as tall, and the paragraph opens a canyon above it — which is what a
+       face mid-sentence used to do. So the LINE measures this anchor, one
+       character wide and one line tall, and the drawing hangs off it out of
+       flow: overflowing upward into leading that was already there, and a
+       hair below the baseline, touching neither the line above nor the one
+       below. Two em read; two and a half carries across a phone held at
+       arm's length in the sun, which is where these are looked at. */
+    .anee-emo { position: relative; display: inline-block;
+        width: 2.6em; height: 1.3em; vertical-align: -.22em; }
+    .anee-emo img { position: absolute; left: 50%; bottom: -.5em;
+        width: 2.5em; height: 2.5em; transform: translateX(-50%);
+        max-width: none; }
 
     /* ---- room to read -------------------------------------------------
        Her answers are laid out now — paragraphs, steps, a rule between what
@@ -77,7 +83,7 @@
         return String(html == null ? '' : html).replace(
             /:anee-([a-z]{2,14}):/g,
             (all, name) => (known.has(name)
-                ? '<img class="anee-emo" src="' + BASE + '/' + name + '.png" alt="" loading="lazy">'
+                ? '<span class="anee-emo"><img src="' + BASE + '/' + name + '.png" alt="" loading="lazy"></span>'
                 : all)
         );
     };

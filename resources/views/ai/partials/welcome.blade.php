@@ -10,7 +10,7 @@
          a vague question costs the same as a good one and comes back needing
          three more, so this is the highest-value thing on the screen. --}}
     <h2>Magandang araw! I'm {{ $settings->assistantName }}</h2>
-    <p class="sub">Ask me anything about your crop, I'm willing to answer.</p>
+    @include('partials.anee-hello-video')
     <div class="ai-howto">
         <p class="ai-howto-h">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>

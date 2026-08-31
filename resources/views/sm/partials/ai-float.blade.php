@@ -103,7 +103,7 @@
                     <img data-ai-face src="{{ $aiFloatAvatar }}" alt="">
                 </span>
                 <p class="font-semibold text-gray-800 mt-2">Hi, I'm {{ $aiFloatSettings->assistantName }}</p>
-                <p class="text-sm text-gray-500 mt-1">Ask me anything about your crop, I'm willing to answer.</p>
+                @include('partials.anee-hello-video')
                 {{-- How to ask. Not decoration: a vague question costs the
                      same as a good one and comes back needing three more. --}}
                 <div class="aif-howto">

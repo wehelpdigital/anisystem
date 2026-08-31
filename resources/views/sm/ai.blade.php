@@ -516,10 +516,7 @@
                      needing three more, so telling a farmer this before they
                      type is worth more than any feature on the page. --}}
                 <h2>Hi, I'm {{ $settings->assistantName }}</h2>
-                {{-- One line. The chips underneath already say what she can
-                     be asked, so listing it here twice cost a line of a short
-                     phone's screen for nothing. --}}
-                <p class="sub">Ask me anything about your crop, I'm willing to answer.</p>
+                @include('partials.anee-hello-video')
 
                 {{-- Four short lines. It was three paragraphs, and an
                      instruction you have to scroll to finish is an

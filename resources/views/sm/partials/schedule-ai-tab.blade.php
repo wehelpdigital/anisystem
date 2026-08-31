@@ -1,5 +1,8 @@
 {{-- Anee's own faces, for the shortcodes she writes. --}}
 @include('partials.anee-emoji')
+{{-- Rendered once so the Collab Room's JavaScript welcome can read the same
+     markup the other three chats render directly. --}}
+<template id="saiHelloTpl">@include('partials.anee-hello-video')</template>
 {{-- Collab Room "AI Technician" tab: shared AI conversations for the team.
      A sessions sidebar (visible to everyone) lets the team keep several named
      threads; any member asks, the question broadcasts instantly and the answer
@@ -509,6 +512,11 @@
     const AI_NAME = @json(\App\Models\AiSetting::current()->assistantName);
 
     /* ---------- intro (shown when a session is empty) ---------- */
+        /* Her hello, as a string. The partial is rendered once into a
+           template below and read back here, so the Collab Room's welcome and
+           the three rendered ones cannot drift apart. */
+        const AI_HELLO = document.getElementById('saiHelloTpl')?.innerHTML || '';
+
         function showIntro() {
             if ($('saiIntro')) return;
             $('saiLoading')?.remove();
@@ -517,7 +525,8 @@
             el.innerHTML = `
                 ${AI_FACE}
                 <h4>Hi team, I'm ${AI_NAME}</h4>
-                <p>Ask me anything about your crop, I'm willing to answer. Everyone on the team sees the questions and answers, and you can save a whole session to your schedule notes.</p>
+                ${AI_HELLO}
+                <p>Everyone on the team sees the questions and answers, and you can save a whole session to your schedule notes.</p>
                 <div class="sai-howto">
                     <p class="sai-howto-h">The more you tell me, the better I answer</p>
                     <p class="sai-howto-b">Crop and age, what was done, what you see.</p>
