@@ -1,10 +1,17 @@
+{{-- The article as anee.io will show it, before anybody can read it.
+
+     The same stylesheet and the same sanitiser as the real page — a preview
+     that renders differently is worse than no preview — and deliberately not
+     the same in three ways: it will show a draft, it does not count as a
+     read, and it says so at the top so nobody mistakes it for the published
+     thing. The comment thread is left off: a conversation that has not
+     happened is not part of what this will look like. --}}
 @extends('layouts.app')
 
-@section('title', $post->title . ' — Blog')
+@section('title', $post->title . ' — Preview')
 @section('body-class', 'plaza-ground')
-@section('page-title', 'Technician\'s Blog')
+@section('page-title', 'Preview')
 @section('page-subtitle', \Illuminate\Support\Str::limit($post->title, 40))
-@section('back', route('community.blog'))
 
 @push('head')
 @include('community.partials.plaza-css')
@@ -85,20 +92,19 @@
     .article-body table { width:100%; border-collapse:collapse; margin:1.2rem 0; font-size:.9rem; }
     .article-body th, .article-body td { border:1px solid var(--color-gray-200); padding:.45rem .6rem; text-align:left; }
     .article-body th { background:var(--color-gray-50); font-weight:700; }
+    .prev-flag { border:1px dashed var(--color-brand-300); background:var(--color-brand-50);
+        color:var(--color-gray-700); border-radius:.75rem; padding:.6rem .85rem; margin-bottom:1rem;
+        font-size:.85rem; }
+    .prev-flag b { color:var(--color-brand-700); }
 </style>
 @endpush
 
 @section('content')
 <div class="article">
-
-    {{-- Easy-click breadcrumbs --}}
-    <nav class="bc" aria-label="Breadcrumb">
-        <a href="{{ route('community.index') }}">🤝 Community</a>
-        <span class="sep">›</span>
-        <a href="{{ route('community.blog') }}">📰 Tech Blog</a>
-        <span class="sep">›</span>
-        <span class="cur">{{ $post->title }}</span>
-    </nav>
+    <div class="prev-flag">
+        <b>Preview</b> — this is how it will look in anee.io.
+        {{ $post->isPublished ? 'This article is published.' : 'This article is still a draft; nobody else can open it.' }}
+    </div>
 
     @php
         $byline = trim((string) $post->authorName) ?: 'anee.io Team';
@@ -133,104 +139,5 @@
          picture, a pull quote and a section heading survive. --}}
     <div class="article-body">{!! \App\Support\CommunityText::articleHtml($post->body) !!}</div>
 
-    {{-- Comments --}}
-    <div class="mt-8" id="blogComments">
-        <h3 class="font-bold text-gray-900 mb-3" style="font-family:var(--font-heading)">
-            Comments <span class="text-gray-400 font-normal" id="blogCommentCount">({{ $comments->count() }})</span>
-        </h3>
-
-        <div class="card p-3 mb-4 emoji-scope">
-            <textarea id="blogCommentInput" class="form-textarea" rows="3" maxlength="5000" placeholder="Share your thoughts…"></textarea>
-
-            <div id="blogAttach" class="hidden mt-2">
-                <div class="flex items-center gap-2">
-                    <img id="blogAttachThumb" alt="" class="w-16 h-16 object-cover rounded-lg border border-gray-100">
-                    <button type="button" id="blogAttachRemove" class="text-xs font-semibold text-gray-400 hover:text-red-500">✕ Remove photo</button>
-                </div>
-            </div>
-
-            <div class="flex items-center justify-between gap-2 mt-2">
-                <div class="flex items-center gap-1">
-                    <button type="button" class="btn btn-white btn-sm js-emoji-btn" data-target="blogCommentInput" title="Add emoji" aria-label="Add emoji">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    </button>
-                    <label class="btn btn-white btn-sm cursor-pointer mb-0" title="Add a photo">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                        <input type="file" id="blogCommentImage" accept="image/jpeg,image/png,image/webp" class="hidden">
-                    </label>
-                </div>
-                <button type="button" id="blogCommentSend" class="btn btn-primary btn-sm">Post comment</button>
-            </div>
-        </div>
-
-        <div id="blogCommentList" class="space-y-3">
-            @forelse ($comments as $comment)
-                @include('community.blog.partials.comment', ['comment' => $comment])
-            @empty
-                <p class="text-sm text-gray-400 text-center py-4" id="blogNoComments">Be the first to comment.</p>
-            @endforelse
-        </div>
-    </div>
 </div>
 @endsection
-
-@push('scripts')
-@include('community.partials.emoji-js')
-@include('community.partials.react-js')
-@include('community.partials.lightbox-js')
-@include('community.partials.comment-tools-js')
-<script>
-(function blogComments() {
-    const $ = (id) => document.getElementById(id);
-    const input = $('blogCommentInput');
-    const fileInput = $('blogCommentImage');
-    const attach = $('blogAttach');
-    const attachThumb = $('blogAttachThumb');
-    const SEND_URL = @json(route('community.blog.comment', ['id' => $post->id]));
-
-    const clearAttach = () => {
-        fileInput.value = '';
-        attach.classList.add('hidden');
-        if (attachThumb.src) { try { URL.revokeObjectURL(attachThumb.src); } catch (_) {} attachThumb.removeAttribute('src'); }
-    };
-    fileInput.addEventListener('change', () => {
-        const f = fileInput.files[0];
-        if (f) { attachThumb.src = URL.createObjectURL(f); attach.classList.remove('hidden'); }
-        else clearAttach();
-    });
-    $('blogAttachRemove').addEventListener('click', clearAttach);
-
-    $('blogCommentSend').addEventListener('click', async (e) => {
-        const btn = e.currentTarget;
-        const body = input.value.trim();
-        const file = fileInput.files[0];
-        if (!body && !file) { window.toast && toast('Write a comment or add a photo.', 'error'); return; }
-        const prevHtml = btn.innerHTML;
-        btn.disabled = true;
-        btn.classList.add('is-sending');
-        btn.innerHTML = '<span class="inline-flex items-center gap-1.5"><svg class="w-4 h-4 plaza-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.4" stroke-opacity=".25"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Posting…</span>';
-        try {
-            const fd = new FormData();
-            if (body) fd.append('body', body);
-            if (file) fd.append('image', file);
-            const res = await window.api(SEND_URL, { method: 'POST', body: fd });
-            $('blogNoComments')?.remove();
-            $('blogCommentList').insertAdjacentHTML('afterbegin', res.data.html);
-            window.plazaCommentFx?.animateIn($('blogCommentList').firstElementChild);
-            input.value = '';
-            clearAttach();
-            const c = $('blogCommentCount');
-            const n = $('blogCommentList').querySelectorAll('[data-blog-comment]').length;
-            if (c) c.textContent = '(' + n + ')';
-            window.toast && toast('Comment posted.');
-        } catch (err) {
-            window.toast && toast(err.message, 'error');
-        } finally {
-            btn.disabled = false;
-            btn.classList.remove('is-sending');
-            btn.innerHTML = prevHtml;
-        }
-    });
-})();
-</script>
-@endpush

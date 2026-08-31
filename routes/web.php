@@ -578,3 +578,12 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-worker-presentation', [App\Http\Controllers\Manager\DocumentController::class, 'workerPresentation'])->name('sm.worker-presentation');
     Route::get('/app/sm-card-viewer', [App\Http\Controllers\Manager\DocumentController::class, 'cardViewer'])->name('sm.card-viewer');
 });
+
+/* An article as anee.io will show it, for the admin app's builder.
+ *
+ * Outside every auth group on purpose: the person looking is an
+ * administrator on the other app and has no session here. The address is
+ * signed instead, and the response carries a noindex header, so it is
+ * reachable by the one person holding the link and by nobody's crawler. */
+Route::get('/blog-preview/{id}', [App\Http\Controllers\BlogPreviewController::class, 'show'])
+    ->whereNumber('id')->name('blog.preview');

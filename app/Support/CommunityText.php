@@ -74,6 +74,57 @@ class CommunityText
     }
 
     /**
+     * The body of a staff-written article.
+     *
+     * safeHtml() below is for what MEMBERS write — a comment, a group topic —
+     * and its allow-list is deliberately narrow: no pictures, no headings
+     * above h3, nothing that can lay out a page. An article on the
+     * technician's blog is written by staff in a builder on the admin side,
+     * and it is a page: it has a cover, sections, pictures with captions,
+     * pull quotes and the occasional embedded clip. Running it through the
+     * comment sanitizer stripped all of that and left the words in a row.
+     *
+     * So it gets its own list — wider, still an allow-list, and still no
+     * script, no style, no event attributes, and no iframe that is not a
+     * video from a host named here.
+     */
+    public static function articleHtml(?string $raw): string
+    {
+        $raw = (string) $raw;
+        if (trim($raw) === '') {
+            return '';
+        }
+        if ($raw === strip_tags($raw)) {
+            return static::render($raw);
+        }
+
+        $config = \HTMLPurifier_Config::createDefault();
+        $config->set('HTML.Allowed', implode(',', [
+            'p', 'br', 'hr', 'b', 'strong', 'i', 'em', 'u', 's', 'span[class]',
+            'h2', 'h3', 'h4',
+            'ul', 'ol', 'li',
+            'a[href|title]',
+            'blockquote', 'cite',
+            // Not figure/figcaption: the purifier's doctype is HTML 4, which
+            // has never heard of them and refuses the whole document rather
+            // than dropping the tag. A div with a class says the same thing
+            // and survives.
+            'img[src|alt|width|height]',
+            'div[class]',
+            'table', 'thead', 'tbody', 'tr', 'th', 'td',
+            'iframe[src|width|height|frameborder]',
+        ]));
+        $config->set('HTML.TargetBlank', true);
+        $config->set('AutoFormat.RemoveEmpty', true);
+        $config->set('Cache.DefinitionImpl', null);
+        // A clip is normal in an article; a frame pointing anywhere is not.
+        $config->set('HTML.SafeIframe', true);
+        $config->set('URI.SafeIframeRegexp', '%^https://(www\.youtube\.com/embed/|player\.vimeo\.com/video/)%');
+
+        return (new \HTMLPurifier($config))->purify($raw);
+    }
+
+    /**
      * Render a body that may contain WYSIWYG HTML (group topics). If it has
      * HTML tags, sanitize with a strict allow-list and return it raw; if it's
      * plain text, fall back to the mention/hashtag linkifier. Safe either way.
