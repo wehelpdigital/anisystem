@@ -726,10 +726,9 @@ class AiController extends Controller
         }
 
         $day = date('Y-m-d', strtotime($date));
-        $tasks = \App\Models\AsScheduleActivity::active()
-            ->where('croppingScheduleId', $schedule->id)
+        $tasks = $schedule->activities()
             ->whereDate('targetDate', $day)
-            ->orderBy('id')
+            ->reorder('id')
             ->limit(60)
             ->get()
             ->map(fn ($a) => ['id' => $a->id, 'title' => $a->activityTitle ?: 'Task'])
@@ -962,34 +961,16 @@ class AiController extends Controller
             return '';
         }
 
-        $schedule->load('lots');
-        $lots = $schedule->lots
-            ->map(fn ($l) => trim($l->lotName . ' (' . rtrim(rtrim((string) $l->lotSize, '0'), '.') . ' ' . $l->lotSizeUnit . ')'))
-            ->implode(', ');
-
-        $head = array_filter([
-            'Crop: ' . ($schedule->cropType ?: 'not set'),
-            $schedule->cropVariety ? 'Variety: ' . $schedule->cropVariety : null,
-            $schedule->dayType ? 'Day counting: ' . $schedule->dayType : null,
-            $lots ? 'Lots: ' . $lots : null,
-        ]);
-
-        $rows = [];
-        foreach ($this->planActivities($schedule) as $a) {
-            $when = $a->targetDate ? \Carbon\Carbon::parse($a->targetDate)->format('M j, Y') : 'no date';
-            $done = (int) ($a->isDone ?? 0) === 1 ? 'done' : 'planned';
-            $rows[] = '- ' . $when . ': ' . trim((string) $a->activityTitle) . ' (' . $done . ')';
-            if (count($rows) >= self::PLAN_MAX_ROWS) {
-                $rows[] = '- (…older entries left out)';
-                break;
-            }
-        }
-
-        return "The farmer has attached their cropping plan \"{$schedule->title}\" as background for THIS question.\n"
-            . implode('. ', $head) . ".\n"
-            . ($rows ? "Work so far, newest first:\n" . implode("\n", $rows) . "\n" : "No activities are on this plan yet.\n")
-            . "Read it before answering, and use it where it bears on the question. It is the farmer's own record, "
-            . "not a rule: where it disagrees with good practice, say so plainly.\n\nQuestion: ";
+        /* The whole season, not a list of titles.
+         *
+         * What a farmer means by "attach this season" is everything: where
+         * each lot stands in its own calendar today, what has actually been
+         * done since the first entry, what was written down along the way,
+         * who is on the team, and what is in the store. SeasonContext gathers
+         * all of that once per change and hands it over compiled, so a
+         * question pays for one lookup rather than six modules of queries.
+         */
+        return \App\Support\SeasonContext::text($schedule);
     }
 
     /**
@@ -1025,9 +1006,11 @@ class AiController extends Controller
     /** The plan's activities, newest first — what a question is most likely about. */
     private function planActivities(AsCroppingSchedule $schedule)
     {
-        return \App\Models\AsScheduleActivity::active()
-            ->where('croppingScheduleId', $schedule->id)
-            ->orderByDesc('targetDate')
+        // The relation, not the table: activities are versioned, and every
+        // past edit of the plan is still in there. A bare query hands back
+        // the same job once per version.
+        return $schedule->activities()
+            ->reorder('targetDate', 'desc')
             ->orderByDesc('id')
             ->limit(self::PLAN_MAX_ROWS + 1)
             ->get();
