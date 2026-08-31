@@ -43,7 +43,11 @@
        across a phone at arm's length in the sun, small enough that the line
        still reads as a line of writing. */
     .anee-emo { display: inline-block; width: 1.9em; height: 1.9em;
-        vertical-align: -.55em; margin: 0 .08em; }
+        /* Centred on the words it sits among, not hung off the baseline.
+           A fixed baseline offset is a guess that is only right at one font
+           size; middle puts the picture's midline on the text's own, which
+           stays true whatever the bubble is set in. */
+        vertical-align: middle; margin: 0 .08em; }
     .anee-emo img { display: block; width: 100%; height: 100%; max-width: none; }
 
     /* ---- room to read -------------------------------------------------
