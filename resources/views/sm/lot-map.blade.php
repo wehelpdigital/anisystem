@@ -27,22 +27,38 @@
        errand. One lot, one question, and a Save in the same row as the tools.
 
        The page does not scroll. A map that can be dragged inside a page that
-       can be dragged means one of the two is wrong, and it is the page. */
+       can be dragged means one of the two is wrong, and it is the page.
+
+       And the map IS the page: every edge of it is an edge of the screen.
+       The column this app reads its pages in — six-and-a-half hundred pixels
+       of centred text with a rem of air either side — is right for a page of
+       words and wrong for ground you are trying to see, where the padding is
+       just imagery you have been charged for and cannot look at. */
     body.lotmap-open { overflow: hidden; }
-    body.lotmap-open main { padding-top: .5rem; padding-bottom: 0; }
+    body.lotmap-open main {
+        padding: 0;
+        max-width: none;
+        width: 100%;
+    }
     /* The footer belongs to pages you read, not to a map that fills the
        screen — and with the page not scrolling it could never be reached. */
     body.lotmap-open footer { display: none; }
 
-    .lm-stage { border-radius: 1rem; overflow: hidden;
-        border: 1px solid var(--color-gray-200); background: var(--color-white); }
-    html.dark .lm-stage { border-color: #2b3a1c; background: #151b12; }
-    /* Everything the page is not: the header, the stage's own frame and the
-       small breath above it. What is left is the map. */
-    .lm-stage .cmap-map { height: calc(100dvh - 8.5rem); min-height: 18rem; }
-    @media (min-width: 48rem) {
-        .lm-stage .cmap-map { height: calc(100dvh - 10rem); }
-    }
+    /* No frame. A rounded border inset from the page's edges makes a picture
+       OF a map, which is a different thing from a map. */
+    .lm-stage { border: 0; border-radius: 0; overflow: hidden;
+        background: var(--color-white); }
+    html.dark .lm-stage { background: #151b12; }
+
+    /* Everything below the header, measured rather than guessed — the header
+       is one height on a phone and another on a desk, and a map that is eight
+       pixels too tall puts a scrollbar on a page that must not scroll. The
+       fallback is the phone's, for the moment before the script runs.
+
+       The height goes on the STAGE: the map partial is a flex column with the
+       toolbar fixed and the canvas taking what is left, so it fills whatever
+       it is given. */
+    .lm-stage { height: var(--lm-h, calc(100dvh - 3.55rem)); }
 </style>
 @endpush
 
@@ -66,6 +82,27 @@
      * sees one button in the tools row and one question before it writes.
      */
     const LOT = @json(['id' => $lot->id, 'name' => $lot->lotName]);
+
+    /* How tall the map is: whatever is left under the header.
+     *
+     * Measured, not guessed. The header is one height on a phone and another
+     * on a desk, and it grows a line when a season's name wraps — eight
+     * pixels of arithmetic error either puts a scrollbar on a page that must
+     * not scroll, or leaves a strip of page showing under the map. */
+    const stage = document.querySelector('.lm-stage');
+    const fit = () => {
+        if (!stage) return;
+        const top = stage.getBoundingClientRect().top;
+        // visualViewport where there is one: on a phone the address bar
+        // collapsing changes the usable height and innerHeight lies about it.
+        const h = (window.visualViewport?.height || window.innerHeight) - top;
+        stage.style.setProperty('--lm-h', Math.max(220, Math.round(h)) + 'px');
+    };
+    fit();
+    window.addEventListener('resize', fit);
+    window.visualViewport?.addEventListener('resize', fit);
+    // The header settles after its fonts land, which is after this runs.
+    window.addEventListener('load', fit, { once: true });
 
     /* Start the map.
      *
