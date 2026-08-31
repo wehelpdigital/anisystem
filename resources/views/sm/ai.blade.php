@@ -32,7 +32,7 @@
                the same way — it was the taller of the two and the page's real
                height came from it, which is why sizing the chat alone changed
                nothing at all. */
-            .ai-sessions { display: flex; flex-direction: column; gap: .3rem; height: calc(100dvh - 10.6rem - 7.1rem); min-height: min(26rem, 60dvh);
+            .ai-sessions { display: flex; flex-direction: column; gap: .3rem; height: var(--ai-avail, calc(100dvh - 10.6rem - 7.1rem)); min-height: min(26rem, 60dvh);
                 overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--color-gray-300) transparent;
                 border: 1px solid var(--color-gray-100); border-radius: 1rem; background: var(--color-white);
                 padding: .6rem; box-shadow: var(--shadow-card); }
@@ -52,13 +52,15 @@
 
         /* Two numbers, named: what the page itself takes (app bar, main's
            paddings, the gap the footer holds itself away by) and what the
-           footer takes. It was one number that guessed — and the guess was a
+           footer takes. Six tunings of them live below, one per screen this
+           page can appear on; they are the first frame only, and then
+           partials/ai-fit measures the room for real and writes --ai-avail. It was one number that guessed — and the guess was a
            hundred pixels short of the footer, so on a desktop the page opened
            with a scrollbar before a word was said. The footer is shorter where
            its links sit on fewer rows, and gone on a phone. */
         .aichat { --ai-chrome: 10.6rem; --ai-foot: 7.1rem;
             display: flex; flex-direction: column;
-            height: calc(100dvh - var(--ai-chrome) - var(--ai-foot));
+            height: var(--ai-avail, calc(100dvh - var(--ai-chrome) - var(--ai-foot)));
             min-height: min(26rem, 60dvh); width: 100%; }
         @media (max-width: 1023px) { .aichat { --ai-foot: 5.6rem; } }
         /* Mobile: clear the fixed bottom tab bar so the composer + hint stay visible. */
@@ -70,6 +72,13 @@
            top padding + the toolbar row). Tuned by measurement. */
         html.sm-ai-open body { overflow: hidden; }
         html.sm-ai-open footer { display: none; }
+        @unless (request()->boolean('partial'))
+        {{-- On its own page this is an app screen and keeps the screen, as
+             the homepage technician does. Never emitted into the shell: this
+             stylesheet outlives the module that brought it, and a bare rule
+             would take the footer off the whole schedule. --}}
+        footer { display: none; }
+        @endunless
         html.sm-ai-open .aichat { --ai-chrome: 9.4rem; --ai-foot: 0rem; min-height: 0; }
         @media (min-width: 768px) { html.sm-ai-open .aichat { --ai-chrome: 10.4rem; } }
         /* Full-page mode only (the body class never reaches the shell's
@@ -80,7 +89,7 @@
             /* The chip row above this page is gone, so the chat takes the
                pixels it used to cost: 5.4rem is the app bar and main's top
                padding, measured. */
-            body.hide-tabbar .aichat { --ai-chrome: 5.4rem; --ai-foot: 0rem; margin-bottom: -1rem; }
+            body.hide-tabbar .aichat { --ai-chrome: 5.4rem; --ai-foot: 0rem; }
             body.hide-tabbar .aichat-composer { padding-bottom: calc(.3rem + env(safe-area-inset-bottom)); }
             body.hide-tabbar footer { display: none; }
         }
@@ -393,6 +402,8 @@
      row cost it a third of the first screen and the thread opened scrolled.
      The way back to the other modules is the arrow in the masthead, which
      goes to the hub. --}}
+
+@include('partials.ai-fit')
 
 <div class="ai-shell">
     {{-- Chat sessions rail (desktop; phones use the history sheet) --}}

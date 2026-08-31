@@ -44,7 +44,7 @@
         .ai-history-rail { display: none; }
         @media (min-width: 1024px) {
             .ai-history-rail { display: flex; flex-direction: column; position: sticky; top: 5rem;
-                max-height: calc(100dvh - 8.5rem); border: 1px solid var(--color-gray-100);
+                max-height: var(--ai-avail, calc(100dvh - 8.5rem)); border: 1px solid var(--color-gray-100);
                 border-radius: 1rem; background: var(--color-white); box-shadow: var(--shadow-card); overflow: hidden; }
         }
         .ai-history-rail .rail-head { display: flex; align-items: center; gap: .5rem; padding: .75rem .9rem .55rem; }
@@ -81,6 +81,11 @@
         /* Two numbers, named: what the page itself takes (app bar and main's
            paddings) and what the footer takes. The column is the rest.
 
+           They are the first frame only. partials/ai-fit measures the room
+           for real and writes --ai-avail, because a sum of constants cannot
+           know that the footer wrapped onto a second row of links, or that
+           the history rail beside the chat is the taller of the two.
+
            It used to be one number, 12.5rem, which was the page's chrome plus
            a guess — and the guess was a hundred pixels short of the footer, so
            a chat with nothing in it yet opened with a scrollbar. The footer is
@@ -91,7 +96,7 @@
            gap the footer holds itself away by (40). */
         .aichat { --ai-chrome: 12.1rem; --ai-foot: 7.1rem;
             display: flex; flex-direction: column;
-            height: calc(100dvh - var(--ai-chrome) - var(--ai-foot));
+            height: var(--ai-avail, calc(100dvh - var(--ai-chrome) - var(--ai-foot)));
             min-height: min(26rem, 60dvh); width: 100%; }
         @media (max-width: 1023px) { .aichat { --ai-foot: 5.6rem; } }
         /* On a phone this page IS the chat: the tab bar is hidden (body
@@ -99,10 +104,16 @@
            the column runs to the true bottom of the viewport — measured, so
            the composer sits ON the footer line instead of floating 115px
            above it. 6.3rem = app bar + main's top padding + one crumb line. */
+        /* This page is an app screen, not a document: it opens at the app
+           bar and ends at the composer. The footer under it is 145 pixels of
+           links plus the 40 it holds itself away by — a quarter of a laptop
+           window, which is what pushed the empty welcome into a scroll. The
+           phone has hidden it here since the day this was written; every
+           other width now does the same. */
+        footer { display: none; }
         @media (max-width: 767px) {
-            .aichat { --ai-chrome: 6.3rem; --ai-foot: 0rem; min-height: min(22rem, 55dvh); margin-bottom: -1rem; }
+            .aichat { --ai-chrome: 6.3rem; --ai-foot: 0rem; min-height: min(22rem, 55dvh); }
             .aichat-composer { padding-bottom: calc(.3rem + env(safe-area-inset-bottom)); }
-            footer { display: none; }
         }
         .aichat-thread { flex: 1 1 auto; overflow-y: auto; padding: .5rem .25rem 1.25rem; scroll-behavior: smooth; display: flex; flex-direction: column; scrollbar-width: thin; scrollbar-color: var(--color-gray-300) transparent; }
         .aichat-thread::-webkit-scrollbar { width: 6px; }
@@ -402,6 +413,8 @@
      screen reader when it changes. --}}
 <span id="aiCrumbCurrent" aria-live="polite"
       style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0">{{ $conversation && $messages->isNotEmpty() ? \Illuminate\Support\Str::limit($conversation->title, 40) : 'New question' }}</span>
+
+@include('partials.ai-fit')
 
 <div class="ai-layout">
 

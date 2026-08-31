@@ -15,7 +15,10 @@
      the surfaces that rebuild their welcome in JavaScript. --}}
 @once
 <style>
-    .anee-hello-film { position: relative; width: 100%; max-width: 22rem;
+    /* The width is a variable because on a short window the welcome around
+       it has nowhere to go: partials/ai-fit spends this before it lets the
+       first screen open with a scrollbar. */
+    .anee-hello-film { position: relative; width: 100%; max-width: var(--anee-film, 22rem);
         margin: .55rem auto .2rem; border-radius: .9rem; overflow: hidden;
         aspect-ratio: 16 / 9; background: #0d1408;
         box-shadow: 0 10px 26px -18px rgb(0 0 0 / .8); }
