@@ -11,7 +11,9 @@
 @section('page-title', $settings->assistantName . ', Your Smart Agricultural Technician')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'ai')
-@section('back', route('sm.hub', ['id' => $schedule->id]))
+{{-- Back to whatever opened this: the Activities shell with this pane
+     showing, or the schedule's hub. --}}
+@section('back', $backTo ?? route('sm.hub', ['id' => $schedule->id]))
 
 @push('head')
     <style>
@@ -808,7 +810,16 @@ const __init = () => {
         attach: @json(route('ai.photo.existing')),
         newConvo: @json(route('ai.conversation.new')),
         delConvo: (id) => @json(route('ai.conversation.delete')) + '?id=' + id,
-        page: @json(route('sm.ai', ['id' => $schedule->id])),
+        /* This module's own page.
+         *
+         * Starting a new chat and opening an old one both reload it, and this
+         * module is reachable two ways — on its own page, and as a pane inside
+         * the Activities shell. Without carrying where we are standing, that
+         * reload silently moves anybody who came through the shell out of it:
+         * same module, different chrome, and a back arrow pointing at the hub
+         * rather than at the board they were on. */
+        page: @json(route('sm.ai', ['id' => $schedule->id]))
+            + '&from=' + encodeURIComponent(location.pathname + location.search),
         credits: @json(route('ai.credits')),
         toNote: @json(route('ai.conversation.note')),
         rename: @json(route('ai.conversation.rename')),

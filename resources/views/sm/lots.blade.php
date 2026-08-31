@@ -567,7 +567,15 @@ const __init = () => {
      * and in the Gallery exactly as every other map save does. What comes
      * back to this card is two numbers and a link that opens the Maps app.
      */
-    const MAP_URL = @json(route('sm.lots.map', ['id' => $schedule->id]));
+    /* Where this pane is standing, so the map can send you back to it.
+     *
+     * The Lots module is reachable on its own page and as a pane inside the
+     * Activities shell. Without this the map's back arrow always returned to
+     * the standalone page, which moved anybody who came through the shell out
+     * of it — same module, different chrome, and a hamburger that no longer
+     * opened the modules sheet. */
+    const MAP_URL = @json(route('sm.lots.map', ['id' => $schedule->id]))
+        + '&from=' + encodeURIComponent(location.pathname + location.search);
 
     function lotCardHtml(lot) {
         // Same golden-angle hue the lot gets on its activity cards, so the colour

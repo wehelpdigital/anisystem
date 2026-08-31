@@ -745,12 +745,10 @@
         const closeSessMenus = () => { sessMenu?.classList.add('hidden'); };
         $('aiFloatMenuBtn')?.addEventListener('click', (e) => {
             e.stopPropagation();
-            taskMenu?.classList.add('hidden');
             sessMenu?.classList.toggle('hidden');
         });
         document.addEventListener('click', (e) => {
             if (sessMenu && !sessMenu.classList.contains('hidden') && !sessMenu.contains(e.target)) sessMenu.classList.add('hidden');
-            if (taskMenu && !taskMenu.classList.contains('hidden') && !taskMenu.contains(e.target)) taskMenu.classList.add('hidden');
         });
 
         function startFresh(say) {

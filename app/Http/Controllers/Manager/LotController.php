@@ -99,7 +99,23 @@ class LotController extends BaseScheduleController
             ->where('deleteStatus', 1)
             ->findOrFail((int) $request->query('lot'));
 
+        /* Where Back goes.
+         *
+         * Whatever opened this map said where it was standing, and that is
+         * where the arrow returns to — the shell with the Lots pane open, or
+         * the standalone Lots page, whichever it actually was.
+         *
+         * Only a path on this site is honoured. A `from` that can be anything
+         * is an open redirect wearing a back arrow, and it is one line to not
+         * have one.
+         */
+        $from = (string) $request->query('from', '');
+        $backTo = (str_starts_with($from, '/') && ! str_starts_with($from, '//'))
+            ? $from
+            : route('sm.lots', ['id' => $schedule->id]);
+
         return view('sm.lot-map', [
+            'backTo' => $backTo,
             'schedule' => $schedule,
             'lot' => $lot,
             // What the map itself needs to know about the errand: which lot,

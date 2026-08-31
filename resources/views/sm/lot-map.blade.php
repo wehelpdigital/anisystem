@@ -8,7 +8,9 @@
 @section('page-title', $lot->lotName)
 @section('page-subtitle', 'Where this lot is')
 @section('help-key', 'lots')
-@section('back', route('sm.lots', ['id' => $schedule->id]))
+{{-- Back to whatever opened this: the Activities shell with the Lots pane
+     showing, or the Lots page on its own. --}}
+@section('back', $backTo ?? route('sm.lots', ['id' => $schedule->id]))
 
 @push('head')
 <style>

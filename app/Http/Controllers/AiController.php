@@ -1016,7 +1016,14 @@ class AiController extends Controller
             : null;
         $conversation?->loadMissing('linkedActivity');
 
+        /* Where Back goes. Only a path on this site is honoured — a `from`
+         * that can be anything is an open redirect wearing a back arrow. */
+        $from = (string) $request->query('from', '');
+
         return view('sm.ai', [
+            'backTo' => (str_starts_with($from, '/') && ! str_starts_with($from, '//'))
+                ? $from
+                : route('sm.hub', ['id' => $schedule->id]),
             'aiGone' => $this->goneShots($conversation
                 ? $conversation->messages()->reorder('id', 'desc')->limit(60)->get()
                 : collect()),
