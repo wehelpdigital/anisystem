@@ -567,7 +567,7 @@
             @endphp
             <button type="button" class="ai-see" id="aiUsePlan" aria-pressed="false"
                     data-plan-tokens="{{ (int) ($planTokens ?? 0) }}"
-                    title="Sends this season — its crop, its lots and its activities — in front of the question">
+                    title="Sends this whole season in front of the question — where each lot stands today, the work done so far, the notes, the team and the store">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.4 1.8 1.8-5.4M9 20l11-11a2.83 2.83 0 10-4-4L5 16l4 4z"/></svg>
                 This season's plan
                 {{-- The price is on the switch, not in a footnote. Turning
@@ -599,7 +599,7 @@
                 {{-- What is left, under the button that spends it. An account that
                      rides free shows the sign for it rather than a number that
                      never moves. --}}
-                <span class="ai-bal" data-ai-bal>@if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b> left @endif</span>
+                <span class="ai-bal" data-ai-bal style="margin-top:0">@if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b> left @endif</span>
     </div>
 </div>
 </div>

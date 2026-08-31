@@ -17,8 +17,10 @@
        app's own green rather than a browser's grey bevel — it is a breath in
        a reply, not a border between two documents. */
     /* The balance, beside the price of the next answer. */
+    /* Beside the price where there is room, under it where there is not —
+       and centred either way, because the line it belongs to is centred. */
     .ai-bal { font-size: .68rem; font-weight: 700; color: var(--color-gray-400);
-        white-space: nowrap; }
+        white-space: nowrap; text-align: center; margin-top: .1rem; }
     .ai-bal b { font-weight: 900; color: var(--color-brand-700); }
     html.dark .ai-bal { color: #8ea37a; }
     html.dark .ai-bal b { color: #bfe19a; }

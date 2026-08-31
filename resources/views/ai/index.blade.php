@@ -531,7 +531,7 @@
                 {{-- What is left, under the button that spends it. An account that
                      rides free shows the sign for it rather than a number that
                      never moves. --}}
-                <span class="ai-bal" data-ai-bal>@if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b> left @endif</span>
+                <span class="ai-bal" data-ai-bal style="margin-top:0">@if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b> left @endif</span>
         </div>
     </div>
 </div>{{-- /.aichat --}}
