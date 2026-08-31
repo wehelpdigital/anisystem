@@ -1,5 +1,6 @@
 {{-- Anee's own faces, for the shortcodes she writes. --}}
 @include('partials.anee-emoji')
+@include('partials.ai-attach-task')
 {{--
     Floating AI-technician chat, available on every schedule page.
     Self-contained: pulls the AI settings + credit balance itself and talks to
@@ -20,11 +21,6 @@
     $aiFloatUnlimited = app(\App\Services\AiCreditService::class)->unlimited((int) auth()->id());
     // The menu's "save onto a task" picker — rendered with the page, since
     // the float already knows its schedule and tasks change rarely enough.
-    $aiFloatTasks = \App\Models\AsScheduleActivity::query()
-        ->where('croppingScheduleId', $schedule->id)
-        ->orderByDesc('targetDate')
-        ->limit(30)
-        ->get(['id', 'activityTitle', 'targetDate']);
 @endphp
 @if ($aiFloatSettings && $aiFloatSettings->isUsable())
 <div id="aiFloat" class="ai-float{{ request('module') === 'ai' ? ' ai-float-off' : '' }}">
@@ -80,17 +76,6 @@
                     </button>
                 </div>
                 {{-- Which task: rendered with the page, shown on ask. --}}
-                <div id="aiFloatTaskMenu" class="ai-float-attmenu is-belowright is-tall hidden">
-                    @forelse ($aiFloatTasks as $t)
-                        <button type="button" data-task="{{ $t->id }}">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            <span class="min-w-0"><span class="block truncate">{{ \Illuminate\Support\Str::limit($t->activityTitle ?: 'Task', 34) }}</span>
-                            <span class="block text-[0.62rem] text-gray-400">{{ $t->targetDate ? \Illuminate\Support\Carbon::parse($t->targetDate)->format('M j, Y') : 'no set date' }}</span></span>
-                        </button>
-                    @empty
-                        <p class="px-2 py-2 text-xs text-gray-400">No tasks on this schedule yet.</p>
-                    @endforelse
-                </div>
             </div>
             <button type="button" id="aiFloatClose" class="ai-float-icon" aria-label="Close">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -132,6 +117,10 @@
         <div class="ai-float-composer">
             <div id="aiFloatChips" class="ai-float-chips hidden"></div>
             <p class="ai-float-est hidden" id="aiFloatEst" aria-live="polite"></p>
+            {{-- What is left, under the button that spends it. An account
+                 that rides free shows the sign for it rather than a number
+                 that never moves. --}}
+            <p class="ai-bal ai-float-bal" data-ai-bal>@if ($aiFloatUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($aiFloatBalance ?? 0, 2), '0'), '.') }}</b> left @endif</p>
             <div id="aiFloatBusy" class="ai-float-busyline hidden" role="status">
                 <span class="sp" aria-hidden="true"></span><span class="tx">Attaching photo…</span>
             </div>
@@ -623,6 +612,13 @@
             thread.appendChild(el); scrollDown(); return el;
         }
         function setBalance(v) {
+            // Every place the number is written, including the one under the
+            // composer — an account watching its credits should not have to
+            // open a menu to see them move.
+            document.querySelectorAll('[data-ai-bal] b').forEach((el) => {
+                if (el.textContent.trim() === '\u221E') return;
+                el.textContent = (Math.round(Number(v) * 100) / 100).toString();
+            });
             const el = $('aiFloatBalance'); if (el) el.textContent = String(Math.round(v * 100) / 100);
             // A failed send already answers with a purchase card in the thread,
             // right where the user is looking — the banner on top of it said
@@ -745,8 +741,8 @@
 
         /* ---- The session menu: the past, a fresh start, two filings. ---- */
         const WELCOME_HTML = thread.innerHTML;   // the welcome, kept for "new session"
-        const sessMenu = $('aiFloatMenu'), taskMenu = $('aiFloatTaskMenu');
-        const closeSessMenus = () => { sessMenu?.classList.add('hidden'); taskMenu?.classList.add('hidden'); };
+        const sessMenu = $('aiFloatMenu');
+        const closeSessMenus = () => { sessMenu?.classList.add('hidden'); };
         $('aiFloatMenuBtn')?.addEventListener('click', (e) => {
             e.stopPropagation();
             taskMenu?.classList.add('hidden');
@@ -842,17 +838,31 @@
             finally { btn.disabled = false; btn.textContent = was; }
         });
         $('aiFloatToNote')?.addEventListener('click', () => { closeSessMenus(); fileAway(null); });
+        /* Onto a day, or onto a task on it.
+         *
+         * The little menu of this season's tasks is gone: it listed every job
+         * of the whole season at once and had no way to say "just this day".
+         * The shared sheet asks the day first, and the season is not asked at
+         * all because this button only exists inside one. */
         $('aiFloatToTask')?.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (!conversationId) { closeSessMenus(); toast('Nothing to save yet — ask something first, or open an old chat.', 'error'); return; }
-            sessMenu?.classList.add('hidden');
-            taskMenu?.classList.remove('hidden');
-        });
-        taskMenu?.addEventListener('click', (e) => {
-            const b = e.target.closest('[data-task]');
-            if (!b) return;
-            taskMenu.classList.add('hidden');
-            fileAway(parseInt(b.dataset.task, 10));
+            closeSessMenus();
+            if (!conversationId) { toast('Nothing to save yet — ask something first, or open an old chat.', 'error'); return; }
+            window.aiAttachOpen?.({
+                askSchedule: false,
+                scheduleId: SCHEDULE_ID,
+                save: async (a) => {
+                    const res = await api(URLS.toNote, { method: 'POST', body: {
+                        conversationId,
+                        scheduleId: a.scheduleId,
+                        activityId: a.activityId,
+                        noteDate: a.date,
+                        title: a.title,
+                        description: a.description,
+                    } });
+                    toast(res.message || 'Kept in the notebook.');
+                },
+            });
         });
         $('aiFloatAttUpload')?.addEventListener('click', () => { closeMenu(); $('aiFloatPhotoFiles')?.click(); });
         $('aiFloatAttCamera')?.addEventListener('click', () => { closeMenu(); $('aiFloatPhotoCam')?.click(); });

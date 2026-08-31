@@ -23,12 +23,11 @@
     $saiPerPhoto = (float) $saiSettings->creditsPerImage;
     $saiPerPhotoTxt = rtrim(rtrim(number_format($saiPerPhoto, 2), '0'), '.');
     $saiHintIdle = '≈ 4 credits per answer' . ($saiPerPhoto > 0 ? ' · +' . $saiPerPhotoTxt . ' per photo' : '');
+    // The room spends the OWNER's credits, so whether they run free is a
+    // question about the owner and not about whoever is reading.
+    $saiUnlimited = app(\App\Services\AiCreditService::class)
+        ->unlimited((int) $schedule->anisystemUserId);
     // The "attach to a task" picker, rendered with the page.
-    $saiTasks = \App\Models\AsScheduleActivity::query()
-        ->where('croppingScheduleId', $schedule->id)
-        ->orderByDesc('targetDate')
-        ->limit(30)
-        ->get(['id', 'activityTitle', 'targetDate']);
 @endphp
 <div class="sai-wrap" id="saiWrap" data-schedule="{{ $schedule->id }}">
     <div class="sai-layout">
@@ -116,6 +115,8 @@
                     </button>
                 </div>
                 <p class="sai-estimate" id="saiEstimate" data-idle="{{ $saiHintIdle }}">{{ $saiHintIdle }}</p>
+                {{-- The owner's pool, which is what this room spends. --}}
+                <p class="ai-bal" data-ai-bal>@if ($saiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>…</b> left @endif</p>
             </div>
         </div>
     </div>
@@ -168,23 +169,6 @@
     </div>
 </div>
 
-<div class="sheet hidden" id="saiTaskSheet" style="--sheet-width:22rem">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header">
-        <h3 class="sheet-title">Which task?</h3>
-        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
-    </div>
-    <div class="sheet-body space-y-1">
-        @forelse ($saiTasks as $saiTask)
-            <button type="button" class="sai-opt" data-sai-task="{{ $saiTask->id }}">
-                <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
-                <span class="min-w-0">{{ \Illuminate\Support\Str::limit($saiTask->activityTitle ?: 'Task', 40) }}<span class="sub">{{ $saiTask->targetDate ? \Illuminate\Support\Carbon::parse($saiTask->targetDate)->format('M j, Y') : 'no set date' }}</span></span>
-            </button>
-        @empty
-            <p class="text-sm text-gray-500 text-center py-6">No tasks on this schedule yet.</p>
-        @endforelse
-    </div>
-</div>
 
 <div class="sheet hidden" id="saiNoteSheet" style="--sheet-width:22rem">
     <div class="sheet-handle"></div>
@@ -570,7 +554,15 @@
             thread.appendChild(el); thinkingEl = el; scrollDown();
         }
         function clearThinking() { if (thinkingEl) { thinkingEl.remove(); thinkingEl = null; } }
-        function setBalance(v) { if (v !== undefined && v !== null) $('saiBalance').textContent = String(Math.round(v * 100) / 100); }
+        function setBalance(v) {
+            if (v === undefined || v === null) return;
+            $('saiBalance').textContent = String(Math.round(v * 100) / 100);
+            // And under the composer, where a farmer is actually looking.
+            document.querySelectorAll('[data-ai-bal] b').forEach((el) => {
+                if (el.textContent.trim() === '∞') return;
+                el.textContent = String(Math.round(v * 100) / 100);
+            });
+        }
 
         /* ---------- sessions sidebar ---------- */
         function renderSessions() {
@@ -815,12 +807,6 @@
         });
         // Bound on the sheet itself: openSheet moves it to <body>, out of this
         // partial's subtree, so a wrapper-level listener would never hear it.
-        $('saiTaskSheet').addEventListener('click', (e) => {
-            const b = e.target.closest('[data-sai-task]');
-            if (!b) return;
-            window.closeSheet?.('saiTaskSheet');
-            fileAway(parseInt(b.dataset.saiTask, 10));
-        });
         $('saiNoteSave').addEventListener('click', saveNote);
 
         /* The chips, and every door a photo comes through.

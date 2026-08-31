@@ -46,6 +46,26 @@
     html.dark .aiat-tag.is-set { background: rgb(107 159 61 / .16); border-color: var(--color-brand-600); color: #bfe19a; }
     @media (prefers-reduced-motion: reduce) { .aiat-tag { transition: none; } }
     .aiat-none { font-size: .78rem; color: var(--color-gray-400); padding: .4rem .1rem; }
+
+    /* The rows this sheet writes, styled here.
+       They borrowed .ai-attach-opt from the two AI PAGES, which the Collab
+       Room and the floating technician do not load — so in those two the
+       seasons ran into each other in one grey line. A shared sheet dresses
+       its own rows. */
+    #aiAtPickBody .ai-attach-opt { display: flex; align-items: center; gap: .55rem;
+        width: 100%; text-align: left; padding: .62rem .7rem; border-radius: .7rem;
+        border: 1px solid transparent; background: transparent; cursor: pointer;
+        font-size: .86rem; font-weight: 700; color: var(--color-gray-800);
+        transition: background .28s cubic-bezier(.22,1,.36,1),
+                    border-color .28s cubic-bezier(.22,1,.36,1); }
+    #aiAtPickBody .ai-attach-opt + .ai-attach-opt { margin-top: .2rem; }
+    #aiAtPickBody .ai-attach-opt:hover { background: var(--color-brand-50); border-color: var(--color-brand-100); }
+    #aiAtPickBody .ai-attach-opt .sub { display: block; margin-top: .1rem;
+        font-size: .72rem; font-weight: 600; color: var(--color-gray-400); }
+    html.dark #aiAtPickBody .ai-attach-opt { color: #e8efe1; }
+    html.dark #aiAtPickBody .ai-attach-opt:hover { background: rgb(107 159 61 / .16); border-color: #2b3a1c; }
+    html.dark #aiAtPickBody .ai-attach-opt .sub { color: #8ea37a; }
+    @media (prefers-reduced-motion: reduce) { #aiAtPickBody .ai-attach-opt { transition: none; } }
 </style>
 
 <div class="sheet hidden" id="aiAtSheet" style="--sheet-width:24rem">

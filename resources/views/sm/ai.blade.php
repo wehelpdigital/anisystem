@@ -373,11 +373,6 @@
     // same pattern the floating assistant already uses).
     $aiUnlimited = app(\App\Services\AiCreditService::class)->unlimited((int) auth()->id());
     // The menu's "attach to a task" picker, rendered with the page.
-    $aiPageTasks = \App\Models\AsScheduleActivity::query()
-        ->where('croppingScheduleId', $schedule->id)
-        ->orderByDesc('targetDate')
-        ->limit(30)
-        ->get(['id', 'activityTitle', 'targetDate']);
     // The real per-photo price, so the hint stays honest when several photos
     // ride on one question.
     $aiPerPhoto = (float) ($settings->creditsPerImage ?? 0);
@@ -768,23 +763,6 @@
 
 @include('partials.ai-attach-task')
 
-<div class="sheet hidden" id="aiTaskSheet" style="--sheet-width:22rem">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header">
-        <h3 class="sheet-title">Which task?</h3>
-        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
-    </div>
-    <div class="sheet-body space-y-1">
-        @forelse ($aiPageTasks as $t)
-            <button type="button" class="ai-attach-opt" data-ai-task="{{ $t->id }}">
-                <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
-                <span class="min-w-0">{{ \Illuminate\Support\Str::limit($t->activityTitle ?: 'Task', 40) }}<span class="sub">{{ $t->targetDate ? \Illuminate\Support\Carbon::parse($t->targetDate)->format('M j, Y') : 'no set date' }}</span></span>
-            </button>
-        @empty
-            <p class="text-sm text-gray-500 text-center py-6">No tasks on this schedule yet.</p>
-        @endforelse
-    </div>
-</div>
 
 <div class="sheet hidden" id="aiNoteSheet" style="--sheet-width:22rem">
     <div class="sheet-handle"></div>
@@ -1286,12 +1264,6 @@ const __init = () => {
                 toast(res.message || 'Kept in the notebook.');
             },
         });
-    });
-    document.addEventListener('click', (e) => {
-        const b = e.target.closest('[data-ai-task]');
-        if (!b) return;
-        window.closeSheet?.('aiTaskSheet');
-        aiFileAway(parseInt(b.dataset.aiTask, 10));
     });
     byId('aiNoteSave')?.addEventListener('click', async () => {
         const btn = byId('aiNoteSave');
