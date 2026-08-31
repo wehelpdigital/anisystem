@@ -87,7 +87,11 @@
         // one is the sheet itself, because the drawing is the whole point.
         ['Draw', 'draw', null,
             'M4 20l4-1L20 7a2 2 0 00-3-3L5 16l-1 4zM14 6l4 4'],
-        ['AI Technician', 'ai', null,
+        // "Chat Technician": on this shelf the tile beside it is a drawing
+        // pad and the one above it is a map, and "AI" named the machinery
+        // rather than the thing you do with it. What you do with it is chat
+        // to a technician.
+        ['Chat Technician', 'ai', null,
             'M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5'],
     ];
 @endphp

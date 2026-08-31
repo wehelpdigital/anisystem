@@ -262,7 +262,12 @@
 
         /* ===== Composer dock ===== */
         .aichat-composer { flex-shrink: 0; padding: .6rem 0 .1rem; background: linear-gradient(to top, var(--color-gray-50) 70%, transparent); }
-        .aichat-box { display: flex; align-items: flex-end; gap: .4rem; padding: .45rem; border-radius: 1.35rem; background: var(--color-white); border: 1.5px solid var(--color-gray-200); box-shadow: var(--shadow-card-lg); transition: border-color .15s ease, box-shadow .15s ease; }
+        /* The camera and the send button sit level with the writing.
+           They were pinned to the bottom of the box, which is right for a
+           composer that has grown to several lines and wrong for the one line it
+           is on nearly all the time: at rest the buttons hung below the middle of
+           a field they are supposed to belong to. */
+        .aichat-box { display: flex; align-items: center; gap: .4rem; padding: .45rem; border-radius: 1.35rem; background: var(--color-white); border: 1.5px solid var(--color-gray-200); box-shadow: var(--shadow-card-lg); transition: border-color .15s ease, box-shadow .15s ease; }
         .aichat-box:focus-within { border-color: var(--color-brand-500); box-shadow: 0 0 0 3px rgb(107 159 61 / .18), var(--shadow-card-lg); }
         .ai-cam { width: 2.75rem; height: 2.75rem; border-radius: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--color-brand-50); color: var(--color-brand-700); cursor: pointer; transition: background .15s ease; }
         .ai-cam:hover { background: var(--color-brand-100); }
@@ -597,11 +602,14 @@
             </button>
         </div>
         @php $aiHintIdle = '≈ 4 credits per answer' . ($aiPerPhoto > 0 ? ' · +' . $aiPerPhotoTxt . ' per photo' : ''); @endphp
-        <p class="ai-hint" id="aiHint" data-idle="{{ $aiHintIdle }}">{{ $aiHintIdle }}</p>
-                {{-- What is left, under the button that spends it. An account that
-                     rides free shows the sign for it rather than a number that
-                     never moves. --}}
-                <span class="ai-bal" data-ai-bal style="margin-top:0">@if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b> left @endif</span>
+        {{-- What the next answer costs and what is left to pay it with, on
+             one line: the two numbers only mean anything beside each other,
+             and the hint is a block, so left to itself the balance fell to a
+             line of its own at the far left of a centred composer. --}}
+        <div class="flex flex-wrap items-center justify-center gap-x-2">
+            <p class="ai-hint mt-0!" id="aiHint" data-idle="{{ $aiHintIdle }}">{{ $aiHintIdle }}</p>
+            <span class="ai-bal" data-ai-bal style="margin-top:0">@if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b> left @endif</span>
+        </div>
     </div>
 </div>
 </div>

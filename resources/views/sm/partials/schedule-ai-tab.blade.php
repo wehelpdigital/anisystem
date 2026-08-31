@@ -376,7 +376,12 @@
     .sai-opt .ic { width: 2.4rem; height: 2.4rem; border-radius: .8rem; flex-shrink: 0; display: flex;
         align-items: center; justify-content: center; background: var(--color-brand-50); color: var(--color-brand-700); }
     .sai-opt .sub { display: block; font-size: .72rem; font-weight: 600; color: var(--color-gray-400); }
-    .sai-box { display: flex; align-items: flex-end; gap: .25rem; border: 1.5px solid var(--color-gray-200); border-radius: 1.1rem; padding: .2rem .2rem .2rem .4rem; background: var(--color-white); }
+    /* The camera and the send button sit level with the writing.
+       They were pinned to the bottom of the box, which is right for a
+       composer that has grown to several lines and wrong for the one line it
+       is on nearly all the time: at rest the buttons hung below the middle of
+       a field they are supposed to belong to. */
+    .sai-box { display: flex; align-items: center; gap: .25rem; border: 1.5px solid var(--color-gray-200); border-radius: 1.1rem; padding: .2rem .2rem .2rem .4rem; background: var(--color-white); }
     .sai-box:focus-within { border-color: var(--color-brand-500); box-shadow: 0 0 0 3px rgb(107 159 61 / .18); }
     .sai-cam { width: 2.15rem; height: 2.15rem; border-radius: .7rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--color-brand-50); color: var(--color-brand-700); cursor: pointer; }
     .sai-cam:hover { background: var(--color-brand-100); }

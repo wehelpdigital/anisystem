@@ -21,6 +21,10 @@
        and centred either way, because the line it belongs to is centred. */
     .ai-bal { font-size: .68rem; font-weight: 700; color: var(--color-gray-400);
         white-space: nowrap; text-align: center; margin-top: .1rem; }
+    /* A dot between the price and the purse. Two numbers running together
+       read as one number, and the gap the row was meant to give them is not
+       there on every composer. */
+    .ai-bal::before { content: "·"; margin: 0 .4rem; opacity: .55; }
     .ai-bal b { font-weight: 900; color: var(--color-brand-700); }
     html.dark .ai-bal { color: #8ea37a; }
     html.dark .ai-bal b { color: #bfe19a; }

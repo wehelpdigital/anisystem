@@ -150,6 +150,17 @@ class AiController extends Controller
                 ->limit(20)
                 ->get(),
             'aiChrome' => $chrome,
+            /* Where Back goes. Only a path on this site is honoured — a
+             * `from` that can be anything is an open redirect wearing a back
+             * arrow. The homepage is the default because that is where both
+             * doors into this page are. */
+            'backTo' => (function () use ($request) {
+                $from = (string) $request->query('from', '');
+
+                return (str_starts_with($from, '/') && ! str_starts_with($from, '//'))
+                    ? $from
+                    : route('app.dashboard');
+            })(),
             'aiGone' => $this->goneShots($conversation
                 ? $conversation->messages()->reorder('id', 'desc')->limit(60)->get()
                 : collect()),

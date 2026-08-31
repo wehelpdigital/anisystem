@@ -1199,13 +1199,18 @@
                     <div class="card-body !p-4">
                         <div class="flex items-center justify-between gap-2 mb-2">
                             <div class="flex items-baseline gap-2 min-w-0">
+                                {{-- The same room the card above opens. The
+                                     sidebar used to lead to the fuller page —
+                                     the one that still offers Link and an
+                                     attach-a-plan button — so which door you
+                                     took decided what you got. --}}
                                 <h2 class="text-sm font-bold text-gray-900 shrink-0">🤖 AI Technician</h2>
                                 <a href="{{ route('ai.credits') }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 whitespace-nowrap" title="Buy AI credits">⚡ {{ number_format((int) $aiBalance) }}</a>
                             </div>
-                            <a href="{{ route('ai.index') }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 shrink-0">Open →</a>
+                            <a href="{{ route('ai.home') }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 shrink-0">Open →</a>
                         </div>
                         @if ($recentChats->isEmpty())
-                            <a href="{{ route('ai.index') }}" class="flex items-center gap-3 px-1 py-2 rounded-lg hover:bg-gray-50 transition">
+                            <a href="{{ route('ai.home') }}" class="flex items-center gap-3 px-1 py-2 rounded-lg hover:bg-gray-50 transition">
                                 <span class="text-2xl leading-none">💬</span>
                                 <div class="min-w-0">
                                     <p class="font-bold text-gray-900 text-sm">Start a conversation</p>
@@ -1215,7 +1220,7 @@
                         @else
                             <div class="divide-y divide-gray-100">
                                 @foreach ($recentChats as $chat)
-                                    <a href="{{ route('ai.index', ['c' => $chat->id, 'scheduleId' => $chat->croppingScheduleId]) }}" class="flex items-start gap-2.5 px-1 py-2.5 hover:bg-gray-50 transition">
+                                    <a href="{{ route('ai.home', ['c' => $chat->id]) }}" class="flex items-start gap-2.5 px-1 py-2.5 hover:bg-gray-50 transition">
                                         <span class="text-lg leading-none mt-0.5">💬</span>
                                         <div class="min-w-0">
                                             <p class="font-semibold text-gray-900 text-sm leading-snug line-clamp-1">{{ $chat->title ?: 'Untitled chat' }}</p>

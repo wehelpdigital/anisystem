@@ -7,6 +7,9 @@
 {{-- Her name, and what she is for. --}}
 @section('page-title', $settings->assistantName . ', Your Smart Agricultural Technician')
 @section('page-subtitle', 'Crop questions, answered')
+{{-- This page is reached from the homepage and from the credits page, and
+     had no way off it but the browser's own. --}}
+@section('back', $backTo ?? route('app.dashboard'))
 
 @php
     /* Which dress this page is wearing.
@@ -241,7 +244,12 @@
 
         /* --- Composer dock --- */
         .aichat-composer { flex-shrink: 0; padding: .6rem 0 .1rem; background: linear-gradient(to top, var(--color-gray-50) 70%, transparent); }
-        .aichat-box { display: flex; align-items: flex-end; gap: .4rem; padding: .45rem; border-radius: 1.35rem; background: var(--color-white); border: 1.5px solid var(--color-gray-200); box-shadow: var(--shadow-card-lg); transition: border-color .15s ease, box-shadow .15s ease; }
+        /* The camera and the send button sit level with the writing.
+           They were pinned to the bottom of the box, which is right for a
+           composer that has grown to several lines and wrong for the one line it
+           is on nearly all the time: at rest the buttons hung below the middle of
+           a field they are supposed to belong to. */
+        .aichat-box { display: flex; align-items: center; gap: .4rem; padding: .45rem; border-radius: 1.35rem; background: var(--color-white); border: 1.5px solid var(--color-gray-200); box-shadow: var(--shadow-card-lg); transition: border-color .15s ease, box-shadow .15s ease; }
         .aichat-box:focus-within { border-color: var(--color-brand-500); box-shadow: 0 0 0 3px rgb(107 159 61 / .18), var(--shadow-card-lg); }
         .ai-cam { width: 2.75rem; height: 2.75rem; border-radius: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--color-brand-50); color: var(--color-brand-700); cursor: pointer; transition: background .15s ease; }
         .ai-cam:hover { background: var(--color-brand-100); }
