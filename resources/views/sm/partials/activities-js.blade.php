@@ -234,6 +234,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const $qsa = (sel, root) => Array.from((root || document).querySelectorAll(sel));
     const money = (n) => '₱' + Number(n || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     const esc = window.escapeHtml;
+    /* A reading, said the way a farmer says it — the twin of
+       LotCalendar::says() in PHP. A tree counts in months underneath, but
+       "AGE 24" is twenty-four of nothing; two years is what anybody holds. */
+    const saysAge = (r) => {
+        if (!r) return '';
+        if (r.counter !== 'AGE') return ((r.counter || '') + ' ' + (r.day ?? '')).trim();
+        const m = Math.max(0, parseInt(r.day, 10) || 0);
+        const y = Math.floor(m / 12), rest = m % 12;
+        if (y < 1) return m + (m === 1 ? ' Month' : ' Months');
+        return y + (y === 1 ? ' Year' : ' Years') + (rest ? ' ' + rest + (rest === 1 ? ' Month' : ' Months') : '');
+    };
 
     const dayType = () => ($qs('.day-type-label')?.textContent || DAY_TYPE_DEFAULT).trim() || DAY_TYPE_DEFAULT;
 
@@ -559,7 +570,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="gs-emoji">${st.icon || '🌱'}</span>
                     <span class="grow min-w-0">
                         <span class="gs-lotname">${esc(r.lotName)}</span>
-                        <span class="gs-day block">${esc(st.cropLabel)} · ${r.counter} ${r.day}<span class="gs-fold-stage"> · ${esc(st.label)}</span></span>
+                        <span class="gs-day block">${esc(st.cropLabel)} · ${saysAge(r)}<span class="gs-fold-stage"> · ${esc(st.label)}</span></span>
                     </span>
                 </div>
                 <div class="gs-fold"><div class="gs-fold-inner">

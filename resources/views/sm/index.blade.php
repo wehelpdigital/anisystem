@@ -1013,7 +1013,13 @@
                                 </button>
                             @endif
                         </span>
-                        <span class="se-status"><i class="se-dot se-dot-{{ $s->status }}"></i>{{ $s->status }}</span>
+                        {{-- The status chip is gone. Its WORD was the first
+                             thing to give up its space when the row ran out,
+                             so on a phone all that was left was an orange dot
+                             with nothing to say it meant "setting up" — a mark
+                             beside a delete button that nobody could read. The
+                             state is on the card itself, where there is room
+                             to spell it. --}}
                         <span class="se-chev" aria-hidden="true">
                             <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                         </span>
@@ -1048,7 +1054,7 @@
                                     @foreach ($reads as $r)
                                         <div class="se-slide">
                                             <div class="se-read">
-                                                <span class="se-read-day">{{ $r['counter'] }} {{ $r['day'] }}</span>
+                                                <span class="se-read-day">{{ \App\Support\LotCalendar::says($r) }}</span>
                                                 @if ($r['stage'])
                                                     <span class="se-read-stage truncate">· {{ $r['stage'] }}</span>
                                                 @endif

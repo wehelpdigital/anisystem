@@ -61,6 +61,44 @@ class LotCalendar
      *
      * @return array{day:int, counter:string}|null
      */
+    /**
+     * A reading, said the way a farmer says it.
+     *
+     * An annual is "DAS 54" and always has been: the counter is the unit and
+     * the number is the answer. A tree is not — "AGE 24" is twenty-four of
+     * nothing, and the thing anybody actually holds about a mango is that it
+     * is two years old, or two years and three months.
+     *
+     * Written here rather than in each view because four surfaces print a
+     * reading and they have already disagreed once.
+     */
+    public static function says(?array $age): string
+    {
+        if (! $age) {
+            return '';
+        }
+        if (($age['counter'] ?? '') !== 'AGE') {
+            return trim(($age['counter'] ?? '') . ' ' . ($age['day'] ?? ''));
+        }
+
+        $months = max(0, (int) ($age['day'] ?? 0));
+        $years = intdiv($months, 12);
+        $rest = $months % 12;
+
+        if ($years < 1) {
+            return $months . ' ' . ($months === 1 ? 'Month' : 'Months');
+        }
+
+        $said = $years . ' ' . ($years === 1 ? 'Year' : 'Years');
+        // Only when there is a remainder: "2 Years 0 Months" is a form, not a
+        // sentence.
+        if ($rest > 0) {
+            $said .= ' ' . $rest . ' ' . ($rest === 1 ? 'Month' : 'Months');
+        }
+
+        return $said;
+    }
+
     public static function ageOf($lot, Carbon $on, ?Carbon $dayZero, ?Carbon $transplant): ?array
     {
         $mode = strtoupper((string) ($lot->dayType ?: 'DAT'));

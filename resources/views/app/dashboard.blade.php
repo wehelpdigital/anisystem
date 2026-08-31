@@ -129,47 +129,43 @@
     /* The play control is ours until the first press; after that the video's
        own controls take over, because a second set of them over a playing
        clip is a thing to fight with. */
-    /* The whole still is the button; the dot sits in the corner rather than
-       the middle, because dead centre is where her face is and a card that
-       introduces somebody should not open by covering them up. */
+    /* The whole still is the button and the dot sits in the bottom-left,
+       which on her closing frame is rice rather than her face. The reach is
+       the whole film because it is the only control there is: tap to start,
+       tap to stop, and nothing else on the picture at any point. */
     .dash-anee-play { position: absolute; inset: 0; display: flex; align-items: flex-end;
-        justify-content: flex-end; padding: .7rem; background: rgb(9 14 6 / .16); border: 0; cursor: pointer;
+        justify-content: flex-start; padding: .7rem; border: 0; cursor: pointer;
+        background: rgb(9 14 6 / .14);
         transition: background .28s cubic-bezier(.22, 1, .36, 1); }
-    .dash-anee-play:hover { background: rgb(9 14 6 / .06); }
+    .dash-anee-play:hover { background: rgb(9 14 6 / .05); }
     .dash-anee-playdot { display: flex; align-items: center; justify-content: center;
-        width: 3rem; height: 3rem; border-radius: 999px;
+        width: 2.8rem; height: 2.8rem; border-radius: 999px;
         background: var(--color-brand-600); color: #fff;
-        box-shadow: 0 6px 18px -6px rgb(0 0 0 / .6), 0 0 0 .35rem rgb(255 255 255 / .22);
-        transition: transform .28s cubic-bezier(.22, 1, .36, 1); }
+        box-shadow: 0 6px 18px -6px rgb(0 0 0 / .6), 0 0 0 .32rem rgb(255 255 255 / .22);
+        transition: transform .28s cubic-bezier(.22, 1, .36, 1),
+                    opacity .28s cubic-bezier(.22, 1, .36, 1); }
     .dash-anee-play:hover .dash-anee-playdot { transform: scale(1.06); }
-    .dash-anee-playdot svg { width: 1.25rem; height: 1.25rem; margin-left: .14rem; }
-    .dash-anee-tag { position: absolute; left: .6rem; top: .6rem; pointer-events: none;
-        display: inline-flex; align-items: center; border-radius: 999px;
-        padding: .22rem .6rem; font-size: .68rem; font-weight: 800; color: #fff;
-        background: rgb(9 14 6 / .5); backdrop-filter: blur(4px);
-        box-shadow: inset 0 0 0 1px rgb(255 255 255 / .18); }
-    /* Both step aside the moment it is playing. */
-    .dash-anee-play, .dash-anee-tag { opacity: 1;
-        transition: opacity .28s cubic-bezier(.22, 1, .36, 1), background .28s cubic-bezier(.22, 1, .36, 1); }
-    .dash-anee-film.is-playing .dash-anee-play,
-    .dash-anee-film.is-playing .dash-anee-tag { opacity: 0; pointer-events: none; }
+    .dash-anee-playdot svg { width: 1.2rem; height: 1.2rem; margin-left: .13rem; }
+    /* Playing: the tint and the dot go, the button stays. Not
+       pointer-events:none — with no player underneath, this press IS pause. */
+    .dash-anee-film.is-playing .dash-anee-play { background: transparent; }
+    .dash-anee-film.is-playing .dash-anee-playdot { opacity: 0; transform: scale(.86); }
     @media (prefers-reduced-motion: reduce) {
-        .dash-anee-play, .dash-anee-tag, .dash-anee-playdot { transition: none; }
+        .dash-anee-play, .dash-anee-playdot { transition: none; }
     }
 
-    .dash-anee-go { display: flex; align-items: center; justify-content: center; gap: .5rem;
-        margin-top: .85rem; padding: .7rem 1rem; border-radius: .85rem;
-        background: var(--color-brand-600); color: #fff;
-        font-size: .9rem; font-weight: 800; text-decoration: none;
+    /* The colour and the drift come from .sweep-fill.sweep-green in the
+       layout — the one place four buttons on three pages read it from, so
+       they cannot drift apart in the code while drifting together on the
+       screen. This adds only the shape. */
+    .dash-anee-go { display: flex; align-items: center; justify-content: center;
+        margin-top: .85rem; padding: .72rem 1rem; border-radius: .85rem;
+        font-size: .92rem; font-weight: 800; letter-spacing: .01em; text-decoration: none;
         box-shadow: 0 6px 16px -10px rgb(0 0 0 / .8);
-        transition: transform .28s cubic-bezier(.22, 1, .36, 1), background .28s cubic-bezier(.22, 1, .36, 1); }
-    .dash-anee-go:hover { background: var(--color-brand-700); transform: translateY(-1px); }
-    .dash-anee-go svg { width: 1.15rem; height: 1.15rem; flex: none; }
-    .dash-anee-go-x { width: .9rem !important; height: .9rem !important; opacity: .85;
         transition: transform .28s cubic-bezier(.22, 1, .36, 1); }
-    .dash-anee-go:hover .dash-anee-go-x { transform: translateX(.15rem); }
+    .dash-anee-go:hover { transform: translateY(-1px); }
     @media (prefers-reduced-motion: reduce) {
-        .dash-anee-go, .dash-anee-go-x { transition: none; }
+        .dash-anee-go { transition: none; }
         .dash-anee-go:hover { transform: none; }
     }
 
@@ -183,9 +179,41 @@
         .dash-anee-film { grid-column: 2; grid-row: 1 / span 2; }
     }
 
-    .dash-hero.is-waiting { opacity: 0; }
-    .dash-hero { opacity: 1; transition: opacity .5s cubic-bezier(.22, 1, .36, 1); }
-    @media (prefers-reduced-motion: reduce) { .dash-hero { transition: none; } }
+    /* Waiting on the forecast, out loud.
+       The greeting is held until the sky has been checked — otherwise it says
+       "Magandang umaga" and corrects itself to "Mabagyong umaga" a second
+       later, in front of somebody who has already read it. But an empty card
+       for that second is its own kind of wrong, so the card stays and says
+       what it is doing. The wait ends on every path: answered, refused, or
+       three and a half seconds gone. */
+    .dash-hero-load { position: absolute; inset: 0; z-index: 3;
+        display: flex; align-items: center; justify-content: center; gap: .6rem;
+        background: inherit; opacity: 0; pointer-events: none;
+        font-size: .84rem; font-weight: 800; color: #4c6b33;
+        transition: opacity .34s cubic-bezier(.22, 1, .36, 1); }
+    html.dark .dash-hero-load { color: #a8bd93; }
+    .dash-hero.is-waiting .dash-hero-load { opacity: 1; }
+    /* Three seeds, dropping in turn. Small, because this is a card saying
+       "one moment", not a page saying "something is wrong". */
+    .dash-hero-load i { width: .5rem; height: .5rem; border-radius: 999px;
+        background: currentColor; display: inline-block;
+        animation: heroSeed 1.05s ease-in-out infinite; }
+    .dash-hero-load i:nth-child(2) { animation-delay: .14s; }
+    .dash-hero-load i:nth-child(3) { animation-delay: .28s; }
+    @keyframes heroSeed {
+        0%, 70%, 100% { transform: translateY(0); opacity: .38; }
+        35% { transform: translateY(-.32rem); opacity: 1; }
+    }
+    /* What the card says once it knows, and does not say before. */
+    .dash-hero-mark, .dash-hero-body, .dash-hero-state {
+        transition: opacity .34s cubic-bezier(.22, 1, .36, 1); }
+    .dash-hero.is-waiting .dash-hero-mark,
+    .dash-hero.is-waiting .dash-hero-body,
+    .dash-hero.is-waiting .dash-hero-state { opacity: 0; }
+    @media (prefers-reduced-motion: reduce) {
+        .dash-hero-load, .dash-hero-load i,
+        .dash-hero-mark, .dash-hero-body, .dash-hero-state { transition: none; animation: none; }
+    }
     .dash-hero-mark { grid-column: 1; grid-row: 1 / -1; align-self: center;
         width: 3rem; height: 3rem; border-radius: 999px; flex-shrink: 0;
         display: inline-flex; align-items: center; justify-content: center;
@@ -452,6 +480,21 @@
        fold animation carries it, instead of the gap snapping away after. */
     .ds-card .card-body { gap: 0; }
     .ds-body { padding-top: .85rem; }
+    /* The one way in, the width of the card. */
+    .ds-open { display: flex; align-items: center; justify-content: center;
+        padding: .68rem 1rem; border-radius: .8rem;
+        font-size: .9rem; font-weight: 800; letter-spacing: .01em; text-decoration: none;
+        box-shadow: 0 6px 16px -10px rgb(0 0 0 / .8);
+        transition: transform .28s cubic-bezier(.22, 1, .36, 1); }
+    .ds-open:hover { transform: translateY(-1px); }
+    @media (prefers-reduced-motion: reduce) {
+        .ds-open { transition: none; }
+        .ds-open:hover { transform: none; }
+    }
+    /* Where "Open board" was: a fact, not a link, so it does not read as one. */
+    .dn-when-said { font-weight: 600; color: var(--color-gray-500); cursor: default; }
+    html.dark .dn-when-said { color: #a8bd93; }
+
     .ds-fold-wrap { display: grid; grid-template-rows: 1fr; min-height: 0; }
     .ds-card.is-folding .ds-fold-wrap { transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
     .ds-card.is-folded .ds-fold-wrap { grid-template-rows: 0fr; }
@@ -593,6 +636,12 @@
                 : ['Magandang gabi', 'tod-evening', 'gabi']);
     @endphp
     <div class="dash-hero is-waiting" id="dashHero">
+        {{-- Sits over the greeting while the sky is being checked, and takes
+             the card's own ground so there is no seam where it ends. --}}
+        <div class="dash-hero-load" aria-live="polite">
+            <i></i><i></i><i></i>
+            <span>Loading your day…</span>
+        </div>
         {{-- Your own field across the top of your own greeting, with the hour
              standing half over its edge the way a face stands on a profile.
              Only if you have set a cover: the home screen is the first thing
@@ -850,10 +899,30 @@
                                             <b>{{ $next['activities']->count() }} {{ \Illuminate\Support\Str::plural('task', $next['activities']->count()) }}</b>
                                             <i>@if ($next['isToday']) due today @else in {{ $next['daysAway'] }} {{ \Illuminate\Support\Str::plural('day', $next['daysAway']) }} @endif</i>
                                         </span>
-                                        <a class="dn-all" href="{{ route('sm.activities', ['id' => $schedule->id]) }}">
-                                            Open board
-                                            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                                        </a>
+                                        {{-- When it was last touched, where the
+                                             second way in used to be. The
+                                             shelf is ordered by this, so the
+                                             card should say it — and the one
+                                             button at the foot is now the
+                                             whole answer to "how do I get in".
+                                             --}}
+                                        @php
+                                            $touched = $schedule->lastTouchedAt
+                                                ? \Illuminate\Support\Carbon::parse($schedule->lastTouchedAt)
+                                                : $schedule->updated_at;
+                                            // abs(): this Carbon returns a SIGNED difference, and a
+                                            // season made in May came back as -147699 minutes, which
+                                            // is under two and made every card say "Created".
+                                            $madeToday = $touched && $schedule->created_at
+                                                && abs($touched->diffInMinutes($schedule->created_at)) < 2;
+                                        @endphp
+                                        <span class="dn-all dn-when-said">
+                                            @if ($touched && ! $madeToday)
+                                                Updated {{ $touched->timezone('Asia/Manila')->diffForHumans() }}
+                                            @else
+                                                Created {{ $schedule->created_at?->format('M j, Y') }}
+                                            @endif
+                                        </span>
                                     </div>
 
                                     {{-- One task is not a slider. More than one
@@ -942,32 +1011,35 @@
                                 </a>
                             @endif
 
-                            <div class="flex items-center justify-between gap-3 mt-auto pt-1">
-                                <div class="min-w-0 flex items-center gap-2 flex-wrap">
-                                    {{-- The shelf is ordered by this, so the card says it:
-                                         "why is that one on top" should be answerable
-                                         without opening either. Falls back to the day it
-                                         was made, for a season nobody has touched since. --}}
+                            {{-- One way in, the width of the card, on the same
+                                 drifting green the rest of the app's real
+                                 buttons ride. The status badge is gone with
+                                 the second link: "Setting up" beside a button
+                                 was a label nobody asked for, and the card
+                                 above it already says what is happening. --}}
+                            <div class="mt-auto pt-2">
+                                {{-- A season with nothing coming up has no
+                                     next-tasks heading to carry the fact, so it
+                                     says it here instead of not at all. --}}
+                                @unless ($next)
                                     @php
                                         $touched = $schedule->lastTouchedAt
                                             ? \Illuminate\Support\Carbon::parse($schedule->lastTouchedAt)
                                             : $schedule->updated_at;
-                                        // abs(): this Carbon returns a SIGNED difference, and
-                                        // a season made in May came back as -147699 minutes,
-                                        // which is under two and made every card say "Created".
                                         $madeToday = $touched && $schedule->created_at
                                             && abs($touched->diffInMinutes($schedule->created_at)) < 2;
                                     @endphp
-                                    <p class="text-xs text-gray-500 shrink-0">
+                                    <p class="text-xs text-gray-500 mb-2">
                                         @if ($touched && ! $madeToday)
                                             Updated {{ $touched->timezone('Asia/Manila')->diffForHumans() }}
                                         @else
                                             Created {{ $schedule->created_at?->format('M j, Y') }}
                                         @endif
                                     </p>
-                                    <span class="badge {{ $sBadge }} shrink-0">{{ $sLabel }}</span>
-                                </div>
-                                <a href="{{ route('sm.hub', ['id' => $schedule->id]) }}" class="btn btn-outline btn-sm shrink-0">Open</a>
+                                @endunless
+                                <a href="{{ route('sm.activities', ['id' => $schedule->id]) }}"
+                                   class="ds-open sweep-fill sweep-green"
+                                   style="--sw-t: 12s; --sw-d: -{{ $loop->index * 3 }}s">Open Activities</a>
                             </div>
                             </div>
                             </div>{{-- /.ds-fold-wrap --}}
@@ -1033,33 +1105,35 @@
                     </div>
                 </div>
 
-                {{-- The film. preload="none" so a homepage on mobile data does
-                     not fetch two megabytes nobody pressed play on; the poster
-                     is a still from the clip itself, so the card is her face
-                     rather than a black rectangle. --}}
+                {{-- The film, and no player at all.
+                     preload="none" so a homepage on mobile data does not fetch
+                     two megabytes nobody pressed play on. The poster is the
+                     clip's CLOSING frame, so the card wears the face she
+                     leaves you with — and it is the still the card returns to
+                     when the film ends, rather than a frozen tail. --}}
                 <div class="dash-anee-film" id="dashAneeFilm">
-                    {{-- No controls until it is playing: at rest this is a
-                         poster with one button on it, and a scrub bar and a
-                         fullscreen icon over a still nobody has pressed are
-                         two more things to read. The script adds them on the
-                         first press and never takes them away. --}}
                     <video id="dashAneeVid" class="dash-anee-vid" playsinline preload="none"
                            poster="{{ asset('videos/anee-intro-poster.webp') }}"
                            aria-label="{{ $aneeName }} introduces herself">
                         <source src="{{ asset('videos/anee-intro.mp4') }}" type="video/mp4">
                     </video>
+                    {{-- The only control there is. It shows as a dot in the
+                         corner and reaches across the whole still, so a tap
+                         anywhere starts it and anywhere stops it again. --}}
                     <button type="button" class="dash-anee-play" id="dashAneePlay" aria-label="Play the introduction">
                         <span class="dash-anee-playdot">
                             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
                         </span>
                     </button>
-                    <span class="dash-anee-tag" id="dashAneeTag">Meet {{ $aneeName }} · 0:10</span>
                 </div>
 
-                <a href="{{ $canUseAi ? route('ai.home') : route('purchase.plans') }}" class="dash-anee-go">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8M8 14h5m7-2a8 8 0 01-8 8H8l-4 3v-4.5A8 8 0 1120 12z"/></svg>
-                    {{ $canUseAi ? 'Ask ' . $aneeName : 'Unlock ' . $aneeName }}
-                    <svg class="dash-anee-go-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                {{-- The words alone, on the same drifting green four other
+                     buttons in this app already ride. An icon either side of
+                     three words was two decorations on the one thing the card
+                     is asking for. --}}
+                <a href="{{ $canUseAi ? route('ai.home') : route('purchase.plans') }}"
+                   class="dash-anee-go sweep-fill sweep-green" style="--sw-t: 13s; --sw-d: -4s">
+                    {{ $canUseAi ? 'Chat with ' . $aneeName : 'Unlock ' . $aneeName }}
                 </a>
             </section>
 
@@ -1873,18 +1947,31 @@
     const film = document.getElementById('dashAneeFilm');
     const vid = document.getElementById('dashAneeVid');
     if (!film || !vid) return;
-    const off = () => film.classList.add('is-playing');
-    const on = () => film.classList.remove('is-playing');
+    const hideDot = () => film.classList.add('is-playing');
+    const showDot = () => film.classList.remove('is-playing');
+
+    /* One press, two meanings, and no third control anywhere on the card. */
     document.getElementById('dashAneePlay')?.addEventListener('click', () => {
-        off();
-        vid.controls = true;
-        // A blocked autoplay policy rejects this; the clip's own controls are
-        // showing by then, so the press is not lost, only unhandled here.
-        vid.play?.().catch(() => on());
+        if (!vid.paused) { vid.pause(); return; }
+        hideDot();
+        // A blocked autoplay policy rejects this. Nothing else is listening,
+        // so the dot has to come back or the card is left looking pressed.
+        vid.play?.().catch(showDot);
     });
-    vid.addEventListener('play', off);
-    vid.addEventListener('pause', on);
-    vid.addEventListener('ended', on);
+
+    vid.addEventListener('play', hideDot);
+    vid.addEventListener('pause', showDot);
+
+    /* Ended: back to the still it started on.
+     *
+     * currentTime = 0 leaves the FIRST frame on screen, which is not the
+     * frame this card is built around. load() drops the decoded film and the
+     * poster comes back — the closing salute, exactly as it was before the
+     * press, so the card never sits on a frozen tail. */
+    vid.addEventListener('ended', () => {
+        showDot();
+        vid.load();
+    });
 })();
 </script>
 @endpush

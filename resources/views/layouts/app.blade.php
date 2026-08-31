@@ -533,6 +533,16 @@
                 <a href="{{ route('legal.show', ['slug' => 'about']) }}" class="text-gray-500 hover:text-brand-700 font-semibold">About</a>
             </nav>
         </div>
+        {{-- Who this was built by, and who for. Under the legal row rather
+             than beside it: it is not a link and it is not a term. --}}
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 pb-6 -mt-2">
+            <p class="text-xs text-gray-400 text-center sm:text-right flex items-center justify-center sm:justify-end gap-1.5">
+                Made with
+                <svg class="w-3.5 h-3.5 text-brand-600" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.9-9.6-9A5.6 5.6 0 0 1 12 6.3a5.6 5.6 0 0 1 9.6 5.7C19.5 16.1 12 21 12 21z"/></svg>
+                <span class="sr-only">love</span>
+                by Farmers for Farmers
+            </p>
+        </div>
     </footer>
 
     {{-- Mobile bottom tab bar --}}
