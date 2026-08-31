@@ -1140,7 +1140,16 @@
             @if (\App\Support\WorkerContext::canUseCommunity())
             <div>
                 <div class="flex items-center justify-between gap-3 mb-3 px-1">
-                    <h2 class="text-base md:text-lg font-bold text-gray-900">🏘️ Community Wall</h2>
+                    {{-- The signpost, drawn, in place of the house emoji.
+                         Sized in em so it follows the heading between the
+                         phone's size and the desk's, and aligned on the text
+                         rather than the line box so it sits ON the words. --}}
+                    <h2 class="text-base md:text-lg font-bold text-gray-900 flex items-center gap-2">
+                        <img src="{{ asset('images/community-post.png') }}" alt=""
+                             width="64" height="72"
+                             style="width:auto;height:1.15em;flex:none">
+                        Community Wall
+                    </h2>
                     <a href="{{ route('community.index') }}" class="text-sm font-bold text-brand-700 hover:underline shrink-0">See more</a>
                 </div>
 
