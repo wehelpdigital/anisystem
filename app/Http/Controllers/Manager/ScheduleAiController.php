@@ -113,6 +113,8 @@ class ScheduleAiController extends BaseScheduleController
         $validator = Validator::make($request->all(), [
             'sessionId' => 'required|integer',
             'activityId' => 'nullable|integer',
+            // A day, when the session belongs to one rather than to a job on it.
+            'noteDate' => 'nullable|date',
             'title' => 'nullable|string|max:180',
             'description' => 'nullable|string|max:2000',
         ]);
@@ -156,6 +158,12 @@ class ScheduleAiController extends BaseScheduleController
                 ? \Illuminate\Support\Carbon::parse($activity->targetDate)->format('M j, Y')
                 : 'no set date';
             $html .= '<p><em>Attached to the task "' . e($activity->activityTitle ?: 'Task') . '" (' . e($when) . ').</em></p>';
+        } elseif ($request->filled('noteDate')) {
+            // No task, but a day: said in the note, because a note filed under
+            // a date and not saying so is a note about nothing.
+            $html .= '<p><em>Kept for '
+                . e(\Illuminate\Support\Carbon::parse($request->input('noteDate'))->format('M j, Y'))
+                . '.</em></p>';
         }
         foreach ($msgs as $m) {
             $who = $m->role === 'assistant' ? 'AI Technician' : ($m->author?->full_name ?: 'Member');

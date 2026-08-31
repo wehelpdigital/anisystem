@@ -584,6 +584,10 @@
         </div>
         @php $aiHintIdle = '≈ 4 credits per answer' . ($aiPerPhoto > 0 ? ' · +' . $aiPerPhotoTxt . ' per photo' : ''); @endphp
         <p class="ai-hint" id="aiHint" data-idle="{{ $aiHintIdle }}">{{ $aiHintIdle }}</p>
+                {{-- What is left, under the button that spends it. An account that
+                     rides free shows the sign for it rather than a number that
+                     never moves. --}}
+                <span class="ai-bal" data-ai-bal>@if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b> left @endif</span>
     </div>
 </div>
 </div>
@@ -745,6 +749,8 @@
 </div>
 @endpush
 
+@include('partials.ai-attach-task')
+
 <div class="sheet hidden" id="aiTaskSheet" style="--sheet-width:22rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -788,7 +794,10 @@
 <button type="button" id="aiMenuBtn"
         class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full text-gray-500 hover:bg-gray-100 transition overflow-hidden"
         title="{{ $settings->assistantName }} options" aria-label="{{ $settings->assistantName }} options" aria-haspopup="dialog">
-        <img data-ai-face src="{{ $settings->faceUrl() }}" alt="" class="w-7 h-7 md:w-8 md:h-8 rounded-full object-cover">
+        {{-- Three dots, not her face. A portrait in a toolbar reads as "who"
+             and this button is "what can I do" — and the face is already on
+             every one of her answers below it. --}}
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg>
 </button>
 @endpush
 @endunless
@@ -901,6 +910,10 @@ const __init = () => {
     }
 
     function setBalance(v) {
+        document.querySelectorAll('[data-ai-bal] b').forEach((el) => {
+            if (el.textContent.trim() === '\u221E') return;
+            el.textContent = (Math.round(Number(v) * 100) / 100).toString();
+        });
         const balEl = byId('aiBalance');
         if (balEl) balEl.textContent = String(Math.round(v * 100) / 100);
         // Accounts that ride free never see the empty-wallet note.
@@ -1229,10 +1242,30 @@ const __init = () => {
         window.smFocus?.(byId('aiNoteTitle'), { delay: 120 });
     }
     byId('aiMenuToNote')?.addEventListener('click', () => { window.closeSheet?.('aiMenuSheet'); aiFileAway(null); });
+    /* Onto a day, or onto a task on it.
+     *
+     * The flat list of this season's tasks is gone: it offered every job of
+     * the whole season at once and had no way to say "just this day". The
+     * shared sheet asks the day first and then what on it, and the season is
+     * not asked at all because this page is standing in one. */
     byId('aiMenuToTask')?.addEventListener('click', () => {
         window.closeSheet?.('aiMenuSheet');
         if (!conversationId) { toast('Nothing to save yet — ask something first, or open an old chat.', 'error'); return; }
-        openSheet('aiTaskSheet');
+        window.aiAttachOpen?.({
+            askSchedule: false,
+            scheduleId: SCHEDULE_ID,
+            save: async (a) => {
+                const res = await api(URLS.toNote, { method: 'POST', body: {
+                    conversationId,
+                    scheduleId: a.scheduleId,
+                    activityId: a.activityId,
+                    noteDate: a.date,
+                    title: a.title,
+                    description: a.description,
+                } });
+                toast(res.message || 'Kept in the notebook.');
+            },
+        });
     });
     document.addEventListener('click', (e) => {
         const b = e.target.closest('[data-ai-task]');

@@ -511,6 +511,10 @@
         </div>
         <div class="flex items-center justify-center gap-2 mt-1.5">
                 <p class="ai-hint mt-0!" id="aiHint" data-idle="≈ 4 credits per answer{{ $aiPerPhoto > 0 ? ' · +' . $aiPerPhotoTxt . ' per photo' : '' }}">≈ 4 credits per answer{{ $aiPerPhoto > 0 ? ' · +' . $aiPerPhotoTxt . ' per photo' : '' }}</p>
+                {{-- What is left, under the button that spends it. An account that
+                     rides free shows the sign for it rather than a number that
+                     never moves. --}}
+                <span class="ai-bal" data-ai-bal>@if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b> left @endif</span>
         </div>
     </div>
 </div>{{-- /.aichat --}}
@@ -560,6 +564,8 @@
 
 {{-- The big green masthead is gone on the owner's ask; what it held lives
      behind one square button beside the bell. --}}
+@include('partials.ai-attach-task')
+
 @if ($aiChrome === 'home')
 {{-- Naming what is being kept, in the same words the floating technician
      uses for a season's notebook: a title, and why it was worth keeping.
@@ -600,6 +606,12 @@
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
             <span>Recent chats<span class="sub">Pick up an earlier question</span></span>
         </button>
+        {{-- Filing this chat onto a day or a task, from a page that is not
+             standing in a season — so the sheet asks which one. --}}
+        <button type="button" class="ai-attach-opt" id="aiMenuToTask">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></span>
+            <span>Attach to a task<span class="sub">File this chat onto a day, or a task on it</span></span>
+        </button>
         @if ($aiChrome === 'home')
             {{-- Keeping it. The season notebooks are not offered here because
                  this chat is not in a season — Global Notes is where the
@@ -629,7 +641,10 @@
 <button type="button" id="aiMenuBtn"
         class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full text-gray-500 hover:bg-gray-100 transition overflow-hidden"
         title="{{ $settings->assistantName }} options" aria-label="{{ $settings->assistantName }} options" aria-haspopup="dialog">
-        <img data-ai-face src="{{ $settings->faceUrl() }}" alt="" class="w-7 h-7 md:w-8 md:h-8 rounded-full object-cover">
+        {{-- Three dots, not her face. A portrait in a toolbar reads as "who"
+             and this button is "what can I do" — and the face is already on
+             every one of her answers below it. --}}
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg>
 </button>
 @endpush
 
@@ -653,6 +668,7 @@ const __init = () => {
     const URLS = {
         ask: @json(route('ai.ask')),
         globalNote: @json(route('ai.conversation.global-note')),
+        toNote: @json(route('ai.conversation.note')),
         photo: @json(route('ai.photo')),
         attach: @json(route('ai.photo.existing')),
         newConvo: @json(route('ai.conversation.new')),
@@ -780,6 +796,13 @@ const __init = () => {
     }
 
     function setBalance(value) {
+        // Every place the number is written, including the one under the
+        // composer — an account watching its credits should not have to open
+        // a menu to see them move.
+        document.querySelectorAll('[data-ai-bal] b').forEach((el) => {
+            if (el.textContent.trim() === '\u221E') return;
+            el.textContent = (Math.round(Number(value) * 100) / 100).toString();
+        });
         const balEl = byId('aiBalance');
         if (balEl) balEl.textContent = String(Math.round(value * 100) / 100);
         // Accounts that ride free never see the empty-wallet note.
@@ -1159,6 +1182,27 @@ const __init = () => {
         } catch (err) {
             window.toast?.(err.message || 'Could not save that note.', 'error');
         } finally { btn.disabled = false; }
+    });
+
+    /* Onto a day, or onto a task on it. The season is asked for here because
+       this page is not standing in one. */
+    byId('aiMenuToTask')?.addEventListener('click', () => {
+        window.closeSheet?.('aiMenuSheet');
+        if (!conversationId) { window.toast?.('Nothing to keep yet — ask something first, or open an old chat.', 'error'); return; }
+        window.aiAttachOpen?.({
+            askSchedule: true,
+            save: async (a) => {
+                const res = await api(URLS.toNote, { method: 'POST', body: {
+                    conversationId,
+                    scheduleId: a.scheduleId,
+                    activityId: a.activityId,
+                    noteDate: a.date,
+                    title: a.title,
+                    description: a.description,
+                } });
+                window.toast?.(res.message || 'Kept in the notebook.');
+            },
+        });
     });
 
     byId('aiMenuLink')?.addEventListener('click', () => {

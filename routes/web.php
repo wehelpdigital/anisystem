@@ -400,6 +400,9 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/ai-conversation-note', [App\Http\Controllers\AiController::class, 'saveToNote'])->name('ai.conversation.note');
     // The same chat, kept where a chat that belongs to no season belongs.
     Route::post('/app/ai-conversation-global-note', [App\Http\Controllers\AiController::class, 'saveToGlobalNote'])->name('ai.conversation.global-note');
+    // What the "attach to a task" sheet asks: which seasons, and what is on
+    // a day of one.
+    Route::get('/app/ai-attach-options', [App\Http\Controllers\AiController::class, 'attachOptions'])->name('ai.attach.options');
     // The technician, opened from the homepage: no season to attach, and the
     // notebook it keeps is the global one.
     Route::get('/app/ai-home', [App\Http\Controllers\AiController::class, 'home'])->name('ai.home');

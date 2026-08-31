@@ -3,6 +3,7 @@
 {{-- Rendered once so the Collab Room's JavaScript welcome can read the same
      markup the other three chats render directly. --}}
 <template id="saiHelloTpl">@include('partials.anee-hello-video')</template>
+@include('partials.ai-attach-task')
 {{-- Collab Room "AI Technician" tab: shared AI conversations for the team.
      A sessions sidebar (visible to everyone) lets the team keep several named
      threads; any member asks, the question broadcasts instantly and the answer
@@ -792,10 +793,25 @@
         /* ---------- keeping a session: the two doors ---------- */
         $('saiSaveSession').addEventListener('click', () => window.openSheet?.('saiSaveSheet'));
         $('saiSaveToNote').addEventListener('click', () => { window.closeSheet?.('saiSaveSheet'); fileAway(null); });
+        /* Onto a day, or onto a task on it — the same three questions the
+           other two chats ask, minus the season, which this room is in. */
         $('saiSaveToTask').addEventListener('click', () => {
             window.closeSheet?.('saiSaveSheet');
             if (!currentSession) { window.toast?.('Nothing to keep yet — ask something first.', 'error'); return; }
-            window.openSheet?.('saiTaskSheet');
+            window.aiAttachOpen?.({
+                askSchedule: false,
+                scheduleId: SCHEDULE_ID,
+                save: async (a) => {
+                    const r = await api(`${U.sessionNote}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: {
+                        sessionId: currentSession,
+                        activityId: a.activityId,
+                        noteDate: a.date,
+                        title: a.title,
+                        description: a.description,
+                    } });
+                    window.toast?.((r && r.message) || 'Saved to the schedule notebook.');
+                },
+            });
         });
         // Bound on the sheet itself: openSheet moves it to <body>, out of this
         // partial's subtree, so a wrapper-level listener would never hear it.

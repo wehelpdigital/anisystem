@@ -16,6 +16,12 @@
     /* The line she can draw between two parts of an answer. Soft, and the
        app's own green rather than a browser's grey bevel — it is a breath in
        a reply, not a border between two documents. */
+    /* The balance, beside the price of the next answer. */
+    .ai-bal { font-size: .68rem; font-weight: 700; color: var(--color-gray-400);
+        white-space: nowrap; }
+    .ai-bal b { font-weight: 900; color: var(--color-brand-700); }
+    html.dark .ai-bal { color: #8ea37a; }
+    html.dark .ai-bal b { color: #bfe19a; }
     .ai-rule { border: 0; height: 0; margin: .85em 0;
         border-top: 1px dashed rgb(107 159 61 / .38); }
     html.dark .ai-rule { border-top-color: rgb(168 204 126 / .3); }

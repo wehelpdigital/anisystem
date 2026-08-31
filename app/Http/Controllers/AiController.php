@@ -549,6 +549,8 @@ class AiController extends Controller
             'conversationId' => 'required|integer',
             'scheduleId' => 'required|integer',
             'activityId' => 'nullable|integer',
+            // A day, when the chat belongs to one rather than to a job on it.
+            'noteDate' => 'nullable|date',
             // The farmer names the note and may say why it was kept — the
             // transcript is the attachment, not the whole story.
             'title' => 'nullable|string|max:180',
@@ -603,6 +605,12 @@ class AiController extends Controller
                 ? \Illuminate\Support\Carbon::parse($activity->targetDate)->format('M j, Y')
                 : 'no set date';
             $html .= '<p><em>Attached to the task "' . e($activity->activityTitle ?: 'Task') . '" (' . e($when) . ').</em></p>';
+        } elseif ($request->filled('noteDate')) {
+            // No task, but a day: said in the note, because a note filed
+            // under a date and not saying so is a note about nothing.
+            $html .= '<p><em>Kept for '
+                . e(\Illuminate\Support\Carbon::parse($request->input('noteDate'))->format('M j, Y'))
+                . '.</em></p>';
         }
         foreach ($messages as $m) {
             $who = $m->role === 'assistant' ? $tech : 'You';
@@ -686,6 +694,48 @@ class AiController extends Controller
         ]);
 
         return $this->json(true, 'Saved to your Global Notes.', ['noteId' => $note->id]);
+    }
+
+    /**
+     * The seasons a chat may be filed into, and what is on a given day.
+     *
+     * Two questions the "attach to a task" sheet asks, answered from one
+     * door: with no date, the list of seasons; with one, that season's tasks
+     * on it. Both scoped the way every other read on this controller is.
+     */
+    public function attachOptions(Request $request)
+    {
+        $userId = (int) Auth::id();
+        $date = trim((string) $request->query('date'));
+        $scheduleId = (int) $request->query('scheduleId');
+
+        if (! $scheduleId) {
+            return $this->json(true, 'Seasons.', [
+                'schedules' => AsCroppingSchedule::active()->forClient($userId)
+                    ->orderByDesc('id')->limit(60)->get()
+                    ->map(fn ($s) => ['id' => $s->id, 'title' => $s->title])->all(),
+            ]);
+        }
+
+        $schedule = AsCroppingSchedule::active()->forClient($userId)->find($scheduleId);
+        if (! $schedule) {
+            return $this->json(false, 'That season is not yours.', [], 404);
+        }
+        if (! $date || ! strtotime($date)) {
+            return $this->json(true, 'Season.', ['tasks' => []]);
+        }
+
+        $day = date('Y-m-d', strtotime($date));
+        $tasks = \App\Models\AsScheduleActivity::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->whereDate('targetDate', $day)
+            ->orderBy('id')
+            ->limit(60)
+            ->get()
+            ->map(fn ($a) => ['id' => $a->id, 'title' => $a->activityTitle ?: 'Task'])
+            ->all();
+
+        return $this->json(true, 'Tasks.', ['tasks' => $tasks, 'date' => $day]);
     }
 
     public function deleteConversation(Request $request)
