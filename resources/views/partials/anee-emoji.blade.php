@@ -47,7 +47,15 @@
            A fixed baseline offset is a guess that is only right at one font
            size; middle puts the picture's midline on the text's own, which
            stays true whatever the bubble is set in. */
-        vertical-align: middle; margin: 0 .08em; }
+        vertical-align: middle;
+        /* Room of its own, above and below.
+           A line box grows to hold what is in it and not a pixel more, so a
+           face nearly two em tall in a line of one left two pixels between
+           its chin and the next line of writing. Vertical margin on an
+           inline-block counts toward the line box, so this is leading the
+           face brings with it — the neighbouring lines move apart, they are
+           not written over. */
+        margin: .3em .08em; }
     .anee-emo img { display: block; width: 100%; height: 100%; max-width: none; }
 
     /* ---- room to read -------------------------------------------------
