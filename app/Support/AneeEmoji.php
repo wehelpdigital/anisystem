@@ -144,8 +144,77 @@ class AneeEmoji
      * text and survives escaping unchanged, so this can go last and nothing a
      * model writes can reach the page as markup.
      */
+    /**
+     * Move every face in one block to an edge of it.
+     *
+     * A face already leading the block stays leading. Everything else goes to
+     * the end, in the order it was written — a face mid-sentence is nearly
+     * always a reaction to the clause it follows, and the end of that
+     * paragraph is the nearest honest place for it.
+     */
+    private static function arrange(string $inner): string
+    {
+        if (! preg_match_all('/:anee-[a-z]{2,14}:/', $inner, $m, PREG_OFFSET_CAPTURE)) {
+            return $inner;
+        }
+
+        $tokens = array_map(fn ($x) => $x[0], $m[0]);
+        // "Leading" means nothing but whitespace and inline opening tags
+        // stands before it — <strong> counts as nothing, a word does not.
+        $before = substr($inner, 0, $m[0][0][1]);
+        $leads = trim(strip_tags($before)) === '';
+
+        $rest = preg_replace('/:anee-[a-z]{2,14}:/', '', $inner);
+        // Tidy what the removals left: doubled spaces where a face sat
+        // between two words, and a space in front of the punctuation it
+        // was standing before.
+        $rest = preg_replace('/[ \t]{2,}/', ' ', (string) $rest);
+        $rest = preg_replace('/\s+([,.;:!?])/', '$1', (string) $rest);
+        // A face written inside emphasis leaves the emphasis behind with
+        // nothing in it, which renders as a stray gap.
+        $rest = preg_replace('#<(strong|b|em|i|u|span)>\s*</\1>#i', '', (string) $rest);
+        $rest = trim((string) $rest);
+
+        $head = $leads ? array_shift($tokens) : null;
+
+        return trim(($head ? $head . ' ' : '')
+            . $rest
+            . ($tokens ? ' ' . implode(' ', $tokens) : ''));
+    }
+
+    /**
+     * The same, over every block in a rendered answer.
+     *
+     * Paragraphs, list items and headings are the units: a face belongs to
+     * the thing it was written in, and moving one out of its own bullet into
+     * the end of the list would be moving it away from what it is about.
+     */
+    public static function toEdges(string $html): string
+    {
+        /* No block tags: this IS one block.
+         *
+         * The markdown renderer calls this one line at a time, before the
+         * paragraph tag is wrapped round it — so the common case has no <p>
+         * to find, and a rule that only knew how to look inside one did
+         * nothing at all. */
+        if (! preg_match('#<(p|li|h[1-6])\b#i', $html)) {
+            return self::arrange($html);
+        }
+
+        return (string) preg_replace_callback(
+            '#(<(p|li|h[1-6])\b[^>]*>)(.*?)(</\2>)#si',
+            fn ($m) => $m[1] . self::arrange($m[3]) . $m[4],
+            $html
+        );
+    }
+
     public static function render(string $html): string
     {
+        // To the edges first, then to pictures: arranging is done on the
+        // shortcodes, which are plain text and easy to move, rather than on
+        // the markup they become.
+        $html = self::toEdges($html);
+
         return (string) preg_replace_callback(
             '/:anee-([a-z]{2,14}):/',
             function ($m) {
@@ -153,9 +222,9 @@ class AneeEmoji
                     return $m[0];
                 }
 
-                // A span the size of a character, with the drawing hung off
-                // it. The line measures the span; the picture is out of flow,
-                // so a face never opens a canyon above the line it lands on.
+                // A span the size of a character, carrying its own leading
+                // so the lines around it move apart rather than being written
+                // over.
                 return '<span class="anee-emo"><img src="' . e(self::url($m[1]))
                     . '" alt="' . e(self::FACES[$m[1]]) . '" loading="lazy"></span>';
             },
@@ -181,10 +250,14 @@ class AneeEmoji
             . $block
             . "\n"
             . "How to wear them:\n"
+            . "  - AT THE START OR THE END OF A PARAGRAPH, never inside a\n"
+            . "    sentence. A face is punctuation: one on the way in, or one on\n"
+            . "    the way out. Mid-clause it splits the line it lands on and the\n"
+            . "    eye stops on it halfway through what you are saying.\n"
             . "  - Two or three in a reply that has two or three beats to it: the\n"
-            . "    reaction at the top, the turn in the middle, the warning at the\n"
-            . "    end. One is plenty for a short answer. None at all is fine for a\n"
-            . "    grave one.\n"
+            . "    reaction at the top, the turn at the end of a paragraph, the\n"
+            . "    warning at the end of the last. One is plenty for a short\n"
+            . "    answer. None at all is fine for a grave one.\n"
             . "  - Never the same face twice in one reply, and do not open every\n"
             . "    reply with the one you opened the last one with. :anee-smile: is\n"
             . "    not a default -- it is what you wear when nothing stronger fits.\n"

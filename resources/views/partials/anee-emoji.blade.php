@@ -96,6 +96,53 @@
     const BASE = @json(asset('images/anee/emoji'));
     const known = new Set(FACES);
 
+    const TOKEN = /:anee-[a-z]{2,14}:/g;
+
+    /**
+     * Move every face in one block to an edge of it — the twin of
+     * AneeEmoji::arrange() in PHP.
+     *
+     * A face already leading the block stays leading; everything else goes to
+     * the end, in the order it was written. A face mid-sentence is nearly
+     * always a reaction to the clause it follows, and the end of that
+     * paragraph is the nearest honest place for it.
+     */
+    const arrange = (inner) => {
+        const found = inner.match(TOKEN);
+        if (!found) return inner;
+
+        // "Leading" means nothing but whitespace and inline opening tags
+        // stands before it — <strong> counts as nothing, a word does not.
+        const at = inner.search(TOKEN);
+        const leads = inner.slice(0, at).replace(/<[^>]*>/g, '').trim() === '';
+
+        let rest = inner.replace(TOKEN, '')
+            .replace(/[ \t]{2,}/g, ' ')
+            .replace(/\s+([,.;:!?])/g, '$1')
+            // A face written inside emphasis leaves the emphasis behind with
+            // nothing in it, which renders as a stray gap.
+            .replace(/<(strong|b|em|i|u|span)>\s*<\/\1>/gi, '')
+            .trim();
+
+        const tokens = found.slice();
+        const head = leads ? tokens.shift() : null;
+
+        return ((head ? head + ' ' : '') + rest + (tokens.length ? ' ' + tokens.join(' ') : '')).trim();
+    };
+
+    /**
+     * The same, over every block: paragraphs, list items and headings.
+     *
+     * With no block tags in it the string IS one block — which is how the
+     * renderers that hand over a line at a time arrive here.
+     */
+    const toEdges = (html) => (/<(p|li|h[1-6])\b/i.test(html)
+        ? html.replace(
+            /(<(p|li|h[1-6])\b[^>]*>)([\s\S]*?)(<\/\2>)/gi,
+            (all, open, tag, inner, close) => open + arrange(inner) + close
+        )
+        : arrange(html));
+
     /**
      * Swap :anee-name: for the picture, in a string that is ALREADY escaped.
      *
@@ -104,7 +151,10 @@
      * a shortcode naming something unknown is simply left as text.
      */
     window.aneeEmoji = function (html) {
-        return String(html == null ? '' : html).replace(
+        // To the edges first, then to pictures: arranging is done on the
+        // shortcodes, which are plain text and easy to move, rather than on
+        // the markup they become.
+        return toEdges(String(html == null ? '' : html)).replace(
             /:anee-([a-z]{2,14}):/g,
             (all, name) => (known.has(name)
                 ? '<span class="anee-emo"><img src="' + BASE + '/' + name + '.png" alt="" loading="lazy"></span>'
