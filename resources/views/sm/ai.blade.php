@@ -1263,6 +1263,10 @@ const __init = () => {
         window.aiAttachOpen?.({
             askSchedule: false,
             scheduleId: SCHEDULE_ID,
+            // Said out loud on the sheet: this chat is inside a season, so it
+            // is not asked which one — but not being asked is not the same
+            // as not being told.
+            scheduleName: @json($schedule->title),
             save: async (a) => {
                 const res = await api(URLS.toNote, { method: 'POST', body: {
                     conversationId,

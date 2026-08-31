@@ -46,6 +46,17 @@
     html.dark .aiat-tag.is-set { background: rgb(107 159 61 / .16); border-color: var(--color-brand-600); color: #bfe19a; }
     @media (prefers-reduced-motion: reduce) { .aiat-tag { transition: none; } }
     .aiat-none { font-size: .78rem; color: var(--color-gray-400); padding: .4rem .1rem; }
+    /* A fact, not a control: no border, no chevron, nothing to press. */
+    .aiat-said { flex: 1 1 auto; min-width: 0; padding: .5rem .1rem;
+        font-size: .82rem; font-weight: 800; color: #2f5219;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    html.dark .aiat-said { color: #bfe19a; }
+    .aiat-hint { display: flex; align-items: flex-start; gap: .45rem;
+        font-size: .74rem; line-height: 1.5; color: var(--color-gray-500); }
+    .aiat-hint svg { width: .95rem; height: .95rem; flex: none; margin-top: .12rem; opacity: .7; }
+    .aiat-hint b { font-weight: 800; color: var(--color-gray-700); }
+    html.dark .aiat-hint { color: #8ea37a; }
+    html.dark .aiat-hint b { color: #cdd8c0; }
 
     /* The rows this sheet writes, styled here.
        They borrowed .ai-attach-opt from the two AI PAGES, which the Collab
@@ -83,6 +94,14 @@
                     <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>
             </div>
+            {{-- A chat inside a season is not asked which one. That is not a
+                 reason to leave it unsaid: somebody keeping a chat wants to
+                 know where it is going, and "the one you are in" is only
+                 obvious to whoever wrote the code. --}}
+            <div class="aiat-row" id="aiAtSchedSaidRow" hidden>
+                <b>Season</b>
+                <span class="aiat-said" id="aiAtSchedSaid"></span>
+            </div>
             <div class="aiat-row">
                 <b>Day</b>
                 <button type="button" class="aiat-tag" id="aiAtDate">
@@ -98,6 +117,14 @@
                 </button>
             </div>
         </div>
+
+        {{-- What happens if the last question is left alone. The sheet is
+             called "Attach to a task", so a day with no task on it looks like
+             an unfinished form rather than a choice — this says it is one. --}}
+        <p class="aiat-hint" id="aiAtHint" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 11v5M12 7.6v.9"/></svg>
+            <span>Pick a task to file this onto it. Choose <b>Save a note in this day</b>, or leave the task alone, and it is kept as a note on that day instead.</span>
+        </p>
 
         <div>
             <label class="form-label" for="aiAtTitle">Title</label>
@@ -147,11 +174,21 @@
 
     function draw() {
         byId('aiAtSchedRow').hidden = !cfg.askSchedule;
+        // Asked, or simply told — one of the two, never neither.
+        const told = !cfg.askSchedule && !!pick.scheduleName;
+        byId('aiAtSchedSaidRow').hidden = !told;
+        if (told) byId('aiAtSchedSaid').textContent = pick.scheduleName;
         setTag('aiAtSched', pick.scheduleName || 'Choose a season', !!pick.scheduleId);
         setTag('aiAtDate', pick.date ? niceDay(pick.date) : 'Pick a day', !!pick.date);
-        // The task tag exists only once there is a day to have tasks on.
-        byId('aiAtTaskRow').hidden = !(pick.scheduleId && pick.date);
-        setTag('aiAtTask', pick.activityId ? pick.activityName : (pick.date ? 'Select a task' : 'Select a task'),
+        // The task tag exists only once there is a day to have tasks on, and
+        // the line about what happens without one appears with it.
+        const askingTask = !!(pick.scheduleId && pick.date);
+        byId('aiAtTaskRow').hidden = !askingTask;
+        byId('aiAtHint').hidden = !askingTask;
+        // Optional, and said so: the resting state is a real choice, not an
+        // unanswered question.
+        setTag('aiAtTask', pick.activityId ? pick.activityName
+            : (pick.activityId === 0 ? 'This day' : 'Optional — keep it on the day'),
             pick.activityId !== null);
     }
 
@@ -244,7 +281,12 @@
     byId('aiAtGo')?.addEventListener('click', async () => {
         if (!pick.scheduleId) { window.toast?.('Choose a season first.', 'error'); return; }
         if (!pick.date) { window.toast?.('Pick a day first.', 'error'); return; }
-        if (pick.activityId === null) { window.toast?.('Choose a task, or "Save a note in this day".', 'error'); return; }
+        /* No task is an answer.
+         *
+         * It used to be refused, which made the sheet demand a job for a chat
+         * that was about a day — and a day with nothing scheduled on it has no
+         * job to offer. Left alone, it keeps the note on the day, which is
+         * what the line above the button says it will do. */
         const btn = byId('aiAtGo');
         btn.disabled = true;
         try {
