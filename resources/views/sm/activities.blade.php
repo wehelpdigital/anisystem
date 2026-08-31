@@ -2126,7 +2126,14 @@
            has actually landed (or immediately, for an unknown key). */
         body.module-booting #activitiesRoot,
         body.module-booting [data-activities-only] { display: none !important; }
+        /* Shown while .hidden is still on it — see the overlay rule below,
+           which is written to catch this case too. Without that it fell back
+           to a block in the ordinary flow: an overlay that ends halfway down
+           the page, with the half-built module either side of it. */
         body.module-booting #moduleLoader { display: flex !important; }
+        /* One wait, not two: the card is speaking, so the boot spinner does
+           not need to. */
+        body.module-booting::before { display: none; }
         /* THE WAIT COVERS THE PAGE, IT DOES NOT JOIN IT.
          *
          * This loader was a block in the ordinary flow, so it was laid out
@@ -2139,12 +2146,26 @@
          * Over the top, it cannot be underneath anything. And what is behind
          * it is free to be laid out, measured and settled while it is up,
          * which is the other half of why the card is held at all. */
-        #moduleLoader:not(.hidden) {
-            position: fixed; inset: 0; z-index: 240;
+        #moduleLoader:not(.hidden),
+        body.module-booting #moduleLoader {
+            position: fixed; inset: 0;
+            /* Above the booting sheet, which is 300 — otherwise the first
+               wait of all is a card behind a blank screen. */
+            z-index: 302;
             display: flex; align-items: center; justify-content: center;
             background: var(--color-gray-50);
         }
-        html.dark #moduleLoader:not(.hidden) { background: #0f140c; }
+        html.dark #moduleLoader:not(.hidden),
+        html.dark body.module-booting #moduleLoader { background: #0f140c; }
+        /* And the page holds still underneath it.
+           Fixed covers the viewport, which is only the whole story while
+           nobody scrolls: scroll a long page under a full-screen wait and you
+           are reading the thing the wait was covering. Held on both, because
+           either one can be the scroller depending on the page. */
+        html.mod-held, html.mod-held body { overflow: hidden; }
+        /* The first paint into a module wears its own sheet, and holds too. */
+        body.module-booting { overflow: hidden; }
+        html:has(body.module-booting) { overflow: hidden; }
         /* While booting, a plain page-coloured sheet with a spinner covers
            everything — the header retitling, the back button popping in, the
            chrome settling — so the first thing seen IS the module. Pseudo
@@ -4211,6 +4232,11 @@
             // as the wrong wait: "Loading Maps…" says what is actually coming.
             loaderLabel.textContent = 'Loading ' + (MODULES[key].label || '') + '…';
             loader.classList.remove('hidden');
+            // Nothing moves behind it. A page that scrolls under a full-screen
+            // wait is a page being read while it is still being built — and at
+            // the bottom of a long one the reader scrolls straight out from
+            // under the overlay and finds the half-made thing it was covering.
+            document.documentElement.classList.add('mod-held');
             // A different reminder each time, and the clock starts now.
             window.rollWaitLine?.(loader.querySelector('.bv-card'));
             host.classList.add('hidden');
@@ -4241,7 +4267,10 @@
                  * second and a very short one a further half — a floor on
                  * how long the card is up, never a delay added to real
                  * work. */
-                const hide = () => loader.classList.add('hidden');
+                const hide = () => {
+                    loader.classList.add('hidden');
+                    document.documentElement.classList.remove('mod-held');
+                };
                 if (window.waitCardRelease) window.waitCardRelease(loader, hide);
                 else hide();
             }

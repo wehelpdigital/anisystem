@@ -1727,8 +1727,20 @@ window.screenLoader = function screenLoader(label = 'Working…') {
     // reminder. Two different things, so they get two different places.
     el.querySelector('[data-loader-label]').textContent = label;
     el.classList.remove('hidden');
+    /* And the page holds still.
+     *
+     * The overlay is fixed, which covers the viewport — but only while
+     * nobody scrolls. This one is translucent, so scrolling under it drags
+     * the page past behind the glass, and at the end of a long page the
+     * reader arrives somewhere the overlay was never covering. */
+    document.documentElement.classList.add('load-held');
 
-    return { hide: () => el.classList.add('hidden') };
+    return {
+        hide: () => {
+            el.classList.add('hidden');
+            document.documentElement.classList.remove('load-held');
+        },
+    };
 };
 
 /* Animate a button (or toolbar item) that would otherwise snap in/out via a

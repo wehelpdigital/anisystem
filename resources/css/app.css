@@ -573,6 +573,9 @@ body.no-footer footer { display: none; }
     animation: screenLoaderIn .15s ease;
 }
 .screen-loader.hidden { display: none; }
+/* Nothing moves behind a blocking overlay. Held on both, because either the
+   root or the body can be the scroller depending on the page. */
+html.load-held, html.load-held body { overflow: hidden; }
 .screen-loader .spin {
     width: 2.75rem; height: 2.75rem; border-radius: 999px;
     border: 3.5px solid rgb(255 255 255 / .3); border-top-color: #fff;
