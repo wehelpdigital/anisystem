@@ -28,20 +28,23 @@
         border-top: 1px dashed rgb(107 159 61 / .38); }
     html.dark .ai-rule { border-top-color: rgb(168 204 126 / .3); }
 
-    /* A face is drawn at two and a half em and takes up one character.
-       An inline picture that size makes its whole line two and a half times
-       as tall, and the paragraph opens a canyon above it — which is what a
-       face mid-sentence used to do. So the LINE measures this anchor, one
-       character wide and one line tall, and the drawing hangs off it out of
-       flow: overflowing upward into leading that was already there, and a
-       hair below the baseline, touching neither the line above nor the one
-       below. Two em read; two and a half carries across a phone held at
-       arm's length in the sun, which is where these are looked at. */
-    .anee-emo { position: relative; display: inline-block;
-        width: 2.6em; height: 1.3em; vertical-align: -.22em; }
-    .anee-emo img { position: absolute; left: 50%; bottom: -.5em;
-        width: 2.5em; height: 2.5em; transform: translateX(-50%);
-        max-width: none; }
+    /* A face is a character, and it lives in the line like one.
+       It went two ways round before this. At two and a half em, in flow, it
+       made its own line two and a half times as tall and opened a canyon
+       above itself. Hung out of flow to close the canyon, it had to overflow
+       something — and what it overflowed was the line above, which on a tight
+       paragraph it landed on top of.
+       Neither, now: it is an ordinary inline box at a size the line can
+       actually carry. Where a face lands the line grows about a quarter of an
+       em — a breath, not a canyon — and because the line GROWS, there is no
+       direction left for it to overlap in. Text wraps around it the way it
+       wraps around a word.
+       Nineteen twentieths of an em rather than a full one: big enough to read
+       across a phone at arm's length in the sun, small enough that the line
+       still reads as a line of writing. */
+    .anee-emo { display: inline-block; width: 1.9em; height: 1.9em;
+        vertical-align: -.55em; margin: 0 .08em; }
+    .anee-emo img { display: block; width: 100%; height: 100%; max-width: none; }
 
     /* ---- room to read -------------------------------------------------
        Her answers are laid out now — paragraphs, steps, a rule between what
