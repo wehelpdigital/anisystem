@@ -86,7 +86,7 @@
        a picture and not what it is doing, which is the whole point of it.
        Two em is the smallest size where the expression reads at all. */
 </style>
-@include('partials.ai-lightbox')
+@include('partials.photo-lightbox')
 <script>
 (function () {
     if (window.aneeEmoji) return;
