@@ -86,6 +86,30 @@
          rather than renaming every push, so the next page to guess "styles"
          still works. --}}
     @stack('styles')
+    {{-- The note the page before this one left.
+         Read here, before a single pixel of this page is drawn, so the veil
+         it raised on the tap does not come down between the two — the seam
+         used to be a half-built page with a loading card sitting on it. The
+         body's own script takes it down once this page has actually painted. --}}
+    <script>
+        (() => {
+            let going = null;
+            try { going = sessionStorage.getItem('nav.going'); } catch (_) {}
+            if (!going) return;
+            // Stale notes are ignored: a tab reopened tomorrow on a restored
+            // session should not open behind a veil nobody raised.
+            if (Date.now() - (parseInt(going, 10) || 0) > 30000) {
+                try { sessionStorage.removeItem('nav.going'); } catch (_) {}
+                return;
+            }
+            document.documentElement.classList.add('nav-arriving', 'nav-held');
+        })();
+    </script>
+    <style>
+        /* The element is hidden in the markup, which is a display:none the
+           class cannot argue with — so the arriving state says so directly. */
+        html.nav-arriving .nav-loader[hidden] { display: flex; }
+    </style>
 </head>
 {{-- `body-class` lets a page opt into layout-level changes, e.g. the Collab
      Room hiding the mobile tab bar to use the full screen. --}}
@@ -581,6 +605,13 @@
            can never trap a tap behind an invisible sheet of glass. */
         .nav-loader.is-on { opacity: 1; pointer-events: auto; }
         html.dark .nav-loader { background: rgb(10 14 8 / .72); }
+        /* Nothing moves behind it. A page that scrolls under a veil is a page
+           being read before it is finished. */
+        html.nav-held, html.nav-held body { overflow: hidden; }
+        /* Arriving: straight on, no fade in. The veil was already up on the
+           page before this one, so fading it in here would be a blink. */
+        html.nav-arriving .nav-loader { opacity: 1; pointer-events: auto; transition: none; }
+        html.nav-arriving .nav-loader .bv-card { transform: none; opacity: 1; transition: none; }
         /* The card lifts in rather than appearing, so a fast navigation that
            never gets to show it does not flash a box at anybody. */
         .nav-loader .bv-card { transform: translateY(6px) scale(.98); opacity: 0;
@@ -637,14 +668,25 @@
          page in the app: a scene from the farm, a line, and the aside under
          it. A ring that turns says only "not broken yet"; this says what is
          happening and gives somebody something to read while it does. --}}
-    <div id="navLoader" class="nav-loader" hidden aria-hidden="true">
+    <div id="navLoader" class="nav-loader{{ '' }}" hidden aria-hidden="true">
         @include('sm.partials.wait-card')
     </div>
     <script>
         (() => {
             const veil = document.getElementById('navLoader');
             if (!veil) return;
-            const clear = () => { veil.classList.remove('is-on'); veil.hidden = true; };
+            const root = document.documentElement;
+            const clear = () => {
+                veil.classList.remove('is-on');
+                veil.hidden = true;
+                root.classList.remove('nav-held', 'nav-arriving');
+                try { sessionStorage.removeItem('nav.going'); } catch (_) {}
+            };
+            const raise = () => {
+                veil.hidden = false;
+                root.classList.add('nav-held');
+                requestAnimationFrame(() => veil.classList.add('is-on'));
+            };
             // A different line every time it goes up.
             const roll = () => { try { window.rollWaitLine?.(veil.querySelector('.bv-card')); } catch (_) {} };
             document.addEventListener('click', (e) => {
@@ -679,17 +721,44 @@
                 setTimeout(() => {
                     if (e.defaultPrevented) return;
                     roll();
-                    veil.hidden = false;
-                    requestAnimationFrame(() => veil.classList.add('is-on'));
+                    raise();
+                    /* A note for the page we are on our way to.
+                     *
+                     * It reads this before it draws anything and puts the
+                     * veil straight back up, so the seam between the two
+                     * pages is never a half-built one with a loading card
+                     * sitting on it. Session storage rather than a query
+                     * string: the note is about this tab, not about the URL,
+                     * and it must not survive into a shared link. */
+                    try { sessionStorage.setItem('nav.going', String(Date.now())); } catch (_) {}
                     // And if we are somehow still here — a handler that
                     // navigated by other means, a click that led nowhere —
                     // the veil gives up rather than sitting on the page.
                     setTimeout(clear, 5000);
                 }, 0);
             });
+            /* Arrived. The veil comes down when the page is actually ready
+             * to be looked at, not when the document says it exists: images
+             * and web fonts land after DOMContentLoaded, and a page that
+             * reflows under somebody's eyes is the thing this is for.
+             *
+             * Two frames after load, so the first paint is already on screen
+             * underneath before the veil starts going. And a ceiling, because
+             * one slow image must not hold the whole page hostage. */
+            const arrived = () => requestAnimationFrame(() => requestAnimationFrame(clear));
+            if (root.classList.contains('nav-arriving')) {
+                if (document.readyState === 'complete') arrived();
+                else window.addEventListener('load', arrived, { once: true });
+                setTimeout(clear, 4000);
+            }
+
             // Fired on every arrival including back/forward cache restores —
             // the one signal that always says "you can see the page again".
-            window.addEventListener('pageshow', clear);
+            // A restored page is already painted, so it clears at once.
+            window.addEventListener('pageshow', (e) => { if (e.persisted) clear(); });
+            // Leaving by any other road — a form post, a scripted assign —
+            // should raise it too rather than leave the page looking idle.
+            window.addEventListener('beforeunload', () => { try { sessionStorage.setItem('nav.going', String(Date.now())); } catch (_) {} });
         })();
     </script>
 
