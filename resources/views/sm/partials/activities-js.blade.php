@@ -5488,10 +5488,46 @@ document.addEventListener('DOMContentLoaded', () => {
     function saveCardOpen() {
         try { localStorage.setItem(CARD_OPEN_KEY, JSON.stringify([...CARD_OPEN])); } catch (_) { /* private mode */ }
     }
+    /* Only a touch board folds, and the pointer does not change halfway
+       through a session, so the question is asked once rather than on every
+       mutation the board makes. */
+    const CARDS_FOLD = window.matchMedia('(pointer: coarse)').matches;
     function applyCardCollapse() {
-        if (!window.matchMedia('(pointer: coarse)').matches) return;
-        $qsa('#activitiesList .activity-card[data-id]').forEach((c) => {
-            c.classList.toggle('act-collapsed', !CARD_OPEN.has(c.getAttribute('data-id')));
+        if (!CARDS_FOLD) return;
+        $qsa('#activitiesList .activity-card[data-id]').forEach(foldOne);
+    }
+    /* Only the cards that just arrived, once per frame.
+     *
+     * This ran a full pass over every card on the board for each batch of
+     * records the observer delivered — synchronously, inside the callback,
+     * touching every class list on the way. A drag across a long season did
+     * that dozens of times a second, and the pass is itself a DOM write, so
+     * the board was reading itself while it was still being written.
+     *
+     * The observer already knows which nodes appeared, and a card that was
+     * on the board a moment ago is already folded the way the set says. So
+     * the work is the arrivals, and there is at most one pass a frame. */
+    const COLLAPSE_NEW = new Set();
+    let COLLAPSE_PENDING = false;
+    function foldOne(card) {
+        card.classList.toggle('act-collapsed', !CARD_OPEN.has(card.getAttribute('data-id')));
+    }
+    function scheduleCardCollapse(records) {
+        if (!CARDS_FOLD) return;
+        for (const r of records) {
+            for (const node of r.addedNodes) {
+                if (node.nodeType !== 1) continue;
+                if (node.matches?.('.activity-card[data-id]')) COLLAPSE_NEW.add(node);
+                node.querySelectorAll?.('.activity-card[data-id]').forEach((c) => COLLAPSE_NEW.add(c));
+            }
+        }
+        if (!COLLAPSE_NEW.size || COLLAPSE_PENDING) return;
+        COLLAPSE_PENDING = true;
+        requestAnimationFrame(() => {
+            COLLAPSE_PENDING = false;
+            // A card can be gone again by the time the frame runs.
+            COLLAPSE_NEW.forEach((c) => { if (c.isConnected) foldOne(c); });
+            COLLAPSE_NEW.clear();
         });
     }
     /* The board holds its breath for the length of a fold — see the
@@ -5549,11 +5585,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // Re-rendered and freshly added cards fold according to the saved set —
     // without this every JS re-render came back fully expanded.
-    if (document.getElementById('activitiesList')) {
-        new MutationObserver(() => applyCardCollapse())
+    if (document.getElementById('activitiesList') && CARDS_FOLD) {
+        new MutationObserver(scheduleCardCollapse)
             .observe(document.getElementById('activitiesList'), { childList: true, subtree: true });
     }
     applyCardCollapse();
+
+    /* Refresh. The page is rebuilt from the same address, so the season,
+       the module and anything else the URL carries all survive; the browser
+       keeps the scroll position on a reload, so the day being read comes
+       back too. The spin is on the button rather than a toast, because the
+       answer arrives as a new page and a toast would not live to be read. */
+    $id('boardRefreshBtn')?.addEventListener('click', (e) => {
+        const btn = e.currentTarget;
+        btn.disabled = true;
+        btn.querySelector('svg')?.classList.add('animate-spin');
+        window.location.reload();
+    });
 
     // Long boards: one tap to either end.
     $id('actJumpTop')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));

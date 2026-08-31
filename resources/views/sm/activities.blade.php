@@ -3235,6 +3235,19 @@
                 <path d="M8.85 16.7v.01"/>
             </svg>
         </button>
+        {{-- Refresh: the board, freshly built.
+             A long session on a big season accumulates what a long session
+             accumulates — half-finished animations, a scroll position the
+             browser is still catching up with, sheets that have been opened
+             and closed thirty times. Rebuilding the page costs one read and
+             hands all of it back, which is what people already do by hitting
+             the browser's own reload; this puts it where the hand already is,
+             next to the Mirror. --}}
+        <button type="button" id="boardRefreshBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
+                title="Refresh — rebuild this board" aria-label="Refresh: rebuild this board">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M20 9A8 8 0 006.34 6.34M4 15a8 8 0 0013.66 2.66"/></svg>
+            <span class="hidden sm:inline">Refresh</span>
+        </button>
         <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative toolbar-in-menu" data-activities-only disabled title="Nothing to undo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
             <span class="hidden sm:inline">Undo</span>
