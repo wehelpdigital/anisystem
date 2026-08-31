@@ -249,14 +249,24 @@
            composer that has grown to several lines and wrong for the one line it
            is on nearly all the time: at rest the buttons hung below the middle of
            a field they are supposed to belong to. */
-        .aichat-box { display: flex; align-items: center; gap: .4rem; padding: .45rem; border-radius: 1.35rem; background: var(--color-white); border: 1.5px solid var(--color-gray-200); box-shadow: var(--shadow-card-lg); transition: border-color .15s ease, box-shadow .15s ease; }
+        /* The floating technician's measurements.
+           This one was drawn to fill a page it does not have — a camera the
+           size of a thumbnail, a send button with a word written on it, and a
+           radius to match — and on a phone it took the bottom of the screen
+           for a field holding one line. The float fits the same three things
+           into a keyboard's worth of room and nothing about it is cramped. */
+        .aichat-box { display: flex; align-items: center; gap: .25rem; padding: .25rem .25rem .25rem .4rem; border-radius: 1.1rem; background: var(--color-white); border: 1.5px solid var(--color-gray-200); box-shadow: var(--shadow-card-lg); transition: border-color .15s ease, box-shadow .15s ease; }
         .aichat-box:focus-within { border-color: var(--color-brand-500); box-shadow: 0 0 0 3px rgb(107 159 61 / .18), var(--shadow-card-lg); }
-        .ai-cam { width: 2.75rem; height: 2.75rem; border-radius: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--color-brand-50); color: var(--color-brand-700); cursor: pointer; transition: background .15s ease; }
+        .ai-cam { width: 2.25rem; height: 2.25rem; border-radius: .75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--color-brand-50); color: var(--color-brand-700); cursor: pointer; transition: background .15s ease; }
         .ai-cam:hover { background: var(--color-brand-100); }
         /* No scrollbar while the box is still growing — the autosize handler
            flips this to auto only once the text passes the max height. */
-        #aiInput { resize: none; max-height: 9rem; overflow-y: hidden; font-size: 1rem; }
-        #aiSendBtn { display: inline-flex; align-items: center; gap: .4rem; min-height: 2.9rem; padding: 0 1.1rem; border-radius: 999px; color: #fff; font-weight: 700; font-size: .92rem; background: linear-gradient(140deg, #6b9f3d, #3d6823); box-shadow: 0 4px 12px -3px rgb(45 80 22 / .5); transition: transform .15s ease, opacity .15s ease; flex-shrink: 0; }
+        #aiInput { resize: none; max-height: 6rem; overflow-y: hidden; font-size: .95rem; padding: .4rem .25rem; }
+        /* A round button with an arrow in it, as the float has: "Ask" was a
+           word taking the width of two more controls to say what the arrow
+           says. The label stays in the markup for a screen reader. */
+        #aiSendBtn { display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: 999px; color: #fff; background: linear-gradient(140deg, #6b9f3d, #3d6823); box-shadow: 0 2px 8px -2px rgb(45 80 22 / .5); transition: transform .15s ease, opacity .15s ease; flex-shrink: 0; }
+        #aiSendBtn .ai-send-label { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
         #aiSendBtn:hover:not(:disabled) { transform: scale(1.04); }
         #aiSendBtn:active:not(:disabled) { transform: scale(.95); }
         #aiSendBtn:disabled { opacity: .55; }
@@ -269,8 +279,7 @@
            box keeps its own line. */
         @media (max-width: 480px) {
             .ai-send-label { display: none; }
-            #aiSendBtn { padding: 0 .85rem; }
-            .ai-cam { width: 2.5rem; height: 2.5rem; border-radius: .85rem; }
+            /* Already the small size at every width — see above. */
             #aiInput { padding-left: .35rem; padding-right: .35rem; }
         }
         /* The attached plan, above the box. Reads as a thing carried with
