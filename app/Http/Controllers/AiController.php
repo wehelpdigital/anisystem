@@ -72,6 +72,49 @@ class AiController extends Controller
         return $this->page($request, 'home');
     }
 
+    /**
+     * Which of a thread's photos have been taken out of the Gallery.
+     *
+     * One file serves the chat and the Gallery, so retiring the gallery row
+     * is how a photo gets deleted — and the chat has to say so rather than
+     * showing a broken frame or, worse, a picture somebody believes they
+     * removed.
+     *
+     * One query for the whole thread: a season of daily questions is a lot of
+     * photos and none of this is worth a round trip each.
+     *
+     * @return array<string, true>
+     */
+    private function goneShots($messages): array
+    {
+        $paths = [];
+        foreach ($messages as $m) {
+            foreach ((array) ($m->imagePaths ?: ($m->imagePath ? [$m->imagePath] : [])) as $p) {
+                if (filled($p)) {
+                    $paths[] = (string) $p;
+                }
+            }
+        }
+        if (! $paths) {
+            return [];
+        }
+
+        $live = \App\Models\AsGalleryImage::whereIn('path', $paths)
+            ->where('deleteStatus', 1)
+            ->pluck('path')
+            ->all();
+        $known = \App\Models\AsGalleryImage::whereIn('path', $paths)
+            ->pluck('path')
+            ->all();
+
+        // Only a photo the Gallery has HEARD of can have been deleted from
+        // it: everything older than this feature was never filed, and is
+        // still perfectly good.
+        $gone = array_diff(array_unique($known), $live);
+
+        return array_fill_keys($gone, true);
+    }
+
     private function page(Request $request, string $chrome)
     {
         // AI is a Boss/Lifetime feature — Basic can't use it.
@@ -107,6 +150,9 @@ class AiController extends Controller
                 ->limit(20)
                 ->get(),
             'aiChrome' => $chrome,
+            'aiGone' => $this->goneShots($conversation
+                ? $conversation->messages()->reorder('id', 'desc')->limit(60)->get()
+                : collect()),
             // Offered nowhere in the home dress: the plan button already only
             // draws when there is something to offer, so an empty list is the
             // whole of "no season here".
@@ -364,10 +410,63 @@ class AiController extends Controller
             return $this->json(false, 'Photo upload failed: ' . $e->getMessage(), [], 500);
         }
 
+        /* And into the Gallery, where a photograph of this farm belongs.
+         *
+         * By reference: the row points at the file the chat is already
+         * holding, so the picture exists once on disk however many places
+         * show it. Into the season's gallery when the question was asked
+         * inside one, and into the global gallery when it was not. */
+        $this->fileInGallery($stored, (int) $request->input('scheduleId'));
+
         return $this->json(true, 'Photo attached.', [
             'path' => $stored,
             'url' => \App\Support\MediaStore::url($stored),
         ]);
+    }
+
+    /**
+     * Put a chat's photo in the Gallery, once.
+     *
+     * Quiet on failure by design: a gallery row is a convenience, and a
+     * farmer standing in a field waiting to ask a question should not be
+     * told their photo failed because a second table was busy.
+     */
+    private function fileInGallery(string $path, int $scheduleId = 0): void
+    {
+        try {
+            $userId = (int) Auth::id();
+            // The season's gallery when the question was asked inside one and
+            // the farm actually owns it; the global gallery otherwise.
+            $sid = 0;
+            if ($scheduleId > 0) {
+                $sid = (int) (AsCroppingSchedule::active()->forClient($userId)
+                    ->where('id', $scheduleId)->value('id') ?? 0);
+            }
+
+            $exists = \App\Models\AsGalleryImage::where('path', $path)
+                ->where('userId', $userId)
+                ->exists();
+            if ($exists) {
+                return;
+            }
+
+            \App\Models\AsGalleryImage::create([
+                // Loose in the gallery rather than in an album: the column has
+                // no default, and a photo taken to ask a question has not been
+                // filed anywhere yet by definition.
+                'albumId' => 0,
+                'croppingScheduleId' => $sid,
+                'userId' => $userId,
+                'path' => $path,
+                // Whose errand this picture was on. The caption is what a
+                // person reads in the Gallery under a photo they may not
+                // remember taking.
+                'caption' => 'Asked ' . (AiSetting::current()?->assistantName ?: 'Anee'),
+                'deleteStatus' => 1,
+            ]);
+        } catch (\Throwable $e) {
+            report($e);
+        }
     }
 
     /**
@@ -918,6 +1017,9 @@ class AiController extends Controller
         $conversation?->loadMissing('linkedActivity');
 
         return view('sm.ai', [
+            'aiGone' => $this->goneShots($conversation
+                ? $conversation->messages()->reorder('id', 'desc')->limit(60)->get()
+                : collect()),
             'schedule' => $schedule,
             'settings' => $settings,
             'balance' => $this->credits->balance($userId),

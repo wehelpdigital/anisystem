@@ -880,6 +880,9 @@
             chip._blob = preview;
             uploadsBusy++; sayAttaching();
             const form = new FormData(); form.append('image', file);
+            // Which season this photo belongs to, so it lands in that
+            // gallery rather than the global one.
+            try { form.append('scheduleId', String(SCHEDULE_ID)); } catch (_) {}
             api(U.photo, { method: 'POST', body: form })
                 .then((r) => { chip.dataset.path = r.data.path; chip.classList.remove('is-busy'); })
                 .catch((err) => { window.toast?.(err.message, 'error'); dropChip(chip); })

@@ -323,6 +323,13 @@
 
         /* --- Photos inside a bubble: one keeps its natural shape, two or
                more settle into a tidy square grid. --- */
+        /* A photo that used to be here. */
+        .ai-shot-gone { display: inline-flex; align-items: center; gap: .4rem;
+            padding: .5rem .7rem; border-radius: .6rem; margin-top: .4rem;
+            border: 1px dashed var(--color-gray-300); background: var(--color-gray-50);
+            font-size: .74rem; font-weight: 700; color: var(--color-gray-400); }
+        .ai-shot-gone svg { width: .95rem; height: .95rem; }
+        html.dark .ai-shot-gone { border-color: #2b3a1c; background: #151b12; color: #8ea37a; }
         .ai-shots { display: grid; gap: .35rem; margin-top: .4rem; }
         .ai-shots img { margin-top: 0; }
         .ai-shots.is-multi { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -449,7 +456,17 @@
                     @if ($mShots)
                         <div class="ai-shots {{ count($mShots) > 1 ? 'is-multi' : '' }}">
                             @foreach ($mShots as $mShot)
-                                <img src="{{ \App\Support\MediaStore::url($mShot) }}" alt="Attached photo">
+                                @if (! empty($aiGone[$mShot]))
+                                    {{-- Taken out of the Gallery, which is the
+                                         same file. The turn keeps its place and
+                                         says so. --}}
+                                    <span class="ai-shot-gone">
+                                        <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18M8.5 8.5A2 2 0 0011 11m10 6V7a2 2 0 00-2-2H9m-4 0a2 2 0 00-2 2v10a2 2 0 002 2h10"/></svg>
+                                        Photo deleted
+                                    </span>
+                                @else
+                                    <img src="{{ \App\Support\MediaStore::url($mShot) }}" alt="Attached photo">
+                                @endif
                             @endforeach
                         </div>
                     @endif
