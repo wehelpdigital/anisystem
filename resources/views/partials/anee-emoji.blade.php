@@ -25,6 +25,15 @@
        read as one number, and the gap the row was meant to give them is not
        there on every composer. */
     .ai-bal::before { content: "·"; margin: 0 .4rem; opacity: .55; }
+    /* Standing in a row of switches rather than under the composer: a pill
+       like its neighbours, quieter, and with nothing to press. The separator
+       dot goes — it was there to part it from a line of text it is no longer
+       part of. */
+    .ai-bal-chip { display: inline-flex; align-items: center; gap: .3rem;
+        padding: .2rem .5rem; border-radius: 999px; border: 1px solid var(--color-gray-200);
+        background: var(--color-white); white-space: nowrap; margin-top: 0; }
+    .ai-bal-chip::before { content: none; }
+    html.dark .ai-bal-chip { background: #151b12; border-color: #2b3a1c; }
     .ai-bal b { font-weight: 900; color: var(--color-brand-700); }
     html.dark .ai-bal { color: #8ea37a; }
     html.dark .ai-bal b { color: #bfe19a; }

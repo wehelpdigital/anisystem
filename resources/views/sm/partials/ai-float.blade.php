@@ -117,10 +117,6 @@
         <div class="ai-float-composer">
             <div id="aiFloatChips" class="ai-float-chips hidden"></div>
             <p class="ai-float-est hidden" id="aiFloatEst" aria-live="polite"></p>
-            {{-- What is left, under the button that spends it. An account
-                 that rides free shows the sign for it rather than a number
-                 that never moves. --}}
-            <p class="ai-bal ai-float-bal" data-ai-bal>@if ($aiFloatUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($aiFloatBalance ?? 0, 2), '0'), '.') }}</b> left @endif</p>
             <div id="aiFloatBusy" class="ai-float-busyline hidden" role="status">
                 <span class="sp" aria-hidden="true"></span><span class="tx">Attaching photo…</span>
             </div>
@@ -166,6 +162,11 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
                     This chat so far
                 </button>
+                {{-- What the wallet holds, at the end of the row that
+                     decides what the next answer costs. An account that
+                     rides free shows the sign for it rather than a number
+                     that never moves. --}}
+                <span class="ai-bal ai-bal-chip" data-ai-bal title="What is left in the wallet this chat spends from">Current credits @if ($aiFloatUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format(($aiFloatBalance ?? 0), 2), '0'), '.') }}</b>@endif</span>
             </div>
         </div>
     </div>

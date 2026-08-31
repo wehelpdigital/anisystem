@@ -113,10 +113,11 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
                         This thread so far
                     </button>
+                    {{-- The owner's pool, which is what this room spends, at
+                         the end of the row that decides what it spends. --}}
+                    <span class="ai-bal ai-bal-chip" data-ai-bal title="What is left in the wallet this chat spends from">Current credits @if ($saiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>…</b>@endif</span>
                 </div>
                 <p class="sai-estimate" id="saiEstimate" data-idle="{{ $saiHintIdle }}">{{ $saiHintIdle }}</p>
-                {{-- The owner's pool, which is what this room spends. --}}
-                <p class="ai-bal" data-ai-bal>@if ($saiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>…</b> left @endif</p>
             </div>
         </div>
     </div>

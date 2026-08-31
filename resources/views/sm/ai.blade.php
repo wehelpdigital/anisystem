@@ -599,6 +599,9 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
                 This chat so far
             </button>
+            {{-- What the wallet holds, at the end of the row that decides
+                 what the next answer costs. --}}
+            <span class="ai-bal ai-bal-chip" data-ai-bal title="What is left in the wallet this chat spends from">Current credits @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b>@endif</span>
         </div>
         <div class="aichat-box">
             <button type="button" class="ai-cam shrink-0" id="aiAttachBtn" title="Add photos" aria-label="Add photos" aria-haspopup="dialog">
@@ -613,14 +616,10 @@
             </button>
         </div>
         @php $aiHintIdle = '≈ 4 credits per answer' . ($aiPerPhoto > 0 ? ' · +' . $aiPerPhotoTxt . ' per photo' : ''); @endphp
-        {{-- What the next answer costs and what is left to pay it with, on
-             one line: the two numbers only mean anything beside each other,
-             and the hint is a block, so left to itself the balance fell to a
-             line of its own at the far left of a centred composer. --}}
-        <div class="flex flex-wrap items-center justify-center gap-x-2">
-            <p class="ai-hint mt-0!" id="aiHint" data-idle="{{ $aiHintIdle }}">{{ $aiHintIdle }}</p>
-            <span class="ai-bal" data-ai-bal style="margin-top:0">@if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b> left @endif</span>
-        </div>
+        {{-- What the next answer costs. What is left to pay it with moved
+             up to the switch row, where the things that change the price
+             are. --}}
+        <p class="ai-hint" id="aiHint" data-idle="{{ $aiHintIdle }}">{{ $aiHintIdle }}</p>
     </div>
 </div>
 </div>

@@ -558,10 +558,13 @@
         </div>
         <div class="flex items-center justify-center gap-2 mt-1.5">
                 <p class="ai-hint mt-0!" id="aiHint" data-idle="≈ 4 credits per answer{{ $aiPerPhoto > 0 ? ' · +' . $aiPerPhotoTxt . ' per photo' : '' }}">≈ 4 credits per answer{{ $aiPerPhoto > 0 ? ' · +' . $aiPerPhotoTxt . ' per photo' : '' }}</p>
-                {{-- What is left, under the button that spends it. An account that
-                     rides free shows the sign for it rather than a number that
-                     never moves. --}}
-                <span class="ai-bal" data-ai-bal style="margin-top:0">@if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b> left @endif</span>
+                {{-- What is left, under the button that spends it. This page
+                     has no row of switches to stand at the end of — nothing
+                     here changes what a question carries — so it keeps its
+                     place beside the price and says what it is. An account
+                     that rides free shows the sign for it rather than a
+                     number that never moves. --}}
+                <span class="ai-bal" data-ai-bal style="margin-top:0" title="What is left in the wallet this chat spends from">Current credits @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b>@endif</span>
         </div>
     </div>
 </div>{{-- /.aichat --}}
