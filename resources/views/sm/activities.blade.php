@@ -2126,7 +2126,25 @@
            has actually landed (or immediately, for an unknown key). */
         body.module-booting #activitiesRoot,
         body.module-booting [data-activities-only] { display: none !important; }
-        body.module-booting #moduleLoader { display: block !important; }
+        body.module-booting #moduleLoader { display: flex !important; }
+        /* THE WAIT COVERS THE PAGE, IT DOES NOT JOIN IT.
+         *
+         * This loader was a block in the ordinary flow, so it was laid out
+         * wherever it happened to sit — and the pane it was waiting for is
+         * shown the moment its fetch lands, while the card has a floor on how
+         * long it stays up. For the rest of that floor a finished module sat
+         * on screen with a loading card underneath it at the bottom of the
+         * page: a page that has plainly arrived, still saying it is coming.
+         *
+         * Over the top, it cannot be underneath anything. And what is behind
+         * it is free to be laid out, measured and settled while it is up,
+         * which is the other half of why the card is held at all. */
+        #moduleLoader:not(.hidden) {
+            position: fixed; inset: 0; z-index: 240;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--color-gray-50);
+        }
+        html.dark #moduleLoader:not(.hidden) { background: #0f140c; }
         /* While booting, a plain page-coloured sheet with a spinner covers
            everything — the header retitling, the back button popping in, the
            chrome settling — so the first thing seen IS the module. Pseudo
