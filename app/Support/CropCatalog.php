@@ -295,7 +295,7 @@ class CropCatalog
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 50, 'pattern' => 'cucurbit',
         ],
         'okra' => [
-            'label' => 'Okra (Okra)', 'icon' => '🌿', 'group' => 'Fruit vegetables',
+            'label' => 'Okra', 'icon' => '🌿', 'group' => 'Fruit vegetables',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 50, 'pattern' => 'fruiting',
         ],
         'chili' => [
@@ -392,7 +392,7 @@ class CropCatalog
             'counters' => ['DAP'],
         ],
         'papaya' => [
-            'label' => 'Papaya (Papaya)', 'icon' => '🫐', 'group' => 'Fruit trees',
+            'label' => 'Papaya', 'icon' => '🍈', 'group' => 'Fruit trees',
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 9,
         ],
         'mango' => [
@@ -432,7 +432,7 @@ class CropCatalog
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 96,
         ],
         'rambutan' => [
-            'label' => 'Rambutan (Rambutan)', 'icon' => '🍒', 'group' => 'Fruit trees',
+            'label' => 'Rambutan', 'icon' => '🍒', 'group' => 'Fruit trees',
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 60,
         ],
         'durian' => [
@@ -456,7 +456,7 @@ class CropCatalog
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 36,
         ],
         'santol' => [
-            'label' => 'Santol (Santol)', 'icon' => '🍑', 'group' => 'Fruit trees',
+            'label' => 'Santol', 'icon' => '🍑', 'group' => 'Fruit trees',
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 60,
         ],
         'starapple' => [
