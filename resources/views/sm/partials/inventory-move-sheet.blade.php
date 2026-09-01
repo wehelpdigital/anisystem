@@ -26,15 +26,39 @@
             <p class="form-hint" id="ivMoveHave"></p>
         </div>
 
+        {{-- SOMETHING NOT ON THE SHELF YET.
+             Chosen from the picker above, and only when stock is coming in —
+             a delivery of something the shed has never held before is an
+             ordinary Tuesday, and it used to be the one thing this sheet could
+             not record. The three questions are the same three the item form
+             asks, because it is the same item. --}}
+        <div id="ivMoveNewWrap" class="hidden rounded-xl border border-dashed border-gray-300 p-3 space-y-2.5">
+            <div>
+                <label for="ivMoveNewName" class="form-label text-xs! mb-1!">What is it? <span class="text-red-500">*</span></label>
+                <input type="text" id="ivMoveNewName" maxlength="150" class="form-input bg-white!" placeholder="e.g. Urea 46-0-0" autocomplete="off">
+            </div>
+            <div class="iv-newrow">
+                <div>
+                    <label for="ivMoveNewKind" class="form-label text-xs! mb-1!">Kind</label>
+                    <select id="ivMoveNewKind" class="form-select bg-white!">
+                        @foreach (\App\Models\AsInventoryItem::KINDS as $key => $k)
+                            <option value="{{ $key }}">{{ $k['icon'] }} {{ $k['label'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="ivMoveNewUnit" class="form-label text-xs! mb-1!">Counted in</label>
+                    <select id="ivMoveNewUnit" class="form-select bg-white!"></select>
+                </div>
+            </div>
+        </div>
+
         <div>
             <label for="ivMoveQty" class="form-label">How much? <span class="text-red-500">*</span></label>
             <div class="relative">
                 <input type="number" id="ivMoveQty" min="0" step="any" class="form-input" placeholder="0" inputmode="decimal">
                 <span class="iv-qty-u" id="ivMoveUnit"></span>
             </div>
-            {{-- A pack count beside the base amount as it is typed: somebody
-                 who thinks in bags should not have to do the fifties in their
-                 head to check they have not typed a zero too many. --}}
             <p class="form-hint" id="ivMovePacks"></p>
         </div>
 
@@ -58,7 +82,10 @@
 
 <style>
     .iv-qty-u { position: absolute; right: .8rem; top: 50%; transform: translateY(-50%);
-        font-size: .78rem; font-weight: 700; color: var(--color-gray-400); pointer-events: none; }
+        font-size: .78rem; font-weight: 700; color: var(--color-gray-400); pointer-events: none;
+        max-width: 45%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .iv-newrow { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    html.dark #ivMoveNewWrap { border-color: #3a4630; }
     /* Said, not refused. A farm can run into the negative on paper — the bag
        in the shed was opened last week and nobody wrote it down — and a form
        that will not let somebody record what actually happened just gets

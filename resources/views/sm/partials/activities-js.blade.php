@@ -4102,15 +4102,34 @@ document.addEventListener('DOMContentLoaded', () => {
      * asked before the name, because it is the question that decides what
      * the rest of the form means — and choosing fills the name and unit in,
      * since somebody who picked Urea off the shelf has already said both. */
-    function fillStockPicker() {
+    function fillStockPicker(waiting) {
         const sel = $id('itemStockPick');
         const wrap = $id('itemStockWrap');
         if (!sel || !wrap) return;
         const items = window.IV_ITEMS || [];
+
+        /* Still reading the shed.
+         *
+         * The question is SHOWN and says so, rather than staying hidden until
+         * the answer lands. Hidden-because-empty and hidden-because-not-here-yet
+         * look identical from the outside, and on a board busy enough to make
+         * the fetch take eight seconds the second one is what people meet —
+         * they open + Item, see no way to spend stock, and reasonably conclude
+         * there is none. */
+        if (waiting && !items.length) {
+            wrap.classList.remove('hidden');
+            sel.innerHTML = '<option value="">Reading the shed…</option>';
+            sel.disabled = true;
+            const hint = $id('itemStockHint');
+            if (hint) hint.textContent = 'Fetching what this season has in stock.';
+            return;
+        }
+
+        sel.disabled = false;
         // A picker with nothing in it is a question with no answers.
         wrap.classList.toggle('hidden', items.length === 0);
         sel.innerHTML = '<option value="">No — just list it on this activity</option>'
-            + items.map((i) => `<option value="${i.id}" data-unit="${esc(i.unit)}" data-name="${esc(i.name)}">${esc(i.icon + ' ' + i.name)} — ${esc(i.says)}</option>`).join('');
+            + items.map((i) => `<option value="${i.id}" data-unit="${esc(i.unitLabel || i.unit)}" data-name="${esc(i.name)}">${esc(i.icon + ' ' + i.name)} — ${esc(i.says)}</option>`).join('');
         sayStockPick();
         syncToShedVisibility();
     }
@@ -4332,6 +4351,28 @@ document.addEventListener('DOMContentLoaded', () => {
         finally { btn.disabled = false; }
     });
 
+    /**
+     * Make sure the shelf is here, and say so while it is not.
+     *
+     * Called twice: when the activity sheet opens, which is early enough that
+     * the round trip usually finishes while somebody is still typing a title,
+     * and again when the item panel is expanded, in case it has not. The
+     * second call is free when the first has already landed.
+     */
+    let shelfComing = null;
+    function ensureShelf() {
+        if (window.IV_ITEMS) { fillStockPicker(); return Promise.resolve(); }
+        fillStockPicker(true);
+        // One flight at a time: opening the panel while the sheet's own
+        // prefetch is still out must not start a second identical request on a
+        // board that is already short of connections.
+        shelfComing = shelfComing || (window.ivReload?.() ?? Promise.resolve());
+        return shelfComing
+            .then(() => fillStockPicker())
+            .catch(() => fillStockPicker())
+            .finally(() => { shelfComing = null; });
+    }
+
     $id('itemsToggleBtn')?.addEventListener('click', () => {
         const panel = $id('itemPickerPanel');
         const open = panel.classList.toggle('hidden');
@@ -4343,8 +4384,7 @@ document.addEventListener('DOMContentLoaded', () => {
                every board load: most activities never touch the inventory,
                and a farm's whole stock list on every page is a cost paid by
                everyone for the few who need it. */
-            (window.IV_ITEMS ? Promise.resolve() : (window.ivReload?.() ?? Promise.resolve()))
-                .then(fillStockPicker).catch(() => fillStockPicker());
+            ensureShelf();
             window.smFocus($id('itemNameInput'), { delay: 50 });
         }
     });
@@ -4447,6 +4487,8 @@ document.addEventListener('DOMContentLoaded', () => {
         refreshActivityModalLotState();
         markWorkerAvailability();
         openSheet('activitySheet');
+        // The shed, fetched while the title is still being typed.
+        ensureShelf();
     }
 
     async function openEditActivitySheet(id) {
@@ -4510,6 +4552,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             refreshActivityModalLotState();
             openSheet('activitySheet');
+        // The shed, fetched while the title is still being typed.
+        ensureShelf();
         } catch (err) {
             toast(err.message, 'error');
         }

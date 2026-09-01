@@ -24,6 +24,7 @@
             moveDelete: (id) => `{{ route('sm.inventory.move.delete') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
         };
         const KINDS = @json(\App\Models\AsInventoryItem::KINDS);
+        const UNITS = @json(\App\Models\AsInventoryItem::UNITS);
 
         let ITEMS = [];
         let MOVES = [];
@@ -36,13 +37,37 @@
             const v = Number(n) || 0;
             return (Math.round(v * 1000) / 1000).toLocaleString(undefined, { maximumFractionDigits: 3 });
         };
-        /** A quantity said the way the item is spoken about. */
-        const say = (item, qty) => {
-            const base = `${trim(qty)} ${item.unit}`;
-            if (!item.packSize || !item.packLabel) return base;
-            const packs = qty / item.packSize;
-            const word = Math.abs(Math.round(packs * 100) / 100) === 1 ? item.packLabel : item.packLabel + 's';
-            return `${trim(packs)} ${word} · ${base}`;
+        /**
+         * A unit as a word — "bags (50 kg)", "kg", "piece".
+         *
+         * The same list the model holds, so the two cannot drift into saying
+         * different things about the same stored value.
+         */
+        const unitSays = (key, singular) => {
+            const u = UNITS[key];
+            if (!u) return String(key || '');   // from before this list existed
+            const word = singular ? u.one : u.many;
+            return u.of ? `${word} (${u.of})` : word;
+        };
+
+        /** A quantity said the way the item is counted. */
+        const say = (item, qty) => `${trim(qty)} ${unitSays(item.unit, Math.abs(qty) === 1)}`;
+
+        /**
+         * Fill a unit dropdown with the units a kind is actually bought in.
+         *
+         * Which units appear follows from the kind — a fuel is not sold in
+         * sachets — and the first is the common answer, so it is already given.
+         */
+        const fillUnits = (sel, kind, want) => {
+            if (!sel) return;
+            const keys = KINDS[kind]?.units || Object.keys(UNITS);
+            // A unit already chosen stays offered even if the kind moved on,
+            // so switching kind to look at the list never silently rewrites
+            // what something is counted in.
+            if (want && !keys.includes(want) && UNITS[want]) keys.unshift(want);
+            sel.innerHTML = keys.map((k) => `<option value="${k}">${esc(unitSays(k, false))}</option>`).join('');
+            sel.value = want && keys.includes(want) ? want : keys[0];
         };
         const itemById = (id) => ITEMS.find((i) => String(i.id) === String(id)) || null;
 
@@ -146,41 +171,39 @@
         }));
 
         /* ---------------- the item sheet ---------------- */
+        /* The kind decides which units are on offer. Changing it refills the
+           list, keeping whatever was already chosen if that kind still sells
+           it — so opening the list to look is never a way to lose an answer. */
         function sayKind() {
             const k = $id('ivKind')?.value;
-            const hint = $id('ivKindHint');
-            if (!hint) return;
-            const units = KINDS[k]?.units || [];
-            hint.textContent = units.length ? `Usually counted in ${units.join(' or ')}.` : '';
-            // Nudge the unit to something sensible, but never overrule a
-            // choice already made — a farm may well count its seed in sacks.
             const unitSel = $id('ivUnit');
-            if (unitSel && !unitSel.dataset.touched && units[0]) unitSel.value = units[0];
+            if (unitSel) fillUnits(unitSel, k, unitSel.dataset.touched ? unitSel.value : null);
+            const hint = $id('ivKindHint');
+            if (hint) {
+                const first = (KINDS[k]?.units || [])[0];
+                hint.textContent = first ? `Usually counted in ${unitSays(first, false)}.` : '';
+            }
+            sayUnit();
+        }
+
+        /** The unit, echoed beside the box the opening count is typed into. */
+        function sayUnit() {
+            const u = $id('ivOpeningUnit');
+            if (u) u.textContent = unitSays($id('ivUnit')?.value, false);
         }
         $id('ivKind')?.addEventListener('change', sayKind);
-        $id('ivUnit')?.addEventListener('change', (e) => { e.currentTarget.dataset.touched = '1'; });
-
-        function sayPack() {
-            const size = Number($id('ivPackSize')?.value || 0);
-            const label = ($id('ivPackLabel')?.value || '').trim();
-            const unit = $id('ivUnit')?.value || 'kg';
-            const hint = $id('ivPackHint');
-            if (!hint) return;
-            hint.textContent = (size > 0 && label)
-                ? `One ${label} = ${trim(size)} ${unit}. The shelf will read both.`
-                : 'Leave both empty for something bought loose.';
-        }
-        ['ivPackSize', 'ivPackLabel', 'ivUnit'].forEach((id) => $id(id)?.addEventListener('input', sayPack));
+        $id('ivUnit')?.addEventListener('change', (e) => {
+            e.currentTarget.dataset.touched = '1';
+            sayUnit();
+        });
 
         function openItemSheet(item = null) {
             $id('ivItemTitle').textContent = item ? 'Edit item' : 'Add an item';
             $id('ivItemId').value = item ? item.id : '';
             $id('ivName').value = item ? item.name : '';
             $id('ivKind').value = item ? item.kind : 'granular';
-            $id('ivUnit').value = item ? item.unit : 'kg';
             $id('ivUnit').dataset.touched = item ? '1' : '';
-            $id('ivPackSize').value = item && item.packSize ? item.packSize : '';
-            $id('ivPackLabel').value = item && item.packLabel ? item.packLabel : '';
+            fillUnits($id('ivUnit'), item ? item.kind : 'granular', item ? item.unit : null);
             $id('ivLowAt').value = item && item.lowAt ? item.lowAt : '';
             $id('ivNote').value = item && item.note ? item.note : '';
             $id('ivOpening').value = '';
@@ -189,7 +212,6 @@
             // the In and Out buttons are for.
             $id('ivOpeningWrap').classList.toggle('hidden', !!item);
             sayKind();
-            sayPack();
             openSheet('ivItemSheet');
         }
 
@@ -212,8 +234,6 @@
                 name,
                 kind: $id('ivKind').value,
                 unit: $id('ivUnit').value,
-                packSize: $id('ivPackSize').value || null,
-                packLabel: $id('ivPackLabel').value.trim() || null,
                 lowAt: $id('ivLowAt').value || null,
                 note: $id('ivNote').value.trim() || null,
                 opening: id ? null : ($id('ivOpening').value || null),
@@ -229,40 +249,66 @@
         });
 
         /* ---------------- the move sheet ---------------- */
+        /** Is the sheet being used to invent an item rather than pick one? */
+        const movingNew = () => $id('ivMoveItem')?.value === '__new';
+
         function fillMovePicker(want) {
             const sel = $id('ivMoveItem');
             if (!sel) return;
-            sel.innerHTML = ITEMS.length
-                ? ITEMS.map((i) => `<option value="${i.id}">${esc(i.icon + ' ' + i.name)}</option>`).join('')
-                : '<option value="">Nothing on the shelf yet</option>';
-            if (want) sel.value = String(want);
+            const dir = $id('ivMoveDir')?.value || 'out';
+            const rows = ITEMS.map((i) => `<option value="${i.id}">${esc(i.icon + ' ' + i.name)}</option>`);
+            /* Stock arriving can be stock of something the shed has never held.
+               Stock leaving cannot: there is nothing to take it from. */
+            if (dir === 'in') rows.unshift('<option value="__new">➕ Something not on the shelf yet</option>');
+            sel.innerHTML = rows.length ? rows.join('') : '<option value="">Nothing on the shelf yet</option>';
+            // An empty shed answers its own question: the only thing that can
+            // happen is a first item.
+            sel.value = want ? String(want) : (ITEMS.length || dir !== 'in' ? sel.options[0]?.value ?? '' : '__new');
             sayMoveItem();
         }
 
         function sayMoveItem() {
-            const item = itemById($id('ivMoveItem')?.value);
+            const isNew = movingNew();
+            const item = isNew ? null : itemById($id('ivMoveItem')?.value);
             const have = $id('ivMoveHave');
             const unit = $id('ivMoveUnit');
-            if (unit) unit.textContent = item ? item.unit : '';
+
+            $id('ivMoveNewWrap')?.classList.toggle('hidden', !isNew);
+            if (isNew) fillUnits($id('ivMoveNewUnit'), $id('ivMoveNewKind')?.value, $id('ivMoveNewUnit')?.value);
+
+            const unitKey = isNew ? $id('ivMoveNewUnit')?.value : item?.unit;
+            if (unit) unit.textContent = unitKey ? unitSays(unitKey, false) : '';
             if (have) {
-                have.textContent = item
-                    ? (item.onHand > 0 ? `${say(item, item.onHand)} on hand.` : 'None on hand.')
-                    : 'Add something to the inventory first.';
+                have.textContent = isNew
+                    ? 'New to the shed. What you type below becomes its opening count.'
+                    : (item
+                        ? (item.onHand > 0 ? `${say(item, item.onHand)} on hand.` : 'None on hand.')
+                        : 'Nothing on the shelf yet — use Add new inventory first.');
             }
             sayMoveQty();
         }
 
         function sayMoveQty() {
-            const item = itemById($id('ivMoveItem')?.value);
+            const isNew = movingNew();
+            const item = isNew ? null : itemById($id('ivMoveItem')?.value);
             const qty = Number($id('ivMoveQty')?.value || 0);
-            const packs = $id('ivMovePacks');
+            const after = $id('ivMovePacks');
             const warn = $id('ivMoveWarn');
             const out = $id('ivMoveDir')?.value === 'out';
 
-            if (packs) {
-                packs.textContent = (item && item.packSize && item.packLabel && qty > 0)
-                    ? `That is ${trim(qty / item.packSize)} ${item.packLabel}${Math.abs(qty / item.packSize) === 1 ? '' : 's'}.`
-                    : '';
+            /* What the count will BE. "Have I enough" answered before the
+               button is pressed rather than after it, and it is the same
+               figure the Totals tab will show a second later. */
+            if (after) {
+                if (isNew && qty > 0) {
+                    const u = $id('ivMoveNewUnit')?.value;
+                    after.textContent = `It will start at ${trim(qty)} ${unitSays(u, Math.abs(qty) === 1)}.`;
+                } else if (item && qty > 0) {
+                    const now = item.onHand + (out ? -qty : qty);
+                    after.textContent = `After this: ${say(item, now)}.`;
+                } else {
+                    after.textContent = '';
+                }
             }
             /* Said, not refused. A farm can run into the negative on paper —
                the bag was opened last week and nobody wrote it down — and a
@@ -279,6 +325,11 @@
         }
         $id('ivMoveItem')?.addEventListener('change', sayMoveItem);
         $id('ivMoveQty')?.addEventListener('input', sayMoveQty);
+        $id('ivMoveNewKind')?.addEventListener('change', () => {
+            fillUnits($id('ivMoveNewUnit'), $id('ivMoveNewKind').value);
+            sayMoveItem();
+        });
+        $id('ivMoveNewUnit')?.addEventListener('change', sayMoveItem);
 
         /**
          * Open the move sheet.
@@ -300,6 +351,8 @@
             $id('ivMoveGo').textContent = dir === 'in' ? 'Add it' : 'Take it out';
             $id('ivMoveQty').value = '';
             $id('ivMoveNote').value = '';
+            const newName = $id('ivMoveNewName');
+            if (newName) newName.value = '';
             $id('ivMoveDate').value = o.date || new Date().toISOString().slice(0, 10);
             fillMovePicker(o.itemId);
             openSheet('ivMoveSheet');
@@ -309,21 +362,40 @@
         $id('ivMoveGo')?.addEventListener('click', async (e) => {
             const btn = e.currentTarget;
             const itemId = $id('ivMoveItem').value;
+            const isNew = itemId === '__new';
             const qty = Number($id('ivMoveQty').value || 0);
-            if (!itemId) { toast('Add something to the inventory first.', 'error'); return; }
+            const newName = isNew ? $id('ivMoveNewName').value.trim() : '';
+            if (!isNew && !itemId) { toast('Nothing on the shelf yet — add a new item first.', 'error'); return; }
+            if (isNew && !newName) { toast('What is it?', 'error'); $id('ivMoveNewName').focus(); return; }
             if (!(qty > 0)) { toast('How much?', 'error'); $id('ivMoveQty').focus(); return; }
             btn.disabled = true;
             try {
-                const res = await api(U.move, {
-                    method: 'POST',
-                    body: {
-                        itemId: Number(itemId),
-                        qty,
-                        direction: $id('ivMoveDir').value,
-                        on: $id('ivMoveDate').value || null,
-                        note: $id('ivMoveNote').value.trim() || null,
-                    },
-                });
+                /* Two errands, one button. A new item is created WITH what
+                   just arrived as its opening count, dated to the day this was
+                   opened from — one round trip, and the shed is never left
+                   holding a thing it has none of. */
+                const res = isNew
+                    ? await api(U.store, {
+                        method: 'POST',
+                        body: {
+                            name: newName,
+                            kind: $id('ivMoveNewKind').value,
+                            unit: $id('ivMoveNewUnit').value,
+                            opening: qty,
+                            on: $id('ivMoveDate').value || null,
+                            openingNote: $id('ivMoveNote').value.trim() || null,
+                        },
+                    })
+                    : await api(U.move, {
+                        method: 'POST',
+                        body: {
+                            itemId: Number(itemId),
+                            qty,
+                            direction: $id('ivMoveDir').value,
+                            on: $id('ivMoveDate').value || null,
+                            note: $id('ivMoveNote').value.trim() || null,
+                        },
+                    });
                 toast(res.message);
                 closeSheet('ivMoveSheet');
                 await load();

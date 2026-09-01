@@ -83,8 +83,11 @@ class InventoryController extends BaseScheduleController
                     'kindLabel' => $i->kindLabel(),
                     'icon' => $i->icon(),
                     'unit' => $i->unit,
-                    'packSize' => $i->packSize ? (float) $i->packSize : null,
-                    'packLabel' => $i->packLabel,
+                    // Said here, not worked out there: the browser prints the
+                    // unit in four places and none of them should own a second
+                    // copy of the vocabulary.
+                    'unitLabel' => $i->unitLabel(),
+                    'unitOne' => AsInventoryItem::unitSays($i->unit, true),
                     'lowAt' => $i->lowAt ? (float) $i->lowAt : null,
                     'note' => $i->note,
                     'onHand' => $have,
@@ -103,7 +106,7 @@ class InventoryController extends BaseScheduleController
             'itemId' => $m->itemId,
             'itemName' => $m->item->name ?? 'Removed item',
             'icon' => $m->item?->icon() ?? '📦',
-            'unit' => $m->item->unit ?? '',
+            'unit' => $m->item ? $m->item->unitLabel() : '',
             'delta' => (float) $m->delta,
             'before' => (float) $m->qtyBefore,
             'after' => (float) $m->qtyAfter,
@@ -138,10 +141,29 @@ class InventoryController extends BaseScheduleController
          * Nobody adds Urea to a list in order to say they have none of it. */
         $opening = (float) $request->input('opening', 0);
         if ($opening > 0) {
-            $this->stock->move($item, $opening, AsInventoryMove::OPEN, null, 'Opening stock');
+            /* Two different notes, and they must not be the same one.
+             * `note` is about the THING — where it is kept, which supplier —
+             * and stays on it all season. `openingNote` is about this one
+             * arrival, and belongs in the log line beside it. The move sheet
+             * sends the second; the item form sends the first. */
+            $this->stock->move(
+                $item,
+                $opening,
+                AsInventoryMove::OPEN,
+                $request->input('on'),
+                /* Null, not "Opening stock". The reason column already says
+                 * that, and the log line prints both — so the default spelled
+                 * itself out twice on the same row. */
+                trim((string) $request->input('openingNote')) ?: null,
+            );
         }
 
-        return $this->jsonOk('Added to the inventory.', ['data' => $this->oneItem($item)]);
+        return $this->jsonOk(
+            $opening > 0
+                ? $item->name . ' added — ' . $item->say($opening) . ' on hand.'
+                : 'Added to the inventory.',
+            ['data' => $this->oneItem($item->fresh())]
+        );
     }
 
     public function update(Request $request)
@@ -269,8 +291,8 @@ class InventoryController extends BaseScheduleController
             'kindLabel' => $item->kindLabel(),
             'icon' => $item->icon(),
             'unit' => $item->unit,
-            'packSize' => $item->packSize ? (float) $item->packSize : null,
-            'packLabel' => $item->packLabel,
+            'unitLabel' => $item->unitLabel(),
+            'unitOne' => AsInventoryItem::unitSays($item->unit, true),
             'lowAt' => $item->lowAt ? (float) $item->lowAt : null,
             'note' => $item->note,
             'onHand' => $have,
@@ -284,17 +306,18 @@ class InventoryController extends BaseScheduleController
         $kind = $request->input('kind');
         $unit = $request->input('unit');
 
+        $kind = isset(AsInventoryItem::KINDS[$kind]) ? $kind : 'other';
+
         return [
             'name' => trim((string) $request->input('name')),
-            'kind' => isset(AsInventoryItem::KINDS[$kind]) ? $kind : 'other',
-            'unit' => in_array($unit, AsInventoryItem::UNITS, true) ? $unit : 'kg',
-            // A pack is only a pack if it has both a size and a name for it —
-            // "50" on its own says nothing, and "bag" on its own is not a
-            // quantity anybody can add up.
-            'packSize' => $request->filled('packSize') && $request->filled('packLabel')
-                ? (float) $request->input('packSize') : null,
-            'packLabel' => $request->filled('packSize') && $request->filled('packLabel')
-                ? trim((string) $request->input('packLabel')) : null,
+            'kind' => $kind,
+            /* One unit, and it has to be one this kind is actually offered.
+             * A unit the form never showed is a unit somebody typed at the
+             * API, and the honest answer to that is the kind's own default
+             * rather than a number counted in nothing. */
+            'unit' => isset(AsInventoryItem::UNITS[$unit])
+                ? $unit
+                : (AsInventoryItem::unitsFor($kind)[0] ?? 'kg'),
             'lowAt' => $request->filled('lowAt') ? (float) $request->input('lowAt') : null,
             'note' => $request->filled('note') ? trim((string) $request->input('note')) : null,
         ];
@@ -306,11 +329,15 @@ class InventoryController extends BaseScheduleController
             'name' => 'required|string|max:150',
             'kind' => 'nullable|string|max:30',
             'unit' => 'nullable|string|max:20',
-            'packSize' => 'nullable|numeric|min:0.001|max:999999',
-            'packLabel' => 'nullable|string|max:30',
             'lowAt' => 'nullable|numeric|min:0|max:9999999',
             'note' => 'nullable|string|max:500',
             'opening' => 'nullable|numeric|min:0|max:9999999',
+            // The day the opening count was taken. Sent when an item is being
+            // created from a day on the board, where the date is already known
+            // and is the part people get wrong coming back to it on Friday.
+            'on' => 'nullable|date',
+            // About that arrival, not about the thing. See store().
+            'openingNote' => 'nullable|string|max:500',
         ];
     }
 }

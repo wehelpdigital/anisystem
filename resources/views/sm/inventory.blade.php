@@ -87,7 +87,6 @@
 
     .iv-empty { text-align: center; padding: 2.2rem 1rem; }
     .iv-unitrow { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
-    .iv-packrow { display: grid; grid-template-columns: 1fr 1.2fr; gap: .5rem; }
 
     html.dark .iv-face { background: #25311b; }
     html.dark .iv-name, html.dark .iv-move-n { color: #e8efe1; }
@@ -181,49 +180,32 @@
             </select>
             <p class="form-hint" id="ivKindHint"></p>
         </div>
+        {{-- COUNTED IN WHAT.
+             One answer, and the pack is inside it: "bags (50 kg)" sits in the
+             same list as "kg", so a farm that buys bags counts bags and a farm
+             that buys loose counts kilos. Which answers appear follows from
+             the kind above — a fuel is not sold in sachets — the way the day
+             counter follows from the crop on the lot form. The options are
+             filled in by the script; the list lives in one place, on the
+             model, and nothing here keeps a second copy of it. --}}
         <div class="iv-unitrow">
             <div>
                 <label for="ivUnit" class="form-label">Counted in</label>
-                <select id="ivUnit" class="form-select">
-                    @foreach (\App\Models\AsInventoryItem::UNITS as $u)
-                        <option value="{{ $u }}">{{ $u }}</option>
-                    @endforeach
-                </select>
+                <select id="ivUnit" class="form-select"></select>
             </div>
             <div>
                 <label for="ivLowAt" class="form-label">Tell me at <span class="text-gray-400 font-normal">(optional)</span></label>
-                <input type="number" id="ivLowAt" min="0" step="any" class="form-input" placeholder="e.g. 100">
+                <input type="number" id="ivLowAt" min="0" step="any" class="form-input" placeholder="e.g. 5">
             </div>
-        </div>
-
-        {{-- BOUGHT IN PACKS. Both halves or neither: "50" on its own says
-             nothing, and "bag" on its own is not a quantity anybody can add
-             up. Stock is still held in the unit above — this is only a way
-             of saying it, so the shelf can read "12 bags · 600 kg". --}}
-        <div class="rounded-xl border border-gray-100 p-3 space-y-2.5">
-            <span class="form-label mb-0">Bought in packs? <span class="text-gray-400 font-normal">(optional)</span></span>
-            <div class="iv-packrow">
-                <div>
-                    <label for="ivPackSize" class="form-label text-xs">One pack holds</label>
-                    <input type="number" id="ivPackSize" min="0" step="any" class="form-input" placeholder="50">
-                </div>
-                <div>
-                    <label for="ivPackLabel" class="form-label text-xs">Called a</label>
-                    <input type="text" id="ivPackLabel" maxlength="30" class="form-input" placeholder="bag" list="ivPackList">
-                    <datalist id="ivPackList">
-                        @foreach (['bag', 'sack', 'bottle', 'box', 'pack', 'drum', 'can'] as $p)
-                            <option value="{{ $p }}"></option>
-                        @endforeach
-                    </datalist>
-                </div>
-            </div>
-            <p class="form-hint" id="ivPackHint">Leave both empty for something bought loose.</p>
         </div>
 
         <div id="ivOpeningWrap">
             <label for="ivOpening" class="form-label">How much have you now? <span class="text-gray-400 font-normal">(optional)</span></label>
-            <input type="number" id="ivOpening" min="0" step="any" class="form-input" placeholder="0">
-            <p class="form-hint">Recorded as the opening count. Nobody adds Urea to a list in order to say they have none.</p>
+            <div class="relative">
+                <input type="number" id="ivOpening" min="0" step="any" class="form-input" placeholder="0">
+                <span class="iv-qty-u" id="ivOpeningUnit"></span>
+            </div>
+            <p class="form-hint">Recorded as the opening count, and it shows in the log. Nobody adds Urea to a list in order to say they have none.</p>
         </div>
 
         <div>

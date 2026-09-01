@@ -2282,21 +2282,38 @@ class ActivityController extends BaseScheduleController
      * The shed's unit for a line's free-text one.
      *
      * An activity line may say "bottle", "sack" or "cavan" — words about how a
-     * thing is bought. The inventory counts in a fixed base unit and says the
-     * pack separately, so anything it does not know becomes a piece: one
-     * bottle is one thing on the shelf, which is true and countable, and the
-     * farmer can set the real unit in the inventory module afterwards.
+     * thing is bought, typed by hand into a box with a datalist. The shed
+     * counts in one named unit, and several of its units carry a size: a bag
+     * is fifty kilos or it is twenty-five, and the two are different answers.
+     *
+     * So a word that names exactly one unit is taken, and a word that names
+     * several — "bag", "bottle" — is NOT resolved by picking the first. That
+     * would have the shed asserting a 50 kg bag because somebody typed three
+     * letters. It becomes a piece instead: one bottle is one thing on the
+     * shelf, which is true and countable, and the real unit is one tap away in
+     * the inventory module.
      */
     private function shedUnit(?string $unit): string
     {
         $u = trim(mb_strtolower((string) $unit));
-        foreach (\App\Models\AsInventoryItem::UNITS as $known) {
-            if ($u === mb_strtolower($known)) {
-                return $known;
+        if ($u === '') {
+            return 'piece';
+        }
+
+        $hits = [];
+        foreach (\App\Models\AsInventoryItem::UNITS as $key => $u2) {
+            $words = [mb_strtolower($key), mb_strtolower($u2['one']), mb_strtolower($u2['many'])];
+            if (isset($u2['of'])) {
+                // The whole name, so "bag (50 kg)" round-trips exactly.
+                $words[] = mb_strtolower($u2['one'] . ' (' . $u2['of'] . ')');
+                $words[] = mb_strtolower($u2['many'] . ' (' . $u2['of'] . ')');
+            }
+            if (in_array($u, $words, true)) {
+                $hits[] = $key;
             }
         }
 
-        return $u === 'l' ? 'L' : 'piece';
+        return count($hits) === 1 ? $hits[0] : 'piece';
     }
 
     private function workerPivot(Request $request, array $workerIds): array
