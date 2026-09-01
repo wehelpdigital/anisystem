@@ -83,7 +83,11 @@
     /* A note the writer wants read, not skimmed. */
     .article-body .a-note { border:1px solid var(--color-brand-200); background:var(--color-brand-50);
         border-radius:.85rem; padding:.85rem 1rem; margin:1.2rem 0; }
+    /* The one warm note in the article palette. Written as its own pair
+       rather than off the ramp, so it needs its own dark answer — a light
+       cream on a dark page is a lamp, not a note. */
     .article-body .a-note.is-warn { border-color:#f0c98a; background:#fff8ec; }
+    html.dark .article-body .a-note.is-warn { border-color:#5c4a24; background:#241d10; }
     .article-body .a-note b { display:block; margin-bottom:.2rem; color:var(--color-gray-900); }
     .article-body .a-btn { display:inline-block; background:var(--color-brand-600); color:#fff !important;
         font-weight:700; padding:.55rem 1.1rem; border-radius:999px; text-decoration:none; margin:.4rem 0; }
