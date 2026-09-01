@@ -219,11 +219,25 @@ class AccountController extends Controller
         $subscription = $user->currentSubscription();
         $history = $user->subscriptions()->get();
 
+        /* The credit ledger, newest first.
+         *
+         * Paginated on its own page name so moving through it does not disturb
+         * anything else the page is showing, and appended with the query string
+         * so the tab a reader is on survives page two. */
+        $credits = \App\Models\AiCreditLedger::active()
+            ->where('userId', $user->id)
+            ->orderByDesc('id')
+            ->paginate(20, ['*'], 'credits')
+            ->withQueryString();
+
         return view('account.subscription', [
             'user' => $user,
             'subscription' => $subscription,
             'history' => $history,
             'locked' => (bool) session('locked'),
+            'credits' => $credits,
+            'creditBalance' => app(\App\Services\AiCreditService::class)->balance($user->id),
+            'creditsUnlimited' => app(\App\Services\AiCreditService::class)->unlimited($user->id),
         ]);
     }
 

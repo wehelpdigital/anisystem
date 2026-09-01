@@ -5,6 +5,48 @@
 @section('page-subtitle', 'Plan, status & payment history')
 @section('back', route('account.index'))
 
+@push('head')
+<style>
+    /* TWO TABS, one page. Links rather than buttons, so the tab is in the URL
+       and survives a reload and a pagination link. */
+    .acct-tabs { display: flex; gap: .35rem; margin-bottom: 1.1rem;
+        border-bottom: 1px solid var(--color-gray-200); }
+    .acct-tab { display: inline-flex; align-items: center; gap: .4rem;
+        padding: .55rem .8rem; font-weight: 700; font-size: .88rem;
+        color: var(--color-gray-500); border-bottom: 2px solid transparent;
+        margin-bottom: -1px; white-space: nowrap; }
+    .acct-tab:hover { color: var(--color-gray-700); }
+    .acct-tab.is-active { color: var(--color-brand-700); border-bottom-color: var(--color-brand-600); }
+    .acct-tab-n { font-size: .68rem; font-weight: 800; padding: .05rem .38rem;
+        border-radius: 999px; background: var(--color-gray-100); color: var(--color-gray-500); }
+    .acct-tab.is-active .acct-tab-n { background: var(--color-brand-50); color: var(--color-brand-700); }
+
+    /* ONE MOVEMENT. What it was for, when, and what was left afterwards. */
+    .cl-row { display: flex; align-items: center; gap: .7rem;
+        padding: .7rem .9rem; border-bottom: 1px solid var(--color-gray-100); }
+    .cl-row:last-child { border-bottom: 0; }
+    .cl-face { width: 1.9rem; height: 1.9rem; flex: none; border-radius: 999px;
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 800; font-size: .95rem; }
+    .cl-face.is-out { background: #fff7ed; color: #b45309; }
+    .cl-face.is-in { background: var(--color-brand-50); color: var(--color-brand-700); }
+    .cl-mid { flex: 1 1 auto; min-width: 0; }
+    .cl-what { display: block; font-size: .87rem; font-weight: 700; color: var(--color-gray-900);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cl-when { display: block; font-size: .73rem; color: var(--color-gray-400); }
+    .cl-num { flex: none; text-align: right; }
+    .cl-num b { display: block; font-size: .92rem; font-weight: 800; }
+    .cl-num b.is-out { color: #b45309; }
+    .cl-num b.is-in { color: var(--color-brand-700); }
+    .cl-num small { display: block; font-size: .7rem; color: var(--color-gray-400); }
+
+    html.dark .acct-tabs { border-color: #2b3423; }
+    html.dark .cl-row { border-color: #2b3423; }
+    html.dark .cl-what { color: #e8efe1; }
+    html.dark .cl-face.is-out { background: #2c2213; }
+</style>
+@endpush
+
 @section('content')
 @php
     $status = $subscription?->effective_status;
@@ -25,7 +67,106 @@
     };
 @endphp
 
-<div class="max-w-4xl mx-auto space-y-5">
+@php
+    /* Which tab, kept in the query string.
+     *
+     * A tab held only in JavaScript forgets itself the moment the credits log
+     * follows a pagination link, which lands somebody back on Plan wondering
+     * where the list went. */
+    $tab = request('tab') === 'credits' ? 'credits' : 'plan';
+@endphp
+
+<div class="max-w-4xl mx-auto">
+
+    <div class="acct-tabs" role="tablist">
+        <a href="{{ route('account.subscription') }}"
+           class="acct-tab {{ $tab === 'plan' ? 'is-active' : '' }}" role="tab"
+           aria-selected="{{ $tab === 'plan' ? 'true' : 'false' }}">Plan &amp; billing</a>
+        <a href="{{ route('account.subscription', ['tab' => 'credits']) }}"
+           class="acct-tab {{ $tab === 'credits' ? 'is-active' : '' }}" role="tab"
+           aria-selected="{{ $tab === 'credits' ? 'true' : 'false' }}">
+            Credits log
+            @if ($credits->total() > 0)<span class="acct-tab-n">{{ $credits->total() }}</span>@endif
+        </a>
+    </div>
+
+</div>
+
+{{-- ============================ CREDITS LOG ============================
+     Every AI answer already wrote a row here — the balance IS the sum of
+     these, never a stored number — so this is the record being read at last
+     rather than a new one being kept. A figure that only ever goes down, with
+     no way to see what took it, is the kind of thing people stop trusting. --}}
+<div class="max-w-4xl mx-auto space-y-5 {{ $tab === 'credits' ? '' : 'hidden' }}">
+    <div class="card">
+        <div class="card-body">
+            <div class="flex items-start justify-between gap-3 flex-wrap">
+                <div>
+                    <h2 class="text-base font-bold text-gray-900">AI credits</h2>
+                    <p class="text-sm text-gray-500 mt-0.5">
+                        Every question Anee answers costs credits, priced on the length of the
+                        question and the answer. Each one is a line below.
+                    </p>
+                </div>
+                <div class="text-right shrink-0">
+                    @if ($creditsUnlimited)
+                        <p class="text-2xl font-extrabold text-brand-700">Unlimited</p>
+                        <p class="text-xs text-gray-500">This account runs the platform.</p>
+                    @else
+                        <p class="text-2xl font-extrabold {{ $creditBalance > 0 ? 'text-brand-700' : 'text-red-600' }}">
+                            {{ number_format($creditBalance, 2) }}
+                        </p>
+                        <p class="text-xs text-gray-500">on hand</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if ($credits->isEmpty())
+        <div class="card"><div class="card-body text-center py-10">
+            <div class="mx-auto w-14 h-14 rounded-2xl bg-brand-50 flex items-center justify-center mb-3">
+                <svg class="w-7 h-7 text-brand-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-900 mb-1">Nothing spent yet</h3>
+            <p class="text-sm text-gray-500">Ask Anee a question and what it cost will show up here.</p>
+        </div></div>
+    @else
+        <div class="card"><div class="card-body !p-0">
+            @foreach ($credits as $row)
+                @php
+                    $d = (float) $row->delta;
+                    $out = $d < 0;
+                @endphp
+                <div class="cl-row">
+                    <span class="cl-face {{ $out ? 'is-out' : 'is-in' }}">{{ $out ? '−' : '+' }}</span>
+                    <span class="cl-mid">
+                        <span class="cl-what">{{ $row->reason ?: ($out ? 'AI usage' : 'Credits added') }}</span>
+                        <span class="cl-when">
+                            {{ $row->created_at?->format('M j, Y · g:ia') }}
+                            @if ($row->source) · {{ ucfirst($row->source) }} @endif
+                        </span>
+                    </span>
+                    <span class="cl-num">
+                        <b class="{{ $out ? 'is-out' : 'is-in' }}">{{ $out ? '−' : '+' }}{{ number_format(abs($d), 2) }}</b>
+                        {{-- What the balance stood at afterwards, as recorded.
+                             Read, not recomputed: it is what was true at the
+                             time, and a running total worked out on the way
+                             down the page would disagree the first time a row
+                             was ever voided. --}}
+                        <small>{{ $row->balanceAfter !== null ? number_format((float) $row->balanceAfter, 2) . ' left' : '' }}</small>
+                    </span>
+                </div>
+            @endforeach
+        </div></div>
+
+        @if ($credits->hasPages())
+            <div class="px-1">{{ $credits->appends(['tab' => 'credits'])->links() }}</div>
+        @endif
+    @endif
+</div>
+
+<div class="max-w-4xl mx-auto space-y-5 {{ $tab === 'plan' ? '' : 'hidden' }}">
 
     {{-- Locked banner --}}
     @if ($locked)
