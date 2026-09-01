@@ -146,19 +146,28 @@
              All four are written out here so the markup says what the answers
              are; the JS keeps the ones that apply and drops the rest. --}}
         <div id="lotDayTypeWrap">
-            <label for="lotDayType" class="form-label">Day counter</label>
-            <select id="lotDayType" class="form-select">
+            <label class="form-label">Day counter</label>
+            {{-- A tag and a sheet, like the crop above. One line of a select
+                 cannot hold what each answer means — where the count starts,
+                 what it does mid-season, and what the stages are then read
+                 against — so each carries its own sentence where it is
+                 chosen. The select below is still the thing read and written;
+                 this is a face on it. --}}
+            <button type="button" class="crop-tag" id="lotDayTypeBtn">
+                <span class="crop-tag-e" id="lotDayTypeIcon">🗓️</span>
+                <span class="crop-tag-t" id="lotDayTypeNow">DAS → DAT</span>
+                <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <select id="lotDayType" class="form-select hidden" aria-hidden="true" tabindex="-1">
                 <option value="DAT">DAS → DAT — sown, then transplanted</option>
                 <option value="DAS">DAS only — direct seeded (DSR)</option>
                 <option value="DAP">DAP — days after planting</option>
                 <option value="TREE">Mature trees — no day count, read by age</option>
             </select>
             <p class="form-hint" id="lotDayTypeHint"></p>
-            {{-- Said only while the list still holds more than one answer.
-                 A crop with one honest way of being counted has already been
-                 answered, and a paragraph comparing three of them under a
-                 select showing one is noise. --}}
-            <p class="form-hint" id="lotDayTypeAll">How this lot's day numbers are counted. <strong>DAP</strong> is a single count from planting. <strong>DAS/DAT</strong> counts DAS from sowing, then flips to DAT once you flag the transplant activity.</p>
+            {{-- The paragraph that compared the counters lived here. Each one
+                 now carries its own sentence in the sheet where it is chosen,
+                 which is the moment it is worth reading. --}}
         </div>
 
         {{-- Lot address — town + province power the local weather forecast. --}}
@@ -212,6 +221,41 @@
 
      Stacked over the lot sheet rather than replacing it, so the half-filled
      form is still behind and comes back untouched. --}}
+{{-- Choosing how a lot's days are counted. Each answer says what it means
+     rather than abbreviating it, because DAS and DAP look alike and decide
+     every date on the board. --}}
+<div class="sheet hidden" id="dayTypePickSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">How are this lot's days counted?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="dt-rows" id="dayTypeRows">
+            @foreach ([
+                ['DAT', '🌾', 'Sown, then transplanted', 'DAS → DAT',
+                 'Counts DAS from day zero, then restarts as DAT on the transplant date. Stages read against the transplanted calendar once it does.'],
+                ['DAS', '🌱', 'Direct seeded', 'DAS only',
+                 'One count from sowing, all season. Stages read against the direct-seeded calendar — a transplant date is ignored.'],
+                ['DAP', '🌿', 'Planted', 'DAP',
+                 'One count from planting, all season.'],
+                ['TREE', '🌳', 'Mature trees', 'No day count',
+                 'No day count at all. The stages are read against how old the trees are.'],
+            ] as [$dtKey, $dtIcon, $dtName, $dtShort, $dtSays])
+                <button type="button" class="dt-row" data-daytype="{{ $dtKey }}">
+                    <span class="dt-row-e">{{ $dtIcon }}</span>
+                    <span class="dt-row-body">
+                        <b>{{ $dtName }} <span class="dt-row-short">{{ $dtShort }}</span></b>
+                        <i>{{ $dtSays }}</i>
+                    </span>
+                    <svg class="dt-row-tick hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                </button>
+            @endforeach
+        </div>
+        <p class="form-hint mt-2" id="dayTypeSheetNote"></p>
+    </div>
+</div>
+
 <div class="sheet hidden" id="cropPickSheet" style="--sheet-width:30rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -319,6 +363,26 @@
     .crop-tag-t.is-none { color: var(--color-gray-400); font-weight: 500; }
     .crop-tag-c { width: 1rem; height: 1rem; flex: none; color: var(--color-gray-400); }
     html.dark .crop-tag { background: #1c2416; border-color: #2b3a1c; }
+
+    /* THE DAY-COUNTER SHEET — four answers, each with its own sentence. */
+    .dt-rows { display: flex; flex-direction: column; gap: .4rem; }
+    .dt-row { display: flex; align-items: flex-start; gap: .6rem; width: 100%; text-align: left;
+        padding: .6rem .7rem; border-radius: .75rem; cursor: pointer;
+        border: 1px solid var(--color-gray-200); background: var(--color-white); }
+    .dt-row:hover { border-color: var(--color-brand-300); background: var(--color-brand-50); }
+    .dt-row.is-on { border-color: var(--color-brand-500); background: var(--color-brand-50); }
+    .dt-row.is-off { opacity: .4; pointer-events: none; }
+    .dt-row-e { font-size: 1.15rem; line-height: 1.2; flex: none; }
+    .dt-row-body { flex: 1 1 auto; min-width: 0; }
+    .dt-row-body b { display: block; font-size: .9rem; font-weight: 700; color: var(--color-gray-900); }
+    .dt-row-body i { display: block; font-style: normal; font-size: .78rem; line-height: 1.45;
+        color: var(--color-gray-500); margin-top: .1rem; }
+    .dt-row-short { font-weight: 600; font-size: .75rem; color: var(--color-brand-700);
+        background: var(--color-brand-50); border-radius: 999px; padding: .05rem .4rem; margin-left: .3rem; }
+    .dt-row-tick { width: 1.1rem; height: 1.1rem; flex: none; color: var(--color-brand-600); margin-top: .15rem; }
+    html.dark .dt-row { background: #1c2416; border-color: #2b3a1c; }
+    html.dark .dt-row-body b { color: #e8efe1; }
+    html.dark .dt-row-short { background: #243019; }
 
     /* THE PICKER — a search box, then the families. */
     .crop-search { position: relative; margin-bottom: .6rem; }
@@ -665,12 +729,25 @@ const __init = () => {
      */
     function lotFixedSummary(lot) {
         const editing = !!lot;
+        // The crop and the counter: asked while the lot is being made, gone
+        // once it exists.
         [
             document.getElementById('lotCropBtn')?.closest('div'),
-            document.getElementById('lotMaturityWrap'),
-            document.getElementById('lotTreeWrap'),
             document.getElementById('lotDayTypeWrap'),
         ].forEach((w) => w && w.classList.toggle('hidden', editing));
+
+        /* The two timing questions are not ours to show.
+         *
+         * Which of them applies follows from the crop, and sayCropTiming has
+         * just settled it. Toggling them here on `editing` un-hid BOTH on a
+         * fresh lot — days-to-maturity and how-old-are-the-trees on screen
+         * together, which is exactly the pair that must never both be asked.
+         * So: taken away on an existing lot, and otherwise left as the crop
+         * left them. */
+        if (editing) {
+            document.getElementById('lotMaturityWrap').classList.add('hidden');
+            document.getElementById('lotTreeWrap').classList.add('hidden');
+        }
     }
 
     async function openLotSheet(lot = null) {
@@ -754,12 +831,78 @@ const __init = () => {
         DAP: 'One count from planting, all season.',
         TREE: 'No day count at all. The stages are read against how old the trees are, which is the field above.',
     };
+    /* What the tag says when a counter is chosen. Short, because the whole
+       sentence is a line below it and again in the sheet. */
+    const DAY_TYPE_TAG = {
+        DAT: ['🌾', 'Sown, then transplanted'],
+        DAS: ['🌱', 'Direct seeded'],
+        DAP: ['🌿', 'Planted'],
+        TREE: ['🌳', 'Mature trees — read by age'],
+    };
+
     function sayDayType() {
         const sel = document.getElementById('lotDayType');
         const hint = document.getElementById('lotDayTypeHint');
-        if (sel && hint) hint.textContent = DAY_TYPE_SAYS[sel.value] || '';
+        if (!sel) return;
+        if (hint) hint.textContent = DAY_TYPE_SAYS[sel.value] || '';
+
+        const [icon, name] = DAY_TYPE_TAG[sel.value] || ['🗓️', 'Choose how days are counted'];
+        const iconEl = document.getElementById('lotDayTypeIcon');
+        const nameEl = document.getElementById('lotDayTypeNow');
+        if (iconEl) iconEl.textContent = icon;
+        if (nameEl) nameEl.textContent = name;
+
+        /* Which answers this crop can honestly take.
+         *
+         * fitDayTypes has already marked the impossible ones `hidden` on the
+         * select, so the sheet reads that rather than working it out a second
+         * time and risking a different answer. Greyed rather than removed:
+         * "rice is never counted from planting" is worth seeing, and a list
+         * that silently shortens leaves somebody hunting for an option they
+         * remember. */
+        let open = 0;
+        document.querySelectorAll('#dayTypeRows .dt-row').forEach((row) => {
+            const key = row.getAttribute('data-daytype');
+            const opt = sel.querySelector(`option[value="${key}"]`);
+            const allowed = !!opt && !opt.hidden;
+            if (allowed) open++;
+            row.classList.toggle('is-off', !allowed);
+            row.classList.toggle('is-on', key === sel.value);
+            row.querySelector('.dt-row-tick')?.classList.toggle('hidden', key !== sel.value);
+        });
+
+        // A menu of one is not a choice — the same line the select drew by
+        // disabling itself.
+        const btn = document.getElementById('lotDayTypeBtn');
+        if (btn) {
+            btn.disabled = open <= 1;
+            btn.style.opacity = open <= 1 ? '.72' : '';
+            btn.style.cursor = open <= 1 ? 'default' : '';
+        }
+        const note = document.getElementById('dayTypeSheetNote');
+        if (note) {
+            note.textContent = open <= 1
+                ? 'This crop has only one honest way of being counted.'
+                : 'Greyed answers do not apply to the crop this lot is set to.';
+        }
     }
     document.getElementById('lotDayType')?.addEventListener('change', sayDayType);
+
+    document.getElementById('lotDayTypeBtn')?.addEventListener('click', () => {
+        if (document.getElementById('lotDayTypeBtn').disabled) return;
+        window.openSheet?.('dayTypePickSheet');
+    });
+
+    document.getElementById('dayTypeRows')?.addEventListener('click', (e) => {
+        const row = e.target.closest('[data-daytype]');
+        if (!row || row.classList.contains('is-off')) return;
+        const sel = document.getElementById('lotDayType');
+        sel.value = row.getAttribute('data-daytype');
+        // Through the select's own event, so anything else listening to it
+        // hears the change the same way it always did.
+        sel.dispatchEvent(new Event('change', { bubbles: true }));
+        window.closeSheet?.('dayTypePickSheet');
+    });
 
     /**
      * Keep only the ways THIS crop can honestly be counted.
@@ -798,7 +941,6 @@ const __init = () => {
         // One answer is not a choice — say so rather than offering a menu of
         // one, and drop the paragraph that compares the others.
         sel.disabled = shown <= 1;
-        document.getElementById('lotDayTypeAll')?.classList.toggle('hidden', shown <= 1);
         sayDayType();
     }
 
