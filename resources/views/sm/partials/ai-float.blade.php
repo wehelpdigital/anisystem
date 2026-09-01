@@ -590,6 +590,18 @@
         const scrollDown = () => { thread.scrollTop = thread.scrollHeight; };
         const nowStamp = () => new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
 
+        // A stored user line, as a bubble. Usually just the words; when the
+        // technician answered from the admin console it is their line, and
+        // the mark in front of it becomes a label instead of being read out.
+        function saidHtml(text) {
+            const said = window.aneeSaidBy
+                ? window.aneeSaidBy(escapeHtml(text || ''))
+                : { who: null, html: escapeHtml(text || '') };
+
+            return (said.who ? `<span class="anee-said-by">${escapeHtml(said.who)}</span>` : '')
+                + '<p>' + said.html.replace(/\r?\n/g, '<br>') + '</p>';
+        }
+
         function render(text) {
             const esc = escapeHtml(text || '');
             const lines = esc.split(/\r?\n/); let html = ''; let list = null;
@@ -803,7 +815,7 @@
                 // Replayed history arrives settled — entrances are for news.
                 thread.classList.add('is-replay');
                 (res.data.messages || []).forEach((m) => addTurn(m.role === 'user',
-                    m.role === 'user' ? '<p>' + escapeHtml(m.content).replace(/\r?\n/g, '<br>') + '</p>' : render(m.content),
+                    m.role === 'user' ? saidHtml(m.content) : render(m.content),
                     m.images || [], null, false));
                 thread.classList.remove('is-replay');
                 scrollDown();

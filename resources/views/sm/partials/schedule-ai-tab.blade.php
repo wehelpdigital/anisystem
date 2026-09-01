@@ -544,8 +544,17 @@
             const me = !!m.mine;
             const el = document.createElement('div');
             el.className = 'sai-msg' + (settled ? '' : ' is-new') + (me ? ' me' : '');
-            const who = (!me && m.role === 'user') ? `<span class="sai-who">${esc(m.name || 'Member')}</span>` : '';
-            const body = m.role === 'assistant' ? render(m.content) : ('<p>' + esc(m.content).replace(/\r?\n/g, '<br>') + '</p>');
+            // A user turn can be the technician's, answered from the admin
+            // console: the roles have no way to say so, and the mark in the
+            // words does. When it is theirs the name on the bubble is theirs
+            // too, whoever the room thinks sent it.
+            const said = (m.role === 'user' && window.aneeSaidBy)
+                ? window.aneeSaidBy(esc(m.content))
+                : { who: null, html: esc(m.content) };
+            const who = said.who
+                ? `<span class="sai-who">${esc(said.who)}</span>`
+                : ((!me && m.role === 'user') ? `<span class="sai-who">${esc(m.name || 'Member')}</span>` : '');
+            const body = m.role === 'assistant' ? render(m.content) : ('<p>' + said.html.replace(/\r?\n/g, '<br>') + '</p>');
             const img = m.image ? `<img src="${esc(m.image)}" alt="">` : '';
             const cost = (m.role === 'assistant' && m.creditsCharged) ? `<p class="sai-cost">${esc(String(Math.round(m.creditsCharged * 100) / 100))} credits</p>` : '';
             const when = m.at ? `<time class="sai-when">${esc(m.at)}</time>` : '';

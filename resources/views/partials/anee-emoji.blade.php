@@ -71,6 +71,12 @@
         margin: .3em .08em; }
     .anee-emo img { display: block; width: 100%; height: 100%; max-width: none; }
 
+    /* Who said it, when it was not you and not Anee. */
+    .anee-said-by {
+        display: block; font-size: 10px; font-weight: 700; letter-spacing: .05em;
+        text-transform: uppercase; opacity: .72; margin-bottom: .15rem;
+    }
+
     /* ---- room to read -------------------------------------------------
        Her answers are laid out now — paragraphs, steps, a rule between what
        is wrong and what to do — and all of that was written into bubbles
@@ -163,6 +169,34 @@
      * in this app handles a model's output; this is the last step of that, so
      * a shortcode naming something unknown is simply left as text.
      */
+    /**
+     * Whose line is this, when the roles cannot say.
+     *
+     * A conversation has a user and an assistant and nothing else, so when
+     * the technician answers from the admin console their line is stored as
+     * a user turn with a mark in front of it. Without this the client reads
+     * `[technician] ...` in what looks like their own voice.
+     *
+     * Takes and returns ESCAPED html — it runs alongside the emoji pass, on
+     * the same already-safe string.
+     */
+    const ANEE_TECHNICIAN_MARK = '[technician] ';
+
+    window.aneeSaidBy = function (escapedHtml) {
+        const s = String(escapedHtml == null ? '' : escapedHtml);
+        // The mark is written before escaping and contains nothing that
+        // escaping changes, so it is still itself here.
+        const at = s.indexOf(ANEE_TECHNICIAN_MARK);
+        // Only when it LEADS the message. Further in it is somebody quoting.
+        const lead = s.slice(0, at < 0 ? 0 : at).replace(/<[^>]*>/g, '').trim();
+        if (at < 0 || lead !== '') return { who: null, html: s };
+
+        return {
+            who: 'Technician',
+            html: s.slice(0, at) + s.slice(at + ANEE_TECHNICIAN_MARK.length),
+        };
+    };
+
     window.aneeEmoji = function (html) {
         // To the edges first, then to pictures: arranging is done on the
         // shortcodes, which are plain text and easy to move, rather than on
