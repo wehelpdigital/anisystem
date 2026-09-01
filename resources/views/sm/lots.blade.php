@@ -99,6 +99,15 @@
             <p class="form-hint">Sets the growth stages this lot is read against.</p>
         </div>
 
+        {{-- Said here rather than discovered later.
+             The edit form simply does not offer the crop or the day counter,
+             which answers the question only for somebody who has already gone
+             looking. This is the moment it is worth knowing. --}}
+        <p class="lot-once" id="lotOnceNote">
+            <span class="lot-once-e">🔒</span>
+            <span>The crop and its day counter are set now — neither can be changed once this lot is saved.</span>
+        </p>
+
         {{-- HOW LONG, or HOW OLD — never both.
              A crop that is harvested once is planned by its days to maturity;
              a tree is read by its age. Which of the two is asked follows from
@@ -363,6 +372,15 @@
     .crop-tag-t.is-none { color: var(--color-gray-400); font-weight: 500; }
     .crop-tag-c { width: 1rem; height: 1rem; flex: none; color: var(--color-gray-400); }
     html.dark .crop-tag { background: #1c2416; border-color: #2b3a1c; }
+
+    /* SETTLED NOW — a quiet line, not a warning. Nothing has gone wrong; a
+       fact about the form is simply being stated before it matters. */
+    .lot-once { display: flex; align-items: flex-start; gap: .45rem;
+        margin-top: -.35rem; padding: .5rem .6rem; border-radius: .6rem;
+        font-size: .78rem; line-height: 1.45;
+        color: #6b5b2e; background: #fdf8ec; border: 1px solid #f0e4c4; }
+    .lot-once-e { flex: none; font-size: .85rem; line-height: 1.35; }
+    html.dark .lot-once { color: #d8c99a; background: #2a2417; border-color: #3d3421; }
 
     /* THE DAY-COUNTER SHEET — four answers, each with its own sentence. */
     .dt-rows { display: flex; flex-direction: column; gap: .4rem; }
@@ -734,6 +752,7 @@ const __init = () => {
         [
             document.getElementById('lotCropBtn')?.closest('div'),
             document.getElementById('lotDayTypeWrap'),
+            document.getElementById('lotOnceNote'),
         ].forEach((w) => w && w.classList.toggle('hidden', editing));
 
         /* The two timing questions are not ours to show.
