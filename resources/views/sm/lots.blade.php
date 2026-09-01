@@ -59,22 +59,6 @@
     <div class="sheet-body space-y-4">
         <input type="hidden" id="lotId" value="">
 
-        {{-- Said before the three questions it is about, and only while a lot
-             is being made. Every date on the board is worked out from them. --}}
-        <div class="rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 mb-3"
-             id="lotOnceNotice">
-            <b>The crop, how its days are counted, and its days to maturity are set now and
-            cannot be changed afterwards.</b>
-            The whole plan is worked out from them. If they turn out wrong, make the lot again
-            rather than editing it.
-        </div>
-
-        {{-- And what an existing lot already is. The three below are not shown
-             when editing, and a sheet that simply leaves the crop out reads as
-             a lot that has none. --}}
-        <div class="rounded-xl border border-gray-200 bg-gray-50 p-3 text-sm text-gray-700 mb-3 hidden"
-             id="lotFixedSays"></div>
-
         <div>
             <label for="lotName" class="form-label">Lot Name <span class="text-red-500">*</span></label>
             <input type="text" id="lotName" maxlength="255" class="form-input" placeholder="e.g. Lot A — riverside">
@@ -672,13 +656,12 @@ const __init = () => {
     /* ---------------- Sheet open / fill ---------------- */
 
     /**
-     * What a lot already is, when one is being edited.
+     * The three that are settled when a lot is made.
      *
-     * The crop, the day counter and the days to maturity are settled when the
-     * lot is made: the whole plan is derived from them, so changing one later
-     * would not move the plan, it would change what the plan means. They are
-     * still FILLED — the crop decides which timing question exists, and the
-     * save reads these fields — they are simply not shown, and said instead.
+     * Hidden on an existing lot rather than offered: they are what the whole
+     * plan was derived from, so changing one would not move the plan, it
+     * would change what the plan means. Still FILLED — the crop decides which
+     * timing question exists, and the save reads these fields.
      */
     function lotFixedSummary(lot) {
         const editing = !!lot;
@@ -688,29 +671,6 @@ const __init = () => {
             document.getElementById('lotTreeWrap'),
             document.getElementById('lotDayTypeWrap'),
         ].forEach((w) => w && w.classList.toggle('hidden', editing));
-
-        document.getElementById('lotOnceNotice')?.classList.toggle('hidden', editing);
-        const says = document.getElementById('lotFixedSays');
-        if (!says) return;
-        says.classList.toggle('hidden', !editing);
-        if (!editing) return;
-
-        const row = cropRow(matchCrop(lot.crop || ''));
-        const words = {
-            DAT: 'DAS then DAT \u2014 sown, then transplanted',
-            DAS: 'DAS only \u2014 direct seeded',
-            DAP: 'DAP \u2014 days after planting',
-            TREE: 'Mature trees \u2014 read by age',
-        };
-        const bits = [row ? row.querySelector('b').textContent.trim() : 'No crop set'];
-        bits.push(words[lot.dayType] || lot.dayType || 'counter not set');
-        if (lot.dayType === 'TREE') {
-            bits.push('read by the trees\u2019 age');
-        } else if (lot.maturityDays) {
-            bits.push(lot.maturityDays + ' days to maturity');
-        }
-        says.innerHTML = '<b>Set when this lot was made, and not changed here:</b> '
-            + bits.map((b) => String(b).replace(/[<>&]/g, '')).join(' \u00b7 ');
     }
 
     async function openLotSheet(lot = null) {
