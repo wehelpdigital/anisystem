@@ -216,6 +216,22 @@ class LotController extends BaseScheduleController
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
         }
 
+        /* What the lot IS was settled when it was made.
+         *
+         * cropTiming() answers four things and three of them — the crop, the
+         * day counter and the days to maturity — are what every date on this
+         * season's board was derived from. Changing one now would not move the
+         * plan; it would quietly change what the plan means, mid-season, on
+         * work already done. So they are not read here.
+         *
+         * The trees' age is the exception and is kept: nobody knows the day an
+         * orchard went in, and correcting it moves nothing that was planned in
+         * days.
+         *
+         * Ignored rather than refused — a client posting the whole form it has
+         * is not misbehaving, and failing the save over a field nobody meant to
+         * touch is the worse answer. The reply carries what is really stored.
+         */
         $lot->update(array_merge(
             [
                 'lotName'     => $request->lotName,
@@ -224,7 +240,9 @@ class LotController extends BaseScheduleController
                 'variety'     => $request->filled('variety') ? trim($request->variety) : null,
                 'notes'       => $request->notes,
             ],
-            $this->cropTiming($request),
+            \App\Support\CropStages::isPerennial($lot->crop) && $request->filled('treePlantedAt')
+                ? ['treePlantedAt' => $request->input('treePlantedAt')]
+                : [],
             $this->addressFields($request)
         ));
 
