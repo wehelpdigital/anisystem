@@ -2841,6 +2841,23 @@
         html.dark .transplant-panel .text-green-900 { color: #a7e8bd; }
         html.dark .transplant-panel .text-green-800\/80 { color: #7fd39a; }
 
+        /* ---- RICH TEXT WRITTEN FOR A WHITE PAGE ----
+           A pasted description arrives carrying `color:#000000` on every span,
+           which is 1.24:1 against a dark card: there, selectable, invisible.
+           In the dark those colours are ignored — unless the element also
+           brings its own background, in which case it is a self-contained
+           callout that reads correctly on any surface and is left alone.
+           Nothing stored is changed; in the light every colour is honoured. */
+        html.dark .activity-description-content [style*="color"]:not([style*="background:#"]):not([style*="background: #"]):not([style*="background-color:#"]):not([style*="background-color: #"]):not([style*="background:rgb"]):not([style*="background: rgb"]):not([style*="background-color:rgb"]):not([style*="background-color: rgb"]),
+        html.dark .sun-editor-editable [style*="color"]:not([style*="background:#"]):not([style*="background: #"]):not([style*="background-color:#"]):not([style*="background-color: #"]):not([style*="background:rgb"]):not([style*="background: rgb"]):not([style*="background-color:rgb"]):not([style*="background-color: rgb"]),
+        html.dark .se-wrapper-wysiwyg [style*="color"]:not([style*="background:#"]):not([style*="background: #"]):not([style*="background-color:#"]):not([style*="background-color: #"]):not([style*="background:rgb"]):not([style*="background: rgb"]):not([style*="background-color:rgb"]):not([style*="background-color: rgb"]) {
+            color: inherit !important;
+        }
+        /* The same for a font tag, which is what some older paste paths emit. */
+        html.dark .activity-description-content font[color],
+        html.dark .sun-editor-editable font[color],
+        html.dark .se-wrapper-wysiwyg font[color] { color: inherit !important; }
+
         html.dark .sm-quill-wrap .ql-toolbar,
         html.dark .sm-quill-wrap .ql-container { border-color: var(--tl-border); background: var(--tl-surface); }
         html.dark .sm-quill-wrap .ql-editor { color: var(--tl-text); }
