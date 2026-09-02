@@ -65,6 +65,7 @@ class User extends Authenticatable
             'deleteStatus' => 'integer',
             'adminUserId' => 'integer',
             'lastSeenAt' => 'datetime',
+            'communitySuspendedUntil' => 'datetime',
             'created_at' => 'datetime:Y-m-d H:i:s',
             'updated_at' => 'datetime:Y-m-d H:i:s',
         ];

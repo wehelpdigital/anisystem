@@ -30,6 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'subscription' => \App\Http\Middleware\EnsureSubscriptionActive::class,
             'no-cache' => \App\Http\Middleware\NoCacheHeaders::class,
+            'admin.panel' => \App\Http\Middleware\AdminPanelOnly::class,
         ]);
         // Runs after StartSession — drops a session whose public IP changed,
         // then refreshes the member's last-seen (online) timestamp.
@@ -41,6 +42,9 @@ return Application::configure(basePath: dirname(__DIR__))
             // Here rather than in ninety controller actions: that shape has
             // already cost this app twelve open endpoints once.
             \App\Http\Middleware\WorkerModuleAccess::class,
+            // Watches the /app/community hallway for suspended members. By
+            // path, not per-route: a door added next month is still covered.
+            \App\Http\Middleware\CommunityOpen::class,
         ]);
         $middleware->redirectGuestsTo(fn () => route('login'));
         $middleware->redirectUsersTo(fn () => route('app.dashboard'));

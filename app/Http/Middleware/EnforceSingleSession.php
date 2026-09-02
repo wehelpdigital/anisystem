@@ -53,6 +53,14 @@ class EnforceSingleSession
             return $next($request);
         }
 
+        /* An admin looking through a client's eyes does not compete for the
+         * client's one session. Claiming the slot here would sign the real
+         * person out of their phone with "opened on another device" — for
+         * something they did not do. */
+        if ($request->session()->has('admin_impersonator')) {
+            return $next($request);
+        }
+
         if (Auth::check()) {
             $user = Auth::user();
             $sid = $request->session()->getId();

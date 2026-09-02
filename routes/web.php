@@ -173,6 +173,37 @@ Route::middleware('auth')->group(function () {
 | child ids via ?id=, JSON envelope {success, message, data}.
 */
 
+/*
+|--------------------------------------------------------------------------
+| Admin panel — the platform seen from above (admins only, no sub gate)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'admin.panel'])->prefix('admin')->group(function () {
+    Route::get('/', [App\Http\Controllers\Admin\AdminPanelController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/clients', [App\Http\Controllers\Admin\AdminPanelController::class, 'clients'])->name('admin.clients');
+    Route::get('/support', [App\Http\Controllers\Admin\AdminSupportController::class, 'page'])->name('admin.support');
+
+    Route::get('/data/overview', [App\Http\Controllers\Admin\AdminPanelController::class, 'overview'])->name('admin.data.overview');
+    Route::get('/data/clients', [App\Http\Controllers\Admin\AdminPanelController::class, 'clientsData'])->name('admin.data.clients');
+    Route::get('/data/client/{id}', [App\Http\Controllers\Admin\AdminPanelController::class, 'clientOne'])->whereNumber('id')->name('admin.data.client');
+    Route::put('/client/{id}/info', [App\Http\Controllers\Admin\AdminPanelController::class, 'updateInfo'])->whereNumber('id')->name('admin.client.info');
+    Route::post('/client/{id}/password-link', [App\Http\Controllers\Admin\AdminPanelController::class, 'sendPasswordLink'])->whereNumber('id')->name('admin.client.password-link');
+    Route::put('/client/{id}/password', [App\Http\Controllers\Admin\AdminPanelController::class, 'setPassword'])->whereNumber('id')->name('admin.client.password');
+    Route::put('/client/{id}/community-suspend', [App\Http\Controllers\Admin\AdminPanelController::class, 'communitySuspend'])->whereNumber('id')->name('admin.client.suspend');
+    Route::post('/client/{id}/credits', [App\Http\Controllers\Admin\AdminPanelController::class, 'adjustCredits'])->whereNumber('id')->name('admin.client.credits');
+    Route::post('/client/{id}/impersonate', [App\Http\Controllers\Admin\AdminPanelController::class, 'impersonate'])->whereNumber('id')->name('admin.client.impersonate');
+
+    Route::get('/data/tickets', [App\Http\Controllers\Admin\AdminSupportController::class, 'tickets'])->name('admin.data.tickets');
+    Route::get('/data/ticket/{id}', [App\Http\Controllers\Admin\AdminSupportController::class, 'one'])->whereNumber('id')->name('admin.data.ticket');
+    Route::post('/ticket/{id}/reply', [App\Http\Controllers\Admin\AdminSupportController::class, 'reply'])->whereNumber('id')->name('admin.ticket.reply');
+    Route::put('/ticket/{id}/status', [App\Http\Controllers\Admin\AdminSupportController::class, 'setStatus'])->whereNumber('id')->name('admin.ticket.status');
+});
+
+// The way back from looking through a client's eyes. Auth only: the signed-in
+// user is the CLIENT right now, and the session key is the credential.
+Route::post('/admin/return', [App\Http\Controllers\Admin\AdminPanelController::class, 'stopImpersonating'])
+    ->middleware('auth')->name('admin.return');
+
 Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app', [App\Http\Controllers\AppController::class, 'dashboard'])->name('app.dashboard');
     Route::get('/app/weather', [App\Http\Controllers\WeatherController::class, 'forecast'])->name('app.weather');
