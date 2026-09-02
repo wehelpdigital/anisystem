@@ -11,8 +11,35 @@
 <script>
 (() => {
     const __ivInit = () => {
-        if (window.__ivReady) return;
-        window.__ivReady = true;
+        /* No early return.
+         *
+         * This file is included twice on the same page: once by the activities
+         * board, which wants the move sheet for its day menu, and again by the
+         * Inventory module when the board injects it. The old guard let the
+         * first copy win, so the injected copy never bound its own Save button
+         * and never painted its own shelf. What must happen once is the
+         * document-level delegation at the bottom; everything else has to
+         * happen every time, because every injection brings new elements. */
+        /* ONE MOVE SHEET, NOT TWO.
+         *
+         * The board renders this sheet for its day menu, and the injected
+         * Inventory module renders another copy of the same partial — so the
+         * document ends up with two of every element in it. getElementById
+         * answers with whichever comes first while openSheet may show the
+         * other, and the two disagree: pressing "+ In" wrote the direction to
+         * one sheet and read it back from the other, which came out as "out"
+         * and recorded a subtraction.
+         *
+         * The board's copy is the one kept, because it outlives the module —
+         * the injected one is torn down every time you leave, and the day
+         * menu still needs a sheet to open afterwards. */
+        (() => {
+            const host = document.getElementById('moduleHost');
+            const sheets = [...document.querySelectorAll('#ivMoveSheet')];
+            if (sheets.length < 2) return;
+            const keep = sheets.find((el) => !host || !host.contains(el)) || sheets[0];
+            sheets.forEach((el) => { if (el !== keep) el.remove(); });
+        })();
 
         const SCHEDULE_ID = {{ $schedule->id }};
         const U = {
@@ -79,8 +106,6 @@
             window.IV_ITEMS = ITEMS;
             paintAll();
         }
-        window.ivReload = load;
-
         /* ---------------- the module's three tabs ---------------- */
         function paintAll() {
             paintShelf();
@@ -165,10 +190,10 @@
         }
 
         /* ---------------- tabs ---------------- */
-        document.querySelectorAll('.iv-tab').forEach((tab) => tab.addEventListener('click', () => {
+        function showTab(tab) {
             document.querySelectorAll('.iv-tab').forEach((t) => t.classList.toggle('is-active', t === tab));
             document.querySelectorAll('.iv-pane').forEach((p) => p.classList.toggle('is-active', p.id === tab.dataset.pane));
-        }));
+        }
 
         /* ---------------- the item sheet ---------------- */
         /* The kind decides which units are on offer. Changing it refills the
@@ -186,16 +211,12 @@
             sayUnit();
         }
 
-        /** The unit, echoed beside the box the opening count is typed into. */
+        /** The unit, echoed beside the one box on this form that takes a number. */
         function sayUnit() {
-            const u = $id('ivOpeningUnit');
+            const u = $id('ivLowUnit');
             if (u) u.textContent = unitSays($id('ivUnit')?.value, false);
         }
-        $id('ivKind')?.addEventListener('change', sayKind);
-        $id('ivUnit')?.addEventListener('change', (e) => {
-            e.currentTarget.dataset.touched = '1';
-            sayUnit();
-        });
+
 
         function openItemSheet(item = null) {
             $id('ivItemTitle').textContent = item ? 'Edit item' : 'Add an item';
@@ -206,27 +227,11 @@
             fillUnits($id('ivUnit'), item ? item.kind : 'granular', item ? item.unit : null);
             $id('ivLowAt').value = item && item.lowAt ? item.lowAt : '';
             $id('ivNote').value = item && item.note ? item.note : '';
-            $id('ivOpening').value = '';
-            // An opening count belongs to adding a thing, not to editing one:
-            // a thing already on the shelf changes by moving, which is what
-            // the In and Out buttons are for.
-            $id('ivOpeningWrap').classList.toggle('hidden', !!item);
             sayKind();
             openSheet('ivItemSheet');
         }
 
-        document.addEventListener('click', (e) => {
-            if (e.target.closest('[data-add-item]')) { openItemSheet(); return; }
-            const ed = e.target.closest('[data-iv-edit]');
-            if (ed) { openItemSheet(itemById(ed.getAttribute('data-iv-edit'))); return; }
-            const inBtn = e.target.closest('[data-iv-in]');
-            if (inBtn) { window.ivOpenMove({ direction: 'in', itemId: inBtn.getAttribute('data-iv-in') }); return; }
-            const outBtn = e.target.closest('[data-iv-out]');
-            if (outBtn) { window.ivOpenMove({ direction: 'out', itemId: outBtn.getAttribute('data-iv-out') }); return; }
-        });
-
-        $id('ivSaveItem')?.addEventListener('click', async (e) => {
-            const btn = e.currentTarget;
+        async function saveItem(btn) {
             const id = $id('ivItemId').value;
             const name = $id('ivName').value.trim();
             if (!name) { toast('Give the item a name.', 'error'); $id('ivName').focus(); return; }
@@ -236,7 +241,6 @@
                 unit: $id('ivUnit').value,
                 lowAt: $id('ivLowAt').value || null,
                 note: $id('ivNote').value.trim() || null,
-                opening: id ? null : ($id('ivOpening').value || null),
             };
             btn.disabled = true;
             try {
@@ -246,7 +250,7 @@
                 await load();
             } catch (err) { toast(err.message, 'error'); }
             finally { btn.disabled = false; }
-        });
+        }
 
         /* ---------------- the move sheet ---------------- */
         /** Is the sheet being used to invent an item rather than pick one? */
@@ -323,13 +327,7 @@
                 }
             }
         }
-        $id('ivMoveItem')?.addEventListener('change', sayMoveItem);
-        $id('ivMoveQty')?.addEventListener('input', sayMoveQty);
-        $id('ivMoveNewKind')?.addEventListener('change', () => {
-            fillUnits($id('ivMoveNewUnit'), $id('ivMoveNewKind').value);
-            sayMoveItem();
-        });
-        $id('ivMoveNewUnit')?.addEventListener('change', sayMoveItem);
+
 
         /**
          * Open the move sheet.
@@ -359,8 +357,7 @@
             setTimeout(() => $id('ivMoveQty')?.focus(), 280);
         };
 
-        $id('ivMoveGo')?.addEventListener('click', async (e) => {
-            const btn = e.currentTarget;
+        async function moveGo(btn) {
             const itemId = $id('ivMoveItem').value;
             const isNew = itemId === '__new';
             const qty = Number($id('ivMoveQty').value || 0);
@@ -403,12 +400,10 @@
                 window.ivDayChanged?.($id('ivMoveDate').value);
             } catch (err) { toast(err.message, 'error'); }
             finally { btn.disabled = false; }
-        });
+        }
 
         /* ---------------- undoing one hand-typed entry ---------------- */
-        document.addEventListener('click', async (e) => {
-            const x = e.target.closest('[data-iv-move-del]');
-            if (!x) return;
+        async function delMove(id) {
             const ok = window.confirmAction ? await window.confirmAction({
                 title: 'Remove this entry?',
                 message: 'The stock goes back to what it was before this line. The lines after it keep the readings they were written with.',
@@ -416,11 +411,71 @@
             }) : true;
             if (!ok) return;
             try {
-                const res = await api(U.moveDelete(x.getAttribute('data-iv-move-del')), { method: 'DELETE' });
+                const res = await api(U.moveDelete(id), { method: 'DELETE' });
                 toast(res.message);
                 await load();
             } catch (err) { toast(err.message, 'error'); }
-        });
+        }
+
+        /* ---------------- who answers ----------------
+         *
+         * The newest copy of this script, because it is the one whose elements
+         * are on screen. The listeners below are attached to `document` once
+         * and read this on every event rather than closing over one run's
+         * functions — which is what made the injected copy inert. */
+        window.__ivApi = {
+            openItemSheet, saveItem, load, itemById, sayKind, sayUnit,
+            sayMoveItem, sayMoveQty, moveGo, delMove, showTab, fillUnits,
+        };
+        window.ivReload = load;
+
+        /* ---------------- bound once, to the document ---------------- */
+        if (!window.__ivBound) {
+            window.__ivBound = true;
+
+            document.addEventListener('click', (e) => {
+                const A = window.__ivApi;
+                if (!A) return;
+                if (e.target.closest('[data-add-item]')) { A.openItemSheet(); return; }
+                const ed = e.target.closest('[data-iv-edit]');
+                if (ed) { A.openItemSheet(A.itemById(ed.getAttribute('data-iv-edit'))); return; }
+                const inBtn = e.target.closest('[data-iv-in]');
+                if (inBtn) { window.ivOpenMove({ direction: 'in', itemId: inBtn.getAttribute('data-iv-in') }); return; }
+                const outBtn = e.target.closest('[data-iv-out]');
+                if (outBtn) { window.ivOpenMove({ direction: 'out', itemId: outBtn.getAttribute('data-iv-out') }); return; }
+                const tab = e.target.closest('.iv-tab');
+                if (tab) { A.showTab(tab); return; }
+                const del = e.target.closest('[data-iv-move-del]');
+                if (del) { A.delMove(del.getAttribute('data-iv-move-del')); return; }
+                const save = e.target.closest('#ivSaveItem');
+                if (save) { A.saveItem(save); return; }
+                const go = e.target.closest('#ivMoveGo');
+                if (go) { A.moveGo(go); return; }
+            });
+
+            /* change and input bubble, so the same trick works for the
+               selects — and a select that is replaced by an injection needs no
+               re-attaching. */
+            document.addEventListener('change', (e) => {
+                const A = window.__ivApi;
+                if (!A || !e.target.id) return;
+                if (e.target.id === 'ivKind') { A.sayKind(); return; }
+                if (e.target.id === 'ivUnit') { e.target.dataset.touched = '1'; A.sayUnit(); return; }
+                if (e.target.id === 'ivMoveItem') { A.sayMoveItem(); return; }
+                if (e.target.id === 'ivMoveNewKind') {
+                    A.fillUnits(document.getElementById('ivMoveNewUnit'), e.target.value);
+                    A.sayMoveItem();
+                    return;
+                }
+                if (e.target.id === 'ivMoveNewUnit') { A.sayMoveItem(); return; }
+            });
+
+            document.addEventListener('input', (e) => {
+                const A = window.__ivApi;
+                if (!A) return;
+                if (e.target.id === 'ivMoveQty') A.sayMoveQty();
+            });
+        }
 
         @if ($standalone ?? false)
         load().catch((err) => toast(err.message, 'error'));

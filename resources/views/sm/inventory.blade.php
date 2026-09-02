@@ -195,18 +195,22 @@
             </div>
             <div>
                 <label for="ivLowAt" class="form-label">Tell me at <span class="text-gray-400 font-normal">(optional)</span></label>
-                <input type="number" id="ivLowAt" min="0" step="any" class="form-input" placeholder="e.g. 5">
+                {{-- The unit beside it, because "5" is not a quantity until it
+                     says five of what. It is the only number left on this
+                     form, so it is the only place the unit has to be. --}}
+                <div class="relative">
+                    <input type="number" id="ivLowAt" min="0" step="any" class="form-input" placeholder="e.g. 5">
+                    <span class="iv-qty-u" id="ivLowUnit"></span>
+                </div>
             </div>
         </div>
 
-        <div id="ivOpeningWrap">
-            <label for="ivOpening" class="form-label">How much have you now? <span class="text-gray-400 font-normal">(optional)</span></label>
-            <div class="relative">
-                <input type="number" id="ivOpening" min="0" step="any" class="form-input" placeholder="0">
-                <span class="iv-qty-u" id="ivOpeningUnit"></span>
-            </div>
-            <p class="form-hint">Recorded as the opening count, and it shows in the log. Nobody adds Urea to a list in order to say they have none.</p>
-        </div>
+        {{-- No opening count.
+             Adding a thing to the shed and receiving a delivery are two acts,
+             and this form is only the first. "How much have you now?" reads as
+             a running total somebody has to keep correct; the answer is just
+             + In, as often as you like, and each one writes its own line in
+             the log — which one opening figure never would. --}}
 
         <div>
             <label for="ivNote" class="form-label">Note <span class="text-gray-400 font-normal">(optional)</span></label>
