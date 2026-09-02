@@ -244,6 +244,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::put('/app/sm-inventory-update', [App\Http\Controllers\Manager\InventoryController::class, 'update'])->name('sm.inventory.update');
     Route::delete('/app/sm-inventory-delete', [App\Http\Controllers\Manager\InventoryController::class, 'destroy'])->name('sm.inventory.destroy');
     Route::post('/app/sm-inventory-move', [App\Http\Controllers\Manager\InventoryController::class, 'moveStock'])->name('sm.inventory.move');
+    Route::post('/app/sm-inventory-restart', [App\Http\Controllers\Manager\InventoryController::class, 'restart'])->name('sm.inventory.restart');
     Route::delete('/app/sm-inventory-move-delete', [App\Http\Controllers\Manager\InventoryController::class, 'deleteMove'])->name('sm.inventory.move.delete');
 
     Route::post('/app/sm-workers-access-grant', [App\Http\Controllers\Manager\WorkerAccessController::class, 'grant'])->name('sm.workers.access.grant');

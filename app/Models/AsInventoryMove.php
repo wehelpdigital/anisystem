@@ -31,7 +31,7 @@ class AsInventoryMove extends BaseModel
     public const ADJUST = 'adjust';
 
     public const REASONS = [
-        self::OPEN => ['label' => 'Opening stock', 'icon' => '📖'],
+        self::OPEN => ['label' => 'Start', 'icon' => '📖'],
         self::IN => ['label' => 'Stock added', 'icon' => '📥'],
         self::OUT => ['label' => 'Used', 'icon' => '📤'],
         self::ACTIVITY => ['label' => 'Used by an activity', 'icon' => '✅'],

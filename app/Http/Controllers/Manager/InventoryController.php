@@ -61,9 +61,20 @@ class InventoryController extends BaseScheduleController
     {
         $schedule = $this->schedule($request->query('id'));
 
+        /* The season's past, for the Start question. A first count on a board
+         * with ticked activities has to ask WHEN counting begins — and "from
+         * the beginning" needs to know where the beginning is. */
+        $done = \App\Models\AsScheduleActivity::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)->where('isDone', 1)->count();
+        $first = \App\Models\AsScheduleActivity::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)->whereNotNull('targetDate')
+            ->min('targetDate');
+
         return $this->jsonOk('ok', ['data' => [
             'items' => $this->itemsPayload($schedule->id),
             'moves' => $this->movesPayload($schedule->id),
+            'doneActivities' => $done,
+            'firstActivityDate' => $first ? substr((string) $first, 0, 10) : null,
         ]]);
     }
 
@@ -89,8 +100,12 @@ class InventoryController extends BaseScheduleController
                     'unitLabel' => $i->unitLabel(),
                     'unitOne' => AsInventoryItem::unitSays($i->unit, true),
                     'lowAt' => $i->lowAt ? (float) $i->lowAt : null,
+                    'unitPrice' => $i->unitPrice !== null ? (float) $i->unitPrice : null,
                     'note' => $i->note,
                     'onHand' => $have,
+                    // Whether the book has begun — the first stock-in is asked
+                    // its Start question only while this is false.
+                    'hasMoves' => $i->moves()->exists(),
                     'says' => $i->say($have),
                     // Below the line they said to watch for — the shelf marks
                     // it, and so does the picker in the activity sheet.
@@ -141,19 +156,15 @@ class InventoryController extends BaseScheduleController
          * Nobody adds Urea to a list in order to say they have none of it. */
         $opening = (float) $request->input('opening', 0);
         if ($opening > 0) {
-            /* Two different notes, and they must not be the same one.
-             * `note` is about the THING — where it is kept, which supplier —
-             * and stays on it all season. `openingNote` is about this one
-             * arrival, and belongs in the log line beside it. The move sheet
-             * sends the second; the item form sends the first. */
-            $this->stock->move(
+            /* The Start, not just a move: the book begins here. startCount
+             * also adopts activity lines that name this item and spends what
+             * done activities used from this day forward — a book started
+             * mid-season owes the season its past. openingNote is about this
+             * arrival and lands on the Start line; `note` stayed on the item. */
+            $this->stock->startCount(
                 $item,
                 $opening,
-                AsInventoryMove::OPEN,
                 $request->input('on'),
-                /* Null, not "Opening stock". The reason column already says
-                 * that, and the log line prints both — so the default spelled
-                 * itself out twice on the same row. */
                 trim((string) $request->input('openingNote')) ?: null,
             );
         }
@@ -234,13 +245,18 @@ class InventoryController extends BaseScheduleController
         $qty = abs((float) $request->input('qty'));
         $reason = $request->input('reason') ?: ($in ? AsInventoryMove::IN : AsInventoryMove::OUT);
 
-        $move = $this->stock->move(
-            $item,
-            $in ? $qty : -$qty,
-            $reason,
-            $request->input('on'),
-            $request->input('note'),
-        );
+        /* A first count phrased as a move is still the Start. The sheet sends
+         * reason=open for an item whose book has not begun; that path runs
+         * the whole beginning — adoption, retro-spend — not just one line. */
+        $move = $reason === AsInventoryMove::OPEN
+            ? $this->stock->startCount($item, $qty, $request->input('on'), $request->input('note'))
+            : $this->stock->move(
+                $item,
+                $in ? $qty : -$qty,
+                $reason,
+                $request->input('on'),
+                $request->input('note'),
+            );
 
         $have = $this->stock->onHand($item->id);
 
@@ -250,6 +266,41 @@ class InventoryController extends BaseScheduleController
                 'move' => $move ? $this->movesPayload($schedule->id)[0] ?? null : null,
                 'item' => $this->oneItem($item),
             ]]
+        );
+    }
+
+    /**
+     * Move the Start — a different day, a different amount, or both.
+     *
+     * The old Start and the old retroactive spends are removed and rebuilt
+     * from the new answer; hand-typed deliveries and uses survive, because
+     * they happened regardless of where the book opens. The ledger's
+     * before/after readings are renumbered so the book agrees with itself.
+     */
+    public function restart(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        $v = Validator::make($request->all(), [
+            'itemId' => 'required|integer',
+            'qty' => 'required|numeric|min:0.001|max:9999999',
+            'on' => 'required|date',
+        ]);
+        if ($v->fails()) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => $v->errors()]);
+        }
+
+        $item = $this->itemOf($schedule->id, (int) $request->input('itemId'));
+        if (! $item) {
+            return $this->jsonFail('Item not found.', 404);
+        }
+
+        $this->stock->restart($item, abs((float) $request->input('qty')), $request->input('on'));
+        $have = $this->stock->onHand($item->id);
+
+        return $this->jsonOk(
+            $item->name . ' now starts on ' . date('M j, Y', strtotime($request->input('on')))
+                . ' — ' . $item->say($have) . ' on hand after what the season used.',
+            ['data' => ['item' => $this->oneItem($item)]]
         );
     }
 
@@ -294,6 +345,7 @@ class InventoryController extends BaseScheduleController
             'unitLabel' => $item->unitLabel(),
             'unitOne' => AsInventoryItem::unitSays($item->unit, true),
             'lowAt' => $item->lowAt ? (float) $item->lowAt : null,
+            'unitPrice' => $item->unitPrice !== null ? (float) $item->unitPrice : null,
             'note' => $item->note,
             'onHand' => $have,
             'says' => $item->say($have),
@@ -319,6 +371,10 @@ class InventoryController extends BaseScheduleController
                 ? $unit
                 : (AsInventoryItem::unitsFor($kind)[0] ?? 'kg'),
             'lowAt' => $request->filled('lowAt') ? (float) $request->input('lowAt') : null,
+            // What one unit costs, for the expense report this will feed.
+            // Optional and per item: the farm buys the same bag at the same
+            // price all season.
+            'unitPrice' => $request->filled('unitPrice') ? (float) $request->input('unitPrice') : null,
             'note' => $request->filled('note') ? trim((string) $request->input('note')) : null,
         ];
     }
@@ -330,6 +386,7 @@ class InventoryController extends BaseScheduleController
             'kind' => 'nullable|string|max:30',
             'unit' => 'nullable|string|max:20',
             'lowAt' => 'nullable|numeric|min:0|max:9999999',
+            'unitPrice' => 'nullable|numeric|min:0|max:99999999',
             'note' => 'nullable|string|max:500',
             'opening' => 'nullable|numeric|min:0|max:9999999',
             // The day the opening count was taken. Sent when an item is being

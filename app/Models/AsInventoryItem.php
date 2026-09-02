@@ -81,12 +81,13 @@ class AsInventoryItem extends BaseModel
 
     protected $fillable = [
         'croppingScheduleId', 'name', 'kind', 'unit',
-        'lowAt', 'note', 'deleteStatus',
+        'lowAt', 'unitPrice', 'note', 'deleteStatus',
     ];
 
     protected $casts = [
         'croppingScheduleId' => 'integer',
         'lowAt' => 'decimal:3',
+        'unitPrice' => 'decimal:2',
         'deleteStatus' => 'integer',
     ];
 

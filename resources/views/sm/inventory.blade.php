@@ -205,6 +205,15 @@
             </div>
         </div>
 
+        <div>
+            <label for="ivPrice" class="form-label">Price <span class="text-gray-400 font-normal">(optional)</span></label>
+            <div class="relative">
+                <input type="number" id="ivPrice" min="0" step="any" class="form-input" placeholder="0.00" inputmode="decimal">
+                <span class="iv-qty-u" id="ivPriceUnit"></span>
+            </div>
+            <p class="form-hint">What one costs. The expense report will multiply it by what the moves say was used.</p>
+        </div>
+
         {{-- No opening count.
              Adding a thing to the shed and receiving a delivery are two acts,
              and this form is only the first. "How much have you now?" reads as

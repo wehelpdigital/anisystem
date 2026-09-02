@@ -20,26 +20,25 @@
          * and never painted its own shelf. What must happen once is the
          * document-level delegation at the bottom; everything else has to
          * happen every time, because every injection brings new elements. */
-        /* ONE MOVE SHEET, NOT TWO.
+        /* ONE OF EACH SHEET, EVER.
          *
-         * The board renders this sheet for its day menu, and the injected
-         * Inventory module renders another copy of the same partial — so the
-         * document ends up with two of every element in it. getElementById
-         * answers with whichever comes first while openSheet may show the
-         * other, and the two disagree: pressing "+ In" wrote the direction to
-         * one sheet and read it back from the other, which came out as "out"
-         * and recorded a subtraction.
+         * Two roads to a duplicate. The board and the injected module render
+         * the same partial, so the document gets two copies outright. And
+         * openSheet() re-parents whatever it opens to <body> — so a sheet
+         * opened once ESCAPES its module wrapper and survives the teardown
+         * that fresh:true performs, shadowing the next injection's copy.
          *
-         * The board's copy is the one kept, because it outlives the module —
-         * the injected one is torn down every time you leave, and the day
-         * menu still needs a sheet to open afterwards. */
-        (() => {
-            const host = document.getElementById('moduleHost');
-            const sheets = [...document.querySelectorAll('#ivMoveSheet')];
-            if (sheets.length < 2) return;
-            const keep = sheets.find((el) => !host || !host.contains(el)) || sheets[0];
-            sheets.forEach((el) => { if (el !== keep) el.remove(); });
-        })();
+         * Either way, getElementById answers with one element while the user
+         * types into another. That is how "+ In" recorded a subtraction, and
+         * how editing an item saved as a brand-new one while Close closed the
+         * invisible twin. Every inventory sheet gets the same cure: keep the
+         * FIRST copy in document order — the one getElementById will answer
+         * with — and remove the rest. All behaviour is delegated, so any
+         * single copy is a working copy. */
+        ['ivMoveSheet', 'ivItemSheet', 'ivStartSheet', 'ivStartEditSheet'].forEach((sid) => {
+            const copies = [...document.querySelectorAll('#' + sid)];
+            copies.slice(1).forEach((el) => el.remove());
+        });
 
         const SCHEDULE_ID = {{ $schedule->id }};
         const U = {
@@ -48,6 +47,7 @@
             update: (id) => `{{ route('sm.inventory.update') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
             destroy: (id) => `{{ route('sm.inventory.destroy') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
             move: `{{ route('sm.inventory.move') }}?scheduleId=${SCHEDULE_ID}`,
+            restart: `{{ route('sm.inventory.restart') }}?scheduleId=${SCHEDULE_ID}`,
             moveDelete: (id) => `{{ route('sm.inventory.move.delete') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
         };
         const KINDS = @json(\App\Models\AsInventoryItem::KINDS);
@@ -99,10 +99,19 @@
         const itemById = (id) => ITEMS.find((i) => String(i.id) === String(id)) || null;
 
         /* ---------------- fetching ---------------- */
+        /* The season's past: how many activities are already ticked done, and
+           where the season begins. The Start question is only asked on a
+           board that has a past. */
+        let CTX = { done: 0, first: null };
+
         async function load() {
             const res = await api(U.list, { method: 'GET' });
             ITEMS = res.data?.items || [];
             MOVES = res.data?.moves || [];
+            CTX = {
+                done: Number(res.data?.doneActivities || 0),
+                first: res.data?.firstActivityDate || null,
+            };
             window.IV_ITEMS = ITEMS;
             paintAll();
         }
@@ -128,6 +137,7 @@
                                 ${i.onHand > 0 ? esc(say(i, i.onHand)) : 'None left'}
                                 ${i.isLow && i.onHand > 0 ? '<span class="iv-low">low</span>' : ''}
                             </div>
+                            ${i.unitPrice != null ? `<div class="iv-note">\u20b1${trim(i.unitPrice)} per ${esc(unitSays(i.unit, true))}</div>` : ''}
                             ${i.note ? `<div class="iv-note">${esc(i.note)}</div>` : ''}
                         </span>
                         <span class="iv-acts">
@@ -171,7 +181,9 @@
                     <span class="iv-move-d ${m.isIn ? 'is-in' : 'is-out'}">${m.isIn ? '+' : '−'}${esc(trim(Math.abs(m.delta)))}</span>
                     ${m.reason === 'activity'
                         ? '<span class="iv-move-x" title="This one came from an activity. Untick the activity to take it back.">🔒</span>'
-                        : `<button type="button" class="iv-move-x" data-iv-move-del="${m.id}" title="Remove this entry" aria-label="Remove this entry">✕</button>`}
+                        : m.reason === 'open'
+                            ? `<button type="button" class="iv-move-x" data-iv-start-edit="${m.itemId}" data-qty="${Math.abs(m.delta)}" data-on="${esc(m.on || '')}" title="Move the start — change the amount or the day and recalculate" aria-label="Move the start">✏️</button>`
+                            : `<button type="button" class="iv-move-x" data-iv-move-del="${m.id}" title="Remove this entry" aria-label="Remove this entry">✕</button>`}
                 </div>`;
             });
             box.innerHTML = html;
@@ -213,8 +225,12 @@
 
         /** The unit, echoed beside the one box on this form that takes a number. */
         function sayUnit() {
+            const word = unitSays($id('ivUnit')?.value, false);
             const u = $id('ivLowUnit');
-            if (u) u.textContent = unitSays($id('ivUnit')?.value, false);
+            if (u) u.textContent = word;
+            // The price is per ONE of whatever this is counted in.
+            const p = $id('ivPriceUnit');
+            if (p) p.textContent = '\u20b1 per ' + unitSays($id('ivUnit')?.value, true);
         }
 
 
@@ -226,6 +242,7 @@
             $id('ivUnit').dataset.touched = item ? '1' : '';
             fillUnits($id('ivUnit'), item ? item.kind : 'granular', item ? item.unit : null);
             $id('ivLowAt').value = item && item.lowAt ? item.lowAt : '';
+            $id('ivPrice').value = item && item.unitPrice != null ? item.unitPrice : '';
             $id('ivNote').value = item && item.note ? item.note : '';
             sayKind();
             openSheet('ivItemSheet');
@@ -240,6 +257,7 @@
                 kind: $id('ivKind').value,
                 unit: $id('ivUnit').value,
                 lowAt: $id('ivLowAt').value || null,
+                unitPrice: $id('ivPrice').value || null,
                 note: $id('ivNote').value.trim() || null,
             };
             btn.disabled = true;
@@ -252,9 +270,106 @@
             finally { btn.disabled = false; }
         }
 
+        /* ---------------- when the book begins ----------------
+         *
+         * One chooser, two callers: the move sheet's first count and the log's
+         * Start line. `startTarget` says who asked; each keeps its own answer,
+         * so opening the chooser to look never rewrites the other's choice. */
+        /* The LOCAL day, not UTC's. toISOString put a Manila evening on
+           yesterday's date — the server counts in Asia/Manila and so must the
+           tag that claims to say "Today". */
+        const todayISO = () => {
+            const d = new Date();
+            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        };
+        const START = { move: { mode: 'today', date: null }, edit: { mode: 'date', date: null } };
+        let startTarget = 'move';
+
+        const startDateOf = (st) => st.mode === 'date' ? (st.date || todayISO())
+            : st.mode === 'beginning' ? (CTX.first || todayISO())
+            : todayISO();
+
+        const sayDate = (iso) => {
+            const d = new Date(iso + 'T00:00:00');
+            return isNaN(d) ? iso : d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+        };
+
+        /** Paint one tag from one answer. */
+        function sayStart(which) {
+            const st = START[which];
+            const icon = $id(which === 'move' ? 'ivStartIcon' : 'ivStartEditIcon');
+            const now = $id(which === 'move' ? 'ivStartNow' : 'ivStartEditNow');
+            if (!now) return;
+            if (st.mode === 'today') { icon.textContent = '\ud83d\uddd3\ufe0f'; now.textContent = 'Today \u00b7 ' + sayDate(todayISO()); }
+            else if (st.mode === 'beginning') { icon.textContent = '\u23ee\ufe0f'; now.textContent = 'The beginning \u00b7 ' + sayDate(CTX.first || todayISO()); }
+            else { icon.textContent = '\ud83d\udcc5'; now.textContent = sayDate(st.date || todayISO()); }
+            const hint = $id('ivStartHint');
+            if (which === 'move' && hint) {
+                hint.textContent = 'Activities already ticked done from this day take from the count automatically.';
+            }
+        }
+
+        function openStartChooser(which) {
+            startTarget = which;
+            const st = START[which];
+            document.querySelectorAll('#ivStartRows .dt-row').forEach((r) => {
+                const on = r.getAttribute('data-start') === st.mode;
+                r.classList.toggle('is-on', on);
+                r.querySelector('.dt-row-tick')?.classList.toggle('hidden', !on);
+            });
+            const say = $id('ivStartBeginningSays');
+            if (say) {
+                say.textContent = CTX.first
+                    ? `The season's first activity is ${sayDate(CTX.first)}. Everything ticked done that used this item comes off the count.`
+                    : 'Everything already ticked done that used this item comes off the count.';
+            }
+            openSheet('ivStartSheet');
+        }
+
+        function chooseStart(row) {
+            const mode = row.getAttribute('data-start');
+            const st = START[startTarget];
+            if (mode === 'date') {
+                const input = $id('ivStartDateInput');
+                input.value = st.mode === 'date' && st.date ? st.date : todayISO();
+                /* A real datepicker, raised from the row. Where the browser
+                   cannot raise one, the input itself is brought into reach. */
+                try { input.showPicker(); } catch (_) {
+                    input.style.opacity = '1';
+                    input.style.pointerEvents = 'auto';
+                    input.focus();
+                }
+                return; // settled by the input's change event
+            }
+            st.mode = mode;
+            sayStart(startTarget);
+            closeSheet('ivStartSheet');
+        }
+
+        function pickedStartDate(value) {
+            if (!value) return;
+            const st = START[startTarget];
+            st.mode = 'date';
+            st.date = value;
+            sayStart(startTarget);
+            closeSheet('ivStartSheet');
+        }
+
         /* ---------------- the move sheet ---------------- */
         /** Is the sheet being used to invent an item rather than pick one? */
         const movingNew = () => $id('ivMoveItem')?.value === '__new';
+
+        /**
+         * A FIRST count: a new item, or one whose book has not begun.
+         * The Start question is asked then, and only on a board with a past —
+         * without ticked activities every answer is the same answer.
+         */
+        function firstCount() {
+            if ($id('ivMoveDir')?.value !== 'in') return false;
+            if (movingNew()) return true;
+            const item = itemById($id('ivMoveItem')?.value);
+            return !!item && !item.hasMoves;
+        }
 
         function fillMovePicker(want) {
             const sel = $id('ivMoveItem');
@@ -280,8 +395,17 @@
             $id('ivMoveNewWrap')?.classList.toggle('hidden', !isNew);
             if (isNew) fillUnits($id('ivMoveNewUnit'), $id('ivMoveNewKind')?.value, $id('ivMoveNewUnit')?.value);
 
+            /* The Start question, in place of the plain date, for a first
+               count on a board with a past. */
+            const asking = firstCount() && CTX.done > 0;
+            $id('ivStartWrap')?.classList.toggle('hidden', !asking);
+            $id('ivMoveDateWrap')?.classList.toggle('hidden', asking);
+            if (asking) sayStart('move');
+
             const unitKey = isNew ? $id('ivMoveNewUnit')?.value : item?.unit;
             if (unit) unit.textContent = unitKey ? unitSays(unitKey, false) : '';
+            const pu = $id('ivMoveNewPriceUnit');
+            if (pu && isNew) pu.textContent = '\u20b1 per ' + unitSays($id('ivMoveNewUnit')?.value, true);
             if (have) {
                 have.textContent = isNew
                     ? 'New to the shed. What you type below becomes its opening count.'
@@ -351,7 +475,12 @@
             $id('ivMoveNote').value = '';
             const newName = $id('ivMoveNewName');
             if (newName) newName.value = '';
-            $id('ivMoveDate').value = o.date || new Date().toISOString().slice(0, 10);
+            $id('ivMoveDate').value = o.date || todayISO();
+            const newPrice = $id('ivMoveNewPrice');
+            if (newPrice) newPrice.value = '';
+            // Each opening starts from Today; yesterday's choice belonged to
+            // yesterday's item.
+            START.move = { mode: 'today', date: null };
             fillMovePicker(o.itemId);
             openSheet('ivMoveSheet');
             setTimeout(() => $id('ivMoveQty')?.focus(), 280);
@@ -371,6 +500,11 @@
                    just arrived as its opening count, dated to the day this was
                    opened from — one round trip, and the shed is never left
                    holding a thing it has none of. */
+                /* A first count carries its chosen start day and is written
+                   as the Start; the server then charges it with what the
+                   season's done activities already used from that day. */
+                const asking = firstCount() && CTX.done > 0;
+                const when = asking ? startDateOf(START.move) : ($id('ivMoveDate').value || null);
                 const res = isNew
                     ? await api(U.store, {
                         method: 'POST',
@@ -378,8 +512,9 @@
                             name: newName,
                             kind: $id('ivMoveNewKind').value,
                             unit: $id('ivMoveNewUnit').value,
+                            unitPrice: $id('ivMoveNewPrice')?.value || null,
                             opening: qty,
-                            on: $id('ivMoveDate').value || null,
+                            on: when,
                             openingNote: $id('ivMoveNote').value.trim() || null,
                         },
                     })
@@ -389,7 +524,8 @@
                             itemId: Number(itemId),
                             qty,
                             direction: $id('ivMoveDir').value,
-                            on: $id('ivMoveDate').value || null,
+                            reason: asking ? 'open' : null,
+                            on: when,
                             note: $id('ivMoveNote').value.trim() || null,
                         },
                     });
@@ -398,6 +534,36 @@
                 await load();
                 // The board keeps its own copy of the day's rows.
                 window.ivDayChanged?.($id('ivMoveDate').value);
+            } catch (err) { toast(err.message, 'error'); }
+            finally { btn.disabled = false; }
+        }
+
+        /* ---------------- moving the Start ---------------- */
+        function openStartEdit(itemId, qty, on) {
+            const item = itemById(itemId);
+            if (!item) { toast('That item is gone.', 'error'); return; }
+            $id('ivStartEditItem').value = String(item.id);
+            $id('ivStartEditWhat').textContent = `${item.icon} ${item.name} — the book currently starts ${on ? 'on ' + sayDate(on) : 'today'} with ${say(item, Number(qty) || 0)}.`;
+            $id('ivStartEditQty').value = qty || '';
+            $id('ivStartEditUnit').textContent = unitSays(item.unit, false);
+            START.edit = { mode: 'date', date: on || todayISO() };
+            sayStart('edit');
+            openSheet('ivStartEditSheet');
+        }
+
+        async function startEditGo(btn) {
+            const itemId = $id('ivStartEditItem').value;
+            const qty = Number($id('ivStartEditQty').value || 0);
+            if (!(qty > 0)) { toast('Started with how much?', 'error'); $id('ivStartEditQty').focus(); return; }
+            btn.disabled = true;
+            try {
+                const res = await api(U.restart, {
+                    method: 'POST',
+                    body: { itemId: Number(itemId), qty, on: startDateOf(START.edit) },
+                });
+                toast(res.message);
+                closeSheet('ivStartEditSheet');
+                await load();
             } catch (err) { toast(err.message, 'error'); }
             finally { btn.disabled = false; }
         }
@@ -426,6 +592,7 @@
         window.__ivApi = {
             openItemSheet, saveItem, load, itemById, sayKind, sayUnit,
             sayMoveItem, sayMoveQty, moveGo, delMove, showTab, fillUnits,
+            openStartChooser, chooseStart, pickedStartDate, openStartEdit, startEditGo,
         };
         window.ivReload = load;
 
@@ -447,6 +614,14 @@
                 if (tab) { A.showTab(tab); return; }
                 const del = e.target.closest('[data-iv-move-del]');
                 if (del) { A.delMove(del.getAttribute('data-iv-move-del')); return; }
+                const se = e.target.closest('[data-iv-start-edit]');
+                if (se) { A.openStartEdit(se.getAttribute('data-iv-start-edit'), se.getAttribute('data-qty'), se.getAttribute('data-on')); return; }
+                if (e.target.closest('#ivStartBtn')) { A.openStartChooser('move'); return; }
+                if (e.target.closest('#ivStartEditBtn')) { A.openStartChooser('edit'); return; }
+                const srow = e.target.closest('#ivStartRows .dt-row');
+                if (srow) { A.chooseStart(srow); return; }
+                const sgo = e.target.closest('#ivStartEditGo');
+                if (sgo) { A.startEditGo(sgo); return; }
                 const save = e.target.closest('#ivSaveItem');
                 if (save) { A.saveItem(save); return; }
                 const go = e.target.closest('#ivMoveGo');
@@ -468,6 +643,7 @@
                     return;
                 }
                 if (e.target.id === 'ivMoveNewUnit') { A.sayMoveItem(); return; }
+                if (e.target.id === 'ivStartDateInput') { A.pickedStartDate(e.target.value); return; }
             });
 
             document.addEventListener('input', (e) => {
