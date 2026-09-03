@@ -963,6 +963,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const descHtml = a.description || '';
+        // The day-length chip and the roster, built once and worn twice: on
+        // the title's own line from md up, in the meta strip on phones.
+        const dayWorkerChips = ((hasChecklist(a) || a.activityType === 'reminder_checklist') ? ''
+            : `<span class="meta-time">${SVG.clock} ${esc(timeRequiredLabel(a.timeRequired))}</span>`) + workerTags;
         const imageUrl = a.imageUrl || (a.imagePath ? STORAGE_BASE + '/' + String(a.imagePath).replace(/^\/+/, '') : '');
         const cardImages = (a.images && a.images.length) ? a.images : (imageUrl ? [{ url: imageUrl }] : []);
         const imagesHtml = cardImages.length
@@ -1003,7 +1007,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="activity-card-lots activity-card-lothead">${isReminderCard
                 ? '<span class="badge reminder-head-badge">Reminder Checklist</span>'
                 : lotsRow}</div>
-            <h3 class="activity-card-title">${esc(a.activityTitle || '')}</h3>
+            <div class="act-title-line">
+                <h3 class="activity-card-title">${esc(a.activityTitle || '')}</h3>
+                <span class="act-inline-meta">${dayWorkerChips}</span>
+            </div>
             <div class="activity-card-badges">
                 <span class="pill pill-${esc(priority)}">${esc(priorityCap)}</span>
                 ${isReminderCard && lotIds.length ? lotsRow : ''}
@@ -1034,9 +1041,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ${descHtml ? `<div class="activity-description-content text-sm text-gray-700 mt-2" data-lightbox>${descHtml}</div>` : ''}
     ${imagesHtml}
     <div class="activity-meta">
-        ${(hasChecklist(a) || isReminderCard) ? ''
-            : `<span class="meta-time">${SVG.clock} ${esc(timeRequiredLabel(a.timeRequired))}</span>`}
-        ${workerTags}
+        <span class="am-phone">${dayWorkerChips}</span>
         ${itemTags}
     </div>
     ${payrollChecklist(a)}

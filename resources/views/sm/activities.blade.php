@@ -2043,6 +2043,32 @@
         @media (prefers-reduced-motion: reduce) { .day-type-menu { animation: none; } }
         /* Meta strip: time + workers + materials/services on one wrapped row. */
         .activity-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .55rem; }
+        /* THE DAY'S LENGTH AND ITS PEOPLE SIT BESIDE THE NAME — on desktop.
+           One chunk of chips, two coats: .am-phone joins the meta strip on
+           phones, .act-inline-meta joins the title's line from md up. Both
+           are display:contents so the chips answer to whichever flex row is
+           wearing them, and the sleeping coat is display:none. */
+        .am-phone { display: contents; }
+        .act-inline-meta { display: none; }
+        /* The card head is one flattened, order-choreographed flex (the
+           column wrapper is display:contents), so this line must take the
+           title's old seat: order 2, a full row of its own. And the title's
+           global order:2 must be quieted INSIDE the line, or the chips march
+           in front of the name. */
+        .act-title-line { min-width: 0; order: 2; flex: 0 0 100%; max-width: 100%; }
+        .act-title-line .activity-card-title { order: 0; }
+        @media (min-width: 768px) {
+            .am-phone { display: none; }
+            .act-inline-meta { display: contents; }
+            .act-title-line { display: flex; align-items: center; gap: .3rem .35rem; flex-wrap: wrap; }
+            /* The title elsewhere claims a whole row (flex-basis 100%); on
+               this line it takes only its words, or the chips can never sit
+               beside it. */
+            .act-title-line .activity-card-title { flex: 0 1 auto; width: auto; min-width: 0; margin-right: .15rem; }
+            /* With its chips gone upstairs, a strip holding no materials is
+               an empty div wearing a margin — fold it away. */
+            .activity-meta:not(:has(.material-tag)) { display: none; }
+        }
         /* Two panes in the activity sheet. Hiding is done from the host with
            one class rather than by toggling each child: the type tabs already
            show and hide panels of their own, and a pane switch that restored
