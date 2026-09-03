@@ -105,7 +105,10 @@ class InventoryController extends BaseScheduleController
                     'onHand' => $have,
                     // Whether the book has begun — the first stock-in is asked
                     // its Start question only while this is false.
-                    'hasMoves' => $i->moves()->exists(),
+                    // The birth line does not count: an item whose only move
+                    // is its own creation has not begun its book, and its
+                    // first stock-in still gets the Start question.
+                    'hasMoves' => $i->moves()->where('reason', '!=', AsInventoryMove::CREATED)->exists(),
                     'says' => $i->say($have),
                     // Below the line they said to watch for — the shelf marks
                     // it, and so does the picker in the activity sheet.
@@ -154,6 +157,22 @@ class InventoryController extends BaseScheduleController
 
         /* An opening count is part of adding the thing, not a second errand.
          * Nobody adds Urea to a list in order to say they have none of it. */
+        /* The birth certificate. Without it the log's first line was stock
+         * arriving from nowhere; with it the book starts where the shed did.
+         * delta 0 on purpose — joining the list is not stock — and written
+         * directly because move() rightly refuses a move of nothing. */
+        AsInventoryMove::create([
+            'croppingScheduleId' => $schedule->id,
+            'itemId' => $item->id,
+            'delta' => 0,
+            'qtyBefore' => 0,
+            'qtyAfter' => 0,
+            'reason' => AsInventoryMove::CREATED,
+            'happenedOn' => now('Asia/Manila')->toDateString(),
+            'byUserId' => \Illuminate\Support\Facades\Auth::id(),
+            'deleteStatus' => 1,
+        ]);
+
         $opening = (float) $request->input('opening', 0);
         if ($opening > 0) {
             /* The Start, not just a move: the book begins here. startCount

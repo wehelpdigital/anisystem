@@ -279,8 +279,11 @@
     .dash-hero-state .rankb .rankb-e { font-size: .85rem; }
     @media (min-width: 640px) {
         .dash-hero { grid-template-columns: auto minmax(0, 1fr) auto; }
+        /* One row of facts, right-aligned. This used to stack the chips in a
+           column, which read as the rank chip orphaning its seat badge onto
+           the next line — the pair belongs shoulder to shoulder. */
         .dash-hero-state { grid-column: 3; grid-row: 1 / -1; justify-self: end; align-self: center;
-            flex-direction: column; align-items: flex-end; }
+            flex-wrap: wrap; justify-content: flex-end; max-width: 24rem; }
     }
     /* --- Your own field, across the top of your own greeting ---
        A row of its own at the head of the hero's grid, bled back out through

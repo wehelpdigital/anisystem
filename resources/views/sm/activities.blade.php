@@ -5047,8 +5047,16 @@
         // A switch already under way owns the outcome; a pop that arrives
         // mid-flight is older news than what the reader just asked for.
         if (busy) return;
+        /* Landing on the module we are already showing is not a navigation —
+           it is the wake of an overlay entry collapsing (a sheet closed, and
+           unregisterOverlay rewound its pushState). Re-showing it would put a
+           fresh:true module through a teardown and refetch for the crime of
+           cancelling a form. The depth bookkeeping stays untouched too: the
+           module's own entry is the one we just landed on. */
+        const target = (e.state && e.state.module) || 'activities';
+        if (target === current) return;
         if (pushDepth > 0) pushDepth--;
-        showModule((e.state && e.state.module) || 'activities', false);
+        showModule(target, false);
     });
 
     /* The header chevron and the phone's Back button disagreed: Back walked

@@ -159,7 +159,9 @@
 @endsection
 
 @push('sheets')
-<div class="sheet hidden" id="ivItemSheet" style="--sheet-width:32rem">
+{{-- data-static: typing happens here, and a stray tap on the dimmed page
+     must not eat a half-written item. ✕ and Cancel are the doors. --}}
+<div class="sheet hidden" id="ivItemSheet" data-static="true" style="--sheet-width:32rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
         <h3 class="sheet-title" id="ivItemTitle">Add an item</h3>
@@ -220,6 +222,22 @@
              a running total somebody has to keep correct; the answer is just
              + In, as often as you like, and each one writes its own line in
              the log — which one opening figure never would. --}}
+
+        {{-- STOCK, FROM THE EDIT SHEET. The shelf card says Edit or Delete
+             and nothing else, so moving stock lives here — where the item is
+             already open — and in the day menu's two doors as before. --}}
+        <div id="ivStockRow" class="hidden rounded-xl border border-gray-100 p-3">
+            <div class="flex items-center justify-between gap-2">
+                <div class="min-w-0">
+                    <p class="form-label !mb-0">Stock</p>
+                    <p class="form-hint !mt-0" id="ivStockSays"></p>
+                </div>
+                <div class="flex gap-2 shrink-0">
+                    <button type="button" class="btn btn-white btn-sm" id="ivStockIn">+ In</button>
+                    <button type="button" class="btn btn-white btn-sm" id="ivStockOut">− Out</button>
+                </div>
+            </div>
+        </div>
 
         <div>
             <label for="ivNote" class="form-label">Note <span class="text-gray-400 font-normal">(optional)</span></label>

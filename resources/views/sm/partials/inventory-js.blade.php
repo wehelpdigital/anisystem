@@ -141,9 +141,8 @@
                             ${i.note ? `<div class="iv-note">${esc(i.note)}</div>` : ''}
                         </span>
                         <span class="iv-acts">
-                            <button type="button" class="iv-btn is-in" data-iv-in="${i.id}">+ In</button>
-                            <button type="button" class="iv-btn is-out" data-iv-out="${i.id}">− Out</button>
                             <button type="button" class="iv-btn" data-iv-edit="${i.id}">Edit</button>
+                            <button type="button" class="iv-btn is-out" data-iv-del="${i.id}">Delete</button>
                         </span>
                     </div>
                 </div>`).join('');
@@ -176,9 +175,11 @@
                     <span class="iv-move-e" title="${esc(m.reasonLabel)}">${m.reasonIcon}</span>
                     <span class="iv-move-t">
                         <span class="iv-move-n">${esc(m.itemName)}</span>
-                        <span class="iv-move-s">${esc(m.reasonLabel)} · <b>${esc(trim(m.before))}</b> → <b>${esc(trim(m.after))}</b> ${esc(m.unit)}${m.note ? ' · ' + esc(m.note) : ''}</span>
+                        <span class="iv-move-s">${esc(m.reasonLabel)}${m.reason === 'created' ? '' : ` · <b>${esc(trim(m.before))}</b> → <b>${esc(trim(m.after))}</b> ${esc(m.unit)}`}${m.note ? ' · ' + esc(m.note) : ''}</span>
                     </span>
-                    <span class="iv-move-d ${m.isIn ? 'is-in' : 'is-out'}">${m.isIn ? '+' : '−'}${esc(trim(Math.abs(m.delta)))}</span>
+                    ${m.reason === 'created'
+                        ? '<span class="iv-move-d" style="color:var(--color-gray-300)">·</span>'
+                        : `<span class="iv-move-d ${m.isIn ? 'is-in' : 'is-out'}">${m.isIn ? '+' : '−'}${esc(trim(Math.abs(m.delta)))}</span>`}
                     ${m.reason === 'activity'
                         ? '<span class="iv-move-x" title="This one came from an activity. Untick the activity to take it back.">🔒</span>'
                         : m.reason === 'open'
@@ -244,6 +245,14 @@
             $id('ivLowAt').value = item && item.lowAt ? item.lowAt : '';
             $id('ivPrice').value = item && item.unitPrice != null ? item.unitPrice : '';
             $id('ivNote').value = item && item.note ? item.note : '';
+            /* Stock moves from here now that the card says only Edit/Delete.
+               A brand-new item has no stock to move; the row waits. */
+            $id('ivStockRow')?.classList.toggle('hidden', !item);
+            if (item) {
+                const says = $id('ivStockSays');
+                if (says) says.textContent = item.onHand > 0 ? say(item, item.onHand) + ' on hand.' : 'None on hand.';
+                $id('ivStockRow').dataset.item = item.id;
+            }
             sayKind();
             openSheet('ivItemSheet');
         }
@@ -589,8 +598,25 @@
          * are on screen. The listeners below are attached to `document` once
          * and read this on every event rather than closing over one run's
          * functions — which is what made the injected copy inert. */
+        /** Take an item off the shed's list. Its log lines stay: history
+            does not thin out because somebody stopped stocking a thing. */
+        async function delItem(id) {
+            const item = itemById(id);
+            const ok = window.confirmAction ? await window.confirmAction({
+                title: 'Delete ' + (item ? item.name : 'this item') + '?',
+                message: 'It comes off the shed\u2019s list. Its log lines stay, and activities that used it keep their record.',
+                confirmText: 'Delete',
+            }) : true;
+            if (!ok) return;
+            try {
+                const res = await api(U.destroy(id), { method: 'DELETE' });
+                toast(res.message);
+                await load();
+            } catch (err) { toast(err.message, 'error'); }
+        }
+
         window.__ivApi = {
-            openItemSheet, saveItem, load, itemById, sayKind, sayUnit,
+            openItemSheet, saveItem, load, itemById, sayKind, sayUnit, delItem,
             sayMoveItem, sayMoveQty, moveGo, delMove, showTab, fillUnits,
             openStartChooser, chooseStart, pickedStartDate, openStartEdit, startEditGo,
         };
@@ -606,10 +632,16 @@
                 if (e.target.closest('[data-add-item]')) { A.openItemSheet(); return; }
                 const ed = e.target.closest('[data-iv-edit]');
                 if (ed) { A.openItemSheet(A.itemById(ed.getAttribute('data-iv-edit'))); return; }
-                const inBtn = e.target.closest('[data-iv-in]');
-                if (inBtn) { window.ivOpenMove({ direction: 'in', itemId: inBtn.getAttribute('data-iv-in') }); return; }
-                const outBtn = e.target.closest('[data-iv-out]');
-                if (outBtn) { window.ivOpenMove({ direction: 'out', itemId: outBtn.getAttribute('data-iv-out') }); return; }
+                const delB = e.target.closest('[data-iv-del]');
+                if (delB) { A.delItem(delB.getAttribute('data-iv-del')); return; }
+                const sIn = e.target.closest('#ivStockIn');
+                const sOut = e.target.closest('#ivStockOut');
+                if (sIn || sOut) {
+                    const itemId = document.getElementById('ivStockRow')?.dataset.item;
+                    closeSheet('ivItemSheet');
+                    window.ivOpenMove({ direction: sIn ? 'in' : 'out', itemId });
+                    return;
+                }
                 const tab = e.target.closest('.iv-tab');
                 if (tab) { A.showTab(tab); return; }
                 const del = e.target.closest('[data-iv-move-del]');

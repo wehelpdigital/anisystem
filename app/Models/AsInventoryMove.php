@@ -30,12 +30,16 @@ class AsInventoryMove extends BaseModel
     /** A correction to make the book agree with the shed. */
     public const ADJUST = 'adjust';
 
+    /** The item joining the shed's list — a line in the diary, no stock. */
+    public const CREATED = 'created';
+
     public const REASONS = [
         self::OPEN => ['label' => 'Start', 'icon' => '📖'],
         self::IN => ['label' => 'Stock added', 'icon' => '📥'],
         self::OUT => ['label' => 'Used', 'icon' => '📤'],
         self::ACTIVITY => ['label' => 'Used by an activity', 'icon' => '✅'],
         self::ADJUST => ['label' => 'Correction', 'icon' => '✏️'],
+        self::CREATED => ['label' => 'Added to the shed', 'icon' => '🏷️'],
     ];
 
     protected $fillable = [
