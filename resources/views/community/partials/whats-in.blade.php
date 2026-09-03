@@ -26,7 +26,7 @@
         transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
     .cw-panel.is-folded .cw-fold { grid-template-rows: 0fr; }
     .cw-fold > div { overflow: hidden; min-height: 0; }
-    .cw-stack { display: grid; gap: .5rem; padding: 0 .55rem .55rem; }
+    .cw-stack { display: grid; gap: .5rem; padding: .35rem .55rem .55rem; }
     .cw-tile { display: flex; align-items: center; gap: .7rem; width: 100%; text-align: left;
         padding: .7rem .8rem; border-radius: .9rem; text-decoration: none;
         border: 1px solid var(--color-gray-100);
@@ -83,7 +83,7 @@
     <div class="cw-fold" id="whatsInBody">
         <div>
             <div class="cw-stack">
-                <a href="{{ route('community.groups.page') }}" class="cw-tile cw-disc">
+                <a href="{{ route('community.groups.index') }}" class="cw-tile cw-disc">
                     <span class="cw-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h8m-8 4h5M21 12a8 8 0 01-11.6 7.1L4 21l1.9-5.4A8 8 0 1121 12z"/></svg></span>
                     <span class="cw-txt">
                         <b>Discussions</b>
