@@ -1237,16 +1237,14 @@
                                      the one that still offers Link and an
                                      attach-a-plan button — so which door you
                                      took decided what you got. --}}
-                                {{-- The title yields (truncates) so the coin
-                                     and Open never collide on a narrow card. --}}
+                                {{-- Her face and a short name; the credits
+                                     figure that stood beside it retired on
+                                     the owner's call (2026-09-04) — the
+                                     wallet already speaks inside every chat. --}}
                                 <h2 class="flex items-center gap-1.5 text-sm font-bold text-gray-900 min-w-0">
                                     <img src="{{ $aiSettings->faceUrl() }}" alt="" width="20" height="20" class="rounded-full object-cover shrink-0" style="width:1.25rem;height:1.25rem;">
-                                    <span class="truncate">Past Conversations with {{ $aiSettings->assistantName }}</span>
+                                    <span class="truncate">Chats with {{ $aiSettings->assistantName }}</span>
                                 </h2>
-                                <a href="{{ route('ai.credits') }}" class="flex items-center gap-1 text-xs font-semibold text-brand-600 hover:text-brand-700 whitespace-nowrap shrink-0" title="{{ $aiUnlimited ? 'Unlimited credits' : 'Buy AI credits' }}">
-                                    <svg viewBox="0 0 24 24" aria-hidden="true" style="width:.95rem;height:.95rem;flex:none;"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg>
-                                    @if ($aiUnlimited)<span title="Unlimited">&#8734;</span>@else{{ number_format((int) $aiBalance) }}@endif
-                                </a>
                             </div>
                             <a href="{{ route('ai.home') }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 shrink-0">Open →</a>
                         </div>
@@ -1278,7 +1276,10 @@
             <section class="card">
                 <div class="card-body !p-4">
                     <div class="flex items-center justify-between gap-2 mb-2">
-                        <h2 class="text-sm font-bold text-gray-900">💬 Latest Discussions</h2>
+                        <h2 class="flex items-center gap-1.5 text-sm font-bold text-gray-900">
+                            <img src="{{ asset('images/speech-bubbles.png') }}" alt="" width="20" height="20" class="shrink-0" style="width:1.25rem;height:1.25rem;">
+                            Latest Discussions
+                        </h2>
                         <a href="{{ route('community.groups.index') }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 shrink-0">See more →</a>
                     </div>
                     <div class="divide-y divide-gray-100">
