@@ -16,7 +16,12 @@
 @extends('layouts.app')
 
 @section('title', 'Community Rankings')
-@section('body-class', 'plaza-ground rk-full')
+{{-- hide-tabbar is the HOUSE way to drop the phone's bottom bar: it also
+     takes back every offset that existed to clear it (page-safe-bottom,
+     the footer's footer-safe padding, the floats) — the ad-hoc rules this
+     page carried missed the footer's, leaving a dead scrollable strip
+     under it exactly the bar's height. --}}
+@section('body-class', 'plaza-ground hide-tabbar')
 @section('page-title', 'Community Rankings')
 @section('help-key', 'community-ranking')
 @section('page-subtitle', 'Ang hagdan ng bukid')
@@ -241,9 +246,7 @@
     /* The ladder is a destination, not a hallway: the bottom tab bar steps
        away so the whole screen is the board. The back arrow up top is the
        way home. */
-    body.rk-full .tabbar { display: none; }
-    body.rk-full { padding-bottom: 0; }
-    body.rk-full main { padding-bottom: 1.5rem; }
+
 
     /* ---- You, on the ladder ---- */
     .rk-me { padding: 1.35rem 1rem 1.2rem; text-align: center; margin-bottom: 1rem;
