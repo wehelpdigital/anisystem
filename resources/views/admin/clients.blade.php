@@ -49,6 +49,7 @@
         suspend: (id) => '{{ url('/admin/client') }}/' + id + '/community-suspend',
         credits: (id) => '{{ url('/admin/client') }}/' + id + '/credits',
         loginAs: (id) => '{{ url('/admin/client') }}/' + id + '/impersonate',
+        admin: (id) => '{{ url('/admin/client') }}/' + id + '/admin',
     };
 
     /* ---------------- the list ---------------- */
@@ -58,6 +59,7 @@
             <span class="ad-mid">
                 <span class="ad-name">${esc(c.name)}
                     ${c.isAdmin ? '<span class="ad-badge is-admin ml-1">admin</span>' : ''}
+                    ${c.role ? `<span class="ad-badge is-role ml-1">${esc(c.role)}</span>` : ''}
                     ${c.suspendedSays ? `<span class="ad-badge is-susp ml-1">suspended</span>` : ''}
                 </span>
                 <span class="ad-meta">${esc(c.email)} · joined ${esc(c.registered || '')}</span>
@@ -99,10 +101,11 @@
         $id('clBody').innerHTML = `
             <div class="flex flex-wrap gap-1.5 text-xs">
                 ${c.isAdmin ? '<span class="ad-badge is-admin">admin</span>' : ''}
+                ${c.role ? `<span class="ad-badge is-role">${esc(c.role)}</span>` : ''}
                 ${c.suspendedSays ? `<span class="ad-badge is-susp">community suspended · ${esc(c.suspendedSays)}</span>` : ''}
                 <span class="badge badge-gray">joined ${esc(c.registered || '—')}</span>
                 <span class="badge badge-gray">${c.schedules} season${c.schedules === 1 ? '' : 's'}</span>
-                <span class="badge badge-gray">${c.tickets} ticket${c.tickets === 1 ? '' : 's'}</span>
+                <a class="badge badge-gray" href="{{ route('admin.support') }}?client=${c.id}" title="Open this client's tickets">${c.tickets} ticket${c.tickets === 1 ? '' : 's'} ↗</a>
                 <span class="badge badge-green">${Number(c.creditBalance).toLocaleString()} credits</span>
             </div>
 
@@ -162,6 +165,15 @@
             <div class="card p-3.5 space-y-2.5">
                 <p class="font-bold text-sm text-gray-900 dark:text-gray-100">AI credits</p>
                 <p class="text-xs text-gray-400 -mt-1.5">Balance: <b>${Number(c.creditBalance).toLocaleString()}</b>. Positive adds, negative takes back; the client sees the reason in their own credits log.</p>
+                ${(c.workerFarms && c.workerFarms.length) ? `
+                    <div>
+                        <label class="form-label !mb-1 text-xs!">Whose balance receives it</label>
+                        <select id="ceCredTarget" class="form-select">
+                            <option value="${c.id}">Their own account</option>
+                            ${c.workerFarms.map((f) => `<option value="${f.bossId}">The farm they work at — ${esc(f.bossName)} (owner's balance)</option>`).join('')}
+                        </select>
+                        <p class="text-xs text-gray-400 mt-1">A worker's questions bill the farm owner — pick where this grant should land.</p>
+                    </div>` : ''}
                 <div class="grid grid-cols-[6.5rem_1fr] gap-2">
                     <input type="number" step="any" id="ceCredAmt" class="form-input" placeholder="+10">
                     <input type="text" id="ceCredWhy" class="form-input" maxlength="150" placeholder="Reason — e.g. Goodwill for the outage">
@@ -173,6 +185,16 @@
                 <p class="font-bold text-sm text-gray-900 dark:text-gray-100">See what they see</p>
                 <p class="text-xs text-gray-400 -mt-1">Opens the client panel signed in as them. A bar up top brings you back here.</p>
                 <button type="button" class="btn btn-white btn-sm w-full" id="ceLoginAs">👁 Log in as ${esc(c.firstName || c.name)}</button>
+            </div>
+
+            <div class="card p-3.5 space-y-2">
+                <p class="font-bold text-sm text-gray-900 dark:text-gray-100">Admin access</p>
+                ${c.isAdmin ? `
+                    <p class="text-xs text-gray-400 -mt-1">This account can open the admin panel — everything you can do here, they can.</p>
+                    <button type="button" class="btn btn-white btn-sm w-full" id="ceAdminOff">Remove admin access</button>`
+                : `
+                    <p class="text-xs text-gray-400 -mt-1">Grants the whole panel: clients, credits, support, impersonation. Not a small key.</p>
+                    <button type="button" class="btn btn-white btn-sm w-full" id="ceAdminOn">🛡 Make ${esc(c.firstName || c.name)} an admin</button>`}
             </div>`;
         wire();
     }
@@ -237,12 +259,37 @@
         $id('ceCredGo').onclick = busyable($id('ceCredGo'), async () => {
             const amt = Number($id('ceCredAmt').value || 0);
             if (!amt) { toast('How many credits? Positive adds, negative takes back.', 'error'); return; }
+            const target = $id('ceCredTarget') ? Number($id('ceCredTarget').value) : c.id;
             const res = await api(U.credits(c.id), { method: 'POST', body: {
-                credits: amt, reason: $id('ceCredWhy').value.trim(),
+                credits: amt, reason: $id('ceCredWhy').value.trim(), target,
             } });
             toast(res.message);
-            CUR.creditBalance = Number(CUR.creditBalance) + amt;
+            // The sheet's own number only moves when the grant landed HERE.
+            if (target === c.id) CUR.creditBalance = Number(CUR.creditBalance) + amt;
             paint();
+        });
+
+        const admOn = $id('ceAdminOn');
+        if (admOn) admOn.onclick = busyable(admOn, async () => {
+            const ok = window.confirmAction
+                ? await confirmAction({ title: 'Make them an admin?', message: 'The whole panel — clients, credits, impersonation — opens to this account.', confirmText: 'Make admin', danger: true })
+                : confirm('Make this account an admin?');
+            if (!ok) return;
+            const res = await api(U.admin(c.id), { method: 'PUT', body: { admin: true } });
+            toast(res.message);
+            CUR.isAdmin = true;
+            paint(); feed.reset();
+        });
+        const admOff = $id('ceAdminOff');
+        if (admOff) admOff.onclick = busyable(admOff, async () => {
+            const ok = window.confirmAction
+                ? await confirmAction({ title: 'Remove admin access?', message: 'They keep their account; the panel closes to them.', confirmText: 'Remove', danger: true })
+                : confirm('Remove admin access?');
+            if (!ok) return;
+            const res = await api(U.admin(c.id), { method: 'PUT', body: { admin: false } });
+            toast(res.message);
+            CUR.isAdmin = false;
+            paint(); feed.reset();
         });
 
         $id('ceLoginAs').onclick = busyable($id('ceLoginAs'), async () => {

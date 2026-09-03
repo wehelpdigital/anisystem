@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SupportMessage;
 use App\Models\SupportTicket;
+use App\Models\User;
 use App\Services\EmailQueue;
+use App\Support\HtmlSanitizer;
+use App\Support\MediaStore;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -26,35 +29,61 @@ class AdminSupportController extends Controller
         return view('admin.support');
     }
 
-    /** Tickets, newest movement first, filtered and paged for the scroll. */
+    /**
+     * Tickets, grouped by the person who raised them.
+     *
+     * Support is a conversation with a person, not a pile of subjects: the
+     * page walks CLIENTS, newest movement first, each carrying every ticket
+     * of theirs that matches the filters. The cursor rides each group's
+     * newest ticket id, so a fresh ticket cannot shift the pages mid-scroll.
+     */
     public function tickets(Request $request)
     {
-        $q = SupportTicket::active()->with('user')->withCount('messages');
-
+        $filtered = SupportTicket::active();
         $status = (string) $request->input('status', '');
         if (in_array($status, ['open', 'answered', 'closed'], true)) {
-            $q->where('status', $status);
+            $filtered->where('status', $status);
+        }
+        if ($request->filled('client')) {
+            $filtered->where('userId', (int) $request->input('client'));
         }
         if ($request->filled('search')) {
             $s = trim((string) $request->input('search'));
-            $q->where(function ($w) use ($s) {
+            $filtered->where(function ($w) use ($s) {
                 $w->where('subject', 'like', "%{$s}%")
                     ->orWhere('ticketNumber', 'like', "%{$s}%")
                     ->orWhereHas('user', fn ($u) => $u->where('email', 'like', "%{$s}%")
                         ->orWhere('firstName', 'like', "%{$s}%"));
             });
         }
-        if ($request->filled('cursor')) {
-            $q->where('id', '<', (int) $request->input('cursor'));
-        }
 
-        $rows = $q->orderByDesc('id')->limit(13)->get();
-        $more = $rows->count() > 12;
-        $rows = $rows->take(12);
+        $heads = (clone $filtered)->selectRaw('userId, MAX(id) as newestId, COUNT(*) as n')
+            ->groupBy('userId')->orderByDesc('newestId');
+        if ($request->filled('cursor')) {
+            $heads->having('newestId', '<', (int) $request->input('cursor'));
+        }
+        $heads = $heads->limit(9)->get();
+        $more = $heads->count() > 8;
+        $heads = $heads->take(8);
+
+        $tickets = $heads->isEmpty() ? collect() : (clone $filtered)
+            ->whereIn('userId', $heads->pluck('userId'))
+            ->with('user')->withCount('messages')->orderByDesc('id')->get()->groupBy('userId');
+        $users = User::whereIn('id', $heads->pluck('userId'))->get()->keyBy('id');
 
         return response()->json(['success' => true, 'message' => 'ok', 'data' => [
-            'rows' => $rows->map(fn ($t) => $this->row($t))->values(),
-            'nextCursor' => $more ? $rows->last()->id : null,
+            'rows' => $heads->map(function ($h) use ($tickets, $users) {
+                $u = $users[$h->userId] ?? null;
+
+                return [
+                    'clientId' => (int) $h->userId,
+                    'clientName' => $u ? (trim(($u->firstName ?? '') . ' ' . ($u->lastName ?? '')) ?: $u->email) : 'Removed account',
+                    'clientEmail' => $u->email ?? '',
+                    'count' => (int) $h->n,
+                    'tickets' => ($tickets[$h->userId] ?? collect())->map(fn ($t) => $this->row($t))->values(),
+                ];
+            })->values(),
+            'nextCursor' => $more ? (int) $heads->last()->newestId : null,
             'counts' => [
                 'open' => SupportTicket::active()->where('status', 'open')->count(),
                 'answered' => SupportTicket::active()->where('status', 'answered')->count(),
@@ -79,6 +108,7 @@ class AdminSupportController extends Controller
                 'mine' => $m->authorType === 'admin',
                 'author' => $m->authorName ?: ($m->authorType === 'admin' ? 'Support team' : 'Client'),
                 'body' => $m->body,
+                'format' => $m->bodyFormat ?? 'text',
                 'at' => $m->created_at?->format('M j, Y · g:ia'),
             ])->values(),
         ])]);
@@ -92,18 +122,30 @@ class AdminSupportController extends Controller
     public function reply(Request $request, int $id)
     {
         $t = SupportTicket::active()->with('user')->findOrFail($id);
-        $data = $request->validate(['body' => 'required|string|max:8000']);
+        $data = $request->validate([
+            'body' => 'required|string|max:16000',
+            'format' => 'nullable|in:text,html',
+        ]);
 
         $admin = Auth::user();
         $adminName = trim((string) ($admin->firstName ?? '')) ?: 'Support team';
 
-        DB::transaction(function () use ($t, $data, $admin, $adminName) {
+        /* Merge fields first — {first_name}, {ticket_no} and friends become
+         * this client's own facts — then, for a rich reply, the same purifier
+         * every client-authored rich text passes through. */
+        $isHtml = ($data['format'] ?? 'text') === 'html';
+        $body = $this->mergeFields($data['body'], $t, $adminName);
+        $body = $isHtml ? HtmlSanitizer::rich($body) : $body;
+        $data['body'] = $body;
+
+        DB::transaction(function () use ($t, $data, $admin, $adminName, $isHtml) {
             SupportMessage::create([
                 'ticketId' => $t->id,
                 'authorType' => 'admin',
                 'authorId' => (int) $admin->id,
                 'authorName' => $adminName,
                 'body' => $data['body'],
+                'bodyFormat' => $isHtml ? 'html' : 'text',
                 'deleteStatus' => 1,
             ]);
             $t->update(['status' => 'answered', 'lastReplyAt' => now()]);
@@ -135,13 +177,98 @@ class AdminSupportController extends Controller
                 '<p>Hi ' . e($t->user->firstName ?: 'there') . ',</p>'
                 . '<p>Our team replied to your support ticket <strong>' . e($t->ticketNumber) . '</strong> — “' . e($t->subject) . '”:</p>'
                 . '<blockquote style="margin:12px 0;padding:10px 14px;border-left:3px solid #4c9a2a;background:#f6f9f2;">'
-                . nl2br(e($data['body'])) . '</blockquote>'
+                . ($isHtml ? $data['body'] : nl2br(e($data['body']))) . '</blockquote>'
                 . '<p><a href="' . $link . '">Open the ticket</a> to reply.</p>',
                 ['templateKey' => 'support_reply', 'relatedType' => 'support_ticket', 'relatedId' => $t->id],
             );
         }
 
         return response()->json(['success' => true, 'message' => 'Reply sent — the client is notified in the app and by email.']);
+    }
+
+    /**
+     * {first_name} and friends, resolved from the ticket in hand. Single
+     * braces (Blade never sees these), resolved at send time so one canned
+     * answer greets every client by their own name.
+     */
+    private function mergeFields(string $body, SupportTicket $t, string $adminName): string
+    {
+        return strtr($body, [
+            '{first_name}' => $t->user->firstName ?? 'there',
+            '{last_name}' => $t->user->lastName ?? '',
+            '{email}' => $t->user->email ?? '',
+            '{ticket_no}' => (string) $t->ticketNumber,
+            '{subject}' => (string) $t->subject,
+            '{admin_name}' => $adminName,
+        ]);
+    }
+
+    /* ------------------------------------------------------ canned answers */
+
+    /** The shelf, alphabetical. */
+    public function canned()
+    {
+        return response()->json(['success' => true, 'message' => 'ok', 'data' => [
+            'rows' => DB::table('as_support_canned')->where('deleteStatus', 1)
+                ->orderBy('title')->get(['id', 'title', 'body']),
+        ]]);
+    }
+
+    /** Write one — new when no id, edited when one is given. */
+    public function saveCanned(Request $request)
+    {
+        $data = $request->validate([
+            'id' => 'nullable|integer',
+            'title' => 'required|string|max:120',
+            'body' => 'required|string|max:16000',
+        ]);
+        $row = [
+            'title' => trim($data['title']),
+            'body' => HtmlSanitizer::rich($data['body']),
+            'updated_at' => now(),
+        ];
+
+        if (! empty($data['id'])) {
+            $hit = DB::table('as_support_canned')->where('id', (int) $data['id'])
+                ->where('deleteStatus', 1)->update($row);
+            if (! $hit) {
+                return response()->json(['success' => false, 'message' => 'That template is gone already.'], 404);
+            }
+
+            return response()->json(['success' => true, 'message' => 'Template saved.']);
+        }
+
+        DB::table('as_support_canned')->insert($row + ['deleteStatus' => 1, 'created_at' => now()]);
+
+        return response()->json(['success' => true, 'message' => 'Template added to the shelf.']);
+    }
+
+    public function deleteCanned(int $id)
+    {
+        DB::table('as_support_canned')->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
+
+        return response()->json(['success' => true, 'message' => 'Template removed.']);
+    }
+
+    /**
+     * One picture or clip for a reply, through the house MediaStore. Images
+     * go inline; a video rides as a link the thread turns into a player,
+     * because the purifier speaks HTML4 and <video> is not its word.
+     */
+    public function media(Request $request)
+    {
+        $request->validate(['file' => 'required|file|max:51200|mimes:jpg,jpeg,png,webp,gif,mp4,webm,mov']);
+        $file = $request->file('file');
+        $kind = str_starts_with((string) $file->getMimeType(), 'video') ? 'video' : 'image';
+        $path = MediaStore::putFile($file, 'support');
+        if (! $path) {
+            return response()->json(['success' => false, 'message' => 'The file could not be stored.'], 500);
+        }
+
+        return response()->json(['success' => true, 'message' => 'ok', 'data' => [
+            'url' => MediaStore::url($path),
+            'kind' => $kind,
+        ]]);
     }
 
     /** Manage: open ↔ closed. Answered is earned by replying, not picked. */

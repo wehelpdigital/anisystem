@@ -6,7 +6,7 @@ class SupportMessage extends BaseModel
 {
     protected $table = 'as_support_messages';
 
-    protected $fillable = ['ticketId', 'authorType', 'authorId', 'authorName', 'body', 'deleteStatus'];
+    protected $fillable = ['ticketId', 'authorType', 'authorId', 'authorName', 'body', 'bodyFormat', 'deleteStatus'];
 
     public function ticket()
     {

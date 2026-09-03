@@ -45,7 +45,7 @@ class User extends Authenticatable
         'avatarPath',
         'coverPath',
         'coverPos',
-        'adminUserId',
+        'adminUserId', 'panelAdmin',
         'lastSeenAt',
         'deleteStatus',
     ];
@@ -152,9 +152,18 @@ class User extends Authenticatable
      * A mother-site super admin bridged into anee.io (see SuperAdminBridge).
      * Such members get full access without an anee.io subscription.
      */
+    /**
+     * Accounts that post as the app itself — Anee, the AniSystem Technician.
+     * Real rows (their messages need authors) but not clients, so the admin
+     * panel's lists leave them out.
+     */
+    public const SYSTEM_EMAILS = ['ai-technician@anisenso.system', 'technician@anee.io'];
+
     public function isSuperAdmin(): bool
     {
-        return ! empty($this->adminUserId);
+        // Two doors to the same hat: linked to a mother-site admin row, or
+        // granted straight from the panel.
+        return ! empty($this->adminUserId) || ! empty($this->panelAdmin);
     }
 
     /**

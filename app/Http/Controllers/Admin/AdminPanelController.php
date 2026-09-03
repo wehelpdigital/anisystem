@@ -7,6 +7,7 @@ use App\Models\AiCreditLedger;
 use App\Models\Subscription;
 use App\Models\SupportTicket;
 use App\Models\User;
+use App\Models\WorkerGrant;
 use App\Services\AiCreditService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -112,7 +113,8 @@ class AdminPanelController extends Controller
      */
     public function clientsData(Request $request)
     {
-        $q = User::active()->orderByDesc('id');
+        // The app's own voices — Anee, the Technician — are rows, not clients.
+        $q = User::active()->whereNotIn('email', User::SYSTEM_EMAILS)->orderByDesc('id');
 
         if ($request->filled('search')) {
             $s = trim((string) $request->input('search'));
@@ -130,11 +132,37 @@ class AdminPanelController extends Controller
         $rows = $q->limit(13)->get();
         $more = $rows->count() > 12;
         $rows = $rows->take(12);
+        $roles = $this->rolesFor($rows->pluck('id')->all());
 
         return response()->json(['success' => true, 'message' => 'ok', 'data' => [
-            'rows' => $rows->map(fn ($u) => $this->clientRow($u))->values(),
+            'rows' => $rows->map(fn ($u) => $this->clientRow($u, $roles[$u->id] ?? null))->values(),
             'nextCursor' => $more ? $rows->last()->id : null,
         ]]);
+    }
+
+    /**
+     * Which hats a page of accounts wear, in two grouped queries — a worker
+     * with a login is a client too, and the list should say which kind it is
+     * looking at. Admin rides separately (its badge already exists).
+     */
+    private function rolesFor(array $ids): array
+    {
+        if (! $ids) {
+            return [];
+        }
+        $owners = DB::table('as_cropping_schedules')->whereIn('anisystemUserId', $ids)
+            ->where('deleteStatus', 1)->distinct()->pluck('anisystemUserId')->map(fn ($v) => (int) $v)->all();
+        $workers = WorkerGrant::active()->whereIn('workerUserId', $ids)
+            ->where('status', WorkerGrant::STATUS_ACTIVE)->distinct()->pluck('workerUserId')->map(fn ($v) => (int) $v)->all();
+
+        $out = [];
+        foreach ($ids as $id) {
+            $o = in_array((int) $id, $owners, true);
+            $w = in_array((int) $id, $workers, true);
+            $out[$id] = $o && $w ? 'owner + worker' : ($w ? 'worker' : ($o ? 'farm owner' : null));
+        }
+
+        return $out;
     }
 
     /** One client, in full: the sheet's payload. */
@@ -143,8 +171,17 @@ class AdminPanelController extends Controller
         $u = User::active()->findOrFail($id);
         $sub = Subscription::where('deleteStatus', 1)->where('userId', $u->id)->orderByDesc('id')->first();
 
-        return response()->json(['success' => true, 'message' => 'ok', 'data' => $this->clientRow($u) + [
+        return response()->json(['success' => true, 'message' => 'ok', 'data' => $this->clientRow($u, $this->rolesFor([$u->id])[$u->id] ?? null) + [
             'phone' => $u->phone,
+            // The farms this account works for: each is a balance the
+            // admin may credit instead, because a worker's questions bill
+            // the farm owner, not the worker.
+            'workerFarms' => WorkerGrant::active()->where('workerUserId', $u->id)
+                ->where('status', WorkerGrant::STATUS_ACTIVE)->with('boss')->get()
+                ->map(fn ($g) => [
+                    'bossId' => (int) $g->bossUserId,
+                    'bossName' => trim((($g->boss->firstName ?? '') . ' ' . ($g->boss->lastName ?? ''))) ?: ($g->boss->email ?? ('Farm #' . $g->bossUserId)),
+                ])->values(),
             'subscription' => $sub ? [
                 'planName' => $sub->planName,
                 'status' => $sub->effective_status ?? $sub->status,
@@ -158,12 +195,13 @@ class AdminPanelController extends Controller
         ]]);
     }
 
-    private function clientRow(User $u): array
+    private function clientRow(User $u, ?string $role = null): array
     {
         $until = $u->communitySuspendedUntil;
 
         return [
             'id' => $u->id,
+            'role' => $role,
             'name' => trim(($u->firstName ?? '') . ' ' . ($u->lastName ?? '')) ?: $u->email,
             'firstName' => $u->firstName,
             'lastName' => $u->lastName,
@@ -273,17 +311,61 @@ class AdminPanelController extends Controller
         $reason = trim((string) ($data['reason'] ?? '')) ?: 'Adjusted by support';
         $svc = app(AiCreditService::class);
 
+        /* Which balance receives it. A worker's questions bill the farm
+         * owner, so for a both-hats account the admin picks: their own
+         * balance, or one of the farms they work for — verified against the
+         * grant, because a typo must not credit a stranger. */
+        $target = $u;
+        $targetId = (int) $request->input('target', $u->id) ?: $u->id;
+        if ($targetId !== $u->id) {
+            $isBoss = WorkerGrant::active()->where('workerUserId', $u->id)
+                ->where('bossUserId', $targetId)->where('status', WorkerGrant::STATUS_ACTIVE)->exists();
+            if (! $isBoss) {
+                return response()->json(['success' => false, 'message' => 'That farm is not one they work for.'], 422);
+            }
+            $target = User::active()->findOrFail($targetId);
+            $reason .= ' (for worker ' . ($u->firstName ?: $u->email) . ')';
+        }
+
         if ($credits > 0) {
-            $balance = $svc->grant($u->id, $credits, $reason, 'admin', Auth::id());
+            $balance = $svc->grant($target->id, $credits, $reason, 'admin', Auth::id());
         } else {
-            $balance = $svc->chargeAllowingNegative($u->id, abs($credits), $reason);
+            $balance = $svc->chargeAllowingNegative($target->id, abs($credits), $reason);
         }
 
         return response()->json(['success' => true, 'message' => sprintf(
             '%s%s credits — %s now has %s.',
             $credits > 0 ? '+' : '−', rtrim(rtrim(number_format(abs($credits), 2), '0'), '.'),
-            $u->firstName ?: $u->email, number_format((float) $balance, 2)
+            $target->firstName ?: $target->email, number_format((float) $balance, 2)
         )]);
+    }
+
+    /**
+     * The admin hat, granted or taken from the panel.
+     *
+     * A panel-made admin is its own flag (panelAdmin), leaving adminUserId
+     * to be what it has always been: the SuperAdminBridge's link to a
+     * mother-site admin row. A mother-linked admin is the mother app's to
+     * manage, so demoting one here is refused rather than broken.
+     */
+    public function setAdmin(Request $request, int $id)
+    {
+        $u = User::active()->findOrFail($id);
+        $data = $request->validate(['admin' => 'required|boolean']);
+
+        if ($u->id === Auth::id()) {
+            return response()->json(['success' => false, 'message' => 'Your own hat stays on your own head.'], 422);
+        }
+        if (! $data['admin'] && (int) $u->adminUserId > 0) {
+            return response()->json(['success' => false, 'message' => 'This admin is linked to the mother site — manage that link there.'], 422);
+        }
+
+        $u->forceFill(['panelAdmin' => $data['admin'] ? 1 : 0])->save();
+
+        return response()->json(['success' => true, 'message' => $data['admin']
+            ? ($u->firstName ?: $u->email) . ' is now an admin.'
+            : 'Admin access removed.',
+            'data' => $this->clientRow($u->fresh(), $this->rolesFor([$u->id])[$u->id] ?? null)]);
     }
 
     /* -------------------------------------------------------- impersonation */

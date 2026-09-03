@@ -110,6 +110,7 @@
             text-transform: uppercase; letter-spacing: .03em; padding: .12rem .45rem; border-radius: 999px; }
         .ad-badge.is-admin { background: #ede9fe; color: #5b21b6; }
         .ad-badge.is-susp { background: #fef2f2; color: #b91c1c; }
+        .ad-badge.is-role { background: #eaf1fd; color: #1d4ed8; }
         .ad-badge.is-open { background: #fffbeb; color: #b45309; }
         .ad-badge.is-answered { background: var(--color-brand-50); color: var(--color-brand-800); }
         .ad-badge.is-closed { background: var(--color-gray-100); color: var(--color-gray-500); }
@@ -149,6 +150,7 @@
         html.dark .tk-msg { background: #1c2417; color: #e8efe1; }
         html.dark .ad-badge.is-admin { background: #2d2748; color: #c4b5fd; }
         html.dark .ad-badge.is-susp { background: #3a1d1d; color: #fca5a5; }
+        html.dark .ad-badge.is-role { background: #16202f; color: #9fc0f5; }
         html.dark .ad-badge.is-open { background: #2c2213; color: #f0c274; }
         html.dark .ad-badge.is-closed { background: #1c2417; color: #9ca3af; }
     </style>
@@ -181,6 +183,10 @@
             <a href="{{ route('admin.support') }}" class="ad-tab {{ request()->routeIs('admin.support') ? 'is-on' : '' }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8m-8 4h5m-9 7l3.5-3.5H19a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14z"/></svg>
                 <span>Support</span>
+            </a>
+            <a href="{{ route('admin.reports') }}" class="ad-tab {{ request()->routeIs('admin.reports') ? 'is-on' : '' }}">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21V4m0 1l9-2 9 4-9 2-9-4zm0 8l9-2 9 4-9 2-9-4z"/></svg>
+                <span>Reports</span>
             </a>
         </nav>
     </header>

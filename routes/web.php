@@ -197,6 +197,14 @@ Route::middleware(['auth', 'admin.panel'])->prefix('admin')->group(function () {
     Route::get('/data/ticket/{id}', [App\Http\Controllers\Admin\AdminSupportController::class, 'one'])->whereNumber('id')->name('admin.data.ticket');
     Route::post('/ticket/{id}/reply', [App\Http\Controllers\Admin\AdminSupportController::class, 'reply'])->whereNumber('id')->name('admin.ticket.reply');
     Route::put('/ticket/{id}/status', [App\Http\Controllers\Admin\AdminSupportController::class, 'setStatus'])->whereNumber('id')->name('admin.ticket.status');
+    Route::put('/client/{id}/admin', [App\Http\Controllers\Admin\AdminPanelController::class, 'setAdmin'])->whereNumber('id')->name('admin.client.admin');
+    Route::get('/data/canned', [App\Http\Controllers\Admin\AdminSupportController::class, 'canned'])->name('admin.data.canned');
+    Route::post('/canned', [App\Http\Controllers\Admin\AdminSupportController::class, 'saveCanned'])->name('admin.canned.save');
+    Route::delete('/canned/{id}', [App\Http\Controllers\Admin\AdminSupportController::class, 'deleteCanned'])->whereNumber('id')->name('admin.canned.delete');
+    Route::post('/ticket-media', [App\Http\Controllers\Admin\AdminSupportController::class, 'media'])->name('admin.ticket.media');
+    Route::get('/reports', [App\Http\Controllers\Admin\AdminReportsController::class, 'page'])->name('admin.reports');
+    Route::get('/data/reports', [App\Http\Controllers\Admin\AdminReportsController::class, 'reports'])->name('admin.data.reports');
+    Route::put('/report/{id}/status', [App\Http\Controllers\Admin\AdminReportsController::class, 'setStatus'])->whereNumber('id')->name('admin.report.status');
 });
 
 // The way back from looking through a client's eyes. Auth only: the signed-in

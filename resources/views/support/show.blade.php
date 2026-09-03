@@ -31,7 +31,13 @@
                     {{ $isAdmin ? '🛟 ' . ($m->authorName ?: 'Support team') : ($m->authorName ?: 'You') }}
                     <span class="font-normal text-gray-400">· {{ $m->created_at?->diffForHumans() }}</span>
                 </p>
-                <p class="text-sm text-gray-800 whitespace-pre-line break-words">{{ $m->body }}</p>
+                @if (($m->bodyFormat ?? 'text') === 'html')
+                    {{-- An admin reply composed rich: purified at write, so
+                         rendering it raw here shows formatting, not risk. --}}
+                    <div class="text-sm text-gray-800 break-words rich-text sup-rich">{!! $m->body !!}</div>
+                @else
+                    <p class="text-sm text-gray-800 whitespace-pre-line break-words">{{ $m->body }}</p>
+                @endif
             </div>
         </div>
     @endforeach
