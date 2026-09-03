@@ -259,7 +259,7 @@
                          the bottom-right corner, which is exactly where the
                          sheet arrives, and a button floating over a message
                          you are trying to read is not a button anyone wants. --}}
-                    <div class="relative" x-data="notificationBell()" x-init="init()" @click.outside="open = false"
+                    <div class="relative bell-wrap" x-data="notificationBell()" x-init="init()" @click.outside="open = false"
                         x-effect="document.documentElement.classList.toggle('overlay-open', open)">
                         <button type="button" @click="toggle()"
                             class="relative flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full text-gray-500 hover:bg-gray-100 transition"

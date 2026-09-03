@@ -532,6 +532,14 @@ html.rl-open, html.rl-open body { overflow: hidden; }
    between the help button and the avatar. The swell is tamed sideways and
    the pill buys the remaining overhang back as real margin. */
 .help-btn.is-new { margin-right: .45rem; }
+/* And the bell leans toward the help side outright — asked for by eye, not
+   by measurement: equal gaps still read right-heavy beside a round photo. */
+@media (min-width: 768px) {
+    .bell-wrap { margin-left: -.65rem; margin-right: .65rem; }
+}
+@media (max-width: 767px) {
+    .bell-wrap { margin-left: -.15rem; margin-right: .15rem; }
+}
 @media (prefers-reduced-motion: reduce) {
     .help-btn.is-new { animation: none; }
     .help-btn.is-new::after { animation: none; opacity: .7; }
