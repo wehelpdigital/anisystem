@@ -143,47 +143,140 @@ class WhenToPlantController extends Controller
                 ['outOfCredits' => true], 402);
         }
 
-        $result = $this->ai->ask($settings, [], $prompt);
-        if (! ($result['ok'] ?? false)) {
-            // Nothing produced, nothing charged.
-            return $this->json(false, $result['error'] ?? 'The analysis could not be run. Try again in a moment.', [], 502);
+        /* One in flight at a time: a double press must not buy two. A
+         * standing job is simply handed back for the page to keep polling. */
+        $standing = DB::table('as_plant_analyses')->where('userId', Auth::id())
+            ->where('status', 'pending')->where('deleteStatus', 1)
+            ->where('created_at', '>', now()->subMinutes(10))
+            ->orderByDesc('id')->first();
+        if ($standing) {
+            return $this->json(true, 'Already working on it.', ['pending' => true, 'id' => $standing->id]);
         }
 
-        $report = $this->parseReport((string) $result['text']);
-        if ($report === null) {
-            // One polite retry: the model is told exactly what went wrong.
-            // History turns carry 'text', not 'content' — every provider
-            // branch in AiClient reads $turn['text'], and Gemini's crashed
-            // outright on the wrong key.
-            $retry = $this->ai->ask($settings, [
-                ['role' => 'user', 'text' => $prompt],
-                ['role' => 'assistant', 'text' => (string) $result['text']],
-            ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.');
-            if ($retry['ok'] ?? false) {
-                $report = $this->parseReport((string) $retry['text']);
-                $result['tokensIn'] += (int) ($retry['tokensIn'] ?? 0);
-                $result['tokensOut'] += (int) ($retry['tokensOut'] ?? 0);
+        $p = $this->params($request);
+        $crop = CropCatalog::CROPS[$p['crop']];
+        $title = $crop['label'] . ' · ' . (self::SEASONS[$p['season']] ?? '') . ' ' . $p['year'] . ' · ' . $p['location'];
+        $id = DB::table('as_plant_analyses')->insertGetId([
+            'userId' => Auth::id(),
+            'title' => mb_substr($title, 0, 190),
+            'params' => json_encode($p),
+            'report' => json_encode(new \stdClass),
+            'credits' => 0,
+            'status' => 'pending',
+            'deleteStatus' => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        /* THE GATEWAY MUST NOT WAIT ON THE MODEL. A hosted proxy times a
+         * long request out — a chat answer slips under its limit, this
+         * module's full JSON does not, and the farmer read that as "server
+         * error". Under php-fpm the response leaves NOW, the connection is
+         * handed back, and the model is asked afterwards while the page
+         * polls the row. Where that hand-off does not exist (local mod_php)
+         * the work runs inline — that host has 600 patient seconds. */
+        if (function_exists('fastcgi_finish_request')) {
+            ignore_user_abort(true);
+            @set_time_limit(0);
+            response()->json(['success' => true, 'message' => 'Working…', 'data' => [
+                'pending' => true, 'id' => $id,
+            ]])->send();
+            fastcgi_finish_request();
+            $this->runJob($id, (int) $payer->id, $settings, $prompt);
+            exit;
+        }
+
+        @set_time_limit(300);
+        $this->runJob($id, (int) $payer->id, $settings, $prompt);
+
+        return $this->jobState($id);
+    }
+
+    /** The model call and the charge, off the request's clock. */
+    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt): void
+    {
+        try {
+            /* Off the request's clock, the job can afford patience a chat
+             * cannot: a transport blip (the provider timing out once) gets a
+             * second try before the job is called failed. */
+            $result = $this->ai->ask($settings, [], $prompt);
+            if (! ($result['ok'] ?? false)) {
+                sleep(3);
+                $result = $this->ai->ask($settings, [], $prompt);
             }
-        }
-        if ($report === null) {
-            return $this->json(false, 'The analysis came back unreadable and nothing was charged. Please try again.', [], 502);
-        }
+            if (! ($result['ok'] ?? false)) {
+                throw new \RuntimeException($result['error'] ?? 'The AI could not be reached. Nothing was charged.');
+            }
 
-        // The work is done: the charge lands through the same ledger every
-        // question uses, so the subscription page's credit log shows it.
-        $crop = CropCatalog::CROPS[$request->input('crop')];
-        $charged = $this->credits->priceFor($settings, (int) $result['tokensIn'], (int) $result['tokensOut']);
-        $newBalance = $this->credits->chargeAllowingNegative(
-            $payer->id,
-            $charged,
-            'When-to-plant analysis — ' . $crop['label'] . ', ' . $request->input('year')
-        );
+            $report = $this->parseReport((string) $result['text']);
+            if ($report === null) {
+                // One polite retry. History turns carry 'text', not
+                // 'content' — every provider branch reads $turn['text'].
+                $retry = $this->ai->ask($settings, [
+                    ['role' => 'user', 'text' => $prompt],
+                    ['role' => 'assistant', 'text' => (string) $result['text']],
+                ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.');
+                if ($retry['ok'] ?? false) {
+                    $report = $this->parseReport((string) $retry['text']);
+                    $result['tokensIn'] += (int) ($retry['tokensIn'] ?? 0);
+                    $result['tokensOut'] += (int) ($retry['tokensOut'] ?? 0);
+                }
+            }
+            if ($report === null) {
+                throw new \RuntimeException('The analysis came back unreadable. Nothing was charged — please try again.');
+            }
+
+            // The charge lands through the same ledger every question uses,
+            // so the subscription page's credit log shows it.
+            $row = DB::table('as_plant_analyses')->where('id', $id)->first();
+            $p = json_decode((string) ($row->params ?? '[]'), true) ?: [];
+            $crop = CropCatalog::CROPS[$p['crop'] ?? ''] ?? ['label' => 'Crop'];
+            $charged = $this->credits->priceFor($settings, (int) $result['tokensIn'], (int) $result['tokensOut']);
+            $this->credits->chargeAllowingNegative($payerId, $charged,
+                'When-to-plant analysis — ' . $crop['label'] . ', ' . ($p['year'] ?? ''));
+
+            DB::table('as_plant_analyses')->where('id', $id)->update([
+                'report' => json_encode($report),
+                'credits' => round($charged, 2),
+                'status' => 'ready',
+                'error' => null,
+                'updated_at' => now(),
+            ]);
+        } catch (\Throwable $e) {
+            report($e);
+            DB::table('as_plant_analyses')->where('id', $id)->update([
+                'status' => 'failed',
+                'error' => mb_substr($e->getMessage(), 0, 500),
+                'updated_at' => now(),
+            ]);
+        }
+    }
+
+    /** Where a job stands — polled by the page until ready or failed. */
+    public function jobState(int $id)
+    {
+        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())
+            ->where('id', $id)->where('deleteStatus', 1)->first();
+        if (! $r) {
+            return $this->json(false, 'That analysis is gone.', [], 404);
+        }
+        if ($r->status === 'pending') {
+            return $this->json(true, 'Working…', ['pending' => true, 'id' => (int) $r->id, 'status' => 'pending']);
+        }
+        if ($r->status === 'failed') {
+            // A failed job is not worth a place on the shelf.
+            DB::table('as_plant_analyses')->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
+
+            return $this->json(false, $r->error ?: 'The analysis failed and nothing was charged. Please try again.', ['status' => 'failed'], 502);
+        }
 
         return $this->json(true, 'Analysis ready.', [
-            'report' => $report,
-            'params' => $this->params($request),
-            'charged' => round($charged, 2),
-            'balance' => round($newBalance, 2),
+            'status' => 'ready',
+            'savedId' => (int) $r->id,
+            'report' => json_decode($r->report, true),
+            'params' => json_decode($r->params, true),
+            'charged' => (float) $r->credits,
+            'balance' => round($this->credits->balance($this->payer()->id), 2),
         ]);
     }
 
@@ -221,7 +314,7 @@ class WhenToPlantController extends Controller
     public function list()
     {
         $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())
-            ->where('deleteStatus', 1)->orderByDesc('id')
+            ->where('deleteStatus', 1)->where('status', 'ready')->orderByDesc('id')
             ->get(['id', 'title', 'credits', 'created_at']);
 
         return $this->json(true, 'ok', ['rows' => $rows->map(fn ($r) => [
@@ -235,7 +328,7 @@ class WhenToPlantController extends Controller
     public function one(int $id)
     {
         $r = DB::table('as_plant_analyses')->where('userId', Auth::id())
-            ->where('id', $id)->where('deleteStatus', 1)->first();
+            ->where('id', $id)->where('deleteStatus', 1)->where('status', 'ready')->first();
         if (! $r) {
             return $this->json(false, 'That analysis is gone.', [], 404);
         }
@@ -256,7 +349,7 @@ class WhenToPlantController extends Controller
     public static function contextFor(int $id, int $userId): ?array
     {
         $r = DB::table('as_plant_analyses')->where('userId', $userId)
-            ->where('id', $id)->where('deleteStatus', 1)->first();
+            ->where('id', $id)->where('deleteStatus', 1)->where('status', 'ready')->first();
         if (! $r) {
             return null;
         }
@@ -362,13 +455,12 @@ GROUND RULES
 - Write the summary and the "why" in plain words a farmer reads easily. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
 
 Return ONLY a valid JSON object — no code fences, no commentary — in exactly this shape:
-{"bestWindow":{"fromMonth":1,"fromDay":1,"toMonth":1,"toDay":1,"label":"","why":""},"avoidWindows":[{"fromMonth":1,"fromDay":1,"toMonth":1,"toDay":1,"label":"","why":"","severity":"high"}],"monthScores":[{"month":1,"score":0,"note":""}],"timeline":[{"stage":"","days":0}],"threats":[{"whenNot":"","threat":"","severity":"low"}],"confidence":"moderate","dataGaps":[""],"summary":""}
+{"bestWindow":{"fromMonth":1,"fromDay":1,"toMonth":1,"toDay":1,"label":"","why":""},"avoidWindows":[{"fromMonth":1,"fromDay":1,"toMonth":1,"toDay":1,"label":"","why":"","severity":"high"}],"monthScores":[{"month":1,"score":0,"note":""}],"threats":[{"whenNot":"","threat":"","severity":"low"}],"confidence":"moderate","dataGaps":[""],"summary":""}
 Rules for the shape:
 - bestWindow must be a SPECIFIC, actionable range of roughly 2–6 weeks with explicit dates, and its label must spell the dates out (e.g. "May 10 – June 5") — NEVER a season name or a whole season.
 - avoidWindows: one to three ranges to KEEP AWAY FROM, each specific to the month and week (e.g. "Late July – mid October") and grounded in the named region's historical typhoon/climate pattern; why says what historically happens there then; severity "moderate" or "high".
-- monthScores carries ALL twelve months (score 0–100 = how suitable STARTING to plant that month is; note ≤ 12 words). Differentiate months even inside the target season — a flat run of equal scores is an unfinished answer.
-- timeline runs from planting to harvest and its days sum near the maturity above.
-- threats are what the farmer risks by planting OUTSIDE bestWindow, each naming when; severity "low"/"moderate"/"high"; confidence "low"/"moderate"/"high".
+- monthScores carries ALL twelve months (score 0–100 = how suitable STARTING to plant that month is; note ≤ 10 words). Differentiate months even inside the target season — a flat run of equal scores is an unfinished answer.
+- threats: at most three, what the farmer risks by planting OUTSIDE bestWindow, each naming when; severity "low"/"moderate"/"high"; confidence "low"/"moderate"/"high"; dataGaps at most three; summary ≤ 90 words. Keep the whole answer tight.
 PROMPT;
     }
 

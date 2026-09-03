@@ -225,6 +225,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/when-to-plant/one/{id}', [App\Http\Controllers\WhenToPlantController::class, 'one'])->whereNumber('id')->name('wtp.one');
     Route::delete('/app/when-to-plant/{id}', [App\Http\Controllers\WhenToPlantController::class, 'destroy'])->whereNumber('id')->name('wtp.delete');
     Route::get('/app/when-to-plant/preview/{id}', [App\Http\Controllers\WhenToPlantController::class, 'preview'])->whereNumber('id')->name('wtp.preview');
+    Route::get('/app/when-to-plant/job/{id}', [App\Http\Controllers\WhenToPlantController::class, 'jobState'])->whereNumber('id')->name('wtp.job');
     Route::get('/app/weather', [App\Http\Controllers\WeatherController::class, 'forecast'])->name('app.weather');
     Route::get('/app/sm-weather', [App\Http\Controllers\WeatherController::class, 'scheduleForecast'])->name('sm.weather');
     // Weather as a schedule module: the 6-day view plus an hourly tab.

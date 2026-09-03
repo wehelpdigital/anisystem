@@ -361,6 +361,7 @@
         save: '{{ route('wtp.save') }}',
         list: '{{ route('wtp.list') }}',
         one: (id) => '{{ url('/app/when-to-plant/one') }}/' + id,
+        job: (id) => '{{ url('/app/when-to-plant/job') }}/' + id,
         del: (id) => '{{ url('/app/when-to-plant') }}/' + id,
         anee: '{{ route('ai.index') }}',
     };
@@ -566,11 +567,26 @@
                 year: state.year, season: state.season, crop: state.crop,
                 variety: state.variety, location: state.location, problems: state.problems,
             } });
-            LAST = { report: res.data.report, params: res.data.params, charged: res.data.charged, savedId: null };
-            OPT.balance = res.data.balance;
+            let data = res.data;
+            /* The server answers at once and works after the reply; the page
+               keeps the spinner up and asks the row how it is doing. A
+               failed job comes back through api() as its own message. */
+            if (data.pending) {
+                for (let i = 0; i < 100 && (!data || data.status !== 'ready'); i++) {
+                    await new Promise((r) => setTimeout(r, 3000));
+                    const st = await api(U.job(data.id || res.data.id), { method: 'GET' });
+                    if (st.data && st.data.status === 'ready') { data = st.data; break; }
+                }
+                if (!data || data.status !== 'ready') {
+                    throw new Error('Still working — give it a minute, then look on the Saved tab.');
+                }
+            }
+            LAST = { report: data.report, params: data.params, charged: data.charged, savedId: data.savedId || null };
+            OPT.balance = data.balance;
             landed = true;
             drawReport($id('wtpReport'), LAST, 'fresh');
-            toast(`Done — ${res.data.charged} credits used.`);
+            toast(`Done — ${data.charged} credits used.`);
+            loadSavedQuietly();
         } catch (err) {
             toast(err.message, 'error');
         } finally {
@@ -671,56 +687,46 @@
             </div>
 
             <div class="wtp-acts">
-                ${mode === 'fresh' ? `<button type="button" class="btn btn-primary w-full" id="wtpSave">💾 Save this analysis</button>` : ''}
-                <button type="button" class="btn btn-white w-full" id="${mode === 'fresh' ? 'wtpAttach' : 'wtpAttachSaved'}" ${mode === 'fresh' ? 'disabled title="Save it first — Anee reads the saved copy"' : ''}>
+                <button type="button" class="btn btn-primary w-full" id="${mode === 'fresh' ? 'wtpAttach' : 'wtpAttachSaved'}">
                     ${OPT && OPT.aneeFace ? `<img class="wtp-anee-face" src="${esc(OPT.aneeFace)}" alt="">` : '🤖'} Attach to Anee
                 </button>
                 ${mode === 'fresh' ? `<button type="button" class="btn btn-white w-full" id="wtpAgain">⚡ Run another analysis</button>` : ''}
-                ${mode === 'saved' ? `<button type="button" class="btn btn-white w-full" id="wtpDelete">🗑 Delete</button>` : ''}
+                <button type="button" class="btn btn-white w-full" id="wtpDelete">🗑 Delete</button>
             </div>`;
 
         host.hidden = false;
         requestAnimationFrame(() => requestAnimationFrame(() => host.classList.add('is-drawn')));
         host.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-        if (mode === 'fresh') {
-            host.querySelector('#wtpSave').addEventListener('click', async (e) => {
-                e.currentTarget.disabled = true;
-                try {
-                    const res = await api(U.save, { method: 'POST', body: { params: item.params, report: item.report, charged: item.charged } });
-                    toast(res.message);
-                    LAST.savedId = res.data.id;
-                    const at = host.querySelector('#wtpAttach');
-                    at.disabled = false;
-                    at.removeAttribute('title');
-                } catch (err) { toast(err.message, 'error'); e.currentTarget.disabled = false; }
-            });
-            host.querySelector('#wtpAttach').addEventListener('click', () => {
-                if (LAST.savedId) window.location.href = U.anee + '?analysis=' + LAST.savedId;
-            });
-            host.querySelector('#wtpAgain').addEventListener('click', wizardBack);
-        } else {
-            host.querySelector('#wtpAttachSaved').addEventListener('click', () => {
-                window.location.href = U.anee + '?analysis=' + item.savedId;
-            });
-            host.querySelector('#wtpDelete').addEventListener('click', async () => {
-                const ok = window.confirmAction
-                    ? await confirmAction({ title: 'Delete this analysis?', message: 'The credits it cost are already spent; only the report goes.', confirmText: 'Delete', danger: true })
-                    : confirm('Delete this analysis?');
-                if (!ok) return;
-                try {
-                    const res = await api(U.del(item.savedId), { method: 'DELETE' });
-                    toast(res.message);
-                    host.hidden = true;
-                    loadSaved();
-                } catch (err) { toast(err.message, 'error'); }
-            });
-        }
+        // A finished run is already on the shelf, so both views carry the
+        // same three verbs: attach, run again (fresh only), delete.
+        host.querySelector(mode === 'fresh' ? '#wtpAttach' : '#wtpAttachSaved').addEventListener('click', () => {
+            if (item.savedId) window.location.href = U.anee + '?analysis=' + item.savedId;
+        });
+        if (mode === 'fresh') host.querySelector('#wtpAgain').addEventListener('click', wizardBack);
+        host.querySelector('#wtpDelete').addEventListener('click', async () => {
+            const ok = window.confirmAction
+                ? await confirmAction({ title: 'Delete this analysis?', message: 'The credits it cost are already spent; only the report goes.', confirmText: 'Delete', danger: true })
+                : confirm('Delete this analysis?');
+            if (!ok) return;
+            try {
+                const res = await api(U.del(item.savedId), { method: 'DELETE' });
+                toast(res.message);
+                host.hidden = true;
+                loadSaved();
+                if (mode === 'fresh') wizardBack();
+            } catch (err) { toast(err.message, 'error'); }
+        });
     }
+
+    /* The shelf list, refreshed without switching tabs — a finished run
+       already lives there. */
+    function loadSavedQuietly() { loadSaved().catch(() => {}); }
 
     /* ---------------- saved ---------------- */
     async function loadSaved() {
         try {
+            // eslint-disable-next-line no-empty
             const res = await api(U.list, { method: 'GET' });
             const rows = res.data.rows || [];
             $id('wtpSavedList').innerHTML = rows.map((r) => `
