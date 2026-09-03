@@ -10,7 +10,9 @@ use App\Support\CropCatalog;
 use App\Support\WorkerContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -331,6 +333,11 @@ class WhenToPlantController extends Controller
             ->implode('; ') ?: 'not tabulated — use typical stages for this crop';
         $problems = collect($p['problems'])->map(fn ($k) => self::PROBLEMS[$k] ?? $k)->implode('; ') ?: 'none reported';
         $maturity = CropCatalog::maturity($p['crop']);
+        $enso = $this->ensoFacts();
+        $ensoBlock = $enso !== '' ? '- ' . $enso . "\n" : '';
+        $ensoRule = $enso !== ''
+            ? 'the observed ENSO state given above (project it toward the planting window only with typical persistence and decay, and say plainly how uncertain that projection is)'
+            : 'general ENSO behaviour — state plainly that you cannot know the live ENSO state for ' . $p['year'] . ' and mark it as uncertainty rather than inventing a forecast';
 
         return <<<PROMPT
 You are an agronomic decision-support analyst for Philippine farming. Recommend when to PLANT within the year {$p['year']}, aiming at the farmer's chosen cropping season, for the case below.
@@ -342,9 +349,9 @@ FACTS GIVEN
 - Stated variety: "{$p['variety']}" — use published characteristics of this variety ONLY if you genuinely know them; otherwise say variety-specific data is unavailable in dataGaps and reason from the crop's typical range. Never invent varietal traits.
 - Location as the farmer wrote it: {$p['location']}
 - Field problems the farmer reports: {$problems}
-
+{$ensoBlock}
 GROUND RULES
-- Reason only from established knowledge: PAGASA climatological normals (wet/dry season timing for the region named), historical tropical-cyclone seasonality in the Philippines (including the Aug–Oct peak and regional differences), general ENSO behaviour — state plainly that you cannot know the live ENSO state for {$p['year']} and mark it as uncertainty rather than inventing a forecast — soil-water behaviour implied by the reported problems, and the crop calendar arithmetic above.
+- Reason only from established knowledge: PAGASA climatological normals (wet/dry season timing for the region named), historical tropical-cyclone seasonality in the Philippines (including the Aug–Oct peak and regional differences), {$ensoRule}, soil-water behaviour implied by the reported problems, and the crop calendar arithmetic above.
 - Where the given facts cannot answer something (exact distance to river or sea, microclimate, irrigation reliability), name it in dataGaps instead of guessing.
 - Be scientific and neutral: no product recommendations, no marketing tone, no bias toward any input or brand.
 - Write the summary and the "why" in plain words a farmer reads easily. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
@@ -358,6 +365,42 @@ Rules for the shape:
 - timeline runs from planting to harvest and its days sum near the maturity above.
 - threats are what the farmer risks by planting OUTSIDE bestWindow, each naming when; severity "low"/"moderate"/"high"; confidence "low"/"moderate"/"high".
 PROMPT;
+    }
+
+    /**
+     * The observed ENSO state, read from NOAA CPC's public ONI table and
+     * cached for a day. A FACT for the prompt, not a forecast: the model is
+     * told what the ocean has actually been doing and may project forward
+     * only with stated uncertainty. Falls back to '' quietly — the analysis
+     * then runs its honest-ignorance wording instead.
+     */
+    private function ensoFacts(): string
+    {
+        try {
+            return Cache::remember('wtp-oni-facts', 86400, function () {
+                $txt = Http::timeout(6)->get('https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt')->body();
+                $rows = array_values(array_filter(array_map('trim', explode("\n", $txt))));
+                $parsed = [];
+                foreach (array_slice($rows, -4) as $r) {
+                    $p = preg_split('/\s+/', $r);
+                    if (count($p) >= 4 && is_numeric($p[3])) {
+                        $parsed[] = $p[0] . ' ' . $p[1] . ' anomaly ' . $p[3] . '°C';
+                    }
+                }
+                if (! $parsed) {
+                    return '';
+                }
+                preg_match('/(-?\d+(?:\.\d+)?)°C$/', end($parsed), $m);
+                $last = (float) ($m[1] ?? 0);
+                $state = $last >= 0.5 ? 'El Niño conditions'
+                    : ($last <= -0.5 ? 'La Niña conditions' : 'ENSO-neutral conditions');
+
+                return 'Observed ENSO state (NOAA CPC ONI, 3-month running anomalies, most recent last): '
+                    . implode('; ', $parsed) . ' — i.e. currently ' . $state . '.';
+            });
+        } catch (\Throwable $e) {
+            return '';
+        }
     }
 
     private function seasonWords(string $key): string

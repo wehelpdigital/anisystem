@@ -169,6 +169,11 @@
     html.dark .wtp-win.is-no { background: #2a1414; border-color: #4c1d1d; color: #fca5a5; }
     html.dark .wtp-win.is-no.sev-moderate { background: #241d10; border-color: #4d3a12; color: #f0c274; }
 
+    /* The summary in its own voice: the dark remap outguns dark: utilities,
+       so the words carry their own class. */
+    .wtp-plain { font-size: .875rem; line-height: 1.65; color: var(--color-gray-700); }
+    html.dark .wtp-plain { color: #d5e3c5; }
+
     /* The attach button wears Anee's own face. */
     .wtp-anee-face { width: 1.15rem; height: 1.15rem; border-radius: 999px; object-fit: cover; }
 
@@ -441,6 +446,9 @@
     function drawReport(host, item, mode) {
         const r = item.report;
         const p = item.params;
+        // Older saved reports carry the persona's :anee-…: shortcodes, which
+        // have no renderer here — swept so prose reads as prose.
+        const sweep = (t) => String(t || '').replace(/:[a-z0-9_-]+:/gi, '').replace(/\s{2,}/g, ' ').trim();
         const crop = (OPT ? OPT.crops.find((c) => c.key === p.crop) : null) || {};
         const bw = r.bestWindow || {};
         const m1 = MONTHS[(bw.fromMonth || 1) - 1];
@@ -449,12 +457,11 @@
         for (let m = bw.fromMonth; m; m = (m === bw.toMonth ? 0 : (m % 12) + 1)) { bestMonths.add(m); if (bestMonths.size > 12) break; }
 
         const scores = (r.monthScores || []).slice(0, 12);
-        const maxDays = (r.timeline || []).reduce((s, x) => s + (Number(x.days) || 0), 0) || 1;
 
         const windowsCard = `
             <div class="wtp-card">
                 <h3>The calendar, plainly</h3>
-                <div class="wtp-win is-go"><b>🌱 Plant: ${esc(bw.label || '')}</b><span>${esc(bw.why || '')}</span></div>
+                <div class="wtp-win is-go"><b>🌱 Plant: ${esc(bw.label || '')}</b><span>${esc(sweep(bw.why))}</span></div>
                 ${(r.avoidWindows || []).map((w) => `
                     <div class="wtp-win is-no sev-${esc(w.severity === 'moderate' ? 'moderate' : 'high')}">
                         <b>⛔ Avoid ${esc(w.label || '')}:</b><span>${esc(w.why || '')}</span>
@@ -465,7 +472,7 @@
             <div class="wtp-hero">
                 <h2>${esc(crop.icon || '🌱')} ${esc(crop.label || 'Your crop')} — ${esc(OPT ? OPT.seasons[p.season] || '' : '')} ${esc(String(p.year || ''))}</h2>
                 <p class="h-win">${esc(bw.label || (m1 + ' ' + (bw.fromDay || '') + ' – ' + m2 + ' ' + (bw.toDay || '')))}</p>
-                <p class="h-why">${esc(bw.why || '')}</p>
+                <p class="h-why">${esc(sweep(bw.why))}</p>
                 <div class="wtp-chips">
                     <span class="wtp-chip">📍 ${esc(p.location || '')}</span>
                     ${p.variety ? `<span class="wtp-chip">🧬 ${esc(p.variety)}</span>` : ''}
@@ -490,17 +497,6 @@
                 <p class="wtp-mnote">Green is the recommended window; lighter green still works, amber is risky, red is asking for trouble. Hover a bar for its note.</p>
             </div>
 
-            <div class="wtp-card">
-                <h3>Planting to harvest — ${maxDays} days</h3>
-                <div class="wtp-line">
-                    ${(r.timeline || []).map((sgm, i) => `
-                        <div class="wtp-seg" style="flex:${Math.max(1, Number(sgm.days) || 1)} 1 0; background:${SEG_HUES[i % SEG_HUES.length]}; transition-delay:${i * 90}ms" title="${esc(sgm.stage)} — ${sgm.days} days">${esc(sgm.stage)}</div>`).join('')}
-                </div>
-                <div class="wtp-legend">
-                    ${(r.timeline || []).map((sgm, i) => `<span><i style="background:${SEG_HUES[i % SEG_HUES.length]}"></i>${esc(sgm.stage)} · ${sgm.days}d</span>`).join('')}
-                </div>
-            </div>
-
             ${(r.threats || []).length ? `
             <div class="wtp-card">
                 <h3>If you plant outside the window</h3>
@@ -513,11 +509,15 @@
 
             <div class="wtp-card">
                 <h3>In plain words</h3>
-                <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">${esc(r.summary || '')}</p>
+                <p class="wtp-plain">${esc(sweep(r.summary))}</p>
                 ${(r.dataGaps || []).length ? `
                     <h3 class="mt-4">What this analysis could not know</h3>
                     <ul class="wtp-gap">${(r.dataGaps || []).map((g) => `<li>${esc(g)}</li>`).join('')}</ul>` : ''}
-                <p class="wtp-fine mt-3">A guide, not a promise: weather and climate carry real uncertainty, and no analysis can see a particular storm. What this gives you is a data-grounded starting point — the patterns of past seasons weighed against your crop and your field — which beats deciding with nothing to compare against. Check PAGASA advisories as planting approaches.</p>
+            </div>
+
+            <div class="wtp-card">
+                <h3>🧭 A guide, not a promise</h3>
+                <p class="wtp-fine">Weather and climate carry real uncertainty, and no analysis can see a particular storm. What this gives you is a data-grounded starting point — the patterns of past seasons weighed against your crop and your field — which beats deciding with nothing to compare against. Check PAGASA advisories as planting approaches.</p>
             </div>
 
             <div class="wtp-acts">
