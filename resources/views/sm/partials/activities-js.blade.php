@@ -4141,15 +4141,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const opt = sel.selectedOptions[0];
         if (!sel.value) {
             hint.textContent = 'A plain line is a note to yourself. It costs nothing off the count.';
+            /* Choosing "No" again must UNDO the shed's takeover: the name box
+               and the free-text unit come back, the kin select stands down.
+               This branch used to return before the reveal code below ever
+               ran, leaving a plain line with no name box at all. */
+            $id('itemNameWrap')?.classList.remove('hidden');
+            const nb = $id('itemNameInput');
+            if (nb) nb.value = '';
+            swapUnitControl(null);
             return;
         }
         const item = (window.IV_ITEMS || []).find((i) => String(i.id) === sel.value);
         hint.textContent = item
             ? `${item.says} on hand. Nothing moves until this activity is ticked done — then the quantity comes off, converted if the unit differs.`
             : '';
-        // Fill what they have already told us by choosing.
+        /* The shelf already named it. The name box hides rather than
+           prefills — a visible second name box is an invitation to type a
+           second name — and Add-to-list reads the name from the pick. */
+        $id('itemNameWrap')?.classList.toggle('hidden', !!item);
         const nameBox = $id('itemNameInput');
-        if (nameBox && !nameBox.value.trim()) nameBox.value = opt.getAttribute('data-name') || '';
+        if (nameBox) nameBox.value = item ? (opt.getAttribute('data-name') || '') : nameBox.value;
         swapUnitControl(item);
     }
 

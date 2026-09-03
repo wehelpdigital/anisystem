@@ -547,7 +547,10 @@
                         <p class="form-hint" id="itemStockHint"></p>
                     </div>
 
-                    <div>
+                    {{-- Hidden while a shed item is chosen above: the shelf
+                         already named it, and a second name box invites a
+                         second name. --}}
+                    <div id="itemNameWrap">
                         <label class="form-label text-xs! mb-1!" for="itemNameInput">Item name</label>
                         <input type="text" id="itemNameInput" class="form-input bg-white!" list="itemNameList" maxlength="255" placeholder="e.g. Urea 46-0-0" autocomplete="off">
                         <datalist id="itemNameList"></datalist>
