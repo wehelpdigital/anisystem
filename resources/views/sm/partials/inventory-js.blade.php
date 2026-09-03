@@ -371,13 +371,7 @@
             if (mode === 'date') {
                 const input = $id('ivStartDateInput');
                 input.value = st.mode === 'date' && st.date ? st.date : todayISO();
-                /* A real datepicker, raised from the row. Where the browser
-                   cannot raise one, the input itself is brought into reach. */
-                try { input.showPicker(); } catch (_) {
-                    input.style.opacity = '1';
-                    input.style.pointerEvents = 'auto';
-                    input.focus();
-                }
+                raisePicker(input);
                 return; // settled by the input's change event
             }
             st.mode = mode;
@@ -395,6 +389,32 @@
         }
 
         /* ---------------- the move sheet ---------------- */
+        /**
+         * Raise a date input's native picker from the tag that fronts it.
+         *
+         * showPicker() is the good road but a picky one — some browsers
+         * refuse it on an insecure origin even with a genuine tap. The old
+         * fallback revealed the raw input over the tag and never hid it
+         * again, so one refusal turned the tag back into a plain field for
+         * the rest of the session. The reveal now tucks itself back in the
+         * moment the choice is made or abandoned.
+         */
+        function raisePicker(input) {
+            if (!input) return;
+            try { input.showPicker(); return; } catch (_) { /* the long road */ }
+            input.style.opacity = '1';
+            input.style.pointerEvents = 'auto';
+            const tuck = () => {
+                input.style.opacity = '';
+                input.style.pointerEvents = '';
+                input.removeEventListener('blur', tuck);
+                input.removeEventListener('change', tuck);
+            };
+            input.addEventListener('blur', tuck);
+            input.addEventListener('change', tuck);
+            input.focus();
+        }
+
         /** The When tag, painted from the input it fronts. */
         function sayMoveDate() {
             const v = $id('ivMoveDate')?.value;
@@ -700,7 +720,7 @@
 
         window.__ivApi = {
             openItemSheet, saveItem, load, itemById, sayKind, sayUnit, delItem,
-            openItemMenu, itemMenuAct, sayMoveDate,
+            openItemMenu, itemMenuAct, sayMoveDate, raisePicker,
             sayMoveItem, sayMoveQty, moveGo, delMove, showTab, fillUnits,
             openStartChooser, chooseStart, pickedStartDate, openStartEdit, startEditGo,
         };
@@ -729,17 +749,7 @@
                 if (e.target.closest('#ivStartBtn')) { A.openStartChooser('move'); return; }
                 if (e.target.closest('#ivStartEditBtn')) { A.openStartChooser('edit'); return; }
                 if (e.target.closest('#ivItemStartBtn')) { A.openStartChooser('item'); return; }
-                if (e.target.closest('#ivMoveDateBtn')) {
-                    const input = document.getElementById('ivMoveDate');
-                    /* The real picker, raised from the tag; where the browser
-                       cannot raise one, the input itself is brought to hand. */
-                    try { input.showPicker(); } catch (_) {
-                        input.style.opacity = '1';
-                        input.style.pointerEvents = 'auto';
-                        input.focus();
-                    }
-                    return;
-                }
+                if (e.target.closest('#ivMoveDateBtn')) { A.raisePicker(document.getElementById('ivMoveDate')); return; }
                 const srow = e.target.closest('#ivStartRows .dt-row');
                 if (srow) { A.chooseStart(srow); return; }
                 const sgo = e.target.closest('#ivStartEditGo');
