@@ -199,10 +199,12 @@ class WhenToPlantController extends Controller
             /* Off the request's clock, the job can afford patience a chat
              * cannot: a transport blip (the provider timing out once) gets a
              * second try before the job is called failed. */
-            $result = $this->ai->ask($settings, [], $prompt);
+            // A document-sized answer lane: the chat cap (1200) cut the
+            // JSON mid-object on longer runs, which read as "unreadable".
+            $result = $this->ai->ask($settings, [], $prompt, null, 4000);
             if (! ($result['ok'] ?? false)) {
                 sleep(3);
-                $result = $this->ai->ask($settings, [], $prompt);
+                $result = $this->ai->ask($settings, [], $prompt, null, 4000);
             }
             if (! ($result['ok'] ?? false)) {
                 throw new \RuntimeException($result['error'] ?? 'The AI could not be reached. Nothing was charged.');
@@ -215,7 +217,7 @@ class WhenToPlantController extends Controller
                 $retry = $this->ai->ask($settings, [
                     ['role' => 'user', 'text' => $prompt],
                     ['role' => 'assistant', 'text' => (string) $result['text']],
-                ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.');
+                ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.', null, 4000);
                 if ($retry['ok'] ?? false) {
                     $report = $this->parseReport((string) $retry['text']);
                     $result['tokensIn'] += (int) ($retry['tokensIn'] ?? 0);
@@ -223,6 +225,11 @@ class WhenToPlantController extends Controller
                 }
             }
             if ($report === null) {
+                // The head of what came back, kept where a debugger can read
+                // it — the farmer just needs to know nothing was charged.
+                \Illuminate\Support\Facades\Log::warning('when-to-plant: unparsable answer', [
+                    'head' => mb_substr((string) $result['text'], 0, 400),
+                ]);
                 throw new \RuntimeException('The analysis came back unreadable. Nothing was charged — please try again.');
             }
 

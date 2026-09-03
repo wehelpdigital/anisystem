@@ -29,18 +29,21 @@ class AiClient
      *   One picture or several. A single one is still accepted as it always
      *   was, because every existing caller passes exactly that.
      */
-    public function ask(AiSetting $settings, array $history, string $prompt, array|null $image = null): array
+    public function ask(AiSetting $settings, array $history, string $prompt, array|null $image = null, ?int $maxOut = null): array
     {
         $key = $settings->plainApiKey();
         if (! $key) {
             return $this->fail('The AI is not configured yet. Please contact support.');
         }
 
+        /* The settings row's cap is sized for a chat answer. A caller whose
+         * answer is a document — the when-to-plant JSON — says so here, or
+         * the reply is cut mid-object and reads as "unreadable". */
         try {
             return match ($settings->provider) {
-                'openai' => $this->askOpenAi($settings, $key, $history, $prompt, self::pictures($image)),
-                'gemini' => $this->askGemini($settings, $key, $history, $prompt, self::pictures($image)),
-                default => $this->askClaude($settings, $key, $history, $prompt, self::pictures($image)),
+                'openai' => $this->askOpenAi($settings, $key, $history, $prompt, self::pictures($image), $maxOut),
+                'gemini' => $this->askGemini($settings, $key, $history, $prompt, self::pictures($image), $maxOut),
+                default => $this->askClaude($settings, $key, $history, $prompt, self::pictures($image), $maxOut),
             };
         } catch (\Throwable $e) {
             report($e);
@@ -75,7 +78,7 @@ class AiClient
         ));
     }
 
-    private function askClaude(AiSetting $s, string $key, array $history, string $prompt, array $images): array
+    private function askClaude(AiSetting $s, string $key, array $history, string $prompt, array $images, ?int $maxOut = null): array
     {
         $messages = [];
         foreach ($history as $turn) {
@@ -96,7 +99,7 @@ class AiClient
             ->withHeaders(['x-api-key' => $key, 'anthropic-version' => '2023-06-01'])
             ->post('https://api.anthropic.com/v1/messages', [
                 'model' => $s->effectiveModel(),
-                'max_tokens' => (int) $s->maxOutputTokens,
+                'max_tokens' => (int) ($maxOut ?? $s->maxOutputTokens),
                 'temperature' => (float) $s->temperature,
                 'system' => $s->instructions(),
                 'messages' => $messages,
@@ -122,7 +125,7 @@ class AiClient
     }
 
     /** @param  array<int, array{mime:string,data:string}>  $images */
-    private function askOpenAi(AiSetting $s, string $key, array $history, string $prompt, array $images): array
+    private function askOpenAi(AiSetting $s, string $key, array $history, string $prompt, array $images, ?int $maxOut = null): array
     {
         $messages = [['role' => 'system', 'content' => $s->instructions()]];
         foreach ($history as $turn) {
@@ -142,7 +145,7 @@ class AiClient
             ->withToken($key)
             ->post('https://api.openai.com/v1/chat/completions', [
                 'model' => $s->effectiveModel(),
-                'max_tokens' => (int) $s->maxOutputTokens,
+                'max_tokens' => (int) ($maxOut ?? $s->maxOutputTokens),
                 'temperature' => (float) $s->temperature,
                 'messages' => $messages,
             ]);
@@ -163,7 +166,7 @@ class AiClient
     }
 
     /** @param  array<int, array{mime:string,data:string}>  $images */
-    private function askGemini(AiSetting $s, string $key, array $history, string $prompt, array $images): array
+    private function askGemini(AiSetting $s, string $key, array $history, string $prompt, array $images, ?int $maxOut = null): array
     {
         $contents = [];
         foreach ($history as $turn) {
@@ -196,7 +199,7 @@ class AiClient
                      * farmer got a 44-token stub cut mid-sentence. So the
                      * thoughts get their own bounded lane, and the settings
                      * row's number stays what it reads as: the ANSWER budget. */
-                    'maxOutputTokens' => (int) $s->maxOutputTokens + self::GEMINI_THINKING_BUDGET,
+                    'maxOutputTokens' => (int) ($maxOut ?? $s->maxOutputTokens) + self::GEMINI_THINKING_BUDGET,
                     'temperature' => (float) $s->temperature,
                     'thinkingConfig' => ['thinkingBudget' => self::GEMINI_THINKING_BUDGET],
                 ],
