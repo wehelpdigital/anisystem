@@ -34,8 +34,15 @@
     .rp-snap { margin: .4rem 0; padding: .5rem .7rem; border-radius: .6rem; font-size: .8rem;
         background: var(--color-gray-50); border-left: 3px solid var(--color-gray-200);
         color: var(--color-gray-600); }
+    .rp-reason { font-size: .875rem; color: var(--color-gray-900); }
+    html.dark .rp-reason { color: #e8efe1; }
     .rp-who { font-size: .73rem; color: var(--color-gray-400); }
     .rp-acts { display: flex; gap: .4rem; margin-top: .5rem; flex-wrap: wrap; }
+    /* A hand-width screen: the actions share the row instead of ragging. */
+    @media (max-width: 639px) {
+        .rp-acts .btn { flex: 1 1 auto; justify-content: center; }
+        .rp-who.ml-auto, .rp-line .rp-who { flex-basis: 100%; margin-left: 0; }
+    }
     html.dark .rp-row { border-color: #222b1a; }
     html.dark .rp-type { background: #16202f; color: #9fc0f5; }
     html.dark .rp-snap { background: #131a0e; border-color: #2b3a1c; color: #a8bd93; }
@@ -57,7 +64,7 @@
         <div class="rp-row" data-report="${r.id}">
             <div class="rp-line">
                 <span class="rp-type">${esc(r.type)}</span>
-                <b class="text-sm text-gray-900 dark:text-gray-100">${esc(r.reason)}</b>
+                <b class="rp-reason">${esc(r.reason)}</b>
                 ${r.status !== 'open' ? `<span class="ad-badge is-closed">${esc(r.status)}</span>` : ''}
                 <span class="rp-who ml-auto">${esc(r.at || '')}</span>
             </div>
@@ -66,7 +73,6 @@
             <p class="rp-who">Reported by <b>${esc(r.reporter)}</b>${r.target ? ` · about <b>${esc(r.target)}</b>` : ''}</p>
             <div class="rp-acts">
                 <a class="btn btn-white btn-sm" href="${esc(r.url)}" target="_blank" rel="noopener">Open where it lives ↗</a>
-                ${r.targetUserId ? `<a class="btn btn-white btn-sm" href="{{ route('admin.clients') }}" title="Suspensions live in the client's own sheet">Client tools</a>` : ''}
                 ${r.status === 'open' ? `
                     <button type="button" class="btn btn-primary btn-sm" data-rp-set="handled">Mark handled</button>
                     <button type="button" class="btn btn-white btn-sm" data-rp-set="dismissed">Dismiss</button>`

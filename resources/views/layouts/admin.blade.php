@@ -41,15 +41,34 @@
             font-family: var(--font-heading); line-height: 1.15; }
         .ad-sub { font-size: .7rem; color: var(--color-gray-400); font-weight: 600; }
 
-        .ad-tabs { display: flex; gap: .25rem; max-width: 64rem; margin: 0 auto;
-            padding: 0 .9rem .55rem; }
-        .ad-tab { flex: 1 1 0; display: flex; align-items: center; justify-content: center; gap: .4rem;
-            min-height: 2.5rem; border-radius: .7rem; font-size: .84rem; font-weight: 700;
-            color: var(--color-gray-500); }
-        .ad-tab:hover { background: var(--color-gray-50); color: var(--color-gray-800); }
-        .ad-tab.is-on { background: var(--color-brand-50); color: var(--color-brand-800); }
-        .ad-tab svg { width: 1.05rem; height: 1.05rem; flex: none; }
-        @media (min-width: 640px) { .ad-tab { flex: 0 0 auto; padding: 0 1rem; } }
+        .ad-navwrap { max-width: 64rem; margin: 0 auto; padding: 0 .9rem .55rem; }
+        .ad-navtag { display: inline-flex; align-items: center; gap: .45rem;
+            padding: .45rem .5rem .45rem .85rem; border-radius: 999px; cursor: pointer;
+            background: var(--color-brand-50); color: var(--color-brand-800);
+            font-weight: 800; font-size: .84rem; border: 1px solid var(--color-brand-200); }
+        .ad-navtag:hover { background: var(--color-brand-100); }
+        .ad-navtag svg { width: 1rem; height: 1rem; flex: none; }
+        .ad-navtag-c { opacity: .6; }
+        /* The sheet of rooms. */
+        .ad-nav-row { display: flex; align-items: center; gap: .7rem; width: 100%; text-align: left;
+            padding: .7rem .8rem; border-radius: .8rem; margin-bottom: .35rem;
+            border: 1px solid var(--color-gray-100); color: var(--color-gray-800); }
+        .ad-nav-row:hover { background: var(--color-gray-50); }
+        .ad-nav-row.is-on { border-color: var(--color-brand-300); background: var(--color-brand-50); }
+        .ad-nav-row svg { width: 1.15rem; height: 1.15rem; flex: none; color: var(--color-brand-700); }
+        .ad-nav-row b { display: block; font-size: .88rem; font-weight: 800; }
+        .ad-nav-row i { display: block; font-style: normal; font-size: .72rem; color: var(--color-gray-500); }
+        html.dark .ad-navtag { background: #22301a; border-color: #3f5626; color: #cfe6b8; }
+        html.dark .ad-navtag:hover { background: #2a3a20; }
+        html.dark .ad-nav-row { border-color: #222b1a; color: #e8efe1; }
+        html.dark .ad-nav-row:hover { background: #161e10; }
+        html.dark .ad-nav-row.is-on { background: #22301a; border-color: #3f5626; }
+        html.dark .ad-nav-row svg { color: #a5c97e; }
+        html.dark .ad-nav-row i { color: #93a684; }
+        /* The panel's filter chips, dressed for the dark — the client bundle
+           only dresses the selected one. */
+        html.dark .chip { background: #151b12; border-color: #2b3a1c; color: #a8bd93; }
+        html.dark .chip:hover { background: #1c2913; border-color: #3f5626; }
 
         .ad-main { max-width: 64rem; margin: 0 auto; padding: 1rem .9rem 4rem; }
 
@@ -169,26 +188,21 @@
                 <p class="ad-title">Admin panel</p>
                 <p class="ad-sub">@yield('subtitle', 'anee.io')</p>
             </div>
-            <span class="ad-face" title="{{ auth()->user()->email }}">{{ mb_strtoupper(mb_substr(auth()->user()->firstName ?? 'A', 0, 1)) }}</span>
         </div>
-        <nav class="ad-tabs" role="tablist">
-            <a href="{{ route('admin.dashboard') }}" class="ad-tab {{ request()->routeIs('admin.dashboard') ? 'is-on' : '' }}">
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg>
-                <span>Dashboard</span>
-            </a>
-            <a href="{{ route('admin.clients') }}" class="ad-tab {{ request()->routeIs('admin.clients') ? 'is-on' : '' }}">
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-1.33-7.77"/></svg>
-                <span>Clients</span>
-            </a>
-            <a href="{{ route('admin.support') }}" class="ad-tab {{ request()->routeIs('admin.support') ? 'is-on' : '' }}">
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8m-8 4h5m-9 7l3.5-3.5H19a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14z"/></svg>
-                <span>Support</span>
-            </a>
-            <a href="{{ route('admin.reports') }}" class="ad-tab {{ request()->routeIs('admin.reports') ? 'is-on' : '' }}">
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21V4m0 1l9-2 9 4-9 2-9-4zm0 8l9-2 9 4-9 2-9-4z"/></svg>
-                <span>Reports</span>
-            </a>
-        </nav>
+        {{-- Four tabs folded into one tag: it names the room you are in and
+             opens the sheet of rooms. --}}
+        @php
+            $adminHere = request()->routeIs('admin.clients') ? 'Clients'
+                : (request()->routeIs('admin.support') ? 'Support'
+                : (request()->routeIs('admin.reports') ? 'Reports' : 'Dashboard'));
+        @endphp
+        <div class="ad-navwrap">
+            <button type="button" class="ad-navtag" id="adminNavBtn" aria-haspopup="dialog" title="Open another module">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h10"/></svg>
+                <span>{{ $adminHere }}</span>
+                <svg class="ad-navtag-c" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>
+        </div>
     </header>
 
     <main class="ad-main">
@@ -196,6 +210,36 @@
     </main>
 
     @stack('sheets')
+
+    {{-- Which room of the panel to open. --}}
+    <div class="sheet hidden" id="adminNavSheet" style="--sheet-width:24rem">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+            <h3 class="sheet-title">Open a module</h3>
+            <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+        </div>
+        <div class="sheet-body">
+            <a class="ad-nav-row {{ request()->routeIs('admin.dashboard') ? 'is-on' : '' }}" href="{{ route('admin.dashboard') }}">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg>
+                <span class="min-w-0"><b>Dashboard</b><i>Registrations, sales and the platform's pulse</i></span>
+            </a>
+            <a class="ad-nav-row {{ request()->routeIs('admin.clients') ? 'is-on' : '' }}" href="{{ route('admin.clients') }}">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-1.33-7.77"/></svg>
+                <span class="min-w-0"><b>Clients</b><i>Every account, and what can be done for it</i></span>
+            </a>
+            <a class="ad-nav-row {{ request()->routeIs('admin.support') ? 'is-on' : '' }}" href="{{ route('admin.support') }}">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8m-8 4h5m-9 7l3.5-3.5H19a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14z"/></svg>
+                <span class="min-w-0"><b>Support</b><i>Tickets, grouped by the person who raised them</i></span>
+            </a>
+            <a class="ad-nav-row {{ request()->routeIs('admin.reports') ? 'is-on' : '' }}" href="{{ route('admin.reports') }}">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21V4m0 1l9-2 9 4-9 2-9-4zm0 8l9-2 9 4-9 2-9-4z"/></svg>
+                <span class="min-w-0"><b>Reports</b><i>What the community flagged</i></span>
+            </a>
+        </div>
+    </div>
+    <script>
+        document.getElementById('adminNavBtn')?.addEventListener('click', () => window.openSheet && window.openSheet('adminNavSheet'));
+    </script>
 
     <script>
         /* THE SCROLL THAT FEEDS ITSELF.
