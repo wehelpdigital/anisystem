@@ -216,6 +216,20 @@
             <p class="form-hint">What one costs. The expense report will multiply it by what the moves say was used.</p>
         </div>
 
+        {{-- WHEN COUNTING BEGINS — asked here because here is where the name
+             is typed, and the name is what the season's past is matched by.
+             Only shown while the season HAS a past, and only when creating:
+             an existing item's start is moved from its log line. --}}
+        <div id="ivItemStartWrap" class="hidden">
+            <label class="form-label">Counted from</label>
+            <button type="button" class="crop-tag" id="ivItemStartBtn">
+                <span class="crop-tag-e" id="ivItemStartIcon">🗓️</span>
+                <span class="crop-tag-t" id="ivItemStartNow">Today</span>
+                <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <p class="form-hint">Activities already ticked done that name this item come off its count from this day — even before you record any stock.</p>
+        </div>
+
         {{-- No opening count.
              Adding a thing to the shed and receiving a delivery are two acts,
              and this form is only the first. "How much have you now?" reads as

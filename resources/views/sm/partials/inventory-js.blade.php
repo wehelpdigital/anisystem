@@ -133,8 +133,11 @@
                         <span class="iv-mid">
                             <span class="iv-name">${esc(i.name)}</span>
                             <span class="iv-kind">${esc(i.kindLabel)}</span>
-                            <div class="iv-have ${i.isLow ? 'is-low' : (i.onHand <= 0 ? 'is-none' : '')}">
-                                ${i.onHand > 0 ? esc(say(i, i.onHand)) : 'None left'}
+                            {{-- A negative count is the season saying it used what
+                                 nobody recorded receiving — the number IS the message,
+                                 and "None left" would hide it. --}}
+                            <div class="iv-have ${i.isLow || i.onHand < 0 ? 'is-low' : (i.onHand === 0 ? 'is-none' : '')}">
+                                ${i.onHand !== 0 ? esc(say(i, i.onHand)) : 'None left'}
                                 ${i.isLow && i.onHand > 0 ? '<span class="iv-low">low</span>' : ''}
                             </div>
                             ${i.unitPrice != null ? `<div class="iv-note">\u20b1${trim(i.unitPrice)} per ${esc(unitSays(i.unit, true))}</div>` : ''}
@@ -182,8 +185,8 @@
                         : `<span class="iv-move-d ${m.isIn ? 'is-in' : 'is-out'}">${m.isIn ? '+' : '−'}${esc(trim(Math.abs(m.delta)))}</span>`}
                     ${m.reason === 'activity'
                         ? '<span class="iv-move-x" title="This one came from an activity. Untick the activity to take it back.">🔒</span>'
-                        : m.reason === 'open'
-                            ? `<button type="button" class="iv-move-x" data-iv-start-edit="${m.itemId}" data-qty="${Math.abs(m.delta)}" data-on="${esc(m.on || '')}" title="Move the start — change the amount or the day and recalculate" aria-label="Move the start">✏️</button>`
+                        : (m.reason === 'open' || m.reason === 'created')
+                            ? `<button type="button" class="iv-move-x" data-iv-start-edit="${m.itemId}" data-qty="${m.reason === 'open' ? Math.abs(m.delta) : 0}" data-on="${esc(m.on || '')}" title="Move the start — change the amount or the day and recalculate" aria-label="Move the start">✏️</button>`
                             : `<button type="button" class="iv-move-x" data-iv-move-del="${m.id}" title="Remove this entry" aria-label="Remove this entry">✕</button>`}
                 </div>`;
             });
@@ -197,7 +200,7 @@
                 <div class="iv-total">
                     <span class="iv-total-e">${i.icon}</span>
                     <span class="iv-total-n">${esc(i.name)}</span>
-                    <span class="iv-total-q ${i.isLow ? 'is-low' : (i.onHand <= 0 ? 'is-none' : '')}">${i.onHand > 0 ? esc(say(i, i.onHand)) : 'none'}</span>
+                    <span class="iv-total-q ${i.isLow || i.onHand < 0 ? 'is-low' : (i.onHand === 0 ? 'is-none' : '')}">${i.onHand !== 0 ? esc(say(i, i.onHand)) : 'none'}</span>
                 </div>`).join('');
             $id('ivTotalsEmpty')?.classList.toggle('hidden', ITEMS.length > 0);
         }
@@ -248,6 +251,11 @@
             /* Stock moves from here now that the card says only Edit/Delete.
                A brand-new item has no stock to move; the row waits. */
             $id('ivStockRow')?.classList.toggle('hidden', !item);
+            /* The question belongs to creation, and only to a season with a
+               past. An existing item's start is moved from its log line. */
+            const askStart = !item && CTX.done > 0;
+            $id('ivItemStartWrap')?.classList.toggle('hidden', !askStart);
+            if (askStart) { START.item = { mode: 'today', date: null }; sayStart('item'); }
             if (item) {
                 const says = $id('ivStockSays');
                 if (says) says.textContent = item.onHand > 0 ? say(item, item.onHand) + ' on hand.' : 'None on hand.';
@@ -268,6 +276,8 @@
                 lowAt: $id('ivLowAt').value || null,
                 unitPrice: $id('ivPrice').value || null,
                 note: $id('ivNote').value.trim() || null,
+                // Creating on a board with a past: when the count begins.
+                countFrom: (!id && CTX.done > 0) ? startDateOf(START.item) : null,
             };
             btn.disabled = true;
             try {
@@ -291,7 +301,7 @@
             const d = new Date();
             return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
         };
-        const START = { move: { mode: 'today', date: null }, edit: { mode: 'date', date: null } };
+        const START = { move: { mode: 'today', date: null }, edit: { mode: 'date', date: null }, item: { mode: 'today', date: null } };
         let startTarget = 'move';
 
         const startDateOf = (st) => st.mode === 'date' ? (st.date || todayISO())
@@ -304,10 +314,16 @@
         };
 
         /** Paint one tag from one answer. */
+        const START_IDS = {
+            move: ['ivStartIcon', 'ivStartNow'],
+            edit: ['ivStartEditIcon', 'ivStartEditNow'],
+            item: ['ivItemStartIcon', 'ivItemStartNow'],
+        };
+
         function sayStart(which) {
             const st = START[which];
-            const icon = $id(which === 'move' ? 'ivStartIcon' : 'ivStartEditIcon');
-            const now = $id(which === 'move' ? 'ivStartNow' : 'ivStartEditNow');
+            const icon = $id(START_IDS[which][0]);
+            const now = $id(START_IDS[which][1]);
             if (!now) return;
             if (st.mode === 'today') { icon.textContent = '\ud83d\uddd3\ufe0f'; now.textContent = 'Today \u00b7 ' + sayDate(todayISO()); }
             else if (st.mode === 'beginning') { icon.textContent = '\u23ee\ufe0f'; now.textContent = 'The beginning \u00b7 ' + sayDate(CTX.first || todayISO()); }
@@ -563,7 +579,9 @@
         async function startEditGo(btn) {
             const itemId = $id('ivStartEditItem').value;
             const qty = Number($id('ivStartEditQty').value || 0);
-            if (!(qty > 0)) { toast('Started with how much?', 'error'); $id('ivStartEditQty').focus(); return; }
+            // Zero is an answer: a book can open with nothing on the shelf,
+            // and the season's takes then run it honestly negative.
+            if (qty < 0) { toast('Started with how much?', 'error'); $id('ivStartEditQty').focus(); return; }
             btn.disabled = true;
             try {
                 const res = await api(U.restart, {
@@ -650,6 +668,7 @@
                 if (se) { A.openStartEdit(se.getAttribute('data-iv-start-edit'), se.getAttribute('data-qty'), se.getAttribute('data-on')); return; }
                 if (e.target.closest('#ivStartBtn')) { A.openStartChooser('move'); return; }
                 if (e.target.closest('#ivStartEditBtn')) { A.openStartChooser('edit'); return; }
+                if (e.target.closest('#ivItemStartBtn')) { A.openStartChooser('item'); return; }
                 const srow = e.target.closest('#ivStartRows .dt-row');
                 if (srow) { A.chooseStart(srow); return; }
                 const sgo = e.target.closest('#ivStartEditGo');

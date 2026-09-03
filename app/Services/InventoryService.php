@@ -186,6 +186,18 @@ class InventoryService
             ->update(['deleteStatus' => 0]);
 
         $this->startCount($item, $qty, $on);
+
+        /* A start with no stock has no OPEN line, so the birth line is the
+         * start marker — its date moves with the answer, because it is the
+         * only line the pencil can live on. With stock, the birth line stays
+         * where it was: when the item joined the list is its own true fact. */
+        if ($qty <= 0) {
+            AsInventoryMove::where('itemId', $item->id)
+                ->where('reason', AsInventoryMove::CREATED)
+                ->where('deleteStatus', 1)
+                ->update(['happenedOn' => $on ?: now('Asia/Manila')->toDateString()]);
+            $this->rebuildChain($item->id);
+        }
     }
 
     /**

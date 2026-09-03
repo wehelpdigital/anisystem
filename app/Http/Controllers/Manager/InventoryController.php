@@ -161,6 +161,9 @@ class InventoryController extends BaseScheduleController
          * arriving from nowhere; with it the book starts where the shed did.
          * delta 0 on purpose — joining the list is not stock — and written
          * directly because move() rightly refuses a move of nothing. */
+        /* Dated to the chosen counting start when one was given — the birth
+         * line is the start marker for a book that opens with no stock. */
+        $countFrom = $request->input('countFrom');
         AsInventoryMove::create([
             'croppingScheduleId' => $schedule->id,
             'itemId' => $item->id,
@@ -168,12 +171,19 @@ class InventoryController extends BaseScheduleController
             'qtyBefore' => 0,
             'qtyAfter' => 0,
             'reason' => AsInventoryMove::CREATED,
-            'happenedOn' => now('Asia/Manila')->toDateString(),
+            'happenedOn' => $countFrom ?: now('Asia/Manila')->toDateString(),
             'byUserId' => \Illuminate\Support\Facades\Auth::id(),
             'deleteStatus' => 1,
         ]);
 
         $opening = (float) $request->input('opening', 0);
+        if ($opening <= 0 && $countFrom) {
+            /* No stock, but a start: the season's done activities that name
+             * this item come off the count from that day. The balance can run
+             * honestly negative — the farm used what nobody has recorded
+             * receiving yet, and a book that hides that is lying politely. */
+            $this->stock->startCount($item, 0, $countFrom);
+        }
         if ($opening > 0) {
             /* The Start, not just a move: the book begins here. startCount
              * also adopts activity lines that name this item and spends what
@@ -301,7 +311,8 @@ class InventoryController extends BaseScheduleController
         $schedule = $this->scheduleFromRequest($request);
         $v = Validator::make($request->all(), [
             'itemId' => 'required|integer',
-            'qty' => 'required|numeric|min:0.001|max:9999999',
+            // Zero allowed: a book may open with nothing on the shelf.
+            'qty' => 'required|numeric|min:0|max:9999999',
             'on' => 'required|date',
         ]);
         if ($v->fails()) {
@@ -412,6 +423,9 @@ class InventoryController extends BaseScheduleController
             // created from a day on the board, where the date is already known
             // and is the part people get wrong coming back to it on Friday.
             'on' => 'nullable|date',
+            // When counting begins, for an item created with no stock on a
+            // board that has a past. The opening's `on` wins when both come.
+            'countFrom' => 'nullable|date',
             // About that arrival, not about the thing. See store().
             'openingNote' => 'nullable|string|max:500',
         ];
