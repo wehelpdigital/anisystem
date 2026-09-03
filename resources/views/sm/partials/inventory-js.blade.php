@@ -325,6 +325,7 @@
                birth. All three stay filled (and hidden), so saving sends them
                back unchanged. */
             $id('ivUnitRow')?.classList.toggle('hidden', !!item);
+            $id('ivOpenQtyWrap')?.classList.toggle('hidden', !!item);
             $id('ivPriceWrap')?.classList.toggle('hidden', !!item);
             /* The question belongs to creation, and only to a season with a
                past. An existing item's start is moved from its log line. */
@@ -339,6 +340,11 @@
             const id = $id('ivItemId').value;
             const name = $id('ivName').value.trim();
             if (!name) { toast('Give the item a name.', 'error'); $id('ivName').focus(); return; }
+            if (!id && !(Number($id('ivOpenQty').value) > 0)) {
+                toast('How much have you now? A thing joins the shed by being counted.', 'error');
+                $id('ivOpenQty').focus();
+                return;
+            }
             const body = {
                 name,
                 kind: $id('ivKind').value,

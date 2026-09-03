@@ -218,15 +218,16 @@
                 <label for="ivUnit" class="form-label">Counted in</label>
                 <select id="ivUnit" class="form-select"></select>
             </div>
-            <div>
-                {{-- The low-stock warning is gone — this is a farm's shed,
-                     not a store's shelf — and its slot goes to the question
-                     people kept trying to answer here anyway: the count. --}}
-                <label for="ivOpenQty" class="form-label">How much have you now? <span class="text-gray-400 font-normal">(optional)</span></label>
-                <div class="relative">
-                    <input type="number" id="ivOpenQty" min="0" step="any" class="form-input" placeholder="0" inputmode="decimal">
-                    <span class="iv-qty-u" id="ivOpenQtyUnit"></span>
-                </div>
+        </div>
+
+        {{-- The count, on a row of its own and not optional: a thing joins
+             the shed by being counted. (The low-stock warning that used to
+             sit here is gone — a farm's shed is not a store's shelf.) --}}
+        <div id="ivOpenQtyWrap">
+            <label for="ivOpenQty" class="form-label">How much have you now? <span class="text-red-500">*</span></label>
+            <div class="relative">
+                <input type="number" id="ivOpenQty" min="0" step="any" class="form-input" placeholder="0" inputmode="decimal">
+                <span class="iv-qty-u" id="ivOpenQtyUnit"></span>
             </div>
         </div>
 
