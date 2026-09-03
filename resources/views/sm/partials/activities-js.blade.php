@@ -4206,6 +4206,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const pl0 = $id('itemPriceLabel');
             if (pl0) pl0.textContent = 'Price (₱)';
             $id('itemBuyHint')?.classList.add('hidden');
+            $id('itemMoneyRow')?.classList.remove('is-stock');
             swapUnitControl(null);
             refreshShortWarn();
             return;
@@ -4236,6 +4237,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const pl = $id('itemPriceLabel');
         if (pl) pl.textContent = item ? 'Price (₱) — new purchase only' : 'Price (₱)';
         $id('itemBuyHint')?.classList.toggle('hidden', !item);
+        // A shed line stacks the money row: quantity first, price below
+        // behind its rule — the layout is the sentence.
+        $id('itemMoneyRow')?.classList.toggle('is-stock', !!item);
         swapUnitControl(item);
         refreshShortWarn();
     }
@@ -4303,7 +4307,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (box) box.value = says;
         const now = $id('itemUnitNow');
         if (now) {
-            now.textContent = says || 'Pick a unit (optional)';
+            now.textContent = says || 'Pick a unit';
             now.classList.toggle('is-none', !says);
         }
         closeSheet('itemUnitAllSheet');
@@ -4329,7 +4333,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (now) { now.textContent = kin[0].says; now.classList.remove('is-none'); }
         } else {
             unitBox.value = '';
-            if (now) { now.textContent = 'Pick a unit (optional)'; now.classList.add('is-none'); }
+            if (now) { now.textContent = 'Pick a unit'; now.classList.add('is-none'); }
         }
     }
 
@@ -4634,6 +4638,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const stockItem = stockPre ? (window.IV_ITEMS || []).find((i) => String(i.id) === stockPre) : null;
         const qty = parseFloat($id('itemQtyInput').value) || 1;
         const unit = lineUnitValue();
+        /* A plain line must say its measure (the owner's call, 2026-09-04):
+           "2 of them" reads three ways in a report. The sheet opens so the
+           refusal is also the way to comply. */
+        if (!stockPre && !unit) {
+            toast('Pick a unit for this line.', 'error');
+            openSheet('itemUnitAllSheet');
+            return;
+        }
         /* Against a shed item, a typed price DECLARES a new purchase; empty
            spends the stock already there (the shed's own price does the
            costing later). The guard above has already vetoed a spend the
@@ -4707,7 +4719,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ['itemNameInput', 'itemPriceInput', 'itemUnitInput'].forEach((idv) => { if ($id(idv)) $id(idv).value = ''; });
         if ($id('itemQtyInput')) $id('itemQtyInput').value = '1';
         const unitNow = $id('itemUnitNow');
-        if (unitNow) { unitNow.textContent = 'Pick a unit (optional)'; unitNow.classList.add('is-none'); }
+        if (unitNow) { unitNow.textContent = 'Pick a unit'; unitNow.classList.add('is-none'); }
         const pl = $id('itemPriceLabel');
         if (pl) pl.textContent = 'Price (₱)';
         $id('itemBuyHint')?.classList.add('hidden');

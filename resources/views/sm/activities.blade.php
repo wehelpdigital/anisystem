@@ -2045,6 +2045,13 @@
         #itemStockBtn .crop-tag-t.is-none { color: var(--color-gray-500); font-weight: 600; }
         html.dark #itemStockBtn .crop-tag-t.is-none { color: #9aa78d; }
 
+        /* A shed line's money row stacks: quantity first on its own row,
+           then the price + its note as their own section behind a rule. */
+        #itemMoneyRow.is-stock { grid-template-columns: 1fr; }
+        #itemMoneyRow.is-stock #itemPriceCell { margin-top: .25rem; padding-top: .8rem;
+            border-top: 1px dashed var(--color-gray-300); }
+        html.dark #itemMoneyRow.is-stock #itemPriceCell { border-top-color: #2f3a26; }
+
         /* A material line inside the activity sheet: a small card. */
         #itemsContainer { display: flex; flex-direction: column; gap: .45rem; }
         .mline { display: flex; align-items: flex-start; gap: .6rem; width: 100%;

@@ -568,21 +568,26 @@
                          book's price; filled means a fresh purchase, logged
                          into the inventory at this price so old and new
                          stock keep their own costs. --}}
+                    {{-- Side by side for a plain line; a shed line stacks
+                         them (is-stock) — the quantity first on its own row,
+                         then the price and its note behind a dashed rule as
+                         their own little section, because there the price is
+                         a purchase declaration, not just a number. --}}
                     <div class="grid grid-cols-2 gap-2" id="itemMoneyRow">
+                        <div id="itemQtyCell">
+                            <label class="form-label text-xs! mb-1!" for="itemQtyInput">Quantity</label>
+                            <input type="number" id="itemQtyInput" class="form-input bg-white!" value="1" min="0" step="any" placeholder="1" inputmode="decimal">
+                        </div>
                         <div id="itemPriceCell">
                             <label class="form-label text-xs! mb-1!" for="itemPriceInput" id="itemPriceLabel">Price (₱)</label>
                             <input type="number" id="itemPriceInput" class="form-input bg-white!" list="itemPriceList" min="0" step="any" placeholder="0.00" inputmode="decimal">
                             <datalist id="itemPriceList"></datalist>
-                        </div>
-                        <div>
-                            <label class="form-label text-xs! mb-1!" for="itemQtyInput">Quantity</label>
-                            <input type="number" id="itemQtyInput" class="form-input bg-white!" value="1" min="0" step="any" placeholder="1" inputmode="decimal">
+                            <p class="form-hint hidden" id="itemBuyHint">Leave the price empty to use what the inventory already holds. Put a price in and this counts as a <b>new purchase</b>: it is logged into the inventory at that price, so the old stock and the new keep their own costs for the reports.</p>
                         </div>
                     </div>
-                    <p class="form-hint hidden" id="itemBuyHint">Leave the price empty to use what the inventory already holds. Put a price in and this counts as a <b>new purchase</b>: it is logged into the inventory at that price, so the old stock and the new keep their own costs for the reports.</p>
                     <p class="hidden text-xs font-bold" id="itemShortWarn" style="color:#b45309"></p>
                     <div>
-                        <span class="form-label text-xs! mb-1!">Unit</span>
+                        <span class="form-label text-xs! mb-1!">Unit <span class="text-red-500">*</span></span>
                         {{-- One tag, two sheets behind it: a shed line opens
                              the item's kin (units the tick can convert), a
                              plain line opens the whole catalogue. The hidden
@@ -591,7 +596,7 @@
                         <select id="itemUnitSelect" class="hidden" aria-hidden="true" tabindex="-1" aria-label="Unit"></select>
                         <button type="button" class="crop-tag" id="itemUnitBtn">
                             <span class="crop-tag-e">⚖️</span>
-                            <span class="crop-tag-t is-none" id="itemUnitNow">Pick a unit (optional)</span>
+                            <span class="crop-tag-t is-none" id="itemUnitNow">Pick a unit</span>
                             <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                         </button>
                     </div>
@@ -727,10 +732,6 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body dt-rows" id="itemUnitAllList">
-        <button type="button" class="dt-row" data-unit-all="">
-            <span class="dt-row-e">➖</span>
-            <span class="dt-row-body"><b>No unit</b><i>Just a count — “2 of them”.</i></span>
-        </button>
         @foreach (\App\Models\AsInventoryItem::UNITS as $uk => $u)
             @php $usays = \App\Models\AsInventoryItem::unitSays($uk, false); @endphp
             <button type="button" class="dt-row" data-unit-all="{{ $usays }}">

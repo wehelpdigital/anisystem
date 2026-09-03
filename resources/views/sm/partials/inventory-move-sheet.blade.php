@@ -19,8 +19,16 @@
         <input type="hidden" id="ivMoveDir" value="out">
 
         <div>
-            <label for="ivMoveItem" class="form-label">Which item?</label>
-            <select id="ivMoveItem" class="form-select"></select>
+            <label class="form-label">Which item?</label>
+            {{-- The select holds the VALUE (everything downstream reads it);
+                 the tag is its face, the sheet its list — the activity
+                 sheet's idiom, worn by the day menu's doors too. --}}
+            <select id="ivMoveItem" class="hidden" aria-hidden="true" tabindex="-1"></select>
+            <button type="button" class="crop-tag" id="ivMoveItemBtn">
+                <span class="crop-tag-e" id="ivMoveItemIcon">🎒</span>
+                <span class="crop-tag-t" id="ivMoveItemNow">Which item?</span>
+                <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>
             {{-- What is left, right under the choice, because the next thing
                  typed is a number and this is what it has to fit inside. --}}
             <p class="form-hint" id="ivMoveHave"></p>
@@ -37,19 +45,19 @@
                 <label for="ivMoveNewName" class="form-label text-xs! mb-1!">What is it? <span class="text-red-500">*</span></label>
                 <input type="text" id="ivMoveNewName" maxlength="150" class="form-input bg-white!" placeholder="e.g. Urea 46-0-0" autocomplete="off">
             </div>
-            <div class="iv-newrow">
-                <div>
-                    <label for="ivMoveNewKind" class="form-label text-xs! mb-1!">Kind</label>
-                    <select id="ivMoveNewKind" class="form-select bg-white!">
-                        @foreach (\App\Models\AsInventoryItem::KINDS as $key => $k)
-                            <option value="{{ $key }}">{{ $k['icon'] }} {{ $k['label'] }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div>
-                    <label for="ivMoveNewUnit" class="form-label text-xs! mb-1!">Counted in</label>
-                    <select id="ivMoveNewUnit" class="form-select bg-white!"></select>
-                </div>
+            {{-- One question per row — squeezed side by side, the two
+                 selects truncated their own answers on a phone. --}}
+            <div>
+                <label for="ivMoveNewKind" class="form-label text-xs! mb-1!">Kind</label>
+                <select id="ivMoveNewKind" class="form-select bg-white!">
+                    @foreach (\App\Models\AsInventoryItem::KINDS as $key => $k)
+                        <option value="{{ $key }}">{{ $k['icon'] }} {{ $k['label'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <label for="ivMoveNewUnit" class="form-label text-xs! mb-1!">Counted in</label>
+                <select id="ivMoveNewUnit" class="form-select bg-white!"></select>
             </div>
             <div>
                 <label for="ivMoveNewPrice" class="form-label text-xs! mb-1!">Price <span class="text-gray-400 font-normal">(optional)</span></label>
@@ -68,12 +76,18 @@
                  item takes kilos, a litre-counted one takes ml: the picker
                  holds the item's kin and the book converts. When a unit has
                  no kin, the picker gives way to a plain suffix. --}}
-            <div class="iv-qtyrow">
-                <div class="relative flex-1">
-                    <input type="number" id="ivMoveQty" min="0" step="any" class="form-input" placeholder="0" inputmode="decimal">
-                    <span class="iv-qty-u" id="ivMoveUnit"></span>
-                </div>
-                <select id="ivMoveUnitSel" class="form-select hidden iv-unit-sel" aria-label="Unit of the amount"></select>
+            <div class="relative">
+                <input type="number" id="ivMoveQty" min="0" step="any" class="form-input" placeholder="0" inputmode="decimal">
+                <span class="iv-qty-u" id="ivMoveUnit"></span>
+            </div>
+            <select id="ivMoveUnitSel" class="hidden" aria-hidden="true" tabindex="-1" aria-label="Unit of the amount"></select>
+            <div id="ivMoveUnitWrap" class="hidden mt-2">
+                <label class="form-label text-xs! mb-1!">Unit</label>
+                <button type="button" class="crop-tag" id="ivMoveUnitBtn">
+                    <span class="crop-tag-e">⚖️</span>
+                    <span class="crop-tag-t" id="ivMoveUnitNow"></span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
             </div>
             <p class="form-hint" id="ivMovePacks"></p>
         </div>
@@ -304,6 +318,26 @@
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
         <button type="button" id="ivStartEditGo" class="btn btn-primary">Recalculate</button>
     </div>
+</div>
+
+{{-- Which item a move touches — the picker's list. --}}
+<div class="sheet hidden" id="ivMoveItemSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Which item?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows" id="ivMoveItemList"></div>
+</div>
+
+{{-- The unit an amount is typed in — only units the item's book converts. --}}
+<div class="sheet hidden" id="ivMoveUnitSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Measured in what?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows" id="ivMoveUnitList"></div>
 </div>
 
 <style>

@@ -35,7 +35,7 @@
          * FIRST copy in document order — the one getElementById will answer
          * with — and remove the rest. All behaviour is delegated, so any
          * single copy is a working copy. */
-        ['ivMoveSheet', 'ivItemSheet', 'ivStartSheet', 'ivStartEditSheet', 'ivMenuSheet', 'ivConvSheet', 'ivMoveEditSheet'].forEach((sid) => {
+        ['ivMoveSheet', 'ivItemSheet', 'ivStartSheet', 'ivStartEditSheet', 'ivMenuSheet', 'ivConvSheet', 'ivMoveEditSheet', 'ivMoveItemSheet', 'ivMoveUnitSheet'].forEach((sid) => {
             const copies = [...document.querySelectorAll('#' + sid)];
             copies.slice(1).forEach((el) => el.remove());
         });
@@ -541,11 +541,70 @@
             sayMoveItem();
         }
 
+        /* ---- the move sheet's two chooser sheets ---- */
+        function openMoveItemSheet() {
+            const list = $id('ivMoveItemList');
+            if (!list) return;
+            const dir = $id('ivMoveDir')?.value || 'out';
+            const now = $id('ivMoveItem')?.value || '';
+            const rows = [];
+            /* Stock arriving can be stock of something the shed has never
+               held; stock leaving cannot. Same rule the old dropdown kept. */
+            if (dir === 'in') {
+                rows.push(`<button type="button" class="dt-row${now === '__new' ? ' is-on' : ''}" data-mv-item="__new">
+                    <span class="dt-row-e">➕</span>
+                    <span class="dt-row-body"><b>Something not on the shelf yet</b><i>A first delivery of a brand-new item</i></span>
+                </button>`);
+            }
+            ITEMS.forEach((i) => rows.push(`<button type="button" class="dt-row${now === String(i.id) ? ' is-on' : ''}" data-mv-item="${i.id}">
+                <span class="dt-row-e">${esc(i.icon)}</span>
+                <span class="dt-row-body"><b>${esc(i.name)}</b><i>${esc(i.says)} on hand · counted in ${esc(i.unitLabel || i.unit)}</i></span>
+            </button>`));
+            list.innerHTML = rows.join('') || '<p class="text-sm text-gray-400 text-center py-6">Nothing on the shelf yet.</p>';
+            openSheet('ivMoveItemSheet');
+        }
+        function pickMoveItem(v) {
+            const sel = $id('ivMoveItem');
+            if (sel) sel.value = v;
+            closeSheet('ivMoveItemSheet');
+            sayMoveItem();
+        }
+        function openMoveUnitSheet() {
+            const item = movingNew() ? null : itemById($id('ivMoveItem')?.value);
+            const kin = item && item.kin && item.kin.length > 1 ? item.kin : null;
+            if (!kin) return;
+            const now = $id('ivMoveUnitSel')?.value;
+            $id('ivMoveUnitList').innerHTML = kin.map((k) => `<button type="button" class="dt-row${k === now ? ' is-on' : ''}" data-mv-unit="${esc(k)}">
+                <span class="dt-row-e">⚖️</span>
+                <span class="dt-row-body"><b>${esc(unitSays(k, false))}</b>${UNITS[k] && UNITS[k].long ? `<i>${esc(UNITS[k].long)}</i>` : ''}</span>
+            </button>`).join('');
+            openSheet('ivMoveUnitSheet');
+        }
+        function pickMoveUnit(k) {
+            const sel = $id('ivMoveUnitSel');
+            if (sel) sel.value = k;
+            const now = $id('ivMoveUnitNow');
+            if (now) now.textContent = unitSays(k, false) + (UNITS[k] && UNITS[k].long ? ' (' + UNITS[k].long + ')' : '');
+            closeSheet('ivMoveUnitSheet');
+            sayMoveQty();
+        }
+
         function sayMoveItem() {
             const isNew = movingNew();
             const item = isNew ? null : itemById($id('ivMoveItem')?.value);
             const have = $id('ivMoveHave');
             const unit = $id('ivMoveUnit');
+
+            /* The tag wears the pick — every road here (the picker sheet,
+               a day-menu door with an itemId, the module's kebab) lands in
+               this function, so the face has one painter. */
+            const mtE = $id('ivMoveItemIcon');
+            const mtT = $id('ivMoveItemNow');
+            if (mtE && mtT) {
+                if (isNew) { mtE.textContent = '➕'; mtT.textContent = 'Something not on the shelf yet'; }
+                else if (item) { mtE.textContent = item.icon; mtT.textContent = item.name; }
+                else { mtE.textContent = '🎒'; mtT.textContent = 'Nothing on the shelf yet'; }
+            }
 
             $id('ivMoveNewWrap')?.classList.toggle('hidden', !isNew);
             if (isNew) fillUnits($id('ivMoveNewUnit'), $id('ivMoveNewKind')?.value, $id('ivMoveNewUnit')?.value);
@@ -562,10 +621,16 @@
                unit they are being given. */
             const sel = $id('ivMoveUnitSel');
             const kin = (!isNew && item && item.kin && item.kin.length > 1) ? item.kin : null;
-            if (sel) {
-                sel.classList.toggle('hidden', !kin);
-                if (kin) sel.innerHTML = kin.map((k) => `<option value="${k}">${esc(unitSays(k, false) + (UNITS[k] && UNITS[k].long ? ' (' + UNITS[k].long + ')' : ''))}</option>`).join('');
+            if (sel && kin) {
+                sel.innerHTML = kin.map((k) => `<option value="${k}">${esc(unitSays(k, false))}</option>`).join('');
+                sel.value = kin[0];   // the item's own unit leads its kin
             }
+            /* A labelled tag stands where the bare select used to squat
+               beside the number — the owner asked the Expense door for a
+               labelled unit, and the two doors are one sheet. */
+            $id('ivMoveUnitWrap')?.classList.toggle('hidden', !kin);
+            const unow = $id('ivMoveUnitNow');
+            if (unow && kin) unow.textContent = unitSays(kin[0], false) + (UNITS[kin[0]] && UNITS[kin[0]].long ? ' (' + UNITS[kin[0]].long + ')' : '');
             const unitKey = isNew ? $id('ivMoveNewUnit')?.value : item?.unit;
             if (unit) {
                 unit.textContent = (kin || !unitKey) ? '' : unitSays(unitKey, false);
@@ -597,7 +662,7 @@
             /* What the count will BE. "Have I enough" answered before the
                button is pressed rather than after it, and it is the same
                figure the Totals tab will show a second later. */
-            const typedUnit = (!isNew && item && !$id('ivMoveUnitSel')?.classList.contains('hidden'))
+            const typedUnit = (!isNew && item && !$id('ivMoveUnitWrap')?.classList.contains('hidden'))
                 ? $id('ivMoveUnitSel').value : (item ? item.unit : null);
             const inItem = (item && qty > 0) ? convert(qty, typedUnit || item.unit, item.unit) : null;
             if (after) {
@@ -717,7 +782,7 @@
                             qty,
                             // The unit the amount was typed in; the book
                             // converts into its own.
-                            unit: !$id('ivMoveUnitSel').classList.contains('hidden')
+                            unit: !$id('ivMoveUnitWrap')?.classList.contains('hidden')
                                 ? $id('ivMoveUnitSel').value : null,
                             direction: $id('ivMoveDir').value,
                             reason: asking ? 'open' : null,
@@ -915,6 +980,7 @@
             openItemSheet, saveItem, load, itemById, sayKind, sayUnit, delItem,
             openItemMenu, itemMenuAct, sayMoveDate, raisePicker, openConv,
             sayMoveItem, sayMoveQty, moveGo, delMove, showTab, fillUnits,
+            openMoveItemSheet, pickMoveItem, openMoveUnitSheet, pickMoveUnit,
             openStartChooser, chooseStart, pickedStartDate, openStartEdit, startEditGo,
             moveEditGo, sayMEdDate,
         };
@@ -946,6 +1012,12 @@
                 if (e.target.closest('#ivStartEditBtn')) { A.openStartChooser('edit'); return; }
                 if (e.target.closest('#ivItemStartBtn')) { A.openStartChooser('item'); return; }
                 if (e.target.closest('#ivMoveDateBtn')) { A.raisePicker(document.getElementById('ivMoveDate')); return; }
+                if (e.target.closest('#ivMoveItemBtn')) { A.openMoveItemSheet(); return; }
+                const mvi = e.target.closest('[data-mv-item]');
+                if (mvi) { A.pickMoveItem(mvi.getAttribute('data-mv-item')); return; }
+                if (e.target.closest('#ivMoveUnitBtn')) { A.openMoveUnitSheet(); return; }
+                const mvu = e.target.closest('[data-mv-unit]');
+                if (mvu) { A.pickMoveUnit(mvu.getAttribute('data-mv-unit')); return; }
                 const srow = e.target.closest('#ivStartRows .dt-row');
                 if (srow) { A.chooseStart(srow); return; }
                 const sgo = e.target.closest('#ivStartEditGo');
