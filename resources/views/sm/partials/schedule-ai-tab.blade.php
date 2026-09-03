@@ -115,7 +115,7 @@
                     </button>
                     {{-- The owner's pool, which is what this room spends, at
                          the end of the row that decides what it spends. --}}
-                    <span class="ai-bal ai-bal-chip" data-ai-bal title="What is left in the wallet this chat spends from">Current credits @if ($saiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>…</b>@endif</span>
+                    <span class="ai-bal ai-bal-chip" data-ai-bal title="Current credits — what is left in the wallet this chat spends from" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($saiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>…</b>@endif</span>
                 </div>
                 <p class="sai-estimate" id="saiEstimate" data-idle="{{ $saiHintIdle }}">{{ $saiHintIdle }}</p>
             </div>

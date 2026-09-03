@@ -601,7 +601,7 @@
             </button>
             {{-- What the wallet holds, at the end of the row that decides
                  what the next answer costs. --}}
-            <span class="ai-bal ai-bal-chip" data-ai-bal title="What is left in the wallet this chat spends from">Current credits @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b>@endif</span>
+            <span class="ai-bal ai-bal-chip" data-ai-bal title="Current credits — what is left in the wallet this chat spends from" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b>@endif</span>
         </div>
         <div class="aichat-box">
             <button type="button" class="ai-cam shrink-0" id="aiAttachBtn" title="Add photos" aria-label="Add photos" aria-haspopup="dialog">

@@ -35,6 +35,8 @@
     .ai-bal-chip::before { content: none; }
     html.dark .ai-bal-chip { background: #151b12; border-color: #2b3a1c; }
     .ai-bal b { font-weight: 900; color: var(--color-brand-700); }
+    /* The words "Current credits" became a coin: same meaning, no sentence. */
+    .ai-coin { width: .95rem; height: .95rem; flex: none; display: inline-block; vertical-align: -.18em; }
     html.dark .ai-bal { color: #8ea37a; }
     html.dark .ai-bal b { color: #bfe19a; }
     .ai-rule { border: 0; height: 0; margin: .85em 0;

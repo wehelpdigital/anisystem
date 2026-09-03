@@ -573,7 +573,7 @@
                      place beside the price and says what it is. An account
                      that rides free shows the sign for it rather than a
                      number that never moves. --}}
-                <span class="ai-bal" data-ai-bal style="margin-top:0" title="What is left in the wallet this chat spends from">Current credits @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b>@endif</span>
+                <span class="ai-bal" data-ai-bal style="margin-top:0" title="Current credits — what is left in the wallet this chat spends from" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b>@endif</span>
         </div>
     </div>
 </div>{{-- /.aichat --}}
