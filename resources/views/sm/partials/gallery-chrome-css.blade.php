@@ -32,7 +32,8 @@
         padding: 0 .9rem .9rem; }
     .ga-cell { position: relative; aspect-ratio: 1; border-radius: .7rem; overflow: hidden; background: #0b1220;
         cursor: pointer; }
-    .ga-cell img, .ga-cell video { width: 100%; height: 100%; object-fit: cover; display: block;
+    .ga-cell img, .ga-cell video { position: absolute; inset: 0; width: 100%; height: 100%;
+        object-fit: cover; display: block;
         opacity: 0; transition: opacity .28s ease; }
     .ga-cell img.is-loaded, .ga-cell video.is-loaded { opacity: 1; }
     /* While the picture decodes the square shimmers instead of sitting black —
@@ -245,8 +246,13 @@
             border-color .28s cubic-bezier(.22,1,.36,1); }
     .ga-item:hover { transform: translateY(-2px); border-color: #a8cc7e;
         box-shadow: 0 12px 26px -18px rgb(0 0 0 / .5); }
-    .ga-shot { position: relative; aspect-ratio: 1; flex: none; background: #0b1220; }
-    .ga-shot img, .ga-shot video { width: 100%; height: 100%; object-fit: cover; display: block;
+    /* The square is the law, not a preference: with the media in normal
+       flow, a tall photo's intrinsic height overrode aspect-ratio and every
+       card wore a different thumbnail. Pinned absolute, the box keeps its
+       ratio and the picture fills whatever it is given. */
+    .ga-shot { position: relative; aspect-ratio: 1; flex: none; background: #0b1220; overflow: hidden; }
+    .ga-shot img, .ga-shot video { position: absolute; inset: 0; width: 100%; height: 100%;
+        object-fit: cover; display: block;
         opacity: 0; transition: opacity .28s ease; }
     .ga-shot img.is-loaded, .ga-shot video.is-loaded { opacity: 1; }
     /* The bin rides on the tile rather than inside it: the tile is already a
@@ -315,8 +321,9 @@
         background: var(--color-white); border: 1px solid var(--color-gray-200); text-decoration: none;
         transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
     .tb-card:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -18px rgb(0 0 0 / .5); }
-    .tb-shot { position: relative; aspect-ratio: 16/10; background: #0b1220; }
-    .tb-shot img, .tb-shot video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .tb-shot { position: relative; aspect-ratio: 16/10; background: #0b1220; overflow: hidden; }
+    .tb-shot img, .tb-shot video { position: absolute; inset: 0; width: 100%; height: 100%;
+        object-fit: cover; display: block; }
     .tb-kind { position: absolute; left: .4rem; top: .4rem; padding: .1rem .45rem; border-radius: 999px;
         font-size: .6rem; font-weight: 800; letter-spacing: .02em; text-transform: uppercase;
         background: rgb(0 0 0 / .6); color: #fff; }
