@@ -76,6 +76,7 @@ class WhenToPlantController extends Controller
             'seasons' => self::SEASONS,
             'years' => range((int) now('Asia/Manila')->format('Y'), (int) now('Asia/Manila')->format('Y') + 2),
             'quote' => $canUse ? $this->quote($settings) : null,
+            'aneeFace' => $settings->faceUrl(),
             'balance' => round($this->credits->balance($payer->id), 2),
             'canUse' => $canUse,
             'whyNot' => $canUse ? null
@@ -349,8 +350,13 @@ GROUND RULES
 - Write the summary and the "why" in plain words a farmer reads easily. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
 
 Return ONLY a valid JSON object — no code fences, no commentary — in exactly this shape:
-{"bestWindow":{"fromMonth":1,"fromDay":1,"toMonth":1,"toDay":1,"label":"","why":""},"monthScores":[{"month":1,"score":0,"note":""}],"timeline":[{"stage":"","days":0}],"threats":[{"whenNot":"","threat":"","severity":"low"}],"confidence":"moderate","dataGaps":[""],"summary":""}
-Rules for the shape: monthScores carries ALL twelve months (score 0–100 = how suitable STARTING to plant that month is, note ≤ 12 words); timeline runs from planting to harvest and its days sum near the maturity above; threats are what the farmer risks by planting OUTSIDE bestWindow, each naming when; severity is "low", "moderate" or "high"; confidence is "low", "moderate" or "high".
+{"bestWindow":{"fromMonth":1,"fromDay":1,"toMonth":1,"toDay":1,"label":"","why":""},"avoidWindows":[{"fromMonth":1,"fromDay":1,"toMonth":1,"toDay":1,"label":"","why":"","severity":"high"}],"monthScores":[{"month":1,"score":0,"note":""}],"timeline":[{"stage":"","days":0}],"threats":[{"whenNot":"","threat":"","severity":"low"}],"confidence":"moderate","dataGaps":[""],"summary":""}
+Rules for the shape:
+- bestWindow must be a SPECIFIC, actionable range of roughly 2–6 weeks with explicit dates, and its label must spell the dates out (e.g. "May 10 – June 5") — NEVER a season name or a whole season.
+- avoidWindows: one to three ranges to KEEP AWAY FROM, each specific to the month and week (e.g. "Late July – mid October") and grounded in the named region's historical typhoon/climate pattern; why says what historically happens there then; severity "moderate" or "high".
+- monthScores carries ALL twelve months (score 0–100 = how suitable STARTING to plant that month is; note ≤ 12 words). Differentiate months even inside the target season — a flat run of equal scores is an unfinished answer.
+- timeline runs from planting to harvest and its days sum near the maturity above.
+- threats are what the farmer risks by planting OUTSIDE bestWindow, each naming when; severity "low"/"moderate"/"high"; confidence "low"/"moderate"/"high".
 PROMPT;
     }
 

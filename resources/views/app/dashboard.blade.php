@@ -106,8 +106,9 @@
         background-size: 260% 100%;
         animation: gradSweep 16s ease-in-out infinite alternate; }
     @media (prefers-reduced-motion: reduce) { .dash-anee { animation: none; } }
-    /* The when-to-plant row under Anee's card. */
-    .dash-wtp { display: flex; align-items: center; gap: .8rem; margin-top: .85rem;
+    /* When-to-plant: its own card beside Anee's, not a row inside it. */
+    .dash-wtp-card { margin-top: .85rem; }
+    .dash-wtp { display: flex; align-items: center; gap: .8rem;
         padding: .8rem .9rem; border-radius: .9rem; border: 1px solid #cfe3b8;
         background: linear-gradient(115deg, #f3f8ec, #eef6e6);
         transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
@@ -1153,11 +1154,14 @@
                     {{ $canUseAi ? 'Chat with ' . $aneeName : 'Unlock ' . $aneeName }}
                 </a>
 
-                {{-- The technician's other trick: one bought analysis that
-                     names your planting window. A row of its own under the
-                     chat, because it is a decision, not a conversation. --}}
+            </section>
+
+            {{-- The technician's other trick: one bought analysis that names
+                 your planting window. Its own card, because it is a decision,
+                 not a conversation. --}}
+            <section class="dash-wtp-card" aria-label="When to Plant Analysis">
                 <a href="{{ route('wtp.page') }}" class="dash-wtp">
-                    <span class="dash-wtp-ic">📅</span>
+                    <span class="dash-wtp-ic">⚡</span>
                     <span class="min-w-0">
                         <b>When to Plant Analysis</b>
                         <i>Your crop, your place, the field's troubles — and the window the climate argues for, with the risks of missing it. One analysis, a few AI credits.</i>

@@ -154,6 +154,35 @@
     html.dark .wtp-threat.sev-high { background: #2a1414; border-color: #4c1d1d; color: #fca5a5; }
     html.dark .wtp-threat.sev-moderate { background: #241d10; border-color: #4d3a12; color: #f0c274; }
     html.dark .wtp-threat.sev-low { background: #161e10; border-color: #2b3a1c; color: #a8bd93; }
+    /* The calendar, plainly: one green row to plant by, red rows to keep
+       away from. */
+    /* Flowing prose, not columns: the bold dates lead and the reason runs
+       on after them, however narrow the screen. */
+    .wtp-win { display: block; padding: .6rem .7rem;
+        border-radius: .7rem; margin-bottom: .45rem; font-size: .84rem; line-height: 1.55;
+        border: 1px solid; }
+    .wtp-win b { margin-right: .3rem; }
+    .wtp-win.is-go { background: #f0f7e8; border-color: #cfe3b8; color: #2d5016; }
+    .wtp-win.is-no { background: #fef2f2; border-color: #fecaca; color: #7f1d1d; }
+    .wtp-win.is-no.sev-moderate { background: #fffbeb; border-color: #fde68a; color: #713f12; }
+    html.dark .wtp-win.is-go { background: #1c2913; border-color: #2b3a1c; color: #cfe6b8; }
+    html.dark .wtp-win.is-no { background: #2a1414; border-color: #4c1d1d; color: #fca5a5; }
+    html.dark .wtp-win.is-no.sev-moderate { background: #241d10; border-color: #4d3a12; color: #f0c274; }
+
+    /* The attach button wears Anee's own face. */
+    .wtp-anee-face { width: 1.15rem; height: 1.15rem; border-radius: 999px; object-fit: cover; }
+
+    /* A report that fits a hand: tighter hero, chart labels kept, the
+       timeline's in-band words stand down and the legend speaks for them. */
+    @media (max-width: 639px) {
+        .wtp-hero { padding: .9rem 1rem; }
+        .wtp-hero .h-win { font-size: 1.15rem; }
+        .wtp-card { padding: .8rem .85rem; }
+        .wtp-months { gap: .2rem; height: 6.5rem; }
+        .wtp-seg { font-size: 0; }
+        .wtp-line { height: 1.5rem; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
         .wtp-step.is-on { animation: none; }
         .wtp-run { animation: none; }
@@ -300,7 +329,7 @@
 
         const q = $id('wtpQuote');
         if (OPT.canUse && OPT.quote) {
-            $id('wtpQuoteText').innerHTML = `One analysis spends about <b>${OPT.quote} credits</b>. You have <b>${Number(OPT.balance).toLocaleString()}</b> — nothing is charged until you press Run, and the exact cost is shown after.`;
+            $id('wtpQuoteText').innerHTML = `One analysis spends about <b>${OPT.quote} credits</b>. You have <b>${Number(OPT.balance).toLocaleString()}</b> — nothing is charged until you press Run. It is a guide, not a promise — weather and climate always carry uncertainty — but a window argued from the data beats deciding with nothing to compare against.`;
             q.hidden = false;
         } else if (!OPT.canUse) {
             $id('wtpQuoteText').innerHTML = esc(OPT.whyNot || 'The analysis is not available right now.');
@@ -376,6 +405,7 @@
         wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = 'none');
         $id('wtpWait').classList.add('is-on');
         $id('wtpReport').hidden = true;
+        let landed = false;
         try {
             const res = await api(U.generate, { method: 'POST', body: {
                 year: state.year, season: state.season, crop: state.crop,
@@ -383,6 +413,7 @@
             } });
             LAST = { report: res.data.report, params: res.data.params, charged: res.data.charged, savedId: null };
             OPT.balance = res.data.balance;
+            landed = true;
             drawReport($id('wtpReport'), LAST, 'fresh');
             toast(`Done — ${res.data.charged} credits used.`);
         } catch (err) {
@@ -391,8 +422,20 @@
             $id('wtpWait').classList.remove('is-on');
             wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = '');
             show(step);
+            // The report has the floor: the form and its price bow out until
+            // the farmer asks for another run.
+            if (landed) { wiz.hidden = true; $id('wtpQuote').hidden = true; }
         }
     });
+
+    function wizardBack() {
+        $id('wtpWiz').hidden = false;
+        if (OPT && OPT.canUse && OPT.quote) $id('wtpQuote').hidden = false;
+        $id('wtpReport').hidden = true;
+        $id('wtpReport').classList.remove('is-drawn');
+        show(0);
+        $id('wtpWiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 
     /* ---------------- the report, drawn ---------------- */
     function drawReport(host, item, mode) {
@@ -408,6 +451,16 @@
         const scores = (r.monthScores || []).slice(0, 12);
         const maxDays = (r.timeline || []).reduce((s, x) => s + (Number(x.days) || 0), 0) || 1;
 
+        const windowsCard = `
+            <div class="wtp-card">
+                <h3>The calendar, plainly</h3>
+                <div class="wtp-win is-go"><b>🌱 Plant: ${esc(bw.label || '')}</b><span>${esc(bw.why || '')}</span></div>
+                ${(r.avoidWindows || []).map((w) => `
+                    <div class="wtp-win is-no sev-${esc(w.severity === 'moderate' ? 'moderate' : 'high')}">
+                        <b>⛔ Avoid ${esc(w.label || '')}:</b><span>${esc(w.why || '')}</span>
+                    </div>`).join('')}
+            </div>`;
+
         host.innerHTML = `
             <div class="wtp-hero">
                 <h2>${esc(crop.icon || '🌱')} ${esc(crop.label || 'Your crop')} — ${esc(OPT ? OPT.seasons[p.season] || '' : '')} ${esc(String(p.year || ''))}</h2>
@@ -420,6 +473,8 @@
                     ${item.charged ? `<span class="wtp-chip">${item.charged} credits</span>` : ''}
                 </div>
             </div>
+
+            ${windowsCard}
 
             <div class="wtp-card">
                 <h3>How each month scores for planting</h3>
@@ -462,12 +517,15 @@
                 ${(r.dataGaps || []).length ? `
                     <h3 class="mt-4">What this analysis could not know</h3>
                     <ul class="wtp-gap">${(r.dataGaps || []).map((g) => `<li>${esc(g)}</li>`).join('')}</ul>` : ''}
-                <p class="wtp-fine mt-3">Guidance from climatological patterns and the crop's calendar — not a live weather or ENSO forecast. Check PAGASA advisories as planting approaches.</p>
+                <p class="wtp-fine mt-3">A guide, not a promise: weather and climate carry real uncertainty, and no analysis can see a particular storm. What this gives you is a data-grounded starting point — the patterns of past seasons weighed against your crop and your field — which beats deciding with nothing to compare against. Check PAGASA advisories as planting approaches.</p>
             </div>
 
             <div class="wtp-acts">
                 ${mode === 'fresh' ? `<button type="button" class="btn btn-primary w-full" id="wtpSave">💾 Save this analysis</button>` : ''}
-                <button type="button" class="btn btn-white w-full" id="${mode === 'fresh' ? 'wtpAttach' : 'wtpAttachSaved'}" ${mode === 'fresh' ? 'disabled title="Save it first — Anee reads the saved copy"' : ''}>🤖 Attach to Anee</button>
+                <button type="button" class="btn btn-white w-full" id="${mode === 'fresh' ? 'wtpAttach' : 'wtpAttachSaved'}" ${mode === 'fresh' ? 'disabled title="Save it first — Anee reads the saved copy"' : ''}>
+                    ${OPT && OPT.aneeFace ? `<img class="wtp-anee-face" src="${esc(OPT.aneeFace)}" alt="">` : '🤖'} Attach to Anee
+                </button>
+                ${mode === 'fresh' ? `<button type="button" class="btn btn-white w-full" id="wtpAgain">⚡ Run another analysis</button>` : ''}
                 ${mode === 'saved' ? `<button type="button" class="btn btn-white w-full" id="wtpDelete">🗑 Delete</button>` : ''}
             </div>`;
 
@@ -490,6 +548,7 @@
             host.querySelector('#wtpAttach').addEventListener('click', () => {
                 if (LAST.savedId) window.location.href = U.anee + '?analysis=' + LAST.savedId;
             });
+            host.querySelector('#wtpAgain').addEventListener('click', wizardBack);
         } else {
             host.querySelector('#wtpAttachSaved').addEventListener('click', () => {
                 window.location.href = U.anee + '?analysis=' + item.savedId;
