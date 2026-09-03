@@ -1320,7 +1320,10 @@
         @include('community.blog.partials.card-css')
         <div>
             <div class="flex items-center justify-between gap-3 mb-3 px-1">
-                <h2 class="text-base md:text-lg font-bold text-gray-900">📰 From the Technician's Blog</h2>
+                <h2 class="flex items-center gap-2 text-base md:text-lg font-bold text-gray-900">
+                    <img src="{{ asset('images/idea.png') }}" alt="" width="22" height="22" class="shrink-0" style="width:1.375rem;height:1.375rem;">
+                    From the Technician's Blog
+                </h2>
                 <a href="{{ route('community.blog') }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 shrink-0">See all →</a>
             </div>
             <div class="blog-grid blog-grid-inset">
