@@ -237,6 +237,9 @@
         <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
     </a>
 @endif
+{{-- The plaza's other rooms, introduced above the wall's own tools. --}}
+@include('community.partials.whats-in')
+
 {{-- What you came to do, as two buttons rather than a box you scroll past.
      The wall is the posts; writing one and looking for one are errands, and
      both open from the bottom over what you were reading — the same shape
