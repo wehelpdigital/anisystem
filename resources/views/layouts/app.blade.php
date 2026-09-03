@@ -611,9 +611,11 @@
             <span>Community</span>
         </a>
         @endif
-        <a href="{{ route('account.index') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('account.*') ? 'is-active' : '' }}">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-            <span>Account</span>
+        {{-- Account lives behind the profile photo already; this seat goes
+             to the Shop, where the season's needs will be bought. --}}
+        <a href="{{ route('shop.index') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('shop.*') ? 'is-active' : '' }}">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l1.2-4.2A2 2 0 016.1 3.5h11.8a2 2 0 011.9 1.3L21 9M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9M3 9h18M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+            <span>Shop</span>
         </a>
     </nav>
 

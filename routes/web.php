@@ -206,6 +206,8 @@ Route::post('/admin/return', [App\Http\Controllers\Admin\AdminPanelController::c
 
 Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app', [App\Http\Controllers\AppController::class, 'dashboard'])->name('app.dashboard');
+    // The storefront's promise, ahead of the storefront.
+    Route::view('/app/shop', 'shop.index')->name('shop.index');
     Route::get('/app/weather', [App\Http\Controllers\WeatherController::class, 'forecast'])->name('app.weather');
     Route::get('/app/sm-weather', [App\Http\Controllers\WeatherController::class, 'scheduleForecast'])->name('sm.weather');
     // Weather as a schedule module: the 6-day view plus an hourly tab.
