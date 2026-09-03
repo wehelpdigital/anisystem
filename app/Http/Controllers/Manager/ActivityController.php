@@ -110,6 +110,12 @@ class ActivityController extends BaseScheduleController
 
                 return [
                     'id' => $m->id,
+                    // What a drag or an edit needs to route the act.
+                    'reason' => $m->reason,
+                    'itemId' => $m->itemId,
+                    'qty' => abs((float) $m->delta),
+                    'enteredQty' => $m->enteredQty !== null ? (float) $m->enteredQty : null,
+                    'enteredUnit' => $m->enteredUnit,
                     'name' => $item->name ?? 'Removed item',
                     'icon' => $item?->icon() ?? '📦',
                     'isIn' => $m->isIn(),

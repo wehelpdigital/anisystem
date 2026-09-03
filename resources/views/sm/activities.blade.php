@@ -2756,6 +2756,14 @@
         .ivn-t { min-width: 0; }
         .ivn-t b { font-weight: 800; }
         .ivn-t small { font-size: .74rem; opacity: .75; }
+        .ivn-row[draggable="true"] { cursor: grab; }
+        .ivn-row.dragging { opacity: .45; }
+        .ivn-kebab { flex: none; margin-left: auto; align-self: center; width: 1.7rem; height: 1.7rem;
+            display: inline-flex; align-items: center; justify-content: center; border-radius: .5rem;
+            border: 0; background: transparent; color: inherit; opacity: .55; cursor: pointer; }
+        .ivn-kebab:hover { opacity: 1; background: rgba(0,0,0,.06); }
+        .ivn-kebab svg { width: 1rem; height: 1rem; }
+        html.dark .ivn-kebab:hover { background: rgba(255,255,255,.1); }
         html.dark .ivn-row { background: #1d2716; border-color: #2e3d20; color: #c5d8b0; }
         html.dark .ivn-row.is-out { background: #292112; border-color: #423618; color: #dcc48c; }
         .progress-marker-line {
@@ -3968,6 +3976,32 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body" id="dxMoveBody"></div>
+</div>
+
+{{-- What can be done to a shed note on a day: the dx menu's shape, because
+     it is the same act on a different ledger. The day list is borrowed from
+     dxMoveSheet — one asker at a time, the contexts null each other. --}}
+<div class="sheet hidden" id="ivnMenuSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Inventory entry</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="dxm-what" id="ivnMenuWhat"></div>
+        <button type="button" class="dxm-item" data-ivnm="edit">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+            <span>Edit<span class="dxm-sub">Change the amount, the day or the note</span></span>
+        </button>
+        <button type="button" class="dxm-item" data-ivnm="move">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M3 11h18M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <span>Move to another day<span class="dxm-sub">It keeps its amount and note</span></span>
+        </button>
+        <button type="button" class="dxm-item dxm-danger" data-ivnm="delete">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
+            <span>Delete<span class="dxm-sub">You will be asked to confirm</span></span>
+        </button>
+    </div>
 </div>
 
 @include('sm.partials.draw-canvas')

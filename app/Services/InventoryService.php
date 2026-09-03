@@ -225,6 +225,27 @@ class InventoryService
     }
 
     /**
+     * Amend one hand-typed line: its amount, its day, its note, and what the
+     * hand typed. The chain is rebuilt because the line's place in time may
+     * have moved — before/after figures are a record only while the line
+     * stands where it was written. (rebuildChain's callers: startCount,
+     * restart, and this.)
+     */
+    public function amend(AsInventoryMove $move, float $delta, ?string $on, ?string $note, ?array $entered): void
+    {
+        DB::transaction(function () use ($move, $delta, $on, $note, $entered) {
+            $move->update([
+                'delta' => $delta,
+                'happenedOn' => $on ?: $move->happenedOn,
+                'note' => $note,
+                'enteredQty' => $entered['qty'] ?? null,
+                'enteredUnit' => $entered['unit'] ?? null,
+            ]);
+            $this->rebuildChain($move->itemId);
+        });
+    }
+
+    /**
      * Link existing activity lines to this item by name.
      *
      * An activity written before the item existed named its material as free

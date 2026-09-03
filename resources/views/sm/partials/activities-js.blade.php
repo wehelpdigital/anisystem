@@ -7226,12 +7226,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!rows.length) { host.innerHTML = ''; host.hidden = true; return; }
         host.hidden = false;
         host.innerHTML = rows.map((r) => `
-            <div class="ivn-row ${r.isIn ? '' : 'is-out'}">
+            <div class="ivn-row ${r.isIn ? '' : 'is-out'}" data-move-id="${r.id}" data-date="${esc(dateKey)}" data-reason="${esc(r.reason || '')}" data-item-id="${r.itemId || ''}" data-qty="${r.qty || 0}"${MAY_DRAG ? ' draggable="true" title="Drag to another day · tap the dots for options"' : ''}>
                 <span class="ivn-e">${r.isIn ? '📥' : '📤'}</span>
                 <span class="ivn-t">
                     <b>${r.isIn ? 'Added' : 'Expensed'} ${esc(r.says)}</b> · ${esc(r.icon)} ${esc(r.name)}
                     <small>· ${esc(r.reasonLabel)}${r.typedSays ? ' · typed as ' + esc(r.typedSays) : ''}${r.note ? ' · ' + esc(r.note) : ''}</small>
                 </span>
+                <button type="button" class="ivn-kebab${LOCK_EDIT_CLS}"${LOCK_EDIT} data-ivn-menu="${r.id}" title="${esc(editTitle('Entry options'))}" aria-label="Entry options">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg>
+                </button>
             </div>`).join('');
     }
 
@@ -7251,6 +7254,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     id: m.id, name: m.itemName, icon: m.icon, isIn: m.isIn,
                     says: m.saysDelta, reasonLabel: m.reasonLabel,
                     typedSays: m.typedSays || null, note: m.note,
+                    reason: m.reason, itemId: m.itemId, qty: Math.abs(Number(m.delta) || 0),
+                    enteredQty: m.enteredQty ?? null, enteredUnit: m.enteredUnit || null,
                 });
             });
             Object.keys(byDay).forEach((d) => byDay[d].reverse());
@@ -7262,6 +7267,112 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', hydrateIvNotes, { once: true });
     else hydrateIvNotes();
+
+    /* ---- Doing things to a shed note: menu, edit, move, delete, drag ----
+     *
+     * The dx rows' manners, on the shed's ledger. The board asks; the writes
+     * go through inventory-js's doors (ivEditShedMove / ivMoveShedMove /
+     * __ivApi.delMove) so the book keeps its one writer's phrasing — and
+     * every one of those doors ends by telling ivDayChanged. */
+    let ivnMenuCtx = null;   // the note the menu is about
+    let ivnMoveCtx = null;   // set while the day list is choosing for a shed note
+    let dragIvn = null;      // {id, date, reason, itemId, qty} while one is in the air
+
+    function ivnRowData(id, dateKey) {
+        const rows = Array.isArray(DAY_IV_NOTES[dateKey]) ? DAY_IV_NOTES[dateKey] : [];
+        return rows.find((r) => String(r.id) === String(id)) || null;
+    }
+    function ivnCtxFrom(rowEl) {
+        return {
+            id: rowEl.getAttribute('data-move-id'),
+            date: (rowEl.getAttribute('data-date') || '').trim(),
+            reason: rowEl.getAttribute('data-reason') || '',
+            itemId: parseInt(rowEl.getAttribute('data-item-id') || '', 10) || null,
+            qty: Number(rowEl.getAttribute('data-qty')) || 0,
+        };
+    }
+
+    function openIvnMenu(rowEl) {
+        if (!mayEditBoard() || !rowEl) return;
+        ivnMenuCtx = ivnCtxFrom(rowEl);
+        const r = ivnRowData(ivnMenuCtx.id, ivnMenuCtx.date);
+        $id('ivnMenuWhat').innerHTML = (r
+            ? `<span class="dxm-amt">${r.isIn ? 'Added' : 'Expensed'} ${esc(r.says)}</span>`
+              + `<span class="dxm-note">${esc(r.icon)} ${esc(r.name)}${r.note ? ' — ' + esc(r.note) : ''}</span>`
+            : '')
+            + `<span class="dxm-day">${esc(prettyDateFull(ivnMenuCtx.date))}</span>`;
+        openSheet('ivnMenuSheet');
+    }
+
+    function openIvnMove() {
+        if (!ivnMenuCtx) return;
+        ivnMoveCtx = ivnMenuCtx;
+        dxMenuCtx = null;   // the day list is shared; one asker at a time
+        const { date } = ivnMoveCtx;
+        $id('dxMoveSubtitle').textContent = 'Inventory entry currently on ' + prettyDateFull(date);
+        const body = $id('dxMoveBody');
+        body.innerHTML = boardDays().map((d) => {
+            const cur = d === date;
+            const dow = prettyDateFull(d).split(',')[0];
+            return `<button type="button" class="dxm-day-btn${cur ? ' is-current' : ''}"${cur ? ' disabled' : ''} data-dxm-date="${esc(d)}">
+                <span class="dxm-dow">${esc(dow)}</span>
+                <span class="min-w-0">${esc(prettyDate(d))}</span>
+                ${cur ? '<span class="dxm-tag">Now here</span>' : ''}
+            </button>`;
+        }).join('') || '<p class="text-sm text-gray-500">This board has no other days yet.</p>';
+        openSheet('dxMoveSheet');
+        setTimeout(() => $qs('.dxm-day-btn.is-current', body)?.scrollIntoView({ block: 'center' }), 60);
+    }
+
+    async function moveShedNoteTo(ctx, toDate) {
+        if (!mayEditBoard() || !ctx || !toDate || toDate === ctx.date) return;
+        try {
+            const res = await window.ivMoveShedMove({ id: parseInt(ctx.id, 10), reason: ctx.reason, itemId: ctx.itemId, qty: ctx.qty, on: toDate });
+            toast((res && res.message) || ('Moved to ' + prettyDateWords(toDate) + '.'));
+            window.ivDayChanged?.();
+        } catch (err) { toast(err.message, 'error'); }
+    }
+
+    document.addEventListener('click', (e) => {
+        const kebab = e.target.closest && e.target.closest('[data-ivn-menu]');
+        if (kebab && !kebab.disabled) {
+            e.preventDefault();
+            openIvnMenu(kebab.closest('.ivn-row'));
+            return;
+        }
+        const act = e.target.closest && e.target.closest('#ivnMenuSheet [data-ivnm]');
+        if (act && ivnMenuCtx) {
+            e.preventDefault();
+            const ctx = ivnMenuCtx;
+            const what = act.getAttribute('data-ivnm');
+            closeSheet('ivnMenuSheet');
+            // After the sheet is away, so nothing is asked underneath one.
+            setTimeout(() => {
+                if (what === 'move') { openIvnMove(); return; }
+                if (what === 'edit') {
+                    const r = ivnRowData(ctx.id, ctx.date);
+                    window.ivEditShedMove?.({
+                        id: parseInt(ctx.id, 10), reason: ctx.reason, itemId: ctx.itemId,
+                        qty: ctx.qty, on: ctx.date,
+                        note: (r && r.note) || '',
+                        enteredQty: r ? r.enteredQty : null,
+                        enteredUnit: r ? r.enteredUnit : null,
+                    });
+                    return;
+                }
+                if (what === 'delete') window.__ivApi?.delMove(parseInt(ctx.id, 10));
+            }, 220);
+            return;
+        }
+        const day = e.target.closest && e.target.closest('#dxMoveSheet [data-dxm-date]');
+        if (day && ivnMoveCtx) {
+            e.preventDefault();
+            const ctx = ivnMoveCtx;
+            ivnMoveCtx = null;
+            closeSheet('dxMoveSheet');
+            moveShedNoteTo(ctx, day.getAttribute('data-dxm-date'));
+        }
+    });
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', hydrateAllExpenseBlocks, { once: true });
     else hydrateAllExpenseBlocks();
@@ -7671,6 +7782,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function openDxMenu(kind, id, dateKey, rowEl) {
         if (!mayEditBoard() || !id || !dateKey) return;
         dxMenuCtx = { kind, id: String(id), date: dateKey };
+        ivnMoveCtx = null;   // the shared day list answers one asker at a time
         const amt = rowEl ? ($qs('.dx-amt', rowEl)?.textContent || '') : '';
         const note = rowEl ? ($qs('.dx-note', rowEl)?.textContent || '') : '';
         $id('dxMenuTitle').textContent = kind === 'income' ? 'Extra income' : 'Extra expense';
@@ -9147,6 +9259,16 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Dragging a shed note carries the move to another day.
+        const ivnRow = e.target.closest && e.target.closest('.ivn-row[data-move-id]');
+        if (ivnRow) {
+            if (e.target.closest('button, a') || !mayEditBoard()) { e.preventDefault(); return; }
+            dragIvn = ivnCtxFrom(ivnRow);
+            setTimeout(() => { if (dragIvn && String(dragIvn.id) === ivnRow.getAttribute('data-move-id')) ivnRow.classList.add('dragging'); }, 0);
+            if (e.dataTransfer) { e.dataTransfer.effectAllowed = 'move'; try { e.dataTransfer.setData('text/plain', 'ivn:' + dragIvn.id); } catch (_) { /* noop */ } }
+            return;
+        }
+
         // Dragging an inline sticky note to another slot/day.
         const inl = e.target.closest && e.target.closest('.inline-note[data-inline-note]');
         if (inl) {
@@ -9212,6 +9334,8 @@ document.addEventListener('DOMContentLoaded', () => {
         dxOrigin = null;
         dragMarkerDate = null;
         dragInlineEl = null;
+        dragIvn = null;
+        $qsa('.ivn-row.dragging').forEach((el) => el.classList.remove('dragging'));
     });
 
     /* What the dragged card would be dropped above.
@@ -9317,6 +9441,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 .forEach((el) => el.classList.remove('drag-over-group', 'drag-over'));
             if (targetRest) targetRest.classList.add('drag-over');
             else targetGroup.classList.add('drag-over-group');
+            return;
+        }
+
+        // A shed note in the air: any day can take it, quiet ones included.
+        if (dragIvn) {
+            const rest = e.target.closest && e.target.closest('.rest-day-marker[data-date]');
+            const group = rest ? null : (e.target.closest && e.target.closest('.date-group[data-date]'));
+            const to = ((rest || group)?.getAttribute('data-date') || '').trim();
+            $qsa('.date-group.drag-over-group, .rest-day-marker.drag-over').forEach((el) => el.classList.remove('drag-over-group', 'drag-over'));
+            if (!to || to === '__no-date__' || to === dragIvn.date) return;
+            e.preventDefault();
+            if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+            if (rest) rest.classList.add('drag-over');
+            else group.classList.add('drag-over-group');
             return;
         }
 
@@ -9446,6 +9584,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 else moveExpenseToDate({ id, date: from }, landedOn, order);
             }
             dxOrigin = null;
+            return;
+        }
+
+        // Shed note drop → the move takes the day it landed on.
+        if (dragIvn) {
+            const ctx = dragIvn; dragIvn = null;
+            $qsa('.ivn-row.dragging').forEach((el) => el.classList.remove('dragging'));
+            $qsa('.date-group.drag-over-group, .rest-day-marker.drag-over').forEach((el) => el.classList.remove('drag-over-group', 'drag-over'));
+            const rest = e.target.closest && e.target.closest('.rest-day-marker[data-date]');
+            const group = rest ? null : (e.target.closest && e.target.closest('.date-group[data-date]'));
+            const to = ((rest || group)?.getAttribute('data-date') || '').trim();
+            if (!to || to === '__no-date__' || to === ctx.date) return;
+            e.preventDefault();
+            moveShedNoteTo(ctx, to);
             return;
         }
 
@@ -9813,6 +9965,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 clearDropHighlights();
                 dragGroupDate = null;
                 if (commit && to && to !== '__no-date__' && to !== td.groupDate) moveGroupToDate(td.groupDate, to);
+            } else if (td.ivn) {
+                const group = target?.closest?.('.date-group');
+                const to = (group?.getAttribute('data-date') || rest?.getAttribute('data-date') || '').trim();
+                td.ivn.classList.remove('dragging');
+                clearDropHighlights();
+                dragIvn = null;
+                if (commit && to && to !== '__no-date__' && to !== td.ivnCtx.date) moveShedNoteTo(td.ivnCtx, to);
             } else if (td.note) {
                 const container = target?.closest?.('.date-activities');
                 td.note.classList.remove('dragging');
@@ -9859,11 +10018,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // rather than the plan's.
         if (td.note ? !MAY_DRAG_NOTE : !MAY_DRAG) return;
         if (td.dx && !mayEditBoard()) return;   // the day's money is the plan's
+        if (td.ivn && !mayEditBoard()) return;  // and so are the shed's lines
         td.active = true;
         document.body.classList.add('is-touch-dragging');
         navigator.vibrate?.(15);
 
-        const el = td.header || td.note || td.dx || td.blockEl || td.card;
+        const el = td.header || td.note || td.dx || td.ivn || td.blockEl || td.card;
         td.ghost = buildDragGhost(el);
         const rect = el.getBoundingClientRect();
         td.offsetX = td.lastX - rect.left;
@@ -9877,6 +10037,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (td.dx) {
             td.dx.classList.add('dragging');
             dxOrigin = { parent: td.dx.parentNode, next: td.dx.nextElementSibling, date: td.dxDate };
+        } else if (td.ivn) {
+            td.ivn.classList.add('dragging');
+            dragIvn = td.ivnCtx;
         } else if (td.header) {
             td.header.classList.add('dragging');
             dragGroupDate = td.groupDate;
@@ -9914,8 +10077,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // handle — the mouse path already refuses to drag from a button.
         const dxHead = header ? null : t.target.closest?.('.dx-head[draggable="true"]');
         const dx = (header || dxHead || t.target.closest?.('button, a')) ? null : t.target.closest?.(DX_ROW_SEL);
-        const card = (header || dx) ? null : t.target.closest?.('.activity-card[data-id]');
-        if (!header && !card && !dx && !dxHead) return;
+        // A shed note is picked up like a money row; its kebab stays a tap.
+        const ivn = (header || dxHead || dx || t.target.closest?.('button, a')) ? null : t.target.closest?.('.ivn-row[data-move-id]');
+        const card = (header || dx || ivn) ? null : t.target.closest?.('.activity-card[data-id]');
+        if (!header && !card && !dx && !dxHead && !ivn) return;
 
         const groupDate = header ? (header.closest('.date-group')?.getAttribute('data-date') || '').trim() : '';
         if (header && (!groupDate || groupDate === '__no-date__')) return;
@@ -9927,6 +10092,7 @@ document.addEventListener('DOMContentLoaded', () => {
             blockDate: dxHead ? (dxHead.closest(DX_BLOCK_SEL)?.getAttribute('data-date') || '').trim() : '',
             dx, dxKind: dx ? dxKindOf(dx) : '',
             dxDate: dx ? (dx.getAttribute('data-date') || '').trim() : '',
+            ivn, ivnCtx: ivn ? ivnCtxFrom(ivn) : null,
             groupDate, active: false, raf: null,
             startX: t.clientX, startY: t.clientY, lastX: t.clientX, lastY: t.clientY,
             offsetX: 0, offsetY: 0, ghost: null,
@@ -9958,6 +10124,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const group = target?.closest?.('.date-group');
             const to = (group?.getAttribute('data-date') || rest?.getAttribute('data-date') || '').trim();
             if (!to || to === '__no-date__' || to === touchDrag.groupDate) return;
+            if (rest) rest.classList.add('drag-over');
+            else group.classList.add('drag-over-group');
+            return;
+        }
+
+        if (touchDrag.ivn) {
+            const group = rest ? null : target?.closest?.('.date-group');
+            const to = ((rest || group)?.getAttribute('data-date') || '').trim();
+            if (!to || to === '__no-date__' || to === touchDrag.ivnCtx.date) return;
             if (rest) rest.classList.add('drag-over');
             else group.classList.add('drag-over-group');
             return;

@@ -152,6 +152,10 @@ class InventoryController extends BaseScheduleController
             'typedSays' => ($m->enteredQty !== null && $m->enteredUnit)
                 ? AsInventoryItem::trim((float) $m->enteredQty) . ' ' . AsInventoryItem::unitSays($m->enteredUnit, abs((float) $m->enteredQty) == 1.0)
                 : null,
+            // The raw typed figures too, so an edit form opens showing what
+            // the hand wrote rather than the book's conversion of it.
+            'enteredQty' => $m->enteredQty !== null ? (float) $m->enteredQty : null,
+            'enteredUnit' => $m->enteredUnit,
         ])->values()->all();
     }
 
@@ -401,6 +405,80 @@ class InventoryController extends BaseScheduleController
         $move->update(['deleteStatus' => 0]);
 
         return $this->jsonOk('Entry removed.');
+    }
+
+    /**
+     * Amend one hand-typed move — amount (typed in any kin unit), day, note.
+     * With only `on`, it is a plain re-dating: the board's drag. Activity
+     * lines belong to their activity, and the Start keeps its own editor
+     * because its date decides what the season retro-spends.
+     */
+    public function updateMove(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        $v = Validator::make($request->all(), [
+            'id' => 'required|integer',
+            'qty' => 'nullable|numeric|min:0.001|max:9999999',
+            'unit' => 'nullable|string|max:20',
+            'on' => 'nullable|date',
+            'note' => 'nullable|string|max:500',
+        ]);
+        if ($v->fails()) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => $v->errors()]);
+        }
+
+        $move = AsInventoryMove::where('croppingScheduleId', $schedule->id)
+            ->where('id', (int) $request->input('id'))
+            ->where('deleteStatus', 1)->first();
+        if (! $move) {
+            return $this->jsonFail('That entry is gone already.', 404);
+        }
+        if (! in_array($move->reason, [AsInventoryMove::IN, AsInventoryMove::OUT, AsInventoryMove::ADJUST], true)) {
+            return $this->jsonFail(
+                $move->reason === AsInventoryMove::ACTIVITY
+                    ? 'This one came from an activity being marked done. Edit the activity instead.'
+                    : 'The Start is edited from its own editor — its date decides what the season used.',
+                422
+            );
+        }
+        $item = $this->itemOf($schedule->id, (int) $move->itemId);
+        if (! $item) {
+            return $this->jsonFail('Item not found.', 404);
+        }
+
+        $delta = (float) $move->delta;
+        $entered = ($move->enteredQty !== null && $move->enteredUnit)
+            ? ['qty' => (float) $move->enteredQty, 'unit' => $move->enteredUnit]
+            : null;
+        if ($request->filled('qty')) {
+            $typed = abs((float) $request->input('qty'));
+            $fromUnit = (string) ($request->input('unit') ?: $item->unit);
+            $converted = AsInventoryItem::convert($typed, $fromUnit, $item->unit);
+            if ($converted === null) {
+                return $this->jsonFail(
+                    AsInventoryItem::unitSays($fromUnit, false) . ' cannot be counted into '
+                        . AsInventoryItem::unitSays($item->unit, false) . ' — different kinds of amount.',
+                    422
+                );
+            }
+            $qty = round($converted, 3);
+            if ($qty < 0.001) {
+                return $this->jsonFail('That amount rounds to nothing in ' . AsInventoryItem::unitSays($item->unit, false) . '.', 422);
+            }
+            // The sign is the line's own: an arrival stays an arrival.
+            $delta = $delta < 0 ? -$qty : $qty;
+            $entered = $fromUnit !== $item->unit ? ['qty' => $typed, 'unit' => $fromUnit] : null;
+        }
+
+        $this->stock->amend(
+            $move,
+            $delta,
+            $request->input('on') ?: null,
+            $request->has('note') ? (trim((string) $request->input('note')) ?: null) : $move->note,
+            $entered
+        );
+
+        return $this->jsonOk('Entry updated — ' . $item->say($this->stock->onHand($item->id)) . ' on hand.');
     }
 
     private function itemOf(int $scheduleId, $id): ?AsInventoryItem

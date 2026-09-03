@@ -35,7 +35,7 @@
          * FIRST copy in document order — the one getElementById will answer
          * with — and remove the rest. All behaviour is delegated, so any
          * single copy is a working copy. */
-        ['ivMoveSheet', 'ivItemSheet', 'ivStartSheet', 'ivStartEditSheet', 'ivMenuSheet', 'ivConvSheet'].forEach((sid) => {
+        ['ivMoveSheet', 'ivItemSheet', 'ivStartSheet', 'ivStartEditSheet', 'ivMenuSheet', 'ivConvSheet', 'ivMoveEditSheet'].forEach((sid) => {
             const copies = [...document.querySelectorAll('#' + sid)];
             copies.slice(1).forEach((el) => el.remove());
         });
@@ -49,6 +49,7 @@
             move: `{{ route('sm.inventory.move') }}?scheduleId=${SCHEDULE_ID}`,
             restart: `{{ route('sm.inventory.restart') }}?scheduleId=${SCHEDULE_ID}`,
             moveDelete: (id) => `{{ route('sm.inventory.move.delete') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
+            moveUpdate: `{{ route('sm.inventory.move.update') }}?scheduleId=${SCHEDULE_ID}`,
         };
         const KINDS = @json(\App\Models\AsInventoryItem::KINDS);
         const UNITS = @json(\App\Models\AsInventoryItem::UNITS);
@@ -737,9 +738,81 @@
                 toast(res.message);
                 closeSheet('ivStartEditSheet');
                 await load();
+                window.ivDayChanged?.();
             } catch (err) { toast(err.message, 'error'); }
             finally { btn.disabled = false; }
         }
+
+        /* ---------------- editing one hand-typed entry ----------------
+         *
+         * Opened from the board's shed notes (and callable wherever the move
+         * is known). The Start routes to its own editor, because its date
+         * decides what the season retro-spends; plain lines get the small
+         * sheet: amount in any kin unit, day, note. */
+        window.ivEditShedMove = async function ivEditShedMove(o = {}) {
+            if (!ITEMS.length) {
+                try { await load(); } catch (err) { toast(err.message, 'error'); return; }
+            }
+            if (o.reason === 'open') { openStartEdit(o.itemId, o.qty, o.on); return; }
+            const item = itemById(o.itemId);
+            if (!item) { toast('That item is gone.', 'error'); return; }
+            $id('ivMEdId').value = String(o.id);
+            $id('ivMEdWhat').textContent = `${item.icon} ${item.name}`;
+            $id('ivMEdQty').value = o.enteredQty ?? o.qty ?? '';
+            const sel = $id('ivMEdUnitSel');
+            const suffix = $id('ivMEdUnit');
+            const kin = (item.kinSays && item.kinSays.length > 1) ? item.kinSays : null;
+            sel.classList.toggle('hidden', !kin);
+            suffix.textContent = kin ? '' : (item.unitLabel || '');
+            if (kin) {
+                sel.innerHTML = kin.map((k) => `<option value="${k.key}">${esc(k.says)}</option>`).join('');
+                sel.value = (o.enteredUnit && kin.some((k) => k.key === o.enteredUnit)) ? o.enteredUnit : item.unit;
+            }
+            $id('ivMEdDate').value = o.on || todayISO();
+            sayMEdDate();
+            $id('ivMEdNote').value = o.note || '';
+            openSheet('ivMoveEditSheet');
+        };
+
+        function sayMEdDate() {
+            const v = $id('ivMEdDate')?.value;
+            const el = $id('ivMEdDateNow');
+            if (el) el.textContent = v ? sayDate(v) : 'Today';
+        }
+
+        async function moveEditGo(btn) {
+            const id = Number($id('ivMEdId').value);
+            const qty = Number($id('ivMEdQty').value || 0);
+            if (!(qty > 0)) { toast('How much?', 'error'); $id('ivMEdQty').focus(); return; }
+            btn.disabled = true;
+            try {
+                const sel = $id('ivMEdUnitSel');
+                const res = await api(U.moveUpdate, {
+                    method: 'POST',
+                    body: {
+                        id, qty,
+                        unit: !sel.classList.contains('hidden') ? sel.value : null,
+                        on: $id('ivMEdDate').value || null,
+                        note: $id('ivMEdNote').value.trim() || null,
+                    },
+                });
+                toast(res.message);
+                closeSheet('ivMoveEditSheet');
+                await load();
+                window.ivDayChanged?.();
+            } catch (err) { toast(err.message, 'error'); }
+            finally { btn.disabled = false; }
+        }
+
+        /* One door for carrying a hand-typed line to another day. The Start
+         * travels through restart — its date decides what the season used —
+         * and plain lines through the amend endpoint. */
+        window.ivMoveShedMove = async function ivMoveShedMove(o = {}) {
+            if (o.reason === 'open') {
+                return api(U.restart, { method: 'POST', body: { itemId: Number(o.itemId), qty: Number(o.qty) || 0, on: o.on } });
+            }
+            return api(U.moveUpdate, { method: 'POST', body: { id: Number(o.id), on: o.on } });
+        };
 
         /* ---------------- undoing one hand-typed entry ---------------- */
         async function delMove(id) {
@@ -753,6 +826,7 @@
                 const res = await api(U.moveDelete(id), { method: 'DELETE' });
                 toast(res.message);
                 await load();
+                window.ivDayChanged?.();
             } catch (err) { toast(err.message, 'error'); }
         }
 
@@ -802,6 +876,7 @@
                 const res = await api(U.destroy(id), { method: 'DELETE' });
                 toast(res.message);
                 await load();
+                window.ivDayChanged?.();
             } catch (err) { toast(err.message, 'error'); await load(); }
         }
 
@@ -810,6 +885,7 @@
             openItemMenu, itemMenuAct, sayMoveDate, raisePicker, openConv,
             sayMoveItem, sayMoveQty, moveGo, delMove, showTab, fillUnits,
             openStartChooser, chooseStart, pickedStartDate, openStartEdit, startEditGo,
+            moveEditGo, sayMEdDate,
         };
         window.ivReload = load;
 
@@ -847,6 +923,9 @@
                 if (save) { A.saveItem(save); return; }
                 const go = e.target.closest('#ivMoveGo');
                 if (go) { A.moveGo(go); return; }
+                if (e.target.closest('#ivMEdDateBtn')) { A.raisePicker(document.getElementById('ivMEdDate')); return; }
+                const mego = e.target.closest('#ivMEdGo');
+                if (mego) { A.moveEditGo(mego); return; }
             });
 
             /* change and input bubble, so the same trick works for the
@@ -867,6 +946,7 @@
                 if (e.target.id === 'ivMoveUnitSel') { A.sayMoveQty(); return; }
                 if (e.target.id === 'ivStartDateInput') { A.pickedStartDate(e.target.value); return; }
                 if (e.target.id === 'ivMoveDate') { A.sayMoveDate(); return; }
+                if (e.target.id === 'ivMEdDate') { A.sayMEdDate(); return; }
             });
 
             document.addEventListener('input', (e) => {

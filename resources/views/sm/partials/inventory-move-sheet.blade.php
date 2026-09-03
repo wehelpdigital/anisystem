@@ -121,6 +121,50 @@
     </div>
 </div>
 
+{{-- EDITING ONE HAND-TYPED LINE: the amount (in any kin unit), the day, the
+     note. The Start never lands here — its date decides what the season
+     retro-spends, so it keeps its own editor. --}}
+<div class="sheet hidden" id="ivMoveEditSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Edit this entry</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-3">
+        <input type="hidden" id="ivMEdId">
+        <p class="form-hint mt-0!" id="ivMEdWhat"></p>
+        <div>
+            <label for="ivMEdQty" class="form-label">How much? <span class="text-red-500">*</span></label>
+            <div class="iv-qtyrow">
+                <div class="relative flex-1">
+                    <input type="number" id="ivMEdQty" min="0" step="any" class="form-input" placeholder="0" inputmode="decimal">
+                    <span class="iv-qty-u" id="ivMEdUnit"></span>
+                </div>
+                <select id="ivMEdUnitSel" class="form-select hidden iv-unit-sel" aria-label="Unit of the amount"></select>
+            </div>
+        </div>
+        <div>
+            <label class="form-label">When?</label>
+            <div class="relative">
+                <button type="button" class="crop-tag" id="ivMEdDateBtn">
+                    <span class="crop-tag-e">📅</span>
+                    <span class="crop-tag-t" id="ivMEdDateNow">Today</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <input type="date" id="ivMEdDate" class="iv-start-date" tabindex="-1" aria-label="When">
+            </div>
+        </div>
+        <div>
+            <label for="ivMEdNote" class="form-label">Note <span class="text-gray-400 font-normal">(optional)</span></label>
+            <textarea id="ivMEdNote" rows="2" maxlength="500" class="form-textarea" placeholder="What it went on, who delivered it"></textarea>
+        </div>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" id="ivMEdGo" class="btn btn-primary">Save</button>
+    </div>
+</div>
+
 {{-- THE SAME AMOUNT, IN EVERY UNIT OF ITS KIND.
      Opened by tapping any quantity that has kin: the book's figure leads,
      and each row below is the identical amount wearing a different unit. --}}
