@@ -19,7 +19,15 @@
         background: linear-gradient(115deg, #f3f8ec, #e4efd4); border: 1px solid #cfe3b8; margin-bottom: 1rem; }
     .wtp-quote b { color: #2d5016; }
     .wtp-quote .q-ico { font-size: 1.4rem; }
-    .wtp-quote .q-t { font-size: .82rem; color: #3d5226; line-height: 1.45; }
+    .wtp-quote .q-t { flex: 1 1 auto; min-width: 0; font-size: .82rem; color: #3d5226; line-height: 1.45; }
+    .wtp-quote .q-x { flex: none; align-self: flex-start; width: 1.5rem; height: 1.5rem; border-radius: 999px;
+        color: #3d5226; opacity: .55; font-size: .8rem; }
+    .wtp-quote .q-x:hover { opacity: 1; background: rgb(0 0 0 / .06); }
+    /* Shrunk: one line of price, and the card itself is the way back open. */
+    .wtp-quote.is-min { padding: .55rem .8rem; cursor: pointer; }
+    .wtp-quote.is-min .q-x { display: none; }
+    html.dark .wtp-quote .q-x { color: #a8bd93; }
+    html.dark .wtp-quote .q-x:hover { background: rgb(255 255 255 / .08); }
 
     /* The wizard: steps slide past each other; the rail says where you are. */
     .wtp-wiz { position: relative; overflow: hidden; }
@@ -240,6 +248,7 @@
         <div class="wtp-quote" id="wtpQuote" hidden>
             <span class="q-ico">🔎</span>
             <span class="q-t" id="wtpQuoteText"></span>
+            <button type="button" class="q-x" id="wtpQuoteX" aria-label="Shrink this note" title="Shrink this note">✕</button>
         </div>
 
         <div class="card p-5 wtp-wiz" id="wtpWiz">
@@ -402,15 +411,45 @@
             <label class="wtp-prob" data-prob="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
         $id('wtpDots').innerHTML = Array.from({ length: STEPS }, (_, i) => `<span class="wtp-dot${i === 0 ? ' is-on' : ''}"></span>`).join('');
 
-        const q = $id('wtpQuote');
-        if (OPT.canUse && OPT.quote) {
-            $id('wtpQuoteText').innerHTML = `One analysis spends about <b>${OPT.quote} credits</b>. You have <b>${Number(OPT.balance).toLocaleString()}</b> — nothing is charged until you press Run. It is a guide, not a promise — weather and climate always carry uncertainty — but a window argued from the data beats deciding with nothing to compare against.`;
-            q.hidden = false;
-        } else if (!OPT.canUse) {
-            $id('wtpQuoteText').innerHTML = esc(OPT.whyNot || 'The analysis is not available right now.');
-            q.hidden = false;
-        }
+        paintQuote();
     }
+
+    /* The price note, in two sizes. The X shrinks it to the one line that
+       matters and the choice is remembered; tapping the shrunk card brings
+       the whole note back. */
+    const QUOTE_MIN_KEY = 'anee-wtp-quote-min';
+    let quoteMin = false;
+    try { quoteMin = localStorage.getItem(QUOTE_MIN_KEY) === '1'; } catch (_) { /* opens full */ }
+
+    function paintQuote() {
+        const q = $id('wtpQuote');
+        if (!OPT) return;
+        if (!OPT.canUse) {
+            $id('wtpQuoteText').innerHTML = esc(OPT.whyNot || 'The analysis is not available right now.');
+            q.classList.remove('is-min');
+            q.hidden = false;
+            return;
+        }
+        if (!OPT.quote) { q.hidden = true; return; }
+        q.classList.toggle('is-min', quoteMin);
+        $id('wtpQuoteText').innerHTML = quoteMin
+            ? `One analysis spends about <b>${OPT.quote} credits</b>.`
+            : `One analysis spends about <b>${OPT.quote} credits</b>, and you have <b>${Number(OPT.balance).toLocaleString()}</b>. Nothing is charged until you press Run. Treat the result as a guide: the weather always keeps some surprises. Still, a window built from real data is a much better starting point than guessing.`;
+        q.hidden = false;
+    }
+
+    $id('wtpQuoteX').addEventListener('click', (e) => {
+        e.stopPropagation();
+        quoteMin = true;
+        try { localStorage.setItem(QUOTE_MIN_KEY, '1'); } catch (_) { /* not remembered */ }
+        paintQuote();
+    });
+    $id('wtpQuote').addEventListener('click', () => {
+        if (!$id('wtpQuote').classList.contains('is-min')) return;
+        quoteMin = false;
+        try { localStorage.setItem(QUOTE_MIN_KEY, '0'); } catch (_) { /* not remembered */ }
+        paintQuote();
+    });
 
     /* ---------------- the walk ---------------- */
     function show(n, backwards) {

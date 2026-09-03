@@ -152,9 +152,12 @@ class WhenToPlantController extends Controller
         $report = $this->parseReport((string) $result['text']);
         if ($report === null) {
             // One polite retry: the model is told exactly what went wrong.
+            // History turns carry 'text', not 'content' — every provider
+            // branch in AiClient reads $turn['text'], and Gemini's crashed
+            // outright on the wrong key.
             $retry = $this->ai->ask($settings, [
-                ['role' => 'user', 'content' => $prompt],
-                ['role' => 'assistant', 'content' => (string) $result['text']],
+                ['role' => 'user', 'text' => $prompt],
+                ['role' => 'assistant', 'text' => (string) $result['text']],
             ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.');
             if ($retry['ok'] ?? false) {
                 $report = $this->parseReport((string) $retry['text']);
