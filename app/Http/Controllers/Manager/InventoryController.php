@@ -211,7 +211,9 @@ class InventoryController extends BaseScheduleController
             $this->stock->startCount(
                 $item,
                 $opening,
-                $request->input('on'),
+                // The move sheet says `on`; the item sheet's Start chooser
+                // says `countFrom`. Either names the day the count begins.
+                $request->input('on') ?: $request->input('countFrom'),
                 trim((string) $request->input('openingNote')) ?: null,
             );
         }

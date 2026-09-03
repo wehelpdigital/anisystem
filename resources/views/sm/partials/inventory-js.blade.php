@@ -300,7 +300,7 @@
         /** The unit, echoed beside the one box on this form that takes a number. */
         function sayUnit() {
             const word = unitSays($id('ivUnit')?.value, false);
-            const u = $id('ivLowUnit');
+            const u = $id('ivOpenQtyUnit');
             if (u) u.textContent = word;
             // The price is per ONE of whatever this is counted in.
             const p = $id('ivPriceUnit');
@@ -315,7 +315,7 @@
             $id('ivKind').value = item ? item.kind : 'granular';
             $id('ivUnit').dataset.touched = item ? '1' : '';
             fillUnits($id('ivUnit'), item ? item.kind : 'granular', item ? item.unit : null);
-            $id('ivLowAt').value = item && item.lowAt ? item.lowAt : '';
+            $id('ivOpenQty').value = '';
             $id('ivPrice').value = item && item.unitPrice != null ? item.unitPrice : '';
             $id('ivNote').value = item && item.note ? item.note : '';
             /* Stock moves from here now that the card says only Edit/Delete.
@@ -343,9 +343,11 @@
                 name,
                 kind: $id('ivKind').value,
                 unit: $id('ivUnit').value,
-                lowAt: $id('ivLowAt').value || null,
                 unitPrice: $id('ivPrice').value || null,
                 note: $id('ivNote').value.trim() || null,
+                // What is on hand right now, when creating with stock: the
+                // server writes it as the Start.
+                opening: (!id && Number($id('ivOpenQty').value) > 0) ? Number($id('ivOpenQty').value) : null,
                 // Creating on a board with a past: when the count begins.
                 countFrom: (!id && CTX.done > 0) ? startDateOf(START.item) : null,
             };

@@ -219,14 +219,13 @@
                 <select id="ivUnit" class="form-select"></select>
             </div>
             <div>
-                <label for="ivLowAt" class="form-label">Warn me when low <span class="text-gray-400 font-normal">(optional)</span></label>
-                {{-- Named for what it does, at cost of a longer label: as
-                     "Tell me at" it was the only number box on the form and a
-                     person adding 70 bags typed the 70 HERE — the field read
-                     as a count and quietly swallowed the stock. --}}
+                {{-- The low-stock warning is gone — this is a farm's shed,
+                     not a store's shelf — and its slot goes to the question
+                     people kept trying to answer here anyway: the count. --}}
+                <label for="ivOpenQty" class="form-label">How much have you now? <span class="text-gray-400 font-normal">(optional)</span></label>
                 <div class="relative">
-                    <input type="number" id="ivLowAt" min="0" step="any" class="form-input" placeholder="e.g. 5">
-                    <span class="iv-qty-u" id="ivLowUnit"></span>
+                    <input type="number" id="ivOpenQty" min="0" step="any" class="form-input" placeholder="0" inputmode="decimal">
+                    <span class="iv-qty-u" id="ivOpenQtyUnit"></span>
                 </div>
             </div>
         </div>
