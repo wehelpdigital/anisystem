@@ -104,6 +104,40 @@
     </div>
 </div>
 
+{{-- ONE ITEM'S MENU — the four verbs behind the card's ⋮.
+     Each row carries its sentence, because "edit" and "add stock" are
+     different errands and the difference is worth a line. --}}
+<div class="sheet hidden" id="ivMenuSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <div class="min-w-0">
+            <h3 class="sheet-title truncate" id="ivMenuTitle">Item</h3>
+            <p class="text-xs text-gray-400" id="ivMenuSays"></p>
+        </div>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full shrink-0" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="dt-rows">
+            <button type="button" class="dt-row" data-iv-menu-act="edit">
+                <span class="dt-row-e">✏️</span>
+                <span class="dt-row-body"><b>Edit current</b><i>Name, kind, unit, price, the low-stock warning.</i></span>
+            </button>
+            <button type="button" class="dt-row" data-iv-menu-act="in">
+                <span class="dt-row-e">📥</span>
+                <span class="dt-row-body"><b>Add inventory of this</b><i>A delivery, a purchase, a carry-over — the count goes up.</i></span>
+            </button>
+            <button type="button" class="dt-row" data-iv-menu-act="out">
+                <span class="dt-row-e">📤</span>
+                <span class="dt-row-body"><b>Subtract inventory of this</b><i>Used or lost outside an activity — the count goes down.</i></span>
+            </button>
+            <button type="button" class="dt-row" data-iv-menu-act="delete">
+                <span class="dt-row-e">🗑️</span>
+                <span class="dt-row-body"><b>Delete this</b><i>Off the shed's list. Its log lines stay.</i></span>
+            </button>
+        </div>
+    </div>
+</div>
+
 {{-- WHEN COUNTING BEGINS — the chooser the tag opens.
      Three answers, each with its own sentence, because the sentence is the
      point: what happens to the activities already ticked done is decided

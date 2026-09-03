@@ -35,7 +35,7 @@
          * FIRST copy in document order — the one getElementById will answer
          * with — and remove the rest. All behaviour is delegated, so any
          * single copy is a working copy. */
-        ['ivMoveSheet', 'ivItemSheet', 'ivStartSheet', 'ivStartEditSheet'].forEach((sid) => {
+        ['ivMoveSheet', 'ivItemSheet', 'ivStartSheet', 'ivStartEditSheet', 'ivMenuSheet'].forEach((sid) => {
             const copies = [...document.querySelectorAll('#' + sid)];
             copies.slice(1).forEach((el) => el.remove());
         });
@@ -148,8 +148,7 @@
                             ${i.note ? `<div class="iv-note">${esc(i.note)}</div>` : ''}
                         </span>
                         <span class="iv-acts">
-                            <button type="button" class="iv-btn" data-iv-edit="${i.id}">Edit</button>
-                            <button type="button" class="iv-btn is-out" data-iv-del="${i.id}">Delete</button>
+                            <button type="button" class="iv-btn" data-iv-menu="${i.id}" title="Edit, add stock, take stock, delete" aria-label="Actions for ${esc(i.name)}">⋮</button>
                         </span>
                     </div>
                 </div>`).join('');
@@ -254,18 +253,11 @@
             $id('ivNote').value = item && item.note ? item.note : '';
             /* Stock moves from here now that the card says only Edit/Delete.
                A brand-new item has no stock to move; the row waits. */
-            $id('ivStockRow')?.classList.toggle('hidden', !item);
             /* The question belongs to creation, and only to a season with a
                past. An existing item's start is moved from its log line. */
             const askStart = !item && CTX.done > 0;
             $id('ivItemStartWrap')?.classList.toggle('hidden', !askStart);
             if (askStart) { START.item = { mode: 'today', date: null }; sayStart('item'); }
-            if (item) {
-                const says = $id('ivStockSays');
-                if (says) says.textContent = item.onHand !== 0 ? say(item, item.onHand) + ' on hand.'
-                    : (item.hasMoves ? 'None on hand.' : 'Nothing recorded yet — + In writes the first count.');
-                $id('ivStockRow').dataset.item = item.id;
-            }
             sayKind();
             openSheet('ivItemSheet');
         }
@@ -621,6 +613,27 @@
          * are on screen. The listeners below are attached to `document` once
          * and read this on every event rather than closing over one run's
          * functions — which is what made the injected copy inert. */
+        /** The card's ⋮: one item's four verbs, each with its sentence. */
+        function openItemMenu(id) {
+            const item = itemById(id);
+            if (!item) return;
+            $id('ivMenuTitle').textContent = item.icon + ' ' + item.name;
+            $id('ivMenuSays').textContent = item.onHand !== 0
+                ? say(item, item.onHand) + ' on hand'
+                : (item.hasMoves ? 'None on hand' : 'No stock recorded yet');
+            $id('ivMenuSheet').dataset.item = String(item.id);
+            openSheet('ivMenuSheet');
+        }
+
+        function itemMenuAct(act) {
+            const id = $id('ivMenuSheet').dataset.item;
+            closeSheet('ivMenuSheet');
+            if (act === 'edit') { openItemSheet(itemById(id)); return; }
+            if (act === 'in') { window.ivOpenMove({ direction: 'in', itemId: id }); return; }
+            if (act === 'out') { window.ivOpenMove({ direction: 'out', itemId: id }); return; }
+            if (act === 'delete') delItem(id);
+        }
+
         /** Take an item off the shed's list. Its log lines stay: history
             does not thin out because somebody stopped stocking a thing. */
         async function delItem(id) {
@@ -640,6 +653,7 @@
 
         window.__ivApi = {
             openItemSheet, saveItem, load, itemById, sayKind, sayUnit, delItem,
+            openItemMenu, itemMenuAct,
             sayMoveItem, sayMoveQty, moveGo, delMove, showTab, fillUnits,
             openStartChooser, chooseStart, pickedStartDate, openStartEdit, startEditGo,
         };
@@ -655,16 +669,10 @@
                 if (e.target.closest('[data-add-item]')) { A.openItemSheet(); return; }
                 const ed = e.target.closest('[data-iv-edit]');
                 if (ed) { A.openItemSheet(A.itemById(ed.getAttribute('data-iv-edit'))); return; }
-                const delB = e.target.closest('[data-iv-del]');
-                if (delB) { A.delItem(delB.getAttribute('data-iv-del')); return; }
-                const sIn = e.target.closest('#ivStockIn');
-                const sOut = e.target.closest('#ivStockOut');
-                if (sIn || sOut) {
-                    const itemId = document.getElementById('ivStockRow')?.dataset.item;
-                    closeSheet('ivItemSheet');
-                    window.ivOpenMove({ direction: sIn ? 'in' : 'out', itemId });
-                    return;
-                }
+                const menuB = e.target.closest('[data-iv-menu]');
+                if (menuB) { A.openItemMenu(menuB.getAttribute('data-iv-menu')); return; }
+                const act = e.target.closest('[data-iv-menu-act]');
+                if (act) { A.itemMenuAct(act.getAttribute('data-iv-menu-act')); return; }
                 const tab = e.target.closest('.iv-tab');
                 if (tab) { A.showTab(tab); return; }
                 const del = e.target.closest('[data-iv-move-del]');

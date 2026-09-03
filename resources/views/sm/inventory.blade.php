@@ -196,10 +196,11 @@
                 <select id="ivUnit" class="form-select"></select>
             </div>
             <div>
-                <label for="ivLowAt" class="form-label">Tell me at <span class="text-gray-400 font-normal">(optional)</span></label>
-                {{-- The unit beside it, because "5" is not a quantity until it
-                     says five of what. It is the only number left on this
-                     form, so it is the only place the unit has to be. --}}
+                <label for="ivLowAt" class="form-label">Warn me when low <span class="text-gray-400 font-normal">(optional)</span></label>
+                {{-- Named for what it does, at cost of a longer label: as
+                     "Tell me at" it was the only number box on the form and a
+                     person adding 70 bags typed the 70 HERE — the field read
+                     as a count and quietly swallowed the stock. --}}
                 <div class="relative">
                     <input type="number" id="ivLowAt" min="0" step="any" class="form-input" placeholder="e.g. 5">
                     <span class="iv-qty-u" id="ivLowUnit"></span>
@@ -236,22 +237,6 @@
              a running total somebody has to keep correct; the answer is just
              + In, as often as you like, and each one writes its own line in
              the log — which one opening figure never would. --}}
-
-        {{-- STOCK, FROM THE EDIT SHEET. The shelf card says Edit or Delete
-             and nothing else, so moving stock lives here — where the item is
-             already open — and in the day menu's two doors as before. --}}
-        <div id="ivStockRow" class="hidden rounded-xl border border-gray-100 p-3">
-            <div class="flex items-center justify-between gap-2">
-                <div class="min-w-0">
-                    <p class="form-label !mb-0">Stock</p>
-                    <p class="form-hint !mt-0" id="ivStockSays"></p>
-                </div>
-                <div class="flex gap-2 shrink-0">
-                    <button type="button" class="btn btn-white btn-sm" id="ivStockIn">+ In</button>
-                    <button type="button" class="btn btn-white btn-sm" id="ivStockOut">− Out</button>
-                </div>
-            </div>
-        </div>
 
         <div>
             <label for="ivNote" class="form-label">Note <span class="text-gray-400 font-normal">(optional)</span></label>
