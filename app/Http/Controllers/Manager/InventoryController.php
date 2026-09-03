@@ -99,6 +99,9 @@ class InventoryController extends BaseScheduleController
                     // copy of the vocabulary.
                     'unitLabel' => $i->unitLabel(),
                     'unitOne' => AsInventoryItem::unitSays($i->unit, true),
+                    // The units a move may be typed in: this one's dimension,
+                    // this one first. One entry means no picker to draw.
+                    'kin' => AsInventoryItem::kin($i->unit),
                     'lowAt' => $i->lowAt ? (float) $i->lowAt : null,
                     'unitPrice' => $i->unitPrice !== null ? (float) $i->unitPrice : null,
                     'note' => $i->note,
@@ -256,6 +259,10 @@ class InventoryController extends BaseScheduleController
         $v = Validator::make($request->all(), [
             'itemId' => 'required|integer',
             'qty' => 'required|numeric|min:0.001|max:9999999',
+            // The unit the amount was TYPED in — any unit of the item's
+            // dimension. Converted here, because arithmetic about stock is
+            // the book's to do, not the browser's.
+            'unit' => 'nullable|string|max:20',
             'direction' => 'required|in:in,out',
             'reason' => 'nullable|in:open,in,out,adjust',
             'on' => 'nullable|date',
@@ -272,6 +279,23 @@ class InventoryController extends BaseScheduleController
 
         $in = $request->input('direction') === 'in';
         $qty = abs((float) $request->input('qty'));
+
+        /* Typed in kilos, counted in bags: convert on the way in. A unit the
+         * item's dimension does not contain is refused with the reason said,
+         * not silently miscounted. */
+        $fromUnit = (string) ($request->input('unit') ?: $item->unit);
+        $converted = AsInventoryItem::convert($qty, $fromUnit, $item->unit);
+        if ($converted === null) {
+            return $this->jsonFail(
+                AsInventoryItem::unitSays($fromUnit, false) . ' cannot be counted into '
+                    . AsInventoryItem::unitSays($item->unit, false) . ' — different kinds of amount.',
+                422
+            );
+        }
+        $qty = round($converted, 3);
+        if ($qty < 0.001) {
+            return $this->jsonFail('That amount rounds to nothing in ' . AsInventoryItem::unitSays($item->unit, false) . '.', 422);
+        }
         $reason = $request->input('reason') ?: ($in ? AsInventoryMove::IN : AsInventoryMove::OUT);
 
         /* A first count phrased as a move is still the Start. The sheet sends

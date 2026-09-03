@@ -80,6 +80,15 @@
         /** A quantity said the way the item is counted. */
         const say = (item, qty) => `${trim(qty)} ${unitSays(item.unit, Math.abs(qty) === 1)}`;
 
+        /* The same arithmetic the server does, mirrored ONLY to say what will
+           happen before the button is pressed. The book's copy decides. */
+        const convert = (qty, from, to) => {
+            if (from === to) return qty;
+            const a = UNITS[from], b = UNITS[to];
+            if (!a || !b || !a.dim || a.dim !== b.dim) return null;
+            return qty * a.factor / b.factor;
+        };
+
         /**
          * Fill a unit dropdown with the units a kind is actually bought in.
          *
@@ -148,7 +157,9 @@
                             ${i.note ? `<div class="iv-note">${esc(i.note)}</div>` : ''}
                         </span>
                         <span class="iv-acts">
-                            <button type="button" class="iv-btn" data-iv-menu="${i.id}" title="Edit, add stock, take stock, delete" aria-label="Actions for ${esc(i.name)}">⋮</button>
+                            <button type="button" class="iv-kebab" data-iv-menu="${i.id}" title="Edit, add stock, take stock, delete" aria-label="Actions for ${esc(i.name)}">
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                            </button>
                         </span>
                     </div>
                 </div>`).join('');
@@ -253,6 +264,12 @@
             $id('ivNote').value = item && item.note ? item.note : '';
             /* Stock moves from here now that the card says only Edit/Delete.
                A brand-new item has no stock to move; the row waits. */
+            /* Editing is name, kind and note. The unit belongs to the ledger
+               already written in it; the price and the warning were set at
+               birth. All three stay filled (and hidden), so saving sends them
+               back unchanged. */
+            $id('ivUnitRow')?.classList.toggle('hidden', !!item);
+            $id('ivPriceWrap')?.classList.toggle('hidden', !!item);
             /* The question belongs to creation, and only to a season with a
                past. An existing item's start is moved from its log line. */
             const askStart = !item && CTX.done > 0;
@@ -424,8 +441,19 @@
             $id('ivMoveDateWrap')?.classList.toggle('hidden', asking);
             if (asking) sayStart('move');
 
+            /* The amount's own unit: a picker of the item's kin when it has
+               any, a plain suffix when it does not. New items type in the
+               unit they are being given. */
+            const sel = $id('ivMoveUnitSel');
+            const kin = (!isNew && item && item.kin && item.kin.length > 1) ? item.kin : null;
+            if (sel) {
+                sel.classList.toggle('hidden', !kin);
+                if (kin) sel.innerHTML = kin.map((k) => `<option value="${k}">${esc(unitSays(k, false))}</option>`).join('');
+            }
             const unitKey = isNew ? $id('ivMoveNewUnit')?.value : item?.unit;
-            if (unit) unit.textContent = unitKey ? unitSays(unitKey, false) : '';
+            if (unit) {
+                unit.textContent = (kin || !unitKey) ? '' : unitSays(unitKey, false);
+            }
             const pu = $id('ivMoveNewPriceUnit');
             if (pu && isNew) pu.textContent = '\u20b1 per ' + unitSays($id('ivMoveNewUnit')?.value, true);
             if (have) {
@@ -449,13 +477,18 @@
             /* What the count will BE. "Have I enough" answered before the
                button is pressed rather than after it, and it is the same
                figure the Totals tab will show a second later. */
+            const typedUnit = (!isNew && item && !$id('ivMoveUnitSel')?.classList.contains('hidden'))
+                ? $id('ivMoveUnitSel').value : (item ? item.unit : null);
+            const inItem = (item && qty > 0) ? convert(qty, typedUnit || item.unit, item.unit) : null;
             if (after) {
                 if (isNew && qty > 0) {
                     const u = $id('ivMoveNewUnit')?.value;
                     after.textContent = `It will start at ${trim(qty)} ${unitSays(u, Math.abs(qty) === 1)}.`;
-                } else if (item && qty > 0) {
-                    const now = item.onHand + (out ? -qty : qty);
-                    after.textContent = `After this: ${say(item, now)}.`;
+                } else if (item && inItem !== null && qty > 0) {
+                    const now = item.onHand + (out ? -inItem : inItem);
+                    // Say the conversion only when there was one to do.
+                    const conv = typedUnit && typedUnit !== item.unit ? `= ${say(item, inItem)}. ` : '';
+                    after.textContent = `${conv}After this: ${say(item, now)}.`;
                 } else {
                     after.textContent = '';
                 }
@@ -465,7 +498,7 @@
                form that refuses to record what actually happened just gets
                worked around. */
             if (warn) {
-                const short = item && out && qty > item.onHand;
+                const short = item && out && inItem !== null && inItem > item.onHand;
                 warn.classList.toggle('hidden', !short);
                 if (short) {
                     warn.textContent = `That is more than the ${say(item, item.onHand)} on record. `
@@ -545,6 +578,10 @@
                         body: {
                             itemId: Number(itemId),
                             qty,
+                            // The unit the amount was typed in; the book
+                            // converts into its own.
+                            unit: !$id('ivMoveUnitSel').classList.contains('hidden')
+                                ? $id('ivMoveUnitSel').value : null,
                             direction: $id('ivMoveDir').value,
                             reason: asking ? 'open' : null,
                             on: when,
@@ -707,6 +744,7 @@
                     return;
                 }
                 if (e.target.id === 'ivMoveNewUnit') { A.sayMoveItem(); return; }
+                if (e.target.id === 'ivMoveUnitSel') { A.sayMoveQty(); return; }
                 if (e.target.id === 'ivStartDateInput') { A.pickedStartDate(e.target.value); return; }
             });
 

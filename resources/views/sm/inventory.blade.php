@@ -44,6 +44,15 @@
         border: 1px solid #fde68a; }
     .iv-note { font-size: .75rem; color: var(--color-gray-400); margin-top: .2rem; }
     .iv-acts { display: flex; flex-direction: column; gap: .3rem; flex: none; }
+    /* The card's one button. The bare ⋮ glyph in a text button rendered as a
+       sliver nobody saw; a drawn icon in a round button has a face. */
+    .iv-kebab { width: 2.25rem; height: 2.25rem; border-radius: 999px; flex: none;
+        display: flex; align-items: center; justify-content: center; cursor: pointer;
+        border: 1px solid var(--color-gray-200); background: var(--color-white);
+        color: var(--color-gray-500); }
+    .iv-kebab:hover { background: var(--color-gray-100); color: var(--color-gray-900); }
+    .iv-kebab svg { width: 1.15rem; height: 1.15rem; }
+    html.dark .iv-kebab { background: #1c2417; border-color: #2f3a26; color: #b9c6ad; }
     .iv-btn { display: inline-flex; align-items: center; justify-content: center; gap: .25rem;
         min-height: 1.9rem; padding: 0 .55rem; border-radius: .6rem; cursor: pointer;
         font-size: .74rem; font-weight: 800; border: 1px solid var(--color-gray-200);
@@ -190,7 +199,10 @@
              counter follows from the crop on the lot form. The options are
              filled in by the script; the list lives in one place, on the
              model, and nothing here keeps a second copy of it. --}}
-        <div class="iv-unitrow">
+        {{-- Creation-only from here down to the note: what a thing is counted
+             in belongs to its ledger, and its price and warning were set when
+             it joined. Editing is name, kind and note. --}}
+        <div class="iv-unitrow" id="ivUnitRow">
             <div>
                 <label for="ivUnit" class="form-label">Counted in</label>
                 <select id="ivUnit" class="form-select"></select>
@@ -208,7 +220,7 @@
             </div>
         </div>
 
-        <div>
+        <div id="ivPriceWrap">
             <label for="ivPrice" class="form-label">Price <span class="text-gray-400 font-normal">(optional)</span></label>
             <div class="relative">
                 <input type="number" id="ivPrice" min="0" step="any" class="form-input" placeholder="0.00" inputmode="decimal">

@@ -30,25 +30,64 @@ class AsInventoryItem extends BaseModel
      * it picks the other one. The size is in the name so that a number on its
      * own — 12 — is never ambiguous on a shelf, in a log, or in a total.
      */
+    /*
+     * `dim` and `factor`: what a unit is made of, and how much of it. A bag
+     * (50 kg) IS fifty kilos — dim mass, factor 50 — so a move typed in kg
+     * lands in a bag-counted book as bags, arithmetic instead of refusal.
+     * Units without a stated size (piece, sack, sachet, box, roll) are
+     * honest counts: each its own dimension, converting to nothing.
+     */
     public const UNITS = [
-        'kg' => ['one' => 'kg', 'many' => 'kg'],
-        'g' => ['one' => 'g', 'many' => 'g'],
-        'L' => ['one' => 'L', 'many' => 'L'],
-        'ml' => ['one' => 'ml', 'many' => 'ml'],
-        'piece' => ['one' => 'piece', 'many' => 'pieces'],
-        'bag50' => ['one' => 'bag', 'many' => 'bags', 'of' => '50 kg'],
-        'bag40' => ['one' => 'bag', 'many' => 'bags', 'of' => '40 kg'],
-        'bag25' => ['one' => 'bag', 'many' => 'bags', 'of' => '25 kg'],
-        'bag20' => ['one' => 'bag', 'many' => 'bags', 'of' => '20 kg'],
-        'sack' => ['one' => 'sack', 'many' => 'sacks'],
-        'bottle1' => ['one' => 'bottle', 'many' => 'bottles', 'of' => '1 L'],
-        'bottle250' => ['one' => 'bottle', 'many' => 'bottles', 'of' => '250 ml'],
-        'jug5' => ['one' => 'jug', 'many' => 'jugs', 'of' => '5 L'],
-        'drum200' => ['one' => 'drum', 'many' => 'drums', 'of' => '200 L'],
-        'sachet' => ['one' => 'sachet', 'many' => 'sachets'],
-        'box' => ['one' => 'box', 'many' => 'boxes'],
-        'roll' => ['one' => 'roll', 'many' => 'rolls'],
+        'kg' => ['one' => 'kg', 'many' => 'kg', 'dim' => 'mass', 'factor' => 1],
+        'g' => ['one' => 'g', 'many' => 'g', 'dim' => 'mass', 'factor' => 0.001],
+        'L' => ['one' => 'L', 'many' => 'L', 'dim' => 'volume', 'factor' => 1],
+        'ml' => ['one' => 'ml', 'many' => 'ml', 'dim' => 'volume', 'factor' => 0.001],
+        'piece' => ['one' => 'piece', 'many' => 'pieces', 'dim' => 'piece', 'factor' => 1],
+        'bag50' => ['one' => 'bag', 'many' => 'bags', 'of' => '50 kg', 'dim' => 'mass', 'factor' => 50],
+        'bag40' => ['one' => 'bag', 'many' => 'bags', 'of' => '40 kg', 'dim' => 'mass', 'factor' => 40],
+        'bag25' => ['one' => 'bag', 'many' => 'bags', 'of' => '25 kg', 'dim' => 'mass', 'factor' => 25],
+        'bag20' => ['one' => 'bag', 'many' => 'bags', 'of' => '20 kg', 'dim' => 'mass', 'factor' => 20],
+        'sack' => ['one' => 'sack', 'many' => 'sacks', 'dim' => 'sack', 'factor' => 1],
+        'bottle1' => ['one' => 'bottle', 'many' => 'bottles', 'of' => '1 L', 'dim' => 'volume', 'factor' => 1],
+        'bottle250' => ['one' => 'bottle', 'many' => 'bottles', 'of' => '250 ml', 'dim' => 'volume', 'factor' => 0.25],
+        'jug5' => ['one' => 'jug', 'many' => 'jugs', 'of' => '5 L', 'dim' => 'volume', 'factor' => 5],
+        'drum200' => ['one' => 'drum', 'many' => 'drums', 'of' => '200 L', 'dim' => 'volume', 'factor' => 200],
+        'sachet' => ['one' => 'sachet', 'many' => 'sachets', 'dim' => 'sachet', 'factor' => 1],
+        'box' => ['one' => 'box', 'many' => 'boxes', 'dim' => 'box', 'factor' => 1],
+        'roll' => ['one' => 'roll', 'many' => 'rolls', 'dim' => 'roll', 'factor' => 1],
     ];
+
+    /**
+     * A quantity in one unit, said in another — or null when the two are not
+     * made of the same stuff. 70 kg into bag50 is 1.4; 500 ml into L is 0.5;
+     * 3 pieces into kg is nobody's arithmetic and stays a refusal.
+     */
+    public static function convert(float $qty, string $from, string $to): ?float
+    {
+        if ($from === $to) {
+            return $qty;
+        }
+        $a = self::UNITS[$from] ?? null;
+        $b = self::UNITS[$to] ?? null;
+        if (! $a || ! $b || $a['dim'] !== $b['dim']) {
+            return null;
+        }
+
+        return $qty * $a['factor'] / $b['factor'];
+    }
+
+    /** Every unit sharing this one's dimension, this one first. */
+    public static function kin(string $unit): array
+    {
+        $dim = self::UNITS[$unit]['dim'] ?? null;
+        if ($dim === null) {
+            return [$unit];
+        }
+        $keys = array_keys(array_filter(self::UNITS, fn ($u) => $u['dim'] === $dim));
+        usort($keys, fn ($x, $y) => ($x === $unit ? 0 : 1) <=> ($y === $unit ? 0 : 1));
+
+        return $keys;
+    }
 
     /**
      * The kinds, and the units each one is actually bought in.

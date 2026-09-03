@@ -64,9 +64,16 @@
 
         <div>
             <label for="ivMoveQty" class="form-label">How much? <span class="text-red-500">*</span></label>
-            <div class="relative">
-                <input type="number" id="ivMoveQty" min="0" step="any" class="form-input" placeholder="0" inputmode="decimal">
-                <span class="iv-qty-u" id="ivMoveUnit"></span>
+            {{-- The amount, in whatever unit it was measured. A bag-counted
+                 item takes kilos, a litre-counted one takes ml: the picker
+                 holds the item's kin and the book converts. When a unit has
+                 no kin, the picker gives way to a plain suffix. --}}
+            <div class="iv-qtyrow">
+                <div class="relative flex-1">
+                    <input type="number" id="ivMoveQty" min="0" step="any" class="form-input" placeholder="0" inputmode="decimal">
+                    <span class="iv-qty-u" id="ivMoveUnit"></span>
+                </div>
+                <select id="ivMoveUnitSel" class="form-select hidden iv-unit-sel" aria-label="Unit of the amount"></select>
             </div>
             <p class="form-hint" id="ivMovePacks"></p>
         </div>
@@ -260,6 +267,8 @@
         font-size: .78rem; font-weight: 700; color: var(--color-gray-400); pointer-events: none;
         max-width: 45%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .iv-newrow { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .iv-qtyrow { display: flex; gap: .5rem; align-items: stretch; }
+    .iv-unit-sel { flex: 0 0 auto; width: auto; max-width: 11rem; }
     html.dark #ivMoveNewWrap { border-color: #3a4630; }
     /* Said, not refused. A farm can run into the negative on paper — the bag
        in the shed was opened last week and nobody wrote it down — and a form
