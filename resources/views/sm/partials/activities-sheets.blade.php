@@ -524,7 +524,13 @@
                 </div>
                 <p id="itemsContainerEmpty" class="text-xs text-gray-400 mt-1.5">No items added yet.</p>
 
-                <div id="itemPickerPanel" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2.5">
+                {{-- The fold animates (grid-rows trick); the panel inside
+                     keeps its chrome, so nothing shows as a collapsed sliver.
+                     Visibility rides the transition so a shut panel is not
+                     tabbed into. --}}
+                <div class="ipp-fold is-shut" id="itemPanelFold">
+                <div class="ipp-clip">
+                <div id="itemPickerPanel" class="mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2.5">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-bold text-gray-500 uppercase">New item</span>
                         <button type="button" class="btn-ghost rounded-full w-7 h-7 flex items-center justify-center text-gray-400 hover:text-gray-700 js-quick-form-close" data-form="itemPickerPanel" aria-label="Close">✕</button>
@@ -623,6 +629,8 @@
                         Add to list
                     </button>
                 </div>
+                </div>
+                </div>{{-- /.ipp-fold --}}
             </div>
 
             {{-- Reference files — at the bottom, multiple allowed.

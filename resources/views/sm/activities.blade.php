@@ -2045,6 +2045,27 @@
         #itemStockBtn .crop-tag-t.is-none { color: var(--color-gray-500); font-weight: 600; }
         html.dark #itemStockBtn .crop-tag-t.is-none { color: #9aa78d; }
 
+        /* The item panel folds open and shut rather than snapping: grid
+           rows carry the height, opacity the presence, and visibility waits
+           for the fold so a shut panel is not tabbed into. */
+        .ipp-fold { display: grid; grid-template-rows: 1fr; opacity: 1;
+            transition-property: grid-template-rows, opacity, visibility;
+            transition-duration: .28s, .28s, 0s;
+            transition-timing-function: cubic-bezier(.22,1,.36,1);
+            transition-delay: 0s; }
+        .ipp-fold.is-shut { grid-template-rows: 0fr; opacity: 0; visibility: hidden;
+            /* Only the delay differs: visibility waits for the fold. */
+            transition-delay: 0s, 0s, .28s; }
+        .ipp-clip { overflow: hidden; min-height: 0; }
+
+        /* A new line lands with a small rise; leaving is animateOut's job. */
+        #itemsContainer .mline { animation: mlineIn .28s cubic-bezier(.22,1,.36,1) both; }
+        @keyframes mlineIn { from { opacity: 0; transform: translateY(6px) scale(.98); } to { opacity: 1; transform: none; } }
+        @media (prefers-reduced-motion: reduce) {
+            .ipp-fold, .ipp-fold.is-shut { transition: none; }
+            #itemsContainer .mline { animation: none; }
+        }
+
         /* A shed line's money row stacks: quantity first on its own row,
            then the price + its note as their own section behind a rule. */
         #itemMoneyRow.is-stock { grid-template-columns: 1fr; }

@@ -4413,9 +4413,10 @@ document.addEventListener('DOMContentLoaded', () => {
     $id('itemsContainer')?.addEventListener('click', (e) => {
         const btn = e.target.closest('.remove-item-tag');
         if (!btn) return;
-        btn.closest('.mline, span').remove();
-        refreshItemsEmptyState();
-        refreshShortWarn();
+        const card = btn.closest('.mline, span');
+        const after = () => { refreshItemsEmptyState(); refreshShortWarn(); };
+        if (window.animateOut) window.animateOut(card, () => { card.remove(); after(); });
+        else { card.remove(); after(); }
     });
 
     // Expand / collapse the add-item panel.
@@ -4434,11 +4435,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const x = e.target.closest('.js-quick-form-close');
         if (!x) return;
         const formId = x.getAttribute('data-form');
-        $id(formId)?.classList.add('hidden');
         if (formId === 'itemPickerPanel') {
+            // This panel folds (animated) rather than display-hiding.
+            $id('itemPanelFold')?.classList.add('is-shut');
             $id('itemsToggleBtn')?.setAttribute('aria-expanded', 'false');
             if ($id('itemsToggleLabel')) $id('itemsToggleLabel').textContent = '+ Item';
+            return;
         }
+        $id(formId)?.classList.add('hidden');
     });
 
     /* ---- The crop decides what else this lot can be asked --------------
@@ -4616,11 +4620,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     $id('itemsToggleBtn')?.addEventListener('click', () => {
-        const panel = $id('itemPickerPanel');
-        const open = panel.classList.toggle('hidden');
-        $id('itemsToggleBtn').setAttribute('aria-expanded', open ? 'false' : 'true');
-        $id('itemsToggleLabel').textContent = open ? '+ Item' : 'Cancel';
-        if (!open) {
+        const shut = $id('itemPanelFold').classList.toggle('is-shut');
+        $id('itemsToggleBtn').setAttribute('aria-expanded', shut ? 'false' : 'true');
+        $id('itemsToggleLabel').textContent = shut ? '+ Item' : 'Cancel';
+        if (!shut) {
             refreshNameDatalist();
             /* The shelf is fetched the first time somebody opens this, not on
                every board load: most activities never touch the inventory,
@@ -4713,7 +4716,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setActivityImages([]);
         $id('itemsContainer').innerHTML = '';
         // Collapse + clear the add-item panel.
-        $id('itemPickerPanel')?.classList.add('hidden');
+        $id('itemPanelFold')?.classList.add('is-shut');
         $id('itemsToggleBtn')?.setAttribute('aria-expanded', 'false');
         if ($id('itemsToggleLabel')) $id('itemsToggleLabel').textContent = '+ Item';
         ['itemNameInput', 'itemPriceInput', 'itemUnitInput'].forEach((idv) => { if ($id(idv)) $id(idv).value = ''; });
@@ -4879,7 +4882,7 @@ document.addEventListener('DOMContentLoaded', () => {
            activity that looked like it would spend stock then spent nothing
            when ticked. What is picked (or named) when Save is pressed is
            added first, through the same button, same rules. */
-        const panelOpen = $id('itemPickerPanel') && !$id('itemPickerPanel').classList.contains('hidden');
+        const panelOpen = $id('itemPanelFold') && !$id('itemPanelFold').classList.contains('is-shut');
         const pendingLine = panelOpen && (($id('itemStockPick')?.value || '') !== ''
             || ($id('itemNameInput')?.value || '').trim() !== '');
         if (pendingLine) $id('addItemBtn')?.click();
