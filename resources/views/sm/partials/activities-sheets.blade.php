@@ -563,12 +563,14 @@
                         <input type="text" id="itemNameInput" class="form-input bg-white!" list="itemNameList" maxlength="255" placeholder="e.g. Urea 46-0-0" autocomplete="off">
                         <datalist id="itemNameList"></datalist>
                     </div>
-                    {{-- A line off the shelf stops asking the price: the shed
-                         set it when the item joined, and a second answer here
-                         could only disagree. --}}
+                    {{-- Against a shed item the price is a DECLARATION, not
+                         a note: empty spends the stock already there at the
+                         book's price; filled means a fresh purchase, logged
+                         into the inventory at this price so old and new
+                         stock keep their own costs. --}}
                     <div class="grid grid-cols-2 gap-2" id="itemMoneyRow">
                         <div id="itemPriceCell">
-                            <label class="form-label text-xs! mb-1!" for="itemPriceInput">Price (₱)</label>
+                            <label class="form-label text-xs! mb-1!" for="itemPriceInput" id="itemPriceLabel">Price (₱)</label>
                             <input type="number" id="itemPriceInput" class="form-input bg-white!" list="itemPriceList" min="0" step="any" placeholder="0.00" inputmode="decimal">
                             <datalist id="itemPriceList"></datalist>
                         </div>
@@ -577,44 +579,38 @@
                             <input type="number" id="itemQtyInput" class="form-input bg-white!" value="1" min="0" step="any" placeholder="1" inputmode="decimal">
                         </div>
                     </div>
+                    <p class="form-hint hidden" id="itemBuyHint">Leave the price empty to use what the inventory already holds. Put a price in and this counts as a <b>new purchase</b>: it is logged into the inventory at that price, so the old stock and the new keep their own costs for the reports.</p>
+                    <p class="hidden text-xs font-bold" id="itemShortWarn" style="color:#b45309"></p>
                     <div>
-                        <label class="form-label text-xs! mb-1!" for="itemUnitInput">Unit</label>
-                        {{-- Free text for a plain line — the farm's own words.
-                             Against a shed item the text gives way to a select
-                             of that item's kin, so the unit is always one the
-                             tick can convert: kilos off a bag-counted book,
-                             ml off a litre one. --}}
-                        <input type="text" id="itemUnitInput" class="form-input bg-white!" list="itemUnitList" maxlength="30" placeholder="e.g. kg, bottle, pack" autocomplete="off">
-                        {{-- For a shed line: the select holds the value, the
-                             tag wears it, the sheet lists the item's kin. --}}
+                        <span class="form-label text-xs! mb-1!">Unit</span>
+                        {{-- One tag, two sheets behind it: a shed line opens
+                             the item's kin (units the tick can convert), a
+                             plain line opens the whole catalogue. The hidden
+                             input and select are the value stores. --}}
+                        <input type="text" id="itemUnitInput" class="hidden" aria-hidden="true" tabindex="-1" maxlength="30">
                         <select id="itemUnitSelect" class="hidden" aria-hidden="true" tabindex="-1" aria-label="Unit"></select>
-                        <button type="button" class="crop-tag hidden" id="itemUnitBtn">
+                        <button type="button" class="crop-tag" id="itemUnitBtn">
                             <span class="crop-tag-e">⚖️</span>
-                            <span class="crop-tag-t" id="itemUnitNow"></span>
+                            <span class="crop-tag-t is-none" id="itemUnitNow">Pick a unit (optional)</span>
                             <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                         </button>
-                        <datalist id="itemUnitList">
-                            @foreach (['kg','g','ml','l','bottle','sachet','piece','pack','bag','sack'] as $u)
-                                <option value="{{ $u }}"></option>
-                            @endforeach
-                        </datalist>
                     </div>
                     {{-- THE OTHER HALF OF THE SHED.
                          Above, a line can SPEND something the inventory
-                         already holds. Here it can put something new ON it:
-                         the material gets an entry in the Inventory module,
-                         with no stock and no movement, because writing an
-                         activity down is not the same as receiving a delivery.
-                         What it buys is that the thing now exists to be
-                         received against — and the next activity that needs it
-                         can pick it from the list above.
+                         already holds. Here it can put something new ON it —
+                         WITH its quantity (the owner's call, 2026-09-03):
+                         ticking this means the material was bought for this
+                         work, so the item joins the inventory, the quantity
+                         arrives as a logged stock-in at the line's price, and
+                         marking the activity done uses it back to zero —
+                         unless more stock arrives some other way first.
                          Hidden while a stock item is chosen: that line is
                          already about something on the shelf. --}}
                     <label class="item-shed" id="itemToShedWrap">
                         <input type="checkbox" id="itemToShed" class="form-checkbox">
                         <span>
                             <b>Also add it to the inventory</b>
-                            <i>Puts it on the shed's list so you can record deliveries and spend it from future activities. No stock is added.</i>
+                            <i>Puts it in the inventory with this quantity, logged as a stock-in at this price. When the activity is marked done, the quantity is used up — back to zero unless more stock arrives on another activity or through the Inventory module.</i>
                         </span>
                     </label>
                     <button type="button" id="addItemBtn" class="btn btn-primary btn-sm w-full">
@@ -721,6 +717,28 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body dt-rows" id="itemStockList"></div>
+</div>
+
+{{-- Every unit the house knows — for plain lines that spend nothing. --}}
+<div class="sheet hidden" id="itemUnitAllSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Measured in what?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows" id="itemUnitAllList">
+        <button type="button" class="dt-row" data-unit-all="">
+            <span class="dt-row-e">➖</span>
+            <span class="dt-row-body"><b>No unit</b><i>Just a count — “2 of them”.</i></span>
+        </button>
+        @foreach (\App\Models\AsInventoryItem::UNITS as $uk => $u)
+            @php $usays = \App\Models\AsInventoryItem::unitSays($uk, false); @endphp
+            <button type="button" class="dt-row" data-unit-all="{{ $usays }}">
+                <span class="dt-row-e">⚖️</span>
+                <span class="dt-row-body"><b>{{ $usays }}</b>@if (!empty($u['long']))<i>{{ $u['long'] }}</i>@endif</span>
+            </button>
+        @endforeach
+    </div>
 </div>
 
 {{-- The unit a shed line is measured in — only units its book can convert. --}}

@@ -370,6 +370,16 @@ class ActivityController extends BaseScheduleController
         // Soft-delete is reversible, so we keep the image file on disk
         // even after deletion — restoration brings it back wired up.
         $activity->update(['deleteStatus' => 0]);
+        /* Its declared purchases leave with it — stock it said it bought is
+         * stock nobody bought once the activity is gone. Outside the delete
+         * itself on purpose: a failed stock write must not undo a delete. */
+        try {
+            app(\App\Services\InventoryService::class)->dropActivityPurchases($activity->id);
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Purchases did not follow a delete', [
+                'activity' => $activity->id, 'error' => $e->getMessage(),
+            ]);
+        }
         $this->broadcastBoard($schedule, 'deleted', ['id' => $activity->id], $activity->versionId);
         return $this->jsonOk('Activity deleted.');
     }
@@ -1066,6 +1076,34 @@ class ActivityController extends BaseScheduleController
 
         $activity->update(['deleteStatus' => 1]);
 
+        /* What it declared bought comes back with it. */
+        try {
+            $rows = AsScheduleActivityItem::where('activityId', $activity->id)
+                ->where('deleteStatus', 1)
+                ->where('newBuy', 1)
+                ->whereNotNull('inventoryItemId')
+                ->get()
+                ->map(fn ($r) => [
+                    'itemId' => (int) $r->inventoryItemId,
+                    'qty' => (float) $r->quantity,
+                    'unit' => $r->unitOfMeasure,
+                    'price' => $r->unitPrice !== null ? (float) $r->unitPrice : null,
+                ])
+                ->filter(fn ($l) => $l['itemId'] > 0 && $l['qty'] > 0)
+                ->values()->all();
+            if ($rows !== []) {
+                app(\App\Services\InventoryService::class)->syncActivityPurchases(
+                    $schedule->id, $activity->id, $rows,
+                    $activity->targetDate?->format('Y-m-d'),
+                    (string) ($activity->activityTitle ?? '')
+                );
+            }
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Purchases did not follow a restore', [
+                'activity' => $activity->id, 'error' => $e->getMessage(),
+            ]);
+        }
+
         $fresh = $activity->fresh(['items.material', 'items.service', 'lots', 'workers']);
         $data = $fresh->toArray();
         $data['lotIds'] = $fresh->lots->pluck('id');
@@ -1296,6 +1334,8 @@ class ActivityController extends BaseScheduleController
             // So editing an activity keeps the line pointing at the same
             // thing in the shed rather than quietly becoming a plain note.
             'inventoryItemId' => $it->inventoryItemId ? (int) $it->inventoryItemId : null,
+            // And a purchase stays a purchase across edits.
+            'newBuy' => (int) ($it->newBuy ?? 0) === 1 ? 1 : 0,
         ])->values();
     }
 
@@ -1399,6 +1439,7 @@ class ActivityController extends BaseScheduleController
             // "Also put this on the shed": a line naming something the farm
             // keeps but the inventory has never heard of.
             'items.*.toShed' => 'nullable|boolean',
+            'items.*.newBuy' => 'nullable|boolean',
             'items.*.notes'         => 'nullable|string|max:500',
             // A reminder checklist: the day's errands, each optionally
             // carrying money that only counts once the line is ticked.
@@ -1584,16 +1625,16 @@ class ActivityController extends BaseScheduleController
                 // recreate from the submitted payload.
                 AsScheduleActivityItem::where('activityId', $activity->id)->update(['deleteStatus' => 0]);
 
+                $purchases = [];
                 foreach ((array) $request->input('items', []) as $item) {
                     $name = trim((string) ($item['itemName'] ?? ''));
                     if ($name === '') continue;
                     /* A line that names something new for the shed puts it
-                     * there. Only the ITEM is created — no stock and no move:
-                     * writing an activity down is not the same as receiving a
-                     * delivery, and inventing one would leave the shed saying
-                     * the farm holds something nobody bought. What it buys is
-                     * that the thing now exists to be received against, and
-                     * the next activity can spend it.
+                     * there WITH its quantity now (the owner's call,
+                     * 2026-09-03): ticking the box means the material was
+                     * bought for this work, so the item is created, the
+                     * quantity arrives as a logged stock-in below, and the
+                     * done-tick spends it back to zero.
                      *
                      * Keyed on the name within this season, so ticking the box
                      * twice for the same material does not shelve it twice. */
@@ -1607,10 +1648,19 @@ class ActivityController extends BaseScheduleController
                             [
                                 'kind' => 'other',
                                 'unit' => $this->shedUnit($item['unitOfMeasure'] ?? null),
+                                // The line's price becomes the item's standing
+                                // price — the first word on what one costs.
+                                'unitPrice' => isset($item['unitPrice']) && $item['unitPrice'] !== '' ? $item['unitPrice'] : null,
                             ]
                         );
                         $item['inventoryItemId'] = $shelved->id;
+                        $item['newBuy'] = 1;
                     }
+                    /* newBuy is the line's OWN flag, never inferred from a
+                     * price: years of lines carry prices that were only
+                     * notes, and a re-save must not turn them into
+                     * deliveries nobody received. */
+                    $isBuy = ! empty($item['newBuy']) && ! empty($item['inventoryItemId']);
                     AsScheduleActivityItem::create([
                         'activityId'    => $activity->id,
                         'itemType'      => 'custom',
@@ -1623,10 +1673,30 @@ class ActivityController extends BaseScheduleController
                         // has to come back with the payload or the link is
                         // lost — which is why the picker sends it.
                         'inventoryItemId' => ! empty($item['inventoryItemId']) ? (int) $item['inventoryItemId'] : null,
+                        'newBuy'        => $isBuy ? 1 : 0,
                         'notes'         => $item['notes'] ?? null,
                         'deleteStatus'  => 1,
                     ]);
+                    if ($isBuy && (float) ($item['quantity'] ?? 0) > 0) {
+                        $purchases[] = [
+                            'itemId' => (int) $item['inventoryItemId'],
+                            'qty' => (float) $item['quantity'],
+                            'unit' => $item['unitOfMeasure'] ?? null,
+                            'price' => isset($item['unitPrice']) && $item['unitPrice'] !== '' ? (float) $item['unitPrice'] : null,
+                        ];
+                    }
                 }
+
+                /* The purchases the lines declare, kept in step on EVERY
+                 * save — including an empty set, which withdraws deliveries
+                 * a previous version of this activity declared. */
+                app(\App\Services\InventoryService::class)->syncActivityPurchases(
+                    $activity->croppingScheduleId,
+                    $activity->id,
+                    $purchases,
+                    $activity->targetDate?->format('Y-m-d'),
+                    (string) ($activity->activityTitle ?? '')
+                );
 
                 // Replace pivot rows with the submitted lot + worker sets.
                 $activity->lots()->sync($submittedLotIds);

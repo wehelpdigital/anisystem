@@ -63,12 +63,13 @@ class InventoryService
         ?string $note = null,
         ?int $activityId = null,
         ?array $entered = null,
+        ?float $unitPrice = null,
     ): ?AsInventoryMove {
         if (abs($delta) < 0.0005) {
             return null;
         }
 
-        return DB::transaction(function () use ($item, $delta, $reason, $on, $note, $activityId, $entered) {
+        return DB::transaction(function () use ($item, $delta, $reason, $on, $note, $activityId, $entered, $unitPrice) {
             /* Read inside the transaction and lock the item's rows, so two
              * people ticking two activities at the same moment cannot both
              * read the same "before" and write two moves that each claim the
@@ -91,6 +92,9 @@ class InventoryService
                 'enteredUnit' => $entered['unit'] ?? null,
                 'happenedOn' => $on ?: now('Asia/Manila')->toDateString(),
                 'note' => $note,
+                // What one unit cost on THIS move — a fresh bag bought dear
+                // keeps its price beside the shelf's older, cheaper stock.
+                'unitPrice' => $unitPrice,
                 'byUserId' => Auth::id(),
                 'deleteStatus' => 1,
             ]);
@@ -156,6 +160,96 @@ class InventoryService
         }
 
         return $written;
+    }
+
+    /**
+     * The purchases an activity declares, kept in step with its rows.
+     *
+     * A material line marked newBuy is a delivery: stock the activity brings
+     * in (at its own price) and then uses. Replace-all like the rows
+     * themselves — every save voids the activity's previous stock-ins and
+     * posts the current ones, so an edit that changes quantity or price, or
+     * withdraws the purchase, never leaves a stale delivery in the book.
+     * Chains rebuild for every touched item, because voiding a mid-chain
+     * move leaves later before/after figures lying (amend()'s precedent).
+     *
+     * @param  array<int, array{itemId:int, qty:float, unit:?string, price:?float}>  $lines
+     */
+    public function syncActivityPurchases(int $scheduleId, int $activityId, array $lines, ?string $on, string $label = ''): int
+    {
+        $touched = AsInventoryMove::where('activityId', $activityId)
+            ->where('reason', AsInventoryMove::IN)
+            ->where('deleteStatus', 1)
+            ->pluck('itemId')->all();
+        if ($touched === [] && $lines === []) {
+            return 0;
+        }
+        AsInventoryMove::where('activityId', $activityId)
+            ->where('reason', AsInventoryMove::IN)
+            ->where('deleteStatus', 1)
+            ->update(['deleteStatus' => 0]);
+
+        $items = AsInventoryItem::where('croppingScheduleId', $scheduleId)
+            ->where('deleteStatus', 1)
+            ->whereIn('id', array_column($lines, 'itemId'))
+            ->get()->keyBy('id');
+
+        $written = 0;
+        foreach ($lines as $line) {
+            $item = $items->get((int) $line['itemId']);
+            $qty = (float) ($line['qty'] ?? 0);
+            if (! $item || $qty <= 0) {
+                continue;
+            }
+            // Typed in a kin unit, counted in the book's — same arithmetic
+            // the spend does, so the in and the out cancel to the gram.
+            $typed = $qty;
+            $fromKey = AsInventoryItem::unitKeyFromWords($line['unit'] ?? null);
+            $entered = null;
+            if ($fromKey !== null) {
+                $converted = AsInventoryItem::convert($qty, $fromKey, $item->unit);
+                if ($converted !== null) {
+                    $qty = round($converted, 3);
+                    if ($fromKey !== $item->unit) {
+                        $entered = ['qty' => $typed, 'unit' => $fromKey];
+                    }
+                }
+            }
+            if ($qty <= 0) {
+                continue;
+            }
+            $price = isset($line['price']) && $line['price'] !== null && $line['price'] !== '' ? (float) $line['price'] : null;
+            $note = 'Bought for ' . ($label !== '' ? '“' . mb_substr($label, 0, 80) . '”' : 'an activity')
+                . ($price !== null ? ' at ₱' . number_format($price, 2) . ' each' : '');
+            if ($this->move($item, $qty, AsInventoryMove::IN, $on, $note, $activityId, $entered, $price)) {
+                $written++;
+                $touched[] = $item->id;
+            }
+        }
+        foreach (array_unique($touched) as $itemId) {
+            $this->rebuildChain((int) $itemId);
+        }
+
+        return $written;
+    }
+
+    /** An activity that leaves takes its declared purchases with it. */
+    public function dropActivityPurchases(int $activityId): void
+    {
+        $touched = AsInventoryMove::where('activityId', $activityId)
+            ->where('reason', AsInventoryMove::IN)
+            ->where('deleteStatus', 1)
+            ->pluck('itemId')->all();
+        if ($touched === []) {
+            return;
+        }
+        AsInventoryMove::where('activityId', $activityId)
+            ->where('reason', AsInventoryMove::IN)
+            ->where('deleteStatus', 1)
+            ->update(['deleteStatus' => 0]);
+        foreach (array_unique($touched) as $itemId) {
+            $this->rebuildChain((int) $itemId);
+        }
     }
 
     /**

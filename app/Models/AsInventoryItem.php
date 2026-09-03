@@ -38,10 +38,12 @@ class AsInventoryItem extends BaseModel
      * honest counts: each its own dimension, converting to nothing.
      */
     public const UNITS = [
-        'kg' => ['one' => 'kg', 'many' => 'kg', 'dim' => 'mass', 'factor' => 1],
-        'g' => ['one' => 'g', 'many' => 'g', 'dim' => 'mass', 'factor' => 0.001],
-        'L' => ['one' => 'L', 'many' => 'L', 'dim' => 'volume', 'factor' => 1],
-        'ml' => ['one' => 'ml', 'many' => 'ml', 'dim' => 'volume', 'factor' => 0.001],
+        // 'long' is picker detail ONLY — counts still say "500 g", but a
+        // dropdown row says "g (grams)" so nobody guesses at an abbreviation.
+        'kg' => ['one' => 'kg', 'many' => 'kg', 'long' => 'kilograms', 'dim' => 'mass', 'factor' => 1],
+        'g' => ['one' => 'g', 'many' => 'g', 'long' => 'grams', 'dim' => 'mass', 'factor' => 0.001],
+        'L' => ['one' => 'L', 'many' => 'L', 'long' => 'liters', 'dim' => 'volume', 'factor' => 1],
+        'ml' => ['one' => 'ml', 'many' => 'ml', 'long' => 'milliliters', 'dim' => 'volume', 'factor' => 0.001],
         'piece' => ['one' => 'piece', 'many' => 'pieces', 'dim' => 'piece', 'factor' => 1],
         'bag50' => ['one' => 'bag', 'many' => 'bags', 'of' => '50 kg', 'dim' => 'mass', 'factor' => 50],
         'bag40' => ['one' => 'bag', 'many' => 'bags', 'of' => '40 kg', 'dim' => 'mass', 'factor' => 40],

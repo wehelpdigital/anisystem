@@ -13,6 +13,9 @@ class AsScheduleActivityItem extends BaseModel
         // Which thing in the shed this line spends, if any. Null for a line
         // that is only a note to itself.
         'inventoryItemId',
+        // The line's own word that it is a PURCHASE: the save posts a
+        // stock-in at the line's price, and the tick spends it back out.
+        'newBuy',
         'serviceId',
         'itemName',
         'unitPrice',

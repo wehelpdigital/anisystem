@@ -103,7 +103,7 @@
             // so switching kind to look at the list never silently rewrites
             // what something is counted in.
             if (want && !keys.includes(want) && UNITS[want]) keys.unshift(want);
-            sel.innerHTML = keys.map((k) => `<option value="${k}">${esc(unitSays(k, false))}</option>`).join('');
+            sel.innerHTML = keys.map((k) => `<option value="${k}">${esc(unitSays(k, false) + (UNITS[k] && UNITS[k].long ? ' (' + UNITS[k].long + ')' : ''))}</option>`).join('');
             sel.value = want && keys.includes(want) ? want : keys[0];
         };
         const itemById = (id) => ITEMS.find((i) => String(i.id) === String(id)) || null;
@@ -564,7 +564,7 @@
             const kin = (!isNew && item && item.kin && item.kin.length > 1) ? item.kin : null;
             if (sel) {
                 sel.classList.toggle('hidden', !kin);
-                if (kin) sel.innerHTML = kin.map((k) => `<option value="${k}">${esc(unitSays(k, false))}</option>`).join('');
+                if (kin) sel.innerHTML = kin.map((k) => `<option value="${k}">${esc(unitSays(k, false) + (UNITS[k] && UNITS[k].long ? ' (' + UNITS[k].long + ')' : ''))}</option>`).join('');
             }
             const unitKey = isNew ? $id('ivMoveNewUnit')?.value : item?.unit;
             if (unit) {
@@ -572,6 +572,10 @@
             }
             const pu = $id('ivMoveNewPriceUnit');
             if (pu && isNew) pu.textContent = '\u20b1 per ' + unitSays($id('ivMoveNewUnit')?.value, true);
+            /* A fresh purchase can carry its own price — only when ADDING to
+               something already on the shelf (a new item's form asks its own). */
+            $id('ivMoveBuyWrap')?.classList.toggle('hidden',
+                !(!isNew && item && $id('ivMoveDir')?.value === 'in'));
             if (have) {
                 have.textContent = isNew
                     ? 'New to the shed. What you type below becomes its opening count.'
@@ -614,11 +618,21 @@
                form that refuses to record what actually happened just gets
                worked around. */
             if (warn) {
-                const short = item && out && inItem !== null && inItem > item.onHand;
+                /* The same arithmetic the activity sheet's guard does: what
+                   is on hand minus what unticked activities already claim.
+                   Said, not refused — this door records what has already
+                   happened in the world, and a refusal just gets worked
+                   around. */
+                const spoken = (item && item.promised && Number(item.promised.total)) || 0;
+                const free = item ? item.onHand - spoken : 0;
+                const short = item && out && inItem !== null && inItem > free;
                 warn.classList.toggle('hidden', !short);
                 if (short) {
-                    warn.textContent = `That is more than the ${say(item, item.onHand)} on record. `
-                        + `It will be saved and the count will go below zero — worth checking the shed, or adding what came in first.`;
+                    warn.textContent = inItem > item.onHand
+                        ? `That is more than the ${say(item, item.onHand)} on record. `
+                            + `It will be saved and the count will go below zero — worth checking the shed, or adding what came in first.`
+                        : `The shed holds ${say(item, item.onHand)}, but activities not yet done already claim ${say(item, spoken)} of it — `
+                            + `this leaves them short. It will still be saved; worth checking the plan.`;
                 }
             }
         }
@@ -650,6 +664,8 @@
             sayMoveDate();
             const newPrice = $id('ivMoveNewPrice');
             if (newPrice) newPrice.value = '';
+            const buyPrice = $id('ivMoveBuyPrice');
+            if (buyPrice) buyPrice.value = '';
             // Each opening starts from Today; yesterday's choice belonged to
             // yesterday's item. Except when the sheet was opened FROM a day —
             // the day menu's date is the asker's answer, and a new item's
@@ -707,6 +723,11 @@
                             reason: asking ? 'open' : null,
                             on: when,
                             note: $id('ivMoveNote').value.trim() || null,
+                            // What one unit cost, when this stock-in was a
+                            // purchase — the server stamps it on the move
+                            // and says it in the log line.
+                            unitPrice: ($id('ivMoveDir').value === 'in' && ($id('ivMoveBuyPrice')?.value || '').trim() !== '')
+                                ? $id('ivMoveBuyPrice').value : null,
                         },
                     });
                 toast(res.message);

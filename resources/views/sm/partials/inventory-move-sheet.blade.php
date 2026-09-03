@@ -108,6 +108,15 @@
             <p class="form-hint" id="ivStartHint"></p>
         </div>
 
+        {{-- A stock-in that is a fresh purchase can say what one unit cost —
+             dearer new bags keep their own price beside the old stock's, and
+             the log line says so. Only when ADDING to something that already
+             exists; a NEW item's form has its own price box. --}}
+        <div id="ivMoveBuyWrap" class="hidden">
+            <label for="ivMoveBuyPrice" class="form-label">Bought at (₱ each) <span class="text-gray-400 font-normal">(optional)</span></label>
+            <input type="number" id="ivMoveBuyPrice" min="0" step="any" class="form-input" placeholder="0.00" inputmode="decimal">
+        </div>
+
         <div>
             <label for="ivMoveNote" class="form-label">Note <span class="text-gray-400 font-normal">(optional)</span></label>
             <textarea id="ivMoveNote" rows="2" maxlength="500" class="form-textarea" placeholder="What it went on, who delivered it, anything worth remembering"></textarea>

@@ -71,20 +71,63 @@ class InventoryController extends BaseScheduleController
             ->min('targetDate');
 
         return $this->jsonOk('ok', ['data' => [
-            'items' => $this->itemsPayload($schedule->id),
+            'items' => $this->itemsPayload($schedule->id, $this->promisedFor($schedule)),
             'moves' => $this->movesPayload($schedule->id),
             'doneActivities' => $done,
             'firstActivityDate' => $first ? substr((string) $first, 0, 10) : null,
         ]]);
     }
 
-    private function itemsPayload(int $scheduleId): array
+    /**
+     * What unticked activities already claim from each item, per activity,
+     * in the ITEM's unit — so a picker can say "there are 70 bags, but 50
+     * are spoken for". New-buy lines are left out: their spend is covered
+     * by their own delivery, already in the book.
+     *
+     * @return array<int, array<int, float>>  [itemId => [activityId => qty]]
+     */
+    private function promisedFor($schedule): array
+    {
+        $undone = $schedule->activities()->where('isDone', 0)->pluck('as_schedule_activities.id');
+        if ($undone->isEmpty()) {
+            return [];
+        }
+        $lines = \App\Models\AsScheduleActivityItem::whereIn('activityId', $undone)
+            ->where('deleteStatus', 1)
+            ->whereNotNull('inventoryItemId')
+            ->where('newBuy', 0)
+            ->get(['activityId', 'inventoryItemId', 'quantity', 'unitOfMeasure']);
+        $items = AsInventoryItem::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)->get()->keyBy('id');
+
+        $by = [];
+        foreach ($lines as $l) {
+            $item = $items->get((int) $l->inventoryItemId);
+            $qty = (float) $l->quantity;
+            if (! $item || $qty <= 0) {
+                continue;
+            }
+            // Same arithmetic the spend will do when the tick lands.
+            $fromKey = AsInventoryItem::unitKeyFromWords($l->unitOfMeasure);
+            if ($fromKey !== null) {
+                $converted = AsInventoryItem::convert($qty, $fromKey, $item->unit);
+                if ($converted !== null) {
+                    $qty = round($converted, 3);
+                }
+            }
+            $by[$item->id][$l->activityId] = round(($by[$item->id][$l->activityId] ?? 0) + $qty, 3);
+        }
+
+        return $by;
+    }
+
+    private function itemsPayload(int $scheduleId, array $promised = []): array
     {
         $onHand = $this->stock->onHandFor($scheduleId);
 
         return AsInventoryItem::where('croppingScheduleId', $scheduleId)
             ->where('deleteStatus', 1)->orderBy('name')->get()
-            ->map(function ($i) use ($onHand) {
+            ->map(function ($i) use ($onHand, $promised) {
                 $have = $onHand[$i->id] ?? 0.0;
 
                 return [
@@ -111,10 +154,17 @@ class InventoryController extends BaseScheduleController
                         fn ($k) => [
                             'key' => $k,
                             'says' => AsInventoryItem::unitSays($k, false),
+                            'long' => AsInventoryItem::UNITS[$k]['long'] ?? null,
                             'toItem' => AsInventoryItem::convert(1, $k, $i->unit),
                         ],
                         AsInventoryItem::kin($i->unit)
                     ),
+                    // What unticked activities already claim, per activity,
+                    // in this item's unit — the picker's "spoken for" figure.
+                    'promised' => [
+                        'total' => round(array_sum($promised[$i->id] ?? []), 3),
+                        'by' => (object) ($promised[$i->id] ?? []),
+                    ],
                     'lowAt' => $i->lowAt ? (float) $i->lowAt : null,
                     'unitPrice' => $i->unitPrice !== null ? (float) $i->unitPrice : null,
                     'note' => $i->note,
@@ -291,6 +341,9 @@ class InventoryController extends BaseScheduleController
             'reason' => 'nullable|in:open,in,out,adjust',
             'on' => 'nullable|date',
             'note' => 'nullable|string|max:500',
+            // What one unit cost, for a stock-in that is a fresh purchase —
+            // dearer bags keep their own price beside the old stock's.
+            'unitPrice' => 'nullable|numeric|min:0|max:99999999',
         ]);
         if ($v->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $v->errors()]);
@@ -331,6 +384,14 @@ class InventoryController extends BaseScheduleController
             ? ['qty' => abs((float) $request->input('qty')), 'unit' => $fromUnit]
             : null;
 
+        $buyPrice = $in && $request->filled('unitPrice') ? (float) $request->input('unitPrice') : null;
+        /* The price rides in the note too, so every log renderer says it
+         * without learning a new field. */
+        $note = (string) ($request->input('note') ?? '');
+        if ($buyPrice !== null) {
+            $said = 'Bought at ₱' . number_format($buyPrice, 2) . ' each';
+            $note = $note === '' ? $said : $note . ' · ' . $said;
+        }
         $move = $reason === AsInventoryMove::OPEN
             ? $this->stock->startCount($item, $qty, $request->input('on'), $request->input('note'))
             : $this->stock->move(
@@ -338,9 +399,10 @@ class InventoryController extends BaseScheduleController
                 $in ? $qty : -$qty,
                 $reason,
                 $request->input('on'),
-                $request->input('note'),
+                $note !== '' ? mb_substr($note, 0, 500) : null,
                 null,
                 $entered,
+                $buyPrice,
             );
         if ($move && $entered && $reason === AsInventoryMove::OPEN) {
             // The Start goes through startCount, which has no entered slot;

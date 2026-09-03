@@ -2051,6 +2051,8 @@
             padding: .55rem .7rem; border-radius: .7rem; font-size: .84rem;
             background: var(--color-white); border: 1px solid var(--color-gray-200); }
         .mline.is-stock { background: #f2f8ec; border-color: #dcead0; }
+        /* A purchase line wears a receipt's tint, not the shelf's green. */
+        .mline.is-buy { background: #fdf8ec; border-color: #eee0ba; }
         .mline-t { flex: 1 1 auto; min-width: 0; }
         .mline-t b { display: block; font-weight: 800; color: var(--color-gray-900); line-height: 1.3; }
         .mline-t small { display: block; font-size: .72rem; color: var(--color-gray-500); margin-top: .1rem; }
@@ -2060,6 +2062,7 @@
         .mline .remove-item-tag:hover { background: #fef2f2; color: #b91c1c; }
         html.dark .mline { background: #151b12; border-color: #2b3a1c; }
         html.dark .mline.is-stock { background: #1d2716; border-color: #2e3d20; }
+        html.dark .mline.is-buy { background: #251f10; border-color: #43391b; }
         html.dark .mline-t b { color: #e8efe1; }
         html.dark .mline-t .mline-w { color: #a5c97e; }
 

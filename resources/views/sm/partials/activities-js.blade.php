@@ -4116,17 +4116,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     $id('itemNameInput')?.addEventListener('input', (e) => refreshPriceDatalistFor(e.target.value));
 
-    function appendItemTag(name, price, qty, unit, stockId, toShed) {
+    function appendItemTag(name, price, qty, unit, stockId, toShed, newBuy) {
         const unitSafe = unit || '';
         const priceNum = (price !== '' && price != null && !isNaN(parseFloat(price))) ? parseFloat(price) : null;
         /* A card, not a cramped chip: the name leads, the facts sit under
-           it, and the line says in words where it comes from or goes. Still
-           a <span>, so every selector that reads these lines stands. */
+           it, and the line says in words which of the three things it is —
+           a spend off the shelf, a fresh purchase, or a note to yourself.
+           Still a <span>, so every selector that reads these lines stands. */
+        const buying = !!newBuy && !!stockId;
         const whence = stockId
-            ? '📦 Comes off the inventory when this is ticked done'
-            : (toShed ? '🆕 Joins the inventory when this saves' : '');
-        const html = `<span class="mline${stockId ? ' is-stock' : ''}"
-            data-name="${esc(name)}" data-price="${priceNum != null ? esc(String(priceNum)) : ''}" data-qty="${esc(trimQty(qty || 1))}" data-unit="${esc(unitSafe)}" data-stock="${stockId ? esc(String(stockId)) : ''}" data-toshed="${(!stockId && toShed) ? '1' : ''}">
+            ? (buying
+                ? '🧾 A new purchase — logged into the inventory at this price, and this work uses it up'
+                : '📦 Comes off the inventory when this is ticked done')
+            : (toShed ? '🆕 Joins the inventory with this quantity when this saves — used up when the work is done' : '');
+        const html = `<span class="mline${stockId ? ' is-stock' : ''}${buying || (!stockId && toShed) ? ' is-buy' : ''}"
+            data-name="${esc(name)}" data-price="${priceNum != null ? esc(String(priceNum)) : ''}" data-qty="${esc(trimQty(qty || 1))}" data-unit="${esc(unitSafe)}" data-stock="${stockId ? esc(String(stockId)) : ''}" data-toshed="${(!stockId && toShed) ? '1' : ''}" data-newbuy="${buying ? '1' : ''}">
             <span class="mline-t">
                 <b>${esc(name)}</b>
                 <small>×${esc(trimQty(qty || 1))}${unitSafe ? ' ' + esc(unitSafe) : ''}${priceNum != null ? ' · ₱' + esc(fmtMoney(priceNum)) + ' each' : ''}</small>
@@ -4136,6 +4140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </span>`;
         $id('itemsContainer').insertAdjacentHTML('beforeend', html);
         refreshItemsEmptyState();
+        refreshShortWarn();
     }
 
     /* ---- The shelf, offered inside the activity sheet ----
@@ -4198,9 +4203,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 tT.textContent = 'No — just list it on this activity';
                 tT.classList.add('is-none');
             }
-            $id('itemPriceCell')?.classList.remove('hidden');
-            $id('itemMoneyRow')?.classList.add('grid-cols-2');
+            const pl0 = $id('itemPriceLabel');
+            if (pl0) pl0.textContent = 'Price (₱)';
+            $id('itemBuyHint')?.classList.add('hidden');
             swapUnitControl(null);
+            refreshShortWarn();
             return;
         }
         const item = (window.IV_ITEMS || []).find((i) => String(i.id) === sel.value);
@@ -4221,11 +4228,16 @@ document.addEventListener('DOMContentLoaded', () => {
             tagT.textContent = item ? `${item.name} — ${item.says}` : 'No — just list it on this activity';
             tagT.classList.toggle('is-none', !item);
         }
-        /* A shed line's price is the shed's to say. */
-        $id('itemPriceCell')?.classList.toggle('hidden', !!item);
-        $id('itemMoneyRow')?.classList.toggle('grid-cols-2', !item);
-        if (item) { const pi = $id('itemPriceInput'); if (pi) pi.value = ''; }
+        /* The price against a shed item is a DECLARATION: empty spends the
+           stock already there; filled means a fresh purchase at that price.
+           It starts empty on every pick — a purchase is typed on purpose. */
+        const pi = $id('itemPriceInput');
+        if (item && pi) pi.value = '';
+        const pl = $id('itemPriceLabel');
+        if (pl) pl.textContent = item ? 'Price (₱) — new purchase only' : 'Price (₱)';
+        $id('itemBuyHint')?.classList.toggle('hidden', !item);
         swapUnitControl(item);
+        refreshShortWarn();
     }
 
     /* The stock tag opens its sheet; a row sets the hidden select and lets
@@ -4258,14 +4270,17 @@ document.addEventListener('DOMContentLoaded', () => {
         syncToShedVisibility();
     });
 
-    /* Same idiom for the unit of a shed line. */
+    /* One unit tag, two sheets behind it: a shed line offers the item's
+       kin (units the tick can convert), a plain line offers the whole
+       catalogue — with the long names beside the terse ones, so "g" reads
+       as grams and not a guess. */
     $id('itemUnitBtn')?.addEventListener('click', () => {
-        if (!LINE_KIN) return;
+        if (!LINE_KIN) { openSheet('itemUnitAllSheet'); return; }
         const now = $id('itemUnitSelect')?.value;
         $id('itemUnitList2').innerHTML = LINE_KIN.map((k) => `
             <button type="button" class="dt-row${k.says === now ? ' is-on' : ''}" data-unit-row="${esc(k.says)}">
                 <span class="dt-row-e">⚖️</span>
-                <span class="dt-row-body"><b>${esc(k.says)}</b>${k.says === now ? '<i>Chosen now</i>' : ''}</span>
+                <span class="dt-row-body"><b>${esc(k.says)}</b>${k.long ? `<i>${esc(k.long)}</i>` : (k.says === now ? '<i>Chosen now</i>' : '')}</span>
             </button>`).join('');
         openSheet('itemUnitSheet');
     });
@@ -4276,8 +4291,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const sel = $id('itemUnitSelect');
         if (sel) sel.value = says;
         const now = $id('itemUnitNow');
-        if (now) now.textContent = says;
+        if (now) { now.textContent = says; now.classList.remove('is-none'); }
         closeSheet('itemUnitSheet');
+        refreshShortWarn();
+    });
+    $id('itemUnitAllList')?.addEventListener('click', (e) => {
+        const row = e.target.closest('[data-unit-all]');
+        if (!row) return;
+        const says = row.getAttribute('data-unit-all') || '';
+        const box = $id('itemUnitInput');
+        if (box) box.value = says;
+        const now = $id('itemUnitNow');
+        if (now) {
+            now.textContent = says || 'Pick a unit (optional)';
+            now.classList.toggle('is-none', !says);
+        }
+        closeSheet('itemUnitAllSheet');
+        refreshShortWarn();
     });
 
     /**
@@ -4292,15 +4322,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!unitBox || !unitSel) return;
         const kin = item && Array.isArray(item.kinSays) && item.kinSays.length ? item.kinSays : null;
         LINE_KIN = kin;
-        unitBox.classList.toggle('hidden', !!kin);
-        $id('itemUnitBtn')?.classList.toggle('hidden', !kin);
+        const now = $id('itemUnitNow');
         if (kin) {
             unitSel.innerHTML = kin.map((k) => `<option value="${esc(k.says)}">${esc(k.says)}</option>`).join('');
             unitSel.value = kin[0].says;   // the item's own unit leads its kin
-            const now = $id('itemUnitNow');
-            if (now) now.textContent = kin[0].says;
+            if (now) { now.textContent = kin[0].says; now.classList.remove('is-none'); }
         } else {
             unitBox.value = '';
+            if (now) { now.textContent = 'Pick a unit (optional)'; now.classList.add('is-none'); }
         }
     }
 
@@ -4311,6 +4340,56 @@ document.addEventListener('DOMContentLoaded', () => {
         if (LINE_KIN) return $id('itemUnitSelect')?.value || '';
         return ($id('itemUnitInput')?.value || '').trim();
     }
+
+    /* ---- Enough on the shelf? ----
+     *
+     * A plain spend (shed item picked, no price typed) may not ask for more
+     * than the shelf can still promise: what is on hand, minus what OTHER
+     * unticked activities already claim (the server's promised figures,
+     * this activity's own claim excluded — its lines are the cards in this
+     * sheet), minus the no-price cards already added here. A NEW PURCHASE
+     * (price typed) skips the guard: it brings its own stock. */
+    function unitToItemFactor(item, words) {
+        if (!words) return 1;
+        const hit = (item.kinSays || []).find((k) => k.says === words);
+        return hit && hit.toItem != null ? hit.toItem : 1;
+    }
+    function shelfAvailable(item) {
+        const editing = String($id('activityId')?.value || '');
+        let claimed = 0;
+        const by = (item.promised && item.promised.by) || {};
+        Object.keys(by).forEach((aid) => {
+            if (aid !== editing) claimed += Number(by[aid]) || 0;
+        });
+        $qsa(`#itemsContainer > span[data-stock="${item.id}"]`).forEach((c) => {
+            if (c.getAttribute('data-newbuy') === '1') return;
+            claimed += (parseFloat(c.getAttribute('data-qty')) || 0) * unitToItemFactor(item, c.getAttribute('data-unit') || '');
+        });
+        return (Number(item.onHand) || 0) - claimed;
+    }
+    function refreshShortWarn() {
+        const warn = $id('itemShortWarn');
+        const btn = $id('addItemBtn');
+        if (!warn || !btn) return;
+        const stockId = $id('itemStockPick')?.value || '';
+        const item = stockId ? (window.IV_ITEMS || []).find((i) => String(i.id) === stockId) : null;
+        const priced = ($id('itemPriceInput')?.value || '').trim() !== '';
+        let short = false;
+        if (item && !priced) {
+            const need = (parseFloat($id('itemQtyInput')?.value) || 0) * unitToItemFactor(item, lineUnitValue());
+            const avail = shelfAvailable(item);
+            if (need > avail + 0.0005) {
+                short = true;
+                const left = Math.max(0, Math.round(avail * 1000) / 1000);
+                warn.textContent = `Not enough in the inventory — only ${left} ${item.unitLabel || item.unit} ${left === 1 ? 'is' : 'are'} free once other planned work takes its share. Add a price to make this a new purchase instead.`;
+            }
+        }
+        warn.classList.toggle('hidden', !short);
+        btn.disabled = short;
+        btn.classList.toggle('opacity-50', short);
+    }
+    $id('itemQtyInput')?.addEventListener('input', refreshShortWarn);
+    $id('itemPriceInput')?.addEventListener('input', refreshShortWarn);
 
     /* The two halves of the shed are alternatives, never both: a line taking
        Urea off the shelf cannot also be putting Urea on it. */
@@ -4332,6 +4411,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!btn) return;
         btn.closest('.mline, span').remove();
         refreshItemsEmptyState();
+        refreshShortWarn();
     });
 
     // Expand / collapse the add-item panel.
@@ -4554,16 +4634,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const stockItem = stockPre ? (window.IV_ITEMS || []).find((i) => String(i.id) === stockPre) : null;
         const qty = parseFloat($id('itemQtyInput').value) || 1;
         const unit = lineUnitValue();
-        /* A shed line carries the shed's price; only a plain line asks. The
-           shed states it per its OWN unit, so a line typed in a kin unit
-           restates it — ₱1450 a 50 kg bag is ₱29 a kilo, not ₱1450. */
-        let price = ($id('itemPriceInput').value || '').trim();
-        if (stockItem) {
-            price = '';
-            if (stockItem.unitPrice != null) {
-                const kinRow = (stockItem.kinSays || []).find((k) => k.says === unit);
-                const toItem = kinRow && kinRow.toItem != null ? kinRow.toItem : 1;
-                price = String(Math.round(stockItem.unitPrice * toItem * 100) / 100);
+        /* Against a shed item, a typed price DECLARES a new purchase; empty
+           spends the stock already there (the shed's own price does the
+           costing later). The guard above has already vetoed a spend the
+           shelf cannot cover — this is the belt to that braces. */
+        const price = ($id('itemPriceInput').value || '').trim();
+        const newBuy = !!stockItem && price !== '';
+        if (stockItem && !newBuy) {
+            const need = qty * unitToItemFactor(stockItem, unit);
+            if (need > shelfAvailable(stockItem) + 0.0005) {
+                toast('Not enough in the inventory for that quantity — add a price to make it a new purchase.', 'error');
+                return;
             }
         }
         if ($qs(`#itemsContainer span[data-name="${cssEsc(name)}"]`)) {
@@ -4572,7 +4653,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const stockId = $id('itemStockPick')?.value || '';
         const toShed = !stockId && !!$id('itemToShed')?.checked;
-        appendItemTag(name, price, qty, unit, stockId, toShed);
+        appendItemTag(name, price, qty, unit, stockId, toShed, newBuy);
         rememberItem(name, price, unit);
         refreshNameDatalist();
         // Clear the fields for the next item, keep the panel open.
@@ -4625,6 +4706,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if ($id('itemsToggleLabel')) $id('itemsToggleLabel').textContent = '+ Item';
         ['itemNameInput', 'itemPriceInput', 'itemUnitInput'].forEach((idv) => { if ($id(idv)) $id(idv).value = ''; });
         if ($id('itemQtyInput')) $id('itemQtyInput').value = '1';
+        const unitNow = $id('itemUnitNow');
+        if (unitNow) { unitNow.textContent = 'Pick a unit (optional)'; unitNow.classList.add('is-none'); }
+        const pl = $id('itemPriceLabel');
+        if (pl) pl.textContent = 'Price (₱)';
+        $id('itemBuyHint')?.classList.add('hidden');
+        const warn = $id('itemShortWarn');
+        if (warn) warn.classList.add('hidden');
+        const addBtn = $id('addItemBtn');
+        if (addBtn) { addBtn.disabled = false; addBtn.classList.remove('opacity-50'); }
         refreshItemsEmptyState();
     }
 
@@ -4717,7 +4807,7 @@ document.addEventListener('DOMContentLoaded', () => {
             (a.items || []).forEach((it) => {
                 const name = it.itemName || it.material?.materialName || it.service?.serviceName;
                 if (name) {
-                    appendItemTag(name, it.unitPrice != null ? it.unitPrice : '', it.quantity, it.unitOfMeasure || '', it.inventoryItemId || '');
+                    appendItemTag(name, it.unitPrice != null ? it.unitPrice : '', it.quantity, it.unitOfMeasure || '', it.inventoryItemId || '', false, !!it.newBuy);
                     rememberItem(name, it.unitPrice != null ? it.unitPrice : '', it.unitOfMeasure || '');
                 }
             });
@@ -4795,6 +4885,7 @@ document.addEventListener('DOMContentLoaded', () => {
             unitPrice: tag.getAttribute('data-price') || '',
             quantity: tag.getAttribute('data-qty'),
             unitOfMeasure: tag.getAttribute('data-unit') || '',
+            newBuy: tag.getAttribute('data-newbuy') === '1' ? 1 : 0,
             // The rows are destroyed and recreated on every save, so this
             // has to travel with them or the line quietly stops spending
             // stock the next time the activity is edited.
