@@ -570,6 +570,17 @@ body.no-footer footer { display: none; }
     .hide-tabbar .team-float.has-ai { bottom: 5rem; }
 }
 
+/* The footer's green heart beats — two soft squeezes, then rest, the way
+   a heart actually sounds. Transform only, so nothing around it moves. */
+.footer-heart { animation: footerHeartbeat 2.6s ease-in-out infinite; transform-origin: center; }
+@keyframes footerHeartbeat {
+    0%, 28%, 100% { transform: scale(1); }
+    7% { transform: scale(1.25); }
+    14% { transform: scale(1); }
+    21% { transform: scale(1.18); }
+}
+@media (prefers-reduced-motion: reduce) { .footer-heart { animation: none; } }
+
 /* Simple utility for horizontal scrolling chip rows on mobile */
 .scroll-chips {
     @apply flex gap-2 overflow-x-auto pb-1 -mx-1 px-1;
