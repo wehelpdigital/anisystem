@@ -132,11 +132,8 @@
             fillMovePicker();
         }
 
-        function paintShelf() {
-            const list = $id('ivList');
-            if (!list) return;   // the board includes this without the module
-            list.innerHTML = ITEMS.map((i) => `
-                <div class="card" data-iv-card="${i.id}">
+        /** One card's inside — shared by fresh cards and refreshed ones. */
+        const cardInner = (i) => `
                     <div class="iv-card">
                         <span class="iv-face">${i.icon}</span>
                         <span class="iv-mid">
@@ -161,8 +158,44 @@
                                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
                             </button>
                         </span>
-                    </div>
-                </div>`).join('');
+                    </div>`;
+
+        function paintShelf() {
+            const list = $id('ivList');
+            if (!list) return;   // the board includes this without the module
+
+            /* Surgical, not wholesale. A card that already exists is kept —
+               node moved into place, content refreshed — so nothing flickers;
+               a new card eases in; a vanished one collapses out; a count that
+               changed pops once. innerHTML-the-lot killed every transition. */
+            const prev = new Map();
+            list.querySelectorAll('[data-iv-card]').forEach((n) => prev.set(n.getAttribute('data-iv-card'), n));
+            const frag = document.createDocumentFragment();
+            ITEMS.forEach((i) => {
+                const id = String(i.id);
+                let node = prev.get(id);
+                if (node) {
+                    prev.delete(id);
+                    const was = node.querySelector('.iv-have')?.textContent.trim();
+                    node.innerHTML = cardInner(i);
+                    const have = node.querySelector('.iv-have');
+                    if (was !== undefined && have && was !== have.textContent.trim()) {
+                        have.classList.add('iv-pop');
+                        have.addEventListener('animationend', () => have.classList.remove('iv-pop'), { once: true });
+                    }
+                } else {
+                    node = document.createElement('div');
+                    node.className = 'card';
+                    node.setAttribute('data-iv-card', id);
+                    node.dataset.animated = '1';
+                    node.innerHTML = cardInner(i);
+                    window.animateIn?.(node);
+                }
+                frag.appendChild(node);
+            });
+            // Gone from the data but still on screen: collapse them out.
+            prev.forEach((n) => window.animateOut ? window.animateOut(n, () => n.remove()) : n.remove());
+            list.appendChild(frag);
             $id('ivEmpty')?.classList.toggle('hidden', ITEMS.length > 0);
             const n = $id('ivCount');
             if (n) n.textContent = ITEMS.length;
@@ -170,11 +203,18 @@
             if (l) l.textContent = ITEMS.length === 1 ? 'item' : 'items';
         }
 
+        /* Which log lines have already been seen, so the first paint arrives
+           quietly and only genuine additions slide in. */
+        let LOGSEEN = null;
+
         function paintLog() {
             const box = $id('ivLog');
             if (!box) return;
+            const firstPaint = LOGSEEN === null;
+            const seen = LOGSEEN || new Set();
             if (!MOVES.length) {
                 box.innerHTML = '';
+                LOGSEEN = new Set();
                 $id('ivLogEmpty')?.classList.remove('hidden');
                 return;
             }
@@ -188,7 +228,8 @@
                     html += `<p class="iv-day-h">${esc(m.onSays || m.on || '')}</p>`;
                     lastDay = m.on;
                 }
-                html += `<div class="iv-move" data-iv-move="${m.id}">
+                const enter = !firstPaint && !seen.has(m.id) ? ' iv-line-enter' : '';
+                html += `<div class="iv-move${enter}" data-iv-move="${m.id}">
                     <span class="iv-move-e" title="${esc(m.reasonLabel)}">${m.reasonIcon}</span>
                     <span class="iv-move-t">
                         <span class="iv-move-n">${esc(m.itemName)}</span>
@@ -205,7 +246,10 @@
                 </div>`;
             });
             box.innerHTML = html;
+            LOGSEEN = new Set(MOVES.map((m) => m.id));
         }
+
+        let TOTSEEN = new Map();
 
         function paintTotals() {
             const box = $id('ivTotals');
@@ -217,6 +261,17 @@
                     <span class="iv-total-q ${i.isLow || i.onHand < 0 ? 'is-low' : (i.onHand === 0 ? 'is-none' : '')}">${i.onHand !== 0 ? esc(say(i, i.onHand)) : (i.hasMoves ? 'none' : 'not counted yet')}</span>
                 </div>`).join('');
             $id('ivTotalsEmpty')?.classList.toggle('hidden', ITEMS.length > 0);
+            // A figure that moved pops once — the eye is told which one.
+            const now = new Map(ITEMS.map((i) => [i.id, i.says]));
+            box.querySelectorAll('.iv-total').forEach((row, idx) => {
+                const i = ITEMS[idx];
+                if (i && TOTSEEN.size && TOTSEEN.has(i.id) && TOTSEEN.get(i.id) !== i.says) {
+                    const q = row.querySelector('.iv-total-q');
+                    q.classList.add('iv-pop');
+                    q.addEventListener('animationend', () => q.classList.remove('iv-pop'), { once: true });
+                }
+            });
+            TOTSEEN = now;
         }
 
         /* ---------------- tabs ---------------- */
@@ -711,11 +766,16 @@
                 confirmText: 'Delete',
             }) : true;
             if (!ok) return;
+            /* The card leaves NOW — a delete that waits for the server reads
+               as a delete that did not take. If the server disagrees, load()
+               below repaints the truth and the card returns. */
+            const card = document.querySelector(`[data-iv-card="${id}"]`);
+            if (card) window.animateOut ? window.animateOut(card, () => card.remove()) : card.remove();
             try {
                 const res = await api(U.destroy(id), { method: 'DELETE' });
                 toast(res.message);
                 await load();
-            } catch (err) { toast(err.message, 'error'); }
+            } catch (err) { toast(err.message, 'error'); await load(); }
         }
 
         window.__ivApi = {

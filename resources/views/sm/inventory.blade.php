@@ -95,6 +95,17 @@
     .iv-total-q.is-none { color: var(--color-gray-300); }
 
     .iv-empty { text-align: center; padding: 2.2rem 1rem; }
+
+    /* MOTION. New log lines slide in; a number that changed pops once. The
+       cards themselves ride the app's own list-item-enter/-leave. */
+    @keyframes ivLineIn { from { opacity: 0; transform: translateX(-.6rem); } to { opacity: 1; transform: none; } }
+    .iv-line-enter { animation: ivLineIn .28s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes ivPop { 0% { transform: scale(1); } 45% { transform: scale(1.14); } 100% { transform: scale(1); } }
+    .iv-pop { animation: ivPop .34s cubic-bezier(.22,1,.36,1); transform-origin: left center; display: inline-block; }
+    @media (prefers-reduced-motion: reduce) {
+        .iv-line-enter, .iv-pop { animation: none; }
+    }
+    html.sm-still .iv-line-enter, html.sm-still .iv-pop { animation: none; }
     .iv-unitrow { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
 
     html.dark .iv-face { background: #25311b; }
