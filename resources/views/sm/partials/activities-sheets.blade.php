@@ -540,10 +540,18 @@
                          a picker with nothing in it is a question with no
                          answers. --}}
                     <div id="itemStockWrap" class="hidden">
-                        <label class="form-label text-xs! mb-1!" for="itemStockPick">Take it from the inventory?</label>
-                        <select id="itemStockPick" class="form-select bg-white!">
+                        <label class="form-label text-xs! mb-1!">Take it from the inventory?</label>
+                        {{-- The select holds the VALUE (everything downstream
+                             reads it); the tag is its face, and the sheet its
+                             list — the lot form's idiom. --}}
+                        <select id="itemStockPick" class="hidden" aria-hidden="true" tabindex="-1">
                             <option value="">No — just list it on this activity</option>
                         </select>
+                        <button type="button" class="crop-tag" id="itemStockBtn">
+                            <span class="crop-tag-e" id="itemStockIcon">🎒</span>
+                            <span class="crop-tag-t is-none" id="itemStockNow">No — just list it on this activity</span>
+                            <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                        </button>
                         <p class="form-hint" id="itemStockHint"></p>
                     </div>
 
@@ -555,8 +563,11 @@
                         <input type="text" id="itemNameInput" class="form-input bg-white!" list="itemNameList" maxlength="255" placeholder="e.g. Urea 46-0-0" autocomplete="off">
                         <datalist id="itemNameList"></datalist>
                     </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <div>
+                    {{-- A line off the shelf stops asking the price: the shed
+                         set it when the item joined, and a second answer here
+                         could only disagree. --}}
+                    <div class="grid grid-cols-2 gap-2" id="itemMoneyRow">
+                        <div id="itemPriceCell">
                             <label class="form-label text-xs! mb-1!" for="itemPriceInput">Price (₱)</label>
                             <input type="number" id="itemPriceInput" class="form-input bg-white!" list="itemPriceList" min="0" step="any" placeholder="0.00" inputmode="decimal">
                             <datalist id="itemPriceList"></datalist>
@@ -574,7 +585,14 @@
                              tick can convert: kilos off a bag-counted book,
                              ml off a litre one. --}}
                         <input type="text" id="itemUnitInput" class="form-input bg-white!" list="itemUnitList" maxlength="30" placeholder="e.g. kg, bottle, pack" autocomplete="off">
-                        <select id="itemUnitSelect" class="form-select bg-white! hidden" aria-label="Unit"></select>
+                        {{-- For a shed line: the select holds the value, the
+                             tag wears it, the sheet lists the item's kin. --}}
+                        <select id="itemUnitSelect" class="hidden" aria-hidden="true" tabindex="-1" aria-label="Unit"></select>
+                        <button type="button" class="crop-tag hidden" id="itemUnitBtn">
+                            <span class="crop-tag-e">⚖️</span>
+                            <span class="crop-tag-t" id="itemUnitNow"></span>
+                            <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                        </button>
                         <datalist id="itemUnitList">
                             @foreach (['kg','g','ml','l','bottle','sachet','piece','pack','bag','sack'] as $u)
                                 <option value="{{ $u }}"></option>
@@ -693,6 +711,26 @@
             </button>
         @endforeach
     </div>
+</div>
+
+{{-- Which shed line an activity item spends from — the stock picker's list. --}}
+<div class="sheet hidden" id="itemStockSheet" style="--sheet-width:28rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Take it from the inventory?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows" id="itemStockList"></div>
+</div>
+
+{{-- The unit a shed line is measured in — only units its book can convert. --}}
+<div class="sheet hidden" id="itemUnitSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Measured in what?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows" id="itemUnitList2"></div>
 </div>
 
 {{-- Tools menu: one sheet holding the toolbar actions (Drafts, Report, Search,

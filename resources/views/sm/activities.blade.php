@@ -2041,6 +2041,28 @@
         .day-type-opt.is-current strong { color: var(--color-brand-700); }
         html.dark .day-type-opt.is-current { background: rgb(107 159 61 / .16); }
         @media (prefers-reduced-motion: reduce) { .day-type-menu { animation: none; } }
+        /* The stock tag, before anything is picked, speaks quietly. */
+        #itemStockBtn .crop-tag-t.is-none { color: var(--color-gray-500); font-weight: 600; }
+        html.dark #itemStockBtn .crop-tag-t.is-none { color: #9aa78d; }
+
+        /* A material line inside the activity sheet: a small card. */
+        #itemsContainer { display: flex; flex-direction: column; gap: .45rem; }
+        .mline { display: flex; align-items: flex-start; gap: .6rem; width: 100%;
+            padding: .55rem .7rem; border-radius: .7rem; font-size: .84rem;
+            background: var(--color-white); border: 1px solid var(--color-gray-200); }
+        .mline.is-stock { background: #f2f8ec; border-color: #dcead0; }
+        .mline-t { flex: 1 1 auto; min-width: 0; }
+        .mline-t b { display: block; font-weight: 800; color: var(--color-gray-900); line-height: 1.3; }
+        .mline-t small { display: block; font-size: .72rem; color: var(--color-gray-500); margin-top: .1rem; }
+        .mline-t .mline-w { color: #4a7c2a; }
+        .mline .remove-item-tag { flex: none; width: 1.6rem; height: 1.6rem; border-radius: 999px;
+            color: var(--color-gray-400); }
+        .mline .remove-item-tag:hover { background: #fef2f2; color: #b91c1c; }
+        html.dark .mline { background: #151b12; border-color: #2b3a1c; }
+        html.dark .mline.is-stock { background: #1d2716; border-color: #2e3d20; }
+        html.dark .mline-t b { color: #e8efe1; }
+        html.dark .mline-t .mline-w { color: #a5c97e; }
+
         /* Meta strip: time + workers + materials/services on one wrapped row. */
         .activity-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .55rem; }
         /* THE DAY'S LENGTH AND ITS PEOPLE SIT BESIDE THE NAME — on desktop.

@@ -104,8 +104,15 @@ class InventoryController extends BaseScheduleController
                     'kin' => AsInventoryItem::kin($i->unit),
                     // The same kin with its words, for pickers that store
                     // words: the label round-trips through unitKeyFromWords.
+                    // toItem: one of THIS unit, in the item's own unit — the
+                    // activity sheet uses it to restate the shed's price per
+                    // whatever unit the line is typed in.
                     'kinSays' => array_map(
-                        fn ($k) => ['key' => $k, 'says' => AsInventoryItem::unitSays($k, false)],
+                        fn ($k) => [
+                            'key' => $k,
+                            'says' => AsInventoryItem::unitSays($k, false),
+                            'toItem' => AsInventoryItem::convert(1, $k, $i->unit),
+                        ],
                         AsInventoryItem::kin($i->unit)
                     ),
                     'lowAt' => $i->lowAt ? (float) $i->lowAt : null,
