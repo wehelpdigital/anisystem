@@ -14,20 +14,30 @@
         border: 1px solid var(--color-gray-200); cursor: pointer; }
     .wtp-tab.is-on { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
 
-    /* The price, said before anything is spent. */
-    .wtp-quote { display: flex; align-items: center; gap: .7rem; padding: .8rem .9rem; border-radius: .9rem;
-        background: linear-gradient(115deg, #f3f8ec, #e4efd4); border: 1px solid #cfe3b8; margin-bottom: 1rem; }
+    /* The price, said before anything is spent: one titled container that
+       folds to its headline, holding two small cards — what it costs, and
+       how to hold the answer. The fold ANIMATES (grid-rows trick) rather
+       than snapping between two layouts. */
+    .wtp-quote { border-radius: .9rem; margin-bottom: 1rem; overflow: hidden;
+        background: linear-gradient(115deg, #f3f8ec, #e4efd4); border: 1px solid #cfe3b8; }
     .wtp-quote b { color: #2d5016; }
-    .wtp-quote .q-ico { font-size: 1.4rem; }
-    .wtp-quote .q-t { flex: 1 1 auto; min-width: 0; font-size: .82rem; color: #3d5226; line-height: 1.45; }
-    .wtp-quote .q-x { flex: none; align-self: flex-start; width: 1.5rem; height: 1.5rem; border-radius: 999px;
-        color: #3d5226; opacity: .55; font-size: .8rem; }
-    .wtp-quote .q-x:hover { opacity: 1; background: rgb(0 0 0 / .06); }
-    /* Shrunk: one line of price, and the card itself is the way back open. */
-    .wtp-quote.is-min { padding: .55rem .8rem; cursor: pointer; }
-    .wtp-quote.is-min .q-x { display: none; }
-    html.dark .wtp-quote .q-x { color: #a8bd93; }
-    html.dark .wtp-quote .q-x:hover { background: rgb(255 255 255 / .08); }
+    .q-head { display: flex; align-items: center; gap: .6rem; width: 100%; text-align: left;
+        padding: .7rem .9rem; cursor: pointer; }
+    .q-head .q-ico { font-size: 1.15rem; flex: none; }
+    .q-title { flex: 1 1 auto; min-width: 0; font-size: .84rem; font-weight: 800; color: #2d5016; }
+    .q-hint { flex: none; font-size: .74rem; font-weight: 700; color: #3d5226; opacity: 0;
+        transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .is-min .q-hint { opacity: .8; }
+    .q-c { flex: none; width: 1rem; height: 1rem; color: #3d5226; opacity: .6;
+        transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .is-min .q-c { transform: rotate(-90deg); }
+    .q-body { display: grid; grid-template-rows: 1fr; opacity: 1;
+        transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+    .is-min .q-body { grid-template-rows: 0fr; opacity: 0; }
+    .q-body-in { overflow: hidden; min-height: 0; display: grid; gap: .5rem; padding: 0 .9rem; }
+    .q-body-in::after { content: ''; height: .4rem; }
+    .q-card { border-radius: .7rem; padding: .6rem .75rem; font-size: .82rem; color: #3d5226;
+        line-height: 1.5; background: rgb(255 255 255 / .6); border: 1px solid rgb(207 227 184 / .8); }
 
     /* The wizard: steps slide past each other; the rail says where you are. */
     .wtp-wiz { position: relative; overflow: hidden; }
@@ -57,7 +67,8 @@
     @media (min-width: 640px) { .wtp-probs { grid-template-columns: 1fr 1fr; } }
     .wtp-prob { display: flex; align-items: center; gap: .55rem; padding: .55rem .7rem; border-radius: .7rem;
         border: 1.5px solid var(--color-gray-200); background: var(--color-white); cursor: pointer;
-        font-size: .8rem; font-weight: 600; color: var(--color-gray-700); }
+        font-size: .8rem; font-weight: 600; color: var(--color-gray-700);
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
     .wtp-prob input { accent-color: #4a7c2a; width: 1rem; height: 1rem; flex: none; }
     .wtp-prob.is-on { border-color: var(--color-brand-500); background: var(--color-brand-50); }
 
@@ -72,13 +83,22 @@
     .wtp-run:disabled { opacity: .6; }
     @keyframes wtpTide { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
 
-    /* While the model thinks: the wait-card idiom, one scene deep. */
-    .wtp-wait { display: none; flex-direction: column; align-items: center; gap: .6rem; padding: 2rem 1rem; text-align: center; }
-    .wtp-wait.is-on { display: flex; }
+    /* While the model thinks: a veil over the WHOLE page — tabs, buttons,
+       everything — so nothing invites a click that would abandon the run. */
+    .wtp-wait { position: fixed; inset: 0; z-index: 110; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: .6rem; padding: 2rem 1.2rem; text-align: center;
+        background: rgb(250 250 248 / .98); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        opacity: 0; visibility: hidden; pointer-events: none;
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), visibility .28s; }
+    .wtp-wait.is-on { opacity: 1; visibility: visible; pointer-events: auto; }
     .wtp-wait .w-spin { width: 2.4rem; height: 2.4rem; border-radius: 999px; border: 3px solid var(--color-brand-200);
         border-top-color: var(--color-brand-600); animation: wtpSpin .8s linear infinite; }
     @keyframes wtpSpin { to { transform: rotate(360deg); } }
     .wtp-wait p { font-size: .85rem; color: var(--color-gray-500); max-width: 22rem; }
+    .wtp-wait .w-stay { font-size: .8rem; font-weight: 700; color: #b45309; }
+    html.dark .wtp-wait { background: rgb(13 17 9 / .98); }
+    html.dark .wtp-wait p b { color: #e8efe1; }
+    html.dark .wtp-wait .w-stay { color: #fbbf24; }
 
     /* ---- THE REPORT ---- */
     .wtp-report { display: grid; gap: .9rem; }
@@ -148,7 +168,9 @@
     html.dark .wtp-tab.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
     html.dark .wtp-quote { background: linear-gradient(115deg, #1c2913, #22301a); border-color: #2b3a1c; }
     html.dark .wtp-quote b { color: #cfe6b8; }
-    html.dark .wtp-quote .q-t { color: #a8bd93; }
+    html.dark .q-title { color: #cfe6b8; }
+    html.dark .q-hint, html.dark .q-c { color: #a8bd93; }
+    html.dark .q-card { background: rgb(255 255 255 / .05); border-color: #2b3a1c; color: #a8bd93; }
     html.dark .wtp-q { color: #e8efe1; }
     html.dark .wtp-choice, html.dark .wtp-prob { background: #151b12; border-color: #2b3a1c; color: #d5e3c5; }
     html.dark .wtp-choice.is-on { background: #22301a; border-color: #6b9f3d; color: #cfe6b8; }
@@ -235,6 +257,7 @@
         .wtp-step.is-on { animation: none; }
         .wtp-run { animation: none; }
         .wtp-mbar, .wtp-seg, .wtp-threat, .wtp-dot { transition: none; transform: none; opacity: 1; }
+        .wtp-wait, .q-body, .q-c, .q-hint, .wtp-prob { transition: none; }
     }
 </style>
 
@@ -246,9 +269,18 @@
 
     <div id="wtpGen">
         <div class="wtp-quote" id="wtpQuote" hidden>
-            <span class="q-ico">🔎</span>
-            <span class="q-t" id="wtpQuoteText"></span>
-            <button type="button" class="q-x" id="wtpQuoteX" aria-label="Shrink this note" title="Shrink this note">✕</button>
+            <button type="button" class="q-head" id="wtpQuoteHead" aria-expanded="true">
+                <span class="q-ico">🔎</span>
+                <span class="q-title">Before you run one</span>
+                <span class="q-hint" id="wtpQuoteHint"></span>
+                <svg class="q-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="q-body">
+                <div class="q-body-in">
+                    <div class="q-card" id="wtpQuoteCost"></div>
+                    <div class="q-card" id="wtpQuoteTreat">Treat the result as a guide: the weather always keeps some surprises. Still, a window built from real data is a much better starting point than guessing.</div>
+                </div>
+            </div>
         </div>
 
         <div class="card p-5 wtp-wiz" id="wtpWiz">
@@ -308,6 +340,7 @@
             <div class="wtp-wait" id="wtpWait">
                 <span class="w-spin"></span>
                 <p><b>Reading the climate for your field…</b><br>Typhoon seasonality, the wet and dry rhythm, and your crop's own calendar. Half a minute, usually.</p>
+                <p class="w-stay">Please stay on this screen — leaving it loses this run.</p>
             </div>
 
             <div class="wtp-dots" id="wtpDots"></div>
@@ -426,29 +459,26 @@
         const q = $id('wtpQuote');
         if (!OPT) return;
         if (!OPT.canUse) {
-            $id('wtpQuoteText').innerHTML = esc(OPT.whyNot || 'The analysis is not available right now.');
+            $id('wtpQuoteCost').innerHTML = esc(OPT.whyNot || 'The analysis is not available right now.');
+            $id('wtpQuoteTreat').hidden = true;
+            $id('wtpQuoteHint').textContent = '';
             q.classList.remove('is-min');
             q.hidden = false;
             return;
         }
         if (!OPT.quote) { q.hidden = true; return; }
         q.classList.toggle('is-min', quoteMin);
-        $id('wtpQuoteText').innerHTML = quoteMin
-            ? `One analysis spends about <b>${OPT.quote} credits</b>.`
-            : `One analysis spends about <b>${OPT.quote} credits</b>, and you have <b>${Number(OPT.balance).toLocaleString()}</b>. Nothing is charged until you press Run. Treat the result as a guide: the weather always keeps some surprises. Still, a window built from real data is a much better starting point than guessing.`;
+        $id('wtpQuoteHead').setAttribute('aria-expanded', quoteMin ? 'false' : 'true');
+        $id('wtpQuoteCost').innerHTML = `One analysis spends <b>${OPT.quote} credits</b>, and you have <b>${Number(OPT.balance).toLocaleString()}</b>. Nothing is charged until you press Run.`;
+        $id('wtpQuoteTreat').hidden = false;
+        // The folded card still says the one number that matters.
+        $id('wtpQuoteHint').textContent = `${OPT.quote} credits`;
         q.hidden = false;
     }
 
-    $id('wtpQuoteX').addEventListener('click', (e) => {
-        e.stopPropagation();
-        quoteMin = true;
-        try { localStorage.setItem(QUOTE_MIN_KEY, '1'); } catch (_) { /* not remembered */ }
-        paintQuote();
-    });
-    $id('wtpQuote').addEventListener('click', () => {
-        if (!$id('wtpQuote').classList.contains('is-min')) return;
-        quoteMin = false;
-        try { localStorage.setItem(QUOTE_MIN_KEY, '0'); } catch (_) { /* not remembered */ }
+    $id('wtpQuoteHead').addEventListener('click', () => {
+        quoteMin = !quoteMin;
+        try { localStorage.setItem(QUOTE_MIN_KEY, quoteMin ? '1' : '0'); } catch (_) { /* not remembered */ }
         paintQuote();
     });
 
@@ -485,7 +515,7 @@
             + `${state.variety ? ' · ' + esc(state.variety) : ''} · ${esc(OPT.seasons[state.season] || '')} ${state.year}`
             + ` · ${esc(state.location)}`
             + (state.problems.length ? `<br><span class="text-xs">${state.problems.length} field problem${state.problems.length === 1 ? '' : 's'} considered</span>` : '');
-        $id('wtpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (~${OPT.quote} credits)` : 'Run the analysis';
+        $id('wtpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
         $id('wtpRunFine').textContent = OPT.canUse
             ? 'Charged to the same AI credits your questions use — it shows in your subscription’s credit log.'
             : (OPT.whyNot || '');
@@ -549,9 +579,30 @@
         $id('wtpCropSearch').focus();
     });
 
+    /* Some troubles cannot share a field: clay that cracks is not sand that
+       drains, a field that floods is not fast-draining, one water answer at
+       a time, one waterside at a time. Ticking one quietly unticks its
+       opposite instead of letting the form claim both. */
+    const PROB_FOES = {
+        cracking: ['sandy'],
+        sandy: ['cracking', 'floods'],
+        floods: ['sandy'],
+        river: ['sea'],
+        sea: ['river'],
+        water_source: ['rainfed'],
+        rainfed: ['water_source'],
+    };
     $id('wtpProbs').addEventListener('change', (e) => {
         const l = e.target.closest('.wtp-prob');
         if (l) l.classList.toggle('is-on', e.target.checked);
+        if (!e.target.checked) return;
+        (PROB_FOES[e.target.value] || []).forEach((k) => {
+            const foe = document.querySelector(`#wtpProbs input[value="${k}"]`);
+            if (foe && foe.checked) {
+                foe.checked = false;
+                foe.closest('.wtp-prob')?.classList.remove('is-on');
+            }
+        });
     });
 
     /* ---------------- the run ---------------- */

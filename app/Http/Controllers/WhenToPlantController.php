@@ -91,19 +91,18 @@ class WhenToPlantController extends Controller
         ]]);
     }
 
+    /** The house's flat price for one analysis, in credits — the owner set
+     *  it; the metered cost (~19 on real runs) sits under it. */
+    public const PRICE = 50;
+
     /**
-     * The standing price, quoted before anything is spent. Measured with the
-     * same estimate the wall enforces, over a stand-in for the real prompt —
-     * one number, shown up front, so the farmer decides with it in hand.
+     * The standing price, quoted before anything is spent — one number,
+     * shown up front, so the farmer decides with it in hand. Flat, not
+     * metered: the number said first is exactly the number charged.
      */
     private function quote(AiSetting $settings): float
     {
-        /* estimate() budgets a chat-sized answer; this module's answer is a
-         * full JSON report — twelve scored months, a staged timeline, the
-         * threats — which measured ~2.7× that on real runs. Quoted at the
-         * measured weight, so the number said first is the number charged,
-         * near enough. */
-        return ceil($this->credits->estimate($settings, str_repeat('x', 3600)) * 2.7);
+        return (float) self::PRICE;
     }
 
     /** Run the analysis. Nothing is saved unless the farmer asks to keep it. */
@@ -138,7 +137,7 @@ class WhenToPlantController extends Controller
         $balance = $this->credits->balance($payer->id);
         $estimate = $this->quote($settings);
         if ($balance < $estimate && ! $this->credits->unlimited($payer->id)) {
-            return $this->json(false, 'You need about ' . ceil($estimate) . ' credits for this analysis and have '
+            return $this->json(false, 'You need ' . ceil($estimate) . ' credits for this analysis and have '
                 . rtrim(rtrim(number_format($balance, 2), '0'), '.') . '.',
                 ['outOfCredits' => true], 402);
         }
@@ -238,7 +237,9 @@ class WhenToPlantController extends Controller
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
             $p = json_decode((string) ($row->params ?? '[]'), true) ?: [];
             $crop = CropCatalog::CROPS[$p['crop'] ?? ''] ?? ['label' => 'Crop'];
-            $charged = $this->credits->priceFor($settings, (int) $result['tokensIn'], (int) $result['tokensOut']);
+            // The flat price, exactly as quoted — never the meter's smaller
+            // figure, and never a surprise above the number the farmer read.
+            $charged = (float) self::PRICE;
             $this->credits->chargeAllowingNegative($payerId, $charged,
                 'When-to-plant analysis — ' . $crop['label'] . ', ' . ($p['year'] ?? ''));
 
