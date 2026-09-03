@@ -642,8 +642,12 @@
             const newPrice = $id('ivMoveNewPrice');
             if (newPrice) newPrice.value = '';
             // Each opening starts from Today; yesterday's choice belonged to
-            // yesterday's item.
-            START.move = { mode: 'today', date: null };
+            // yesterday's item. Except when the sheet was opened FROM a day —
+            // the day menu's date is the asker's answer, and a new item's
+            // Start chooser must not quietly trade it back for Today.
+            START.move = (o.date && o.date !== todayISO())
+                ? { mode: 'date', date: o.date }
+                : { mode: 'today', date: null };
             fillMovePicker(o.itemId);
             openSheet('ivMoveSheet');
             setTimeout(() => $id('ivMoveQty')?.focus(), 280);
@@ -699,6 +703,8 @@
                 toast(res.message);
                 closeSheet('ivMoveSheet');
                 await load();
+                // The board notes the shed's day, when the board is here.
+                window.ivDayChanged?.();
             } catch (err) { toast(err.message, 'error'); }
             finally { btn.disabled = false; }
         }

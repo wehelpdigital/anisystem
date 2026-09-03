@@ -2726,10 +2726,38 @@
         }
         @media (prefers-reduced-motion: reduce) { .rest-day-marker { transition: none; } }
         .rest-day-marker.drag-over { border-color: #6b9f3d; background: #f3f8ec; }
+        /* A rest day holding shed notes is not empty: it opens past the 6rem
+           crop, top-aligns its column, and stays on the board even when empty
+           dates are folded away. (Placed after the fold rules on purpose —
+           equal specificity, later wins.) */
+        .rest-day-marker:has(.ivn-row) { max-height: none; align-items: flex-start; }
+        body.hide-empty-dates .rest-day-marker:has(.ivn-row),
+        .rest-day-marker.filters-active:has(.ivn-row) {
+            max-height: none; opacity: 1; margin-bottom: .9rem;
+            padding: .55rem .8rem; border-width: 1.5px;
+        }
+        .rest-day-marker .day-ivnotes { margin: .4rem 0 .1rem; }
         .rest-day-date { display: block; font-weight: 600; font-size: .82rem; color: #4b5563; }
         .rest-day-tag { display: block; font-size: .72rem; color: #9ca3af; }
 
         .progress-marker { margin: -0.35rem 0 .9rem; }
+
+        /* THE SHED'S NOTES ON A DAY. Dressed like the day's other notes — a
+           soft row, not a ledger card — tinted by direction: arriving is the
+           board's green family, leaving is the amber the count warnings wear. */
+        .day-ivnotes { margin: .55rem .7rem 0; display: flex; flex-direction: column; gap: .35rem; }
+        .date-activities > .day-ivnotes { margin: .5rem 0; }
+        .day-ivnotes[hidden] { display: none; }
+        .ivn-row { display: flex; align-items: baseline; gap: .5rem; padding: .5rem .7rem;
+            border-radius: .7rem; font-size: .82rem; line-height: 1.45;
+            background: #f2f8ec; border: 1px solid #dcead0; color: #3d5226; }
+        .ivn-row.is-out { background: #fdf7ec; border-color: #f0e2c2; color: #6b5220; }
+        .ivn-e { flex: none; font-size: .95rem; }
+        .ivn-t { min-width: 0; }
+        .ivn-t b { font-weight: 800; }
+        .ivn-t small { font-size: .74rem; opacity: .75; }
+        html.dark .ivn-row { background: #1d2716; border-color: #2e3d20; color: #c5d8b0; }
+        html.dark .ivn-row.is-out { background: #292112; border-color: #423618; color: #dcc48c; }
         .progress-marker-line {
             display: flex; align-items: center; justify-content: space-between; gap: .5rem; flex-wrap: wrap;
             border-top: 2px dashed #f59e0b; padding-top: .45rem;
@@ -3613,6 +3641,9 @@
                     <div class="grow min-w-0">
                         <span class="rest-day-date">{{ $item['carbon']->format('l, F j, Y') }}</span>
                         <span class="rest-day-tag">No activities scheduled</span>
+                        {{-- A delivery logged on a quiet day still needs a
+                             place to read as a note. --}}
+                        <div class="day-ivnotes" data-date="{{ $item['date'] }}" hidden></div>
                     </div>
                     <button type="button" class="btn btn-white btn-sm rest-day-add-btn shrink-0" data-date="{{ $item['date'] }}">+ Add</button>
                 </div>
@@ -3670,6 +3701,7 @@
                         <div class="grow min-w-0">
                             <span class="rest-day-date">{{ $dateCarbon->format('l, F j, Y') }}</span>
                             <span class="rest-day-tag">No activities scheduled</span>
+                            <div class="day-ivnotes" data-date="{{ $dateKey }}" hidden></div>
                         </div>
                         <button type="button" class="btn btn-white btn-sm rest-day-add-btn shrink-0" data-date="{{ $dateKey }}">+ Add</button>
                     </div>
@@ -3794,13 +3826,13 @@
                              the day showed nothing, and only a redraw of that
                              day ever brought it out. --}}
                         <div class="day-income-block" data-date="{{ $dateKey }}" data-block-sort="{{ ($incomeSortByDate[$dateKey] ?? null) === null ? '' : $incomeSortByDate[$dateKey] }}" hidden></div>
-                        {{-- And what the shed did on this day: what an
-                             activity spent when it was ticked done, and
-                             anything logged by hand from the day menu. Its
-                             place is painted here even when empty, for the
-                             same reason the income strip's is — a strip that
-                             only the JS renderer ever creates has nowhere to
-                             land on a freshly loaded page. --}}
+                        {{-- The shed's notes for this day — each hand-made
+                             move as one note-shaped row, filled by the JS
+                             painter from DAY_IV_NOTES. The host exists on the
+                             fresh page for the same reason the income strip's
+                             does: a div only the JS rebuild creates has
+                             nowhere to land on first load. --}}
+                        <div class="day-ivnotes" data-date="{{ $dateKey }}" hidden></div>
                     @endif
                     @php
                         // Interleave positioned inline notes with the day's cards by order.
@@ -5333,6 +5365,8 @@
     // Per-day extra expenses (amount + note), keyed by date. Seeded from the
     // server; kept live by the expense sheet so day strips re-render without a
     // reload. { 'YYYY-MM-DD': [{id, amount, note}, ...] }
+    window.DAY_IV_NOTES = @json($dayInventoryNotes ?? (object) []);
+    if (Array.isArray(window.DAY_IV_NOTES)) window.DAY_IV_NOTES = {};
     window.DAY_EXPENSES = @json($dayExpensesForJs);
     // A keyed collection JSON-encodes to an object; an empty one becomes [].
     if (Array.isArray(window.DAY_EXPENSES)) window.DAY_EXPENSES = {};

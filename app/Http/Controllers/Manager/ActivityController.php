@@ -92,9 +92,35 @@ class ActivityController extends BaseScheduleController
          * a whole season of them is smaller than one day's activities, and
          * fetching per day would mean a request for every day that has
          * nothing to show. */
-        /* The per-day inventory strip these queries fed was removed from the
-         * board — the Inventory module is the log's home. Two queries fewer
-         * on a page that fires plenty. */
+        /* The shed's hand-made moves, one note per move on its day. Only the
+         * hand's: an activity's own spend already shows on its card, and the
+         * birth line is not stock. (The old SUMMARY strip — "1 change" — was
+         * removed at the owner's asking; these note-shaped lines are what he
+         * asked for instead.) */
+        $ivNoteItems = \App\Models\AsInventoryItem::where('croppingScheduleId', $schedule->id)
+            ->get()->keyBy('id');
+        $dayInventoryNotes = \App\Models\AsInventoryMove::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)
+            ->whereIn('reason', ['in', 'out', 'open', 'adjust'])
+            ->orderBy('id')
+            ->get()
+            ->groupBy(fn ($m) => $m->happenedOn?->format('Y-m-d'))
+            ->map(fn ($grp) => $grp->map(function ($m) use ($ivNoteItems) {
+                $item = $ivNoteItems->get($m->itemId);
+
+                return [
+                    'id' => $m->id,
+                    'name' => $item->name ?? 'Removed item',
+                    'icon' => $item?->icon() ?? '📦',
+                    'isIn' => $m->isIn(),
+                    'says' => $item ? $item->say(abs((float) $m->delta)) : (string) abs((float) $m->delta),
+                    'reasonLabel' => $m->reasonLabel(),
+                    'typedSays' => ($m->enteredQty !== null && $m->enteredUnit)
+                        ? \App\Models\AsInventoryItem::trim((float) $m->enteredQty) . ' ' . \App\Models\AsInventoryItem::unitSays($m->enteredUnit, abs((float) $m->enteredQty) == 1.0)
+                        : null,
+                    'note' => $m->note,
+                ];
+            })->values());
 
         $activeVersion = $schedule->versions->firstWhere('isActive', true)
             ?? $schedule->versions->firstWhere('isOriginal', true)
@@ -135,6 +161,7 @@ class ActivityController extends BaseScheduleController
                 ->where('versionId', $activeVersion?->id)
                 ->pluck('activityTitle', 'id')->all(),
             'inlineNotesByDate' => $inlineNotesByDate,
+            'dayInventoryNotes' => $dayInventoryNotes,
             'expensesByDate'    => $expensesByDate,
             'expenseSortByDate' => $expenseSortByDate,
             'incomeSortByDate'  => $incomeSortByDate,

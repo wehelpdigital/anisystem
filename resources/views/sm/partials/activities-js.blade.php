@@ -1855,6 +1855,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="grow min-w-0">
                 <span class="rest-day-date">${esc(prettyDateLong(dateKey))}</span>
                 <span class="rest-day-tag">No activities scheduled</span>
+                <div class="day-ivnotes" data-date="${esc(dateKey)}" hidden></div>
             </div>
             <button type="button" class="btn btn-white btn-sm rest-day-add-btn shrink-0${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Add an activity to this day'))}">+ Add</button>
         </div>`;
@@ -1959,7 +1960,7 @@ document.addEventListener('DOMContentLoaded', () => {
               // The twin of the Blade host div. Every day-card thing in this
               // module has two renderers, and the one that forgets is the one
               // whose strip vanishes on the next redraw.
-              ;
+              + `<div class="day-ivnotes" data-date="${esc(dateKey)}" hidden></div>`;
 
         const wrap = document.createElement('div');
         // Today's card wears a ring that breathes, so the eye finds the day
@@ -7207,8 +7208,60 @@ document.addEventListener('DOMContentLoaded', () => {
         placeMoneyBlocks();
     }
 
-    /* The per-day inventory strip lived here. Removed whole: the Inventory
-       module is the log's home, and the board does not need a second one. */
+    /* ---- THE SHED'S NOTES ON A DAY ----
+     *
+     * Each hand-made move reads on its day like a worker note: "Added 2 bags
+     * (50 kg) · Urea", with what the hand typed when that differed. Only the
+     * hand's moves — an activity's spend already lives on its card, and the
+     * whole ledger lives in the Inventory module. (This replaces, at the
+     * owner's asking, the counting-house summary that was removed.) */
+    const DAY_IV_NOTES = (window.DAY_IV_NOTES && typeof window.DAY_IV_NOTES === 'object'
+        && !Array.isArray(window.DAY_IV_NOTES)) ? window.DAY_IV_NOTES : {};
+    window.DAY_IV_NOTES = DAY_IV_NOTES;
+
+    function renderIvNotes(host) {
+        if (!host) return;
+        const dateKey = (host.getAttribute('data-date') || '').trim();
+        const rows = (dateKey && Array.isArray(DAY_IV_NOTES[dateKey])) ? DAY_IV_NOTES[dateKey] : [];
+        if (!rows.length) { host.innerHTML = ''; host.hidden = true; return; }
+        host.hidden = false;
+        host.innerHTML = rows.map((r) => `
+            <div class="ivn-row ${r.isIn ? '' : 'is-out'}">
+                <span class="ivn-e">${r.isIn ? '📥' : '📤'}</span>
+                <span class="ivn-t">
+                    <b>${r.isIn ? 'Added' : 'Expensed'} ${esc(r.says)}</b> · ${esc(r.icon)} ${esc(r.name)}
+                    <small>· ${esc(r.reasonLabel)}${r.typedSays ? ' · typed as ' + esc(r.typedSays) : ''}${r.note ? ' · ' + esc(r.note) : ''}</small>
+                </span>
+            </div>`).join('');
+    }
+
+    function hydrateIvNotes() {
+        $qsa('#activitiesList .day-ivnotes').forEach(renderIvNotes);
+    }
+
+    /* The move sheet tells the board a day changed; the board re-reads the
+       shed rather than guessing what one save did. */
+    window.ivDayChanged = async function ivDayChanged() {
+        try {
+            const res = await api(`{{ route('sm.inventory.list') }}?id=${SCHEDULE_ID}`, { method: 'GET' });
+            const byDay = {};
+            (res.data?.moves || []).forEach((m) => {
+                if (!m.on || ['activity', 'created'].includes(m.reason)) return;
+                (byDay[m.on] = byDay[m.on] || []).push({
+                    id: m.id, name: m.itemName, icon: m.icon, isIn: m.isIn,
+                    says: m.saysDelta, reasonLabel: m.reasonLabel,
+                    typedSays: m.typedSays || null, note: m.note,
+                });
+            });
+            Object.keys(byDay).forEach((d) => byDay[d].reverse());
+            Object.keys(DAY_IV_NOTES).forEach((k) => delete DAY_IV_NOTES[k]);
+            Object.assign(DAY_IV_NOTES, byDay);
+            hydrateIvNotes();
+        } catch (_) { /* the next full load will have it */ }
+    };
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', hydrateIvNotes, { once: true });
+    else hydrateIvNotes();
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', hydrateAllExpenseBlocks, { once: true });
     else hydrateAllExpenseBlocks();
