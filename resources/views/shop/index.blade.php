@@ -62,7 +62,7 @@
         <div class="shop-tile"><span>🧂</span>Fertilizer &amp; inputs<i>Priced per bag</i></div>
         <div class="shop-tile"><span>🛠️</span>Tools &amp; equipment<i>From bolo to pump</i></div>
         <div class="shop-tile"><span>🧤</span>Safety gear<i>For every activity</i></div>
-        <div class="shop-tile"><span>📖</span>Quick Guides<i>Short how-tos that pay for themselves</i></div>
+        <div class="shop-tile"><span>📖</span>Cheat Sheets<i>Short how-tos that pay for themselves</i></div>
         <div class="shop-tile"><span>👕</span>Fashion<i>Farm wear that works</i></div>
     </div>
 
