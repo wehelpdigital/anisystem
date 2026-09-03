@@ -1936,7 +1936,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // gates its own actions. Everything else here writes.
         const buttons = isNoDate ? '' : `
             <button type="button" class="date-header-btn group-add-activity-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Add a new activity to this date'))}">${SVG.plus}</button>
-            <span class="hidden md:flex items-center gap-0.5">
+            <span class="hidden items-center gap-0.5">
                 <button type="button" class="date-header-btn date-note-btn${LOCK_NOTE_CLS}" data-date="${esc(dateKey)}"${LOCK_NOTE} title="${esc(noteTitle('Add a note to this day'))}">${SVG.notePlus}</button>
                 <button type="button" class="date-header-btn day-expense-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Add an extra expense for this day'))}">${SVG.coin}</button>
                 <button type="button" class="date-header-btn date-marker-btn${hasMarker ? ' has-marker' : ''}${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle(hasMarker ? 'Edit the resume-here marker' : 'Drop a resume-here marker after this date'))}">${SVG.bookmark}</button>

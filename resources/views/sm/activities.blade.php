@@ -3722,7 +3722,10 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
                             </button>
                             {{-- Secondary day actions: inline on desktop, overflow sheet on phones. --}}
-                            <span class="hidden md:flex items-center gap-0.5">
+                            {{-- Never shown: the day's ⋮ is the door at every
+                                 width now. The buttons stay in the DOM because
+                                 the menu's rows forward their clicks here. --}}
+                            <span class="hidden items-center gap-0.5">
                                 {{-- The same lock the JS-rendered copy of this
                                      button carries. Without it the first render
                                      handed a worker who may not write notes a
