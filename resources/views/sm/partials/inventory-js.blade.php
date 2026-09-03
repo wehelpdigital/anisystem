@@ -136,8 +136,12 @@
                             {{-- A negative count is the season saying it used what
                                  nobody recorded receiving — the number IS the message,
                                  and "None left" would hide it. --}}
+                            {{-- "None left" is for a book that ran dry. A book
+                                 that has not begun says so instead — a fresh
+                                 item wearing "None left" reads as an accusation
+                                 about stock nobody ever recorded. --}}
                             <div class="iv-have ${i.isLow || i.onHand < 0 ? 'is-low' : (i.onHand === 0 ? 'is-none' : '')}">
-                                ${i.onHand !== 0 ? esc(say(i, i.onHand)) : 'None left'}
+                                ${i.onHand !== 0 ? esc(say(i, i.onHand)) : (i.hasMoves ? 'None left' : 'No stock recorded yet')}
                                 ${i.isLow && i.onHand > 0 ? '<span class="iv-low">low</span>' : ''}
                             </div>
                             ${i.unitPrice != null ? `<div class="iv-note">\u20b1${trim(i.unitPrice)} per ${esc(unitSays(i.unit, true))}</div>` : ''}
@@ -200,7 +204,7 @@
                 <div class="iv-total">
                     <span class="iv-total-e">${i.icon}</span>
                     <span class="iv-total-n">${esc(i.name)}</span>
-                    <span class="iv-total-q ${i.isLow || i.onHand < 0 ? 'is-low' : (i.onHand === 0 ? 'is-none' : '')}">${i.onHand !== 0 ? esc(say(i, i.onHand)) : 'none'}</span>
+                    <span class="iv-total-q ${i.isLow || i.onHand < 0 ? 'is-low' : (i.onHand === 0 ? 'is-none' : '')}">${i.onHand !== 0 ? esc(say(i, i.onHand)) : (i.hasMoves ? 'none' : 'not counted yet')}</span>
                 </div>`).join('');
             $id('ivTotalsEmpty')?.classList.toggle('hidden', ITEMS.length > 0);
         }
@@ -258,7 +262,8 @@
             if (askStart) { START.item = { mode: 'today', date: null }; sayStart('item'); }
             if (item) {
                 const says = $id('ivStockSays');
-                if (says) says.textContent = item.onHand > 0 ? say(item, item.onHand) + ' on hand.' : 'None on hand.';
+                if (says) says.textContent = item.onHand !== 0 ? say(item, item.onHand) + ' on hand.'
+                    : (item.hasMoves ? 'None on hand.' : 'Nothing recorded yet — + In writes the first count.');
                 $id('ivStockRow').dataset.item = item.id;
             }
             sayKind();
