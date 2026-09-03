@@ -239,6 +239,9 @@ class AppController extends Controller
             'scheduleCrops' => $scheduleCrops,
             'scheduleHasLocation' => $scheduleHasLocation,
             'aiBalance' => $aiBalance,
+            // Super admins spend from a bottomless pocket — the sidebar
+            // shows them an infinity, not a zero that looks like broke.
+            'aiUnlimited' => app(\App\Services\AiCreditService::class)->unlimited((int) $user->id),
             'latestBlog' => $latestBlog,
             'scheduleNext' => $scheduleNext,
             'latestDiscussions' => $latestDiscussions,
@@ -249,9 +252,6 @@ class AppController extends Controller
             'recentChats' => $recentChats,
             'openTickets' => $openTickets,
             'canUseAi' => $user->canUseAi(),
-            // Her name and her face, for the section that introduces her. The
-            // name is an admin's to change, so nothing hard-codes "Anee".
-            'aiSettings' => \App\Models\AiSetting::current(),
             // Her name and her face, for the section that introduces her. The
             // name is an admin's to change, so nothing hard-codes "Anee".
             'aiSettings' => \App\Models\AiSetting::current(),

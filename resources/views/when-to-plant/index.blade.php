@@ -469,7 +469,7 @@
         if (!OPT.quote) { q.hidden = true; return; }
         q.classList.toggle('is-min', quoteMin);
         $id('wtpQuoteHead').setAttribute('aria-expanded', quoteMin ? 'false' : 'true');
-        $id('wtpQuoteCost').innerHTML = `One analysis spends <b>${OPT.quote} credits</b>, and you have <b>${Number(OPT.balance).toLocaleString()}</b>. Nothing is charged until you press Run.`;
+        $id('wtpQuoteCost').innerHTML = `One analysis spends <b>${OPT.quote} credits</b>, and you have <b>${OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString()}</b>. Nothing is charged until you press Run.`;
         $id('wtpQuoteTreat').hidden = false;
         // The folded card still says the one number that matters.
         $id('wtpQuoteHint').textContent = `${OPT.quote} credits`;

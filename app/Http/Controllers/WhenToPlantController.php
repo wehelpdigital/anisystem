@@ -82,6 +82,9 @@ class WhenToPlantController extends Controller
             'quote' => $canUse ? $this->quote($settings) : null,
             'aneeFace' => $settings->faceUrl(),
             'balance' => round($this->credits->balance($payer->id), 2),
+            // A super admin's wallet has no floor — the note says infinity
+            // rather than a zero that reads as empty.
+            'unlimited' => $this->credits->unlimited((int) $payer->id),
             'canUse' => $canUse,
             'whyNot' => $canUse ? null
                 : ($settings->isUsable()
