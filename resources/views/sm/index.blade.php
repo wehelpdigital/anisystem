@@ -842,6 +842,17 @@
         </section>
     @endif
 
+        {{-- The phone's door to a new season: a full row above the search,
+             wearing the moving green, instead of a + hovering over the list.
+             Desktop keeps its own CTA below; workers and the archive view
+             get no door, same as the button this replaces. --}}
+        @if (! $isWorkerHere && ! ($showArchived ?? false))
+            <a href="{{ route('sm.create') }}" class="sch-add-cta md:hidden" id="schAddCta">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
+                Add New Cropping Schedule
+            </a>
+        @endif
+
         {{-- Search runs as you type (see the script below); the button-less form
              still submits on Enter as a no-JS fallback. --}}
         <form method="GET" action="{{ route('sm.index') }}" role="search" id="scheduleSearchForm" class="flex-1">
@@ -868,6 +879,24 @@
             @endif
         </div>
     </div>
+
+    <style>
+        /* The green door breathes: the field-green gradient drifts end to
+           end the way the day headers' wash does, so the button reads as
+           alive without shouting. Reduced motion holds it still. */
+        .sch-add-cta { display: flex; align-items: center; justify-content: center; gap: .5rem;
+            width: 100%; padding: .85rem 1rem; border-radius: 1rem; color: #fff;
+            font-weight: 800; font-size: .95rem; letter-spacing: .01em;
+            background: linear-gradient(115deg, #7bb24a, #4a7c2a 30%, #3d6823 55%, #6b9f3d 80%, #8fc96a);
+            background-size: 260% 100%;
+            box-shadow: 0 10px 22px -12px rgb(61 104 35 / .65);
+            animation: schAddTide 5.5s ease-in-out infinite alternate;
+            transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+        .sch-add-cta:active { transform: scale(.985); }
+        @keyframes schAddTide { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+        @media (prefers-reduced-motion: reduce) { .sch-add-cta { animation: none; background-position: 40% 50%; } }
+        html.dark .sch-add-cta { box-shadow: 0 10px 22px -12px rgb(0 0 0 / .7); }
+    </style>
 
     {{-- Two controls for the whole shelf. The orders live behind Filter
          rather than across the top: four pills that are mostly one answer
@@ -1149,14 +1178,8 @@
          the Archives: a shelf of finished seasons is not where anybody starts
          a new one, and a green + hanging over closed work reads as an
          invitation to do the wrong thing. --}}
-    @if (! $isWorkerHere && ! ($showArchived ?? false))
-    <a href="{{ route('sm.create') }}"
-        class="md:hidden fixed right-4 z-30 w-14 h-14 rounded-full btn-primary shadow-lg flex items-center justify-center sweep-fill sweep-green"
-        style="bottom: calc(3.5rem + 30px + env(safe-area-inset-bottom, 0px))"
-        aria-label="New cropping schedule">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
-    </a>
-    @endif
+    {{-- The floating + is gone: the phone's door to a new season is the
+         green row above the search field now, where it can say its name. --}}
 
     @if (\App\Support\WorkerContext::canUseModule('camera'))
         @include('sm.partials.quick-capture', ['allSchedules' => $allSchedules])

@@ -17,7 +17,7 @@
     </button>
     <div class="pymk-body" id="pymkBody">
         <div class="pymk-wrap">
-            <div class="pymk-rail" id="pymkRail">
+            <div class="pymk-rail drag-scroll" id="pymkRail">
                 @for ($i = 0; $i < 3; $i++)
                     <div class="pymk-skel" aria-hidden="true"></div>
                 @endfor

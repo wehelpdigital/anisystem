@@ -1809,16 +1809,22 @@ window.animToggleHidden = function animToggleHidden(el, hide, cls = 'hidden') {
     }
 };
 
-/* Chip strips (.scroll-chips) pan natively under a finger, but a mouse has no
-   native drag-to-scroll — grab-and-slide for desktop, delegated so strips
-   injected later (SPA modules) work too. A real drag swallows the click that
-   follows it, so sliding never activates a chip. */
+/* Sideways rails pan natively under a finger, but a mouse has no native
+   drag-to-scroll — grab-and-slide for desktop, delegated so strips injected
+   later (SPA modules) work too. `.drag-scroll` marks any rail that wants
+   this (the people-you-may-know rail, the post carousels); `.scroll-chips`
+   had it first. A real drag swallows the click that follows it, so sliding
+   never activates a chip or opens a profile. */
 document.addEventListener('pointerdown', (e) => {
     if (e.pointerType !== 'mouse' || e.button !== 0) return;
-    const strip = e.target.closest('.scroll-chips');
+    const strip = e.target.closest('.scroll-chips, .drag-scroll');
     if (!strip || strip.scrollWidth <= strip.clientWidth) return;
     const startX = e.clientX;
     const startLeft = strip.scrollLeft;
+    // Smooth-scrolling rails animate every scrollLeft write; the hand wants
+    // the rail glued to it, so smoothness stands down for the drag.
+    const smoothBefore = strip.style.scrollBehavior;
+    strip.style.scrollBehavior = 'auto';
     let dragged = false;
     const move = (ev) => {
         const dx = ev.clientX - startX;
@@ -1828,6 +1834,7 @@ document.addEventListener('pointerdown', (e) => {
     const up = () => {
         window.removeEventListener('pointermove', move);
         window.removeEventListener('pointerup', up);
+        strip.style.scrollBehavior = smoothBefore;
         if (dragged) {
             strip.addEventListener('click', (ce) => {
                 ce.preventDefault();

@@ -177,7 +177,10 @@
                         @if (\App\Support\WorkerContext::canUseCommunity())
                         <a href="{{ route('community.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('community.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Community</a>
                         @endif
-                        <a href="{{ route('tutorials.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('tutorials.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Tutorials</a>
+                        {{-- Tutorials left this row: the How-to-use module is
+                             that door now, and two ways in read as two
+                             different things. The page itself still answers
+                             its route for old links. --}}
                         <a href="{{ route('support.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('support.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Support</a>
                         <a href="{{ route('account.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('account.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Account</a>
                     </nav>
@@ -350,8 +353,7 @@
                             @if (auth()->user()->isSuperAdmin())
                                 {{-- The other hat. Only an admin ever renders
                                      this line; a client's menu is untouched. --}}
-                                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-bold text-brand-700 hover:bg-brand-50">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                <a href="{{ route('admin.dashboard') }}" class="block rounded-lg px-3 py-2.5 text-sm font-bold text-brand-700 hover:bg-brand-50">
                                     Admin Panel
                                 </a>
                             @endif
@@ -365,8 +367,7 @@
                                  hidden once installed, and hidden entirely on
                                  a browser that cannot install. --}}
                             <button type="button" id="pwaInstallBtn" hidden
-                                class="w-full flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-brand-700 hover:bg-brand-50">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+                                class="w-full text-left block rounded-lg px-3 py-2.5 text-sm font-medium text-brand-700 hover:bg-brand-50">
                                 Install to device
                             </button>
                             {{-- The way to reach a person. It existed as a page

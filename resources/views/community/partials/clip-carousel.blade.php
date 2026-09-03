@@ -15,7 +15,7 @@
 @endphp
 @if (count($ccClips) > 1)
     <div class="post-carousel pc-clips{{ ($mini ?? false) ? ' pc-mini' : '' }}" data-shots data-noauto>
-        <div class="pc-track">
+        <div class="pc-track drag-scroll">
             @foreach ($ccClips as $ccClip)
                 <div class="pc-slide">
                     @include('community.partials.video-embed', [

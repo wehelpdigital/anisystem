@@ -1,5 +1,11 @@
 @import 'tailwindcss';
 
+/* Night mode is the app's own switch (html.dark), not the OS's. Without this
+   the dark: utilities answered only to prefers-color-scheme — so the admin
+   panel's dark:text-* headings never fired for anyone who toggled night mode,
+   and fired wrongly in light mode for anyone whose OS runs dark. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
