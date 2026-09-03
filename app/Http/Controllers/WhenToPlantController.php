@@ -73,6 +73,8 @@ class WhenToPlantController extends Controller
                 'label' => $c['label'],
                 'icon' => $c['icon'],
                 'group' => $c['group'],
+                'maturity' => $c['maturity'] ?? null,
+                'perennial' => CropCatalog::isPerennial($key),
             ])->values(),
             'problems' => self::PROBLEMS,
             'seasons' => self::SEASONS,

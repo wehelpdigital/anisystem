@@ -174,6 +174,41 @@
     .wtp-plain { font-size: .875rem; line-height: 1.65; color: var(--color-gray-700); }
     html.dark .wtp-plain { color: #d5e3c5; }
 
+    /* The crop tag and its sheet — the lot form's dress, copied whole so a
+       farmer meets the same picker everywhere a crop is chosen. */
+    .crop-tag { display: flex; align-items: center; gap: .5rem; width: 100%;
+        padding: .65rem .8rem; border-radius: .8rem; cursor: pointer; text-align: left;
+        border: 1.5px solid var(--color-gray-200); background: var(--color-white);
+        transition: border-color .2s, background .2s; }
+    .crop-tag:hover { border-color: var(--color-brand-300); background: var(--color-brand-50); }
+    .crop-tag-e { font-size: 1.1rem; line-height: 1; flex: none; }
+    .crop-tag-t { flex: 1 1 auto; min-width: 0; font-size: .9rem; font-weight: 700; color: #3d6823;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .crop-tag-t.is-none { color: var(--color-gray-400); font-weight: 500; }
+    .crop-tag-c { width: 1rem; height: 1rem; flex: none; color: var(--color-gray-400); }
+    html.dark .crop-tag { background: #1c2416; border-color: #2b3a1c; }
+    html.dark .crop-tag-t { color: #a5c97e; }
+    .crop-search { position: relative; margin-bottom: .6rem; }
+    .crop-search svg { position: absolute; left: .8rem; top: 50%; transform: translateY(-50%);
+        width: 1.05rem; height: 1.05rem; color: var(--color-gray-400); pointer-events: none; }
+    .crop-search .form-input { padding-left: 2.4rem; padding-right: 2.2rem; }
+    .crop-search-x { position: absolute; right: .5rem; top: 50%; transform: translateY(-50%);
+        width: 1.6rem; height: 1.6rem; border-radius: 999px; color: var(--color-gray-400); }
+    .crop-search-x:hover { background: var(--color-gray-100); }
+    .crop-group-h { font-size: .68rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
+        color: var(--color-gray-400); margin: .8rem 0 .25rem; }
+    .crop-row { display: flex; align-items: center; gap: .65rem; width: 100%; text-align: left;
+        padding: .5rem .6rem; border-radius: .7rem; cursor: pointer; }
+    .crop-row:hover { background: var(--color-brand-50); }
+    .crop-row-e { font-size: 1.25rem; line-height: 1; flex: none; }
+    .crop-row-t { min-width: 0; }
+    .crop-row-t b { display: block; font-size: .875rem; font-weight: 700; color: var(--color-gray-900); }
+    .crop-row-t small { display: block; font-size: .7rem; color: var(--color-gray-400); }
+    .crop-none { font-size: .8rem; color: var(--color-gray-400); text-align: center; padding: 1rem 0; }
+    html.dark .crop-row:hover { background: #22301a; }
+    html.dark .crop-row-t b { color: #e8efe1; }
+    @media (prefers-reduced-motion: reduce) { .crop-tag, .crop-row { transition: none; } }
+
     /* The attach button wears Anee's own face. */
     .wtp-anee-face { width: 1.15rem; height: 1.15rem; border-radius: 999px; object-fit: cover; }
 
@@ -220,11 +255,17 @@
                 <p class="wtp-sub">The window is searched inside the season you actually farm.</p>
                 <div class="wtp-choices" id="wtpSeasons"></div>
             </section>
-            {{-- Step 3: the crop --}}
+            {{-- Step 3: the crop. The lot form's tag-and-sheet, not a
+                 dropdown: the tag wears the chosen crop's face, the sheet
+                 holds the whole searchable catalogue. --}}
             <section class="wtp-step" data-step="2">
                 <p class="wtp-q">What will you plant?</p>
                 <p class="wtp-sub">The same catalogue your lots choose from.</p>
-                <select id="wtpCrop" class="form-select"></select>
+                <button type="button" class="crop-tag" id="wtpCropBtn">
+                    <span class="crop-tag-e" id="wtpCropIcon">🌱</span>
+                    <span class="crop-tag-t is-none" id="wtpCropNow">Choose the crop</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
             </section>
             {{-- Step 4: the variety --}}
             <section class="wtp-step" data-step="3">
@@ -282,6 +323,25 @@
     </div>
 </div>
 
+{{-- The whole catalogue, searchable — the same rows the lot form shows. --}}
+<div class="sheet hidden" id="wtpCropSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Choose a crop</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="crop-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+            <input type="text" id="wtpCropSearch" class="form-input" autocomplete="off"
+                   placeholder="Search — palay, sayote, mangga…">
+            <button type="button" class="crop-search-x hidden" id="wtpCropSearchX" aria-label="Clear">✕</button>
+        </div>
+        <div id="wtpCropList"></div>
+        <p class="crop-none hidden" id="wtpCropNone">Nothing matches that. Try the local name, or pick “Vegetables — mixed”.</p>
+    </div>
+</div>
+
 <script>
 (() => {
     const $id = (x) => document.getElementById(x);
@@ -326,8 +386,18 @@
             <button type="button" class="wtp-choice" data-season="${k}"><span class="c-e">${seasonIcons[k] || '🌱'}</span><span>${esc(label)}<small>${esc(seasonSubs[k] || '')}</small></span></button>`).join('');
         const groups = {};
         OPT.crops.forEach((c) => { (groups[c.group] = groups[c.group] || []).push(c); });
-        $id('wtpCrop').innerHTML = '<option value="">Pick the crop…</option>' + Object.entries(groups).map(([g, list]) => `
-            <optgroup label="${esc(g)}">${list.map((c) => `<option value="${esc(c.key)}">${esc(c.icon)} ${esc(c.label)}</option>`).join('')}</optgroup>`).join('');
+        $id('wtpCropList').innerHTML = Object.entries(groups).map(([g, list]) => `
+            <div class="crop-group" data-crop-group>
+                <p class="crop-group-h">${esc(g)}</p>
+                ${list.map((c) => `
+                    <button type="button" class="crop-row" data-crop="${esc(c.key)}" data-find="${esc((c.label + ' ' + g).toLowerCase())}">
+                        <span class="crop-row-e">${esc(c.icon)}</span>
+                        <span class="crop-row-t">
+                            <b>${esc(c.label)}</b>
+                            <small>${c.perennial ? 'Tree crop — read by its age' : (c.maturity ? c.maturity + ' days to harvest' : '')}</small>
+                        </span>
+                    </button>`).join('')}
+            </div>`).join('');
         $id('wtpProbs').innerHTML = Object.entries(OPT.problems).map(([k, label]) => `
             <label class="wtp-prob" data-prob="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
         $id('wtpDots').innerHTML = Array.from({ length: STEPS }, (_, i) => `<span class="wtp-dot${i === 0 ? ' is-on' : ''}"></span>`).join('');
@@ -360,7 +430,7 @@
         switch (step) {
             case 0: return !!state.year || (toast('Pick the year first.', 'error'), false);
             case 1: return !!state.season || (toast('Pick the season.', 'error'), false);
-            case 2: state.crop = $id('wtpCrop').value; return !!state.crop || (toast('Pick the crop.', 'error'), false);
+            case 2: return !!state.crop || (toast('Pick the crop.', 'error'), false);
             case 3: state.variety = $id('wtpVariety').value.trim(); return true;
             case 4: state.location = $id('wtpLocation').value.trim();
                 return !!state.location || (toast('Say where the field is.', 'error'), false);
@@ -398,6 +468,47 @@
         document.querySelectorAll('#wtpSeasons .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
         setTimeout(() => show(2), 180);
     });
+    $id('wtpCropBtn').addEventListener('click', () => {
+        openSheet('wtpCropSheet');
+        if (!window.matchMedia('(hover: none)').matches) {
+            setTimeout(() => $id('wtpCropSearch')?.focus(), 280);
+        }
+    });
+    $id('wtpCropSheet').addEventListener('click', (e) => {
+        const row = e.target.closest('.crop-row');
+        if (!row) return;
+        state.crop = row.getAttribute('data-crop');
+        const c = OPT.crops.find((x) => x.key === state.crop) || {};
+        $id('wtpCropIcon').textContent = c.icon || '🌱';
+        const now = $id('wtpCropNow');
+        now.textContent = c.label || 'Choose the crop';
+        now.classList.remove('is-none');
+        closeSheet('wtpCropSheet');
+        setTimeout(() => show(3), 220);
+    });
+    const cropSift = () => {
+        const q = ($id('wtpCropSearch').value || '').trim().toLowerCase();
+        $id('wtpCropSearchX').classList.toggle('hidden', !q);
+        let shown = 0;
+        document.querySelectorAll('#wtpCropList [data-crop-group]').forEach((g) => {
+            let left = 0;
+            g.querySelectorAll('.crop-row').forEach((r) => {
+                const hit = !q || (r.getAttribute('data-find') || '').includes(q);
+                r.hidden = !hit;
+                if (hit) left++;
+            });
+            g.hidden = left === 0;
+            shown += left;
+        });
+        $id('wtpCropNone').classList.toggle('hidden', shown > 0);
+    };
+    $id('wtpCropSearch').addEventListener('input', cropSift);
+    $id('wtpCropSearchX').addEventListener('click', () => {
+        $id('wtpCropSearch').value = '';
+        cropSift();
+        $id('wtpCropSearch').focus();
+    });
+
     $id('wtpProbs').addEventListener('change', (e) => {
         const l = e.target.closest('.wtp-prob');
         if (l) l.classList.toggle('is-on', e.target.checked);
