@@ -4637,6 +4637,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     $id('saveActivityBtn')?.addEventListener('click', async (e) => {
         if (!mayEditBoard()) return;   // the sheet is shut to viewers; the Save says so too
+
+        /* A line sitting picked in the item panel is a line the person meant.
+           They chose Urea, set a quantity, and pressed Save — and the save
+           quietly dropped it, because only "Add to list" makes it a line. An
+           activity that looked like it would spend stock then spent nothing
+           when ticked. What is picked (or named) when Save is pressed is
+           added first, through the same button, same rules. */
+        const panelOpen = $id('itemPickerPanel') && !$id('itemPickerPanel').classList.contains('hidden');
+        const pendingLine = panelOpen && (($id('itemStockPick')?.value || '') !== ''
+            || ($id('itemNameInput')?.value || '').trim() !== '');
+        if (pendingLine) $id('addItemBtn')?.click();
+
         const btn = e.currentTarget;
         const id = $id('activityId').value;
         const startDateVal = ($id('activityTargetDate').value || '').trim();
