@@ -2395,7 +2395,13 @@
            ancestor `inset: 0` would resolve against the viewport and put a
            sheet over the header too. */
         body.is-activities main { position: relative; }
-        #boardVeil { position: absolute; inset: 0; z-index: 30; display: flex; align-items: flex-start;
+        /* Full-bleed sideways: `main` is a centred column, so inset alone
+           stopped at the column's edges and the page's darker ground showed
+           in two strips either side — a wait that plainly wasn't covering
+           what it was waiting for. Anchored at the column's centre and
+           stretched a viewport wide. */
+        #boardVeil { position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw;
+            margin-left: -50vw; z-index: 30; display: flex; align-items: flex-start;
             justify-content: center; padding-top: 4rem; background: var(--color-gray-50, #f9fafb);
             transition: opacity .28s cubic-bezier(.22,1,.36,1); }
         #boardVeil.is-done { opacity: 0; pointer-events: none; }
