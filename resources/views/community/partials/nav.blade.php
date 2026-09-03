@@ -29,9 +29,8 @@
         'ranking' => [
         'label' => 'Community Rankings', 'short' => 'Rankings',
         'url' => route('community.ranking'),
-        // A rosette: the ladder is for bragging, and the icon should look
-        // like something you win.
-        'icon' => 'M12 15a6 6 0 100-12 6 6 0 000 12zm0 0v6m0-6l-3.5 5M12 15l3.5 5M10 9l1.5 1.5L15 7',
+        // A crown: the ladder has a top, and this is what sits on it.
+        'icon' => 'M3 8l4.5 4.5L12 5l4.5 7.5L21 8l-1.6 8.5a1 1 0 01-1 .8H5.6a1 1 0 01-1-.8L3 8zM7.5 21h9',
     ],
     'blog' => [
             'label' => 'Tech Blog', 'short' => 'Blog',
