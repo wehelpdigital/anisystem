@@ -5190,13 +5190,23 @@
        (which, for a hub tile that deep-linked into a module, is the hub). */
     document.getElementById('appBackLink')?.addEventListener('click', (e) => {
         if (pushDepth > 0) { e.preventDefault(); history.back(); return; }
-        /* Deep-linked straight into the technician (a hub tile, a shared
-         * link): there is no stack to unwind, and the toolbar that carries
-         * "Activities" is hidden while the chat has the screen — so the
-         * chevron means the board here rather than the hub two levels up. */
+        /* While the technician has the screen, the chevron makes the SAME
+         * decision aiBackArrow painted on it: back to the module that was
+         * showing, or to the board when the board is genuinely where you
+         * were. Deep-linked straight in from the hub tile there is no such
+         * screen — the handler stands down and the anchor's own href (the
+         * cropping schedule's page) does the walking. This branch used to
+         * force the board unconditionally, which sent hub arrivals to a
+         * screen they had never seen while the arrow's title promised the
+         * schedule. */
         if (document.documentElement.classList.contains('sm-ai-open')) {
-            e.preventDefault();
-            showModule('activities');
+            const home = (backTo && MODULES[backTo]) ? backTo : (enteredByLink ? null : 'activities');
+            if (home) {
+                e.preventDefault();
+                backTo = null;
+                noTrail = true;
+                showModule(home);
+            }
         }
     });
     window.smShowModule = showModule;
