@@ -100,7 +100,13 @@
                                     </button>
                                 </template>
                             </div>
-                            <p class="form-hint">Each lot can override this later.</p>
+                            {{-- A card, not a floating whisper: the promise
+                                 that this answer is not forever is worth a
+                                 frame of its own. --}}
+                            <div class="mt-2 flex items-start gap-2 rounded-xl border border-brand-200 bg-brand-50 p-3 text-xs text-brand-800">
+                                <svg class="w-4 h-4 shrink-0 mt-px" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span>Each lot can override this later.</span>
+                            </div>
                         </div>
                     </div>
 

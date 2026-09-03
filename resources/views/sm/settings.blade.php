@@ -86,7 +86,11 @@
                         <option value="TREE" @selected($schedule->dayType === 'TREE')>Mature trees — no day count, read by age</option>
                     </select>
                     <p class="form-hint" id="settingsDayTypeHint"></p>
-                    <p class="form-hint">This is the season's default. A lot can still be set differently in <a href="{{ route('sm.lots', ['id' => $schedule->id]) }}" class="text-brand-700 font-semibold">Lots</a>.</p>
+                    {{-- The same card the create form wears for this promise. --}}
+                    <div class="mt-2 flex items-start gap-2 rounded-xl border border-brand-200 bg-brand-50 p-3 text-xs text-brand-800">
+                        <svg class="w-4 h-4 shrink-0 mt-px" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span>This is the season's default. A lot can still be set differently in <a href="{{ route('sm.lots', ['id' => $schedule->id]) }}" class="text-brand-700 font-semibold underline decoration-dotted underline-offset-2">Lots</a>.</span>
+                    </div>
                 </div>
 
                 @unless ($setWorker)
