@@ -524,9 +524,14 @@ html.rl-open, html.rl-open body { overflow: hidden; }
 @keyframes helpPulse { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
 @keyframes helpRipple {
     0% { transform: scale(1); opacity: .7; }
-    70% { transform: scale(1.45); opacity: 0; }
-    100% { transform: scale(1.45); opacity: 0; }
+    70% { transform: scale(1.14, 1.45); opacity: 0; }
+    100% { transform: scale(1.14, 1.45); opacity: 0; }
 }
+/* The ripple used to swell 45% past a WIDE pill on the X axis too, throwing
+   its ring into the bell's gap — the bell then read as sitting off-centre
+   between the help button and the avatar. The swell is tamed sideways and
+   the pill buys the remaining overhang back as real margin. */
+.help-btn.is-new { margin-right: .45rem; }
 @media (prefers-reduced-motion: reduce) {
     .help-btn.is-new { animation: none; }
     .help-btn.is-new::after { animation: none; opacity: .7; }
