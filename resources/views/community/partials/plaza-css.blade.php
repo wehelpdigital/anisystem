@@ -1068,6 +1068,32 @@
     .pymk.reco-edge::after { inset: auto 0 0 0;
         background: linear-gradient(270deg, #2f5219, #6b9f3d 35%, #b8d38e 60%, transparent); }
 
+    /* ---- DESKTOP DRESS: the bands become cards.
+       On a phone a band runs to the screen's edges and is part of the page;
+       on a desk the page is a column on a wide ground and a square, edgeless
+       band reads as unfinished. From sm up the full-bleed bands take their
+       side margins back, curve their corners, and keep their colours as
+       accents tucked inside the curve. */
+    @media (min-width: 640px) {
+        .pymk.reco-edge {
+            margin-left: 0; margin-right: 0;
+            border-radius: 1rem; border: 1px solid var(--color-gray-200);
+            background: var(--color-white); overflow: hidden;
+            padding-left: 1rem; padding-right: 1rem;
+        }
+        html.dark .pymk.reco-edge { background: #151b12; border-color: #2b3a1c; }
+        .pymk.reco-edge::before { border-radius: 1rem 1rem 0 0; }
+        .pymk.reco-edge::after { border-radius: 0 0 1rem 1rem; }
+        .mc-card {
+            margin-left: 0; margin-right: 0;
+            border-radius: 1rem; border: 1px solid var(--color-gray-200);
+            overflow: hidden;
+        }
+        html.dark .mc-card { border-color: #2b3a1c; }
+        .mc-card::before { border-radius: 1rem 1rem 0 0; }
+        .mc-card::after { border-radius: 0 0 1rem 1rem; }
+    }
+
     /* Three whole faces, and a way to the next three.
      *
      * The rail used to run off the right edge so a fourth card peeked — the
