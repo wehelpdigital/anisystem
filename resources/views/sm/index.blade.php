@@ -253,6 +253,9 @@
         .qa-notes .qa-ico { background: #fdf6e6; color: #b45309; }
         .qa-gallery .qa-ico { background: #eaf1fd; color: #1d4ed8; }
         .qa-cap .qa-ico { background: #eef6e6; color: #3d6823; }
+        .qa-wtp .qa-ico { background: #eef2fd; color: #4c65e0; }
+        .qa-wtp:hover { border-color: #c7d2f5; } .qa-wtp:hover .qa-go { color: #4c65e0; }
+        html.dark .qa-wtp .qa-ico { background: rgb(76 101 224 / .22); color: #a5b6f2; }
         .qa-rec .qa-ico { background: #fdecec; color: #b91c1c; }
         html.dark .qa-notes .qa-ico { background: rgb(180 83 9 / .18); color: #e0b457; }
         html.dark .qa-gallery .qa-ico { background: rgb(29 78 216 / .22); color: #9fc0f5; }
@@ -799,6 +802,14 @@
             {{-- Its twin: the notes hub gathers the words, this gathers the
                  pictures. Looking for a photo is remembering a picture, not a
                  season, so it does not ask which one first. --}}
+            <a href="{{ route('wtp.page') }}" class="qa-tile qa-wtp">
+                <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v3m8-3v3M4 8h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1zm4 9l2 2 4-4"/></svg></span>
+                <span class="qa-txt">
+                    <b>When to Plant Analysis</b>
+                    <i>The best planting window for your crop and place, argued from the climate. Uses AI credits.</i>
+                </span>
+                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </a>
             <a href="{{ route('gallery.hub') }}" class="qa-tile qa-gallery">
                 <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM8 14l2.5-3 2 2.5L15 10l3 4"/></svg></span>
                 <span class="qa-txt">

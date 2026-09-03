@@ -205,6 +205,8 @@ class AiController extends Controller
             'imageScheduleIds' => 'nullable|array|max:6',
             'imageScheduleIds.*' => 'nullable|integer',
             'scheduleId' => 'nullable|integer',
+            // A saved when-to-plant analysis, riding as context.
+            'attachAnalysisId' => 'nullable|integer',
         ]);
         if ($validator->fails()) {
             return $this->json(false, 'Validation failed.', ['errors' => $validator->errors()], 422);
@@ -249,6 +251,17 @@ class AiController extends Controller
         $priced = $request->boolean('attachPlan')
             ? $prompt . $this->planContext($request->input('scheduleId'), $userId)
             : $prompt;
+        /* The attached analysis weighs what the composer said it would —
+         * refused loudly when it cannot be read, not silently dropped. */
+        $analysisCtx = '';
+        if ($request->filled('attachAnalysisId')) {
+            $found = \App\Http\Controllers\WhenToPlantController::contextFor((int) $request->input('attachAnalysisId'), (int) $userId);
+            if (! $found) {
+                return $this->json(false, 'That analysis could not be attached. Remove it and try again.', [], 422);
+            }
+            $analysisCtx = $found['text'];
+            $priced .= $analysisCtx;
+        }
         $estimate = $this->credits->estimate($settings, $priced, count($images));
         if ($balance < $estimate && ! $this->credits->unlimited($payerId)) {
             $whose = $payerId === (int) Auth::id() ? 'You have' : 'This farm has';
@@ -299,6 +312,7 @@ class AiController extends Controller
             $context = $this->scheduleContext($request->input('scheduleId'), $userId);
         }
         $context = $this->applyLinkContext($context, $conversation);
+        $context .= $analysisCtx;
 
         $userMessage = AiMessage::create([
             'conversationId' => $conversation->id,

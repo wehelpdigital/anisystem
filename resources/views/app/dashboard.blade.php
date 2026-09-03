@@ -106,6 +106,20 @@
         background-size: 260% 100%;
         animation: gradSweep 16s ease-in-out infinite alternate; }
     @media (prefers-reduced-motion: reduce) { .dash-anee { animation: none; } }
+    /* The when-to-plant row under Anee's card. */
+    .dash-wtp { display: flex; align-items: center; gap: .8rem; margin-top: .85rem;
+        padding: .8rem .9rem; border-radius: .9rem; border: 1px solid #cfe3b8;
+        background: linear-gradient(115deg, #f3f8ec, #eef6e6);
+        transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .dash-wtp:hover { transform: translateY(-1px); box-shadow: 0 10px 24px -16px rgb(0 0 0 / .45); }
+    .dash-wtp-ic { font-size: 1.5rem; flex: none; }
+    .dash-wtp b { display: block; font-size: .9rem; font-weight: 800; color: #2d5016; }
+    .dash-wtp i { display: block; font-style: normal; font-size: .74rem; line-height: 1.5; color: #4b5f3a; }
+    .dash-wtp-go { width: 1rem; height: 1rem; flex: none; color: #6b9f3d; }
+    html.dark .dash-wtp { background: linear-gradient(115deg, #1c2913, #182112); border-color: #2b3a1c; }
+    html.dark .dash-wtp b { color: #cfe6b8; }
+    html.dark .dash-wtp i { color: #93a684; }
+    @media (prefers-reduced-motion: reduce) { .dash-wtp { transition: none; } }
     html.dark .dash-anee { border-color: #2b3a1c;
         background-image: linear-gradient(118deg, #18200f, #1d2a13 26%, #24301a 52%, #1d2a13 74%, #18200f); }
 
@@ -1137,6 +1151,18 @@
                 <a href="{{ $canUseAi ? route('ai.home') : route('purchase.plans') }}"
                    class="dash-anee-go sweep-fill sweep-green" style="--sw-t: 13s; --sw-d: -4s">
                     {{ $canUseAi ? 'Chat with ' . $aneeName : 'Unlock ' . $aneeName }}
+                </a>
+
+                {{-- The technician's other trick: one bought analysis that
+                     names your planting window. A row of its own under the
+                     chat, because it is a decision, not a conversation. --}}
+                <a href="{{ route('wtp.page') }}" class="dash-wtp">
+                    <span class="dash-wtp-ic">📅</span>
+                    <span class="min-w-0">
+                        <b>When to Plant Analysis</b>
+                        <i>Your crop, your place, the field's troubles — and the window the climate argues for, with the risks of missing it. One analysis, a few AI credits.</i>
+                    </span>
+                    <svg class="dash-wtp-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </a>
             </section>
 

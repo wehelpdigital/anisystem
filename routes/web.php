@@ -216,6 +216,15 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app', [App\Http\Controllers\AppController::class, 'dashboard'])->name('app.dashboard');
     // The storefront's promise, ahead of the storefront.
     Route::view('/app/shop', 'shop.index')->name('shop.index');
+    // When to Plant — a bought analysis: wizard in, planting window out.
+    Route::get('/app/when-to-plant', [App\Http\Controllers\WhenToPlantController::class, 'page'])->name('wtp.page');
+    Route::get('/app/when-to-plant/options', [App\Http\Controllers\WhenToPlantController::class, 'options'])->name('wtp.options');
+    Route::post('/app/when-to-plant/generate', [App\Http\Controllers\WhenToPlantController::class, 'generate'])->name('wtp.generate');
+    Route::post('/app/when-to-plant/save', [App\Http\Controllers\WhenToPlantController::class, 'save'])->name('wtp.save');
+    Route::get('/app/when-to-plant/list', [App\Http\Controllers\WhenToPlantController::class, 'list'])->name('wtp.list');
+    Route::get('/app/when-to-plant/one/{id}', [App\Http\Controllers\WhenToPlantController::class, 'one'])->whereNumber('id')->name('wtp.one');
+    Route::delete('/app/when-to-plant/{id}', [App\Http\Controllers\WhenToPlantController::class, 'destroy'])->whereNumber('id')->name('wtp.delete');
+    Route::get('/app/when-to-plant/preview/{id}', [App\Http\Controllers\WhenToPlantController::class, 'preview'])->whereNumber('id')->name('wtp.preview');
     Route::get('/app/weather', [App\Http\Controllers\WeatherController::class, 'forecast'])->name('app.weather');
     Route::get('/app/sm-weather', [App\Http\Controllers\WeatherController::class, 'scheduleForecast'])->name('sm.weather');
     // Weather as a schedule module: the 6-day view plus an hourly tab.
