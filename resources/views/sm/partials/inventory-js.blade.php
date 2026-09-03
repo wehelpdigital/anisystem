@@ -395,6 +395,15 @@
         }
 
         /* ---------------- the move sheet ---------------- */
+        /** The When tag, painted from the input it fronts. */
+        function sayMoveDate() {
+            const v = $id('ivMoveDate')?.value;
+            const now = $id('ivMoveDateNow');
+            if (!now) return;
+            now.textContent = !v ? 'Today · ' + sayDate(todayISO())
+                : (v === todayISO() ? 'Today · ' : '') + sayDate(v);
+        }
+
         /** Is the sheet being used to invent an item rather than pick one? */
         const movingNew = () => $id('ivMoveItem')?.value === '__new';
 
@@ -531,6 +540,7 @@
             const newName = $id('ivMoveNewName');
             if (newName) newName.value = '';
             $id('ivMoveDate').value = o.date || todayISO();
+            sayMoveDate();
             const newPrice = $id('ivMoveNewPrice');
             if (newPrice) newPrice.value = '';
             // Each opening starts from Today; yesterday's choice belonged to
@@ -690,7 +700,7 @@
 
         window.__ivApi = {
             openItemSheet, saveItem, load, itemById, sayKind, sayUnit, delItem,
-            openItemMenu, itemMenuAct,
+            openItemMenu, itemMenuAct, sayMoveDate,
             sayMoveItem, sayMoveQty, moveGo, delMove, showTab, fillUnits,
             openStartChooser, chooseStart, pickedStartDate, openStartEdit, startEditGo,
         };
@@ -719,6 +729,17 @@
                 if (e.target.closest('#ivStartBtn')) { A.openStartChooser('move'); return; }
                 if (e.target.closest('#ivStartEditBtn')) { A.openStartChooser('edit'); return; }
                 if (e.target.closest('#ivItemStartBtn')) { A.openStartChooser('item'); return; }
+                if (e.target.closest('#ivMoveDateBtn')) {
+                    const input = document.getElementById('ivMoveDate');
+                    /* The real picker, raised from the tag; where the browser
+                       cannot raise one, the input itself is brought to hand. */
+                    try { input.showPicker(); } catch (_) {
+                        input.style.opacity = '1';
+                        input.style.pointerEvents = 'auto';
+                        input.focus();
+                    }
+                    return;
+                }
                 const srow = e.target.closest('#ivStartRows .dt-row');
                 if (srow) { A.chooseStart(srow); return; }
                 const sgo = e.target.closest('#ivStartEditGo');
@@ -746,6 +767,7 @@
                 if (e.target.id === 'ivMoveNewUnit') { A.sayMoveItem(); return; }
                 if (e.target.id === 'ivMoveUnitSel') { A.sayMoveQty(); return; }
                 if (e.target.id === 'ivStartDateInput') { A.pickedStartDate(e.target.value); return; }
+                if (e.target.id === 'ivMoveDate') { A.sayMoveDate(); return; }
             });
 
             document.addEventListener('input', (e) => {

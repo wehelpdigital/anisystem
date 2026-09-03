@@ -79,8 +79,18 @@
         </div>
 
         <div id="ivMoveDateWrap">
-            <label for="ivMoveDate" class="form-label">When?</label>
-            <input type="date" id="ivMoveDate" class="form-input">
+            <label class="form-label">When?</label>
+            {{-- A tag that raises the real datepicker, like the lot form's
+                 counters: the date reads as a fact wearing a face, and the
+                 input underneath stays the value everything else reads. --}}
+            <div class="relative">
+                <button type="button" class="crop-tag" id="ivMoveDateBtn">
+                    <span class="crop-tag-e">📅</span>
+                    <span class="crop-tag-t" id="ivMoveDateNow">Today</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <input type="date" id="ivMoveDate" class="iv-start-date" tabindex="-1" aria-label="When">
+            </div>
         </div>
 
         {{-- WHEN THE BOOK BEGINS.
