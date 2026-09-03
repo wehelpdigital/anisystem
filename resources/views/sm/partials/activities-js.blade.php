@@ -4145,13 +4145,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const item = (window.IV_ITEMS || []).find((i) => String(i.id) === sel.value);
         hint.textContent = item
-            ? `${item.says} on hand. The quantity below comes off it when this activity is ticked done.`
+            ? `${item.says} on hand. Nothing moves until this activity is ticked done — then the quantity comes off, converted if the unit differs.`
             : '';
         // Fill what they have already told us by choosing.
         const nameBox = $id('itemNameInput');
-        const unitBox = $id('itemUnitInput');
         if (nameBox && !nameBox.value.trim()) nameBox.value = opt.getAttribute('data-name') || '';
-        if (unitBox) unitBox.value = opt.getAttribute('data-unit') || '';
+        swapUnitControl(item);
+    }
+
+    /**
+     * Free text for a plain line; a select of the item's kin for a shed one.
+     * The select stores the unit's WORDS — "bags (50 kg)", "kg" — which the
+     * server resolves back to a unit when the tick spends, so the label on
+     * the card and the arithmetic in the book are one and the same.
+     */
+    function swapUnitControl(item) {
+        const unitBox = $id('itemUnitInput');
+        const unitSel = $id('itemUnitSelect');
+        if (!unitBox || !unitSel) return;
+        const kin = item && Array.isArray(item.kinSays) && item.kinSays.length ? item.kinSays : null;
+        unitBox.classList.toggle('hidden', !!kin);
+        unitSel.classList.toggle('hidden', !kin);
+        if (kin) {
+            unitSel.innerHTML = kin.map((k) => `<option value="${esc(k.says)}">${esc(k.says)}</option>`).join('');
+            unitSel.value = kin[0].says;   // the item's own unit leads its kin
+        } else {
+            unitBox.value = '';
+        }
+    }
+
+    /** Whatever unit control is on duty, its answer. */
+    function lineUnitValue() {
+        const unitSel = $id('itemUnitSelect');
+        if (unitSel && !unitSel.classList.contains('hidden')) return unitSel.value;
+        return ($id('itemUnitInput')?.value || '').trim();
     }
 
     /* The two halves of the shed are alternatives, never both: a line taking
@@ -4394,7 +4421,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!name) { toast('Enter an item name', 'error'); $id('itemNameInput').focus(); return; }
         const price = ($id('itemPriceInput').value || '').trim();
         const qty = parseFloat($id('itemQtyInput').value) || 1;
-        const unit = ($id('itemUnitInput').value || '').trim();
+        const unit = lineUnitValue();
         if ($qs(`#itemsContainer span[data-name="${cssEsc(name)}"]`)) {
             toast('That item is already added — remove it first to change it.', 'info');
             return;

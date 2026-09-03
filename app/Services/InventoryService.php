@@ -125,6 +125,21 @@ class InventoryService
             if (! $item || $qty <= 0) {
                 continue;
             }
+            /* The line may be measured in a kin unit — 100 kg against a
+             * bag-counted book. Its words resolve to a unit and the amount
+             * converts; words that resolve to nothing (or to another
+             * dimension) are taken as the item's own unit, which is what
+             * every line meant before units grew dimensions. */
+            $fromKey = AsInventoryItem::unitKeyFromWords($line['unit'] ?? null);
+            if ($fromKey !== null) {
+                $converted = AsInventoryItem::convert($qty, $fromKey, $item->unit);
+                if ($converted !== null) {
+                    $qty = round($converted, 3);
+                }
+            }
+            if ($qty <= 0) {
+                continue;
+            }
             // Negative: an activity takes stock out.
             if ($this->move($item, -$qty, AsInventoryMove::ACTIVITY, $on, null, $activityId)) {
                 $written++;
@@ -230,7 +245,10 @@ class InventoryService
      */
     private function spendItemForDoneActivities(AsInventoryItem $item, string $fromDate): int
     {
-        $rows = DB::table('as_schedule_activity_items as l')
+        /* Line by line rather than a SQL sum, because each line carries its
+         * own unit now and 100 kg + 2 bags is not 102 of anything until both
+         * are converted into the item's unit. */
+        $lines = DB::table('as_schedule_activity_items as l')
             ->join('as_schedule_activities as a', 'a.id', '=', 'l.activityId')
             ->where('a.croppingScheduleId', $item->croppingScheduleId)
             ->where('a.deleteStatus', 1)
@@ -240,10 +258,25 @@ class InventoryService
             ->where('l.deleteStatus', 1)
             ->where('l.inventoryItemId', $item->id)
             ->where('l.quantity', '>', 0)
-            ->groupBy('a.id', 'a.targetDate')
-            ->selectRaw('a.id as activityId, a.targetDate, SUM(l.quantity) as qty')
             ->orderBy('a.targetDate')
-            ->get();
+            ->get(['a.id as activityId', 'a.targetDate', 'l.quantity', 'l.unitOfMeasure']);
+
+        $rows = [];
+        foreach ($lines as $l) {
+            $qty = (float) $l->quantity;
+            $fromKey = AsInventoryItem::unitKeyFromWords($l->unitOfMeasure);
+            if ($fromKey !== null) {
+                $converted = AsInventoryItem::convert($qty, $fromKey, $item->unit);
+                if ($converted !== null) {
+                    $qty = round($converted, 3);
+                }
+            }
+            if (! isset($rows[$l->activityId])) {
+                $rows[$l->activityId] = (object) ['activityId' => $l->activityId, 'targetDate' => $l->targetDate, 'qty' => 0.0];
+            }
+            $rows[$l->activityId]->qty += $qty;
+        }
+        $rows = array_values($rows);
 
         $written = 0;
         foreach ($rows as $r) {

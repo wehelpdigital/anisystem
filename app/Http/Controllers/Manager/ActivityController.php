@@ -480,7 +480,7 @@ class ActivityController extends BaseScheduleController
             ->where('deleteStatus', 1)
             ->whereNotNull('inventoryItemId')
             ->get()
-            ->map(fn ($r) => ['itemId' => (int) $r->inventoryItemId, 'qty' => (float) $r->quantity])
+            ->map(fn ($r) => ['itemId' => (int) $r->inventoryItemId, 'qty' => (float) $r->quantity, 'unit' => $r->unitOfMeasure])
             ->filter(fn ($l) => $l['itemId'] > 0 && $l['qty'] > 0)
             ->values()->all();
 

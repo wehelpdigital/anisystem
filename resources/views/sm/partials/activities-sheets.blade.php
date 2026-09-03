@@ -565,7 +565,13 @@
                     </div>
                     <div>
                         <label class="form-label text-xs! mb-1!" for="itemUnitInput">Unit</label>
+                        {{-- Free text for a plain line — the farm's own words.
+                             Against a shed item the text gives way to a select
+                             of that item's kin, so the unit is always one the
+                             tick can convert: kilos off a bag-counted book,
+                             ml off a litre one. --}}
                         <input type="text" id="itemUnitInput" class="form-input bg-white!" list="itemUnitList" maxlength="30" placeholder="e.g. kg, bottle, pack" autocomplete="off">
+                        <select id="itemUnitSelect" class="form-select bg-white! hidden" aria-label="Unit"></select>
                         <datalist id="itemUnitList">
                             @foreach (['kg','g','ml','l','bottle','sachet','piece','pack','bag','sack'] as $u)
                                 <option value="{{ $u }}"></option>

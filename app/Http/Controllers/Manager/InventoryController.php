@@ -102,6 +102,12 @@ class InventoryController extends BaseScheduleController
                     // The units a move may be typed in: this one's dimension,
                     // this one first. One entry means no picker to draw.
                     'kin' => AsInventoryItem::kin($i->unit),
+                    // The same kin with its words, for pickers that store
+                    // words: the label round-trips through unitKeyFromWords.
+                    'kinSays' => array_map(
+                        fn ($k) => ['key' => $k, 'says' => AsInventoryItem::unitSays($k, false)],
+                        AsInventoryItem::kin($i->unit)
+                    ),
                     'lowAt' => $i->lowAt ? (float) $i->lowAt : null,
                     'unitPrice' => $i->unitPrice !== null ? (float) $i->unitPrice : null,
                     'note' => $i->note,

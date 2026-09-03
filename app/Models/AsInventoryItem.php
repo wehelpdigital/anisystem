@@ -76,6 +76,34 @@ class AsInventoryItem extends BaseModel
         return $qty * $a['factor'] / $b['factor'];
     }
 
+    /**
+     * The unit a stretch of words means — or null when it means nothing or
+     * more than one thing. "kg" is kg; "bags (50 kg)" is bag50; a bare "bag"
+     * matches four sizes and stays null, because guessing a size is how a
+     * ledger goes quietly wrong.
+     */
+    public static function unitKeyFromWords(?string $text): ?string
+    {
+        $t = mb_strtolower(trim((string) $text));
+        if ($t === '') {
+            return null;
+        }
+        $hits = [];
+        foreach (self::UNITS as $key => $u) {
+            $words = [mb_strtolower($key), mb_strtolower($u['one']), mb_strtolower($u['many'])];
+            if (isset($u['of'])) {
+                $words[] = mb_strtolower($u['one'] . ' (' . $u['of'] . ')');
+                $words[] = mb_strtolower($u['many'] . ' (' . $u['of'] . ')');
+            }
+            if (in_array($t, $words, true)) {
+                $hits[$key] = true;
+            }
+        }
+        $keys = array_keys($hits);
+
+        return count($keys) === 1 ? $keys[0] : null;
+    }
+
     /** Every unit sharing this one's dimension, this one first. */
     public static function kin(string $unit): array
     {
