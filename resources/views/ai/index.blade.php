@@ -190,6 +190,17 @@
             margin-top: .25rem; }
         .ai-howto-eg b { color: var(--color-brand-800, #2f5219); font-weight: 800; }
         html.dark .ai-howto { background: rgb(107 159 61 / .12); border-color: #2b3a1c; }
+        /* Folded to its headline until tapped — sm/ai's card, same clothes. */
+        .ai-howto-fold { display: none; }
+        .ai-howto.is-open .ai-howto-fold { display: block; }
+        .ai-howto-h { cursor: pointer; width: 100%; }
+        .ai-howto-chev { margin-left: auto; width: .9rem; height: .9rem; flex: none;
+            transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        .ai-howto.is-open .ai-howto-chev { transform: rotate(180deg); }
+        .ai-howto-rule { display: block; height: 1px; margin: .45rem 0;
+            background: rgb(107 159 61 / .35); }
+        html.dark .ai-howto-rule { background: #2b3a1c; }
+        @media (prefers-reduced-motion: reduce) { .ai-howto-chev { transition: none; } }
         html.dark .ai-howto-h, html.dark .ai-howto-eg b { color: #a5c97e; }
         html.dark .ai-howto-b, html.dark .ai-howto-eg { color: #b7c2ad; }
         .ai-caps { display: flex; flex-wrap: wrap; justify-content: center; gap: .35rem; margin-top: .6rem; }
@@ -522,18 +533,12 @@
     <div class="aichat-composer">
         {{-- One chip per attached photo, each with its own remove. --}}
         <div id="aiPhotoChips" aria-label="Attached photos" aria-live="polite"></div>
-        {{-- The attached plan, and what it is adding. --}}
-        @if ($aiChrome !== 'home')
-        <div id="aiPlanChip" class="ai-planchip" hidden>
-            <span class="ai-planchip-ic">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-            </span>
-            <span class="ai-planchip-txt"><b id="aiPlanName">Plan</b><i id="aiPlanSub">attached</i></span>
-            <button type="button" id="aiPlanX" class="ai-planchip-x" aria-label="Remove the plan">✕</button>
-        </div>
-        @endif
-        {{-- A when-to-plant analysis, riding the next question. Same chip
-             the plan wears; arrives via ?analysis= from the module. --}}
+        {{-- A when-to-plant analysis, riding the next question — the one
+             attachment this composer offers now. The old attach-a-plan
+             button, chip and sheet retired with the Link menu row (the
+             owner's call, 2026-09-04): the other chats never had them, and
+             the machinery that served them sits dormant behind byId guards
+             below. Arrives via ?analysis= from the module. --}}
         <div id="aiWtpChip" class="ai-planchip" hidden>
             <span class="ai-planchip-ic">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v3m8-3v3M4 8h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1zm4 9l2 2 4-4"/></svg>
@@ -546,15 +551,6 @@
             <button type="button" class="ai-cam shrink-0" id="aiAttachBtn" title="Add photos" aria-label="Add photos" aria-haspopup="dialog">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
             </button>
-            {{-- Beside the camera, because it is the same kind of act: this
-                 question carries something extra. Not a dropdown — a chat is
-                 not "about" a season, a question either brings the plan or
-                 does not. --}}
-            @if ($schedules->isNotEmpty())
-                <button type="button" class="ai-cam shrink-0" id="aiPlanBtn" title="Attach my plan" aria-label="Attach my plan">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                </button>
-            @endif
             <input type="file" id="aiPhotoFiles" accept="image/*" multiple class="hidden">
             <input type="file" id="aiPhotoCam" accept="image/*" capture="environment" class="hidden">
             <textarea id="aiInput" class="form-textarea border-0! shadow-none! focus:ring-0! p-2 grow bg-transparent!" rows="1"
@@ -584,18 +580,6 @@
 {{-- The attach chooser: every way a photo can arrive, behind one button
      (the messenger's + chooser, spoken in the house sheet language). The
      gallery door only shows where the season picker travels with the page. --}}
-{{-- Which plan, when there is more than one. --}}
-@if ($aiChrome !== 'home')
-<div class="sheet hidden" id="aiPlanSheet" style="--sheet-width:22rem">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header">
-        <h3 class="sheet-title">Attach a plan</h3>
-        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
-    </div>
-    <div class="sheet-body space-y-1" id="aiPlanList"></div>
-</div>
-@endif
-
 <div class="sheet hidden" id="aiAttachSheet" style="--sheet-width:22rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -625,7 +609,6 @@
      behind one square button beside the bell. --}}
 @include('partials.ai-attach-task')
 
-@if ($aiChrome === 'home')
 {{-- Naming what is being kept, in the same words the floating technician
      uses for a season's notebook: a title, and why it was worth keeping.
      The transcript is the attachment, not the whole story. --}}
@@ -648,7 +631,6 @@
         <button type="button" id="aiGlobalNoteSave" class="btn btn-primary w-full">Save to Global Notes</button>
     </div>
 </div>
-@endif
 
 <div class="sheet hidden" id="aiMenuSheet" style="--sheet-width:20rem">
     <div class="sheet-handle"></div>
@@ -671,21 +653,15 @@
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></span>
             <span>Attach to a task<span class="sub">File this chat onto a day, or a task on it</span></span>
         </button>
-        @if ($aiChrome === 'home')
-            {{-- Keeping it. The season notebooks are not offered here because
-                 this chat is not in a season — Global Notes is where the
-                 things that belong to the farm rather than to one season
-                 already live. --}}
-            <button type="button" class="ai-attach-opt" id="aiMenuGlobalNote">
-                <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span>
-                <span>Save as a global note<span class="sub">Keep this chat in Global Notes</span></span>
-            </button>
-        @else
-            <button type="button" class="ai-attach-opt" id="aiMenuLink">
-                <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 010 5.656l-3 3a4 4 0 01-5.656-5.656l1.5-1.5m7.156-2.344a4 4 0 015.656 0l.014.014a4 4 0 010 5.642l-1.5 1.5M8.5 15.5l7-7"/></svg></span>
-                <span>Link<span class="sub">Tie this chat to one of your plans</span></span>
-            </button>
-        @endif
+        {{-- Keeping it. The season notebooks are not offered here because
+             this chat is not in a season — Global Notes is where the things
+             that belong to the farm rather than to one season already live.
+             Both chromes now: the Link row this replaced tied a chat to a
+             plan, which the other chats never offered. --}}
+        <button type="button" class="ai-attach-opt" id="aiMenuGlobalNote">
+            <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span>
+            <span>Save as a global note<span class="sub">Keep this chat in Global Notes</span></span>
+        </button>
         @unless ($aiUnlimited)
             <a href="{{ route('ai.credits') }}" class="ai-attach-opt">
                 <span class="ic"><svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg></span>
