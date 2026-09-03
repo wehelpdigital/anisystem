@@ -1446,3 +1446,31 @@ html.dark .doc-file-x { background: var(--color-gray-200); color: var(--color-gr
 .share-activity.prio-low { border-left-color: #74788d; }
 
 .share-day-today > div:first-child h3 { color: var(--color-brand-700); }
+
+/* ---- RICH TEXT WRITTEN FOR A WHITE PAGE ----
+   Paste from Word or Docs and every span arrives carrying `color:#000000`,
+   which is correct on white and invisible on a dark card: 1.24:1, there and
+   unreadable — while being written and while being read, because it is the
+   same HTML in the editor and on the page. In dark mode those inline colours
+   are ignored — unless the element also brings its own BACKGROUND, in which
+   case it is a self-contained callout that reads correctly on any surface and
+   keeps its colours exactly. Nothing stored changes; light mode honours every
+   colour as written. One home for every editor and every reading surface, so
+   the next module gets this for free. */
+html.dark .sun-editor-editable [style*="color"]:not([style*="background:#"]):not([style*="background: #"]):not([style*="background-color:#"]):not([style*="background-color: #"]):not([style*="background:rgb"]):not([style*="background: rgb"]):not([style*="background-color:rgb"]):not([style*="background-color: rgb"]),
+html.dark .se-wrapper-wysiwyg [style*="color"]:not([style*="background:#"]):not([style*="background: #"]):not([style*="background-color:#"]):not([style*="background-color: #"]):not([style*="background:rgb"]):not([style*="background: rgb"]):not([style*="background-color:rgb"]):not([style*="background-color: rgb"]),
+html.dark .ql-editor [style*="color"]:not([style*="background:#"]):not([style*="background: #"]):not([style*="background-color:#"]):not([style*="background-color: #"]):not([style*="background:rgb"]):not([style*="background: rgb"]):not([style*="background-color:rgb"]):not([style*="background-color: rgb"]),
+html.dark .activity-description-content [style*="color"]:not([style*="background:#"]):not([style*="background: #"]):not([style*="background-color:#"]):not([style*="background-color: #"]):not([style*="background:rgb"]):not([style*="background: rgb"]):not([style*="background-color:rgb"]):not([style*="background-color: rgb"]),
+html.dark .note-body [style*="color"]:not([style*="background:#"]):not([style*="background: #"]):not([style*="background-color:#"]):not([style*="background-color: #"]):not([style*="background:rgb"]):not([style*="background: rgb"]):not([style*="background-color:rgb"]):not([style*="background-color: rgb"]),
+html.dark .inline-note-body [style*="color"]:not([style*="background:#"]):not([style*="background: #"]):not([style*="background-color:#"]):not([style*="background-color: #"]):not([style*="background:rgb"]):not([style*="background: rgb"]):not([style*="background-color:rgb"]):not([style*="background-color: rgb"]),
+html.dark .date-note-inner [style*="color"]:not([style*="background:#"]):not([style*="background: #"]):not([style*="background-color:#"]):not([style*="background-color: #"]):not([style*="background:rgb"]):not([style*="background: rgb"]):not([style*="background-color:rgb"]):not([style*="background-color: rgb"]) {
+    color: inherit !important;
+}
+/* The font tag, which older paste paths still emit. */
+html.dark .sun-editor-editable font[color],
+html.dark .se-wrapper-wysiwyg font[color],
+html.dark .ql-editor font[color],
+html.dark .activity-description-content font[color],
+html.dark .note-body font[color],
+html.dark .inline-note-body font[color],
+html.dark .date-note-inner font[color] { color: inherit !important; }
