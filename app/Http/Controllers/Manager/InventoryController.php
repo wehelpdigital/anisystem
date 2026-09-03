@@ -148,6 +148,10 @@ class InventoryController extends BaseScheduleController
             'on' => $m->happenedOn?->format('Y-m-d'),
             'onSays' => $m->happenedOn?->format('M j, Y'),
             'note' => $m->note,
+            // "typed as 20 kg" — only when the hand's unit was not the book's.
+            'typedSays' => ($m->enteredQty !== null && $m->enteredUnit)
+                ? AsInventoryItem::trim((float) $m->enteredQty) . ' ' . AsInventoryItem::unitSays($m->enteredUnit, abs((float) $m->enteredQty) == 1.0)
+                : null,
         ])->values()->all();
     }
 
@@ -307,6 +311,12 @@ class InventoryController extends BaseScheduleController
         /* A first count phrased as a move is still the Start. The sheet sends
          * reason=open for an item whose book has not begun; that path runs
          * the whole beginning — adoption, retro-spend — not just one line. */
+        // The typed figure rides along whenever it differed from the book's
+        // unit — "−0.4 bags" is arithmetic, "typed as 20 kg" is memory.
+        $entered = $fromUnit !== $item->unit
+            ? ['qty' => abs((float) $request->input('qty')), 'unit' => $fromUnit]
+            : null;
+
         $move = $reason === AsInventoryMove::OPEN
             ? $this->stock->startCount($item, $qty, $request->input('on'), $request->input('note'))
             : $this->stock->move(
@@ -315,7 +325,15 @@ class InventoryController extends BaseScheduleController
                 $reason,
                 $request->input('on'),
                 $request->input('note'),
+                null,
+                $entered,
             );
+        if ($move && $entered && $reason === AsInventoryMove::OPEN) {
+            // The Start goes through startCount, which has no entered slot;
+            // the row is stamped after the fact rather than widening every
+            // signature between here and there.
+            $move->update($entered ? ['enteredQty' => $entered['qty'], 'enteredUnit' => $entered['unit']] : []);
+        }
 
         $have = $this->stock->onHand($item->id);
 

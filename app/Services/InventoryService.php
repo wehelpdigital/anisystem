@@ -62,12 +62,13 @@ class InventoryService
         ?string $on = null,
         ?string $note = null,
         ?int $activityId = null,
+        ?array $entered = null,
     ): ?AsInventoryMove {
         if (abs($delta) < 0.0005) {
             return null;
         }
 
-        return DB::transaction(function () use ($item, $delta, $reason, $on, $note, $activityId) {
+        return DB::transaction(function () use ($item, $delta, $reason, $on, $note, $activityId, $entered) {
             /* Read inside the transaction and lock the item's rows, so two
              * people ticking two activities at the same moment cannot both
              * read the same "before" and write two moves that each claim the
@@ -85,6 +86,9 @@ class InventoryService
                 'qtyAfter' => $before + $delta,
                 'reason' => $reason,
                 'activityId' => $activityId,
+                // What the hand typed, when it differed from the book's unit.
+                'enteredQty' => $entered['qty'] ?? null,
+                'enteredUnit' => $entered['unit'] ?? null,
                 'happenedOn' => $on ?: now('Asia/Manila')->toDateString(),
                 'note' => $note,
                 'byUserId' => Auth::id(),
@@ -130,18 +134,23 @@ class InventoryService
              * converts; words that resolve to nothing (or to another
              * dimension) are taken as the item's own unit, which is what
              * every line meant before units grew dimensions. */
+            $typed = $qty;
             $fromKey = AsInventoryItem::unitKeyFromWords($line['unit'] ?? null);
+            $entered = null;
             if ($fromKey !== null) {
                 $converted = AsInventoryItem::convert($qty, $fromKey, $item->unit);
                 if ($converted !== null) {
                     $qty = round($converted, 3);
+                    if ($fromKey !== $item->unit) {
+                        $entered = ['qty' => $typed, 'unit' => $fromKey];
+                    }
                 }
             }
             if ($qty <= 0) {
                 continue;
             }
             // Negative: an activity takes stock out.
-            if ($this->move($item, -$qty, AsInventoryMove::ACTIVITY, $on, null, $activityId)) {
+            if ($this->move($item, -$qty, AsInventoryMove::ACTIVITY, $on, null, $activityId, $entered)) {
                 $written++;
             }
         }

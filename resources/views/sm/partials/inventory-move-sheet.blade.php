@@ -121,6 +121,23 @@
     </div>
 </div>
 
+{{-- THE SAME AMOUNT, IN EVERY UNIT OF ITS KIND.
+     Opened by tapping any quantity that has kin: the book's figure leads,
+     and each row below is the identical amount wearing a different unit. --}}
+<div class="sheet hidden" id="ivConvSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <div class="min-w-0">
+            <h3 class="sheet-title" id="ivConvTitle">Amount</h3>
+            <p class="text-xs text-gray-400">The same amount, said in its other units.</p>
+        </div>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full shrink-0" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div id="ivConvRows"></div>
+    </div>
+</div>
+
 {{-- ONE ITEM'S MENU — the four verbs behind the card's ⋮.
      Each row carries its sentence, because "edit" and "add stock" are
      different errands and the difference is worth a line. --}}
@@ -278,6 +295,16 @@
         max-width: 45%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .iv-newrow { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
     .iv-qtyrow { display: flex; gap: .5rem; align-items: stretch; }
+    /* A figure that can translate itself says so quietly. */
+    .iv-convable { cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px;
+        text-decoration-color: var(--color-gray-300); }
+    .iv-convable:hover { text-decoration-color: currentColor; }
+    .iv-conv-row { display: flex; justify-content: space-between; gap: .8rem; padding: .55rem .2rem;
+        border-bottom: 1px dashed var(--color-gray-100); font-size: .9rem; }
+    .iv-conv-row:last-child { border-bottom: 0; }
+    .iv-conv-row b { font-weight: 800; color: var(--color-gray-900); font-variant-numeric: tabular-nums; }
+    .iv-conv-row span { color: var(--color-gray-500); }
+    html.dark .iv-conv-row b { color: #e8efe1; }
     .iv-unit-sel { flex: 0 0 auto; width: auto; max-width: 11rem; }
     html.dark #ivMoveNewWrap { border-color: #3a4630; }
     /* Said, not refused. A farm can run into the negative on paper — the bag

@@ -35,7 +35,7 @@
          * FIRST copy in document order — the one getElementById will answer
          * with — and remove the rest. All behaviour is delegated, so any
          * single copy is a working copy. */
-        ['ivMoveSheet', 'ivItemSheet', 'ivStartSheet', 'ivStartEditSheet', 'ivMenuSheet'].forEach((sid) => {
+        ['ivMoveSheet', 'ivItemSheet', 'ivStartSheet', 'ivStartEditSheet', 'ivMenuSheet', 'ivConvSheet'].forEach((sid) => {
             const copies = [...document.querySelectorAll('#' + sid)];
             copies.slice(1).forEach((el) => el.remove());
         });
@@ -147,7 +147,7 @@
                                  item wearing "None left" reads as an accusation
                                  about stock nobody ever recorded. --}}
                             <div class="iv-have ${i.isLow || i.onHand < 0 ? 'is-low' : (i.onHand === 0 ? 'is-none' : '')}">
-                                ${i.onHand !== 0 ? esc(say(i, i.onHand)) : (i.hasMoves ? 'None left' : 'No stock recorded yet')}
+                                ${i.onHand !== 0 ? convable(i.onHand, i.unit) : (i.hasMoves ? 'None left' : 'No stock recorded yet')}
                                 ${i.isLow && i.onHand > 0 ? '<span class="iv-low">low</span>' : ''}
                             </div>
                             ${i.unitPrice != null ? `<div class="iv-note">\u20b1${trim(i.unitPrice)} per ${esc(unitSays(i.unit, true))}</div>` : ''}
@@ -233,11 +233,11 @@
                     <span class="iv-move-e" title="${esc(m.reasonLabel)}">${m.reasonIcon}</span>
                     <span class="iv-move-t">
                         <span class="iv-move-n">${esc(m.itemName)}</span>
-                        <span class="iv-move-s">${esc(m.reasonLabel)}${m.reason === 'created' ? '' : ` · <b>${esc(trim(m.before))}</b> → <b>${esc(trim(m.after))}</b> ${esc(m.unit)}`}${m.note ? ' · ' + esc(m.note) : ''}</span>
+                        <span class="iv-move-s">${esc(m.reasonLabel)}${m.reason === 'created' ? '' : ` · <b>${esc(trim(m.before))}</b> → <b>${esc(trim(m.after))}</b> ${esc(m.unit)}`}${m.typedSays ? ` · <b>typed as ${esc(m.typedSays)}</b>` : ''}${m.note ? ' · ' + esc(m.note) : ''}</span>
                     </span>
                     ${m.reason === 'created'
                         ? '<span class="iv-move-d" style="color:var(--color-gray-300)">·</span>'
-                        : `<span class="iv-move-d ${m.isIn ? 'is-in' : 'is-out'}">${m.isIn ? '+' : '−'}${esc(trim(Math.abs(m.delta)))}</span>`}
+                        : `<span class="iv-move-d ${m.isIn ? 'is-in' : 'is-out'}">${m.isIn ? '+' : '−'}${convable(Math.abs(m.delta), itemById(m.itemId)?.unit || 'piece')}</span>`}
                     ${m.reason === 'activity'
                         ? '<span class="iv-move-x" title="This one came from an activity. Untick the activity to take it back.">🔒</span>'
                         : (m.reason === 'open' || m.reason === 'created')
@@ -258,7 +258,7 @@
                 <div class="iv-total">
                     <span class="iv-total-e">${i.icon}</span>
                     <span class="iv-total-n">${esc(i.name)}</span>
-                    <span class="iv-total-q ${i.isLow || i.onHand < 0 ? 'is-low' : (i.onHand === 0 ? 'is-none' : '')}">${i.onHand !== 0 ? esc(say(i, i.onHand)) : (i.hasMoves ? 'none' : 'not counted yet')}</span>
+                    <span class="iv-total-q ${i.isLow || i.onHand < 0 ? 'is-low' : (i.onHand === 0 ? 'is-none' : '')}">${i.onHand !== 0 ? convable(i.onHand, i.unit) : (i.hasMoves ? 'none' : 'not counted yet')}</span>
                 </div>`).join('');
             $id('ivTotalsEmpty')?.classList.toggle('hidden', ITEMS.length > 0);
             // A figure that moved pops once — the eye is told which one.
@@ -356,6 +356,29 @@
                 await load();
             } catch (err) { toast(err.message, 'error'); }
             finally { btn.disabled = false; }
+        }
+
+        /* ---------------- an amount, translated ----------------
+         *
+         * Tap a figure with kin and read the same amount in every unit of
+         * its kind. Wrapping is decided here, once: a unit whose kin is only
+         * itself gets no underline and no sheet. */
+        const convable = (qty, unitKey, extra) => {
+            const kin = Object.keys(UNITS).filter((k) => UNITS[k].dim && UNITS[unitKey] && UNITS[k].dim === UNITS[unitKey].dim);
+            const inner = `${trim(qty)} ${unitSays(unitKey, Math.abs(qty) === 1)}`;
+            if (kin.length < 2) return esc(inner);
+            return `<button type="button" class="iv-convable" data-conv-qty="${qty}" data-conv-unit="${esc(unitKey)}" title="See this amount in other units">${esc(inner)}${extra || ''}</button>`;
+        };
+
+        function openConv(qty, unitKey) {
+            qty = Number(qty);
+            $id('ivConvTitle').textContent = `${trim(qty)} ${unitSays(unitKey, Math.abs(qty) === 1)}`;
+            const kin = Object.keys(UNITS).filter((k) => k !== unitKey && UNITS[k].dim && UNITS[unitKey] && UNITS[k].dim === UNITS[unitKey].dim);
+            $id('ivConvRows').innerHTML = kin.map((k) => {
+                const v = convert(qty, unitKey, k);
+                return `<div class="iv-conv-row"><b>${esc(trim(v))}</b><span>${esc(unitSays(k, Math.abs(v) === 1))}</span></div>`;
+            }).join('');
+            openSheet('ivConvSheet');
         }
 
         /* ---------------- when the book begins ----------------
@@ -778,7 +801,7 @@
 
         window.__ivApi = {
             openItemSheet, saveItem, load, itemById, sayKind, sayUnit, delItem,
-            openItemMenu, itemMenuAct, sayMoveDate, raisePicker,
+            openItemMenu, itemMenuAct, sayMoveDate, raisePicker, openConv,
             sayMoveItem, sayMoveQty, moveGo, delMove, showTab, fillUnits,
             openStartChooser, chooseStart, pickedStartDate, openStartEdit, startEditGo,
         };
@@ -794,6 +817,8 @@
                 if (e.target.closest('[data-add-item]')) { A.openItemSheet(); return; }
                 const ed = e.target.closest('[data-iv-edit]');
                 if (ed) { A.openItemSheet(A.itemById(ed.getAttribute('data-iv-edit'))); return; }
+                const conv = e.target.closest('[data-conv-qty]');
+                if (conv) { A.openConv(conv.getAttribute('data-conv-qty'), conv.getAttribute('data-conv-unit')); return; }
                 const menuB = e.target.closest('[data-iv-menu]');
                 if (menuB) { A.openItemMenu(menuB.getAttribute('data-iv-menu')); return; }
                 const act = e.target.closest('[data-iv-menu-act]');
