@@ -1474,3 +1474,9 @@ html.dark .activity-description-content font[color],
 html.dark .note-body font[color],
 html.dark .inline-note-body font[color],
 html.dark .date-note-inner font[color] { color: inherit !important; }
+
+/* THE DANGER BUTTON IN THE DARK. The dark palette remap lightens its fill to
+   a coral (244,124,124) and left the label white: 2.62:1, found by the admin
+   panel audit but broken everywhere the button appears. Deep red ink on the
+   light fill — it still reads as danger, and now it reads at all. */
+html.dark .btn-danger { color: #450a0a; }

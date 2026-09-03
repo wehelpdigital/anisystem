@@ -122,6 +122,20 @@
         .tk-msg .tk-who { display: block; font-size: .64rem; font-weight: 800; opacity: .75; margin-bottom: .1rem; }
         .tk-msg .tk-at { display: block; font-size: .62rem; opacity: .6; margin-top: .2rem; }
 
+        /* LIGHT MODE'S QUIET TEXT, MEASURED. gray-400 on a white card is
+           2.60:1 — quiet is not the same as inaudible. Scoped to light so the
+           dark values, which measured clean, stay exactly as they are. The
+           sheets are listed by id because openSheet() re-parents them to
+           <body>, out from under .ad-main. */
+        html:not(.dark) .ad-sub,
+        html:not(.dark) .ad-meta,
+        html:not(.dark) .ch-lbl,
+        html:not(.dark) .ad-stat span,
+        html:not(.dark) .ad-more,
+        html:not(.dark) .ad-main .text-gray-400,
+        html:not(.dark) #clSheet .text-gray-400,
+        html:not(.dark) #tkSheet .text-gray-400 { color: var(--color-gray-500); }
+
         html.dark .ad-top { background: #10160c; border-color: #1f2917; }
         html.dark .ad-title { color: #e8efe1; }
         html.dark .ad-tab.is-on { background: #22301a; color: #cfe6b8; }

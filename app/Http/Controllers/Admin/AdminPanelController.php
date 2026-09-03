@@ -323,6 +323,14 @@ class AdminPanelController extends Controller
 
         Auth::login($admin);
 
+        /* Auth::login regenerates the session id, and the single-session
+         * guard remembers the OLD one on the admin's row. Without re-claiming
+         * the slot here, the very next request on a live host reads "a newer
+         * login owns the account" and signs the admin out — the return button
+         * became a logout button. Dev hosts skip the guard, which is exactly
+         * why a probe on .test could not see this. */
+        $admin->forceFill(['currentSessionId' => $request->session()->getId()])->saveQuietly();
+
         return redirect('/admin')->with('success', 'Back to your own account.');
     }
 }

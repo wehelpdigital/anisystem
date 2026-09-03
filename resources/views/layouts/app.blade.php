@@ -119,11 +119,14 @@
              client's account, and this is the thread back out. Fixed and
              loud on purpose — an admin who forgets whose account they are
              in does damage politely. --}}
-        <div style="position:sticky;top:0;z-index:120;" class="bg-amber-400 text-amber-950 text-[13px] font-bold px-3 py-2 flex items-center justify-between gap-3 shadow">
+        {{-- Literal colours, not tokens: dark mode remaps the palette, and a
+             bar that must be legible in BOTH modes cannot let either mode
+             repaint it. Amber stays amber at midnight. --}}
+        <div style="position:sticky;top:0;z-index:120;background:#fbbf24;color:#451a03;" class="text-[13px] font-bold px-3 py-2 flex items-center justify-between gap-3 shadow">
             <span class="truncate">👁 Viewing as {{ auth()->user()->full_name ?? auth()->user()->email }} — their account, your eyes.</span>
             <form method="POST" action="{{ route('admin.return') }}" class="shrink-0">
                 @csrf
-                <button type="submit" class="rounded-lg bg-amber-950 text-amber-100 px-3 py-1 text-xs font-bold">Back to admin</button>
+                <button type="submit" style="background:#451a03;color:#fde68a;" class="rounded-lg px-3 py-1 text-xs font-bold">Back to admin</button>
             </form>
         </div>
     @endif
