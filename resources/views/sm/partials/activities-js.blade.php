@@ -5489,7 +5489,7 @@ document.addEventListener('DOMContentLoaded', () => {
             body.innerHTML = entries.map((e) => {
                 const d = e.day || {};
                 const hrs = e.hours || [];
-                const rail = hrs.length ? `<div class="wx-hours mt-3">${hrs.map((h) => `
+                const rail = hrs.length ? `<div class="wx-hours scroll-chips mt-3">${hrs.map((h) => `
                         <div class="wx-hour" title="${esc(h.text || '')}">
                             <div class="wx-hour-time">${esc(h.hour || '')}</div>
                             <div class="wx-hour-emoji">${hourArt(h)}</div>

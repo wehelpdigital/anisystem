@@ -88,6 +88,9 @@
     .wx-day-pop { font-size: .68rem; font-weight: 700; color: #2563eb; }
 
     /* One hour in the hourly rail. */
+    /* Also .scroll-chips in the markup: that class is what the app's
+       delegated mouse-drag watches, so a desktop hand can slide the rail the
+       way a thumb does. These rules load after app.css and keep the gap. */
     .wx-hours { display: flex; gap: .45rem; overflow-x: auto; padding: .15rem .1rem .5rem; scrollbar-width: none; }
     .wx-hours::-webkit-scrollbar { display: none; }
     .wx-hour { flex: 0 0 auto; width: 4.6rem; text-align: center; padding: .6rem .3rem;
@@ -167,7 +170,7 @@
                 <span class="wx-open-hint">${hours.length} ${hours.length === 1 ? 'hour' : 'hours'}</span>
             </div>
             <div class="wx-verdict"><span class="wx-verdict-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 2"/></svg></span><span class="wx-verdict-text">${verdict}</span></div>
-            <div class="wx-hours mt-2">${hours.map((h) => `
+            <div class="wx-hours scroll-chips mt-2">${hours.map((h) => `
                 <div class="wx-hour ${h.isNow ? 'is-now' : ''}" title="${esc(h.text)}${h.mm != null ? ' &middot; ' + h.mm + ' mm' : ''}">
                     <div class="wx-hour-time">${esc(h.isNow ? 'Now' : h.hour)}</div>
                     <div class="wx-hour-emoji">${skyArt(h, 34, h.night)}</div>
