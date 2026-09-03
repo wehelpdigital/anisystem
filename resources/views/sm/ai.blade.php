@@ -14,6 +14,14 @@
 {{-- Back to whatever opened this: the Activities shell with this pane
      showing, or the schedule's hub. --}}
 @section('back', $backTo ?? route('sm.hub', ['id' => $schedule->id]))
+@php
+    /* The `from` this page arrived with, revalidated the way the controller
+       does, so switching between recent chats keeps remembering where Back
+       should go instead of forgetting it on the first hop. */
+    $aiFromQ = (($f = (string) request()->query('from')) !== ''
+        && str_starts_with($f, '/') && ! str_starts_with($f, '//'))
+        ? '&from=' . urlencode($f) : '';
+@endphp
 
 @push('head')
     <style>
@@ -188,6 +196,20 @@
             margin-top: .25rem; }
         .ai-howto-eg b { color: var(--color-brand-800, #2f5219); font-weight: 800; }
         html.dark .ai-howto { background: rgb(107 159 61 / .12); border-color: #2b3a1c; }
+        /* Folded to its headline by default: an empty chat should fit its
+           screen. The headline is the button; a thin rule separates the
+           worked pair. */
+        .ai-howto-fold { display: none; }
+        .ai-howto.is-open .ai-howto-fold { display: block; }
+        .ai-howto-h { cursor: pointer; width: 100%; }
+        .ai-howto-chev { margin-left: auto; width: .9rem; height: .9rem; flex: none;
+            transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        .ai-howto.is-open .ai-howto-chev { transform: rotate(180deg); }
+        .ai-howto-rule { display: block; height: 1px; margin: .45rem 0;
+            background: var(--color-gray-200); border: 0; }
+        html.dark .ai-howto-rule { background: #2b3a1c; }
+        @media (prefers-reduced-motion: reduce) { .ai-howto-chev { transition: none; } }
+
         html.dark .ai-howto-h, html.dark .ai-howto-eg b { color: #a5c97e; }
         html.dark .ai-howto-b, html.dark .ai-howto-eg { color: #b7c2ad; }
 
@@ -417,7 +439,7 @@
         @forelse ($conversations as $c)
             @include('sm.partials.ai-session-row', [
                 'id' => $c->id,
-                'href' => route('sm.ai', ['id' => $schedule->id, 'c' => $c->id]),
+                'href' => route('sm.ai', ['id' => $schedule->id, 'c' => $c->id]) . $aiFromQ,
                 'title' => $c->title,
                 'when' => $c->updated_at?->diffForHumans(),
                 'link' => $c->link_label,
@@ -430,7 +452,7 @@
              partial as the rows above, so the two can never drift. --}}
         <template id="aiSessionRowTpl">@include('sm.partials.ai-session-row', [
             'id' => '__ID__',
-            'href' => route('sm.ai', ['id' => $schedule->id]) . '&c=__ID__',
+            'href' => route('sm.ai', ['id' => $schedule->id]) . '&c=__ID__' . $aiFromQ,
             'title' => '',
             'when' => 'just now',
             'link' => null,
@@ -552,17 +574,21 @@
                      instruction you have to scroll to finish is an
                      instruction nobody reads. The example does most of the
                      teaching, so it is what the space goes to. --}}
-                <div class="ai-howto">
+                <div class="ai-howto" onclick="this.classList.toggle('is-open')" role="button" tabindex="0" aria-label="How to ask — tap to expand">
                     <p class="ai-howto-h">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
                         The more you tell me, the better I answer
+                        <svg class="ai-howto-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </p>
-                    <p class="ai-howto-b">Crop and age, what you did, what you see.</p>
-                    {{-- Labelled, because "Not / Try" on its own reads as a
-                         rule until you have understood it is a worked pair. --}}
-                    <p class="ai-howto-lbl">For example</p>
-                    <p class="ai-howto-eg"><b>Not</b> "my rice is sick"<br>
-                        <b>Try</b> "RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"</p>
+                    <div class="ai-howto-fold">
+                        <p class="ai-howto-b">Crop and age, what you did, what you see.</p>
+                        {{-- Labelled, because "Not / Try" on its own reads as a
+                             rule until you have understood it is a worked pair. --}}
+                        <p class="ai-howto-lbl">For example</p>
+                        <p class="ai-howto-eg"><b>Not</b> "my rice is sick"</p>
+                        <span class="ai-howto-rule" aria-hidden="true"></span>
+                        <p class="ai-howto-eg"><b>Try</b> "RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"</p>
+                    </div>
                 </div>
             </div>
         @endforelse
@@ -721,7 +747,7 @@
         @foreach ($conversations as $c)
             @include('sm.partials.ai-session-sheet-row', [
                 'id' => $c->id,
-                'href' => route('sm.ai', ['id' => $schedule->id, 'c' => $c->id]),
+                'href' => route('sm.ai', ['id' => $schedule->id, 'c' => $c->id]) . $aiFromQ,
                 'title' => $c->title,
                 'when' => $c->updated_at?->diffForHumans(),
                 'link' => $c->link_label,
@@ -733,7 +759,7 @@
         @endif
         <template id="aiSessionSheetRowTpl">@include('sm.partials.ai-session-sheet-row', [
             'id' => '__ID__',
-            'href' => route('sm.ai', ['id' => $schedule->id]) . '&c=__ID__',
+            'href' => route('sm.ai', ['id' => $schedule->id]) . '&c=__ID__' . $aiFromQ,
             'title' => '',
             'when' => 'just now',
             'link' => null,

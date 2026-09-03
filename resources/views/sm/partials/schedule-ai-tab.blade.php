@@ -287,6 +287,20 @@
     .sai-howto-eg { font-size: .72rem; line-height: 1.5; color: var(--color-gray-500); margin-top: .22rem; }
     .sai-howto-eg b { color: var(--color-brand-800, #2f5219); font-weight: 800; }
     html.dark .sai-howto { background: rgb(107 159 61 / .12); border-color: #2b3a1c; }
+    /* Folded to its headline by default: an empty chat should fit its
+       screen. The headline is the button; a thin rule separates the
+       worked pair. */
+    .sai-howto-fold { display: none; }
+    .sai-howto.is-open .sai-howto-fold { display: block; }
+    .sai-howto-h { cursor: pointer; width: 100%; }
+    .sai-howto-chev { margin-left: auto; width: .9rem; height: .9rem; flex: none;
+        transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .sai-howto.is-open .sai-howto-chev { transform: rotate(180deg); }
+    .sai-howto-rule { display: block; height: 1px; margin: .45rem 0;
+        background: var(--color-gray-200); border: 0; }
+    html.dark .sai-howto-rule { background: #2b3a1c; }
+    @media (prefers-reduced-motion: reduce) { .sai-howto-chev { transition: none; } }
+
     html.dark .sai-howto-h, html.dark .sai-howto-eg b { color: #a5c97e; }
     html.dark .sai-howto-b, html.dark .sai-howto-eg { color: #b7c2ad; }
     /* The two switches, where the question is typed rather than behind a
@@ -518,12 +532,17 @@
                 <h4>Hi team, I'm ${AI_NAME}</h4>
                 ${AI_HELLO}
                 <p>Everyone on the team sees the questions and answers, and you can save a whole session to your schedule notes.</p>
-                <div class="sai-howto">
-                    <p class="sai-howto-h">The more you tell me, the better I answer</p>
-                    <p class="sai-howto-b">Crop and age, what was done, what you see.</p>
-                    <p class="sai-howto-lbl">For example</p>
-                    <p class="sai-howto-eg"><b>Not</b> "the rice is sick"<br>
-                        <b>Try</b> "RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"</p>
+                <div class="sai-howto" onclick="this.classList.toggle('is-open')" role="button" tabindex="0" aria-label="How to ask — tap to expand">
+                    <p class="sai-howto-h" style="display:flex;align-items:center;gap:.35rem">The more you tell me, the better I answer
+                        <svg class="sai-howto-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </p>
+                    <div class="sai-howto-fold">
+                        <p class="sai-howto-b">Crop and age, what was done, what you see.</p>
+                        <p class="sai-howto-lbl">For example</p>
+                        <p class="sai-howto-eg"><b>Not</b> "the rice is sick"</p>
+                        <span class="sai-howto-rule" aria-hidden="true"></span>
+                        <p class="sai-howto-eg"><b>Try</b> "RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"</p>
+                    </div>
                 </div>`;
             /* The three suggestion chips are gone. They were pills in the
              * stylesheet at the top of this file and squares by the time the
