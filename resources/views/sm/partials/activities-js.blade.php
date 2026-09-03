@@ -1945,7 +1945,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button type="button" class="date-header-btn move-group-das-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Move this whole day to a specific day number'))}">${SVG.dayNumber}</button>
                 <button type="button" class="date-header-btn date-header-delete-btn delete-group-date-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Delete every activity in this group'))}">${SVG.trash}</button>
             </span>
-            <button type="button" class="date-header-btn day-menu-btn md:hidden" data-date="${esc(dateKey)}" title="More actions for this day">${SVG.kebab}</button>`;
+            <button type="button" class="date-header-btn day-menu-btn" data-date="${esc(dateKey)}" title="More actions for this day">${SVG.kebab}</button>`;
 
         // Chips sit BESIDE the inner, not in it — the phone clamps the inner
         // to one line and chips inside it were trimmed away with the words.

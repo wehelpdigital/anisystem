@@ -2706,9 +2706,11 @@
         .icon-btn-danger:hover { background: #fef2f2; color: #dc2626; }
         @media (min-width: 768px) {
             .icon-btn { width: 2.375rem; height: 2.375rem; }
-            /* These component classes set `display`, which beats Tailwind's
-               md:hidden — hide the phone overflow buttons explicitly. */
-            .card-menu-btn, .day-menu-btn { display: none; }
+            /* The card's overflow stays phone-only — its rows all have
+               desktop twins on the card itself. The DAY menu does not: two of
+               its rows (Expense / Add new inventory) live nowhere else, so
+               the day's ⋮ earns its place at every width. */
+            .card-menu-btn { display: none; }
         }
 
         .rest-day-marker {
@@ -3753,7 +3755,7 @@
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
                                 </button>
                             </span>
-                            <button type="button" class="date-header-btn day-menu-btn md:hidden" data-date="{{ $dateKey }}" title="More actions for this day">
+                            <button type="button" class="date-header-btn day-menu-btn" data-date="{{ $dateKey }}" title="More actions for this day">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
                             </button>
                         @endif
